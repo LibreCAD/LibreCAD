@@ -7,7 +7,7 @@
         <location filename="../asciifile/asciifile.cpp" line="35"/>
         <location filename="../asciifile/asciifile.cpp" line="41"/>
         <source>Read ascii points</source>
-        <translation>ਐਸਕੀ ਪੁਆਇੰਟ ਪੜ੍ਹੋ</translation>
+        <translation>ਐਸਕੀ ਬਿੰਦੂ ਪੜ੍ਹੋ</translation>
     </message>
 </context>
 <context>
@@ -16,7 +16,7 @@
         <location filename="../circletools/circletools.cpp" line="50"/>
         <location filename="../circletools/circletools.cpp" line="56"/>
         <source>CircleTools</source>
-        <translation>Mga Kagamitan sa Bilog</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -24,7 +24,7 @@
     <message>
         <location filename="../pointstocsv/pointstocsv.cpp" line="34"/>
         <source>Export points to csv</source>
-        <translation>ਪੁਆਇੰਟਾਂ ਨੂੰ CSV ਵਿੱਚ ਨਿਰਯਾਤ ਕਰੋ</translation>
+        <translation>ਬਿੰਦੂਆਂ ਨੂੰ CSV ਵਿੱਚ ਨਿਰਯਾਤ ਕਰੋ</translation>
     </message>
 </context>
 <context>
@@ -48,7 +48,7 @@
     <message>
         <location filename="../align/align.cpp" line="50"/>
         <source>Specify base points first</source>
-        <translation>ਪਹਿਲਾਂ ਬੇਸ ਪੁਆਇੰਟ ਦੱਸੋ</translation>
+        <translation>ਪਹਿਲਾਂ ਬੇਸ ਬਿੰਦੂ ਦੱਸੋ</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="54"/>
@@ -64,7 +64,7 @@ Ok to accept and start alignment.</source>
     <message>
         <location filename="../align/align.cpp" line="81"/>
         <source>first base point:</source>
-        <translation>ਪਹਿਲਾ ਬੇਸ ਪੁਆਇੰਟ:</translation>
+        <translation>ਪਹਿਲਾ ਬੇਸ ਬਿੰਦੂ:</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="86"/>
@@ -85,12 +85,7 @@ Align will copy rather than move the selected objects.
 If &apos;Specify base points first&apos; is checked,
 Align will prompt for the alignment points in the order
 first base, second base, first target, second target.</source>
-        <translation>Kung minarkahan ang &apos;Panatilihin ang orihinal na mga bagay&apos;,
-kokopyahin ng Align sa halip na ilipat ang mga napiling bagay.
-
-Kung minarkahan ang &apos;Tukuyin muna ang mga base point&apos;,
-hinihiling ng Align ang mga alignment point sa pagkakasunud-sunod na
-unang base, pangalawang base, unang target, pangalawang target.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="91"/>
@@ -117,7 +112,7 @@ unang base, pangalawang base, unang target, pangalawang target.</translation>
         <location filename="../list/list.cpp" line="23"/>
         <location filename="../list/list.cpp" line="30"/>
         <source>List entities</source>
-        <translation>ਇਕਾਈਆਂ ਦੀ ਸੂਚੀ</translation>
+        <translation>ਐਂਟੀਟੀਆਂ ਦੀ ਸੂਚੀ</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="46"/>
@@ -127,7 +122,7 @@ unang base, pangalawang base, unang target, pangalawang target.</translation>
     <message>
         <location filename="../list/list.cpp" line="60"/>
         <source>Empty Entity</source>
-        <translation>ਖਾਲੀ ਇਕਾਈ</translation>
+        <translation>ਖਾਲੀ ਐਂਟੀਟੀ</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="67"/>
@@ -167,14 +162,14 @@ unang base, pangalawang base, unang target, pangalawang target.</translation>
     <message>
         <location filename="../list/list.cpp" line="88"/>
         <source>POINT</source>
-        <translation>ਪੁਆਇੰਟ</translation>
+        <translation>ਬਿੰਦੂ</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="89"/>
         <location filename="../list/list.cpp" line="180"/>
         <location filename="../list/list.cpp" line="222"/>
         <source>in point</source>
-        <translation>ਪੁਆਇੰਟ ਵਿੱਚ</translation>
+        <translation>ਬਿੰਦੂ ਵਿੱਚ</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="94"/>
@@ -184,12 +179,12 @@ unang base, pangalawang base, unang target, pangalawang target.</translation>
     <message>
         <location filename="../list/list.cpp" line="99"/>
         <source>from point</source>
-        <translation>ਪੁਆਇੰਟ ਤੋਂ</translation>
+        <translation>ਬਿੰਦੂ ਤੋਂ</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="102"/>
         <source>to point</source>
-        <translation>ਪੁਆਇੰਟ ਤੱਕ</translation>
+        <translation>ਬਿੰਦੂ ਤੱਕ</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="107"/>
@@ -304,7 +299,7 @@ unang base, pangalawang base, unang target, pangalawang target.</translation>
     <message>
         <location filename="../list/list.cpp" line="191"/>
         <source>Insertion point</source>
-        <translation>ਇਨਸਰਸ਼ਨ ਪੁਆਇੰਟ</translation>
+        <translation>ਇਨਸਰਸ਼ਨ ਬਿੰਦੂ</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="194"/>
@@ -364,7 +359,7 @@ unang base, pangalawang base, unang target, pangalawang target.</translation>
     <message>
         <location filename="../list/list.cpp" line="237"/>
         <source>SPLINEPOINTS</source>
-        <translation>ਸਪਲਾਈਨ ਪੁਆਇੰਟ</translation>
+        <translation>ਸਪਲਾਈਨ ਬਿੰਦੂ</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="240"/>
@@ -374,32 +369,32 @@ unang base, pangalawang base, unang target, pangalawang target.</translation>
     <message>
         <location filename="../list/list.cpp" line="243"/>
         <source>DIMLEADER</source>
-        <translation>ਡਾਇਮੈਂਸ਼ਨ ਲੀਡਰ</translation>
+        <translation>ਲੀਡਰ</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="246"/>
         <source>DIMALIGNED</source>
-        <translation>ਡਾਇਮੈਂਸ਼ਨ ਅਲਾਈਨਡ</translation>
+        <translation>ਅਲਾਈਨਡ ਮਾਪ</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="249"/>
         <source>DIMLINEAR</source>
-        <translation>ਡਾਇਮੈਂਸ਼ਨ ਲੀਨੀਅਰ</translation>
+        <translation>ਲੀਨੀਅਰ ਮਾਪ</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="252"/>
         <source>DIMRADIAL</source>
-        <translation>ਡਾਇਮੈਂਸ਼ਨ ਰੇਡੀਅਲ</translation>
+        <translation>ਰੇਡੀਅਲ ਮਾਪ</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="255"/>
         <source>DIMDIAMETRIC</source>
-        <translation>ਡਾਇਮੈਂਸ਼ਨ ਡਾਇਆਮੀਟ੍ਰਿਕ</translation>
+        <translation>ਡਾਇਮੀਟ੍ਰਿਕ ਮਾਪ</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="258"/>
         <source>DIMANGULAR</source>
-        <translation>ਡਾਇਮੈਂਸ਼ਨ ਐਂਗੂਲਰ</translation>
+        <translation>ਐਂਗੂਲਰ ਮਾਪ</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="261"/>
@@ -453,7 +448,7 @@ unang base, pangalawang base, unang target, pangalawang target.</translation>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="220"/>
         <source>Read ascii points</source>
-        <translation>ਐਸਕੀ ਪੁਆਇੰਟ ਪੜ੍ਹੋ</translation>
+        <translation>ਐਸਕੀ ਬਿੰਦੂ ਪੜ੍ਹੋ</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="226"/>
@@ -493,27 +488,27 @@ unang base, pangalawang base, unang target, pangalawang target.</translation>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="237"/>
         <source>Connect points</source>
-        <translation>ਪੁਆਇੰਟ ਜੋੜੋ</translation>
+        <translation>ਬਿੰਦੂ ਜੋੜੋ</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="245"/>
         <source>2D Point</source>
-        <translation>2D ਪੁਆਇੰਟ</translation>
+        <translation>2D ਬਿੰਦੂ</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="245"/>
         <source>Draw 2D Point</source>
-        <translation>2D ਪੁਆਇੰਟ ਬਣਾਓ</translation>
+        <translation>2D ਬਿੰਦੂ ਬਣਾਓ</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="246"/>
         <source>3D Point</source>
-        <translation>3D ਪੁਆਇੰਟ</translation>
+        <translation>3D ਬਿੰਦੂ</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="246"/>
         <source>Draw 3D Point</source>
-        <translation>3D ਪੁਆਇੰਟ ਬਣਾਓ</translation>
+        <translation>3D ਬਿੰਦੂ ਬਣਾਓ</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="247"/>
@@ -751,7 +746,7 @@ unang base, pangalawang base, unang target, pangalawang target.</translation>
     <message>
         <location filename="../divide/divide.cpp" line="518"/>
         <source>CIRCLE</source>
-        <translation>ਵਰਤੁਲ</translation>
+        <translation>ਚੱਕਰ</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="524"/>
@@ -766,7 +761,7 @@ unang base, pangalawang base, unang target, pangalawang target.</translation>
     <message>
         <location filename="../divide/divide.cpp" line="530"/>
         <source>POLYLINE</source>
-        <translation>ਪੋਲੀਲਾਈਨ</translation>
+        <translation>ਪੌਲੀਲਾਈਨ</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="531"/>
@@ -844,7 +839,7 @@ unang base, pangalawang base, unang target, pangalawang target.</translation>
     <message>
         <location filename="../divide/dividedlg.cpp" line="134"/>
         <source>Breaks - Off</source>
-        <translation>ਵਿਰਾਮ - ਬੰਦ</translation>
+        <translation>ਬ੍ਰੇਕ - ਬੰਦ</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="179"/>
@@ -859,7 +854,12 @@ decimal degrees
 0° at 3 o&apos;clock
 goes
 anti-clockwise.</source>
-        <translation>ਸ਼ੁਰੂ ਵਾਲਾ ਕੋਣ ਦਰਜ ਕਰੋ, ਦਸ਼ਮਲਵ ਦਰਜੇ ਵਿੱਚ। 3 ਵਜੇ 0° ਤੋਂ ਸ਼ੁਰੂ ਹੋ ਕੇ ਘੜੀ ਦੀ ਉਲਟ ਦਿਸ਼ਾ ਵਿੱਚ ਜਾਂਦਾ ਹੈ।</translation>
+        <translation>ਸ਼ੁਰੂ ਵਾਲਾ ਕੋਣ
+ਦਰਜ ਕਰੋ,
+ਦਸ਼ਮਲਵ ਡਿਗਰੀਆਂ ਵਿੱਚ।
+3 ਵਜੇ 0° ਤੋਂ ਸ਼ੁਰੂ ਹੋ ਕੇ
+ਘੜੀ ਦੀ ਉਲਟ
+ਦਿਸ਼ਾ ਵਿੱਚ ਜਾਂਦਾ ਹੈ।</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="246"/>
@@ -1023,7 +1023,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../list/list.cpp" line="278"/>
         <source>List entities</source>
-        <translation>ਇਕਾਈਆਂ ਦੀ ਸੂਚੀ</translation>
+        <translation>ਐਂਟੀਟੀਆਂ ਦੀ ਸੂਚੀ</translation>
     </message>
 </context>
 <context>
@@ -1229,7 +1229,7 @@ Use t or x in your equation as a variable/parameter.
         <location filename="../plotequation/plotdialog.cpp" line="61"/>
         <source>SplinePoints</source>
         <comment>Plot Equation to generate 2nd spline by LC_SplinePoints</comment>
-        <translation>ਸਪਲਾਈਨ ਪੁਆਇੰਟ</translation>
+        <translation>ਸਪਲਾਈਨ ਬਿੰਦੂ</translation>
     </message>
 </context>
 <context>

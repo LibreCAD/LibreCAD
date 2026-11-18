@@ -424,17 +424,17 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/lc_abstractactionwithpreview.cpp" line="860"/>
         <source> is not divided as it is part of polyline. Expand polyline first.</source>
-        <translation> غير مقسم لأنه جزء من متعدد خطوط. قم بتوسيع متعدد الخطوط أولاً.</translation>
+        <translation> لا يُقسَم لأنه جزء من خط متعدد. فكّك الخط المتعدد أولًا.</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawslicedivide.cpp" line="180"/>
         <source>Line</source>
-        <translation>Line</translation>
+        <translation>خط</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawslicedivide.cpp" line="190"/>
         <source>Arc</source>
-        <translation>Arc</translation>
+        <translation>قوس</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawslicedivide.cpp" line="200"/>
@@ -492,7 +492,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="54"/>
         <source>Zoom &amp;Panning</source>
-        <translation>تكبير التحريك</translation>
+        <translation>&amp;تحريك العرض</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="64"/>
@@ -695,22 +695,22 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="475"/>
         <source>Ellipse &amp;Arc (Axis)</source>
-        <translation>قطع ناقص وقوس (محور)</translation>
+        <translation>&amp;قوس قطع ناقص (محور)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="482"/>
         <source>Ellipse &amp;Foci Point</source>
-        <translation>قطع ناقص وبؤرة نقطة</translation>
+        <translation>&amp;قطع ناقص بالبؤرتين ونقطة</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="489"/>
         <source>Ellipse &amp;4 Point</source>
-        <translation>قطع ناقص وأربع نقاط</translation>
+        <translation>&amp;قطع ناقص بأربع نقاط</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="496"/>
         <source>Ellipse Center and &amp;3 Points</source>
-        <translation>مركز قطع ناقص وثلاث نقاط</translation>
+        <translation>&amp;قطع ناقص بالمركز وثلاث نقاط</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="503"/>
@@ -730,7 +730,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="551"/>
         <source>&amp;Polyline</source>
-        <translation>متعدد خطوط</translation>
+        <translation>&amp;خط متعدد</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="558"/>
@@ -755,17 +755,17 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="590"/>
         <source>&amp;Trim segments</source>
-        <translation>تقليم القطاعات</translation>
+        <translation>&amp;قص المقاطع</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="598"/>
         <source>Create &amp;Equidistant Polylines</source>
-        <translation>إنشاء متعدد خطوط متساوية المسافة</translation>
+        <translation>&amp;إنشاء خطوط متعددة متساوية البعد</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="605"/>
         <source>Create Polyline from Existing &amp;Segments</source>
-        <translation>إنشاء متعدد خطوط من القطاعات الموجودة</translation>
+        <translation>&amp;إنشاء خط متعدد من المقاطع الموجودة</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="614"/>
@@ -780,7 +780,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="627"/>
         <source>&amp;Hatch</source>
-        <translation>تظليل</translation>
+        <translation>&amp;تهشير</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="634"/>
@@ -805,7 +805,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="671"/>
         <source>&amp;Radial</source>
-        <translation>شعاعي</translation>
+        <translation>&amp;نصف قطري</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="678"/>
@@ -820,7 +820,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="699"/>
         <source>&amp;Leader</source>
-        <translation>دليل</translation>
+        <translation>&amp;خط إشارة</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="708"/>
@@ -880,7 +880,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="792"/>
         <source>&amp;Trim</source>
-        <translation>تقليم</translation>
+        <translation>&amp;قص</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="808"/>
@@ -895,22 +895,22 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="832"/>
         <source>&amp;Stretch</source>
-        <translation>تمدد</translation>
+        <translation>&amp;مط</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="840"/>
         <source>&amp;Bevel</source>
-        <translation>حافة مائلة</translation>
+        <translation>&amp;شطف</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="848"/>
         <source>&amp;Fillet</source>
-        <translation>تقريب</translation>
+        <translation>&amp;تقويس</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="856"/>
         <source>&amp;Explode Text into Letters</source>
-        <translation>تفجير النص إلى حروف</translation>
+        <translation>&amp;تفكيك النص إلى حروف</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="922"/>
@@ -945,7 +945,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1418"/>
         <source>&amp;Selection pointer</source>
-        <translation>اختيار مؤشر</translation>
+        <translation>&amp;مؤشر التحديد</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1428"/>
@@ -980,7 +980,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="983"/>
         <source>lower after entity</source>
-        <translation>خفض بعد الكيان</translation>
+        <translation>إنزال تحت الكيان</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="991"/>
@@ -1070,7 +1070,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="863"/>
         <source>Ex&amp;plode</source>
-        <translation>تفجير</translation>
+        <translation>تف&amp;كيك</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1170"/>
@@ -1120,7 +1120,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1505"/>
         <source>&amp;Auto Zoom</source>
-        <translation>تقريب – تبعيد تلقائي</translation>
+        <translation>&amp;تكبير/تصغير تلقائي</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1515"/>
@@ -1175,7 +1175,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1274"/>
         <source>Export as PDF</source>
-        <translation>تصدير بتنسيق بي دي اف</translation>
+        <translation>تصدير بتنسيق PDF</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1620"/>
@@ -1237,7 +1237,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1337"/>
         <source>Left</source>
-        <translation>Left</translation>
+        <translation>يسار</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1346"/>
@@ -1247,7 +1247,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1355"/>
         <source>Top</source>
-        <translation>Top</translation>
+        <translation>أعلى</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1364"/>
@@ -1277,7 +1277,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="800"/>
         <source>Tr&amp;im Two</source>
-        <translation>تقليم اثنين</translation>
+        <translation>&amp;قص كيانين</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="816"/>
@@ -1408,7 +1408,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="300"/>
         <source>Star</source>
-        <translation>Star</translation>
+        <translation>نجمة</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="306"/>
@@ -1458,22 +1458,22 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="519"/>
         <source>Para&amp;bola 4 points</source>
-        <translation>مكافئ 4 نقاط</translation>
+        <translation>&amp;قطع مكافئ بأربع نقاط</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="526"/>
         <source>Parabola &amp;Focus Directrix</source>
-        <translation>مكافئ بؤرة مباشرة</translation>
+        <translation>&amp;قطع مكافئ بالبؤرة والدليل</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="873"/>
         <source>&amp;Pick Pen From Entity</source>
-        <translation>اختر قلم من كيان</translation>
+        <translation>&amp;أخذ القلم من كيان</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="881"/>
         <source>&amp;Pick Pen From Entity (Resolved)</source>
-        <translation>اختر قلم من كيان (محلول)</translation>
+        <translation>&amp;أخذ القلم الفعلي من كيان</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="890"/>
@@ -1488,7 +1488,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="906"/>
         <source>Line Join</source>
-        <translation>ربط خط</translation>
+        <translation>وصل الخطوط</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="913"/>
@@ -1503,7 +1503,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="511"/>
         <source>&amp;Hyperbola Foci Point</source>
-        <translation>&amp;نقطة بؤرة القطع الزائد</translation>
+        <translation>&amp;قطع زائد بالبؤرتين ونقطة</translation>
     </message>
 </context>
 <context>
@@ -2249,7 +2249,7 @@ or [%2]</source>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="50"/>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="181"/>
         <source>Free</source>
-        <translation>Free</translation>
+        <translation>حر</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="55"/>
@@ -2267,7 +2267,7 @@ or [%2]</source>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="65"/>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="120"/>
         <source>End</source>
-        <translation>End</translation>
+        <translation>النهاية</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="73"/>
@@ -2277,7 +2277,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="80"/>
         <source>Rel</source>
-        <translation>Rel</translation>
+        <translation>نسبي</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="144"/>
@@ -2355,7 +2355,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_linefrompointtolineoptions.ui" line="227"/>
         <source>End</source>
-        <translation>End</translation>
+        <translation>النهاية</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linefrompointtolineoptions.ui" line="241"/>
@@ -2379,13 +2379,13 @@ or [%2]</source>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="51"/>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="144"/>
         <source>Extend/Trim</source>
-        <translation>تمديد/تقليم</translation>
+        <translation>تمديد/قص</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="56"/>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="149"/>
         <source>Add segment</source>
-        <translation>إضافة قطاع</translation>
+        <translation>إضافة مقطع</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="61"/>
@@ -2396,7 +2396,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="69"/>
         <source>Create Polyline</source>
-        <translation>إنشاء متعدد خطوط</translation>
+        <translation>إنشاء خط متعدد</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="76"/>
@@ -2459,12 +2459,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_linepointsoptions.ui" line="128"/>
         <source>None</source>
-        <translation>None</translation>
+        <translation>لا شيء</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linepointsoptions.ui" line="133"/>
         <source>Both</source>
-        <translation>Both</translation>
+        <translation>كلاهما</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linepointsoptions.ui" line="138"/>
@@ -2474,7 +2474,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_linepointsoptions.ui" line="143"/>
         <source>End</source>
-        <translation>End</translation>
+        <translation>النهاية</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linepointsoptions.ui" line="183"/>
@@ -2502,7 +2502,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_modifybreakdivideoptions.ui" line="39"/>
         <source>Remove Segments</source>
-        <translation>حذف القطاعات</translation>
+        <translation>حذف المقاطع</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_modifybreakdivideoptions.ui" line="46"/>
@@ -2531,7 +2531,7 @@ or [%2]</source>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="56"/>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="87"/>
         <source>Free</source>
-        <translation>Free</translation>
+        <translation>حر</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="79"/>
@@ -2554,7 +2554,7 @@ or [%2]</source>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="102"/>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="121"/>
         <source>End</source>
-        <translation>End</translation>
+        <translation>النهاية</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="129"/>
@@ -2869,7 +2869,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="26"/>
         <source>Polyline</source>
-        <translation>متعدد خطوط</translation>
+        <translation>خط متعدد</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="33"/>
@@ -2919,7 +2919,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="175"/>
         <source>Top</source>
-        <translation>Top</translation>
+        <translation>أعلى</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="180"/>
@@ -2929,7 +2929,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="185"/>
         <source>Left</source>
-        <translation>Left</translation>
+        <translation>يسار</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="190"/>
@@ -2969,7 +2969,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="229"/>
         <source>Bevel</source>
-        <translation>حافة مائلة</translation>
+        <translation>شطف</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="237"/>
@@ -2979,7 +2979,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="245"/>
         <source>Both</source>
-        <translation>Both</translation>
+        <translation>كلاهما</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="250"/>
@@ -3027,7 +3027,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="63"/>
         <source>Polyline</source>
-        <translation>متعدد خطوط</translation>
+        <translation>خط متعدد</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="70"/>
@@ -3091,7 +3091,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="212"/>
         <source>Bevel</source>
-        <translation>حافة مائلة</translation>
+        <translation>شطف</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="220"/>
@@ -3101,7 +3101,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="228"/>
         <source>Both</source>
-        <translation>Both</translation>
+        <translation>كلاهما</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="233"/>
@@ -3124,12 +3124,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="55"/>
         <source>Polyline</source>
-        <translation>متعدد خطوط</translation>
+        <translation>خط متعدد</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="63"/>
         <source>Both</source>
-        <translation>Both</translation>
+        <translation>كلاهما</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="68"/>
@@ -3174,7 +3174,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="170"/>
         <source>Bevel</source>
-        <translation>حافة مائلة</translation>
+        <translation>شطف</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="178"/>
@@ -3225,12 +3225,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="48"/>
         <source>None</source>
-        <translation>None</translation>
+        <translation>لا شيء</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="53"/>
         <source>Both</source>
-        <translation>Both</translation>
+        <translation>كلاهما</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="58"/>
@@ -3242,7 +3242,7 @@ or [%2]</source>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="63"/>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="276"/>
         <source>End</source>
-        <translation>End</translation>
+        <translation>النهاية</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="71"/>
@@ -3252,7 +3252,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="113"/>
         <source>Rel</source>
-        <translation>Rel</translation>
+        <translation>نسبي</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="120"/>
@@ -3320,7 +3320,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_staroptions.ui" line="49"/>
         <source>Polyline</source>
-        <translation>متعدد خطوط</translation>
+        <translation>خط متعدد</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_staroptions.ui" line="56"/>
@@ -3353,7 +3353,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="417"/>
         <source>Dock</source>
-        <translation>Dock</translation>
+        <translation>إرساء</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="417"/>
@@ -3383,7 +3383,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="629"/>
         <source>PolyLines</source>
-        <translation>متعدد خطوط</translation>
+        <translation>خطوط متعددة</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="636"/>
@@ -3518,7 +3518,7 @@ or [%2]</source>
         <location filename="../src/ui/forms/qg_polylineequidistantoptions.ui" line="84"/>
         <location filename="../src/ui/forms/qg_polylineequidistantoptions.ui" line="122"/>
         <source>Distance from original polyline</source>
-        <translation>المسافة من متعدد الخطوط الأصلي</translation>
+        <translation>المسافة من الخط المتعدد الأصلي</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_polylineequidistantoptions.ui" line="97"/>
@@ -3701,7 +3701,7 @@ Please check the permissions.</source>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="792"/>
         <source>&amp;Polyline</source>
-        <translation>متعدّد خطوط</translation>
+        <translation>&amp;خط متعدد</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2106"/>
@@ -3782,17 +3782,17 @@ Auto-save disabled.</source>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="424"/>
         <source>File</source>
-        <translation>File</translation>
+        <translation>ملف</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="431"/>
         <source>Edit</source>
-        <translation>Edit</translation>
+        <translation>تحرير</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="452"/>
         <source>View</source>
-        <translation>View</translation>
+        <translation>عرض</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="467"/>
@@ -3883,7 +3883,7 @@ Please check its existence and permissions.</source>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="258"/>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="523"/>
         <source>Line</source>
-        <translation>Line</translation>
+        <translation>خط</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="263"/>
@@ -3912,7 +3912,7 @@ Please check its existence and permissions.</source>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="278"/>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="547"/>
         <source>Polyline</source>
-        <translation>متعدد خطوط</translation>
+        <translation>خط متعدد</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="288"/>
@@ -3930,12 +3930,12 @@ Please check its existence and permissions.</source>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="298"/>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="571"/>
         <source>Info</source>
-        <translation>Info</translation>
+        <translation>معلومات</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="474"/>
         <source>Pen</source>
-        <translation>Pen</translation>
+        <translation>قلم</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="486"/>
@@ -4005,7 +4005,7 @@ Please check its existence and permissions.</source>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3080"/>
         <source>Copy</source>
-        <translation>Copy</translation>
+        <translation>نسخ</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3091"/>
@@ -4117,12 +4117,12 @@ Please check its existence and permissions.</source>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1220"/>
         <source>East</source>
-        <translation>East</translation>
+        <translation>الشرق</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1224"/>
         <source>West</source>
-        <translation>West</translation>
+        <translation>الغرب</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1229"/>
@@ -4158,7 +4158,7 @@ Please check its existence and permissions.</source>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3461"/>
         <source>Cmd</source>
-        <translation>Cmd</translation>
+        <translation>الأوامر</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3462"/>
@@ -4169,7 +4169,7 @@ Please check its existence and permissions.</source>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3462"/>
         <source>Dock</source>
         <comment>Dock the command widget to the main window</comment>
-        <translation>Dock</translation>
+        <translation>إرساء</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="886"/>
@@ -4430,7 +4430,7 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="115"/>
         <source>Red</source>
-        <translation>Red</translation>
+        <translation>أحمر</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="120"/>
@@ -4445,12 +4445,12 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="124"/>
         <source>Cyan</source>
-        <translation>Cyan</translation>
+        <translation>سماوي</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="126"/>
         <source>Blue</source>
-        <translation>Blue</translation>
+        <translation>أزرق</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="128"/>
@@ -4465,7 +4465,7 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="137"/>
         <source>Gray</source>
-        <translation>Gray</translation>
+        <translation>رمادي</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="139"/>
@@ -4588,7 +4588,7 @@ in a separate window</source>
         <location filename="../src/ui/forms/qg_commandwidget.cpp" line="94"/>
         <location filename="../src/ui/forms/qg_commandwidget.cpp" line="344"/>
         <source>Dock</source>
-        <translation>Dock</translation>
+        <translation>إرساء</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_commandwidget.cpp" line="344"/>
@@ -4603,7 +4603,7 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/forms/qg_commandwidget.cpp" line="345"/>
         <source>Cmd</source>
-        <translation>Cmd</translation>
+        <translation>الأوامر</translation>
     </message>
 </context>
 <context>
@@ -4632,7 +4632,7 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/forms/qg_dimensionlabeleditor.ui" line="20"/>
         <source>Dimension Label Editor</source>
-        <translation>محرر ملصق البعد</translation>
+        <translation>محرر تسمية البعد</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dimensionlabeleditor.ui" line="32"/>
@@ -4703,7 +4703,7 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgarc.ui" line="26"/>
         <source>Arc</source>
-        <translation>Arc</translation>
+        <translation>قوس</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgarc.ui" line="51"/>
@@ -4903,7 +4903,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/forms/qg_dlghatch.ui" line="14"/>
         <source>Choose Hatch Attributes</source>
-        <translation>اختيار سمات التظليل</translation>
+        <translation>اختيار سمات التهشير</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlghatch.ui" line="22"/>
@@ -4938,7 +4938,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/forms/qg_dlghatch.ui" line="86"/>
         <source>Area</source>
-        <translation>Area</translation>
+        <translation>المساحة</translation>
     </message>
 </context>
 <context>
@@ -5110,7 +5110,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgline.ui" line="29"/>
         <source>Line</source>
-        <translation>Line</translation>
+        <translation>خط</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgline.ui" line="54"/>
@@ -5168,7 +5168,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="132"/>
         <source>&amp;Default line spacing</source>
-        <translation>وتباعد السطر الافتراضي</translation>
+        <translation>&amp;تباعد الأسطر الافتراضي</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="135"/>
@@ -5258,7 +5258,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="773"/>
         <source>Copy</source>
-        <translation>Copy</translation>
+        <translation>نسخ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="787"/>
@@ -6194,17 +6194,17 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="34"/>
         <source>&amp;Paper</source>
-        <translation>&amp;Paper</translation>
+        <translation>&amp;الورق</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="108"/>
         <source>&amp;Landscape</source>
-        <translation>&amp;Landscape</translation>
+        <translation>&amp;أفقي</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="115"/>
         <source>P&amp;ortrait</source>
-        <translation>P&amp;ortrait</translation>
+        <translation>&amp;رأسي</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="326"/>
@@ -6274,12 +6274,12 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="570"/>
         <source>&amp;Grid</source>
-        <translation>&amp;Grid</translation>
+        <translation>&amp;الشبكة</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1617"/>
         <source>Number of line segments per spline patch:</source>
-        <translation>عدد قطاعات الخط لكل شريحة تصحيح:</translation>
+        <translation>عدد المقاطع الخطية لكل رقعة منحنى شريحي:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="720"/>
@@ -6289,31 +6289,31 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="654"/>
         <source>Left crosshair with isometric grid</source>
-        <translation>مؤشر التقاطع الأيسر بشبكة متساوية الأبعاد</translation>
+        <translation>مؤشر التقاطع الأيسر بشبكة متساوية القياس</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="152"/>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="212"/>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="657"/>
         <source>Left</source>
-        <translation>Left</translation>
+        <translation>يسار</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="676"/>
         <source>Top crosshair with isometric grid</source>
-        <translation>مؤشر التقاطع العلوي بشبكة متساوية الأبعاد</translation>
+        <translation>مؤشر التقاطع العلوي بشبكة متساوية القياس</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="195"/>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="228"/>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="679"/>
         <source>Top</source>
-        <translation>Top</translation>
+        <translation>أعلى</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="698"/>
         <source>Right crosshair with isometric grid</source>
-        <translation>مؤشر التقاطع الأيمن بشبكة متساوية الأبعاد</translation>
+        <translation>مؤشر التقاطع الأيمن بشبكة متساوية القياس</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="178"/>
@@ -6335,12 +6335,12 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="608"/>
         <source>Use isometric grid</source>
-        <translation>استخدام شبكة آيزومترية</translation>
+        <translation>استخدام شبكة متساوية القياس</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="611"/>
         <source>Isometric Grid</source>
-        <translation>شبكة آيزومترية</translation>
+        <translation>شبكة متساوية القياس</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1047"/>
@@ -6427,7 +6427,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1153"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Distance gap around text&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;المسافة البادئة حول النص&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;مسافة الفجوة حول النص&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1226"/>
@@ -6503,7 +6503,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1554"/>
         <source>Extension lines</source>
-        <translation>خطوط التمديد</translation>
+        <translation>خطوط الامتداد</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1561"/>
@@ -6559,7 +6559,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1598"/>
         <source>fixed extension line length</source>
-        <translation>طول خط التمديد الثابت</translation>
+        <translation>طول خط الامتداد الثابت</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1609"/>
@@ -6657,7 +6657,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="932"/>
         <source>Hatch Patterns:</source>
-        <translation> أنماط التظليل:</translation>
+        <translation>أنماط التهشير:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="841"/>
@@ -6862,17 +6862,17 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="275"/>
         <source>Snap indicator lines</source>
-        <translation>خطوط مؤشر التثبيت</translation>
+        <translation>خطوط مؤشر الالتقاط</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="131"/>
         <source>Snap indicator shape</source>
-        <translation>شكل مؤشر التثبيت</translation>
+        <translation>شكل مؤشر الالتقاط</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="185"/>
         <source>Hide cursor when snapping</source>
-        <translation>إخفاء المؤشر عند التثبيت</translation>
+        <translation>إخفاء المؤشر عند الالتقاط</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1143"/>
@@ -6947,7 +6947,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="111"/>
         <source>Auto-panning</source>
-        <translation>التمرير التلقائي</translation>
+        <translation>التحريك التلقائي للعرض</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="265"/>
@@ -7032,7 +7032,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1270"/>
         <source>Automatically zoom drawing when opening</source>
-        <translation>تكبير الرسم تلقائيًا عند الفتح</translation>
+        <translation>تكبير/تصغير الرسم تلقائيًا عند الفتح</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="880"/>
@@ -7047,7 +7047,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1241"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Temporarily toggle free snapping when the spacebar is pressed and the command window is activated&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;تبديل التثبيت الحر مؤقتًا عند الضغط على مفتاح المسافة وتنشيط نافذة الأوامر&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;تبديل الالتقاط الحر مؤقتًا عند الضغط على مفتاح المسافة وتنشيط نافذة الأوامر&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -7169,8 +7169,8 @@ but ignored by other</source>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.cpp" line="39"/>
         <source>Length of line pattern related to zoom, 
 so default step value required for baking</source>
-        <translation>يرتبط طول نمط الخط بالتكبير، 
-لذا يتطلب قيمة خطوة افتراضية للخبز (Baking).</translation>
+        <translation>طول نمط الخط مرتبط بالتكبير،
+لذا تلزم قيمة خطوة افتراضية للتجهيز المسبق</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="199"/>
@@ -7221,7 +7221,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgpolyline.ui" line="26"/>
         <source>Polyline</source>
-        <translation>متعدّد خطوط</translation>
+        <translation>خط متعدد</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgpolyline.ui" line="44"/>
@@ -7385,7 +7385,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgscale.ui" line="136"/>
         <source>Scale by the same factor at both x- and y- directions</source>
-        <translation>التكبير بنفس العامل في اتجاهي X و Y</translation>
+        <translation>التحجيم بنفس العامل في اتجاهي X و Y</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgscale.ui" line="139"/>
@@ -7441,7 +7441,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="20"/>
         <source>Text</source>
-        <translation>Text</translation>
+        <translation>نص</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="33"/>
@@ -7471,7 +7471,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="115"/>
         <source>Copy</source>
-        <translation>Copy</translation>
+        <translation>نسخ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="129"/>
@@ -8203,17 +8203,17 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="623"/>
         <source>Baseline Right</source>
-        <translation>محاذاة يمين</translation>
+        <translation>يمين خط الأساس</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="646"/>
         <source>Baseline Center</source>
-        <translation>محاذاة توسيط</translation>
+        <translation>منتصف خط الأساس</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="774"/>
         <source>Fit</source>
-        <translation>Fit</translation>
+        <translation>ملاءمة</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="838"/>
@@ -8469,7 +8469,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <location filename="../src/ui/forms/qg_layerdialog.ui" line="33"/>
         <source>Construction Layer</source>
-        <translation>طبقة تشييد</translation>
+        <translation>طبقة إنشاء</translation>
     </message>
 </context>
 <context>
@@ -8639,7 +8639,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="84"/>
         <source>Dot</source>
-        <translation>Dot</translation>
+        <translation>نقطي</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="86"/>
@@ -8654,7 +8654,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="88"/>
         <source>Dash</source>
-        <translation>Dash</translation>
+        <translation>متقطع</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="90"/>
@@ -8777,7 +8777,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <location filename="../src/ui/forms/qg_mousewidget.ui" line="108"/>
         <source>Left</source>
-        <translation>Left</translation>
+        <translation>يسار</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_mousewidget.ui" line="130"/>
@@ -8868,47 +8868,47 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="26"/>
         <source>Snap</source>
-        <translation>Snap</translation>
+        <translation>التقاط</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="47"/>
         <source>Snap to Endpoints</source>
-        <translation>الوثب إلى نقاط النهاية</translation>
+        <translation>الالتقاط إلى نقاط النهاية</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="64"/>
         <source>Snap to equidistant points of entity</source>
-        <translation>الوثب إلى نقاط متساوية البعد من الكيان</translation>
+        <translation>الالتقاط إلى نقاط متساوية البعد على الكيان</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="81"/>
         <source>Snap to center points</source>
-        <translation>الوثب إلى نقاط المركز </translation>
+        <translation>الالتقاط إلى نقاط المركز</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="98"/>
         <source>Snap to intersections automatically</source>
-        <translation>التثبيت التلقائي عند التقاطعات</translation>
+        <translation>الالتقاط التلقائي عند التقاطعات</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="115"/>
         <source>Snap to closest point on entity</source>
-        <translation>الوثب إلى أقرب نقطة من الكيان</translation>
+        <translation>الالتقاط إلى أقرب نقطة على الكيان</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="132"/>
         <source>Snap to point with given distance to endpoint</source>
-        <translation>وثب إلى نقطة بالمسافة المعينة إلى نقطة النهاية</translation>
+        <translation>الالتقاط إلى نقطة على مسافة معينة من نقطة النهاية</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="149"/>
         <source>Snap to intersections manually</source>
-        <translation>التثبيت اليدوي عند التقاطعات</translation>
+        <translation>الالتقاط اليدوي عند التقاطعات</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="166"/>
         <source>Snap to grid</source>
-        <translation>التثبيت على الشبكة</translation>
+        <translation>الالتقاط إلى الشبكة</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="183"/>
@@ -8933,42 +8933,42 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="58"/>
         <source>Free Snap</source>
-        <translation>وثب حُر</translation>
+        <translation>التقاط حر</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="63"/>
         <source>Snap on grid</source>
-        <translation>تثبيت على الشبكة</translation>
+        <translation>الالتقاط على الشبكة</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="68"/>
         <source>Snap on Endpoints</source>
-        <translation>الوثب إلى نقاط النهاية</translation>
+        <translation>الالتقاط على نقاط النهاية</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="73"/>
         <source>Snap on Entity</source>
-        <translation>وثب إلى الكيان</translation>
+        <translation>التقاط على الكيان</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="78"/>
         <source>Snap Center</source>
-        <translation>وثب إلى المركز</translation>
+        <translation>التقاط المركز</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="83"/>
         <source>Snap Middle</source>
-        <translation>تثبيت في المنتصف</translation>
+        <translation>التقاط المنتصف</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="88"/>
         <source>Snap Distance</source>
-        <translation>مسافة الوثب</translation>
+        <translation>مسافة الالتقاط</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="93"/>
         <source>Snap Intersection</source>
-        <translation>تثبيت عند التقاطع</translation>
+        <translation>التقاط التقاطع</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="102"/>
@@ -9032,7 +9032,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/forms/qg_widgetpen.ui" line="26"/>
         <location filename="../src/ui/forms/qg_widgetpen.ui" line="47"/>
         <source>Pen</source>
-        <translation>Pen</translation>
+        <translation>قلم</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_widgetpen.ui" line="91"/>
@@ -9466,7 +9466,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="706"/>
         <source>All Files (*.*)</source>
-        <translation>جميع الملفات (*. *)</translation>
+        <translation>جميع الملفات (*.*)</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="206"/>
@@ -9763,7 +9763,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/lib/engine/rs_entitycontainer.cpp" line="1652"/>
         <source>Hatch failed due to a gap=%1 between (%2, %3) and (%4, %5)</source>
-        <translation>فشل التضليل بسبب وجود فجوة =%1 بين (%2، %3) و (%4، %5)</translation>
+        <translation>فشل التهشير بسبب وجود فجوة =%1 بين (%2، %3) و (%4، %5)</translation>
     </message>
     <message>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="115"/>
@@ -9824,7 +9824,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="547"/>
         <source>polyline</source>
         <comment>draw polyline</comment>
-        <translation>خط متعدد الأجزاء</translation>
+        <translation>بوليلين</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="548"/>
@@ -9878,7 +9878,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="329"/>
         <source>bisect</source>
         <comment>angle bisector</comment>
-        <translation>ينصّف</translation>
+        <translation>bisect</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="328"/>
@@ -9908,13 +9908,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="381"/>
         <source>polygon2v</source>
         <comment>polygon by 2 vertices</comment>
-        <translation>مضلع إلى متجه</translation>
+        <translation>polygon2v</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="383"/>
         <source>poly2</source>
         <comment>polygon by 2 vertices</comment>
-        <translation>مضلع 2</translation>
+        <translation>poly2</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="390"/>
@@ -9932,19 +9932,19 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="398"/>
         <source>c2</source>
         <comment>circle 2 points</comment>
-        <translation>دائرة 2</translation>
+        <translation>c2</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="411"/>
         <source>c3</source>
         <comment>circle 3 points</comment>
-        <translation>دائرة 3</translation>
+        <translation>c3</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="447"/>
         <source>tan3</source>
         <comment>circle tangent to 3</comment>
-        <translation>تان 3</translation>
+        <translation>tan3</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="446"/>
@@ -9956,7 +9956,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="538"/>
         <source>ellipseinscribed</source>
         <comment>inscribed ellipse</comment>
-        <translation>إهليلج داخلي</translation>
+        <translation>ellipseinscribed</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="539"/>
@@ -9974,7 +9974,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="872"/>
         <source>hatch</source>
         <comment>draw hatch</comment>
-        <translation>تظليل</translation>
+        <translation>تهشير</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="873"/>
@@ -9986,7 +9986,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="858"/>
         <source>mtext</source>
         <comment>draw mtext</comment>
-        <translation>نص متعدد</translation>
+        <translation>mtext</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="860"/>
@@ -10010,13 +10010,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="1018"/>
         <source>regen</source>
         <comment>zoom - redraw</comment>
-        <translation>إعادة توليد</translation>
+        <translation>regen</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1019"/>
         <source>redraw</source>
         <comment>zoom - redraw</comment>
-        <translation>إعادة الرسم</translation>
+        <translation>redraw</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1020"/>
@@ -10034,7 +10034,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="1038"/>
         <source>zoomwindow</source>
         <comment>zoom - window</comment>
-        <translation>تكبير النافذة</translation>
+        <translation>zoomwindow</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1039"/>
@@ -10046,7 +10046,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="1026"/>
         <source>zoomauto</source>
         <comment>zoom - auto</comment>
-        <translation>تكبير تلقائي</translation>
+        <translation>zoomauto</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1027"/>
@@ -10058,7 +10058,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="1044"/>
         <source>zoompan</source>
         <comment>zoom - pan</comment>
-        <translation>تحريك</translation>
+        <translation>zoompan</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1045"/>
@@ -10070,7 +10070,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="1032"/>
         <source>zoomprevious</source>
         <comment>zoom - previous</comment>
-        <translation>التكبير السابق</translation>
+        <translation>zoomprevious</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1033"/>
@@ -10118,13 +10118,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="638"/>
         <source>dimaligned</source>
         <comment>dimension - aligned</comment>
-        <translation>محاذاة الأبعاد</translation>
+        <translation>dimaligned</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="650"/>
         <source>dimhorizontal</source>
         <comment>dimension - horizontal</comment>
-        <translation>البعد الأفقي</translation>
+        <translation>dimhorizontal</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="651"/>
@@ -10136,7 +10136,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="656"/>
         <source>dimvertical</source>
         <comment>dimension - vertical</comment>
-        <translation>البعد العمودي</translation>
+        <translation>dimvertical</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="657"/>
@@ -10148,7 +10148,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="644"/>
         <source>dimlinear</source>
         <comment>dimension - linear</comment>
-        <translation>البعد الخطي</translation>
+        <translation>dimlinear</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="645"/>
@@ -10160,7 +10160,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="676"/>
         <source>dimangular</source>
         <comment>dimension - angular</comment>
-        <translation>البعد الزاوي</translation>
+        <translation>dimangular</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="678"/>
@@ -10172,13 +10172,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="663"/>
         <source>dimradial</source>
         <comment>dimension - radial</comment>
-        <translation>البعد الشعاعي</translation>
+        <translation>dimradial</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="671"/>
         <source>dimdiametric</source>
         <comment>dimension - diametric</comment>
-        <translation>البعد القُطري</translation>
+        <translation>dimdiametric</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="669"/>
@@ -10196,7 +10196,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="683"/>
         <source>dimleader</source>
         <comment>dimension - leader</comment>
-        <translation>مؤشر البعد</translation>
+        <translation>dimleader</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="684"/>
@@ -10208,13 +10208,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="689"/>
         <source>dimregen</source>
         <comment>dimension - regenerate</comment>
-        <translation>إعادة توليد البعد</translation>
+        <translation>dimregen</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="960"/>
         <source>restrictnothing</source>
         <comment>restrict - nothing</comment>
-        <translation>لا تقييد</translation>
+        <translation>restrictnothing</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="961"/>
@@ -10226,7 +10226,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="966"/>
         <source>restrictorthogonal</source>
         <comment>restrict - orthogonal</comment>
-        <translation>تقييد متعامد</translation>
+        <translation>restrictorthogonal</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="967"/>
@@ -10238,7 +10238,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="972"/>
         <source>restricthorizontal</source>
         <comment>restrict - horizontal</comment>
-        <translation>تقييد أفقي</translation>
+        <translation>restricthorizontal</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="973"/>
@@ -10250,7 +10250,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="978"/>
         <source>restrictvertical</source>
         <comment>restrict - vertical</comment>
-        <translation>تقييد رأسي</translation>
+        <translation>restrictvertical</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="979"/>
@@ -10364,7 +10364,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="893"/>
         <source>snapfree</source>
         <comment>snap - free</comment>
-        <translation>حر</translation>
+        <translation>snapfree</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="895"/>
@@ -10376,7 +10376,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="900"/>
         <source>snapcenter</source>
         <comment>snap - center</comment>
-        <translation>مركز التثبيت</translation>
+        <translation>snapcenter</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="901"/>
@@ -10388,7 +10388,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="906"/>
         <source>snapdist</source>
         <comment>snap - distance to endpoints</comment>
-        <translation>مسافة الالتقاط</translation>
+        <translation>snapdist</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="907"/>
@@ -10400,7 +10400,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="912"/>
         <source>snapend</source>
         <comment>snap - end points</comment>
-        <translation>نهاية الالتقاط</translation>
+        <translation>snapend</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="913"/>
@@ -10412,7 +10412,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="918"/>
         <source>snapgrid</source>
         <comment>snap - grid</comment>
-        <translation>الالتقاط بالشبكة</translation>
+        <translation>snapgrid</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="919"/>
@@ -10424,7 +10424,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="924"/>
         <source>snapintersection</source>
         <comment>snap - intersection</comment>
-        <translation>التقاط التقاطع</translation>
+        <translation>snapintersection</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="925"/>
@@ -10436,7 +10436,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="930"/>
         <source>snapmiddle</source>
         <comment>snap - middle points</comment>
-        <translation>منتصف الالتقاط</translation>
+        <translation>snapmiddle</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="931"/>
@@ -10448,7 +10448,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="936"/>
         <source>snaponentity</source>
         <comment>snap - on entity</comment>
-        <translation>ربط الكيان</translation>
+        <translation>snaponentity</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="937"/>
@@ -10466,7 +10466,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="954"/>
         <source>setrelativezero</source>
         <comment>set relative zero position</comment>
-        <translation>تعيين الصفر النسبي</translation>
+        <translation>setrelativezero</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="955"/>
@@ -10478,7 +10478,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="616"/>
         <source>selectall</source>
         <comment>Select all entities</comment>
-        <translation>تحديد الكل</translation>
+        <translation>selectall</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="617"/>
@@ -10490,7 +10490,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="622"/>
         <source>deselectall</source>
         <comment>deselect all entities</comment>
-        <translation>إلغاء تحديد الكل</translation>
+        <translation>deselectall</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="624"/>
@@ -10566,7 +10566,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1101"/>
         <source>columnspacing</source>
-        <translation>تباعد الأعمدة</translation>
+        <translation>columnspacing</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1103"/>
@@ -10577,18 +10577,18 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1104"/>
         <source>length</source>
-        <translation>الطول</translation>
+        <translation>length</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1107"/>
         <source>number</source>
-        <translation>العدد</translation>
+        <translation>number</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1108"/>
         <location filename="../src/cmd/rs_commands.cpp" line="1239"/>
         <source>radius</source>
-        <translation>نصف القطر</translation>
+        <translation>radius</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1109"/>
@@ -10598,7 +10598,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1110"/>
         <source>rowspacing</source>
-        <translation>تباعد الصفوف</translation>
+        <translation>rowspacing</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1111"/>
@@ -10668,13 +10668,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="1208"/>
         <source>columnspacing</source>
         <comment>columnspacing for inserts</comment>
-        <translation>تباعد الأعمدة</translation>
+        <translation>columnspacing</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1209"/>
         <source>colspacing</source>
         <comment>columnspacing for inserts</comment>
-        <translation>تباعد الأعمدة</translation>
+        <translation>colspacing</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1210"/>
@@ -10703,7 +10703,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="1221"/>
         <source>?</source>
         <comment>help</comment>
-        <translation>؟</translation>
+        <translation>?</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1223"/>
@@ -10727,43 +10727,43 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="1227"/>
         <source>length1</source>
         <comment>length1</comment>
-        <translation>الطول 1</translation>
+        <translation>length1</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1228"/>
         <source>len1</source>
         <comment>length1</comment>
-        <translation>الطول 1</translation>
+        <translation>len1</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1229"/>
         <source>l1</source>
         <comment>length1</comment>
-        <translation>الطول 1</translation>
+        <translation>l1</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1231"/>
         <source>length2</source>
         <comment>length2</comment>
-        <translation>الطول 2</translation>
+        <translation>length2</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1232"/>
         <source>len2</source>
         <comment>length2</comment>
-        <translation>الطول 2</translation>
+        <translation>len2</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1233"/>
         <source>l2</source>
         <comment>length2</comment>
-        <translation>الطول 2</translation>
+        <translation>l2</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1235"/>
         <source>number</source>
         <comment>number</comment>
-        <translation>رقم</translation>
+        <translation>العدد</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1236"/>
@@ -10806,7 +10806,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="1248"/>
         <source>rowspacing</source>
         <comment>rowspacing for inserts</comment>
-        <translation>تباعد الصفوف</translation>
+        <translation>rowspacing</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1249"/>
@@ -10867,12 +10867,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1269"/>
         <source>paperoffset</source>
-        <translation>إزاحة الورق</translation>
+        <translation>paperoffset</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1270"/>
         <source>graphoffset</source>
-        <translation>إزاحة الرسم البياني</translation>
+        <translation>graphoffset</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1392"/>
@@ -10903,7 +10903,7 @@ Do you want to replace it?</source>
         <location filename="../src/lib/engine/rs_units.cpp" line="204"/>
         <source>None</source>
         <comment>unknown length unit</comment>
-        <translation>None</translation>
+        <translation>لا شيء</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4158"/>
@@ -10923,7 +10923,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1267"/>
         <source>blackwhite</source>
-        <translation>أبيض وأسود</translation>
+        <translation>blackwhite</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1268"/>
@@ -10966,18 +10966,18 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="67"/>
         <source>Edit</source>
-        <translation>Edit</translation>
+        <translation>تحرير</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="68"/>
         <source>Ellipse</source>
-        <translation>شكل بيضاوي</translation>
+        <translation>قطع ناقص</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="69"/>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="88"/>
         <source>File</source>
-        <translation>File</translation>
+        <translation>ملف</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="70"/>
@@ -10987,7 +10987,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="71"/>
         <source>Info</source>
-        <translation>Info</translation>
+        <translation>معلومات</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="72"/>
@@ -10997,7 +10997,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="73"/>
         <source>Line</source>
-        <translation>Line</translation>
+        <translation>خط</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="74"/>
@@ -11018,7 +11018,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="77"/>
         <source>Polyline</source>
-        <translation>سطر متعدد النقاط</translation>
+        <translation>خط متعدد</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="78"/>
@@ -11033,17 +11033,17 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="80"/>
         <source>Snap</source>
-        <translation>Snap</translation>
+        <translation>التقاط</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="81"/>
         <source>Snap Extras</source>
-        <translation>إضافات التثبيت</translation>
+        <translation>إضافات الالتقاط</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="82"/>
         <source>View</source>
-        <translation>View</translation>
+        <translation>عرض</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="83"/>
@@ -11171,13 +11171,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="312"/>
         <source>linepar</source>
         <comment>create parallel</comment>
-        <translation>معامل الخط</translation>
+        <translation>linepar</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="313"/>
         <source>lineoff</source>
         <comment>create parallel</comment>
-        <translation>إزاحة الخط</translation>
+        <translation>lineoff</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="314"/>
@@ -11195,7 +11195,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="320"/>
         <source>lineparthro</source>
         <comment>parallel through point</comment>
-        <translation>معامل الخط</translation>
+        <translation>lineparthro</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="321"/>
@@ -11207,13 +11207,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="327"/>
         <source>linebisect</source>
         <comment>angle bisector</comment>
-        <translation>منصف الخط</translation>
+        <translation>منصف</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="334"/>
         <source>linetancp</source>
         <comment>tangent point and circle</comment>
-        <translation>معامل المماس</translation>
+        <translation>linetancp</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="335"/>
@@ -11225,7 +11225,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="341"/>
         <source>linetan2c</source>
         <comment>tangent two circles</comment>
-        <translation>ظل التمام لـ 2 سي</translation>
+        <translation>linetan2c</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="342"/>
@@ -11237,7 +11237,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="347"/>
         <source>linetancper</source>
         <comment>tangent line and circle</comment>
-        <translation>ظل التمام لكل</translation>
+        <translation>linetancper</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="348"/>
@@ -11249,7 +11249,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="353"/>
         <source>lineperp</source>
         <comment>perpendicular line</comment>
-        <translation>خط عمودي</translation>
+        <translation>lineperp</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="354"/>
@@ -11261,7 +11261,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="360"/>
         <source>linerelang</source>
         <comment>relative line</comment>
-        <translation>علاقة الخط</translation>
+        <translation>linerelang</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="361"/>
@@ -11273,7 +11273,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="366"/>
         <source>polygoncencor</source>
         <comment>polygon centre point</comment>
-        <translation>زاوية مركز المضلع</translation>
+        <translation>polygoncencor</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="367"/>
@@ -11285,7 +11285,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="368"/>
         <source>polycp</source>
         <comment>polygon centre point</comment>
-        <translation>بولي سي بي</translation>
+        <translation>polycp</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="369"/>
@@ -11297,7 +11297,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="374"/>
         <source>polygoncentan</source>
         <comment>polygon centre vertex</comment>
-        <translation>بوليغون سنتران</translation>
+        <translation>polygoncentan</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="375"/>
@@ -11309,13 +11309,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="376"/>
         <source>polyct</source>
         <comment>polygon centre vertex</comment>
-        <translation>بولي سي تي</translation>
+        <translation>polyct</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="382"/>
         <source>p2</source>
         <comment>polygon by 2 vertices</comment>
-        <translation>بي 2</translation>
+        <translation>p2</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="392"/>
@@ -11327,19 +11327,19 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="397"/>
         <source>circle2p</source>
         <comment>circle 2 points</comment>
-        <translation>سيركل 2 بي</translation>
+        <translation>circle2p</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="399"/>
         <source>c2p</source>
         <comment>circle 2 points</comment>
-        <translation>سي 2 بي</translation>
+        <translation>c2p</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="404"/>
         <source>circle2pr</source>
         <comment>circle 2 points radius</comment>
-        <translation>سيركل 2 بي آر</translation>
+        <translation>circle2pr</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="405"/>
@@ -11351,19 +11351,19 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="410"/>
         <source>circle3p</source>
         <comment>circle 3 points</comment>
-        <translation>دائرة 3P</translation>
+        <translation>circle3p</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="412"/>
         <source>c3p</source>
         <comment>circle 3 points</comment>
-        <translation>C3P</translation>
+        <translation>c3p</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="417"/>
         <source>circlecr</source>
         <comment>circle point radius</comment>
-        <translation>دائرة CR</translation>
+        <translation>circlecr</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="418"/>
@@ -11381,7 +11381,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="425"/>
         <source>circletan2cp</source>
         <comment>circle 2 tangent point</comment>
-        <translation>دائرة tan2cp</translation>
+        <translation>circletan2cp</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="426"/>
@@ -11393,7 +11393,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="431"/>
         <source>circletan2p</source>
         <comment>circle tangent 2 points</comment>
-        <translation>دائرة tan2P</translation>
+        <translation>circletan2p</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="432"/>
@@ -11585,7 +11585,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="590"/>
         <source>plinedeltwn</source>
         <comment>pl del between nodes</comment>
-        <translation>بلايندلتون</translation>
+        <translation>plinedeltwn</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="591"/>
@@ -11597,7 +11597,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="596"/>
         <source>plinetrm</source>
         <comment>pl trim segments</comment>
-        <translation>بلاينيتريم</translation>
+        <translation>plinetrm</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="597"/>
@@ -11609,7 +11609,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="602"/>
         <source>plinepar</source>
         <comment>pl equidistant</comment>
-        <translation>بلينيبار</translation>
+        <translation>plinepar</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="603"/>
@@ -11621,7 +11621,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="608"/>
         <source>plinejoin</source>
         <comment>pl join</comment>
-        <translation>بلينجويين</translation>
+        <translation>plinejoin</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="609"/>
@@ -11639,7 +11639,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="629"/>
         <source>invertselect</source>
         <comment>invert select</comment>
-        <translation>عكس التحديد</translation>
+        <translation>invertselect</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="630"/>
@@ -11705,7 +11705,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="721"/>
         <source>modmovrot</source>
         <comment>modify - move rotate</comment>
-        <translation>تحريك وتدوير</translation>
+        <translation>modmovrot</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="722"/>
@@ -11717,19 +11717,19 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="727"/>
         <source>mod2rot</source>
         <comment>modify - rotate2</comment>
-        <translation>تدوير 2</translation>
+        <translation>mod2rot</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="728"/>
         <source>r2</source>
         <comment>modify - rotate2</comment>
-        <translation>تدوير 2</translation>
+        <translation>r2</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="733"/>
         <source>modrevert</source>
         <comment>modify -  revert direction</comment>
-        <translation>التراجع</translation>
+        <translation>modrevert</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="734"/>
@@ -11741,13 +11741,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="740"/>
         <source>modtrim</source>
         <comment>modify - trim (extend)</comment>
-        <translation>قص</translation>
+        <translation>modtrim</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="746"/>
         <source>modtrim2</source>
         <comment>modify - multi trim (extend)</comment>
-        <translation>قص 2</translation>
+        <translation>modtrim2</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="753"/>
@@ -11777,13 +11777,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="766"/>
         <source>modbevel</source>
         <comment>modify - bevel</comment>
-        <translation>شطف الحواف</translation>
+        <translation>modbevel</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="773"/>
         <source>modfillet</source>
         <comment>modify - fillet</comment>
-        <translation>تنعيم الحواف</translation>
+        <translation>modfillet</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="779"/>
@@ -11795,7 +11795,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="787"/>
         <source>modstretch</source>
         <comment>modify - stretch</comment>
-        <translation>تمديد</translation>
+        <translation>مط</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="793"/>
@@ -11813,7 +11813,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="807"/>
         <source>modexpltext</source>
         <comment>explode text strings</comment>
-        <translation>النص التوضيحي</translation>
+        <translation>modexpltext</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="808"/>
@@ -11825,19 +11825,19 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="813"/>
         <source>modexplode</source>
         <comment>explode block/polyline into entities</comment>
-        <translation>انفجار النموذج</translation>
+        <translation>modexplode</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="819"/>
         <source>moddelete</source>
         <comment>modify - delete (erase)</comment>
-        <translation>حذف النموذج</translation>
+        <translation>moddelete</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="828"/>
         <source>infodistance</source>
         <comment>distance point to point</comment>
-        <translation>مسافة المعلومات</translation>
+        <translation>infodistance</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="829"/>
@@ -11849,7 +11849,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="836"/>
         <source>infodistep</source>
         <comment>distance entity to point</comment>
-        <translation>مسافة الخطوة</translation>
+        <translation>infodistep</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="837"/>
@@ -11867,7 +11867,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="843"/>
         <source>infoangle</source>
         <comment>measure angle</comment>
-        <translation>زاوية المعلومات</translation>
+        <translation>infoangle</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="844"/>
@@ -11879,7 +11879,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="850"/>
         <source>infoarea</source>
         <comment>measure area</comment>
-        <translation>مساحة المعلومات</translation>
+        <translation>infoarea</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="851"/>
@@ -11945,13 +11945,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="1105"/>
         <source>length1</source>
         <comment>bevel/fillet length1</comment>
-        <translation>الطول 1</translation>
+        <translation>length1</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1106"/>
         <source>length2</source>
         <comment>bevel/fillet length2</comment>
-        <translation>الطول 2</translation>
+        <translation>length2</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1217"/>
@@ -12282,7 +12282,7 @@ Do you want to replace it?</source>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="123"/>
         <source>error reading DXF/DWG blocks</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>الكتل</translation>
+        <translation>خطأ في قراءة كتل DXF/DWG</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="125"/>
@@ -12439,7 +12439,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="42"/>
         <source>/CustomColor%1</source>
-        <translation>/CustomColor%1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="43"/>
@@ -12522,37 +12522,37 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="235"/>
         <source>re1</source>
         <comment>draw rectangle (1 Point)</comment>
-        <translation>المرجع 1</translation>
+        <translation>re1</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="240"/>
         <source>rect2</source>
         <comment>draw rectangle (2 Points)</comment>
-        <translation>المستطيل 2</translation>
+        <translation>مستطيل2</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="241"/>
         <source>re2</source>
         <comment>draw rectangle (2 Points)</comment>
-        <translation>المرجع 2</translation>
+        <translation>re2</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="246"/>
         <source>rect3</source>
         <comment>draw rectangle (3 Points)</comment>
-        <translation>المستطيل 3</translation>
+        <translation>rect3</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="247"/>
         <source>re3</source>
         <comment>draw rectangle (3 Points)</comment>
-        <translation>المرجع 3</translation>
+        <translation>re3</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="252"/>
         <source>slicel</source>
         <comment>slice/divide line</comment>
-        <translation>مقطع L</translation>
+        <translation>slicel</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="253"/>
@@ -12564,7 +12564,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="258"/>
         <source>slicec</source>
         <comment>slice/divide circle/arc</comment>
-        <translation>مقطع C</translation>
+        <translation>slicec</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="259"/>
@@ -12600,19 +12600,19 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="276"/>
         <source>linepoints</source>
         <comment>draw line of points</comment>
-        <translation>نقاط الخط</translation>
+        <translation>linepoints</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="277"/>
         <source>lpoints</source>
         <comment>draw line of points</comment>
-        <translation>نقاط L</translation>
+        <translation>lpoints</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="282"/>
         <source>criclebyarc</source>
         <comment>draw circle by arc</comment>
-        <translation>رسم دائرة بقوس</translation>
+        <translation>criclebyarc</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="283"/>
@@ -12636,7 +12636,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="294"/>
         <source>linejoin</source>
         <comment>lines join</comment>
-        <translation>وصل الخطوط</translation>
+        <translation>وصل</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="295"/>
@@ -12648,7 +12648,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="300"/>
         <source>breakdivide</source>
         <comment>break or divide entity</comment>
-        <translation>تقسيم الكسر</translation>
+        <translation>كسر</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="301"/>
@@ -12660,7 +12660,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="306"/>
         <source>gapline</source>
         <comment>line gap</comment>
-        <translation>خط الفجوة</translation>
+        <translation>الفجوة</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="307"/>
@@ -12697,13 +12697,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="554"/>
         <source>angleline</source>
         <comment>draw angle from line</comment>
-        <translation>خط الزاوية</translation>
+        <translation>angleline</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="559"/>
         <source>rortoline</source>
         <comment>draw orthogonal</comment>
-        <translation>دوران الخط</translation>
+        <translation>rortoline</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="560"/>
@@ -12715,7 +12715,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="565"/>
         <source>point2line</source>
         <comment>draw line from point to line</comment>
-        <translation>من نقطة إلى خط</translation>
+        <translation>point2line</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="566"/>
@@ -12727,13 +12727,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="945"/>
         <source>snapmiddlemanual</source>
         <comment>snap middle manual</comment>
-        <translation>التثبيت الأوسط اليدوي</translation>
+        <translation>snapmiddlemanual</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="946"/>
         <source>snapmanual</source>
         <comment>snap middle manual</comment>
-        <translation>التثبيت اليدوي</translation>
+        <translation>snapmanual</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="947"/>
@@ -12759,37 +12759,37 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1118"/>
         <source>anglerel</source>
-        <translation>زاوية التدوير</translation>
+        <translation>anglerel</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1119"/>
         <source>start</source>
-        <translation>بدء</translation>
+        <translation>start</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1122"/>
         <source>offset</source>
-        <translation>الإزاحة</translation>
+        <translation>offset</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1123"/>
         <source>linesnap</source>
-        <translation>تثبيت الخطوط</translation>
+        <translation>linesnap</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1124"/>
         <source>ticksnap</source>
-        <translation>تثبيت النقاط</translation>
+        <translation>ticksnap</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1127"/>
         <source>width</source>
-        <translation>العرض</translation>
+        <translation>width</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1128"/>
         <source>height</source>
-        <translation>الارتفاع</translation>
+        <translation>height</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1129"/>
@@ -12805,22 +12805,22 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="1131"/>
         <location filename="../src/cmd/rs_commands.cpp" line="1137"/>
         <source>bevels</source>
-        <translation>الشطفات</translation>
+        <translation>bevels</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1132"/>
         <source>nopoly</source>
-        <translation>نوبولي</translation>
+        <translation>nopoly</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1133"/>
         <source>usepoly</source>
-        <translation>استخدام</translation>
+        <translation>usepoly</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1134"/>
         <source>corners</source>
-        <translation>الزوايا</translation>
+        <translation>corners</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1135"/>
@@ -12830,12 +12830,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1136"/>
         <source>round</source>
-        <translation>دائري</translation>
+        <translation>round</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1138"/>
         <source>snap1</source>
-        <translation>تثبيت 1</translation>
+        <translation>snap1</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1139"/>
@@ -12860,47 +12860,47 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1143"/>
         <source>middle</source>
-        <translation>وسط</translation>
+        <translation>middle</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1144"/>
         <source>right</source>
-        <translation>يمين</translation>
+        <translation>right</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1145"/>
         <source>bottoml</source>
-        <translation>أسفل اليسار</translation>
+        <translation>bottoml</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1146"/>
         <source>bottom</source>
-        <translation>أسفل</translation>
+        <translation>bottom</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1147"/>
         <source>bottomr</source>
-        <translation>أسفل اليمين</translation>
+        <translation>bottomr</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1148"/>
         <source>snapcorner</source>
-        <translation>تثبيت الزاوية</translation>
+        <translation>snapcorner</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1149"/>
         <source>snapshift</source>
-        <translation>تثبيت التحول</translation>
+        <translation>snapshift</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1150"/>
         <source>sizein</source>
-        <translation>الحجم الداخلي</translation>
+        <translation>sizein</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1151"/>
         <source>sizeout</source>
-        <translation>الحجم الخارجي</translation>
+        <translation>sizeout</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1152"/>
@@ -12915,22 +12915,22 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1156"/>
         <source>snap2</source>
-        <translation>تثبيت 2</translation>
+        <translation>snap2</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1157"/>
         <source>corner</source>
-        <translation>زاوية</translation>
+        <translation>corner</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1158"/>
         <source>mid-vert</source>
-        <translation>منتصف عمودي</translation>
+        <translation>mid-vert</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1159"/>
         <source>mid-hor</source>
-        <translation>منتصف أفقي</translation>
+        <translation>mid-hor</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1161"/>
@@ -12940,37 +12940,37 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1162"/>
         <source>noquad</source>
-        <translation>لا رباعي</translation>
+        <translation>noquad</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1163"/>
         <source>angle_inner</source>
-        <translation>الزاوية الداخلية</translation>
+        <translation>angle_inner</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1166"/>
         <source>edges</source>
-        <translation>الحواف</translation>
+        <translation>edges</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1167"/>
         <source>edge-none</source>
-        <translation>لا حافة</translation>
+        <translation>edge-none</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1168"/>
         <source>edge-both</source>
-        <translation>كلا الجانبين</translation>
+        <translation>edge-both</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1169"/>
         <source>edge-start</source>
-        <translation>البداية</translation>
+        <translation>edge-start</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1170"/>
         <source>edge-end</source>
-        <translation>النهاية</translation>
+        <translation>edge-end</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1171"/>
@@ -12995,22 +12995,22 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1175"/>
         <source>nofit</source>
-        <translation>غير ملائم</translation>
+        <translation>nofit</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1176"/>
         <source>dist_fixed</source>
-        <translation>توزيع ثابت</translation>
+        <translation>dist_fixed</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1177"/>
         <source>dist_flex</source>
-        <translation>توزيع مرن</translation>
+        <translation>dist_flex</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1178"/>
         <source>distance</source>
-        <translation>المسافة</translation>
+        <translation>distance</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1182"/>
@@ -13020,7 +13020,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1183"/>
         <source>nosym</source>
-        <translation>بدون رمز</translation>
+        <translation>nosym</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_patternlist.cpp" line="63"/>
@@ -13272,7 +13272,8 @@ Do you want to replace it?</source>
         <location filename="../src/actions/rs_actionblocksinsert.cpp" line="80"/>
         <source> has nested insert of current block in:
 </source>
-        <translation>يحتوي على إدراج متداخل للكتلة الحالية في:</translation>
+        <translation> يحتوي على إدراج متداخل للكتلة الحالية في:
+</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionblocksinsert.cpp" line="82"/>
@@ -13307,7 +13308,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="252"/>
         <source>Specify first extension line origin</source>
-        <translation>حدد منشأ أول خط أمتداد</translation>
+        <translation>حدد منشأ خط الامتداد الأول</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="253"/>
@@ -13317,7 +13318,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="257"/>
         <source>Specify second extension line origin</source>
-        <translation>حدد منشأ ثاني خط أمتداد</translation>
+        <translation>حدد منشأ خط الامتداد الثاني</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="258"/>
@@ -13433,7 +13434,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="283"/>
         <source>Specify first extension line origin</source>
-        <translation>حدد منشأ أول خط أمتداد</translation>
+        <translation>حدد منشأ خط الامتداد الأول</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="284"/>
@@ -13443,7 +13444,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="288"/>
         <source>Specify second extension line origin</source>
-        <translation>حدد منشأ ثاني خط أمتداد</translation>
+        <translation>حدد منشأ خط الامتداد الثاني</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="289"/>
@@ -13559,7 +13560,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawarc.cpp" line="347"/>
         <source>Specify end angle or [angle/chord length]</source>
-        <translation>حدد زاوية النهاية أو [زاوية / طول وتر]</translation>
+        <translation>حدد زاوية النهاية أو [الزاوية/طول الوتر]</translation>
     </message>
 </context>
 <context>
@@ -14168,42 +14169,42 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawhatch.cpp" line="179"/>
         <source>Invalid hatch area. Please check that the entities chosen form one or more closed contours.</source>
-        <translation>منطقة تظليل غير صالحة. يرجى التحقق من أن الكيانات مختارة من معلم مغلق واحد أو اكثر.</translation>
+        <translation>منطقة تهشير غير صالحة. يرجى التحقق من أن الكيانات المختارة تشكّل محيطًا مغلقًا واحدًا أو أكثر.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawhatch.cpp" line="150"/>
         <source>Hatch created successfully.</source>
-        <translation>أنشئت الظلال بنجاح.</translation>
+        <translation>أُنشئ التهشير بنجاح.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawhatch.cpp" line="153"/>
         <source>Hatch Error: Invalid contour found!</source>
-        <translation>خطأ في التظليل: تم العثور على محيط غير صالح!</translation>
+        <translation>خطأ في التهشير: تم العثور على محيط غير صالح!</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawhatch.cpp" line="157"/>
         <source>Hatch Error: Pattern not found!</source>
-        <translation>خطأ في التظليل: نمط غير موجود!</translation>
+        <translation>خطأ في التهشير: النمط غير موجود!</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawhatch.cpp" line="160"/>
         <source>Hatch Error: Contour or pattern too small!</source>
-        <translation>خطأ في التظليل: المحيط أو النمط صغير جدًا!</translation>
+        <translation>خطأ في التهشير: المحيط أو النمط صغير جدًا!</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawhatch.cpp" line="163"/>
         <source>Hatch Error: Contour too big!</source>
-        <translation>خطأ في التظليل: المحيط كبير جدًا!</translation>
+        <translation>خطأ في التهشير: المحيط كبير جدًا!</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawhatch.cpp" line="166"/>
         <source>Hatch Error: Undefined Error!</source>
-        <translation>خطأ في التظليل: خطأ غير معروف!</translation>
+        <translation>خطأ في التهشير: خطأ غير معروف!</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawhatch.cpp" line="171"/>
         <source>Total hatch area = %1</source>
-        <translation>مجموع مساحة التظليل =%1</translation>
+        <translation>مجموع مساحة التهشير = %1</translation>
     </message>
 </context>
 <context>
@@ -14652,12 +14653,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawlinetangent2.cpp" line="282"/>
         <source>Select first circle/ellipse/parabola</source>
-        <translation>تحديد الدائرة/الإهليلج/القطع المكافئ الأول</translation>
+        <translation>حدد الدائرة/القطع الناقص/القطع المكافئ الأول</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinetangent2.cpp" line="286"/>
         <source>Select second circle/ellipse/parabola</source>
-        <translation>تحديد الدائرة/الإهليلج/القطع المكافئ الثاني</translation>
+        <translation>حدد الدائرة/القطع الناقص/القطع المكافئ الثاني</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinetangent2.cpp" line="290"/>
@@ -14749,7 +14750,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawpolyline.cpp" line="375"/>
         <location filename="../src/actions/rs_actiondrawpolyline.cpp" line="520"/>
         <source>Enter number of polylines</source>
-        <translation>إدخال عدد المضلعات</translation>
+        <translation>إدخال عدد الخطوط المتعددة</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawpolyline.cpp" line="459"/>
@@ -15195,7 +15196,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="171"/>
         <source>Specify first break point on a polyline</source>
-        <translation>حدد أول نقطة قطع على متعدّد الخطوط</translation>
+        <translation>حدد نقطة الكسر الأولى على خط متعدد</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="172"/>
@@ -15205,7 +15206,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="175"/>
         <source>Specify second break point on the same polyline</source>
-        <translation>حدد ثاني نقطة قطع على نفس متعدّد الخطوط</translation>
+        <translation>حدد نقطة الكسر الثانية على الخط المتعدد نفسه</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="177"/>
@@ -15215,17 +15216,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="106"/>
         <source>Entities not in the same polyline.</source>
-        <translation>الكيانات ليست على نفس متعدّد الخطوط.</translation>
+        <translation>الكيانات ليست ضمن الخط المتعدد نفسه.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="109"/>
         <source>Parent of second entity is not a polyline</source>
-        <translation>اصل الكيان الثاني ليس متعدّد خطوط</translation>
+        <translation>أصل الكيان الثاني ليس خطًا متعددًا</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="138"/>
         <source>Parent of first entity is not a polyline</source>
-        <translation>اصل الكيان اﻷول ليس متعدّد خطوط</translation>
+        <translation>أصل الكيان الأول ليس خطًا متعددًا</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="112"/>
@@ -15552,7 +15553,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifytrim.cpp" line="189"/>
         <source>Select entity to trim</source>
-        <translation>اِخْتار كيان للتقليم</translation>
+        <translation>اختر الكيان المراد قصه</translation>
     </message>
 </context>
 <context>
@@ -15570,7 +15571,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifytrimamount.cpp" line="108"/>
         <source>The chosen Entity is not an atomic entity or cannot be trimmed.</source>
-        <translation>الكيان المختار ليست كيان ذري أو لا يمكن تقليمه.</translation>
+        <translation>الكيان المختار ليس كيانًا ذريًا أو لا يمكن قصه.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifytrimamount.cpp" line="139"/>
@@ -15580,7 +15581,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifytrimamount.cpp" line="186"/>
         <source>Select entity to trim or enter distance:</source>
-        <translation>اِخْتار كيان للتقليم أو ادخل المسافة:</translation>
+        <translation>اختر الكيان المراد قصه أو أدخل المسافة:</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifytrimamount.cpp" line="187"/>
@@ -15617,7 +15618,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylineadd.cpp" line="109"/>
         <source>Entity must be a polyline.</source>
-        <translation>الكيان يجب أن يكون متعدّد خطوط.</translation>
+        <translation>يجب أن يكون الكيان خطًا متعددًا.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineadd.cpp" line="123"/>
@@ -15632,7 +15633,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylineadd.cpp" line="157"/>
         <source>Specify polyline to add nodes</source>
-        <translation>حدد متعدّد خطوط لإضافة عُقد</translation>
+        <translation>حدد خطًا متعددًا لإضافة عُقد</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineadd.cpp" line="158"/>
@@ -15660,7 +15661,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylineappend.cpp" line="95"/>
         <source>Entity must be a polyline.</source>
-        <translation>الكيان يجب أن يكون متعدّد خطوط.</translation>
+        <translation>يجب أن يكون الكيان خطًا متعددًا.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineappend.cpp" line="119"/>
@@ -15670,7 +15671,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylineappend.cpp" line="191"/>
         <source>Specify the polyline somewhere near the beginning or end point</source>
-        <translation>حدد متعدّد خطوط في مكان ما بالقرب من نقطة البداية أو النهاية</translation>
+        <translation>حدد الخط المتعدد في مكان ما بالقرب من نقطة البداية أو النهاية</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineappend.cpp" line="192"/>
@@ -15696,7 +15697,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylineappend.cpp" line="99"/>
         <source>Can not append nodes in a closed polyline.</source>
-        <translation>لا يمكن أرفاق عقد في متعدّد خطوط مغلق.</translation>
+        <translation>لا يمكن إلحاق عُقد بخط متعدد مغلق.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineappend.cpp" line="230"/>
@@ -15715,7 +15716,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylinedel.cpp" line="112"/>
         <source>Entity must be a polyline.</source>
-        <translation>الكيان يجب أن يكون متعدّد خطوط.</translation>
+        <translation>يجب أن يكون الكيان خطًا متعددًا.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinedel.cpp" line="158"/>
@@ -15760,7 +15761,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylinedelbetween.cpp" line="123"/>
         <source>Entity must be a polyline.</source>
-        <translation>الكيان يجب أن يكون متعدّد خطوط.</translation>
+        <translation>يجب أن يكون الكيان خطًا متعددًا.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinedelbetween.cpp" line="149"/>
@@ -15771,7 +15772,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylinedelbetween.cpp" line="189"/>
         <source>Specify polyline to delete between two nodes</source>
-        <translation>حدد المضلع المراد حذفه بين عقدتين</translation>
+        <translation>حدد الخط المتعدد المراد الحذف منه بين عقدتين</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinedelbetween.cpp" line="190"/>
@@ -15811,12 +15812,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylineequidistant.cpp" line="309"/>
         <source>Entity must be a polyline.</source>
-        <translation>الكيان يجب أن يكون متعدّد خطوط.</translation>
+        <translation>يجب أن يكون الكيان خطًا متعددًا.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineequidistant.cpp" line="369"/>
         <source>Choose the original polyline</source>
-        <translation>اختار متعدّد الخطوط الأصلي</translation>
+        <translation>اختر الخط المتعدد الأصلي</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineequidistant.cpp" line="370"/>
@@ -15834,7 +15835,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylinesegment.cpp" line="356"/>
         <source>Choose one of the segments on the original polyline</source>
-        <translation>اختار واحد من القطاعات في متعدّد الخطوط الأصلي</translation>
+        <translation>اختر أحد المقاطع في الخط المتعدد الأصلي</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinesegment.cpp" line="357"/>
@@ -15844,13 +15845,13 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylinesegment.cpp" line="315"/>
         <source>Entity can not be a closed polyline.</source>
-        <translation>الكيان لا يمكن أن يكون متعدّد خطوط مغلق.</translation>
+        <translation>لا يمكن أن يكون الكيان خطًا متعددًا مغلقًا.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinesegment.cpp" line="66"/>
         <location filename="../src/actions/rs_actionpolylinesegment.cpp" line="87"/>
         <source>Polyline created</source>
-        <translation>تم إنشاء المضلع</translation>
+        <translation>تم إنشاء الخط المتعدد</translation>
     </message>
 </context>
 <context>
@@ -15865,7 +15866,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="110"/>
         <source>Entity must be a polyline.</source>
-        <translation>الكيان يجب أن يكون متعدّد خطوط.</translation>
+        <translation>يجب أن يكون الكيان خطًا متعددًا.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="126"/>
@@ -15882,7 +15883,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="181"/>
         <source>Specify polyline to trim</source>
-        <translation>حدد المضلع المراد تقليمه</translation>
+        <translation>حدد الخط المتعدد المراد قصه</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="182"/>
@@ -16015,7 +16016,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="110"/>
         <source>Select to scale</source>
-        <translation>تحديد للتكبير/التصغير</translation>
+        <translation>تحديد للتحجيم</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="113"/>
@@ -16035,7 +16036,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="125"/>
         <source>Select to explode text</source>
-        <translation>تحديد لتفجير النص</translation>
+        <translation>تحديد لتفكيك النص</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="131"/>
@@ -16076,7 +16077,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="128"/>
         <source>Select to explode block</source>
-        <translation>تحديد لتفجير الكتلة</translation>
+        <translation>تحديد لتفكيك الكتلة</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="104"/>
@@ -16314,7 +16315,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_beveloptions.ui" line="56"/>
         <source>Trim</source>
-        <translation>Trim</translation>
+        <translation>قص</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_beveloptions.ui" line="79"/>
@@ -16360,7 +16361,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_circletan2options.ui" line="69"/>
         <source>Radius of tangential circle</source>
-        <translation>نصف قطر الدائرة المماسية</translation>
+        <translation>نصف قطر الدائرة المماسة</translation>
     </message>
 </context>
 <context>
@@ -16594,7 +16595,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_lineangleoptions.ui" line="180"/>
         <source>End</source>
-        <translation>End</translation>
+        <translation>النهاية</translation>
     </message>
 </context>
 <context>
@@ -16650,7 +16651,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_lineoptions.ui" line="75"/>
         <source>Undo</source>
-        <translation>Undo</translation>
+        <translation>تراجع</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_lineoptions.ui" line="82"/>
@@ -16660,7 +16661,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_lineoptions.ui" line="85"/>
         <source>Redo</source>
-        <translation>Redo</translation>
+        <translation>إعادة</translation>
     </message>
 </context>
 <context>
@@ -16678,7 +16679,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="103"/>
         <source>Polyline</source>
-        <translation>خط متعدد الأجزاء</translation>
+        <translation>خط متعدد</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="122"/>
@@ -16698,7 +16699,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="195"/>
         <source>Rel</source>
-        <translation>Rel</translation>
+        <translation>نسبي</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="224"/>
@@ -16708,7 +16709,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="227"/>
         <source>Undo</source>
-        <translation>Undo</translation>
+        <translation>تراجع</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="234"/>
@@ -16728,7 +16729,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="256"/>
         <source>Redo</source>
-        <translation>Redo</translation>
+        <translation>إعادة</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="297"/>
@@ -16910,12 +16911,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="60"/>
         <source>Undo</source>
-        <translation>Undo</translation>
+        <translation>تراجع</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="80"/>
         <source>Line</source>
-        <translation>Line</translation>
+        <translation>خط</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="85"/>
@@ -17006,17 +17007,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_roundoptions.ui" line="32"/>
         <source>Round Options</source>
-        <translation>خيارات التقريب</translation>
+        <translation>خيارات التقويس</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_roundoptions.ui" line="53"/>
         <source>Check to trim both edges to the rounding</source>
-        <translation>تحديد قص كلا الحافتين وفقًا للتقريب</translation>
+        <translation>حدد لقص كلتا الحافتين حتى التقويس</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_roundoptions.ui" line="56"/>
         <source>Trim</source>
-        <translation>Trim</translation>
+        <translation>قص</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_roundoptions.ui" line="79"/>
@@ -17075,7 +17076,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_splineoptions.ui" line="104"/>
         <source>Undo</source>
-        <translation>Undo</translation>
+        <translation>تراجع</translation>
     </message>
 </context>
 <context>
@@ -17106,7 +17107,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_trimamountoptions.ui" line="23"/>
         <source>Distance. Negative values for trimming, positive values for extending.</source>
-        <translation>المسافة. القيم السالبة للتقليم، والقيم الموجبة للتمديد.</translation>
+        <translation>المسافة. القيم السالبة للقص، والقيم الموجبة للتمديد.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_trimamountoptions.ui" line="56"/>
@@ -17116,12 +17117,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_trimamountoptions.ui" line="78"/>
         <source>Distance. Negative values for trimming, positive values for extending. Negative sign is ignored when trimming to final total length.</source>
-        <translation>المسافة. القيم السالبة للتقليم، والقيم الموجبة للتمديد. يتم تجاهل الإشارة السالبة عند التقليم إلى الطول الإجمالي النهائي.</translation>
+        <translation>المسافة. القيم السالبة للقص، والقيم الموجبة للتمديد. تُتجاهل الإشارة السالبة عند القص إلى الطول الكلي النهائي.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_trimamountoptions.ui" line="97"/>
         <source>The input length is used as total length after trimming, instead of length increase</source>
-        <translation>يتم استخدام الطول المدخل كطول إجمالي بعد التقليم، بدلاً من زيادة الطول.</translation>
+        <translation>يُستخدم طول الإدخال كطول كلي بعد القص بدلاً من مقدار زيادة الطول</translation>
     </message>
 </context>
 <context>
@@ -17144,7 +17145,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/generic/widgetcreator.ui" line="155"/>
         <source>Name</source>
-        <translation>Name</translation>
+        <translation>اسم</translation>
     </message>
     <message>
         <location filename="../src/ui/generic/widgetcreator.ui" line="196"/>

@@ -433,7 +433,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/lc_actiondrawslicedivide.cpp" line="190"/>
         <source>Arc</source>
-        <translation>Arc</translation>
+        <translation>호</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawslicedivide.cpp" line="200"/>
@@ -491,7 +491,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="54"/>
         <source>Zoom &amp;Panning</source>
-        <translation>확대/축소 &amp;팬</translation>
+        <translation>줌 초점이동(&amp;P)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="64"/>
@@ -622,7 +622,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="361"/>
         <source>Center, &amp;Radius</source>
-        <translation>중심, &amp;반경</translation>
+        <translation>중심, 반지름(&amp;R)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="368"/>
@@ -632,7 +632,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="375"/>
         <source>2 Points, Radius</source>
-        <translation>2점, 반경</translation>
+        <translation>2점, 반지름</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="382"/>
@@ -654,7 +654,7 @@ or [%2]</source>
         <location filename="../src/ui/lc_actionfactory.cpp" line="404"/>
         <source>Tangential 2 Circles, Radius</source>
         <comment>circle tangential with two circles, and given radius</comment>
-        <translation>접선 2원, 반경</translation>
+        <translation>접선 2원, 반지름</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="411"/>
@@ -819,7 +819,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="699"/>
         <source>&amp;Leader</source>
-        <translation>&amp;리더</translation>
+        <translation>지시선(&amp;L)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="708"/>
@@ -1069,7 +1069,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="863"/>
         <source>Ex&amp;plode</source>
-        <translation>폭발</translation>
+        <translation>분해(&amp;P)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1170"/>
@@ -1412,7 +1412,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="306"/>
         <source>Break/Divide</source>
-        <translation>분할/나누기</translation>
+        <translation>끊기/분할</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="312"/>
@@ -1609,7 +1609,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_circlebyarcoptions.ui" line="45"/>
         <source>Radius Shift:</source>
-        <translation>반경 이동:</translation>
+        <translation>반지름 이동:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_circlebyarcoptions.ui" line="65"/>
@@ -2194,12 +2194,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="761"/>
         <source>&amp;Freeze Others Layers</source>
-        <translation>다른 레이어 &amp;고정</translation>
+        <translation>다른 레이어 동결(&amp;F)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="762"/>
         <source>&amp;Defreeze All Layers</source>
-        <translation>모든 레이어 고정 해제</translation>
+        <translation>모든 레이어 동결 해제(&amp;D)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="763"/>
@@ -2576,7 +2576,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="43"/>
         <source>Line Type Name</source>
-        <translation>선 유형 이름</translation>
+        <translation>선종류 이름</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="50"/>
@@ -2586,7 +2586,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="57"/>
         <source>Line Type Icon</source>
-        <translation>선 유형 아이콘</translation>
+        <translation>선종류 아이콘</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="64"/>
@@ -2596,12 +2596,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="71"/>
         <source>Line Width Icon</source>
-        <translation>선 두께 아이콘</translation>
+        <translation>선가중치 아이콘</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="78"/>
         <source>Line Width Name</source>
-        <translation>선 두께 이름</translation>
+        <translation>선가중치 이름</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="88"/>
@@ -2898,7 +2898,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="100"/>
         <source>Radius:</source>
-        <translation>반경:</translation>
+        <translation>반지름:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="123"/>
@@ -3016,7 +3016,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="33"/>
         <source>Radius:</source>
-        <translation>반경:</translation>
+        <translation>반지름:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="56"/>
@@ -3193,7 +3193,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="243"/>
         <source>Radius:</source>
-        <translation>반경:</translation>
+        <translation>반지름:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="312"/>
@@ -3314,7 +3314,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_staroptions.ui" line="26"/>
         <source>Radius Inner</source>
-        <translation>내부 반경</translation>
+        <translation>내부 반지름</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_staroptions.ui" line="49"/>
@@ -3324,7 +3324,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_staroptions.ui" line="56"/>
         <source>Radius Outer</source>
-        <translation>외부 반경</translation>
+        <translation>외부 반지름</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_staroptions.ui" line="86"/>
@@ -3700,7 +3700,7 @@ Please check the permissions.</source>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="792"/>
         <source>&amp;Polyline</source>
-        <translation>다각형(&amp;P)</translation>
+        <translation>폴리라인(&amp;P)</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2106"/>
@@ -4213,7 +4213,7 @@ Please check its existence and permissions.</source>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="919"/>
         <source>On&amp;line</source>
-        <translation>온&amp;라인</translation>
+        <translation>온라인(&amp;L)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="941"/>
@@ -4330,7 +4330,7 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/qg_blockwidget.cpp" line="394"/>
         <source>&amp;Defreeze all Blocks</source>
-        <translation>모들 블록 해동(&amp;D)</translation>
+        <translation>모든 블록 동결 해제(&amp;D)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_blockwidget.cpp" line="396"/>
@@ -4631,12 +4631,12 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/forms/qg_dimensionlabeleditor.ui" line="20"/>
         <source>Dimension Label Editor</source>
-        <translation>차원 레이블 편집기</translation>
+        <translation>치수 레이블 편집기</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dimensionlabeleditor.ui" line="32"/>
         <source>Dimension Label:</source>
-        <translation>차원 레이블:</translation>
+        <translation>치수 레이블:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dimensionlabeleditor.ui" line="57"/>
@@ -4671,7 +4671,7 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/forms/qg_dimensionlabeleditor.ui" line="150"/>
         <source>⌀ (Diameter)</source>
-        <translation>⌀ (직경)</translation>
+        <translation>⌀ (지름)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dimensionlabeleditor.ui" line="165"/>
@@ -4681,7 +4681,7 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/forms/qg_dimensionlabeleditor.ui" line="93"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Format of the dimension text, &amp;lt;&amp;gt; can be used as a placeholder for the dimension measurement value&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;차원 텍스트 형식입니다. &amp;lt;&amp;gt;는 차원 측정값의 자리 표시자로 사용할 수 있습니다.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;치수 문자 형식입니다. &amp;lt;&amp;gt;는 치수 측정값의 자리 표시자로 사용할 수 있습니다.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dimensionlabeleditor.cpp" line="75"/>
@@ -4702,7 +4702,7 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgarc.ui" line="26"/>
         <source>Arc</source>
-        <translation>Arc</translation>
+        <translation>호</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgarc.ui" line="51"/>
@@ -4761,8 +4761,8 @@ in a separate window</source>
         <location filename="../src/ui/forms/qg_dlgattributes.ui" line="69"/>
         <source>Apply attributes also to all sub-entities of selected INSERT.
 This recursively modifies all entities of the Block itself.</source>
-        <translation>선택한 삽입의 모든 하위 엔터티에도 속성을 적용합니다.
-이렇게 하면 블록 자체의 모든 엔터티가 재귀적으로 수정됩니다.</translation>
+        <translation>선택한 삽입의 모든 하위 엔티티에도 속성을 적용합니다.
+이렇게 하면 블록 자체의 모든 엔티티가 재귀적으로 수정됩니다.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgattributes.ui" line="73"/>
@@ -4917,7 +4917,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/forms/qg_dlghatch.ui" line="44"/>
         <source>Scale:</source>
-        <translation>크기:</translation>
+        <translation>축척:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlghatch.ui" line="57"/>
@@ -5096,12 +5096,12 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlginsert.ui" line="159"/>
         <source>Scale X:</source>
-        <translation>축적 X:</translation>
+        <translation>축척 X:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlginsert.ui" line="179"/>
         <source>Scale Y:</source>
-        <translation>축적 Y:</translation>
+        <translation>축척 Y:</translation>
     </message>
 </context>
 <context>
@@ -5124,12 +5124,12 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgline.ui" line="93"/>
         <source>End point (x):</source>
-        <translation>끝 점(x):</translation>
+        <translation>끝점(x):</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgline.ui" line="123"/>
         <source>End point (y):</source>
-        <translation>끝 점(y):</translation>
+        <translation>끝점(y):</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgline.ui" line="133"/>
@@ -5892,7 +5892,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="847"/>
         <source>Diameter (⌀)</source>
-        <translation>직경 (⌀)</translation>
+        <translation>지름 (⌀)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="113"/>
@@ -5930,7 +5930,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgmirror.ui" line="26"/>
         <source>Mirroring Options</source>
-        <translation>미러 옵션</translation>
+        <translation>대칭 옵션</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmirror.ui" line="70"/>
@@ -6131,7 +6131,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="552"/>
         <source>angular</source>
-        <translation>각형</translation>
+        <translation>각도</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1099"/>
@@ -6243,12 +6243,12 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="582"/>
         <source>Grid Settings</source>
-        <translation>격자 설정</translation>
+        <translation>그리드 설정</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="588"/>
         <source>Show Grid</source>
-        <translation>격자 표시</translation>
+        <translation>그리드 표시</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="741"/>
@@ -6273,7 +6273,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="570"/>
         <source>&amp;Grid</source>
-        <translation>격자(&amp;G)</translation>
+        <translation>그리드(&amp;G)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1617"/>
@@ -6288,7 +6288,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="654"/>
         <source>Left crosshair with isometric grid</source>
-        <translation>등각 투영 격자와 함께 왼쪽 십자선</translation>
+        <translation>등각 투영 그리드와 함께 왼쪽 십자선</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="152"/>
@@ -6300,7 +6300,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="676"/>
         <source>Top crosshair with isometric grid</source>
-        <translation>등각 투영 격자와 함께 위쪽 십자선</translation>
+        <translation>등각 투영 그리드와 함께 위쪽 십자선</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="195"/>
@@ -6312,7 +6312,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="698"/>
         <source>Right crosshair with isometric grid</source>
-        <translation>등각 투영 격자와 함께 오른쪽 십자선</translation>
+        <translation>등각 투영 그리드와 함께 오른쪽 십자선</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="178"/>
@@ -6324,22 +6324,22 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="595"/>
         <source>Use orthogonal grid</source>
-        <translation>직교 격자 사용</translation>
+        <translation>직교 그리드 사용</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="598"/>
         <source>Orthogonal Grid</source>
-        <translation>직교 격자</translation>
+        <translation>직교 그리드</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="608"/>
         <source>Use isometric grid</source>
-        <translation>등각 투영 격자 사용</translation>
+        <translation>등각 투영 그리드 사용</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="611"/>
         <source>Isometric Grid</source>
-        <translation>등각 투영 격자</translation>
+        <translation>등각 투영 그리드</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1047"/>
@@ -6441,7 +6441,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1296"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension arrow size. &lt;a name=&quot;result_box&quot;/&gt;without effect when tick size &lt;a name=&quot;result_box&quot;/&gt;is other than 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;치수 화살표 크기. 화살표 크기가 0이 아닌 경우 효과가 없습니다.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;치수 화살표 크기. 틱 크기가 0이 아닌 경우 효과가 없습니다.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1350"/>
@@ -6502,7 +6502,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1554"/>
         <source>Extension lines</source>
-        <translation>연장선</translation>
+        <translation>치수보조선</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1561"/>
@@ -6558,7 +6558,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1598"/>
         <source>fixed extension line length</source>
-        <translation>고정된 연장선 길이</translation>
+        <translation>고정된 치수보조선 길이</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1609"/>
@@ -6656,7 +6656,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="932"/>
         <source>Hatch Patterns:</source>
-        <translation>해칭 패턴:</translation>
+        <translation>해치 패턴:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="841"/>
@@ -6731,12 +6731,12 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="627"/>
         <source>&amp;Meta Grid Color:</source>
-        <translation>메타(&amp;M) 모눈 색상:</translation>
+        <translation>메타 그리드 색상(&amp;M):</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="255"/>
         <source>A&amp;utomatically scale grid</source>
-        <translation>자동(&amp;A) 축척 모눈</translation>
+        <translation>그리드 자동 축척(&amp;U)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="655"/>
@@ -6826,7 +6826,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1263"/>
         <source>Modify layer of selected entities, at  layer activation</source>
-        <translation>선택한 개체의 레이어를 레이어 활성화 시 수정합니다.</translation>
+        <translation>선택한 엔티티의 레이어를 레이어 활성화 시 수정합니다.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1089"/>
@@ -6921,7 +6921,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1260"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, activating a layer would modify all selected entities to that new layer. To change layer of multiple entities: first select needed entities; activate a layer in the layer widget. This makes all selected entities modified to belong to the new layer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;활성화하면 레이어를 활성화할 때 선택한 모든 개체가 새 레이어로 수정됩니다. 여러 개체의 레이어를 변경하려면 먼저 필요한 개체를 선택한 다음 레이어 위젯에서 레이어를 활성화합니다. 이렇게 하면 선택한 모든 개체가 새 레이어에 속하도록 수정됩니다.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;활성화하면 레이어를 활성화할 때 선택한 모든 엔티티가 새 레이어로 수정됩니다. 여러 엔티티의 레이어를 변경하려면 먼저 필요한 엔티티를 선택한 다음 레이어 위젯에서 레이어를 활성화합니다. 이렇게 하면 선택한 모든 엔티티가 새 레이어에 속하도록 수정됩니다.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="834"/>
@@ -6936,7 +6936,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="118"/>
         <source>N&amp;umber of preview entities:</source>
-        <translation>미리보기 개체 수:</translation>
+        <translation>미리보기 엔티티 수(&amp;U):</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1036"/>
@@ -6946,7 +6946,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="111"/>
         <source>Auto-panning</source>
-        <translation>자동 패닝</translation>
+        <translation>자동 초점이동</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="265"/>
@@ -6961,7 +6961,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="335"/>
         <source>Visualize the entity under the cursor</source>
-        <translation>커서 아래의 개체를 시각적으로 표시합니다.</translation>
+        <translation>커서 아래의 엔티티를 시각적으로 표시합니다.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="338"/>
@@ -7031,7 +7031,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1270"/>
         <source>Automatically zoom drawing when opening</source>
-        <translation>파일을 열 때 그림을 자동으로 확대합니다.</translation>
+        <translation>파일을 열 때 도면을 자동으로 확대합니다.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="880"/>
@@ -7069,12 +7069,12 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="92"/>
         <source>Blocks</source>
-        <translation>블럭</translation>
+        <translation>블록</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="100"/>
         <source>Convert blocks to safe inline SVG content</source>
-        <translation>블록을 안전한 inline SVG content로 변환</translation>
+        <translation>블록을 안전한 인라인 SVG 내용으로 변환</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="115"/>
@@ -7213,7 +7213,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgpolyline.ui" line="26"/>
         <source>Polyline</source>
-        <translation>폴리선</translation>
+        <translation>폴리라인</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgpolyline.ui" line="44"/>
@@ -8210,7 +8210,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="838"/>
         <source>Diameter (⌀)</source>
-        <translation>직경 (⌀)</translation>
+        <translation>지름 (⌀)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="784"/>
@@ -8276,7 +8276,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/qg_filedialog.cpp" line="130"/>
         <source>Drawing Exchange %1</source>
-        <translation>그림 교환 %1</translation>
+        <translation>도면 교환 %1</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_filedialog.cpp" line="138"/>
@@ -8796,12 +8796,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/qg_pentoolbar.cpp" line="48"/>
         <source>Line width</source>
-        <translation>선 두께</translation>
+        <translation>선가중치</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_pentoolbar.cpp" line="52"/>
         <source>Line type</source>
-        <translation>선 종류</translation>
+        <translation>선종류</translation>
     </message>
 </context>
 <context>
@@ -8848,7 +8848,7 @@ p, li { white-space: pre-wrap; }
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;선택된 요소의 개수&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;선택된 엔티티의 개수&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_selectionwidget.ui" line="177"/>
@@ -8861,7 +8861,7 @@ p, li { white-space: pre-wrap; }
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;선택된 요소의 전체 길이&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;선택된 엔티티의 전체 길이&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -8869,7 +8869,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="26"/>
         <source>Snap</source>
-        <translation>Snap</translation>
+        <translation>스냅</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="47"/>
@@ -8879,7 +8879,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="64"/>
         <source>Snap to equidistant points of entity</source>
-        <translation>요소의 등거리점에 스냅</translation>
+        <translation>엔티티의 등거리점에 스냅</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="81"/>
@@ -8894,7 +8894,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="115"/>
         <source>Snap to closest point on entity</source>
-        <translation>요소위의 최근접점에 스냅</translation>
+        <translation>엔티티 위의 가장 가까운 점에 스냅</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="132"/>
@@ -8939,7 +8939,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="63"/>
         <source>Snap on grid</source>
-        <translation>모눈에 스냅</translation>
+        <translation>그리드에 스냅</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="68"/>
@@ -8949,7 +8949,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="73"/>
         <source>Snap on Entity</source>
-        <translation>요소에 스냅</translation>
+        <translation>엔티티에 스냅</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="78"/>
@@ -9009,7 +9009,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="224"/>
         <source>Relative zero position is %1</source>
-        <translation>상대 0점 위치는 %1입니다.</translation>
+        <translation>상대 원점 위치는 %1입니다.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="224"/>
@@ -9038,7 +9038,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_widgetpen.ui" line="91"/>
         <source>Line type:</source>
-        <translation>선 종류:</translation>
+        <translation>선종류:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_widgetpen.ui" line="75"/>
@@ -9095,7 +9095,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="581"/>
         <source>Block &quot;%1&quot; and all its entities will be removed.</source>
-        <translation>블록 &quot;%1&quot;와 그것의 모든 요소들을 제거할 것이다.</translation>
+        <translation>블록 &quot;%1&quot; 및 그 안의 모든 엔티티가 제거됩니다.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.cpp" line="213"/>
@@ -9113,7 +9113,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/qg_dialogfactory.cpp" line="311"/>
         <source>Layer &quot;%1&quot; and all entities on it will be removed.
 This action can NOT be undone.</source>
-        <translation>레이어 &quot;%1&quot; 및 해당 레이어의 모든 개체가 제거됩니다.
+        <translation>레이어 &quot;%1&quot; 및 해당 레이어의 모든 엔티티가 제거됩니다.
 이 작업은 되돌릴 수 없습니다.</translation>
     </message>
     <message>
@@ -9134,7 +9134,7 @@ This action can NOT be undone.</source>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1811"/>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="399"/>
         <source>Listed layers and all entities on them will be removed.</source>
-        <translation>나열된 레이어와 그 위에 있는 모든 개체가 제거됩니다.</translation>
+        <translation>나열된 레이어와 그 위에 있는 모든 엔티티가 제거됩니다.</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1812"/>
@@ -9163,7 +9163,7 @@ This action can NOT be undone.</source>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="644"/>
         <source>Listed blocks and all their entities will be removed.</source>
-        <translation>나열된 블록과 그 안에 있는 모든 개체가 제거됩니다.</translation>
+        <translation>나열된 블록과 그 안에 있는 모든 엔티티가 제거됩니다.</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="648"/>
@@ -9210,7 +9210,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="991"/>
         <source>No layers without entities found, nothing to remove.</source>
-        <translation>엔터티가 없는 레이어가 없어 제거할 것이 없습니다.</translation>
+        <translation>엔티티가 없는 레이어가 없어 제거할 것이 없습니다.</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1131"/>
@@ -9270,7 +9270,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1293"/>
         <source>Pen will be removed from palette, drawing entities will not be affected.</source>
-        <translation>펜이 팔레트에서 제거되지만, 드로잉 개체에는 영향을 미치지 않습니다.</translation>
+        <translation>펜이 팔레트에서 제거되지만, 도면 엔티티에는 영향을 미치지 않습니다.</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1294"/>
@@ -9291,7 +9291,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1312"/>
         <source>Pens will be removed from palette, drawing entities will not be affected.</source>
-        <translation>팔레트에서 펜이 제거됩니다. 드로잉 개체에는 영향을 주지 않습니다.</translation>
+        <translation>팔레트에서 펜이 제거됩니다. 도면 엔티티에는 영향을 주지 않습니다.</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1314"/>
@@ -9301,24 +9301,26 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1335"/>
         <source>Select Entities </source>
-        <translation>개체 선택</translation>
+        <translation>엔티티 선택 </translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1336"/>
         <source>There are no entities that matches pen on visible layers.</source>
-        <translation>현재 보이는 레이어에 해당 펜과 일치하는 개체가 없습니다.</translation>
+        <translation>현재 보이는 레이어에 해당 펜과 일치하는 엔티티가 없습니다.</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1337"/>
         <source>Such entities exist on frozen layers.
 </source>
-        <translation>해당 개체가 잠긴 레이어에 있습니다.</translation>
+        <translation>해당 엔티티가 동결된 레이어에 있습니다.
+</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1338"/>
         <source>Such entities exist on locked layers.
 </source>
-        <translation>해당 개체가 고정된 레이어에 있습니다.</translation>
+        <translation>해당 엔티티가 잠긴 레이어에 있습니다.
+</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1339"/>
@@ -9328,19 +9330,19 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1348"/>
         <source>Set pen by entity</source>
-        <translation>개체별로 펜 설정</translation>
+        <translation>엔티티별로 펜 설정</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1349"/>
         <source>Please select only one entity to pick pen setting.</source>
-        <translation>펜 설정을 선택할 개체를 하나만 선택하십시오.</translation>
+        <translation>펜 설정을 선택할 엔티티를 하나만 선택하십시오.</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="981"/>
         <source>Layer(s) without entities found, yet they are filtered and not visible.
 
 Clear filtering mask and repeat.</source>
-        <translation>엔터티가 없는 레이어가 발견되었지만 필터링되어 보이지 않습니다.
+        <translation>엔티티가 없는 레이어가 발견되었지만 필터링되어 보이지 않습니다.
 
 필터 마스크를 지우고 다시 시도하십시오.</translation>
     </message>
@@ -9723,7 +9725,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4174"/>
         <source>error reading offsets in dwg file</source>
-        <translation>dwg 파일에서 오프셋 읽는 중 에러</translation>
+        <translation>DWG 파일의 오프셋을 읽는 중 오류</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4178"/>
@@ -9733,7 +9735,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4186"/>
         <source>error reading entities in dwg file</source>
-        <translation>dwg 파일에서 요소 읽는 중 에러</translation>
+        <translation>DWG 파일의 엔티티를 읽는 중 오류</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_filedialog.cpp" line="458"/>
@@ -9748,7 +9750,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/lib/engine/rs_entitycontainer.cpp" line="1652"/>
         <source>Hatch failed due to a gap=%1 between (%2, %3) and (%4, %5)</source>
-        <translation>(%2, %3) 과 (%4, %5) 사이에서 gap=%1 에 의해 해칭을 실패했다.</translation>
+        <translation>(%2, %3)과 (%4, %5) 사이의 간격(gap=%1) 때문에 해치에 실패했습니다.</translation>
     </message>
     <message>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="115"/>
@@ -9758,12 +9760,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4182"/>
         <source>error reading blocks in dwg file</source>
-        <translation>dwg 파일에서 블록 읽는 중 에러</translation>
+        <translation>DWG 파일의 블록을 읽는 중 오류</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4190"/>
         <source>error reading objects in dwg file</source>
-        <translation>dwg 파일에서 오브젝트 읽는 중 에러</translation>
+        <translation>DWG 파일의 객체를 읽는 중 오류</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="704"/>
@@ -9893,7 +9895,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="381"/>
         <source>polygon2v</source>
         <comment>polygon by 2 vertices</comment>
-        <translation>두 꼭짓점 다각형</translation>
+        <translation>polygon2v</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="383"/>
@@ -9941,7 +9943,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="538"/>
         <source>ellipseinscribed</source>
         <comment>inscribed ellipse</comment>
-        <translation>타원 내접</translation>
+        <translation>ellipseinscribed</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="539"/>
@@ -9959,7 +9961,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="872"/>
         <source>hatch</source>
         <comment>draw hatch</comment>
-        <translation>해칭</translation>
+        <translation>해치</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="873"/>
@@ -9995,13 +9997,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="1018"/>
         <source>regen</source>
         <comment>zoom - redraw</comment>
-        <translation>다시 생성</translation>
+        <translation>regen</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1019"/>
         <source>redraw</source>
         <comment>zoom - redraw</comment>
-        <translation>다시 그리기</translation>
+        <translation>redraw</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1020"/>
@@ -10019,7 +10021,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="1038"/>
         <source>zoomwindow</source>
         <comment>zoom - window</comment>
-        <translation>창 확대</translation>
+        <translation>zoomwindow</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1039"/>
@@ -10031,7 +10033,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="1026"/>
         <source>zoomauto</source>
         <comment>zoom - auto</comment>
-        <translation>자동 확대</translation>
+        <translation>zoomauto</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1027"/>
@@ -10043,7 +10045,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="1044"/>
         <source>zoompan</source>
         <comment>zoom - pan</comment>
-        <translation>줌/팬</translation>
+        <translation>zoompan</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1045"/>
@@ -10055,7 +10057,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="1032"/>
         <source>zoomprevious</source>
         <comment>zoom - previous</comment>
-        <translation>이전 확대/축소</translation>
+        <translation>zoomprevious</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1033"/>
@@ -10163,13 +10165,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="671"/>
         <source>dimdiametric</source>
         <comment>dimension - diametric</comment>
-        <translation>대각선</translation>
+        <translation>dimdiametric</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="669"/>
         <source>dimdiameter</source>
         <comment>dimension - diametric</comment>
-        <translation>대각선</translation>
+        <translation>dimdiameter</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="670"/>
@@ -10181,7 +10183,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="683"/>
         <source>dimleader</source>
         <comment>dimension - leader</comment>
-        <translation>치수 선</translation>
+        <translation>dimleader</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="684"/>
@@ -10193,13 +10195,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="689"/>
         <source>dimregen</source>
         <comment>dimension - regenerate</comment>
-        <translation>치수 재생성</translation>
+        <translation>dimregen</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="960"/>
         <source>restrictnothing</source>
         <comment>restrict - nothing</comment>
-        <translation>제한 없음</translation>
+        <translation>restrictnothing</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="961"/>
@@ -10211,7 +10213,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="966"/>
         <source>restrictorthogonal</source>
         <comment>restrict - orthogonal</comment>
-        <translation>직각 제한</translation>
+        <translation>restrictorthogonal</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="967"/>
@@ -10223,7 +10225,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="972"/>
         <source>restricthorizontal</source>
         <comment>restrict - horizontal</comment>
-        <translation>가로 제한</translation>
+        <translation>restricthorizontal</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="973"/>
@@ -10235,7 +10237,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="978"/>
         <source>restrictvertical</source>
         <comment>restrict - vertical</comment>
-        <translation>세로 제한</translation>
+        <translation>restrictvertical</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="979"/>
@@ -10409,7 +10411,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="924"/>
         <source>snapintersection</source>
         <comment>snap - intersection</comment>
-        <translation>스냅 교차점</translation>
+        <translation>snapintersection</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="925"/>
@@ -10421,7 +10423,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="930"/>
         <source>snapmiddle</source>
         <comment>snap - middle points</comment>
-        <translation>중앙 스냅</translation>
+        <translation>snapmiddle</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="931"/>
@@ -10433,7 +10435,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="936"/>
         <source>snaponentity</source>
         <comment>snap - on entity</comment>
-        <translation>엔터티에 스냅</translation>
+        <translation>snaponentity</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="937"/>
@@ -10451,7 +10453,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="954"/>
         <source>setrelativezero</source>
         <comment>set relative zero position</comment>
-        <translation>상대 원점 설정</translation>
+        <translation>setrelativezero</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="955"/>
@@ -10463,7 +10465,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="616"/>
         <source>selectall</source>
         <comment>Select all entities</comment>
-        <translation>모두 선택</translation>
+        <translation>selectall</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="617"/>
@@ -10475,7 +10477,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="622"/>
         <source>deselectall</source>
         <comment>deselect all entities</comment>
-        <translation>모두 선택 해제</translation>
+        <translation>deselectall</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="624"/>
@@ -10551,7 +10553,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1101"/>
         <source>columnspacing</source>
-        <translation>열 간격</translation>
+        <translation>columnspacing</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1103"/>
@@ -10562,12 +10564,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1104"/>
         <source>length</source>
-        <translation>길이</translation>
+        <translation>length</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1107"/>
         <source>number</source>
-        <translation>숫자</translation>
+        <translation>number</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1108"/>
@@ -10583,7 +10585,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1110"/>
         <source>rowspacing</source>
-        <translation>행 간격</translation>
+        <translation>rowspacing</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1111"/>
@@ -10653,13 +10655,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="1208"/>
         <source>columnspacing</source>
         <comment>columnspacing for inserts</comment>
-        <translation>열 간격</translation>
+        <translation>columnspacing</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1209"/>
         <source>colspacing</source>
         <comment>columnspacing for inserts</comment>
-        <translation>열 간격</translation>
+        <translation>colspacing</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1210"/>
@@ -10718,13 +10720,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="1228"/>
         <source>len1</source>
         <comment>length1</comment>
-        <translation>길이1</translation>
+        <translation>len1</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1229"/>
         <source>l1</source>
         <comment>length1</comment>
-        <translation>길이1</translation>
+        <translation>l1</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1231"/>
@@ -10736,13 +10738,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="1232"/>
         <source>len2</source>
         <comment>length2</comment>
-        <translation>길이2</translation>
+        <translation>len2</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1233"/>
         <source>l2</source>
         <comment>length2</comment>
-        <translation>길이2</translation>
+        <translation>l2</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1235"/>
@@ -10791,7 +10793,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="1248"/>
         <source>rowspacing</source>
         <comment>rowspacing for inserts</comment>
-        <translation>행 간격</translation>
+        <translation>rowspacing</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1249"/>
@@ -10852,12 +10854,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1269"/>
         <source>paperoffset</source>
-        <translation>용지 오프셋</translation>
+        <translation>paperoffset</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1270"/>
         <source>graphoffset</source>
-        <translation>그래프 오프셋</translation>
+        <translation>graphoffset</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1392"/>
@@ -10967,7 +10969,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="70"/>
         <source>Dimension</source>
-        <translation>차원</translation>
+        <translation>치수</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="71"/>
@@ -11018,7 +11020,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="80"/>
         <source>Snap</source>
-        <translation>Snap</translation>
+        <translation>스냅</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="81"/>
@@ -11444,7 +11446,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="467"/>
         <source>arctan</source>
         <comment>arc tangent</comment>
-        <translation>아크탄젠트</translation>
+        <translation>arctan</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="468"/>
@@ -11486,7 +11488,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="514"/>
         <source>ellipsec2p</source>
         <comment>ellipse axis</comment>
-        <translation>타원 2점</translation>
+        <translation>ellipsec2p</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="515"/>
@@ -11498,7 +11500,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="520"/>
         <source>ellipse3p</source>
         <comment>ellipse foci</comment>
-        <translation>타원 3점</translation>
+        <translation>ellipse3p</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="521"/>
@@ -11510,7 +11512,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="526"/>
         <source>ellipse4p</source>
         <comment>ellipse 4 point</comment>
-        <translation>타원 4점</translation>
+        <translation>ellipse4p</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="527"/>
@@ -11522,7 +11524,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="532"/>
         <source>ellipsec3p</source>
         <comment>ellipse center 3 point</comment>
-        <translation>타원 3점(곡선)</translation>
+        <translation>ellipsec3p</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="533"/>
@@ -11534,7 +11536,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="572"/>
         <source>plineadd</source>
         <comment>pl add node</comment>
-        <translation>선 추가</translation>
+        <translation>plineadd</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="573"/>
@@ -11624,7 +11626,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="629"/>
         <source>invertselect</source>
         <comment>invert select</comment>
-        <translation>선택 반전</translation>
+        <translation>invertselect</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="630"/>
@@ -11642,7 +11644,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="662"/>
         <source>dimradius</source>
         <comment>dimension - radial</comment>
-        <translation>흐림 반경</translation>
+        <translation>dimradius</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="664"/>
@@ -11678,19 +11680,19 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="709"/>
         <source>modscale</source>
         <comment>modify - scale</comment>
-        <translation>크기 조정</translation>
+        <translation>modscale</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="715"/>
         <source>modmirror</source>
         <comment>modify -  mirror</comment>
-        <translation>대칭 이동</translation>
+        <translation>modmirror</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="721"/>
         <source>modmovrot</source>
         <comment>modify - move rotate</comment>
-        <translation>이동 및 회전</translation>
+        <translation>modmovrot</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="722"/>
@@ -11702,7 +11704,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="727"/>
         <source>mod2rot</source>
         <comment>modify - rotate2</comment>
-        <translation>회전</translation>
+        <translation>mod2rot</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="728"/>
@@ -11714,7 +11716,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="733"/>
         <source>modrevert</source>
         <comment>modify -  revert direction</comment>
-        <translation>되돌리기</translation>
+        <translation>modrevert</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="734"/>
@@ -11726,25 +11728,25 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="740"/>
         <source>modtrim</source>
         <comment>modify - trim (extend)</comment>
-        <translation>모드 트리밍</translation>
+        <translation>modtrim</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="746"/>
         <source>modtrim2</source>
         <comment>modify - multi trim (extend)</comment>
-        <translation>모드 트리밍 2</translation>
+        <translation>modtrim2</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="753"/>
         <source>modlengthen</source>
         <comment>modify - lengthen</comment>
-        <translation>모드 길이 조정</translation>
+        <translation>modlengthen</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="759"/>
         <source>modoffset</source>
         <comment>modify - offset</comment>
-        <translation>모드 오프셋</translation>
+        <translation>modoffset</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="760"/>
@@ -11762,43 +11764,43 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="766"/>
         <source>modbevel</source>
         <comment>modify - bevel</comment>
-        <translation>모드 베벨</translation>
+        <translation>modbevel</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="773"/>
         <source>modfillet</source>
         <comment>modify - fillet</comment>
-        <translation>모드 필릿</translation>
+        <translation>modfillet</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="779"/>
         <source>moddivide</source>
         <comment>modify - divide (cut)</comment>
-        <translation>모드 분할</translation>
+        <translation>moddivide</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="787"/>
         <source>modstretch</source>
         <comment>modify - stretch</comment>
-        <translation>모드 늘이기</translation>
+        <translation>modstretch</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="793"/>
         <source>modproperties</source>
         <comment>modify properties</comment>
-        <translation>속성 수정</translation>
+        <translation>modproperties</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="800"/>
         <source>modattr</source>
         <comment>modify attribute</comment>
-        <translation>속성 수정</translation>
+        <translation>modattr</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="807"/>
         <source>modexpltext</source>
         <comment>explode text strings</comment>
-        <translation>설명 텍스트 수정</translation>
+        <translation>modexpltext</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="808"/>
@@ -11810,7 +11812,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="813"/>
         <source>modexplode</source>
         <comment>explode block/polyline into entities</comment>
-        <translation>세부 정보 표시</translation>
+        <translation>modexplode</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="819"/>
@@ -11822,7 +11824,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="828"/>
         <source>infodistance</source>
         <comment>distance point to point</comment>
-        <translation>거리 정보</translation>
+        <translation>infodistance</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="829"/>
@@ -11834,7 +11836,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="836"/>
         <source>infodistep</source>
         <comment>distance entity to point</comment>
-        <translation>단계별 거리 정보</translation>
+        <translation>infodistep</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="837"/>
@@ -11852,7 +11854,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="843"/>
         <source>infoangle</source>
         <comment>measure angle</comment>
-        <translation>정보 각도</translation>
+        <translation>infoangle</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="844"/>
@@ -11864,7 +11866,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="850"/>
         <source>infoarea</source>
         <comment>measure area</comment>
-        <translation>정보 영역</translation>
+        <translation>infoarea</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="851"/>
@@ -11930,13 +11932,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="1105"/>
         <source>length1</source>
         <comment>bevel/fillet length1</comment>
-        <translation>길이 1</translation>
+        <translation>length1</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1106"/>
         <source>length2</source>
         <comment>bevel/fillet length2</comment>
-        <translation>길이 2</translation>
+        <translation>length2</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1217"/>
@@ -12195,7 +12197,7 @@ Do you want to replace it?</source>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="109"/>
         <source>Anyhow, there are some entities identified.</source>
         <comment>dwgImport</comment>
-        <translation>어쨌든 일부 개체가 식별되었습니다.</translation>
+        <translation>어쨌든 일부 엔티티가 식별되었습니다.</translation>
     </message>
     <message>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="110"/>
@@ -12273,7 +12275,7 @@ Do you want to replace it?</source>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="125"/>
         <source>error reading DXF/DWG entities</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>DXF/DWG 엔터티를 읽는 중 오류가 발생했습니다.</translation>
+        <translation>DXF/DWG 엔티티를 읽는 중 오류가 발생했습니다.</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="127"/>
@@ -12332,12 +12334,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="85"/>
         <source>Auto fit and center drawing to page.</source>
-        <translation>자동으로 그림을 페이지에 맞추고 가운데 정렬합니다.</translation>
+        <translation>자동으로 도면을 페이지에 맞추고 가운데 정렬합니다.</translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="89"/>
         <source>Auto center drawing on page.</source>
-        <translation>자동으로 그림을 페이지 가운데 정렬합니다.</translation>
+        <translation>자동으로 도면을 페이지 가운데 정렬합니다.</translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="93"/>
@@ -12424,7 +12426,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="42"/>
         <source>/CustomColor%1</source>
-        <translation>사용자 지정 색상%1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="43"/>
@@ -12585,7 +12587,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="276"/>
         <source>linepoints</source>
         <comment>draw line of points</comment>
-        <translation>선 지점</translation>
+        <translation>linepoints</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="277"/>
@@ -12597,7 +12599,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="282"/>
         <source>criclebyarc</source>
         <comment>draw circle by arc</comment>
-        <translation>호로 원 그리기</translation>
+        <translation>circlebyarc</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="283"/>
@@ -12609,7 +12611,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="288"/>
         <source>duplicate</source>
         <comment>duplicate entity</comment>
-        <translation>중복</translation>
+        <translation>duplicate</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="289"/>
@@ -12621,7 +12623,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="294"/>
         <source>linejoin</source>
         <comment>lines join</comment>
-        <translation>선 연결</translation>
+        <translation>linejoin</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="295"/>
@@ -12657,7 +12659,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="493"/>
         <source>parabola4p</source>
         <comment>Parabola 4 points</comment>
-        <translation>4점 포물선</translation>
+        <translation>parabola4p</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="494"/>
@@ -12688,7 +12690,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="559"/>
         <source>rortoline</source>
         <comment>draw orthogonal</comment>
-        <translation>회전선</translation>
+        <translation>rortoline</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="560"/>
@@ -12700,7 +12702,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="565"/>
         <source>point2line</source>
         <comment>draw line from point to line</comment>
-        <translation>점-선</translation>
+        <translation>point2line</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="566"/>
@@ -12712,13 +12714,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="945"/>
         <source>snapmiddlemanual</source>
         <comment>snap middle manual</comment>
-        <translation>중앙 스냅 (수동)</translation>
+        <translation>snapmiddlemanual</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="946"/>
         <source>snapmanual</source>
         <comment>snap middle manual</comment>
-        <translation>수동 스냅</translation>
+        <translation>snapmanual</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="947"/>
@@ -12744,37 +12746,37 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1118"/>
         <source>anglerel</source>
-        <translation>상대 각도</translation>
+        <translation>anglerel</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1119"/>
         <source>start</source>
-        <translation>시작</translation>
+        <translation>start</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1122"/>
         <source>offset</source>
-        <translation>오프셋</translation>
+        <translation>offset</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1123"/>
         <source>linesnap</source>
-        <translation>선 스냅</translation>
+        <translation>linesnap</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1124"/>
         <source>ticksnap</source>
-        <translation>틱 스냅</translation>
+        <translation>ticksnap</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1127"/>
         <source>width</source>
-        <translation>너비</translation>
+        <translation>width</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1128"/>
         <source>height</source>
-        <translation>높이</translation>
+        <translation>height</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1129"/>
@@ -12790,22 +12792,22 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="1131"/>
         <location filename="../src/cmd/rs_commands.cpp" line="1137"/>
         <source>bevels</source>
-        <translation>경사</translation>
+        <translation>bevels</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1132"/>
         <source>nopoly</source>
-        <translation>다각형 사용 안 함</translation>
+        <translation>nopoly</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1133"/>
         <source>usepoly</source>
-        <translation>다각형 사용</translation>
+        <translation>usepoly</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1134"/>
         <source>corners</source>
-        <translation>모서리</translation>
+        <translation>corners</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1135"/>
@@ -12815,12 +12817,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1136"/>
         <source>round</source>
-        <translation>둥글게</translation>
+        <translation>round</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1138"/>
         <source>snap1</source>
-        <translation>스냅 1</translation>
+        <translation>snap1</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1139"/>
@@ -12845,47 +12847,47 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1143"/>
         <source>middle</source>
-        <translation>중앙</translation>
+        <translation>middle</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1144"/>
         <source>right</source>
-        <translation>오른쪽</translation>
+        <translation>right</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1145"/>
         <source>bottoml</source>
-        <translation>하단 왼쪽</translation>
+        <translation>bottoml</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1146"/>
         <source>bottom</source>
-        <translation>하단</translation>
+        <translation>bottom</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1147"/>
         <source>bottomr</source>
-        <translation>하단 오른쪽</translation>
+        <translation>bottomr</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1148"/>
         <source>snapcorner</source>
-        <translation>모서리 맞춤</translation>
+        <translation>snapcorner</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1149"/>
         <source>snapshift</source>
-        <translation>스냅 시프트</translation>
+        <translation>snapshift</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1150"/>
         <source>sizein</source>
-        <translation>크기 조정 (안쪽)</translation>
+        <translation>sizein</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1151"/>
         <source>sizeout</source>
-        <translation>크기 조정 (바깥쪽)</translation>
+        <translation>sizeout</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1152"/>
@@ -12900,22 +12902,22 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1156"/>
         <source>snap2</source>
-        <translation>스냅 2</translation>
+        <translation>snap2</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1157"/>
         <source>corner</source>
-        <translation>모서리</translation>
+        <translation>corner</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1158"/>
         <source>mid-vert</source>
-        <translation>수직 중앙</translation>
+        <translation>mid-vert</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1159"/>
         <source>mid-hor</source>
-        <translation>수평 중앙</translation>
+        <translation>mid-hor</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1161"/>
@@ -12980,22 +12982,22 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1175"/>
         <source>nofit</source>
-        <translation>맞지 않음</translation>
+        <translation>nofit</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1176"/>
         <source>dist_fixed</source>
-        <translation>고정 간격</translation>
+        <translation>dist_fixed</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1177"/>
         <source>dist_flex</source>
-        <translation>유연한 간격</translation>
+        <translation>dist_flex</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1178"/>
         <source>distance</source>
-        <translation>간격</translation>
+        <translation>distance</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1182"/>
@@ -13005,17 +13007,17 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1183"/>
         <source>nosym</source>
-        <translation>비대칭</translation>
+        <translation>nosym</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_patternlist.cpp" line="63"/>
         <source>Hatch:: no pattern found. Please set pattern path in application preferences</source>
-        <translation>Hatch: 패턴을 찾을 수 없습니다. 응용 프로그램 설정에서 패턴 경로를 설정하십시오.</translation>
+        <translation>해치: 패턴을 찾을 수 없습니다. 응용 프로그램 설정에서 패턴 경로를 설정하십시오.</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_patternlist.cpp" line="85"/>
         <source>Hatch:: loading pattern failed: %1</source>
-        <translation>Hatch: 패턴 로드 실패: %1</translation>
+        <translation>해치: 패턴 로드 실패: %1</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="84"/>
@@ -13292,7 +13294,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="252"/>
         <source>Specify first extension line origin</source>
-        <translation>첫 번째 확장선 원점 지정</translation>
+        <translation>첫 번째 치수보조선 원점 지정</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="253"/>
@@ -13302,7 +13304,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="257"/>
         <source>Specify second extension line origin</source>
-        <translation>두 번째 확장선 원점 지정</translation>
+        <translation>두 번째 치수보조선 원점 지정</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="258"/>
@@ -13318,7 +13320,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="266"/>
         <source>Enter dimension text:</source>
-        <translation>치수 텍스트 입력:</translation>
+        <translation>치수 문자 입력:</translation>
     </message>
 </context>
 <context>
@@ -13348,7 +13350,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimangular.cpp" line="254"/>
         <source>Enter dimension text:</source>
-        <translation>치수 텍스트 입력:</translation>
+        <translation>치수 문자 입력:</translation>
     </message>
 </context>
 <context>
@@ -13366,7 +13368,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimdiametric.cpp" line="286"/>
         <source>Select arc or circle entity</source>
-        <translation>호나 원 요소를 선택</translation>
+        <translation>호 또는 원 엔티티 선택</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimdiametric.cpp" line="287"/>
@@ -13382,7 +13384,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimdiametric.cpp" line="294"/>
         <source>Enter dimension text:</source>
-        <translation>치수 텍스트 입력:</translation>
+        <translation>치수 문자 입력:</translation>
     </message>
 </context>
 <context>
@@ -13418,7 +13420,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="283"/>
         <source>Specify first extension line origin</source>
-        <translation>첫 번째 확장선 원점 지정</translation>
+        <translation>첫 번째 치수보조선 원점 지정</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="284"/>
@@ -13428,7 +13430,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="288"/>
         <source>Specify second extension line origin</source>
-        <translation>두 번째 확장선 원점 지정</translation>
+        <translation>두 번째 치수보조선 원점 지정</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="289"/>
@@ -13444,7 +13446,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="297"/>
         <source>Enter dimension text:</source>
-        <translation>치수 텍스트 입력:</translation>
+        <translation>치수 문자 입력:</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="301"/>
@@ -13483,7 +13485,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimradial.cpp" line="287"/>
         <source>Enter dimension text:</source>
-        <translation>치수 텍스트 입력:</translation>
+        <translation>치수 문자 입력:</translation>
     </message>
 </context>
 <context>
@@ -13515,7 +13517,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawarc.cpp" line="339"/>
         <source>Specify radius</source>
-        <translation>반경 지정</translation>
+        <translation>반지름 지정</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawarc.cpp" line="339"/>
@@ -13544,7 +13546,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawarc.cpp" line="347"/>
         <source>Specify end angle or [angle/chord length]</source>
-        <translation>끝 각도 또는 [각도/현 길이] 지정</translation>
+        <translation>끝 각도 또는 [각도/현의 길이] 지정</translation>
     </message>
 </context>
 <context>
@@ -13730,7 +13732,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawcirclecr.cpp" line="227"/>
         <source>Specify circle radius</source>
-        <translation>원 반경 지정</translation>
+        <translation>원 반지름 지정</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcirclecr.cpp" line="228"/>
@@ -13740,17 +13742,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawcirclecr.cpp" line="106"/>
         <source>radius=%1 is invalid (expression)</source>
-        <translation>반경=%1이(가) 유효하지 않습니다 (표현식)</translation>
+        <translation>반지름=%1이(가) 유효하지 않습니다 (표현식)</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcirclecr.cpp" line="108"/>
         <source>radius=%1 is invalid (negative)</source>
-        <translation>반경=%1이(가) 유효하지 않습니다 (음수)</translation>
+        <translation>반지름=%1이(가) 유효하지 않습니다 (음수)</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcirclecr.cpp" line="111"/>
         <source>radius=%1 is invalid (zero)</source>
-        <translation>반경=%1이(가) 유효하지 않습니다 (0)</translation>
+        <translation>반지름=%1이(가) 유효하지 않습니다 (0)</translation>
     </message>
 </context>
 <context>
@@ -13848,27 +13850,27 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan2.cpp" line="154"/>
         <source>Invalid expression &apos;%1&apos; for radius</source>
-        <translation>반경에 대한 유효하지 않은 표현식 &apos;%1&apos;</translation>
+        <translation>반지름에 대한 유효하지 않은 표현식 &apos;%1&apos;</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan2.cpp" line="156"/>
         <source>Invalid negative radius &apos;%1&apos;</source>
-        <translation>유효하지 않은 음수 반경 &apos;%1&apos;</translation>
+        <translation>유효하지 않은 음수 반지름 &apos;%1&apos;</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan2.cpp" line="159"/>
         <source>Invalid zero radius &apos;%1&apos;</source>
-        <translation>유효하지 않은 0 반경 &apos;%1&apos;</translation>
+        <translation>유효하지 않은 0 반지름 &apos;%1&apos;</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan2.cpp" line="167"/>
         <source>No tangent circle possible for radius &apos;%1&apos;</source>
-        <translation>반경 &apos;%1&apos;에 대해 접선 원을 만들 수 없습니다</translation>
+        <translation>반지름 &apos;%1&apos;에 대해 접선 원을 만들 수 없습니다</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan2.cpp" line="181"/>
         <source>No common tangential circle for radius &apos;%1&apos;</source>
-        <translation>반경 &apos;%1&apos;에 대해 공통 접선 원이 없습니다</translation>
+        <translation>반지름 &apos;%1&apos;에 대해 공통 접선 원이 없습니다</translation>
     </message>
 </context>
 <context>
@@ -14153,42 +14155,42 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawhatch.cpp" line="179"/>
         <source>Invalid hatch area. Please check that the entities chosen form one or more closed contours.</source>
-        <translation>유효하지 않은 해칭 영역입니다. 선택한 엔티티가 하나 이상의 닫힌 윤곽선을 형성하는지 확인하십시오.</translation>
+        <translation>유효하지 않은 해치 영역입니다. 선택한 엔티티가 하나 이상의 닫힌 윤곽선을 형성하는지 확인하십시오.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawhatch.cpp" line="150"/>
         <source>Hatch created successfully.</source>
-        <translation>해칭이 성공적으로 생성되었습니다.</translation>
+        <translation>해치가 성공적으로 생성되었습니다.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawhatch.cpp" line="153"/>
         <source>Hatch Error: Invalid contour found!</source>
-        <translation>해칭 오류: 유효하지 않은 윤곽선 발견!</translation>
+        <translation>해치 오류: 유효하지 않은 윤곽선 발견!</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawhatch.cpp" line="157"/>
         <source>Hatch Error: Pattern not found!</source>
-        <translation>해칭 오류: 패턴을 찾을 수 없습니다!</translation>
+        <translation>해치 오류: 패턴을 찾을 수 없습니다!</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawhatch.cpp" line="160"/>
         <source>Hatch Error: Contour or pattern too small!</source>
-        <translation>해칭 오류: 윤곽선 또는 패턴이 너무 작습니다!</translation>
+        <translation>해치 오류: 윤곽선 또는 패턴이 너무 작습니다!</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawhatch.cpp" line="163"/>
         <source>Hatch Error: Contour too big!</source>
-        <translation>해칭 오류: 윤곽선이 너무 큽니다!</translation>
+        <translation>해치 오류: 윤곽선이 너무 큽니다!</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawhatch.cpp" line="166"/>
         <source>Hatch Error: Undefined Error!</source>
-        <translation>해칭 오류: 정의되지 않은 오류!</translation>
+        <translation>해치 오류: 정의되지 않은 오류!</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawhatch.cpp" line="171"/>
         <source>Total hatch area = %1</source>
-        <translation>총 해칭 영역 = %1</translation>
+        <translation>총 해치 영역 = %1</translation>
     </message>
 </context>
 <context>
@@ -14349,7 +14351,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawlinebisector.cpp" line="251"/>
         <source>Number sector lines not in range: </source>
         <comment>number of bisector to create must be in [1, 200]</comment>
-        <translation>섹터 라인 수가 범위 밖입니다: </translation>
+        <translation>섹터 선 수가 범위 밖입니다: </translation>
     </message>
 </context>
 <context>
@@ -15269,7 +15271,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifymirror.cpp" line="161"/>
         <source>Specify first point of mirror line</source>
-        <translation>미러선 첫 번째 점 지정</translation>
+        <translation>대칭선의 첫 번째 점 지정</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifymirror.cpp" line="162"/>
@@ -15279,7 +15281,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifymirror.cpp" line="166"/>
         <source>Specify second point of mirror line</source>
-        <translation>미러선 두 번째 점 지정</translation>
+        <translation>대칭선의 두 번째 점 지정</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifymirror.cpp" line="167"/>
@@ -15432,7 +15434,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifyround.cpp" line="427"/>
         <source>Enter radius:</source>
-        <translation>반경 입력:</translation>
+        <translation>반지름 입력:</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifyround.cpp" line="428"/>
@@ -15442,7 +15444,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifyround.cpp" line="419"/>
         <source>Specify first entity or enter radius &lt;%1&gt;</source>
-        <translation>첫 번째 엔티티 지정 또는 반경 &lt;%1&gt; 입력</translation>
+        <translation>첫 번째 엔티티 지정 또는 반지름 입력 &lt;%1&gt;</translation>
     </message>
 </context>
 <context>
@@ -15462,7 +15464,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifyscale.cpp" line="238"/>
         <source>Specify scale center</source>
-        <translation>스케일 중심 지정</translation>
+        <translation>축척 중심 지정</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifyscale.cpp" line="247"/>
@@ -16000,12 +16002,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="110"/>
         <source>Select to scale</source>
-        <translation>스케일 위해 선택</translation>
+        <translation>축척할 엔티티 선택</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="113"/>
         <source>Select to mirror</source>
-        <translation>미러 위해 선택</translation>
+        <translation>대칭할 엔티티 선택</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="116"/>
@@ -16183,7 +16185,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionzoompan.cpp" line="127"/>
         <source>Click and drag to pan zoom</source>
-        <translation>확대/축소를 위해 클릭하고 드래그</translation>
+        <translation>클릭하고 끌어서 초점이동</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionzoompan.cpp" line="128"/>
@@ -16194,7 +16196,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionzoompan.cpp" line="131"/>
         <source>Zoom panning</source>
-        <translation>확대 팬</translation>
+        <translation>줌 초점이동</translation>
     </message>
 </context>
 <context>
@@ -16264,7 +16266,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_arctangentialoptions.ui" line="66"/>
         <source>Radius of the tangential arc</source>
-        <translation>접선 호의 반경</translation>
+        <translation>접선 호의 반지름</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_arctangentialoptions.ui" line="85"/>
@@ -16275,7 +16277,7 @@ This block cannot be inserted.</source>
         <location filename="../src/ui/forms/qg_arctangentialoptions.ui" line="98"/>
         <source>Radius</source>
         <extracomment>Draw Tangential Arc by the given radius</extracomment>
-        <translation>반경</translation>
+        <translation>반지름</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_arctangentialoptions.ui" line="120"/>
@@ -16289,17 +16291,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_beveloptions.ui" line="32"/>
         <source>Bevel Options</source>
-        <translation>베벨 옵션</translation>
+        <translation>모따기 옵션</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_beveloptions.ui" line="53"/>
         <source>Check to trim both entities to the bevel</source>
-        <translation>두 엔티티를 베벨까지 트림하려면 체크</translation>
+        <translation>두 엔티티를 모따기에 맞춰 트림하려면 선택</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_beveloptions.ui" line="56"/>
         <source>Trim</source>
-        <translation>Trim</translation>
+        <translation>트림</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_beveloptions.ui" line="79"/>
@@ -16322,7 +16324,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_circleoptions.ui" line="50"/>
         <source>Radius:</source>
-        <translation>반경:</translation>
+        <translation>반지름:</translation>
     </message>
 </context>
 <context>
@@ -16335,17 +16337,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_circletan2options.ui" line="56"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Radius of the tangential circle to draw&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;그릴 접선 원의 반경&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;그릴 접선 원의 반지름&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_circletan2options.ui" line="59"/>
         <source>Radius:</source>
-        <translation>반경:</translation>
+        <translation>반지름:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_circletan2options.ui" line="69"/>
         <source>Radius of tangential circle</source>
-        <translation>접선 원의 반경</translation>
+        <translation>접선 원의 반지름</translation>
     </message>
 </context>
 <context>
@@ -16435,7 +16437,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_imageoptions.ui" line="86"/>
         <source>Scale Factor</source>
-        <translation>스케일 계수</translation>
+        <translation>축척 비율</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_imageoptions.ui" line="93"/>
@@ -16473,7 +16475,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_insertoptions.ui" line="128"/>
         <source>Scale Factor</source>
-        <translation>스케일 계수</translation>
+        <translation>축척 비율</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_insertoptions.ui" line="163"/>
@@ -16531,7 +16533,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_libraryinsertoptions.ui" line="80"/>
         <source>Scale Factor</source>
-        <translation>스케일 계수</translation>
+        <translation>축척 비율</translation>
     </message>
 </context>
 <context>
@@ -16910,7 +16912,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="90"/>
         <source>Tan Radius</source>
-        <translation>접선 반경</translation>
+        <translation>접선 반지름</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="95"/>
@@ -16920,7 +16922,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="103"/>
         <source>Radius:</source>
-        <translation>반경:</translation>
+        <translation>반지름:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="126"/>
@@ -16948,7 +16950,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_printpreviewoptions.ui" line="87"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Print Scale is locked to the current value&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;인쇄 스케일이 현재 값으로 잠겨 있습니다&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;인쇄 축척이 현재 값으로 잠겨 있습니다&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_printpreviewoptions.ui" line="90"/>
@@ -16973,7 +16975,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_printpreviewoptions.ui" line="116"/>
         <source>Apply Print Scale to line width</source>
-        <translation>인쇄 스케일을 선 폭에 적용</translation>
+        <translation>인쇄 축척을 선가중치에 적용</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_printpreviewoptions.ui" line="226"/>
@@ -16991,22 +16993,22 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_roundoptions.ui" line="32"/>
         <source>Round Options</source>
-        <translation>둥글게 옵션</translation>
+        <translation>모깎기 옵션</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_roundoptions.ui" line="53"/>
         <source>Check to trim both edges to the rounding</source>
-        <translation>두 모서리를 둥글게까지 트림하려면 체크</translation>
+        <translation>두 모서리를 모깎기에 맞춰 트림하려면 선택</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_roundoptions.ui" line="56"/>
         <source>Trim</source>
-        <translation>Trim</translation>
+        <translation>트림</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_roundoptions.ui" line="79"/>
         <source>Radius:</source>
-        <translation>반경:</translation>
+        <translation>반지름:</translation>
     </message>
 </context>
 <context>

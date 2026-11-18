@@ -6,7 +6,7 @@
     <message>
         <location filename="../src/ui/generic/colorwizard.ui" line="14"/>
         <source>Frame</source>
-        <translation>Okvir</translation>
+        <translation>Оквир</translation>
     </message>
     <message>
         <location filename="../src/ui/generic/colorwizard.ui" line="35"/>
@@ -35,7 +35,7 @@
     <message>
         <location filename="../src/ui/generic/comboboxoption.ui" line="41"/>
         <source>Set</source>
-        <translation>Set</translation>
+        <translation>Постави</translation>
     </message>
 </context>
 <context>
@@ -122,7 +122,7 @@
     <message>
         <location filename="../src/actions/lc_actiondimarc.cpp" line="272"/>
         <source>Specify dimension arc location</source>
-        <translation>Доделите локацију лука димензије</translation>
+        <translation>Одредите положај котног лука</translation>
     </message>
 </context>
 <context>
@@ -158,7 +158,7 @@ distance between points=%2 is larger than diameter=%3</source>
         <location filename="../src/actions/lc_actiondrawcircle2pr.cpp" line="243"/>
         <location filename="../src/actions/lc_actiondrawcircle2pr.cpp" line="247"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Назад</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawcircle2pr.cpp" line="246"/>
@@ -171,59 +171,59 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="260"/>
         <source>Foci cannot be coincident</source>
-        <translation>Žiže ne smeju biti u istom položaju</translation>
+        <translation>Жиже не смеју бити у истом положају</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="273"/>
         <source>The point does not define a hyperbola with these foci</source>
-        <translation>Tačka ne definiše hiperbolu sa ovim žižama</translation>
+        <translation>Тачка не дефинише хиперболу са овим жижама</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="286"/>
         <source>The end point is not on the same hyperbola branch</source>
-        <translation>Krajnja tačka nije na istoj grani hiperbole</translation>
+        <translation>Крајња тачка није на истој грани хиперболе</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="295"/>
         <source>Start and end points cannot be the same</source>
-        <translation>Početna i krajnja tačka ne smeju biti iste</translation>
+        <translation>Почетна и крајња тачка не смеју бити исте</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="314"/>
         <source>specify the two foci, then the start and end points on one branch</source>
-        <translation>Odredite dve žiže, zatim početnu i krajnju tačku na jednoj grani</translation>
+        <translation>Одредите две жиже, затим почетну и крајњу тачку на једној грани</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="326"/>
         <source>Specify the first focus</source>
-        <translation>Odredite prvu žižu</translation>
+        <translation>Одредите прву жижу</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="327"/>
         <source>Cancel</source>
-        <translation>Otkaži</translation>
+        <translation>Откажи</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="330"/>
         <source>Specify the second focus</source>
-        <translation>Odredite drugu žižu</translation>
+        <translation>Одредите другу жижу</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="331"/>
         <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="335"/>
         <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="339"/>
         <source>Back</source>
-        <translation>Nazad</translation>
+        <translation>Назад</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="334"/>
         <source>Specify the start point on the branch</source>
-        <translation>Odredite početnu tačku na grani</translation>
+        <translation>Одредите почетну тачку на грани</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawhyperbolafp.cpp" line="338"/>
         <source>Specify the end point on the same branch</source>
-        <translation>Odredite krajnju tačku na istoj grani</translation>
+        <translation>Одредите крајњу тачку на истој грани</translation>
     </message>
 </context>
 <context>
@@ -246,7 +246,7 @@ or [%2]</source>
         <location filename="../src/actions/lc_actiondrawlinepoints.cpp" line="516"/>
         <location filename="../src/actions/lc_actiondrawlinepoints.cpp" line="521"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Назад</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawlinepoints.cpp" line="516"/>
@@ -304,7 +304,7 @@ or [%2]</source>
         <location filename="../src/actions/lc_actiondrawlinesnake.cpp" line="474"/>
         <location filename="../src/actions/lc_actiondrawlinesnake.cpp" line="486"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Назад</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawlinesnake.cpp" line="448"/>
@@ -361,7 +361,7 @@ or [%2]</source>
         <location filename="../src/actions/lc_actiondrawparabola4points.cpp" line="284"/>
         <location filename="../src/actions/lc_actiondrawparabola4points.cpp" line="289"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Назад</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawparabola4points.cpp" line="278"/>
@@ -401,7 +401,7 @@ or [%2]</source>
         <location filename="../src/actions/lc_actiondrawparabolaFD.cpp" line="301"/>
         <location filename="../src/actions/lc_actiondrawparabolaFD.cpp" line="306"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Назад</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawparabolaFD.cpp" line="300"/>
@@ -429,12 +429,12 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/lc_actiondrawslicedivide.cpp" line="180"/>
         <source>Line</source>
-        <translation>Line</translation>
+        <translation>Линија</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawslicedivide.cpp" line="190"/>
         <source>Arc</source>
-        <translation>Arc</translation>
+        <translation>Лук</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawslicedivide.cpp" line="200"/>
@@ -463,7 +463,7 @@ or [%2]</source>
         <location filename="../src/actions/lc_actiondrawsplinepoints.cpp" line="276"/>
         <location filename="../src/actions/lc_actiondrawsplinepoints.cpp" line="282"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Назад</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawsplinepoints.cpp" line="281"/>
@@ -578,7 +578,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="187"/>
         <source>Bisector</source>
-        <translation>Пресечник</translation>
+        <translation>Симетрала</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="194"/>
@@ -608,12 +608,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="229"/>
         <source>Pol&amp;ygon (Cen,Cor)</source>
-        <translation>Пол&amp;игон (цен,тач)</translation>
+        <translation>Пол&amp;игон (центар,теме)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="243"/>
         <source>Polygo&amp;n (Cor,Cor)</source>
-        <translation>Полиго&amp;н (лин,лин)</translation>
+        <translation>Полиго&amp;н (теме,теме)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="252"/>
@@ -785,7 +785,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="634"/>
         <source>Insert &amp;Image</source>
-        <translation>Убаци &amp;Слику</translation>
+        <translation>Уметни &amp;слику</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="643"/>
@@ -815,12 +815,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="685"/>
         <source>&amp;Angular</source>
-        <translation>&amp;Угаона</translation>
+        <translation>&amp;Угаоно</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="699"/>
         <source>&amp;Leader</source>
-        <translation>&amp;Ознака</translation>
+        <translation>&amp;Показна линија</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="708"/>
@@ -865,12 +865,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="762"/>
         <source>&amp;Mirror</source>
-        <translation>&amp;У огледалу</translation>
+        <translation>&amp;Пресликај</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="777"/>
         <source>Rotate T&amp;wo</source>
-        <translation>Обрни Д&amp;ва</translation>
+        <translation>Ротирај д&amp;ва</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="784"/>
@@ -880,7 +880,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="792"/>
         <source>&amp;Trim</source>
-        <translation>С&amp;крати</translation>
+        <translation>О&amp;дсеци</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="808"/>
@@ -900,17 +900,17 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="840"/>
         <source>&amp;Bevel</source>
-        <translation>&amp;Заобли</translation>
+        <translation>&amp;Скос</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="848"/>
         <source>&amp;Fillet</source>
-        <translation>З&amp;аокругли</translation>
+        <translation>За&amp;обли</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="856"/>
         <source>&amp;Explode Text into Letters</source>
-        <translation>Рас&amp;тури текст у слова</translation>
+        <translation>Рас&amp;тави текст на слова</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="922"/>
@@ -925,7 +925,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="935"/>
         <source>&amp;Distance Entity to Point</source>
-        <translation>&amp;Растијање Ентитета од Тачке</translation>
+        <translation>&amp;Растојање ентитета од тачке</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="942"/>
@@ -940,7 +940,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="956"/>
         <source>Polygonal &amp;Area</source>
-        <translation>Полигона &amp;Површина</translation>
+        <translation>Површина &amp;полигона</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1418"/>
@@ -1055,7 +1055,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1147"/>
         <source>&amp;Insert Block</source>
-        <translation>&amp;Убаци блок</translation>
+        <translation>&amp;Уметни блок</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1154"/>
@@ -1070,17 +1070,17 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="863"/>
         <source>Ex&amp;plode</source>
-        <translation>Рас&amp;формирај</translation>
+        <translation>Ра&amp;зложи</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1170"/>
         <source>&amp;Application Preferences</source>
-        <translation>&amp;Поставке Апликације</translation>
+        <translation>&amp;Подешавања апликације</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1178"/>
         <source>Current &amp;Drawing Preferences</source>
-        <translation>Поставке &amp;Тренутног цртежа</translation>
+        <translation>Подешавања &amp;тренутног цртежа</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1201"/>
@@ -1175,7 +1175,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1274"/>
         <source>Export as PDF</source>
-        <translation>Извези кадо ПДФ</translation>
+        <translation>Извези као PDF</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1620"/>
@@ -1200,7 +1200,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1299"/>
         <source>&amp;Grid</source>
-        <translation>&amp;Подела</translation>
+        <translation>&amp;Мрежа</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1301"/>
@@ -1237,7 +1237,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1337"/>
         <source>Left</source>
-        <translation>Left</translation>
+        <translation>Лево</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1346"/>
@@ -1247,7 +1247,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1355"/>
         <source>Top</source>
-        <translation>Top</translation>
+        <translation>Горе</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1364"/>
@@ -1277,12 +1277,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="800"/>
         <source>Tr&amp;im Two</source>
-        <translation>&amp;Исеци два</translation>
+        <translation>Скр&amp;ати два</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="816"/>
         <source>O&amp;ffset</source>
-        <translation>О&amp;дстојање</translation>
+        <translation>О&amp;дмак</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1395"/>
@@ -1353,7 +1353,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1237"/>
         <source>Export as CA&amp;M/plain SVG...</source>
-        <translation>Извези као КА&amp;М/обични СВГ...</translation>
+        <translation>Извези као CA&amp;M/обични SVG...</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1266"/>
@@ -1408,7 +1408,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="300"/>
         <source>Star</source>
-        <translation>Star</translation>
+        <translation>Звезда</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="306"/>
@@ -1503,7 +1503,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="511"/>
         <source>&amp;Hyperbola Foci Point</source>
-        <translation>&amp;Žiže hiperbole - tačka</translation>
+        <translation>&amp;Жиже хиперболе - тачка</translation>
     </message>
 </context>
 <context>
@@ -1580,7 +1580,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/lc_actionsnapmiddlemanual.cpp" line="306"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Назад</translation>
     </message>
 </context>
 <context>
@@ -1588,7 +1588,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_circlebyarcoptions.ui" line="14"/>
         <source>Form</source>
-        <translation>Form</translation>
+        <translation>Образац</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_circlebyarcoptions.ui" line="27"/>
@@ -1633,12 +1633,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_crossoptions.ui" line="20"/>
         <source>Form</source>
-        <translation>Form</translation>
+        <translation>Образац</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_crossoptions.ui" line="63"/>
         <source>Extension</source>
-        <translation>Проширење</translation>
+        <translation>Продужење</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_crossoptions.ui" line="68"/>
@@ -1663,7 +1663,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_crossoptions.ui" line="161"/>
         <source>Type</source>
-        <translation>Type</translation>
+        <translation>Тип</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_crossoptions.ui" line="168"/>
@@ -1676,7 +1676,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_deviceoptions.ui" line="14"/>
         <source>Form</source>
-        <translation>Form</translation>
+        <translation>Образац</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_deviceoptions.ui" line="20"/>
@@ -1686,7 +1686,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_deviceoptions.ui" line="53"/>
         <source>Save</source>
-        <translation>Save</translation>
+        <translation>Сачувај</translation>
     </message>
 </context>
 <context>
@@ -1702,7 +1702,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_duplicateoptions.ui" line="14"/>
         <source>Form</source>
-        <translation>Form</translation>
+        <translation>Образац</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_duplicateoptions.ui" line="26"/>
@@ -1777,7 +1777,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.ui" line="110"/>
         <source>Dimensions</source>
-        <translation>Димензије</translation>
+        <translation>Коте</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.ui" line="120"/>
@@ -1859,7 +1859,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="94"/>
         <source>Dimensional</source>
-        <translation>Димензионални</translation>
+        <translation>Котни</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="114"/>
@@ -1964,7 +1964,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.cpp" line="72"/>
         <source>Dimensional Layer</source>
-        <translation>Димензионални слој</translation>
+        <translation>Котни слој</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.cpp" line="73"/>
@@ -2057,7 +2057,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="275"/>
         <source>Add dimensions Layer</source>
-        <translation>Додај слој димензија</translation>
+        <translation>Додај котни слој</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="285"/>
@@ -2122,7 +2122,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="698"/>
         <source>&amp;Add Dimensions Sub-Layer</source>
-        <translation>&amp;Додај под-слој димензија</translation>
+        <translation>&amp;Додај котни подслој</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="702"/>
@@ -2143,7 +2143,7 @@ or [%2]</source>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="720"/>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="731"/>
         <source>Convert to Dimensional Layer</source>
-        <translation>Претвори у димензионални слој</translation>
+        <translation>Претвори у котни слој</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="721"/>
@@ -2238,7 +2238,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="14"/>
         <source>Form</source>
-        <translation>Form</translation>
+        <translation>Образац</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="42"/>
@@ -2249,7 +2249,7 @@ or [%2]</source>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="50"/>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="181"/>
         <source>Free</source>
-        <translation>Free</translation>
+        <translation>Слободно</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="55"/>
@@ -2267,17 +2267,17 @@ or [%2]</source>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="65"/>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="120"/>
         <source>End</source>
-        <translation>End</translation>
+        <translation>Крај</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="73"/>
         <source>Line Snap:</source>
-        <translation>Снап линије:</translation>
+        <translation>Хватање линије:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="80"/>
         <source>Rel</source>
-        <translation>Rel</translation>
+        <translation>Релативно</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="144"/>
@@ -2287,7 +2287,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="167"/>
         <source>Tick Snap:</source>
-        <translation>Снап ознаке:</translation>
+        <translation>Хватање ознаке:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="174"/>
@@ -2302,7 +2302,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="208"/>
         <source>Snap Distance:</source>
-        <translation>Растојање снапа:</translation>
+        <translation>Растојање хватања:</translation>
     </message>
 </context>
 <context>
@@ -2310,7 +2310,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_linefrompointtolineoptions.ui" line="14"/>
         <source>Form</source>
-        <translation>Form</translation>
+        <translation>Образац</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linefrompointtolineoptions.ui" line="48"/>
@@ -2355,7 +2355,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_linefrompointtolineoptions.ui" line="227"/>
         <source>End</source>
-        <translation>End</translation>
+        <translation>Крај</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linefrompointtolineoptions.ui" line="241"/>
@@ -2365,7 +2365,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_linefrompointtolineoptions.ui" line="270"/>
         <source>Snap:</source>
-        <translation>Снап:</translation>
+        <translation>Хватање:</translation>
     </message>
 </context>
 <context>
@@ -2373,13 +2373,13 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="20"/>
         <source>Form</source>
-        <translation>Form</translation>
+        <translation>Образац</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="51"/>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="144"/>
         <source>Extend/Trim</source>
-        <translation>Прошири/Скрати</translation>
+        <translation>Продужи/Одсеци</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="56"/>
@@ -2444,7 +2444,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_linepointsoptions.ui" line="20"/>
         <source>Form</source>
-        <translation>Form</translation>
+        <translation>Образац</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linepointsoptions.ui" line="32"/>
@@ -2459,12 +2459,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_linepointsoptions.ui" line="128"/>
         <source>None</source>
-        <translation>None</translation>
+        <translation>Ништа</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linepointsoptions.ui" line="133"/>
         <source>Both</source>
-        <translation>Both</translation>
+        <translation>Оба</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linepointsoptions.ui" line="138"/>
@@ -2474,7 +2474,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_linepointsoptions.ui" line="143"/>
         <source>End</source>
-        <translation>End</translation>
+        <translation>Крај</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linepointsoptions.ui" line="183"/>
@@ -2497,7 +2497,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_modifybreakdivideoptions.ui" line="14"/>
         <source>Form</source>
-        <translation>Form</translation>
+        <translation>Образац</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_modifybreakdivideoptions.ui" line="39"/>
@@ -2515,23 +2515,23 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="14"/>
         <source>Form</source>
-        <translation>Form</translation>
+        <translation>Образац</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="42"/>
         <source>Gap Snap:</source>
-        <translation>Снап празнине:</translation>
+        <translation>Хватање празнине:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="49"/>
         <source>Snap Distance:</source>
-        <translation>Растојање снапа:</translation>
+        <translation>Растојање хватања:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="56"/>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="87"/>
         <source>Free</source>
-        <translation>Free</translation>
+        <translation>Слободно</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="79"/>
@@ -2554,12 +2554,12 @@ or [%2]</source>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="102"/>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="121"/>
         <source>End</source>
-        <translation>End</translation>
+        <translation>Крај</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="129"/>
         <source>Line Snap:</source>
-        <translation>Снап линије:</translation>
+        <translation>Хватање линије:</translation>
     </message>
 </context>
 <context>
@@ -2756,7 +2756,7 @@ or [%2]</source>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="349"/>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="352"/>
         <source>Save</source>
-        <translation>Save</translation>
+        <translation>Сачувај</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="363"/>
@@ -2864,7 +2864,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="14"/>
         <source>Form</source>
-        <translation>Form</translation>
+        <translation>Образац</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="26"/>
@@ -2904,7 +2904,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="123"/>
         <source>Snap:</source>
-        <translation>Снап:</translation>
+        <translation>Хватање:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="162"/>
@@ -2919,7 +2919,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="175"/>
         <source>Top</source>
-        <translation>Top</translation>
+        <translation>Горе</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="180"/>
@@ -2929,7 +2929,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="185"/>
         <source>Left</source>
-        <translation>Left</translation>
+        <translation>Лево</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="190"/>
@@ -2974,12 +2974,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="237"/>
         <source>Snap shift</source>
-        <translation>Померај снапа</translation>
+        <translation>Померај хватања</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="245"/>
         <source>Both</source>
-        <translation>Both</translation>
+        <translation>Оба</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="250"/>
@@ -3007,12 +3007,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="14"/>
         <source>Form</source>
-        <translation>Form</translation>
+        <translation>Образац</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="26"/>
         <source>Snap shift</source>
-        <translation>Померај снапа</translation>
+        <translation>Померај хватања</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="33"/>
@@ -3032,7 +3032,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="70"/>
         <source>End Snap:</source>
-        <translation>Снап краја:</translation>
+        <translation>Хватање краја:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="77"/>
@@ -3047,7 +3047,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="107"/>
         <source>Start Snap:</source>
-        <translation>Снап почетка:</translation>
+        <translation>Хватање почетка:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="131"/>
@@ -3101,7 +3101,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="228"/>
         <source>Both</source>
-        <translation>Both</translation>
+        <translation>Оба</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="233"/>
@@ -3119,7 +3119,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="14"/>
         <source>Form</source>
-        <translation>Form</translation>
+        <translation>Образац</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="55"/>
@@ -3129,7 +3129,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="63"/>
         <source>Both</source>
-        <translation>Both</translation>
+        <translation>Оба</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="68"/>
@@ -3184,7 +3184,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="185"/>
         <source>Snap shift</source>
-        <translation>Померај снапа</translation>
+        <translation>Померај хватања</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="192"/>
@@ -3212,7 +3212,7 @@ or [%2]</source>
     <message>
         <location filename="../src/test/lc_simpletests.cpp" line="78"/>
         <source>Insert Image</source>
-        <translation>Убаци Слику</translation>
+        <translation>Уметни слику</translation>
     </message>
 </context>
 <context>
@@ -3220,17 +3220,17 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="14"/>
         <source>Form</source>
-        <translation>Form</translation>
+        <translation>Образац</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="48"/>
         <source>None</source>
-        <translation>None</translation>
+        <translation>Ништа</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="53"/>
         <source>Both</source>
-        <translation>Both</translation>
+        <translation>Оба</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="58"/>
@@ -3242,7 +3242,7 @@ or [%2]</source>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="63"/>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="276"/>
         <source>End</source>
-        <translation>End</translation>
+        <translation>Крај</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="71"/>
@@ -3252,7 +3252,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="113"/>
         <source>Rel</source>
-        <translation>Rel</translation>
+        <translation>Релативно</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="120"/>
@@ -3277,7 +3277,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="228"/>
         <source>Tick snap:</source>
-        <translation>Снап ознаке:</translation>
+        <translation>Хватање ознаке:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="235"/>
@@ -3310,7 +3310,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_staroptions.ui" line="14"/>
         <source>Form</source>
-        <translation>Form</translation>
+        <translation>Образац</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_staroptions.ui" line="26"/>
@@ -3353,7 +3353,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="417"/>
         <source>Dock</source>
-        <translation>Dock</translation>
+        <translation>Док</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="417"/>
@@ -3782,22 +3782,22 @@ Auto-save disabled.</source>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="424"/>
         <source>File</source>
-        <translation>File</translation>
+        <translation>Датотека</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="431"/>
         <source>Edit</source>
-        <translation>Edit</translation>
+        <translation>Уреди</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="452"/>
         <source>View</source>
-        <translation>View</translation>
+        <translation>Приказ</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="467"/>
         <source>Snap Selection</source>
-        <translation>Одабир брзе селекције</translation>
+        <translation>Избор хватања</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="479"/>
@@ -3817,7 +3817,7 @@ Auto-save disabled.</source>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3067"/>
         <source>Compiler: GNU GCC %1.%2.%3</source>
-        <translation>Компајлер: ГНУ GCC %1.%2.%3</translation>
+        <translation>Компајлер: GNU GCC %1.%2.%3</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3072"/>
@@ -3831,12 +3831,12 @@ Auto-save disabled.</source>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2882"/>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3255"/>
         <source>Draft Mode</source>
-        <translation>Режим Цртања</translation>
+        <translation>Режим нацрта</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2500"/>
         <source>Export as PDF</source>
-        <translation>Извези као ПДФ</translation>
+        <translation>Извези као PDF</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="692"/>
@@ -3883,7 +3883,7 @@ Please check its existence and permissions.</source>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="258"/>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="523"/>
         <source>Line</source>
-        <translation>Line</translation>
+        <translation>Линија</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="263"/>
@@ -3930,12 +3930,12 @@ Please check its existence and permissions.</source>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="298"/>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="571"/>
         <source>Info</source>
-        <translation>Info</translation>
+        <translation>Информације</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="474"/>
         <source>Pen</source>
-        <translation>Pen</translation>
+        <translation>Оловка</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="486"/>
@@ -3945,7 +3945,7 @@ Please check its existence and permissions.</source>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="187"/>
         <source>Grid Status</source>
-        <translation>Статус поделе</translation>
+        <translation>Статус мреже</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3307"/>
@@ -3955,7 +3955,7 @@ Please check its existence and permissions.</source>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3312"/>
         <source>Dockwidgets</source>
-        <translation>Виџети поставке</translation>
+        <translation>Прикључиви виџети</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3520"/>
@@ -4005,7 +4005,7 @@ Please check its existence and permissions.</source>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3080"/>
         <source>Copy</source>
-        <translation>Copy</translation>
+        <translation>Умножи</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3091"/>
@@ -4097,7 +4097,7 @@ Please check its existence and permissions.</source>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1202"/>
         <source>Rounded</source>
-        <translation>Заоругљено</translation>
+        <translation>Заобљено</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1206"/>
@@ -4117,12 +4117,12 @@ Please check its existence and permissions.</source>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1220"/>
         <source>East</source>
-        <translation>East</translation>
+        <translation>Исток</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1224"/>
         <source>West</source>
-        <translation>West</translation>
+        <translation>Запад</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1229"/>
@@ -4158,7 +4158,7 @@ Please check its existence and permissions.</source>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3461"/>
         <source>Cmd</source>
-        <translation>Cmd</translation>
+        <translation>Команда</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3462"/>
@@ -4169,7 +4169,7 @@ Please check its existence and permissions.</source>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3462"/>
         <source>Dock</source>
         <comment>Dock the command widget to the main window</comment>
-        <translation>Dock</translation>
+        <translation>Док</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="886"/>
@@ -4242,12 +4242,12 @@ Please check its existence and permissions.</source>
     <message>
         <location filename="../src/ui/qg_actionhandler.cpp" line="1275"/>
         <source>Spacebar: restored snapping mode to normal</source>
-        <translation>Просторна тастер: враћено нормално подешавање привлачења</translation>
+        <translation>Размакница: враћен нормалан режим хватања</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_actionhandler.cpp" line="1276"/>
         <source>Spacebar: temporarily set snapping mode to free snapping</source>
-        <translation>Просторна тастер: привремено подешавање привлачења на слободно привлачење</translation>
+        <translation>Размакница: режим хватања привремено подешен на слободно хватање</translation>
     </message>
 </context>
 <context>
@@ -4321,7 +4321,7 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/qg_blockwidget.cpp" line="223"/>
         <source>Insert the active block</source>
-        <translation>Убацити активни блок</translation>
+        <translation>Уметни активни блок</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_blockwidget.cpp" line="387"/>
@@ -4376,7 +4376,7 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/qg_blockwidget.cpp" line="413"/>
         <source>&amp;Insert Block</source>
-        <translation>Уб&amp;аци блок</translation>
+        <translation>&amp;Уметни блок</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_blockwidget.cpp" line="415"/>
@@ -4430,7 +4430,7 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="115"/>
         <source>Red</source>
-        <translation>Red</translation>
+        <translation>Црвено</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="120"/>
@@ -4445,12 +4445,12 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="124"/>
         <source>Cyan</source>
-        <translation>Cyan</translation>
+        <translation>Цијан</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="126"/>
         <source>Blue</source>
-        <translation>Blue</translation>
+        <translation>Плаво</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="128"/>
@@ -4465,7 +4465,7 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="137"/>
         <source>Gray</source>
-        <translation>Gray</translation>
+        <translation>Сиво</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="139"/>
@@ -4588,7 +4588,7 @@ in a separate window</source>
         <location filename="../src/ui/forms/qg_commandwidget.cpp" line="94"/>
         <location filename="../src/ui/forms/qg_commandwidget.cpp" line="344"/>
         <source>Dock</source>
-        <translation>Dock</translation>
+        <translation>Док</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_commandwidget.cpp" line="344"/>
@@ -4603,7 +4603,7 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/forms/qg_commandwidget.cpp" line="345"/>
         <source>Cmd</source>
-        <translation>Cmd</translation>
+        <translation>Команда</translation>
     </message>
 </context>
 <context>
@@ -4647,7 +4647,7 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/forms/qg_dimensionlabeleditor.ui" line="133"/>
         <source>Insert:</source>
-        <translation>Убаци:</translation>
+        <translation>Уметни:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dimensionlabeleditor.ui" line="155"/>
@@ -4682,7 +4682,7 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/forms/qg_dimensionlabeleditor.ui" line="93"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Format of the dimension text, &amp;lt;&amp;gt; can be used as a placeholder for the dimension measurement value&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Формат текста димензије, &amp;lt;&amp;gt; се може користити као замена за вредност мерења димензије&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Формат текста коте, &amp;lt;&amp;gt; се може користити као замена за вредност мерења коте&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dimensionlabeleditor.cpp" line="75"/>
@@ -4703,7 +4703,7 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgarc.ui" line="26"/>
         <source>Arc</source>
-        <translation>Arc</translation>
+        <translation>Лук</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgarc.ui" line="51"/>
@@ -4762,7 +4762,7 @@ in a separate window</source>
         <location filename="../src/ui/forms/qg_dlgattributes.ui" line="69"/>
         <source>Apply attributes also to all sub-entities of selected INSERT.
 This recursively modifies all entities of the Block itself.</source>
-        <translation>Применити својства такође на све под-ентитете изабраног УБАЦИВАЊА.
+        <translation>Примени својства и на све подентитете изабраног уметнутог блока (INSERT).
 Ово рекурзивно мења све ентитете самог блока.</translation>
     </message>
     <message>
@@ -4908,7 +4908,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/forms/qg_dlghatch.ui" line="22"/>
         <source>Pattern</source>
-        <translation>Образац</translation>
+        <translation>Узорак</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlghatch.ui" line="34"/>
@@ -4938,7 +4938,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/forms/qg_dlghatch.ui" line="86"/>
         <source>Area</source>
-        <translation>Area</translation>
+        <translation>Површина</translation>
     </message>
 </context>
 <context>
@@ -5050,7 +5050,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlginsert.ui" line="26"/>
         <source>Insert</source>
-        <translation>Убаци</translation>
+        <translation>Уметни</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlginsert.ui" line="44"/>
@@ -5065,12 +5065,12 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlginsert.ui" line="129"/>
         <source>Insertion point (x):</source>
-        <translation>Тачка убацивања (x):</translation>
+        <translation>Тачка уметања (x):</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlginsert.ui" line="139"/>
         <source>Insertion point (y):</source>
-        <translation>Тачка убацивања (y):</translation>
+        <translation>Тачка уметања (y):</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlginsert.ui" line="189"/>
@@ -5113,7 +5113,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgline.ui" line="29"/>
         <source>Line</source>
-        <translation>Line</translation>
+        <translation>Линија</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgline.ui" line="54"/>
@@ -5256,12 +5256,12 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="759"/>
         <source>Cut</source>
-        <translation>Cut</translation>
+        <translation>Исеци</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="773"/>
         <source>Copy</source>
-        <translation>Copy</translation>
+        <translation>Умножи</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="787"/>
@@ -5934,7 +5934,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgmirror.ui" line="26"/>
         <source>Mirroring Options</source>
-        <translation>Опције огледалних слика</translation>
+        <translation>Опције пресликавања</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmirror.ui" line="70"/>
@@ -6187,7 +6187,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1544"/>
         <source>Dimension line gap:</source>
-        <translation>Растојање линије коте:</translation>
+        <translation>Размак котне линије:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="14"/>
@@ -6242,7 +6242,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="860"/>
         <source>&amp;Dimensions</source>
-        <translation>&amp;Димензије</translation>
+        <translation>&amp;Коте</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="582"/>
@@ -6272,7 +6272,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="552"/>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="557"/>
         <source>auto</source>
-        <translation>auto</translation>
+        <translation>аутоматски</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="570"/>
@@ -6299,7 +6299,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="212"/>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="657"/>
         <source>Left</source>
-        <translation>Left</translation>
+        <translation>Лево</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="676"/>
@@ -6311,7 +6311,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="228"/>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="679"/>
         <source>Top</source>
-        <translation>Top</translation>
+        <translation>Горе</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="698"/>
@@ -6348,12 +6348,12 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1047"/>
         <source>Tick size:</source>
-        <translation>Величина показивача:</translation>
+        <translation>Величина косе црте:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1116"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension Tick size. Set it to 0 will disable the dimension tick. Dimension arrow won&apos;t be drawn when dimension tick is enabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Величина котног зареза. Подесите 0 да искључите конти зарез. Стрелице кота се неће цртати када је котни зарез укључен.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Величина котног зареза. Подесите 0 да искључите котни зарез. Котне стрелице се неће цртати када је котни зарез укључен.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1461"/>
@@ -6398,7 +6398,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="933"/>
         <source>Linear units:</source>
-        <translation>Линијске коте:</translation>
+        <translation>Линеарне јединице:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="949"/>
@@ -6420,7 +6420,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1109"/>
         <source>Linear zeros:</source>
-        <translation>Линијске нуле:</translation>
+        <translation>Линеарне нуле:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1146"/>
@@ -6506,7 +6506,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1554"/>
         <source>Extension lines</source>
-        <translation>Линије препуста</translation>
+        <translation>Помоћне котне линије</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1561"/>
@@ -6562,7 +6562,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1598"/>
         <source>fixed extension line length</source>
-        <translation>фиксна величина линије препуста</translation>
+        <translation>фиксна дужина помоћне котне линије</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1609"/>
@@ -6660,7 +6660,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="932"/>
         <source>Hatch Patterns:</source>
-        <translation>Облици шрафура:</translation>
+        <translation>Узорци шрафура:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="841"/>
@@ -6820,7 +6820,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="777"/>
         <source>Snap indicator:</source>
-        <translation>Показивач прихватних тачака:</translation>
+        <translation>Индикатор хватања:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="199"/>
@@ -6855,7 +6855,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1120"/>
         <source>All</source>
-        <translation>All</translation>
+        <translation>Све</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="192"/>
@@ -6865,17 +6865,17 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="275"/>
         <source>Snap indicator lines</source>
-        <translation>Линије показивача изборника</translation>
+        <translation>Линије индикатора хватања</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="131"/>
         <source>Snap indicator shape</source>
-        <translation>Облик показивача изборника</translation>
+        <translation>Облик индикатора хватања</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="185"/>
         <source>Hide cursor when snapping</source>
-        <translation>Сакриј показивач током аутоматског избора</translation>
+        <translation>Сакриј показивач током хватања</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1143"/>
@@ -6945,7 +6945,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1036"/>
         <source>Don&apos;t use native OS file open dialog</source>
-        <translation>Не користи подразумевани изборник за отварање датотека оперативног система</translation>
+        <translation>Не користи изворни дијалог оперативног система за отварање датотека</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="111"/>
@@ -7025,7 +7025,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1244"/>
         <source>Toggle free snap mode when SPACE BAR is pressed</source>
-        <translation>Промени начин слободног избора када је размакница притиснута</translation>
+        <translation>Укључи/искључи режим слободног хватања када је размакница притиснута</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1254"/>
@@ -7050,7 +7050,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1241"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Temporarily toggle free snapping when the spacebar is pressed and the command window is activated&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>Привремено укључи/искључи слободно прилагођавање када се притисне тастер за размак и прозор са командама је активран</translation>
+        <translation>Привремено укључи/искључи слободно хватање када се притисне тастер за размак и прозор са командама је активиран</translation>
     </message>
 </context>
 <context>
@@ -7445,7 +7445,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="20"/>
         <source>Text</source>
-        <translation>Text</translation>
+        <translation>Текст</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="33"/>
@@ -7470,12 +7470,12 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="101"/>
         <source>Cut</source>
-        <translation>Cut</translation>
+        <translation>Исеци</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="115"/>
         <source>Copy</source>
-        <translation>Copy</translation>
+        <translation>Умножи</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="129"/>
@@ -8217,7 +8217,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="774"/>
         <source>Fit</source>
-        <translation>Fit</translation>
+        <translation>Уклопи</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="838"/>
@@ -8396,7 +8396,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="43"/>
         <source>auto</source>
-        <translation>auto</translation>
+        <translation>аутоматски</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="258"/>
@@ -8462,7 +8462,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_layerdialog.cpp" line="65"/>
         <source>Default Pen</source>
-        <translation>Подразумевано перо</translation>
+        <translation>Подразумевана оловка</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_layerdialog.ui" line="29"/>
@@ -8605,7 +8605,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <location filename="../src/ui/qg_librarywidget.cpp" line="89"/>
         <source>Insert</source>
-        <translation>Убаци</translation>
+        <translation>Уметни</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_librarywidget.cpp" line="93"/>
@@ -8634,17 +8634,17 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="82"/>
         <source>No Pen</source>
-        <translation>без пера</translation>
+        <translation>без оловке</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="83"/>
         <source>Continuous</source>
-        <translation>континуална</translation>
+        <translation>пуна линија</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="84"/>
         <source>Dot</source>
-        <translation>Dot</translation>
+        <translation>тачка</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="86"/>
@@ -8659,7 +8659,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="88"/>
         <source>Dash</source>
-        <translation>Dash</translation>
+        <translation>повлака</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="90"/>
@@ -8782,7 +8782,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <location filename="../src/ui/forms/qg_mousewidget.ui" line="108"/>
         <source>Left</source>
-        <translation>Left</translation>
+        <translation>Лево</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_mousewidget.ui" line="130"/>
@@ -8860,7 +8860,7 @@ p, li { white-space: pre-wrap; }
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Број изабрани ентитета&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Број изабраних ентитета&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_selectionwidget.ui" line="177"/>
@@ -8881,47 +8881,47 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="26"/>
         <source>Snap</source>
-        <translation>Snap</translation>
+        <translation>Хватање</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="47"/>
         <source>Snap to Endpoints</source>
-        <translation>вођица на крајњим тачкама</translation>
+        <translation>Хватање за крајње тачке</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="64"/>
         <source>Snap to equidistant points of entity</source>
-        <translation>вођица на еквидистантним тачкама ентитета</translation>
+        <translation>Хватање за еквидистантне тачке ентитета</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="81"/>
         <source>Snap to center points</source>
-        <translation>вођица на средње тачке</translation>
+        <translation>Хватање за централне тачке</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="98"/>
         <source>Snap to intersections automatically</source>
-        <translation>наведи на тачке пресека аутоматски</translation>
+        <translation>Аутоматско хватање за тачке пресека</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="115"/>
         <source>Snap to closest point on entity</source>
-        <translation>наведи ка најближој тачки ентитета</translation>
+        <translation>Хватање за најближу тачку ентитета</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="132"/>
         <source>Snap to point with given distance to endpoint</source>
-        <translation>наведи на тачку на датој удаљености од крајње</translation>
+        <translation>Хватање за тачку на датом растојању од крајње тачке</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="149"/>
         <source>Snap to intersections manually</source>
-        <translation>наведи на пресеке ручно</translation>
+        <translation>Ручно хватање за пресеке</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="166"/>
         <source>Snap to grid</source>
-        <translation>наведи на мрежу</translation>
+        <translation>Хватање за мрежу</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="183"/>
@@ -8946,42 +8946,42 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="58"/>
         <source>Free Snap</source>
-        <translation>слободно навођење</translation>
+        <translation>Слободно хватање</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="63"/>
         <source>Snap on grid</source>
-        <translation>наведи на мрежу</translation>
+        <translation>Хватање за мрежу</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="68"/>
         <source>Snap on Endpoints</source>
-        <translation>наведи на крајње тачке</translation>
+        <translation>Хватање за крајње тачке</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="73"/>
         <source>Snap on Entity</source>
-        <translation>наведи на ентитет</translation>
+        <translation>Хватање за ентитет</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="78"/>
         <source>Snap Center</source>
-        <translation>наведи на центар</translation>
+        <translation>Хватање за центар</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="83"/>
         <source>Snap Middle</source>
-        <translation>наведи на средину</translation>
+        <translation>Хватање за средину</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="88"/>
         <source>Snap Distance</source>
-        <translation>наведи према растојању</translation>
+        <translation>Хватање на растојању</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="93"/>
         <source>Snap Intersection</source>
-        <translation>наведи на пресек</translation>
+        <translation>Хватање за пресек</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="102"/>
@@ -9016,7 +9016,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="43"/>
         <source>Exclusive Snap Mode</source>
-        <translation>режим ексклузивног навођења</translation>
+        <translation>Режим искључивог хватања</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="224"/>
@@ -9036,7 +9036,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="52"/>
         <source>Snap Middle Manual</source>
-        <translation>Ручно подешавање средишње тачке</translation>
+        <translation>Ручно хватање за средину</translation>
     </message>
 </context>
 <context>
@@ -9045,7 +9045,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/forms/qg_widgetpen.ui" line="26"/>
         <location filename="../src/ui/forms/qg_widgetpen.ui" line="47"/>
         <source>Pen</source>
-        <translation>Pen</translation>
+        <translation>Оловка</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_widgetpen.ui" line="91"/>
@@ -9189,29 +9189,30 @@ This action can NOT be undone.</source>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.cpp" line="214"/>
         <source>Layer empty name is not allowed.</source>
-        <translation>Naziv praznog sloja nije dozvoljen.</translation>
+        <translation>Празан назив слоја није дозвољен.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.cpp" line="278"/>
         <source>Attempt to create layer with duplicating name. Duplicated layer name is 
 [%1].
 Please specify a different name.</source>
-        <translation>Pokušaj kreiranja sloja sa dupliranim imenom. Duplirano ime sloja je \n[%1].
-Molimo, navedite drugačije ime.</translation>
+        <translation>Покушај креирања слоја са дуплираним именом. Дуплирано име слоја је 
+[%1].
+Молимо, наведите другачије име.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.cpp" line="153"/>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.cpp" line="191"/>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.cpp" line="215"/>
         <source>Error</source>
-        <translation>Greška</translation>
+        <translation>Грешка</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.cpp" line="154"/>
         <source>Layer list separator string is empty. It will not be possible to build layers tree.
 Please specify a different value.</source>
-        <translation>Niz za razdvajanje slojeva je prazan. Neće biti moguće izgraditi stablo slojeva.
-Molimo, navedite drugačiju vrednost.</translation>
+        <translation>Низ за раздвајање слојева је празан. Неће бити могуће изградити стабло слојева.
+Молимо, наведите другачију вредност.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.cpp" line="192"/>
@@ -9259,7 +9260,8 @@ Please specify a different name.</source>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1185"/>
         <source>Dimensional layer may be added only for normal active layer.
 </source>
-        <translation>Димензионални слој може се додати само за нормалан активни слој.</translation>
+        <translation>Котни слој може се додати само за нормални активни слој.
+</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1248"/>
@@ -9275,45 +9277,45 @@ Please specify a different name.</source>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1828"/>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1879"/>
         <source>Layer DialogEx</source>
-        <translation>Dijalog slojeva</translation>
+        <translation>Дијалог слојева</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.cpp" line="216"/>
         <source>Invalid value provided for %1 color.
 Please specify a different value.</source>
-        <translation>Nevalidna vrednost uneta za boju %1.
-Molimo, navedite drugačiju vrednost.</translation>
+        <translation>Невалидна вредност унета за боју %1.
+Молимо, наведите другачију вредност.</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1292"/>
         <source>Remove pen</source>
-        <translation>Ukloni pero</translation>
+        <translation>Уклони оловку</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1293"/>
         <source>Pen will be removed from palette, drawing entities will not be affected.</source>
-        <translation>Pero će biti uklonjeno iz palete, a entiteti crteža neće biti izmenjeni.</translation>
+        <translation>Оловка ће бити уклоњена из палете, а ентитети цртежа неће бити измењени.</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1294"/>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1313"/>
         <source>Are you sure you&apos;d like to proceed?</source>
-        <translation>Da li ste sigurni da želite da nastavite?</translation>
+        <translation>Да ли сте сигурни да желите да наставите?</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1295"/>
         <source>Pen for removal:</source>
-        <translation>Pero za uklanjanje:</translation>
+        <translation>Оловка за уклањање:</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1311"/>
         <source>Remove pens</source>
-        <translation>Ukloni pera</translation>
+        <translation>Уклони оловке</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1312"/>
         <source>Pens will be removed from palette, drawing entities will not be affected.</source>
-        <translation>Pera će biti uklonjena iz palete, a entiteti crteža neće biti izmenjeni.</translation>
+        <translation>Оловке ће бити уклоњене из палете, а ентитети цртежа неће бити измењени.</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1314"/>
@@ -9362,9 +9364,9 @@ Molimo, navedite drugačiju vrednost.</translation>
         <source>Layer(s) without entities found, yet they are filtered and not visible.
 
 Clear filtering mask and repeat.</source>
-        <translation>Sloj(evi) bez entiteta, ali su filtrirani i nevidljivi.
+        <translation>Пронађени су слојеви без ентитета, али су филтрирани и невидљиви.
 
-Uklonite masku filtera i ponovite.</translation>
+Уклоните маску филтера и поновите.</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1272"/>
@@ -9373,11 +9375,11 @@ Uklonite masku filtera i ponovite.</translation>
 If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
 
 If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
-        <translation>Da li želite da se vrednost „Po sloju“ zameni vrednostima izvornih slojeva?
+        <translation>Да ли желите да се вредност „По слоју“ замени вредностима изворних слојева?
 
-Ako odgovorite potvrdno, entiteti sa perima „Po sloju“ će izgledati na novom sloju isto kao i na prethodnim slojevima, a vrednost „Po sloju“ biće zamenjena rešenim perima.
+Ако одговорите потврдно, ентитети са оловкама „По слоју“ ће изгледати на новом слоју исто као и на претходним слојевима, а вредност „По слоју“ биће замењена разрешеним оловкама.
 
-Ako odgovorite odrično, vrednosti „Po sloju“ će ostati, pa će pero ciljnog sloja definisati pero za takve entitete.</translation>
+Ако одговорите одрично, вредности „По слоју“ ће остати, па ће оловка циљног слоја дефинисати оловку за такве ентитете.</translation>
     </message>
 </context>
 <context>
@@ -9479,19 +9481,19 @@ Do you want to replace it?</source>
         <location filename="../src/lib/engine/rs_units.cpp" line="206"/>
         <location filename="../src/lib/engine/rs_units.cpp" line="262"/>
         <source>Inch</source>
-        <translation>Inch</translation>
+        <translation>Инчи</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="208"/>
         <location filename="../src/lib/engine/rs_units.cpp" line="264"/>
         <source>Foot</source>
-        <translation>Foot</translation>
+        <translation>Стопе</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="210"/>
         <location filename="../src/lib/engine/rs_units.cpp" line="266"/>
         <source>Mile</source>
-        <translation>Mile</translation>
+        <translation>Миље</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="212"/>
@@ -9527,13 +9529,13 @@ Do you want to replace it?</source>
         <location filename="../src/lib/engine/rs_units.cpp" line="222"/>
         <location filename="../src/lib/engine/rs_units.cpp" line="278"/>
         <source>Mil</source>
-        <translation>Mil</translation>
+        <translation>Мил</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="224"/>
         <location filename="../src/lib/engine/rs_units.cpp" line="280"/>
         <source>Yard</source>
-        <translation>Yard</translation>
+        <translation>Јарди</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="226"/>
@@ -9897,7 +9899,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="336"/>
         <source>tanpc</source>
         <comment>tangent point and circle</comment>
-        <translation>тантк</translation>
+        <translation>tanpc</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="355"/>
@@ -9921,7 +9923,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="383"/>
         <source>poly2</source>
         <comment>polygon by 2 vertices</comment>
-        <translation>поли2</translation>
+        <translation>poly2</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="390"/>
@@ -9939,25 +9941,25 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="398"/>
         <source>c2</source>
         <comment>circle 2 points</comment>
-        <translation>к2</translation>
+        <translation>c2</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="411"/>
         <source>c3</source>
         <comment>circle 3 points</comment>
-        <translation>к3</translation>
+        <translation>c3</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="447"/>
         <source>tan3</source>
         <comment>circle tangent to 3</comment>
-        <translation>тан3</translation>
+        <translation>tan3</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="446"/>
         <source>ct3</source>
         <comment>circle tangent to 3</comment>
-        <translation>цт3</translation>
+        <translation>ct3</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="538"/>
@@ -10023,7 +10025,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="1019"/>
         <source>redraw</source>
         <comment>zoom - redraw</comment>
-        <translation>прецртај</translation>
+        <translation>освежи</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1020"/>
@@ -10221,7 +10223,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="960"/>
         <source>restrictnothing</source>
         <comment>restrict - nothing</comment>
-        <translation>неогранич</translation>
+        <translation>неограничено</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="961"/>
@@ -10335,7 +10337,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="748"/>
         <source>tm2</source>
         <comment>modify - multi trim (extend)</comment>
-        <translation>трн2</translation>
+        <translation>tm2</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="754"/>
@@ -10371,7 +10373,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="893"/>
         <source>snapfree</source>
         <comment>snap - free</comment>
-        <translation>слободни одабир</translation>
+        <translation>snapfree</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="895"/>
@@ -10383,7 +10385,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="900"/>
         <source>snapcenter</source>
         <comment>snap - center</comment>
-        <translation>одабир центра</translation>
+        <translation>snapcenter</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="901"/>
@@ -10395,7 +10397,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="906"/>
         <source>snapdist</source>
         <comment>snap - distance to endpoints</comment>
-        <translation>одабир на растојању</translation>
+        <translation>snapdist</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="907"/>
@@ -10407,7 +10409,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="912"/>
         <source>snapend</source>
         <comment>snap - end points</comment>
-        <translation>одабир крајева</translation>
+        <translation>snapend</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="913"/>
@@ -10419,7 +10421,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="918"/>
         <source>snapgrid</source>
         <comment>snap - grid</comment>
-        <translation>одабир мреже</translation>
+        <translation>snapgrid</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="919"/>
@@ -10431,7 +10433,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="924"/>
         <source>snapintersection</source>
         <comment>snap - intersection</comment>
-        <translation>одабир пресека</translation>
+        <translation>snapintersection</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="925"/>
@@ -10443,7 +10445,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="930"/>
         <source>snapmiddle</source>
         <comment>snap - middle points</comment>
-        <translation>одабир средње тачке</translation>
+        <translation>snapmiddle</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="931"/>
@@ -10455,7 +10457,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="936"/>
         <source>snaponentity</source>
         <comment>snap - on entity</comment>
-        <translation>одабир на ентитету</translation>
+        <translation>snaponentity</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="937"/>
@@ -10473,7 +10475,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="954"/>
         <source>setrelativezero</source>
         <comment>set relative zero position</comment>
-        <translation>подеси релативну нулу</translation>
+        <translation>setrelativezero</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="955"/>
@@ -10485,7 +10487,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="616"/>
         <source>selectall</source>
         <comment>Select all entities</comment>
-        <translation>изабери све</translation>
+        <translation>selectall</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="617"/>
@@ -10497,7 +10499,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="622"/>
         <source>deselectall</source>
         <comment>deselect all entities</comment>
-        <translation>деселектуј све</translation>
+        <translation>deselectall</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="624"/>
@@ -10562,7 +10564,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="1099"/>
         <location filename="../src/cmd/rs_commands.cpp" line="1197"/>
         <source>chord length</source>
-        <translation>дужина жице</translation>
+        <translation>дужина тетиве</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1100"/>
@@ -10573,7 +10575,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1101"/>
         <source>columnspacing</source>
-        <translation>размак колона</translation>
+        <translation>columnspacing</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1103"/>
@@ -10584,12 +10586,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1104"/>
         <source>length</source>
-        <translation>дужина</translation>
+        <translation>length</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1107"/>
         <source>number</source>
-        <translation>број</translation>
+        <translation>number</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1108"/>
@@ -10605,7 +10607,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1110"/>
         <source>rowspacing</source>
-        <translation>размак редова</translation>
+        <translation>rowspacing</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1111"/>
@@ -10675,13 +10677,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="1208"/>
         <source>columnspacing</source>
         <comment>columnspacing for inserts</comment>
-        <translation>размак колона</translation>
+        <translation>размакколона</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1209"/>
         <source>colspacing</source>
         <comment>columnspacing for inserts</comment>
-        <translation>колраз</translation>
+        <translation>colspacing</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1210"/>
@@ -10740,13 +10742,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="1228"/>
         <source>len1</source>
         <comment>length1</comment>
-        <translation>дуж1</translation>
+        <translation>len1</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1229"/>
         <source>l1</source>
         <comment>length1</comment>
-        <translation>д1</translation>
+        <translation>l1</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1231"/>
@@ -10758,13 +10760,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="1232"/>
         <source>len2</source>
         <comment>length2</comment>
-        <translation>дуж2</translation>
+        <translation>len2</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1233"/>
         <source>l2</source>
         <comment>length2</comment>
-        <translation>д2</translation>
+        <translation>l2</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1235"/>
@@ -10813,7 +10815,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="1248"/>
         <source>rowspacing</source>
         <comment>rowspacing for inserts</comment>
-        <translation>размак редова</translation>
+        <translation>размакредова</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1249"/>
@@ -10910,7 +10912,7 @@ Do you want to replace it?</source>
         <location filename="../src/lib/engine/rs_units.cpp" line="204"/>
         <source>None</source>
         <comment>unknown length unit</comment>
-        <translation>None</translation>
+        <translation>Ништа</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4158"/>
@@ -10947,7 +10949,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="747"/>
         <source>t2</source>
         <comment>modify - multi trim (extend)</comment>
-        <translation>т2</translation>
+        <translation>t2</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="795"/>
@@ -10973,7 +10975,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="67"/>
         <source>Edit</source>
-        <translation>Edit</translation>
+        <translation>Уреди</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="68"/>
@@ -10984,7 +10986,7 @@ Do you want to replace it?</source>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="69"/>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="88"/>
         <source>File</source>
-        <translation>File</translation>
+        <translation>Датотека</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="70"/>
@@ -10994,7 +10996,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="71"/>
         <source>Info</source>
-        <translation>Info</translation>
+        <translation>Информације</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="72"/>
@@ -11004,7 +11006,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="73"/>
         <source>Line</source>
-        <translation>Line</translation>
+        <translation>Линија</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="74"/>
@@ -11040,17 +11042,17 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="80"/>
         <source>Snap</source>
-        <translation>Snap</translation>
+        <translation>Хватање</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="81"/>
         <source>Snap Extras</source>
-        <translation>Додатни одабири тачке</translation>
+        <translation>Додатне опције хватања</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="82"/>
         <source>View</source>
-        <translation>View</translation>
+        <translation>Приказ</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="83"/>
@@ -11067,7 +11069,7 @@ Do you want to replace it?</source>
         <location filename="../src/ui/generic/widgetcreator.cpp" line="170"/>
         <location filename="../src/ui/generic/widgetcreator.cpp" line="224"/>
         <source>All</source>
-        <translation>All</translation>
+        <translation>Све</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1983"/>
@@ -11077,7 +11079,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="149"/>
         <source>Pen Wizard</source>
-        <translation>Водич за пера</translation>
+        <translation>Водич за оловке</translation>
     </message>
     <message>
         <location filename="../src/ui/generic/colorwizard.cpp" line="54"/>
@@ -11184,7 +11186,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="313"/>
         <source>lineoff</source>
         <comment>create parallel</comment>
-        <translation>линискљ</translation>
+        <translation>lineoff</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="314"/>
@@ -11292,7 +11294,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="368"/>
         <source>polycp</source>
         <comment>polygon centre point</comment>
-        <translation>полицт</translation>
+        <translation>polycp</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="369"/>
@@ -11316,13 +11318,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="376"/>
         <source>polyct</source>
         <comment>polygon centre vertex</comment>
-        <translation>полигцт</translation>
+        <translation>polyct</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="382"/>
         <source>p2</source>
         <comment>polygon by 2 vertices</comment>
-        <translation>п2</translation>
+        <translation>p2</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="392"/>
@@ -11340,7 +11342,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="399"/>
         <source>c2p</source>
         <comment>circle 2 points</comment>
-        <translation>к2т</translation>
+        <translation>c2p</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="404"/>
@@ -11364,7 +11366,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="412"/>
         <source>c3p</source>
         <comment>circle 3 points</comment>
-        <translation>к3т</translation>
+        <translation>c3p</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="417"/>
@@ -11430,7 +11432,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="445"/>
         <source>t3</source>
         <comment>circle tangent to 3</comment>
-        <translation>кт3</translation>
+        <translation>t3</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="454"/>
@@ -11460,7 +11462,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="462"/>
         <source>a3</source>
         <comment>draw 3pt arc</comment>
-        <translation>л3т</translation>
+        <translation>a3</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="467"/>
@@ -11508,7 +11510,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="514"/>
         <source>ellipsec2p</source>
         <comment>ellipse axis</comment>
-        <translation>елиппсац2т</translation>
+        <translation>елипсац2т</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="515"/>
@@ -11538,7 +11540,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="527"/>
         <source>e4</source>
         <comment>ellipse 4 point</comment>
-        <translation>е4</translation>
+        <translation>e4</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="532"/>
@@ -11550,7 +11552,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="533"/>
         <source>e3</source>
         <comment>ellipse center 3 point</comment>
-        <translation>е3</translation>
+        <translation>e3</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="572"/>
@@ -11646,7 +11648,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="629"/>
         <source>invertselect</source>
         <comment>invert select</comment>
-        <translation>обрс</translation>
+        <translation>invertselect</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="630"/>
@@ -11730,7 +11732,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="728"/>
         <source>r2</source>
         <comment>modify - rotate2</comment>
-        <translation>ро2</translation>
+        <translation>r2</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="733"/>
@@ -11784,13 +11786,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="766"/>
         <source>modbevel</source>
         <comment>modify - bevel</comment>
-        <translation>модзаоб</translation>
+        <translation>модзакос</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="773"/>
         <source>modfillet</source>
         <comment>modify - fillet</comment>
-        <translation>модзакос</translation>
+        <translation>модзаоб</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="779"/>
@@ -11808,7 +11810,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="793"/>
         <source>modproperties</source>
         <comment>modify properties</comment>
-        <translation>модпроп</translation>
+        <translation>модсвојства</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="800"/>
@@ -11820,7 +11822,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="807"/>
         <source>modexpltext</source>
         <comment>explode text strings</comment>
-        <translation>модексплтекст</translation>
+        <translation>раставитекст</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="808"/>
@@ -11832,7 +11834,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="813"/>
         <source>modexplode</source>
         <comment>explode block/polyline into entities</comment>
-        <translation>модекспл</translation>
+        <translation>растави</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="819"/>
@@ -11856,7 +11858,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="836"/>
         <source>infodistep</source>
         <comment>distance entity to point</comment>
-        <translation>инфорасојт</translation>
+        <translation>инфорастојет</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="837"/>
@@ -11952,13 +11954,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="1105"/>
         <source>length1</source>
         <comment>bevel/fillet length1</comment>
-        <translation>дужина1</translation>
+        <translation>length1</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1106"/>
         <source>length2</source>
         <comment>bevel/fillet length2</comment>
-        <translation>дужина2</translation>
+        <translation>length2</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1217"/>
@@ -12066,13 +12068,13 @@ Do you want to replace it?</source>
         <location filename="../src/lib/engine/rs_units.cpp" line="959"/>
         <source>Arch D</source>
         <comment>Paper format</comment>
-        <translation>Arhitektura D</translation>
+        <translation>Arch D</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="960"/>
         <source>Arch E</source>
         <comment>Paper format</comment>
-        <translation>Arhitektura E</translation>
+        <translation>Arch E</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="978"/>
@@ -12150,31 +12152,31 @@ Do you want to replace it?</source>
         <location filename="../src/lib/engine/rs_units.cpp" line="1012"/>
         <source>arch a</source>
         <comment>Paper format</comment>
-        <translation>arh a</translation>
+        <translation>arch a</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="1014"/>
         <source>arch b</source>
         <comment>Paper format</comment>
-        <translation>arh b</translation>
+        <translation>arch b</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="1016"/>
         <source>arch c</source>
         <comment>Paper format</comment>
-        <translation>arh c</translation>
+        <translation>arch c</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="1018"/>
         <source>arch d</source>
         <comment>Paper format</comment>
-        <translation>arh d</translation>
+        <translation>arch d</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="1020"/>
         <source>arch e</source>
         <comment>Paper format</comment>
-        <translation>arh e</translation>
+        <translation>arch e</translation>
     </message>
     <message>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="74"/>
@@ -12431,7 +12433,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/forms/qg_commandwidget.cpp" line="85"/>
         <source>Paste multiple commands</source>
-        <translation>Убаци више команди</translation>
+        <translation>Налепи више команди</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_filedialogservice.cpp" line="221"/>
@@ -12446,7 +12448,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="42"/>
         <source>/CustomColor%1</source>
-        <translation>/ПодешенаБоја%1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="43"/>
@@ -12469,7 +12471,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="188"/>
         <source>sline</source>
         <comment>draw snake line</comment>
-        <translation>translation 2</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="189"/>
@@ -12487,7 +12489,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="195"/>
         <source>slinex</source>
         <comment>draw snake line (X)</comment>
-        <translation>translation 5</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="196"/>
@@ -12505,7 +12507,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="202"/>
         <source>sliney</source>
         <comment>draw snake line (Y)</comment>
-        <translation>translation 8</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="203"/>
@@ -12607,19 +12609,19 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="276"/>
         <source>linepoints</source>
         <comment>draw line of points</comment>
-        <translation>тачке на линији</translation>
+        <translation>линијатачака</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="277"/>
         <source>lpoints</source>
         <comment>draw line of points</comment>
-        <translation>т. на линији</translation>
+        <translation>lpoints</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="282"/>
         <source>criclebyarc</source>
         <comment>draw circle by arc</comment>
-        <translation>круг помоћу лука</translation>
+        <translation>circlebyarc</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="283"/>
@@ -12643,7 +12645,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="294"/>
         <source>linejoin</source>
         <comment>lines join</comment>
-        <translation>спој линија</translation>
+        <translation>споји</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="295"/>
@@ -12655,7 +12657,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="300"/>
         <source>breakdivide</source>
         <comment>break or divide entity</comment>
-        <translation>прекид линије</translation>
+        <translation>breakdivide</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="301"/>
@@ -12667,7 +12669,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="306"/>
         <source>gapline</source>
         <comment>line gap</comment>
-        <translation>размак линије</translation>
+        <translation>gapline</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="307"/>
@@ -12679,19 +12681,19 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="493"/>
         <source>parabola4p</source>
         <comment>Parabola 4 points</comment>
-        <translation>парабола са 4 тачке</translation>
+        <translation>parabola4p</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="494"/>
         <source>pl4</source>
         <comment>Parabola 4 points</comment>
-        <translation>п4</translation>
+        <translation>pl4</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="499"/>
         <source>parabolafd</source>
         <comment>Parabola focus directrix</comment>
-        <translation>парабола са прекидима</translation>
+        <translation>parabolafd</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="500"/>
@@ -12704,13 +12706,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="554"/>
         <source>angleline</source>
         <comment>draw angle from line</comment>
-        <translation>угао</translation>
+        <translation>линијаугла</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="559"/>
         <source>rortoline</source>
         <comment>draw orthogonal</comment>
-        <translation>ротациона линија</translation>
+        <translation>rortoline</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="560"/>
@@ -12722,25 +12724,25 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="565"/>
         <source>point2line</source>
         <comment>draw line from point to line</comment>
-        <translation>тачка до линија</translation>
+        <translation>point2line</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="566"/>
         <source>p2l</source>
         <comment>draw line from point to line</comment>
-        <translation>т-л</translation>
+        <translation>p2l</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="945"/>
         <source>snapmiddlemanual</source>
         <comment>snap middle manual</comment>
-        <translation>ручно подешавање средишње тачке</translation>
+        <translation>snapmiddlemanual</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="946"/>
         <source>snapmanual</source>
         <comment>snap middle manual</comment>
-        <translation>ручно подешавање</translation>
+        <translation>snapmanual</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="947"/>
@@ -12766,37 +12768,37 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1118"/>
         <source>anglerel</source>
-        <translation>ugao</translation>
+        <translation>anglerel</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1119"/>
         <source>start</source>
-        <translation>почетак</translation>
+        <translation>start</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1122"/>
         <source>offset</source>
-        <translation>офсет</translation>
+        <translation>offset</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1123"/>
         <source>linesnap</source>
-        <translation>прилагођавање линијама</translation>
+        <translation>linesnap</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1124"/>
         <source>ticksnap</source>
-        <translation>прилагођавање ознакама</translation>
+        <translation>ticksnap</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1127"/>
         <source>width</source>
-        <translation>ширина</translation>
+        <translation>width</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1128"/>
         <source>height</source>
-        <translation>висина</translation>
+        <translation>height</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1129"/>
@@ -12812,22 +12814,22 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="1131"/>
         <location filename="../src/cmd/rs_commands.cpp" line="1137"/>
         <source>bevels</source>
-        <translation>ivice</translation>
+        <translation>bevels</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1132"/>
         <source>nopoly</source>
-        <translation>bez poligona</translation>
+        <translation>nopoly</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1133"/>
         <source>usepoly</source>
-        <translation>koristi poligon</translation>
+        <translation>usepoly</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1134"/>
         <source>corners</source>
-        <translation>uglovi</translation>
+        <translation>corners</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1135"/>
@@ -12837,12 +12839,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1136"/>
         <source>round</source>
-        <translation>zaobljeno</translation>
+        <translation>round</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1138"/>
         <source>snap1</source>
-        <translation>podesi na 1</translation>
+        <translation>snap1</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1139"/>
@@ -12867,47 +12869,47 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1143"/>
         <source>middle</source>
-        <translation>sredina</translation>
+        <translation>middle</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1144"/>
         <source>right</source>
-        <translation>desno</translation>
+        <translation>right</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1145"/>
         <source>bottoml</source>
-        <translation>donji levi ugao</translation>
+        <translation>bottoml</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1146"/>
         <source>bottom</source>
-        <translation>dno</translation>
+        <translation>bottom</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1147"/>
         <source>bottomr</source>
-        <translation>donji desni ugao</translation>
+        <translation>bottomr</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1148"/>
         <source>snapcorner</source>
-        <translation>ugao za pričvršćivanje</translation>
+        <translation>snapcorner</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1149"/>
         <source>snapshift</source>
-        <translation>pomak za pričvršćivanje</translation>
+        <translation>snapshift</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1150"/>
         <source>sizein</source>
-        <translation>veličina unutra</translation>
+        <translation>sizein</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1151"/>
         <source>sizeout</source>
-        <translation>veličina spolja</translation>
+        <translation>sizeout</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1152"/>
@@ -12922,22 +12924,22 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1156"/>
         <source>snap2</source>
-        <translation>прилагоди</translation>
+        <translation>snap2</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1157"/>
         <source>corner</source>
-        <translation>угао</translation>
+        <translation>corner</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1158"/>
         <source>mid-vert</source>
-        <translation>средња вертикала</translation>
+        <translation>mid-vert</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1159"/>
         <source>mid-hor</source>
-        <translation>средња хоризонтала</translation>
+        <translation>mid-hor</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1161"/>
@@ -12947,37 +12949,37 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1162"/>
         <source>noquad</source>
-        <translation>без квада</translation>
+        <translation>noquad</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1163"/>
         <source>angle_inner</source>
-        <translation>унутрашњи угао</translation>
+        <translation>angle_inner</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1166"/>
         <source>edges</source>
-        <translation>ивице</translation>
+        <translation>edges</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1167"/>
         <source>edge-none</source>
-        <translation>без ивице</translation>
+        <translation>edge-none</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1168"/>
         <source>edge-both</source>
-        <translation>са обе стране</translation>
+        <translation>edge-both</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1169"/>
         <source>edge-start</source>
-        <translation>са почетка</translation>
+        <translation>edge-start</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1170"/>
         <source>edge-end</source>
-        <translation>са краја</translation>
+        <translation>edge-end</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1171"/>
@@ -13002,12 +13004,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1175"/>
         <source>nofit</source>
-        <translation>не прилагођавај</translation>
+        <translation>nofit</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1176"/>
         <source>dist_fixed</source>
-        <translation>фиксна удаљеност</translation>
+        <translation>dist_fixed</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1177"/>
@@ -13017,7 +13019,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1178"/>
         <source>distance</source>
-        <translation>udaljenost</translation>
+        <translation>distance</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1182"/>
@@ -13027,17 +13029,17 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1183"/>
         <source>nosym</source>
-        <translation>bez simetrije</translation>
+        <translation>nosym</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_patternlist.cpp" line="63"/>
         <source>Hatch:: no pattern found. Please set pattern path in application preferences</source>
-        <translation>Hatch:: Nije pronađen uzorak. Molimo, postavite putanju uzorka u preferencijama aplikacije.</translation>
+        <translation>Шрафура: није пронађен узорак. Молимо, поставите путању до узорака у подешавањима апликације.</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_patternlist.cpp" line="85"/>
         <source>Hatch:: loading pattern failed: %1</source>
-        <translation>Hatch:: Učitavanje uzorka nije uspelo: %1</translation>
+        <translation>Шрафура: учитавање узорка није успело: %1</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="84"/>
@@ -13047,17 +13049,17 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/lc_peninforegistry.cpp" line="204"/>
         <source>By Layer</source>
-        <translation>Po sloju</translation>
+        <translation>По слоју</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_peninforegistry.cpp" line="207"/>
         <source>By Block</source>
-        <translation>Po bloku</translation>
+        <translation>По блоку</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_peninforegistry.cpp" line="210"/>
         <source>- Unchanged -</source>
-        <translation>- Neizmenjeno -</translation>
+        <translation>- Неизмењено -</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="44"/>
@@ -13279,7 +13281,7 @@ Do you want to replace it?</source>
         <location filename="../src/actions/rs_actionblocksinsert.cpp" line="80"/>
         <source> has nested insert of current block in:
 </source>
-        <translation> садржи унутрашње убацивање тренутног блока у:
+        <translation> садржи угњеждено уметање тренутног блока у:
 </translation>
     </message>
     <message>
@@ -13287,7 +13289,7 @@ Do you want to replace it?</source>
         <source>
 This block cannot be inserted.</source>
         <translation>
-Овај блок не може бити убачен.</translation>
+Овај блок не може бити уметнут.</translation>
     </message>
 </context>
 <context>
@@ -13308,7 +13310,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondefault.cpp" line="501"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Назад</translation>
     </message>
 </context>
 <context>
@@ -13316,7 +13318,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="252"/>
         <source>Specify first extension line origin</source>
-        <translation>Одредите почетну тачку прве линије продужења</translation>
+        <translation>Одредите почетак прве помоћне котне линије</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="253"/>
@@ -13326,13 +13328,13 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="257"/>
         <source>Specify second extension line origin</source>
-        <translation>Одредите почетак друге линије продужења</translation>
+        <translation>Одредите почетак друге помоћне котне линије</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="258"/>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="263"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Назад</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="262"/>
@@ -13442,7 +13444,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="283"/>
         <source>Specify first extension line origin</source>
-        <translation>Одредите почетак прве линије препуста коте</translation>
+        <translation>Одредите почетак прве помоћне котне линије</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="284"/>
@@ -13452,13 +13454,13 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="288"/>
         <source>Specify second extension line origin</source>
-        <translation>Одредите почетак друге линије препуста коте</translation>
+        <translation>Одредите почетак друге помоћне котне линије</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="289"/>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="294"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Назад</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="293"/>
@@ -13524,7 +13526,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawarc.cpp" line="315"/>
         <source>Not a valid chord length</source>
-        <translation>Није исправна дужина жице</translation>
+        <translation>Није исправна дужина тетиве</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawarc.cpp" line="336"/>
@@ -13548,7 +13550,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawarc.cpp" line="352"/>
         <location filename="../src/actions/rs_actiondrawarc.cpp" line="356"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Назад</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawarc.cpp" line="343"/>
@@ -13563,12 +13565,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawarc.cpp" line="355"/>
         <source>Specify chord length:</source>
-        <translation>Одредите дужину жице:</translation>
+        <translation>Одредите дужину тетиве:</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawarc.cpp" line="347"/>
         <source>Specify end angle or [angle/chord length]</source>
-        <translation>Одредите крајњни угао или [угао/жичну дужину]</translation>
+        <translation>Одредите крајњи угао или [угао/дужина тетиве]</translation>
     </message>
 </context>
 <context>
@@ -13592,7 +13594,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawarc3p.cpp" line="238"/>
         <location filename="../src/actions/rs_actiondrawarc3p.cpp" line="242"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Назад</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawarc3p.cpp" line="242"/>
@@ -13626,7 +13628,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawarctangential.cpp" line="232"/>
         <location filename="../src/actions/rs_actiondrawarctangential.cpp" line="235"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Назад</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawarctangential.cpp" line="235"/>
@@ -13654,7 +13656,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawcircle.cpp" line="176"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Назад</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircle.cpp" line="176"/>
@@ -13664,7 +13666,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawcircle.cpp" line="215"/>
         <source>Please specify center first</source>
-        <translation>Молимо Vas да прво наведете центар</translation>
+        <translation>Молимо Вас да прво наведете центар</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircle.cpp" line="231"/>
@@ -13697,7 +13699,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawcircle2p.cpp" line="188"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Назад</translation>
     </message>
 </context>
 <context>
@@ -13726,7 +13728,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawcircle3p.cpp" line="191"/>
         <location filename="../src/actions/rs_actiondrawcircle3p.cpp" line="195"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Назад</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircle3p.cpp" line="194"/>
@@ -13759,7 +13761,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawcirclecr.cpp" line="228"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Назад</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcirclecr.cpp" line="106"/>
@@ -13798,7 +13800,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawcircleinscribe.cpp" line="275"/>
         <location filename="../src/actions/rs_actiondrawcircleinscribe.cpp" line="280"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Назад</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircleinscribe.cpp" line="279"/>
@@ -13823,7 +13825,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawcircletan1_2p.cpp" line="436"/>
         <location filename="../src/actions/rs_actiondrawcircletan1_2p.cpp" line="440"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Назад</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan1_2p.cpp" line="435"/>
@@ -13838,7 +13840,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan1_2p.cpp" line="425"/>
         <source>Specify a line/arc/circle</source>
-        <translation>Одредите линију/лик/круг</translation>
+        <translation>Одредите линију/лук/круг</translation>
     </message>
 </context>
 <context>
@@ -13862,7 +13864,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawcircletan2.cpp" line="332"/>
         <location filename="../src/actions/rs_actiondrawcircletan2.cpp" line="337"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Назад</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan2.cpp" line="336"/>
@@ -13917,7 +13919,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawcircletan2_1p.cpp" line="344"/>
         <location filename="../src/actions/rs_actiondrawcircletan2_1p.cpp" line="348"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Назад</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan2_1p.cpp" line="343"/>
@@ -13942,7 +13944,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawcircletan3.cpp" line="473"/>
         <location filename="../src/actions/rs_actiondrawcircletan3.cpp" line="478"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Назад</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan3.cpp" line="477"/>
@@ -13987,7 +13989,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawellipse4points.cpp" line="295"/>
         <location filename="../src/actions/rs_actiondrawellipse4points.cpp" line="300"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Назад</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipse4points.cpp" line="294"/>
@@ -14035,7 +14037,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawellipseaxis.cpp" line="367"/>
         <location filename="../src/actions/rs_actiondrawellipseaxis.cpp" line="372"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Назад</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipseaxis.cpp" line="361"/>
@@ -14080,7 +14082,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawellipsecenter3points.cpp" line="292"/>
         <location filename="../src/actions/rs_actiondrawellipsecenter3points.cpp" line="297"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Назад</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipsecenter3points.cpp" line="296"/>
@@ -14114,7 +14116,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawellipsefocipoint.cpp" line="244"/>
         <location filename="../src/actions/rs_actiondrawellipsefocipoint.cpp" line="250"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Назад</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipsefocipoint.cpp" line="249"/>
@@ -14154,7 +14156,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawellipseinscribe.cpp" line="290"/>
         <location filename="../src/actions/rs_actiondrawellipseinscribe.cpp" line="295"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Назад</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawellipseinscribe.cpp" line="289"/>
@@ -14192,12 +14194,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawhatch.cpp" line="157"/>
         <source>Hatch Error: Pattern not found!</source>
-        <translation>Грешка шрафирања: Образац није пронађен!</translation>
+        <translation>Грешка шрафирања: узорак није пронађен!</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawhatch.cpp" line="160"/>
         <source>Hatch Error: Contour or pattern too small!</source>
-        <translation>Грешка шрафирања: Контура или образац су превише мали!</translation>
+        <translation>Грешка шрафирања: контура или узорак су премали!</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawhatch.cpp" line="163"/>
@@ -14271,7 +14273,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawline.cpp" line="338"/>
         <location filename="../src/actions/rs_actiondrawline.cpp" line="342"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Назад</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawline.cpp" line="341"/>
@@ -14321,7 +14323,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawlineangle.cpp" line="305"/>
         <location filename="../src/actions/rs_actiondrawlineangle.cpp" line="309"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Назад</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlineangle.cpp" line="309"/>
@@ -14357,7 +14359,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawlinebisector.cpp" line="297"/>
         <location filename="../src/actions/rs_actiondrawlinebisector.cpp" line="301"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Назад</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinebisector.cpp" line="296"/>
@@ -14409,7 +14411,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawlinehorvert.cpp" line="162"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Назад</translation>
     </message>
 </context>
 <context>
@@ -14432,7 +14434,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawlineorthtan.cpp" line="190"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Назад</translation>
     </message>
 </context>
 <context>
@@ -14485,7 +14487,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawlineparallelthrough.cpp" line="181"/>
         <location filename="../src/actions/rs_actiondrawlineparallelthrough.cpp" line="185"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Назад</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlineparallelthrough.cpp" line="185"/>
@@ -14552,7 +14554,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawlinepolygon2.cpp" line="150"/>
         <location filename="../src/actions/rs_actiondrawlinepolygon2.cpp" line="154"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Назад</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinepolygon2.cpp" line="154"/>
@@ -14590,7 +14592,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawlinerectangle.cpp" line="160"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Назад</translation>
     </message>
 </context>
 <context>
@@ -14619,7 +14621,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawlinerelangle.cpp" line="279"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Назад</translation>
     </message>
 </context>
 <context>
@@ -14642,7 +14644,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawlinetangent1.cpp" line="187"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Назад</translation>
     </message>
 </context>
 <context>
@@ -14656,22 +14658,22 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawlinetangent2.cpp" line="287"/>
         <location filename="../src/actions/rs_actiondrawlinetangent2.cpp" line="291"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Назад</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinetangent2.cpp" line="282"/>
         <source>Select first circle/ellipse/parabola</source>
-        <translation>Izaberite prvi krug/elipsu/parabolu</translation>
+        <translation>Изаберите први круг/елипсу/параболу</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinetangent2.cpp" line="286"/>
         <source>Select second circle/ellipse/parabola</source>
-        <translation>Izaberite drugu krug/elipsu/parabolu</translation>
+        <translation>Изаберите други круг/елипсу/параболу</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinetangent2.cpp" line="290"/>
         <source>Select the tangent line closest to cursor</source>
-        <translation>Izaberite tangentu najbližu kursoru</translation>
+        <translation>Изаберите тангенту најближу курсору</translation>
     </message>
 </context>
 <context>
@@ -14694,7 +14696,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawmtext.cpp" line="261"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Назад</translation>
     </message>
 </context>
 <context>
@@ -14731,7 +14733,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawpolyline.cpp" line="695"/>
         <location filename="../src/actions/rs_actiondrawpolyline.cpp" line="699"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Назад</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawpolyline.cpp" line="698"/>
@@ -14817,7 +14819,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actiondrawspline.cpp" line="291"/>
         <location filename="../src/actions/rs_actiondrawspline.cpp" line="295"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Назад</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawspline.cpp" line="294"/>
@@ -14856,7 +14858,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawtext.cpp" line="291"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Назад</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawtext.cpp" line="285"/>
@@ -14928,7 +14930,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actioninfoangle.cpp" line="145"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Назад</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actioninfoangle.cpp" line="94"/>
@@ -14995,7 +14997,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actioninfodist.cpp" line="175"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Назад</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actioninfodist.cpp" line="80"/>
@@ -15028,7 +15030,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actioninfodist2.cpp" line="161"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Назад</translation>
     </message>
 </context>
 <context>
@@ -15142,7 +15144,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionmodifybevel.cpp" line="281"/>
         <location filename="../src/actions/rs_actionmodifybevel.cpp" line="285"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Назад</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifybevel.cpp" line="280"/>
@@ -15191,7 +15193,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifycut.cpp" line="150"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Назад</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifycut.cpp" line="110"/>
@@ -15219,7 +15221,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="177"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Назад</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="106"/>
@@ -15293,7 +15295,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifymirror.cpp" line="161"/>
         <source>Specify first point of mirror line</source>
-        <translation>Одредите прву тачку огледалне линије</translation>
+        <translation>Одредите прву тачку осе симетрије</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifymirror.cpp" line="162"/>
@@ -15303,12 +15305,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifymirror.cpp" line="166"/>
         <source>Specify second point of mirror line</source>
-        <translation>Одредите другу тачку огледалне линије</translation>
+        <translation>Одредите другу тачку осе симетрије</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifymirror.cpp" line="167"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Назад</translation>
     </message>
 </context>
 <context>
@@ -15331,7 +15333,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifymove.cpp" line="175"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Назад</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifymove.cpp" line="150"/>
@@ -15365,7 +15367,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionmodifymoverotate.cpp" line="240"/>
         <location filename="../src/actions/rs_actionmodifymoverotate.cpp" line="244"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Назад</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifymoverotate.cpp" line="243"/>
@@ -15378,12 +15380,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifyoffset.cpp" line="101"/>
         <source>Specify direction of offset</source>
-        <translation>Одредите смер офсета</translation>
+        <translation>Одредите смер одмака</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifyoffset.cpp" line="101"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Назад</translation>
     </message>
 </context>
 <context>
@@ -15398,7 +15400,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionmodifyrotate.cpp" line="150"/>
         <location filename="../src/actions/rs_actionmodifyrotate.cpp" line="154"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Назад</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifyrotate.cpp" line="144"/>
@@ -15431,7 +15433,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifyrotate2.cpp" line="153"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Назад</translation>
     </message>
 </context>
 <context>
@@ -15446,7 +15448,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionmodifyround.cpp" line="420"/>
         <location filename="../src/actions/rs_actionmodifyround.cpp" line="424"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Назад</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifyround.cpp" line="423"/>
@@ -15486,12 +15488,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifyscale.cpp" line="238"/>
         <source>Specify scale center</source>
-        <translation>Odredite centar za skaliranje</translation>
+        <translation>Одредите центар за скалирање</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifyscale.cpp" line="247"/>
         <source>Specify target point</source>
-        <translation>Odredite ciljnu tačku</translation>
+        <translation>Одредите циљну тачку</translation>
     </message>
 </context>
 <context>
@@ -15516,7 +15518,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionmodifystretch.cpp" line="184"/>
         <location filename="../src/actions/rs_actionmodifystretch.cpp" line="188"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Назад</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifystretch.cpp" line="183"/>
@@ -15534,7 +15536,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifytrim.cpp" line="177"/>
         <source>Select first trim entity</source>
-        <translation>Изаберите први ентитет за скраћивање</translation>
+        <translation>Изаберите први ентитет за одсецање</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifytrim.cpp" line="178"/>
@@ -15551,17 +15553,17 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionmodifytrim.cpp" line="181"/>
         <location filename="../src/actions/rs_actionmodifytrim.cpp" line="190"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Назад</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifytrim.cpp" line="186"/>
         <source>Select second trim entity</source>
-        <translation>Одаберите други ентитет за скраћивање</translation>
+        <translation>Изаберите други ентитет за одсецање</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifytrim.cpp" line="189"/>
         <source>Select entity to trim</source>
-        <translation>Изаберите ентитет који желите да скратите</translation>
+        <translation>Изаберите ентитет који желите да одсечете</translation>
     </message>
 </context>
 <context>
@@ -15594,7 +15596,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifytrimamount.cpp" line="187"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Назад</translation>
     </message>
 </context>
 <context>
@@ -15656,7 +15658,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylineadd.cpp" line="162"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Назад</translation>
     </message>
 </context>
 <context>
@@ -15695,7 +15697,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionpolylineappend.cpp" line="208"/>
         <location filename="../src/actions/rs_actionpolylineappend.cpp" line="212"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Назад</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylineappend.cpp" line="211"/>
@@ -15744,7 +15746,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylinedel.cpp" line="163"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Назад</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinedel.cpp" line="129"/>
@@ -15796,7 +15798,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionpolylinedelbetween.cpp" line="194"/>
         <location filename="../src/actions/rs_actionpolylinedelbetween.cpp" line="198"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Назад</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinedelbetween.cpp" line="197"/>
@@ -15891,7 +15893,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="181"/>
         <source>Specify polyline to trim</source>
-        <translation>Одредите полилинију за скраћивање</translation>
+        <translation>Одредите полилинију за одсецање</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="182"/>
@@ -15907,7 +15909,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="186"/>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="190"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Назад</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="189"/>
@@ -16029,7 +16031,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="113"/>
         <source>Select to mirror</source>
-        <translation>Изаберите за огладало</translation>
+        <translation>Изаберите за пресликавање</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="116"/>
@@ -16044,7 +16046,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="125"/>
         <source>Select to explode text</source>
-        <translation>Изабериде да експлодирате текст</translation>
+        <translation>Изаберите да раставите текст</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="131"/>
@@ -16075,7 +16077,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="119"/>
         <source>Select to create offset</source>
-        <translation>Изаберите да креирате офсет</translation>
+        <translation>Изаберите за одмак</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="86"/>
@@ -16085,7 +16087,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="128"/>
         <source>Select to explode block</source>
-        <translation>Изаберите да експлодирате блок</translation>
+        <translation>Изаберите да раставите блок</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="104"/>
@@ -16121,7 +16123,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionselectintersected.cpp" line="143"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Назад</translation>
     </message>
 </context>
 <context>
@@ -16139,7 +16141,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionselectwindow.cpp" line="184"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Назад</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselectwindow.cpp" line="181"/>
@@ -16181,7 +16183,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/rs_actionsnapintersectionmanual.cpp" line="183"/>
         <location filename="../src/actions/rs_actionsnapintersectionmanual.cpp" line="187"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Назад</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionsnapintersectionmanual.cpp" line="186"/>
@@ -16207,7 +16209,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionzoompan.cpp" line="127"/>
         <source>Click and drag to pan zoom</source>
-        <translation>Кликните и повуците за премештања и увећавање</translation>
+        <translation>Кликните и превуците за померање погледа</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionzoompan.cpp" line="128"/>
@@ -16218,7 +16220,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionzoompan.cpp" line="131"/>
         <source>Zoom panning</source>
-        <translation>Увећавање премештањем</translation>
+        <translation>Померање погледа</translation>
     </message>
 </context>
 <context>
@@ -16241,7 +16243,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionzoomwindow.cpp" line="154"/>
         <source>Back</source>
-        <translation>Back</translation>
+        <translation>Назад</translation>
     </message>
 </context>
 <context>
@@ -16249,7 +16251,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/lib/gui/rs_graphicview.cpp" line="1550"/>
         <source>Draft</source>
-        <translation>Skica</translation>
+        <translation>Скица</translation>
     </message>
 </context>
 <context>
@@ -16313,17 +16315,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_beveloptions.ui" line="32"/>
         <source>Bevel Options</source>
-        <translation>Опције заобљења</translation>
+        <translation>Опције скоса</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_beveloptions.ui" line="53"/>
         <source>Check to trim both entities to the bevel</source>
-        <translation>Изаберите да исечете оба ентитета на заобљење</translation>
+        <translation>Означите да бисте оба ентитета одсекли до скоса</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_beveloptions.ui" line="56"/>
         <source>Trim</source>
-        <translation>Trim</translation>
+        <translation>Одсеци</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_beveloptions.ui" line="79"/>
@@ -16359,7 +16361,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_circletan2options.ui" line="56"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Radius of the tangential circle to draw&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Полупречик за цртање тангетног круга&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Полупречник тангентног круга који се црта&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_circletan2options.ui" line="59"/>
@@ -16377,7 +16379,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_dimlinearoptions.ui" line="32"/>
         <source>Linear Dimension Options</source>
-        <translation>Опције линијске коте</translation>
+        <translation>Опције линеарне коте</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dimlinearoptions.ui" line="68"/>
@@ -16439,7 +16441,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_imageoptions.ui" line="32"/>
         <source>Insert Options</source>
-        <translation>Опције убацивања</translation>
+        <translation>Опције уметања</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_imageoptions.ui" line="53"/>
@@ -16477,7 +16479,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_insertoptions.ui" line="32"/>
         <source>Insert Options</source>
-        <translation>Опције убацивања</translation>
+        <translation>Опције уметања</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_insertoptions.ui" line="65"/>
@@ -16535,7 +16537,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_libraryinsertoptions.ui" line="32"/>
         <source>Library Insert Options</source>
-        <translation>Опција убацивања из библиотеке</translation>
+        <translation>Опције уметања из библиотеке</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_libraryinsertoptions.ui" line="53"/>
@@ -16588,7 +16590,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_lineangleoptions.ui" line="147"/>
         <source>Snap Point:</source>
-        <translation>Тачка привлачења:</translation>
+        <translation>Тачка хватања:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_lineangleoptions.ui" line="170"/>
@@ -16603,7 +16605,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_lineangleoptions.ui" line="180"/>
         <source>End</source>
-        <translation>End</translation>
+        <translation>Крај</translation>
     </message>
 </context>
 <context>
@@ -16659,7 +16661,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_lineoptions.ui" line="75"/>
         <source>Undo</source>
-        <translation>Undo</translation>
+        <translation>Опозови</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_lineoptions.ui" line="82"/>
@@ -16669,7 +16671,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_lineoptions.ui" line="85"/>
         <source>Redo</source>
-        <translation>Redo</translation>
+        <translation>Понови</translation>
     </message>
 </context>
 <context>
@@ -16677,17 +16679,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="32"/>
         <source>Line Options</source>
-        <translation>Opcije linije</translation>
+        <translation>Опције линије</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="56"/>
         <source>Direction:</source>
-        <translation>Smer:</translation>
+        <translation>Смер:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="103"/>
         <source>Polyline</source>
-        <translation>Polilinija</translation>
+        <translation>Полилинија</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="122"/>
@@ -16697,7 +16699,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="141"/>
         <source>Angle</source>
-        <translation>translation 2</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="160"/>
@@ -16707,37 +16709,37 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="195"/>
         <source>Rel</source>
-        <translation>Rel</translation>
+        <translation>Релативно</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="224"/>
         <source>Undo the last line drawing</source>
-        <translation>translation 5</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="227"/>
         <source>Undo</source>
-        <translation>Undo</translation>
+        <translation>Опозови</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="234"/>
         <source>Form a closed contour from lines drawn</source>
-        <translation>translation 7</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="237"/>
         <source>Close</source>
-        <translation>translation 8</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="253"/>
         <source>Redo the last line drawing</source>
-        <translation>translation 9</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="256"/>
         <source>Redo</source>
-        <translation>Redo</translation>
+        <translation>Понови</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="297"/>
@@ -16878,7 +16880,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_modifyoffsetoptions.ui" line="32"/>
         <source>Modify Offset Options</source>
-        <translation>Промена опција офсета</translation>
+        <translation>Опције одмака</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_modifyoffsetoptions.ui" line="56"/>
@@ -16888,7 +16890,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_modifyoffsetoptions.ui" line="72"/>
         <source>Offset from original entity</source>
-        <translation>Размак од оригиналног ентитета</translation>
+        <translation>Одмак од оригиналног ентитета</translation>
     </message>
 </context>
 <context>
@@ -16896,7 +16898,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_moverotateoptions.ui" line="32"/>
         <source>Move Rotate Options</source>
-        <translation>Опције премештања-померања</translation>
+        <translation>Опције премештања-ротирања</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_moverotateoptions.ui" line="50"/>
@@ -16919,12 +16921,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="60"/>
         <source>Undo</source>
-        <translation>Undo</translation>
+        <translation>Опозови</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="80"/>
         <source>Line</source>
-        <translation>Line</translation>
+        <translation>Линија</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_polylineoptions.ui" line="85"/>
@@ -17020,12 +17022,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_roundoptions.ui" line="53"/>
         <source>Check to trim both edges to the rounding</source>
-        <translation>Изаберите да исечете обе ивице до заокругљења</translation>
+        <translation>Означите да бисте обе ивице одсекли до заобљења</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_roundoptions.ui" line="56"/>
         <source>Trim</source>
-        <translation>Trim</translation>
+        <translation>Одсеци</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_roundoptions.ui" line="79"/>
@@ -17038,7 +17040,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_snapdistoptions.ui" line="32"/>
         <source>Snap Distance Options</source>
-        <translation>Опције растојања прихвата</translation>
+        <translation>Опције растојања хватања</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snapdistoptions.ui" line="50"/>
@@ -17051,7 +17053,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_snapmiddleoptions.ui" line="35"/>
         <source>Snap Distance Options</source>
-        <translation>Опције растојања прихвата</translation>
+        <translation>Опције растојања хватања</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snapmiddleoptions.ui" line="47"/>
@@ -17084,7 +17086,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_splineoptions.ui" line="104"/>
         <source>Undo</source>
-        <translation>Undo</translation>
+        <translation>Опозови</translation>
     </message>
 </context>
 <context>
@@ -17110,12 +17112,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_trimamountoptions.ui" line="20"/>
         <source>Trim Amount Options</source>
-        <translation>Опције количине сечења</translation>
+        <translation>Опције продужавања</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_trimamountoptions.ui" line="23"/>
         <source>Distance. Negative values for trimming, positive values for extending.</source>
-        <translation>Растојање. Негативне вредности за сечење, позитивне вредности за продуживање.</translation>
+        <translation>Растојање. Негативне вредности за скраћивање, позитивне вредности за продужавање.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_trimamountoptions.ui" line="56"/>
@@ -17125,12 +17127,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_trimamountoptions.ui" line="78"/>
         <source>Distance. Negative values for trimming, positive values for extending. Negative sign is ignored when trimming to final total length.</source>
-        <translation>Растојање. Негативне вредности за сечење, позитивне вредности за продужење. Негативан знак је игнорисан када се сече до финалне укупне дужине.</translation>
+        <translation>Растојање. Негативне вредности за скраћивање, позитивне вредности за продужавање. Негативан знак се занемарује при скраћивању на коначну укупну дужину.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_trimamountoptions.ui" line="97"/>
         <source>The input length is used as total length after trimming, instead of length increase</source>
-        <translation>Унета дужина се користи као тотална дужина после сечења, уместо увећања дужине</translation>
+        <translation>Унета дужина се користи као укупна дужина након скраћивања, уместо повећања дужине</translation>
     </message>
 </context>
 <context>
@@ -17153,7 +17155,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/generic/widgetcreator.ui" line="155"/>
         <source>Name</source>
-        <translation>Name</translation>
+        <translation>Име</translation>
     </message>
     <message>
         <location filename="../src/ui/generic/widgetcreator.ui" line="196"/>

@@ -64,7 +64,7 @@
     <message>
         <location filename="../src/ui/forms/LC_DlgParabola.ui" line="142"/>
         <source>Control Points</source>
-        <translation>Irányító pontok</translation>
+        <translation>Vezérlőpontok</translation>
     </message>
 </context>
 <context>
@@ -72,7 +72,7 @@
     <message>
         <location filename="../src/ui/forms/lc_dlgsplinepoints.ui" line="26"/>
         <source>SplinePoints</source>
-        <translation>Hajlítható vonal Ponttal</translation>
+        <translation>Spline-pontok</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_dlgsplinepoints.ui" line="62"/>
@@ -92,18 +92,18 @@
     <message>
         <location filename="../src/ui/forms/lc_dlgsplinepoints.ui" line="110"/>
         <source>Spline Points</source>
-        <translation>Hajlítható vonal Ponttal</translation>
+        <translation>Spline-pontok</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_dlgsplinepoints.ui" line="120"/>
         <source>Control Points</source>
-        <translation>Ellenőrző pont</translation>
+        <translation>Vezérlőpontok</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_dlgsplinepoints.ui" line="135"/>
         <location filename="../src/ui/forms/lc_dlgsplinepoints.ui" line="138"/>
         <source>Points on Spline</source>
-        <translation>Pont a görbén</translation>
+        <translation>Pontok a spline-on</translation>
     </message>
 </context>
 <context>
@@ -424,7 +424,7 @@ vagy [%2]</translation>
     <message>
         <location filename="../src/actions/lc_abstractactionwithpreview.cpp" line="860"/>
         <source> is not divided as it is part of polyline. Expand polyline first.</source>
-        <translation> nem osztható fel, mert poli vonal része. Először bontsa ki a poli vonalat.</translation>
+        <translation> nem osztható fel, mert egy vonallánc része. Először bontsa szét a vonalláncot.</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawslicedivide.cpp" line="180"/>
@@ -434,7 +434,7 @@ vagy [%2]</translation>
     <message>
         <location filename="../src/actions/lc_actiondrawslicedivide.cpp" line="190"/>
         <source>Arc</source>
-        <translation>Arc</translation>
+        <translation>Ív</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawslicedivide.cpp" line="200"/>
@@ -492,7 +492,7 @@ vagy [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="54"/>
         <source>Zoom &amp;Panning</source>
-        <translation>Nagyítás &amp;Mozgatás</translation>
+        <translation>&amp;Pásztázás</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="64"/>
@@ -675,7 +675,7 @@ vagy [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="434"/>
         <source>&amp;Center, Point, Angles</source>
-        <translation>&amp;Közép, Pont, Szögek</translation>
+        <translation>&amp;Középpont, pont, szögek</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="442"/>
@@ -720,12 +720,12 @@ vagy [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="535"/>
         <source>&amp;Spline</source>
-        <translation>&amp;Hajlítható vonal</translation>
+        <translation>&amp;Spline</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="542"/>
         <source>&amp;Spline through points</source>
-        <translation>&amp;Hajlítható vonal pontokon keresztül</translation>
+        <translation>&amp;Spline pontokon keresztül</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="551"/>
@@ -780,7 +780,7 @@ vagy [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="627"/>
         <source>&amp;Hatch</source>
-        <translation>&amp;Kitöltések</translation>
+        <translation>&amp;Sraffozás</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="634"/>
@@ -820,7 +820,7 @@ vagy [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="699"/>
         <source>&amp;Leader</source>
-        <translation>&amp;Vezetővonal</translation>
+        <translation>&amp;Mutatóvonal</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="708"/>
@@ -860,7 +860,7 @@ vagy [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="754"/>
         <source>&amp;Scale</source>
-        <translation>&amp;Méretezés</translation>
+        <translation>&amp;Átméretezés</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="762"/>
@@ -875,12 +875,12 @@ vagy [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="784"/>
         <source>&amp;Properties</source>
-        <translation>&amp;Részletek</translation>
+        <translation>&amp;Tulajdonságok</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="792"/>
         <source>&amp;Trim</source>
-        <translation>&amp;Metszés</translation>
+        <translation>&amp;Levágás</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="808"/>
@@ -980,12 +980,12 @@ vagy [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="983"/>
         <source>lower after entity</source>
-        <translation>eggyel lejjebb</translation>
+        <translation>elem alá helyezés</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="991"/>
         <source>raise over entity</source>
-        <translation>eggyel feljebb</translation>
+        <translation>elem fölé helyezés</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="999"/>
@@ -1000,32 +1000,32 @@ vagy [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1044"/>
         <source>&amp;Remove Layer</source>
-        <translation>Fólia &amp;törlése</translation>
+        <translation>Réteg &amp;törlése</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1051"/>
         <source>&amp;Edit Layer</source>
-        <translation>Fólia &amp;szerkesztése</translation>
+        <translation>Réteg &amp;szerkesztése</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1058"/>
         <source>Toggle Layer Loc&amp;k</source>
-        <translation>Fólia zárolás váltá&amp;sa</translation>
+        <translation>Réteg zárolásának váltá&amp;sa</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1065"/>
         <source>&amp;Toggle Layer Visibility</source>
-        <translation>&amp;Fólia láthatóság váltása</translation>
+        <translation>&amp;Réteg láthatóságának váltása</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1072"/>
         <source>Toggle Layer &amp;Print</source>
-        <translation>Fólia &amp;Nyomtatás váltása</translation>
+        <translation>Réteg &amp;nyomtatásának váltása</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1079"/>
         <source>Toggle &amp;Construction Layer</source>
-        <translation>Építési réteg&amp; váltása</translation>
+        <translation>&amp;Szerkesztési réteg váltása</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1112"/>
@@ -1055,7 +1055,7 @@ vagy [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1147"/>
         <source>&amp;Insert Block</source>
-        <translation>Blokk be&amp;illesztés</translation>
+        <translation>Blokk be&amp;szúrása</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1154"/>
@@ -1237,7 +1237,7 @@ vagy [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1337"/>
         <source>Left</source>
-        <translation>Left</translation>
+        <translation>Bal</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1346"/>
@@ -1247,7 +1247,7 @@ vagy [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1355"/>
         <source>Top</source>
-        <translation>Top</translation>
+        <translation>Felső</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1364"/>
@@ -1413,7 +1413,7 @@ vagy [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="306"/>
         <source>Break/Divide</source>
-        <translation>Törés/Felosztás</translation>
+        <translation>Megtörés/felosztás</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="312"/>
@@ -1468,17 +1468,17 @@ vagy [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="873"/>
         <source>&amp;Pick Pen From Entity</source>
-        <translation>&amp;Toll kiválasztása entitásból</translation>
+        <translation>&amp;Toll átvétele elemről</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="881"/>
         <source>&amp;Pick Pen From Entity (Resolved)</source>
-        <translation>&amp;Toll kiválasztása entitásból (feloldva)</translation>
+        <translation>&amp;Toll átvétele elemről (feloldva)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="890"/>
         <source>Apply Pen to Entity</source>
-        <translation>Toll alkalmazása az entitásra</translation>
+        <translation>Toll alkalmazása elemre</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="898"/>
@@ -1527,7 +1527,7 @@ vagy [%2]</translation>
     <message>
         <location filename="../src/actions/lc_actionpenapply.cpp" line="171"/>
         <source>Specify entity to pick the pen</source>
-        <translation>Adja meg az entitást a toll kiválasztásához</translation>
+        <translation>Adja meg az elemet, amelyről a tollat átveszi</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actionpenapply.cpp" line="172"/>
@@ -1538,7 +1538,7 @@ vagy [%2]</translation>
     <message>
         <location filename="../src/actions/lc_actionpenapply.cpp" line="175"/>
         <source>Specify entity to apply pen</source>
-        <translation>Adja meg az entitást a toll alkalmazásához</translation>
+        <translation>Adja meg az elemet, amelyre a tollat alkalmazza</translation>
     </message>
 </context>
 <context>
@@ -1546,7 +1546,7 @@ vagy [%2]</translation>
     <message>
         <location filename="../src/actions/lc_actionpenpick.cpp" line="108"/>
         <source>Specify entity to pick the pen</source>
-        <translation>Adja meg az entitást a toll kiválasztásához</translation>
+        <translation>Adja meg az elemet, amelyről a tollat átveszi</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actionpenpick.cpp" line="109"/>
@@ -1638,7 +1638,7 @@ vagy [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_crossoptions.ui" line="63"/>
         <source>Extension</source>
-        <translation>Kiterjesztés</translation>
+        <translation>Túlnyúlás</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_crossoptions.ui" line="68"/>
@@ -1694,7 +1694,7 @@ vagy [%2]</translation>
     <message>
         <location filename="../src/ui/forms/LC_DlgParabola.cpp" line="112"/>
         <source>Parabola control points cannot be collinear</source>
-        <translation>A parabola irányító pontjai nem lehetnek egyvonalúak</translation>
+        <translation>A parabola vezérlőpontjai nem eshetnek egy egyenesre</translation>
     </message>
 </context>
 <context>
@@ -1788,13 +1788,13 @@ vagy [%2]</translation>
         <location filename="../src/ui/forms/lc_layerdialog_ex.ui" line="133"/>
         <source>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
        The contents of a Construction Layer should not appear in printout.</source>
-        <translation>A konstrukciós réteg végtelen egyenes vonalú entitásokat tartalmaz, amelyeket geometriai konstrukcióhoz használnak.
-       A konstrukciós réteg tartalma nem jelenik meg a nyomtatásban.</translation>
+        <translation>A szerkesztési réteg végtelen egyenes vonalú elemeket tartalmaz, amelyek geometriai szerkesztéshez használhatók.
+       A szerkesztési réteg tartalma nem jelenik meg a nyomtatásban.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.ui" line="137"/>
         <source>Construction Layer</source>
-        <translation>Konstrukciós réteg</translation>
+        <translation>Szerkesztési réteg</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.ui" line="179"/>
@@ -2107,7 +2107,7 @@ vagy [%2]</translation>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="682"/>
         <source>&amp;Select Entities (Sub-Tree)</source>
-        <translation>&amp;Entitások kijelölése (al-fa)</translation>
+        <translation>&amp;Elemek kijelölése (részfa)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="687"/>
@@ -2165,7 +2165,7 @@ vagy [%2]</translation>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="743"/>
         <source>&amp;Select Layer&apos;s Entities</source>
-        <translation>&amp;Réteg entitásainak kijelölése</translation>
+        <translation>A réteg elemeinek &amp;kijelölése</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="746"/>
@@ -2200,7 +2200,7 @@ vagy [%2]</translation>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="762"/>
         <source>&amp;Defreeze All Layers</source>
-        <translation>&amp;Összes réteg kiolvasztása</translation>
+        <translation>&amp;Az összes réteg kiolvasztása</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="763"/>
@@ -2272,7 +2272,7 @@ vagy [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="73"/>
         <source>Line Snap:</source>
-        <translation>Vonal illesztés:</translation>
+        <translation>Vonalillesztés:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="80"/>
@@ -2287,7 +2287,7 @@ vagy [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="167"/>
         <source>Tick Snap:</source>
-        <translation>Jelölés illesztés:</translation>
+        <translation>Jelölő illesztése:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="174"/>
@@ -2330,7 +2330,7 @@ vagy [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_linefrompointtolineoptions.ui" line="105"/>
         <source>To Intersection</source>
-        <translation>Metsszpontig</translation>
+        <translation>Metszéspontig</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linefrompointtolineoptions.ui" line="110"/>
@@ -2379,7 +2379,7 @@ vagy [%2]</translation>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="51"/>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="144"/>
         <source>Extend/Trim</source>
-        <translation>Kiterjesztés/vágás</translation>
+        <translation>Meghosszabbítás/levágás</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="56"/>
@@ -2396,7 +2396,7 @@ vagy [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="69"/>
         <source>Create Polyline</source>
-        <translation>Poli vonal létrehozása</translation>
+        <translation>Vonallánc létrehozása</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="76"/>
@@ -2520,7 +2520,7 @@ vagy [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="42"/>
         <source>Gap Snap:</source>
-        <translation>Rés illesztés:</translation>
+        <translation>Résillesztés:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="49"/>
@@ -2559,7 +2559,7 @@ vagy [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="129"/>
         <source>Line Snap:</source>
-        <translation>Vonal illesztés:</translation>
+        <translation>Vonalillesztés:</translation>
     </message>
 </context>
 <context>
@@ -2667,7 +2667,7 @@ vagy [%2]</translation>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="249"/>
         <source>Show info message if no entities may be selected by pen</source>
-        <translation>Információs üzenet mutatása, ha a tollal nem lehet entitást kiválasztani</translation>
+        <translation>Tájékoztató üzenet megjelenítése, ha a tollal egyetlen elem sem jelölhető ki</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="258"/>
@@ -2682,12 +2682,12 @@ vagy [%2]</translation>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.cpp" line="47"/>
         <source>Select entities by attributes pen</source>
-        <translation>Entitások kijelölése tulajdonság toll szerint</translation>
+        <translation>Elemek kijelölése tulajdonságtoll szerint</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.cpp" line="48"/>
         <source>Select entities by drawing pen</source>
-        <translation>Entitások kijelölése rajz toll szerint</translation>
+        <translation>Elemek kijelölése rajzolási toll szerint</translation>
     </message>
 </context>
 <context>
@@ -2735,22 +2735,22 @@ vagy [%2]</translation>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="290"/>
         <source>Fill Pen Editor by Entity Drawing Pen</source>
-        <translation>Toll szerkesztő kitöltése entitás rajz tollával</translation>
+        <translation>Tollszerkesztő kitöltése az elem rajzolási tollával</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="304"/>
         <source>Fill Pen Editor by Entity Attributes</source>
-        <translation>Toll szerkesztő kitöltése entitás tulajdonságaival</translation>
+        <translation>Tollszerkesztő kitöltése az elem tulajdonságaival</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="318"/>
         <source>Select Entities By Drawing Pen</source>
-        <translation>Entitások kijelölése rajz toll szerint</translation>
+        <translation>Elemek kijelölése rajzolási toll szerint</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="332"/>
         <source>Select Entities By Pen Attributes</source>
-        <translation>Entitások kijelölése toll tulajdonságok szerint</translation>
+        <translation>Elemek kijelölése tolltulajdonságok szerint</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="349"/>
@@ -2836,12 +2836,12 @@ vagy [%2]</translation>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="268"/>
         <source>&amp;Select Entities With Attributes Pen</source>
-        <translation>&amp;Entitások kijelölése tulajdonság toll szerint</translation>
+        <translation>Elemek &amp;kijelölése tulajdonságtoll szerint</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="269"/>
         <source>&amp;Select Entities With Drawing Pen</source>
-        <translation>&amp;Entitások kijelölése rajz toll szerint</translation>
+        <translation>Elemek &amp;kijelölése rajzolási toll szerint</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="272"/>
@@ -2869,7 +2869,7 @@ vagy [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="26"/>
         <source>Polyline</source>
-        <translation>Poli vonal</translation>
+        <translation>Vonallánc</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="33"/>
@@ -2919,7 +2919,7 @@ vagy [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="175"/>
         <source>Top</source>
-        <translation>Top</translation>
+        <translation>Felső</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="180"/>
@@ -2929,7 +2929,7 @@ vagy [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="185"/>
         <source>Left</source>
-        <translation>Left</translation>
+        <translation>Bal</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="190"/>
@@ -2964,17 +2964,17 @@ vagy [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="224"/>
         <source>Round</source>
-        <translation>Kerek</translation>
+        <translation>Lekerekítés</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="229"/>
         <source>Bevel</source>
-        <translation>Ferde</translation>
+        <translation>Letörés</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="237"/>
         <source>Snap shift</source>
-        <translation>Illesztés eltolás</translation>
+        <translation>Illesztési pont eltolása</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="245"/>
@@ -3012,7 +3012,7 @@ vagy [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="26"/>
         <source>Snap shift</source>
-        <translation>Illesztés eltolás</translation>
+        <translation>Illesztési pont eltolása</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="33"/>
@@ -3027,12 +3027,12 @@ vagy [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="63"/>
         <source>Polyline</source>
-        <translation>Poli vonal</translation>
+        <translation>Vonallánc</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="70"/>
         <source>End Snap:</source>
-        <translation>Vég illesztés:</translation>
+        <translation>Vég illesztése:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="77"/>
@@ -3047,7 +3047,7 @@ vagy [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="107"/>
         <source>Start Snap:</source>
-        <translation>Kezdés illesztés:</translation>
+        <translation>Kezdet illesztése:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="131"/>
@@ -3086,12 +3086,12 @@ vagy [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="207"/>
         <source>Round</source>
-        <translation>Kerek</translation>
+        <translation>Lekerekítés</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="212"/>
         <source>Bevel</source>
-        <translation>Ferde</translation>
+        <translation>Letörés</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="220"/>
@@ -3124,7 +3124,7 @@ vagy [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="55"/>
         <source>Polyline</source>
-        <translation>Poli vonal</translation>
+        <translation>Vonallánc</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="63"/>
@@ -3169,12 +3169,12 @@ vagy [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="165"/>
         <source>Round</source>
-        <translation>Kerek</translation>
+        <translation>Lekerekítés</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="170"/>
         <source>Bevel</source>
-        <translation>Ferde</translation>
+        <translation>Letörés</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="178"/>
@@ -3184,7 +3184,7 @@ vagy [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="185"/>
         <source>Snap shift</source>
-        <translation>Illesztés eltolás</translation>
+        <translation>Illesztési pont eltolása</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="192"/>
@@ -3277,7 +3277,7 @@ vagy [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="228"/>
         <source>Tick snap:</source>
-        <translation>Jelölés illesztés:</translation>
+        <translation>Jelölő illesztése:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="235"/>
@@ -3320,7 +3320,7 @@ vagy [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_staroptions.ui" line="49"/>
         <source>Polyline</source>
-        <translation>Poli vonal</translation>
+        <translation>Vonallánc</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_staroptions.ui" line="56"/>
@@ -3631,7 +3631,7 @@ vagy [%2]</translation>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="474"/>
         <source>Pen</source>
-        <translation>Pen</translation>
+        <translation>Toll</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="479"/>
@@ -3652,7 +3652,7 @@ vagy [%2]</translation>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="347"/>
         <source>Layer List</source>
-        <translation>Fólia lista</translation>
+        <translation>Réteglista</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="371"/>
@@ -3731,7 +3731,7 @@ Please check the permissions.</source>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="792"/>
         <source>&amp;Polyline</source>
-        <translation>&amp;Töröttvonal</translation>
+        <translation>&amp;Vonallánc</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2106"/>
@@ -3812,7 +3812,7 @@ Az automatikus mentés kikapcsolva.</translation>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="467"/>
         <source>Snap Selection</source>
-        <translation>Fogás kiválasztása</translation>
+        <translation>Illesztési mód kiválasztása</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2164"/>
@@ -3980,7 +3980,7 @@ Kérjük, ellenőrizze annak létezését és engedélyeit.</translation>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="807"/>
         <source>Dime&amp;nsion</source>
-        <translation>Dime&amp;nzió</translation>
+        <translation>Mérete&amp;zés</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="964"/>
@@ -4242,12 +4242,12 @@ Kérjük, ellenőrizze annak létezését és engedélyeit.</translation>
     <message>
         <location filename="../src/ui/qg_actionhandler.cpp" line="1275"/>
         <source>Spacebar: restored snapping mode to normal</source>
-        <translation>Spacebar: visszaállította a rögzítő (snapping) módot a normál állapotra</translation>
+        <translation>Szóköz: az illesztési mód visszaállt normálra</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_actionhandler.cpp" line="1276"/>
         <source>Spacebar: temporarily set snapping mode to free snapping</source>
-        <translation>Spacebar: ideiglenesen beállította a rögzítő (snapping) módot a szabad rögzítésre</translation>
+        <translation>Szóköz: az illesztési mód ideiglenesen szabad illesztésre állt</translation>
     </message>
 </context>
 <context>
@@ -4331,7 +4331,7 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/qg_blockwidget.cpp" line="223"/>
         <source>Insert the active block</source>
-        <translation>Aktív blokk beillesztése</translation>
+        <translation>Az aktív blokk beszúrása</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_blockwidget.cpp" line="387"/>
@@ -4341,12 +4341,12 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/qg_blockwidget.cpp" line="394"/>
         <source>&amp;Defreeze all Blocks</source>
-        <translation>Összes blokk &amp;feloldása</translation>
+        <translation>Az összes blokk &amp;kiolvasztása</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_blockwidget.cpp" line="396"/>
         <source>&amp;Freeze all Blocks</source>
-        <translation>Összes blokk le&amp;zárása</translation>
+        <translation>Összes blokk &amp;fagyasztása</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_blockwidget.cpp" line="407"/>
@@ -4371,7 +4371,7 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/qg_blockwidget.cpp" line="413"/>
         <source>&amp;Insert Block</source>
-        <translation>Blokk be&amp;illesztés</translation>
+        <translation>Blokk be&amp;szúrása</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_blockwidget.cpp" line="401"/>
@@ -4425,7 +4425,7 @@ in a separate window</source>
         <location filename="../src/ui/qg_colorbox.cpp" line="106"/>
         <location filename="../src/ui/qg_colorbox.cpp" line="282"/>
         <source>By Layer</source>
-        <translation>Fólia szerint</translation>
+        <translation>Réteg szerint</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="107"/>
@@ -4703,12 +4703,12 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgarc.ui" line="26"/>
         <source>Arc</source>
-        <translation>Arc</translation>
+        <translation>Ív</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgarc.ui" line="51"/>
         <source>Layer:</source>
-        <translation>Fólia:</translation>
+        <translation>Réteg:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgarc.ui" line="78"/>
@@ -4723,12 +4723,12 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgarc.ui" line="104"/>
         <source>Center (y):</source>
-        <translation>Közép (y):</translation>
+        <translation>Középpont (y):</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgarc.ui" line="124"/>
         <source>Center (x):</source>
-        <translation>Közép (x):</translation>
+        <translation>Középpont (x):</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgarc.ui" line="144"/>
@@ -4756,14 +4756,14 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgattributes.ui" line="44"/>
         <source>Layer:</source>
-        <translation>Fólia:</translation>
+        <translation>Réteg:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgattributes.ui" line="69"/>
         <source>Apply attributes also to all sub-entities of selected INSERT.
 This recursively modifies all entities of the Block itself.</source>
-        <translation>Alkalmazzon attribútumokat a kijelölt INSERT összes alentitására is.
-Ez rekurzív módon módosítja magának a blokknak az összes entitását.</translation>
+        <translation>Az attribútumok alkalmazása a kijelölt INSERT összes alelemére is.
+Ez rekurzívan módosítja magának a blokknak az összes elemét.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgattributes.ui" line="73"/>
@@ -4781,7 +4781,7 @@ Ez rekurzív módon módosítja magának a blokknak az összes entitását.</tra
     <message>
         <location filename="../src/ui/forms/qg_dlgcircle.ui" line="44"/>
         <source>Layer:</source>
-        <translation>Fólia:</translation>
+        <translation>Réteg:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgcircle.ui" line="71"/>
@@ -4796,12 +4796,12 @@ Ez rekurzív módon módosítja magának a blokknak az összes entitását.</tra
     <message>
         <location filename="../src/ui/forms/qg_dlgcircle.ui" line="97"/>
         <source>Center (y):</source>
-        <translation>Közép (y):</translation>
+        <translation>Középpont (y):</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgcircle.ui" line="117"/>
         <source>Center (x):</source>
-        <translation>Közép (x):</translation>
+        <translation>Középpont (x):</translation>
     </message>
 </context>
 <context>
@@ -4814,7 +4814,7 @@ Ez rekurzív módon módosítja magának a blokknak az összes entitását.</tra
     <message>
         <location filename="../src/ui/forms/qg_dlgdimlinear.ui" line="47"/>
         <source>Layer:</source>
-        <translation>Fólia:</translation>
+        <translation>Réteg:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgdimlinear.ui" line="79"/>
@@ -4832,7 +4832,7 @@ Ez rekurzív módon módosítja magának a blokknak az összes entitását.</tra
     <message>
         <location filename="../src/ui/forms/qg_dlgdimension.ui" line="47"/>
         <source>Layer:</source>
-        <translation>Fólia:</translation>
+        <translation>Réteg:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgdimension.ui" line="20"/>
@@ -4850,7 +4850,7 @@ Ez rekurzív módon módosítja magának a blokknak az összes entitását.</tra
     <message>
         <location filename="../src/ui/forms/qg_dlgellipse.ui" line="51"/>
         <source>Layer:</source>
-        <translation>Fólia:</translation>
+        <translation>Réteg:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgellipse.ui" line="78"/>
@@ -4860,12 +4860,12 @@ Ez rekurzív módon módosítja magának a blokknak az összes entitását.</tra
     <message>
         <location filename="../src/ui/forms/qg_dlgellipse.ui" line="84"/>
         <source>Center (y):</source>
-        <translation>Közép (y):</translation>
+        <translation>Középpont (y):</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgellipse.ui" line="104"/>
         <source>Center (x):</source>
-        <translation>Közép (x):</translation>
+        <translation>Középpont (x):</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgellipse.ui" line="156"/>
@@ -4903,7 +4903,7 @@ Ez rekurzív módon módosítja magának a blokknak az összes entitását.</tra
     <message>
         <location filename="../src/ui/forms/qg_dlghatch.ui" line="14"/>
         <source>Choose Hatch Attributes</source>
-        <translation>Válasszon kitöltést</translation>
+        <translation>Sraffozás tulajdonságainak kiválasztása</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlghatch.ui" line="22"/>
@@ -4918,7 +4918,7 @@ Ez rekurzív módon módosítja magának a blokknak az összes entitását.</tra
     <message>
         <location filename="../src/ui/forms/qg_dlghatch.ui" line="44"/>
         <source>Scale:</source>
-        <translation>Méretezés:</translation>
+        <translation>Lépték:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlghatch.ui" line="57"/>
@@ -4951,7 +4951,7 @@ Ez rekurzív módon módosítja magának a blokknak az összes entitását.</tra
     <message>
         <location filename="../src/ui/forms/qg_dlgimage.ui" line="44"/>
         <source>Layer:</source>
-        <translation>Fólia:</translation>
+        <translation>Réteg:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgimage.ui" line="80"/>
@@ -4976,7 +4976,7 @@ Ez rekurzív módon módosítja magának a blokknak az összes entitását.</tra
     <message>
         <location filename="../src/ui/forms/qg_dlgimage.ui" line="226"/>
         <source>Scale:</source>
-        <translation>Skála:</translation>
+        <translation>Lépték:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgimage.ui" line="153"/>
@@ -5055,7 +5055,7 @@ Kérjük, válassza ki az új rajzokhoz használni kívánt egységet és a kív
     <message>
         <location filename="../src/ui/forms/qg_dlginsert.ui" line="44"/>
         <source>Layer:</source>
-        <translation>Fólia:</translation>
+        <translation>Réteg:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlginsert.ui" line="71"/>
@@ -5100,12 +5100,12 @@ Kérjük, válassza ki az új rajzokhoz használni kívánt egységet és a kív
     <message>
         <location filename="../src/ui/forms/qg_dlginsert.ui" line="159"/>
         <source>Scale X:</source>
-        <translation>Skála X:</translation>
+        <translation>X lépték:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlginsert.ui" line="179"/>
         <source>Scale Y:</source>
-        <translation>Skála Y:</translation>
+        <translation>Y lépték:</translation>
     </message>
 </context>
 <context>
@@ -5118,7 +5118,7 @@ Kérjük, válassza ki az új rajzokhoz használni kívánt egységet és a kív
     <message>
         <location filename="../src/ui/forms/qg_dlgline.ui" line="54"/>
         <source>Layer:</source>
-        <translation>Fólia:</translation>
+        <translation>Réteg:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgline.ui" line="87"/>
@@ -5161,7 +5161,7 @@ Kérjük, válassza ki az új rajzokhoz használni kívánt egységet és a kív
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="45"/>
         <source>Layer:</source>
-        <translation>Fólia:</translation>
+        <translation>Réteg:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="223"/>
@@ -5959,7 +5959,7 @@ Kérjük, válassza ki az új rajzokhoz használni kívánt egységet és a kív
     <message>
         <location filename="../src/ui/forms/qg_dlgmirror.ui" line="46"/>
         <source>Use current &amp;layer</source>
-        <translation>Aktuális &amp;fóliára</translation>
+        <translation>Aktuális &amp;réteg használata</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmirror.ui" line="53"/>
@@ -5997,7 +5997,7 @@ Kérjük, válassza ki az új rajzokhoz használni kívánt egységet és a kív
     <message>
         <location filename="../src/ui/forms/qg_dlgmove.ui" line="128"/>
         <source>Use current &amp;layer</source>
-        <translation>Aktuális &amp;fóliára</translation>
+        <translation>Aktuális &amp;réteg használata</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmove.ui" line="135"/>
@@ -6040,7 +6040,7 @@ Kérjük, válassza ki az új rajzokhoz használni kívánt egységet és a kív
     <message>
         <location filename="../src/ui/forms/qg_dlgmoverotate.ui" line="104"/>
         <source>Use current &amp;layer</source>
-        <translation>Aktuális &amp;fóliára</translation>
+        <translation>Aktuális &amp;réteg használata</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmoverotate.ui" line="131"/>
@@ -6299,7 +6299,7 @@ Kérjük, válassza ki az új rajzokhoz használni kívánt egységet és a kív
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="212"/>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="657"/>
         <source>Left</source>
-        <translation>Left</translation>
+        <translation>Bal</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="676"/>
@@ -6311,7 +6311,7 @@ Kérjük, válassza ki az új rajzokhoz használni kívánt egységet és a kív
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="228"/>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="679"/>
         <source>Top</source>
-        <translation>Top</translation>
+        <translation>Felső</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="698"/>
@@ -6363,17 +6363,17 @@ Kérjük, válassza ki az új rajzokhoz használni kívánt egységet és a kív
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1233"/>
         <source>General Scale:</source>
-        <translation>Általános skála:</translation>
+        <translation>Általános lépték:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="969"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scale to multiply all dimension values.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Méretezés az összes dimenzióérték szorzásához.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Léptéktényező az összes méretérték szorzásához.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1178"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scale to multiply all dimension geometries.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Méretezés az összes méretgeometria szorzásához.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Az összes méretgeometria szorzására használt lépték.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="885"/>
@@ -6506,7 +6506,7 @@ Kérjük, válassza ki az új rajzokhoz használni kívánt egységet és a kív
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1554"/>
         <source>Extension lines</source>
-        <translation>Hosszabbító vonalak</translation>
+        <translation>Méretsegédvonalak</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1561"/>
@@ -6567,7 +6567,7 @@ Kérjük, válassza ki az új rajzokhoz használni kívánt egységet és a kív
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1609"/>
         <source>&amp;Splines</source>
-        <translation>&amp;Vékony vonalak</translation>
+        <translation>&amp;Spline-ok</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1683"/>
@@ -6820,7 +6820,7 @@ Kérjük, válassza ki az új rajzokhoz használni kívánt egységet és a kív
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="777"/>
         <source>Snap indicator:</source>
-        <translation>Raszter jelző:</translation>
+        <translation>Illesztésjelző:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="199"/>
@@ -6830,7 +6830,7 @@ Kérjük, válassza ki az új rajzokhoz használni kívánt egységet és a kív
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1263"/>
         <source>Modify layer of selected entities, at  layer activation</source>
-        <translation>A kiválasztott entitások rétegének módosítása a réteg aktiválásakor</translation>
+        <translation>A kiválasztott elemek rétegének módosítása a réteg aktiválásakor</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1089"/>
@@ -6865,17 +6865,17 @@ Kérjük, válassza ki az új rajzokhoz használni kívánt egységet és a kív
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="275"/>
         <source>Snap indicator lines</source>
-        <translation>Raszter jelző vonalak</translation>
+        <translation>Illesztésjelző vonalak</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="131"/>
         <source>Snap indicator shape</source>
-        <translation>Raszter jelző alakja</translation>
+        <translation>Illesztésjelző alakja</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="185"/>
         <source>Hide cursor when snapping</source>
-        <translation>A kurzor elrejtése kattintáskor</translation>
+        <translation>A kurzor elrejtése illesztéskor</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1143"/>
@@ -6925,7 +6925,7 @@ Kérjük, válassza ki az új rajzokhoz használni kívánt egységet és a kív
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1260"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, activating a layer would modify all selected entities to that new layer. To change layer of multiple entities: first select needed entities; activate a layer in the layer widget. This makes all selected entities modified to belong to the new layer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ha engedélyezve van, egy réteg aktiválása az összes kijelölt entitást az új fóliára módosítja. Több entitás rétegének módosítása: először válassza ki a szükséges entitásokat; Aktiváljon egy réteget a Réteg widgetben. Ez az összes kijelölt rajzelemet úgy módosítja, hogy az új fóliához tartozzon.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ha engedélyezve van, egy réteg aktiválása az összes kijelölt elemet az új rétegre helyezi át. Több elem rétegének módosítása: először jelölje ki a kívánt elemeket, majd aktiváljon egy réteget a Réteg panelen. Ezzel az összes kijelölt elem az új réteghez fog tartozni.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="834"/>
@@ -7050,7 +7050,7 @@ Kérjük, válassza ki az új rajzokhoz használni kívánt egységet és a kív
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1241"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Temporarily toggle free snapping when the spacebar is pressed and the command window is activated&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>Ideiglenesen kikapcsolja a szabad rögzítést, ha a mezőnyök betöltő mezőjét és a parancsablakot aktiválja.</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;A szabad illesztés ideiglenes be- és kikapcsolása a szóköz lenyomásakor, ha a parancsablak aktív&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -7068,7 +7068,7 @@ Kérjük, válassza ki az új rajzokhoz használni kívánt egységet és a kív
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="80"/>
         <source>Export visible construction layers</source>
-        <translation>Látható építési fóliák exportálása</translation>
+        <translation>Látható szerkesztési rétegek exportálása</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="92"/>
@@ -7202,7 +7202,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgpoint.ui" line="44"/>
         <source>Layer:</source>
-        <translation>Fólia:</translation>
+        <translation>Réteg:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgpoint.ui" line="71"/>
@@ -7230,7 +7230,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgpolyline.ui" line="44"/>
         <source>Layer:</source>
-        <translation>Fólia:</translation>
+        <translation>Réteg:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgpolyline.ui" line="77"/>
@@ -7283,7 +7283,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgrotate.ui" line="186"/>
         <source>Use current &amp;layer</source>
-        <translation>Aktuális &amp;fóliára</translation>
+        <translation>Aktuális &amp;réteg használata</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgrotate.ui" line="119"/>
@@ -7336,7 +7336,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgrotate2.ui" line="215"/>
         <source>Use current &amp;layer</source>
-        <translation>Aktuális &amp;fóliára</translation>
+        <translation>Aktuális &amp;réteg használata</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgrotate2.ui" line="119"/>
@@ -7364,7 +7364,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgscale.ui" line="226"/>
         <source>Use current &amp;layer</source>
-        <translation>Aktuális &amp;fóliára</translation>
+        <translation>Aktuális &amp;réteg használata</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgscale.ui" line="50"/>
@@ -7409,7 +7409,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgscale.ui" line="203"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Find the scaling ratios around the center by a reference point and a target point.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>Keresse meg a skálázási arányokat a központ körül egy referenciapont és egy célpont segítségével.</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;A középpont körüli léptékarányok meghatározása egy referenciapont és egy célpont alapján.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -7417,12 +7417,12 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgspline.ui" line="26"/>
         <source>Spline</source>
-        <translation>Görbék</translation>
+        <translation>Spline</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgspline.ui" line="51"/>
         <source>Layer:</source>
-        <translation>Fólia:</translation>
+        <translation>Réteg:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgspline.ui" line="84"/>
@@ -8165,7 +8165,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="175"/>
         <source>Layer:</source>
-        <translation>Fólia:</translation>
+        <translation>Réteg:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="234"/>
@@ -8452,12 +8452,12 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_layerdialog.ui" line="20"/>
         <source>Layer Settings</source>
-        <translation>Fólia beállításai</translation>
+        <translation>Réteg beállításai</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_layerdialog.ui" line="46"/>
         <source>Layer Name:</source>
-        <translation>Fólia neve:</translation>
+        <translation>Réteg neve:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_layerdialog.cpp" line="65"/>
@@ -8474,7 +8474,7 @@ A tervezési rétegek tartalma nem kerül kinyomtatásra.</translation>
     <message>
         <location filename="../src/ui/forms/qg_layerdialog.ui" line="33"/>
         <source>Construction Layer</source>
-        <translation>Építési réteg</translation>
+        <translation>Szerkesztési réteg</translation>
     </message>
 </context>
 <context>
@@ -8482,7 +8482,7 @@ A tervezési rétegek tartalma nem kerül kinyomtatásra.</translation>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="227"/>
         <source>Show all layers</source>
-        <translation>Összes fólia mutatása</translation>
+        <translation>Az összes réteg megjelenítése</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="234"/>
@@ -8492,22 +8492,22 @@ A tervezési rétegek tartalma nem kerül kinyomtatásra.</translation>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="255"/>
         <source>Add a layer</source>
-        <translation>Új fólia</translation>
+        <translation>Új réteg</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="269"/>
         <source>Modify layer attributes / rename</source>
-        <translation>Fólia tulajdonságainak szerkesztése</translation>
+        <translation>Réteg tulajdonságainak módosítása / átnevezése</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="552"/>
         <source>Layer Menu</source>
-        <translation>Fólia menü</translation>
+        <translation>Réteg menü</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="559"/>
         <source>&amp;Defreeze all Layers</source>
-        <translation>Minden fólia &amp;feloldása</translation>
+        <translation>Az összes réteg &amp;kiolvasztása</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="561"/>
@@ -8517,17 +8517,17 @@ A tervezési rétegek tartalma nem kerül kinyomtatásra.</translation>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="582"/>
         <source>&amp;Add Layer</source>
-        <translation>&amp;Új fólia</translation>
+        <translation>&amp;Új réteg</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="578"/>
         <source>&amp;Remove Layer</source>
-        <translation>Fólia &amp;törlése</translation>
+        <translation>Réteg &amp;törlése</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="278"/>
         <source>Looking for matching layer names</source>
-        <translation>Egyező fólianevek keresése</translation>
+        <translation>Egyező rétegnevek keresése</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="584"/>
@@ -8547,7 +8547,7 @@ A tervezési rétegek tartalma nem kerül kinyomtatásra.</translation>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="576"/>
         <source>Toggle &amp;Construction Layer</source>
-        <translation>Építési réteg váltása</translation>
+        <translation>&amp;Szerkesztési réteg váltása</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="241"/>
@@ -8582,7 +8582,7 @@ A tervezési rétegek tartalma nem kerül kinyomtatásra.</translation>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="572"/>
         <source>Toggle Layer Loc&amp;k</source>
-        <translation>Fólia zárolás váltá&amp;sa</translation>
+        <translation>Réteg zárolásának váltá&amp;sa</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="589"/>
@@ -8629,7 +8629,7 @@ A tervezési rétegek tartalma nem kerül kinyomtatásra.</translation>
         <location filename="../src/ui/qg_linetypebox.cpp" line="79"/>
         <location filename="../src/ui/qg_linetypebox.cpp" line="189"/>
         <source>By Layer</source>
-        <translation>Fólia szerint</translation>
+        <translation>Réteg szerint</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="80"/>
@@ -8744,7 +8744,7 @@ A tervezési rétegek tartalma nem kerül kinyomtatásra.</translation>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="89"/>
         <source>Dash (tiny)</source>
-        <translation>Kötőjel (apró)</translation>
+        <translation>Szaggatott (apró)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="93"/>
@@ -8782,7 +8782,7 @@ A tervezési rétegek tartalma nem kerül kinyomtatásra.</translation>
     <message>
         <location filename="../src/ui/forms/qg_mousewidget.ui" line="108"/>
         <source>Left</source>
-        <translation>Left</translation>
+        <translation>Bal</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_mousewidget.ui" line="130"/>
@@ -8808,12 +8808,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/qg_pentoolbar.cpp" line="48"/>
         <source>Line width</source>
-        <translation>Vonal vastagsága</translation>
+        <translation>Vonalvastagság</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_pentoolbar.cpp" line="52"/>
         <source>Line type</source>
-        <translation>Vonal típusa</translation>
+        <translation>Vonaltípus</translation>
     </message>
 </context>
 <context>
@@ -8881,47 +8881,47 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="26"/>
         <source>Snap</source>
-        <translation>Snap</translation>
+        <translation>Illesztés</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="47"/>
         <source>Snap to Endpoints</source>
-        <translation>Igazítás végpontokhoz</translation>
+        <translation>Illesztés végpontokra</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="64"/>
         <source>Snap to equidistant points of entity</source>
-        <translation>Elemtől egyenlő távolságra lévő pontokhoz igazítás</translation>
+        <translation>Illesztés az elem egyenlő távolságú pontjaira</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="81"/>
         <source>Snap to center points</source>
-        <translation>Igazítás középpontokhoz</translation>
+        <translation>Illesztés középpontokra</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="98"/>
         <source>Snap to intersections automatically</source>
-        <translation>Igazítás metszéspontokhoz</translation>
+        <translation>Illesztés metszéspontokra automatikusan</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="115"/>
         <source>Snap to closest point on entity</source>
-        <translation>Igazítás az elemek legközelebbi pontjához</translation>
+        <translation>Illesztés az elem legközelebbi pontjára</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="132"/>
         <source>Snap to point with given distance to endpoint</source>
-        <translation>Végponttól adott távolságra igazítás</translation>
+        <translation>Illesztés a végponttól adott távolságra lévő pontra</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="149"/>
         <source>Snap to intersections manually</source>
-        <translation>Igazítás nem látható metszéspontokhoz</translation>
+        <translation>Illesztés metszéspontokra kézzel</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="166"/>
         <source>Snap to grid</source>
-        <translation>Igazítás rácspontokhoz</translation>
+        <translation>Illesztés rácspontokra</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="183"/>
@@ -8936,42 +8936,42 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="217"/>
         <source>Move relative Zero</source>
-        <translation>Relatív zérus mozgatása</translation>
+        <translation>Relatív nulla mozgatása</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="234"/>
         <source>Lock relative Zero</source>
-        <translation>Relatív zérus zárolása</translation>
+        <translation>Relatív nulla zárolása</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="58"/>
         <source>Free Snap</source>
-        <translation>Szabad igazítás</translation>
+        <translation>Szabad illesztés</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="63"/>
         <source>Snap on grid</source>
-        <translation>Rácsra igazítás</translation>
+        <translation>Rácsra illesztés</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="68"/>
         <source>Snap on Endpoints</source>
-        <translation>Végpontok rőgzítése</translation>
+        <translation>Végpontokra illesztés</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="73"/>
         <source>Snap on Entity</source>
-        <translation>Elem igazítása</translation>
+        <translation>Elemre illesztés</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="78"/>
         <source>Snap Center</source>
-        <translation>Központ rögzítése</translation>
+        <translation>Középpontra illesztés</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="83"/>
         <source>Snap Middle</source>
-        <translation>Középső igazítása</translation>
+        <translation>Felezőpontra illesztés</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="88"/>
@@ -8981,7 +8981,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="93"/>
         <source>Snap Intersection</source>
-        <translation>Kereszteződésre igazítás</translation>
+        <translation>Metszéspontra illesztés</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="102"/>
@@ -9016,17 +9016,17 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="43"/>
         <source>Exclusive Snap Mode</source>
-        <translation>Exkluzív rögzítési mód</translation>
+        <translation>Kizárólagos illesztési mód</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="224"/>
         <source>Relative zero position is %1</source>
-        <translation>Relatív nulla pozíció %1</translation>
+        <translation>A relatív nulla pozíciója %1</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="224"/>
         <source>locked</source>
-        <translation>zárt</translation>
+        <translation>zárolva</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="224"/>
@@ -9036,7 +9036,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="52"/>
         <source>Snap Middle Manual</source>
-        <translation>Manuális központi rögzítés</translation>
+        <translation>Kézi felezőpont-illesztés</translation>
     </message>
 </context>
 <context>
@@ -9045,12 +9045,12 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/forms/qg_widgetpen.ui" line="26"/>
         <location filename="../src/ui/forms/qg_widgetpen.ui" line="47"/>
         <source>Pen</source>
-        <translation>Pen</translation>
+        <translation>Toll</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_widgetpen.ui" line="91"/>
         <source>Line type:</source>
-        <translation>Vonal típus:</translation>
+        <translation>Vonaltípus:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_widgetpen.ui" line="75"/>
@@ -9068,7 +9068,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/qg_widthbox.cpp" line="247"/>
         <source>By Layer</source>
-        <translation>Fólia szerint</translation>
+        <translation>Réteg szerint</translation>
     </message>
 </context>
 <context>
@@ -9087,17 +9087,17 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/qg_dialogfactory.cpp" line="322"/>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="384"/>
         <source>Remove Layer</source>
-        <translation>Fólia törlése</translation>
+        <translation>Réteg törlése</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="323"/>
         <source>Layer &quot;%1&quot; can never be removed.</source>
-        <translation>A &quot;%1&quot; fólia soha sem törölhető.</translation>
+        <translation>A(z) „%1” réteg nem törölhető.</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="465"/>
         <source>Layer Dialog</source>
-        <translation>Fólia beállítás</translation>
+        <translation>Rétegbeállítás</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="580"/>
@@ -9114,12 +9114,12 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/forms/lc_layerdialog_ex.cpp" line="277"/>
         <location filename="../src/ui/forms/qg_layerdialog.cpp" line="85"/>
         <source>Layer Properties</source>
-        <translation>Fólia tulajdonságai</translation>
+        <translation>Réteg tulajdonságai</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_layerdialog.cpp" line="86"/>
         <source>Layer with a name &quot;%1&quot; already exists. Please specify a different name.</source>
-        <translation>A &quot;%1&quot; nevű fólia már létezik. Válasszon másik nevet.</translation>
+        <translation>Már létezik „%1” nevű réteg. Adjon meg másik nevet.</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="311"/>
@@ -9206,7 +9206,8 @@ Please specify a different name.</source>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.cpp" line="154"/>
         <source>Layer list separator string is empty. It will not be possible to build layers tree.
 Please specify a different value.</source>
-        <translation>Az réteglista szeparátor szövege üres. Nem lehet rétegnedvét építeni. Kérjük, adjon meg más értéket.</translation>
+        <translation>A réteglista elválasztó karakterlánca üres. Így nem építhető fel a rétegfa.
+Adjon meg másik értéket.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.cpp" line="192"/>
@@ -9223,7 +9224,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="991"/>
         <source>No layers without entities found, nothing to remove.</source>
-        <translation>Entitás nélküli réteg nem található, eltávolítandó nincs.</translation>
+        <translation>Nem található elem nélküli réteg, nincs mit eltávolítani.</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1131"/>
@@ -9255,7 +9256,7 @@ Please specify a different name.</source>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1248"/>
         <source>Move Selection</source>
-        <translation>Kiválasztás mozgása</translation>
+        <translation>Kijelölés áthelyezése</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1255"/>
@@ -9277,12 +9278,12 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1292"/>
         <source>Remove pen</source>
-        <translation>Pennát töröl</translation>
+        <translation>Toll eltávolítása</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1293"/>
         <source>Pen will be removed from palette, drawing entities will not be affected.</source>
-        <translation>A pennát a palettáról távolítjuk, a rajzolt elemek nem érintettek.</translation>
+        <translation>A tollat eltávolítjuk a palettáról, a rajzelemeket ez nem érinti.</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1294"/>
@@ -9293,44 +9294,46 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1295"/>
         <source>Pen for removal:</source>
-        <translation>Törölendő pennát:</translation>
+        <translation>Eltávolítandó toll:</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1311"/>
         <source>Remove pens</source>
-        <translation>Törlés</translation>
+        <translation>Tollak eltávolítása</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1312"/>
         <source>Pens will be removed from palette, drawing entities will not be affected.</source>
-        <translation>A pennákat a palettáról távolítjuk, a rajzolt elemek nem érintettek.</translation>
+        <translation>A tollakat eltávolítjuk a palettáról, a rajzelemeket ez nem érinti.</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1314"/>
         <source>Pens for removal:</source>
-        <translation>Törölendő pennák:</translation>
+        <translation>Eltávolítandó tollak:</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1335"/>
         <source>Select Entities </source>
-        <translation>Entitások kiválasztása</translation>
+        <translation>Elemek kijelölése </translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1336"/>
         <source>There are no entities that matches pen on visible layers.</source>
-        <translation>Nincs entitás, amely illeszkedik a pennához a látható rétegeken.</translation>
+        <translation>A látható rétegeken nincs a tollnak megfelelő elem.</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1337"/>
         <source>Such entities exist on frozen layers.
 </source>
-        <translation>Az ilyen entitások fagyasztott rétegeken találhatók.</translation>
+        <translation>Ilyen elemek fagyasztott rétegeken vannak.
+</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1338"/>
         <source>Such entities exist on locked layers.
 </source>
-        <translation>Az ilyen entitások léteznek zárt rétegeken.</translation>
+        <translation>Ilyen elemek zárolt rétegeken vannak.
+</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1339"/>
@@ -9340,19 +9343,19 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1348"/>
         <source>Set pen by entity</source>
-        <translation>Toll beállítása entitás alapján</translation>
+        <translation>Toll beállítása elem alapján</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1349"/>
         <source>Please select only one entity to pick pen setting.</source>
-        <translation>Kérjük, válasszon ki csak egy entitást a tollbeállítások kiválasztásához.</translation>
+        <translation>A tollbeállítás átvételéhez csak egy elemet jelöljön ki.</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="981"/>
         <source>Layer(s) without entities found, yet they are filtered and not visible.
 
 Clear filtering mask and repeat.</source>
-        <translation>Nincs entitás a réteg(ek)ben, de a réteg(ek) szűrve vannak és nem látható(ak).
+        <translation>Található elem nélküli réteg, de szűrve van, ezért nem látható.
 
 Törölje a szűrőmaszkot, és próbálja újra.</translation>
     </message>
@@ -9363,11 +9366,11 @@ Törölje a szűrőmaszkot, és próbálja újra.</translation>
 If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
 
 If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
-        <translation>Cserélje ki a „Réteg szerint” értéket a forrásrétegek értékeire?
+        <translation>Lecseréli a „Réteg szerint” értéket a forrásrétegek értékeire?
 
-Ha Igen, akkor a „Réteg szerint” tollbeállítással rendelkező entitások a rétegen pontosan úgy jelennek meg, mint az előző rétegeken, és a „Réteg szerint” érték a feloldott tollbeállításokkal kerül helyettesítésre.
+Igen esetén a „Réteg szerint” tollú elemek az új rétegen pontosan úgy jelennek meg, mint az előző rétegeken, és a „Réteg szerint” értéket a feloldott tollak váltják fel.
 
-Ha Nem, akkor a „Réteg szerint” értékek változatlanok maradnak, és a célréteg tollbeállítása határozza meg az ilyen entitások tollbeállítását.</translation>
+Nem esetén a „Réteg szerint” értékek megmaradnak, így az ilyen elemek tollát a célréteg tolla határozza meg.</translation>
     </message>
 </context>
 <context>
@@ -9845,7 +9848,7 @@ Lecseréli?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="473"/>
         <source>spline</source>
         <comment>draw spline</comment>
-        <translation>hajlítható vonal</translation>
+        <translation>spline</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="475"/>
@@ -9857,7 +9860,7 @@ Lecseréli?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="480"/>
         <source>spline2</source>
         <comment>spline through points</comment>
-        <translation>hajlítható vonal 2</translation>
+        <translation>spline2</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="482"/>
@@ -9875,7 +9878,7 @@ Lecseréli?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="329"/>
         <source>bisect</source>
         <comment>angle bisector</comment>
-        <translation>kettévág</translation>
+        <translation>szögfelező</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="328"/>
@@ -9887,7 +9890,7 @@ Lecseréli?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="336"/>
         <source>tanpc</source>
         <comment>tangent point and circle</comment>
-        <translation>épk</translation>
+        <translation>tanpc</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="355"/>
@@ -9905,13 +9908,13 @@ Lecseréli?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="381"/>
         <source>polygon2v</source>
         <comment>polygon by 2 vertices</comment>
-        <translation>sokszög 2 csúcs</translation>
+        <translation>polygon2v</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="383"/>
         <source>poly2</source>
         <comment>polygon by 2 vertices</comment>
-        <translation>soksz2cs</translation>
+        <translation>poly2</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="390"/>
@@ -9941,19 +9944,19 @@ Lecseréli?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="447"/>
         <source>tan3</source>
         <comment>circle tangent to 3</comment>
-        <translation>kör3érintő</translation>
+        <translation>tan3</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="446"/>
         <source>ct3</source>
         <comment>circle tangent to 3</comment>
-        <translation>ké3</translation>
+        <translation>ct3</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="538"/>
         <source>ellipseinscribed</source>
         <comment>inscribed ellipse</comment>
-        <translation>feliratos ellipszis</translation>
+        <translation>beírtellipszis</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="539"/>
@@ -9971,7 +9974,7 @@ Lecseréli?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="872"/>
         <source>hatch</source>
         <comment>draw hatch</comment>
-        <translation>nyílás</translation>
+        <translation>sraffozás</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="873"/>
@@ -9983,7 +9986,7 @@ Lecseréli?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="858"/>
         <source>mtext</source>
         <comment>draw mtext</comment>
-        <translation>szöveg bevitel</translation>
+        <translation>mtext</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="860"/>
@@ -10007,7 +10010,7 @@ Lecseréli?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="1018"/>
         <source>regen</source>
         <comment>zoom - redraw</comment>
-        <translation>újra</translation>
+        <translation>regen</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1019"/>
@@ -10031,7 +10034,7 @@ Lecseréli?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="1038"/>
         <source>zoomwindow</source>
         <comment>zoom - window</comment>
-        <translation>ablak nagyítás</translation>
+        <translation>ablaknagyítás</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1039"/>
@@ -10043,7 +10046,7 @@ Lecseréli?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="1026"/>
         <source>zoomauto</source>
         <comment>zoom - auto</comment>
-        <translation>automatikus nagyítás</translation>
+        <translation>zoomauto</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1027"/>
@@ -10055,7 +10058,7 @@ Lecseréli?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="1044"/>
         <source>zoompan</source>
         <comment>zoom - pan</comment>
-        <translation>Nagyítás pásztázás</translation>
+        <translation>pásztázás</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1045"/>
@@ -10067,7 +10070,7 @@ Lecseréli?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="1032"/>
         <source>zoomprevious</source>
         <comment>zoom - previous</comment>
-        <translation>előző nagyítás</translation>
+        <translation>zoomprevious</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1033"/>
@@ -10115,13 +10118,13 @@ Lecseréli?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="638"/>
         <source>dimaligned</source>
         <comment>dimension - aligned</comment>
-        <translation>tompított</translation>
+        <translation>igazítottméret</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="650"/>
         <source>dimhorizontal</source>
         <comment>dimension - horizontal</comment>
-        <translation>vízszintes méret</translation>
+        <translation>vízszintesméret</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="651"/>
@@ -10133,7 +10136,7 @@ Lecseréli?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="656"/>
         <source>dimvertical</source>
         <comment>dimension - vertical</comment>
-        <translation>függőleges méret</translation>
+        <translation>függőlegesméret</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="657"/>
@@ -10145,7 +10148,7 @@ Lecseréli?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="644"/>
         <source>dimlinear</source>
         <comment>dimension - linear</comment>
-        <translation>vonalas méret</translation>
+        <translation>lineárisméret</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="645"/>
@@ -10157,7 +10160,7 @@ Lecseréli?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="676"/>
         <source>dimangular</source>
         <comment>dimension - angular</comment>
-        <translation>szögletes méret</translation>
+        <translation>szögméret</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="678"/>
@@ -10169,19 +10172,19 @@ Lecseréli?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="663"/>
         <source>dimradial</source>
         <comment>dimension - radial</comment>
-        <translation>sugár méret</translation>
+        <translation>sugárméret</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="671"/>
         <source>dimdiametric</source>
         <comment>dimension - diametric</comment>
-        <translation>átmérős méret</translation>
+        <translation>dimdiametric</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="669"/>
         <source>dimdiameter</source>
         <comment>dimension - diametric</comment>
-        <translation>átmérő méret</translation>
+        <translation>átmérőméret</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="670"/>
@@ -10193,7 +10196,7 @@ Lecseréli?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="683"/>
         <source>dimleader</source>
         <comment>dimension - leader</comment>
-        <translation>vezető méret</translation>
+        <translation>mutatóvonal</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="684"/>
@@ -10205,13 +10208,13 @@ Lecseréli?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="689"/>
         <source>dimregen</source>
         <comment>dimension - regenerate</comment>
-        <translation>dimreg</translation>
+        <translation>dimregen</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="960"/>
         <source>restrictnothing</source>
         <comment>restrict - nothing</comment>
-        <translation>Semmit sem korlátoz</translation>
+        <translation>restrictnothing</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="961"/>
@@ -10223,7 +10226,7 @@ Lecseréli?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="966"/>
         <source>restrictorthogonal</source>
         <comment>restrict - orthogonal</comment>
-        <translation>derékszög korlátozás</translation>
+        <translation>restrictorthogonal</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="967"/>
@@ -10235,7 +10238,7 @@ Lecseréli?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="972"/>
         <source>restricthorizontal</source>
         <comment>restrict - horizontal</comment>
-        <translation>vízszintes korlátozás</translation>
+        <translation>restricthorizontal</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="973"/>
@@ -10247,7 +10250,7 @@ Lecseréli?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="978"/>
         <source>restrictvertical</source>
         <comment>restrict - vertical</comment>
-        <translation>függőleges korlátozás</translation>
+        <translation>restrictvertical</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="979"/>
@@ -10325,7 +10328,7 @@ Lecseréli?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="748"/>
         <source>tm2</source>
         <comment>modify - multi trim (extend)</comment>
-        <translation>Idő 2</translation>
+        <translation>tm2</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="754"/>
@@ -10361,7 +10364,7 @@ Lecseréli?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="893"/>
         <source>snapfree</source>
         <comment>snap - free</comment>
-        <translation>szabad választás</translation>
+        <translation>snapfree</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="895"/>
@@ -10373,7 +10376,7 @@ Lecseréli?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="900"/>
         <source>snapcenter</source>
         <comment>snap - center</comment>
-        <translation>igazítási közép</translation>
+        <translation>snapcenter</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="901"/>
@@ -10385,7 +10388,7 @@ Lecseréli?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="906"/>
         <source>snapdist</source>
         <comment>snap - distance to endpoints</comment>
-        <translation>igazítási távolság</translation>
+        <translation>snapdist</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="907"/>
@@ -10397,7 +10400,7 @@ Lecseréli?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="912"/>
         <source>snapend</source>
         <comment>snap - end points</comment>
-        <translation>igazítási vég</translation>
+        <translation>snapend</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="913"/>
@@ -10409,7 +10412,7 @@ Lecseréli?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="918"/>
         <source>snapgrid</source>
         <comment>snap - grid</comment>
-        <translation>Rácsra illesztés</translation>
+        <translation>snapgrid</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="919"/>
@@ -10421,7 +10424,7 @@ Lecseréli?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="924"/>
         <source>snapintersection</source>
         <comment>snap - intersection</comment>
-        <translation>Illesztés metszéspontja</translation>
+        <translation>snapintersection</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="925"/>
@@ -10433,7 +10436,7 @@ Lecseréli?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="930"/>
         <source>snapmiddle</source>
         <comment>snap - middle points</comment>
-        <translation>Illesztés közepe</translation>
+        <translation>snapmiddle</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="931"/>
@@ -10445,7 +10448,7 @@ Lecseréli?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="936"/>
         <source>snaponentity</source>
         <comment>snap - on entity</comment>
-        <translation>Elem igazítása</translation>
+        <translation>snaponentity</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="937"/>
@@ -10463,7 +10466,7 @@ Lecseréli?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="954"/>
         <source>setrelativezero</source>
         <comment>set relative zero position</comment>
-        <translation>állítsa be a relatív nulla pozíciót</translation>
+        <translation>setrelativezero</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="955"/>
@@ -10475,7 +10478,7 @@ Lecseréli?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="616"/>
         <source>selectall</source>
         <comment>Select all entities</comment>
-        <translation>Összes elem kiválasztása</translation>
+        <translation>selectall</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="617"/>
@@ -10487,7 +10490,7 @@ Lecseréli?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="622"/>
         <source>deselectall</source>
         <comment>deselect all entities</comment>
-        <translation>törölje az összes elem kijelölését</translation>
+        <translation>deselectall</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="624"/>
@@ -10552,7 +10555,7 @@ Lecseréli?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="1099"/>
         <location filename="../src/cmd/rs_commands.cpp" line="1197"/>
         <source>chord length</source>
-        <translation>ívhossz</translation>
+        <translation>húrhossz</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1100"/>
@@ -10563,23 +10566,23 @@ Lecseréli?</translation>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1101"/>
         <source>columnspacing</source>
-        <translation>oszloptáv</translation>
+        <translation>columnspacing</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1103"/>
         <location filename="../src/cmd/rs_commands.cpp" line="1212"/>
         <source>factor</source>
-        <translation>Tényező</translation>
+        <translation>tényező</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1104"/>
         <source>length</source>
-        <translation>hossz</translation>
+        <translation>length</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1107"/>
         <source>number</source>
-        <translation>szám</translation>
+        <translation>number</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1108"/>
@@ -10595,7 +10598,7 @@ Lecseréli?</translation>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1110"/>
         <source>rowspacing</source>
-        <translation>sortáv</translation>
+        <translation>rowspacing</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1111"/>
@@ -10671,7 +10674,7 @@ Lecseréli?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="1209"/>
         <source>colspacing</source>
         <comment>columnspacing for inserts</comment>
-        <translation>oszloptáv</translation>
+        <translation>colspacing</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1210"/>
@@ -10730,13 +10733,13 @@ Lecseréli?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="1228"/>
         <source>len1</source>
         <comment>length1</comment>
-        <translation>Hossz 1</translation>
+        <translation>len1</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1229"/>
         <source>l1</source>
         <comment>length1</comment>
-        <translation>Címke 1</translation>
+        <translation>l1</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1231"/>
@@ -10748,13 +10751,13 @@ Lecseréli?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="1232"/>
         <source>len2</source>
         <comment>length2</comment>
-        <translation>Hossz 2</translation>
+        <translation>len2</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1233"/>
         <source>l2</source>
         <comment>length2</comment>
-        <translation>Címke 2</translation>
+        <translation>l2</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1235"/>
@@ -10864,12 +10867,12 @@ Lecseréli?</translation>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1269"/>
         <source>paperoffset</source>
-        <translation>papíroffset</translation>
+        <translation>papíreltolás</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1270"/>
         <source>graphoffset</source>
-        <translation>rajz eltolás</translation>
+        <translation>rajzeltolás</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1392"/>
@@ -11030,12 +11033,12 @@ Lecseréli?</translation>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="80"/>
         <source>Snap</source>
-        <translation>Snap</translation>
+        <translation>Illesztés</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="81"/>
         <source>Snap Extras</source>
-        <translation>Extra igazítás</translation>
+        <translation>További illesztések</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="82"/>
@@ -11132,7 +11135,7 @@ Lecseréli?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="215"/>
         <source>linehor</source>
         <comment>horizontal line</comment>
-        <translation>Horizontális sor</translation>
+        <translation>linehor</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="216"/>
@@ -11144,7 +11147,7 @@ Lecseréli?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="221"/>
         <source>linever</source>
         <comment>vertical line</comment>
-        <translation>Vertikális sor</translation>
+        <translation>linever</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="222"/>
@@ -11156,7 +11159,7 @@ Lecseréli?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="227"/>
         <source>linerec</source>
         <comment>draw rectangle</comment>
-        <translation>Sor mező</translation>
+        <translation>linerec</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="228"/>
@@ -11168,13 +11171,13 @@ Lecseréli?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="312"/>
         <source>linepar</source>
         <comment>create parallel</comment>
-        <translation>Sor paraméter</translation>
+        <translation>linepar</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="313"/>
         <source>lineoff</source>
         <comment>create parallel</comment>
-        <translation>Sor eltolása</translation>
+        <translation>lineoff</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="314"/>
@@ -11192,7 +11195,7 @@ Lecseréli?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="320"/>
         <source>lineparthro</source>
         <comment>parallel through point</comment>
-        <translation>vonalparaméter</translation>
+        <translation>lineparthro</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="321"/>
@@ -11204,13 +11207,13 @@ Lecseréli?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="327"/>
         <source>linebisect</source>
         <comment>angle bisector</comment>
-        <translation>vonalhámozó</translation>
+        <translation>linebisect</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="334"/>
         <source>linetancp</source>
         <comment>tangent point and circle</comment>
-        <translation>vonaltangenspont</translation>
+        <translation>linetancp</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="335"/>
@@ -11222,7 +11225,7 @@ Lecseréli?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="341"/>
         <source>linetan2c</source>
         <comment>tangent two circles</comment>
-        <translation>vonaltangenskör</translation>
+        <translation>linetan2c</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="342"/>
@@ -11234,7 +11237,7 @@ Lecseréli?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="347"/>
         <source>linetancper</source>
         <comment>tangent line and circle</comment>
-        <translation>vonaltangensper</translation>
+        <translation>linetancper</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="348"/>
@@ -11558,7 +11561,7 @@ Lecseréli?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="578"/>
         <source>plineapp</source>
         <comment>pl append node</comment>
-        <translation>vonalalkalmazás</translation>
+        <translation>plineapp</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="579"/>
@@ -11570,7 +11573,7 @@ Lecseréli?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="584"/>
         <source>plinedel</source>
         <comment>pl delete node</comment>
-        <translation>vonal törlése</translation>
+        <translation>plinedel</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="585"/>
@@ -11582,7 +11585,7 @@ Lecseréli?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="590"/>
         <source>plinedeltwn</source>
         <comment>pl del between nodes</comment>
-        <translation>vonal törlése (térség)</translation>
+        <translation>plinedeltwn</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="591"/>
@@ -11594,7 +11597,7 @@ Lecseréli?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="596"/>
         <source>plinetrm</source>
         <comment>pl trim segments</comment>
-        <translation>vonal rövidítése</translation>
+        <translation>plinetrm</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="597"/>
@@ -11606,7 +11609,7 @@ Lecseréli?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="602"/>
         <source>plinepar</source>
         <comment>pl equidistant</comment>
-        <translation>vonalparaméter</translation>
+        <translation>plinepar</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="603"/>
@@ -11636,7 +11639,7 @@ Lecseréli?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="629"/>
         <source>invertselect</source>
         <comment>invert select</comment>
-        <translation>válassza ki az ellenkezőjét</translation>
+        <translation>invertselect</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="630"/>
@@ -11678,31 +11681,31 @@ Lecseréli?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="697"/>
         <source>modmove</source>
         <comment>modify - move (copy)</comment>
-        <translation>Mozgatás mód</translation>
+        <translation>modmove</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="703"/>
         <source>modrotate</source>
         <comment>modify - rotate</comment>
-        <translation>Forgatás mód</translation>
+        <translation>modrotate</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="709"/>
         <source>modscale</source>
         <comment>modify - scale</comment>
-        <translation>Skálázás mód</translation>
+        <translation>modscale</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="715"/>
         <source>modmirror</source>
         <comment>modify -  mirror</comment>
-        <translation>Tükrözés mód</translation>
+        <translation>modmirror</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="721"/>
         <source>modmovrot</source>
         <comment>modify - move rotate</comment>
-        <translation>Mozgatás és forgatás mód</translation>
+        <translation>modmovrot</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="722"/>
@@ -11714,19 +11717,19 @@ Lecseréli?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="727"/>
         <source>mod2rot</source>
         <comment>modify - rotate2</comment>
-        <translation>2D forgatás mód</translation>
+        <translation>mod2rot</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="728"/>
         <source>r2</source>
         <comment>modify - rotate2</comment>
-        <translation>2D forgatás</translation>
+        <translation>r2</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="733"/>
         <source>modrevert</source>
         <comment>modify -  revert direction</comment>
-        <translation>Visszaállítás mód</translation>
+        <translation>modrevert</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="734"/>
@@ -11738,25 +11741,25 @@ Lecseréli?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="740"/>
         <source>modtrim</source>
         <comment>modify - trim (extend)</comment>
-        <translation>módtrimszés</translation>
+        <translation>modtrim</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="746"/>
         <source>modtrim2</source>
         <comment>modify - multi trim (extend)</comment>
-        <translation>módtrimszés 2</translation>
+        <translation>modtrim2</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="753"/>
         <source>modlengthen</source>
         <comment>modify - lengthen</comment>
-        <translation>módmegosszabbítás</translation>
+        <translation>modlengthen</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="759"/>
         <source>modoffset</source>
         <comment>modify - offset</comment>
-        <translation>módális eltolás</translation>
+        <translation>modoffset</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="760"/>
@@ -11774,43 +11777,43 @@ Lecseréli?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="766"/>
         <source>modbevel</source>
         <comment>modify - bevel</comment>
-        <translation>módbevel</translation>
+        <translation>modbevel</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="773"/>
         <source>modfillet</source>
         <comment>modify - fillet</comment>
-        <translation>Lekerekítés módosítása</translation>
+        <translation>modfillet</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="779"/>
         <source>moddivide</source>
         <comment>modify - divide (cut)</comment>
-        <translation>módosító osztás</translation>
+        <translation>moddivide</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="787"/>
         <source>modstretch</source>
         <comment>modify - stretch</comment>
-        <translation>módmegnyújtás</translation>
+        <translation>modstretch</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="793"/>
         <source>modproperties</source>
         <comment>modify properties</comment>
-        <translation>módális tulajdonságok</translation>
+        <translation>modproperties</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="800"/>
         <source>modattr</source>
         <comment>modify attribute</comment>
-        <translation>módosítási attribútum</translation>
+        <translation>modattr</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="807"/>
         <source>modexpltext</source>
         <comment>explode text strings</comment>
-        <translation>módosítási magyarázat szövege</translation>
+        <translation>modexpltext</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="808"/>
@@ -11822,19 +11825,19 @@ Lecseréli?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="813"/>
         <source>modexplode</source>
         <comment>explode block/polyline into entities</comment>
-        <translation>módosítás kibontása</translation>
+        <translation>modexplode</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="819"/>
         <source>moddelete</source>
         <comment>modify - delete (erase)</comment>
-        <translation>módosítás törlése</translation>
+        <translation>moddelete</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="828"/>
         <source>infodistance</source>
         <comment>distance point to point</comment>
-        <translation>infó távolság</translation>
+        <translation>infodistance</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="829"/>
@@ -11846,7 +11849,7 @@ Lecseréli?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="836"/>
         <source>infodistep</source>
         <comment>distance entity to point</comment>
-        <translation>infó távolság lépése</translation>
+        <translation>infodistep</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="837"/>
@@ -11942,13 +11945,13 @@ Lecseréli?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="1105"/>
         <source>length1</source>
         <comment>bevel/fillet length1</comment>
-        <translation>hossz1</translation>
+        <translation>length1</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1106"/>
         <source>length2</source>
         <comment>bevel/fillet length2</comment>
-        <translation>hossz2</translation>
+        <translation>length2</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1217"/>
@@ -12207,7 +12210,7 @@ Lecseréli?</translation>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="109"/>
         <source>Anyhow, there are some entities identified.</source>
         <comment>dwgImport</comment>
-        <translation>Mindenesetre, van néhány azonosított entitás.</translation>
+        <translation>Ennek ellenére néhány elemet sikerült azonosítani.</translation>
     </message>
     <message>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="110"/>
@@ -12285,7 +12288,7 @@ Lecseréli?</translation>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="125"/>
         <source>error reading DXF/DWG entities</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>hiba a DXF/DWG entitások olvasásakor</translation>
+        <translation>hiba a DXF/DWG elemek olvasásakor</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="127"/>
@@ -12375,7 +12378,7 @@ Lecseréli?</translation>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="109"/>
         <source>Output scale. E.g.: 0.01 (for 1:100 scale).</source>
-        <translation>Kimeneti skála. Pl.: 0,01 (1:100 méretarányhoz).</translation>
+        <translation>Kimeneti lépték. Pl.: 0,01 (1:100 méretarányhoz).</translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="113"/>
@@ -12436,7 +12439,7 @@ Lecseréli?</translation>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="42"/>
         <source>/CustomColor%1</source>
-        <translation>/Egyedi szín%1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="43"/>
@@ -12459,7 +12462,7 @@ Lecseréli?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="188"/>
         <source>sline</source>
         <comment>draw snake line</comment>
-        <translation>egyszerű vonal</translation>
+        <translation>sline</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="189"/>
@@ -12477,7 +12480,7 @@ Lecseréli?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="195"/>
         <source>slinex</source>
         <comment>draw snake line (X)</comment>
-        <translation>egyszerű vonal X</translation>
+        <translation>slinex</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="196"/>
@@ -12585,7 +12588,7 @@ Lecseréli?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="270"/>
         <source>cross</source>
         <comment>draw cross for circle</comment>
-        <translation>keresztező</translation>
+        <translation>kereszt</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="271"/>
@@ -12621,7 +12624,7 @@ Lecseréli?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="288"/>
         <source>duplicate</source>
         <comment>duplicate entity</comment>
-        <translation>Duplikat</translation>
+        <translation>másodlat</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="289"/>
@@ -12633,7 +12636,7 @@ Lecseréli?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="294"/>
         <source>linejoin</source>
         <comment>lines join</comment>
-        <translation>Vonalcsatlakozás</translation>
+        <translation>linejoin</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="295"/>
@@ -12645,7 +12648,7 @@ Lecseréli?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="300"/>
         <source>breakdivide</source>
         <comment>break or divide entity</comment>
-        <translation>Szakasz szakadása</translation>
+        <translation>törés</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="301"/>
@@ -12657,7 +12660,7 @@ Lecseréli?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="306"/>
         <source>gapline</source>
         <comment>line gap</comment>
-        <translation>Közönség vonala</translation>
+        <translation>gapline</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="307"/>
@@ -12669,19 +12672,19 @@ Lecseréli?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="493"/>
         <source>parabola4p</source>
         <comment>Parabola 4 points</comment>
-        <translation>Parabola</translation>
+        <translation>parabola4p</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="494"/>
         <source>pl4</source>
         <comment>Parabola 4 points</comment>
-        <translation>Pont-von-vonal</translation>
+        <translation>pl4</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="499"/>
         <source>parabolafd</source>
         <comment>Parabola focus directrix</comment>
-        <translation>Parabola</translation>
+        <translation>parabolafd</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="500"/>
@@ -12694,13 +12697,13 @@ Lecseréli?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="554"/>
         <source>angleline</source>
         <comment>draw angle from line</comment>
-        <translation>Szögvonal</translation>
+        <translation>angleline</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="559"/>
         <source>rortoline</source>
         <comment>draw orthogonal</comment>
-        <translation>Rotációs vonal</translation>
+        <translation>rortoline</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="560"/>
@@ -12712,25 +12715,25 @@ Lecseréli?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="565"/>
         <source>point2line</source>
         <comment>draw line from point to line</comment>
-        <translation>Pont-von-vonal</translation>
+        <translation>point2line</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="566"/>
         <source>p2l</source>
         <comment>draw line from point to line</comment>
-        <translation>Pont-von-vonal</translation>
+        <translation>p2l</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="945"/>
         <source>snapmiddlemanual</source>
         <comment>snap middle manual</comment>
-        <translation>Középső rögzítés kézi beállítása</translation>
+        <translation>snapmiddlemanual</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="946"/>
         <source>snapmanual</source>
         <comment>snap middle manual</comment>
-        <translation>Manuális rögzítés</translation>
+        <translation>snapmanual</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="947"/>
@@ -12756,37 +12759,37 @@ Lecseréli?</translation>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1118"/>
         <source>anglerel</source>
-        <translation>Szögviszony</translation>
+        <translation>anglerel</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1119"/>
         <source>start</source>
-        <translation>Kezdőpont</translation>
+        <translation>start</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1122"/>
         <source>offset</source>
-        <translation>Eltolás</translation>
+        <translation>offset</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1123"/>
         <source>linesnap</source>
-        <translation>Vonatrögzítés</translation>
+        <translation>linesnap</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1124"/>
         <source>ticksnap</source>
-        <translation>Tikrögzítés</translation>
+        <translation>ticksnap</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1127"/>
         <source>width</source>
-        <translation>szélesség</translation>
+        <translation>width</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1128"/>
         <source>height</source>
-        <translation>magasság</translation>
+        <translation>height</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1129"/>
@@ -12802,7 +12805,7 @@ Lecseréli?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="1131"/>
         <location filename="../src/cmd/rs_commands.cpp" line="1137"/>
         <source>bevels</source>
-        <translation>szöglet</translation>
+        <translation>bevels</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1132"/>
@@ -12817,7 +12820,7 @@ Lecseréli?</translation>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1134"/>
         <source>corners</source>
-        <translation>sarokok</translation>
+        <translation>corners</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1135"/>
@@ -12827,7 +12830,7 @@ Lecseréli?</translation>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1136"/>
         <source>round</source>
-        <translation>kerek</translation>
+        <translation>round</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1138"/>
@@ -12857,47 +12860,47 @@ Lecseréli?</translation>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1143"/>
         <source>middle</source>
-        <translation>középső</translation>
+        <translation>middle</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1144"/>
         <source>right</source>
-        <translation>jobb</translation>
+        <translation>right</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1145"/>
         <source>bottoml</source>
-        <translation>bal alsó</translation>
+        <translation>bottoml</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1146"/>
         <source>bottom</source>
-        <translation>alsó</translation>
+        <translation>bottom</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1147"/>
         <source>bottomr</source>
-        <translation>jobb alsó</translation>
+        <translation>bottomr</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1148"/>
         <source>snapcorner</source>
-        <translation>Sarokhoz rögzítés</translation>
+        <translation>snapcorner</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1149"/>
         <source>snapshift</source>
-        <translation>Elmozdítás rögzítése</translation>
+        <translation>snapshift</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1150"/>
         <source>sizein</source>
-        <translation>Méret belőlése</translation>
+        <translation>sizein</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1151"/>
         <source>sizeout</source>
-        <translation>Méret külsőlése</translation>
+        <translation>sizeout</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1152"/>
@@ -12912,22 +12915,22 @@ Lecseréli?</translation>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1156"/>
         <source>snap2</source>
-        <translation>2-pontos rögzítés</translation>
+        <translation>snap2</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1157"/>
         <source>corner</source>
-        <translation>Sarok</translation>
+        <translation>corner</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1158"/>
         <source>mid-vert</source>
-        <translation>Függőleges közép</translation>
+        <translation>mid-vert</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1159"/>
         <source>mid-hor</source>
-        <translation>Vízszintes közép</translation>
+        <translation>mid-hor</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1161"/>
@@ -12937,37 +12940,37 @@ Lecseréli?</translation>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1162"/>
         <source>noquad</source>
-        <translation>nincs quad</translation>
+        <translation>noquad</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1163"/>
         <source>angle_inner</source>
-        <translation>belső szög</translation>
+        <translation>angle_inner</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1166"/>
         <source>edges</source>
-        <translation>élek</translation>
+        <translation>edges</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1167"/>
         <source>edge-none</source>
-        <translation>nincs élek</translation>
+        <translation>edge-none</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1168"/>
         <source>edge-both</source>
-        <translation>mindkét élek</translation>
+        <translation>edge-both</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1169"/>
         <source>edge-start</source>
-        <translation>kezdő élek</translation>
+        <translation>edge-start</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1170"/>
         <source>edge-end</source>
-        <translation>végi élek</translation>
+        <translation>edge-end</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1171"/>
@@ -12992,22 +12995,22 @@ Lecseréli?</translation>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1175"/>
         <source>nofit</source>
-        <translation>nincs illesztés</translation>
+        <translation>nofit</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1176"/>
         <source>dist_fixed</source>
-        <translation>fixált távolság</translation>
+        <translation>dist_fixed</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1177"/>
         <source>dist_flex</source>
-        <translation>rugalmas távolság</translation>
+        <translation>dist_flex</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1178"/>
         <source>distance</source>
-        <translation>távolság</translation>
+        <translation>distance</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1182"/>
@@ -13017,17 +13020,17 @@ Lecseréli?</translation>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1183"/>
         <source>nosym</source>
-        <translation>nem szimbolikus</translation>
+        <translation>nosym</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_patternlist.cpp" line="63"/>
         <source>Hatch:: no pattern found. Please set pattern path in application preferences</source>
-        <translation>Hatch:: Nincs mintázat található. Kérjük, állítsa be a mintázat elérési útját az alkalmazás preferenciáiban</translation>
+        <translation>Sraffozás:: nem található minta. Adja meg a minták elérési útját az alkalmazás beállításaiban</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_patternlist.cpp" line="85"/>
         <source>Hatch:: loading pattern failed: %1</source>
-        <translation>Hatch:: Sikertelen mintázat betöltése: %1</translation>
+        <translation>Sraffozás:: a minta betöltése nem sikerült: %1</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="84"/>
@@ -13269,7 +13272,7 @@ Lecseréli?</translation>
         <location filename="../src/actions/rs_actionblocksinsert.cpp" line="80"/>
         <source> has nested insert of current block in:
 </source>
-        <translation> beágyazott aktuális blokk beillesztése:
+        <translation> beágyazva tartalmazza az aktuális blokk beszúrását:
 </translation>
     </message>
     <message>
@@ -13492,7 +13495,7 @@ Ez a blokk nem illeszthető be.</translation>
     <message>
         <location filename="../src/actions/rs_actiondimradial.cpp" line="283"/>
         <source>Specify dimension line position or enter angle:</source>
-        <translation>Méretvonal helyzete, vagy központi szöge:</translation>
+        <translation>Méretvonal helyzete, vagy szöge:</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimradial.cpp" line="287"/>
@@ -13553,12 +13556,12 @@ Ez a blokk nem illeszthető be.</translation>
     <message>
         <location filename="../src/actions/rs_actiondrawarc.cpp" line="355"/>
         <source>Specify chord length:</source>
-        <translation>Ív hossza:</translation>
+        <translation>Adja meg a húr hosszát:</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawarc.cpp" line="347"/>
         <source>Specify end angle or [angle/chord length]</source>
-        <translation>Adja meg a végszöget vagy a [szög/húr hosszát]</translation>
+        <translation>Adja meg a végszöget vagy [szög/húrhossz]</translation>
     </message>
 </context>
 <context>
@@ -13587,7 +13590,7 @@ Ez a blokk nem illeszthető be.</translation>
     <message>
         <location filename="../src/actions/rs_actiondrawarc3p.cpp" line="242"/>
         <source>Specify endpoint</source>
-        <translation>Lezáró pont</translation>
+        <translation>Adja meg a végpontot</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawarc3p.cpp" line="233"/>
@@ -14167,7 +14170,7 @@ Ez a blokk nem illeszthető be.</translation>
     <message>
         <location filename="../src/actions/rs_actiondrawhatch.cpp" line="179"/>
         <source>Invalid hatch area. Please check that the entities chosen form one or more closed contours.</source>
-        <translation>Érvénytelen terület. Ellenőrizze, hogy a kiválasztott elemek zárt körvonalat alkossanak.</translation>
+        <translation>Érvénytelen sraffozási terület. Ellenőrizze, hogy a kiválasztott elemek egy vagy több zárt körvonalat alkotnak-e.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawhatch.cpp" line="150"/>
@@ -14271,7 +14274,7 @@ Ez a blokk nem illeszthető be.</translation>
     <message>
         <location filename="../src/actions/rs_actiondrawline.cpp" line="389"/>
         <source>Cannot close sequence of lines: Not enough entities defined yet, or already closed.</source>
-        <translation>A sorok sorozata nem zárható be: Még nincs elég elem meghatározva, vagy már le van zárva.</translation>
+        <translation>A vonalsorozat nem zárható be: Még nincs elég elem meghatározva, vagy már le van zárva.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawline.cpp" line="443"/>
@@ -14661,7 +14664,7 @@ Ez a blokk nem illeszthető be.</translation>
     <message>
         <location filename="../src/actions/rs_actiondrawlinetangent2.cpp" line="290"/>
         <source>Select the tangent line closest to cursor</source>
-        <translation>Válassza ki a kursorhoz legközelebb eső tangens vonalat</translation>
+        <translation>Válassza ki a kurzorhoz legközelebb eső érintőt</translation>
     </message>
 </context>
 <context>
@@ -14791,7 +14794,7 @@ Ez a blokk nem illeszthető be.</translation>
     <message>
         <location filename="../src/actions/rs_actiondrawspline.cpp" line="277"/>
         <source>Specify first control point</source>
-        <translation>Adja meg az első irányító pontot</translation>
+        <translation>Adja meg az első vezérlőpontot</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawspline.cpp" line="278"/>
@@ -14801,7 +14804,7 @@ Ez a blokk nem illeszthető be.</translation>
     <message>
         <location filename="../src/actions/rs_actiondrawspline.cpp" line="290"/>
         <source>Specify next control point or [%1]</source>
-        <translation>Adja meg a következő pontot, vagy [%1]</translation>
+        <translation>Adja meg a következő vezérlőpontot, vagy [%1]</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawspline.cpp" line="291"/>
@@ -14812,7 +14815,7 @@ Ez a blokk nem illeszthető be.</translation>
     <message>
         <location filename="../src/actions/rs_actiondrawspline.cpp" line="294"/>
         <source>Specify next control point</source>
-        <translation>Adja meg a következő irányító pontot</translation>
+        <translation>Adja meg a következő vezérlőpontot</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawspline.cpp" line="333"/>
@@ -14941,7 +14944,7 @@ Ez a blokk nem illeszthető be.</translation>
     <message>
         <location filename="../src/actions/rs_actioninfoarea.cpp" line="165"/>
         <source>Specify first point of polygon</source>
-        <translation>Poligon első pontjának megadása</translation>
+        <translation>Adja meg a sokszög első pontját</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actioninfoarea.cpp" line="166"/>
@@ -14952,7 +14955,7 @@ Ez a blokk nem illeszthető be.</translation>
     <message>
         <location filename="../src/actions/rs_actioninfoarea.cpp" line="170"/>
         <source>Specify next point of polygon</source>
-        <translation>Poligon következő pontjának megadása</translation>
+        <translation>Adja meg a sokszög következő pontját</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actioninfoarea.cpp" line="137"/>
@@ -15101,7 +15104,7 @@ Ez a blokk nem illeszthető be.</translation>
     <message>
         <location filename="../src/actions/rs_actionlockrelativezero.cpp" line="43"/>
         <source>(Un-)&amp;Lock Relative Zero</source>
-        <translation>Relatív zérus &amp;zárolása</translation>
+        <translation>Relatív nulla &amp;zárolása/feloldása</translation>
     </message>
 </context>
 <context>
@@ -15186,7 +15189,7 @@ Ez a blokk nem illeszthető be.</translation>
     <message>
         <location filename="../src/actions/rs_actionmodifycut.cpp" line="110"/>
         <source>Entity must be a line, arc, circle, ellipse or interpolation spline.</source>
-        <translation>Az elem lehet vonal, ív, kör, ellipszis vagy interpolációs hajlítható vonal.</translation>
+        <translation>Az elem csak vonal, ív, kör, ellipszis vagy interpolációs spline lehet.</translation>
     </message>
 </context>
 <context>
@@ -15194,7 +15197,7 @@ Ez a blokk nem illeszthető be.</translation>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="171"/>
         <source>Specify first break point on a polyline</source>
-        <translation>A sokszög első törési pontja</translation>
+        <translation>Adja meg az első töréspontot a vonalláncon</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="172"/>
@@ -15204,7 +15207,7 @@ Ez a blokk nem illeszthető be.</translation>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="175"/>
         <source>Specify second break point on the same polyline</source>
-        <translation>A sokszög második töréspontja</translation>
+        <translation>Adja meg a második töréspontot ugyanazon a vonalláncon</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="177"/>
@@ -15234,7 +15237,7 @@ Ez a blokk nem illeszthető be.</translation>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="115"/>
         <source>One of the chosen entities is nullptr</source>
-        <translation>A kiválasztott elemek egyike a null minta</translation>
+        <translation>A kiválasztott elemek egyike nullptr</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="142"/>
@@ -15476,7 +15479,7 @@ Ez a blokk nem illeszthető be.</translation>
     <message>
         <location filename="../src/actions/rs_actionmodifyscale.cpp" line="238"/>
         <source>Specify scale center</source>
-        <translation>Adja meg a méretkehámozási központot</translation>
+        <translation>Adja meg az átméretezés középpontját</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifyscale.cpp" line="247"/>
@@ -15524,7 +15527,7 @@ Ez a blokk nem illeszthető be.</translation>
     <message>
         <location filename="../src/actions/rs_actionmodifytrim.cpp" line="177"/>
         <source>Select first trim entity</source>
-        <translation>Első elem a letöréshez</translation>
+        <translation>Első elem a levágáshoz</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifytrim.cpp" line="178"/>
@@ -15546,12 +15549,12 @@ Ez a blokk nem illeszthető be.</translation>
     <message>
         <location filename="../src/actions/rs_actionmodifytrim.cpp" line="186"/>
         <source>Select second trim entity</source>
-        <translation>Második elem a letöréshez</translation>
+        <translation>Második elem a levágáshoz</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifytrim.cpp" line="189"/>
         <source>Select entity to trim</source>
-        <translation>Válasszon elemet a letöréshez</translation>
+        <translation>Válasszon elemet a levágáshoz</translation>
     </message>
 </context>
 <context>
@@ -15569,7 +15572,7 @@ Ez a blokk nem illeszthető be.</translation>
     <message>
         <location filename="../src/actions/rs_actionmodifytrimamount.cpp" line="108"/>
         <source>The chosen Entity is not an atomic entity or cannot be trimmed.</source>
-        <translation>A választott elemet (elemi egység) nem lehet letörni.</translation>
+        <translation>A választott elem nem atomi elem, vagy nem vágható le.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifytrimamount.cpp" line="139"/>
@@ -15579,7 +15582,7 @@ Ez a blokk nem illeszthető be.</translation>
     <message>
         <location filename="../src/actions/rs_actionmodifytrimamount.cpp" line="186"/>
         <source>Select entity to trim or enter distance:</source>
-        <translation>Elem a letöréshez, vagy távolság:</translation>
+        <translation>Elem a levágáshoz, vagy távolság:</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifytrimamount.cpp" line="187"/>
@@ -15765,7 +15768,7 @@ Ez a blokk nem illeszthető be.</translation>
         <location filename="../src/actions/rs_actionpolylinedelbetween.cpp" line="149"/>
         <location filename="../src/actions/rs_actionpolylinedelbetween.cpp" line="162"/>
         <source>Deleting point is not on entity.</source>
-        <translation>A törlési pont nincs entitáson.</translation>
+        <translation>A törlendő pont nincs elemen.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinedelbetween.cpp" line="189"/>
@@ -15920,12 +15923,12 @@ Ez a blokk nem illeszthető be.</translation>
     <message>
         <location filename="../src/actions/rs_actionprintpreview.cpp" line="147"/>
         <source>Printout offset in graph coordinates by (%1, %2)</source>
-        <translation>Nyomtatás eltolása a grafikon koordinátáiban: (%1, %2)</translation>
+        <translation>Nyomtatás eltolása rajzkoordinátákban: (%1, %2)</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionprintpreview.cpp" line="174"/>
         <source>Printout offset in graph coordinates</source>
-        <translation>Nyomtatási eltolás a grafikon koordinátáiban</translation>
+        <translation>Nyomtatás eltolása rajzkoordinátákban</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionprintpreview.cpp" line="179"/>
@@ -16014,7 +16017,7 @@ Ez a blokk nem illeszthető be.</translation>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="110"/>
         <source>Select to scale</source>
-        <translation>Válassza ki a méretezéshez</translation>
+        <translation>Válassza ki az átméretezéshez</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="113"/>
@@ -16088,7 +16091,7 @@ Ez a blokk nem illeszthető be.</translation>
     <message>
         <location filename="../src/actions/rs_actionselectcontour.cpp" line="57"/>
         <source>Entity must be an Atomic Entity.</source>
-        <translation>Elemi egységet válasszon.</translation>
+        <translation>Az elemnek atomi (nem összetett) elemnek kell lennie.</translation>
     </message>
 </context>
 <context>
@@ -16142,7 +16145,7 @@ Ez a blokk nem illeszthető be.</translation>
     <message>
         <location filename="../src/actions/rs_actionsetrelativezero.cpp" line="99"/>
         <source>Set relative Zero</source>
-        <translation>Relatív zérus</translation>
+        <translation>Relatív nulla beállítása</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionsetrelativezero.cpp" line="99"/>
@@ -16197,7 +16200,7 @@ Ez a blokk nem illeszthető be.</translation>
     <message>
         <location filename="../src/actions/rs_actionzoompan.cpp" line="127"/>
         <source>Click and drag to pan zoom</source>
-        <translation>Kattintson és húzza a nagyításhoz</translation>
+        <translation>Kattintson és húzza a pásztázáshoz</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionzoompan.cpp" line="128"/>
@@ -16208,7 +16211,7 @@ Ez a blokk nem illeszthető be.</translation>
     <message>
         <location filename="../src/actions/rs_actionzoompan.cpp" line="131"/>
         <source>Zoom panning</source>
-        <translation>Nagyítás pásztázása</translation>
+        <translation>Pásztázás</translation>
     </message>
 </context>
 <context>
@@ -16308,7 +16311,7 @@ Ez a blokk nem illeszthető be.</translation>
     <message>
         <location filename="../src/ui/forms/qg_beveloptions.ui" line="53"/>
         <source>Check to trim both entities to the bevel</source>
-        <translation>Jelölje be, ha mindkét elemet ferdére vágja</translation>
+        <translation>Jelölje be, ha mindkét elemet a letörésig le kell vágni</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_beveloptions.ui" line="56"/>
@@ -16449,7 +16452,7 @@ Ez a blokk nem illeszthető be.</translation>
     <message>
         <location filename="../src/ui/forms/qg_imageoptions.ui" line="86"/>
         <source>Scale Factor</source>
-        <translation>Átméretezés</translation>
+        <translation>Léptéktényező</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_imageoptions.ui" line="93"/>
@@ -16487,12 +16490,12 @@ Ez a blokk nem illeszthető be.</translation>
     <message>
         <location filename="../src/ui/forms/qg_insertoptions.ui" line="128"/>
         <source>Scale Factor</source>
-        <translation>Átméretezés</translation>
+        <translation>Léptéktényező</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_insertoptions.ui" line="163"/>
         <source>Array:</source>
-        <translation>Tömb:</translation>
+        <translation>Kiosztás:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_insertoptions.ui" line="185"/>
@@ -16545,7 +16548,7 @@ Ez a blokk nem illeszthető be.</translation>
     <message>
         <location filename="../src/ui/forms/qg_libraryinsertoptions.ui" line="80"/>
         <source>Scale Factor</source>
-        <translation>Skálázási tényező</translation>
+        <translation>Léptéktényező</translation>
     </message>
 </context>
 <context>
@@ -16677,7 +16680,7 @@ Ez a blokk nem illeszthető be.</translation>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="103"/>
         <source>Polyline</source>
-        <translation>Többvonal</translation>
+        <translation>Vonallánc</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="122"/>
@@ -16987,7 +16990,7 @@ Ez a blokk nem illeszthető be.</translation>
     <message>
         <location filename="../src/ui/forms/qg_printpreviewoptions.ui" line="116"/>
         <source>Apply Print Scale to line width</source>
-        <translation>Nyomtatási méretezés alkalmazása vonalvastagságra</translation>
+        <translation>Nyomtatási lépték alkalmazása a vonalvastagságra</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_printpreviewoptions.ui" line="226"/>
@@ -17010,7 +17013,7 @@ Ez a blokk nem illeszthető be.</translation>
     <message>
         <location filename="../src/ui/forms/qg_roundoptions.ui" line="53"/>
         <source>Check to trim both edges to the rounding</source>
-        <translation>Ellenőzi, hogy mindkét szélet a lekerekítéshez igazítsa</translation>
+        <translation>Jelölje be, ha mindkét elemet a lekerekítésig le kell vágni</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_roundoptions.ui" line="56"/>
@@ -17028,7 +17031,7 @@ Ez a blokk nem illeszthető be.</translation>
     <message>
         <location filename="../src/ui/forms/qg_snapdistoptions.ui" line="32"/>
         <source>Snap Distance Options</source>
-        <translation>Távolságraszter beállításai</translation>
+        <translation>Illesztési távolság beállításai</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snapdistoptions.ui" line="50"/>
@@ -17041,12 +17044,12 @@ Ez a blokk nem illeszthető be.</translation>
     <message>
         <location filename="../src/ui/forms/qg_snapmiddleoptions.ui" line="35"/>
         <source>Snap Distance Options</source>
-        <translation>Távolságraszter beállításai</translation>
+        <translation>Illesztési távolság beállításai</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snapmiddleoptions.ui" line="47"/>
         <source>Middle Points:</source>
-        <translation>Középpontok:</translation>
+        <translation>Felezőpontok:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snapmiddleoptions.ui" line="63"/>
@@ -17100,12 +17103,12 @@ Ez a blokk nem illeszthető be.</translation>
     <message>
         <location filename="../src/ui/forms/qg_trimamountoptions.ui" line="20"/>
         <source>Trim Amount Options</source>
-        <translation>Trim mennyiség opciók</translation>
+        <translation>Levágás mértékének beállításai</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_trimamountoptions.ui" line="23"/>
         <source>Distance. Negative values for trimming, positive values for extending.</source>
-        <translation>Távolság. Negatív értékek a trimeléshez, pozitív értékek pedig a kiterjesztéshez.</translation>
+        <translation>Távolság. Negatív érték levágást, pozitív érték meghosszabbítást jelent.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_trimamountoptions.ui" line="56"/>

@@ -33,12 +33,12 @@
         <location filename="../align/align.cpp" line="24"/>
         <location filename="../align/align.cpp" line="31"/>
         <source>Align</source>
-        <translation>Align</translation>
+        <translation>Alinear</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="32"/>
         <source>Align settings...</source>
-        <translation>Ajustes alineados...</translation>
+        <translation>Configuración de alineación...</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="49"/>
@@ -53,7 +53,7 @@
     <message>
         <location filename="../align/align.cpp" line="54"/>
         <source>Align Settings</source>
-        <translation>Ajustes alineados</translation>
+        <translation>Configuración de alineación</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="57"/>
@@ -143,7 +143,7 @@ primer punto base, segundo punto base, primer punto de destino, segundo punto de
     <message>
         <location filename="../list/list.cpp" line="77"/>
         <source>Layer</source>
-        <translation>Layer</translation>
+        <translation>Capa</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="79"/>
@@ -350,7 +350,7 @@ primer punto base, segundo punto base, primer punto de destino, segundo punto de
     <message>
         <location filename="../list/list.cpp" line="217"/>
         <source>Vertices</source>
-        <translation>Vertices</translation>
+        <translation>Vértices</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="231"/>
@@ -504,7 +504,7 @@ primer punto base, segundo punto base, primer punto de destino, segundo punto de
     <message>
         <location filename="../asciifile/asciifile.cpp" line="245"/>
         <source>Draw 2D Point</source>
-        <translation>Dibujo 2D Point</translation>
+        <translation>Dibujar punto 2D</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="246"/>
@@ -514,7 +514,7 @@ primer punto base, segundo punto base, primer punto de destino, segundo punto de
     <message>
         <location filename="../asciifile/asciifile.cpp" line="246"/>
         <source>Draw 3D Point</source>
-        <translation>Dibujo 3D Point</translation>
+        <translation>Dibujar punto 3D</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="247"/>
@@ -544,7 +544,7 @@ primer punto base, segundo punto base, primer punto de destino, segundo punto de
     <message>
         <location filename="../asciifile/asciifile.cpp" line="249"/>
         <source>Draw point code</source>
-        <translation>Código del punto de referencia</translation>
+        <translation>Dibujar código del punto</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="263"/>
@@ -787,7 +787,7 @@ primer punto base, segundo punto base, primer punto de destino, segundo punto de
     <message>
         <location filename="../divide/divide.cpp" line="534"/>
         <source>Vertices</source>
-        <translation>Vertices</translation>
+        <translation>Vértices</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="539"/>
@@ -825,7 +825,7 @@ primer punto base, segundo punto base, primer punto de destino, segundo punto de
     <message>
         <location filename="../divide/dividedlg.cpp" line="85"/>
         <source>Divide at</source>
-        <translation>Divide en</translation>
+        <translation>Dividir en</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="92"/>
@@ -845,7 +845,7 @@ primer punto base, segundo punto base, primer punto de destino, segundo punto de
     <message>
         <location filename="../divide/dividedlg.cpp" line="134"/>
         <source>Breaks - Off</source>
-        <translation>Pausas - Desactivado</translation>
+        <translation>Interrupciones - Desactivado</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="179"/>
@@ -1182,10 +1182,11 @@ If you don&apos;t want to use the parametric form, just leave out &quot;Equation
 You can use pi when you need the value of pi (i.e. (3*pi)).
 Use t or x in your equation as a variable/parameter.
 </source>
-        <translation>Este plugin le permite trazar ecuaciones matemáticas.
-Si no quieres usar la forma paramétrica, deja fuera &quot;Ecuación2&quot;.
-Puedes usar pi cuando necesites el valor de pi (es decir (3*pi)).
-Use t o x en su ecuación como variable/parametro.</translation>
+        <translation>Este complemento le permite trazar ecuaciones matemáticas.
+Si no desea usar la forma paramétrica, omita &quot;Ecuación2&quot;.
+Puede usar pi cuando necesite el valor de pi (por ejemplo, (3*pi)).
+Use t o x en su ecuación como variable/parámetro.
+</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="22"/>

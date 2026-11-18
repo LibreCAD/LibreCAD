@@ -7,7 +7,7 @@
         <location filename="../asciifile/asciifile.cpp" line="35"/>
         <location filename="../asciifile/asciifile.cpp" line="41"/>
         <source>Read ascii points</source>
-        <translation>Učitavanje ASCII tačaka</translation>
+        <translation>Учитавање ASCII тачака</translation>
     </message>
 </context>
 <context>
@@ -24,7 +24,7 @@
     <message>
         <location filename="../pointstocsv/pointstocsv.cpp" line="34"/>
         <source>Export points to csv</source>
-        <translation>Izvoz tačaka u CSV</translation>
+        <translation>Извоз тачака у CSV</translation>
     </message>
 </context>
 <context>
@@ -33,22 +33,22 @@
         <location filename="../align/align.cpp" line="24"/>
         <location filename="../align/align.cpp" line="31"/>
         <source>Align</source>
-        <translation>Poravnanje</translation>
+        <translation>Поравнање</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="32"/>
         <source>Align settings...</source>
-        <translation>Postavke poravnanja...</translation>
+        <translation>Подешавања поравнања...</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="49"/>
         <source>Keep original objects</source>
-        <translation>Zadrži originalne objekte</translation>
+        <translation>Задржи оригиналне објекте</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="50"/>
         <source>Specify base points first</source>
-        <translation>Prvo odredite osnovne tačke</translation>
+        <translation>Прво одредите основне тачке</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="54"/>
@@ -59,7 +59,7 @@
         <location filename="../align/align.cpp" line="57"/>
         <source>Click on options to set/unset,
 Ok to accept and start alignment.</source>
-        <translation>Кликните на опције да бисте postavili/uklonili, a zatim pritisnite „OK“ da biste prihvatili i započeli poравнање.</translation>
+        <translation>Кликните на опције да бисте поставили/уклонили, а затим притисните „OK“ да бисте прихватили и започели поравнање.</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="60"/>
@@ -74,23 +74,23 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../align/align.cpp" line="81"/>
         <source>first base point:</source>
-        <translation>prva osnovna tačka:</translation>
+        <translation>прва основна тачка:</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="84"/>
         <location filename="../align/align.cpp" line="89"/>
         <source>second base point:</source>
-        <translation>druga osnovna tačka:</translation>
+        <translation>друга основна тачка:</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="86"/>
         <source>first target point:</source>
-        <translation>prva ciljna tačka:</translation>
+        <translation>прва циљна тачка:</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="91"/>
         <source>second target point:</source>
-        <translation>druga ciljna tačka:</translation>
+        <translation>друга циљна тачка:</translation>
     </message>
 </context>
 <context>
@@ -98,12 +98,12 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../gear/gear.cpp" line="33"/>
         <source>Gear creation plugin</source>
-        <translation>dodatak za kreiranje zupčanika</translation>
+        <translation>додатак за креирање зупчаника</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="40"/>
         <source>Gear plugin</source>
-        <translation>dodatak za zupčanike</translation>
+        <translation>додатак за зупчанике</translation>
     </message>
 </context>
 <context>
@@ -112,7 +112,7 @@ first base, second base, first target, second target.</source>
         <location filename="../list/list.cpp" line="23"/>
         <location filename="../list/list.cpp" line="30"/>
         <source>List entities</source>
-        <translation>Prikaži entitete</translation>
+        <translation>Прикажи ентитете</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="46"/>
@@ -122,7 +122,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="60"/>
         <source>Empty Entity</source>
-        <translation>Prazan entitet</translation>
+        <translation>Празан ентитет</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="67"/>
@@ -137,22 +137,22 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="77"/>
         <source>Layer</source>
-        <translation>Sloj</translation>
+        <translation>Слој</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="79"/>
         <source>Color</source>
-        <translation>Boja</translation>
+        <translation>Боја</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="80"/>
         <source>Line type</source>
-        <translation>Tip linije</translation>
+        <translation>Тип линије</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="81"/>
         <source>Line thickness</source>
-        <translation>Debljina linije</translation>
+        <translation>Дебљина линије</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="82"/>
@@ -162,50 +162,50 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="88"/>
         <source>POINT</source>
-        <translation>TAČKA</translation>
+        <translation>ТАЧКА</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="89"/>
         <location filename="../list/list.cpp" line="180"/>
         <location filename="../list/list.cpp" line="222"/>
         <source>in point</source>
-        <translation>u tački</translation>
+        <translation>у тачки</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="94"/>
         <source>LINE</source>
-        <translation>LINE</translation>
+        <translation>ЛИНИЈА</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="99"/>
         <source>from point</source>
-        <translation>od tačke</translation>
+        <translation>од тачке</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="102"/>
         <source>to point</source>
-        <translation>do tačke</translation>
+        <translation>до тачке</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="107"/>
         <location filename="../list/list.cpp" line="131"/>
         <source>length</source>
-        <translation>dužina</translation>
+        <translation>дужина</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="112"/>
         <source>Angle in XY plane</source>
-        <translation>Ugao u XY ravni</translation>
+        <translation>Угао у XY равни</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="113"/>
         <source>Inc.</source>
-        <translation>Povećanje</translation>
+        <translation>Повећање</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="118"/>
         <source>ARC</source>
-        <translation>ARC</translation>
+        <translation>ЛУК</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="119"/>
@@ -229,7 +229,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="127"/>
         <source>final angle</source>
-        <translation>конечни угао</translation>
+        <translation>крајњи угао</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="134"/>
@@ -244,7 +244,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="141"/>
         <source>area</source>
-        <translation>area</translation>
+        <translation>површина</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="144"/>
@@ -264,42 +264,42 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="169"/>
         <source>OVERLAYBOX</source>
-        <translation>PREKLAPAJUĆA KUTIJA</translation>
+        <translation>ПРЕКЛАПАЈУЋА КУТИЈА</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="172"/>
         <source>SOLID</source>
-        <translation>PUNO</translation>
+        <translation>ПУНО</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="176"/>
         <source>MTEXT</source>
-        <translation>MTEKST</translation>
+        <translation>МТЕКСТ</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="179"/>
         <source>TEXT</source>
-        <translation>TEXT</translation>
+        <translation>ТЕКСТ</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="183"/>
         <source>TEXTCONTENT</source>
-        <translation>SADRŽAJ TEKSTA</translation>
+        <translation>САДРЖАЈ ТЕКСТА</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="186"/>
         <source>INSERT</source>
-        <translation>UBACI</translation>
+        <translation>УМЕТНУТИ БЛОК</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="189"/>
         <source>Name</source>
-        <translation>Name</translation>
+        <translation>Име</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="191"/>
         <source>Insertion point</source>
-        <translation>Тачка убацивања</translation>
+        <translation>Тачка уметања</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="194"/>
@@ -314,92 +314,92 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="203"/>
         <source>Columns/Rows</source>
-        <translation>Kolone/Redovi</translation>
+        <translation>Колоне/Редови</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="207"/>
         <source>Column/Row Spacing</source>
-        <translation>Razmak između kolona/redova</translation>
+        <translation>Размак између колона/редова</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="214"/>
         <source>POLYLINE</source>
-        <translation>POLILINIJA</translation>
+        <translation>ПОЛИЛИНИЈА</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="215"/>
         <source>Closed</source>
-        <translation>Zatvoreno</translation>
+        <translation>Затворено</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="216"/>
         <source>No</source>
-        <translation>No</translation>
+        <translation>Не</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="216"/>
         <source>Yes</source>
-        <translation>Yes</translation>
+        <translation>Да</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="217"/>
         <source>Vertices</source>
-        <translation>Teme</translation>
+        <translation>Темена</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="231"/>
         <source>IMAGE</source>
-        <translation>SLIKA</translation>
+        <translation>СЛИКА</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="234"/>
         <source>SPLINE</source>
-        <translation>SPLINE</translation>
+        <translation>СПЛАЈН</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="237"/>
         <source>SPLINEPOINTS</source>
-        <translation>[&apos;SPLINE tačka&apos;, &apos;SPLINE tačke&apos;, &apos;SPLINE tačaka&apos;]</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="240"/>
         <source>HATCH</source>
-        <translation>ŠABLON</translation>
+        <translation>ШРАФУРА</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="243"/>
         <source>DIMLEADER</source>
-        <translation>DIMLEADER</translation>
+        <translation>ПОКАЗНА ЛИНИЈА</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="246"/>
         <source>DIMALIGNED</source>
-        <translation>DIMLEADER</translation>
+        <translation>ПОРАВНАТА КОТА</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="249"/>
         <source>DIMLINEAR</source>
-        <translation>DIMLINEAR</translation>
+        <translation>ЛИНЕАРНА КОТА</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="252"/>
         <source>DIMRADIAL</source>
-        <translation>DIMRADIAL</translation>
+        <translation>РАДИЈАЛНА КОТА</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="255"/>
         <source>DIMDIAMETRIC</source>
-        <translation>DIMDIAMETRIC</translation>
+        <translation>КОТА ПРЕЧНИКА</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="258"/>
         <source>DIMANGULAR</source>
-        <translation>DIMANGULAR</translation>
+        <translation>УГАОНА КОТА</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="261"/>
         <source>UNKNOWN</source>
-        <translation>NEPOZNAT</translation>
+        <translation>НЕПОЗНАТ</translation>
     </message>
 </context>
 <context>
@@ -408,7 +408,7 @@ first base, second base, first target, second target.</source>
         <location filename="../sameprop/sameprop.cpp" line="21"/>
         <location filename="../sameprop/sameprop.cpp" line="28"/>
         <source>Same properties</source>
-        <translation>Iste osobine</translation>
+        <translation>Исте особине</translation>
     </message>
     <message>
         <location filename="../sameprop/sameprop.cpp" line="41"/>
@@ -563,52 +563,52 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="308"/>
         <source>Point 3D layer is empty</source>
-        <translation>Sloj 3D tačaka je prazan</translation>
+        <translation>Слој 3D тачака је празан</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="311"/>
         <source>Point elevation layer is empty</source>
-        <translation>Sloj visine tačaka je prazan</translation>
+        <translation>Слој висине тачака је празан</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="312"/>
         <source>Point elevation height is empty</source>
-        <translation>Visina sloja tačaka je prazna</translation>
+        <translation>Висина текста за висину тачке је празна</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="313"/>
         <source>Point elevation separation is empty</source>
-        <translation>Razmak sloja visine tačaka je prazan</translation>
+        <translation>Размак за висину тачке је празан</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="316"/>
         <source>Point number layer is empty</source>
-        <translation>Sloj broja tačaka je prazan</translation>
+        <translation>Слој броја тачака је празан</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="317"/>
         <source>Point number height is empty</source>
-        <translation>Visina sloja broja tačaka je prazna</translation>
+        <translation>Висина броја тачке је празна</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="318"/>
         <source>Point number separation is empty</source>
-        <translation>Razmak sloja broja tačaka je prazan</translation>
+        <translation>Размак броја тачке је празан</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="321"/>
         <source>Point code layer is empty</source>
-        <translation>Sloj koda tačaka je prazan</translation>
+        <translation>Слој кода тачака је празан</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="322"/>
         <source>Point code height is empty</source>
-        <translation>Visina sloja koda tačaka je prazna</translation>
+        <translation>Висина кода тачке је празна</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="323"/>
         <source>Point code separation is empty</source>
-        <translation>Razmak sloja koda tačaka je prazan</translation>
+        <translation>Размак кода тачке је празан</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="359"/>
@@ -687,7 +687,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/divide.cpp" line="474"/>
         <source>LINE</source>
-        <translation>LINE</translation>
+        <translation>ЛИНИЈА</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="479"/>
@@ -713,55 +713,55 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/divide.cpp" line="494"/>
         <source>Inc.</source>
-        <translation>Inc.</translation>
+        <translation>Повећање</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="499"/>
         <source>ARC</source>
-        <translation>ARC</translation>
+        <translation>ЛУК</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="500"/>
         <location filename="../divide/divide.cpp" line="519"/>
         <source>center point</source>
-        <translation>centar</translation>
+        <translation>центар</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="506"/>
         <location filename="../divide/divide.cpp" line="523"/>
         <location filename="../divide/divide.cpp" line="545"/>
         <source>radius</source>
-        <translation>poluprečnik</translation>
+        <translation>полупречник</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="507"/>
         <source>initial angle</source>
-        <translation>početni ugao</translation>
+        <translation>почетни угао</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="509"/>
         <source>final angle</source>
-        <translation>završni ugao</translation>
+        <translation>завршни угао</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="518"/>
         <source>CIRCLE</source>
-        <translation>KRUG</translation>
+        <translation>КРУГ</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="524"/>
         <source>circumference</source>
-        <translation>obim</translation>
+        <translation>обим</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="526"/>
         <source>area</source>
-        <translation>area</translation>
+        <translation>површина</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="530"/>
         <source>POLYLINE</source>
-        <translation>POLILINIJA</translation>
+        <translation>ПОЛИЛИНИЈА</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="531"/>
@@ -771,17 +771,17 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/divide.cpp" line="533"/>
         <source>No</source>
-        <translation>No</translation>
+        <translation>Не</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="533"/>
         <source>Yes</source>
-        <translation>Yes</translation>
+        <translation>Да</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="534"/>
         <source>Vertices</source>
-        <translation>Врхови</translation>
+        <translation>Темена</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="539"/>
@@ -804,7 +804,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/dividedlg.cpp" line="69"/>
         <source>Layers</source>
-        <translation>Слоеви</translation>
+        <translation>Слојеви</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="75"/>
@@ -824,7 +824,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/dividedlg.cpp" line="92"/>
         <source>Size</source>
-        <translation>Size</translation>
+        <translation>Величина</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="115"/>
@@ -930,22 +930,22 @@ anti-clockwise.</source>
     <message>
         <location filename="../gear/gear.cpp" line="117"/>
         <source>Addendum (rel. to modulus)</source>
-        <translation>Додатак (у односу на модул)</translation>
+        <translation>Висина главе зуба (у односу на модул)</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="118"/>
         <source>Dedendum (rel. to modulus)</source>
-        <translation>Одузетак (у односу на модул)</translation>
+        <translation>Висина подножја зуба (у односу на модул)</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="119"/>
         <source>Number of segments to draw (dedendum)</source>
-        <translation>Број сегмената за цртање (одузетак)</translation>
+        <translation>Број сегмената за цртање (подножје зуба)</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="120"/>
         <source>Number of segments to draw (addendum)</source>
-        <translation>Број сегмената за цртање (додатак)</translation>
+        <translation>Број сегмената за цртање (глава зуба)</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="121"/>
@@ -965,12 +965,12 @@ anti-clockwise.</source>
     <message>
         <location filename="../gear/gear.cpp" line="125"/>
         <source>Draw addendum circle?</source>
-        <translation>Да ли се црта круг додатка?</translation>
+        <translation>Да ли се црта темени круг?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="126"/>
         <source>Draw pitch circle?</source>
-        <translation>Да ли се црта основни круг?</translation>
+        <translation>Да ли се црта подеони круг?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="127"/>
@@ -980,37 +980,37 @@ anti-clockwise.</source>
     <message>
         <location filename="../gear/gear.cpp" line="128"/>
         <source>Draw root circle?</source>
-        <translation>Crta se osnovni krug?</translation>
+        <translation>Да ли се црта подножни круг?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="129"/>
         <source>Draw pressure line?</source>
-        <translation>Crta se linija pritiska?</translation>
+        <translation>Да ли се црта линија притиска?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="130"/>
         <source>Draw pressure limits?</source>
-        <translation>Crta se granica pritiska?</translation>
+        <translation>Да ли се цртају границе притиска?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="132"/>
         <source>Calculate interference?</source>
-        <translation>Izračunava se interferencija?</translation>
+        <translation>Да ли се израчунава интерференција?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="133"/>
         <source>Number of segments to draw (interference)</source>
-        <translation>Broj segmenata za crtanje (interferencija)</translation>
+        <translation>Број сегмената за цртање (интерференција)</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="135"/>
         <source>Accept</source>
-        <translation>Prihvati</translation>
+        <translation>Прихвати</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="136"/>
         <source>Cancel</source>
-        <translation>Otkaži</translation>
+        <translation>Откажи</translation>
     </message>
 </context>
 <context>
@@ -1018,7 +1018,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../list/list.cpp" line="278"/>
         <source>List entities</source>
-        <translation>Prikaži entitete</translation>
+        <translation>Прикажи ентитете</translation>
     </message>
 </context>
 <context>
@@ -1026,12 +1026,12 @@ anti-clockwise.</source>
     <message>
         <location filename="../sample/sample.cpp" line="54"/>
         <source>Draw line</source>
-        <translation>Crta se linija</translation>
+        <translation>Нацртај линију</translation>
     </message>
     <message>
         <location filename="../sample/sample.cpp" line="60"/>
         <source>Start X:</source>
-        <translation>Početna X koordinata:</translation>
+        <translation>Почетна X координата:</translation>
     </message>
     <message>
         <location filename="../sample/sample.cpp" line="66"/>
@@ -1204,7 +1204,7 @@ Use t or x in your equation as a variable/parameter.
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="32"/>
         <source>Draw</source>
-        <translation>Draw</translation>
+        <translation>Цртај</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="33"/>
@@ -1227,7 +1227,7 @@ Use t or x in your equation as a variable/parameter.
         <location filename="../plotequation/plotdialog.cpp" line="61"/>
         <source>SplinePoints</source>
         <comment>Plot Equation to generate 2nd spline by LC_SplinePoints</comment>
-        <translation>Тачке криве</translation>
+        <translation>Тачке сплајна</translation>
     </message>
 </context>
 <context>

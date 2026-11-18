@@ -206,7 +206,7 @@ primo punto base, secondo punto base, primo punto di riferimento, secondo punto 
     <message>
         <location filename="../list/list.cpp" line="113"/>
         <source>Inc.</source>
-        <translation>Inc.</translation>
+        <translation>Incr.</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="118"/>
@@ -300,7 +300,7 @@ primo punto base, secondo punto base, primo punto di riferimento, secondo punto 
     <message>
         <location filename="../list/list.cpp" line="189"/>
         <source>Name</source>
-        <translation>Name</translation>
+        <translation>Nome</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="191"/>
@@ -345,7 +345,7 @@ primo punto base, secondo punto base, primo punto di riferimento, secondo punto 
     <message>
         <location filename="../list/list.cpp" line="216"/>
         <source>Yes</source>
-        <translation>Yes</translation>
+        <translation>Sì</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="217"/>
@@ -633,12 +633,12 @@ primo punto base, secondo punto base, primo punto di riferimento, secondo punto 
         <location filename="../divide/divide.cpp" line="35"/>
         <location filename="../divide/divide.cpp" line="42"/>
         <source>Divide</source>
-        <translation>Dividenze</translation>
+        <translation>Dividi</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="56"/>
         <source>Select a line, circle or arc and press return</source>
-        <translation>Selezionare una riga, cerchio o arco e premere il ritorno</translation>
+        <translation>Seleziona una linea, un cerchio o un arco e premi Invio</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="67"/>
@@ -653,7 +653,7 @@ primo punto base, secondo punto base, primo punto di riferimento, secondo punto 
     <message>
         <location filename="../divide/divide.cpp" line="444"/>
         <source>Empty Entity</source>
-        <translation>Entrata vuota</translation>
+        <translation>Entità vuota</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="452"/>
@@ -719,7 +719,7 @@ primo punto base, secondo punto base, primo punto di riferimento, secondo punto 
     <message>
         <location filename="../divide/divide.cpp" line="494"/>
         <source>Inc.</source>
-        <translation>Inc.</translation>
+        <translation>Incr.</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="499"/>
@@ -752,7 +752,7 @@ primo punto base, secondo punto base, primo punto di riferimento, secondo punto 
     <message>
         <location filename="../divide/divide.cpp" line="518"/>
         <source>CIRCLE</source>
-        <translation>CIRCOLAZIONE</translation>
+        <translation>CERCHIO</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="524"/>
@@ -782,7 +782,7 @@ primo punto base, secondo punto base, primo punto di riferimento, secondo punto 
     <message>
         <location filename="../divide/divide.cpp" line="533"/>
         <source>Yes</source>
-        <translation>Yes</translation>
+        <translation>Sì</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="534"/>
@@ -830,7 +830,7 @@ primo punto base, secondo punto base, primo punto di riferimento, secondo punto 
     <message>
         <location filename="../divide/dividedlg.cpp" line="92"/>
         <source>Size</source>
-        <translation>Size</translation>
+        <translation>Dimensione</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="115"/>
@@ -840,7 +840,7 @@ primo punto base, secondo punto base, primo punto di riferimento, secondo punto 
     <message>
         <location filename="../divide/dividedlg.cpp" line="126"/>
         <source>Ticks - Off</source>
-        <translation>Intervalli - Disattivato</translation>
+        <translation>Tacche - Disattivate</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="134"/>
@@ -870,12 +870,12 @@ in senso antiorario.</translation>
     <message>
         <location filename="../divide/dividedlg.cpp" line="246"/>
         <source>&lt;i&gt;&quot;New&quot;&lt;/i&gt;&lt;br&gt;Enter name&lt;br&gt;for a new layer&lt;br&gt;(if required?) to&lt;br&gt;draw ticks on.</source>
-        <translation>&lt;i&gt;&quot;Nuovo&quot;&lt;/i&gt;&lt;br&gt;Inserisci il nome&lt;br&gt;per un nuovo livello&lt;br&gt;(se necessario)&lt;br&gt;per disegnare i segni di graduazione.</translation>
+        <translation>&lt;i&gt;&quot;Nuovo&quot;&lt;/i&gt;&lt;br&gt;Inserisci il nome&lt;br&gt;per un nuovo livello&lt;br&gt;(se necessario)&lt;br&gt;su cui disegnare le tacche.</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="252"/>
         <source>Ticks</source>
-        <translation>Tette</translation>
+        <translation>Tacche</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="258"/>
@@ -971,7 +971,7 @@ in senso antiorario.</translation>
     <message>
         <location filename="../gear/gear.cpp" line="124"/>
         <source>Use layers?</source>
-        <translation>Utilizzare strati?</translation>
+        <translation>Utilizzare i livelli?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="125"/>
@@ -1216,7 +1216,7 @@ Usa t o x nella tua equazione come variabile indipendente/parametro.
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="32"/>
         <source>Draw</source>
-        <translation>Draw</translation>
+        <translation>Disegna</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="33"/>

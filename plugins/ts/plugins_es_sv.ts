@@ -143,7 +143,7 @@ primer punto base, segundo punto base, primer punto de destino, segundo punto de
     <message>
         <location filename="../list/list.cpp" line="77"/>
         <source>Layer</source>
-        <translation>Layer</translation>
+        <translation>Capa</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="79"/>
@@ -158,7 +158,7 @@ primer punto base, segundo punto base, primer punto de destino, segundo punto de
     <message>
         <location filename="../list/list.cpp" line="81"/>
         <source>Line thickness</source>
-        <translation>Espesor de la línea</translation>
+        <translation>Grosor de línea</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="82"/>
@@ -280,7 +280,7 @@ primer punto base, segundo punto base, primer punto de destino, segundo punto de
     <message>
         <location filename="../list/list.cpp" line="176"/>
         <source>MTEXT</source>
-        <translation>MTEXT</translation>
+        <translation>TEXTOM</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="179"/>
@@ -504,7 +504,7 @@ primer punto base, segundo punto base, primer punto de destino, segundo punto de
     <message>
         <location filename="../asciifile/asciifile.cpp" line="245"/>
         <source>Draw 2D Point</source>
-        <translation>Dibujo 2D Point</translation>
+        <translation>Dibujar punto 2D</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="246"/>
@@ -514,7 +514,7 @@ primer punto base, segundo punto base, primer punto de destino, segundo punto de
     <message>
         <location filename="../asciifile/asciifile.cpp" line="246"/>
         <source>Draw 3D Point</source>
-        <translation>Dibujo 3D Point</translation>
+        <translation>Dibujar punto 3D</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="247"/>
@@ -668,7 +668,7 @@ primer punto base, segundo punto base, primer punto de destino, segundo punto de
     <message>
         <location filename="../divide/divide.cpp" line="460"/>
         <source>Layer</source>
-        <translation>Layer</translation>
+        <translation>Capa</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="462"/>
@@ -683,7 +683,7 @@ primer punto base, segundo punto base, primer punto de destino, segundo punto de
     <message>
         <location filename="../divide/divide.cpp" line="465"/>
         <source>Line thickness</source>
-        <translation>Espesor de la línea</translation>
+        <translation>Grosor de línea</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="467"/>

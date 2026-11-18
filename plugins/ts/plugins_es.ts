@@ -365,7 +365,7 @@ primer punto base, segundo punto base, primer punto de destino, segundo punto de
     <message>
         <location filename="../list/list.cpp" line="237"/>
         <source>SPLINEPOINTS</source>
-        <translation>SPLINEPOINTS</translation>
+        <translation>SPLINE POR PUNTOS</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="240"/>
@@ -668,7 +668,7 @@ primer punto base, segundo punto base, primer punto de destino, segundo punto de
     <message>
         <location filename="../divide/divide.cpp" line="460"/>
         <source>Layer</source>
-        <translation>Layer</translation>
+        <translation>Capa</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="462"/>
@@ -683,7 +683,7 @@ primer punto base, segundo punto base, primer punto de destino, segundo punto de
     <message>
         <location filename="../divide/divide.cpp" line="465"/>
         <source>Line thickness</source>
-        <translation>Espesor de la línea</translation>
+        <translation>Grosor de línea</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="467"/>
@@ -941,7 +941,7 @@ anti-auricular.</translation>
     <message>
         <location filename="../gear/gear.cpp" line="117"/>
         <source>Addendum (rel. to modulus)</source>
-        <translation>Adición (relativo al módulo)</translation>
+        <translation>Adendo (relativo al módulo)</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="118"/>
@@ -956,7 +956,7 @@ anti-auricular.</translation>
     <message>
         <location filename="../gear/gear.cpp" line="120"/>
         <source>Number of segments to draw (addendum)</source>
-        <translation>Número de segmentos a dibujar (adición)</translation>
+        <translation>Número de segmentos a dibujar (adendo)</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="121"/>

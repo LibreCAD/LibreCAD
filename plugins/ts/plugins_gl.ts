@@ -180,7 +180,7 @@ primeiro punto base, segundo punto base, primeiro punto de destino, segundo punt
     <message>
         <location filename="../list/list.cpp" line="94"/>
         <source>LINE</source>
-        <translation>LINE</translation>
+        <translation>LIÑA</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="99"/>
@@ -211,7 +211,7 @@ primeiro punto base, segundo punto base, primeiro punto de destino, segundo punt
     <message>
         <location filename="../list/list.cpp" line="118"/>
         <source>ARC</source>
-        <translation>ARC</translation>
+        <translation>ARCO</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="119"/>
@@ -250,7 +250,7 @@ primeiro punto base, segundo punto base, primeiro punto de destino, segundo punt
     <message>
         <location filename="../list/list.cpp" line="141"/>
         <source>area</source>
-        <translation>area</translation>
+        <translation>área</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="144"/>
@@ -285,7 +285,7 @@ primeiro punto base, segundo punto base, primeiro punto de destino, segundo punt
     <message>
         <location filename="../list/list.cpp" line="179"/>
         <source>TEXT</source>
-        <translation>TEXT</translation>
+        <translation>TEXTO</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="183"/>
@@ -300,7 +300,7 @@ primeiro punto base, segundo punto base, primeiro punto de destino, segundo punt
     <message>
         <location filename="../list/list.cpp" line="189"/>
         <source>Name</source>
-        <translation>Name</translation>
+        <translation>Nome</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="191"/>
@@ -365,7 +365,7 @@ primeiro punto base, segundo punto base, primeiro punto de destino, segundo punt
     <message>
         <location filename="../list/list.cpp" line="237"/>
         <source>SPLINEPOINTS</source>
-        <translation>NODOS DE SPLINE</translation>
+        <translation>SPLINE POR PUNTOS</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="240"/>
@@ -380,27 +380,27 @@ primeiro punto base, segundo punto base, primeiro punto de destino, segundo punt
     <message>
         <location filename="../list/list.cpp" line="246"/>
         <source>DIMALIGNED</source>
-        <translation>ACOUTAMENTO ALIÑADO</translation>
+        <translation>COTA ALIÑADA</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="249"/>
         <source>DIMLINEAR</source>
-        <translation>ACOUTAMENTO LINEAR</translation>
+        <translation>COTA LINEAL</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="252"/>
         <source>DIMRADIAL</source>
-        <translation>ACOUTAMENTO RADIAL</translation>
+        <translation>COTA RADIAL</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="255"/>
         <source>DIMDIAMETRIC</source>
-        <translation>ACOUTAMENTO DIAMETRAL</translation>
+        <translation>COTA DIAMÉTRICA</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="258"/>
         <source>DIMANGULAR</source>
-        <translation>ACOUTAMENTO ANGULAR</translation>
+        <translation>COTA ANGULAR</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="261"/>
@@ -673,7 +673,7 @@ primeiro punto base, segundo punto base, primeiro punto de destino, segundo punt
     <message>
         <location filename="../divide/divide.cpp" line="462"/>
         <source>Color</source>
-        <translation>Color</translation>
+        <translation>Cor</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="463"/>
@@ -693,7 +693,7 @@ primeiro punto base, segundo punto base, primeiro punto de destino, segundo punt
     <message>
         <location filename="../divide/divide.cpp" line="474"/>
         <source>LINE</source>
-        <translation>LINE</translation>
+        <translation>LIÑA</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="479"/>
@@ -703,7 +703,7 @@ primeiro punto base, segundo punto base, primeiro punto de destino, segundo punt
     <message>
         <location filename="../divide/divide.cpp" line="482"/>
         <source>to point</source>
-        <translation>para apuntar</translation>
+        <translation>ata o punto</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="487"/>
@@ -714,7 +714,7 @@ primeiro punto base, segundo punto base, primeiro punto de destino, segundo punt
     <message>
         <location filename="../divide/divide.cpp" line="492"/>
         <source>Angle in XY plane</source>
-        <translation>Ángulo en avión XY</translation>
+        <translation>Ángulo no plano XY</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="494"/>
@@ -724,7 +724,7 @@ primeiro punto base, segundo punto base, primeiro punto de destino, segundo punt
     <message>
         <location filename="../divide/divide.cpp" line="499"/>
         <source>ARC</source>
-        <translation>ARC</translation>
+        <translation>ARCO</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="500"/>
@@ -752,7 +752,7 @@ primeiro punto base, segundo punto base, primeiro punto de destino, segundo punt
     <message>
         <location filename="../divide/divide.cpp" line="518"/>
         <source>CIRCLE</source>
-        <translation>CIRCLE</translation>
+        <translation>CÍRCULO</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="524"/>
@@ -762,12 +762,12 @@ primeiro punto base, segundo punto base, primeiro punto de destino, segundo punt
     <message>
         <location filename="../divide/divide.cpp" line="526"/>
         <source>area</source>
-        <translation>area</translation>
+        <translation>área</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="530"/>
         <source>POLYLINE</source>
-        <translation>POLYLINE</translation>
+        <translation>POLILIÑA</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="531"/>
@@ -787,7 +787,7 @@ primeiro punto base, segundo punto base, primeiro punto de destino, segundo punt
     <message>
         <location filename="../divide/divide.cpp" line="534"/>
         <source>Vertices</source>
-        <translation>Vertices</translation>
+        <translation>Vértices</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="539"/>
@@ -830,7 +830,7 @@ primeiro punto base, segundo punto base, primeiro punto de destino, segundo punt
     <message>
         <location filename="../divide/dividedlg.cpp" line="92"/>
         <source>Size</source>
-        <translation>Size</translation>
+        <translation>Tamaño</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="115"/>
@@ -840,12 +840,12 @@ primeiro punto base, segundo punto base, primeiro punto de destino, segundo punt
     <message>
         <location filename="../divide/dividedlg.cpp" line="126"/>
         <source>Ticks - Off</source>
-        <translation>Intervalos - Desactivado</translation>
+        <translation>Marcas - Desactivado</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="134"/>
         <source>Breaks - Off</source>
-        <translation>Categoría: Off</translation>
+        <translation>Interrupcións - Desactivado</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="179"/>
@@ -870,12 +870,12 @@ anti-horario.</translation>
     <message>
         <location filename="../divide/dividedlg.cpp" line="246"/>
         <source>&lt;i&gt;&quot;New&quot;&lt;/i&gt;&lt;br&gt;Enter name&lt;br&gt;for a new layer&lt;br&gt;(if required?) to&lt;br&gt;draw ticks on.</source>
-        <translation>&lt;i&gt;&quot;New&quot;&lt;/i&gt;&lt;br&gt;Enter nome&lt;br&gt; para unha nova capa&lt;br&gt;(se é necesario?) para&lt;br&gt;draw.</translation>
+        <translation>&lt;i&gt;&quot;Novo&quot;&lt;/i&gt;&lt;br&gt;Introduza o nome&lt;br&gt;dunha nova capa&lt;br&gt;(se é necesario?) na que&lt;br&gt;debuxar as marcas.</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="252"/>
         <source>Ticks</source>
-        <translation>Ticks</translation>
+        <translation>Marcas</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="258"/>
@@ -903,7 +903,7 @@ anti-horario.</translation>
     <message>
         <location filename="../pointstocsv/pointstocsv.cpp" line="122"/>
         <source>Export to file</source>
-        <translation>Exportar arquivos</translation>
+        <translation>Exportar a ficheiro</translation>
     </message>
     <message>
         <location filename="../pointstocsv/pointstocsv.cpp" line="122"/>
@@ -926,7 +926,7 @@ anti-horario.</translation>
     <message>
         <location filename="../gear/gear.cpp" line="116"/>
         <source>Pressure angle (deg)</source>
-        <translation>Ángulo de presión (deg)</translation>
+        <translation>Ángulo de presión (graos)</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="113"/>
@@ -971,7 +971,7 @@ anti-horario.</translation>
     <message>
         <location filename="../gear/gear.cpp" line="124"/>
         <source>Use layers?</source>
-        <translation>Usas capas?</translation>
+        <translation>Usar capas?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="125"/>
@@ -1125,7 +1125,7 @@ anti-horario.</translation>
     <message>
         <location filename="../picfile/picfile.cpp" line="119"/>
         <source>Scale Factor is empty or invalid</source>
-        <translation>Factor de Escala está baleiro ou non é válido</translation>
+        <translation>O factor de escala está baleiro ou non é válido</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="132"/>
@@ -1216,7 +1216,7 @@ Use t ou x na súa ecuación como unha variable/parámetro.
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="32"/>
         <source>Draw</source>
-        <translation>Draw</translation>
+        <translation>Debuxar</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="33"/>
@@ -1239,7 +1239,7 @@ Use t ou x na súa ecuación como unha variable/parámetro.
         <location filename="../plotequation/plotdialog.cpp" line="61"/>
         <source>SplinePoints</source>
         <comment>Plot Equation to generate 2nd spline by LC_SplinePoints</comment>
-        <translation>Spline por Puntos</translation>
+        <translation>Spline por puntos</translation>
     </message>
 </context>
 <context>

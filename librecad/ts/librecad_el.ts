@@ -48,7 +48,7 @@
     <message>
         <location filename="../src/ui/forms/LC_DlgParabola.ui" line="62"/>
         <source>Layer:</source>
-        <translation>Στρώμα:</translation>
+        <translation>Στρώση:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/LC_DlgParabola.ui" line="95"/>
@@ -59,7 +59,7 @@
         <location filename="../src/ui/forms/LC_DlgParabola.ui" line="110"/>
         <location filename="../src/ui/forms/LC_DlgParabola.ui" line="113"/>
         <source>Points on Spline</source>
-        <translation>Σημεία στην καμπύλη</translation>
+        <translation>Σημεία στο spline</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/LC_DlgParabola.ui" line="142"/>
@@ -72,7 +72,7 @@
     <message>
         <location filename="../src/ui/forms/lc_dlgsplinepoints.ui" line="26"/>
         <source>SplinePoints</source>
-        <translation>Σημεία καμπύλης</translation>
+        <translation>Σημεία spline</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_dlgsplinepoints.ui" line="62"/>
@@ -92,7 +92,7 @@
     <message>
         <location filename="../src/ui/forms/lc_dlgsplinepoints.ui" line="110"/>
         <source>Spline Points</source>
-        <translation>Σημεία καμπύλης</translation>
+        <translation>Σημεία spline</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_dlgsplinepoints.ui" line="120"/>
@@ -103,7 +103,7 @@
         <location filename="../src/ui/forms/lc_dlgsplinepoints.ui" line="135"/>
         <location filename="../src/ui/forms/lc_dlgsplinepoints.ui" line="138"/>
         <source>Points on Spline</source>
-        <translation>Σημεία στην καμπύλη</translation>
+        <translation>Σημεία στο spline</translation>
     </message>
 </context>
 <context>
@@ -487,12 +487,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1537"/>
         <source>&amp;Window Zoom</source>
-        <translation>Παράθυρο Εστίασης</translation>
+        <translation>Εστίαση &amp;παραθύρου</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="54"/>
         <source>Zoom &amp;Panning</source>
-        <translation>&amp;Μετακίνηση εστίασης</translation>
+        <translation>&amp;Μετακίνηση προβολής</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="64"/>
@@ -720,12 +720,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="535"/>
         <source>&amp;Spline</source>
-        <translation>&amp;Καμπύλη</translation>
+        <translation>&amp;Spline</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="542"/>
         <source>&amp;Spline through points</source>
-        <translation>Καμπύλη μέσω σημείων</translation>
+        <translation>&amp;Spline μέσω σημείων</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="551"/>
@@ -755,7 +755,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="590"/>
         <source>&amp;Trim segments</source>
-        <translation>&amp;Διευθέτηση τμημάτων</translation>
+        <translation>&amp;Περικοπή τμημάτων</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="598"/>
@@ -820,7 +820,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="699"/>
         <source>&amp;Leader</source>
-        <translation>Δείκτης</translation>
+        <translation>&amp;Γραμμή οδήγησης</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="708"/>
@@ -865,7 +865,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="762"/>
         <source>&amp;Mirror</source>
-        <translation>Καθρεπτισμός</translation>
+        <translation>&amp;Κατοπτρισμός</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="777"/>
@@ -880,7 +880,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="792"/>
         <source>&amp;Trim</source>
-        <translation>&amp;Κόψιμο</translation>
+        <translation>&amp;Περικοπή</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="808"/>
@@ -900,17 +900,17 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="840"/>
         <source>&amp;Bevel</source>
-        <translation>Λόξευση</translation>
+        <translation>&amp;Λοξοτομή</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="848"/>
         <source>&amp;Fillet</source>
-        <translation>&amp;Στρογγύλεμα</translation>
+        <translation>&amp;Στρογγύλευση</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="856"/>
         <source>&amp;Explode Text into Letters</source>
-        <translation>&amp;Διαχωρισμός κειμένου σε γράμματα</translation>
+        <translation>&amp;Διάσπαση κειμένου σε γράμματα</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="922"/>
@@ -1200,7 +1200,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1299"/>
         <source>&amp;Grid</source>
-        <translation>&amp;Πλέγμα</translation>
+        <translation>&amp;Κάνναβος</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1301"/>
@@ -1313,7 +1313,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1009"/>
         <source>&amp;Show all layers</source>
-        <translation>&amp;Εμφάνιση όλων των στρωμάτων</translation>
+        <translation>&amp;Εμφάνιση όλων των στρώσεων</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1016"/>
@@ -1333,12 +1333,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1086"/>
         <source>&amp;Export Selected Layer(s)</source>
-        <translation>&amp;Εξαγωγή επιλεγμένων στρωμάτων</translation>
+        <translation>&amp;Εξαγωγή επιλεγμένων στρώσεων</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1091"/>
         <source>Export &amp;Visible Layer(s)</source>
-        <translation>Εξαγωγή &amp;ορατών στρωμάτων</translation>
+        <translation>Εξαγωγή &amp;ορατών στρώσεων</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1098"/>
@@ -1468,22 +1468,22 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="873"/>
         <source>&amp;Pick Pen From Entity</source>
-        <translation>&amp;Επιλογή στυλό από οντότητα</translation>
+        <translation>&amp;Λήψη πένας από οντότητα</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="881"/>
         <source>&amp;Pick Pen From Entity (Resolved)</source>
-        <translation>&amp;Επιλογή στυλό από οντότητα (επιλυμένο)</translation>
+        <translation>&amp;Λήψη πένας από οντότητα (επιλυμένη)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="890"/>
         <source>Apply Pen to Entity</source>
-        <translation>Εφαρμογή στυλό σε οντότητα</translation>
+        <translation>Εφαρμογή πένας σε οντότητα</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="898"/>
         <source>Copy Pen</source>
-        <translation>Αντιγραφή στυλό</translation>
+        <translation>Αντιγραφή πένας</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="906"/>
@@ -1498,7 +1498,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1642"/>
         <source>Update Current Pen by Active Layer&apos; Pen</source>
-        <translation>Ενημέρωση τρέχοντος στυλό από στυλό ενεργού στρώματος</translation>
+        <translation>Ενημέρωση της τρέχουσας πένας από την πένα της ενεργής στρώσης</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="511"/>
@@ -1519,7 +1519,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/lc_actionlayersexport.cpp" line="281"/>
         <source>Saving layer &quot;%1&quot; as &quot;%2&quot; </source>
-        <translation>Αποθήκευση στρώματος „%1“ ως „%2“ </translation>
+        <translation>Αποθήκευση στρώσης „%1“ ως „%2“ </translation>
     </message>
 </context>
 <context>
@@ -1527,7 +1527,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/lc_actionpenapply.cpp" line="171"/>
         <source>Specify entity to pick the pen</source>
-        <translation>Καθορίστε οντότητα για επιλογή στυλό</translation>
+        <translation>Καθορίστε την οντότητα από την οποία θα ληφθεί η πένα</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actionpenapply.cpp" line="172"/>
@@ -1538,7 +1538,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/lc_actionpenapply.cpp" line="175"/>
         <source>Specify entity to apply pen</source>
-        <translation>Καθορίστε οντότητα για εφαρμογή στυλό</translation>
+        <translation>Καθορίστε την οντότητα στην οποία θα εφαρμοστεί η πένα</translation>
     </message>
 </context>
 <context>
@@ -1546,7 +1546,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/lc_actionpenpick.cpp" line="108"/>
         <source>Specify entity to pick the pen</source>
-        <translation>Καθορίστε οντότητα για επιλογή στυλό</translation>
+        <translation>Καθορίστε την οντότητα από την οποία θα ληφθεί η πένα</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actionpenpick.cpp" line="109"/>
@@ -1575,7 +1575,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/lc_actionsnapmiddlemanual.cpp" line="305"/>
         <source>Specify end point</source>
-        <translation>Καθορίστε σημείο τέλους</translation>
+        <translation>Καθορίστε το τελικό σημείο</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actionsnapmiddlemanual.cpp" line="306"/>
@@ -1615,7 +1615,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_circlebyarcoptions.ui" line="65"/>
         <source>Layer:</source>
-        <translation>Στρώμα:</translation>
+        <translation>Στρώση:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_circlebyarcoptions.ui" line="102"/>
@@ -1625,7 +1625,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_circlebyarcoptions.ui" line="109"/>
         <source>Pen:</source>
-        <translation>Στυλό:</translation>
+        <translation>Πένα:</translation>
     </message>
 </context>
 <context>
@@ -1707,7 +1707,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_duplicateoptions.ui" line="26"/>
         <source>Layer:</source>
-        <translation>Στρώμα:</translation>
+        <translation>Στρώση:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_duplicateoptions.ui" line="33"/>
@@ -1744,7 +1744,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_duplicateoptions.ui" line="103"/>
         <source>Pen:</source>
-        <translation>Στυλό:</translation>
+        <translation>Πένα:</translation>
     </message>
 </context>
 <context>
@@ -1752,17 +1752,17 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.ui" line="20"/>
         <source>Layer Settings</source>
-        <translation>Ρυθμίσεις στρώματος</translation>
+        <translation>Ρυθμίσεις στρώσης</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.ui" line="61"/>
         <source>Parent Layers Path:</source>
-        <translation>Διαδρομή γονικών στρωμάτων:</translation>
+        <translation>Διαδρομή γονικών στρώσεων:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.ui" line="78"/>
         <source>Layer Type</source>
-        <translation>Τύπος στρώματος</translation>
+        <translation>Τύπος στρώσης</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.ui" line="90"/>
@@ -1788,50 +1788,50 @@ or [%2]</source>
         <location filename="../src/ui/forms/lc_layerdialog_ex.ui" line="133"/>
         <source>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
        The contents of a Construction Layer should not appear in printout.</source>
-        <translation>Ένα στρώμα κατασκευής περιέχει οντότητες άπειρων ευθειών γραμμών προοριζόμενες για γεωμετρική κατασκευή.
-       Τα περιεχόμενα ενός στρώματος κατασκευής δεν πρέπει να εμφανίζονται στην εκτύπωση.</translation>
+        <translation>Μια στρώση κατασκευής περιέχει οντότητες απείρων ευθειών, που προορίζονται για γεωμετρικές κατασκευές.
+       Τα περιεχόμενα μιας στρώσης κατασκευής δεν πρέπει να εμφανίζονται στην εκτύπωση.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.ui" line="137"/>
         <source>Construction Layer</source>
-        <translation>Στρώμα κατασκευής</translation>
+        <translation>Στρώση κατασκευής</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.ui" line="179"/>
         <source>Layer Name:</source>
-        <translation>Όνομα στρώματος:</translation>
+        <translation>Όνομα στρώσης:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.cpp" line="58"/>
         <source>Rename Virtual Layer</source>
-        <translation>Μετονομασία εικονικού στρώματος</translation>
+        <translation>Μετονομασία εικονικής στρώσης</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.cpp" line="62"/>
         <source>Add Secondary Layer</source>
-        <translation>Προσθήκη δευτερεύοντος στρώματος</translation>
+        <translation>Προσθήκη δευτερεύουσας στρώσης</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.cpp" line="67"/>
         <location filename="../src/ui/forms/lc_layerdialog_ex.cpp" line="73"/>
         <source>Add Layer</source>
-        <translation>Προσθήκη στρώματος</translation>
+        <translation>Προσθήκη στρώσης</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.cpp" line="78"/>
         <source>Edit Layer</source>
-        <translation>Επεξεργασία στρώματος</translation>
+        <translation>Επεξεργασία στρώσης</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.cpp" line="165"/>
         <location filename="../src/ui/forms/lc_layerdialog_ex.cpp" line="204"/>
         <source>Default Pen</source>
-        <translation>Προεπιλεγμένο στυλό</translation>
+        <translation>Προεπιλεγμένη πένα</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.cpp" line="182"/>
         <source>Rename Layer</source>
-        <translation>Μετονομασία στρώματος</translation>
+        <translation>Μετονομασία στρώσης</translation>
     </message>
 </context>
 <context>
@@ -1839,7 +1839,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="20"/>
         <source>Layers Tree Options</source>
-        <translation>Επιλογές δέντρου στρωμάτων</translation>
+        <translation>Επιλογές δέντρου στρώσεων</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="33"/>
@@ -1849,12 +1849,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="68"/>
         <source>Layer Level Name Separator</source>
-        <translation>Διαχωριστής ονόματος επιπέδου στρώματος</translation>
+        <translation>Διαχωριστής επιπέδων στα ονόματα στρώσεων</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="88"/>
         <source>Secondary Layer Suffixes</source>
-        <translation>Καταλήξεις δευτερευόντων στρωμάτων</translation>
+        <translation>Καταλήξεις δευτερευουσών στρώσεων</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="94"/>
@@ -1899,12 +1899,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="220"/>
         <source>Show layer type icons</source>
-        <translation>Εμφάνιση εικονιδίων τύπου στρώματος</translation>
+        <translation>Εμφάνιση εικονιδίων τύπου στρώσης</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="233"/>
         <source>Show indented layer names. Ident size:</source>
-        <translation>Εμφάνιση εσοχών ονομάτων στρωμάτων. Μέγεθος εσοχής:</translation>
+        <translation>Εμφάνιση ονομάτων στρώσεων με εσοχή. Μέγεθος εσοχής:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="266"/>
@@ -1914,7 +1914,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="273"/>
         <source>Rename secondary layers on primary rename</source>
-        <translation>Μετονομασία δευτερευόντων στρωμάτων κατά την πρωτεύουσα μετονομασία</translation>
+        <translation>Μετονομασία δευτερευουσών στρώσεων κατά τη μετονομασία της κύριας</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="281"/>
@@ -1934,7 +1934,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="441"/>
         <source>Virtual layer background color</source>
-        <translation>Χρώμα φόντου εικονικού στρώματος</translation>
+        <translation>Χρώμα φόντου εικονικής στρώσης</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="465"/>
@@ -1949,32 +1949,32 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="504"/>
         <source>Active layer background color</source>
-        <translation>Χρώμα φόντου ενεργού στρώματος</translation>
+        <translation>Χρώμα φόντου ενεργής στρώσης</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="525"/>
         <source>Default Pens</source>
-        <translation>Προεπιλεγμένα στυλό</translation>
+        <translation>Προεπιλεγμένες πένες</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.cpp" line="71"/>
         <source>Normal Layer</source>
-        <translation>Κανονικό στρώμα</translation>
+        <translation>Κανονική στρώση</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.cpp" line="72"/>
         <source>Dimensional Layer</source>
-        <translation>Διαστατικό στρώμα</translation>
+        <translation>Στρώση διαστάσεων</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.cpp" line="73"/>
         <source>Informational Layer</source>
-        <translation>Πληροφοριακό στρώμα</translation>
+        <translation>Στρώση πληροφοριών</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.cpp" line="74"/>
         <source>Alternative Position Layer</source>
-        <translation>Στρώμα εναλλακτικής θέσης</translation>
+        <translation>Στρώση εναλλακτικής θέσης</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.cpp" line="239"/>
@@ -1992,7 +1992,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="146"/>
         <source>Looking for matching layer names</source>
-        <translation>Αναζήτηση για αντίστοιχα ονόματα στρωμάτων</translation>
+        <translation>Αναζήτηση αντίστοιχων ονομάτων στρώσεων</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="151"/>
@@ -2007,22 +2007,22 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="185"/>
         <source>Show all layers</source>
-        <translation>Εμφάνιση όλων των στρωμάτων</translation>
+        <translation>Εμφάνιση όλων των στρώσεων</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="193"/>
         <source>Hide all layers except current</source>
-        <translation>Απόκρυψη όλων των στρωμάτων εκτός του τρέχοντος</translation>
+        <translation>Απόκρυψη όλων των στρώσεων εκτός από την τρέχουσα</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="201"/>
         <source>Show Secondary Layers</source>
-        <translation>Εμφάνιση δευτερευόντων στρωμάτων</translation>
+        <translation>Εμφάνιση δευτερευουσών στρώσεων</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="212"/>
         <source>Show Active Layer Only</source>
-        <translation>Εμφάνιση μόνο του ενεργού στρώματος</translation>
+        <translation>Εμφάνιση μόνο της ενεργής στρώσης</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="222"/>
@@ -2042,32 +2042,32 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="251"/>
         <source>Unlock all layers</source>
-        <translation>Ξεκλείδωμα όλων των στρωμάτων</translation>
+        <translation>Ξεκλείδωμα όλων των στρώσεων</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="259"/>
         <source>Lock all layers</source>
-        <translation>Κλείδωμα όλων των στρωμάτων</translation>
+        <translation>Κλείδωμα όλων των στρώσεων</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="267"/>
         <source>Add a layer</source>
-        <translation>Προσθήκη στρώματος</translation>
+        <translation>Προσθήκη στρώσης</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="275"/>
         <source>Add dimensions Layer</source>
-        <translation>Προσθήκη στρώματος διαστάσεων</translation>
+        <translation>Προσθήκη στρώσης διαστάσεων</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="285"/>
         <source>Remove layer</source>
-        <translation>Αφαίρεση στρώματος</translation>
+        <translation>Αφαίρεση στρώσης</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="293"/>
         <source>Modify layer attributes / rename</source>
-        <translation>Τροποποίηση χαρακτηριστικών στρώματος / μετονομασία</translation>
+        <translation>Τροποποίηση χαρακτηριστικών στρώσης / μετονομασία</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="308"/>
@@ -2077,12 +2077,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="656"/>
         <source>Layer Menu</source>
-        <translation>Μενού στρώματος</translation>
+        <translation>Μενού στρώσης</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="675"/>
         <source>&amp;Add Child Layer</source>
-        <translation>&amp;Προσθήκη θυγατρικού στρώματος</translation>
+        <translation>&amp;Προσθήκη θυγατρικής στρώσης</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="676"/>
@@ -2092,7 +2092,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="677"/>
         <source>&amp;Remove Layers (Sub-Tree)</source>
-        <translation>&amp;Αφαίρεση στρωμάτων (υποδέντρο)</translation>
+        <translation>&amp;Αφαίρεση στρώσεων (υποδέντρο)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="679"/>
@@ -2112,125 +2112,125 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="687"/>
         <source>&amp;Edit Layer &amp;Attributes</source>
-        <translation>&amp;Επεξεργασία &amp;χαρακτηριστικών στρώματος</translation>
+        <translation>&amp;Επεξεργασία &amp;χαρακτηριστικών στρώσης</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="689"/>
         <source>&amp;Remove Layer</source>
-        <translation>&amp;Αφαίρεση στρώματος</translation>
+        <translation>&amp;Αφαίρεση στρώσης</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="698"/>
         <source>&amp;Add Dimensions Sub-Layer</source>
-        <translation>&amp;Προσθήκη υποστρώματος διαστάσεων</translation>
+        <translation>&amp;Προσθήκη υποστρώσης διαστάσεων</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="702"/>
         <source>&amp;Add Info Sub-Layer</source>
-        <translation>&amp;Προσθήκη υποστρώματος πληροφοριών</translation>
+        <translation>&amp;Προσθήκη υποστρώσης πληροφοριών</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="706"/>
         <source>&amp;Add Alternative View Sub-Layer</source>
-        <translation>&amp;Προσθήκη υποστρώματος εναλλακτικής προβολής</translation>
+        <translation>&amp;Προσθήκη υποστρώσης εναλλακτικής προβολής</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="712"/>
         <source>&amp;Remove Sub-layers</source>
-        <translation>&amp;Αφαίρεση υποστρωμάτων</translation>
+        <translation>&amp;Αφαίρεση υποστρώσεων</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="720"/>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="731"/>
         <source>Convert to Dimensional Layer</source>
-        <translation>Μετατροπή σε διαστατικό στρώμα</translation>
+        <translation>Μετατροπή σε στρώση διαστάσεων</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="721"/>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="734"/>
         <source>Convert to Info Layer</source>
-        <translation>Μετατροπή σε πληροφοριακό στρώμα</translation>
+        <translation>Μετατροπή σε στρώση πληροφοριών</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="722"/>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="737"/>
         <source>Convert to Alternative Position Layer</source>
-        <translation>Μετατροπή σε στρώμα εναλλακτικής θέσης</translation>
+        <translation>Μετατροπή σε στρώση εναλλακτικής θέσης</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="729"/>
         <source>Convert to Normal Layer</source>
-        <translation>Μετατροπή σε κανονικό στρώμα</translation>
+        <translation>Μετατροπή σε κανονική στρώση</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="743"/>
         <source>&amp;Select Layer&apos;s Entities</source>
-        <translation>&amp;Επιλογή οντοτήτων στρώματος</translation>
+        <translation>&amp;Επιλογή οντοτήτων της στρώσης</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="746"/>
         <source>&amp;Create Layer Copy</source>
-        <translation>&amp;Δημιουργία αντιγράφου στρώματος</translation>
+        <translation>&amp;Δημιουργία αντιγράφου στρώσης</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="747"/>
         <source>&amp;Duplicate Layer With Content</source>
-        <translation>&amp;Διπλασιασμός στρώματος με περιεχόμενο</translation>
+        <translation>&amp;Διπλασιασμός στρώσης με το περιεχόμενο</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="751"/>
         <source>Move Selection to Layer</source>
-        <translation>Μετακίνηση επιλογής σε στρώμα</translation>
+        <translation>Μετακίνηση επιλογής σε στρώση</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="752"/>
         <source>Duplicate Selection to Layer</source>
-        <translation>Διπλασιασμός επιλογής σε στρώμα</translation>
+        <translation>Διπλασιασμός επιλογής σε στρώση</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="759"/>
         <source>&amp;Add Layer</source>
-        <translation>&amp;Προσθήκη στρώματος</translation>
+        <translation>&amp;Προσθήκη στρώσης</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="761"/>
         <source>&amp;Freeze Others Layers</source>
-        <translation>&amp;Πάγωμα άλλων στρωμάτων</translation>
+        <translation>&amp;Πάγωμα των άλλων στρώσεων</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="762"/>
         <source>&amp;Defreeze All Layers</source>
-        <translation>&amp;Αποπάγωμα όλων των στρωμάτων</translation>
+        <translation>&amp;Ξεπάγωμα όλων των στρώσεων</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="763"/>
         <source>&amp;Hide all layers except current</source>
-        <translation>Απόκρυψη όλων των &amp;στρωμάτων εκτός του τρέχοντος</translation>
+        <translation>Απόκρυψη όλων των &amp;στρώσεων εκτός από την τρέχουσα</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="764"/>
         <source>&amp;Unlock All Layers</source>
-        <translation>&amp;Ξεκλείδωμα όλων των στρωμάτων</translation>
+        <translation>&amp;Ξεκλείδωμα όλων των στρώσεων</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="765"/>
         <source>&amp;Lock All Layers</source>
-        <translation>&amp;Κλείδωμα όλων των στρωμάτων</translation>
+        <translation>&amp;Κλείδωμα όλων των στρώσεων</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="766"/>
         <source>Enable &amp;Printing All Layers</source>
-        <translation>Ενεργοποίηση &amp;εκτύπωσης όλων των στρωμάτων</translation>
+        <translation>Ενεργοποίηση &amp;εκτύπωσης όλων των στρώσεων</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="767"/>
         <source>&amp;Disable Printing All Layers</source>
-        <translation>&amp;Απενεργοποίηση εκτύπωσης όλων των στρωμάτων</translation>
+        <translation>&amp;Απενεργοποίηση εκτύπωσης όλων των στρώσεων</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="769"/>
         <source>&amp;Find And Remove Empty Layers</source>
-        <translation>&amp;Εύρεση και αφαίρεση κενών στρωμάτων</translation>
+        <translation>&amp;Εύρεση και αφαίρεση κενών στρώσεων</translation>
     </message>
 </context>
 <context>
@@ -2249,7 +2249,7 @@ or [%2]</source>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="50"/>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="181"/>
         <source>Free</source>
-        <translation>Free</translation>
+        <translation>Ελεύθερο</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="55"/>
@@ -2272,7 +2272,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="73"/>
         <source>Line Snap:</source>
-        <translation>Συγκράτηση γραμμής:</translation>
+        <translation>Έλξη γραμμής:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="80"/>
@@ -2287,7 +2287,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="167"/>
         <source>Tick Snap:</source>
-        <translation>Συγκράτηση σημείου:</translation>
+        <translation>Έλξη σημαδιού:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="174"/>
@@ -2302,7 +2302,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="208"/>
         <source>Snap Distance:</source>
-        <translation>Απόσταση συγκράτησης:</translation>
+        <translation>Απόσταση έλξης:</translation>
     </message>
 </context>
 <context>
@@ -2365,7 +2365,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_linefrompointtolineoptions.ui" line="270"/>
         <source>Snap:</source>
-        <translation>Συγκράτηση:</translation>
+        <translation>Έλξη:</translation>
     </message>
 </context>
 <context>
@@ -2379,7 +2379,7 @@ or [%2]</source>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="51"/>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="144"/>
         <source>Extend/Trim</source>
-        <translation>Επέκταση/Κόψιμο</translation>
+        <translation>Επέκταση/Περικοπή</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="56"/>
@@ -2406,7 +2406,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="102"/>
         <source>Active Pen</source>
-        <translation>Ενεργό στυλό</translation>
+        <translation>Ενεργή πένα</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="107"/>
@@ -2520,18 +2520,18 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="42"/>
         <source>Gap Snap:</source>
-        <translation>Συγκράτηση κενού:</translation>
+        <translation>Έλξη κενού:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="49"/>
         <source>Snap Distance:</source>
-        <translation>Απόσταση συγκράτησης:</translation>
+        <translation>Απόσταση έλξης:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="56"/>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="87"/>
         <source>Free</source>
-        <translation>Free</translation>
+        <translation>Ελεύθερο</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="79"/>
@@ -2559,7 +2559,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="129"/>
         <source>Line Snap:</source>
-        <translation>Συγκράτηση γραμμής:</translation>
+        <translation>Έλξη γραμμής:</translation>
     </message>
 </context>
 <context>
@@ -2567,7 +2567,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="18"/>
         <source>Pen Palette Settings</source>
-        <translation>Ρυθμίσεις παλέτας στυλό</translation>
+        <translation>Ρυθμίσεις παλέτας πενών</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="37"/>
@@ -2597,12 +2597,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="71"/>
         <source>Line Width Icon</source>
-        <translation>Εικονίδιο πλάτους γραμμής</translation>
+        <translation>Εικονίδιο πάχους γραμμής</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="78"/>
         <source>Line Width Name</source>
-        <translation>Όνομα πλάτους γραμμής</translation>
+        <translation>Όνομα πάχους γραμμής</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="88"/>
@@ -2612,12 +2612,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="132"/>
         <source>Active Pen Background:</source>
-        <translation>Φόντο ενεργού στυλό:</translation>
+        <translation>Φόντο ενεργής πένας:</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="150"/>
         <source>Entire table row is bold for active pen</source>
-        <translation>Ολόκληρη η γραμμή πίνακα είναι έντονη για ενεργό στυλό</translation>
+        <translation>Ολόκληρη η γραμμή του πίνακα είναι έντονη για την ενεργή πένα</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="157"/>
@@ -2632,7 +2632,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="192"/>
         <source>Case-insensitive pens filtering</source>
-        <translation>Φιλτράρισμα στυλό χωρίς διάκριση πεζών-κεφαλαίων</translation>
+        <translation>Φιλτράρισμα πενών χωρίς διάκριση πεζών-κεφαλαίων</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="209"/>
@@ -2667,7 +2667,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="249"/>
         <source>Show info message if no entities may be selected by pen</source>
-        <translation>Εμφάνιση μηνύματος πληροφορίας εάν δεν μπορούν να επιλεγούν οντότητες με στυλό</translation>
+        <translation>Εμφάνιση μηνύματος πληροφορίας αν δεν μπορούν να επιλεγούν οντότητες με την πένα</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="258"/>
@@ -2682,12 +2682,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.cpp" line="47"/>
         <source>Select entities by attributes pen</source>
-        <translation>Επιλογή οντοτήτων με στυλό χαρακτηριστικών</translation>
+        <translation>Επιλογή οντοτήτων με την πένα χαρακτηριστικών</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.cpp" line="48"/>
         <source>Select entities by drawing pen</source>
-        <translation>Επιλογή οντοτήτων με στυλό σχεδίασης</translation>
+        <translation>Επιλογή οντοτήτων με την πένα σχεδίασης</translation>
     </message>
 </context>
 <context>
@@ -2695,12 +2695,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="20"/>
         <source>Pen Palette</source>
-        <translation>Παλέτα στυλό</translation>
+        <translation>Παλέτα πενών</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="44"/>
         <source>Pen Name:</source>
-        <translation>Όνομα στυλό:</translation>
+        <translation>Όνομα πένας:</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="94"/>
@@ -2725,7 +2725,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="246"/>
         <source>Width:</source>
-        <translation>Πλάτος:</translation>
+        <translation>Πάχος:</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="271"/>
@@ -2735,22 +2735,22 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="290"/>
         <source>Fill Pen Editor by Entity Drawing Pen</source>
-        <translation>Πλήρωση επεξεργαστή στυλό με στυλό σχεδίασης οντότητας</translation>
+        <translation>Συμπλήρωση του επεξεργαστή πένας με την πένα σχεδίασης της οντότητας</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="304"/>
         <source>Fill Pen Editor by Entity Attributes</source>
-        <translation>Πλήρωση επεξεργαστή στυλό με χαρακτηριστικά οντότητας</translation>
+        <translation>Συμπλήρωση του επεξεργαστή πένας με τα χαρακτηριστικά της οντότητας</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="318"/>
         <source>Select Entities By Drawing Pen</source>
-        <translation>Επιλογή οντοτήτων με στυλό σχεδίασης</translation>
+        <translation>Επιλογή οντοτήτων με την πένα σχεδίασης</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="332"/>
         <source>Select Entities By Pen Attributes</source>
-        <translation>Επιλογή οντοτήτων με χαρακτηριστικά στυλό</translation>
+        <translation>Επιλογή οντοτήτων με τα χαρακτηριστικά πένας</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="349"/>
@@ -2761,17 +2761,17 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="363"/>
         <source>Apply Pen To Selection</source>
-        <translation>Εφαρμογή στυλό στην επιλογή</translation>
+        <translation>Εφαρμογή πένας στην επιλογή</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="377"/>
         <source>Fill Editor Pen by Current Pen</source>
-        <translation>Πλήρωση στυλό επεξεργαστή με τρέχον στυλό</translation>
+        <translation>Συμπλήρωση της πένας του επεξεργαστή με την τρέχουσα πένα</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="391"/>
         <source>Apply Editor Pen As Current Pen</source>
-        <translation>Εφαρμογή στυλό επεξεργαστή ως τρέχον στυλό</translation>
+        <translation>Εφαρμογή της πένας του επεξεργαστή ως τρέχουσας πένας</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="394"/>
@@ -2781,82 +2781,82 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="405"/>
         <source>Update Current Pen by Active Layer&apos; Pen</source>
-        <translation>Ενημέρωση τρέχοντος στυλό με στυλό ενεργού στρώματος</translation>
+        <translation>Ενημέρωση της τρέχουσας πένας από την πένα της ενεργής στρώσης</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="419"/>
         <source>Fill Pen Editor from Active Layer&apos;s Pen</source>
-        <translation>Πλήρωση επεξεργαστή στυλό από στυλό ενεργού στρώματος</translation>
+        <translation>Συμπλήρωση του επεξεργαστή πένας από την πένα της ενεργής στρώσης</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="422"/>
         <source>Pick from Active Layer</source>
-        <translation>Επιλογή από ενεργό στρώμα</translation>
+        <translation>Λήψη από την ενεργή στρώση</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="433"/>
         <source>Apply Editor Pen to Active Layer Pen</source>
-        <translation>Εφαρμογή στυλό επεξεργαστή στο στυλό ενεργού στρώματος</translation>
+        <translation>Εφαρμογή της πένας του επεξεργαστή στην πένα της ενεργής στρώσης</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="436"/>
         <source>Apply To Layer</source>
-        <translation>Εφαρμογή σε στρώμα</translation>
+        <translation>Εφαρμογή σε στρώση</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="447"/>
         <source>Remove Selected Pen</source>
-        <translation>Αφαίρεση επιλεγμένου στυλό</translation>
+        <translation>Αφαίρεση επιλεγμένης πένας</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="450"/>
         <source>Delete Pen</source>
-        <translation>Διαγραφή στυλό</translation>
+        <translation>Διαγραφή πένας</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="245"/>
         <source>Pens Menu</source>
-        <translation>Μενού στυλό</translation>
+        <translation>Μενού πενών</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="265"/>
         <source>&amp;Apply Pen To Selection</source>
-        <translation>&amp;Εφαρμογή στυλό στην επιλογή</translation>
+        <translation>&amp;Εφαρμογή πένας στην επιλογή</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="266"/>
         <source>&amp;Set As Current Pen</source>
-        <translation>&amp;Ορισμός ως τρέχον στυλό</translation>
+        <translation>&amp;Ορισμός ως τρέχουσας πένας</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="267"/>
         <source>&amp;Apply Pen To Active Layer</source>
-        <translation>&amp;Εφαρμογή στυλό σε ενεργό στρώμα</translation>
+        <translation>&amp;Εφαρμογή πένας στην ενεργή στρώση</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="268"/>
         <source>&amp;Select Entities With Attributes Pen</source>
-        <translation>&amp;Επιλογή οντοτήτων με στυλό χαρακτηριστικών</translation>
+        <translation>&amp;Επιλογή οντοτήτων με την πένα χαρακτηριστικών</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="269"/>
         <source>&amp;Select Entities With Drawing Pen</source>
-        <translation>&amp;Επιλογή οντοτήτων με στυλό σχεδίασης</translation>
+        <translation>&amp;Επιλογή οντοτήτων με την πένα σχεδίασης</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="272"/>
         <source>&amp;Edit Pen</source>
-        <translation>&amp;Επεξεργασία στυλό</translation>
+        <translation>&amp;Επεξεργασία πένας</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="273"/>
         <source>&amp;Remove Pen</source>
-        <translation>&amp;Αφαίρεση στυλό</translation>
+        <translation>&amp;Αφαίρεση πένας</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="276"/>
         <source>&amp;Remove Pens</source>
-        <translation>&amp;Αφαίρεση στυλό</translation>
+        <translation>&amp;Αφαίρεση πενών</translation>
     </message>
 </context>
 <context>
@@ -2904,7 +2904,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="123"/>
         <source>Snap:</source>
-        <translation>Συγκράτηση:</translation>
+        <translation>Έλξη:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="162"/>
@@ -2969,12 +2969,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="229"/>
         <source>Bevel</source>
-        <translation>Φάση</translation>
+        <translation>Λοξοτομή</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="237"/>
         <source>Snap shift</source>
-        <translation>Μετατόπιση συγκράτησης</translation>
+        <translation>Μετατόπιση έλξης</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="245"/>
@@ -3012,7 +3012,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="26"/>
         <source>Snap shift</source>
-        <translation>Μετατόπιση συγκράτησης</translation>
+        <translation>Μετατόπιση έλξης</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="33"/>
@@ -3032,7 +3032,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="70"/>
         <source>End Snap:</source>
-        <translation>Συγκράτηση τέλους:</translation>
+        <translation>Έλξη τέλους:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="77"/>
@@ -3047,7 +3047,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="107"/>
         <source>Start Snap:</source>
-        <translation>Συγκράτηση αρχής:</translation>
+        <translation>Έλξη αρχής:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="131"/>
@@ -3091,7 +3091,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="212"/>
         <source>Bevel</source>
-        <translation>Φάση</translation>
+        <translation>Λοξοτομή</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="220"/>
@@ -3174,7 +3174,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="170"/>
         <source>Bevel</source>
-        <translation>Φάση</translation>
+        <translation>Λοξοτομή</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="178"/>
@@ -3184,7 +3184,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="185"/>
         <source>Snap shift</source>
-        <translation>Μετατόπιση συγκράτησης</translation>
+        <translation>Μετατόπιση έλξης</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="192"/>
@@ -3247,7 +3247,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="71"/>
         <source>Edge Tick:</source>
-        <translation>Σημείο άκρης:</translation>
+        <translation>Σημάδι άκρης:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="113"/>
@@ -3272,12 +3272,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="221"/>
         <source>Tick Length:</source>
-        <translation>Μήκος σημείου:</translation>
+        <translation>Μήκος σημαδιού:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="228"/>
         <source>Tick snap:</source>
-        <translation>Συγκράτηση σημείου:</translation>
+        <translation>Έλξη σημαδιού:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="235"/>
@@ -3662,7 +3662,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="474"/>
         <source>Pen</source>
-        <translation>Pen</translation>
+        <translation>Πένα</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="479"/>
@@ -3945,7 +3945,7 @@ Please check its existence and permissions.</source>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="187"/>
         <source>Grid Status</source>
-        <translation>Κατάσταση πλέγματος</translation>
+        <translation>Κατάσταση καννάβου</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3307"/>
@@ -4229,12 +4229,12 @@ Please check its existence and permissions.</source>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="337"/>
         <source>Pen Palette</source>
-        <translation>Παλέτα στυλό</translation>
+        <translation>Παλέτα πενών</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="359"/>
         <source>Layer Tree</source>
-        <translation>Δέντρο στρωμάτων</translation>
+        <translation>Δέντρο στρώσεων</translation>
     </message>
 </context>
 <context>
@@ -4242,12 +4242,12 @@ Please check its existence and permissions.</source>
     <message>
         <location filename="../src/ui/qg_actionhandler.cpp" line="1275"/>
         <source>Spacebar: restored snapping mode to normal</source>
-        <translation>Πλήκτρο διαστήματος: επαναφορά λειτουργίας συγκράτησης σε κανονική</translation>
+        <translation>Πλήκτρο διαστήματος: επαναφορά λειτουργίας έλξης σε κανονική</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_actionhandler.cpp" line="1276"/>
         <source>Spacebar: temporarily set snapping mode to free snapping</source>
-        <translation>Πλήκτρο διαστήματος: προσωρινή ρύθμιση λειτουργίας συγκράτησης σε ελεύθερη</translation>
+        <translation>Πλήκτρο διαστήματος: προσωρινή ρύθμιση λειτουργίας έλξης σε ελεύθερη</translation>
     </message>
 </context>
 <context>
@@ -4763,7 +4763,7 @@ in a separate window</source>
         <location filename="../src/ui/forms/qg_dlgattributes.ui" line="69"/>
         <source>Apply attributes also to all sub-entities of selected INSERT.
 This recursively modifies all entities of the Block itself.</source>
-        <translation>Εφαρμόστε τα χαρακτηριστικά επίσης σε όλες τις υπο-οότητες του επιλεγμένου INSERT.
+        <translation>Εφαρμόστε τα χαρακτηριστικά επίσης σε όλες τις υπο-οντότητες του επιλεγμένου INSERT.
 Αυτό τροποποιεί αναδρομικά όλες τις οντότητες του ίδιου του Block.</translation>
     </message>
     <message>
@@ -5932,7 +5932,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgmirror.ui" line="26"/>
         <source>Mirroring Options</source>
-        <translation>Επιλογές συμμετρίας</translation>
+        <translation>Επιλογές κατοπτρισμού</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmirror.ui" line="70"/>
@@ -6347,13 +6347,13 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1047"/>
         <source>Tick size:</source>
         <translatorcomment>tick -&gt; τικ μάλλον προσωρινά. &quot;σημάδι&quot; ίσως; Χρησιμοποιείται αντί για βέλος σε διαστάσεις και μοιάζει με &quot;/&quot;.</translatorcomment>
-        <translation>Μέγεθος τικ:</translation>
+        <translation>Μέγεθος σημαδιού:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1116"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension Tick size. Set it to 0 will disable the dimension tick. Dimension arrow won&apos;t be drawn when dimension tick is enabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translatorcomment>tick -&gt; τικ</translatorcomment>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Μέγεθος τικ διάστασης. Αν τεθεί 0, θα απενεργοποιήσει το τικ διάστασης. Το βέλος διάστασης δεν θα σχεδιαστεί, όταν το τικ διάστασης είναι ενεργοποιημένο.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Μέγεθος σημαδιού διάστασης. Αν τεθεί 0, το σημάδι διάστασης απενεργοποιείται. Το βέλος διάστασης δεν σχεδιάζεται όταν το σημάδι διάστασης είναι ενεργοποιημένο.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1461"/>
@@ -6430,7 +6430,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1153"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Distance gap around text&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Παραθυράκι απόσταση γύρω από το κείμενο&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Απόσταση διακένου γύρω από το κείμενο&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1226"/>
@@ -6445,7 +6445,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1296"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension arrow size. &lt;a name=&quot;result_box&quot;/&gt;without effect when tick size &lt;a name=&quot;result_box&quot;/&gt;is other than 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>Μέγεθος βέλους διάστασης. &lt;a name=&quot;result_box&quot;/&gt;Δεν έχει επίδραση όταν το μέγεθος σήμανσης &lt;a name=&quot;result_box&quot;/&gt;δεν είναι 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Μέγεθος βέλους διάστασης. &lt;a name=&quot;result_box&quot;/&gt;Χωρίς επίδραση όταν το μέγεθος σημαδιού &lt;a name=&quot;result_box&quot;/&gt;είναι διάφορο του 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1350"/>
@@ -6456,12 +6456,12 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1370"/>
         <source>Dimension lines, arrows &amp; ticks</source>
-        <translation>Γραμμές, βέλη και σήμανση διαστάσεων</translation>
+        <translation>Γραμμές, βέλη και σημάδια διαστάσεων</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1377"/>
         <source>Angular zeros:</source>
-        <translation>Γωνιαίες μηδενικές τιμές:</translation>
+        <translation>Γωνιακά μηδενικά:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1391"/>
@@ -6476,7 +6476,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1414"/>
         <source>Offset:</source>
-        <translation>Μετοπισμός:</translation>
+        <translation>Μετατόπιση:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1427"/>
@@ -6496,7 +6496,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1502"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Offset from origin point.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Μετοπισμός από το σημείο αρχής.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Μετατόπιση από το σημείο αρχής.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1534"/>
@@ -6506,7 +6506,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1554"/>
         <source>Extension lines</source>
-        <translation>Γραμμές επέκτασης</translation>
+        <translation>Βοηθητικές γραμμές</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1561"/>
@@ -6562,12 +6562,12 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1598"/>
         <source>fixed extension line length</source>
-        <translation>σταθερό μήκος γραμμής επέκτασης</translation>
+        <translation>σταθερό μήκος βοηθητικής γραμμής</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1609"/>
         <source>&amp;Splines</source>
-        <translation>&amp;Σπλαίνες</translation>
+        <translation>&amp;Καμπύλες spline</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1683"/>
@@ -6821,7 +6821,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="777"/>
         <source>Snap indicator:</source>
-        <translation>Ένδειξη «Σήμανση»:</translation>
+        <translation>Ένδειξη έλξης:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="199"/>
@@ -6831,7 +6831,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1263"/>
         <source>Modify layer of selected entities, at  layer activation</source>
-        <translation>Μνήστε το επίπεδο των επιλεγμένων στοιχείων, κατά την ενεργοποίηση του επιπέδου</translation>
+        <translation>Αλλαγή της στρώσης των επιλεγμένων οντοτήτων κατά την ενεργοποίηση στρώσης</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1089"/>
@@ -6866,17 +6866,17 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="275"/>
         <source>Snap indicator lines</source>
-        <translation>Γραμμές ένδειξης συναρμολόγησης</translation>
+        <translation>Γραμμές ένδειξης έλξης</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="131"/>
         <source>Snap indicator shape</source>
-        <translation>Σχήμα ένδειξης συναρμολόγησης</translation>
+        <translation>Σχήμα ένδειξης έλξης</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="185"/>
         <source>Hide cursor when snapping</source>
-        <translation>Απόκρυψη δείκτη κατά τη συναρμολόγηση</translation>
+        <translation>Απόκρυψη δείκτη κατά την έλξη</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1143"/>
@@ -6906,7 +6906,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1171"/>
         <source>Enable CAD toolbars</source>
-        <translation>Ενεργοποίηση thanh công cụ CAD</translation>
+        <translation>Ενεργοποίηση γραμμών εργαλείων CAD</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="799"/>
@@ -6921,12 +6921,12 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.cpp" line="410"/>
         <source>This will also include custom menus and toolbars. Continue?</source>
-        <translation>Αυτό θα περιλαμβάνει επίσης προσαρμοσμένα μενού και thanh công cụ. Συνεχίστε;</translation>
+        <translation>Αυτό θα περιλαμβάνει επίσης προσαρμοσμένα μενού και γραμμές εργαλείων. Συνέχεια;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1260"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, activating a layer would modify all selected entities to that new layer. To change layer of multiple entities: first select needed entities; activate a layer in the layer widget. This makes all selected entities modified to belong to the new layer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Όταν ενεργοποιηθεί, η ενεργοποίηση ενός επιπέδου θα τροποποιούσε όλες τις επιλεγμένες οντότητες σε αυτό το νέο επίπεδο. Για να αλλάξετε το επίπεδο πολλαπλών οντοτήτων: επιλέξτε πρώτα τις απαραίτητες οντότητες και ενεργοποιήστε ένα επίπεδο στο widget επιπέδου. Αυτό κάνει όλες τις επιλεγμένες οντότητες να ανήκουν στο νέο επίπεδο.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Όταν ενεργοποιηθεί, η ενεργοποίηση μιας στρώσης μεταφέρει όλες τις επιλεγμένες οντότητες σε αυτή τη νέα στρώση. Για να αλλάξετε τη στρώση πολλών οντοτήτων: επιλέξτε πρώτα τις οντότητες και ενεργοποιήστε μια στρώση στον πίνακα στρώσεων. Έτσι όλες οι επιλεγμένες οντότητες θα ανήκουν στη νέα στρώση.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="834"/>
@@ -6936,7 +6936,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="322"/>
         <source>Minimal Grid Spacing (p&amp;x):</source>
-        <translation>Ελάχιστη Απόσταση Πλέγματος (p&amp;x):</translation>
+        <translation>Ελάχιστη απόσταση καννάβου (p&amp;x):</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="118"/>
@@ -6951,7 +6951,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="111"/>
         <source>Auto-panning</source>
-        <translation>Αυτόματη οροτροπή</translation>
+        <translation>Αυτόματη μετακίνηση προβολής</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="265"/>
@@ -7001,32 +7001,32 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1056"/>
         <source>Invert vertical scrolling direction</source>
-        <translation>Invertir la dirección de desplazamiento vertical</translation>
+        <translation>Αντιστροφή κατακόρυφης κατεύθυνσης κύλισης</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1063"/>
         <source>Inverts zoom direction when using mouse wheel.</source>
-        <translation>Invierte la dirección de zoom al usar la rueda del ratón.</translation>
+        <translation>Αντιστρέφει την κατεύθυνση εστίασης κατά τη χρήση του τροχού του ποντικιού.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1066"/>
         <source>Invert zoom direction</source>
-        <translation>Invertir dirección de zoom</translation>
+        <translation>Αντιστροφή κατεύθυνσης εστίασης</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1228"/>
         <source>Keyboard Settings</source>
-        <translation>Configuración del teclado</translation>
+        <translation>Ρυθμίσεις πληκτρολογίου</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1234"/>
         <source>Evaluate commands when SPACE BAR is pressed</source>
-        <translation>Evaluar comandos al pulsar la BARRA ESPACIADORA</translation>
+        <translation>Εκτέλεση εντολών όταν πατηθεί το πλήκτρο διαστήματος</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1244"/>
         <source>Toggle free snap mode when SPACE BAR is pressed</source>
-        <translation>Alternar modo de ajuste libre al pulsar la BARRA ESPACIADORA</translation>
+        <translation>Εναλλαγή της λειτουργίας ελεύθερης έλξης όταν πατηθεί το ΠΛΗΚΤΡΟ ΔΙΑΣΤΗΜΑΤΟΣ</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1254"/>
@@ -7036,22 +7036,22 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1270"/>
         <source>Automatically zoom drawing when opening</source>
-        <translation>Zoom automático del dibujo al abrir</translation>
+        <translation>Αυτόματη εστίαση σχεδίου κατά το άνοιγμα</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="880"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;Part library folder. The symbol library dxf files must be located in the subdirectories of this folder. The subfolder names will be displayed in the Library Browser.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;( Menu: Widgets &amp;gt; Dock Widgets &amp;gt; Library Browser)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>Carpeta de biblioteca de piezas. Los archivos dxf de la biblioteca de símbolos deben estar ubicados en los subdirectorios de esta carpeta. Los nombres de las subcarpetas se mostrarán en el Navegador de Bibliotecas. (Menú: Widgets &gt; Widgets de Acoplamiento &gt; Navegador de Bibliotecas)</translation>
+        <translation>Φάκελος βιβλιοθήκης εξαρτημάτων. Τα αρχεία dxf της βιβλιοθήκης συμβόλων πρέπει να βρίσκονται στους υποφακέλους αυτού του φακέλου. Τα ονόματα των υποφακέλων θα εμφανίζονται στον Περιηγητή βιβλιοθήκης. (Μενού: Widgets &gt; Αγκυρωμένα παράθυρα &gt; Περιηγητής βιβλιοθήκης)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1157"/>
         <source>Open last opened files</source>
-        <translation>Abrir archivos abiertos recientemente</translation>
+        <translation>Άνοιγμα των τελευταίων ανοιγμένων αρχείων</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1241"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Temporarily toggle free snapping when the spacebar is pressed and the command window is activated&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>Ενεργοποίηση/Απενεργοποίηση προσωρινά της ελεύθερης συγκόλλησης όταν πατηθεί το πλήκτρο κενόστρου και ενεργοποιηθεί το παράθυρο εντολών</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Προσωρινή εναλλαγή της ελεύθερης έλξης όταν πατηθεί το πλήκτρο διαστήματος και είναι ενεργό το παράθυρο εντολών&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -7145,52 +7145,52 @@ because it does not take into account the reference point in the &lt;use&gt;.</s
         <source>MakerCAM as of March 2015 cannot display ellipses and ellipse arcs correctly, 
 when they are created using the &lt;ellipse&gt; tag  with a rotation in 
 the &lt;transform&gt; attribute or as &lt;path&gt; using elliptic arc segments.</source>
-        <translation>MakerCAM a partir de marzo de 2015 no puede mostrar elipses y arcos elípticos correctamente, 
-cuando se crean usando la etiqueta &lt;ellipse&gt; con una rotación en 
-tra el atributo &lt;transform&gt; o como &lt;path&gt; usando segmentos de arco elíptico.</translation>
+        <translation>Το MakerCAM, από τον Μάρτιο του 2015, δεν μπορεί να εμφανίσει σωστά ελλείψεις και ελλειπτικά τόξα, 
+όταν δημιουργούνται με την ετικέτα &lt;ellipse&gt; με περιστροφή στο 
+χαρακτηριστικό &lt;transform&gt; ή ως &lt;path&gt; με τμήματα ελλειπτικού τόξου.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.cpp" line="36"/>
         <source>Exported images can be useful in SVG editors (Inkscape, etc), 
 but avoided in some CAM&apos;s.</source>
-        <translation>Las imágenes exportadas pueden ser útiles en editores SVG (Inkscape, etc), 
-pero son evitadas en algunos CAM.</translation>
+        <translation>Οι εξαγόμενες εικόνες μπορεί να είναι χρήσιμες σε επεξεργαστές SVG (Inkscape κ.λπ.), 
+αλλά καλό είναι να αποφεύγονται σε ορισμένα CAM.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.cpp" line="37"/>
         <source>Many CAM&apos;s(MakerCAM, EleskCAM, LaserWeb) ignore dashed/doted line style, 
 which can be useful in lasercut of plywood or for papercraft. </source>
-        <translation>Muchos CAM (MakerCAM, EleskCAM, LaserWeb) ignoran el estilo de línea discontinuo/punteado, 
-lo cual puede ser útil en el corte láser de contrachapado o para manualidades de papel.</translation>
+        <translation>Πολλά CAM (MakerCAM, EleskCAM, LaserWeb) αγνοούν το στυλ διακεκομμένων/διάστικτων γραμμών, 
+που μπορεί να είναι χρήσιμο στην κοπή κόντρα πλακέ με λέιζερ ή σε χειροτεχνίες από χαρτί. </translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.cpp" line="38"/>
         <source>Default width of elements can affect some CAM&apos;s/SVG Editors, 
 but ignored by other</source>
-        <translation>El ancho predeterminado de los elementos puede afectar a algunos CAM/Editores SVG, 
-pero es ignorado por otros.</translation>
+        <translation>Το προεπιλεγμένο πλάτος των στοιχείων μπορεί να επηρεάσει ορισμένα CAM/επεξεργαστές SVG, 
+ενώ άλλα το αγνοούν</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.cpp" line="39"/>
         <source>Length of line pattern related to zoom, 
 so default step value required for baking</source>
-        <translation>La longitud del patrón de línea está relacionada con el zoom, 
-por lo que se requiere un valor de paso predeterminado para el horneado.</translation>
+        <translation>Το μήκος του μοτίβου γραμμής εξαρτάται από την εστίαση, 
+γι’ αυτό απαιτείται προεπιλεγμένη τιμή βήματος για τη μετατροπή του μοτίβου σε τμήματα</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="199"/>
         <source>Points</source>
-        <translation>Puntos</translation>
+        <translation>Σημεία</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="207"/>
         <source>Export Points</source>
-        <translation>Exportar puntos</translation>
+        <translation>Εξαγωγή σημείων</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.cpp" line="40"/>
         <source>Whether to export points</source>
-        <translation>Si exportar puntos</translation>
+        <translation>Αν θα εξάγονται τα σημεία</translation>
     </message>
 </context>
 <context>
@@ -7412,7 +7412,7 @@ por lo que se requiere un valor de paso predeterminado para el horneado.</transl
     <message>
         <location filename="../src/ui/forms/qg_dlgscale.ui" line="203"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Find the scaling ratios around the center by a reference point and a target point.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>Encontrar las proporciones de escala alrededor del centro mediante un punto de referencia y un punto objetivo.</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Εύρεση των λόγων κλιμάκωσης γύρω από το κέντρο μέσω ενός σημείου αναφοράς και ενός σημείου-στόχου.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -7420,7 +7420,7 @@ por lo que se requiere un valor de paso predeterminado para el horneado.</transl
     <message>
         <location filename="../src/ui/forms/qg_dlgspline.ui" line="26"/>
         <source>Spline</source>
-        <translation>Καμπύλη Spline</translation>
+        <translation>Spline</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgspline.ui" line="51"/>
@@ -7448,7 +7448,7 @@ por lo que se requiere un valor de paso predeterminado para el horneado.</transl
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="20"/>
         <source>Text</source>
-        <translation>Text</translation>
+        <translation>Κείμενο</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="33"/>
@@ -8230,7 +8230,7 @@ por lo que se requiere un valor de paso predeterminado para el horneado.</transl
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="784"/>
         <source>A&amp;ligned</source>
-        <translation>A&amp;alineado</translation>
+        <translation>&amp;Ευθυγραμμισμένη</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="794"/>
@@ -8555,17 +8555,17 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="241"/>
         <source>Unlock all layers</source>
-        <translation>Ξεκλειδώστε όλα τα στρώματα</translation>
+        <translation>Ξεκλείδωμα όλων των στρώσεων</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="248"/>
         <source>Lock all layers</source>
-        <translation>Κλειδώστε όλα τα στρώματα</translation>
+        <translation>Κλείδωμα όλων των στρώσεων</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="262"/>
         <source>Remove layer</source>
-        <translation>Διαγραφή στρώματος</translation>
+        <translation>Διαγραφή στρώσης</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="276"/>
@@ -8575,27 +8575,27 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="563"/>
         <source>&amp;Unlock all Layers</source>
-        <translation>&amp;Ξεκλειδώστε όλα τα Στρώματα</translation>
+        <translation>&amp;Ξεκλείδωμα όλων των στρώσεων</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="565"/>
         <source>&amp;Lock all Layers</source>
-        <translation>&amp;Κλειδώστε όλα τα Στρώματα</translation>
+        <translation>&amp;Κλείδωμα όλων των στρώσεων</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="572"/>
         <source>Toggle Layer Loc&amp;k</source>
-        <translation>Εναλλαγή Επιπέδου Loc&amp;k</translation>
+        <translation>Εναλλαγή &amp;κλειδώματος στρώσης</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="589"/>
         <source>&amp;Export Selected Layer(s)</source>
-        <translation>&amp;Εξαγωγή Επιλεγμένων Επιπέδων</translation>
+        <translation>&amp;Εξαγωγή επιλεγμένων στρώσεων</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="592"/>
         <source>Export &amp;Visible Layer(s)</source>
-        <translation>Εξαγωγή &amp;Ορατών Επιπέδων</translation>
+        <translation>Εξαγωγή &amp;ορατών στρώσεων</translation>
     </message>
 </context>
 <context>
@@ -8811,7 +8811,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/qg_pentoolbar.cpp" line="48"/>
         <source>Line width</source>
-        <translation>Πλάτος γραμμής</translation>
+        <translation>Πάχος γραμμής</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_pentoolbar.cpp" line="52"/>
@@ -8884,7 +8884,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="26"/>
         <source>Snap</source>
-        <translation>Snap</translation>
+        <translation>Έλξη</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="47"/>
@@ -8949,7 +8949,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="58"/>
         <source>Free Snap</source>
-        <translation>Χωρίς έλξη</translation>
+        <translation>Ελεύθερη έλξη</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="63"/>
@@ -8984,7 +8984,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="93"/>
         <source>Snap Intersection</source>
-        <translation>Έλξη σε διασταύρωση</translation>
+        <translation>Έλξη σε τομή</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="102"/>
@@ -9014,12 +9014,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="138"/>
         <source>Lock relative zero position</source>
-        <translation>Ασφάλιση θέσης σχετικού σημείου Μηδέν</translation>
+        <translation>Κλείδωμα θέσης σχετικού μηδέν</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="43"/>
         <source>Exclusive Snap Mode</source>
-        <translation>Αποκλειστική Λειτουργία Πρόσ붙ισης</translation>
+        <translation>Αποκλειστική Λειτουργία Έλξης</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="224"/>
@@ -9039,7 +9039,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="52"/>
         <source>Snap Middle Manual</source>
-        <translation>Σύλληψη Μεσαίου Χειροκίνητη</translation>
+        <translation>Χειροκίνητη έλξη στη μέση</translation>
     </message>
 </context>
 <context>
@@ -9048,7 +9048,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/forms/qg_widgetpen.ui" line="26"/>
         <location filename="../src/ui/forms/qg_widgetpen.ui" line="47"/>
         <source>Pen</source>
-        <translation>Pen</translation>
+        <translation>Πένα</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_widgetpen.ui" line="91"/>
@@ -9058,7 +9058,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_widgetpen.ui" line="75"/>
         <source>Width:</source>
-        <translation>Πλάτος:</translation>
+        <translation>Πάχος:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_widgetpen.ui" line="59"/>
@@ -9128,14 +9128,14 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/qg_dialogfactory.cpp" line="311"/>
         <source>Layer &quot;%1&quot; and all entities on it will be removed.
 This action can NOT be undone.</source>
-        <translation>Το επίπεδο &quot;%1&quot; και όλες οι οντότητες πάνω του θα αφαιρεθούν.
-Αυτή η ενέργεια ΔΕΝ μπορεί να αντιστραφεί.</translation>
+        <translation>Η στρώση &quot;%1&quot; και όλες οι οντότητές της θα αφαιρεθούν.
+Αυτή η ενέργεια ΔΕΝ μπορεί να αναιρεθεί.</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1762"/>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="385"/>
         <source>Layer &quot;0&quot; can never be removed.</source>
-        <translation>Το επίπεδο &quot;0&quot; δεν μπορεί ποτέ να αφαιρεθεί.</translation>
+        <translation>Η στρώση &quot;0&quot; δεν μπορεί ποτέ να αφαιρεθεί.</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1810"/>
@@ -9150,7 +9150,7 @@ This action can NOT be undone.</source>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1811"/>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="399"/>
         <source>Listed layers and all entities on them will be removed.</source>
-        <translation>Τα καταγεγραμμένα επίπεδα και όλες οι οντότητες πάνω τους θα αφαιρεθούν.</translation>
+        <translation>Οι στρώσεις της λίστας και όλες οι οντότητές τους θα αφαιρεθούν.</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1812"/>
@@ -9161,13 +9161,13 @@ This action can NOT be undone.</source>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="406"/>
         <source>Warning: layer &quot;0&quot; can never be removed.</source>
-        <translation>Προειδοποίηση: το επίπεδο &quot;0&quot; δεν μπορεί ποτέ να αφαιρεθεί.</translation>
+        <translation>Προειδοποίηση: η στρώση &quot;0&quot; δεν μπορεί ποτέ να αφαιρεθεί.</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1813"/>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="410"/>
         <source>Layers for removal:</source>
-        <translation>Επίπεδα για διαγραφή:</translation>
+        <translation>Στρώσεις για διαγραφή:</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/ui/qg_dialogfactory.cpp" line="640"/>
@@ -9190,15 +9190,16 @@ This action can NOT be undone.</source>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.cpp" line="214"/>
         <source>Layer empty name is not allowed.</source>
-        <translation>Δεν επιτρέπεται κενό όνομα επιπέδου.</translation>
+        <translation>Δεν επιτρέπεται κενό όνομα στρώσης.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.cpp" line="278"/>
         <source>Attempt to create layer with duplicating name. Duplicated layer name is 
 [%1].
 Please specify a different name.</source>
-        <translation>Προσπάθεια δημιουργίας επιπέδου με διπλό όνομα. Το διπλό όνομα επιπέδου είναι 
-[%1]. Παρακαλώ καθορίστε ένα διαφορετικό όνομα.</translation>
+        <translation>Απόπειρα δημιουργίας στρώσης με όνομα που υπάρχει ήδη. Το διπλό όνομα στρώσης είναι 
+[%1].
+Καθορίστε ένα διαφορετικό όνομα.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.cpp" line="153"/>
@@ -9211,7 +9212,8 @@ Please specify a different name.</source>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.cpp" line="154"/>
         <source>Layer list separator string is empty. It will not be possible to build layers tree.
 Please specify a different value.</source>
-        <translation>Η συμβολοσειρά διαχωριστή της λίστας επιπέδων είναι κενή. Δεν είναι δυνατό να δημιουργηθεί το δέντρο επιπέδων. Παρακαλώ καθορίστε μια διαφορετική τιμή.</translation>
+        <translation>Η συμβολοσειρά διαχωριστή της λίστας στρώσεων είναι κενή. Δεν θα είναι δυνατή η δημιουργία του δέντρου στρώσεων.
+Καθορίστε μια διαφορετική τιμή.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.cpp" line="192"/>
@@ -9223,41 +9225,44 @@ Please specify a different value.</source>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="980"/>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="990"/>
         <source>Remove empty layers</source>
-        <translation>Διαγραφή κενών επιπέδων</translation>
+        <translation>Διαγραφή κενών στρώσεων</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="991"/>
         <source>No layers without entities found, nothing to remove.</source>
-        <translation>Δεν βρέθηκαν στρώματα χωρίς στοιχεία, τίποτα να αφαιρεθεί.</translation>
+        <translation>Δεν βρέθηκαν στρώσεις χωρίς οντότητες, δεν υπάρχει τίποτα για αφαίρεση.</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1131"/>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1176"/>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1184"/>
         <source>Add Layer</source>
-        <translation>Προσθήκη Στρώματος</translation>
+        <translation>Προσθήκη στρώσης</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1132"/>
         <source>Such child layer already exist for 
 [%1].
 Please specify a different name.</source>
-        <translation>Υπάρχει ήδη τέτοιο παιδί στρώμα για το 
-[%1]. Παρακαλώ καθορίστε ένα διαφορετικό όνομα.</translation>
+        <translation>Υπάρχει ήδη τέτοια θυγατρική στρώση για το 
+[%1].
+Καθορίστε ένα διαφορετικό όνομα.</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1177"/>
         <source>Such child layer already exist for 
 [%1].
 </source>
-        <translation>Υπάρχει ήδη τέτοιο παιδί στρώμα για το 
-[%1].</translation>
+        <translation>Υπάρχει ήδη τέτοια θυγατρική στρώση για το 
+[%1].
+</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1185"/>
         <source>Dimensional layer may be added only for normal active layer.
 </source>
-        <translation>Το διαστατικό στρώμα μπορεί να προστεθεί μόνο για το κανονικό ενεργό στρώμα.</translation>
+        <translation>Στρώση διαστάσεων μπορεί να προστεθεί μόνο σε κανονική ενεργή στρώση.
+</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1248"/>
@@ -9273,7 +9278,7 @@ Please specify a different name.</source>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1828"/>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1879"/>
         <source>Layer DialogEx</source>
-        <translation>Διάλογος Στρώματος Ex</translation>
+        <translation>Διάλογος στρώσης Ex</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.cpp" line="216"/>
@@ -9325,19 +9330,21 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1336"/>
         <source>There are no entities that matches pen on visible layers.</source>
-        <translation>Δεν υπάρχουν οντότητες που ταιριάζουν με το πένσα σε ορατές επιφάνειες.</translation>
+        <translation>Δεν υπάρχουν οντότητες που να ταιριάζουν με την πένα σε ορατές στρώσεις.</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1337"/>
         <source>Such entities exist on frozen layers.
 </source>
-        <translation>Τέτοιες οντότητες υπάρχουν σε παγωμένες επιφάνειες.</translation>
+        <translation>Τέτοιες οντότητες υπάρχουν σε παγωμένες στρώσεις.
+</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1338"/>
         <source>Such entities exist on locked layers.
 </source>
-        <translation>Τέτοιες οντότητες υπάρχουν σε κλειδωμένες επιφάνειες.</translation>
+        <translation>Τέτοιες οντότητες υπάρχουν σε κλειδωμένες στρώσεις.
+</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1339"/>
@@ -9359,7 +9366,7 @@ Please specify a different value.</source>
         <source>Layer(s) without entities found, yet they are filtered and not visible.
 
 Clear filtering mask and repeat.</source>
-        <translation>Δεν βρέθηκαν οντότητες σε κάποια επίπεδα, αλλά εξακολουθούν να φιλτράρονται και δεν είναι ορατά.
+        <translation>Βρέθηκαν στρώσεις χωρίς οντότητες, αλλά είναι φιλτραρισμένες και δεν φαίνονται.
 
 Καθαρίστε τη μάσκα φιλτραρίσματος και επαναλάβετε.</translation>
     </message>
@@ -9370,11 +9377,11 @@ Clear filtering mask and repeat.</source>
 If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
 
 If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
-        <translation>Αντικατάσταση της τιμής &quot;Ανά Στρώση&quot; με τις τιμές των αρχικών στρώσεων;
+        <translation>Αντικατάσταση της τιμής &quot;Ανά στρώση&quot; με τις τιμές των αρχικών στρώσεων;
 
-Αν &quot;Ναι&quot; - οι οντότητες με στυλό &quot;Ανά Στρώση&quot; θα εμφανίζονται στο νέο στρώμα ακριβώς όπως στα προηγούμενα στρώματα και η τιμή &quot;Ανά Στρώση&quot; θα αντικαθίσταται από τις αντίστοιχες τιμές των στρωμάτων.
+Αν &quot;Ναι&quot; - οι οντότητες με πένες &quot;Ανά στρώση&quot; θα εμφανίζονται στη νέα στρώση ακριβώς όπως στις προηγούμενες στρώσεις και η τιμή &quot;Ανά στρώση&quot; θα αντικατασταθεί από τις αντίστοιχες πένες.
 
-Αν &quot;Όχι&quot; - οι τιμές &quot;Ανά Στρώση&quot; παραμένουν και, επομένως, το στυλό του στοχευμένου στρώματος θα καθορίζει το στυλό για αυτές τις οντότητες.</translation>
+Αν &quot;Όχι&quot; - οι τιμές &quot;Ανά στρώση&quot; παραμένουν και έτσι η πένα της στρώσης προορισμού θα καθορίζει την πένα αυτών των οντοτήτων.</translation>
     </message>
 </context>
 <context>
@@ -9864,7 +9871,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="480"/>
         <source>spline2</source>
         <comment>spline through points</comment>
-        <translation>σπλάιν 2</translation>
+        <translation>spline2</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="482"/>
@@ -10014,13 +10021,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="1018"/>
         <source>regen</source>
         <comment>zoom - redraw</comment>
-        <translation>Ανανέωση</translation>
+        <translation>regen</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1019"/>
         <source>redraw</source>
         <comment>zoom - redraw</comment>
-        <translation>Επανασχεδίαση</translation>
+        <translation>επανασχεδίαση</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1020"/>
@@ -10038,7 +10045,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="1038"/>
         <source>zoomwindow</source>
         <comment>zoom - window</comment>
-        <translation>Μεγέθυνση Παραθύρου</translation>
+        <translation>zoomwindow</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1039"/>
@@ -10050,7 +10057,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="1026"/>
         <source>zoomauto</source>
         <comment>zoom - auto</comment>
-        <translation>Αυτόματη Μεγέθυνση</translation>
+        <translation>zoomauto</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1027"/>
@@ -10062,7 +10069,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="1044"/>
         <source>zoompan</source>
         <comment>zoom - pan</comment>
-        <translation>Zoom Pan</translation>
+        <translation>zoompan</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1045"/>
@@ -10074,7 +10081,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="1032"/>
         <source>zoomprevious</source>
         <comment>zoom - previous</comment>
-        <translation>Zoom Previous</translation>
+        <translation>zoomprevious</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1033"/>
@@ -10176,19 +10183,19 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="663"/>
         <source>dimradial</source>
         <comment>dimension - radial</comment>
-        <translation>διακτίμηση ακτίνας</translation>
+        <translation>dimradial</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="671"/>
         <source>dimdiametric</source>
         <comment>dimension - diametric</comment>
-        <translation>διακτίμηση διαμέτρου</translation>
+        <translation>dimdiametric</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="669"/>
         <source>dimdiameter</source>
         <comment>dimension - diametric</comment>
-        <translation>διάμετρος</translation>
+        <translation>dimdiameter</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="670"/>
@@ -10200,7 +10207,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="683"/>
         <source>dimleader</source>
         <comment>dimension - leader</comment>
-        <translation>οδηγός διάμετρου</translation>
+        <translation>dimleader</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="684"/>
@@ -10212,13 +10219,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="689"/>
         <source>dimregen</source>
         <comment>dimension - regenerate</comment>
-        <translation>διακτίμηση γενικής</translation>
+        <translation>dimregen</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="960"/>
         <source>restrictnothing</source>
         <comment>restrict - nothing</comment>
-        <translation>περιορισμός τίποτα</translation>
+        <translation>restrictnothing</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="961"/>
@@ -10230,7 +10237,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="966"/>
         <source>restrictorthogonal</source>
         <comment>restrict - orthogonal</comment>
-        <translation>περιορισμός κάθετου</translation>
+        <translation>restrictorthogonal</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="967"/>
@@ -10242,7 +10249,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="972"/>
         <source>restricthorizontal</source>
         <comment>restrict - horizontal</comment>
-        <translation>Περιορισμός οριζόντιας</translation>
+        <translation>restricthorizontal</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="973"/>
@@ -10254,7 +10261,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="978"/>
         <source>restrictvertical</source>
         <comment>restrict - vertical</comment>
-        <translation>Περιορισμός κάθετης</translation>
+        <translation>restrictvertical</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="979"/>
@@ -10368,7 +10375,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="893"/>
         <source>snapfree</source>
         <comment>snap - free</comment>
-        <translation>Χωρίς συγκόλληση</translation>
+        <translation>snapfree</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="895"/>
@@ -10380,7 +10387,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="900"/>
         <source>snapcenter</source>
         <comment>snap - center</comment>
-        <translation>Κέντρο συγκόλλησης</translation>
+        <translation>snapcenter</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="901"/>
@@ -10392,7 +10399,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="906"/>
         <source>snapdist</source>
         <comment>snap - distance to endpoints</comment>
-        <translation>Απόσταση συγκόλλησης</translation>
+        <translation>snapdist</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="907"/>
@@ -10404,7 +10411,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="912"/>
         <source>snapend</source>
         <comment>snap - end points</comment>
-        <translation>Τέλος συγκόλλησης</translation>
+        <translation>snapend</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="913"/>
@@ -10482,7 +10489,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="616"/>
         <source>selectall</source>
         <comment>Select all entities</comment>
-        <translation>Επιλογή όλων</translation>
+        <translation>selectall</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="617"/>
@@ -10494,7 +10501,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="622"/>
         <source>deselectall</source>
         <comment>deselect all entities</comment>
-        <translation>Αποεπιλογή όλων</translation>
+        <translation>αποεπιλογή</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="624"/>
@@ -10553,7 +10560,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="1098"/>
         <location filename="../src/cmd/rs_commands.cpp" line="1201"/>
         <source>close</source>
-        <translation>Κλείσιμο</translation>
+        <translation>κλείσιμο</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1099"/>
@@ -10570,7 +10577,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1101"/>
         <source>columnspacing</source>
-        <translation>απόσταση στηλών</translation>
+        <translation>columnspacing</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1103"/>
@@ -10581,12 +10588,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1104"/>
         <source>length</source>
-        <translation>μήκος</translation>
+        <translation>length</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1107"/>
         <source>number</source>
-        <translation>αριθμός</translation>
+        <translation>number</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1108"/>
@@ -10602,13 +10609,13 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1110"/>
         <source>rowspacing</source>
-        <translation>Απόσταση μεταξύ σειρών</translation>
+        <translation>rowspacing</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1111"/>
         <location filename="../src/cmd/rs_commands.cpp" line="1254"/>
         <source>through</source>
-        <translation>Μέσω</translation>
+        <translation>μέσω</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1112"/>
@@ -10630,7 +10637,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1193"/>
         <source>center</source>
-        <translation>Κέντρο</translation>
+        <translation>κέντρο</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1194"/>
@@ -10672,13 +10679,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="1208"/>
         <source>columnspacing</source>
         <comment>columnspacing for inserts</comment>
-        <translation>Απόσταση στηλών</translation>
+        <translation>columnspacing</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1209"/>
         <source>colspacing</source>
         <comment>columnspacing for inserts</comment>
-        <translation>Απόσταση στηλών</translation>
+        <translation>colspacing</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1210"/>
@@ -10713,7 +10720,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="1223"/>
         <source>length</source>
         <comment>length</comment>
-        <translation>Μήκος</translation>
+        <translation>μήκος</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1224"/>
@@ -10731,37 +10738,37 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="1227"/>
         <source>length1</source>
         <comment>length1</comment>
-        <translation>Μήκος 1</translation>
+        <translation>μήκος1</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1228"/>
         <source>len1</source>
         <comment>length1</comment>
-        <translation>Μήκ. 1</translation>
+        <translation>len1</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1229"/>
         <source>l1</source>
         <comment>length1</comment>
-        <translation>Μήκ. 1</translation>
+        <translation>l1</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1231"/>
         <source>length2</source>
         <comment>length2</comment>
-        <translation>Μήκος 2</translation>
+        <translation>μήκος2</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1232"/>
         <source>len2</source>
         <comment>length2</comment>
-        <translation>Μήκ. 2</translation>
+        <translation>len2</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1233"/>
         <source>l2</source>
         <comment>length2</comment>
-        <translation>Μήκ. 2</translation>
+        <translation>l2</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1235"/>
@@ -10810,7 +10817,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="1248"/>
         <source>rowspacing</source>
         <comment>rowspacing for inserts</comment>
-        <translation>απόσταση μεταξύ σειρών</translation>
+        <translation>rowspacing</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1249"/>
@@ -10927,7 +10934,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1267"/>
         <source>blackwhite</source>
-        <translation>μαύρο-άσπρο</translation>
+        <translation>ασπρόμαυρο</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1268"/>
@@ -10996,7 +11003,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="72"/>
         <source>Layer</source>
-        <translation>Επίπεδο</translation>
+        <translation>Στρώση</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="73"/>
@@ -11022,7 +11029,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="77"/>
         <source>Polyline</source>
-        <translation>Πολύγραμμή</translation>
+        <translation>Πολυγραμμή</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="78"/>
@@ -11037,12 +11044,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="80"/>
         <source>Snap</source>
-        <translation>Snap</translation>
+        <translation>Έλξη</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="81"/>
         <source>Snap Extras</source>
-        <translation>Επιπλέον στοιχεία Snap</translation>
+        <translation>Πρόσθετα έλξης</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="82"/>
@@ -11074,7 +11081,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="149"/>
         <source>Pen Wizard</source>
-        <translation>Οδηγός στυλό</translation>
+        <translation>Οδηγός πενών</translation>
     </message>
     <message>
         <location filename="../src/ui/generic/colorwizard.cpp" line="54"/>
@@ -11115,7 +11122,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/actions/lc_actionlayersexport.cpp" line="178"/>
         <source>No %1 layers found</source>
-        <translation>Δεν βρέθηκαν στρώματα %1</translation>
+        <translation>Δεν βρέθηκαν στρώσεις %1</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="180"/>
@@ -11139,7 +11146,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="215"/>
         <source>linehor</source>
         <comment>horizontal line</comment>
-        <translation>Οριζόντια</translation>
+        <translation>linehor</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="216"/>
@@ -11151,7 +11158,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="221"/>
         <source>linever</source>
         <comment>vertical line</comment>
-        <translation>Κατακόρυφη</translation>
+        <translation>linever</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="222"/>
@@ -11163,7 +11170,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="227"/>
         <source>linerec</source>
         <comment>draw rectangle</comment>
-        <translation>Καταγραφή</translation>
+        <translation>linerec</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="228"/>
@@ -11175,13 +11182,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="312"/>
         <source>linepar</source>
         <comment>create parallel</comment>
-        <translation>Παράλληλη</translation>
+        <translation>παράλληλη</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="313"/>
         <source>lineoff</source>
         <comment>create parallel</comment>
-        <translation>Απενεργοποιημένη</translation>
+        <translation>lineoff</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="314"/>
@@ -11199,7 +11206,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="320"/>
         <source>lineparthro</source>
         <comment>parallel through point</comment>
-        <translation>Παράλληλη</translation>
+        <translation>lineparthro</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="321"/>
@@ -11211,13 +11218,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="327"/>
         <source>linebisect</source>
         <comment>angle bisector</comment>
-        <translation>Διμεριστής γραμμής</translation>
+        <translation>linebisect</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="334"/>
         <source>linetancp</source>
         <comment>tangent point and circle</comment>
-        <translation>Τανγενς σημείο</translation>
+        <translation>linetancp</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="335"/>
@@ -11229,7 +11236,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="341"/>
         <source>linetan2c</source>
         <comment>tangent two circles</comment>
-        <translation>Τανγενς σε κύκλο</translation>
+        <translation>linetan2c</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="342"/>
@@ -11241,7 +11248,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="347"/>
         <source>linetancper</source>
         <comment>tangent line and circle</comment>
-        <translation>Τανγενς γραμμής</translation>
+        <translation>linetancper</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="348"/>
@@ -11253,7 +11260,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="353"/>
         <source>lineperp</source>
         <comment>perpendicular line</comment>
-        <translation>Κατακόρυφη γραμμή</translation>
+        <translation>lineperp</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="354"/>
@@ -11265,7 +11272,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="360"/>
         <source>linerelang</source>
         <comment>relative line</comment>
-        <translation>σχέση γραμμής</translation>
+        <translation>linerelang</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="361"/>
@@ -11277,7 +11284,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="366"/>
         <source>polygoncencor</source>
         <comment>polygon centre point</comment>
-        <translation>γωνία κέντρου πολύγωνου</translation>
+        <translation>polygoncencor</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="367"/>
@@ -11289,7 +11296,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="368"/>
         <source>polycp</source>
         <comment>polygon centre point</comment>
-        <translation>κεντρικό σημείο πολύγωνου</translation>
+        <translation>polycp</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="369"/>
@@ -11301,7 +11308,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="374"/>
         <source>polygoncentan</source>
         <comment>polygon centre vertex</comment>
-        <translation>εφανέγρας κέντρου πολύγωνου</translation>
+        <translation>polygoncentan</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="375"/>
@@ -11313,7 +11320,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="376"/>
         <source>polyct</source>
         <comment>polygon centre vertex</comment>
-        <translation>εφανέγρας κέντρου πολύγωνου</translation>
+        <translation>polyct</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="382"/>
@@ -11685,31 +11692,31 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="697"/>
         <source>modmove</source>
         <comment>modify - move (copy)</comment>
-        <translation>Μετακίνηση</translation>
+        <translation>μετακίνηση</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="703"/>
         <source>modrotate</source>
         <comment>modify - rotate</comment>
-        <translation>Περιστροφή</translation>
+        <translation>περιστροφή</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="709"/>
         <source>modscale</source>
         <comment>modify - scale</comment>
-        <translation>Κλιμάκωση</translation>
+        <translation>κλιμάκωση</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="715"/>
         <source>modmirror</source>
         <comment>modify -  mirror</comment>
-        <translation>Καθρέφτης</translation>
+        <translation>κατοπτρισμός</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="721"/>
         <source>modmovrot</source>
         <comment>modify - move rotate</comment>
-        <translation>Κίνηση/Περιστροφή</translation>
+        <translation>modmovrot</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="722"/>
@@ -11721,7 +11728,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="727"/>
         <source>mod2rot</source>
         <comment>modify - rotate2</comment>
-        <translation>2 Περιστροφές</translation>
+        <translation>mod2rot</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="728"/>
@@ -11733,7 +11740,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="733"/>
         <source>modrevert</source>
         <comment>modify -  revert direction</comment>
-        <translation>Επαναφορά</translation>
+        <translation>modrevert</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="734"/>
@@ -11931,7 +11938,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="1010"/>
         <source>drawpref</source>
         <comment>drawing preferences</comment>
-        <translation>προεπιλεγμένη σχεδίαση</translation>
+        <translation>drawpref</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1011"/>
@@ -11949,13 +11956,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="1105"/>
         <source>length1</source>
         <comment>bevel/fillet length1</comment>
-        <translation>μήκος 1</translation>
+        <translation>length1</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1106"/>
         <source>length2</source>
         <comment>bevel/fillet length2</comment>
-        <translation>μήκος 2</translation>
+        <translation>length2</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1217"/>
@@ -12433,7 +12440,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/lc_filedialogservice.cpp" line="221"/>
         <source>Combine all layers</source>
-        <translation>Συνδυάστε όλα τα επίπεδα</translation>
+        <translation>Συνδυασμός όλων των στρώσεων</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_filedialogservice.cpp" line="252"/>
@@ -12443,7 +12450,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="42"/>
         <source>/CustomColor%1</source>
-        <translation>/CustomColor%1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="43"/>
@@ -12604,7 +12611,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="276"/>
         <source>linepoints</source>
         <comment>draw line of points</comment>
-        <translation>Σημεία γραμμής</translation>
+        <translation>linepoints</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="277"/>
@@ -12616,7 +12623,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="282"/>
         <source>criclebyarc</source>
         <comment>draw circle by arc</comment>
-        <translation>Κύκλος με τόξο</translation>
+        <translation>criclebyarc</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="283"/>
@@ -12628,7 +12635,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="288"/>
         <source>duplicate</source>
         <comment>duplicate entity</comment>
-        <translation>Αντιγραφή</translation>
+        <translation>διπλότυπο</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="289"/>
@@ -12640,7 +12647,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="294"/>
         <source>linejoin</source>
         <comment>lines join</comment>
-        <translation>Σύνδεση γραμμής</translation>
+        <translation>linejoin</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="295"/>
@@ -12652,7 +12659,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="300"/>
         <source>breakdivide</source>
         <comment>break or divide entity</comment>
-        <translation>Διακοπή διαίρεσης</translation>
+        <translation>breakdivide</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="301"/>
@@ -12664,7 +12671,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="306"/>
         <source>gapline</source>
         <comment>line gap</comment>
-        <translation>Γραμμή κενότητας</translation>
+        <translation>διάκενο</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="307"/>
@@ -12701,13 +12708,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="554"/>
         <source>angleline</source>
         <comment>draw angle from line</comment>
-        <translation>Γραμμή γωνίας</translation>
+        <translation>angleline</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="559"/>
         <source>rortoline</source>
         <comment>draw orthogonal</comment>
-        <translation>Γραμμή περιστροφής</translation>
+        <translation>rortoline</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="560"/>
@@ -12719,7 +12726,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="565"/>
         <source>point2line</source>
         <comment>draw line from point to line</comment>
-        <translation>Σημείο σε γραμμή</translation>
+        <translation>point2line</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="566"/>
@@ -12731,13 +12738,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="945"/>
         <source>snapmiddlemanual</source>
         <comment>snap middle manual</comment>
-        <translation>Χειροκίνητη μέση επαφή</translation>
+        <translation>snapmiddlemanual</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="946"/>
         <source>snapmanual</source>
         <comment>snap middle manual</comment>
-        <translation>Χειροκίνητη Σύλληψη</translation>
+        <translation>snapmanual</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="947"/>
@@ -12763,37 +12770,37 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1118"/>
         <source>anglerel</source>
-        <translation>Σχετική Γωνία</translation>
+        <translation>anglerel</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1119"/>
         <source>start</source>
-        <translation>Έναρξη</translation>
+        <translation>start</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1122"/>
         <source>offset</source>
-        <translation>Μεずれμα</translation>
+        <translation>offset</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1123"/>
         <source>linesnap</source>
-        <translation>Σύλληψη Γραμμής</translation>
+        <translation>linesnap</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1124"/>
         <source>ticksnap</source>
-        <translation>Σύλληψη Τίκα</translation>
+        <translation>ticksnap</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1127"/>
         <source>width</source>
-        <translation>πλάτος</translation>
+        <translation>width</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1128"/>
         <source>height</source>
-        <translation>ύψος</translation>
+        <translation>height</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1129"/>
@@ -12809,7 +12816,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="1131"/>
         <location filename="../src/cmd/rs_commands.cpp" line="1137"/>
         <source>bevels</source>
-        <translation>Καμπύλες</translation>
+        <translation>bevels</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1132"/>
@@ -12824,7 +12831,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1134"/>
         <source>corners</source>
-        <translation>γωνίες</translation>
+        <translation>corners</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1135"/>
@@ -12834,7 +12841,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1136"/>
         <source>round</source>
-        <translation>στρογγυλοποίηση</translation>
+        <translation>round</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1138"/>
@@ -12864,47 +12871,47 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1143"/>
         <source>middle</source>
-        <translation>Μεσαί</translation>
+        <translation>middle</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1144"/>
         <source>right</source>
-        <translation>Δεξιά</translation>
+        <translation>right</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1145"/>
         <source>bottoml</source>
-        <translation>Κάτω Αριστερά</translation>
+        <translation>bottoml</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1146"/>
         <source>bottom</source>
-        <translation>Κάτω</translation>
+        <translation>bottom</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1147"/>
         <source>bottomr</source>
-        <translation>Κάτω Δεξιά</translation>
+        <translation>bottomr</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1148"/>
         <source>snapcorner</source>
-        <translation>Snap Γωνία</translation>
+        <translation>snapcorner</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1149"/>
         <source>snapshift</source>
-        <translation>Snap Μετατόπιση</translation>
+        <translation>snapshift</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1150"/>
         <source>sizein</source>
-        <translation>Μέγεθος Εισόδου</translation>
+        <translation>sizein</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1151"/>
         <source>sizeout</source>
-        <translation>Μέγεθος Εξόδου</translation>
+        <translation>sizeout</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1152"/>
@@ -12919,22 +12926,22 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1156"/>
         <source>snap2</source>
-        <translation>Snap 2</translation>
+        <translation>snap2</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1157"/>
         <source>corner</source>
-        <translation>Γωνία</translation>
+        <translation>corner</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1158"/>
         <source>mid-vert</source>
-        <translation>Μεσαίο Κάθετο</translation>
+        <translation>mid-vert</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1159"/>
         <source>mid-hor</source>
-        <translation>Μεσαίο Οριζόντιο</translation>
+        <translation>mid-hor</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1161"/>
@@ -12944,37 +12951,37 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1162"/>
         <source>noquad</source>
-        <translation>χωρίς τετράభు্জιο</translation>
+        <translation>noquad</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1163"/>
         <source>angle_inner</source>
-        <translation>εσωτερική γωνία</translation>
+        <translation>angle_inner</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1166"/>
         <source>edges</source>
-        <translation>άκρες</translation>
+        <translation>edges</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1167"/>
         <source>edge-none</source>
-        <translation>χωρίς άκρη</translation>
+        <translation>edge-none</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1168"/>
         <source>edge-both</source>
-        <translation>και οι δύο άκρες</translation>
+        <translation>edge-both</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1169"/>
         <source>edge-start</source>
-        <translation>άκρη έναρξης</translation>
+        <translation>edge-start</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1170"/>
         <source>edge-end</source>
-        <translation>άκρη λήξης</translation>
+        <translation>edge-end</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1171"/>
@@ -12999,22 +13006,22 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1175"/>
         <source>nofit</source>
-        <translation>χωρίς προσαρμογή</translation>
+        <translation>nofit</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1176"/>
         <source>dist_fixed</source>
-        <translation>απόσταση σταθερή</translation>
+        <translation>dist_fixed</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1177"/>
         <source>dist_flex</source>
-        <translation>απόσταση ευέλικτη</translation>
+        <translation>dist_flex</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1178"/>
         <source>distance</source>
-        <translation>απόσταση</translation>
+        <translation>distance</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1182"/>
@@ -13024,7 +13031,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1183"/>
         <source>nosym</source>
-        <translation>χωρίς σύμβολο</translation>
+        <translation>nosym</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_patternlist.cpp" line="63"/>
@@ -13044,12 +13051,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/lc_peninforegistry.cpp" line="204"/>
         <source>By Layer</source>
-        <translation>Ανά Επίπεδο</translation>
+        <translation>Ανά στρώση</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_peninforegistry.cpp" line="207"/>
         <source>By Block</source>
-        <translation>Ανά Συμπλέκτο</translation>
+        <translation>Κατά μπλοκ</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_peninforegistry.cpp" line="210"/>
@@ -13069,12 +13076,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/qg_widthbox.cpp" line="37"/>
         <source>ByLayer</source>
-        <translation>Ανά Επίπεδο</translation>
+        <translation>Ανά στρώση</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_widthbox.cpp" line="39"/>
         <source>ByBlock</source>
-        <translation>Ανά Συμπλέκτο</translation>
+        <translation>Ανά μπλοκ</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_widthbox.cpp" line="41"/>
@@ -15373,7 +15380,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifyoffset.cpp" line="101"/>
         <source>Specify direction of offset</source>
-        <translation>Καθορίστε την κατεύθυνση της αναπαραγωγής</translation>
+        <translation>Καθορίστε την κατεύθυνση της μετατόπισης</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifyoffset.cpp" line="101"/>
@@ -15529,7 +15536,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifytrim.cpp" line="177"/>
         <source>Select first trim entity</source>
-        <translation>Επιλέξτε την πρώτη οντότητα προς διευθέτηση</translation>
+        <translation>Επιλέξτε την πρώτη οντότητα προς περικοπή</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifytrim.cpp" line="178"/>
@@ -15540,7 +15547,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifytrim.cpp" line="180"/>
         <source>Select limiting entity</source>
-        <translation>Επιλέξτε την οντότητα που θα αποτελέσει το όριο διευθέτησης</translation>
+        <translation>Επιλέξτε την οριακή οντότητα</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifytrim.cpp" line="181"/>
@@ -15551,12 +15558,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifytrim.cpp" line="186"/>
         <source>Select second trim entity</source>
-        <translation>Επιλέξτε τη δεύτερη οντότητα προς διευθέτηση</translation>
+        <translation>Επιλέξτε τη δεύτερη οντότητα προς περικοπή</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifytrim.cpp" line="189"/>
         <source>Select entity to trim</source>
-        <translation>Επιλέξτε την οντότητα προς διευθέτηση</translation>
+        <translation>Επιλέξτε την οντότητα προς περικοπή</translation>
     </message>
 </context>
 <context>
@@ -15574,7 +15581,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifytrimamount.cpp" line="108"/>
         <source>The chosen Entity is not an atomic entity or cannot be trimmed.</source>
-        <translation>Η επιλεγμένη οντότητα δεν είναι ατομική οντότητα ή δεν είναι δυνατό να διευθετηθεί.</translation>
+        <translation>Η επιλεγμένη οντότητα δεν είναι ατομική οντότητα ή δεν μπορεί να περικοπεί.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifytrimamount.cpp" line="139"/>
@@ -15584,7 +15591,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionmodifytrimamount.cpp" line="186"/>
         <source>Select entity to trim or enter distance:</source>
-        <translation>Επιλέξτε οντότητα προς διευθέτηση ή εισάγετε απόσταση:</translation>
+        <translation>Επιλέξτε οντότητα προς περικοπή ή εισάγετε απόσταση:</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifytrimamount.cpp" line="187"/>
@@ -15897,7 +15904,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="181"/>
         <source>Specify polyline to trim</source>
-        <translation>Καθορίστε πολυγραμμή για διευθέτηση</translation>
+        <translation>Καθορίστε πολυγραμμή για περικοπή</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionpolylinetrim.cpp" line="185"/>
@@ -16024,7 +16031,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="113"/>
         <source>Select to mirror</source>
-        <translation>Επιλέξτε για συμμετρία</translation>
+        <translation>Επιλέξτε για κατοπτρισμό</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="116"/>
@@ -16039,7 +16046,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="125"/>
         <source>Select to explode text</source>
-        <translation>Επιλέξτε για διαχωρισμό κειμένου</translation>
+        <translation>Επιλέξτε για διάσπαση κειμένου</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="131"/>
@@ -16070,7 +16077,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="119"/>
         <source>Select to create offset</source>
-        <translation>Επιλέξτε για δημιουργία αναπαραγωγής</translation>
+        <translation>Επιλέξτε για δημιουργία μετατόπισης</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="86"/>
@@ -16080,7 +16087,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="128"/>
         <source>Select to explode block</source>
-        <translation>Επιλέξτε για διαχωρισμό μπλοκ</translation>
+        <translation>Επιλέξτε για διάσπαση μπλοκ</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="104"/>
@@ -16202,7 +16209,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionzoompan.cpp" line="127"/>
         <source>Click and drag to pan zoom</source>
-        <translation>Κάντε κλικ και σύρετε για μετακίνηση εστίασης</translation>
+        <translation>Κάντε κλικ και σύρετε για μετακίνηση της προβολής</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionzoompan.cpp" line="128"/>
@@ -16213,7 +16220,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actionzoompan.cpp" line="131"/>
         <source>Zoom panning</source>
-        <translation>Μετακίνηση εστίασης</translation>
+        <translation>Μετακίνηση προβολής</translation>
     </message>
 </context>
 <context>
@@ -16244,7 +16251,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/lib/gui/rs_graphicview.cpp" line="1550"/>
         <source>Draft</source>
-        <translation>Σχέδιο</translation>
+        <translation>Προσχέδιο</translation>
     </message>
 </context>
 <context>
@@ -16308,17 +16315,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_beveloptions.ui" line="32"/>
         <source>Bevel Options</source>
-        <translation>Επιλογές φάσης</translation>
+        <translation>Επιλογές λοξοτομής</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_beveloptions.ui" line="53"/>
         <source>Check to trim both entities to the bevel</source>
-        <translation>Επιλέξτε για κούρεμα και των δύο οντοτήτων στη φάση</translation>
+        <translation>Επιλέξτε για περικοπή και των δύο οντοτήτων στη λοξοτομή</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_beveloptions.ui" line="56"/>
         <source>Trim</source>
-        <translation>Trim</translation>
+        <translation>Περικοπή</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_beveloptions.ui" line="79"/>
@@ -16583,7 +16590,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_lineangleoptions.ui" line="147"/>
         <source>Snap Point:</source>
-        <translation>Σημείο συγκράτησης:</translation>
+        <translation>Σημείο έλξης:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_lineangleoptions.ui" line="170"/>
@@ -16992,7 +16999,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_printpreviewoptions.ui" line="116"/>
         <source>Apply Print Scale to line width</source>
-        <translation>Εφαρμογή κλίμακας εκτύπωσης στο πλάτος γραμμής</translation>
+        <translation>Εφαρμογή κλίμακας εκτύπωσης στο πάχος γραμμής</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_printpreviewoptions.ui" line="226"/>
@@ -17015,12 +17022,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_roundoptions.ui" line="53"/>
         <source>Check to trim both edges to the rounding</source>
-        <translation>Επιλέξτε για κούρεμα και των δύο άκρων στο στρογγύλεμα</translation>
+        <translation>Επιλέξτε για περικοπή και των δύο άκρων έως τη στρογγύλευση</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_roundoptions.ui" line="56"/>
         <source>Trim</source>
-        <translation>Trim</translation>
+        <translation>Περικοπή</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_roundoptions.ui" line="79"/>
@@ -17033,7 +17040,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_snapdistoptions.ui" line="32"/>
         <source>Snap Distance Options</source>
-        <translation>Επιλογές απόστασης συγκράτησης</translation>
+        <translation>Επιλογές απόστασης έλξης</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snapdistoptions.ui" line="50"/>
@@ -17046,7 +17053,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_snapmiddleoptions.ui" line="35"/>
         <source>Snap Distance Options</source>
-        <translation>Επιλογές απόστασης συγκράτησης</translation>
+        <translation>Επιλογές απόστασης έλξης</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snapmiddleoptions.ui" line="47"/>
@@ -17105,12 +17112,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_trimamountoptions.ui" line="20"/>
         <source>Trim Amount Options</source>
-        <translation>Επιλογές ποσότητας κουρέματος</translation>
+        <translation>Επιλογές ποσού περικοπής</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_trimamountoptions.ui" line="23"/>
         <source>Distance. Negative values for trimming, positive values for extending.</source>
-        <translation>Απόσταση. Αρνητικές τιμές για κούρεμα, θετικές για επιμήκυνση.</translation>
+        <translation>Απόσταση. Αρνητικές τιμές για περικοπή, θετικές τιμές για επέκταση.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_trimamountoptions.ui" line="56"/>
@@ -17120,12 +17127,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/ui/forms/qg_trimamountoptions.ui" line="78"/>
         <source>Distance. Negative values for trimming, positive values for extending. Negative sign is ignored when trimming to final total length.</source>
-        <translation>Απόσταση. Αρνητικές τιμές για κούρεμα, θετικές για επιμήκυνση. Το αρνητικό πρόσημο αγνοείται όταν κόβεται σε τελικό συνολικό μήκος.</translation>
+        <translation>Απόσταση. Αρνητικές τιμές για περικοπή, θετικές τιμές για επέκταση. Το αρνητικό πρόσημο αγνοείται κατά την περικοπή σε τελικό συνολικό μήκος.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_trimamountoptions.ui" line="97"/>
         <source>The input length is used as total length after trimming, instead of length increase</source>
-        <translation>Το εισαχθέν μήκος χρησιμοποιείται ως συνολικό μήκος μετά το κούρεμα, αντί για αύξηση μήκους</translation>
+        <translation>Το μήκος που εισάγεται χρησιμοποιείται ως συνολικό μήκος μετά την περικοπή, αντί για αύξηση του μήκους</translation>
     </message>
 </context>
 <context>

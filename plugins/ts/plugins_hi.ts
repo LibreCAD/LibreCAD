@@ -7,7 +7,7 @@
         <location filename="../asciifile/asciifile.cpp" line="35"/>
         <location filename="../asciifile/asciifile.cpp" line="41"/>
         <source>Read ascii points</source>
-        <translation>Ascii अंक पढ़ें</translation>
+        <translation>ascii बिंदु पढ़ें</translation>
     </message>
 </context>
 <context>
@@ -24,7 +24,7 @@
     <message>
         <location filename="../pointstocsv/pointstocsv.cpp" line="34"/>
         <source>Export points to csv</source>
-        <translation>Csv को निर्यात अंक</translation>
+        <translation>बिंदुओं को csv में निर्यात करें</translation>
     </message>
 </context>
 <context>
@@ -48,7 +48,7 @@
     <message>
         <location filename="../align/align.cpp" line="50"/>
         <source>Specify base points first</source>
-        <translation>पहले आधार अंक निर्दिष्ट करें</translation>
+        <translation>पहले आधार बिंदु निर्दिष्ट करें</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="54"/>
@@ -118,7 +118,7 @@ first base, second base, first target, second target.</source>
         <location filename="../list/list.cpp" line="23"/>
         <location filename="../list/list.cpp" line="30"/>
         <source>List entities</source>
-        <translation>सूची</translation>
+        <translation>एंटिटीज़ की सूची</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="46"/>
@@ -128,7 +128,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="60"/>
         <source>Empty Entity</source>
-        <translation>खाली इकाई</translation>
+        <translation>खाली एंटिटी</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="67"/>
@@ -168,7 +168,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="88"/>
         <source>POINT</source>
-        <translation>अंक</translation>
+        <translation>बिंदु</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="89"/>
@@ -295,7 +295,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="186"/>
         <source>INSERT</source>
-        <translation>संस्थान</translation>
+        <translation>इन्सर्ट</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="189"/>
@@ -330,7 +330,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="214"/>
         <source>POLYLINE</source>
-        <translation>पोलीलाइन</translation>
+        <translation>पॉलीलाइन</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="215"/>
@@ -360,7 +360,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="234"/>
         <source>SPLINE</source>
-        <translation>स्पलीन</translation>
+        <translation>स्प्लाइन</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="237"/>
@@ -390,7 +390,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="252"/>
         <source>DIMRADIAL</source>
-        <translation>द्विपदीय</translation>
+        <translation>रेडियल आयाम</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="255"/>
@@ -419,12 +419,12 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../sameprop/sameprop.cpp" line="41"/>
         <source>select original entity:</source>
-        <translation>मूल इकाई चुनें:</translation>
+        <translation>मूल एंटिटी चुनें:</translation>
     </message>
     <message>
         <location filename="../sameprop/sameprop.cpp" line="43"/>
         <source>select entities to change</source>
-        <translation>बदलने के लिए संस्थाओं का चयन करें</translation>
+        <translation>बदलने के लिए एंटिटीज़ का चयन करें</translation>
     </message>
 </context>
 <context>
@@ -454,7 +454,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="220"/>
         <source>Read ascii points</source>
-        <translation>Ascii अंक पढ़ें</translation>
+        <translation>ascii बिंदु पढ़ें</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="226"/>
@@ -494,37 +494,37 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="237"/>
         <source>Connect points</source>
-        <translation>कनेक्ट अंक</translation>
+        <translation>बिंदुओं को जोड़ें</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="245"/>
         <source>2D Point</source>
-        <translation>2D अंक</translation>
+        <translation>2D बिंदु</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="245"/>
         <source>Draw 2D Point</source>
-        <translation>2D पॉइंट</translation>
+        <translation>2D बिंदु</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="246"/>
         <source>3D Point</source>
-        <translation>3D अंक</translation>
+        <translation>3D बिंदु</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="246"/>
         <source>Draw 3D Point</source>
-        <translation>3D अंक</translation>
+        <translation>3D बिंदु बनाएँ</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="247"/>
         <source>Point Number</source>
-        <translation>अंक</translation>
+        <translation>बिंदु संख्या</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="247"/>
         <source>Draw point number</source>
-        <translation>ड्रॉ पॉइंट नंबर</translation>
+        <translation>बिंदु संख्या बनाएँ</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="248"/>
@@ -534,17 +534,17 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="248"/>
         <source>Draw point elevation</source>
-        <translation>ड्रॉ प्वाइंट ऊंचाई</translation>
+        <translation>बिंदु ऊँचाई बनाएँ</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="249"/>
         <source>Point Code</source>
-        <translation>प्वाइंट कोड</translation>
+        <translation>बिंदु कोड</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="249"/>
         <source>Draw point code</source>
-        <translation>ड्रॉ पॉइंट कोड</translation>
+        <translation>बिंदु कोड बनाएँ</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="263"/>
@@ -564,57 +564,57 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="305"/>
         <source>Point 2D layer is empty</source>
-        <translation>प्वाइंट 2D परत खाली है</translation>
+        <translation>बिंदु 2D परत खाली है</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="308"/>
         <source>Point 3D layer is empty</source>
-        <translation>प्वाइंट 3 डी परत खाली है</translation>
+        <translation>बिंदु 3 डी परत खाली है</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="311"/>
         <source>Point elevation layer is empty</source>
-        <translation>प्वाइंट ऊंचाई परत खाली है</translation>
+        <translation>बिंदु ऊंचाई परत खाली है</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="312"/>
         <source>Point elevation height is empty</source>
-        <translation>प्वाइंट ऊंचाई खाली है</translation>
+        <translation>बिंदु ऊंचाई खाली है</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="313"/>
         <source>Point elevation separation is empty</source>
-        <translation>प्वाइंट ऊंचाई अलगाव खाली है</translation>
+        <translation>बिंदु ऊंचाई अलगाव खाली है</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="316"/>
         <source>Point number layer is empty</source>
-        <translation>अंक संख्या परत खाली है</translation>
+        <translation>बिंदु संख्या परत खाली है</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="317"/>
         <source>Point number height is empty</source>
-        <translation>अंक संख्या ऊंचाई खाली है</translation>
+        <translation>बिंदु संख्या ऊंचाई खाली है</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="318"/>
         <source>Point number separation is empty</source>
-        <translation>अंक संख्या अलगाव खाली है</translation>
+        <translation>बिंदु संख्या अलगाव खाली है</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="321"/>
         <source>Point code layer is empty</source>
-        <translation>प्वाइंट कोड परत खाली है</translation>
+        <translation>बिंदु कोड परत खाली है</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="322"/>
         <source>Point code height is empty</source>
-        <translation>प्वाइंट कोड ऊंचाई खाली है</translation>
+        <translation>बिंदु कोड ऊंचाई खाली है</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="323"/>
         <source>Point code separation is empty</source>
-        <translation>प्वाइंट कोड अलगाव खाली है</translation>
+        <translation>बिंदु कोड अलगाव खाली है</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="359"/>
@@ -638,7 +638,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/divide.cpp" line="56"/>
         <source>Select a line, circle or arc and press return</source>
-        <translation>एक लाइन, सर्कल या आर्क और प्रेस रिटर्न चुनें</translation>
+        <translation>एक रेखा, वृत्त या चाप चुनें और Return दबाएँ</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="67"/>
@@ -653,7 +653,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/divide.cpp" line="444"/>
         <source>Empty Entity</source>
-        <translation>खाली इकाई</translation>
+        <translation>खाली एंटिटी</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="452"/>
@@ -767,7 +767,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/divide.cpp" line="530"/>
         <source>POLYLINE</source>
-        <translation>पोलीलाइन</translation>
+        <translation>पॉलीलाइन</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="531"/>
@@ -797,7 +797,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/divide.cpp" line="555"/>
         <source>MUST be a line, circle or arc</source>
-        <translation>MUST एक लाइन, सर्कल या चाप है</translation>
+        <translation>रेखा, वृत्त या चाप होना अनिवार्य है</translation>
     </message>
 </context>
 <context>
@@ -840,12 +840,12 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/dividedlg.cpp" line="126"/>
         <source>Ticks - Off</source>
-        <translation>बंद</translation>
+        <translation>टिक - बंद</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="134"/>
         <source>Breaks - Off</source>
-        <translation>टूटना - बंद</translation>
+        <translation>ब्रेक - बंद</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="179"/>
@@ -870,12 +870,12 @@ anti-clockwise.</source>
     <message>
         <location filename="../divide/dividedlg.cpp" line="246"/>
         <source>&lt;i&gt;&quot;New&quot;&lt;/i&gt;&lt;br&gt;Enter name&lt;br&gt;for a new layer&lt;br&gt;(if required?) to&lt;br&gt;draw ticks on.</source>
-        <translation>&lt;i&gt;&quot;New&quot;&lt;/i&gt;&lt;br&gt;Enter name&lt;br&gt; एक नई परत &lt;br&gt;(अगर आवश्यक हो?) के लिए&lt;br&gt;draw ticks on.</translation>
+        <translation>&lt;i&gt;&quot;New&quot;&lt;/i&gt;&lt;br&gt;उस नई परत का&lt;br&gt;नाम दर्ज करें&lt;br&gt;(यदि आवश्यक हो?) जिस पर&lt;br&gt;टिक खींचे जाएँगे।</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="252"/>
         <source>Ticks</source>
-        <translation>टर्की</translation>
+        <translation>टिक</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="258"/>
@@ -976,22 +976,22 @@ anti-clockwise.</source>
     <message>
         <location filename="../gear/gear.cpp" line="125"/>
         <source>Draw addendum circle?</source>
-        <translation>ऐडेंडम सर्कल ड्रॉ?</translation>
+        <translation>ऐडेंडम वृत्त बनाएँ?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="126"/>
         <source>Draw pitch circle?</source>
-        <translation>पिच सर्कल खींचो?</translation>
+        <translation>पिच वृत्त खींचो?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="127"/>
         <source>Draw base circle?</source>
-        <translation>बेस सर्कल ड्रॉ?</translation>
+        <translation>बेस वृत्त बनाएँ?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="128"/>
         <source>Draw root circle?</source>
-        <translation>रूट सर्कल खींचें?</translation>
+        <translation>रूट वृत्त खींचें?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="129"/>
@@ -1029,7 +1029,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../list/list.cpp" line="278"/>
         <source>List entities</source>
-        <translation>सूची</translation>
+        <translation>एंटिटीज़ की सूची</translation>
     </message>
 </context>
 <context>
@@ -1165,7 +1165,7 @@ anti-clockwise.</source>
         <location filename="../plotequation/plot.cpp" line="30"/>
         <location filename="../plotequation/plot.cpp" line="37"/>
         <source>Plot plugin</source>
-        <translation>प्लैटिनम</translation>
+        <translation>प्लॉट प्लगइन</translation>
     </message>
 </context>
 <context>
@@ -1173,7 +1173,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="15"/>
         <source>Plot equation</source>
-        <translation>Plot समीकरण</translation>
+        <translation>प्लॉट समीकरण</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="18"/>
@@ -1182,10 +1182,11 @@ If you don&apos;t want to use the parametric form, just leave out &quot;Equation
 You can use pi when you need the value of pi (i.e. (3*pi)).
 Use t or x in your equation as a variable/parameter.
 </source>
-        <translation>यह प्लगइन आपको गणितीय समीकरणों की साजिश करने की अनुमति देता है।
+        <translation>यह प्लगइन आपको गणितीय समीकरणों को प्लॉट करने की अनुमति देता है।
 यदि आप पैरामीट्रिक फॉर्म का उपयोग नहीं करना चाहते हैं, तो बस &quot;Equation2&quot; छोड़ दें।
-जब आप पाई (i.e. (3*pi)) के मूल्य की आवश्यकता होती है तो आप पाई का उपयोग कर सकते हैं।
-एक चर/parameter के रूप में अपने समीकरण में t या x का उपयोग करें।.</translation>
+जब आपको पाई के मान की आवश्यकता हो (जैसे (3*pi)), तो आप pi का उपयोग कर सकते हैं।
+अपने समीकरण में चर/पैरामीटर के रूप में t या x का उपयोग करें।
+</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="22"/>
@@ -1238,7 +1239,7 @@ Use t or x in your equation as a variable/parameter.
         <location filename="../plotequation/plotdialog.cpp" line="61"/>
         <source>SplinePoints</source>
         <comment>Plot Equation to generate 2nd spline by LC_SplinePoints</comment>
-        <translation>स्प्लिनपॉइंट</translation>
+        <translation>स्प्लाइन बिंदु</translation>
     </message>
 </context>
 <context>

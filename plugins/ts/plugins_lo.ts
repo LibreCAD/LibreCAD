@@ -244,7 +244,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="142"/>
         <source>ELLIPSE</source>
-        <translation>ວົງລີ</translation>
+        <translation>ວົງຮີ</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="146"/>

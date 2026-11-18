@@ -38,29 +38,29 @@
     <message>
         <location filename="../align/align.cpp" line="32"/>
         <source>Align settings...</source>
-        <translation>Настроювання...</translation>
+        <translation>Налаштування вирівнювання...</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="49"/>
         <source>Keep original objects</source>
-        <translation>Зберігати оригінальні предмети</translation>
+        <translation>Зберігати оригінальні об’єкти</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="50"/>
         <source>Specify base points first</source>
-        <translation>Вкажіть базові точки першим</translation>
+        <translation>Спочатку вкажіть базові точки</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="54"/>
         <source>Align Settings</source>
-        <translation>Вирівнюючі налаштування</translation>
+        <translation>Налаштування вирівнювання</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="57"/>
         <source>Click on options to set/unset,
 Ok to accept and start alignment.</source>
-        <translation>Натисніть на параметри, щоб встановити / скасувати,
-Ok приймати і почати вирівнювання.</translation>
+        <translation>Натисніть на параметри, щоб встановити/скасувати їх,
+OK — щоб підтвердити й почати вирівнювання.</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="81"/>
@@ -109,7 +109,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../gear/gear.cpp" line="40"/>
         <source>Gear plugin</source>
-        <translation>Плагін</translation>
+        <translation>Плагін шестерень</translation>
     </message>
 </context>
 <context>
@@ -118,7 +118,7 @@ first base, second base, first target, second target.</source>
         <location filename="../list/list.cpp" line="23"/>
         <location filename="../list/list.cpp" line="30"/>
         <source>List entities</source>
-        <translation>Перелік елементів</translation>
+        <translation>Список об&apos;єктів</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="46"/>
@@ -168,7 +168,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="88"/>
         <source>POINT</source>
-        <translation>РОБОТА</translation>
+        <translation>ТОЧКА</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="89"/>
@@ -180,7 +180,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="94"/>
         <source>LINE</source>
-        <translation>LINE</translation>
+        <translation>ЛІНІЯ</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="99"/>
@@ -211,7 +211,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="118"/>
         <source>ARC</source>
-        <translation>ARC</translation>
+        <translation>ДУГА</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="119"/>
@@ -240,7 +240,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="134"/>
         <source>CIRCLE</source>
-        <translation>ЦИРЛ</translation>
+        <translation>КОЛО</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="140"/>
@@ -255,17 +255,17 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="144"/>
         <source>ELLIPSE</source>
-        <translation>ЕЛІПИ</translation>
+        <translation>ЕЛІПС</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="148"/>
         <source>major axis</source>
-        <translation>головні осі</translation>
+        <translation>велика вісь</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="166"/>
         <source>CONSTRUCTIONLINE</source>
-        <translation>БУДІВНИЦТВО</translation>
+        <translation>КОНСТРУКЦІЙНА ЛІНІЯ</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="169"/>
@@ -275,17 +275,17 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="172"/>
         <source>SOLID</source>
-        <translation>СОЛОД</translation>
+        <translation>СУЦІЛЬНА ЗАЛИВКА</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="176"/>
         <source>MTEXT</source>
-        <translation>МТЕКТ</translation>
+        <translation>БАГАТОРЯДКОВИЙ ТЕКСТ</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="179"/>
         <source>TEXT</source>
-        <translation>TEXT</translation>
+        <translation>ТЕКСТ</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="183"/>
@@ -295,7 +295,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="186"/>
         <source>INSERT</source>
-        <translation>ІНСЕРТ</translation>
+        <translation>ВСТАВКА</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="189"/>
@@ -310,7 +310,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="194"/>
         <source>Scale</source>
-        <translation>Ваги</translation>
+        <translation>Масштаб</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="197"/>
@@ -320,32 +320,32 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="203"/>
         <source>Columns/Rows</source>
-        <translation>Колонки/Руси</translation>
+        <translation>Стовпці/рядки</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="207"/>
         <source>Column/Row Spacing</source>
-        <translation>Колонки/Row Spacing</translation>
+        <translation>Відстань між стовпцями/рядками</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="214"/>
         <source>POLYLINE</source>
-        <translation>ПОЛІТИКА</translation>
+        <translation>ПОЛІЛІНІЯ</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="215"/>
         <source>Closed</source>
-        <translation>Закрити</translation>
+        <translation>Замкнено</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="216"/>
         <source>No</source>
-        <translation>No</translation>
+        <translation>Ні</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="216"/>
         <source>Yes</source>
-        <translation>Yes</translation>
+        <translation>Так</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="217"/>
@@ -355,57 +355,57 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="231"/>
         <source>IMAGE</source>
-        <translation>ЗАРЕЄСТРУВАТИСЯ</translation>
+        <translation>ЗОБРАЖЕННЯ</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="234"/>
         <source>SPLINE</source>
-        <translation>СКЛАД</translation>
+        <translation>СПЛАЙН</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="237"/>
         <source>SPLINEPOINTS</source>
-        <translation>СКЛАД</translation>
+        <translation>ТОЧКИ СПЛАЙНА</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="240"/>
         <source>HATCH</source>
-        <translation>ХАТЧ</translation>
+        <translation>ШТРИХУВАННЯ</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="243"/>
         <source>DIMLEADER</source>
-        <translation>ЗАМОВИТИ</translation>
+        <translation>ВИНОСКА</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="246"/>
         <source>DIMALIGNED</source>
-        <translation>ЗАМОВИТИ</translation>
+        <translation>ВИРІВНЯНИЙ РОЗМІР</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="249"/>
         <source>DIMLINEAR</source>
-        <translation>ДИМЛІНАР</translation>
+        <translation>ЛІНІЙНИЙ РОЗМІР</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="252"/>
         <source>DIMRADIAL</source>
-        <translation>ДИМОРАДИ</translation>
+        <translation>РАДІАЛЬНИЙ РОЗМІР</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="255"/>
         <source>DIMDIAMETRIC</source>
-        <translation>ДИДМІАМЕТРИК</translation>
+        <translation>ДІАМЕТРАЛЬНИЙ РОЗМІР</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="258"/>
         <source>DIMANGULAR</source>
-        <translation>ДИМАНГУЛЯР</translation>
+        <translation>КУТОВИЙ РОЗМІР</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="261"/>
         <source>UNKNOWN</source>
-        <translation>НЕМОВЛЯ</translation>
+        <translation>НЕВІДОМО</translation>
     </message>
 </context>
 <context>
@@ -504,7 +504,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="245"/>
         <source>Draw 2D Point</source>
-        <translation>Наклад 2D</translation>
+        <translation>Креслити 2D-точку</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="246"/>
@@ -514,7 +514,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="246"/>
         <source>Draw 3D Point</source>
-        <translation>Малюнок 3D</translation>
+        <translation>Креслити 3D-точку</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="247"/>
@@ -529,22 +529,22 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="248"/>
         <source>Point Elevation</source>
-        <translation>Точка подовження</translation>
+        <translation>Висота точки</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="248"/>
         <source>Draw point elevation</source>
-        <translation>Висота витяжки</translation>
+        <translation>Креслити позначку висоти точки</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="249"/>
         <source>Point Code</source>
-        <translation>Код Точка</translation>
+        <translation>Код точки</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="249"/>
         <source>Draw point code</source>
-        <translation>Код точки ящика</translation>
+        <translation>Малювати код точки</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="263"/>
@@ -564,12 +564,12 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="305"/>
         <source>Point 2D layer is empty</source>
-        <translation>Точка 2D шар порожній</translation>
+        <translation>Двовимірний шар точок порожній</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="308"/>
         <source>Point 3D layer is empty</source>
-        <translation>Точка 3D шар порожній</translation>
+        <translation>Тривимірний шар точок порожній</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="311"/>
@@ -579,12 +579,12 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="312"/>
         <source>Point elevation height is empty</source>
-        <translation>Висота висоти висоти точки порожній</translation>
+        <translation>Висота позначки висоти точки порожня</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="313"/>
         <source>Point elevation separation is empty</source>
-        <translation>Розподіл висоти точки порожній</translation>
+        <translation>Відстань між позначками висот порожня</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="316"/>
@@ -594,27 +594,27 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="317"/>
         <source>Point number height is empty</source>
-        <translation>Висота номеру точка порожній</translation>
+        <translation>Висота номера точки порожня</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="318"/>
         <source>Point number separation is empty</source>
-        <translation>Розділення номеру Точка порожній</translation>
+        <translation>Відстань між номерами точок порожня</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="321"/>
         <source>Point code layer is empty</source>
-        <translation>Шар коду точка порожній</translation>
+        <translation>Шар коду точок порожній</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="322"/>
         <source>Point code height is empty</source>
-        <translation>Висота коду точка порожній</translation>
+        <translation>Висота коду точки порожня</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="323"/>
         <source>Point code separation is empty</source>
-        <translation>Розділення коду Точка порожній</translation>
+        <translation>Відстань між кодами точок порожня</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="359"/>
@@ -638,7 +638,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/divide.cpp" line="56"/>
         <source>Select a line, circle or arc and press return</source>
-        <translation>Виберіть рядок, коло або дугу і натисніть повернення</translation>
+        <translation>Виберіть лінію, коло або дугу і натисніть Enter</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="67"/>
@@ -653,7 +653,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/divide.cpp" line="444"/>
         <source>Empty Entity</source>
-        <translation>Вхід</translation>
+        <translation>Порожній об’єкт</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="452"/>
@@ -668,7 +668,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/divide.cpp" line="460"/>
         <source>Layer</source>
-        <translation>Р</translation>
+        <translation>Шар</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="462"/>
@@ -693,7 +693,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/divide.cpp" line="474"/>
         <source>LINE</source>
-        <translation>LINE</translation>
+        <translation>ЛІНІЯ</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="479"/>
@@ -724,7 +724,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/divide.cpp" line="499"/>
         <source>ARC</source>
-        <translation>ARC</translation>
+        <translation>ДУГА</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="500"/>
@@ -752,7 +752,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/divide.cpp" line="518"/>
         <source>CIRCLE</source>
-        <translation>ЦИРЛ</translation>
+        <translation>КОЛО</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="524"/>
@@ -767,27 +767,27 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/divide.cpp" line="530"/>
         <source>POLYLINE</source>
-        <translation>ПОЛІТИКА</translation>
+        <translation>ПОЛІЛІНІЯ</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="531"/>
         <source>Closed</source>
-        <translation>Закрити</translation>
+        <translation>Замкнено</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="533"/>
         <source>No</source>
-        <translation>No</translation>
+        <translation>Ні</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="533"/>
         <source>Yes</source>
-        <translation>Yes</translation>
+        <translation>Так</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="534"/>
         <source>Vertices</source>
-        <translation>Вертики</translation>
+        <translation>Вершини</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="539"/>
@@ -797,7 +797,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/divide.cpp" line="555"/>
         <source>MUST be a line, circle or arc</source>
-        <translation>MUST бути лінія, коло або дуга</translation>
+        <translation>МАЄ бути лінією, колом або дугою</translation>
     </message>
 </context>
 <context>
@@ -805,7 +805,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/dividedlg.cpp" line="48"/>
         <source>Divide - </source>
-        <translation>Дайд -</translation>
+        <translation>Поділ - </translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="69"/>
@@ -820,17 +820,17 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/dividedlg.cpp" line="76"/>
         <source>Cancel</source>
-        <translation>Зареєструватися</translation>
+        <translation>Скасувати</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="85"/>
         <source>Divide at</source>
-        <translation>Дайвінг</translation>
+        <translation>Поділити в</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="92"/>
         <source>Size</source>
-        <translation>Size</translation>
+        <translation>Розмір</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="115"/>
@@ -840,12 +840,12 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/dividedlg.cpp" line="126"/>
         <source>Ticks - Off</source>
-        <translation>Шини - Від</translation>
+        <translation>Засічки - Вимк.</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="134"/>
         <source>Breaks - Off</source>
-        <translation>Перерви - Від</translation>
+        <translation>Розриви - Вимк.</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="179"/>
@@ -860,42 +860,42 @@ decimal degrees
 0° at 3 o&apos;clock
 goes
 anti-clockwise.</source>
-        <translation>Вхід
-кут, в
-десятковий ступінь
-0° при 3 o&apos;clock
-Увійти
+        <translation>Введіть початковий
+кут у
+десяткових градусах
+0° на 3 годині,
+відлік
 проти годинникової стрілки.</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="246"/>
         <source>&lt;i&gt;&quot;New&quot;&lt;/i&gt;&lt;br&gt;Enter name&lt;br&gt;for a new layer&lt;br&gt;(if required?) to&lt;br&gt;draw ticks on.</source>
-        <translation>&lt;i&gt;&quot;New&quot;&lt;/i&gt;&lt;br&gt;{&lt;br&gt;для нового шару&lt;br&gt;(при необхідності?) to&lt;br&gt;draw ticks on.</translation>
+        <translation>&lt;i&gt;&quot;Новий&quot;&lt;/i&gt;&lt;br&gt;Введіть назву&lt;br&gt;нового шару&lt;br&gt;(за потреби), на якому&lt;br&gt;креслити засічки.</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="252"/>
         <source>Ticks</source>
-        <translation>Шини</translation>
+        <translation>Засічки</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="258"/>
         <source>Above</source>
-        <translation>Вибрані</translation>
+        <translation>Над лінією</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="259"/>
         <source>Below</source>
-        <translation>Головна</translation>
+        <translation>Під лінією</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="263"/>
         <source>Outside</source>
-        <translation>Назад</translation>
+        <translation>Зовні</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="264"/>
         <source>Inside</source>
-        <translation>Головна</translation>
+        <translation>Усередині</translation>
     </message>
 </context>
 <context>
@@ -926,7 +926,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../gear/gear.cpp" line="116"/>
         <source>Pressure angle (deg)</source>
-        <translation>Кут тиску (deg)</translation>
+        <translation>Кут зачеплення (град.)</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="113"/>
@@ -936,27 +936,27 @@ anti-clockwise.</source>
     <message>
         <location filename="../gear/gear.cpp" line="115"/>
         <source>Modulus</source>
-        <translation>Модули</translation>
+        <translation>Модуль</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="117"/>
         <source>Addendum (rel. to modulus)</source>
-        <translation>Додаток (rel. to modulus)</translation>
+        <translation>Висота головки (відносно модуля)</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="118"/>
         <source>Dedendum (rel. to modulus)</source>
-        <translation>Відстань від верхньої частини зуба до основи (відносно модуля)</translation>
+        <translation>Висота ніжки (відносно модуля)</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="119"/>
         <source>Number of segments to draw (dedendum)</source>
-        <translation>Кількість сегментів для малювання (dedendum)</translation>
+        <translation>Кількість сегментів для малювання (ніжка зуба)</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="120"/>
         <source>Number of segments to draw (addendum)</source>
-        <translation>Кількість сегментів для малювання (addendum)</translation>
+        <translation>Кількість сегментів для малювання (головка зуба)</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="121"/>
@@ -966,7 +966,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../gear/gear.cpp" line="122"/>
         <source>Draw symmetric face?</source>
-        <translation>Малюнок симетричний обличчя?</translation>
+        <translation>Малювати симетричний профіль?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="124"/>
@@ -976,42 +976,42 @@ anti-clockwise.</source>
     <message>
         <location filename="../gear/gear.cpp" line="125"/>
         <source>Draw addendum circle?</source>
-        <translation>Малюнок addendum коло?</translation>
+        <translation>Малювати коло вершин?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="126"/>
         <source>Draw pitch circle?</source>
-        <translation>Крупний коло?</translation>
+        <translation>Малювати ділильне коло?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="127"/>
         <source>Draw base circle?</source>
-        <translation>Нанесення базового кола?</translation>
+        <translation>Малювати основне коло?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="128"/>
         <source>Draw root circle?</source>
-        <translation>Намалюйте кореневе коло?</translation>
+        <translation>Малювати коло западин?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="129"/>
         <source>Draw pressure line?</source>
-        <translation>Лінія тиску на шнурок?</translation>
+        <translation>Малювати лінію зачеплення?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="130"/>
         <source>Draw pressure limits?</source>
-        <translation>Обмеження тиску на ящик?</translation>
+        <translation>Малювати межі зачеплення?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="132"/>
         <source>Calculate interference?</source>
-        <translation>Розрахунок перешкод?</translation>
+        <translation>Обчислити інтерференцію?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="133"/>
         <source>Number of segments to draw (interference)</source>
-        <translation>Кількість сегментів для малювання (включення)</translation>
+        <translation>Кількість сегментів для малювання (інтерференція)</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="135"/>
@@ -1021,7 +1021,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../gear/gear.cpp" line="136"/>
         <source>Cancel</source>
-        <translation>Зареєструватися</translation>
+        <translation>Скасувати</translation>
     </message>
 </context>
 <context>
@@ -1029,7 +1029,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../list/list.cpp" line="278"/>
         <source>List entities</source>
-        <translation>Перелік елементів</translation>
+        <translation>Список об&apos;єктів</translation>
     </message>
 </context>
 <context>
@@ -1100,12 +1100,12 @@ anti-clockwise.</source>
     <message>
         <location filename="../picfile/picfile.cpp" line="65"/>
         <source>File...</source>
-        <translation>Головна.</translation>
+        <translation>Файл…</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="75"/>
         <source>Scale:</source>
-        <translation>Вага:</translation>
+        <translation>Масштаб:</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="79"/>
@@ -1115,7 +1115,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../picfile/picfile.cpp" line="83"/>
         <source>Cancel</source>
-        <translation>Зареєструватися</translation>
+        <translation>Скасувати</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="111"/>
@@ -1125,7 +1125,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../picfile/picfile.cpp" line="119"/>
         <source>Scale Factor is empty or invalid</source>
-        <translation>Ваги фактор порожній або недійсний</translation>
+        <translation>Коефіцієнт масштабу порожній або недійсний</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="132"/>
@@ -1135,7 +1135,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../picfile/picfile.cpp" line="137"/>
         <source>Can&apos;t open the file %1</source>
-        <translation>Не відкривайте файл %1</translation>
+        <translation>Не вдається відкрити файл %1</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="144"/>
@@ -1145,12 +1145,12 @@ anti-clockwise.</source>
     <message>
         <location filename="../picfile/picfile.cpp" line="166"/>
         <source>picPunto drawLine: first point is empty %1</source>
-        <translation>picPunto DrawLine: перша точка порожній %1</translation>
+        <translation>picPunto drawLine: перша точка порожня %1</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="179"/>
         <source>picPunto drawLine: next point is empty %1</source>
-        <translation>picPunto DrawLine: наступний пункт порожній %1</translation>
+        <translation>picPunto drawLine: наступна точка порожня %1</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="262"/>
@@ -1165,7 +1165,7 @@ anti-clockwise.</source>
         <location filename="../plotequation/plot.cpp" line="30"/>
         <location filename="../plotequation/plot.cpp" line="37"/>
         <source>Plot plugin</source>
-        <translation>Plot плагін</translation>
+        <translation>Плагін побудови графіків</translation>
     </message>
 </context>
 <context>
@@ -1173,7 +1173,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="15"/>
         <source>Plot equation</source>
-        <translation>Плот рівняння</translation>
+        <translation>Побудувати графік рівняння</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="18"/>
@@ -1182,20 +1182,21 @@ If you don&apos;t want to use the parametric form, just leave out &quot;Equation
 You can use pi when you need the value of pi (i.e. (3*pi)).
 Use t or x in your equation as a variable/parameter.
 </source>
-        <translation>Цей плагін дозволяє побудувати математичні рівняння.
-Якщо ви не хочете використовувати параметрічну форму, просто видаліть &quot;Еквація2&quot;.
-Ви можете використовувати пік, коли вам потрібно значення pi (тобто (3*pi)).
-Використовуйте t або x у рівняння як змінний / parameter.</translation>
+        <translation>Цей плагін дозволяє будувати графіки математичних рівнянь.
+Якщо ви не хочете використовувати параметричну форму, просто залиште &quot;Рівняння 2&quot; порожнім.
+Якщо потрібне значення числа пі, використовуйте pi (наприклад, (3*pi)).
+Використовуйте t або x у рівнянні як змінну/параметр.
+</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="22"/>
         <source>Equation 1:</source>
-        <translation>Еквалія 1:</translation>
+        <translation>Рівняння 1:</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="23"/>
         <source>Equation 2:</source>
-        <translation>Еквалія 2:</translation>
+        <translation>Рівняння 2:</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="26"/>
@@ -1205,7 +1206,7 @@ Use t or x in your equation as a variable/parameter.
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="27"/>
         <source>end value:</source>
-        <translation>кінцева вартість:</translation>
+        <translation>кінцеве значення:</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="28"/>
@@ -1215,12 +1216,12 @@ Use t or x in your equation as a variable/parameter.
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="32"/>
         <source>Draw</source>
-        <translation>Draw</translation>
+        <translation>Побудувати</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="33"/>
         <source>Cancel</source>
-        <translation>Зареєструватися</translation>
+        <translation>Скасувати</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="59"/>
@@ -1232,13 +1233,13 @@ Use t or x in your equation as a variable/parameter.
         <location filename="../plotequation/plotdialog.cpp" line="60"/>
         <source>Polyline</source>
         <comment>Plot Equation to generate RS_Polyline</comment>
-        <translation>Ламана</translation>
+        <translation>Полілінія</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="61"/>
         <source>SplinePoints</source>
         <comment>Plot Equation to generate 2nd spline by LC_SplinePoints</comment>
-        <translation>Шпильки</translation>
+        <translation>Точки сплайну</translation>
     </message>
 </context>
 <context>

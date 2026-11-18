@@ -16,7 +16,7 @@
         <location filename="../circletools/circletools.cpp" line="50"/>
         <location filename="../circletools/circletools.cpp" line="56"/>
         <source>CircleTools</source>
-        <translation>Nástroje kruhov</translation>
+        <translation>Nástroje kružníc</translation>
     </message>
 </context>
 <context>
@@ -118,7 +118,7 @@ Prvá méta, druhá méta, prvý cieľ, druhý cieľ.</translation>
         <location filename="../list/list.cpp" line="23"/>
         <location filename="../list/list.cpp" line="30"/>
         <source>List entities</source>
-        <translation>Zoznam subjektov</translation>
+        <translation>Zoznam objektov</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="46"/>
@@ -128,7 +128,7 @@ Prvá méta, druhá méta, prvý cieľ, druhý cieľ.</translation>
     <message>
         <location filename="../list/list.cpp" line="60"/>
         <source>Empty Entity</source>
-        <translation>Prázdny subjekt</translation>
+        <translation>Prázdny objekt</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="67"/>
@@ -143,7 +143,7 @@ Prvá méta, druhá méta, prvý cieľ, druhý cieľ.</translation>
     <message>
         <location filename="../list/list.cpp" line="77"/>
         <source>Layer</source>
-        <translation>Vrstva</translation>
+        <translation>Hladina</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="79"/>
@@ -153,7 +153,7 @@ Prvá méta, druhá méta, prvý cieľ, druhý cieľ.</translation>
     <message>
         <location filename="../list/list.cpp" line="80"/>
         <source>Line type</source>
-        <translation>Typ trate</translation>
+        <translation>Typ čiary</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="81"/>
@@ -240,7 +240,7 @@ Prvá méta, druhá méta, prvý cieľ, druhý cieľ.</translation>
     <message>
         <location filename="../list/list.cpp" line="134"/>
         <source>CIRCLE</source>
-        <translation>CIRKLE</translation>
+        <translation>KRUŽNICA</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="140"/>
@@ -265,7 +265,7 @@ Prvá méta, druhá méta, prvý cieľ, druhý cieľ.</translation>
     <message>
         <location filename="../list/list.cpp" line="166"/>
         <source>CONSTRUCTIONLINE</source>
-        <translation>KONŠTRUKČNÉ LÍNIE</translation>
+        <translation>KONŠTRUKČNÁ ČIARA</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="169"/>
@@ -305,7 +305,7 @@ Prvá méta, druhá méta, prvý cieľ, druhý cieľ.</translation>
     <message>
         <location filename="../list/list.cpp" line="191"/>
         <source>Insertion point</source>
-        <translation>Vložiť bod</translation>
+        <translation>Bod vloženia</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="194"/>
@@ -330,7 +330,7 @@ Prvá méta, druhá méta, prvý cieľ, druhý cieľ.</translation>
     <message>
         <location filename="../list/list.cpp" line="214"/>
         <source>POLYLINE</source>
-        <translation>POLYLÍN</translation>
+        <translation>POLYLÍNIA</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="215"/>
@@ -350,7 +350,7 @@ Prvá méta, druhá méta, prvý cieľ, druhý cieľ.</translation>
     <message>
         <location filename="../list/list.cpp" line="217"/>
         <source>Vertices</source>
-        <translation>Vertikety</translation>
+        <translation>Vrcholy</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="231"/>
@@ -365,7 +365,7 @@ Prvá méta, druhá méta, prvý cieľ, druhý cieľ.</translation>
     <message>
         <location filename="../list/list.cpp" line="237"/>
         <source>SPLINEPOINTS</source>
-        <translation>SLINEPONTY</translation>
+        <translation>SPLINE CEZ BODY</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="240"/>
@@ -419,12 +419,12 @@ Prvá méta, druhá méta, prvý cieľ, druhý cieľ.</translation>
     <message>
         <location filename="../sameprop/sameprop.cpp" line="41"/>
         <source>select original entity:</source>
-        <translation>vybrať pôvodnú účtovnú jednotku:</translation>
+        <translation>vybrať pôvodný objekt:</translation>
     </message>
     <message>
         <location filename="../sameprop/sameprop.cpp" line="43"/>
         <source>select entities to change</source>
-        <translation>vybrať jednotky pre zmenu</translation>
+        <translation>vybrať objekty na zmenu</translation>
     </message>
 </context>
 <context>
@@ -564,17 +564,17 @@ Prvá méta, druhá méta, prvý cieľ, druhý cieľ.</translation>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="305"/>
         <source>Point 2D layer is empty</source>
-        <translation>Bod 2D vrstva je prázdna</translation>
+        <translation>Hladina 2D bodov je prázdna</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="308"/>
         <source>Point 3D layer is empty</source>
-        <translation>Bod 3D vrstva je prázdna</translation>
+        <translation>Hladina 3D bodov je prázdna</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="311"/>
         <source>Point elevation layer is empty</source>
-        <translation>Vrchná vrstva bodu je prázdna</translation>
+        <translation>Hladina výšok bodov je prázdna</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="312"/>
@@ -589,7 +589,7 @@ Prvá méta, druhá méta, prvý cieľ, druhý cieľ.</translation>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="316"/>
         <source>Point number layer is empty</source>
-        <translation>Bodová vrstva je prázdna</translation>
+        <translation>Hladina čísel bodov je prázdna</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="317"/>
@@ -604,7 +604,7 @@ Prvá méta, druhá méta, prvý cieľ, druhý cieľ.</translation>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="321"/>
         <source>Point code layer is empty</source>
-        <translation>Bodová vrstva je prázdna</translation>
+        <translation>Hladina kódov bodov je prázdna</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="322"/>
@@ -653,7 +653,7 @@ Prvá méta, druhá méta, prvý cieľ, druhý cieľ.</translation>
     <message>
         <location filename="../divide/divide.cpp" line="444"/>
         <source>Empty Entity</source>
-        <translation>Prázdny subjekt</translation>
+        <translation>Prázdny objekt</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="452"/>
@@ -668,7 +668,7 @@ Prvá méta, druhá méta, prvý cieľ, druhý cieľ.</translation>
     <message>
         <location filename="../divide/divide.cpp" line="460"/>
         <source>Layer</source>
-        <translation>Vrstva</translation>
+        <translation>Hladina</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="462"/>
@@ -678,7 +678,7 @@ Prvá méta, druhá méta, prvý cieľ, druhý cieľ.</translation>
     <message>
         <location filename="../divide/divide.cpp" line="463"/>
         <source>Line type</source>
-        <translation>Typ trate</translation>
+        <translation>Typ čiary</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="465"/>
@@ -752,7 +752,7 @@ Prvá méta, druhá méta, prvý cieľ, druhý cieľ.</translation>
     <message>
         <location filename="../divide/divide.cpp" line="518"/>
         <source>CIRCLE</source>
-        <translation>CIRKLE</translation>
+        <translation>KRUŽNICA</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="524"/>
@@ -767,7 +767,7 @@ Prvá méta, druhá méta, prvý cieľ, druhý cieľ.</translation>
     <message>
         <location filename="../divide/divide.cpp" line="530"/>
         <source>POLYLINE</source>
-        <translation>POLYLÍN</translation>
+        <translation>POLYLÍNIA</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="531"/>
@@ -787,7 +787,7 @@ Prvá méta, druhá méta, prvý cieľ, druhý cieľ.</translation>
     <message>
         <location filename="../divide/divide.cpp" line="534"/>
         <source>Vertices</source>
-        <translation>Vertikety</translation>
+        <translation>Vrcholy</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="539"/>
@@ -797,7 +797,7 @@ Prvá méta, druhá méta, prvý cieľ, druhý cieľ.</translation>
     <message>
         <location filename="../divide/divide.cpp" line="555"/>
         <source>MUST be a line, circle or arc</source>
-        <translation>MUSÍ byť priamka, kruh alebo oblúk</translation>
+        <translation>MUSÍ byť priamka, kružnica alebo oblúk</translation>
     </message>
 </context>
 <context>
@@ -810,7 +810,7 @@ Prvá méta, druhá méta, prvý cieľ, druhý cieľ.</translation>
     <message>
         <location filename="../divide/dividedlg.cpp" line="69"/>
         <source>Layers</source>
-        <translation>Vrstvy</translation>
+        <translation>Hladiny</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="75"/>
@@ -840,12 +840,12 @@ Prvá méta, druhá méta, prvý cieľ, druhý cieľ.</translation>
     <message>
         <location filename="../divide/dividedlg.cpp" line="126"/>
         <source>Ticks - Off</source>
-        <translation>Kliešte vypnuté</translation>
+        <translation>Značky - Vypnuté</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="134"/>
         <source>Breaks - Off</source>
-        <translation>Odstávky</translation>
+        <translation>Prerušenia - Vypnuté</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="179"/>
@@ -870,12 +870,12 @@ proti smeru hodinových ručičiek.</translation>
     <message>
         <location filename="../divide/dividedlg.cpp" line="246"/>
         <source>&lt;i&gt;&quot;New&quot;&lt;/i&gt;&lt;br&gt;Enter name&lt;br&gt;for a new layer&lt;br&gt;(if required?) to&lt;br&gt;draw ticks on.</source>
-        <translation>&lt;i&gt;&quot;Nový&quot;&lt;/i&gt; &lt;br&gt;Vstupný názov &lt;br&gt; pre novú vrstvu &lt;br&gt; (ak sa vyžaduje?) do &lt;br&gt;kliešťov.</translation>
+        <translation>&lt;i&gt;&quot;Nový&quot;&lt;/i&gt;&lt;br&gt;Zadajte názov&lt;br&gt;novej hladiny&lt;br&gt;(ak treba?), na ktorú&lt;br&gt;sa nakreslia značky.</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="252"/>
         <source>Ticks</source>
-        <translation>Kliešte</translation>
+        <translation>Značky</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="258"/>
@@ -908,7 +908,7 @@ proti smeru hodinových ručičiek.</translation>
     <message>
         <location filename="../pointstocsv/pointstocsv.cpp" line="122"/>
         <source>CSV (*.csv)</source>
-        <translation>CSV (*.czv)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../pointstocsv/pointstocsv.cpp" line="130"/>
@@ -951,12 +951,12 @@ proti smeru hodinových ručičiek.</translation>
     <message>
         <location filename="../gear/gear.cpp" line="119"/>
         <source>Number of segments to draw (dedendum)</source>
-        <translation>Počet segmentov na kreslenie (ddendum)</translation>
+        <translation>Počet segmentov na vykreslenie (päta zuba)</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="120"/>
         <source>Number of segments to draw (addendum)</source>
-        <translation>Počet segmentov, ktoré sa majú čerpať (doddendum)</translation>
+        <translation>Počet segmentov na vykreslenie (hlava zuba)</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="121"/>
@@ -971,32 +971,32 @@ proti smeru hodinových ručičiek.</translation>
     <message>
         <location filename="../gear/gear.cpp" line="124"/>
         <source>Use layers?</source>
-        <translation>Použiť vrstvy?</translation>
+        <translation>Použiť hladiny?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="125"/>
         <source>Draw addendum circle?</source>
-        <translation>Krúžok dodatku?</translation>
+        <translation>Kresliť hlavovú kružnicu?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="126"/>
         <source>Draw pitch circle?</source>
-        <translation>Kresliť kruh?</translation>
+        <translation>Kresliť roztečovú kružnicu?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="127"/>
         <source>Draw base circle?</source>
-        <translation>Kresliť základný kruh?</translation>
+        <translation>Kresliť základnú kružnicu?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="128"/>
         <source>Draw root circle?</source>
-        <translation>Kresliť koreňový kruh?</translation>
+        <translation>Kresliť pätnú kružnicu?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="129"/>
         <source>Draw pressure line?</source>
-        <translation>Kresliť tlakové potrubie?</translation>
+        <translation>Kresliť tlakovú priamku?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="130"/>
@@ -1029,7 +1029,7 @@ proti smeru hodinových ručičiek.</translation>
     <message>
         <location filename="../list/list.cpp" line="278"/>
         <source>List entities</source>
-        <translation>Zoznam subjektov</translation>
+        <translation>Zoznam objektov</translation>
     </message>
 </context>
 <context>
@@ -1165,7 +1165,7 @@ proti smeru hodinových ručičiek.</translation>
         <location filename="../plotequation/plot.cpp" line="30"/>
         <location filename="../plotequation/plot.cpp" line="37"/>
         <source>Plot plugin</source>
-        <translation>Name</translation>
+        <translation>Doplnok pre grafy</translation>
     </message>
 </context>
 <context>
@@ -1173,7 +1173,7 @@ proti smeru hodinových ručičiek.</translation>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="15"/>
         <source>Plot equation</source>
-        <translation>Plotová rovnica</translation>
+        <translation>Graf rovnice</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="18"/>
@@ -1226,13 +1226,13 @@ Použite t alebo x vo vašej rovnici ako premennú/parameter.</translation>
         <location filename="../plotequation/plotdialog.cpp" line="59"/>
         <source>Line Segments</source>
         <comment>Plot Equation to generate RS_Line segments</comment>
-        <translation>Segmenty riadkov</translation>
+        <translation>Úsečky</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="60"/>
         <source>Polyline</source>
         <comment>Plot Equation to generate RS_Polyline</comment>
-        <translation>Polylín</translation>
+        <translation>Polylínia</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="61"/>
@@ -1246,7 +1246,7 @@ Použite t alebo x vo vašej rovnici ako premennú/parameter.</translation>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="175"/>
         <source>Layer:</source>
-        <translation>Vrstva:</translation>
+        <translation>Hladina:</translation>
     </message>
 </context>
 <context>

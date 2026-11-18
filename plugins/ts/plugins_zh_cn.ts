@@ -16,7 +16,7 @@
         <location filename="../circletools/circletools.cpp" line="50"/>
         <location filename="../circletools/circletools.cpp" line="56"/>
         <source>CircleTools</source>
-        <translation>圆弧工具</translation>
+        <translation>圆工具</translation>
     </message>
 </context>
 <context>
@@ -24,7 +24,7 @@
     <message>
         <location filename="../pointstocsv/pointstocsv.cpp" line="34"/>
         <source>Export points to csv</source>
-        <translation>导出点为 csv</translation>
+        <translation>将点导出到 CSV 文件</translation>
     </message>
 </context>
 <context>
@@ -59,8 +59,8 @@
         <location filename="../align/align.cpp" line="57"/>
         <source>Click on options to set/unset,
 Ok to accept and start alignment.</source>
-        <translation>点击设置/ 取消选项,
-可以接受并开始对齐.</translation>
+        <translation>单击选项以设置/取消设置，
+然后单击“确定”以接受并开始对齐。</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="60"/>
@@ -70,12 +70,12 @@ Align will copy rather than move the selected objects.
 If &apos;Specify base points first&apos; is checked,
 Align will prompt for the alignment points in the order
 first base, second base, first target, second target.</source>
-        <translation>如果选中“ 保留原始对象 ” ,
-对齐将复制而不是移动选定的对象。
+        <translation>如果勾选“保留原始对象”，
+对齐将复制而不是移动所选对象。
 
-如果选中“ 先指定基准点 ” ,
-对齐将按顺序提示对齐点
-第一基地 二基地 第一目标 第二目标.</translation>
+如果勾选“首先指定基准点”，
+对齐将按以下顺序提示对齐点：
+第一个基准点、第二个基准点、第一个目标点、第二个目标点。</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="81"/>
@@ -128,7 +128,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="60"/>
         <source>Empty Entity</source>
-        <translation>无实体</translation>
+        <translation>空实体</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="67"/>
@@ -180,7 +180,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="94"/>
         <source>LINE</source>
-        <translation>LINE</translation>
+        <translation>直线</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="99"/>
@@ -190,7 +190,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="102"/>
         <source>to point</source>
-        <translation>至点</translation>
+        <translation>到点</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="107"/>
@@ -201,17 +201,17 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="112"/>
         <source>Angle in XY plane</source>
-        <translation>在XY平面内夹角</translation>
+        <translation>XY 平面中的角度</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="113"/>
         <source>Inc.</source>
-        <translation>位移</translation>
+        <translation>增量</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="118"/>
         <source>ARC</source>
-        <translation>ARC</translation>
+        <translation>圆弧</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="119"/>
@@ -230,12 +230,12 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="126"/>
         <source>initial angle</source>
-        <translation>起始角</translation>
+        <translation>起始角度</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="127"/>
         <source>final angle</source>
-        <translation>终止角</translation>
+        <translation>终止角度</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="134"/>
@@ -250,7 +250,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="141"/>
         <source>area</source>
-        <translation>area</translation>
+        <translation>面积</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="144"/>
@@ -260,12 +260,12 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="148"/>
         <source>major axis</source>
-        <translation>主轴</translation>
+        <translation>长轴</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="166"/>
         <source>CONSTRUCTIONLINE</source>
-        <translation>辅助线</translation>
+        <translation>构造线</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="169"/>
@@ -275,7 +275,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="172"/>
         <source>SOLID</source>
-        <translation>区域阴影</translation>
+        <translation>二维填充</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="176"/>
@@ -285,22 +285,22 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="179"/>
         <source>TEXT</source>
-        <translation>TEXT</translation>
+        <translation>文字</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="183"/>
         <source>TEXTCONTENT</source>
-        <translation>文本</translation>
+        <translation>文本内容</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="186"/>
         <source>INSERT</source>
-        <translation>插图</translation>
+        <translation>块参照</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="189"/>
         <source>Name</source>
-        <translation>Name</translation>
+        <translation>名称</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="191"/>
@@ -320,17 +320,17 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="203"/>
         <source>Columns/Rows</source>
-        <translation>栏/牛</translation>
+        <translation>列/行</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="207"/>
         <source>Column/Row Spacing</source>
-        <translation>列/ 缩放间距</translation>
+        <translation>列/行间距</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="214"/>
         <source>POLYLINE</source>
-        <translation>多线段</translation>
+        <translation>多段线</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="215"/>
@@ -340,17 +340,17 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="216"/>
         <source>No</source>
-        <translation>No</translation>
+        <translation>否</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="216"/>
         <source>Yes</source>
-        <translation>Yes</translation>
+        <translation>是</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="217"/>
         <source>Vertices</source>
-        <translation>节点</translation>
+        <translation>顶点</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="231"/>
@@ -365,17 +365,17 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="237"/>
         <source>SPLINEPOINTS</source>
-        <translation>发言</translation>
+        <translation>样条曲线点</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="240"/>
         <source>HATCH</source>
-        <translation>阴影</translation>
+        <translation>图案填充</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="243"/>
         <source>DIMLEADER</source>
-        <translation>引线标注</translation>
+        <translation>引线</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="246"/>
@@ -474,7 +474,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="235"/>
         <source>Tab Separator</source>
-        <translation>跳格分隔符</translation>
+        <translation>制表符分隔符</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="235"/>
@@ -504,7 +504,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="245"/>
         <source>Draw 2D Point</source>
-        <translation>显示二维点</translation>
+        <translation>绘制二维点</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="246"/>
@@ -514,7 +514,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="246"/>
         <source>Draw 3D Point</source>
-        <translation>显示三维点</translation>
+        <translation>绘制三维点</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="247"/>
@@ -524,17 +524,17 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="247"/>
         <source>Draw point number</source>
-        <translation>显示点序号</translation>
+        <translation>绘制点序号</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="248"/>
         <source>Point Elevation</source>
-        <translation>点高</translation>
+        <translation>点高程</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="248"/>
         <source>Draw point elevation</source>
-        <translation>显示点高</translation>
+        <translation>绘制点高程</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="249"/>
@@ -544,12 +544,12 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="249"/>
         <source>Draw point code</source>
-        <translation>显示点代码</translation>
+        <translation>绘制点代码</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="263"/>
         <source>Accept</source>
-        <translation>同意</translation>
+        <translation>确定</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="268"/>
@@ -574,17 +574,17 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="311"/>
         <source>Point elevation layer is empty</source>
-        <translation>点高图层为空</translation>
+        <translation>点高程图层为空</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="312"/>
         <source>Point elevation height is empty</source>
-        <translation>点高高度为空</translation>
+        <translation>点高程高度为空</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="313"/>
         <source>Point elevation separation is empty</source>
-        <translation>点高分离为空</translation>
+        <translation>点高程间距为空</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="316"/>
@@ -599,7 +599,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="318"/>
         <source>Point number separation is empty</source>
-        <translation>点序号分离为空</translation>
+        <translation>点序号间距为空</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="321"/>
@@ -614,7 +614,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="323"/>
         <source>Point code separation is empty</source>
-        <translation>点代码分离为空</translation>
+        <translation>点代码间距为空</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="359"/>
@@ -624,7 +624,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="364"/>
         <source>Can&apos;t open the file %1</source>
-        <translation>不能打开文件%1</translation>
+        <translation>无法打开文件 %1</translation>
     </message>
 </context>
 <context>
@@ -633,12 +633,12 @@ first base, second base, first target, second target.</source>
         <location filename="../divide/divide.cpp" line="35"/>
         <location filename="../divide/divide.cpp" line="42"/>
         <source>Divide</source>
-        <translation>除号</translation>
+        <translation>分割</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="56"/>
         <source>Select a line, circle or arc and press return</source>
-        <translation>选择行、圆或弧并按返回</translation>
+        <translation>选择直线、圆或圆弧，然后按回车键</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="67"/>
@@ -678,12 +678,12 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/divide.cpp" line="463"/>
         <source>Line type</source>
-        <translation>行类型</translation>
+        <translation>线型</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="465"/>
         <source>Line thickness</source>
-        <translation>线条厚度</translation>
+        <translation>线宽</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="467"/>
@@ -693,7 +693,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/divide.cpp" line="474"/>
         <source>LINE</source>
-        <translation>LINE</translation>
+        <translation>直线</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="479"/>
@@ -703,7 +703,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/divide.cpp" line="482"/>
         <source>to point</source>
-        <translation>指点</translation>
+        <translation>到点</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="487"/>
@@ -719,12 +719,12 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/divide.cpp" line="494"/>
         <source>Inc.</source>
-        <translation>企业.</translation>
+        <translation>增量</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="499"/>
         <source>ARC</source>
-        <translation>ARC</translation>
+        <translation>圆弧</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="500"/>
@@ -742,62 +742,62 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/divide.cpp" line="507"/>
         <source>initial angle</source>
-        <translation>初始角度</translation>
+        <translation>起始角度</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="509"/>
         <source>final angle</source>
-        <translation>最终角度</translation>
+        <translation>终止角度</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="518"/>
         <source>CIRCLE</source>
-        <translation>克鲁斯</translation>
+        <translation>圆</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="524"/>
         <source>circumference</source>
-        <translation>环绕</translation>
+        <translation>周长</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="526"/>
         <source>area</source>
-        <translation>area</translation>
+        <translation>面积</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="530"/>
         <source>POLYLINE</source>
-        <translation>邮政线路</translation>
+        <translation>多段线</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="531"/>
         <source>Closed</source>
-        <translation>关闭</translation>
+        <translation>闭合</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="533"/>
         <source>No</source>
-        <translation>No</translation>
+        <translation>否</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="533"/>
         <source>Yes</source>
-        <translation>Yes</translation>
+        <translation>是</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="534"/>
         <source>Vertices</source>
-        <translation>温度</translation>
+        <translation>顶点</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="539"/>
         <source>in point</source>
-        <translation>单位</translation>
+        <translation>于点</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="555"/>
         <source>MUST be a line, circle or arc</source>
-        <translation>必须是一行、圆形或弧形</translation>
+        <translation>必须是直线、圆或圆弧</translation>
     </message>
 </context>
 <context>
@@ -805,17 +805,17 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/dividedlg.cpp" line="48"/>
         <source>Divide - </source>
-        <translation>除号 -</translation>
+        <translation>分割 - </translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="69"/>
         <source>Layers</source>
-        <translation>层</translation>
+        <translation>图层</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="75"/>
         <source>OK</source>
-        <translation>OK</translation>
+        <translation>确定</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="76"/>
@@ -825,27 +825,27 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/dividedlg.cpp" line="85"/>
         <source>Divide at</source>
-        <translation>除以</translation>
+        <translation>在以下位置分割</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="92"/>
         <source>Size</source>
-        <translation>Size</translation>
+        <translation>大小</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="115"/>
         <source>places</source>
-        <translation>地点</translation>
+        <translation>个位置</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="126"/>
         <source>Ticks - Off</source>
-        <translation>选项 - 关闭</translation>
+        <translation>刻度线 - 关闭</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="134"/>
         <source>Breaks - Off</source>
-        <translation>中断 - 关闭</translation>
+        <translation>打断 - 关闭</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="179"/>
@@ -860,37 +860,37 @@ decimal degrees
 0° at 3 o&apos;clock
 goes
 anti-clockwise.</source>
-        <translation>输入开始
-角度,单位
-小数度
-3点0分
-继续
-逆时针.</translation>
+        <translation>输入起始
+角度，单位为
+十进制度数。
+0° 位于 3 点钟方向，
+沿逆时针
+方向增加。</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="246"/>
         <source>&lt;i&gt;&quot;New&quot;&lt;/i&gt;&lt;br&gt;Enter name&lt;br&gt;for a new layer&lt;br&gt;(if required?) to&lt;br&gt;draw ticks on.</source>
-        <translation>&lt;i&gt;“新建”&lt;/i&gt;&lt;br&gt;输入新图层的名称&lt;br&gt;(如果需要?)，以便&lt;br&gt;&lt;br&gt;绘制标记。</translation>
+        <translation>&lt;i&gt;“新建”&lt;/i&gt;&lt;br&gt;输入新图层&lt;br&gt;的名称（如需要），&lt;br&gt;用于绘制&lt;br&gt;刻度。</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="252"/>
         <source>Ticks</source>
-        <translation>选项</translation>
+        <translation>刻度</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="258"/>
         <source>Above</source>
-        <translation>上层</translation>
+        <translation>上方</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="259"/>
         <source>Below</source>
-        <translation>以下</translation>
+        <translation>下方</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="263"/>
         <source>Outside</source>
-        <translation>外边</translation>
+        <translation>外部</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="264"/>
@@ -903,12 +903,12 @@ anti-clockwise.</source>
     <message>
         <location filename="../pointstocsv/pointstocsv.cpp" line="122"/>
         <source>Export to file</source>
-        <translation>导出为文件</translation>
+        <translation>导出到文件</translation>
     </message>
     <message>
         <location filename="../pointstocsv/pointstocsv.cpp" line="122"/>
         <source>CSV (*.csv)</source>
-        <translation>CSV (*.csv) (中文(简体) )</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../pointstocsv/pointstocsv.cpp" line="130"/>
@@ -921,12 +921,12 @@ anti-clockwise.</source>
     <message>
         <location filename="../gear/gear.cpp" line="114"/>
         <source>Number of teeth</source>
-        <translation>牙齿数量</translation>
+        <translation>齿数</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="116"/>
         <source>Pressure angle (deg)</source>
-        <translation>压力角( 德克)</translation>
+        <translation>压力角（度）</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="113"/>
@@ -936,57 +936,57 @@ anti-clockwise.</source>
     <message>
         <location filename="../gear/gear.cpp" line="115"/>
         <source>Modulus</source>
-        <translation>模块</translation>
+        <translation>模数</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="117"/>
         <source>Addendum (rel. to modulus)</source>
-        <translation>增编(与模块有关)</translation>
+        <translation>齿顶高（相对于模数）</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="118"/>
         <source>Dedendum (rel. to modulus)</source>
-        <translation>Dedendum (对调相)</translation>
+        <translation>齿根高（相对于模数）</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="119"/>
         <source>Number of segments to draw (dedendum)</source>
-        <translation>要绘制的段数( 定本)</translation>
+        <translation>绘制齿根部分的线段数</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="120"/>
         <source>Number of segments to draw (addendum)</source>
-        <translation>要绘制的段数( 附加)</translation>
+        <translation>绘制齿顶部分的线段数</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="121"/>
         <source>Draw all teeth?</source>
-        <translation>画出所有的牙齿?</translation>
+        <translation>绘制所有齿？</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="122"/>
         <source>Draw symmetric face?</source>
-        <translation>要画对称相片吗 ?</translation>
+        <translation>绘制对称面？</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="124"/>
         <source>Use layers?</source>
-        <translation>使用层?</translation>
+        <translation>使用图层？</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="125"/>
         <source>Draw addendum circle?</source>
-        <translation>绘制增编圆 ?</translation>
+        <translation>绘制齿顶圆？</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="126"/>
         <source>Draw pitch circle?</source>
-        <translation>画出投球圈 ?</translation>
+        <translation>绘制节圆？</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="127"/>
         <source>Draw base circle?</source>
-        <translation>绘制基准圆 ?</translation>
+        <translation>绘制基圆？</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="128"/>
@@ -996,27 +996,27 @@ anti-clockwise.</source>
     <message>
         <location filename="../gear/gear.cpp" line="129"/>
         <source>Draw pressure line?</source>
-        <translation>画出压力线 ?</translation>
+        <translation>绘制压力线？</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="130"/>
         <source>Draw pressure limits?</source>
-        <translation>画出压力限制 ?</translation>
+        <translation>绘制压力极限？</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="132"/>
         <source>Calculate interference?</source>
-        <translation>计算干扰?</translation>
+        <translation>计算干涉？</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="133"/>
         <source>Number of segments to draw (interference)</source>
-        <translation>要绘制的段数( 干扰)</translation>
+        <translation>要绘制的段数（干涉）</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="135"/>
         <source>Accept</source>
-        <translation>接受</translation>
+        <translation>确定</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="136"/>
@@ -1029,7 +1029,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../list/list.cpp" line="278"/>
         <source>List entities</source>
-        <translation>列实体</translation>
+        <translation>列出实体</translation>
     </message>
 </context>
 <context>
@@ -1037,7 +1037,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../sample/sample.cpp" line="54"/>
         <source>Draw line</source>
-        <translation>显示线段</translation>
+        <translation>绘制直线</translation>
     </message>
     <message>
         <location filename="../sample/sample.cpp" line="60"/>
@@ -1062,7 +1062,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../sample/sample.cpp" line="86"/>
         <source>Accept</source>
-        <translation>同意</translation>
+        <translation>确定</translation>
     </message>
     <message>
         <location filename="../sample/sample.cpp" line="91"/>
@@ -1105,12 +1105,12 @@ anti-clockwise.</source>
     <message>
         <location filename="../picfile/picfile.cpp" line="75"/>
         <source>Scale:</source>
-        <translation>缩放 :</translation>
+        <translation>比例：</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="79"/>
         <source>Accept</source>
-        <translation>接受</translation>
+        <translation>确定</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="83"/>
@@ -1125,7 +1125,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../picfile/picfile.cpp" line="119"/>
         <source>Scale Factor is empty or invalid</source>
-        <translation>缩放因子为空或无效</translation>
+        <translation>比例因子为空或无效</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="132"/>
@@ -1135,7 +1135,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../picfile/picfile.cpp" line="137"/>
         <source>Can&apos;t open the file %1</source>
-        <translation>无法打开文件 %1。</translation>
+        <translation>无法打开文件 %1</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="144"/>
@@ -1145,18 +1145,18 @@ anti-clockwise.</source>
     <message>
         <location filename="../picfile/picfile.cpp" line="166"/>
         <source>picPunto drawLine: first point is empty %1</source>
-        <translation>picPunto 画线：第一个点为空 %1</translation>
+        <translation>picPunto drawLine：第一个点为空 %1</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="179"/>
         <source>picPunto drawLine: next point is empty %1</source>
-        <translation>picPunto 绘图线：下一个点为空 %1</translation>
+        <translation>picPunto drawLine：下一个点为空 %1</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="262"/>
         <location filename="../picfile/picfile.cpp" line="271"/>
         <source>format error in %1</source>
-        <translation>%1 中存在格式错误</translation>
+        <translation>%1 中的格式错误</translation>
     </message>
 </context>
 <context>
@@ -1165,7 +1165,7 @@ anti-clockwise.</source>
         <location filename="../plotequation/plot.cpp" line="30"/>
         <location filename="../plotequation/plot.cpp" line="37"/>
         <source>Plot plugin</source>
-        <translation>绘图插件</translation>
+        <translation>函数绘图插件</translation>
     </message>
 </context>
 <context>
@@ -1173,7 +1173,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="15"/>
         <source>Plot equation</source>
-        <translation>绘图等式</translation>
+        <translation>绘图方程</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="18"/>
@@ -1182,25 +1182,26 @@ If you don&apos;t want to use the parametric form, just leave out &quot;Equation
 You can use pi when you need the value of pi (i.e. (3*pi)).
 Use t or x in your equation as a variable/parameter.
 </source>
-        <translation>此插件允许您绘制数学方程式 。
-不愿使用参数表的,只留下&quot;方程式2&quot;.
-您可以在需要 pi 值时使用 pi (即 3* pi) 。
-在公式中使用 t 或 x 作为变量/参数.</translation>
+        <translation>此插件允许您绘制数学方程。
+如果您不想使用参数形式，只需省略“方程 2”。
+在需要使用 pi 值时，可以使用 pi（例如 (3*pi)）。
+在方程中使用 t 或 x 作为变量/参数。
+</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="22"/>
         <source>Equation 1:</source>
-        <translation>方程式1:</translation>
+        <translation>方程 1：</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="23"/>
         <source>Equation 2:</source>
-        <translation>方程式2:</translation>
+        <translation>方程 2：</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="26"/>
         <source>start value:</source>
-        <translation>开始值 :</translation>
+        <translation>起始值：</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="27"/>
@@ -1210,12 +1211,12 @@ Use t or x in your equation as a variable/parameter.
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="28"/>
         <source>step size:</source>
-        <translation>步骤大小 :</translation>
+        <translation>步长：</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="32"/>
         <source>Draw</source>
-        <translation>Draw</translation>
+        <translation>绘制</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="33"/>
@@ -1238,7 +1239,7 @@ Use t or x in your equation as a variable/parameter.
         <location filename="../plotequation/plotdialog.cpp" line="61"/>
         <source>SplinePoints</source>
         <comment>Plot Equation to generate 2nd spline by LC_SplinePoints</comment>
-        <translation>Spline 点</translation>
+        <translation>样条点</translation>
     </message>
 </context>
 <context>
@@ -1254,7 +1255,7 @@ Use t or x in your equation as a variable/parameter.
     <message>
         <location filename="../asciifile/asciifile.cpp" line="204"/>
         <source>Style:</source>
-        <translation>类型：</translation>
+        <translation>样式：</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="205"/>
@@ -1264,7 +1265,7 @@ Use t or x in your equation as a variable/parameter.
     <message>
         <location filename="../asciifile/asciifile.cpp" line="206"/>
         <source>Separation</source>
-        <translation>分离：</translation>
+        <translation>间距：</translation>
     </message>
 </context>
 </TS>

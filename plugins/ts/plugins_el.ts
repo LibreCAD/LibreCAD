@@ -368,7 +368,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="237"/>
         <source>SPLINEPOINTS</source>
-        <translation>ΣΤΙΓΜΑΤΑ</translation>
+        <translation>ΣΗΜΕΙΑ SPLINE</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="240"/>
@@ -673,7 +673,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/divide.cpp" line="460"/>
         <source>Layer</source>
-        <translation>Στρώμα</translation>
+        <translation>Στρώση</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="462"/>
@@ -792,7 +792,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/divide.cpp" line="534"/>
         <source>Vertices</source>
-        <translation>Βερτίκια</translation>
+        <translation>Κορυφές</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="539"/>
@@ -815,7 +815,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/dividedlg.cpp" line="69"/>
         <source>Layers</source>
-        <translation>Στρώματα</translation>
+        <translation>Στρώσεις</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="75"/>
@@ -845,7 +845,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/dividedlg.cpp" line="126"/>
         <source>Ticks - Off</source>
-        <translation>Τικ - εκτός</translation>
+        <translation>Σημάδια - ανενεργά</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="134"/>
@@ -875,12 +875,12 @@ anti-clockwise.</source>
     <message>
         <location filename="../divide/dividedlg.cpp" line="246"/>
         <source>&lt;i&gt;&quot;New&quot;&lt;/i&gt;&lt;br&gt;Enter name&lt;br&gt;for a new layer&lt;br&gt;(if required?) to&lt;br&gt;draw ticks on.</source>
-        <translation>&lt;i&gt;&quot;Νέο&quot;&lt;/i&gt;&lt;br&gt;Εισαγάγετε το όνομα&lt;br&gt; για ένα νέο στρώμα&lt;br&gt; (αν απαιτείται?) για να &lt;br&gt; τραβήξετε τα τσιμπούρια.</translation>
+        <translation>&lt;i&gt;&quot;Νέα&quot;&lt;/i&gt;&lt;br&gt;Εισαγάγετε το όνομα&lt;br&gt;μιας νέας στρώσης&lt;br&gt;(αν χρειάζεται) όπου&lt;br&gt;θα σχεδιαστούν τα σημάδια.</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="252"/>
         <source>Ticks</source>
-        <translation>Τικ</translation>
+        <translation>Σημάδια</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="258"/>
@@ -976,7 +976,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../gear/gear.cpp" line="124"/>
         <source>Use layers?</source>
-        <translation>Να χρησιμοποιείς στρώματα?</translation>
+        <translation>Χρήση στρώσεων;</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="125"/>
@@ -1231,7 +1231,7 @@ Use t or x in your equation as a variable/parameter.
         <location filename="../plotequation/plotdialog.cpp" line="59"/>
         <source>Line Segments</source>
         <comment>Plot Equation to generate RS_Line segments</comment>
-        <translation>Τομείς Γραμμής</translation>
+        <translation>Ευθύγραμμα τμήματα</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="60"/>

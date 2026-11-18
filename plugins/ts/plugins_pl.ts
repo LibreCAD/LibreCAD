@@ -179,7 +179,7 @@ pierwszy punkt bazowy, drugi punkt bazowy, pierwszy punkt docelowy, drugi punkt 
     <message>
         <location filename="../list/list.cpp" line="94"/>
         <source>LINE</source>
-        <translation>LINE</translation>
+        <translation>LINIA</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="99"/>
@@ -210,7 +210,7 @@ pierwszy punkt bazowy, drugi punkt bazowy, pierwszy punkt docelowy, drugi punkt 
     <message>
         <location filename="../list/list.cpp" line="118"/>
         <source>ARC</source>
-        <translation>ARC</translation>
+        <translation>ŁUK</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="119"/>
@@ -274,17 +274,17 @@ pierwszy punkt bazowy, drugi punkt bazowy, pierwszy punkt docelowy, drugi punkt 
     <message>
         <location filename="../list/list.cpp" line="172"/>
         <source>SOLID</source>
-        <translation>BRYŁA</translation>
+        <translation>WYPEŁNIENIE</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="176"/>
         <source>MTEXT</source>
-        <translation>MTEXT</translation>
+        <translation>TEKSTWIELOWIERSZOWY</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="179"/>
         <source>TEXT</source>
-        <translation>TEXT</translation>
+        <translation>TEKST</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="183"/>
@@ -294,7 +294,7 @@ pierwszy punkt bazowy, drugi punkt bazowy, pierwszy punkt docelowy, drugi punkt 
     <message>
         <location filename="../list/list.cpp" line="186"/>
         <source>INSERT</source>
-        <translation>WSTAW</translation>
+        <translation>WSTAWIENIE</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="189"/>
@@ -359,12 +359,12 @@ pierwszy punkt bazowy, drugi punkt bazowy, pierwszy punkt docelowy, drugi punkt 
     <message>
         <location filename="../list/list.cpp" line="234"/>
         <source>SPLINE</source>
-        <translation>KRZYWA</translation>
+        <translation>SPLAJN</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="237"/>
         <source>SPLINEPOINTS</source>
-        <translation>PUNKTYKRZYWEJ</translation>
+        <translation>SPLAJNPRZEZPUNKTY</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="240"/>
@@ -374,12 +374,12 @@ pierwszy punkt bazowy, drugi punkt bazowy, pierwszy punkt docelowy, drugi punkt 
     <message>
         <location filename="../list/list.cpp" line="243"/>
         <source>DIMLEADER</source>
-        <translation>WYMIARWIODĄCY</translation>
+        <translation>ODNOŚNIK</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="246"/>
         <source>DIMALIGNED</source>
-        <translation>WYRÓWNANIE DO SIATKI</translation>
+        <translation>WYMIARWYRÓWNANY</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="249"/>
@@ -652,7 +652,7 @@ pierwszy punkt bazowy, drugi punkt bazowy, pierwszy punkt docelowy, drugi punkt 
     <message>
         <location filename="../divide/divide.cpp" line="444"/>
         <source>Empty Entity</source>
-        <translation>Pusta jednostka</translation>
+        <translation>Pusty obiekt</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="452"/>
@@ -692,7 +692,7 @@ pierwszy punkt bazowy, drugi punkt bazowy, pierwszy punkt docelowy, drugi punkt 
     <message>
         <location filename="../divide/divide.cpp" line="474"/>
         <source>LINE</source>
-        <translation>LINE</translation>
+        <translation>LINIA</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="479"/>
@@ -723,7 +723,7 @@ pierwszy punkt bazowy, drugi punkt bazowy, pierwszy punkt docelowy, drugi punkt 
     <message>
         <location filename="../divide/divide.cpp" line="499"/>
         <source>ARC</source>
-        <translation>ARC</translation>
+        <translation>ŁUK</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="500"/>
@@ -975,12 +975,12 @@ anti-clockwise.</source>
     <message>
         <location filename="../gear/gear.cpp" line="126"/>
         <source>Draw pitch circle?</source>
-        <translation>Narysować krąg rzutów?</translation>
+        <translation>Narysować okrąg podziałowy?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="127"/>
         <source>Draw base circle?</source>
-        <translation>Narysować koło bazowe?</translation>
+        <translation>Narysować okrąg bazowy?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="128"/>
@@ -1023,7 +1023,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../list/list.cpp" line="278"/>
         <source>List entities</source>
-        <translation>Wykaz podmiotów</translation>
+        <translation>Wykaz obiektów</translation>
     </message>
 </context>
 <context>
@@ -1159,7 +1159,7 @@ anti-clockwise.</source>
         <location filename="../plotequation/plot.cpp" line="30"/>
         <location filename="../plotequation/plot.cpp" line="37"/>
         <source>Plot plugin</source>
-        <translation>Wtyczka</translation>
+        <translation>Wtyczka wykresów</translation>
     </message>
 </context>
 <context>
@@ -1233,7 +1233,7 @@ Użyj t lub x w równaniu jako zmienna/parametr.
         <location filename="../plotequation/plotdialog.cpp" line="61"/>
         <source>SplinePoints</source>
         <comment>Plot Equation to generate 2nd spline by LC_SplinePoints</comment>
-        <translation>SplinePoints</translation>
+        <translation>Punkty splajnu</translation>
     </message>
 </context>
 <context>

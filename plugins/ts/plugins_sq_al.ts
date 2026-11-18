@@ -24,7 +24,7 @@
     <message>
         <location filename="../pointstocsv/pointstocsv.cpp" line="34"/>
         <source>Export points to csv</source>
-        <translation>Eksporto</translation>
+        <translation>Eksporto pikat në csv</translation>
     </message>
 </context>
 <context>
@@ -85,7 +85,7 @@ Baza e parë, baza e dytë, objektivi i parë, objektivi i dytë.</translation>
     <message>
         <location filename="../align/align.cpp" line="86"/>
         <source>first target point:</source>
-        <translation>pikë:</translation>
+        <translation>pika e parë e synimit:</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="84"/>
@@ -96,7 +96,7 @@ Baza e parë, baza e dytë, objektivi i parë, objektivi i dytë.</translation>
     <message>
         <location filename="../align/align.cpp" line="91"/>
         <source>second target point:</source>
-        <translation>pikë:</translation>
+        <translation>pika e dytë e synimit:</translation>
     </message>
 </context>
 <context>
@@ -104,7 +104,7 @@ Baza e parë, baza e dytë, objektivi i parë, objektivi i dytë.</translation>
     <message>
         <location filename="../gear/gear.cpp" line="33"/>
         <source>Gear creation plugin</source>
-        <translation>Shfaq</translation>
+        <translation>Shtojcë për krijimin e ingranazheve</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="40"/>
@@ -118,7 +118,7 @@ Baza e parë, baza e dytë, objektivi i parë, objektivi i dytë.</translation>
         <location filename="../list/list.cpp" line="23"/>
         <location filename="../list/list.cpp" line="30"/>
         <source>List entities</source>
-        <translation>Lista</translation>
+        <translation>Listo entitetet</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="46"/>
@@ -143,7 +143,7 @@ Baza e parë, baza e dytë, objektivi i parë, objektivi i dytë.</translation>
     <message>
         <location filename="../list/list.cpp" line="77"/>
         <source>Layer</source>
-        <translation>Nivel</translation>
+        <translation>Shtresa</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="79"/>
@@ -153,12 +153,12 @@ Baza e parë, baza e dytë, objektivi i parë, objektivi i dytë.</translation>
     <message>
         <location filename="../list/list.cpp" line="80"/>
         <source>Line type</source>
-        <translation>Linja lloji</translation>
+        <translation>Lloji i vijës</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="81"/>
         <source>Line thickness</source>
-        <translation>Linja</translation>
+        <translation>Trashësia e vijës</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="82"/>
@@ -168,7 +168,7 @@ Baza e parë, baza e dytë, objektivi i parë, objektivi i dytë.</translation>
     <message>
         <location filename="../list/list.cpp" line="88"/>
         <source>POINT</source>
-        <translation>POINT</translation>
+        <translation>PIKË</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="89"/>
@@ -180,7 +180,7 @@ Baza e parë, baza e dytë, objektivi i parë, objektivi i dytë.</translation>
     <message>
         <location filename="../list/list.cpp" line="94"/>
         <source>LINE</source>
-        <translation>LINE</translation>
+        <translation>VIJË</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="99"/>
@@ -211,14 +211,14 @@ Baza e parë, baza e dytë, objektivi i parë, objektivi i dytë.</translation>
     <message>
         <location filename="../list/list.cpp" line="118"/>
         <source>ARC</source>
-        <translation>ARC</translation>
+        <translation>HARK</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="119"/>
         <location filename="../list/list.cpp" line="135"/>
         <location filename="../list/list.cpp" line="145"/>
         <source>center point</source>
-        <translation>pikë</translation>
+        <translation>pika qendrore</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="125"/>
@@ -240,7 +240,7 @@ Baza e parë, baza e dytë, objektivi i parë, objektivi i dytë.</translation>
     <message>
         <location filename="../list/list.cpp" line="134"/>
         <source>CIRCLE</source>
-        <translation>CIRCLE</translation>
+        <translation>RRETH</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="140"/>
@@ -255,7 +255,7 @@ Baza e parë, baza e dytë, objektivi i parë, objektivi i dytë.</translation>
     <message>
         <location filename="../list/list.cpp" line="144"/>
         <source>ELLIPSE</source>
-        <translation>ELIPI</translation>
+        <translation>ELIPS</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="148"/>
@@ -285,7 +285,7 @@ Baza e parë, baza e dytë, objektivi i parë, objektivi i dytë.</translation>
     <message>
         <location filename="../list/list.cpp" line="179"/>
         <source>TEXT</source>
-        <translation>TEXT</translation>
+        <translation>TEKST</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="183"/>
@@ -295,7 +295,7 @@ Baza e parë, baza e dytë, objektivi i parë, objektivi i dytë.</translation>
     <message>
         <location filename="../list/list.cpp" line="186"/>
         <source>INSERT</source>
-        <translation>INSERT</translation>
+        <translation>FUTJE</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="189"/>
@@ -305,7 +305,7 @@ Baza e parë, baza e dytë, objektivi i parë, objektivi i dytë.</translation>
     <message>
         <location filename="../list/list.cpp" line="191"/>
         <source>Insertion point</source>
-        <translation>Fut</translation>
+        <translation>Pika e futjes</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="194"/>
@@ -315,7 +315,7 @@ Baza e parë, baza e dytë, objektivi i parë, objektivi i dytë.</translation>
     <message>
         <location filename="../list/list.cpp" line="197"/>
         <source>Rotation</source>
-        <translation>Rotation</translation>
+        <translation>Rrotullim</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="203"/>
@@ -330,7 +330,7 @@ Baza e parë, baza e dytë, objektivi i parë, objektivi i dytë.</translation>
     <message>
         <location filename="../list/list.cpp" line="214"/>
         <source>POLYLINE</source>
-        <translation>POLILINA</translation>
+        <translation>POLILINJË</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="215"/>
@@ -350,7 +350,7 @@ Baza e parë, baza e dytë, objektivi i parë, objektivi i dytë.</translation>
     <message>
         <location filename="../list/list.cpp" line="217"/>
         <source>Vertices</source>
-        <translation>Vertikë</translation>
+        <translation>Kulmet</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="231"/>
@@ -370,37 +370,37 @@ Baza e parë, baza e dytë, objektivi i parë, objektivi i dytë.</translation>
     <message>
         <location filename="../list/list.cpp" line="240"/>
         <source>HATCH</source>
-        <translation>HATCH</translation>
+        <translation>VIJËZIM</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="243"/>
         <source>DIMLEADER</source>
-        <translation>DIMLEPER</translation>
+        <translation>VIJË TREGUESE</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="246"/>
         <source>DIMALIGNED</source>
-        <translation>TË DREJTË</translation>
+        <translation>KUOTË E RRESHTUAR</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="249"/>
         <source>DIMLINEAR</source>
-        <translation>DIMLINAR</translation>
+        <translation>KUOTË LINEARE</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="252"/>
         <source>DIMRADIAL</source>
-        <translation>DREADIAL</translation>
+        <translation>KUOTË RREZEJE</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="255"/>
         <source>DIMDIAMETRIC</source>
-        <translation>DIMDIAMIK</translation>
+        <translation>KUOTË DIAMETRI</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="258"/>
         <source>DIMANGULAR</source>
-        <translation>DIMANGANTI</translation>
+        <translation>KUOTË KËNDORE</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="261"/>
@@ -414,17 +414,17 @@ Baza e parë, baza e dytë, objektivi i parë, objektivi i dytë.</translation>
         <location filename="../sameprop/sameprop.cpp" line="21"/>
         <location filename="../sameprop/sameprop.cpp" line="28"/>
         <source>Same properties</source>
-        <translation>Të njëjtat pronësitë</translation>
+        <translation>Të njëjtat veti</translation>
     </message>
     <message>
         <location filename="../sameprop/sameprop.cpp" line="41"/>
         <source>select original entity:</source>
-        <translation>zgjidh</translation>
+        <translation>zgjidh entitetin origjinal:</translation>
     </message>
     <message>
         <location filename="../sameprop/sameprop.cpp" line="43"/>
         <source>select entities to change</source>
-        <translation>zgjidh</translation>
+        <translation>zgjidh entitetet për t&apos;i ndryshuar</translation>
     </message>
 </context>
 <context>
@@ -494,7 +494,7 @@ Baza e parë, baza e dytë, objektivi i parë, objektivi i dytë.</translation>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="237"/>
         <source>Connect points</source>
-        <translation>Lidh</translation>
+        <translation>Lidh pikat</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="245"/>
@@ -534,17 +534,17 @@ Baza e parë, baza e dytë, objektivi i parë, objektivi i dytë.</translation>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="248"/>
         <source>Draw point elevation</source>
-        <translation>Vizato</translation>
+        <translation>Vizato lartësinë e pikës</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="249"/>
         <source>Point Code</source>
-        <translation>Plani</translation>
+        <translation>Kodi i pikës</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="249"/>
         <source>Draw point code</source>
-        <translation>Vizato kodi</translation>
+        <translation>Vizato kodin e pikës</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="263"/>
@@ -564,32 +564,32 @@ Baza e parë, baza e dytë, objektivi i parë, objektivi i dytë.</translation>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="305"/>
         <source>Point 2D layer is empty</source>
-        <translation>Niveli është</translation>
+        <translation>Shtresa e pikave 2D është bosh</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="308"/>
         <source>Point 3D layer is empty</source>
-        <translation>Niveli është</translation>
+        <translation>Shtresa e pikave 3D është bosh</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="311"/>
         <source>Point elevation layer is empty</source>
-        <translation>Niveli është</translation>
+        <translation>Shtresa e lartësive të pikave është bosh</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="312"/>
         <source>Point elevation height is empty</source>
-        <translation>Lartësia është</translation>
+        <translation>Lartësia e tekstit për lartësinë e pikës është bosh</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="313"/>
         <source>Point elevation separation is empty</source>
-        <translation>Pika është</translation>
+        <translation>Ndarësi i lartësisë së pikës është bosh</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="316"/>
         <source>Point number layer is empty</source>
-        <translation>Pika niveli është</translation>
+        <translation>Shtresa e numrave të pikave është bosh</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="317"/>
@@ -604,7 +604,7 @@ Baza e parë, baza e dytë, objektivi i parë, objektivi i dytë.</translation>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="321"/>
         <source>Point code layer is empty</source>
-        <translation>Pika niveli është</translation>
+        <translation>Shtresa e kodeve të pikave është bosh</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="322"/>
@@ -614,7 +614,7 @@ Baza e parë, baza e dytë, objektivi i parë, objektivi i dytë.</translation>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="323"/>
         <source>Point code separation is empty</source>
-        <translation>Pika është</translation>
+        <translation>Ndarësi i kodit të pikës është bosh</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="359"/>
@@ -633,12 +633,12 @@ Baza e parë, baza e dytë, objektivi i parë, objektivi i dytë.</translation>
         <location filename="../divide/divide.cpp" line="35"/>
         <location filename="../divide/divide.cpp" line="42"/>
         <source>Divide</source>
-        <translation>Pjesëtim</translation>
+        <translation>Ndaj</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="56"/>
         <source>Select a line, circle or arc and press return</source>
-        <translation>Zgjidh një vijë, rreth ose ark dhe kthim shtypi</translation>
+        <translation>Zgjidh një vijë, rreth ose hark dhe shtyp Enter</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="67"/>
@@ -668,7 +668,7 @@ Baza e parë, baza e dytë, objektivi i parë, objektivi i dytë.</translation>
     <message>
         <location filename="../divide/divide.cpp" line="460"/>
         <source>Layer</source>
-        <translation>Nivel</translation>
+        <translation>Shtresa</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="462"/>
@@ -678,12 +678,12 @@ Baza e parë, baza e dytë, objektivi i parë, objektivi i dytë.</translation>
     <message>
         <location filename="../divide/divide.cpp" line="463"/>
         <source>Line type</source>
-        <translation>Linja lloji</translation>
+        <translation>Lloji i vijës</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="465"/>
         <source>Line thickness</source>
-        <translation>Linja</translation>
+        <translation>Trashësia e vijës</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="467"/>
@@ -693,7 +693,7 @@ Baza e parë, baza e dytë, objektivi i parë, objektivi i dytë.</translation>
     <message>
         <location filename="../divide/divide.cpp" line="474"/>
         <source>LINE</source>
-        <translation>LINE</translation>
+        <translation>VIJË</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="479"/>
@@ -724,13 +724,13 @@ Baza e parë, baza e dytë, objektivi i parë, objektivi i dytë.</translation>
     <message>
         <location filename="../divide/divide.cpp" line="499"/>
         <source>ARC</source>
-        <translation>ARC</translation>
+        <translation>HARK</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="500"/>
         <location filename="../divide/divide.cpp" line="519"/>
         <source>center point</source>
-        <translation>pikë</translation>
+        <translation>pika qendrore</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="506"/>
@@ -752,7 +752,7 @@ Baza e parë, baza e dytë, objektivi i parë, objektivi i dytë.</translation>
     <message>
         <location filename="../divide/divide.cpp" line="518"/>
         <source>CIRCLE</source>
-        <translation>CIRCLE</translation>
+        <translation>RRETH</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="524"/>
@@ -767,7 +767,7 @@ Baza e parë, baza e dytë, objektivi i parë, objektivi i dytë.</translation>
     <message>
         <location filename="../divide/divide.cpp" line="530"/>
         <source>POLYLINE</source>
-        <translation>POLILINA</translation>
+        <translation>POLILINJË</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="531"/>
@@ -787,7 +787,7 @@ Baza e parë, baza e dytë, objektivi i parë, objektivi i dytë.</translation>
     <message>
         <location filename="../divide/divide.cpp" line="534"/>
         <source>Vertices</source>
-        <translation>Vertikë</translation>
+        <translation>Kulmet</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="539"/>
@@ -805,12 +805,12 @@ Baza e parë, baza e dytë, objektivi i parë, objektivi i dytë.</translation>
     <message>
         <location filename="../divide/dividedlg.cpp" line="48"/>
         <source>Divide - </source>
-        <translation>Ndahuni</translation>
+        <translation>Ndaj - </translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="69"/>
         <source>Layers</source>
-        <translation>Nivelet</translation>
+        <translation>Shtresat</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="75"/>
@@ -825,7 +825,7 @@ Baza e parë, baza e dytë, objektivi i parë, objektivi i dytë.</translation>
     <message>
         <location filename="../divide/dividedlg.cpp" line="85"/>
         <source>Divide at</source>
-        <translation>Në</translation>
+        <translation>Ndaj në</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="92"/>
@@ -840,12 +840,12 @@ Baza e parë, baza e dytë, objektivi i parë, objektivi i dytë.</translation>
     <message>
         <location filename="../divide/dividedlg.cpp" line="126"/>
         <source>Ticks - Off</source>
-        <translation>Tik</translation>
+        <translation>Shenjat - Fikur</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="134"/>
         <source>Breaks - Off</source>
-        <translation>Pushimet</translation>
+        <translation>Ndërprerjet - Fikur</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="179"/>
@@ -875,7 +875,7 @@ Kundër orës.</translation>
     <message>
         <location filename="../divide/dividedlg.cpp" line="252"/>
         <source>Ticks</source>
-        <translation>Tik</translation>
+        <translation>Shenjat</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="258"/>
@@ -908,7 +908,7 @@ Kundër orës.</translation>
     <message>
         <location filename="../pointstocsv/pointstocsv.cpp" line="122"/>
         <source>CSV (*.csv)</source>
-        <translation>CSV (.csv)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../pointstocsv/pointstocsv.cpp" line="130"/>
@@ -951,12 +951,12 @@ Kundër orës.</translation>
     <message>
         <location filename="../gear/gear.cpp" line="119"/>
         <source>Number of segments to draw (dedendum)</source>
-        <translation>Numri nga</translation>
+        <translation>Numri i segmenteve për t&apos;u vizatuar (këmba e dhëmbit)</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="120"/>
         <source>Number of segments to draw (addendum)</source>
-        <translation>Numri nga</translation>
+        <translation>Numri i segmenteve për t&apos;u vizatuar (koka e dhëmbit)</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="121"/>
@@ -996,7 +996,7 @@ Kundër orës.</translation>
     <message>
         <location filename="../gear/gear.cpp" line="129"/>
         <source>Draw pressure line?</source>
-        <translation>Të tërheqim linjën e presionit?</translation>
+        <translation>Të vizatohet vija e presionit?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="130"/>
@@ -1011,7 +1011,7 @@ Kundër orës.</translation>
     <message>
         <location filename="../gear/gear.cpp" line="133"/>
         <source>Number of segments to draw (interference)</source>
-        <translation>Numri nga</translation>
+        <translation>Numri i segmenteve për t&apos;u vizatuar (interferenca)</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="135"/>
@@ -1029,7 +1029,7 @@ Kundër orës.</translation>
     <message>
         <location filename="../list/list.cpp" line="278"/>
         <source>List entities</source>
-        <translation>Lista</translation>
+        <translation>Listo entitetet</translation>
     </message>
 </context>
 <context>
@@ -1037,7 +1037,7 @@ Kundër orës.</translation>
     <message>
         <location filename="../sample/sample.cpp" line="54"/>
         <source>Draw line</source>
-        <translation>Vizato</translation>
+        <translation>Vizato vijë</translation>
     </message>
     <message>
         <location filename="../sample/sample.cpp" line="60"/>
@@ -1130,7 +1130,7 @@ Kundër orës.</translation>
     <message>
         <location filename="../picfile/picfile.cpp" line="132"/>
         <source>The file %1 not exist</source>
-        <translation>Fajlli %1 nuk ekziston</translation>
+        <translation>Skedari %1 nuk ekziston</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="137"/>
@@ -1150,7 +1150,7 @@ Kundër orës.</translation>
     <message>
         <location filename="../picfile/picfile.cpp" line="179"/>
         <source>picPunto drawLine: next point is empty %1</source>
-        <translation>pika e ardhshme për të vizatuar linjën është bosh %1</translation>
+        <translation>picPunto drawLine: pika e ardhshme është bosh %1</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="262"/>
@@ -1173,7 +1173,7 @@ Kundër orës.</translation>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="15"/>
         <source>Plot equation</source>
-        <translation>Ekuacioni</translation>
+        <translation>Vizato grafikun e ekuacionit</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="18"/>
@@ -1182,10 +1182,11 @@ If you don&apos;t want to use the parametric form, just leave out &quot;Equation
 You can use pi when you need the value of pi (i.e. (3*pi)).
 Use t or x in your equation as a variable/parameter.
 </source>
-        <translation>Nga.
-Nëse nuk do të përdorësh formën parametrike, lëre &quot;Ekuition2.&quot;
-Mund të përdorni pi kur keni nevojë për vlerën e pi (p.sh. (3*pi).
-Përdorimi në a.</translation>
+        <translation>Kjo shtojcë ju lejon të vizatoni grafikët e ekuacioneve matematikore.
+Nëse nuk doni të përdorni formën parametrike, thjesht lëreni bosh &quot;Ekuacioni 2&quot;.
+Mund të përdorni pi kur ju nevojitet vlera e pi (p.sh. (3*pi)).
+Përdorni t ose x në ekuacion si ndryshore/parametër.
+</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="22"/>
@@ -1226,19 +1227,19 @@ Përdorimi në a.</translation>
         <location filename="../plotequation/plotdialog.cpp" line="59"/>
         <source>Line Segments</source>
         <comment>Plot Equation to generate RS_Line segments</comment>
-        <translation>Shenjat e rreshtit</translation>
+        <translation>Segmentet e vijës</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="60"/>
         <source>Polyline</source>
         <comment>Plot Equation to generate RS_Polyline</comment>
-        <translation>Poliline</translation>
+        <translation>Polilinjë</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="61"/>
         <source>SplinePoints</source>
         <comment>Plot Equation to generate 2nd spline by LC_SplinePoints</comment>
-        <translation>SpinPoints</translation>
+        <translation>Pikat e spline-it</translation>
     </message>
 </context>
 <context>
@@ -1246,7 +1247,7 @@ Përdorimi në a.</translation>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="175"/>
         <source>Layer:</source>
-        <translation>Nivel:</translation>
+        <translation>Shtresa:</translation>
     </message>
 </context>
 <context>

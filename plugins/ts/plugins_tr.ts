@@ -33,12 +33,12 @@
         <location filename="../align/align.cpp" line="24"/>
         <location filename="../align/align.cpp" line="31"/>
         <source>Align</source>
-        <translation>Align</translation>
+        <translation>Hizala</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="32"/>
         <source>Align settings...</source>
-        <translation>Align ayarları...</translation>
+        <translation>Hizalama ayarları...</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="49"/>
@@ -48,12 +48,12 @@
     <message>
         <location filename="../align/align.cpp" line="50"/>
         <source>Specify base points first</source>
-        <translation>İlk önce yer alan taban puanları</translation>
+        <translation>Önce temel noktaları belirtin</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="54"/>
         <source>Align Settings</source>
-        <translation>Align Ayarlar</translation>
+        <translation>Hizalama Ayarları</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="57"/>
@@ -128,7 +128,7 @@ Hizalama, hizalama noktalarını şu sırayla isteyecektir:
     <message>
         <location filename="../list/list.cpp" line="60"/>
         <source>Empty Entity</source>
-        <translation>Boşluğun</translation>
+        <translation>Boş Varlık</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="67"/>
@@ -153,12 +153,12 @@ Hizalama, hizalama noktalarını şu sırayla isteyecektir:
     <message>
         <location filename="../list/list.cpp" line="80"/>
         <source>Line type</source>
-        <translation>Line tipi</translation>
+        <translation>Çizgi tipi</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="81"/>
         <source>Line thickness</source>
-        <translation>Line kalınlığı</translation>
+        <translation>Çizgi kalınlığı</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="82"/>
@@ -310,7 +310,7 @@ Hizalama, hizalama noktalarını şu sırayla isteyecektir:
     <message>
         <location filename="../list/list.cpp" line="194"/>
         <source>Scale</source>
-        <translation>Scale</translation>
+        <translation>Ölçek</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="197"/>
@@ -350,7 +350,7 @@ Hizalama, hizalama noktalarını şu sırayla isteyecektir:
     <message>
         <location filename="../list/list.cpp" line="217"/>
         <source>Vertices</source>
-        <translation>Vertices</translation>
+        <translation>Köşeler</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="231"/>
@@ -504,7 +504,7 @@ Hizalama, hizalama noktalarını şu sırayla isteyecektir:
     <message>
         <location filename="../asciifile/asciifile.cpp" line="245"/>
         <source>Draw 2D Point</source>
-        <translation>2D Point</translation>
+        <translation>2B Nokta Çiz</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="246"/>
@@ -514,7 +514,7 @@ Hizalama, hizalama noktalarını şu sırayla isteyecektir:
     <message>
         <location filename="../asciifile/asciifile.cpp" line="246"/>
         <source>Draw 3D Point</source>
-        <translation>3D Point</translation>
+        <translation>3B Nokta Çiz</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="247"/>
@@ -564,57 +564,57 @@ Hizalama, hizalama noktalarını şu sırayla isteyecektir:
     <message>
         <location filename="../asciifile/asciifile.cpp" line="305"/>
         <source>Point 2D layer is empty</source>
-        <translation>Point 2D katmanı boş</translation>
+        <translation>2B nokta katmanı boş</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="308"/>
         <source>Point 3D layer is empty</source>
-        <translation>Point 3D katmanı boş</translation>
+        <translation>3B nokta katmanı boş</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="311"/>
         <source>Point elevation layer is empty</source>
-        <translation>Puan yükseklik tabakası boş</translation>
+        <translation>Nokta yüksekliği katmanı boş</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="312"/>
         <source>Point elevation height is empty</source>
-        <translation>Puan yüksekliği boş</translation>
+        <translation>Nokta yüksekliği metninin yüksekliği boş</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="313"/>
         <source>Point elevation separation is empty</source>
-        <translation>Puan yükseklik ayrımı boş</translation>
+        <translation>Nokta yüksekliği aralığı boş</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="316"/>
         <source>Point number layer is empty</source>
-        <translation>Point number katmanı boş</translation>
+        <translation>Nokta numarası katmanı boş</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="317"/>
         <source>Point number height is empty</source>
-        <translation>Puan sayısı yüksekliği boş</translation>
+        <translation>Nokta numarası yüksekliği boş</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="318"/>
         <source>Point number separation is empty</source>
-        <translation>Point number ayrılık boş</translation>
+        <translation>Nokta numarası aralığı boş</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="321"/>
         <source>Point code layer is empty</source>
-        <translation>Point code katmanı boş</translation>
+        <translation>Nokta kodu katmanı boş</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="322"/>
         <source>Point code height is empty</source>
-        <translation>Puan yüksekliği boş</translation>
+        <translation>Nokta kodu yüksekliği boş</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="323"/>
         <source>Point code separation is empty</source>
-        <translation>Point code ayrılması boş</translation>
+        <translation>Nokta kodu aralığı boş</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="359"/>
@@ -653,7 +653,7 @@ Hizalama, hizalama noktalarını şu sırayla isteyecektir:
     <message>
         <location filename="../divide/divide.cpp" line="444"/>
         <source>Empty Entity</source>
-        <translation>Boşluğun</translation>
+        <translation>Boş Varlık</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="452"/>
@@ -683,7 +683,7 @@ Hizalama, hizalama noktalarını şu sırayla isteyecektir:
     <message>
         <location filename="../divide/divide.cpp" line="465"/>
         <source>Line thickness</source>
-        <translation>Line kalınlığı</translation>
+        <translation>Çizgi kalınlığı</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="467"/>
@@ -787,7 +787,7 @@ Hizalama, hizalama noktalarını şu sırayla isteyecektir:
     <message>
         <location filename="../divide/divide.cpp" line="534"/>
         <source>Vertices</source>
-        <translation>Vertices</translation>
+        <translation>Köşeler</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="539"/>
@@ -797,7 +797,7 @@ Hizalama, hizalama noktalarını şu sırayla isteyecektir:
     <message>
         <location filename="../divide/divide.cpp" line="555"/>
         <source>MUST be a line, circle or arc</source>
-        <translation>MUST bir çizgi, çember veya ark</translation>
+        <translation>Bir çizgi, çember veya yay OLMALIDIR</translation>
     </message>
 </context>
 <context>
@@ -830,7 +830,7 @@ Hizalama, hizalama noktalarını şu sırayla isteyecektir:
     <message>
         <location filename="../divide/dividedlg.cpp" line="92"/>
         <source>Size</source>
-        <translation>Size</translation>
+        <translation>Boyut</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="115"/>
@@ -840,7 +840,7 @@ Hizalama, hizalama noktalarını şu sırayla isteyecektir:
     <message>
         <location filename="../divide/dividedlg.cpp" line="126"/>
         <source>Ticks - Off</source>
-        <translation>Tavşanlar - Off</translation>
+        <translation>İşaretler - Kapalı</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="134"/>
@@ -870,17 +870,17 @@ Gündelik bir şekilde.</translation>
     <message>
         <location filename="../divide/dividedlg.cpp" line="246"/>
         <source>&lt;i&gt;&quot;New&quot;&lt;/i&gt;&lt;br&gt;Enter name&lt;br&gt;for a new layer&lt;br&gt;(if required?) to&lt;br&gt;draw ticks on.</source>
-        <translation>&lt;i&gt;&quot;Yeni&quot;&lt;/i&gt;&lt;br&gt;Enter adı&lt;br&gt; Yeni bir katman için &lt;br&gt; (eğer gerekliyse?) &lt;br&gt; üzerinde kenevrler.</translation>
+        <translation>&lt;i&gt;&quot;Yeni&quot;&lt;/i&gt;&lt;br&gt;İşaretlerin çizileceği&lt;br&gt;yeni katman için&lt;br&gt;(gerekiyorsa)&lt;br&gt;bir ad girin.</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="252"/>
         <source>Ticks</source>
-        <translation>Tavşanlar</translation>
+        <translation>İşaretler</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="258"/>
         <source>Above</source>
-        <translation>Above</translation>
+        <translation>Üstte</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="259"/>
@@ -890,7 +890,7 @@ Gündelik bir şekilde.</translation>
     <message>
         <location filename="../divide/dividedlg.cpp" line="263"/>
         <source>Outside</source>
-        <translation>Dışarıdan dış dışında</translation>
+        <translation>Dışarıda</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="264"/>
@@ -1072,12 +1072,12 @@ Gündelik bir şekilde.</translation>
     <message>
         <location filename="../sample/sample.cpp" line="107"/>
         <source>Start X is empty</source>
-        <translation>Start X boş</translation>
+        <translation>Başlangıç X boş</translation>
     </message>
     <message>
         <location filename="../sample/sample.cpp" line="108"/>
         <source>Start Y is empty</source>
-        <translation>Start Y boş</translation>
+        <translation>Başlangıç Y boş</translation>
     </message>
     <message>
         <location filename="../sample/sample.cpp" line="109"/>
@@ -1105,7 +1105,7 @@ Gündelik bir şekilde.</translation>
     <message>
         <location filename="../picfile/picfile.cpp" line="75"/>
         <source>Scale:</source>
-        <translation>Scale:</translation>
+        <translation>Ölçek:</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="79"/>
@@ -1125,7 +1125,7 @@ Gündelik bir şekilde.</translation>
     <message>
         <location filename="../picfile/picfile.cpp" line="119"/>
         <source>Scale Factor is empty or invalid</source>
-        <translation>Scale Factor boş veya geçersiz</translation>
+        <translation>Ölçek Faktörü boş veya geçersiz</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="132"/>
@@ -1165,7 +1165,7 @@ Gündelik bir şekilde.</translation>
         <location filename="../plotequation/plot.cpp" line="30"/>
         <location filename="../plotequation/plot.cpp" line="37"/>
         <source>Plot plugin</source>
-        <translation>Plot eklentisi</translation>
+        <translation>Grafik eklentisi</translation>
     </message>
 </context>
 <context>
@@ -1173,7 +1173,7 @@ Gündelik bir şekilde.</translation>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="15"/>
         <source>Plot equation</source>
-        <translation>Plot denklemi</translation>
+        <translation>Grafik denklemi</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="18"/>
@@ -1182,10 +1182,11 @@ If you don&apos;t want to use the parametric form, just leave out &quot;Equation
 You can use pi when you need the value of pi (i.e. (3*pi)).
 Use t or x in your equation as a variable/parameter.
 </source>
-        <translation>Bu eklenti, matematiksel denklemleri arsanıza olanak sağlar.
-Parametrik formu kullanmak istemiyorsanız, sadece &quot;Equation2&quot; bırakırsınız.
-Pizza değerine ihtiyacınız olduğunda pi kullanabilirsiniz (i.e. (3*pi)).
-Bir değişken / parametre olarak denkleminizde t veya x kullanın.</translation>
+        <translation>Bu eklenti, matematiksel denklemlerin grafiğini çizmenizi sağlar.
+Parametrik biçimi kullanmak istemiyorsanız &quot;Equation2&quot; alanını boş bırakın.
+Pi sayısının değerine ihtiyaç duyduğunuzda pi kullanabilirsiniz (ör. (3*pi)).
+Denkleminizde değişken/parametre olarak t veya x kullanın.
+</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="22"/>
@@ -1215,7 +1216,7 @@ Bir değişken / parametre olarak denkleminizde t veya x kullanın.</translation
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="32"/>
         <source>Draw</source>
-        <translation>Draw</translation>
+        <translation>Çiz</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="33"/>
@@ -1254,7 +1255,7 @@ Bir değişken / parametre olarak denkleminizde t veya x kullanın.</translation
     <message>
         <location filename="../asciifile/asciifile.cpp" line="204"/>
         <source>Style:</source>
-        <translation>Style:</translation>
+        <translation>Stil:</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="205"/>

@@ -250,7 +250,7 @@ primeiro ponto base, segundo ponto base, primeiro ponto alvo, segundo ponto alvo
     <message>
         <location filename="../list/list.cpp" line="141"/>
         <source>area</source>
-        <translation>area</translation>
+        <translation>área</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="144"/>
@@ -300,7 +300,7 @@ primeiro ponto base, segundo ponto base, primeiro ponto alvo, segundo ponto alvo
     <message>
         <location filename="../list/list.cpp" line="189"/>
         <source>Name</source>
-        <translation>Name</translation>
+        <translation>Nome</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="191"/>
@@ -360,12 +360,12 @@ primeiro ponto base, segundo ponto base, primeiro ponto alvo, segundo ponto alvo
     <message>
         <location filename="../list/list.cpp" line="234"/>
         <source>SPLINE</source>
-        <translation>LINHA SUAVE</translation>
+        <translation>SPLINE</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="237"/>
         <source>SPLINEPOINTS</source>
-        <translation>PONTOS DA LINHA SUAVE</translation>
+        <translation>PONTOS DE SPLINE</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="240"/>
@@ -762,12 +762,12 @@ primeiro ponto base, segundo ponto base, primeiro ponto alvo, segundo ponto alvo
     <message>
         <location filename="../divide/divide.cpp" line="526"/>
         <source>area</source>
-        <translation>area</translation>
+        <translation>área</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="530"/>
         <source>POLYLINE</source>
-        <translation>POLÍLIA</translation>
+        <translation>POLILINHA</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="531"/>
@@ -787,7 +787,7 @@ primeiro ponto base, segundo ponto base, primeiro ponto alvo, segundo ponto alvo
     <message>
         <location filename="../divide/divide.cpp" line="534"/>
         <source>Vertices</source>
-        <translation>Vertices</translation>
+        <translation>Vértices</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="539"/>
@@ -830,7 +830,7 @@ primeiro ponto base, segundo ponto base, primeiro ponto alvo, segundo ponto alvo
     <message>
         <location filename="../divide/dividedlg.cpp" line="92"/>
         <source>Size</source>
-        <translation>Size</translation>
+        <translation>Tamanho</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="115"/>
@@ -840,7 +840,7 @@ primeiro ponto base, segundo ponto base, primeiro ponto alvo, segundo ponto alvo
     <message>
         <location filename="../divide/dividedlg.cpp" line="126"/>
         <source>Ticks - Off</source>
-        <translation>Tiques - Desligados</translation>
+        <translation>Marcas - Desligadas</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="134"/>
@@ -870,12 +870,12 @@ anti-horário.</translation>
     <message>
         <location filename="../divide/dividedlg.cpp" line="246"/>
         <source>&lt;i&gt;&quot;New&quot;&lt;/i&gt;&lt;br&gt;Enter name&lt;br&gt;for a new layer&lt;br&gt;(if required?) to&lt;br&gt;draw ticks on.</source>
-        <translation>&lt;i&gt;&quot;New&quot;&lt;/i&gt;&lt;br&gt;Enter name&lt;br&gt;for a new layer&lt;br&gt;(se necessário?) to&lt;br&gt;draw ticks on.</translation>
+        <translation>&lt;i&gt;&quot;Novo&quot;&lt;/i&gt;&lt;br&gt;Digite o nome&lt;br&gt;de uma nova camada&lt;br&gt;(se necessário?) para&lt;br&gt;desenhar as marcas.</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="252"/>
         <source>Ticks</source>
-        <translation>Tiques</translation>
+        <translation>Marcas</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="258"/>
@@ -903,7 +903,7 @@ anti-horário.</translation>
     <message>
         <location filename="../pointstocsv/pointstocsv.cpp" line="122"/>
         <source>Export to file</source>
-        <translation>Exportar para um ficheiro</translation>
+        <translation>Exportar para um arquivo</translation>
     </message>
     <message>
         <location filename="../pointstocsv/pointstocsv.cpp" line="122"/>
@@ -1100,7 +1100,7 @@ anti-horário.</translation>
     <message>
         <location filename="../picfile/picfile.cpp" line="65"/>
         <source>File...</source>
-        <translation>Ficheiro...</translation>
+        <translation>Arquivo...</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="75"/>
@@ -1212,7 +1212,7 @@ Use t or x in your equation as a variable/parameter.
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="32"/>
         <source>Draw</source>
-        <translation>Draw</translation>
+        <translation>Desenhar</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="33"/>
@@ -1229,7 +1229,7 @@ Use t or x in your equation as a variable/parameter.
         <location filename="../plotequation/plotdialog.cpp" line="60"/>
         <source>Polyline</source>
         <comment>Plot Equation to generate RS_Polyline</comment>
-        <translation>Polilina</translation>
+        <translation>Polilinha</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="61"/>

@@ -386,7 +386,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="249"/>
         <source>DIMLINEAR</source>
-        <translation>線形寸法</translation>
+        <translation>長さ寸法</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="252"/>

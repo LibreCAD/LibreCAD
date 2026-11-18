@@ -43,7 +43,7 @@
     <message>
         <location filename="../align/align.cpp" line="49"/>
         <source>Keep original objects</source>
-        <translation>Pertahankan obyek asli</translation>
+        <translation>Pertahankan objek asli</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="50"/>
@@ -143,7 +143,7 @@ titik dasar pertama, titik dasar kedua, titik target pertama, titik target kedua
     <message>
         <location filename="../list/list.cpp" line="77"/>
         <source>Layer</source>
-        <translation>Lapis</translation>
+        <translation>Lapisan</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="79"/>
@@ -153,7 +153,7 @@ titik dasar pertama, titik dasar kedua, titik target pertama, titik target kedua
     <message>
         <location filename="../list/list.cpp" line="80"/>
         <source>Line type</source>
-        <translation>Tipe garis</translation>
+        <translation>Jenis garis</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="81"/>
@@ -330,7 +330,7 @@ titik dasar pertama, titik dasar kedua, titik target pertama, titik target kedua
     <message>
         <location filename="../list/list.cpp" line="214"/>
         <source>POLYLINE</source>
-        <translation>GARIS BANYAK</translation>
+        <translation>POLYLINE</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="215"/>
@@ -370,17 +370,17 @@ titik dasar pertama, titik dasar kedua, titik target pertama, titik target kedua
     <message>
         <location filename="../list/list.cpp" line="240"/>
         <source>HATCH</source>
-        <translation>POLA</translation>
+        <translation>ARSIRAN</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="243"/>
         <source>DIMLEADER</source>
-        <translation>GARIS DIMENSI</translation>
+        <translation>GARIS PETUNJUK</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="246"/>
         <source>DIMALIGNED</source>
-        <translation>DIMENSI SEJALAR</translation>
+        <translation>DIMENSI SEJAJAR</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="249"/>
@@ -840,7 +840,7 @@ titik dasar pertama, titik dasar kedua, titik target pertama, titik target kedua
     <message>
         <location filename="../divide/dividedlg.cpp" line="126"/>
         <source>Ticks - Off</source>
-        <translation>Garis - Mati</translation>
+        <translation>Tanda - Mati</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="134"/>
@@ -869,12 +869,12 @@ berlawanan arah jarum jam.</translation>
     <message>
         <location filename="../divide/dividedlg.cpp" line="246"/>
         <source>&lt;i&gt;&quot;New&quot;&lt;/i&gt;&lt;br&gt;Enter name&lt;br&gt;for a new layer&lt;br&gt;(if required?) to&lt;br&gt;draw ticks on.</source>
-        <translation>&lt;i&gt;&quot;Baru&quot;&lt;/i&gt;&lt;br&gt;Masukkan nama&lt;br&gt;untuk lapisan baru&lt;br&gt;(jika diperlukan)&lt;br&gt;untuk menggambar garis.</translation>
+        <translation>&lt;i&gt;&quot;Baru&quot;&lt;/i&gt;&lt;br&gt;Masukkan nama&lt;br&gt;untuk lapisan baru&lt;br&gt;(jika diperlukan)&lt;br&gt;untuk menggambar tanda.</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="252"/>
         <source>Ticks</source>
-        <translation>Garis</translation>
+        <translation>Tanda</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="258"/>
@@ -990,7 +990,7 @@ berlawanan arah jarum jam.</translation>
     <message>
         <location filename="../gear/gear.cpp" line="128"/>
         <source>Draw root circle?</source>
-        <translation>Gambar lingkaran akar?</translation>
+        <translation>Gambar lingkaran kaki?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="129"/>

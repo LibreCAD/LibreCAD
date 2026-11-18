@@ -111,7 +111,7 @@
     <message>
         <location filename="../src/actions/lc_actiondimarc.cpp" line="267"/>
         <source>Select arc entity</source>
-        <translation>Seleccionar entidade arco</translation>
+        <translation>Selecionar entidade arco</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondimarc.cpp" line="268"/>
@@ -122,7 +122,7 @@
     <message>
         <location filename="../src/actions/lc_actiondimarc.cpp" line="272"/>
         <source>Specify dimension arc location</source>
-        <translation>Especificar localização do arco de dimensão</translation>
+        <translation>Especificar localização do arco de cota</translation>
     </message>
 </context>
 <context>
@@ -131,13 +131,13 @@
         <location filename="../src/actions/lc_actiondrawcircle2pr.cpp" line="195"/>
         <source>radius=%1 is too small for points selected
 distance between points=%2 is larger than diameter=%3</source>
-        <translation>raio=%1 é demasiado pequeno para os pontos seleccionados
+        <translation>raio=%1 é demasiado pequeno para os pontos selecionados
 distância entre pontos=%2 é maior do que o diâmetro=%3</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawcircle2pr.cpp" line="205"/>
         <source>Select from two possible circle centers</source>
-        <translation>Seleccionar entre dois possíveis centros de círculo</translation>
+        <translation>Selecionar entre dois possíveis centros de círculo</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawcircle2pr.cpp" line="238"/>
@@ -163,7 +163,7 @@ distância entre pontos=%2 é maior do que o diâmetro=%3</translation>
     <message>
         <location filename="../src/actions/lc_actiondrawcircle2pr.cpp" line="246"/>
         <source>Select circle center</source>
-        <translation>Seleccionar centro do círculo</translation>
+        <translation>Selecionar centro do círculo</translation>
     </message>
 </context>
 <context>
@@ -294,7 +294,7 @@ ou [%2]</translation>
     <message>
         <location filename="../src/actions/lc_actiondrawlinesnake.cpp" line="434"/>
         <source>Specify direction (x or y) or [%1]</source>
-        <translation>Especificar direcção (x ou y) ou [%1]</translation>
+        <translation>Especificar direção (x ou y) ou [%1]</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawlinesnake.cpp" line="434"/>
@@ -492,17 +492,17 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="54"/>
         <source>Zoom &amp;Panning</source>
-        <translation>Zoom &amp;panorâmico</translation>
+        <translation>&amp;Deslocar a vista</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="64"/>
         <source>Select Entity</source>
-        <translation>Seleccionar entidade</translation>
+        <translation>Selecionar entidade</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="71"/>
         <source>Select Window</source>
-        <translation>Seleccionar janela</translation>
+        <translation>Selecionar janela</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="78"/>
@@ -512,12 +512,12 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="85"/>
         <source>(De-)Select &amp;Contour</source>
-        <translation>(Des)Seleccionar &amp;contorno</translation>
+        <translation>(Des)Selecionar &amp;contorno</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="92"/>
         <source>Select Intersected Entities</source>
-        <translation>Seleccionar entidades intersectadas</translation>
+        <translation>Selecionar entidades intersectadas</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="99"/>
@@ -527,7 +527,7 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="106"/>
         <source>(De-)Select Layer</source>
-        <translation>(Des)Seleccionar camada</translation>
+        <translation>(Des)Selecionar camada</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="115"/>
@@ -573,7 +573,7 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="180"/>
         <source>Rectangle</source>
-        <translation>Rectângulo</translation>
+        <translation>Retângulo</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="187"/>
@@ -700,7 +700,7 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="482"/>
         <source>Ellipse &amp;Foci Point</source>
-        <translation>Elipse &amp;foco</translation>
+        <translation>Elipse por &amp;focos e ponto</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="489"/>
@@ -780,7 +780,7 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="627"/>
         <source>&amp;Hatch</source>
-        <translation>&amp;Hachura</translation>
+        <translation>&amp;Trama</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="634"/>
@@ -820,7 +820,7 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="699"/>
         <source>&amp;Leader</source>
-        <translation>&amp;Líder</translation>
+        <translation>&amp;Linha de indicação</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="708"/>
@@ -845,7 +845,7 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="738"/>
         <source>Re&amp;vert direction</source>
-        <translation>In&amp;verter direcção</translation>
+        <translation>In&amp;verter direção</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="740"/>
@@ -855,7 +855,7 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="746"/>
         <source>&amp;Rotate</source>
-        <translation>&amp;Girar</translation>
+        <translation>&amp;Rodar</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="754"/>
@@ -870,7 +870,7 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="777"/>
         <source>Rotate T&amp;wo</source>
-        <translation>Girar d&amp;ois</translation>
+        <translation>Rodar d&amp;ois</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="784"/>
@@ -935,7 +935,7 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="949"/>
         <source>&amp;Total length of selected entities</source>
-        <translation>&amp;Comprimento total das entidades seleccionadas</translation>
+        <translation>&amp;Comprimento total das entidades selecionadas</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="956"/>
@@ -945,7 +945,7 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1418"/>
         <source>&amp;Selection pointer</source>
-        <translation>&amp;Ponteiro de selecção</translation>
+        <translation>&amp;Ponteiro de seleção</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1428"/>
@@ -1080,17 +1080,17 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1178"/>
         <source>Current &amp;Drawing Preferences</source>
-        <translation>Preferências do &amp;desenho actual</translation>
+        <translation>Preferências do &amp;desenho atual</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1201"/>
         <source>&amp;Delete selected</source>
-        <translation>&amp;Eliminar seleccionado</translation>
+        <translation>&amp;Eliminar selecionado</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1209"/>
         <source>Select &amp;All</source>
-        <translation>Seleccionar &amp;tudo</translation>
+        <translation>Selecionar &amp;tudo</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1219"/>
@@ -1105,7 +1105,7 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1228"/>
         <source>Invert Selection</source>
-        <translation>Inverter selecção</translation>
+        <translation>Inverter seleção</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1485"/>
@@ -1125,7 +1125,7 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1515"/>
         <source>Previous &amp;View</source>
-        <translation>&amp;Visão anterior</translation>
+        <translation>&amp;Vista anterior</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1526"/>
@@ -1180,7 +1180,7 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1620"/>
         <source>Print Pre&amp;view</source>
-        <translation>Visualizar im&amp;pressão</translation>
+        <translation>Pré-&amp;visualizar impressão</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1631"/>
@@ -1272,7 +1272,7 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="770"/>
         <source>Mo&amp;ve and Rotate</source>
-        <translation>Mo&amp;ver e girar</translation>
+        <translation>Mo&amp;ver e rodar</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="800"/>
@@ -1333,7 +1333,7 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1086"/>
         <source>&amp;Export Selected Layer(s)</source>
-        <translation>&amp;Exportar camada(s) seleccionada(s)</translation>
+        <translation>&amp;Exportar camada(s) selecionada(s)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1091"/>
@@ -1363,7 +1363,7 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1389"/>
         <source>Re-dock Widgets</source>
-        <translation>Redockar widgets</translation>
+        <translation>Reacoplar os elementos</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1599"/>
@@ -1393,17 +1393,17 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="282"/>
         <source>Rectangle (1 Point)</source>
-        <translation>Rectângulo (1 ponto)</translation>
+        <translation>Retângulo (1 ponto)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="288"/>
         <source>Rectangle (2 Points)</source>
-        <translation>Rectângulo (2 pontos)</translation>
+        <translation>Retângulo (2 pontos)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="294"/>
         <source>Rectangle (3 Points)</source>
-        <translation>Rectângulo (3 pontos)</translation>
+        <translation>Retângulo (3 pontos)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="300"/>
@@ -1468,27 +1468,27 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="873"/>
         <source>&amp;Pick Pen From Entity</source>
-        <translation>&amp;Seleccionar pênsil da entidade</translation>
+        <translation>&amp;Selecionar caneta da entidade</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="881"/>
         <source>&amp;Pick Pen From Entity (Resolved)</source>
-        <translation>&amp;Seleccionar pênsil da entidade (resolvido)</translation>
+        <translation>&amp;Selecionar caneta da entidade (resolvida)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="890"/>
         <source>Apply Pen to Entity</source>
-        <translation>Aplicar pênsil à entidade</translation>
+        <translation>Aplicar caneta à entidade</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="898"/>
         <source>Copy Pen</source>
-        <translation>Copiar pênsil</translation>
+        <translation>Copiar caneta</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="906"/>
         <source>Line Join</source>
-        <translation>Junção de linha</translation>
+        <translation>Unir linhas</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="913"/>
@@ -1498,7 +1498,7 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1642"/>
         <source>Update Current Pen by Active Layer&apos; Pen</source>
-        <translation>Actualizar pênsil actual com o pênsil da camada activa</translation>
+        <translation>Atualizar caneta atual com a caneta da camada ativa</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="511"/>
@@ -1527,7 +1527,7 @@ ou [%2]</translation>
     <message>
         <location filename="../src/actions/lc_actionpenapply.cpp" line="171"/>
         <source>Specify entity to pick the pen</source>
-        <translation>Especificar entidade para seleccionar o pênsil</translation>
+        <translation>Especificar entidade para selecionar a caneta</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actionpenapply.cpp" line="172"/>
@@ -1538,7 +1538,7 @@ ou [%2]</translation>
     <message>
         <location filename="../src/actions/lc_actionpenapply.cpp" line="175"/>
         <source>Specify entity to apply pen</source>
-        <translation>Especificar entidade para aplicar o pênsil</translation>
+        <translation>Especificar entidade para aplicar a caneta</translation>
     </message>
 </context>
 <context>
@@ -1546,7 +1546,7 @@ ou [%2]</translation>
     <message>
         <location filename="../src/actions/lc_actionpenpick.cpp" line="108"/>
         <source>Specify entity to pick the pen</source>
-        <translation>Especificar entidade para seleccionar o pênsil</translation>
+        <translation>Especificar entidade para selecionar a caneta</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actionpenpick.cpp" line="109"/>
@@ -1594,7 +1594,7 @@ ou [%2]</translation>
         <location filename="../src/ui/forms/lc_circlebyarcoptions.ui" line="27"/>
         <location filename="../src/ui/forms/lc_circlebyarcoptions.ui" line="73"/>
         <source>Active</source>
-        <translation>Activo</translation>
+        <translation>Ativo</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_circlebyarcoptions.ui" line="32"/>
@@ -1625,7 +1625,7 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_circlebyarcoptions.ui" line="109"/>
         <source>Pen:</source>
-        <translation>Pênsil:</translation>
+        <translation>Caneta:</translation>
     </message>
 </context>
 <context>
@@ -1723,7 +1723,7 @@ ou [%2]</translation>
         <location filename="../src/ui/forms/lc_duplicateoptions.ui" line="48"/>
         <location filename="../src/ui/forms/lc_duplicateoptions.ui" line="62"/>
         <source>Active</source>
-        <translation>Activo</translation>
+        <translation>Ativo</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_duplicateoptions.ui" line="53"/>
@@ -1744,7 +1744,7 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_duplicateoptions.ui" line="103"/>
         <source>Pen:</source>
-        <translation>Pênsil:</translation>
+        <translation>Caneta:</translation>
     </message>
 </context>
 <context>
@@ -1777,7 +1777,7 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.ui" line="110"/>
         <source>Dimensions</source>
-        <translation>Dimensões</translation>
+        <translation>Cotas</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.ui" line="120"/>
@@ -1788,7 +1788,7 @@ ou [%2]</translation>
         <location filename="../src/ui/forms/lc_layerdialog_ex.ui" line="133"/>
         <source>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
        The contents of a Construction Layer should not appear in printout.</source>
-        <translation>Uma camada de construção contém entidades de linhas rectas infinitas destinadas à construção geométrica.
+        <translation>Uma camada de construção contém entidades de linhas retas infinitas destinadas à construção geométrica.
        O conteúdo de uma camada de construção não deve aparecer na impressão.</translation>
     </message>
     <message>
@@ -1826,7 +1826,7 @@ ou [%2]</translation>
         <location filename="../src/ui/forms/lc_layerdialog_ex.cpp" line="165"/>
         <location filename="../src/ui/forms/lc_layerdialog_ex.cpp" line="204"/>
         <source>Default Pen</source>
-        <translation>Pênsil predefinido</translation>
+        <translation>Caneta predefinida</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layerdialog_ex.cpp" line="182"/>
@@ -1889,12 +1889,12 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="207"/>
         <source>Display and Operations</source>
-        <translation>Exibição e operações</translation>
+        <translation>Apresentação e operações</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="213"/>
         <source>Show full name as ToolTip</source>
-        <translation>Mostrar nome completo como dica de ferramenta</translation>
+        <translation>Mostrar o nome completo na descrição</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="220"/>
@@ -1909,7 +1909,7 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="266"/>
         <source>Allow restructuring via Drag&amp;Drop</source>
-        <translation>Permitir reestruturação via arrastar&amp;soltar</translation>
+        <translation>Permitir a reestruturação por arrastar e &amp;largar</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="273"/>
@@ -1944,17 +1944,17 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="475"/>
         <source>Selected items background color</source>
-        <translation>Cor de fundo dos itens seleccionados</translation>
+        <translation>Cor de fundo dos itens selecionados</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="504"/>
         <source>Active layer background color</source>
-        <translation>Cor de fundo da camada activa</translation>
+        <translation>Cor de fundo da camada ativa</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.ui" line="525"/>
         <source>Default Pens</source>
-        <translation>Pênsis predefinidos</translation>
+        <translation>Canetas predefinidas</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.cpp" line="71"/>
@@ -1979,7 +1979,7 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_layertreeoptionsdialog.cpp" line="239"/>
         <source>Select Color</source>
-        <translation>Seleccionar cor</translation>
+        <translation>Selecionar cor</translation>
     </message>
 </context>
 <context>
@@ -2022,7 +2022,7 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="212"/>
         <source>Show Active Layer Only</source>
-        <translation>Mostrar apenas a camada activa</translation>
+        <translation>Mostrar apenas a camada ativa</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="222"/>
@@ -2057,7 +2057,7 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="275"/>
         <source>Add dimensions Layer</source>
-        <translation>Adicionar camada de dimensões</translation>
+        <translation>Adicionar camada de cotas</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="285"/>
@@ -2107,7 +2107,7 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="682"/>
         <source>&amp;Select Entities (Sub-Tree)</source>
-        <translation>&amp;Seleccionar entidades (sub-árvore)</translation>
+        <translation>&amp;Selecionar entidades (sub-árvore)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="687"/>
@@ -2122,7 +2122,7 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="698"/>
         <source>&amp;Add Dimensions Sub-Layer</source>
-        <translation>&amp;Adicionar subcamada de dimensões</translation>
+        <translation>&amp;Adicionar subcamada de cotas</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="702"/>
@@ -2165,7 +2165,7 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="743"/>
         <source>&amp;Select Layer&apos;s Entities</source>
-        <translation>&amp;Seleccionar entidades da camada</translation>
+        <translation>&amp;Selecionar entidades da camada</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="746"/>
@@ -2180,12 +2180,12 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="751"/>
         <source>Move Selection to Layer</source>
-        <translation>Mover selecção para a camada</translation>
+        <translation>Mover seleção para a camada</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="752"/>
         <source>Duplicate Selection to Layer</source>
-        <translation>Duplicar selecção para a camada</translation>
+        <translation>Duplicar seleção para a camada</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="759"/>
@@ -2220,12 +2220,12 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="766"/>
         <source>Enable &amp;Printing All Layers</source>
-        <translation>Activar &amp;impressão de todas as camadas</translation>
+        <translation>Ativar &amp;impressão de todas as camadas</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="767"/>
         <source>&amp;Disable Printing All Layers</source>
-        <translation>&amp;Desactivar impressão de todas as camadas</translation>
+        <translation>&amp;Desativar impressão de todas as camadas</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="769"/>
@@ -2272,7 +2272,7 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="73"/>
         <source>Line Snap:</source>
-        <translation>Encaixe de linha:</translation>
+        <translation>Ajuste da linha:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="80"/>
@@ -2287,7 +2287,7 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="167"/>
         <source>Tick Snap:</source>
-        <translation>Encaixe de marcação:</translation>
+        <translation>Ajuste da marca:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="174"/>
@@ -2302,7 +2302,7 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_lineanglereloptions.ui" line="208"/>
         <source>Snap Distance:</source>
-        <translation>Distância de encaixe:</translation>
+        <translation>Distância de ajuste:</translation>
     </message>
 </context>
 <context>
@@ -2365,7 +2365,7 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_linefrompointtolineoptions.ui" line="270"/>
         <source>Snap:</source>
-        <translation>Encaixe:</translation>
+        <translation>Ajuste:</translation>
     </message>
 </context>
 <context>
@@ -2379,7 +2379,7 @@ ou [%2]</translation>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="51"/>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="144"/>
         <source>Extend/Trim</source>
-        <translation>Estender/Cortar</translation>
+        <translation>Estender/Aparar</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="56"/>
@@ -2406,7 +2406,7 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="102"/>
         <source>Active Pen</source>
-        <translation>Pênsil activo</translation>
+        <translation>Caneta ativa</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_linejoinoptions.ui" line="107"/>
@@ -2507,7 +2507,7 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_modifybreakdivideoptions.ui" line="46"/>
         <source>Remove Selected</source>
-        <translation>Remover seleccionado</translation>
+        <translation>Remover selecionado</translation>
     </message>
 </context>
 <context>
@@ -2520,12 +2520,12 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="42"/>
         <source>Gap Snap:</source>
-        <translation>Encaixe de intervalo:</translation>
+        <translation>Ajuste do intervalo:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="49"/>
         <source>Snap Distance:</source>
-        <translation>Distância de encaixe:</translation>
+        <translation>Distância de ajuste:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="56"/>
@@ -2559,7 +2559,7 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_modifygapoptions.ui" line="129"/>
         <source>Line Snap:</source>
-        <translation>Encaixe de linha:</translation>
+        <translation>Ajuste da linha:</translation>
     </message>
 </context>
 <context>
@@ -2567,12 +2567,12 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="18"/>
         <source>Pen Palette Settings</source>
-        <translation>Definições da paleta de pênsil</translation>
+        <translation>Definições da paleta de canetas</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="37"/>
         <source>Columns to display</source>
-        <translation>Colunas a exibir</translation>
+        <translation>Colunas a mostrar</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="43"/>
@@ -2597,12 +2597,12 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="71"/>
         <source>Line Width Icon</source>
-        <translation>Ícone de largura da linha</translation>
+        <translation>Ícone da espessura da linha</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="78"/>
         <source>Line Width Name</source>
-        <translation>Nome da largura da linha</translation>
+        <translation>Nome da espessura da linha</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="88"/>
@@ -2612,12 +2612,12 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="132"/>
         <source>Active Pen Background:</source>
-        <translation>Fundo do pênsil activo:</translation>
+        <translation>Fundo da caneta ativa:</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="150"/>
         <source>Entire table row is bold for active pen</source>
-        <translation>Toda a linha da tabela fica em negrito para o pênsil activo</translation>
+        <translation>Toda a linha da tabela fica em negrito para a caneta ativa</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="157"/>
@@ -2632,17 +2632,17 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="192"/>
         <source>Case-insensitive pens filtering</source>
-        <translation>Filtragem de pênsis sem distinção de maiúsculas/minúsculas</translation>
+        <translation>Filtragem de canetas sem distinção de maiúsculas/minúsculas</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="209"/>
         <source>Controls whether tooltip will be shown for table item or not</source>
-        <translation>Controla se a dica de ferramenta será exibida para o item da tabela</translation>
+        <translation>Controla se é mostrada ou não uma descrição para o item da tabela</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="212"/>
         <source>Show tooltip for table items</source>
-        <translation>Mostrar dica de ferramenta para itens da tabela</translation>
+        <translation>Mostrar a descrição dos itens da tabela</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="219"/>
@@ -2667,7 +2667,7 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="249"/>
         <source>Show info message if no entities may be selected by pen</source>
-        <translation>Mostrar mensagem informativa se nenhuma entidade puder ser seleccionada pelo pênsil</translation>
+        <translation>Mostrar mensagem informativa se nenhuma entidade puder ser selecionada pela caneta</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.ui" line="258"/>
@@ -2682,12 +2682,12 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.cpp" line="47"/>
         <source>Select entities by attributes pen</source>
-        <translation>Seleccionar entidades pelo pênsil de atributos</translation>
+        <translation>Selecionar entidades pela caneta de atributos</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpaletteoptionsdialog.cpp" line="48"/>
         <source>Select entities by drawing pen</source>
-        <translation>Seleccionar entidades pelo pênsil de desenho</translation>
+        <translation>Selecionar entidades pela caneta de desenho</translation>
     </message>
 </context>
 <context>
@@ -2695,12 +2695,12 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="20"/>
         <source>Pen Palette</source>
-        <translation>Paleta de pênsil</translation>
+        <translation>Paleta de canetas</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="44"/>
         <source>Pen Name:</source>
-        <translation>Nome do pênsil:</translation>
+        <translation>Nome da caneta:</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="94"/>
@@ -2735,22 +2735,22 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="290"/>
         <source>Fill Pen Editor by Entity Drawing Pen</source>
-        <translation>Preencher editor de pênsil com o pênsil de desenho da entidade</translation>
+        <translation>Preencher editor de caneta com a caneta de desenho da entidade</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="304"/>
         <source>Fill Pen Editor by Entity Attributes</source>
-        <translation>Preencher editor de pênsil com atributos da entidade</translation>
+        <translation>Preencher editor de caneta com atributos da entidade</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="318"/>
         <source>Select Entities By Drawing Pen</source>
-        <translation>Seleccionar entidades pelo pênsil de desenho</translation>
+        <translation>Selecionar entidades pela caneta de desenho</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="332"/>
         <source>Select Entities By Pen Attributes</source>
-        <translation>Seleccionar entidades pelos atributos do pênsil</translation>
+        <translation>Selecionar entidades pelos atributos da caneta</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="349"/>
@@ -2761,42 +2761,42 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="363"/>
         <source>Apply Pen To Selection</source>
-        <translation>Aplicar pênsil à selecção</translation>
+        <translation>Aplicar caneta à seleção</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="377"/>
         <source>Fill Editor Pen by Current Pen</source>
-        <translation>Preencher pênsil do editor com o pênsil actual</translation>
+        <translation>Preencher caneta do editor com a caneta atual</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="391"/>
         <source>Apply Editor Pen As Current Pen</source>
-        <translation>Aplicar pênsil do editor como pênsil actual</translation>
+        <translation>Aplicar caneta do editor como caneta atual</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="394"/>
         <source>to current</source>
-        <translation>para o actual</translation>
+        <translation>para o atual</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="405"/>
         <source>Update Current Pen by Active Layer&apos; Pen</source>
-        <translation>Actualizar pênsil actual com o pênsil da camada activa</translation>
+        <translation>Atualizar caneta atual com a caneta da camada ativa</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="419"/>
         <source>Fill Pen Editor from Active Layer&apos;s Pen</source>
-        <translation>Preencher editor de pênsil com o pênsil da camada activa</translation>
+        <translation>Preencher editor de caneta com a caneta da camada ativa</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="422"/>
         <source>Pick from Active Layer</source>
-        <translation>Seleccionar da camada activa</translation>
+        <translation>Selecionar da camada ativa</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="433"/>
         <source>Apply Editor Pen to Active Layer Pen</source>
-        <translation>Aplicar pênsil do editor ao pênsil da camada activa</translation>
+        <translation>Aplicar caneta do editor à caneta da camada ativa</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="436"/>
@@ -2806,57 +2806,57 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="447"/>
         <source>Remove Selected Pen</source>
-        <translation>Remover pênsil seleccionado</translation>
+        <translation>Remover caneta selecionada</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.ui" line="450"/>
         <source>Delete Pen</source>
-        <translation>Eliminar pênsil</translation>
+        <translation>Eliminar caneta</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="245"/>
         <source>Pens Menu</source>
-        <translation>Menu de pênsis</translation>
+        <translation>Menu de canetas</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="265"/>
         <source>&amp;Apply Pen To Selection</source>
-        <translation>&amp;Aplicar pênsil à selecção</translation>
+        <translation>&amp;Aplicar caneta à seleção</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="266"/>
         <source>&amp;Set As Current Pen</source>
-        <translation>&amp;Definir como pênsil actual</translation>
+        <translation>&amp;Definir como caneta atual</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="267"/>
         <source>&amp;Apply Pen To Active Layer</source>
-        <translation>&amp;Aplicar pênsil à camada activa</translation>
+        <translation>&amp;Aplicar caneta à camada ativa</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="268"/>
         <source>&amp;Select Entities With Attributes Pen</source>
-        <translation>&amp;Seleccionar entidades com pênsil de atributos</translation>
+        <translation>&amp;Selecionar entidades com caneta de atributos</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="269"/>
         <source>&amp;Select Entities With Drawing Pen</source>
-        <translation>&amp;Seleccionar entidades com pênsil de desenho</translation>
+        <translation>&amp;Selecionar entidades com caneta de desenho</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="272"/>
         <source>&amp;Edit Pen</source>
-        <translation>&amp;Editar pênsil</translation>
+        <translation>&amp;Editar caneta</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="273"/>
         <source>&amp;Remove Pen</source>
-        <translation>&amp;Remover pênsil</translation>
+        <translation>&amp;Remover caneta</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="276"/>
         <source>&amp;Remove Pens</source>
-        <translation>&amp;Remover pênsis</translation>
+        <translation>&amp;Remover canetas</translation>
     </message>
 </context>
 <context>
@@ -2904,7 +2904,7 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="123"/>
         <source>Snap:</source>
-        <translation>Encaixe:</translation>
+        <translation>Ajuste:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="162"/>
@@ -2974,7 +2974,7 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="237"/>
         <source>Snap shift</source>
-        <translation>Deslocamento de encaixe</translation>
+        <translation>Deslocamento do ajuste</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle1pointoptions.ui" line="245"/>
@@ -3012,7 +3012,7 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="26"/>
         <source>Snap shift</source>
-        <translation>Deslocamento de encaixe</translation>
+        <translation>Deslocamento do ajuste</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="33"/>
@@ -3032,7 +3032,7 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="70"/>
         <source>End Snap:</source>
-        <translation>Encaixe final:</translation>
+        <translation>Ajuste final:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="77"/>
@@ -3047,7 +3047,7 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="107"/>
         <source>Start Snap:</source>
-        <translation>Encaixe inicial:</translation>
+        <translation>Ajuste inicial:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle2pointsoptions.ui" line="131"/>
@@ -3184,7 +3184,7 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="185"/>
         <source>Snap shift</source>
-        <translation>Deslocamento de encaixe</translation>
+        <translation>Deslocamento do ajuste</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_rectangle3pointsoptions.ui" line="192"/>
@@ -3277,7 +3277,7 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="228"/>
         <source>Tick snap:</source>
-        <translation>Encaixe de marca:</translation>
+        <translation>Ajuste da marca:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_slicedivideoptions.ui" line="235"/>
@@ -3353,7 +3353,7 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="417"/>
         <source>Dock</source>
-        <translation>Dock</translation>
+        <translation>Acoplar</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="417"/>
@@ -3388,12 +3388,12 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="636"/>
         <source>Select</source>
-        <translation>Seleccionar</translation>
+        <translation>Selecionar</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="643"/>
         <source>Dimensions</source>
-        <translation>Dimensões</translation>
+        <translation>Cotas</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="650"/>
@@ -3451,7 +3451,7 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/forms/lc_widgetoptionsdialog.ui" line="192"/>
         <source>Font Size</source>
-        <translation>Tamanho da fonte</translation>
+        <translation>Tamanho do tipo de letra</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_widgetoptionsdialog.ui" line="160"/>
@@ -3479,7 +3479,7 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/lg_dimzerosbox.cpp" line="34"/>
         <source>select:</source>
-        <translation>seleccionar:</translation>
+        <translation>selecionar:</translation>
     </message>
     <message>
         <location filename="../src/ui/lg_dimzerosbox.cpp" line="37"/>
@@ -3606,12 +3606,12 @@ ou [%2]</translation>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="740"/>
         <source>&amp;View</source>
-        <translation>&amp;Exibir</translation>
+        <translation>&amp;Ver</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="792"/>
         <source>&amp;Polyline</source>
-        <translation>&amp;Multilinha</translation>
+        <translation>&amp;Polilinha</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="991"/>
@@ -3787,7 +3787,7 @@ Gravação automática desligada.</translation>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1790"/>
         <source>Select Template aborted</source>
-        <translation>Selecção de modelo cancelada</translation>
+        <translation>Seleção de modelo cancelada</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2116"/>
@@ -3797,7 +3797,7 @@ Gravação automática desligada.</translation>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="467"/>
         <source>Snap Selection</source>
-        <translation>Selecção de encaixe</translation>
+        <translation>Seleção de ajuste</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="479"/>
@@ -3877,7 +3877,7 @@ Verifique se existe e as permissões.</translation>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="283"/>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="553"/>
         <source>Select</source>
-        <translation>Seleccionar</translation>
+        <translation>Selecionar</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="258"/>
@@ -3918,7 +3918,7 @@ Verifique se existe e as permissões.</translation>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="288"/>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="559"/>
         <source>Dimension</source>
-        <translation>Dimensão</translation>
+        <translation>Cota</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="293"/>
@@ -3940,7 +3940,7 @@ Verifique se existe e as permissões.</translation>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="486"/>
         <source>Dock Areas</source>
-        <translation>Áreas de dock</translation>
+        <translation>Áreas de acoplagem</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="187"/>
@@ -3955,7 +3955,7 @@ Verifique se existe e as permissões.</translation>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3312"/>
         <source>Dockwidgets</source>
-        <translation>Widgets de dock</translation>
+        <translation>Elementos de acoplagem</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3520"/>
@@ -3980,12 +3980,12 @@ Verifique se existe e as permissões.</translation>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="807"/>
         <source>Dime&amp;nsion</source>
-        <translation>Dime&amp;nsão</translation>
+        <translation>&amp;Cotas</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="964"/>
         <source>Dock Wid&amp;gets</source>
-        <translation>Widgets de &amp;dock</translation>
+        <translation>Elementos de acopla&amp;gem</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="364"/>
@@ -4169,7 +4169,7 @@ Verifique se existe e as permissões.</translation>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3462"/>
         <source>Dock</source>
         <comment>Dock the command widget to the main window</comment>
-        <translation>Dock</translation>
+        <translation>Acoplar</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="886"/>
@@ -4224,12 +4224,12 @@ Verifique se existe e as permissões.</translation>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2431"/>
         <source>Please adjust scaling and positioning in print preview first.</source>
-        <translation>Ajuste primeiro a escala e o posicionamento na visualização de impressão.</translation>
+        <translation>Ajuste primeiro a escala e o posicionamento na pré-visualização da impressão.</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="337"/>
         <source>Pen Palette</source>
-        <translation>Paleta de pênsil</translation>
+        <translation>Paleta de canetas</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="359"/>
@@ -4242,12 +4242,12 @@ Verifique se existe e as permissões.</translation>
     <message>
         <location filename="../src/ui/qg_actionhandler.cpp" line="1275"/>
         <source>Spacebar: restored snapping mode to normal</source>
-        <translation>Barra de espaço: modo de encaixe restaurado para normal</translation>
+        <translation>Barra de espaço: modo de ajuste reposto no normal</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_actionhandler.cpp" line="1276"/>
         <source>Spacebar: temporarily set snapping mode to free snapping</source>
-        <translation>Barra de espaço: modo de encaixe temporariamente definido para encaixe livre</translation>
+        <translation>Barra de espaço: modo de ajuste temporariamente definido como ajuste livre</translation>
     </message>
 </context>
 <context>
@@ -4265,7 +4265,7 @@ Verifique se existe e as permissões.</translation>
     <message>
         <location filename="../src/ui/forms/qg_activelayername.ui" line="80"/>
         <source>Current Layer</source>
-        <translation>Camada Actual</translation>
+        <translation>Camada Atual</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_activelayername.ui" line="105"/>
@@ -4278,7 +4278,7 @@ p, li { white-space: pre-wrap; }
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Nome da Camada Activa Actual&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Nome da Camada Ativa Atual&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -4286,17 +4286,17 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_blockdialog.cpp" line="79"/>
         <source>Could not name block. A block named &quot;%1&quot; already exists.</source>
-        <translation>Não pôde renomear o carimbo. Já existe um carimbo chamado &quot;%1&quot;.</translation>
+        <translation>Não foi possível nomear o bloco. Já existe um bloco chamado &quot;%1&quot;.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_blockdialog.cpp" line="78"/>
         <source>Renaming Block</source>
-        <translation>Renomeando o Carimbo</translation>
+        <translation>A mudar o nome do bloco</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_blockdialog.ui" line="20"/>
         <source>Block Settings</source>
-        <translation>Opções de Carimbo</translation>
+        <translation>Opções do Bloco</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_blockdialog.ui" line="43"/>
@@ -4319,13 +4319,13 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/qg_blockwidget.cpp" line="201"/>
         <source>Rename the active block</source>
-        <translation>Renomear o bloco activo</translation>
+        <translation>Renomear o bloco ativo</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_blockwidget.cpp" line="208"/>
         <source>Edit the active block
 in a separate window</source>
-        <translation>Editar o bloco activo
+        <translation>Editar o bloco ativo
 numa janela separada</translation>
     </message>
     <message>
@@ -4464,7 +4464,7 @@ numa janela separada</translation>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="107"/>
         <source>By Block</source>
-        <translation>Pelo Carimbo</translation>
+        <translation>Pelo Bloco</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="106"/>
@@ -4475,7 +4475,7 @@ numa janela separada</translation>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="139"/>
         <source>Light Gray</source>
-        <translation>Cinza Claro</translation>
+        <translation>Cinzento-claro</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="119"/>
@@ -4510,7 +4510,7 @@ numa janela separada</translation>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="138"/>
         <source>Dark Gray</source>
-        <translation>Cinza Escuro</translation>
+        <translation>Cinzento-escuro</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="111"/>
@@ -4588,7 +4588,7 @@ numa janela separada</translation>
         <location filename="../src/ui/forms/qg_commandwidget.cpp" line="94"/>
         <location filename="../src/ui/forms/qg_commandwidget.cpp" line="344"/>
         <source>Dock</source>
-        <translation>Dock</translation>
+        <translation>Acoplar</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_commandwidget.cpp" line="344"/>
@@ -4632,17 +4632,17 @@ numa janela separada</translation>
     <message>
         <location filename="../src/ui/forms/qg_dimensionlabeleditor.ui" line="20"/>
         <source>Dimension Label Editor</source>
-        <translation>Editor de Rótulo de Dimensão</translation>
+        <translation>Editor da etiqueta da cota</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dimensionlabeleditor.ui" line="32"/>
         <source>Dimension Label:</source>
-        <translation>Rótulo de Dimensão:</translation>
+        <translation>Etiqueta da cota:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dimensionlabeleditor.ui" line="57"/>
         <source>Label:</source>
-        <translation>Rótulo:</translation>
+        <translation>Etiqueta:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dimensionlabeleditor.ui" line="133"/>
@@ -4682,7 +4682,7 @@ numa janela separada</translation>
     <message>
         <location filename="../src/ui/forms/qg_dimensionlabeleditor.ui" line="93"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Format of the dimension text, &amp;lt;&amp;gt; can be used as a placeholder for the dimension measurement value&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Formato do texto da dimensão, &amp;lt;&amp;gt; pode ser usado como um espaço reservado para o valor da medição da dimensão&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Formato do texto da cota, &amp;lt;&amp;gt; pode ser usado como um espaço reservado para o valor da medição da cota&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dimensionlabeleditor.cpp" line="75"/>
@@ -4819,7 +4819,7 @@ Isto modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/forms/qg_dlgdimlinear.ui" line="20"/>
         <source>Linear Dimension</source>
-        <translation>Dimensão Linear</translation>
+        <translation>Cota Linear</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgdimlinear.ui" line="79"/>
@@ -4832,7 +4832,7 @@ Isto modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/forms/qg_dlgdimension.ui" line="20"/>
         <source>Dimension</source>
-        <translation>Dimensão</translation>
+        <translation>Cota</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgdimension.ui" line="47"/>
@@ -4923,7 +4923,7 @@ Isto modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/forms/qg_dlghatch.ui" line="14"/>
         <source>Choose Hatch Attributes</source>
-        <translation>Selecione Atributos de Hachura</translation>
+        <translation>Escolher os atributos da trama</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlghatch.ui" line="57"/>
@@ -5170,7 +5170,7 @@ Por favor, escolha a unidade que deseja usar para novos desenhos e o seu idioma 
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="132"/>
         <source>&amp;Default line spacing</source>
-        <translation>Espaçamento de linha padrão</translation>
+        <translation>Espaçamento entre linhas &amp;predefinido</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="135"/>
@@ -5350,7 +5350,7 @@ Por favor, escolha a unidade que deseja usar para novos desenhos e o seu idioma 
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="939"/>
         <source>Char:</source>
-        <translation>Caractere:</translation>
+        <translation>Carácter:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="962"/>
@@ -5905,12 +5905,12 @@ Por favor, escolha a unidade que deseja usar para novos desenhos e o seu idioma 
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="104"/>
         <source>Font Settings</source>
-        <translation>Definições de fonte</translation>
+        <translation>Definições do tipo de letra</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="246"/>
         <source>Font:</source>
-        <translation>Fonte:</translation>
+        <translation>Tipo de letra:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmtext.ui" line="645"/>
@@ -6034,7 +6034,7 @@ Por favor, escolha a unidade que deseja usar para novos desenhos e o seu idioma 
     <message>
         <location filename="../src/ui/forms/qg_dlgmoverotate.ui" line="26"/>
         <source>Move/Rotate Options</source>
-        <translation>Opções de Mover/Rotacionar</translation>
+        <translation>Opções de mover/rodar</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgmoverotate.ui" line="41"/>
@@ -6087,7 +6087,7 @@ Por favor, escolha a unidade que deseja usar para novos desenhos e o seu idioma 
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="570"/>
         <source>&amp;Grid</source>
-        <translation>&amp;Grade</translation>
+        <translation>&amp;Grelha</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="913"/>
@@ -6113,7 +6113,7 @@ Por favor, escolha a unidade que deseja usar para novos desenhos e o seu idioma 
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1544"/>
         <source>Dimension line gap:</source>
-        <translation>Dimensione a linha de brecha:</translation>
+        <translation>Intervalo da linha de cota:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="34"/>
@@ -6236,12 +6236,12 @@ Por favor, escolha a unidade que deseja usar para novos desenhos e o seu idioma 
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="860"/>
         <source>&amp;Dimensions</source>
-        <translation>&amp;Dimensões</translation>
+        <translation>&amp;Cotas</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1617"/>
         <source>Number of line segments per spline patch:</source>
-        <translation>Número de segmentos de linha por porção da chaveta:</translation>
+        <translation>Número de segmentos de linha por troço de spline:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="383"/>
@@ -6362,7 +6362,7 @@ Por favor, escolha a unidade que deseja usar para novos desenhos e o seu idioma 
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1116"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension Tick size. Set it to 0 will disable the dimension tick. Dimension arrow won&apos;t be drawn when dimension tick is enabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Tamanho do marcador de dimensão. Definir para 0 desativará o marcador de dimensão. A seta de dimensão não será desenhada quando o marcador de dimensão estiver ativado.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Tamanho da marca de cota. Definir para 0 desativará a marca de cota. A seta de cota não será desenhada quando a marca de cota estiver ativada.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1461"/>
@@ -6377,12 +6377,12 @@ Por favor, escolha a unidade que deseja usar para novos desenhos e o seu idioma 
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="969"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scale to multiply all dimension values.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Escala para multiplicar todos os valores de dimensão.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Escala para multiplicar todos os valores de cota.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1178"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scale to multiply all dimension geometries.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Escala para multiplicar todas as geometrias de dimensão.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Escala para multiplicar todas as geometrias de cota.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="885"/>
@@ -6449,12 +6449,12 @@ Por favor, escolha a unidade que deseja usar para novos desenhos e o seu idioma 
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1271"/>
         <source>Length to enlarge over dimension line</source>
-        <translation>Comprimento para aumentar acima da linha de dimensão</translation>
+        <translation>Comprimento para aumentar acima da linha de cota</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1296"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension arrow size. &lt;a name=&quot;result_box&quot;/&gt;without effect when tick size &lt;a name=&quot;result_box&quot;/&gt;is other than 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>Tamanho da seta da dimensão. Sem efeito quando o tamanho da marcação for diferente de 0.</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Tamanho da seta da cota. &lt;a name=&quot;result_box&quot;/&gt;Sem efeito quando o tamanho da marca &lt;a name=&quot;result_box&quot;/&gt;for diferente de 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1350"/>
@@ -6465,7 +6465,7 @@ Por favor, escolha a unidade que deseja usar para novos desenhos e o seu idioma 
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1370"/>
         <source>Dimension lines, arrows &amp; ticks</source>
-        <translation>Linhas, setas e marcações de dimensão</translation>
+        <translation>Linhas de cota, setas e marcas</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1377"/>
@@ -6495,7 +6495,7 @@ Por favor, escolha a unidade que deseja usar para novos desenhos e o seu idioma 
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1446"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Text alignment &lt;a name=&quot;result_box&quot;/&gt;relative to the dimension line.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>Alinhamento do texto em relação à linha de dimensão.</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Alinhamento do texto &lt;a name=&quot;result_box&quot;/&gt;em relação à linha de cota.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1456"/>
@@ -6626,7 +6626,7 @@ Por favor, escolha a unidade que deseja usar para novos desenhos e o seu idioma 
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="2669"/>
         <source>(0 =&gt; 5% relative to screen size)</source>
-        <translation>translation 1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="122"/>
@@ -6659,7 +6659,7 @@ Por favor, escolha a unidade que deseja usar para novos desenhos e o seu idioma 
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="14"/>
         <source>Application Preferences</source>
-        <translation>Preferências do Aplicativo</translation>
+        <translation>Preferências da aplicação</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="58"/>
@@ -6669,7 +6669,7 @@ Por favor, escolha a unidade que deseja usar para novos desenhos e o seu idioma 
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="255"/>
         <source>A&amp;utomatically scale grid</source>
-        <translation>Grade escalonada &amp;automaticamente</translation>
+        <translation>Escalar a grelha &amp;automaticamente</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="46"/>
@@ -6679,7 +6679,7 @@ Por favor, escolha a unidade que deseja usar para novos desenhos e o seu idioma 
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="978"/>
         <source>&amp;Defaults</source>
-        <translation>&amp;Padrões</translation>
+        <translation>&amp;Predefinições</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.cpp" line="327"/>
@@ -6689,7 +6689,7 @@ Por favor, escolha a unidade que deseja usar para novos desenhos e o seu idioma 
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.cpp" line="328"/>
         <source>Please restart the application to apply all changes.</source>
-        <translation>Por favor reinicie o aplicativo para aplicar as modificações.</translation>
+        <translation>Reinicie a aplicação para aplicar todas as alterações.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="64"/>
@@ -6714,7 +6714,7 @@ Por favor, escolha a unidade que deseja usar para novos desenhos e o seu idioma 
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="627"/>
         <source>&amp;Meta Grid Color:</source>
-        <translation>Cor da meta-grelha:</translation>
+        <translation>Cor da &amp;metagrelha:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="655"/>
@@ -6749,12 +6749,12 @@ Por favor, escolha a unidade que deseja usar para novos desenhos e o seu idioma 
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="932"/>
         <source>Hatch Patterns:</source>
-        <translation>Padrões de hachura:</translation>
+        <translation>Padrões de trama:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="841"/>
         <source>Fonts:</source>
-        <translation>Fontes:</translation>
+        <translation>Tipos de letra:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="854"/>
@@ -6799,12 +6799,12 @@ Por favor, escolha a unidade que deseja usar para novos desenhos e o seu idioma 
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="683"/>
         <source>St&amp;art Handle Color:</source>
-        <translation>Cor do manipulador inicial:</translation>
+        <translation>Cor da alça in&amp;icial:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="767"/>
         <source>&amp;Handle Color:</source>
-        <translation>Cor do manipulador:</translation>
+        <translation>Cor das &amp;alças:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="378"/>
@@ -6824,7 +6824,7 @@ Por favor, escolha a unidade que deseja usar para novos desenhos e o seu idioma 
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="199"/>
         <source>Anti-aliasing</source>
-        <translation>Anti-aliasing</translation>
+        <translation>Suavização de serrilhado</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1263"/>
@@ -6834,7 +6834,7 @@ Por favor, escolha a unidade que deseja usar para novos desenhos e o seu idioma 
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1089"/>
         <source>Clear Settings</source>
-        <translation>Limpar configurações</translation>
+        <translation>Limpar definições</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1101"/>
@@ -6859,12 +6859,12 @@ Por favor, escolha a unidade que deseja usar para novos desenhos e o seu idioma 
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="192"/>
         <source>Scrollbars</source>
-        <translation>Barras de rolagem</translation>
+        <translation>Barras de deslocamento</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="275"/>
         <source>Snap indicator lines</source>
-        <translation>Linhas de indicador de ajuste</translation>
+        <translation>Linhas do indicador de ajuste</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="131"/>
@@ -6889,7 +6889,7 @@ Por favor, escolha a unidade que deseja usar para novos desenhos e o seu idioma 
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1136"/>
         <source>Display loading screen</source>
-        <translation>Mostrar a tela de carregamento</translation>
+        <translation>Mostrar o ecrã de carregamento</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1150"/>
@@ -6949,7 +6949,7 @@ Por favor, escolha a unidade que deseja usar para novos desenhos e o seu idioma 
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="111"/>
         <source>Auto-panning</source>
-        <translation>Panorâmica automática</translation>
+        <translation>Deslocamento automático da vista</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="265"/>
@@ -6979,27 +6979,27 @@ Por favor, escolha a unidade que deseja usar para novos desenhos e o seu idioma 
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1014"/>
         <source>Auto save time (minutes):</source>
-        <translation>Tempo de salvamento automático (minutos):</translation>
+        <translation>Intervalo de gravação automática (minutos):</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1043"/>
         <source>Inverts scrolling direction when using mouse wheel with Shift key.</source>
-        <translation>Inverte a direção da rolagem ao usar a roda do rato com a tecla Shift.</translation>
+        <translation>Inverte a direção do deslocamento ao usar a roda do rato com a tecla Shift.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1046"/>
         <source>Invert horizontal scrolling direction</source>
-        <translation>Inverter a direção da rolagem horizontal</translation>
+        <translation>Inverter a direção do deslocamento horizontal</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1053"/>
         <source>Inverts scrolling direction when using mouse wheel with Ctrl key.</source>
-        <translation>Inverte a direção da rolagem ao usar a roda do rato com a tecla Ctrl.</translation>
+        <translation>Inverte a direção do deslocamento ao usar a roda do rato com a tecla Ctrl.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1056"/>
         <source>Invert vertical scrolling direction</source>
-        <translation>Inverter a direção da rolagem vertical</translation>
+        <translation>Inverter a direção do deslocamento vertical</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1063"/>
@@ -7019,12 +7019,12 @@ Por favor, escolha a unidade que deseja usar para novos desenhos e o seu idioma 
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1234"/>
         <source>Evaluate commands when SPACE BAR is pressed</source>
-        <translation>Avaliar comandos quando a barra de espaço é pressionada</translation>
+        <translation>Avaliar comandos quando a barra de espaço é premida</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1244"/>
         <source>Toggle free snap mode when SPACE BAR is pressed</source>
-        <translation>Ativar/desativar o modo de ajuste livre ao pressionar a barra de espaço</translation>
+        <translation>Ativar/desativar o modo de ajuste livre ao premir a barra de espaço</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1254"/>
@@ -7039,7 +7039,7 @@ Por favor, escolha a unidade que deseja usar para novos desenhos e o seu idioma 
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="880"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;Part library folder. The symbol library dxf files must be located in the subdirectories of this folder. The subfolder names will be displayed in the Library Browser.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;( Menu: Widgets &amp;gt; Dock Widgets &amp;gt; Library Browser)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;Pasta da biblioteca de peças. Os ficheiros DXF da biblioteca de símbolos devem estar localizados nas subpastas desta pasta. Os nomes das subpastas serão exibidos no Navegador da Biblioteca.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;(Menu: Widgets &gt; Janelas de encaixe &gt; Navegador da Biblioteca)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;Pasta da biblioteca de peças. Os ficheiros DXF da biblioteca de símbolos devem estar localizados nas subpastas desta pasta. Os nomes das subpastas serão mostrados no Navegador da Biblioteca.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;(Menu: Widgets &gt; Janelas de encaixe &gt; Navegador da Biblioteca)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1157"/>
@@ -7049,7 +7049,7 @@ Por favor, escolha a unidade que deseja usar para novos desenhos e o seu idioma 
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="1241"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Temporarily toggle free snapping when the spacebar is pressed and the command window is activated&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ativar/desativar temporariamente o ajuste livre ao pressionar a barra de espaço e quando a janela de comandos estiver ativa&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ativar/desativar temporariamente o ajuste livre ao premir a barra de espaço e quando a janela de comandos estiver ativa&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -7097,7 +7097,7 @@ Por favor, escolha a unidade que deseja usar para novos desenhos e o seu idioma 
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="48"/>
         <source>Default width of elements, mm</source>
-        <translation>Largura padrão dos elementos, mm</translation>
+        <translation>Largura predefinida dos elementos, mm</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="135"/>
@@ -7141,7 +7141,9 @@ because it does not take into account the reference point in the &lt;use&gt;.</s
         <source>MakerCAM as of March 2015 cannot display ellipses and ellipse arcs correctly, 
 when they are created using the &lt;ellipse&gt; tag  with a rotation in 
 the &lt;transform&gt; attribute or as &lt;path&gt; using elliptic arc segments.</source>
-        <translation>A versão do MakerCAM de março de 2015 não consegue exibir corretamente elipses e arcos de elipse, quando são criados usando a etiqueta &lt;ellipse&gt; com uma rotação no atributo &lt;transform&gt; ou como &lt;path&gt; usando segmentos de arco elíptico.</translation>
+        <translation>O MakerCAM, a partir de março de 2015, não consegue mostrar corretamente elipses e arcos de elipse 
+quando são criados com a etiqueta &lt;ellipse&gt; com uma rotação no 
+atributo &lt;transform&gt; ou como &lt;path&gt; com segmentos de arco elíptico.</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.cpp" line="36"/>
@@ -7159,13 +7161,15 @@ which can be useful in lasercut of plywood or for papercraft. </source>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.cpp" line="38"/>
         <source>Default width of elements can affect some CAM&apos;s/SVG Editors, 
 but ignored by other</source>
-        <translation>A largura padrão dos elementos pode afetar alguns CAMs/editores SVG, mas é ignorada por outros.</translation>
+        <translation>A largura predefinida dos elementos pode afetar alguns editores CAM/SVG, 
+mas é ignorada por outros</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.cpp" line="39"/>
         <source>Length of line pattern related to zoom, 
 so default step value required for baking</source>
-        <translation>O comprimento do padrão da linha está relacionado com o zoom, portanto, é necessário um valor de passo padrão para o processamento.</translation>
+        <translation>Comprimento do padrão de linha relativo ao zoom, 
+pelo que é necessário um valor de passo predefinido para o processamento</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="199"/>
@@ -7292,7 +7296,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgrotate2.ui" line="26"/>
         <source>Rotate Two Options</source>
-        <translation>Rotacione Duas Opções</translation>
+        <translation>Opções de rodar dois</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgrotate2.ui" line="174"/>
@@ -7380,7 +7384,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgscale.ui" line="136"/>
         <source>Scale by the same factor at both x- and y- directions</source>
-        <translation>Dimensionar usando o mesmo fator nas direções x e y</translation>
+        <translation>Escalar usando o mesmo fator nas direções x e y</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgscale.ui" line="139"/>
@@ -7400,7 +7404,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgscale.ui" line="203"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Find the scaling ratios around the center by a reference point and a target point.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Encontre as proporções de dimensionamento em torno do centro, usando um ponto de referência e um ponto de destino.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Determinar os fatores de escala em torno do centro através de um ponto de referência e de um ponto de destino.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -7418,7 +7422,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgspline.ui" line="26"/>
         <source>Spline</source>
-        <translation>Chaveta</translation>
+        <translation>Spline</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgspline.ui" line="122"/>
@@ -7458,7 +7462,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="930"/>
         <source>Char:</source>
-        <translation>Caractere:</translation>
+        <translation>Carácter:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="920"/>
@@ -7478,7 +7482,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="87"/>
         <source>Save Text To File</source>
-        <translation>Salve Texto para Arquivo</translation>
+        <translation>Guardar texto num ficheiro</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="542"/>
@@ -7528,7 +7532,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="73"/>
         <source>Load Text From File</source>
-        <translation>Carregue Texto a Partir de Arquivo</translation>
+        <translation>Carregar texto a partir de ficheiro</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="437"/>
@@ -7588,7 +7592,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="873"/>
         <source>Registered (®)</source>
-        <translation>Registrado (®)</translation>
+        <translation>Registado (®)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="878"/>
@@ -8078,7 +8082,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1408"/>
         <source>[FE20-FE2F] Combining Half Marks</source>
-        <translation>[FE20-FE2F] Combinando Meias Marcas</translation>
+        <translation>[FE20-FE2F] Meias marcas combinatórias</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="1413"/>
@@ -8168,7 +8172,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="234"/>
         <source>Font settings</source>
-        <translation>Definições de fonte</translation>
+        <translation>Definições do tipo de letra</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="269"/>
@@ -8188,7 +8192,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="335"/>
         <source>Font:</source>
-        <translation>Fonte:</translation>
+        <translation>Tipo de letra:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="565"/>
@@ -8223,7 +8227,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="794"/>
         <source>&amp;Middle</source>
-        <translation>Centralizado</translation>
+        <translation>&amp;Meio</translation>
     </message>
 </context>
 <context>
@@ -8264,12 +8268,12 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/qg_filedialog.cpp" line="132"/>
         <source>LFF Font %1</source>
-        <translation>Fonte LFF %1</translation>
+        <translation>Tipo de letra LFF %1</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_filedialog.cpp" line="136"/>
         <source>QCad Font %1</source>
-        <translation>Fonte QCad %1</translation>
+        <translation>Tipo de letra QCad %1</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_filedialog.cpp" line="137"/>
@@ -8448,7 +8452,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_layerdialog.cpp" line="65"/>
         <source>Default Pen</source>
-        <translation>Pena Padrão</translation>
+        <translation>Caneta predefinida</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_layerdialog.ui" line="46"/>
@@ -8649,7 +8653,7 @@ O conteúdo de uma camada de construção não deve aparecer na impressão.</tra
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="82"/>
         <source>No Pen</source>
-        <translation>Sem Pena</translation>
+        <translation>Sem caneta</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="95"/>
@@ -8689,7 +8693,7 @@ O conteúdo de uma camada de construção não deve aparecer na impressão.</tra
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="80"/>
         <source>By Block</source>
-        <translation>Pelo Carimbo</translation>
+        <translation>Pelo Bloco</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_linetypebox.cpp" line="90"/>
@@ -8782,7 +8786,7 @@ O conteúdo de uma camada de construção não deve aparecer na impressão.</tra
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Helvetica&apos;; font-size:9pt;&quot;&gt;Hint about left/right mouse button actions&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>Dica sobre as ações dos botões esquerdo/direito do rato</translation>
+        <translation>Sugestão sobre as ações dos botões esquerdo/direito do rato</translation>
     </message>
 </context>
 <context>
@@ -8795,7 +8799,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/qg_pentoolbar.cpp" line="48"/>
         <source>Line width</source>
-        <translation>Largura da linha</translation>
+        <translation>Espessura da linha</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_pentoolbar.cpp" line="52"/>
@@ -8860,7 +8864,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="26"/>
         <source>Snap</source>
-        <translation>Snap</translation>
+        <translation>Ajuste</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.ui" line="47"/>
@@ -9015,7 +9019,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_snaptoolbar.cpp" line="52"/>
         <source>Snap Middle Manual</source>
-        <translation>Ajuste manual ao centro</translation>
+        <translation>Ajustar ao meio (manual)</translation>
     </message>
 </context>
 <context>
@@ -9060,7 +9064,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="580"/>
         <source>Remove Block</source>
-        <translation>Remova Carimbo</translation>
+        <translation>Remover Bloco</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="1762"/>
@@ -9093,7 +9097,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="581"/>
         <source>Block &quot;%1&quot; and all its entities will be removed.</source>
-        <translation>Carimbo &quot;%1&quot; e todas as suas entidades serão removidas.</translation>
+        <translation>O bloco &quot;%1&quot; e todas as suas entidades serão removidos.</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="465"/>
@@ -9329,7 +9333,7 @@ Por favor, especifique um valor diferente.</translation>
     <message>
         <location filename="../src/ui/lc_penpalettewidget.cpp" line="1349"/>
         <source>Please select only one entity to pick pen setting.</source>
-        <translation>Por favor, selecione apenas uma entidade para definir as configurações da caneta.</translation>
+        <translation>Selecione apenas uma entidade para obter as definições da caneta.</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="981"/>
@@ -9365,7 +9369,7 @@ Se não, os valores &quot;Por Camada&quot; serão mantidos e, portanto, a caneta
         <location filename="../src/ui/qg_filedialog.cpp" line="335"/>
         <location filename="../src/ui/qg_filedialog.cpp" line="388"/>
         <source>Save Drawing As</source>
-        <translation>Salve Desenho Como</translation>
+        <translation>Guardar desenho como</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="1797"/>
@@ -9380,7 +9384,7 @@ Se não, os valores &quot;Por Camada&quot; serão mantidos e, portanto, a caneta
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="704"/>
         <source>All Image Files (%1)</source>
-        <translation>Todos os Arquivos de Imagem (%1)</translation>
+        <translation>Todos os Ficheiros de Imagem (%1)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="1793"/>
@@ -9400,7 +9404,7 @@ Se não, os valores &quot;Por Camada&quot; serão mantidos e, portanto, a caneta
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="706"/>
         <source>All Files (*.*)</source>
-        <translation>Todos os Arquivos (*.*)</translation>
+        <translation>Todos os Ficheiros (*.*)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="1809"/>
@@ -9420,7 +9424,7 @@ Se não, os valores &quot;Por Camada&quot; serão mantidos e, portanto, a caneta
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="1803"/>
         <source>Portable Grey Map</source>
-        <translation>Mapa Cinza Portátil - PGM</translation>
+        <translation>Mapa de cinzentos portátil (PGM)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="1799"/>
@@ -9489,12 +9493,12 @@ Se não, os valores &quot;Por Camada&quot; serão mantidos e, portanto, a caneta
         <location filename="../src/lib/engine/rs_units.cpp" line="218"/>
         <location filename="../src/lib/engine/rs_units.cpp" line="274"/>
         <source>Kilometer</source>
-        <translation>Quilômetro</translation>
+        <translation>Quilómetro</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="70"/>
         <source>Dimension</source>
-        <translation>Dimensão</translation>
+        <translation>Cota</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1503"/>
@@ -9522,7 +9526,7 @@ Se não, os valores &quot;Por Camada&quot; serão mantidos e, portanto, a caneta
         <location filename="../src/lib/engine/rs_units.cpp" line="228"/>
         <location filename="../src/lib/engine/rs_units.cpp" line="284"/>
         <source>Nanometer</source>
-        <translation>Nanômetro</translation>
+        <translation>Nanómetro</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="244"/>
@@ -9533,7 +9537,7 @@ Se não, os valores &quot;Por Camada&quot; serão mantidos e, portanto, a caneta
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="77"/>
         <source>Polyline</source>
-        <translation>Multilinha</translation>
+        <translation>Polilinha</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_filedialog.cpp" line="455"/>
@@ -9568,7 +9572,7 @@ Se não, os valores &quot;Por Camada&quot; serão mantidos e, portanto, a caneta
         <location filename="../src/lib/engine/rs_units.cpp" line="236"/>
         <location filename="../src/lib/engine/rs_units.cpp" line="292"/>
         <source>Hectometer</source>
-        <translation>Hectômetro</translation>
+        <translation>Hectómetro</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="68"/>
@@ -9578,7 +9582,7 @@ Se não, os valores &quot;Por Camada&quot; serão mantidos e, portanto, a caneta
     <message>
         <location filename="../src/ui/qg_filedialog.cpp" line="462"/>
         <source>Font %1</source>
-        <translation>Fonte %1</translation>
+        <translation>Tipo de letra %1</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="238"/>
@@ -9595,12 +9599,12 @@ Se não, os valores &quot;Por Camada&quot; serão mantidos e, portanto, a caneta
     <message>
         <location filename="../src/main/main.cpp" line="361"/>
         <source>Loading File %1..</source>
-        <translation>Carregando o Arquivo %1..</translation>
+        <translation>A carregar o ficheiro %1..</translation>
     </message>
     <message>
         <location filename="../src/main/main.cpp" line="261"/>
         <source>Loading..</source>
-        <translation>Carregando..</translation>
+        <translation>A carregar..</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="711"/>
@@ -9649,7 +9653,7 @@ Deseja substituí-lo?</translation>
     <message>
         <location filename="../src/ui/qg_filedialog.cpp" line="461"/>
         <source>LFF Font %1</source>
-        <translation>Fonte LFF %1</translation>
+        <translation>Tipo de letra LFF %1</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_filedialog.cpp" line="463"/>
@@ -9704,17 +9708,17 @@ Deseja substituí-lo?</translation>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="1831"/>
         <source>SGI-Bilddatei</source>
-        <translation>Arquivo de imagem SGI</translation>
+        <translation>Ficheiro de imagem SGI</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="1833"/>
         <source>Targa Image File</source>
-        <translation>Arquivo de imagem Targa</translation>
+        <translation>Ficheiro de imagem Targa</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="1835"/>
         <source>Tagged Image File Format</source>
-        <translation>Formato de arquivo de imagem com marcação</translation>
+        <translation>Formato de ficheiro de imagem com marcação</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_filedialog.cpp" line="454"/>
@@ -9784,7 +9788,7 @@ Deseja substituí-lo?</translation>
     <message>
         <location filename="../src/lib/engine/rs_entitycontainer.cpp" line="1652"/>
         <source>Hatch failed due to a gap=%1 between (%2, %3) and (%4, %5)</source>
-        <translation>Falha no preenchimento devido a um intervalo de %1 entre (%2, %3) e (%4, %5)</translation>
+        <translation>A trama falhou devido a um intervalo de %1 entre (%2, %3) e (%4, %5)</translation>
     </message>
     <message>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="115"/>
@@ -9930,7 +9934,7 @@ Deseja substituí-lo?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="383"/>
         <source>poly2</source>
         <comment>polygon by 2 vertices</comment>
-        <translation>polígono2</translation>
+        <translation>poly2</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="390"/>
@@ -9972,7 +9976,7 @@ Deseja substituí-lo?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="538"/>
         <source>ellipseinscribed</source>
         <comment>inscribed ellipse</comment>
-        <translation>elipse inscrita</translation>
+        <translation>elipseinscrita</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="539"/>
@@ -9990,7 +9994,7 @@ Deseja substituí-lo?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="872"/>
         <source>hatch</source>
         <comment>draw hatch</comment>
-        <translation>hachura</translation>
+        <translation>trama</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="873"/>
@@ -10002,7 +10006,7 @@ Deseja substituí-lo?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="858"/>
         <source>mtext</source>
         <comment>draw mtext</comment>
-        <translation>texto</translation>
+        <translation>mtext</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="860"/>
@@ -10050,7 +10054,7 @@ Deseja substituí-lo?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="1038"/>
         <source>zoomwindow</source>
         <comment>zoom - window</comment>
-        <translation>zoom da janela</translation>
+        <translation>zoomjanela</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1039"/>
@@ -10062,7 +10066,7 @@ Deseja substituí-lo?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="1026"/>
         <source>zoomauto</source>
         <comment>zoom - auto</comment>
-        <translation>zoom automático</translation>
+        <translation>zoomauto</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1027"/>
@@ -10074,7 +10078,7 @@ Deseja substituí-lo?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="1044"/>
         <source>zoompan</source>
         <comment>zoom - pan</comment>
-        <translation>zoom e panorâmica</translation>
+        <translation>zoompan</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1045"/>
@@ -10134,13 +10138,13 @@ Deseja substituí-lo?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="638"/>
         <source>dimaligned</source>
         <comment>dimension - aligned</comment>
-        <translation>alinhamento dimensional</translation>
+        <translation>dimaligned</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="650"/>
         <source>dimhorizontal</source>
         <comment>dimension - horizontal</comment>
-        <translation>horizontal</translation>
+        <translation>dimhorizontal</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="651"/>
@@ -10230,7 +10234,7 @@ Deseja substituí-lo?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="960"/>
         <source>restrictnothing</source>
         <comment>restrict - nothing</comment>
-        <translation>não restringir</translation>
+        <translation>semrestrição</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="961"/>
@@ -10242,7 +10246,7 @@ Deseja substituí-lo?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="966"/>
         <source>restrictorthogonal</source>
         <comment>restrict - orthogonal</comment>
-        <translation>restringir ortogonalmente</translation>
+        <translation>restriçãoortogonal</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="967"/>
@@ -10254,7 +10258,7 @@ Deseja substituí-lo?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="972"/>
         <source>restricthorizontal</source>
         <comment>restrict - horizontal</comment>
-        <translation>restringir horizontalmente</translation>
+        <translation>restriçãohorizontal</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="973"/>
@@ -10266,7 +10270,7 @@ Deseja substituí-lo?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="978"/>
         <source>restrictvertical</source>
         <comment>restrict - vertical</comment>
-        <translation>restringir verticalmente</translation>
+        <translation>restriçãovertical</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="979"/>
@@ -10392,7 +10396,7 @@ Deseja substituí-lo?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="900"/>
         <source>snapcenter</source>
         <comment>snap - center</comment>
-        <translation>Centro de ajuste</translation>
+        <translation>snapcenter</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="901"/>
@@ -10404,7 +10408,7 @@ Deseja substituí-lo?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="906"/>
         <source>snapdist</source>
         <comment>snap - distance to endpoints</comment>
-        <translation>Distância de ajuste</translation>
+        <translation>snapdist</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="907"/>
@@ -10416,7 +10420,7 @@ Deseja substituí-lo?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="912"/>
         <source>snapend</source>
         <comment>snap - end points</comment>
-        <translation>Fim do ajuste</translation>
+        <translation>snapend</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="913"/>
@@ -10428,7 +10432,7 @@ Deseja substituí-lo?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="918"/>
         <source>snapgrid</source>
         <comment>snap - grid</comment>
-        <translation>Ajustar à grelha</translation>
+        <translation>snapgrid</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="919"/>
@@ -10440,7 +10444,7 @@ Deseja substituí-lo?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="924"/>
         <source>snapintersection</source>
         <comment>snap - intersection</comment>
-        <translation>Ajustar à interseção</translation>
+        <translation>snapintersection</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="925"/>
@@ -10452,7 +10456,7 @@ Deseja substituí-lo?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="930"/>
         <source>snapmiddle</source>
         <comment>snap - middle points</comment>
-        <translation>centralizar</translation>
+        <translation>snapmiddle</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="931"/>
@@ -10464,7 +10468,7 @@ Deseja substituí-lo?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="936"/>
         <source>snaponentity</source>
         <comment>snap - on entity</comment>
-        <translation>alinhar ao objeto</translation>
+        <translation>snaponentity</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="937"/>
@@ -10482,7 +10486,7 @@ Deseja substituí-lo?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="954"/>
         <source>setrelativezero</source>
         <comment>set relative zero position</comment>
-        <translation>definir zero relativo</translation>
+        <translation>setrelativezero</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="955"/>
@@ -10494,7 +10498,7 @@ Deseja substituí-lo?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="616"/>
         <source>selectall</source>
         <comment>Select all entities</comment>
-        <translation>selecionar tudo</translation>
+        <translation>selectall</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="617"/>
@@ -10506,7 +10510,7 @@ Deseja substituí-lo?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="622"/>
         <source>deselectall</source>
         <comment>deselect all entities</comment>
-        <translation>desmarcar tudo</translation>
+        <translation>desselecionar</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="624"/>
@@ -10571,7 +10575,7 @@ Deseja substituí-lo?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="1099"/>
         <location filename="../src/cmd/rs_commands.cpp" line="1197"/>
         <source>chord length</source>
-        <translation>comprimento da corda</translation>
+        <translation>corda</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1100"/>
@@ -10582,7 +10586,7 @@ Deseja substituí-lo?</translation>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1101"/>
         <source>columnspacing</source>
-        <translation>espaçamento entre colunas</translation>
+        <translation>columnspacing</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1103"/>
@@ -10593,12 +10597,12 @@ Deseja substituí-lo?</translation>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1104"/>
         <source>length</source>
-        <translation>comprimento</translation>
+        <translation>length</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1107"/>
         <source>number</source>
-        <translation>número</translation>
+        <translation>number</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1108"/>
@@ -10614,13 +10618,13 @@ Deseja substituí-lo?</translation>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1110"/>
         <source>rowspacing</source>
-        <translation>espaçamento entre linhas</translation>
+        <translation>rowspacing</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1111"/>
         <location filename="../src/cmd/rs_commands.cpp" line="1254"/>
         <source>through</source>
-        <translation>através de</translation>
+        <translation>através</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1112"/>
@@ -10684,13 +10688,13 @@ Deseja substituí-lo?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="1208"/>
         <source>columnspacing</source>
         <comment>columnspacing for inserts</comment>
-        <translation>espaçamento da coluna</translation>
+        <translation>columnspacing</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1209"/>
         <source>colspacing</source>
         <comment>columnspacing for inserts</comment>
-        <translation>espaçamento da coluna</translation>
+        <translation>colspacing</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1210"/>
@@ -10749,7 +10753,7 @@ Deseja substituí-lo?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="1228"/>
         <source>len1</source>
         <comment>length1</comment>
-        <translation>compr1</translation>
+        <translation>len1</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1229"/>
@@ -10767,7 +10771,7 @@ Deseja substituí-lo?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="1232"/>
         <source>len2</source>
         <comment>length2</comment>
-        <translation>compr2</translation>
+        <translation>len2</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1233"/>
@@ -10822,7 +10826,7 @@ Deseja substituí-lo?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="1248"/>
         <source>rowspacing</source>
         <comment>rowspacing for inserts</comment>
-        <translation>espaçamento entre linhas</translation>
+        <translation>rowspacing</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1249"/>
@@ -10883,12 +10887,12 @@ Deseja substituí-lo?</translation>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1269"/>
         <source>paperoffset</source>
-        <translation>deslocamento do papel</translation>
+        <translation>paperoffset</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1270"/>
         <source>graphoffset</source>
-        <translation>deslocamento do gráfico</translation>
+        <translation>graphoffset</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1392"/>
@@ -10908,7 +10912,7 @@ Deseja substituí-lo?</translation>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1439"/>
         <source>Accepted keycode: %1</source>
-        <translation>Tecla aceita: %1</translation>
+        <translation>Código de tecla aceite: %1</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="204"/>
@@ -10934,7 +10938,7 @@ Deseja substituí-lo?</translation>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1267"/>
         <source>blackwhite</source>
-        <translation>preto e branco</translation>
+        <translation>pretobranco</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1268"/>
@@ -11014,12 +11018,12 @@ Deseja substituí-lo?</translation>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="80"/>
         <source>Snap</source>
-        <translation>Snap</translation>
+        <translation>Ajuste</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="81"/>
         <source>Snap Extras</source>
-        <translation>Ajustar Extras</translation>
+        <translation>Extras de ajuste</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="82"/>
@@ -11158,7 +11162,7 @@ Deseja substituí-lo?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="313"/>
         <source>lineoff</source>
         <comment>create parallel</comment>
-        <translation>desligada</translation>
+        <translation>lineoff</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="314"/>
@@ -11440,7 +11444,7 @@ Deseja substituí-lo?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="467"/>
         <source>arctan</source>
         <comment>arc tangent</comment>
-        <translation>arctangent</translation>
+        <translation>arctan</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="468"/>
@@ -11482,7 +11486,7 @@ Deseja substituí-lo?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="514"/>
         <source>ellipsec2p</source>
         <comment>ellipse axis</comment>
-        <translation>translation 2</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="515"/>
@@ -11494,7 +11498,7 @@ Deseja substituí-lo?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="520"/>
         <source>ellipse3p</source>
         <comment>ellipse foci</comment>
-        <translation>translation 4</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="521"/>
@@ -11506,31 +11510,31 @@ Deseja substituí-lo?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="526"/>
         <source>ellipse4p</source>
         <comment>ellipse 4 point</comment>
-        <translation>translation 6</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="527"/>
         <source>e4</source>
         <comment>ellipse 4 point</comment>
-        <translation>translation 7</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="532"/>
         <source>ellipsec3p</source>
         <comment>ellipse center 3 point</comment>
-        <translation>translation 8</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="533"/>
         <source>e3</source>
         <comment>ellipse center 3 point</comment>
-        <translation>translation 9</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="572"/>
         <source>plineadd</source>
         <comment>pl add node</comment>
-        <translation>translation 10</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="573"/>
@@ -11668,7 +11672,7 @@ Deseja substituí-lo?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="703"/>
         <source>modrotate</source>
         <comment>modify - rotate</comment>
-        <translation>rotacionar</translation>
+        <translation>rodar</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="709"/>
@@ -11686,7 +11690,7 @@ Deseja substituí-lo?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="721"/>
         <source>modmovrot</source>
         <comment>modify - move rotate</comment>
-        <translation>mover e rotacionar</translation>
+        <translation>modmovrot</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="722"/>
@@ -11848,7 +11852,7 @@ Deseja substituí-lo?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="843"/>
         <source>infoangle</source>
         <comment>measure angle</comment>
-        <translation>ângulo da informação</translation>
+        <translation>infoangle</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="844"/>
@@ -11860,7 +11864,7 @@ Deseja substituí-lo?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="850"/>
         <source>infoarea</source>
         <comment>measure area</comment>
-        <translation>área da informação</translation>
+        <translation>infoarea</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="851"/>
@@ -11908,7 +11912,7 @@ Deseja substituí-lo?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="1010"/>
         <source>drawpref</source>
         <comment>drawing preferences</comment>
-        <translation>preferências de desenho</translation>
+        <translation>drawpref</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1011"/>
@@ -11926,13 +11930,13 @@ Deseja substituí-lo?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="1105"/>
         <source>length1</source>
         <comment>bevel/fillet length1</comment>
-        <translation>comprimento1</translation>
+        <translation>length1</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1106"/>
         <source>length2</source>
         <comment>bevel/fillet length2</comment>
-        <translation>comprimento2</translation>
+        <translation>length2</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1217"/>
@@ -12136,19 +12140,19 @@ Deseja substituí-lo?</translation>
         <location filename="../src/lib/engine/rs_units.cpp" line="1016"/>
         <source>arch c</source>
         <comment>Paper format</comment>
-        <translation>translation 1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="1018"/>
         <source>arch d</source>
         <comment>Paper format</comment>
-        <translation>translation 2</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="1020"/>
         <source>arch e</source>
         <comment>Paper format</comment>
-        <translation>translation 3</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="74"/>
@@ -12328,17 +12332,17 @@ Deseja substituí-lo?</translation>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="85"/>
         <source>Auto fit and center drawing to page.</source>
-        <translation>Ajusta e centraliza automaticamente o desenho na página.</translation>
+        <translation>Ajusta e centra automaticamente o desenho na página.</translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="89"/>
         <source>Auto center drawing on page.</source>
-        <translation>Centraliza automaticamente o desenho na página.</translation>
+        <translation>Centra automaticamente o desenho na página.</translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="93"/>
         <source>Print grayscale.</source>
-        <translation>Imprime em tons de cinza.</translation>
+        <translation>Imprime em escala de cinzentos.</translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="97"/>
@@ -12420,7 +12424,7 @@ Deseja substituí-lo?</translation>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="42"/>
         <source>/CustomColor%1</source>
-        <translation>/CorPersonalizada%1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="43"/>
@@ -12533,7 +12537,7 @@ Deseja substituí-lo?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="252"/>
         <source>slicel</source>
         <comment>slice/divide line</comment>
-        <translation>fatia</translation>
+        <translation>slicel</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="253"/>
@@ -12545,7 +12549,7 @@ Deseja substituí-lo?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="258"/>
         <source>slicec</source>
         <comment>slice/divide circle/arc</comment>
-        <translation>fatia</translation>
+        <translation>slicec</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="259"/>
@@ -12581,13 +12585,13 @@ Deseja substituí-lo?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="276"/>
         <source>linepoints</source>
         <comment>draw line of points</comment>
-        <translation>pontos da linha</translation>
+        <translation>linepoints</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="277"/>
         <source>lpoints</source>
         <comment>draw line of points</comment>
-        <translation>pontos da linha</translation>
+        <translation>lpoints</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="282"/>
@@ -12617,7 +12621,7 @@ Deseja substituí-lo?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="294"/>
         <source>linejoin</source>
         <comment>lines join</comment>
-        <translation>junção de linha</translation>
+        <translation>linejoin</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="295"/>
@@ -12629,7 +12633,7 @@ Deseja substituí-lo?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="300"/>
         <source>breakdivide</source>
         <comment>break or divide entity</comment>
-        <translation>dividir com interrupção</translation>
+        <translation>breakdivide</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="301"/>
@@ -12641,7 +12645,7 @@ Deseja substituí-lo?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="306"/>
         <source>gapline</source>
         <comment>line gap</comment>
-        <translation>linha de separação</translation>
+        <translation>gapline</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="307"/>
@@ -12678,13 +12682,13 @@ Deseja substituí-lo?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="554"/>
         <source>angleline</source>
         <comment>draw angle from line</comment>
-        <translation>ângulo da linha</translation>
+        <translation>angleline</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="559"/>
         <source>rortoline</source>
         <comment>draw orthogonal</comment>
-        <translation>linha de rotação</translation>
+        <translation>rortoline</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="560"/>
@@ -12696,7 +12700,7 @@ Deseja substituí-lo?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="565"/>
         <source>point2line</source>
         <comment>draw line from point to line</comment>
-        <translation>ponto para linha</translation>
+        <translation>ponto2linha</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="566"/>
@@ -12708,13 +12712,13 @@ Deseja substituí-lo?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="945"/>
         <source>snapmiddlemanual</source>
         <comment>snap middle manual</comment>
-        <translation>ajustar ao centro manualmente</translation>
+        <translation>snapmiddlemanual</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="946"/>
         <source>snapmanual</source>
         <comment>snap middle manual</comment>
-        <translation>ajuste manual</translation>
+        <translation>snapmanual</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="947"/>
@@ -12740,37 +12744,37 @@ Deseja substituí-lo?</translation>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1118"/>
         <source>anglerel</source>
-        <translation>ângulo relativo</translation>
+        <translation>anglerel</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1119"/>
         <source>start</source>
-        <translation>início</translation>
+        <translation>start</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1122"/>
         <source>offset</source>
-        <translation>deslocamento</translation>
+        <translation>offset</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1123"/>
         <source>linesnap</source>
-        <translation>alinhamento de linha</translation>
+        <translation>linesnap</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1124"/>
         <source>ticksnap</source>
-        <translation>alinhamento de marcação</translation>
+        <translation>ticksnap</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1127"/>
         <source>width</source>
-        <translation>largura</translation>
+        <translation>width</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1128"/>
         <source>height</source>
-        <translation>altura</translation>
+        <translation>height</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1129"/>
@@ -12786,22 +12790,22 @@ Deseja substituí-lo?</translation>
         <location filename="../src/cmd/rs_commands.cpp" line="1131"/>
         <location filename="../src/cmd/rs_commands.cpp" line="1137"/>
         <source>bevels</source>
-        <translation>biséis</translation>
+        <translation>bevels</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1132"/>
         <source>nopoly</source>
-        <translation>sem polígonos</translation>
+        <translation>nopoly</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1133"/>
         <source>usepoly</source>
-        <translation>usar polígonos</translation>
+        <translation>usepoly</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1134"/>
         <source>corners</source>
-        <translation>cantos</translation>
+        <translation>corners</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1135"/>
@@ -12811,12 +12815,12 @@ Deseja substituí-lo?</translation>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1136"/>
         <source>round</source>
-        <translation>arredondado</translation>
+        <translation>round</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1138"/>
         <source>snap1</source>
-        <translation>superior esquerdo</translation>
+        <translation>snap1</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1139"/>
@@ -12841,47 +12845,47 @@ Deseja substituí-lo?</translation>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1143"/>
         <source>middle</source>
-        <translation>centro</translation>
+        <translation>middle</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1144"/>
         <source>right</source>
-        <translation>direito</translation>
+        <translation>right</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1145"/>
         <source>bottoml</source>
-        <translation>inferior esquerdo</translation>
+        <translation>bottoml</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1146"/>
         <source>bottom</source>
-        <translation>inferior</translation>
+        <translation>bottom</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1147"/>
         <source>bottomr</source>
-        <translation>inferior direito</translation>
+        <translation>bottomr</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1148"/>
         <source>snapcorner</source>
-        <translation>ângulo de ajuste</translation>
+        <translation>snapcorner</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1149"/>
         <source>snapshift</source>
-        <translation>deslocamento de ajuste</translation>
+        <translation>snapshift</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1150"/>
         <source>sizein</source>
-        <translation>tamanho interno</translation>
+        <translation>sizein</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1151"/>
         <source>sizeout</source>
-        <translation>tamanho externo</translation>
+        <translation>sizeout</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1152"/>
@@ -12896,22 +12900,22 @@ Deseja substituí-lo?</translation>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1156"/>
         <source>snap2</source>
-        <translation>ajuste 2</translation>
+        <translation>snap2</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1157"/>
         <source>corner</source>
-        <translation>ângulo</translation>
+        <translation>corner</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1158"/>
         <source>mid-vert</source>
-        <translation>meio-vertical</translation>
+        <translation>mid-vert</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1159"/>
         <source>mid-hor</source>
-        <translation>meio-horizontal</translation>
+        <translation>mid-hor</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1161"/>
@@ -12921,37 +12925,37 @@ Deseja substituí-lo?</translation>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1162"/>
         <source>noquad</source>
-        <translation>semquad</translation>
+        <translation>noquad</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1163"/>
         <source>angle_inner</source>
-        <translation>ângulo_interno</translation>
+        <translation>angle_inner</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1166"/>
         <source>edges</source>
-        <translation>arestas</translation>
+        <translation>edges</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1167"/>
         <source>edge-none</source>
-        <translation>sem_arestas</translation>
+        <translation>edge-none</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1168"/>
         <source>edge-both</source>
-        <translation>arestas_em_ambos_os_lados</translation>
+        <translation>edge-both</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1169"/>
         <source>edge-start</source>
-        <translation>aresta_inicial</translation>
+        <translation>edge-start</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1170"/>
         <source>edge-end</source>
-        <translation>aresta_final</translation>
+        <translation>edge-end</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1171"/>
@@ -12976,22 +12980,22 @@ Deseja substituí-lo?</translation>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1175"/>
         <source>nofit</source>
-        <translation>não ajustar</translation>
+        <translation>nofit</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1176"/>
         <source>dist_fixed</source>
-        <translation>distância fixa</translation>
+        <translation>dist_fixed</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1177"/>
         <source>dist_flex</source>
-        <translation>distância flexível</translation>
+        <translation>dist_flex</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1178"/>
         <source>distance</source>
-        <translation>distância</translation>
+        <translation>distance</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1182"/>
@@ -13001,17 +13005,17 @@ Deseja substituí-lo?</translation>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="1183"/>
         <source>nosym</source>
-        <translation>não simétrico</translation>
+        <translation>nosym</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_patternlist.cpp" line="63"/>
         <source>Hatch:: no pattern found. Please set pattern path in application preferences</source>
-        <translation>Hatch:: Nenhum padrão encontrado. Defina o caminho do padrão nas preferências da aplicação.</translation>
+        <translation>Trama:: nenhum padrão encontrado. Defina o caminho dos padrões nas preferências da aplicação.</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_patternlist.cpp" line="85"/>
         <source>Hatch:: loading pattern failed: %1</source>
-        <translation>Hatch:: Falha ao carregar o padrão: %1</translation>
+        <translation>Trama:: falha ao carregar o padrão: %1</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actiongroupmanager.cpp" line="84"/>
@@ -13253,7 +13257,7 @@ Deseja substituí-lo?</translation>
         <location filename="../src/actions/rs_actionblocksinsert.cpp" line="80"/>
         <source> has nested insert of current block in:
 </source>
-        <translation> tem inserção aninhada do bloco actual em:
+        <translation> tem inserção aninhada do bloco atual em:
 </translation>
     </message>
     <message>
@@ -13269,7 +13273,7 @@ Este bloco não pode ser inserido.</translation>
     <message>
         <location filename="../src/actions/rs_actionblockssave.cpp" line="96"/>
         <source>No block activated to save</source>
-        <translation>Nenhum bloco activado para guardar</translation>
+        <translation>Nenhum bloco ativado para guardar</translation>
     </message>
 </context>
 <context>
@@ -13296,12 +13300,12 @@ Este bloco não pode ser inserido.</translation>
     <message>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="257"/>
         <source>Specify second extension line origin</source>
-        <translation>Indique a segunda extensão da linha de origem</translation>
+        <translation>Indique a origem da segunda linha de extensão</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="262"/>
         <source>Specify dimension line location</source>
-        <translation>Indique a dimensão da linha de localização</translation>
+        <translation>Indique a localização da linha de cota</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="253"/>
@@ -13311,12 +13315,12 @@ Este bloco não pode ser inserido.</translation>
     <message>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="266"/>
         <source>Enter dimension text:</source>
-        <translation>Insira o texto de dimensão:</translation>
+        <translation>Insira o texto da cota:</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimaligned.cpp" line="252"/>
         <source>Specify first extension line origin</source>
-        <translation>Indique a primeira extensão da linha de origem</translation>
+        <translation>Indique a origem da primeira linha de extensão</translation>
     </message>
 </context>
 <context>
@@ -13336,12 +13340,12 @@ Este bloco não pode ser inserido.</translation>
     <message>
         <location filename="../src/actions/rs_actiondimangular.cpp" line="254"/>
         <source>Enter dimension text:</source>
-        <translation>Insira o texto de dimensão:</translation>
+        <translation>Insira o texto da cota:</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimangular.cpp" line="249"/>
         <source>Specify dimension arc line location</source>
-        <translation>Indique a dimensão do arco da linha de localização</translation>
+        <translation>Indique a localização da linha do arco de cota</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimangular.cpp" line="239"/>
@@ -13364,7 +13368,7 @@ Este bloco não pode ser inserido.</translation>
     <message>
         <location filename="../src/actions/rs_actiondimdiametric.cpp" line="291"/>
         <source>Specify dimension line location</source>
-        <translation>Indique a localização da linha de dimensão</translation>
+        <translation>Indique a localização da linha de cota</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimdiametric.cpp" line="287"/>
@@ -13380,7 +13384,7 @@ Este bloco não pode ser inserido.</translation>
     <message>
         <location filename="../src/actions/rs_actiondimdiametric.cpp" line="294"/>
         <source>Enter dimension text:</source>
-        <translation>Insira o texto de dimensão:</translation>
+        <translation>Insira o texto da cota:</translation>
     </message>
 </context>
 <context>
@@ -13422,12 +13426,12 @@ Este bloco não pode ser inserido.</translation>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="288"/>
         <source>Specify second extension line origin</source>
-        <translation>Indique a segunda extensão da linha de origem</translation>
+        <translation>Indique a origem da segunda linha de extensão</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="293"/>
         <source>Specify dimension line location</source>
-        <translation>Indique a dimensão da linha de localização</translation>
+        <translation>Indique a localização da linha de cota</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="284"/>
@@ -13437,17 +13441,17 @@ Este bloco não pode ser inserido.</translation>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="297"/>
         <source>Enter dimension text:</source>
-        <translation>Insira o texto de dimensão:</translation>
+        <translation>Insira o texto da cota:</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="283"/>
         <source>Specify first extension line origin</source>
-        <translation>Indique a primeira extensão da linha de origem</translation>
+        <translation>Indique a origem da primeira linha de extensão</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimlinear.cpp" line="301"/>
         <source>Enter dimension line angle:</source>
-        <translation>Insira o ângulo da linha de dimensão:</translation>
+        <translation>Insira o ângulo da linha de cota:</translation>
     </message>
 </context>
 <context>
@@ -13465,7 +13469,7 @@ Este bloco não pode ser inserido.</translation>
     <message>
         <location filename="../src/actions/rs_actiondimradial.cpp" line="283"/>
         <source>Specify dimension line position or enter angle:</source>
-        <translation>Indique a dimensão da linha de posicionamento ou insira o ângulo:</translation>
+        <translation>Indique a posição da linha de cota ou insira o ângulo:</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondimradial.cpp" line="279"/>
@@ -13481,7 +13485,7 @@ Este bloco não pode ser inserido.</translation>
     <message>
         <location filename="../src/actions/rs_actiondimradial.cpp" line="287"/>
         <source>Enter dimension text:</source>
-        <translation>Insira o texto de dimensão:</translation>
+        <translation>Insira o texto da cota:</translation>
     </message>
 </context>
 <context>
@@ -13542,7 +13546,7 @@ Este bloco não pode ser inserido.</translation>
     <message>
         <location filename="../src/actions/rs_actiondrawarc.cpp" line="347"/>
         <source>Specify end angle or [angle/chord length]</source>
-        <translation>Indique o ângulo final ou [ângulo/comprimento da corda]</translation>
+        <translation>Indique o ângulo final ou [ângulo/corda]</translation>
     </message>
 </context>
 <context>
@@ -13807,7 +13811,7 @@ Este bloco não pode ser inserido.</translation>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan1_2p.cpp" line="439"/>
         <source>Select the center of the tangent circle</source>
-        <translation>Seleccione o centro do círculo tangente</translation>
+        <translation>Selecione o centro do círculo tangente</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan1_2p.cpp" line="425"/>
@@ -13841,7 +13845,7 @@ Este bloco não pode ser inserido.</translation>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan2.cpp" line="336"/>
         <source>Select the center of the tangent circle</source>
-        <translation>Seleccione o centro do círculo tangente</translation>
+        <translation>Selecione o centro do círculo tangente</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan2.cpp" line="154"/>
@@ -13901,7 +13905,7 @@ Este bloco não pode ser inserido.</translation>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan2_1p.cpp" line="347"/>
         <source>Select the center of the tangent circle</source>
-        <translation>Seleccione o centro do círculo tangente</translation>
+        <translation>Selecione o centro do círculo tangente</translation>
     </message>
 </context>
 <context>
@@ -13921,7 +13925,7 @@ Este bloco não pode ser inserido.</translation>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan3.cpp" line="477"/>
         <source>Select the center of the tangent circle</source>
-        <translation>Seleccione o centro do círculo tangente</translation>
+        <translation>Selecione o centro do círculo tangente</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan3.cpp" line="463"/>
@@ -14151,42 +14155,42 @@ Este bloco não pode ser inserido.</translation>
     <message>
         <location filename="../src/actions/rs_actiondrawhatch.cpp" line="150"/>
         <source>Hatch created successfully.</source>
-        <translation>Hachura criada com sucesso.</translation>
+        <translation>Trama criada com sucesso.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawhatch.cpp" line="179"/>
         <source>Invalid hatch area. Please check that the entities chosen form one or more closed contours.</source>
-        <translation>Área de hachura inválida. Por favor verifique se as entidades selecionadas formam um ou mais contornos fechados.</translation>
+        <translation>Área de trama inválida. Verifique se as entidades escolhidas formam um ou mais contornos fechados.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawhatch.cpp" line="153"/>
         <source>Hatch Error: Invalid contour found!</source>
-        <translation>Erro de Hachura: Contorno inválido encontrado!</translation>
+        <translation>Erro de trama: foi encontrado um contorno inválido!</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawhatch.cpp" line="157"/>
         <source>Hatch Error: Pattern not found!</source>
-        <translation>Erro de Hachura: Padrão não encontrado!</translation>
+        <translation>Erro de trama: padrão não encontrado!</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawhatch.cpp" line="160"/>
         <source>Hatch Error: Contour or pattern too small!</source>
-        <translation>Erro de Hachura: Contorno ou padrão demasiado pequeno!</translation>
+        <translation>Erro de trama: contorno ou padrão demasiado pequeno!</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawhatch.cpp" line="163"/>
         <source>Hatch Error: Contour too big!</source>
-        <translation>Erro de Hachura: Contorno demasiado grande!</translation>
+        <translation>Erro de trama: contorno demasiado grande!</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawhatch.cpp" line="166"/>
         <source>Hatch Error: Undefined Error!</source>
-        <translation>Erro de Hachura: Erro indefinido!</translation>
+        <translation>Erro de trama: erro indefinido!</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawhatch.cpp" line="171"/>
         <source>Total hatch area = %1</source>
-        <translation>Área total de hachura = %1</translation>
+        <translation>Área total da trama = %1</translation>
     </message>
 </context>
 <context>
@@ -14391,7 +14395,7 @@ Este bloco não pode ser inserido.</translation>
     <message>
         <location filename="../src/actions/rs_actiondrawlineorthtan.cpp" line="185"/>
         <source>Select a line</source>
-        <translation>Seleccione uma linha</translation>
+        <translation>Selecione uma linha</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlineorthtan.cpp" line="186"/>
@@ -14401,7 +14405,7 @@ Este bloco não pode ser inserido.</translation>
     <message>
         <location filename="../src/actions/rs_actiondrawlineorthtan.cpp" line="189"/>
         <source>Select circle, arc or ellipse</source>
-        <translation>Seleccione círculo, arco ou elipse</translation>
+        <translation>Selecione círculo, arco ou elipse</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlineorthtan.cpp" line="190"/>
@@ -14635,17 +14639,17 @@ Este bloco não pode ser inserido.</translation>
     <message>
         <location filename="../src/actions/rs_actiondrawlinetangent2.cpp" line="282"/>
         <source>Select first circle/ellipse/parabola</source>
-        <translation>Seleccione o primeiro círculo/elipse/parábola</translation>
+        <translation>Selecione o primeiro círculo/elipse/parábola</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinetangent2.cpp" line="286"/>
         <source>Select second circle/ellipse/parabola</source>
-        <translation>Seleccione o segundo círculo/elipse/parábola</translation>
+        <translation>Selecione o segundo círculo/elipse/parábola</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawlinetangent2.cpp" line="290"/>
         <source>Select the tangent line closest to cursor</source>
-        <translation>Seleccione a linha tangente mais próxima do cursor</translation>
+        <translation>Selecione a linha tangente mais próxima do cursor</translation>
     </message>
 </context>
 <context>
@@ -14781,7 +14785,7 @@ Este bloco não pode ser inserido.</translation>
     <message>
         <location filename="../src/actions/rs_actiondrawspline.cpp" line="290"/>
         <source>Specify next control point or [%1]</source>
-        <translation>Especifique o próximo ponto de controle ou [%1]</translation>
+        <translation>Especifique o próximo ponto de controlo ou [%1]</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawspline.cpp" line="278"/>
@@ -14791,7 +14795,7 @@ Este bloco não pode ser inserido.</translation>
     <message>
         <location filename="../src/actions/rs_actiondrawspline.cpp" line="294"/>
         <source>Specify next control point</source>
-        <translation>Especifique o próximo ponto de controle</translation>
+        <translation>Especifique o próximo ponto de controlo</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawspline.cpp" line="333"/>
@@ -14806,7 +14810,7 @@ Este bloco não pode ser inserido.</translation>
     <message>
         <location filename="../src/actions/rs_actiondrawspline.cpp" line="277"/>
         <source>Specify first control point</source>
-        <translation>Indique o primeiro ponto de controle</translation>
+        <translation>Indique o primeiro ponto de controlo</translation>
     </message>
 </context>
 <context>
@@ -15051,7 +15055,7 @@ Este bloco não pode ser inserido.</translation>
     <message>
         <location filename="../src/actions/rs_actionlibraryinsert.cpp" line="79"/>
         <source>Cannot open file &apos;%1&apos;</source>
-        <translation>Não pôde abrir o arquivo &apos;%1&apos;</translation>
+        <translation>Não foi possível abrir o ficheiro &apos;%1&apos;</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionlibraryinsert.cpp" line="187"/>
@@ -15077,7 +15081,7 @@ Este bloco não pode ser inserido.</translation>
     <message>
         <location filename="../src/actions/rs_actionlibraryinsert.cpp" line="60"/>
         <source>Insert Library Object</source>
-        <translation>Inserir Objecto de Biblioteca</translation>
+        <translation>Inserir Objeto de Biblioteca</translation>
     </message>
 </context>
 <context>
@@ -15085,7 +15089,7 @@ Este bloco não pode ser inserido.</translation>
     <message>
         <location filename="../src/actions/rs_actionlockrelativezero.cpp" line="43"/>
         <source>(Un-)&amp;Lock Relative Zero</source>
-        <translation>&amp;(Des)Trave Zero Relativo</translation>
+        <translation>(Des)&amp;bloquear o zero relativo</translation>
     </message>
 </context>
 <context>
@@ -15188,12 +15192,12 @@ Este bloco não pode ser inserido.</translation>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="175"/>
         <source>Specify second break point on the same polyline</source>
-        <translation>Indique o segundo ponto de quebra na mesma multilinha</translation>
+        <translation>Indique o segundo ponto de quebra na mesma polilinha</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="171"/>
         <source>Specify first break point on a polyline</source>
-        <translation>Indique o primeiro ponto de quebra em uma multilinha</translation>
+        <translation>Indique o primeiro ponto de quebra numa polilinha</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifydeletefree.cpp" line="106"/>
@@ -15352,7 +15356,7 @@ Este bloco não pode ser inserido.</translation>
     <message>
         <location filename="../src/actions/rs_actionmodifyoffset.cpp" line="101"/>
         <source>Specify direction of offset</source>
-        <translation>Indique a direcção do deslocamento</translation>
+        <translation>Indique a direção do deslocamento</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifyoffset.cpp" line="101"/>
@@ -15553,7 +15557,7 @@ Este bloco não pode ser inserido.</translation>
     <message>
         <location filename="../src/actions/rs_actionmodifytrimamount.cpp" line="104"/>
         <source>The chosen Entity is in a block. Please edit the block.</source>
-        <translation>A Entidade escolhida está num carimbo. Por favor edite o carimbo.</translation>
+        <translation>A Entidade escolhida está num bloco. Por favor edite o bloco.</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifytrimamount.cpp" line="186"/>
@@ -15919,7 +15923,7 @@ Este bloco não pode ser inserido.</translation>
     <message>
         <location filename="../src/actions/rs_actionprintpreview.cpp" line="184"/>
         <source>: select printout offset coordinates</source>
-        <translation>: seleccione coordenadas de deslocamento de impressão</translation>
+        <translation>: selecione coordenadas de deslocamento de impressão</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionprintpreview.cpp" line="185"/>
@@ -15929,7 +15933,7 @@ Este bloco não pode ser inserido.</translation>
     <message>
         <location filename="../src/actions/rs_actionprintpreview.cpp" line="193"/>
         <source>Printout offset ignores relative zero. Ignoring &apos;@&apos;</source>
-        <translation>O deslocamento de impressão ignora o zero relativo. Ignorando &apos;@&apos;</translation>
+        <translation>O deslocamento da impressão ignora o zero relativo. A ignorar &apos;@&apos;</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionprintpreview.cpp" line="164"/>
@@ -15952,7 +15956,7 @@ Este bloco não pode ser inserido.</translation>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="83"/>
         <source>Select to modify attributes</source>
-        <translation>Seleccione para modificar atributos</translation>
+        <translation>Selecione para modificar atributos</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="83"/>
@@ -15978,52 +15982,52 @@ Este bloco não pode ser inserido.</translation>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="89"/>
         <source>Select to delete</source>
-        <translation>Seleccione para eliminar</translation>
+        <translation>Selecione para eliminar</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="92"/>
         <source>Select to delete immediately</source>
-        <translation>Seleccione para eliminar imediatamente</translation>
+        <translation>Selecione para eliminar imediatamente</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="95"/>
         <source>Select to move</source>
-        <translation>Seleccione para mover</translation>
+        <translation>Selecione para mover</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="107"/>
         <source>Select to rotate</source>
-        <translation>Seleccione para rodar</translation>
+        <translation>Selecione para rodar</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="110"/>
         <source>Select to scale</source>
-        <translation>Seleccione para escalar</translation>
+        <translation>Selecione para escalar</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="113"/>
         <source>Select to mirror</source>
-        <translation>Seleccione para espelhar</translation>
+        <translation>Selecione para espelhar</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="116"/>
         <source>Select to move and rotate</source>
-        <translation>Seleccione para mover e rodar</translation>
+        <translation>Selecione para mover e rodar</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="122"/>
         <source>Select for two axis rotation</source>
-        <translation>Seleccione para rotação de dois eixos</translation>
+        <translation>Selecione para rotação de dois eixos</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="125"/>
         <source>Select to explode text</source>
-        <translation>Seleccione para explodir texto</translation>
+        <translation>Selecione para explodir texto</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="131"/>
         <source>Select to create block</source>
-        <translation>Seleccione para criar bloco</translation>
+        <translation>Selecione para criar bloco</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="135"/>
@@ -16034,37 +16038,37 @@ Este bloco não pode ser inserido.</translation>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="98"/>
         <source>Select to copy</source>
-        <translation>Seleccione para copiar</translation>
+        <translation>Selecione para copiar</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="101"/>
         <source>Select to cut</source>
-        <translation>Seleccione para cortar</translation>
+        <translation>Selecione para cortar</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="75"/>
         <source>No entity selected!</source>
-        <translation>Nenhuma entidade seleccionada!</translation>
+        <translation>Nenhuma entidade selecionada!</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="119"/>
         <source>Select to create offset</source>
-        <translation>Seleccione para criar deslocamento</translation>
+        <translation>Selecione para criar deslocamento</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="86"/>
         <source>Select entities to order</source>
-        <translation>Seleccione entidades para ordenar</translation>
+        <translation>Selecione entidades para ordenar</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="128"/>
         <source>Select to explode block</source>
-        <translation>Seleccione para explodir bloco</translation>
+        <translation>Selecione para explodir bloco</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionselect.cpp" line="104"/>
         <source>Select to revert direction</source>
-        <translation>Seleccione para inverter direcção</translation>
+        <translation>Selecione para inverter direção</translation>
     </message>
 </context>
 <context>
@@ -16118,7 +16122,7 @@ Este bloco não pode ser inserido.</translation>
     <message>
         <location filename="../src/actions/rs_actionselectwindow.cpp" line="181"/>
         <source>Click and drag for the selection window</source>
-        <translation>Clique e arraste para a janela de selecção</translation>
+        <translation>Clique e arraste para a janela de seleção</translation>
     </message>
 </context>
 <context>
@@ -16168,12 +16172,12 @@ Este bloco não pode ser inserido.</translation>
     <message>
         <location filename="../src/actions/rs_actiontoolregeneratedimensions.cpp" line="70"/>
         <source>Regenerated %1 dimension entities</source>
-        <translation>Regeneradas %1 entidades de dimensão</translation>
+        <translation>Regeneradas %1 entidades de cota</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiontoolregeneratedimensions.cpp" line="72"/>
         <source>No dimension entities found</source>
-        <translation>Nenhuma entidade de dimensão encontrada</translation>
+        <translation>Nenhuma entidade de cota encontrada</translation>
     </message>
 </context>
 <context>
@@ -16187,12 +16191,12 @@ Este bloco não pode ser inserido.</translation>
     <message>
         <location filename="../src/actions/rs_actionzoompan.cpp" line="127"/>
         <source>Click and drag to pan zoom</source>
-        <translation>Clique e arraste para deslocar o zoom</translation>
+        <translation>Clique e arraste para deslocar a vista</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionzoompan.cpp" line="131"/>
         <source>Zoom panning</source>
-        <translation>Deslocamento de zoom</translation>
+        <translation>Deslocamento da vista</translation>
     </message>
 </context>
 <context>
@@ -16297,7 +16301,7 @@ Este bloco não pode ser inserido.</translation>
     <message>
         <location filename="../src/ui/forms/qg_beveloptions.ui" line="56"/>
         <source>Trim</source>
-        <translation>Trim</translation>
+        <translation>Aparar</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_beveloptions.ui" line="79"/>
@@ -16351,7 +16355,7 @@ Este bloco não pode ser inserido.</translation>
     <message>
         <location filename="../src/ui/forms/qg_dimlinearoptions.ui" line="32"/>
         <source>Linear Dimension Options</source>
-        <translation>Opções de Dimensão Linear</translation>
+        <translation>Opções de Cota Linear</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dimlinearoptions.ui" line="68"/>
@@ -16364,12 +16368,12 @@ Este bloco não pode ser inserido.</translation>
     <message>
         <location filename="../src/ui/forms/qg_dimoptions.ui" line="32"/>
         <source>Dimension Options</source>
-        <translation>Opções de Dimensão</translation>
+        <translation>Opções de Cota</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dimoptions.ui" line="62"/>
         <source>Label:</source>
-        <translation>Rótulo:</translation>
+        <translation>Etiqueta:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dimoptions.ui" line="109"/>
@@ -16562,7 +16566,7 @@ Este bloco não pode ser inserido.</translation>
     <message>
         <location filename="../src/ui/forms/qg_lineangleoptions.ui" line="147"/>
         <source>Snap Point:</source>
-        <translation>Ponto de Encaixe:</translation>
+        <translation>Ponto de ajuste:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_lineangleoptions.ui" line="170"/>
@@ -16656,7 +16660,7 @@ Este bloco não pode ser inserido.</translation>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="56"/>
         <source>Direction:</source>
-        <translation>Direcção:</translation>
+        <translation>Direção:</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_lineoptions.ui" line="103"/>
@@ -16946,7 +16950,7 @@ Este bloco não pode ser inserido.</translation>
     <message>
         <location filename="../src/ui/forms/qg_printpreviewoptions.ui" line="87"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Print Scale is locked to the current value&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;A Escala de Impressão está bloqueada no valor actual&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;A Escala de Impressão está bloqueada no valor atual&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_printpreviewoptions.ui" line="90"/>
@@ -16971,7 +16975,7 @@ Este bloco não pode ser inserido.</translation>
     <message>
         <location filename="../src/ui/forms/qg_printpreviewoptions.ui" line="116"/>
         <source>Apply Print Scale to line width</source>
-        <translation>Aplicar Escala de Impressão à largura da linha</translation>
+        <translation>Aplicar a escala de impressão à espessura da linha</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_printpreviewoptions.ui" line="226"/>
@@ -16999,7 +17003,7 @@ Este bloco não pode ser inserido.</translation>
     <message>
         <location filename="../src/ui/forms/qg_roundoptions.ui" line="56"/>
         <source>Trim</source>
-        <translation>Trim</translation>
+        <translation>Aparar</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_roundoptions.ui" line="79"/>
@@ -17012,7 +17016,7 @@ Este bloco não pode ser inserido.</translation>
     <message>
         <location filename="../src/ui/forms/qg_snapdistoptions.ui" line="32"/>
         <source>Snap Distance Options</source>
-        <translation>Opções de Distância de Encaixe</translation>
+        <translation>Opções de distância de ajuste</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snapdistoptions.ui" line="50"/>
@@ -17025,7 +17029,7 @@ Este bloco não pode ser inserido.</translation>
     <message>
         <location filename="../src/ui/forms/qg_snapmiddleoptions.ui" line="35"/>
         <source>Snap Distance Options</source>
-        <translation>Opções de Distância de Encaixe</translation>
+        <translation>Opções de distância de ajuste</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_snapmiddleoptions.ui" line="47"/>
@@ -17147,7 +17151,7 @@ Este bloco não pode ser inserido.</translation>
     <message>
         <location filename="../src/ui/generic/widgetcreator.ui" line="223"/>
         <source>Update</source>
-        <translation>Actualizar</translation>
+        <translation>Atualizar</translation>
     </message>
 </context>
 </TS>

@@ -43,7 +43,7 @@
     <message>
         <location filename="../align/align.cpp" line="49"/>
         <source>Keep original objects</source>
-        <translation>احتفظ بالأشياء الأصلية</translation>
+        <translation>احتفظ بالكائنات الأصلية</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="50"/>
@@ -70,12 +70,12 @@ Align will copy rather than move the selected objects.
 If &apos;Specify base points first&apos; is checked,
 Align will prompt for the alignment points in the order
 first base, second base, first target, second target.</source>
-        <translation>إذا تم فحص الأشياء الأصلية
-(أليجن) سينسخ بدلاً من نقل الأشياء المختارة
+        <translation>إذا تم تحديد &apos;احتفظ بالكائنات الأصلية&apos;،
+فستنسخ المحاذاة الكائنات المحددة بدلاً من نقلها.
 
-إذا تم فحص نقاط القاعدة أولاً
-(أليجن) سيدفع إلى نقاط التواؤم في النظام
-القاعدة الأولى، القاعدة الثانية، الهدف الأول، الهدف الثاني.</translation>
+إذا تم تحديد &apos;تحديد نقاط الأساس أولا&apos;،
+فستطلب المحاذاة نقاط المحاذاة بالترتيب
+الأساس الأول، الأساس الثاني، الهدف الأول، الهدف الثاني.</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="81"/>
@@ -180,7 +180,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="94"/>
         <source>LINE</source>
-        <translation>LINE</translation>
+        <translation>خط</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="99"/>
@@ -206,12 +206,12 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="113"/>
         <source>Inc.</source>
-        <translation>Inc.</translation>
+        <translation>زيادة</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="118"/>
         <source>ARC</source>
-        <translation>ARC</translation>
+        <translation>قوس</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="119"/>
@@ -250,7 +250,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="141"/>
         <source>area</source>
-        <translation>area</translation>
+        <translation>المساحة</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="144"/>
@@ -270,37 +270,37 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="169"/>
         <source>OVERLAYBOX</source>
-        <translation>OVERLAYBOX</translation>
+        <translation>صندوق تراكب</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="172"/>
         <source>SOLID</source>
-        <translation>مجسّم</translation>
+        <translation>مصمت</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="176"/>
         <source>MTEXT</source>
-        <translation>MTEXT</translation>
+        <translation>نص متعدد الأسطر</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="179"/>
         <source>TEXT</source>
-        <translation>TEXT</translation>
+        <translation>نص</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="183"/>
         <source>TEXTCONTENT</source>
-        <translation>TEXTCONTENT</translation>
+        <translation>محتوى النص</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="186"/>
         <source>INSERT</source>
-        <translation>أدخل</translation>
+        <translation>إدراج</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="189"/>
         <source>Name</source>
-        <translation>Name</translation>
+        <translation>اسم</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="191"/>
@@ -310,17 +310,17 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="194"/>
         <source>Scale</source>
-        <translation>Scale</translation>
+        <translation>مقياس</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="197"/>
         <source>Rotation</source>
-        <translation>التناوب</translation>
+        <translation>الدوران</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="203"/>
         <source>Columns/Rows</source>
-        <translation>كولومنز/رو</translation>
+        <translation>أعمدة/صفوف</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="207"/>
@@ -330,7 +330,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="214"/>
         <source>POLYLINE</source>
-        <translation>متعدّد خطوط</translation>
+        <translation>خط متعدد</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="215"/>
@@ -340,17 +340,17 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="216"/>
         <source>No</source>
-        <translation>No</translation>
+        <translation>لا</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="216"/>
         <source>Yes</source>
-        <translation>Yes</translation>
+        <translation>نعم</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="217"/>
         <source>Vertices</source>
-        <translation>Vertices</translation>
+        <translation>الرؤوس</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="231"/>
@@ -360,27 +360,27 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="234"/>
         <source>SPLINE</source>
-        <translation>شريحة</translation>
+        <translation>منحنى شريحي</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="237"/>
         <source>SPLINEPOINTS</source>
-        <translation>SPLINEPOINTS</translation>
+        <translation>منحنى شريحي بالنقاط</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="240"/>
         <source>HATCH</source>
-        <translation>تظليل</translation>
+        <translation>تهشير</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="243"/>
         <source>DIMLEADER</source>
-        <translation>قطر</translation>
+        <translation>خط إشارة</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="246"/>
         <source>DIMALIGNED</source>
-        <translation>DIMALIGNED</translation>
+        <translation>بعد محاذى</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="249"/>
@@ -390,17 +390,17 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="252"/>
         <source>DIMRADIAL</source>
-        <translation>DIMRADIAL</translation>
+        <translation>بعد نصف قطري</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="255"/>
         <source>DIMDIAMETRIC</source>
-        <translation>DIMDIAMETRIC</translation>
+        <translation>بعد قطري</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="258"/>
         <source>DIMANGULAR</source>
-        <translation>DIMANGULAR</translation>
+        <translation>بعد زاوي</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="261"/>
@@ -441,7 +441,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../picfile/picfile.cpp" line="36"/>
         <source>Read PIC file</source>
-        <translation>اقرأ ملف الشركة</translation>
+        <translation>قراءة ملف PIC</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="42"/>
@@ -633,12 +633,12 @@ first base, second base, first target, second target.</source>
         <location filename="../divide/divide.cpp" line="35"/>
         <location filename="../divide/divide.cpp" line="42"/>
         <source>Divide</source>
-        <translation>Divide</translation>
+        <translation>تقسيم</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="56"/>
         <source>Select a line, circle or arc and press return</source>
-        <translation>اختيار خط أو دائرة أو دائرة والعودة الصحفية</translation>
+        <translation>حدد خطًا أو دائرة أو قوسًا واضغط على مفتاح الإدخال</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="67"/>
@@ -668,7 +668,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/divide.cpp" line="460"/>
         <source>Layer</source>
-        <translation>Layer</translation>
+        <translation>طبقة</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="462"/>
@@ -693,7 +693,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/divide.cpp" line="474"/>
         <source>LINE</source>
-        <translation>LINE</translation>
+        <translation>خط</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="479"/>
@@ -709,7 +709,7 @@ first base, second base, first target, second target.</source>
         <location filename="../divide/divide.cpp" line="487"/>
         <location filename="../divide/divide.cpp" line="514"/>
         <source>length</source>
-        <translation>طول المدة</translation>
+        <translation>الطول</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="492"/>
@@ -719,18 +719,18 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/divide.cpp" line="494"/>
         <source>Inc.</source>
-        <translation>Inc.</translation>
+        <translation>زيادة</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="499"/>
         <source>ARC</source>
-        <translation>ARC</translation>
+        <translation>قوس</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="500"/>
         <location filename="../divide/divide.cpp" line="519"/>
         <source>center point</source>
-        <translation>نقطة الوسط</translation>
+        <translation>نقطة المركز</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="506"/>
@@ -762,12 +762,12 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/divide.cpp" line="526"/>
         <source>area</source>
-        <translation>area</translation>
+        <translation>المساحة</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="530"/>
         <source>POLYLINE</source>
-        <translation>بوليلين</translation>
+        <translation>خط متعدد</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="531"/>
@@ -777,17 +777,17 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/divide.cpp" line="533"/>
         <source>No</source>
-        <translation>No</translation>
+        <translation>لا</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="533"/>
         <source>Yes</source>
-        <translation>Yes</translation>
+        <translation>نعم</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="534"/>
         <source>Vertices</source>
-        <translation>Vertices</translation>
+        <translation>الرؤوس</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="539"/>
@@ -805,12 +805,12 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/dividedlg.cpp" line="48"/>
         <source>Divide - </source>
-        <translation>ديفايد</translation>
+        <translation>تقسيم - </translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="69"/>
         <source>Layers</source>
-        <translation>Layers</translation>
+        <translation>الطبقات</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="75"/>
@@ -840,12 +840,12 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/dividedlg.cpp" line="126"/>
         <source>Ticks - Off</source>
-        <translation>تذاكر</translation>
+        <translation>علامات - معطلة</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="134"/>
         <source>Breaks - Off</source>
-        <translation>استراحة</translation>
+        <translation>فواصل - معطلة</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="179"/>
@@ -875,7 +875,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../divide/dividedlg.cpp" line="252"/>
         <source>Ticks</source>
-        <translation>تذاكر</translation>
+        <translation>علامات</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="258"/>
@@ -931,7 +931,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../gear/gear.cpp" line="113"/>
         <source>Rotation angle</source>
-        <translation>زاوية التناوب</translation>
+        <translation>زاوية الدوران</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="115"/>
@@ -1011,7 +1011,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../gear/gear.cpp" line="133"/>
         <source>Number of segments to draw (interference)</source>
-        <translation>عدد القطاعات المراد رسمها (التدخل)</translation>
+        <translation>عدد الأجزاء المراد رسمها (التداخل)</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="135"/>
@@ -1105,7 +1105,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../picfile/picfile.cpp" line="75"/>
         <source>Scale:</source>
-        <translation>Scale:</translation>
+        <translation>المقياس:</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="79"/>
@@ -1125,7 +1125,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../picfile/picfile.cpp" line="119"/>
         <source>Scale Factor is empty or invalid</source>
-        <translation>مصنع سكال فارغ أو غير صحيح</translation>
+        <translation>قيمة معامل المقياس فارغة أو غير صالحة</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="132"/>
@@ -1173,7 +1173,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="15"/>
         <source>Plot equation</source>
-        <translation>معادلة الطلاء</translation>
+        <translation>معادلة الرسم البياني</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="18"/>
@@ -1182,10 +1182,11 @@ If you don&apos;t want to use the parametric form, just leave out &quot;Equation
 You can use pi when you need the value of pi (i.e. (3*pi)).
 Use t or x in your equation as a variable/parameter.
 </source>
-        <translation>هذا البلوغ يسمح لك برسم معادلة رياضية
-إذا كنت لا تريد استخدام النموذج المظلي، مجرد ترك &quot;المعادلة 2&quot;.
-يمكنك استخدام بي عندما تحتاج إلى قيمة بي
-استعملي (تي) أو (إكس) في معدتك كمتغير/متغير.</translation>
+        <translation>يتيح لك هذا المكوّن الإضافي رسم المعادلات الرياضية.
+إذا كنت لا تريد استخدام الشكل البارامتري، فاترك &quot;المعادلة 2&quot; فارغة.
+يمكنك استخدام pi عندما تحتاج إلى قيمة pi (على سبيل المثال، (3*pi)).
+استخدم t أو x في معادلتك كمتغير/معامل.
+</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="22"/>
@@ -1232,7 +1233,7 @@ Use t or x in your equation as a variable/parameter.
         <location filename="../plotequation/plotdialog.cpp" line="60"/>
         <source>Polyline</source>
         <comment>Plot Equation to generate RS_Polyline</comment>
-        <translation>Polyline</translation>
+        <translation>خط متعدد</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="61"/>

@@ -124,7 +124,7 @@ Ha a „Először adja meg az alap pontokat” be van jelölve, az igazítás a 
     <message>
         <location filename="../list/list.cpp" line="60"/>
         <source>Empty Entity</source>
-        <translation>Üres entitás</translation>
+        <translation>Üres elem</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="67"/>
@@ -139,7 +139,7 @@ Ha a „Először adja meg az alap pontokat” be van jelölve, az igazítás a 
     <message>
         <location filename="../list/list.cpp" line="77"/>
         <source>Layer</source>
-        <translation>Fólia</translation>
+        <translation>Réteg</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="79"/>
@@ -301,12 +301,12 @@ Ha a „Először adja meg az alap pontokat” be van jelölve, az igazítás a 
     <message>
         <location filename="../list/list.cpp" line="191"/>
         <source>Insertion point</source>
-        <translation>Beillesztési pont</translation>
+        <translation>Beszúrási pont</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="194"/>
         <source>Scale</source>
-        <translation>Méretezés</translation>
+        <translation>Lépték</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="197"/>
@@ -326,7 +326,7 @@ Ha a „Először adja meg az alap pontokat” be van jelölve, az igazítás a 
     <message>
         <location filename="../list/list.cpp" line="214"/>
         <source>POLYLINE</source>
-        <translation>POLIGON</translation>
+        <translation>VONALLÁNC</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="215"/>
@@ -346,7 +346,7 @@ Ha a „Először adja meg az alap pontokat” be van jelölve, az igazítás a 
     <message>
         <location filename="../list/list.cpp" line="217"/>
         <source>Vertices</source>
-        <translation>Tetőpontok</translation>
+        <translation>Csúcspontok</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="231"/>
@@ -356,7 +356,7 @@ Ha a „Először adja meg az alap pontokat” be van jelölve, az igazítás a 
     <message>
         <location filename="../list/list.cpp" line="234"/>
         <source>SPLINE</source>
-        <translation>SZPLIN</translation>
+        <translation>SPLINE</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="237"/>
@@ -366,7 +366,7 @@ Ha a „Először adja meg az alap pontokat” be van jelölve, az igazítás a 
     <message>
         <location filename="../list/list.cpp" line="240"/>
         <source>HATCH</source>
-        <translation>MINTA</translation>
+        <translation>SRAFFOZÁS</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="243"/>
@@ -634,7 +634,7 @@ Ha a „Először adja meg az alap pontokat” be van jelölve, az igazítás a 
     <message>
         <location filename="../divide/divide.cpp" line="56"/>
         <source>Select a line, circle or arc and press return</source>
-        <translation>Válassza ki a sort, kört vagy ívet, és nyomja vissza</translation>
+        <translation>Válasszon ki egy vonalat, kört vagy ívet, majd nyomja meg az Entert</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="67"/>
@@ -649,7 +649,7 @@ Ha a „Először adja meg az alap pontokat” be van jelölve, az igazítás a 
     <message>
         <location filename="../divide/divide.cpp" line="444"/>
         <source>Empty Entity</source>
-        <translation>Üres szervezet</translation>
+        <translation>Üres elem</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="452"/>
@@ -748,7 +748,7 @@ Ha a „Először adja meg az alap pontokat” be van jelölve, az igazítás a 
     <message>
         <location filename="../divide/divide.cpp" line="518"/>
         <source>CIRCLE</source>
-        <translation>CIRKLE</translation>
+        <translation>KÖR</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="524"/>
@@ -783,7 +783,7 @@ Ha a „Először adja meg az alap pontokat” be van jelölve, az igazítás a 
     <message>
         <location filename="../divide/divide.cpp" line="534"/>
         <source>Vertices</source>
-        <translation>Függvények</translation>
+        <translation>Csúcspontok</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="539"/>
@@ -801,12 +801,12 @@ Ha a „Először adja meg az alap pontokat” be van jelölve, az igazítás a 
     <message>
         <location filename="../divide/dividedlg.cpp" line="48"/>
         <source>Divide - </source>
-        <translation>Oszd -</translation>
+        <translation>Felosztás - </translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="69"/>
         <source>Layers</source>
-        <translation>Lábak</translation>
+        <translation>Rétegek</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="75"/>
@@ -836,7 +836,7 @@ Ha a „Először adja meg az alap pontokat” be van jelölve, az igazítás a 
     <message>
         <location filename="../divide/dividedlg.cpp" line="126"/>
         <source>Ticks - Off</source>
-        <translation>Tikkok - ki</translation>
+        <translation>Jelölők - ki</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="134"/>
@@ -856,12 +856,12 @@ decimal degrees
 0° at 3 o&apos;clock
 goes
 anti-clockwise.</source>
-        <translation>Indítás
-szög, in
-tizedesjegyek
-0 ° 3 óránál
-megy
-óramutató járásával ellentétes irányban.</translation>
+        <translation>Adja meg a
+kezdőszöget
+tizedes fokban.
+0° a 3 óránál,
+óramutató járásával
+ellentétes irányban.</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="246"/>
@@ -871,7 +871,7 @@ megy
     <message>
         <location filename="../divide/dividedlg.cpp" line="252"/>
         <source>Ticks</source>
-        <translation>Tikk</translation>
+        <translation>Jelölők</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="258"/>
@@ -886,7 +886,7 @@ megy
     <message>
         <location filename="../divide/dividedlg.cpp" line="263"/>
         <source>Outside</source>
-        <translation>Kifelé</translation>
+        <translation>Kívül</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="264"/>
@@ -904,7 +904,7 @@ megy
     <message>
         <location filename="../pointstocsv/pointstocsv.cpp" line="122"/>
         <source>CSV (*.csv)</source>
-        <translation>CSV (* .csv)</translation>
+        <translation>CSV (*.csv)</translation>
     </message>
     <message>
         <location filename="../pointstocsv/pointstocsv.cpp" line="130"/>
@@ -992,7 +992,7 @@ megy
     <message>
         <location filename="../gear/gear.cpp" line="129"/>
         <source>Draw pressure line?</source>
-        <translation>Nyomóvezetéket húzni?</translation>
+        <translation>Rajzoljon nyomásvonalat?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="130"/>
@@ -1025,7 +1025,7 @@ megy
     <message>
         <location filename="../list/list.cpp" line="278"/>
         <source>List entities</source>
-        <translation>Lista gazdálkodó egységek</translation>
+        <translation>Elemek listázása</translation>
     </message>
 </context>
 <context>
@@ -1101,7 +1101,7 @@ megy
     <message>
         <location filename="../picfile/picfile.cpp" line="75"/>
         <source>Scale:</source>
-        <translation>Méret:</translation>
+        <translation>Lépték:</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="79"/>
@@ -1121,7 +1121,7 @@ megy
     <message>
         <location filename="../picfile/picfile.cpp" line="119"/>
         <source>Scale Factor is empty or invalid</source>
-        <translation>A mérettényező üres vagy érvénytelen</translation>
+        <translation>A léptéktényező üres vagy érvénytelen</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="132"/>
@@ -1161,7 +1161,7 @@ megy
         <location filename="../plotequation/plot.cpp" line="30"/>
         <location filename="../plotequation/plot.cpp" line="37"/>
         <source>Plot plugin</source>
-        <translation>Plugin</translation>
+        <translation>Grafikon beépülő modul</translation>
     </message>
 </context>
 <context>
@@ -1169,7 +1169,7 @@ megy
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="15"/>
         <source>Plot equation</source>
-        <translation>Plot egyenlet</translation>
+        <translation>Egyenlet ábrázolása</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="18"/>
@@ -1178,10 +1178,11 @@ If you don&apos;t want to use the parametric form, just leave out &quot;Equation
 You can use pi when you need the value of pi (i.e. (3*pi)).
 Use t or x in your equation as a variable/parameter.
 </source>
-        <translation>Ez a plugin lehetővé teszi, hogy matematikai egyenleteket.
-Ha nem akarod használni a parametrikus űrlapot, csak hagyd ki a 2. egyenletet.
-A pi akkor használható, ha a pi értékére van szükség (azaz (3 * pi)).
-Az egyenlet t vagy x értéke változó / paraméter.</translation>
+        <translation>Ez a beépülő modul matematikai egyenletek ábrázolását teszi lehetővé.
+Ha nem szeretné a paraméteres alakot használni, egyszerűen hagyja üresen a 2. egyenletet.
+A pi értékéhez használhatja a pi-t (pl. (3*pi)).
+Az egyenletben a t vagy az x használható változóként/paraméterként.
+</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="22"/>
@@ -1228,7 +1229,7 @@ Az egyenlet t vagy x értéke változó / paraméter.</translation>
         <location filename="../plotequation/plotdialog.cpp" line="60"/>
         <source>Polyline</source>
         <comment>Plot Equation to generate RS_Polyline</comment>
-        <translation>Polin</translation>
+        <translation>Vonallánc</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="61"/>

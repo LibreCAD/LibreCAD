@@ -265,7 +265,7 @@ prima bază, a doua bază, primul punct țintă, al doilea punct țintă.</trans
     <message>
         <location filename="../list/list.cpp" line="166"/>
         <source>CONSTRUCTIONLINE</source>
-        <translation>CONSTRUCŢIE</translation>
+        <translation>CONSTRUCTIONLINE</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="169"/>
@@ -330,7 +330,7 @@ prima bază, a doua bază, primul punct țintă, al doilea punct țintă.</trans
     <message>
         <location filename="../list/list.cpp" line="214"/>
         <source>POLYLINE</source>
-        <translation>POLILINĂ</translation>
+        <translation>POLILINIE</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="215"/>
@@ -350,7 +350,7 @@ prima bază, a doua bază, primul punct țintă, al doilea punct țintă.</trans
     <message>
         <location filename="../list/list.cpp" line="217"/>
         <source>Vertices</source>
-        <translation>Vertice</translation>
+        <translation>Vârfuri</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="231"/>
@@ -365,7 +365,7 @@ prima bază, a doua bază, primul punct țintă, al doilea punct țintă.</trans
     <message>
         <location filename="../list/list.cpp" line="237"/>
         <source>SPLINEPOINTS</source>
-        <translation>PUNCTE DE SPLINE</translation>
+        <translation>SPLINEPOINTS</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="240"/>
@@ -484,7 +484,7 @@ prima bază, a doua bază, primul punct țintă, al doilea punct țintă.</trans
     <message>
         <location filename="../asciifile/asciifile.cpp" line="235"/>
         <source>Space in Columns</source>
-        <translation>Spaţiu în coloane</translation>
+        <translation>Spațiu în coloane</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="235"/>
@@ -529,7 +529,7 @@ prima bază, a doua bază, primul punct țintă, al doilea punct țintă.</trans
     <message>
         <location filename="../asciifile/asciifile.cpp" line="248"/>
         <source>Point Elevation</source>
-        <translation>Creştere punct</translation>
+        <translation>Cota punctului</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="248"/>
@@ -564,12 +564,12 @@ prima bază, a doua bază, primul punct țintă, al doilea punct țintă.</trans
     <message>
         <location filename="../asciifile/asciifile.cpp" line="305"/>
         <source>Point 2D layer is empty</source>
-        <translation>Stratul 2D este gol</translation>
+        <translation>Stratul 2D al punctelor este gol</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="308"/>
         <source>Point 3D layer is empty</source>
-        <translation>Stratul 3D este gol</translation>
+        <translation>Stratul 3D al punctelor este gol</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="311"/>
@@ -594,7 +594,7 @@ prima bază, a doua bază, primul punct țintă, al doilea punct țintă.</trans
     <message>
         <location filename="../asciifile/asciifile.cpp" line="317"/>
         <source>Point number height is empty</source>
-        <translation>Înălţimea punctului este goală</translation>
+        <translation>Înălțimea textului numărului punctului nu este completată</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="318"/>
@@ -767,7 +767,7 @@ prima bază, a doua bază, primul punct țintă, al doilea punct țintă.</trans
     <message>
         <location filename="../divide/divide.cpp" line="530"/>
         <source>POLYLINE</source>
-        <translation>POLILINĂ</translation>
+        <translation>POLILINIE</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="531"/>
@@ -787,7 +787,7 @@ prima bază, a doua bază, primul punct țintă, al doilea punct țintă.</trans
     <message>
         <location filename="../divide/divide.cpp" line="534"/>
         <source>Vertices</source>
-        <translation>Vertice</translation>
+        <translation>Vârfuri</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="539"/>
@@ -840,12 +840,12 @@ prima bază, a doua bază, primul punct țintă, al doilea punct țintă.</trans
     <message>
         <location filename="../divide/dividedlg.cpp" line="126"/>
         <source>Ticks - Off</source>
-        <translation>Ticuri - oprite</translation>
+        <translation>Marcaje - Dezactivat</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="134"/>
         <source>Breaks - Off</source>
-        <translation>Despărţiri</translation>
+        <translation>Întreruperi - Dezactivat</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="179"/>
@@ -870,12 +870,12 @@ merge
     <message>
         <location filename="../divide/dividedlg.cpp" line="246"/>
         <source>&lt;i&gt;&quot;New&quot;&lt;/i&gt;&lt;br&gt;Enter name&lt;br&gt;for a new layer&lt;br&gt;(if required?) to&lt;br&gt;draw ticks on.</source>
-        <translation>&lt;i&gt; &quot;Nou&quot; &lt;/i&gt; &lt;br&gt;Enter name&lt;br&gt; for a new layer&lt;br&gt; (dacă este necesar?) to&lt;br&gt;draw ticles on.</translation>
+        <translation>&lt;i&gt;&quot;Nou&quot;&lt;/i&gt;&lt;br&gt;Introduceți numele&lt;br&gt;unui strat nou&lt;br&gt;(dacă este necesar?) pe care&lt;br&gt;să se deseneze marcajele.</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="252"/>
         <source>Ticks</source>
-        <translation>Ticuri</translation>
+        <translation>Marcaje</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="258"/>
@@ -961,17 +961,17 @@ merge
     <message>
         <location filename="../gear/gear.cpp" line="121"/>
         <source>Draw all teeth?</source>
-        <translation>Să desenez toţi dinţii?</translation>
+        <translation>Să desenez toți dinții?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="122"/>
         <source>Draw symmetric face?</source>
-        <translation>Desenează faţa simetrică?</translation>
+        <translation>Desenează fața simetrică?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="124"/>
         <source>Use layers?</source>
-        <translation>Folosiţi straturi?</translation>
+        <translation>Folosiți straturi?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="125"/>
@@ -1006,12 +1006,12 @@ merge
     <message>
         <location filename="../gear/gear.cpp" line="132"/>
         <source>Calculate interference?</source>
-        <translation>Calculaţi interferenţele?</translation>
+        <translation>Calculați interferențele?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="133"/>
         <source>Number of segments to draw (interference)</source>
-        <translation>Numărul de segmente de desenat (interferinţă)</translation>
+        <translation>Numărul de segmente de desenat (interferință)</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="135"/>
@@ -1052,12 +1052,12 @@ merge
     <message>
         <location filename="../sample/sample.cpp" line="72"/>
         <source>End X:</source>
-        <translation>Sfârşitul X:</translation>
+        <translation>Sfârșitul X:</translation>
     </message>
     <message>
         <location filename="../sample/sample.cpp" line="78"/>
         <source>End Y:</source>
-        <translation>Sfârşitul Y:</translation>
+        <translation>Sfârșitul Y:</translation>
     </message>
     <message>
         <location filename="../sample/sample.cpp" line="86"/>
@@ -1082,12 +1082,12 @@ merge
     <message>
         <location filename="../sample/sample.cpp" line="109"/>
         <source>End X is empty</source>
-        <translation>Sfârşitul X este gol</translation>
+        <translation>Sfârșitul X este gol</translation>
     </message>
     <message>
         <location filename="../sample/sample.cpp" line="110"/>
         <source>End Y is empty</source>
-        <translation>Sfârşitul Y e gol</translation>
+        <translation>Sfârșitul Y e gol</translation>
     </message>
     <message>
         <location filename="../sample/sample.cpp" line="132"/>
@@ -1165,7 +1165,7 @@ merge
         <location filename="../plotequation/plot.cpp" line="30"/>
         <location filename="../plotequation/plot.cpp" line="37"/>
         <source>Plot plugin</source>
-        <translation>Modul plot</translation>
+        <translation>Modul pentru grafice de funcții</translation>
     </message>
 </context>
 <context>
@@ -1173,7 +1173,7 @@ merge
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="15"/>
         <source>Plot equation</source>
-        <translation>Ecuație plot</translation>
+        <translation>Graficul ecuației</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="18"/>
@@ -1182,10 +1182,11 @@ If you don&apos;t want to use the parametric form, just leave out &quot;Equation
 You can use pi when you need the value of pi (i.e. (3*pi)).
 Use t or x in your equation as a variable/parameter.
 </source>
-        <translation>Acest modul vă permite să complotați ecuații matematice.
-Dacă nu doriți să utilizați formularul parametric, lăsați doar &quot;Equation2.&quot;
-Puteţi utiliza pi atunci când aveţi nevoie de valoarea pi (adică (3*pi)).
-Utilizaţi t sau x în ecuaţia dumneavoastră ca variabilă/parametru.</translation>
+        <translation>Acest modul vă permite să trasați graficele unor ecuații matematice.
+Dacă nu doriți să folosiți forma parametrică, omiteți „Ecuația 2”.
+Puteți folosi pi când aveți nevoie de valoarea lui pi (de exemplu, (3*pi)).
+Folosiți t sau x în ecuație ca variabilă/parametru.
+</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="22"/>
@@ -1215,7 +1216,7 @@ Utilizaţi t sau x în ecuaţia dumneavoastră ca variabilă/parametru.</transla
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="32"/>
         <source>Draw</source>
-        <translation>Draw</translation>
+        <translation>Desenează</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="33"/>
@@ -1238,7 +1239,7 @@ Utilizaţi t sau x în ecuaţia dumneavoastră ca variabilă/parametru.</transla
         <location filename="../plotequation/plotdialog.cpp" line="61"/>
         <source>SplinePoints</source>
         <comment>Plot Equation to generate 2nd spline by LC_SplinePoints</comment>
-        <translation>Spline Points</translation>
+        <translation>Puncte spline</translation>
     </message>
 </context>
 <context>

@@ -182,7 +182,7 @@ Primera base, segona base, primer objectiu, segona objectiu.</translation>
     <message>
         <location filename="../list/list.cpp" line="94"/>
         <source>LINE</source>
-        <translation>LINE</translation>
+        <translation>LÍNIA</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="99"/>
@@ -267,7 +267,7 @@ Primera base, segona base, primer objectiu, segona objectiu.</translation>
     <message>
         <location filename="../list/list.cpp" line="166"/>
         <source>CONSTRUCTIONLINE</source>
-        <translation>PORTA DE LA TRUCIÓCONSTELLATION NAME (OPTIONAL)</translation>
+        <translation>LÍNIA DE CONSTRUCCIÓ</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="169"/>
@@ -292,12 +292,12 @@ Primera base, segona base, primer objectiu, segona objectiu.</translation>
     <message>
         <location filename="../list/list.cpp" line="183"/>
         <source>TEXTCONTENT</source>
-        <translation>CONTENTCONSTELLATION NAME (OPTIONAL)</translation>
+        <translation>CONTINGUT DE TEXT</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="186"/>
         <source>INSERT</source>
-        <translation>INSEREIX</translation>
+        <translation>INSERCIÓ</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="189"/>
@@ -332,7 +332,7 @@ Primera base, segona base, primer objectiu, segona objectiu.</translation>
     <message>
         <location filename="../list/list.cpp" line="214"/>
         <source>POLYLINE</source>
-        <translation>POLITCONSTELLATION NAME (OPTIONAL)</translation>
+        <translation>POLILÍNIA</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="215"/>
@@ -372,12 +372,12 @@ Primera base, segona base, primer objectiu, segona objectiu.</translation>
     <message>
         <location filename="../list/list.cpp" line="240"/>
         <source>HATCH</source>
-        <translation>RATLLAT</translation>
+        <translation>OMBREJAT</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="243"/>
         <source>DIMLEADER</source>
-        <translation>Cota guia</translation>
+        <translation>Línia de referència</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="246"/>
@@ -695,7 +695,7 @@ Primera base, segona base, primer objectiu, segona objectiu.</translation>
     <message>
         <location filename="../divide/divide.cpp" line="474"/>
         <source>LINE</source>
-        <translation>LINE</translation>
+        <translation>LÍNIA</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="479"/>
@@ -754,7 +754,7 @@ Primera base, segona base, primer objectiu, segona objectiu.</translation>
     <message>
         <location filename="../divide/divide.cpp" line="518"/>
         <source>CIRCLE</source>
-        <translation>COMPLECONSTELLATION NAME (OPTIONAL)</translation>
+        <translation>CERCLE</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="524"/>
@@ -769,7 +769,7 @@ Primera base, segona base, primer objectiu, segona objectiu.</translation>
     <message>
         <location filename="../divide/divide.cpp" line="530"/>
         <source>POLYLINE</source>
-        <translation>POLITCONSTELLATION NAME (OPTIONAL)</translation>
+        <translation>POLILÍNIA</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="531"/>
@@ -847,7 +847,7 @@ Primera base, segona base, primer objectiu, segona objectiu.</translation>
     <message>
         <location filename="../divide/dividedlg.cpp" line="134"/>
         <source>Breaks - Off</source>
-        <translation>Divideix - Inactiu</translation>
+        <translation>Interrupcions - Desactivat</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="179"/>
@@ -872,12 +872,12 @@ En sentit antihorari.</translation>
     <message>
         <location filename="../divide/dividedlg.cpp" line="246"/>
         <source>&lt;i&gt;&quot;New&quot;&lt;/i&gt;&lt;br&gt;Enter name&lt;br&gt;for a new layer&lt;br&gt;(if required?) to&lt;br&gt;draw ticks on.</source>
-        <translation>&lt;i&gt;&quot;New&quot; &lt;/i&gt; &lt;br&gt; Introduïu el nom &lt;br&gt; per a una nova capa &lt;br&gt;(if requerit?) per a &lt;br&gt;draws.</translation>
+        <translation>&lt;i&gt;&quot;New&quot;&lt;/i&gt;&lt;br&gt;Introduïu el nom&lt;br&gt;d&apos;una nova capa&lt;br&gt;(si cal?) per&lt;br&gt;dibuixar-hi les marques.</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="252"/>
         <source>Ticks</source>
-        <translation>Ticks</translation>
+        <translation>Marques</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="258"/>
@@ -910,7 +910,7 @@ En sentit antihorari.</translation>
     <message>
         <location filename="../pointstocsv/pointstocsv.cpp" line="122"/>
         <source>CSV (*.csv)</source>
-        <translation>CSV (*. csv)</translation>
+        <translation>CSV (*.csv)</translation>
     </message>
     <message>
         <location filename="../pointstocsv/pointstocsv.cpp" line="130"/>
@@ -1167,7 +1167,7 @@ En sentit antihorari.</translation>
         <location filename="../plotequation/plot.cpp" line="30"/>
         <location filename="../plotequation/plot.cpp" line="37"/>
         <source>Plot plugin</source>
-        <translation>Connector d&apos;impressió</translation>
+        <translation>Connector de traçat d&apos;equacions</translation>
     </message>
 </context>
 <context>

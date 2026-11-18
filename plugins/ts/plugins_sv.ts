@@ -7,7 +7,7 @@
         <location filename="../asciifile/asciifile.cpp" line="35"/>
         <location filename="../asciifile/asciifile.cpp" line="41"/>
         <source>Read ascii points</source>
-        <translation>Läs ascii poäng</translation>
+        <translation>Läs ASCII-punkter</translation>
     </message>
 </context>
 <context>
@@ -24,7 +24,7 @@
     <message>
         <location filename="../pointstocsv/pointstocsv.cpp" line="34"/>
         <source>Export points to csv</source>
-        <translation>Exportera poäng till csv</translation>
+        <translation>Exportera punkter till csv</translation>
     </message>
 </context>
 <context>
@@ -48,7 +48,7 @@
     <message>
         <location filename="../align/align.cpp" line="50"/>
         <source>Specify base points first</source>
-        <translation>Ange baspoäng först</translation>
+        <translation>Ange baspunkter först</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="54"/>
@@ -118,7 +118,7 @@ första baspunkten, andra baspunkten, första målpunkten, andra målpunkten.</t
         <location filename="../list/list.cpp" line="23"/>
         <location filename="../list/list.cpp" line="30"/>
         <source>List entities</source>
-        <translation>Lista enheter</translation>
+        <translation>Lista objekt</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="46"/>
@@ -128,7 +128,7 @@ första baspunkten, andra baspunkten, första målpunkten, andra målpunkten.</t
     <message>
         <location filename="../list/list.cpp" line="60"/>
         <source>Empty Entity</source>
-        <translation>Tomt Entity</translation>
+        <translation>Tom entitet</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="67"/>
@@ -143,7 +143,7 @@ första baspunkten, andra baspunkten, första målpunkten, andra målpunkten.</t
     <message>
         <location filename="../list/list.cpp" line="77"/>
         <source>Layer</source>
-        <translation>Layer</translation>
+        <translation>Lager</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="79"/>
@@ -158,7 +158,7 @@ första baspunkten, andra baspunkten, första målpunkten, andra målpunkten.</t
     <message>
         <location filename="../list/list.cpp" line="81"/>
         <source>Line thickness</source>
-        <translation>Line tjocklek</translation>
+        <translation>Linjetjocklek</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="82"/>
@@ -168,7 +168,7 @@ första baspunkten, andra baspunkten, första målpunkten, andra målpunkten.</t
     <message>
         <location filename="../list/list.cpp" line="88"/>
         <source>POINT</source>
-        <translation>POÄNG</translation>
+        <translation>PUNKT</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="89"/>
@@ -190,7 +190,7 @@ första baspunkten, andra baspunkten, första målpunkten, andra målpunkten.</t
     <message>
         <location filename="../list/list.cpp" line="102"/>
         <source>to point</source>
-        <translation>att peka</translation>
+        <translation>till punkt</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="107"/>
@@ -419,12 +419,12 @@ första baspunkten, andra baspunkten, första målpunkten, andra målpunkten.</t
     <message>
         <location filename="../sameprop/sameprop.cpp" line="41"/>
         <source>select original entity:</source>
-        <translation>välj originalenhet:</translation>
+        <translation>välj originalobjekt:</translation>
     </message>
     <message>
         <location filename="../sameprop/sameprop.cpp" line="43"/>
         <source>select entities to change</source>
-        <translation>välj enheter att ändra</translation>
+        <translation>välj objekt att ändra</translation>
     </message>
 </context>
 <context>
@@ -454,7 +454,7 @@ första baspunkten, andra baspunkten, första målpunkten, andra målpunkten.</t
     <message>
         <location filename="../asciifile/asciifile.cpp" line="220"/>
         <source>Read ascii points</source>
-        <translation>Läs ascii poäng</translation>
+        <translation>Läs ASCII-punkter</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="226"/>
@@ -494,7 +494,7 @@ första baspunkten, andra baspunkten, första målpunkten, andra målpunkten.</t
     <message>
         <location filename="../asciifile/asciifile.cpp" line="237"/>
         <source>Connect points</source>
-        <translation>Ansluta poäng</translation>
+        <translation>Anslut punkter</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="245"/>
@@ -504,7 +504,7 @@ första baspunkten, andra baspunkten, första målpunkten, andra målpunkten.</t
     <message>
         <location filename="../asciifile/asciifile.cpp" line="245"/>
         <source>Draw 2D Point</source>
-        <translation>Rita 2D Point</translation>
+        <translation>Rita 2D-punkt</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="246"/>
@@ -514,12 +514,12 @@ första baspunkten, andra baspunkten, första målpunkten, andra målpunkten.</t
     <message>
         <location filename="../asciifile/asciifile.cpp" line="246"/>
         <source>Draw 3D Point</source>
-        <translation>Rita 3D Point</translation>
+        <translation>Rita 3D-punkt</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="247"/>
         <source>Point Number</source>
-        <translation>Antal poäng</translation>
+        <translation>Punktnummer</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="247"/>
@@ -534,7 +534,7 @@ första baspunkten, andra baspunkten, första målpunkten, andra målpunkten.</t
     <message>
         <location filename="../asciifile/asciifile.cpp" line="248"/>
         <source>Draw point elevation</source>
-        <translation>Draw Point höjd</translation>
+        <translation>Rita punkthöjd</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="249"/>
@@ -544,7 +544,7 @@ första baspunkten, andra baspunkten, första målpunkten, andra målpunkten.</t
     <message>
         <location filename="../asciifile/asciifile.cpp" line="249"/>
         <source>Draw point code</source>
-        <translation>Draw Point Code</translation>
+        <translation>Rita punktkod</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="263"/>
@@ -564,17 +564,17 @@ första baspunkten, andra baspunkten, första målpunkten, andra målpunkten.</t
     <message>
         <location filename="../asciifile/asciifile.cpp" line="305"/>
         <source>Point 2D layer is empty</source>
-        <translation>Point 2D-skiktet är tomt</translation>
+        <translation>Punktlagret 2D är tomt</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="308"/>
         <source>Point 3D layer is empty</source>
-        <translation>Point 3D-skiktet är tomt</translation>
+        <translation>3D-punktlagret är tomt</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="311"/>
         <source>Point elevation layer is empty</source>
-        <translation>Punkthöjdskiktet är tomt</translation>
+        <translation>Punkthöjdslagret är tomt</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="312"/>
@@ -584,12 +584,12 @@ första baspunkten, andra baspunkten, första målpunkten, andra målpunkten.</t
     <message>
         <location filename="../asciifile/asciifile.cpp" line="313"/>
         <source>Point elevation separation is empty</source>
-        <translation>Point höjd separation är tom</translation>
+        <translation>Punkthöjdsavståndet är tomt</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="316"/>
         <source>Point number layer is empty</source>
-        <translation>Punktnummerskikt är tomt</translation>
+        <translation>Punktnummerlagret är tomt</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="317"/>
@@ -604,17 +604,17 @@ första baspunkten, andra baspunkten, första målpunkten, andra målpunkten.</t
     <message>
         <location filename="../asciifile/asciifile.cpp" line="321"/>
         <source>Point code layer is empty</source>
-        <translation>Point code lager är tomt</translation>
+        <translation>Punktkodlagret är tomt</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="322"/>
         <source>Point code height is empty</source>
-        <translation>Point code höjd är tom</translation>
+        <translation>Punktkodens höjd är tom</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="323"/>
         <source>Point code separation is empty</source>
-        <translation>Point code separation är tom</translation>
+        <translation>Punktkodsavståndet är tomt</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="359"/>
@@ -653,7 +653,7 @@ första baspunkten, andra baspunkten, första målpunkten, andra målpunkten.</t
     <message>
         <location filename="../divide/divide.cpp" line="444"/>
         <source>Empty Entity</source>
-        <translation>Tomt Entity</translation>
+        <translation>Tom entitet</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="452"/>
@@ -668,7 +668,7 @@ första baspunkten, andra baspunkten, första målpunkten, andra målpunkten.</t
     <message>
         <location filename="../divide/divide.cpp" line="460"/>
         <source>Layer</source>
-        <translation>Layer</translation>
+        <translation>Lager</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="462"/>
@@ -683,7 +683,7 @@ första baspunkten, andra baspunkten, första målpunkten, andra målpunkten.</t
     <message>
         <location filename="../divide/divide.cpp" line="465"/>
         <source>Line thickness</source>
-        <translation>Line tjocklek</translation>
+        <translation>Linjetjocklek</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="467"/>
@@ -703,7 +703,7 @@ första baspunkten, andra baspunkten, första målpunkten, andra målpunkten.</t
     <message>
         <location filename="../divide/divide.cpp" line="482"/>
         <source>to point</source>
-        <translation>att peka</translation>
+        <translation>till punkt</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="487"/>
@@ -810,7 +810,7 @@ första baspunkten, andra baspunkten, första målpunkten, andra målpunkten.</t
     <message>
         <location filename="../divide/dividedlg.cpp" line="69"/>
         <source>Layers</source>
-        <translation>Layers</translation>
+        <translation>Lager</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="75"/>
@@ -860,12 +860,12 @@ decimal degrees
 0° at 3 o&apos;clock
 goes
 anti-clockwise.</source>
-        <translation>Enter start
-vinkel, i
-Decimal grader
-0° vid klockan 3
-går
-anti-clockwise.</translation>
+        <translation>Ange start-
+vinkel i
+decimala grader.
+0° vid klockan 3,
+ökar
+moturs.</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="246"/>
@@ -875,7 +875,7 @@ anti-clockwise.</translation>
     <message>
         <location filename="../divide/dividedlg.cpp" line="252"/>
         <source>Ticks</source>
-        <translation>Ticks</translation>
+        <translation>Markeringar</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="258"/>
@@ -951,12 +951,12 @@ anti-clockwise.</translation>
     <message>
         <location filename="../gear/gear.cpp" line="119"/>
         <source>Number of segments to draw (dedendum)</source>
-        <translation>Antal segment att dra (dedendum)</translation>
+        <translation>Antal segment att rita (dedendum)</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="120"/>
         <source>Number of segments to draw (addendum)</source>
-        <translation>Antal segment att dra (addendum)</translation>
+        <translation>Antal segment att rita (addendum)</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="121"/>
@@ -1011,7 +1011,7 @@ anti-clockwise.</translation>
     <message>
         <location filename="../gear/gear.cpp" line="133"/>
         <source>Number of segments to draw (interference)</source>
-        <translation>Antal segment att dra (interferens)</translation>
+        <translation>Antal segment att rita (interferens)</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="135"/>
@@ -1029,7 +1029,7 @@ anti-clockwise.</translation>
     <message>
         <location filename="../list/list.cpp" line="278"/>
         <source>List entities</source>
-        <translation>Lista enheter</translation>
+        <translation>Lista objekt</translation>
     </message>
 </context>
 <context>
@@ -1125,7 +1125,7 @@ anti-clockwise.</translation>
     <message>
         <location filename="../picfile/picfile.cpp" line="119"/>
         <source>Scale Factor is empty or invalid</source>
-        <translation>Scale Factor är tom eller ogiltig</translation>
+        <translation>Skalfaktorn är tom eller ogiltig</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="132"/>
@@ -1232,7 +1232,7 @@ Använd t eller x i din ekvation som en variabel/parameter.</translation>
         <location filename="../plotequation/plotdialog.cpp" line="60"/>
         <source>Polyline</source>
         <comment>Plot Equation to generate RS_Polyline</comment>
-        <translation>Polyline</translation>
+        <translation>Polylinje</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="61"/>
@@ -1246,7 +1246,7 @@ Använd t eller x i din ekvation som en variabel/parameter.</translation>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="175"/>
         <source>Layer:</source>
-        <translation>Layer:</translation>
+        <translation>Lager:</translation>
     </message>
 </context>
 <context>

@@ -305,7 +305,7 @@ pirmais bāzes punkts, otrais bāzes punkts, pirmais mērķa punkts, otrais mēr
     <message>
         <location filename="../list/list.cpp" line="214"/>
         <source>POLYLINE</source>
-        <translation>LAUZTALĪNIJA</translation>
+        <translation>POLILĪNIJA</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="215"/>
@@ -380,7 +380,7 @@ pirmais bāzes punkts, otrais bāzes punkts, pirmais mērķa punkts, otrais mēr
     <message>
         <location filename="../list/list.cpp" line="237"/>
         <source>SPLINEPOINTS</source>
-        <translation>SLĪNIJAS</translation>
+        <translation>SPLAINA PUNKTI</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="194"/>
@@ -653,7 +653,7 @@ pirmais bāzes punkts, otrais bāzes punkts, pirmais mērķa punkts, otrais mēr
     <message>
         <location filename="../divide/divide.cpp" line="444"/>
         <source>Empty Entity</source>
-        <translation>Tukša vienība</translation>
+        <translation>Tukšs objekts</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="452"/>
@@ -767,7 +767,7 @@ pirmais bāzes punkts, otrais bāzes punkts, pirmais mērķa punkts, otrais mēr
     <message>
         <location filename="../divide/divide.cpp" line="530"/>
         <source>POLYLINE</source>
-        <translation>POLILĪNA</translation>
+        <translation>POLILĪNIJA</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="531"/>
@@ -825,12 +825,12 @@ pirmais bāzes punkts, otrais bāzes punkts, pirmais mērķa punkts, otrais mēr
     <message>
         <location filename="../divide/dividedlg.cpp" line="85"/>
         <source>Divide at</source>
-        <translation>Dalīties</translation>
+        <translation>Dalīt pie</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="92"/>
         <source>Size</source>
-        <translation>Size</translation>
+        <translation>Izmērs</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="115"/>
@@ -840,12 +840,12 @@ pirmais bāzes punkts, otrais bāzes punkts, pirmais mērķa punkts, otrais mēr
     <message>
         <location filename="../divide/dividedlg.cpp" line="126"/>
         <source>Ticks - Off</source>
-        <translation>Ērces - izslēgts</translation>
+        <translation>Atzīmes - izslēgtas</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="134"/>
         <source>Breaks - Off</source>
-        <translation>Pārtraukumi</translation>
+        <translation>Pārtraukumi - izslēgti</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="179"/>
@@ -860,11 +860,11 @@ decimal degrees
 0° at 3 o&apos;clock
 goes
 anti-clockwise.</source>
-        <translation>Ievadiet sākumu
-leņķis,
-decimāldaļas grādi
-0° plkst.
-iet
+        <translation>Ievadiet sākuma
+leņķi
+decimālgrādos.
+0° ir pulksten 3,
+leņķis pieaug
 pretēji pulksteņrādītāja virzienam.</translation>
     </message>
     <message>
@@ -875,7 +875,7 @@ pretēji pulksteņrādītāja virzienam.</translation>
     <message>
         <location filename="../divide/dividedlg.cpp" line="252"/>
         <source>Ticks</source>
-        <translation>Ērces</translation>
+        <translation>Atzīmes</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="258"/>
@@ -991,7 +991,7 @@ pretēji pulksteņrādītāja virzienam.</translation>
     <message>
         <location filename="../gear/gear.cpp" line="126"/>
         <source>Draw pitch circle?</source>
-        <translation>Zīmēt?</translation>
+        <translation>Zīmēt dalījuma apli?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="127"/>
@@ -1227,7 +1227,7 @@ Izmantojiet savos vienādojums t vai x kā mainīgos/parametrus.
         <location filename="../plotequation/plotdialog.cpp" line="59"/>
         <source>Line Segments</source>
         <comment>Plot Equation to generate RS_Line segments</comment>
-        <translation>Rindu segmenti</translation>
+        <translation>Līniju segmenti</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="60"/>
@@ -1239,7 +1239,7 @@ Izmantojiet savos vienādojums t vai x kā mainīgos/parametrus.
         <location filename="../plotequation/plotdialog.cpp" line="61"/>
         <source>SplinePoints</source>
         <comment>Plot Equation to generate 2nd spline by LC_SplinePoints</comment>
-        <translation>SplinePoints</translation>
+        <translation>Splaina punkti</translation>
     </message>
 </context>
 <context>

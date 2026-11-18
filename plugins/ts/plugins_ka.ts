@@ -33,7 +33,7 @@
         <location filename="../align/align.cpp" line="24"/>
         <location filename="../align/align.cpp" line="31"/>
         <source>Align</source>
-        <translation>სწორება</translation>
+        <translation>გასწორება</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="32"/>
@@ -196,7 +196,7 @@ first base, second base, first target, second target.</source>
         <location filename="../list/list.cpp" line="107"/>
         <location filename="../list/list.cpp" line="131"/>
         <source>length</source>
-        <translation>ხანგრძლივობა</translation>
+        <translation>სიგრძე</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="112"/>
@@ -255,7 +255,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="144"/>
         <source>ELLIPSE</source>
-        <translation>ოვალი</translation>
+        <translation>ელიფსი</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="148"/>
@@ -414,17 +414,17 @@ first base, second base, first target, second target.</source>
         <location filename="../sameprop/sameprop.cpp" line="21"/>
         <location filename="../sameprop/sameprop.cpp" line="28"/>
         <source>Same properties</source>
-        <translation>ი. თ.</translation>
+        <translation>იგივე თვისებები</translation>
     </message>
     <message>
         <location filename="../sameprop/sameprop.cpp" line="41"/>
         <source>select original entity:</source>
-        <translation>ო. ო. არ-ვა:</translation>
+        <translation>აირჩიეთ საწყისი ობიექტი:</translation>
     </message>
     <message>
         <location filename="../sameprop/sameprop.cpp" line="43"/>
         <source>select entities to change</source>
-        <translation>შ. ო. ა.</translation>
+        <translation>აირჩიეთ შესაცვლელი ობიექტები</translation>
     </message>
 </context>
 <context>
@@ -709,7 +709,7 @@ first base, second base, first target, second target.</source>
         <location filename="../divide/divide.cpp" line="487"/>
         <location filename="../divide/divide.cpp" line="514"/>
         <source>length</source>
-        <translation>ხანგრძლივობა</translation>
+        <translation>სიგრძე</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="492"/>
