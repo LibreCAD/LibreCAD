@@ -58886,3 +58886,27 @@ Validation: focused mixed-bulge test passes 448 assertions; the full
 `[region-boundary]` selector passes 2,886 assertions across six cases. Test
 slice is `c5eff1d63`. Independent topology/retained-side checks and broader
 distances, scales, and source variants remain open.
+
+## 1859. Record Scale Probe and ODA Session Retry (2026-11-18)
+
+Probed geometric scale factors `1e-3`, `10`, and `1e3` for the mixed-bulge
+continuous-locus matrix, including translated cases. The current kernel returns
+`InvalidSource` for these scaled profiles, so no scale-independence claim is
+added and the exploratory test edits were removed. This identifies a concrete
+open coverage/behavior question: determine whether the rejection is an intended
+minimum/maximum source-domain limit or an unwanted scale-sensitive validation
+before adding scale fixtures to the supported-domain oracle.
+
+Also retried the 176-fixture ODA conversion after the user confirmed the ODA
+desktop app was running. CUA could list the app but could not attach an
+accessible window (`cgWindowNotFound`). Launching the CLI from the SSH-backed
+shell again aborted with exit 134 on Cocoa pasteboard and
+`hiservices-xpcservice` errors before processing inputs. This is not new ODA
+evidence; the successful GUI conversion and ezdxf audit in section 1848 remain
+the latest acceptance result. Retry only when ODA can be operated through an
+accessible GUI window or an interactive GUI terminal.
+
+Validation: no source/test changes remain from the scale probe; DWG audit
+attempt produced no outputs. Independent CAD acceptance, source-scale domain
+coverage, GUI Properties acceptance, and larger-bulge topology validation
+remain open.
