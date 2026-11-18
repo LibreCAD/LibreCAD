@@ -58230,3 +58230,24 @@ primitive loci before/after rotation, then trace the exact arrangement's
 candidate endpoints and circular-offset angles to find the first divergence.
 Keep the existing high-origin normalization and acceptance checks intact while
 fixing this ordinary-scale rotation case.
+
+## 1824. Make Circular-arc Partitioning Rotation Invariant (2026-11-18)
+
+Captured source line/arc primitives were verified against an exact rigid
+rotation to within `1e-12`, isolating the defect to kernel parameterization.
+`EllipseSource` previously placed every span boundary at the fixed world-angle
+diagonals `pi/4 + k*pi/2`. A rigidly rotated circular arc therefore acquired a
+different parameter break sequence, which changed candidate fragmentation in
+the region arrangement. Open circular arcs now split their sweep into equal
+spans no larger than 90 degrees, relative to their own start angle. Ellipse
+arcs retain the vertex-aligned break schedule needed for cusp isolation; full
+circles retain their existing canonical schedule.
+
+Added kernel regressions for both captured primitive-locus preservation and
+rotation-invariant mixed-bulge region output. Validation: `[mixed-bulge][rotation]`
+passes 30 assertions / 2 cases; `[polyline][mixed-bulge]` passes 427 assertions
+/ 4 cases; `[ellipse]` passes 1,314,475 assertions / 6 cases; the end-to-end
+`Worker client generates crossing mixed-bulge polyline regions` persistence
+case passes 9,102 assertions / 1 case across its R14, R2000, and R2018 DXF/DWG
+lanes. The earlier local-frame heuristic experiments remain discarded. The
+broader CTest shards, CI, and external CAD acceptance gates remain open.

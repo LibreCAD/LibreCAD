@@ -605,14 +605,26 @@ private:
         // the ends, and where eta crosses pi/4 + k pi/2 in between
         m_breaks.push_back(0.0);
         const double quarter = M_PI_2;
-        double first = std::fmod(s * (M_PI_4 - start), quarter);
-        if (first < 0.0) {
-            first += quarter;
-        }
-        const double margin = 1e-9 * std::max(1.0, sweep);
-        for (double t = first; t < sweep - margin; t += quarter) {
-            if (t > margin) {
-                m_breaks.push_back(t);
+        const double majorLength = std::hypot(major.x, major.y);
+        const double minorLength = std::hypot(minor.x, minor.y);
+        const bool circularArc = !closed &&
+            std::abs(majorLength - minorLength) <=
+                64.0 * g_eps * std::max(majorLength, minorLength);
+        if (circularArc) {
+            const std::size_t pieces = static_cast<std::size_t>(std::ceil(sweep / quarter));
+            for (std::size_t i = 1; i < pieces; ++i) {
+                m_breaks.push_back(sweep * static_cast<double>(i) / static_cast<double>(pieces));
+            }
+        } else {
+            double first = std::fmod(s * (M_PI_4 - start), quarter);
+            if (first < 0.0) {
+                first += quarter;
+            }
+            const double margin = 1e-9 * std::max(1.0, sweep);
+            for (double t = first; t < sweep - margin; t += quarter) {
+                if (t > margin) {
+                    m_breaks.push_back(t);
+                }
             }
         }
         m_breaks.push_back(sweep);

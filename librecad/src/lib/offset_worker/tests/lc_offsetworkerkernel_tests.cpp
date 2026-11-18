@@ -11449,6 +11449,125 @@ TEST_CASE("concave mixed-bulge region routing survives rigid and large-origin fr
     }
 }
 
+TEST_CASE("captured mixed-bulge polyline preserves its locus under rotation",
+          "[lc-offsetcurve][worker-kernel][polyline][mixed-bulge][rotation]") {
+    constexpr double angle = 0.37;
+    RS_Polyline original;
+    original.addVertex({20, 10});
+    original.addVertex({20, -10}, -0.5);
+    original.addVertex({-20, 10}, 0.1);
+    original.addVertex({-20, -10});
+    original.setClosed(true);
+    original.endPolyline();
+    RS_Polyline rotated;
+    rotated.addVertex({20, 10});
+    rotated.addVertex({20, -10}, -0.5);
+    rotated.addVertex({-20, 10}, 0.1);
+    rotated.addVertex({-20, -10});
+    rotated.setClosed(true);
+    rotated.endPolyline();
+    rotated.rotate({0, 0}, angle);
+
+    const auto source = LC_OffsetSourceGeometry::captureForGeneration(original);
+    const auto transformed = LC_OffsetSourceGeometry::captureForGeneration(rotated);
+    REQUIRE(source);
+    REQUIRE(transformed);
+    const auto* sourcePolyline = std::get_if<LC_OffsetPolylineData>(&source->value);
+    const auto* transformedPolyline = std::get_if<LC_OffsetPolylineData>(&transformed->value);
+    REQUIRE(sourcePolyline);
+    REQUIRE(transformedPolyline);
+    REQUIRE(sourcePolyline->segments.size() == transformedPolyline->segments.size());
+    const double angularTolerance = 128.0 * std::numeric_limits<double>::epsilon();
+    for (std::size_t i = 0; i < sourcePolyline->segments.size(); ++i) {
+        CAPTURE(i);
+        if (const auto* line = std::get_if<RS_LineData>(&sourcePolyline->segments[i])) {
+            const auto* transformedLine =
+                std::get_if<RS_LineData>(&transformedPolyline->segments[i]);
+            REQUIRE(transformedLine);
+            RS_Vector expectedStart = line->startpoint;
+            RS_Vector expectedEnd = line->endpoint;
+            expectedStart.rotate({0, 0}, angle);
+            expectedEnd.rotate({0, 0}, angle);
+            CHECK(expectedStart.distanceTo(transformedLine->startpoint) < 1e-12);
+            CHECK(expectedEnd.distanceTo(transformedLine->endpoint) < 1e-12);
+        } else {
+            const auto& arc = std::get<RS_ArcData>(sourcePolyline->segments[i]);
+            const auto* transformedArc =
+                std::get_if<RS_ArcData>(&transformedPolyline->segments[i]);
+            REQUIRE(transformedArc);
+            RS_Vector expectedCenter = arc.center;
+            expectedCenter.rotate({0, 0}, angle);
+            CHECK(expectedCenter.distanceTo(transformedArc->center) < 1e-12);
+            CHECK(std::abs(arc.radius - transformedArc->radius) < 1e-12);
+            CHECK(std::abs(std::remainder(transformedArc->angle1 - arc.angle1 - angle,
+                                          2.0 * M_PI)) < angularTolerance);
+            CHECK(std::abs(std::remainder(transformedArc->angle2 - arc.angle2 - angle,
+                                          2.0 * M_PI)) < angularTolerance);
+            CHECK(arc.reversed == transformedArc->reversed);
+        }
+    }
+}
+
+TEST_CASE("mixed-bulge region offset is rotation invariant",
+          "[lc-offsetcurve][worker-kernel][polyline][mixed-bulge][rotation]") {
+    constexpr double angle = 0.37;
+    auto build = [=](bool rotateSource) {
+        RS_Polyline polyline;
+        polyline.addVertex({20, 10});
+        polyline.addVertex({20, -10}, -0.5);
+        polyline.addVertex({-20, 10}, 0.1);
+        polyline.addVertex({-20, -10});
+        polyline.setClosed(true);
+        polyline.endPolyline();
+        if (rotateSource) polyline.rotate({0, 0}, angle);
+        const auto source = LC_OffsetSourceGeometry::captureForGeneration(polyline);
+        REQUIRE(source);
+        const LC_OffsetSourceDefinition definition{*source, -0.5, 1e-4, false};
+        const auto options = LC_OffsetWorkerTolerance::directOptions(definition, polyline);
+        REQUIRE(options);
+        return LC_CurveOffset::buildDirectBranches(
+            polyline, LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Right, 0.5),
+            *options, LC_CurveOffset::makeDirectSourceBudget());
+    };
+    const auto original = build(false);
+    const auto rotated = build(true);
+    REQUIRE(original.status == LC_CurveOffsetStatus::Ok);
+    REQUIRE(rotated.status == LC_CurveOffsetStatus::Ok);
+    auto samples = [=](const LC_CurveOffsetGeometryResult& geometry, bool inverseRotate) {
+        std::vector<RS_Vector> points;
+        for (const auto& branch : geometry.branches) {
+            for (const auto& piece : branch.cubicPieces) {
+                for (unsigned i = 0; i <= 16; ++i) {
+                    const double t = static_cast<double>(i) / 16.0;
+                    const double u = 1.0 - t;
+                    RS_Vector point = piece.bezier[0] * (u * u * u) +
+                        piece.bezier[1] * (3.0 * u * u * t) +
+                        piece.bezier[2] * (3.0 * u * t * t) +
+                        piece.bezier[3] * (t * t * t);
+                    if (inverseRotate) point.rotate({0, 0}, -angle);
+                    points.push_back(point);
+                }
+            }
+        }
+        return points;
+    };
+    const auto first = samples(original, false);
+    const auto second = samples(rotated, true);
+    auto directedGap = [](const std::vector<RS_Vector>& from, const std::vector<RS_Vector>& to) {
+        double maximum = 0.0;
+        for (const RS_Vector& point : from) {
+            double nearest = std::numeric_limits<double>::infinity();
+            for (const RS_Vector& candidate : to)
+                nearest = std::min(nearest, point.distanceTo(candidate));
+            maximum = std::max(maximum, nearest);
+        }
+        return maximum;
+    };
+    const double gap = std::max(directedGap(first, second), directedGap(second, first));
+    CAPTURE(gap);
+    CHECK(gap < 1e-3);
+}
+
 TEST_CASE("polyline source validation rejects degenerate and inconsistent chains",
           "[lc-offsetcurve][worker-kernel][source-cache][polyline]") {
     const std::array<LC_OffsetPolylineData, 4> invalidVariants{
