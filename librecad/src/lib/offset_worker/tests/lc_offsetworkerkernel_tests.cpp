@@ -11557,7 +11557,7 @@ TEST_CASE("mixed-bulge region offset is rotation invariant",
     const auto exactLocusDeviation = [](const LC_CurveOffsetGeometryResult& geometry,
                                         const RS_Polyline& source) {
         struct ExactPrimitive {
-            enum class Kind { Segment, Arc, Circle } kind;
+            enum class Kind { Segment, Arc } kind;
             RS_Vector start;
             RS_Vector end;
             RS_Vector centre;
@@ -11581,12 +11581,8 @@ TEST_CASE("mixed-bulge region offset is rotation invariant",
         if (!haveDistance) return std::numeric_limits<double>::infinity();
 
         // Fragment orientation can reverse, so source offsets use both signed sides.
-        // Arc sweeps are bounded; join circles stay full supports, with topology separate.
+        // Arc sweeps are bounded; join sectors come from their exact piece provenance.
         std::vector<ExactPrimitive> primitives;
-        const auto addJoinCircle = [&](const RS_Vector& centre) {
-            primitives.push_back({ExactPrimitive::Kind::Circle, {}, {}, centre,
-                                  std::abs(signedDistance)});
-        };
         for (const RS_Entity* entity : source) {
             if (const auto* line = dynamic_cast<const RS_Line*>(entity)) {
                 const RS_Vector start = line->getStartpoint();
@@ -11600,8 +11596,6 @@ TEST_CASE("mixed-bulge region offset is rotation invariant",
                     primitives.push_back({ExactPrimitive::Kind::Segment,
                         start + offset, line->getEndpoint() + offset});
                 }
-                addJoinCircle(start);
-                addJoinCircle(line->getEndpoint());
             } else if (const auto* arc = dynamic_cast<const RS_Arc*>(entity)) {
                 const double direction = arc->isReversed() ? -1.0 : 1.0;
                 for (const double offsetDistance : {signedDistance, -signedDistance}) {
@@ -11611,8 +11605,6 @@ TEST_CASE("mixed-bulge region offset is rotation invariant",
                     primitives.push_back({ExactPrimitive::Kind::Arc, {}, {}, arc->getCenter(), radius,
                                           startAngle, direction, arc->getAngleLength()});
                 }
-                addJoinCircle(arc->getStartpoint());
-                addJoinCircle(arc->getEndpoint());
             }
         }
         const auto distanceToSegment = [](const RS_Vector& point, const RS_Vector& start,
@@ -11629,7 +11621,7 @@ TEST_CASE("mixed-bulge region offset is rotation invariant",
             }
             const RS_Vector radial = point - primitive.centre;
             const double radialError = std::abs(radial.magnitude() - primitive.radius);
-            if (primitive.kind == ExactPrimitive::Kind::Circle || primitive.radius == 0.0) {
+            if (primitive.radius == 0.0) {
                 return radialError;
             }
             double along = std::fmod(primitive.direction *
@@ -11649,6 +11641,14 @@ TEST_CASE("mixed-bulge region offset is rotation invariant",
         double maximum = 0.0;
         for (const auto& branch : geometry.branches) {
             for (const auto& piece : branch.cubicPieces) {
+                std::vector<ExactPrimitive> piecePrimitives = primitives;
+                const auto& provenance = piece.provenance;
+                if (provenance.arcCentre.valid) {
+                    const double sweep = provenance.sourceT1 - provenance.sourceT0;
+                    piecePrimitives.push_back({ExactPrimitive::Kind::Arc, {}, {}, provenance.arcCentre,
+                        std::abs(provenance.signedDistance), provenance.sourceT0,
+                        std::copysign(1.0, sweep), std::abs(sweep)});
+                }
                 for (const double parameter : {0.125, 0.25, 0.5, 0.75, 0.875}) {
                     const double inverse = 1.0 - parameter;
                     const RS_Vector point = piece.bezier[0] * (inverse * inverse * inverse) +
@@ -11656,7 +11656,7 @@ TEST_CASE("mixed-bulge region offset is rotation invariant",
                         piece.bezier[2] * (3.0 * inverse * parameter * parameter) +
                         piece.bezier[3] * (parameter * parameter * parameter);
                     double nearest = std::numeric_limits<double>::infinity();
-                    for (const ExactPrimitive& primitive : primitives) {
+                    for (const ExactPrimitive& primitive : piecePrimitives) {
                         const double distance = distanceToPrimitive(point, primitive);
                         if (distance < nearest) {
                             nearest = distance;
