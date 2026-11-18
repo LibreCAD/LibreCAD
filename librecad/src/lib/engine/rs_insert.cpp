@@ -228,9 +228,6 @@ void RS_Insert::update() {
                     ne->move(data.insertionPoint - blk->getBasePoint() + arrayOffset);
 
                    // RS_DEBUG->print(RS_Debug::D_ERROR, "ne: angle: %lg\n", data.angle);
-                // Select:
-                    ne->setSelected(isSelected());
-
                 // individual entities can be on indiv. layers
                     RS_Pen tmpPen = updatePen(ne->getPen(false), getPen());
                 // now that we've evaluated all flags, let's strip them:
@@ -246,6 +243,9 @@ void RS_Insert::update() {
                         //RS_DEBUG->print("RS_Insert::update: updating new entity");
                         ne->update();
                     }
+
+                // Update can recreate children (for example, spline segments).
+                    ne->setSelected(isSelected());
 
 //                                RS_DEBUG->print("RS_Insert::update: adding new entity");
                     appendEntity(ne);
