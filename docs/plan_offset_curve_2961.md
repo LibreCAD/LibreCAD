@@ -58660,3 +58660,24 @@ constructed offset endpoint against both returned roots, and determine which
 events alter retained cycle membership. Any correction must be limited to
 certified construction-known endpoint tangencies and must retain the `.15/.25`
 transform regression; do not snap arbitrary near-tangent intersections.
+
+## 1848. Complete the GUI ODA Retry and Audit Its DXF Output (2026-11-18)
+
+The user confirmed ODAFileConverter was open. Launching its executable from the
+SSH shell still aborts with exit 134 after Cocoa pasteboard errors for the
+clipboard/find boards and an invalid `hiservices-xpcservice` connection; that
+CLI attempt produced no usable result. The already-running GUI had the staged
+input `/private/tmp/offset-2961-typed-trim-oda-fixtures`, Audit enabled, output
+version 2018 ASCII DXF, progress `Done`, and 176 files processed. Its output
+directory `/private/tmp/offset-2961-typed-trim-oda-acad2018-dxf-retry-gui-20261118`
+contains 176 non-empty DXFs, no `.err` files, and a one-to-one basename match
+to the 176 staged DWGs. ezdxf 1.4.4 independently read and audited all 176
+outputs with zero read errors, audit errors, or repairs.
+
+This closes the ODA GUI conversion and DXF structural-audit retry for this
+fixture batch. It does not establish geometric equivalence, preservation of
+editable offset semantics, or AutoCAD acceptance. The SSH-launched ODA CLI
+remains unusable in this macOS process context; use the GUI route for future
+ODA batches unless Cocoa pasteboard/XPC access from SSH is repaired. The
+visible Properties source-picker gate and the larger `.35/.5` transform
+discrepancy remain open.
