@@ -59033,14 +59033,15 @@ diagnostic semantics when adding any new normalized path.
 Expanded the independent sampled dilation/erosion matrix across four rigid
 frames at each supported scale: identity, rotation, rotation plus translation,
 and reflection plus rotation/translation. Reflected fixtures invert bulge signs
-to preserve the reflected analytic arc loci. Translations scale with the source,
-so this matrix isolates rigid-frame effects without conflating them with the
-separate large-origin conditioning question. The oracle still derives expected
-membership solely from the source winding and exact line/arc boundary distance.
+to preserve the reflected analytic arc loci. Translated variants use the fixed
+origin `(1e6, -2e6)`. The oracle still
+derives expected membership solely from source winding and exact line/arc
+boundary distance, with the source and output sampled in their actual world
+coordinates.
 
 Validation: topology case passes 46,110 assertions across 48 scale/profile/
 distance/sign/frame combinations; `[mixed-bulge]` passes 46,996 assertions
-across five cases and `[region-boundary]` passes 48,996 across seven. The
-0.001x open-boundary regression remains unresolved and outside this passing
-matrix; translated frames here are relative-scale translations, not large-origin
-acceptance.
+across five cases and `[region-boundary]` passes 48,996 across seven. This
+includes the tested large-origin variants for these fixtures, not general
+large-origin acceptance. The 0.001x open-boundary regression remains
+unresolved and outside this passing matrix.

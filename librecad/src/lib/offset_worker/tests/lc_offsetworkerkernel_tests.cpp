@@ -11993,7 +11993,7 @@ TEST_CASE("mixed-bulge region cycles match independent dilation and erosion memb
                 point.scale(scale);
                 if (reflected) point.y = -point.y;
                 if (frame != 0u) point.rotate(0.37);
-                if (frame >= 2u) point += RS_Vector{10000.0 * scale, -20000.0 * scale};
+                if (frame >= 2u) point += RS_Vector{1e6, -2e6};
                 return point;
             };
             const double orientation = reflected ? -1.0 : 1.0;
