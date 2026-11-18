@@ -58785,3 +58785,26 @@ parameter map with explicit domain metadata), then separately validate retained
 topology. Do not reinterpret this failed exploratory correspondence as either
 a passing accuracy bound or a confirmed geometry defect. Existing transform
 invariance and fitter-observed-error tests remain the current evidence.
+
+## 1853. Measure the Mixed-bulge Region Candidate Locus (2026-11-18)
+
+The rotation-invariance fixture now independently samples each retained cubic at
+five interior parameters and measures distance to exact source-offset supports:
+parallel line segments, both signed circular offset supports, and the exact
+corner-circle supports. Using both signed sides avoids the invalid assumption
+that region regularization preserves each source entity's original orientation.
+The radial-locus threshold is derived from `directOptions()` and is
+`requestedGeometry/8`, matching the production fit cap.
+
+For the `.15`, `.25`, `.35`, and `.5` bulge profiles, the largest measured
+deviations are `0.0003548701` and `0.0005522220`; the corresponding smallest
+requested cap is `0.0047423533/8 = 0.0005927942`. The expanded focused test
+passes 164 assertions, and the complete `[region-boundary]` selector passes
+2,886 assertions across six cases.
+
+This is sampled distance to supporting loci, not a certified Hausdorff bound:
+arc angular domains and join sectors are intentionally not constrained by this
+oracle, and using both signed sides does not verify retained-side selection.
+The transform/noding and region-cycle checks remain separate topology evidence.
+Next, qualify angular/domain correspondence and include arc approximation in a
+whole-curve error bound before treating `/8` as a certified accuracy guarantee.
