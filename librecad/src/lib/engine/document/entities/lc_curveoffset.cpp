@@ -7642,7 +7642,26 @@ LC_CurveOffsetStatus regionBoundary(const OffsetSource& source, const SourceScal
                                                        : LC_CurveOffsetStatus::AmbiguousTopology;
         }
         if (decision == 1) {
-            kept.push_back(i);
+            const bool duplicate = std::any_of(kept.begin(), kept.end(), [&](const size_t prior) {
+                const std::vector<LC_OffsetCubicPiece>& priorPieces = pieces[prior].pieces;
+                if (priorPieces.size() != piece.pieces.size()) {
+                    return false;
+                }
+                for (size_t part = 0; part < priorPieces.size(); ++part) {
+                    for (size_t control = 0; control < piece.pieces[part].bezier.size(); ++control) {
+                        if (priorPieces[part].bezier[control].distanceTo(piece.pieces[part].bezier[control]) >
+                            options.tolerance.evaluation) {
+                            return false;
+                        }
+                    }
+                }
+                return true;
+            });
+            if (duplicate) {
+                ++removed;
+            } else {
+                kept.push_back(i);
+            }
         }
         else {
             ++removed;

@@ -12044,7 +12044,7 @@ TEST_CASE("simple closed mixed-bulge offsets are invariant to the polyline seam"
     }
 }
 
-TEST_CASE("small crossing mixed-bulge topology refuses consistently across the seam",
+TEST_CASE("small crossing mixed-bulge topology resolves consistently across the seam",
           "[lc-offsetcurve][worker-kernel][polyline][mixed-bulge][region-boundary][seam]") {
     constexpr double scale = 1e-3;
     const std::array<RS_Vector, 4> vertices{{{20, 10}, {20, -10}, {-20, 10}, {-20, -10}}};
@@ -12066,16 +12066,11 @@ TEST_CASE("small crossing mixed-bulge topology refuses consistently across the s
         const auto result = LC_CurveOffset::buildDirectBranches(
             *source, LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Right, distance),
             *options, LC_CurveOffset::makeDirectSourceBudget());
-        const auto& diagnostics = result.intersectionDiagnostics;
         CAPTURE(seam);
-        CHECK(result.status == LC_CurveOffsetStatus::AmbiguousTopology);
-        CHECK(result.branches.empty());
-        CHECK(diagnostics.stage ==
-              LC_CurveOffsetGeometryResult::IntersectionDiagnostics::Stage::RegionBoundary);
-        CHECK(diagnostics.failureSite ==
-              LC_CurveOffsetGeometryResult::IntersectionDiagnostics::FailureSite::CycleAssembly);
-        CHECK(diagnostics.cycleAssemblyFailure ==
-              LC_CurveOffsetGeometryResult::IntersectionDiagnostics::CycleAssemblyFailure::MultipleContinuations);
+        CHECK(result.status == LC_CurveOffsetStatus::Ok);
+        REQUIRE_FALSE(result.branches.empty());
+        CHECK(std::all_of(result.branches.begin(), result.branches.end(),
+                          [](const LC_OffsetBranch& branch) { return branch.closed; }));
     }
 }
 
@@ -12109,7 +12104,7 @@ TEST_CASE("small mixed-bulge RegionBoundary survives seam endpoint roundoff",
                       [](const LC_OffsetBranch& branch) { return branch.closed; }));
 }
 
-TEST_CASE("small mixed-bulge seam matrix resolves except the known multiple-continuation case",
+TEST_CASE("small mixed-bulge seam matrix resolves the former multiple-continuation case",
           "[lc-offsetcurve][worker-kernel][polyline][mixed-bulge][region-boundary][seam]") {
     constexpr double scale = 1e-3;
     const std::array<RS_Vector, 4> vertices{{{20, 10}, {20, -10}, {-20, 10}, {-20, -10}}};
@@ -12135,16 +12130,6 @@ TEST_CASE("small mixed-bulge seam matrix resolves except the known multiple-cont
                         erosion ? LC_CurveOffsetSide::Left : LC_CurveOffsetSide::Right, distance),
                     *options, LC_CurveOffset::makeDirectSourceBudget());
                 CAPTURE(secondBulge, ratio, erosion);
-                const bool touchingCase = secondBulge == 0.15 && ratio == 0.125 && !erosion;
-                if (touchingCase) {
-                    CHECK(result.status == LC_CurveOffsetStatus::AmbiguousTopology);
-                    CHECK(result.branches.empty());
-                    CHECK(result.intersectionDiagnostics.failureSite ==
-                          LC_CurveOffsetGeometryResult::IntersectionDiagnostics::FailureSite::CycleAssembly);
-                    CHECK(result.intersectionDiagnostics.cycleAssemblyFailure ==
-                          LC_CurveOffsetGeometryResult::IntersectionDiagnostics::CycleAssemblyFailure::MultipleContinuations);
-                    continue;
-                }
                 CHECK(result.status == LC_CurveOffsetStatus::Ok);
                 REQUIRE_FALSE(result.branches.empty());
                 CHECK(std::all_of(result.branches.begin(), result.branches.end(),
@@ -12351,12 +12336,13 @@ TEST_CASE("transformed mixed-bulge offsets resolve seam endpoint roundoff",
     }
 }
 
-TEST_CASE("small rotated mixed-bulge seam refusal is classified as multiple continuations",
+TEST_CASE("small rotated mixed-bulge duplicate boundary pieces are seam invariant",
           "[lc-offsetcurve][worker-kernel][polyline][mixed-bulge][region-boundary][seam][topology]") {
     constexpr double scale = 1e-3;
     constexpr double distance = 0.125 * scale;
     const std::array<RS_Vector, 4> vertices{{{20, 10}, {20, -10}, {-20, 10}, {-20, -10}}};
     const std::array<double, 4> bulges{{0.0, -0.5, 0.15, 0.0}};
+    std::size_t expectedBranchCount = 0;
     for (std::size_t seam = 0; seam < vertices.size(); ++seam) {
         RS_Polyline source;
         for (std::size_t i = 0; i < vertices.size(); ++i) {
@@ -12380,19 +12366,14 @@ TEST_CASE("small rotated mixed-bulge seam refusal is classified as multiple cont
                 static_cast<int>(result.intersectionDiagnostics.stage),
                 static_cast<int>(result.intersectionDiagnostics.failureSite),
                 static_cast<int>(result.intersectionDiagnostics.cycleAssemblyFailure));
-        if (seam == 1u) {
-            CHECK(result.status == LC_CurveOffsetStatus::AmbiguousTopology);
-            CHECK(result.branches.empty());
-            CHECK(result.intersectionDiagnostics.stage ==
-                  LC_CurveOffsetGeometryResult::IntersectionDiagnostics::Stage::RegionBoundary);
-            CHECK(result.intersectionDiagnostics.failureSite ==
-                  LC_CurveOffsetGeometryResult::IntersectionDiagnostics::FailureSite::CycleAssembly);
-            CHECK(result.intersectionDiagnostics.cycleAssemblyFailure ==
-                  LC_CurveOffsetGeometryResult::IntersectionDiagnostics::CycleAssemblyFailure::MultipleContinuations);
+        CHECK(result.status == LC_CurveOffsetStatus::Ok);
+        REQUIRE_FALSE(result.branches.empty());
+        CHECK(std::all_of(result.branches.begin(), result.branches.end(),
+                          [](const LC_OffsetBranch& branch) { return branch.closed; }));
+        if (seam == 0u) {
+            expectedBranchCount = result.branches.size();
         } else {
-            CHECK(result.status == LC_CurveOffsetStatus::Ok);
-            CHECK(std::all_of(result.branches.begin(), result.branches.end(),
-                              [](const LC_OffsetBranch& branch) { return branch.closed; }));
+            CHECK(result.branches.size() == expectedBranchCount);
         }
     }
 }
@@ -12400,10 +12381,10 @@ TEST_CASE("small rotated mixed-bulge seam refusal is classified as multiple cont
 TEST_CASE("mixed-bulge region cycles match independent dilation and erosion membership",
           "[lc-offsetcurve][worker-kernel][polyline][mixed-bulge][region-boundary][topology]") {
     const double scale = GENERATE(1e-3, 1.0, 10.0, 1e3);
-    const unsigned frame = scale < 0.01 ? 1u : GENERATE(0u, 1u, 2u, 3u);
+    const unsigned frame = scale < 0.01 ? GENERATE(0u, 1u) : GENERATE(0u, 1u, 2u, 3u);
     const std::size_t seamStart = scale < 0.01
-                                      ? GENERATE(std::size_t{0}, std::size_t{2},
-                                                 std::size_t{3})
+                                      ? GENERATE(std::size_t{0}, std::size_t{1},
+                                                 std::size_t{2}, std::size_t{3})
                                   : (scale == 1.0 || scale == 10.0 || scale == 1e3)
                                       ? GENERATE(std::size_t{0}, std::size_t{1},
                                                  std::size_t{2}, std::size_t{3})
