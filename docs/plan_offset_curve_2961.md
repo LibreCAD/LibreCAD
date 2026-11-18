@@ -58283,3 +58283,13 @@ test passed 1/1 in 281.59 seconds, covering the complete kernel suite rather
 than only the focused ellipse and mixed-bulge selections. This is local macOS
 arm64 evidence; PR cross-platform checks and independent CAD acceptance remain
 open.
+
+## 1828. Rebuild the qmake6 Application after Kernel Changes (2026-11-18)
+
+Ran the recursive application/plugin build in `/private/tmp/offset3193-qmake6-fresh`
+after the circular-arc partition implementation. `make -j4` exited successfully
+and rebuilt the shared kernel in both its application and worker targets. The
+shell continues to report the missing optional
+`/private/tmp/libdxfrw-cargo/env`; compiler and macOS deployment-target warnings
+are non-fatal. This qualifies the local macOS qmake6 build, not cross-platform
+CI or visible-app behavior.
