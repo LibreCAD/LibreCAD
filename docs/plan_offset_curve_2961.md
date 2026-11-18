@@ -59406,3 +59406,14 @@ case; registered `offset_worker_kernel` CTest passes 1/1 in 312.18 seconds;
 `git diff --check` passes. This qualifies only the recorded `0.001x` source,
 offset ratios, frames, and seams; it is not a general high-origin or scale
 invariance proof.
+
+Follow-up worker integration validation on the same test build also passes:
+`offset_worker_process`, `offset_worker_client_0`, and
+`offset_worker_process_ordinary` pass 3/3 in 326.01 seconds. The latter
+exercises the corrected RegionBoundary geometry through the worker request
+path; this does not replace the other client matrices or full application
+acceptance. The focused `Worker client generates crossing mixed-bulge
+polyline regions` persistence case also passes 35,098 assertions / 1 case over
+R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG save/reopen lanes, including the
+second-save checks. This is bounded fixture coverage, not general external
+CAD acceptance.
