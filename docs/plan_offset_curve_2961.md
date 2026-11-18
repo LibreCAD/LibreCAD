@@ -58414,3 +58414,18 @@ combined reflected frame before broadening `.25` persistence claims. The
 positive kernel test is committed as `bb5139423`; this roadmap entry is a
 separate documentation commit. ODA/manual CAD acceptance and CI are still
 external gates.
+
+## 1836. Rule Out Whole-arrangement Interval Retry for the Reflected Case (2026-11-18)
+
+Temporarily forced the bounded interval solver to re-node every normalized
+exact-primitive arrangement, then reran the isolated reflected `.25` profile
+at origin and after rotation plus `(1e6,-2e6)`. The transformed case still
+returns `AmbiguousTopology` in cycle assembly with the same open-boundary
+failure; the experiment was removed, so normalized inputs do not incur that
+broader fallback cost. Temporary candidate-decision tracing showed the
+source-span keep/drop sequence is aligned between the origin and transformed
+profiles, further reducing the likelihood that this is simply a winding-vote
+flip. The next probe should compare the actual candidate cut endpoints and
+their source-parameter reconstruction at the cycle join (span 3 to span 2),
+including exact roots that were accepted rather than only pairs with no root.
+No code change or new pass claim results from this diagnostic experiment.
