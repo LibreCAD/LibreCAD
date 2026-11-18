@@ -59433,13 +59433,10 @@ refresh, then verifies the preserved value is applied on submission.
 
 Validation: the focused regression passes 25 assertions / 1 case with
 `QT_QPA_PLATFORM=offscreen`; the full Properties dialog suite completes with
-97/99 cases and 46,746/46,748 assertions passing. The two failures are
-`hasFocus()` checks in rapid-proposal and invalid-latest-proposal tests. Both
-attempt to type additional proposals while async preparation is active, when
-the current widget intentionally disables its editors. Thus they do not
-currently model possible user input; reconcile the supersession-test contract
-with the busy-state interaction before treating those cases as qualified.
-This is not full GUI acceptance. `git diff --check` passes.
+97/99 cases and 46,746/46,748 assertions passing at this checkpoint. Section
+1886 supersedes that run: the focus helper now processes pending Qt events,
+and supersession tests match the actual enabled fields during preparation.
+This is still headless evidence, not full GUI acceptance.
 
 ## 1885. Retry ODA CLI after User Opens GUI Application (2026-11-18)
 
@@ -59454,7 +59451,25 @@ audit errors, or repairs. This does not establish geometry equivalence,
 editable offset semantics, or AutoCAD acceptance.
 
 The remaining gates are visible Properties workflow acceptance, reconciliation
-of the two supersession tests with disabled busy-state editors, broader
-mixed-bulge topology/scale evidence, and external CAD semantic acceptance.
-Continue with code-backed validation and only close the visible or external
-acceptance gates when directly observed.
+of broader mixed-bulge topology/scale evidence, and external CAD semantic
+acceptance. Continue with code-backed validation and only close the visible or
+external acceptance gates when directly observed.
+
+## 1886. Align Async Supersession Tests with Busy-state Controls (2026-11-18)
+
+Test commit: `6fec47a7b`.
+
+The prior rapid-proposal test tried to update distance and traversal controls
+after async preparation had disabled them. It now supersedes the pending
+distance job through the still-enabled major/minor fields and verifies that
+only the latest axis proposal is published. The invalid-latest case now uses
+the still-enabled major field: malformed or out-of-domain text cancels the
+pending request, leaves committed geometry untouched, and permits a valid
+distance edit after recovery. The test typing helper processes pending Qt
+focus events before asserting focus, avoiding a race in the offscreen platform.
+
+Validation: the focused async supersession/refusal selector passes 737
+assertions / 2 cases. The complete Properties dialog suite passes all 99
+cases and 47,459 assertions with `QT_QPA_PLATFORM=offscreen`; `git diff
+--check` passes. This validates headless control and worker behavior only;
+visible GUI acceptance remains open.
