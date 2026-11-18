@@ -58303,4 +58303,6 @@ partition schedule, preserving cusp isolation at their distinct axes. The
 rotation regression and ellipse suite pass after the refinement: 37 assertions
 / 2 mixed-bulge rotation cases and 1,314,475 assertions / 6 ellipse cases.
 Near-circular exact-cusp edge profiles remain covered by the broader ellipse
-suite only where already present; independent CAD acceptance remains open.
+suite only where already present. Rebuilt the recursive qmake6 application and
+plugins on this exact refinement; `make -j4` exits 0. The optional Cargo-env
+warning remains non-fatal. Independent CAD acceptance remains open.
