@@ -1624,10 +1624,12 @@ TEST_CASE("Worker client generates crossing mixed-bulge polyline regions",
     attributes.setLayer(&layer);
 
     constexpr double rotation = 0.37;
-    const RS_Vector translation{1e6, -2e6};
+    const std::array<RS_Vector, 3> translations{{
+        {0.0, 0.0}, {1e6, -2e6}, {1e9, -2e9}}};
     std::array<std::vector<RS_SplineData>, 2> originBranches;
     qint64 requestId = 501;
-    for (std::size_t frame = 0; frame < 2; ++frame) {
+    for (std::size_t frame = 0; frame < translations.size(); ++frame) {
+        const RS_Vector translation = translations[frame];
         RS_Polyline sourceEntity;
         sourceEntity.addVertex({20, 10});
         sourceEntity.addVertex({20, -10}, -0.5);
@@ -1635,7 +1637,7 @@ TEST_CASE("Worker client generates crossing mixed-bulge polyline regions",
         sourceEntity.addVertex({-20, -10});
         sourceEntity.setClosed(true);
         sourceEntity.endPolyline();
-        if (frame == 1) {
+        if (frame > 0) {
             sourceEntity.rotate({0, 0}, rotation);
             sourceEntity.move(translation);
         }
@@ -1716,7 +1718,7 @@ TEST_CASE("Worker client generates crossing mixed-bulge polyline regions",
                             expectedStart + (expectedEnd - expectedStart) * fraction));
                         RS_Vector point = actualEntity.getPointAt(
                             actualStart + (actualEnd - actualStart) * fraction);
-                        if (frame == 1)
+                        if (frame > 0)
                             point = (point - translation).rotated(-rotation);
                         actualPoints.push_back(point);
                     }
