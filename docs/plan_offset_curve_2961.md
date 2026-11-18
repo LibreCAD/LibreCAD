@@ -57950,3 +57950,11 @@ zero audit errors, and zero repairs. This is independent DXF structural/audit
 evidence. It does not establish geometric equivalence, visual correctness,
 editable-source metadata semantics, or AutoCAD acceptance; those gates remain
 open as recorded in section 1806.
+
+## 1808. Revalidate the source-picker suite on the current code head (2026-11-18)
+
+Re-ran the complete offscreen Properties source-picker selection from the
+current code tree with the CMake Release test binary. All 45 cases passed
+(15,601 assertions), covering the automated nine-family filter/replacement
+contract. This remains offscreen test evidence and does not close the visible
+packaged-app acceptance gate in section 1806.
