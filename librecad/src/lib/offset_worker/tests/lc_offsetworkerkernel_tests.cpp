@@ -12288,6 +12288,74 @@ TEST_CASE("ordinary-scale mixed-bulge outcomes are invariant to the polyline sea
     }
 }
 
+TEST_CASE("transformed mixed-bulge seam availability discrepancies are fail-closed",
+          "[lc-offsetcurve][worker-kernel][polyline][mixed-bulge][region-boundary][seam][transform]") {
+    struct Scenario {
+        unsigned frame;
+        double distance;
+        bool erosion;
+    };
+    const std::array<Scenario, 3> scenarios{{{1u, 1.25, false},
+                                             {1u, 1.25, true},
+                                             {3u, 5.0, false}}};
+    const std::array<RS_Vector, 4> vertices{{{20, 10}, {20, -10}, {-20, 10}, {-20, -10}}};
+    constexpr double scale = 10.0;
+
+    for (const Scenario& scenario : scenarios) {
+        const bool reflected = scenario.frame == 3u;
+        const auto transform = [&](RS_Vector point) {
+            point.scale(scale);
+            if (reflected) point.y = -point.y;
+            point.rotate(0.37);
+            if (scenario.frame == 3u) point += RS_Vector{1e6, -2e6};
+            return point;
+        };
+        const double orientation = reflected ? -1.0 : 1.0;
+        const std::array<double, 4> bulges{{0.0, -0.5 * orientation,
+                                            0.15 * orientation, 0.0}};
+        for (std::size_t seam = 0; seam < vertices.size(); ++seam) {
+            RS_Polyline source;
+            for (std::size_t i = 0; i < vertices.size(); ++i) {
+                const std::size_t vertex = (seam + i) % vertices.size();
+                source.addVertex(transform(vertices[vertex]), bulges[vertex]);
+            }
+            source.setClosed(true);
+            source.endPolyline();
+            const auto sourceGeometry = LC_OffsetSourceGeometry::captureForGeneration(source);
+            REQUIRE(sourceGeometry);
+            const LC_OffsetSourceDefinition definition{
+                *sourceGeometry, -scenario.distance, 1e-3, false};
+            const auto options = LC_OffsetWorkerTolerance::directOptions(definition, source);
+            REQUIRE(options);
+            const auto result = LC_CurveOffset::buildDirectBranches(
+                source,
+                LC_CurveOffset::makeSideRequest(
+                    scenario.erosion ? LC_CurveOffsetSide::Left : LC_CurveOffsetSide::Right,
+                    scenario.distance),
+                *options, LC_CurveOffset::makeDirectSourceBudget());
+            const bool knownRefusal =
+                (scenario.frame == 1u && seam == 3u) ||
+                (scenario.frame == 3u && seam == 2u);
+            CAPTURE(scenario.frame, scenario.distance, scenario.erosion, seam,
+                    static_cast<int>(result.status),
+                    static_cast<int>(result.intersectionDiagnostics.stage),
+                    static_cast<int>(result.intersectionDiagnostics.failureSite),
+                    static_cast<int>(result.intersectionDiagnostics.cycleAssemblyFailure));
+            if (knownRefusal) {
+                CHECK(result.status == LC_CurveOffsetStatus::FitFailed);
+                CHECK(result.branches.empty());
+                CHECK(result.intersectionDiagnostics.stage ==
+                      LC_CurveOffsetGeometryResult::IntersectionDiagnostics::Stage::RegionBoundary);
+                CHECK(result.intersectionDiagnostics.failureSite ==
+                      LC_CurveOffsetGeometryResult::IntersectionDiagnostics::FailureSite::CandidateSplit);
+            } else {
+                CHECK(result.status == LC_CurveOffsetStatus::Ok);
+                CHECK_FALSE(result.branches.empty());
+            }
+        }
+    }
+}
+
 TEST_CASE("mixed-bulge region cycles match independent dilation and erosion membership",
           "[lc-offsetcurve][worker-kernel][polyline][mixed-bulge][region-boundary][topology]") {
     const double scale = GENERATE(1e-3, 1.0, 10.0, 1e3);
