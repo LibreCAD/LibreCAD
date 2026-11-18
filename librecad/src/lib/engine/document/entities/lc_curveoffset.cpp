@@ -867,8 +867,12 @@ private:
         const double first = breaks.front();
         const double last = breaks.back();
         const double mapped = first + (parameter - piece.offset);
-        const double slack = 16.0 * std::numeric_limits<double>::epsilon() *
-            std::max({1.0, std::abs(mapped), std::abs(first), std::abs(last)});
+        // The concatenated parameter can be much larger than this child's
+        // parameter when polyline spans mix lengths and angles.
+        const double roundoff = 16.0 * std::numeric_limits<double>::epsilon() *
+            std::max({1.0, std::abs(parameter), std::abs(piece.offset), std::abs(mapped),
+                      std::abs(first), std::abs(last)});
+        const double slack = std::min(roundoff, (last - first) * 0.25);
         if (!std::isfinite(mapped) || mapped < first - slack || mapped > last + slack)
             return std::nullopt;
         return std::clamp(mapped, first, last);

@@ -11512,12 +11512,13 @@ TEST_CASE("mixed-bulge region offset is rotation invariant",
           "[lc-offsetcurve][worker-kernel][polyline][mixed-bulge][rotation]") {
     constexpr double angle = 0.37;
     const auto makeSourceProfile = [=](double secondArcBulge, bool rotateSource = false,
-                                       bool translateSource = false, bool reflectSource = false) {
+                                       bool translateSource = false, bool reflectSource = false,
+                                       double sourceScale = 1.0) {
         auto polyline = std::make_unique<RS_Polyline>();
-        polyline->addVertex({20, 10});
-        polyline->addVertex({20, -10}, -0.5);
-        polyline->addVertex({-20, 10}, secondArcBulge);
-        polyline->addVertex({-20, -10});
+        polyline->addVertex({20 * sourceScale, 10 * sourceScale});
+        polyline->addVertex({20 * sourceScale, -10 * sourceScale}, -0.5);
+        polyline->addVertex({-20 * sourceScale, 10 * sourceScale}, secondArcBulge);
+        polyline->addVertex({-20 * sourceScale, -10 * sourceScale});
         polyline->setClosed(true);
         polyline->endPolyline();
         if (reflectSource) polyline->mirror({0, 0}, {1, 0});
@@ -11578,26 +11579,55 @@ TEST_CASE("mixed-bulge region offset is rotation invariant",
         }
         if (!haveDistance) return std::numeric_limits<double>::infinity();
 
+        const RS_Vector origin = source.getStartpoint();
+        if (!origin.valid || !std::isfinite(origin.x) || !std::isfinite(origin.y)) {
+            return std::numeric_limits<double>::infinity();
+        }
+        double normalizationScale = std::abs(signedDistance);
+        for (const RS_Entity* entity : source) {
+            if (const auto* line = dynamic_cast<const RS_Line*>(entity)) {
+                normalizationScale = std::max({normalizationScale,
+                    line->getStartpoint().distanceTo(origin),
+                    line->getEndpoint().distanceTo(origin)});
+            } else if (const auto* arc = dynamic_cast<const RS_Arc*>(entity)) {
+                normalizationScale = std::max({normalizationScale,
+                    arc->getCenter().distanceTo(origin) + arc->getRadius(),
+                    std::abs(arc->getRadius())});
+            }
+        }
+        if (!(normalizationScale > 0.0) || !std::isfinite(normalizationScale)) {
+            return std::numeric_limits<double>::infinity();
+        }
+        const auto normalizePoint = [&](const RS_Vector& point) {
+            return (point - origin) / normalizationScale;
+        };
+        const double inputRoundoffSlack = 128.0 * std::numeric_limits<double>::epsilon() *
+            std::max({1.0, std::abs(origin.x), std::abs(origin.y), normalizationScale}) /
+            normalizationScale;
+        signedDistance /= normalizationScale;
+        const double normalizedErrorLimit = errorLimit / normalizationScale;
+
         // Fragment orientation can reverse, so source offsets use both signed sides.
         // Arc sweeps are bounded; join sectors come from their exact piece provenance.
         std::vector<ExactPrimitive> primitives;
         for (const RS_Entity* entity : source) {
             if (const auto* line = dynamic_cast<const RS_Line*>(entity)) {
-                const RS_Vector start = line->getStartpoint();
-                const RS_Vector delta = line->getEndpoint() - start;
+                const RS_Vector start = normalizePoint(line->getStartpoint());
+                const RS_Vector end = normalizePoint(line->getEndpoint());
+                const RS_Vector delta = end - start;
                 const double length = delta.magnitude();
                 if (!(length > 0.0)) continue;
                 const RS_Vector tangent = delta / length;
                 const RS_Vector normal{-tangent.y, tangent.x};
                 for (const double offsetDistance : {signedDistance, -signedDistance}) {
                     const RS_Vector offset = normal * offsetDistance;
-                    primitives.push_back({ExactPrimitive::Kind::Segment,
-                        start + offset, line->getEndpoint() + offset});
+                    primitives.push_back({ExactPrimitive::Kind::Segment, start + offset, end + offset});
                 }
             } else if (const auto* arc = dynamic_cast<const RS_Arc*>(entity)) {
                 const double direction = arc->isReversed() ? -1.0 : 1.0;
                 for (const double offsetDistance : {signedDistance, -signedDistance}) {
-                    const double signedRadius = arc->getRadius() - direction * offsetDistance;
+                    const double signedRadius = arc->getRadius() / normalizationScale -
+                        direction * offsetDistance;
                     const double startAngle = arc->getAngle1() + (signedRadius < 0.0 ? M_PI : 0.0);
                     const double radius = std::abs(signedRadius);
                     const double sweep = arc->getAngleLength();
@@ -11608,7 +11638,8 @@ TEST_CASE("mixed-bulge region offset is rotation invariant",
                             static_cast<double>(arcPieces);
                         const double last = sweep * static_cast<double>(arcPiece + 1) /
                             static_cast<double>(arcPieces);
-                        primitives.push_back({ExactPrimitive::Kind::Arc, {}, {}, arc->getCenter(), radius,
+                        primitives.push_back({ExactPrimitive::Kind::Arc, {}, {},
+                            normalizePoint(arc->getCenter()), radius,
                             startAngle + direction * first, direction, last - first});
                     }
                 }
@@ -11673,7 +11704,9 @@ TEST_CASE("mixed-bulge region offset is rotation invariant",
                 std::abs(primitive.centre.x), std::abs(primitive.centre.y),
                 std::abs(primitive.start.x), std::abs(primitive.start.y),
                 std::abs(primitive.end.x), std::abs(primitive.end.y)});
-            const double slack = 128.0 * std::numeric_limits<double>::epsilon() * scale;
+            const double slack = std::max(
+                128.0 * std::numeric_limits<double>::epsilon() * scale,
+                inputRoundoffSlack);
             if (primitive.kind == ExactPrimitive::Kind::Segment) {
                 const RS_Vector axis = primitive.end - primitive.start;
                 const double length = axis.magnitude();
@@ -11733,7 +11766,7 @@ TEST_CASE("mixed-bulge region offset is rotation invariant",
             }
             if (nearestPrimitive == nullptr) return std::numeric_limits<double>::infinity();
             const double bound = certifiedBound(bezier, *nearestPrimitive);
-            if (bound <= errorLimit) return bound;
+            if (bound <= normalizedErrorLimit) return bound;
             if (depth >= 20) return std::numeric_limits<double>::infinity();
             const auto [left, right] = splitBezier(bezier);
             return std::max(self(self, left, depth + 1), self(self, right, depth + 1));
@@ -11744,15 +11777,19 @@ TEST_CASE("mixed-bulge region offset is rotation invariant",
                 const auto& provenance = piece.provenance;
                 if (provenance.arcCentre.valid) {
                     const double sweep = provenance.sourceT1 - provenance.sourceT0;
-                    primitives.push_back({ExactPrimitive::Kind::Arc, {}, {}, provenance.arcCentre,
-                        std::abs(provenance.signedDistance), provenance.sourceT0,
+                    primitives.push_back({ExactPrimitive::Kind::Arc, {}, {},
+                        normalizePoint(provenance.arcCentre),
+                        std::abs(provenance.signedDistance) / normalizationScale, provenance.sourceT0,
                         std::copysign(1.0, sweep), std::abs(sweep)});
                 }
-                maximum = std::max(maximum, certify(certify, piece.bezier, 0));
+                std::array<RS_Vector, 4> normalizedBezier{};
+                std::transform(piece.bezier.begin(), piece.bezier.end(), normalizedBezier.begin(),
+                               normalizePoint);
+                maximum = std::max(maximum, certify(certify, normalizedBezier, 0));
                 if (provenance.arcCentre.valid) primitives.pop_back();
             }
         }
-        return maximum;
+        return maximum * normalizationScale;
     };
     auto samples = [=](const LC_CurveOffsetGeometryResult& geometry, bool inverseRotate,
                        bool inverseTranslate) {
@@ -11833,9 +11870,9 @@ TEST_CASE("mixed-bulge region offset is rotation invariant",
         REQUIRE(reflectedRotatedTranslated.status == LC_CurveOffsetStatus::Ok);
         const auto checkCertifiedLocus =
             [&](const LC_CurveOffsetGeometryResult &geometry,
-                const RS_Polyline &profile) {
+                const RS_Polyline &profile, double geometryDistance) {
               const double requestedGeometry =
-                  requestedGeometryTolerance(profile, distance);
+                  requestedGeometryTolerance(profile, geometryDistance);
               const double locusErrorBound = certifiedLocusErrorBound(
                   geometry, profile, requestedGeometry / 8.0);
               CAPTURE(locusErrorBound);
@@ -11843,13 +11880,33 @@ TEST_CASE("mixed-bulge region offset is rotation invariant",
               CHECK(locusErrorBound <= requestedGeometry / 8.0);
             };
         const auto sourceProfile = makeSourceProfile(secondArcBulge);
-        checkCertifiedLocus(original, *sourceProfile);
-        checkCertifiedLocus(rotated, *rotatedSource);
-        checkCertifiedLocus(translated, *translatedSource);
-        checkCertifiedLocus(rotatedTranslated, *rotatedTranslatedSource);
-        checkCertifiedLocus(reflected, *reflectedSource);
+        checkCertifiedLocus(original, *sourceProfile, distance);
+        checkCertifiedLocus(rotated, *rotatedSource, distance);
+        checkCertifiedLocus(translated, *translatedSource, distance);
+        checkCertifiedLocus(rotatedTranslated, *rotatedTranslatedSource, distance);
+        checkCertifiedLocus(reflected, *reflectedSource, distance);
         checkCertifiedLocus(reflectedRotatedTranslated,
-                            *reflectedRotatedTranslatedSource);
+                            *reflectedRotatedTranslatedSource, distance);
+        if (secondArcBulge == 0.15 && distance == 0.25) {
+            for (const double sourceScale : {1e-3, 10.0}) {
+                CAPTURE(sourceScale);
+                auto scaledProfile = makeSourceProfile(secondArcBulge, false, false, false, sourceScale);
+                const auto scaledSource = LC_OffsetSourceGeometry::captureForGeneration(*scaledProfile);
+                REQUIRE(scaledSource);
+                const double scaledDistance = distance * sourceScale;
+                const LC_OffsetSourceDefinition scaledDefinition{
+                    *scaledSource, -scaledDistance, 1e-4, false};
+                const auto scaledOptions = LC_OffsetWorkerTolerance::directOptions(
+                    scaledDefinition, *scaledProfile);
+                REQUIRE(scaledOptions);
+                const auto scaledGeometry = LC_CurveOffset::buildDirectBranches(
+                    *scaledProfile, LC_CurveOffset::makeSideRequest(
+                        LC_CurveOffsetSide::Right, scaledDistance),
+                    *scaledOptions, LC_CurveOffset::makeDirectSourceBudget());
+                REQUIRE(scaledGeometry.status == LC_CurveOffsetStatus::Ok);
+                checkCertifiedLocus(scaledGeometry, *scaledProfile, scaledDistance);
+            }
+        }
         CHECK_FALSE(original.intersectionDiagnostics.regionArrangementWork
                         .intervalFallback);
         CHECK(translated.intersectionDiagnostics.regionArrangementWork
