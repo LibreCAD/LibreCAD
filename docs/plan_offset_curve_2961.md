@@ -58697,26 +58697,31 @@ frames (for example, a boundary near `22.0229` in the origin fit versus
 `22.3596` in the translated fit). All temporary tracing and the `.35` test
 expansion were removed.
 
-The corresponding per-run fit tolerances are about `0.00418` to `0.00477`, and
+The reported caller fit tolerances are about `0.00418` to `0.00477`, and
 `maxObservedError` is NaN on this region-boundary return path. A test-only
-retry with `fit=1e-4` made the `.35` pairwise gaps worse, increasing the maximum
-from about `0.00251` to `0.00359`; that probe and its `.35` test expansion were
-reverted. This rules out a simple global fit-tolerance tightening and shows
-that partition variation alone is not a sufficient diagnosis. Without an
-independent exact-curve oracle, neither the nominal tolerance comparison nor
-the root trace certifies the returned geometry or justifies weakening the
-stricter `2.5e-4` transform assertion. Keep `.35/.5` unqualified and do not
-snap near-endpoint roots based on this evidence. The next implementation-ready
-step is to measure each retained cubic against the exact source-offset and
-corner-circle boundary with an independent distance oracle, record requested
-and certified error by source interval, and identify why a stricter local fit
-changes rather than improves the transformed locus. Preserve the existing
-qualified `.15/.25` matrix.
+retry set `options.tolerance.fit=1e-4` and increased the maximum `.35` gap from
+about `0.00251` to `0.00359`, but this was not a symmetric fit-budget test:
+the high-origin/rotated `regionBoundary()` path recomputes its local fit budget
+from `requestedGeometry`, overriding that caller fit value, while cases that
+stay in the world frame retain the override. That probe and its `.35` test
+expansion were reverted; it neither rules out nor supports a consistently
+tighter local-fit strategy. Partition variation remains correlated with the
+gap, not a proven cause. Without an independent exact-curve oracle, neither
+the nominal tolerance comparison nor the root trace certifies returned
+geometry or justifies weakening the stricter `2.5e-4` transform assertion.
+Keep `.35/.5` unqualified and do not snap near-endpoint roots based on this
+evidence. The next implementation-ready step is to measure each retained
+cubic against the exact source-offset and corner-circle boundary with an
+independent distance oracle, record requested and certified error by source
+interval, then run a symmetric local-frame fit-budget experiment. Preserve the
+existing qualified `.15/.25` matrix.
 
 Validation after cleanup: `librecad_offset_worker_kernel_tests` rebuilt in
 `/private/tmp/offset-2961-cmake-clean`; the focused `mixed-bulge region offset
 is rotation invariant` test passed all 52 assertions for `.15/.25`; and
 `git diff --check` passed. The temporary `.35` probe had failed its exploratory
 `2.5e-4` assertion at `0.0025126` and is not counted as a product regression
-pass or as a new supported profile. A second temporary `.35` retry with a
-strict fit override failed at `0.00359` and is also diagnostic only.
+pass or as a new supported profile. A second temporary `.35` retry with an
+asymmetric fit override failed at `0.00359`; it is diagnostic only because
+local-frame tolerance recomputation prevented it from testing a uniform fit
+budget.
