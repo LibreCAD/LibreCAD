@@ -59167,6 +59167,8 @@ reproduction before changing fitting or topology decisions.
 
 ## 1873. Recover Small-scale Mixed-bulge Source Noding (2026-11-18)
 
+Implementation commit: `850530636`.
+
 The seam sweep isolated the depth-48 source-noding exhaustion to exact
 line/arc polyline spans whose concatenated child parameter landed a few ULPs
 inside a child endpoint. `PolylineSource::straightSpan()` now recognizes
