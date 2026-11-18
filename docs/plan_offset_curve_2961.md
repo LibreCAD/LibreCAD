@@ -58556,3 +58556,18 @@ source-family picker workflow were not established. No drawing content was
 saved or changed. This narrows section 1841's selection blocker but leaves
 visible source highlighting, candidate-family switching, replacement,
 cancellation, and refusal acceptance open.
+
+## 1844. Reject Broad Self-crossing Polyline Localization (2026-11-18)
+
+An exploratory provenance signature for the `.35` profile shows transformed
+corner-arc cut parameters moving by roughly `4e-6` to `2e-5` after undoing the
+frame rotation, while the sampled-locus gap reaches `2.51e-3`. This associates
+the discrepancy with changed candidate cuts, but does not yet identify the
+specific primitive pair or prove the source of each parameter drift. A trial
+that removed the simple-polyline predicate from the translation-localization
+path made the previously successful `.15` combined-frame case and `.35`
+translated case return `AmbiguousTopology`. The broad change and temporary
+test probes were reverted; no implementation or passing claim results. Keep
+the simple-polyline guard until a bounded, event-specific normalization or
+certification path preserves the qualified `.15/.25` matrix and improves the
+larger profiles. `.35/.5` remain unqualified.
