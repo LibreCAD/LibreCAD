@@ -58635,3 +58635,28 @@ transformed frames, specifically tracing which changed cut signature causes
 the `.35` locus gap. Any correction must retain the `.15/.25` matrix and add
 the new larger-bulge row only after its independent bidirectional locus oracle
 passes.
+
+## 1847. Trace the High-origin Corner-circle Secant (2026-11-18)
+
+Added temporary primitive-pair tracing to the `.35` transform matrix, then
+removed it after the probe. In the translated frame, one line/corner-circle
+contact that is an exact endpoint tangency at the origin is returned as a
+near-tangent secant: the origin event has source parameter `20` and circle
+angle approximately `0`, while the translated event has parameter
+`19.99998958` and circle angle `2.0836e-5`. The line endpoint's radial error
+from the intended radius is only about `1.1e-10`, consistent with the
+large-origin arithmetic bound; the square-root conditioning of the secant
+formula magnifies that into an approximately `1e-5` parameter shift. The
+reflected case shows the corresponding event near the opposite `2*pi` seam.
+
+A temporary endpoint reconstruction using source tangent and signed offset
+identified this constructed node contact but did not reduce the full
+bidirectional `.35` locus gap, so that incomplete prototype and all trace/test
+edits were removed. This is evidence for a localized topology-event issue,
+not a complete diagnosis: other candidate/corner-circle pairs also drift in
+the failing profile. Next enumerate every line/corner-circle event whose
+candidate endpoint maps to the circle's source node, compare the exact
+constructed offset endpoint against both returned roots, and determine which
+events alter retained cycle membership. Any correction must be limited to
+certified construction-known endpoint tangencies and must retain the `.15/.25`
+transform regression; do not snap arbitrary near-tangent intersections.
