@@ -59288,3 +59288,16 @@ Validation: `[topology]` passes 405,704 assertions / 1 case. This is sampled
 membership over the recorded frame/profile matrix, not a continuous topology
 proof or general seam-invariance guarantee. Smaller-scale and other
 transformed-seam combinations remain separate coverage.
+
+## 1878. Extend Seam Membership to Unit-scale Profiles (2026-11-18)
+
+Test commit: `20d5367f1`.
+
+Expanded the same independent dilation/erosion membership oracle from scale 10
+to scale 1 across all four frames and all four polyline seams. It retains the
+full four-bulge, four-relative-distance, two-direction matrix. No production
+code changed in this slice.
+
+Validation: `[topology]` passes 591,770 assertions / 1 case for scales 1 and
+10. This raises sampled membership coverage to the recorded scale/frame/seam
+grid; it is not a continuous proof or general scale-invariance guarantee.
