@@ -59385,3 +59385,24 @@ replacement passes 411 assertions; all ordered family-pair replacements pass
 assertions. These checks cover parabola among all nine supported kinds,
 cross-family type synchronization, replacement, and highlight state, but do
 not substitute for the requested visible acceptance.
+
+## 1883. Extend Small-scale Membership Across All Rigid Frames (2026-11-18)
+
+Test commit: `66096e821`.
+
+The independent `0.001x` mixed-bulge dilation/erosion oracle now covers all
+four rigid frames (identity, rotation, translation, and reflected
+rotation/translation) and all four closed-polyline seam starts. The earlier
+two-frame limit was not a production restriction: the fixture had incorrectly
+scaled `relativeTolerance`, a dimensionless factor, by geometry scale. That
+made the requested tolerance smaller than the numeric floor after translation
+to `(1e6,-2e6)`. Keeping the same `1e-4` relative factor across scales lets the
+oracle test the intended uniform-scale matrix without weakening production
+precision checks.
+
+Validation: `[topology]` passes 5,089,791 assertions / 2 cases; `[seam]`
+passes 4,143 assertions / 7 cases; `[self-noding]` passes 5 assertions / 1
+case; registered `offset_worker_kernel` CTest passes 1/1 in 312.18 seconds;
+`git diff --check` passes. This qualifies only the recorded `0.001x` source,
+offset ratios, frames, and seams; it is not a general high-origin or scale
+invariance proof.
