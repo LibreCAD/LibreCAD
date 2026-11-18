@@ -6612,11 +6612,17 @@ bool included(const int winding, const LC_CurveFillRule rule) {
  */
 // frameError bounds coordinate uncertainty before a large-origin local-frame transform.
 LC_CurveOffsetStatus regionBoundary(const OffsetSource& source, const SourceScale& scale, const double magnitude,
-                                    const bool dilate, const LC_CurveOffsetOptions& options,
+                                    const bool dilate, const LC_CurveOffsetOptions& requestedOptions,
                                     const LC_OffsetSourceBudget& budget, std::vector<LC_OffsetBranch>& cycles,
                                     LC_CurveOffsetGeometryResult& result, const bool normalized = false,
                                     const double frameError = 0.0) {
     using FailureSite = LC_CurveOffsetGeometryResult::IntersectionDiagnostics::FailureSite;
+    LC_CurveOffsetOptions options = requestedOptions;
+    // Keep adaptive cubic fitting within the same precision envelope across frames.
+    const double regionFitCap = options.tolerance.requestedGeometry / 8.0;
+    if (std::isfinite(regionFitCap) && regionFitCap > 0.0) {
+        options.tolerance.fit = std::min(options.tolerance.fit, regionFitCap);
+    }
     if (!source.closed()) {
         return LC_CurveOffsetStatus::InvalidSource; // a region needs a closed boundary
     }
@@ -6664,7 +6670,8 @@ LC_CurveOffsetStatus regionBoundary(const OffsetSource& source, const SourceScal
                     std::min(tolerance.requestedGeometry / 8.0, tolerance.requestedGeometry * 0.05));
                 tolerance.nodeMerge = std::min(tolerance.requestedGeometry * 0.10,
                                                tolerance.requestedGeometry - tolerance.evaluation);
-                tolerance.fit = tolerance.requestedGeometry - tolerance.evaluation - tolerance.nodeMerge;
+                tolerance.fit = std::min(options.tolerance.fit,
+                    tolerance.requestedGeometry - tolerance.evaluation - tolerance.nodeMerge);
                 tolerance.classification = std::max(tolerance.evaluation + tolerance.nodeMerge,
                                                     tolerance.requestedGeometry * 0.25);
                 tolerance.rootResidual = tolerance.evaluation;
