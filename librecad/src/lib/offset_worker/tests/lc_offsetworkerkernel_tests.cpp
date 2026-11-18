@@ -11554,8 +11554,8 @@ TEST_CASE("mixed-bulge region offset is rotation invariant",
         REQUIRE(options);
         return options->tolerance.requestedGeometry;
     };
-    const auto exactLocusDeviation = [](const LC_CurveOffsetGeometryResult& geometry,
-                                        const RS_Polyline& source) {
+    const auto certifiedLocusErrorBound = [](const LC_CurveOffsetGeometryResult& geometry,
+                                              const RS_Polyline& source, const double errorLimit) {
         struct ExactPrimitive {
             enum class Kind { Segment, Arc } kind;
             RS_Vector start;
@@ -11602,8 +11602,17 @@ TEST_CASE("mixed-bulge region offset is rotation invariant",
                     const double signedRadius = arc->getRadius() - direction * offsetDistance;
                     const double startAngle = arc->getAngle1() + (signedRadius < 0.0 ? M_PI : 0.0);
                     const double radius = std::abs(signedRadius);
-                    primitives.push_back({ExactPrimitive::Kind::Arc, {}, {}, arc->getCenter(), radius,
-                                          startAngle, direction, arc->getAngleLength()});
+                    const double sweep = arc->getAngleLength();
+                    const std::size_t arcPieces = static_cast<std::size_t>(
+                        std::ceil(sweep / (0.5 * M_PI)));
+                    for (std::size_t arcPiece = 0; arcPiece < arcPieces; ++arcPiece) {
+                        const double first = sweep * static_cast<double>(arcPiece) /
+                            static_cast<double>(arcPieces);
+                        const double last = sweep * static_cast<double>(arcPiece + 1) /
+                            static_cast<double>(arcPieces);
+                        primitives.push_back({ExactPrimitive::Kind::Arc, {}, {}, arc->getCenter(), radius,
+                            startAngle + direction * first, direction, last - first});
+                    }
                 }
             }
         }
@@ -11638,32 +11647,111 @@ TEST_CASE("mixed-bulge region offset is rotation invariant",
             return std::min(point.distanceTo(endpoint(0.0)),
                             point.distanceTo(endpoint(primitive.sweep)));
         };
+        const auto bezierAt = [](const std::array<RS_Vector, 4>& bezier, const double parameter) {
+            const double inverse = 1.0 - parameter;
+            return bezier[0] * (inverse * inverse * inverse) +
+                bezier[1] * (3.0 * inverse * inverse * parameter) +
+                bezier[2] * (3.0 * inverse * parameter * parameter) +
+                bezier[3] * (parameter * parameter * parameter);
+        };
+        const auto splitBezier = [](const std::array<RS_Vector, 4>& bezier) {
+            const RS_Vector a = (bezier[0] + bezier[1]) * 0.5;
+            const RS_Vector b = (bezier[1] + bezier[2]) * 0.5;
+            const RS_Vector c = (bezier[2] + bezier[3]) * 0.5;
+            const RS_Vector d = (a + b) * 0.5;
+            const RS_Vector e = (b + c) * 0.5;
+            const RS_Vector middle = (d + e) * 0.5;
+            return std::pair{
+                std::array<RS_Vector, 4>{bezier[0], a, d, middle},
+                std::array<RS_Vector, 4>{middle, e, c, bezier[3]}};
+        };
+        const auto cross2 = [](const RS_Vector& lhs, const RS_Vector& rhs) {
+            return lhs.x * rhs.y - lhs.y * rhs.x;
+        };
+        // Bound each control hull against a finite segment or a convex arc sector.
+        const auto certifiedBound = [&](const std::array<RS_Vector, 4>& bezier,
+                                        const ExactPrimitive& primitive) {
+            const double scale = std::max({1.0, primitive.radius,
+                std::abs(primitive.centre.x), std::abs(primitive.centre.y),
+                std::abs(primitive.start.x), std::abs(primitive.start.y),
+                std::abs(primitive.end.x), std::abs(primitive.end.y)});
+            const double slack = 128.0 * std::numeric_limits<double>::epsilon() * scale;
+            if (primitive.kind == ExactPrimitive::Kind::Segment) {
+                const RS_Vector axis = primitive.end - primitive.start;
+                const double length = axis.magnitude();
+                if (!(length > 0.0)) return std::numeric_limits<double>::infinity();
+                double maxDistance = 0.0;
+                for (const RS_Vector& control : bezier) {
+                    const RS_Vector relative = control - primitive.start;
+                    const double projection = relative.dotP(axis) / axis.squared();
+                    if (projection < -slack / length || projection > 1.0 + slack / length) {
+                        return std::numeric_limits<double>::infinity();
+                    }
+                    maxDistance = std::max(maxDistance, std::abs(cross2(relative, axis)) / length);
+                }
+                return maxDistance;
+            }
+
+            const RS_Vector startRay{std::cos(primitive.startAngle), std::sin(primitive.startAngle)};
+            const double endAngle = primitive.startAngle + primitive.direction * primitive.sweep;
+            const RS_Vector endRay{std::cos(endAngle), std::sin(endAngle)};
+            double minX = std::numeric_limits<double>::infinity();
+            double maxX = -std::numeric_limits<double>::infinity();
+            double minY = std::numeric_limits<double>::infinity();
+            double maxY = -std::numeric_limits<double>::infinity();
+            for (const RS_Vector& control : bezier) {
+                const RS_Vector relative = control - primitive.centre;
+                const double firstSide = cross2(startRay, relative) * primitive.direction;
+                const double secondSide = cross2(relative, endRay) * primitive.direction;
+                if (firstSide < -slack || secondSide < -slack) {
+                    return std::numeric_limits<double>::infinity();
+                }
+                minX = std::min(minX, relative.x);
+                maxX = std::max(maxX, relative.x);
+                minY = std::min(minY, relative.y);
+                maxY = std::max(maxY, relative.y);
+            }
+            const auto minAbs = [](const double low, const double high) {
+                return low <= 0.0 && high >= 0.0 ? 0.0 : std::min(std::abs(low), std::abs(high));
+            };
+            const double minRadius = std::hypot(minAbs(minX, maxX), minAbs(minY, maxY));
+            const double maxRadius = std::hypot(std::max(std::abs(minX), std::abs(maxX)),
+                                                std::max(std::abs(minY), std::abs(maxY)));
+            return std::max(std::abs(minRadius - primitive.radius),
+                            std::abs(maxRadius - primitive.radius));
+        };
+        // De Casteljau subdivision tightens the hull bounds and may select a different exact span.
+        const auto certify = [&](auto&& self, const std::array<RS_Vector, 4>& bezier,
+                                 const unsigned depth) -> double {
+            const RS_Vector midpoint = bezierAt(bezier, 0.5);
+            const ExactPrimitive* nearestPrimitive = nullptr;
+            double nearestDistance = std::numeric_limits<double>::infinity();
+            for (const ExactPrimitive& primitive : primitives) {
+                const double distance = distanceToPrimitive(midpoint, primitive);
+                if (distance < nearestDistance) {
+                    nearestDistance = distance;
+                    nearestPrimitive = &primitive;
+                }
+            }
+            if (nearestPrimitive == nullptr) return std::numeric_limits<double>::infinity();
+            const double bound = certifiedBound(bezier, *nearestPrimitive);
+            if (bound <= errorLimit) return bound;
+            if (depth >= 20) return std::numeric_limits<double>::infinity();
+            const auto [left, right] = splitBezier(bezier);
+            return std::max(self(self, left, depth + 1), self(self, right, depth + 1));
+        };
         double maximum = 0.0;
         for (const auto& branch : geometry.branches) {
             for (const auto& piece : branch.cubicPieces) {
-                std::vector<ExactPrimitive> piecePrimitives = primitives;
                 const auto& provenance = piece.provenance;
                 if (provenance.arcCentre.valid) {
                     const double sweep = provenance.sourceT1 - provenance.sourceT0;
-                    piecePrimitives.push_back({ExactPrimitive::Kind::Arc, {}, {}, provenance.arcCentre,
+                    primitives.push_back({ExactPrimitive::Kind::Arc, {}, {}, provenance.arcCentre,
                         std::abs(provenance.signedDistance), provenance.sourceT0,
                         std::copysign(1.0, sweep), std::abs(sweep)});
                 }
-                for (const double parameter : {0.125, 0.25, 0.5, 0.75, 0.875}) {
-                    const double inverse = 1.0 - parameter;
-                    const RS_Vector point = piece.bezier[0] * (inverse * inverse * inverse) +
-                        piece.bezier[1] * (3.0 * inverse * inverse * parameter) +
-                        piece.bezier[2] * (3.0 * inverse * parameter * parameter) +
-                        piece.bezier[3] * (parameter * parameter * parameter);
-                    double nearest = std::numeric_limits<double>::infinity();
-                    for (const ExactPrimitive& primitive : piecePrimitives) {
-                        const double distance = distanceToPrimitive(point, primitive);
-                        if (distance < nearest) {
-                            nearest = distance;
-                        }
-                    }
-                    maximum = std::max(maximum, nearest);
-                }
+                maximum = std::max(maximum, certify(certify, piece.bezier, 0));
+                if (provenance.arcCentre.valid) primitives.pop_back();
             }
         }
         return maximum;
@@ -11732,11 +11820,12 @@ TEST_CASE("mixed-bulge region offset is rotation invariant",
         REQUIRE(rotatedTranslated.status == LC_CurveOffsetStatus::Ok);
         REQUIRE(reflected.status == LC_CurveOffsetStatus::Ok);
         REQUIRE(reflectedRotatedTranslated.status == LC_CurveOffsetStatus::Ok);
-        const double exactDeviation = exactLocusDeviation(original, *sourceProfile);
         const double requestedGeometry = requestedGeometryTolerance(*sourceProfile);
-        CAPTURE(exactDeviation);
+        const double locusErrorBound = certifiedLocusErrorBound(
+            original, *sourceProfile, requestedGeometry / 8.0);
+        CAPTURE(locusErrorBound);
         CAPTURE(requestedGeometry);
-        CHECK(exactDeviation <= requestedGeometry / 8.0);
+        CHECK(locusErrorBound <= requestedGeometry / 8.0);
         CHECK_FALSE(original.intersectionDiagnostics.regionArrangementWork.intervalFallback);
         CHECK(translated.intersectionDiagnostics.regionArrangementWork.exactPrimitiveNoding);
         CHECK(rotatedTranslated.intersectionDiagnostics.regionArrangementWork.exactPrimitiveNoding);
