@@ -58058,3 +58058,22 @@ lanes; it does not establish arbitrary mixed-bulge topology or semantic ODA /
 AutoCAD acceptance. DWG export still reports the existing fixed-handle raw
 OBJECTS replay diagnostic, separate from generated spline geometry. Code
 commits: `274db8cac` (persistence) and `4ece04b47` (source-distance oracle).
+
+## 1814. Record the Expanded Worker-client Suite Watchdog (2026-11-18)
+
+Reran the full `librecad_offset_worker_client_tests
+'[lc-offsetcurve][worker-client]'` suite with its configured 30-minute suite
+watchdog. It exited with code 42 at 1,800,004 ms: 60 cases ran, 34 passed,
+and 26 failed at the shared elapsed-time assertion in
+`lc_offsetworkerclient_tests.cpp:180` (`client suite watchdog elapsed`). The
+failures were watchdog assertions, not reported geometry mismatches; the run
+completed 5,140,445 assertions, with 5,140,419 passing. This is the second
+broader-suite run limited by the suite watchdog, rather than evidence of a
+functional regression. The focused crossing mixed-bulge case in section 1813
+remains the specific passing validation for the recent persistence/oracle
+change. To make a full suite actionable, follow up by splitting expensive
+cross-format cases into bounded test groups or optimizing fixture setup, then
+rerun each group; do not raise the watchdog without identifying why the suite
+exceeds its budget. PR CI at the time of this note: Ubuntu x64/arm64 and macOS
+latest checks passed, while Windows, macOS Intel, DWG/DXF verification, and
+static analysis were still in progress; a Headless OFF run was cancelled.
