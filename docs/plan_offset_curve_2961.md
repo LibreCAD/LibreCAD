@@ -59473,3 +59473,22 @@ assertions / 2 cases. The complete Properties dialog suite passes all 99
 cases and 47,459 assertions with `QT_QPA_PLATFORM=offscreen`; `git diff
 --check` passes. This validates headless control and worker behavior only;
 visible GUI acceptance remains open.
+
+## 1887. Retry ODA DWG Output with the GUI Session Active (2026-11-18)
+
+After the user confirmed ODAFileConverter was open, its accessibility tree
+showed the completed 176-file GUI conversion configuration. I attempted to
+switch the output format from 2018 ASCII DXF to 2018 DWG through the app's
+controls, but the native UI control service returned `noWindowsAvailable` for
+the selector and did not change the selected format. The non-destructive CLI
+retry through `scripts/oda-validate.sh`, using the same staged 176-DWG input
+batch, `ACAD2018`, DWG output, and audit enabled, again aborted before
+processing with exit 134, pasteboard creation errors, and an invalid
+`hiservices-xpcservice` connection. No DWG outputs were produced.
+
+The prior 176/176 GUI-produced 2018 ASCII DXF files still pass ezdxf parsing
+and structural audit with zero read errors, audit errors, or repairs (section
+1848). This retry adds no DWG interoperability evidence and does not establish
+geometry equivalence or semantic acceptance. Keep external CAD/DWG acceptance
+open; a future retry needs operable ODA GUI selector controls or a converter
+process launched directly from the interactive desktop session.
