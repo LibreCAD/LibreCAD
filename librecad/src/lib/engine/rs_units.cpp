@@ -719,8 +719,9 @@ QString RS_Units::formatAngle(double angle, RS2::AngleFormat format, int prec) {
             // rounded up carries into the minutes and degrees instead of showing 60.
             const int secDecimals = prec > 1 ? prec - 2 : 0;
             const double secScale = std::pow(10., secDecimals);
-            const double unitsPerMinute = prec > 1 ? 60. * secScale : 1.;
-            const double unitsPerDegree = prec > 0 ? 60. * unitsPerMinute : 1.;
+            // the same cases as the switch below: 0 shows degrees, 1 minutes, any other value seconds
+            const double unitsPerMinute = prec == 0 || prec == 1 ? 1. : 60. * secScale;
+            const double unitsPerDegree = prec == 0 ? 1. : 60. * unitsPerMinute;
 
             const double total = std::round(value * unitsPerDegree);
             const double inDegree = std::fmod(total, unitsPerDegree);

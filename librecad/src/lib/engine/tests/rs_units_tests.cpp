@@ -22,40 +22,45 @@
 // Tests for the degrees/minutes/seconds format of RS_Units::formatAngle().
 
 #include <catch2/catch_test_macros.hpp>
-#include <catch2/catch_tostring.hpp>
+
+#include <string>
 
 #include <QString>
 
 #include "rs_math.h"
 #include "rs_units.h"
 
-namespace Catch {
-template <>
-struct StringMaker<QString> {
-    static std::string convert(const QString &value) {
-        return '"' + value.toStdString() + '"';
-    }
-};
-}
-
 namespace {
-QString dms(double degrees, int prec) {
-    return RS_Units::formatAngle(RS_Math::deg2rad(degrees), RS2::DegreesMinutesSeconds, prec);
+// The text as UTF-8, which a failing check prints. A Catch::StringMaker<QString> in this
+// file would not help: other test files instantiate Catch's own printer for QString under
+// the same name, and the linker keeps one of those, which prints { {?}, {?}, ... }.
+std::string dms(double degrees, int prec) {
+    return RS_Units::formatAngle(RS_Math::deg2rad(degrees), RS2::DegreesMinutesSeconds, prec).toStdString();
 }
 }
 
 TEST_CASE("formatAngle DMS rounds the whole angle", "[rs_units]") {
-    CHECK(dms(10.4999, 0) == QString::fromUtf8("10°"));
-    CHECK(dms(10.5, 0) == QString::fromUtf8("11°"));
-    CHECK(dms(10.0083, 1) == QString::fromUtf8("10° 0'"));
-    CHECK(dms(10.99999, 1) == QString::fromUtf8("11° 0'"));
-    CHECK(dms(10.9917, 2) == QString::fromUtf8("10° 59' 30\""));
+    CHECK(dms(10.4999, 0) == "10°");
+    CHECK(dms(10.5, 0) == "11°");
+    CHECK(dms(10.0083, 1) == "10° 0'");
+    CHECK(dms(10.99999, 1) == "11° 0'");
+    CHECK(dms(10.9917, 2) == "10° 59' 30\"");
 }
 
 TEST_CASE("formatAngle DMS carries a rounded up value", "[rs_units]") {
-    CHECK(dms(10.9917, 1) == QString::fromUtf8("11° 0'"));
-    CHECK(dms(10.99999, 2) == QString::fromUtf8("11° 0' 0\""));
-    CHECK(dms(10.99999, 3) == QString::fromUtf8("11° 0' 0.0\""));
-    CHECK(dms(10.4999999, 4) == QString::fromUtf8("10° 30' 0.00\""));
-    CHECK(dms(10.99999, 5) == QString::fromUtf8("10° 59' 59.964\""));
+    CHECK(dms(10.9917, 1) == "11° 0'");
+    CHECK(dms(10.99999, 2) == "11° 0' 0\"");
+    CHECK(dms(10.99999, 3) == "11° 0' 0.0\"");
+    CHECK(dms(10.4999999, 4) == "10° 30' 0.00\"");
+    CHECK(dms(10.99999, 5) == "10° 59' 59.964\"");
+}
+
+// A drawing can carry a negative precision: AutoCAD writes $DIMADEC = -1, and Drawing
+// Preferences saves $AUPREC = -1 after a switch from decimal degrees with 7 or 8 places.
+// Such a string has the fields of precision 2, so the angle is rounded to whole seconds.
+TEST_CASE("formatAngle DMS with a negative precision rounds to whole seconds", "[rs_units]") {
+    CHECK(dms(10.5, -1) == "10° 30' 0\"");
+    CHECK(dms(10.4999, -1) == "10° 30' 0\"");
+    CHECK(dms(280.25, -1) == "280° 15' 0\"");
+    CHECK(dms(30.52555, -1) == "30° 31' 32\"");
 }
