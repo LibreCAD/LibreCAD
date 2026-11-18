@@ -12154,11 +12154,150 @@ TEST_CASE("small mixed-bulge seam matrix resolves except the known multiple-cont
     }
 }
 
+TEST_CASE("ordinary-scale mixed-bulge outcomes are invariant to the polyline seam",
+          "[lc-offsetcurve][worker-kernel][polyline][mixed-bulge][region-boundary][seam]") {
+    const std::array<RS_Vector, 4> vertices{{{20, 10}, {20, -10}, {-20, 10}, {-20, -10}}};
+    const auto cubicAt = [](const std::array<RS_Vector, 4>& controls, const double t) {
+        const double u = 1.0 - t;
+        return controls[0] * (u * u * u) + controls[1] * (3.0 * u * u * t) +
+               controls[2] * (3.0 * u * t * t) + controls[3] * (t * t * t);
+    };
+    struct BranchMeasure {
+        double signedArea = 0.0;
+        double length = 0.0;
+        RS_Vector min{std::numeric_limits<double>::infinity(),
+                      std::numeric_limits<double>::infinity()};
+        RS_Vector max{-std::numeric_limits<double>::infinity(),
+                      -std::numeric_limits<double>::infinity()};
+    };
+    const auto measureBranches = [&](const LC_CurveOffsetGeometryResult& result) {
+        std::vector<BranchMeasure> measures;
+        for (const LC_OffsetBranch& branch : result.branches) {
+            REQUIRE(branch.closed);
+            BranchMeasure measure;
+            long double twiceArea = 0.0L;
+            RS_Vector previous;
+            bool havePrevious = false;
+            for (const LC_OffsetCubicPiece& piece : branch.cubicPieces) {
+                for (unsigned step = 0; step <= 32; ++step) {
+                    const RS_Vector point = cubicAt(piece.bezier,
+                        static_cast<double>(step) / 32.0);
+                    measure.min.x = std::min(measure.min.x, point.x);
+                    measure.min.y = std::min(measure.min.y, point.y);
+                    measure.max.x = std::max(measure.max.x, point.x);
+                    measure.max.y = std::max(measure.max.y, point.y);
+                    if (havePrevious) {
+                        twiceArea += static_cast<long double>(previous.x) * point.y -
+                                     static_cast<long double>(previous.y) * point.x;
+                        measure.length += previous.distanceTo(point);
+                    }
+                    previous = point;
+                    havePrevious = true;
+                }
+            }
+            REQUIRE(havePrevious);
+            const RS_Vector first = cubicAt(branch.cubicPieces.front().bezier, 0.0);
+            twiceArea += static_cast<long double>(previous.x) * first.y -
+                         static_cast<long double>(previous.y) * first.x;
+            measure.length += previous.distanceTo(first);
+            measure.signedArea = static_cast<double>(twiceArea / 2.0L);
+            measures.push_back(measure);
+        }
+        std::sort(measures.begin(), measures.end(), [](const BranchMeasure& a,
+                                                       const BranchMeasure& b) {
+            return a.signedArea < b.signedArea;
+        });
+        return measures;
+    };
+
+    for (const double scale : {1.0, 10.0}) {
+        for (const double secondBulge : {0.15, 0.25, 0.35, 0.5}) {
+            for (const double ratio : {0.125, 0.25, 0.5, 0.75}) {
+                for (const bool erosion : {false, true}) {
+                    const std::array<double, 4> bulges{{0.0, -0.5, secondBulge, 0.0}};
+                    const double distance = ratio * scale;
+                    std::optional<LC_CurveOffsetGeometryResult> reference;
+                    std::vector<BranchMeasure> referenceMeasures;
+                    for (std::size_t seam = 0; seam < vertices.size(); ++seam) {
+                        RS_Polyline source;
+                        for (std::size_t i = 0; i < vertices.size(); ++i) {
+                            const std::size_t vertex = (seam + i) % vertices.size();
+                            source.addVertex(vertices[vertex] * scale, bulges[vertex]);
+                        }
+                        source.setClosed(true);
+                        source.endPolyline();
+                        const auto sourceGeometry =
+                            LC_OffsetSourceGeometry::captureForGeneration(source);
+                        REQUIRE(sourceGeometry);
+                        const LC_OffsetSourceDefinition definition{
+                            *sourceGeometry, -distance, 1e-4 * scale, false};
+                        const auto options =
+                            LC_OffsetWorkerTolerance::directOptions(definition, source);
+                        REQUIRE(options);
+                        const auto result = LC_CurveOffset::buildDirectBranches(
+                            source,
+                            LC_CurveOffset::makeSideRequest(
+                                erosion ? LC_CurveOffsetSide::Left : LC_CurveOffsetSide::Right,
+                                distance),
+                            *options, LC_CurveOffset::makeDirectSourceBudget());
+                        CAPTURE(scale, secondBulge, ratio, erosion, seam,
+                                static_cast<int>(result.status),
+                                static_cast<int>(result.intersectionDiagnostics.stage),
+                                static_cast<int>(result.intersectionDiagnostics.failureSite),
+                                static_cast<int>(result.intersectionDiagnostics.cycleAssemblyFailure));
+
+                        if (seam == 0) {
+                            reference = result;
+                            if (result.status == LC_CurveOffsetStatus::Ok)
+                                referenceMeasures = measureBranches(result);
+                            continue;
+                        }
+
+                        REQUIRE(reference);
+                        CHECK(result.status == reference->status);
+                        CHECK(result.intersectionDiagnostics.stage ==
+                              reference->intersectionDiagnostics.stage);
+                        CHECK(result.intersectionDiagnostics.failureSite ==
+                              reference->intersectionDiagnostics.failureSite);
+                        CHECK(result.intersectionDiagnostics.cycleAssemblyFailure ==
+                              reference->intersectionDiagnostics.cycleAssemblyFailure);
+                        if (result.status == LC_CurveOffsetStatus::Ok &&
+                            reference->status == LC_CurveOffsetStatus::Ok) {
+                            REQUIRE(result.branches.size() == reference->branches.size());
+                            const auto currentMeasures = measureBranches(result);
+                            REQUIRE(currentMeasures.size() == referenceMeasures.size());
+                            for (std::size_t i = 0; i < currentMeasures.size(); ++i) {
+                                const BranchMeasure& expected = referenceMeasures[i];
+                                const BranchMeasure& actual = currentMeasures[i];
+                                CAPTURE(i, expected.signedArea, actual.signedArea,
+                                        expected.length, actual.length);
+                                CHECK(std::abs(expected.signedArea - actual.signedArea) <
+                                      0.05 * scale * scale);
+                                CHECK(std::abs(expected.length - actual.length) <
+                                      0.01 * scale);
+                                CHECK(actual.min.distanceTo(expected.min) < 0.01 * scale);
+                                CHECK(actual.max.distanceTo(expected.max) < 0.01 * scale);
+                            }
+                        } else {
+                            CHECK(result.branches.empty());
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
 TEST_CASE("mixed-bulge region cycles match independent dilation and erosion membership",
           "[lc-offsetcurve][worker-kernel][polyline][mixed-bulge][region-boundary][topology]") {
     const double scale = GENERATE(1e-3, 1.0, 10.0, 1e3);
     const unsigned frame = scale < 0.01 ? 1u : GENERATE(0u, 1u, 2u, 3u);
-    const std::size_t seamStart = scale < 0.01 ? GENERATE(std::size_t{0}, std::size_t{3}) : 0;
+    const std::size_t seamStart = scale < 0.01
+                                      ? GENERATE(std::size_t{0}, std::size_t{3})
+                                  : scale == 10.0 && frame == 0u
+                                      ? GENERATE(std::size_t{0}, std::size_t{1},
+                                                 std::size_t{2}, std::size_t{3})
+                                      : 0;
     const bool erosion = GENERATE(false, true);
     for (const double secondArcBulge : {0.15, 0.25, 0.35, 0.5}) {
         for (const double baseDistance : {0.125, 0.25, 0.5, 0.75}) {
