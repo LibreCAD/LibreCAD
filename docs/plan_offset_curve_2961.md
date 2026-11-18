@@ -58392,3 +58392,25 @@ The focused kernel case passes 18 assertions. The full registered CMake
 `offset_worker_kernel` suite passes 1/1 in 284.60 seconds. The fix and tests
 are committed as `e1fe3b914`; the roadmap update is a separate follow-up
 commit. Independent CAD/ODA acceptance and cross-platform CI remain open.
+
+## 1835. Extend Kernel Coverage to the `.25` Bulge (2026-11-18)
+
+Extended the direct-kernel transform comparison to the `.25` second-bulge
+profile. Origin, rotation-only, translation-only, and combined
+rotation/translation all return valid geometry, use the interval fallback for
+the translated cases, and match the origin locus within `2.5e-4` (36
+assertions across `.15` and `.25`). The existing worker-client persistence
+matrix, still covering `.01`, `.1`, and `.15`, passes 26,914 assertions.
+
+An additional exploratory `.25` worker row with reflection followed by
+rotation and translation remains unresolved: the direct kernel reports
+`AmbiguousTopology` at cycle assembly, with an open boundary gap of
+`0.9444436989` from source span 3 to span 2. The exact primitive arrangement
+did not trigger interval fallback for this row. Reflection-only,
+reflection-plus-rotation, and reflection-plus-translation succeed, so the
+failure is specific to the combined frame. This row was not added to the
+worker pass matrix; investigate candidate noding/classification for the
+combined reflected frame before broadening `.25` persistence claims. The
+positive kernel test is committed as `bb5139423`; this roadmap entry is a
+separate documentation commit. ODA/manual CAD acceptance and CI are still
+external gates.
