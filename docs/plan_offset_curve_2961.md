@@ -58838,6 +58838,20 @@ assertions and `[region-boundary]` passes 2,886 assertions across six cases.
 The test slice is `3680ec90f`. A continuous error bound and independently
 derived retained-sector/topology oracle remain open.
 
+## 1857. Carry the Continuous Mixed-bulge Bound Through Frame Changes (2026-11-18)
+
+Extended the certified-locus check to every generated frame in the transform
+matrix: origin, rotation, translation to `(1e6, -2e6)`, rotation plus
+translation, reflection, and reflection plus rotation/translation. Each result
+uses a separately transformed source profile and its own `directOptions()`
+geometry budget, so the certification is not inferred from inverse-frame
+visual similarity alone.
+
+Validation: focused mixed-bulge matrix passes 224 assertions; all six
+`[region-boundary]` cases pass 2,886 assertions. Test slice is `0313be8f6`.
+Independent retained-side/topology validation and broader source/scale matrices
+remain open.
+
 ## 1856. Bound Every Mixed-bulge Cubic Against an Exact Candidate Span (2026-11-18)
 
 Replaced the five-point error sample with an adaptive continuous bound over each
