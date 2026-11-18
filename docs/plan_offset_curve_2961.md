@@ -23,7 +23,7 @@ USA.
 -->
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
-Updated: 2026-11-17. Project: **LibreCAD**, not LibreCAD_3.
+Updated: 2026-11-18. Project: **LibreCAD**, not LibreCAD_3.
 
 **Current source-picker disposition (2026-11-16):** While choosing a
 replacement in the Properties widget, the user can change the source-family
@@ -57958,3 +57958,30 @@ current code tree with the CMake Release test binary. All 45 cases passed
 (15,601 assertions), covering the automated nine-family filter/replacement
 contract. This remains offscreen test evidence and does not close the visible
 packaged-app acceptance gate in section 1806.
+
+## 1809. Classify Cross-platform Cusp-boundary Worker Refusal (2026-11-18)
+
+The PR DWG/DXF CI run exposed a worker-client failure for one interior pick on
+a reversed, high-origin 1000:1 elliptic arc at an offset equal to its minimum
+curvature radius. The Linux worker refused with `AmbiguousTopology` and emitted
+no output; the same modeled-source case completes on this macOS build. The
+worker-client regression now accepts either a complete produced result or
+that specific fail-closed refusal, and verifies that refusal is atomic (zero
+copies, no entities added/deleted). Other ambiguous-topology fixtures retain
+their exact expected statuses. No production geometry tolerance or behavior
+was changed.
+
+The focused CMake Release worker-client case passes 2,912,215 assertions / 1
+case; `git diff --check` passes. This preserves conservative behavior at the
+exact-curvature boundary but does not qualify arbitrary ellipse eccentricity,
+origin, or cusp neighborhoods. PR cross-platform verification remains
+pending.
+
+Separately, the staged 176-file Trim Two DWG batch was reconverted through the
+open ODA GUI to ACAD2018 ASCII DXF. The new output has one-to-one DWG basename
+coverage and passes ezdxf 1.4.4 audit with zero errors and repairs. A direct
+SSH-launched converter retry still aborts on Cocoa pasteboard/XPC services;
+the GUI-run conversion is the valid ODA evidence. ODA structural conversion
+does not establish geometric equivalence, visual correctness, or AutoCAD
+semantic acceptance. Those gates remain open with the visible Properties
+workflow in section 1806.

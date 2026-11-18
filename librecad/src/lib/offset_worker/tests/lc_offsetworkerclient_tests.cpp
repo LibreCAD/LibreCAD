@@ -2979,6 +2979,8 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
     std::vector<std::size_t> expectedSingularThinCuspFixtures;
     std::vector<std::size_t> expectedLimitExceededProduceFixtures;
     std::vector<std::size_t> expectedAmbiguousTopologyProduceFixtures;
+    // This exact-curvature interior offset may be conservatively refused on some platforms.
+    std::vector<std::size_t> platformDependentAmbiguousTopologyProduceFixtures;
     expectedLimitExceededProduceFixtures.push_back(rotatedWideAxisAtCuspEllipseFixture);
     std::vector<std::size_t> reversed100To1InteriorPickFixtures;
     std::vector<std::size_t> reversed100To1ExteriorPickFixtures;
@@ -3380,6 +3382,8 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         sources.emplace_back(LC_OffsetSourceGeometry{thinCuspEllipses[73]});
         thinEllipseCuspFixtures.emplace_back(fixture, cuspDistance);
         reversed1000To1InteriorPickFixtures.push_back(fixture);
+        if (cuspDistance == 1.0e-4)
+            platformDependentAmbiguousTopologyProduceFixtures.push_back(fixture);
     }
     for (const double cuspDistance : {0.9e-2, 1.0e-2, 1.1e-2}) {
         const std::size_t fixture = sources.size();
@@ -4578,6 +4582,23 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
                 CHECK(producedValue->source.status == LC_OffsetSourceStatus::OffsetFailed);
                 CHECK(producedValue->source.copiesMade == 0);
                 CHECK(producedValue->source.engineStatus == LC_CurveOffsetStatus::AmbiguousTopology);
+                CHECK(producedValue->outputs.empty());
+                REQUIRE(prepared.accept(produced));
+                REQUIRE(prepared.advance(batch));
+                REQUIRE(prepared.outcome().sources.size() == 1);
+                CHECK(prepared.outcome().sources.front().status == LC_OffsetSourceStatus::OffsetFailed);
+                CHECK_FALSE(prepared.outcome().sources.front().complete());
+                CHECK(batch.entitiesToAdd.empty());
+                CHECK(batch.entitiesToDelete.empty());
+                continue;
+            }
+            if (std::find(platformDependentAmbiguousTopologyProduceFixtures.begin(),
+                          platformDependentAmbiguousTopologyProduceFixtures.end(), i) !=
+                    platformDependentAmbiguousTopologyProduceFixtures.end() &&
+                producedValue->source.engineStatus == LC_CurveOffsetStatus::AmbiguousTopology) {
+                CHECK(producedValue->outputStatus == Reply::OrdinaryStatus::None);
+                CHECK(producedValue->source.status == LC_OffsetSourceStatus::OffsetFailed);
+                CHECK(producedValue->source.copiesMade == 0);
                 CHECK(producedValue->outputs.empty());
                 REQUIRE(prepared.accept(produced));
                 REQUIRE(prepared.advance(batch));
