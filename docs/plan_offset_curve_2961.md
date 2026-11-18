@@ -58293,3 +58293,14 @@ shell continues to report the missing optional
 `/private/tmp/libdxfrw-cargo/env`; compiler and macOS deployment-target warnings
 are non-fatal. This qualifies the local macOS qmake6 build, not cross-platform
 CI or visible-app behavior.
+
+## 1829. Keep Near-circular Ellipses on Cusp-aware Partitions (2026-11-18)
+
+Tightened the circular-arc partition predicate to the source's exact
+`ratio == 1.0` classification instead of an axis-length tolerance. This keeps
+near-circular but genuinely elliptic arcs on the existing vertex-aligned
+partition schedule, preserving cusp isolation at their distinct axes. The
+rotation regression and ellipse suite pass after the refinement: 37 assertions
+/ 2 mixed-bulge rotation cases and 1,314,475 assertions / 6 ellipse cases.
+Near-circular exact-cusp edge profiles remain covered by the broader ellipse
+suite only where already present; independent CAD acceptance remains open.

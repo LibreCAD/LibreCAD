@@ -486,7 +486,8 @@ public:
                 return nullptr;
             }
         }
-        return std::unique_ptr<OffsetSource>(new EllipseSource(d.center, major, minor, s, start, sweep, closed));
+        return std::unique_ptr<OffsetSource>(new EllipseSource(
+            d.center, major, minor, s, start, sweep, closed, d.ratio == 1.0));
     }
 
     bool closed() const override {
@@ -595,7 +596,7 @@ public:
 
 private:
     EllipseSource(const RS_Vector& centre, const RS_Vector& major, const RS_Vector& minor, const double s,
-                  const double start, const double sweep, const bool closed)
+                  const double start, const double sweep, const bool closed, const bool circular)
         : m_centre{centre.x, centre.y},
           m_major{major},
           m_minor{minor},
@@ -605,11 +606,7 @@ private:
         // the ends, and where eta crosses pi/4 + k pi/2 in between
         m_breaks.push_back(0.0);
         const double quarter = M_PI_2;
-        const double majorLength = std::hypot(major.x, major.y);
-        const double minorLength = std::hypot(minor.x, minor.y);
-        const bool circularArc = !closed &&
-            std::abs(majorLength - minorLength) <=
-                64.0 * g_eps * std::max(majorLength, minorLength);
+        const bool circularArc = !closed && circular;
         if (circularArc) {
             const std::size_t pieces = static_cast<std::size_t>(std::ceil(sweep / quarter));
             for (std::size_t i = 1; i < pieces; ++i) {
