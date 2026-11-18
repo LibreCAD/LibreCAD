@@ -58018,3 +58018,17 @@ and `1e9` from section 1810. Any future extension needs a local-frame design
 that preserves the original topology decision and independently verifies both
 signed geometries before replacing the refusal. The combined focused worker
 client case passes 1,566 assertions / 1 case on CMake Release.
+
+## 1812. Retry ODA with Its Desktop Process Running (2026-11-18)
+
+Retried the 176-file ACAD2018 ASCII DXF audit using the staged fixtures and
+`scripts/oda-validate.sh` while ODAFileConverter was reported running in the
+desktop session. The SSH-launched process still aborted with exit 134 after
+Cocoa pasteboard errors for the clipboard/find boards and an invalid
+`hiservices-xpcservice` connection; it produced no validated output. The
+desktop inventory confirmed the ODA process was running, but CUA could not
+attach to its window (`cgWindowNotFound`), so the source/output picker could
+not be operated or observed. This attempt is a failure, not new ODA evidence;
+the successful GUI conversion and independent audits remain those recorded in
+sections 1805 and 1807. A fresh ODA batch is still pending until its GUI is
+accessible or its CLI can run with working macOS pasteboard/XPC services.
