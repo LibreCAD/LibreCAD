@@ -81,8 +81,9 @@ void LC_SelectedSet::add(RS_Entity* entity) {
 
 void LC_SelectedSet::remove(RS_Entity* entity) {
     entity->setSelectionFlag(false);
-    m_entitiesList.removeOne(entity);
-    fireSelectionChanged();
+    if (m_entitiesList.removeOne(entity)) {
+        fireSelectionChanged();
+    }
 }
 
 void LC_SelectedSet::replaceBy(QList<RS_Entity*>& entities) {
