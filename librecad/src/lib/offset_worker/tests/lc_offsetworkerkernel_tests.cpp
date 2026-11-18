@@ -11610,7 +11610,10 @@ TEST_CASE("mixed-bulge region offset is rotation invariant",
         // Fragment orientation can reverse, so source offsets use both signed sides.
         // Arc sweeps are bounded; join sectors come from their exact piece provenance.
         std::vector<ExactPrimitive> primitives;
+        std::vector<RS_Vector> sourceVertices;
         for (const RS_Entity* entity : source) {
+            sourceVertices.push_back(normalizePoint(entity->getStartpoint()));
+            sourceVertices.push_back(normalizePoint(entity->getEndpoint()));
             if (const auto* line = dynamic_cast<const RS_Line*>(entity)) {
                 const RS_Vector start = normalizePoint(line->getStartpoint());
                 const RS_Vector end = normalizePoint(line->getEndpoint());
@@ -11755,18 +11758,21 @@ TEST_CASE("mixed-bulge region offset is rotation invariant",
         const auto certify = [&](auto&& self, const std::array<RS_Vector, 4>& bezier,
                                  const unsigned depth) -> double {
             const RS_Vector midpoint = bezierAt(bezier, 0.5);
-            const ExactPrimitive* nearestPrimitive = nullptr;
             double nearestDistance = std::numeric_limits<double>::infinity();
             for (const ExactPrimitive& primitive : primitives) {
                 const double distance = distanceToPrimitive(midpoint, primitive);
-                if (distance < nearestDistance) {
-                    nearestDistance = distance;
-                    nearestPrimitive = &primitive;
-                }
+                nearestDistance = std::min(nearestDistance, distance);
             }
-            if (nearestPrimitive == nullptr) return std::numeric_limits<double>::infinity();
-            const double bound = certifiedBound(bezier, *nearestPrimitive);
-            if (bound <= normalizedErrorLimit) return bound;
+            if (!std::isfinite(nearestDistance)) return std::numeric_limits<double>::infinity();
+            // Keep every candidate that could satisfy the midpoint error budget;
+            // nearest-only selection is unstable where source and join spans meet.
+            for (const ExactPrimitive& primitive : primitives) {
+                if (distanceToPrimitive(midpoint, primitive) > nearestDistance + normalizedErrorLimit) {
+                    continue;
+                }
+                const double bound = certifiedBound(bezier, primitive);
+                if (bound <= normalizedErrorLimit) return bound;
+            }
             if (depth >= 20) return std::numeric_limits<double>::infinity();
             const auto [left, right] = splitBezier(bezier);
             return std::max(self(self, left, depth + 1), self(self, right, depth + 1));
@@ -11775,18 +11781,27 @@ TEST_CASE("mixed-bulge region offset is rotation invariant",
         for (const auto& branch : geometry.branches) {
             for (const auto& piece : branch.cubicPieces) {
                 const auto& provenance = piece.provenance;
+                bool addedJoinArc = false;
                 if (provenance.arcCentre.valid) {
-                    const double sweep = provenance.sourceT1 - provenance.sourceT0;
-                    primitives.push_back({ExactPrimitive::Kind::Arc, {}, {},
-                        normalizePoint(provenance.arcCentre),
-                        std::abs(provenance.signedDistance) / normalizationScale, provenance.sourceT0,
-                        std::copysign(1.0, sweep), std::abs(sweep)});
+                    const RS_Vector centre = normalizePoint(provenance.arcCentre);
+                    // Source-arc parameters are not circle angles; only joins use
+                    // provenance sectors centered at a source vertex.
+                    addedJoinArc = std::any_of(sourceVertices.begin(), sourceVertices.end(),
+                        [&](const RS_Vector& vertex) {
+                            return centre.distanceTo(vertex) <= inputRoundoffSlack;
+                        });
+                    if (addedJoinArc) {
+                        const double sweep = provenance.sourceT1 - provenance.sourceT0;
+                        primitives.push_back({ExactPrimitive::Kind::Arc, {}, {}, centre,
+                            std::abs(provenance.signedDistance) / normalizationScale, provenance.sourceT0,
+                            std::copysign(1.0, sweep), std::abs(sweep)});
+                    }
                 }
                 std::array<RS_Vector, 4> normalizedBezier{};
                 std::transform(piece.bezier.begin(), piece.bezier.end(), normalizedBezier.begin(),
                                normalizePoint);
                 maximum = std::max(maximum, certify(certify, normalizedBezier, 0));
-                if (provenance.arcCentre.valid) primitives.pop_back();
+                if (addedJoinArc) primitives.pop_back();
             }
         }
         return maximum * normalizationScale;
