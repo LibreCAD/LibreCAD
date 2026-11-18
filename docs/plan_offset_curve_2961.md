@@ -58175,3 +58175,18 @@ assertions / 1 case. Any follow-up must rebuild for each geometry variant,
 isolate direct-kernel and worker outcomes, and determine whether a conservative
 refusal or a translation-sensitivity defect is present before adding the
 profile to the persistence matrix.
+
+## 1821. Rebuild and Run the Two-arc Reversal Probe (2026-11-18)
+
+Followed up section 1820 by rebuilding the worker-client test target with the
+second arc set to bulge `0.1`. This run is valid: the worker returned `Ok`,
+but the reverse-traversal frame at `(1e6,-2e6)` exceeded the cross-frame
+Hausdorff-style comparison bound for signed distance `-0.5` (maximum sampled
+pairing error `0.0294635418671946`, allowed `0.0138718705232318`). The case
+completed 9,152 assertions with three failures, including this geometry
+mismatch. This is evidence of a reversal/topology-dependent output difference
+for this specific two-arc profile; it does not yet distinguish an engine
+defect from a mistaken orientation-invariance expectation. The `0.01` variant
+was not rebuilt and remains untested. The source fixture was restored. Next,
+compare the original and reversed captured source loci and document the signed
+offset convention for closed polylines before changing the kernel or oracle.
