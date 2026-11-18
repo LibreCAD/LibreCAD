@@ -2853,6 +2853,7 @@ if (BUILD_TESTS)
         librecad/src/ui/main/tests/lc_docklayout_tests.cpp
         librecad/src/ui/components/pen/tests/qg_widgetpen_tests.cpp
         librecad/src/ui/components/comboboxes/tests/qg_linetypebox_tests.cpp
+        librecad/src/ui/components/comboboxes/tests/lc_colorbox_tests.cpp
         librecad/src/ui/dialogs/tests/lc_dialog_tests.cpp
         librecad/src/ui/dialogs/tests/lc_language_selection_tests.cpp
         librecad/src/ui/dialogs/tests/lc_translation_catalog_tests.cpp
@@ -3565,6 +3566,11 @@ if (BUILD_TESTS)
     target_include_directories(librecad_linetype_ui_tests PRIVATE
         "${CMAKE_CURRENT_BINARY_DIR}/librecad_lib_autogen/include")
     add_librecad_filter_micro_test(
+        librecad_colorbox_ui_tests
+        librecad/src/ui/components/comboboxes/tests/lc_colorbox_tests.cpp)
+    target_sources(librecad_colorbox_ui_tests PRIVATE ${LIBRECAD_RES})
+    set_target_properties(librecad_colorbox_ui_tests PROPERTIES AUTORCC ON)
+    add_librecad_filter_micro_test(
         librecad_dimension_clipboard_tests
         librecad/src/lib/engine/document/entities/tests/lc_dimension_clipboard_tests.cpp)
     target_sources(librecad_dimension_clipboard_tests PRIVATE
@@ -3895,6 +3901,10 @@ if (BUILD_TESTS)
         add_test(NAME librecad_linetype_ui_tests
             COMMAND $<TARGET_FILE:librecad_linetype_ui_tests> --reporter compact)
         set_tests_properties(librecad_linetype_ui_tests PROPERTIES
+            ENVIRONMENT "QT_QPA_PLATFORM=offscreen" TIMEOUT 120)
+        add_test(NAME librecad_colorbox_ui_tests
+            COMMAND $<TARGET_FILE:librecad_colorbox_ui_tests> --reporter compact)
+        set_tests_properties(librecad_colorbox_ui_tests PROPERTIES
             ENVIRONMENT "QT_QPA_PLATFORM=offscreen" TIMEOUT 120)
         add_test(NAME librecad_console_svg_tests
             COMMAND $<TARGET_FILE:librecad_lc_consolesvgexporttests>
