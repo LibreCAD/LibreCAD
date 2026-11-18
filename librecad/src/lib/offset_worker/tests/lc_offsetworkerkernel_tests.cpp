@@ -11511,11 +11511,11 @@ TEST_CASE("captured mixed-bulge polyline preserves its locus under rotation",
 TEST_CASE("mixed-bulge region offset is rotation invariant",
           "[lc-offsetcurve][worker-kernel][polyline][mixed-bulge][rotation]") {
     constexpr double angle = 0.37;
-    auto build = [=](bool rotateSource) {
+    auto build = [=](double secondArcBulge, bool rotateSource) {
         RS_Polyline polyline;
         polyline.addVertex({20, 10});
         polyline.addVertex({20, -10}, -0.5);
-        polyline.addVertex({-20, 10}, 0.1);
+        polyline.addVertex({-20, 10}, secondArcBulge);
         polyline.addVertex({-20, -10});
         polyline.setClosed(true);
         polyline.endPolyline();
@@ -11529,16 +11529,12 @@ TEST_CASE("mixed-bulge region offset is rotation invariant",
             polyline, LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Right, 0.5),
             *options, LC_CurveOffset::makeDirectSourceBudget());
     };
-    const auto original = build(false);
-    const auto rotated = build(true);
-    REQUIRE(original.status == LC_CurveOffsetStatus::Ok);
-    REQUIRE(rotated.status == LC_CurveOffsetStatus::Ok);
     auto samples = [=](const LC_CurveOffsetGeometryResult& geometry, bool inverseRotate) {
         std::vector<RS_Vector> points;
         for (const auto& branch : geometry.branches) {
             for (const auto& piece : branch.cubicPieces) {
-                for (unsigned i = 0; i <= 16; ++i) {
-                    const double t = static_cast<double>(i) / 16.0;
+                for (unsigned i = 0; i <= 64; ++i) {
+                    const double t = static_cast<double>(i) / 64.0;
                     const double u = 1.0 - t;
                     RS_Vector point = piece.bezier[0] * (u * u * u) +
                         piece.bezier[1] * (3.0 * u * u * t) +
@@ -11551,8 +11547,6 @@ TEST_CASE("mixed-bulge region offset is rotation invariant",
         }
         return points;
     };
-    const auto first = samples(original, false);
-    const auto second = samples(rotated, true);
     auto directedGap = [](const std::vector<RS_Vector>& from, const std::vector<RS_Vector>& to) {
         double maximum = 0.0;
         for (const RS_Vector& point : from) {
@@ -11563,9 +11557,18 @@ TEST_CASE("mixed-bulge region offset is rotation invariant",
         }
         return maximum;
     };
-    const double gap = std::max(directedGap(first, second), directedGap(second, first));
-    CAPTURE(gap);
-    CHECK(gap < 1e-3);
+    for (const double secondArcBulge : {0.01, 0.1}) {
+        CAPTURE(secondArcBulge);
+        const auto original = build(secondArcBulge, false);
+        const auto rotated = build(secondArcBulge, true);
+        REQUIRE(original.status == LC_CurveOffsetStatus::Ok);
+        REQUIRE(rotated.status == LC_CurveOffsetStatus::Ok);
+        const auto first = samples(original, false);
+        const auto second = samples(rotated, true);
+        const double gap = std::max(directedGap(first, second), directedGap(second, first));
+        CAPTURE(gap);
+        CHECK(gap < 2.5e-4);
+    }
 }
 
 TEST_CASE("polyline source validation rejects degenerate and inconsistent chains",

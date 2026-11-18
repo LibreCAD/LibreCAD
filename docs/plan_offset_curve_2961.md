@@ -58264,3 +58264,13 @@ lanes. This qualifies the previously failing two-arc geometry within that
 bounded matrix; other bulge combinations, rotations, and topology classes are
 not implied. ODA GUI conversion remains unavailable (`cgWindowNotFound`), and
 PR cross-platform checks remain pending.
+
+## 1826. Qualify a Smaller Second-arc Bulge at Kernel Level (2026-11-18)
+
+Extended the direct-kernel rotation-invariance regression to exercise both
+second-arc bulges, `0.01` and `0.1`, with 65 samples per cubic piece and a
+`2.5e-4` bidirectional sampled-set bound. Both profiles pass; the combined
+rotation/source-locus selection passes 37 assertions / 2 cases. The `.01`
+profile is not yet in the persistence matrix, so only kernel-level rotation
+invariance is qualified for that value. Other close-to-zero bulges and
+independent CAD review remain open.
