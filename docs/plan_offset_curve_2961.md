@@ -58837,3 +58837,24 @@ Validation is unchanged numerically: the focused mixed-bulge case passes 164
 assertions and `[region-boundary]` passes 2,886 assertions across six cases.
 The test slice is `3680ec90f`. A continuous error bound and independently
 derived retained-sector/topology oracle remain open.
+
+## 1856. Bound Every Mixed-bulge Cubic Against an Exact Candidate Span (2026-11-18)
+
+Replaced the five-point error sample with an adaptive continuous bound over each
+output cubic. De Casteljau subdivision is fail-closed at depth 20. For every
+subcurve, its control hull must lie within one exact finite line-offset segment
+or one angularly bounded circular offset/join sector; the control-hull
+projection or axis-aligned radial interval then bounds the maximum positional
+error. Source line/arc candidates consider both signed sides to account for
+fragment reversal; join arcs use their explicit provenance sectors. The check
+uses the computed `requestedGeometry/8` budget.
+
+Validation: the focused mixed-bulge test passes 164 assertions and the full
+`[region-boundary]` selector passes 2,886 assertions across six cases. The
+roadmap parser and whitespace check pass. Test slice is `fa4f43650`.
+
+This certifies geometric proximity of the tested cubics to the union of exact
+candidate spans, not that the correct side/cycle was retained. Join sectors are
+still taken from output provenance; independent expected topology, broader
+source variants/transforms, and a production-level certified error contract
+remain open.
