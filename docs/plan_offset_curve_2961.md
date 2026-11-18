@@ -58332,3 +58332,23 @@ does not change the prior successful 176-file audit in section 1805 and does
 not establish a new result. Retry when the desktop automation bridge can
 attach to the already-running GUI or when ODA can be launched from an
 interactive GUI terminal; do not report this attempt as an ODA pass.
+
+## 1832. Classify Larger Mixed-bulge Transform Refusal (2026-11-18)
+
+An exploratory direct-kernel matrix varied the second circular bulge from the
+passing `0.1` profile to `0.15` and `0.25`, comparing origin, rotation-only,
+translation-only, and combined rotation plus `(1e6,-2e6)`. Both larger bulges
+offset successfully at the origin and under each single transform, but return
+`AmbiguousTopology` under the combined transform. Diagnostics identify
+`RegionBoundary` cycle assembly with an open boundary: the `.15` endpoint gap
+is `0.763252`, and the `.25` gap is `0.697744`; each case reports one source
+intersection and no offset intersections. The `.25` worker persistence
+experiment likewise refuses at the first combined rotated/high-origin frame.
+These are not close-node snap gaps and were not added as passing coverage.
+The exploratory test changes were removed; the committed `.01/.1` matrix
+remains green. This is a transform-conditioned topology stability issue to
+investigate before claiming these larger bulges, not evidence that the refusal
+is geometrically correct. Next compare the pre-arrangement region fragment
+classification and generated candidate endpoints in normalized coordinates
+for the combined frame, then add a positive invariance regression with an
+independent offset-locus oracle before retaining any kernel change.
