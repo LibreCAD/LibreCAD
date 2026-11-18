@@ -11982,16 +11982,26 @@ TEST_CASE("mixed-bulge region offset is rotation invariant",
 TEST_CASE("mixed-bulge region cycles match independent dilation and erosion membership",
           "[lc-offsetcurve][worker-kernel][polyline][mixed-bulge][region-boundary][topology]") {
     const double scale = GENERATE(1.0, 10.0, 1e3);
+    const unsigned frame = GENERATE(0u, 1u, 2u, 3u);
     const bool erosion = GENERATE(false, true);
     for (const double secondArcBulge : {0.15, 0.35}) {
         for (const double baseDistance : {0.25, 0.5}) {
             const double distance = baseDistance * scale;
-            CAPTURE(scale, secondArcBulge, distance, erosion);
+            CAPTURE(scale, frame, secondArcBulge, distance, erosion);
+            const bool reflected = frame == 3u;
+            const auto transform = [&](RS_Vector point) {
+                point.scale(scale);
+                if (reflected) point.y = -point.y;
+                if (frame != 0u) point.rotate(0.37);
+                if (frame >= 2u) point += RS_Vector{10000.0 * scale, -20000.0 * scale};
+                return point;
+            };
+            const double orientation = reflected ? -1.0 : 1.0;
             auto source = std::make_unique<RS_Polyline>();
-            source->addVertex({20 * scale, 10 * scale});
-            source->addVertex({20 * scale, -10 * scale}, -0.5);
-            source->addVertex({-20 * scale, 10 * scale}, secondArcBulge);
-            source->addVertex({-20 * scale, -10 * scale});
+            source->addVertex(transform({20, 10}));
+            source->addVertex(transform({20, -10}), -0.5 * orientation);
+            source->addVertex(transform({-20, 10}), secondArcBulge * orientation);
+            source->addVertex(transform({-20, -10}));
             source->setClosed(true);
             source->endPolyline();
 
