@@ -11525,17 +11525,18 @@ TEST_CASE("mixed-bulge region offset is rotation invariant",
         if (translateSource) polyline->move({1e6, -2e6});
         return polyline;
     };
-    auto build = [=](double secondArcBulge, bool rotateSource, bool translateSource, bool reflectSource = false) {
+    auto build = [=](double secondArcBulge, double distance, bool rotateSource,
+                     bool translateSource, bool reflectSource = false) {
         const auto sourceProfile = makeSourceProfile(secondArcBulge, rotateSource,
                                                      translateSource, reflectSource);
         RS_Polyline& polyline = *sourceProfile;
         const auto source = LC_OffsetSourceGeometry::captureForGeneration(polyline);
         REQUIRE(source);
-        const LC_OffsetSourceDefinition definition{*source, -0.5, 1e-4, false};
+        const LC_OffsetSourceDefinition definition{*source, -distance, 1e-4, false};
         const auto options = LC_OffsetWorkerTolerance::directOptions(definition, polyline);
         REQUIRE(options);
         const auto geometry = LC_CurveOffset::buildDirectBranches(
-            polyline, LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Right, 0.5),
+            polyline, LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Right, distance),
             *options, LC_CurveOffset::makeDirectSourceBudget());
         if (geometry.status == LC_CurveOffsetStatus::Ok) {
             REQUIRE(std::isfinite(geometry.maxObservedError));
@@ -11543,10 +11544,10 @@ TEST_CASE("mixed-bulge region offset is rotation invariant",
         }
         return geometry;
     };
-    const auto requestedGeometryTolerance = [](const RS_Polyline& source) {
+    const auto requestedGeometryTolerance = [](const RS_Polyline& source, const double distance) {
         const auto sourceGeometry = LC_OffsetSourceGeometry::captureForGeneration(source);
         REQUIRE(sourceGeometry);
-        const LC_OffsetSourceDefinition definition{*sourceGeometry, -0.5, 1e-4, false};
+        const LC_OffsetSourceDefinition definition{*sourceGeometry, -distance, 1e-4, false};
         const auto options = LC_OffsetWorkerTolerance::directOptions(definition, source);
         REQUIRE(options);
         return options->tolerance.requestedGeometry;
@@ -11802,64 +11803,84 @@ TEST_CASE("mixed-bulge region offset is rotation invariant",
         }
         return maximum;
     };
-    for (const double secondArcBulge : {0.15, 0.25, 0.35, 0.5}) {
-        CAPTURE(secondArcBulge);
-        const auto original = build(secondArcBulge, false, false);
-        const auto rotated = build(secondArcBulge, true, false);
-        const auto translated = build(secondArcBulge, false, true);
-        const auto rotatedTranslated = build(secondArcBulge, true, true);
-        const auto reflected = build(secondArcBulge, false, false, true);
-        const auto reflectedRotatedTranslated = build(secondArcBulge, true, true, true);
-        const auto rotatedSource = makeSourceProfile(secondArcBulge, true, false);
-        const auto translatedSource = makeSourceProfile(secondArcBulge, false, true);
-        const auto rotatedTranslatedSource = makeSourceProfile(secondArcBulge, true, true);
-        const auto reflectedSource = makeSourceProfile(secondArcBulge, false, false, true);
-        const auto reflectedRotatedTranslatedSource = makeSourceProfile(secondArcBulge, true, true, true);
+    for (const double distance : {0.25, 0.5}) {
+      for (const double secondArcBulge : {0.15, 0.25, 0.35, 0.5}) {
+        CAPTURE(distance, secondArcBulge);
+        const auto original = build(secondArcBulge, distance, false, false);
+        const auto rotated = build(secondArcBulge, distance, true, false);
+        const auto translated = build(secondArcBulge, distance, false, true);
+        const auto rotatedTranslated =
+            build(secondArcBulge, distance, true, true);
+        const auto reflected =
+            build(secondArcBulge, distance, false, false, true);
+        const auto reflectedRotatedTranslated =
+            build(secondArcBulge, distance, true, true, true);
+        const auto rotatedSource =
+            makeSourceProfile(secondArcBulge, true, false);
+        const auto translatedSource =
+            makeSourceProfile(secondArcBulge, false, true);
+        const auto rotatedTranslatedSource =
+            makeSourceProfile(secondArcBulge, true, true);
+        const auto reflectedSource =
+            makeSourceProfile(secondArcBulge, false, false, true);
+        const auto reflectedRotatedTranslatedSource =
+            makeSourceProfile(secondArcBulge, true, true, true);
         REQUIRE(original.status == LC_CurveOffsetStatus::Ok);
         REQUIRE(rotated.status == LC_CurveOffsetStatus::Ok);
         REQUIRE(translated.status == LC_CurveOffsetStatus::Ok);
         REQUIRE(rotatedTranslated.status == LC_CurveOffsetStatus::Ok);
         REQUIRE(reflected.status == LC_CurveOffsetStatus::Ok);
         REQUIRE(reflectedRotatedTranslated.status == LC_CurveOffsetStatus::Ok);
-        const auto checkCertifiedLocus = [&](const LC_CurveOffsetGeometryResult& geometry,
-                                             const RS_Polyline& profile) {
-            const double requestedGeometry = requestedGeometryTolerance(profile);
-            const double locusErrorBound = certifiedLocusErrorBound(
-                geometry, profile, requestedGeometry / 8.0);
-            CAPTURE(locusErrorBound);
-            CAPTURE(requestedGeometry);
-            CHECK(locusErrorBound <= requestedGeometry / 8.0);
-        };
+        const auto checkCertifiedLocus =
+            [&](const LC_CurveOffsetGeometryResult &geometry,
+                const RS_Polyline &profile) {
+              const double requestedGeometry =
+                  requestedGeometryTolerance(profile, distance);
+              const double locusErrorBound = certifiedLocusErrorBound(
+                  geometry, profile, requestedGeometry / 8.0);
+              CAPTURE(locusErrorBound);
+              CAPTURE(requestedGeometry);
+              CHECK(locusErrorBound <= requestedGeometry / 8.0);
+            };
         const auto sourceProfile = makeSourceProfile(secondArcBulge);
         checkCertifiedLocus(original, *sourceProfile);
         checkCertifiedLocus(rotated, *rotatedSource);
         checkCertifiedLocus(translated, *translatedSource);
         checkCertifiedLocus(rotatedTranslated, *rotatedTranslatedSource);
         checkCertifiedLocus(reflected, *reflectedSource);
-        checkCertifiedLocus(reflectedRotatedTranslated, *reflectedRotatedTranslatedSource);
-        CHECK_FALSE(original.intersectionDiagnostics.regionArrangementWork.intervalFallback);
-        CHECK(translated.intersectionDiagnostics.regionArrangementWork.exactPrimitiveNoding);
-        CHECK(rotatedTranslated.intersectionDiagnostics.regionArrangementWork.exactPrimitiveNoding);
-        CHECK(reflectedRotatedTranslated.intersectionDiagnostics.regionArrangementWork.exactPrimitiveNoding);
+        checkCertifiedLocus(reflectedRotatedTranslated,
+                            *reflectedRotatedTranslatedSource);
+        CHECK_FALSE(original.intersectionDiagnostics.regionArrangementWork
+                        .intervalFallback);
+        CHECK(translated.intersectionDiagnostics.regionArrangementWork
+                  .exactPrimitiveNoding);
+        CHECK(rotatedTranslated.intersectionDiagnostics.regionArrangementWork
+                  .exactPrimitiveNoding);
+        CHECK(reflectedRotatedTranslated.intersectionDiagnostics
+                  .regionArrangementWork.exactPrimitiveNoding);
         const auto reference = samples(original, false, false);
-        for (const auto& [geometry, inverseRotate, inverseTranslate] : {
-                 std::tuple{rotated, true, false},
-                 std::tuple{translated, false, true},
-                 std::tuple{rotatedTranslated, true, true}}) {
-            const auto transformed = samples(geometry, inverseRotate, inverseTranslate);
-            const double gap = std::max(directedGap(reference, transformed),
-                                        directedGap(transformed, reference));
-            CAPTURE(inverseRotate);
-            CAPTURE(inverseTranslate);
-            CAPTURE(gap);
-            CHECK(gap < 2.5e-4);
+        for (const auto &[geometry, inverseRotate, inverseTranslate] :
+             {std::tuple{rotated, true, false},
+              std::tuple{translated, false, true},
+              std::tuple{rotatedTranslated, true, true}}) {
+          const auto transformed =
+              samples(geometry, inverseRotate, inverseTranslate);
+          const double gap = std::max(directedGap(reference, transformed),
+                                      directedGap(transformed, reference));
+          CAPTURE(inverseRotate);
+          CAPTURE(inverseTranslate);
+          CAPTURE(gap);
+          CHECK(gap < 2.5e-4);
         }
         const auto reflectedReference = samples(reflected, false, false);
-        const auto reflectedTransformed = samples(reflectedRotatedTranslated, true, true);
-        const double reflectedGap = std::max(directedGap(reflectedReference, reflectedTransformed),
-                                             directedGap(reflectedTransformed, reflectedReference));
+        const auto reflectedTransformed =
+            samples(reflectedRotatedTranslated, true, true);
+        const double reflectedGap =
+            std::max(directedGap(reflectedReference, reflectedTransformed),
+                     directedGap(reflectedTransformed, reflectedReference));
         CAPTURE(reflectedGap);
         CHECK(reflectedGap < 2.5e-4);
+      }
     }
 }
 
