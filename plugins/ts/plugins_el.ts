@@ -707,7 +707,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../divide/divide.cpp" line="455"/>
         <source>Layer</source>
-        <translation>Επίπεδο</translation>
+        <translation>Στρώση</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="457"/>
@@ -849,7 +849,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../divide/dividedlg.cpp" line="68"/>
         <source>Layers</source>
-        <translation>Επίπεδα</translation>
+        <translation>Στρώσεις</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="74"/>
@@ -1005,7 +1005,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../gear/gear.cpp" line="123"/>
         <source>Use layers?</source>
-        <translation>Χρήση επιπέδων;</translation>
+        <translation>Χρήση στρώσεων;</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="124"/>

@@ -142,7 +142,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="58"/>
         <source>Empty Entity</source>
-        <translation>Slet objekt</translation>
+        <translation>Tomt objekt</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="65"/>
@@ -189,7 +189,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
         <location filename="../list/list.cpp" line="178"/>
         <location filename="../list/list.cpp" line="220"/>
         <source>in point</source>
-        <translation>aktuelle objekt</translation>
+        <translation>i punkt</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="92"/>
@@ -344,7 +344,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="212"/>
         <source>POLYLINE</source>
-        <translation>KNÆKLINJE</translation>
+        <translation>POLYLINJE</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="213"/>
@@ -369,12 +369,12 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="229"/>
         <source>IMAGE</source>
-        <translation>BILLED</translation>
+        <translation>BILLEDE</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="232"/>
         <source>SPLINE</source>
-        <translation>KURVE</translation>
+        <translation>SPLINE</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="235"/>
@@ -384,7 +384,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="238"/>
         <source>HATCH</source>
-        <translation>SKRAVER</translation>
+        <translation>SKRAVERING</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="241"/>
@@ -758,13 +758,13 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../divide/divide.cpp" line="494"/>
         <source>ARC</source>
-        <translation>BUUE</translation>
+        <translation>BUE</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="495"/>
         <location filename="../divide/divide.cpp" line="514"/>
         <source>center point</source>
-        <translation>midterpunkt</translation>
+        <translation>centrum</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="501"/>

@@ -225,7 +225,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="116"/>
         <source>ARC</source>
-        <translation>ARK</translation>
+        <translation>HARK</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="117"/>
@@ -758,13 +758,13 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../divide/divide.cpp" line="494"/>
         <source>ARC</source>
-        <translation>ARC</translation>
+        <translation>HARK</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="495"/>
         <location filename="../divide/divide.cpp" line="514"/>
         <source>center point</source>
-        <translation>qendra</translation>
+        <translation>pika qendrore</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="501"/>
@@ -1266,7 +1266,7 @@ Përdorni t ose x në ekuacionin tuaj si një variabël/parametër.</translation
         <location filename="../plotequation/plotdialog.cpp" line="60"/>
         <source>Polyline</source>
         <comment>Plot Equation to generate RS_Polyline</comment>
-        <translation>Vijë shumëkëndëshe</translation>
+        <translation>Polilinjë</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="61"/>

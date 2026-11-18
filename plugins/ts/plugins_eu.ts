@@ -232,7 +232,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
         <location filename="../list/list.cpp" line="133"/>
         <location filename="../list/list.cpp" line="143"/>
         <source>center point</source>
-        <translation>erdiguneko puntua</translation>
+        <translation>zentro-puntua</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="123"/>
@@ -309,7 +309,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="184"/>
         <source>INSERT</source>
-        <translation>SARTU</translation>
+        <translation>TXERTAKETA</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="187"/>
@@ -384,7 +384,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="238"/>
         <source>HATCH</source>
-        <translation>ITZALEZTADURA</translation>
+        <translation>MARRADURA</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="241"/>
@@ -662,7 +662,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
         <location filename="../divide/divide.cpp" line="34"/>
         <location filename="../divide/divide.cpp" line="41"/>
         <source>Divide</source>
-        <translation>Banatu</translation>
+        <translation>Zatitu</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="42"/>
@@ -801,7 +801,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../divide/divide.cpp" line="525"/>
         <source>POLYLINE</source>
-        <translation>POLILINIA</translation>
+        <translation>POLILINEA</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="526"/>

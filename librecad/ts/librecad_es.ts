@@ -249,7 +249,7 @@ Este bloque no se puede insertar.</translation>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="322"/>
         <source>Enter dimension line angle:</source>
-        <translation>Ingrese el ángulo de la línea de cota:</translation>
+        <translation>Introduzca el ángulo de la línea de cota:</translation>
     </message>
 </context>
 <context>
@@ -525,7 +525,7 @@ Este bloque no se puede insertar.</translation>
     <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_bounding_box.cpp" line="98"/>
         <source>Note: Bounding box was created for world coordinate system.</source>
-        <translation>Nota: Se creó una caja para el sistema de coordenadas mundial.</translation>
+        <translation>Nota: El cuadro delimitador se creó en el sistema de coordenadas universal.</translation>
     </message>
 </context>
 <context>
@@ -561,7 +561,7 @@ Este bloque no se puede insertar.</translation>
     <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_center_mark.cpp" line="397"/>
         <source>Select circle, arc or ellipse</source>
-        <translation>Seleccionar circunferencia, arco o elipse</translation>
+        <translation>Seleccionar círculo, arco o elipse</translation>
     </message>
 </context>
 <context>
@@ -2285,7 +2285,7 @@ o [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="338"/>
         <source>Zoom &amp;Panning</source>
-        <translation>Zoom &amp;Panorámica</translation>
+        <translation>&amp;Encuadre</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="246"/>
@@ -2461,12 +2461,12 @@ o [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="227"/>
         <source>Slice/Divide Line</source>
-        <translation>Dividir línea</translation>
+        <translation>Seccionar/dividir línea</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="228"/>
         <source>Slice/Divide Circle</source>
-        <translation>Cortar/dividir círculo</translation>
+        <translation>Seccionar/dividir círculo</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="236"/>
@@ -2747,7 +2747,7 @@ o [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="394"/>
         <source>&amp;Bevel</source>
-        <translation>&amp;Bisela</translation>
+        <translation>&amp;Chaflán</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="395"/>
@@ -2988,7 +2988,7 @@ o [%2]</translation>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="78"/>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="430"/>
         <source>Snap</source>
-        <translation>Snap</translation>
+        <translation>Forzado</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="57"/>
@@ -3154,7 +3154,7 @@ o [%2]</translation>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="73"/>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="73"/>
         <source>Relative Zero</source>
-        <translation>Relativo Cero</translation>
+        <translation>Cero relativo</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="74"/>
@@ -3199,12 +3199,12 @@ o [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="78"/>
         <source>Snapping operations</source>
-        <translation>Operaciones de ajuste</translation>
+        <translation>Operaciones de forzado</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="79"/>
         <source>Snap Extras</source>
-        <translation>Extras Snap</translation>
+        <translation>Extras de forzado</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="79"/>
@@ -3440,17 +3440,17 @@ o [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="456"/>
         <source>Snap on Entity</source>
-        <translation>Ajustar a la entidad</translation>
+        <translation>Forzar a la entidad</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="457"/>
         <source>Snap Center</source>
-        <translation>Ajustar al centro</translation>
+        <translation>Forzar al centro</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="458"/>
         <source>Snap Middle</source>
-        <translation>Ajustar al punto medio</translation>
+        <translation>Forzar al punto medio</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="459"/>
@@ -3460,7 +3460,7 @@ o [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="460"/>
         <source>Snap Intersection</source>
-        <translation>Intersección</translation>
+        <translation>Forzar a la intersección</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="466"/>
@@ -3570,7 +3570,7 @@ o [%2]</translation>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="565"/>
         <source>Exclusive Snap Mode</source>
-        <translation>Modo de ajuste exclusivo</translation>
+        <translation>Modo de forzado exclusivo</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="566"/>
@@ -4371,7 +4371,7 @@ Punto: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/info/lc_action_info_dist_point_to_entity.cpp" line="301"/>
         <source>Do not snap to child entities in container</source>
-        <translation>No ajuste a las entidades secundarias del contenedor</translation>
+        <translation>No forzar a las entidades secundarias del contenedor</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_action_info_dist_point_to_entity.cpp" line="305"/>
@@ -4473,7 +4473,7 @@ Punto: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfopoint.cpp" line="75"/>
         <source>Relative Zero:</source>
-        <translation>Relativo Cero:</translation>
+        <translation>Cero relativo:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfopoint.cpp" line="123"/>
@@ -4744,7 +4744,7 @@ Punto: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickposition.cpp" line="80"/>
         <source>Relative Zero:</source>
-        <translation>Relativo Cero:</translation>
+        <translation>Cero relativo:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickposition.cpp" line="152"/>
@@ -4800,7 +4800,7 @@ Punto: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="53"/>
         <source>Align action at the moment supports only World Coordinates system, and may not be invoked if User Coordinate System is active.</source>
-        <translation>La acción de alineación solo admite el sistema de coordenadas mundial y no se puede invocar si el sistema de coordenadas de usuario está activo.</translation>
+        <translation>La acción de alineación solo admite el sistema de coordenadas universal y no se puede invocar si el sistema de coordenadas de usuario está activo.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="147"/>
@@ -4936,7 +4936,7 @@ Punto: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_single.cpp" line="54"/>
         <source>Align action at the moment supports only World Coordinates system, and may not be invoked if User Coordinate System is active.</source>
-        <translation>La acción de alineación solo admite el sistema de coordenadas mundial y no se puede invocar si el sistema de coordenadas de usuario está activo.</translation>
+        <translation>La acción de alineación solo admite el sistema de coordenadas universal y no se puede invocar si el sistema de coordenadas de usuario está activo.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_single.cpp" line="115"/>
@@ -5107,7 +5107,7 @@ Punto: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="248"/>
         <source>Break/Divide Line</source>
-        <translation>Dividir línea</translation>
+        <translation>Partir/dividir línea</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="249"/>
@@ -5143,7 +5143,7 @@ Punto: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="468"/>
         <source>Break/Divide Arc</source>
-        <translation>Dividir/Romper arco</translation>
+        <translation>Partir/dividir arco</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="520"/>
@@ -5161,7 +5161,7 @@ Punto: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_cut.cpp" line="105"/>
         <source>Divide</source>
-        <translation>Dividido</translation>
+        <translation>Dividir</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_cut.cpp" line="106"/>
@@ -5842,7 +5842,7 @@ Punto: (%8, %9)</translation>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate.cpp" line="708"/>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate.cpp" line="711"/>
         <source>Snap to center of selection</source>
-        <translation>Ajustar al centro de la selección</translation>
+        <translation>Forzar al centro de la selección</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate.cpp" line="711"/>
@@ -5865,7 +5865,7 @@ Punto: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate_twice.cpp" line="145"/>
         <source>Rotating Twice</source>
-        <translation>Rotar dos veces</translation>
+        <translation>Girar dos veces</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate_twice.cpp" line="146"/>
@@ -5997,7 +5997,7 @@ Punto: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_scale.cpp" line="413"/>
         <source>Snap to center of selection</source>
-        <translation>Ajustar al centro de la selección</translation>
+        <translation>Forzar al centro de la selección</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_scale.cpp" line="417"/>
@@ -6012,7 +6012,7 @@ Punto: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_scale.cpp" line="420"/>
         <source>Free snap</source>
-        <translation>Referencia libre</translation>
+        <translation>Forzado libre</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_scale.cpp" line="429"/>
@@ -6157,12 +6157,12 @@ Punto: (%8, %9)</translation>
     <message>
         <location filename="../src/ui/action_options/lc_action_options_properties_filler_base.cpp" line="294"/>
         <source>Snap Distance</source>
-        <translation>Distancia de referencia</translation>
+        <translation>Distancia de forzado</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/lc_action_options_properties_filler_base.cpp" line="294"/>
         <source>Distance of snap point from initially resolved snap point</source>
-        <translation>Distancia del punto de referencia con respecto al punto de referencia inicial calculado</translation>
+        <translation>Distancia del punto de forzado respecto al punto de forzado calculado inicialmente</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/lc_action_options_properties_filler_base.cpp" line="308"/>
@@ -7058,7 +7058,7 @@ Ocurrió un error durante la generación del XML.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.cpp" line="352"/>
         <source>Resolve conflicts before saving.</source>
-        <translation>Resolver conflictos antes de salvar.</translation>
+        <translation>Resuelva los conflictos antes de guardar.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.cpp" line="356"/>
@@ -7774,17 +7774,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="392"/>
         <source>Bulge:</source>
-        <translation>Abultamiento:</translation>
+        <translation>Curvatura:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="414"/>
         <source>Bulge (sagitta) of the arc</source>
-        <translation>Abultamiento (sagita) del arco</translation>
+        <translation>Curvatura (sagita) del arco</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="421"/>
         <source>Pick bulge value from the drawing</source>
-        <translation>Elija el valor del abultamiento en el dibujo</translation>
+        <translation>Elija el valor de la curvatura en el dibujo</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="447"/>
@@ -8729,7 +8729,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_device/lc_deviceoptions.ui" line="56"/>
         <source>Save</source>
-        <translation>Salvar</translation>
+        <translation>Guardar</translation>
     </message>
 </context>
 <context>
@@ -8893,7 +8893,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/support/lc_dimstylepreviewpanel.ui" line="90"/>
         <source>Zoom Pan</source>
-        <translation>Zoom y desplazamiento</translation>
+        <translation>Zoom y encuadre</translation>
     </message>
 </context>
 <context>
@@ -9110,7 +9110,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="88"/>
         <source>Linewidth:</source>
-        <translation>Ancho de línea:</translation>
+        <translation>Grosor de línea:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="137"/>
@@ -9809,7 +9809,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1270"/>
         <source>Moves either the text or the arrowheads outside the extension lines based on the best fit (DIMATFIT system variable).</source>
-        <translation>Mueva el texto o los cabezales de flecha fuera de las líneas de extensión basadas en el mejor ajuste (DIMATFIT sistema variable).</translation>
+        <translation>Mueve el texto o las puntas de flecha fuera de las líneas de extensión según el mejor ajuste (variable de sistema DIMATFIT).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1273"/>
@@ -9819,7 +9819,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1280"/>
         <source>Moves arrowheads outside the extension lines first, then text (DIMATFIT system variable).</source>
-        <translation>Mueva los cabezales de flecha fuera de las líneas de extensión primero, luego texto (DIMATFIT sistema variable).</translation>
+        <translation>Mueve primero las puntas de flecha fuera de las líneas de extensión y luego el texto (variable de sistema DIMATFIT).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1283"/>
@@ -9829,7 +9829,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1290"/>
         <source>Moves text outside the extension lines first, then arrowheads (DIMATFIT system variable).</source>
-        <translation>Se mueve el texto fuera de las líneas de extensión primero, luego los cabezales de flecha (DIMATFIT sistema variable).</translation>
+        <translation>Mueve primero el texto fuera de las líneas de extensión y luego las puntas de flecha (variable de sistema DIMATFIT).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1300"/>
@@ -10607,7 +10607,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="417"/>
         <source>Style with such name already exists, please enter another unique one.</source>
-        <translation>Estilo con tal nombre ya existe, por favor ingrese otro único.</translation>
+        <translation>Ya existe un estilo con ese nombre; introduzca otro nombre único.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="465"/>
@@ -11239,7 +11239,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="237"/>
         <source>NOTE: Menu assignment will be ignored. It is reserved for &apos;Pan&apos;.</source>
-        <translation>NOTA: La asignación de menú será ignorada. Está reservado para &apos;Pan&apos;.</translation>
+        <translation>NOTA: La asignación de menú se ignorará. Está reservada para &apos;Encuadre&apos;.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="242"/>
@@ -11332,7 +11332,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="85"/>
         <source>If checked, type of grid for saved view will be shown.</source>
-        <translation>Si está marcado, se mostrará el tipo de cuadrícula para la vista guardada.</translation>
+        <translation>Si está marcado, se mostrará el tipo de rejilla de la vista guardada.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="55"/>
@@ -11531,7 +11531,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.cpp" line="146"/>
         <source>Provided name of dimension style (%1) is not unique! Please enter another one.</source>
-        <translation>¡El nombre de estilo de cota indicado (%1) no es único! Por favor, ingrese otro.</translation>
+        <translation>¡El nombre de estilo de cota indicado (%1) no es único! Introduzca otro.</translation>
     </message>
 </context>
 <context>
@@ -11712,7 +11712,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_new_widget.cpp" line="70"/>
         <source>Name is not unique. Please enter unique name.</source>
-        <translation>El nombre no es único. Por favor ingrese el nombre único.</translation>
+        <translation>El nombre no es único. Introduzca un nombre único.</translation>
     </message>
 </context>
 <context>
@@ -12246,7 +12246,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="56"/>
         <source>If checked, the column with type of grid for UCS will be shown.</source>
-        <translation>Si está activada, se mostrará la columna con el tipo de cuadrícula para UCS.</translation>
+        <translation>Si está activada, se mostrará la columna con el tipo de rejilla del UCS.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="98"/>
@@ -12281,12 +12281,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="140"/>
         <source>Pan, UCS Origin in Center</source>
-        <translation>Desplazar, origen del UCS en el centro</translation>
+        <translation>Encuadre, origen del UCS en el centro</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="145"/>
         <source>Pan, UCS Origin in Left-Bottom</source>
-        <translation>Desplazar, origen del UCS en la esquina inferior izquierda</translation>
+        <translation>Encuadre, origen del UCS en la esquina inferior izquierda</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="153"/>
@@ -12296,7 +12296,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="156"/>
         <source>Restore UCS on single click of table item</source>
-        <translation>Restaurar SCU con un solo clic en el elemento de la tabla</translation>
+        <translation>Restaurar el UCS con un solo clic en el elemento de la tabla</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="163"/>
@@ -13444,7 +13444,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="90"/>
         <source>MText</source>
-        <translation>MText</translation>
+        <translation>TextoM</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="91"/>
@@ -13748,7 +13748,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="245"/>
         <source>Line Width</source>
-        <translation>Ancho de línea</translation>
+        <translation>Grosor de línea</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="245"/>
@@ -14365,7 +14365,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/info/lc_info_dist_point_to_entity_options_filler.cpp" line="33"/>
         <source>Snap On Entity</source>
-        <translation>Ajustar a la entidad</translation>
+        <translation>Forzar a la entidad</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/info/lc_info_dist_point_to_entity_options_filler.cpp" line="33"/>
@@ -14388,7 +14388,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/info/lc_info_dist_point_to_entity_options_widget.ui" line="35"/>
         <source>Snap On Entity</source>
-        <translation>Ajustar a la entidad</translation>
+        <translation>Forzar a la entidad</translation>
     </message>
 </context>
 <context>
@@ -15399,7 +15399,7 @@ Esto puede recuperar dibujos guardados por LibreCAD 2.2.1, pero también mostrar
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_filler.cpp" line="86"/>
         <source>Snap point for position of intersection point between created line and source entity (within original line)</source>
-        <translation>Punto de referencia de la intersección entre la línea creada y la entidad de origen (sobre la línea original)</translation>
+        <translation>Punto de forzado de la intersección entre la línea creada y la entidad de origen (sobre la línea original)</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_filler.cpp" line="98"/>
@@ -15427,7 +15427,7 @@ Esto puede recuperar dibujos guardados por LibreCAD 2.2.1, pero también mostrar
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_widget.ui" line="81"/>
         <source>Snap Point:</source>
-        <translation>Punto de referencia:</translation>
+        <translation>Punto de forzado:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_widget.ui" line="113"/>
@@ -15583,12 +15583,12 @@ Esto puede recuperar dibujos guardados por LibreCAD 2.2.1, pero también mostrar
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="73"/>
         <source>Snap point for position of intersection point between created line and source entity (within original line)</source>
-        <translation>Punto de referencia de la intersección entre la línea creada y la entidad de origen (sobre la línea original)</translation>
+        <translation>Punto de forzado de la intersección entre la línea creada y la entidad de origen (sobre la línea original)</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="80"/>
         <source>Snap Distance</source>
-        <translation>Distancia de referencia</translation>
+        <translation>Distancia de forzado</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="95"/>
@@ -15598,7 +15598,7 @@ Esto puede recuperar dibujos guardados por LibreCAD 2.2.1, pero también mostrar
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="95"/>
         <source>Defines which part of created line will be snapped to intersection point</source>
-        <translation>Define qué punto de la línea creada se ajustará al punto de intersección</translation>
+        <translation>Define qué punto de la línea creada se forzará al punto de intersección</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="102"/>
@@ -15608,12 +15608,12 @@ Esto puede recuperar dibujos guardados por LibreCAD 2.2.1, pero también mostrar
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="102"/>
         <source>Offset of tick snap point from intersection point</source>
-        <translation>Desplazamiento del punto de referencia de la marca respecto al punto de intersección</translation>
+        <translation>Desplazamiento del punto de forzado de la marca respecto al punto de intersección</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="108"/>
         <source>Divide</source>
-        <translation>Dividido</translation>
+        <translation>Dividir</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="108"/>
@@ -15631,12 +15631,12 @@ Esto puede recuperar dibujos guardados por LibreCAD 2.2.1, pero también mostrar
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="50"/>
         <source>Distance of intersection point from specified line snap point</source>
-        <translation>Distancia entre el punto de intersección y el punto de referencia especificado en la línea</translation>
+        <translation>Distancia entre el punto de intersección y el punto de forzado especificado en la línea</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="57"/>
         <source>Snap point for position of intersection point between created line and source entity (within original line)</source>
-        <translation>Punto de referencia de la intersección entre la línea creada y la entidad de origen (sobre la línea original)</translation>
+        <translation>Punto de forzado de la intersección entre la línea creada y la entidad de origen (sobre la línea original)</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="61"/>
@@ -15675,7 +15675,7 @@ Esto puede recuperar dibujos guardados por LibreCAD 2.2.1, pero también mostrar
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="125"/>
         <source>Divide</source>
-        <translation>Dividido</translation>
+        <translation>Dividir</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="132"/>
@@ -15700,7 +15700,7 @@ Esto puede recuperar dibujos guardados por LibreCAD 2.2.1, pero también mostrar
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="156"/>
         <source>Line Snap:</source>
-        <translation>Referencia de línea:</translation>
+        <translation>Forzado de línea:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="163"/>
@@ -15715,7 +15715,7 @@ Esto puede recuperar dibujos guardados por LibreCAD 2.2.1, pero también mostrar
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="180"/>
         <source>Snap Distance:</source>
-        <translation>Distancia de referencia:</translation>
+        <translation>Distancia de forzado:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="205"/>
@@ -15725,12 +15725,12 @@ Esto puede recuperar dibujos guardados por LibreCAD 2.2.1, pero también mostrar
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="212"/>
         <source>Pick snap distance from drawing</source>
-        <translation>Seleccione la distancia de referencia en el dibujo</translation>
+        <translation>Seleccione la distancia de forzado en el dibujo</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="226"/>
         <source>Tick Snap:</source>
-        <translation>Referencia de marca:</translation>
+        <translation>Forzado de marca:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="233"/>
@@ -15740,12 +15740,12 @@ Esto puede recuperar dibujos guardados por LibreCAD 2.2.1, pero también mostrar
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="265"/>
         <source>Offset of tick snap point from intersection point</source>
-        <translation>Desplazamiento del punto de referencia de la marca respecto al punto de intersección</translation>
+        <translation>Desplazamiento del punto de forzado de la marca respecto al punto de intersección</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="272"/>
         <source>Defines which part of created line will be snapped to intersection point</source>
-        <translation>Define qué punto de la línea creada se ajustará al punto de intersección</translation>
+        <translation>Define qué punto de la línea creada se forzará al punto de intersección</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="294"/>
@@ -15899,12 +15899,12 @@ Esto puede recuperar dibujos guardados por LibreCAD 2.2.1, pero también mostrar
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="88"/>
         <source>Snap</source>
-        <translation>Referencia</translation>
+        <translation>Forzado</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="88"/>
         <source>Snap point for created line</source>
-        <translation>Punto de referencia para la línea creada</translation>
+        <translation>Punto de forzado para la línea creada</translation>
     </message>
 </context>
 <context>
@@ -15937,7 +15937,7 @@ Esto puede recuperar dibujos guardados por LibreCAD 2.2.1, pero también mostrar
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="120"/>
         <source>Snap point for created line</source>
-        <translation>Punto de referencia para la línea creada</translation>
+        <translation>Punto de forzado para la línea creada</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="124"/>
@@ -15957,7 +15957,7 @@ Esto puede recuperar dibujos guardados por LibreCAD 2.2.1, pero también mostrar
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="142"/>
         <source>Snap:</source>
-        <translation>Referencia:</translation>
+        <translation>Forzado:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="171"/>
@@ -16068,7 +16068,7 @@ Esto puede recuperar dibujos guardados por LibreCAD 2.2.1, pero también mostrar
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="56"/>
         <source>Snap point for gap on the line</source>
-        <translation>Punto de referencia del hueco sobre la línea</translation>
+        <translation>Punto de forzado del hueco sobre la línea</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="63"/>
@@ -16078,7 +16078,7 @@ Esto puede recuperar dibujos guardados por LibreCAD 2.2.1, pero también mostrar
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="63"/>
         <source>Distance from snap point</source>
-        <translation>Distancia desde el punto de referencia</translation>
+        <translation>Distancia desde el punto de forzado</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="80"/>
@@ -16088,7 +16088,7 @@ Esto puede recuperar dibujos guardados por LibreCAD 2.2.1, pero también mostrar
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="80"/>
         <source>Snap point of gap to line snap point</source>
-        <translation>Punto del hueco que se alineará con el punto de referencia de la línea</translation>
+        <translation>Punto del hueco que se alineará con el punto de forzado de la línea</translation>
     </message>
 </context>
 <context>
@@ -16101,7 +16101,7 @@ Esto puede recuperar dibujos guardados por LibreCAD 2.2.1, pero también mostrar
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="32"/>
         <source>Snap point of gap to line snap point</source>
-        <translation>Punto del hueco que se alineará con el punto de referencia de la línea</translation>
+        <translation>Punto del hueco que se alineará con el punto de forzado de la línea</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="36"/>
@@ -16129,12 +16129,12 @@ Esto puede recuperar dibujos guardados por LibreCAD 2.2.1, pero también mostrar
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="61"/>
         <source>Gap Snap:</source>
-        <translation>Referencia del hueco:</translation>
+        <translation>Forzado del hueco:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="68"/>
         <source>Snap point for gap on the line</source>
-        <translation>Punto de referencia del hueco sobre la línea</translation>
+        <translation>Punto de forzado del hueco sobre la línea</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="72"/>
@@ -16163,7 +16163,7 @@ Esto puede recuperar dibujos guardados por LibreCAD 2.2.1, pero también mostrar
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="95"/>
         <source>Line Snap:</source>
-        <translation>Referencia de línea:</translation>
+        <translation>Forzado de línea:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="134"/>
@@ -16188,17 +16188,17 @@ Esto puede recuperar dibujos guardados por LibreCAD 2.2.1, pero también mostrar
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="177"/>
         <source>Distance from snap point</source>
-        <translation>Distancia desde el punto de referencia</translation>
+        <translation>Distancia desde el punto de forzado</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="184"/>
         <source>Snap Distance:</source>
-        <translation>Distancia de referencia:</translation>
+        <translation>Distancia de forzado:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="191"/>
         <source>Pick snap distance from drawing</source>
-        <translation>Seleccione la distancia de referencia en el dibujo</translation>
+        <translation>Seleccione la distancia de forzado en el dibujo</translation>
     </message>
 </context>
 <context>
@@ -17329,7 +17329,7 @@ Esto puede recuperar dibujos guardados por LibreCAD 2.2.1, pero también mostrar
     <message>
         <location filename="../src/ui/dialogs/entity/lc_mtextpropertieseditingwidget.ui" line="84"/>
         <source>Rotation angle in degrees (UCS)</source>
-        <translation>Ángulo de rotación en grados (SCU)</translation>
+        <translation>Ángulo de rotación en grados (UCS)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_mtextpropertieseditingwidget.ui" line="85"/>
@@ -17513,12 +17513,12 @@ Esto puede recuperar dibujos guardados por LibreCAD 2.2.1, pero también mostrar
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_arc.cpp" line="94"/>
         <source>Bulge</source>
-        <translation>Abultamiento</translation>
+        <translation>Curvatura</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_arc.cpp" line="94"/>
         <source>Bulge of arc </source>
-        <translation>Abultamiento del arco </translation>
+        <translation>Curvatura del arco </translation>
     </message>
 </context>
 <context>
@@ -17556,7 +17556,7 @@ Esto puede recuperar dibujos guardados por LibreCAD 2.2.1, pero también mostrar
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_base.h" line="57"/>
         <source>Line Width</source>
-        <translation>Ancho de línea</translation>
+        <translation>Grosor de línea</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_base.h" line="57"/>
@@ -20098,7 +20098,7 @@ Esto puede recuperar dibujos guardados por LibreCAD 2.2.1, pero también mostrar
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_mtext.cpp" line="30"/>
         <source>MText</source>
-        <translation>MText</translation>
+        <translation>TextoM</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_mtext.cpp" line="35"/>
@@ -20925,7 +20925,7 @@ Esto puede recuperar dibujos guardados por LibreCAD 2.2.1, pero también mostrar
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="220"/>
         <source>Draw Order</source>
-        <translation>Orden de dibujo</translation>
+        <translation>Orden de visualización</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="228"/>
@@ -21373,7 +21373,7 @@ Esto puede recuperar dibujos guardados por LibreCAD 2.2.1, pero también mostrar
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="598"/>
         <source>&amp;Layout</source>
-        <translation>&amp;Diseño</translation>
+        <translation>&amp;Disposición</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="602"/>
@@ -22171,7 +22171,7 @@ Advertencia: ¡esta acción no puede ser deshecha!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="399"/>
         <source>Grid View: </source>
-        <translation>Vista de cuadrícula: </translation>
+        <translation>Rejilla de la vista: </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="400"/>
@@ -22904,22 +22904,22 @@ Advertencia: ¡esta acción no puede ser deshecha!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="314"/>
         <source>Divide</source>
-        <translation>Dividido</translation>
+        <translation>Raya 2 puntos</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="315"/>
         <source>Divide (tiny)</source>
-        <translation>Dividido (muy pequeño)</translation>
+        <translation>Raya 2 puntos (muy pequeña)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="316"/>
         <source>Divide (small)</source>
-        <translation>Dividido (pequeño)</translation>
+        <translation>Raya 2 puntos (pequeña)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="317"/>
         <source>Divide (large)</source>
-        <translation>Dividido (grande)</translation>
+        <translation>Raya 2 puntos (grande)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="318"/>
@@ -22964,22 +22964,22 @@ Advertencia: ¡esta acción no puede ser deshecha!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="322"/>
         <source>Border</source>
-        <translation>Frontera</translation>
+        <translation>2 rayas 1 punto</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="323"/>
         <source>Border (tiny)</source>
-        <translation>Frontera (muy pequeña)</translation>
+        <translation>2 rayas 1 punto (muy pequeño)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="324"/>
         <source>Border (small)</source>
-        <translation>Frontera (pequeña)</translation>
+        <translation>2 rayas 1 punto (pequeño)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="325"/>
         <source>Border (large)</source>
-        <translation>Frontera (grande)</translation>
+        <translation>2 rayas 1 punto (grande)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="344"/>
@@ -23077,7 +23077,7 @@ Advertencia: ¡esta acción no puede ser deshecha!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettemodel.cpp" line="230"/>
         <source>Line Width:</source>
-        <translation>Ancho de línea:</translation>
+        <translation>Grosor de línea:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettemodel.cpp" line="233"/>
@@ -23371,12 +23371,12 @@ Advertencia: ¡esta acción no puede ser deshecha!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="365"/>
         <source>Width:</source>
-        <translation>Ancho:</translation>
+        <translation>Grosor:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="372"/>
         <source>Width of line</source>
-        <translation>Ancho de línea</translation>
+        <translation>Grosor de línea</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="402"/>
@@ -24157,7 +24157,7 @@ Tenga en cuenta que si guarda una pluma mediante el editor sin reiniciar, las pl
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="72"/>
         <source>Apply Print Scale to line width</source>
-        <translation>Aplicar escala de impresión al ancho de línea</translation>
+        <translation>Aplicar la escala de impresión al grosor de línea</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="78"/>
@@ -24484,7 +24484,7 @@ Tenga en cuenta que si guarda una pluma mediante el editor sin reiniciar, las pl
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_active_pen.cpp" line="80"/>
         <source>Line Width</source>
-        <translation>Ancho de línea</translation>
+        <translation>Grosor de línea</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_active_pen.cpp" line="80"/>
@@ -24677,12 +24677,12 @@ Tenga en cuenta que si guarda una pluma mediante el editor sin reiniciar, las pl
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="106"/>
         <source>Bulge</source>
-        <translation>Abultamiento</translation>
+        <translation>Curvatura</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="106"/>
         <source>Bulge of arc</source>
-        <translation>Abultamiento del arco</translation>
+        <translation>Curvatura del arco</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="131"/>
@@ -24742,7 +24742,7 @@ Tenga en cuenta que si guarda una pluma mediante el editor sin reiniciar, las pl
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="143"/>
         <source>Divide</source>
-        <translation>Dividido</translation>
+        <translation>Dividir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="143"/>
@@ -24929,7 +24929,7 @@ Tenga en cuenta que si guarda una pluma mediante el editor sin reiniciar, las pl
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="173"/>
         <source>Slice/Divide</source>
-        <translation>Seccionar/Dividir</translation>
+        <translation>Seccionar/dividir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="173"/>
@@ -24939,7 +24939,7 @@ Tenga en cuenta que si guarda una pluma mediante el editor sin reiniciar, las pl
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="174"/>
         <source>Break/Divide</source>
-        <translation>Romper/Dividir</translation>
+        <translation>Partir/dividir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="177"/>
@@ -25146,7 +25146,7 @@ Tenga en cuenta que si guarda una pluma mediante el editor sin reiniciar, las pl
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="78"/>
         <source>Divide</source>
-        <translation>Dividido</translation>
+        <translation>Dividir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="78"/>
@@ -25293,7 +25293,7 @@ Tenga en cuenta que si guarda una pluma mediante el editor sin reiniciar, las pl
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="103"/>
         <source>Slice/Divide</source>
-        <translation>Seccionar/Dividir</translation>
+        <translation>Seccionar/dividir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="103"/>
@@ -25303,7 +25303,7 @@ Tenga en cuenta que si guarda una pluma mediante el editor sin reiniciar, las pl
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="104"/>
         <source>Break/Divide</source>
-        <translation>Romper/Dividir</translation>
+        <translation>Partir/dividir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="108"/>
@@ -27304,7 +27304,7 @@ Tenga en cuenta que si guarda una pluma mediante el editor sin reiniciar, las pl
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_ellipse.cpp" line="136"/>
         <source>Divide</source>
-        <translation>Dividido</translation>
+        <translation>Dividir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_ellipse.cpp" line="136"/>
@@ -27471,7 +27471,7 @@ Tenga en cuenta que si guarda una pluma mediante el editor sin reiniciar, las pl
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="122"/>
         <source>Line Width</source>
-        <translation>Ancho de línea</translation>
+        <translation>Grosor de línea</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="122"/>
@@ -28327,7 +28327,7 @@ Tenga en cuenta que si guarda una pluma mediante el editor sin reiniciar, las pl
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_hyperbola.cpp" line="137"/>
         <source>Divide</source>
-        <translation>Dividido</translation>
+        <translation>Dividir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_hyperbola.cpp" line="137"/>
@@ -28767,7 +28767,7 @@ Tenga en cuenta que si guarda una pluma mediante el editor sin reiniciar, las pl
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="109"/>
         <source>Divide</source>
-        <translation>Dividido</translation>
+        <translation>Dividir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="109"/>
@@ -28988,7 +28988,7 @@ Tenga en cuenta que si guarda una pluma mediante el editor sin reiniciar, las pl
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="175"/>
         <source>Slice/Divide</source>
-        <translation>Seccionar/Dividir</translation>
+        <translation>Seccionar/dividir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="175"/>
@@ -28998,7 +28998,7 @@ Tenga en cuenta que si guarda una pluma mediante el editor sin reiniciar, las pl
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="176"/>
         <source>Break/Divide</source>
-        <translation>Romper/Dividir</translation>
+        <translation>Partir/dividir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="178"/>
@@ -29354,7 +29354,7 @@ Tenga en cuenta que si guarda una pluma mediante el editor sin reiniciar, las pl
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_parabola.cpp" line="66"/>
         <source>Divide</source>
-        <translation>Dividido</translation>
+        <translation>Dividir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_parabola.cpp" line="66"/>
@@ -30051,7 +30051,7 @@ Tenga en cuenta que si guarda una pluma mediante el editor sin reiniciar, las pl
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="110"/>
         <source>Divide</source>
-        <translation>Dividido</translation>
+        <translation>Dividir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="110"/>
@@ -30739,7 +30739,7 @@ Tenga en cuenta que si guarda una pluma mediante el editor sin reiniciar, las pl
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="548"/>
         <source>Line Width</source>
-        <translation>Ancho de línea</translation>
+        <translation>Grosor de línea</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="550"/>
@@ -30917,7 +30917,7 @@ Tenga en cuenta que si guarda una pluma mediante el editor sin reiniciar, las pl
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="698"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="896"/>
         <source>Bulge</source>
-        <translation>Abultamiento</translation>
+        <translation>Curvatura</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="717"/>
@@ -31233,12 +31233,12 @@ Capa: </translation>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1111"/>
         <source>Mirrored in X</source>
-        <translation>Espejo en X</translation>
+        <translation>Reflejado en X</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1113"/>
         <source>Mirrored in Y</source>
-        <translation>Espejo en Y</translation>
+        <translation>Reflejado en Y</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1120"/>
@@ -31610,7 +31610,7 @@ Capa: </translation>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfopointsdata.cpp" line="226"/>
         <source>Relative Zero</source>
-        <translation>Relativo Cero</translation>
+        <translation>Cero relativo</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfopointsdata.cpp" line="231"/>
@@ -31840,7 +31840,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="81"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If selected, more detailed information about lines and arcs that are part of polyline will be shown in Entity Info widget.&lt;br/&gt;Otherwise, only information about vertexes/bulges will be displayed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Si se selecciona, se mostrará información más detallada sobre líneas y arcos que forman parte de una polilínea en el widget de Información de entidad.&lt;br/&gt;De lo contrario, solo se mostrará información sobre vértices/abultamientos.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Si se selecciona, se mostrará información más detallada sobre líneas y arcos que forman parte de una polilínea en el widget de Información de entidad.&lt;br/&gt;De lo contrario, solo se mostrará información sobre vértices/curvaturas.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="84"/>
@@ -31958,7 +31958,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1_point_options_filler.cpp" line="59"/>
         <source>Snap</source>
-        <translation>Referencia</translation>
+        <translation>Forzado</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1_point_options_filler.cpp" line="59"/>
@@ -32216,12 +32216,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="388"/>
         <source>If checked, specifies that snap point should be shifted by radius of corners.</source>
-        <translation>Si está marcada, desplaza el punto de referencia según el radio de las esquinas.</translation>
+        <translation>Si está marcada, desplaza el punto de forzado según el radio de las esquinas.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="391"/>
         <source>Snap shift</source>
-        <translation>Desplazamiento de referencia</translation>
+        <translation>Desplazamiento del forzado</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="405"/>
@@ -32236,7 +32236,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="419"/>
         <source>Snap:</source>
-        <translation>Referencia:</translation>
+        <translation>Forzado:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="438"/>
@@ -32396,7 +32396,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="91"/>
         <source>Start Snap:</source>
-        <translation>Referencia inicial:</translation>
+        <translation>Forzado inicial:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="105"/>
@@ -32486,12 +32486,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="318"/>
         <source>If checked, specifies that snap points should be shifted by radius of corners.</source>
-        <translation>Si está activada, desplaza los puntos de referencia según el radio de las esquinas.</translation>
+        <translation>Si está activada, desplaza los puntos de forzado según el radio de las esquinas.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="321"/>
         <source>Snap shift</source>
-        <translation>Desplazamiento de referencia</translation>
+        <translation>Desplazamiento del forzado</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="340"/>
@@ -32501,7 +32501,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="347"/>
         <source>End Snap:</source>
-        <translation>Referencia final:</translation>
+        <translation>Forzado final:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="354"/>
@@ -32647,12 +32647,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="248"/>
         <source>If checked, specifies that snap points should be shifted by radius of corners.</source>
-        <translation>Si está activada, desplaza los puntos de referencia según el radio de las esquinas.</translation>
+        <translation>Si está activada, desplaza los puntos de forzado según el radio de las esquinas.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="251"/>
         <source>Snap shift</source>
-        <translation>Desplazamiento de referencia</translation>
+        <translation>Desplazamiento del forzado</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="258"/>
@@ -32820,7 +32820,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_abstract_options_filler.cpp" line="86"/>
         <source>If checked, specifies that snap point should be shifted by radius of corners.</source>
-        <translation>Si está activada, desplaza el punto de referencia según el radio de las esquinas.</translation>
+        <translation>Si está activada, desplaza el punto de forzado según el radio de las esquinas.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_abstract_options_filler.cpp" line="97"/>
@@ -32863,12 +32863,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/components/status_bar/lc_relzerocoordinateswidget.ui" line="35"/>
         <source>Relative Zero (Cartesian)</source>
-        <translation>Relativo Cero (Cartesiano)</translation>
+        <translation>Cero relativo (cartesiano)</translation>
     </message>
     <message>
         <location filename="../src/ui/components/status_bar/lc_relzerocoordinateswidget.ui" line="45"/>
         <source>Relative Zero (Polar)</source>
-        <translation>Relativo Cero (Polar)</translation>
+        <translation>Cero relativo (polar)</translation>
     </message>
 </context>
 <context>
@@ -33917,7 +33917,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="88"/>
         <source>MText</source>
-        <translation>MText</translation>
+        <translation>TextoM</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="95"/>
@@ -34286,7 +34286,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="138"/>
         <source>Divide</source>
-        <translation>Dividido</translation>
+        <translation>Dividir</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="138"/>
@@ -34356,7 +34356,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="182"/>
         <source>Divide</source>
-        <translation>Dividido</translation>
+        <translation>Dividir</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="189"/>
@@ -34396,12 +34396,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="284"/>
         <source>Offset of tick snap point to intersection point. </source>
-        <translation>Desplazamiento del punto de referencia de la marca respecto a la intersección. </translation>
+        <translation>Desplazamiento del punto de forzado de la marca respecto a la intersección. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="291"/>
         <source>Tick snap:</source>
-        <translation>Referencia de la marca:</translation>
+        <translation>Forzado de marca:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="298"/>
@@ -34860,7 +34860,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="20"/>
         <source>Edit properties of a spline entity, including degree, closed state, control points, and knot vector</source>
-        <translation>Editar las propiedades de una entidad spline, incluidos el grado, el estado cerrado, los puntos de control y el vector de nodos</translation>
+        <translation>Editar las propiedades de una entidad spline, incluidos el grado, el estado cerrado, los puntos de control y el vector de nudos</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="47"/>
@@ -34946,17 +34946,17 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="255"/>
         <source>Knot values control the spline’s curve shape (non-decreasing sequence)</source>
-        <translation>Los valores de nodo controlan la forma de la curva de la spline (secuencia no decreciente)</translation>
+        <translation>Los valores de los nudos controlan la forma de la curva de la spline (secuencia no decreciente)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="258"/>
         <source>Knot Vector Table</source>
-        <translation>Tabla del vector de nodos.</translation>
+        <translation>Tabla del vector de nudos</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="261"/>
         <source>Edit knot values for the spline (must be non-decreasing)</source>
-        <translation>Editar los valores de nodo de la spline (deben ser no decrecientes)</translation>
+        <translation>Editar los valores de los nudos de la spline (deben ser no decrecientes)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="276"/>
@@ -35319,7 +35319,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dialogs/entity/lc_textpropertieseditingwidget.ui" line="91"/>
         <source>Rotation angle in degrees (UCS)</source>
-        <translation>Ángulo de rotación en grados (SCU)</translation>
+        <translation>Ángulo de rotación en grados (UCS)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_textpropertieseditingwidget.ui" line="92"/>
@@ -35432,7 +35432,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="75"/>
         <source>Snap Selection</source>
-        <translation>Selección de Snap</translation>
+        <translation>Selección de forzado</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="86"/>
@@ -35871,7 +35871,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.ui" line="66"/>
         <source>Edit selected user coordinates name. No-name UCS are temporary and are not saved.</source>
-        <translation>Editar el nombre de coordenadas seleccionadas del usuario. No-nombre UCS son temporales y no se salvan.</translation>
+        <translation>Editar el nombre del UCS seleccionado. Los UCS sin nombre son temporales y no se guardan.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.ui" line="148"/>
@@ -36220,12 +36220,12 @@ Advertencia: ¡esta acción no puede ser deshecha!</translation>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="537"/>
         <source>Relative Zero</source>
-        <translation>Relativo Cero</translation>
+        <translation>Cero relativo</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="538"/>
         <source>Mouse</source>
-        <translation>Mouse</translation>
+        <translation>Ratón</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="539"/>
@@ -36250,7 +36250,7 @@ Advertencia: ¡esta acción no puede ser deshecha!</translation>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="547"/>
         <source>Current size of Grid/MetaGrid. Click to change grid size.</source>
-        <translation>Tamaño actual de Grid/MetaGrid. Haga clic para cambiar el tamaño de la cuadrícula.</translation>
+        <translation>Tamaño actual de la rejilla/metarrejilla. Haga clic para cambiar el tamaño de la rejilla.</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="141"/>
@@ -36371,7 +36371,7 @@ Advertencia: ¡esta acción no puede ser deshecha!</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="384"/>
         <source>Saved Icons Style:</source>
-        <translation>Estilo de los iconos salvados:</translation>
+        <translation>Estilo de los iconos guardado:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="394"/>
@@ -36421,7 +36421,7 @@ Advertencia: ¡esta acción no puede ser deshecha!</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="209"/>
         <source>Input the path of a Qt style sheet.</source>
-        <translation>Ingresar la ruta de una hoja de estilo Qt.</translation>
+        <translation>Introduzca la ruta de una hoja de estilos Qt.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="452"/>
@@ -38811,7 +38811,7 @@ Esto modifica recursivamente todas las entidades del propio Bloque.</translation
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="753"/>
         <source>Right isometric grid</source>
-        <translation>Cuadrícula isométrica derecha</translation>
+        <translation>Rejilla isométrica derecha</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="756"/>
@@ -38821,7 +38821,7 @@ Esto modifica recursivamente todas las entidades del propio Bloque.</translation
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="775"/>
         <source>Left isometric grid</source>
-        <translation>Cuadrícula isométrica izquierda</translation>
+        <translation>Rejilla isométrica izquierda</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="778"/>
@@ -38836,7 +38836,7 @@ Esto modifica recursivamente todas las entidades del propio Bloque.</translation
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="826"/>
         <source>Top isometric grid</source>
-        <translation>Cuadrícula isométrica superior</translation>
+        <translation>Rejilla isométrica superior</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="829"/>
@@ -38875,17 +38875,17 @@ Esto modifica recursivamente todas las entidades del propio Bloque.</translation
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="886"/>
         <source>Draw Meta Grid:</source>
-        <translation>Dibuja Meta Grid:</translation>
+        <translation>Dibujar metarrejilla:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="917"/>
         <source>Grid Spacing</source>
-        <translation>Espaciado de la cuadrícula</translation>
+        <translation>Espaciado de la rejilla</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="955"/>
         <source>Select or enter grid spacing value by X axis</source>
-        <translation>Seleccione o introduzca valor de espaciamiento de cuadrícula por eje X</translation>
+        <translation>Seleccione o introduzca el valor del espaciado de la rejilla en el eje X</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="990"/>
@@ -39564,7 +39564,7 @@ Esto modifica recursivamente todas las entidades del propio Bloque.</translation
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4968"/>
         <source>Time between automatic saving of the document in minutes.</source>
-        <translation>Tiempo entre salvados automáticos del documento en minutos.</translation>
+        <translation>Tiempo entre guardados automáticos del documento, en minutos.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4991"/>
@@ -39579,17 +39579,17 @@ Esto modifica recursivamente todas las entidades del propio Bloque.</translation
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="761"/>
         <source>St&amp;art Handle Color:</source>
-        <translation>Colo&amp;r punto de manejo inicial:</translation>
+        <translation>Color del pinzamiento &amp;inicial:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="872"/>
         <source>&amp;Handle Color:</source>
-        <translation>Color p&amp;untos de manejo:</translation>
+        <translation>Color de los &amp;pinzamientos:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="751"/>
         <source>&amp;End Handle Color:</source>
-        <translation>Colo&amp;r punto de manejo final:</translation>
+        <translation>Color del pinzamiento &amp;final:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="105"/>
@@ -39641,7 +39641,7 @@ Esto modifica recursivamente todas las entidades del propio Bloque.</translation
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5267"/>
         <source>RIght Isometric Grid</source>
-        <translation>Cuadrícula isométrica derecha</translation>
+        <translation>Rejilla isométrica derecha</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5205"/>
@@ -39651,13 +39651,13 @@ Esto modifica recursivamente todas las entidades del propio Bloque.</translation
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5287"/>
         <source>Top Isometric Grid</source>
-        <translation>Cuadrícula isométrica superior</translation>
+        <translation>Rejilla isométrica superior</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1255"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1359"/>
         <source>Meta-grid</source>
-        <translation>Meta-grid</translation>
+        <translation>Metarrejilla</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="689"/>
@@ -39679,7 +39679,7 @@ Esto modifica recursivamente todas las entidades del propio Bloque.</translation
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="975"/>
         <source>Draw meta-grid</source>
-        <translation>Dibujar meta-grid</translation>
+        <translation>Dibujar metarrejilla</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="965"/>
@@ -39709,7 +39709,7 @@ Esto modifica recursivamente todas las entidades del propio Bloque.</translation
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3779"/>
         <source>Highlight with screen linewidth in &quot;Draft&quot; mode</source>
-        <translation>Resaltar con el grosor de línea de pantalla en modo &quot;Draft&quot;</translation>
+        <translation>Resaltar con el grosor de línea de pantalla en modo &quot;Borrador&quot;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3799"/>
@@ -39789,7 +39789,7 @@ Esto modifica recursivamente todas las entidades del propio Bloque.</translation
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5847"/>
         <source>Check GitHub for new releases of LibreCAD on program startup</source>
-        <translation>Chequee GitHub para nuevas versiones de LibreCAD en el inicio del programa</translation>
+        <translation>Comprobar en GitHub si hay nuevas versiones de LibreCAD al iniciar el programa</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5850"/>
@@ -39854,7 +39854,7 @@ Esto modifica recursivamente todas las entidades del propio Bloque.</translation
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1810"/>
         <source>Hide cursor when snapping</source>
-        <translation>Ocultar el cursor al ajustar</translation>
+        <translation>Ocultar el cursor al forzar</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5739"/>
@@ -39968,7 +39968,7 @@ Esto modifica recursivamente todas las entidades del propio Bloque.</translation
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="217"/>
         <source>Auto-panning</source>
-        <translation>Panorámica automática</translation>
+        <translation>Encuadre automático</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3689"/>
@@ -39998,7 +39998,7 @@ Esto modifica recursivamente todas las entidades del propio Bloque.</translation
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1571"/>
         <source>Snap</source>
-        <translation>Snap</translation>
+        <translation>Forzado</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1606"/>
@@ -40029,7 +40029,7 @@ Esto modifica recursivamente todas las entidades del propio Bloque.</translation
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1609"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1619"/>
         <source>Snap Indicator lines</source>
-        <translation>Líneas de indicador de ajuste</translation>
+        <translation>Líneas del indicador de forzado</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1583"/>
@@ -40083,7 +40083,7 @@ Esto modifica recursivamente todas las entidades del propio Bloque.</translation
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1736"/>
         <source>Type of line to draw snap indicator</source>
-        <translation>Tipo de línea para dibujar indicador de snap</translation>
+        <translation>Tipo de línea para dibujar el indicador de forzado</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1743"/>
@@ -40093,7 +40093,7 @@ Esto modifica recursivamente todas las entidades del propio Bloque.</translation
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1750"/>
         <source>Width of line for snap indicator</source>
-        <translation>Ancho de línea para el indicador de snap</translation>
+        <translation>Ancho de línea del indicador de forzado</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1726"/>
@@ -40108,7 +40108,7 @@ Esto modifica recursivamente todas las entidades del propio Bloque.</translation
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1656"/>
         <source>Type of snap indicator shape</source>
-        <translation>Tipo de forma del indicador de ajuste</translation>
+        <translation>Tipo de forma del indicador de forzado</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1663"/>
@@ -40133,12 +40133,12 @@ Esto modifica recursivamente todas las entidades del propio Bloque.</translation
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1626"/>
         <source>Snap Indicator Color:</source>
-        <translation>Color de indicador de ajuste:</translation>
+        <translation>Color del indicador de forzado:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1633"/>
         <source>Color for snap indicator shape</source>
-        <translation>Color para la forma de indicador de snap</translation>
+        <translation>Color de la forma del indicador de forzado</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1967"/>
@@ -40208,7 +40208,7 @@ Esto modifica recursivamente todas las entidades del propio Bloque.</translation
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="745"/>
         <source>Entity Handle</source>
-        <translation>Puntos de manejo de la entidad</translation>
+        <translation>Pinzamientos de la entidad</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="888"/>
@@ -40218,32 +40218,32 @@ Esto modifica recursivamente todas las entidades del propio Bloque.</translation
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="809"/>
         <source>Color of end handle for entity</source>
-        <translation>Color del punto de manejo final de la entidad</translation>
+        <translation>Color del pinzamiento final de la entidad</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="771"/>
         <source>Color for start handle of entity</source>
-        <translation>Color del punto de manejo inicial de la entidad</translation>
+        <translation>Color del pinzamiento inicial de la entidad</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="854"/>
         <source>Color of non-endpoint handle of entity</source>
-        <translation>Color de los puntos de manejo de la entidad que no son extremos</translation>
+        <translation>Color de los pinzamientos de la entidad que no son extremos</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="847"/>
         <source>Handle Size:</source>
-        <translation>Tamaño de los puntos de manejo:</translation>
+        <translation>Tamaño de los pinzamientos:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="933"/>
         <source>If enabled, entity handles are highlighted on hover (requires &quot;highlight entities on hover&quot; to be enabled)</source>
-        <translation>Si está habilitado, los puntos de manejo de la entidad se resaltan al pasar el ratón (requiere tener activado &quot;Resaltar entidades al pasar el ratón&quot;)</translation>
+        <translation>Si está habilitado, los pinzamientos de la entidad se resaltan al pasar el ratón (requiere tener activado &quot;Resaltar entidades al pasar el ratón&quot;)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="939"/>
         <source>Show entity handles on mouse hover</source>
-        <translation>Mostrar los puntos de manejo de la entidad al pasar el ratón</translation>
+        <translation>Mostrar los pinzamientos de la entidad al pasar el ratón</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="268"/>
@@ -40416,12 +40416,12 @@ Esto modifica recursivamente todas las entidades del propio Bloque.</translation
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1261"/>
         <source>Type of Meta Grid line if grid is drawn as points</source>
-        <translation>Tipo de línea Meta Grid si la cuadrícula se dibuja como puntos</translation>
+        <translation>Tipo de línea de la metarrejilla si la rejilla se dibuja con puntos</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1268"/>
         <source>Width of Meta Grid line if grid is drawn by points</source>
-        <translation>Ancho de Meta Grid línea si la rejilla es dibujada por puntos</translation>
+        <translation>Ancho de línea de la metarrejilla si la rejilla se dibuja con puntos</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1284"/>
@@ -40439,13 +40439,13 @@ Esto modifica recursivamente todas las entidades del propio Bloque.</translation
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1298"/>
         <source>Color for Meta Grid lines if grid drawn by points</source>
-        <translation>Color para Meta Grid líneas si rejilla dibujada por puntos</translation>
+        <translation>Color de las líneas de la metarrejilla si la rejilla se dibuja con puntos</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1316"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1420"/>
         <source>&amp;Meta-grid Color:</source>
-        <translation>Color &amp;Meta-grid:</translation>
+        <translation>Color de la &amp;metarrejilla:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1353"/>
@@ -40470,17 +40470,17 @@ Esto modifica recursivamente todas las entidades del propio Bloque.</translation
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1365"/>
         <source>Type of Meta Grid lines if grid is drawn by lines</source>
-        <translation>Tipo de Meta Grid líneas si la cuadrícula se dibuja por líneas</translation>
+        <translation>Tipo de las líneas de la metarrejilla si la rejilla se dibuja con líneas</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1372"/>
         <source>Width of Meta Grid lines if grid is drawn by lines</source>
-        <translation>Ancho de Meta Grid líneas si la rejilla es dibujada por líneas</translation>
+        <translation>Ancho de las líneas de la metarrejilla si la rejilla se dibuja con líneas</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1402"/>
         <source>Color of Meta Grid if grid drawn by lines</source>
-        <translation>Color de Meta Grid si la cuadrícula dibujada por líneas</translation>
+        <translation>Color de la metarrejilla si la rejilla se dibuja con líneas</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3272"/>
@@ -40574,12 +40574,12 @@ Esto modifica recursivamente todas las entidades del propio Bloque.</translation
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3660"/>
         <source>Color of relative zero marker</source>
-        <translation>Color del marcador relativo cero</translation>
+        <translation>Color del marcador del cero relativo</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3683"/>
         <source>If checked, relative zero marker will not be drawn</source>
-        <translation>Si se verifica, no se dibujará un marcador relativo cero</translation>
+        <translation>Si se marca, no se dibujará el marcador del cero relativo</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3614"/>
@@ -40589,7 +40589,7 @@ Esto modifica recursivamente todas las entidades del propio Bloque.</translation
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="956"/>
         <source>Grid General</source>
-        <translation>Cuadrícula (General)</translation>
+        <translation>Rejilla (general)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="962"/>
@@ -40604,7 +40604,7 @@ Esto modifica recursivamente todas las entidades del propio Bloque.</translation
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1057"/>
         <source>Unitless grid</source>
-        <translation>Cuadrícula sin unidad</translation>
+        <translation>Rejilla sin unidades</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1005"/>
@@ -40619,12 +40619,12 @@ Esto modifica recursivamente todas las entidades del propio Bloque.</translation
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1044"/>
         <source>If checked, Meta Grid lines will be drawn on top of grid. Simple grid is faster yet is less visually lean.</source>
-        <translation>Si se marca, las líneas Meta Grid se dibujarán sobre la rejilla. La rejilla simple es más rápida, pero visualmente menos refinada.</translation>
+        <translation>Si se marca, las líneas de la metarrejilla se dibujarán sobre la rejilla. La rejilla simple es más rápida, pero visualmente menos refinada.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1096"/>
         <source>Minimal spacing between grid until grid rescale</source>
-        <translation>Espaciado mínimo entre cuadrícula hasta reescala de cuadrícula</translation>
+        <translation>Espaciado mínimo de la rejilla antes de reescalarla</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1031"/>
@@ -40738,7 +40738,7 @@ Esto modifica recursivamente todas las entidades del propio Bloque.</translation
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3776"/>
         <source>If selected, entity will be highlighted in &quot;Draft&quot; mode using entity&apos;s linewidth instead of 1px</source>
-        <translation>Si se selecciona, la entidad será destacada en modo &quot;Draft&quot; usando el ancho de línea de la entidad en lugar de 1px</translation>
+        <translation>Si se selecciona, la entidad se resaltará en modo &quot;Borrador&quot; con el grosor de línea de la entidad en lugar de 1 px</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3881"/>
@@ -40964,7 +40964,7 @@ Esto modifica recursivamente todas las entidades del propio Bloque.</translation
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2755"/>
         <source>Show properties for entity that is edited by handles</source>
-        <translation>Mostrar propiedades de la entidad que se edita con los puntos de control</translation>
+        <translation>Mostrar propiedades de la entidad que se edita con los pinzamientos</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2765"/>
@@ -40979,7 +40979,7 @@ Esto modifica recursivamente todas las entidades del propio Bloque.</translation
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2794"/>
         <source>If checked, relative distance and angle from relative zero point to snap point will be shown.</source>
-        <translation>Si se marca, se mostrará la distancia relativa y el ángulo desde el punto cero relativo hasta el punto de ajuste.</translation>
+        <translation>Si se marca, se mostrarán la distancia relativa y el ángulo desde el punto cero relativo hasta el punto de forzado.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2797"/>
@@ -41034,7 +41034,7 @@ Esto modifica recursivamente todas las entidades del propio Bloque.</translation
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2784"/>
         <source>If checked, absolute position of snap point will be shown.</source>
-        <translation>Si se marca, se mostrará la posición absoluta del punto de ajuste.</translation>
+        <translation>Si se marca, se mostrará la posición absoluta del punto de forzado.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2787"/>
@@ -41251,7 +41251,7 @@ Esto modifica recursivamente todas las entidades del propio Bloque.</translation
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3578"/>
         <source>If selected and view is in user coordinate system, the marker for coodinate system will be shown in zero point of world coordinates system. </source>
-        <translation>Si se selecciona y la vista está en el sistema de coordenadas de usuario, el marcador del sistema coordinado se mostrará en cero punto del sistema de coordenadas mundiales. </translation>
+        <translation>Si se selecciona y la vista está en el sistema de coordenadas de usuario, el marcador del sistema de coordenadas se mostrará en el punto cero del sistema de coordenadas universal. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3581"/>
@@ -41311,7 +41311,7 @@ Esto modifica recursivamente todas las entidades del propio Bloque.</translation
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1146"/>
         <source>Decimal meta-grid every:</source>
-        <translation>Cuadrícula meta decimal cada:</translation>
+        <translation>Metarrejilla decimal cada:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1153"/>
@@ -41321,7 +41321,7 @@ Esto modifica recursivamente todas las entidades del propio Bloque.</translation
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1940"/>
         <source>Radius of arc within angle snap mark.</source>
-        <translation>Radio del arco dentro de la marca de ajuste de ángulo.</translation>
+        <translation>Radio del arco dentro de la marca del forzado de ángulo.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1577"/>
@@ -41331,7 +41331,7 @@ Esto modifica recursivamente todas las entidades del propio Bloque.</translation
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1853"/>
         <source>Advanced Snap Fine-tuning settings</source>
-        <translation>Ajustes avanzados de ajuste fino</translation>
+        <translation>Configuración avanzada del ajuste fino del forzado</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1905"/>
@@ -41819,12 +41819,12 @@ Esto modifica recursivamente todas las entidades del propio Bloque.</translation
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4928"/>
         <source>Auto-Save Drawings</source>
-        <translation>Dibujos auto-salvado</translation>
+        <translation>Guardado automático de dibujos</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4984"/>
         <source>Auto-save file name prefix:</source>
-        <translation>Nombre de archivo auto-salvado prefijo:</translation>
+        <translation>Prefijo del nombre de archivo de guardado automático:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5001"/>
@@ -42144,7 +42144,7 @@ Esto modifica recursivamente todas las entidades del propio Bloque.</translation
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3002"/>
         <source>Show world coordinates if in user coordinate system</source>
-        <translation>Mostrar coordenadas mundiales si en el sistema de coordenadas de usuario</translation>
+        <translation>Mostrar las coordenadas universales si se está en el sistema de coordenadas de usuario</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5480"/>
@@ -42244,7 +42244,7 @@ Esto modifica recursivamente todas las entidades del propio Bloque.</translation
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5150"/>
         <source>Toggle free snap mode when SPACE BAR is pressed</source>
-        <translation>Alternar el modo de ajuste libre cuando se pulsa la BARRA ESPACIO</translation>
+        <translation>Alternar el modo de forzado libre al pulsar la BARRA ESPACIADORA</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5068"/>
@@ -43975,7 +43975,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/components/pen/qg_widgetpen.ui" line="130"/>
         <source>Width of line</source>
-        <translation>Ancho de línea</translation>
+        <translation>Grosor de línea</translation>
     </message>
     <message>
         <location filename="../src/ui/components/pen/qg_widgetpen.ui" line="137"/>
@@ -43985,7 +43985,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/components/pen/qg_widgetpen.ui" line="81"/>
         <source>Width:</source>
-        <translation>Ancho:</translation>
+        <translation>Grosor:</translation>
     </message>
     <message>
         <location filename="../src/ui/components/pen/qg_widgetpen.ui" line="65"/>
@@ -44833,7 +44833,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/lib/engine/document/container/rs_entitycontainer.cpp" line="1499"/>
         <source>Hatch failed due to a gap=%1 between (%2, %3) and (%4, %5)</source>
-        <translation>Falló el rayado debido al espaciado=%1 entre (%2, %3) y (%4, %5)</translation>
+        <translation>El sombreado falló debido a un hueco=%1 entre (%2, %3) y (%4, %5)</translation>
     </message>
     <message>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="125"/>
@@ -48391,7 +48391,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="39"/>
         <source>/CustomColor%1</source>
-        <translation>/CustomColor%1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="40"/>
@@ -48433,7 +48433,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/lib/actions/lc_modifiersinfo.h" line="32"/>
         <source>Snap to Relative Zero</source>
-        <translation>Ajustar a Cero Relativo</translation>
+        <translation>Forzar al cero relativo</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="50"/>
@@ -48460,7 +48460,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/lib/engine/document/patterns/rs_patternlist.cpp" line="93"/>
         <source>Hatch:: loading pattern failed: %1</source>
-        <translation>Hatch:: falló la carga del patrón: %1</translation>
+        <translation>Sombreado:: falló la carga del patrón: %1</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="42"/>
@@ -49036,7 +49036,7 @@ Compruebe el nombre del archivo y los permisos.</translation>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1018"/>
         <source>Pan / Scroll Vertically / Select Child entities</source>
-        <translation>Panorámica / Desplazamiento vertical / Selección de entidades secundarias</translation>
+        <translation>Encuadre / Desplazamiento vertical / Selección de entidades secundarias</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1023"/>
@@ -49294,32 +49294,32 @@ Compruebe el nombre del archivo y los permisos.</translation>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="134"/>
         <source>Hatch Error: Invalid contour found!</source>
-        <translation>Error en rayado: El contorno encontrado no es válido!</translation>
+        <translation>Error de sombreado: ¡el contorno encontrado no es válido!</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="138"/>
         <source>Hatch Error: Pattern not found!</source>
-        <translation>Error en rayado: No se encontró el patrón!</translation>
+        <translation>Error de sombreado: ¡no se encontró el patrón!</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="141"/>
         <source>Hatch Error: Contour or pattern too small!</source>
-        <translation>Error en rayado: Contorno o patrón demasiado pequeño!</translation>
+        <translation>Error de sombreado: ¡contorno o patrón demasiado pequeño!</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="144"/>
         <source>Hatch Error: Contour too big!</source>
-        <translation>Error en rayado: Contorno demasiado grande!</translation>
+        <translation>Error de sombreado: ¡contorno demasiado grande!</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="147"/>
         <source>Hatch Error: Undefined Error!</source>
-        <translation>Error en rayado: Error indefinido!</translation>
+        <translation>Error de sombreado: ¡error indefinido!</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="152"/>
         <source>Total hatch area = %1</source>
-        <translation>Área total de rayado = %1</translation>
+        <translation>Área total de sombreado = %1</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="185"/>
@@ -49361,7 +49361,7 @@ Compruebe el nombre del archivo y los permisos.</translation>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineorthtan.cpp" line="260"/>
         <source>Select circle, arc or ellipse</source>
-        <translation>Seleccionar circunferencia, arco o elipse</translation>
+        <translation>Seleccionar círculo, arco o elipse</translation>
     </message>
 </context>
 <context>
@@ -49418,7 +49418,7 @@ Compruebe el nombre del archivo y los permisos.</translation>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent1.cpp" line="206"/>
         <source>Select circle, arc or ellipse</source>
-        <translation>Seleccionar circunferencia, arco o elipse</translation>
+        <translation>Seleccionar círculo, arco o elipse</translation>
     </message>
 </context>
 <context>
@@ -49721,7 +49721,7 @@ Fin: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="166"/>
         <source>Don&apos;t move relative zero</source>
-        <translation>No muevas relativo cero</translation>
+        <translation>No mover el cero relativo</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="166"/>
@@ -49868,7 +49868,7 @@ Fin: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="253"/>
         <source>Printout offset ignores relative zero. Ignoring &apos;@&apos;</source>
-        <translation>Desplazamiento de impresión ignora el origen relativo. Ignorando &apos;@&apos;</translation>
+        <translation>El desplazamiento de impresión ignora el cero relativo. Se ignora &apos;@&apos;</translation>
     </message>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="230"/>
@@ -49894,7 +49894,7 @@ Fin: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/rel_zero/rs_actionsetrelativezero.cpp" line="72"/>
         <source>Set relative Zero</source>
-        <translation>Situar Origen Relativo Cero</translation>
+        <translation>Establecer el cero relativo</translation>
     </message>
 </context>
 <context>
@@ -49933,7 +49933,7 @@ Fin: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/zoom/rs_actionzoompan.cpp" line="112"/>
         <source>Zoom panning</source>
-        <translation>Panorámica con zoom</translation>
+        <translation>Encuadre</translation>
     </message>
 </context>
 <context>
@@ -50334,7 +50334,7 @@ Fin: (%8 , %9)</translation>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapdistoptions.ui" line="32"/>
         <source>Snap Distance Options</source>
-        <translation>Opciones Forzar Distancia</translation>
+        <translation>Opciones de forzado a distancia</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapdistoptions.ui" line="50"/>
@@ -50357,12 +50357,12 @@ Fin: (%8 , %9)</translation>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapmiddleoptions.ui" line="35"/>
         <source>Snap Distance Options</source>
-        <translation>Opciones Forzar Distancia</translation>
+        <translation>Opciones de forzado a distancia</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapmiddleoptions.ui" line="59"/>
         <source>Snap Middle Points:</source>
-        <translation>Ajustar a los puntos medios:</translation>
+        <translation>Puntos medios del forzado:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapmiddleoptions.ui" line="81"/>

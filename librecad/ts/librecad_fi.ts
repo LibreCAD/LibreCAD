@@ -51,7 +51,7 @@
     <message>
         <location filename="../src/actions/drawing/lc_abstractactionwithpreview.cpp" line="644"/>
         <source> is not divided as it is locked.</source>
-        <translation>ei ole jaettu, koska se on lukittu.</translation>
+        <translation> ei jaettu, koska se on lukittu.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/lc_abstractactionwithpreview.cpp" line="652"/>
@@ -61,7 +61,7 @@
     <message>
         <location filename="../src/actions/drawing/lc_abstractactionwithpreview.cpp" line="652"/>
         <source> is not divided as it is part of polyline. Expand polyline first.</source>
-        <translation>ei ole jaettu, koska se on osa polyline. Laajenna polyline ensin.</translation>
+        <translation> ei jaettu, koska se on osa murtoviivaa. Pura murtoviiva ensin.</translation>
     </message>
 </context>
 <context>
@@ -69,13 +69,14 @@
     <message>
         <location filename="../src/actions/dock_widgets/block/lc_action_block_insert.cpp" line="88"/>
         <source>Block cannot contain an insert of itself.</source>
-        <translation type="unfinished">Block ei voi sisältää lisää itsestään.</translation>
+        <translation type="unfinished">Lohko ei voi sisältää omaa lisäystään.</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/block/lc_action_block_insert.cpp" line="95"/>
         <source> has nested insert of current block in:
 </source>
-        <translation type="unfinished">on pesinyt nykyisen lohkon:</translation>
+        <translation type="unfinished"> sisältää nykyisen lohkon sisäkkäisen lisäyksen lohkossa:
+</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/block/lc_action_block_insert.cpp" line="97"/>
@@ -196,7 +197,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="218"/>
         <source>Specify dimension line position or enter angle:</source>
-        <translation>Määrittele mittalinjan sijainti tai syötä kulma:</translation>
+        <translation>Määritä mittaviivan sijainti tai syötä kulma:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="221"/>
@@ -237,7 +238,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="304"/>
         <source>Snap to Adjacent Dim</source>
-        <translation>Kohdista lähimpään mittaviivaan</translation>
+        <translation>Tartu viereiseen mittaan</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="319"/>
@@ -265,7 +266,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimordinate.cpp" line="211"/>
         <source>Change Ordinate</source>
-        <translation>Vaihda asettelua</translation>
+        <translation>Vaihda ordinaattaa</translation>
     </message>
 </context>
 <context>
@@ -312,7 +313,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_2points_base.cpp" line="118"/>
         <source>The end point is too close to the start point</source>
-        <translation>Loppukohta on liian lähellä aloituspistettä</translation>
+        <translation>Päätepiste on liian lähellä alkupistettä</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_2points_base.cpp" line="159"/>
@@ -431,7 +432,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_center_point_param.cpp" line="535"/>
         <source>Specify center</source>
-        <translation type="unfinished">Määritä keskus</translation>
+        <translation type="unfinished">Määritä keskipiste</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_center_point_param.cpp" line="539"/>
@@ -651,7 +652,7 @@ pisteiden välinen etäisyys=%2 on suurempi kuin halkaisija=%3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_center_point.cpp" line="131"/>
         <source>Specify center</source>
-        <translation type="unfinished">Määritä keskus</translation>
+        <translation type="unfinished">Määritä keskipiste</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_center_point.cpp" line="134"/>
@@ -715,7 +716,7 @@ pisteiden välinen etäisyys=%2 on suurempi kuin halkaisija=%3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_1entity_2points.cpp" line="449"/>
         <source>Specify a line/arc/circle</source>
-        <translation type="unfinished">Määritä linja/kaari/ympyrä</translation>
+        <translation type="unfinished">Määritä viiva/kaari/ympyrä</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_1entity_2points.cpp" line="452"/>
@@ -730,7 +731,7 @@ pisteiden välinen etäisyys=%2 on suurempi kuin halkaisija=%3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_1entity_2points.cpp" line="458"/>
         <source>Select the center of the tangent circle</source>
-        <translation type="unfinished">Valitse tangenttiympyrän keskusta</translation>
+        <translation type="unfinished">Valitse sivuavan ympyrän keskipiste</translation>
     </message>
 </context>
 <context>
@@ -738,7 +739,7 @@ pisteiden välinen etäisyys=%2 on suurempi kuin halkaisija=%3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_2entities_1point.cpp" line="338"/>
         <source>Specify a line/arc/circle</source>
-        <translation type="unfinished">Määritä linja/kaari/ympyrä</translation>
+        <translation type="unfinished">Määritä viiva/kaari/ympyrä</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_2entities_1point.cpp" line="341"/>
@@ -753,7 +754,7 @@ pisteiden välinen etäisyys=%2 on suurempi kuin halkaisija=%3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_2entities_1point.cpp" line="347"/>
         <source>Select the center of the tangent circle</source>
-        <translation type="unfinished">Valitse tangenttiympyrän keskusta</translation>
+        <translation type="unfinished">Valitse sivuavan ympyrän keskipiste</translation>
     </message>
 </context>
 <context>
@@ -776,7 +777,7 @@ pisteiden välinen etäisyys=%2 on suurempi kuin halkaisija=%3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_2entities_radius.cpp" line="298"/>
         <source>Select the center of the tangent circle</source>
-        <translation type="unfinished">Valitse tangenttiympyrän keskusta</translation>
+        <translation type="unfinished">Valitse sivuavan ympyrän keskipiste</translation>
     </message>
 </context>
 <context>
@@ -804,7 +805,7 @@ pisteiden välinen etäisyys=%2 on suurempi kuin halkaisija=%3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_3entities.cpp" line="529"/>
         <source>Select the center of the tangent circle</source>
-        <translation type="unfinished">Valitse tangenttiympyrän keskusta</translation>
+        <translation type="unfinished">Valitse sivuavan ympyrän keskipiste</translation>
     </message>
 </context>
 <context>
@@ -827,7 +828,7 @@ pisteiden välinen etäisyys=%2 on suurempi kuin halkaisija=%3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="419"/>
         <source>Mirror offset direction</source>
-        <translation>Peilin offset suunta</translation>
+        <translation>Peilaa siirtymän suunta</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="422"/>
@@ -837,7 +838,7 @@ pisteiden välinen etäisyys=%2 on suurempi kuin halkaisija=%3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="422"/>
         <source>Snap to Adjacent Dim</source>
-        <translation>Kohdista lähimpään mittaviivaan</translation>
+        <translation>Tartu viereiseen mittaan</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="425"/>
@@ -850,7 +851,7 @@ pisteiden välinen etäisyys=%2 on suurempi kuin halkaisija=%3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="63"/>
         <source>Select Center</source>
-        <translation>Valitse keskus</translation>
+        <translation>Valitse keskipiste</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="68"/>
@@ -883,7 +884,7 @@ pisteiden välinen etäisyys=%2 on suurempi kuin halkaisija=%3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/lc_action_draw_ellipse_1point.cpp" line="332"/>
         <source>Specify ellipse center</source>
-        <translation>Määrittele ellipsikeskus</translation>
+        <translation>Määritä ellipsin keskipiste</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/lc_action_draw_ellipse_1point.cpp" line="336"/>
@@ -930,7 +931,7 @@ pisteiden välinen etäisyys=%2 on suurempi kuin halkaisija=%3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawhyperbolafp.cpp" line="124"/>
         <source>Points not on hyperbola</source>
-        <translation>Ei hyperbolassa</translation>
+        <translation>Pisteet eivät ole hyperbelillä</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawhyperbolafp.cpp" line="276"/>
@@ -1003,7 +1004,7 @@ pisteiden välinen etäisyys=%2 on suurempi kuin halkaisija=%3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line.cpp" line="325"/>
         <source>Cannot close sequence of lines: Not enough entities defined yet, or already closed.</source>
-        <translation type="unfinished">Viivojen sarjaa ei voi sulkea: Ei vielä määritelty tai jo suljettu.</translation>
+        <translation type="unfinished">Viivajonoa ei voi sulkea: kohteita ei ole vielä määritetty tarpeeksi, tai jono on jo suljettu.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line.cpp" line="387"/>
@@ -1138,7 +1139,7 @@ pisteiden välinen etäisyys=%2 on suurempi kuin halkaisija=%3</translation>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_bisector.cpp" line="248"/>
         <source>Number sector lines not in range: </source>
         <comment>number of bisector to create must be in [1, 200]</comment>
-        <translation type="unfinished">Sektorit, jotka eivät ole alueella:</translation>
+        <translation type="unfinished">Sektoriviivojen lukumäärä ei ole sallitulla välillä: </translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_bisector.cpp" line="282"/>
@@ -1785,7 +1786,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_action_draw_polygon_base.cpp" line="267"/>
         <source>Specify center</source>
-        <translation type="unfinished">Määritä keskus</translation>
+        <translation type="unfinished">Määritä keskipiste</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_action_draw_polygon_base.cpp" line="290"/>
@@ -1800,7 +1801,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_action_draw_polygon_base.cpp" line="291"/>
         <source>Center:</source>
-        <translation type="unfinished">Keskus:</translation>
+        <translation type="unfinished">Keskipiste:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_action_draw_polygon_base.cpp" line="292"/>
@@ -1830,7 +1831,7 @@ or [%2]</source>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_draw_polyline.cpp" line="439"/>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_draw_polyline.cpp" line="606"/>
         <source>Enter number of polylines</source>
-        <translation type="unfinished">Anna polylinjojen lukumäärä</translation>
+        <translation type="unfinished">Anna murtoviivojen lukumäärä</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_draw_polyline.cpp" line="564"/>
@@ -1923,7 +1924,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_1point.cpp" line="402"/>
         <source>Don&apos;t keep insertion point</source>
-        <translation>Älä jatka syöttämistä</translation>
+        <translation>Älä säilytä lisäyspistettä</translation>
     </message>
 </context>
 <context>
@@ -2028,7 +2029,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_abstract.cpp" line="195"/>
         <source>Center:</source>
-        <translation type="unfinished">Keskus:</translation>
+        <translation type="unfinished">Keskipiste:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_abstract.cpp" line="224"/>
@@ -2070,7 +2071,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_abstract.cpp" line="452"/>
         <source>Specify corner bevel length (x,y)</source>
-        <translation type="unfinished">Määritä kulmaviivan pituus (x,y)</translation>
+        <translation type="unfinished">Määritä kulman viisteen pituus (x,y)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_abstract.cpp" line="455"/>
@@ -2095,7 +2096,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_slice_divide.cpp" line="248"/>
         <source>Arc</source>
-        <translation>Arc</translation>
+        <translation>Kaari</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_slice_divide.cpp" line="258"/>
@@ -2185,7 +2186,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_action_draw_star.cpp" line="222"/>
         <source>Invalid rays number, should be in range [3..99]</source>
-        <translation>Väärien säteiden lukumäärän on oltava alueella [3..99]</translation>
+        <translation>Virheellinen säteiden määrä, sallittu väli on [3..99]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_action_draw_star.cpp" line="232"/>
@@ -2282,7 +2283,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="338"/>
         <source>Zoom &amp;Panning</source>
-        <translation>&amp;Raahaa Näkymää</translation>
+        <translation>&amp;Panorointi</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="246"/>
@@ -2383,7 +2384,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="216"/>
         <source>Tangent &amp;Orthogonal</source>
-        <translation>Tangentti ja orthonaali</translation>
+        <translation>Tangentti, &amp;kohtisuora</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="217"/>
@@ -2463,7 +2464,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="227"/>
         <source>Slice/Divide Line</source>
-        <translation>Viipalointi/Jakaminen</translation>
+        <translation>Viipaloi/jaa viiva</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="228"/>
@@ -2488,7 +2489,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="263"/>
         <source>Center, &amp;Radius</source>
-        <translation>Keskity, &amp; Säde</translation>
+        <translation>Keskipiste, &amp;säde</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="264"/>
@@ -2524,7 +2525,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="278"/>
         <source>&amp;Center, Point, Angles</source>
-        <translation>&amp; Center, piste, kulmat</translation>
+        <translation>&amp;Keskipiste, piste, kulmat</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="281"/>
@@ -2544,7 +2545,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="287"/>
         <source>Arc &amp;Tangential</source>
-        <translation>Arc &amp; Tangential</translation>
+        <translation>&amp;Tangentiaalinen kaari</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="299"/>
@@ -2554,7 +2555,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="301"/>
         <source>&amp;Insert spline points</source>
-        <translation>&amp; Aseta spline- pisteet</translation>
+        <translation>&amp;Lisää splinin pisteitä</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="312"/>
@@ -2564,12 +2565,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="313"/>
         <source>Ellipse &amp;Arc (Axis)</source>
-        <translation>Ellipse &amp; Arc (Axis)</translation>
+        <translation>Ellipsin &amp;kaari (akseli)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="314"/>
         <source>Ellipse &amp;Foci Point</source>
-        <translation>Ellipse &amp; Foci Point</translation>
+        <translation>Ellipsi, &amp;polttopisteet</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="315"/>
@@ -2579,7 +2580,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="316"/>
         <source>Ellipse Center and &amp;3 Points</source>
-        <translation>Ellipse- keskus ja &amp; 3 pistettä</translation>
+        <translation>Ellipsi, keskipiste ja &amp;3 pistettä</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="317"/>
@@ -2594,7 +2595,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="225"/>
         <source>Centerline</source>
-        <translation>Keskilinja</translation>
+        <translation>Keskiviiva</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="226"/>
@@ -2619,12 +2620,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="298"/>
         <source>&amp;Spline through points</source>
-        <translation>&amp; Pisteiden läpi</translation>
+        <translation>&amp;Spline pisteiden kautta</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="323"/>
         <source>&amp;Polyline</source>
-        <translation>&amp;Polyline</translation>
+        <translation>&amp;Murtoviiva</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="324"/>
@@ -2654,7 +2655,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="329"/>
         <source>Create &amp;Equidistant Polylines</source>
-        <translation>Luo &amp; Equidistant Polylines</translation>
+        <translation>Luo &amp;etäisyydeltään samat murtoviivat</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="331"/>
@@ -2699,22 +2700,22 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="353"/>
         <source>&amp;Radial</source>
-        <translation>&amp;Säteen Suuntainen</translation>
+        <translation>&amp;Säde</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="354"/>
         <source>&amp;Diametric</source>
-        <translation>&amp; Diametrinen</translation>
+        <translation>&amp;Halkaisija</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="355"/>
         <source>&amp;Angular</source>
-        <translation>&amp;Kulmikas</translation>
+        <translation>&amp;Kulma</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="356"/>
         <source>&amp;Arc</source>
-        <translation>&amp; Arc</translation>
+        <translation>&amp;Kaari</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="357"/>
@@ -2734,7 +2735,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="378"/>
         <source>&amp;Attributes</source>
-        <translation>&amp; Osallistujat</translation>
+        <translation>&amp;Attribuutit</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="379"/>
@@ -2884,7 +2885,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="582"/>
         <source>&amp;Point Coordinates</source>
-        <translation>&amp; Osoita koordinaatit</translation>
+        <translation>&amp;Pisteen koordinaatit</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="600"/>
@@ -3074,7 +3075,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="388"/>
         <source>&amp;Trim</source>
-        <translation>&amp; Trim</translation>
+        <translation>&amp;Rajaa</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="390"/>
@@ -3139,7 +3140,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="762"/>
         <source>&amp;Dimension Styles</source>
-        <translation>&amp; Dimension Styles</translation>
+        <translation>&amp;Mittatyylit</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="772"/>
@@ -3229,12 +3230,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="59"/>
         <source>Arc</source>
-        <translation>Arc</translation>
+        <translation>Kaari</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="59"/>
         <source>Arc drawing commands</source>
-        <translation>Arc-piirustuksen komennot</translation>
+        <translation>Kaaren piirtokomennot</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="60"/>
@@ -3375,7 +3376,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="74"/>
         <source>Polyline</source>
-        <translation>Polyline</translation>
+        <translation>Murtoviiva</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="74"/>
@@ -3420,7 +3421,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="79"/>
         <source>Snap Extras</source>
-        <translation>Snap Extrat</translation>
+        <translation>Tartunnan lisätoiminnot</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="79"/>
@@ -3596,12 +3597,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="279"/>
         <source>&amp;Center, Point, Chord</source>
-        <translation>&amp; Center, Point, Chord</translation>
+        <translation>&amp;Keskipiste, piste, jänne</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="280"/>
         <source>&amp;Center, Point, Arc Angle</source>
-        <translation>&amp; Center, piste, kaaren kulma</translation>
+        <translation>&amp;Keskipiste, piste, kaaren kulma</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="282"/>
@@ -3631,7 +3632,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="296"/>
         <source>&amp;Hyperbola &amp;Foci Point</source>
-        <translation>&amp; Hyperbola &amp; Foci Point</translation>
+        <translation>&amp;Hyperbeli, &amp;polttopisteet</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="300"/>
@@ -3646,7 +3647,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="303"/>
         <source>&amp;Spline from polyline</source>
-        <translation>&amp; Spline polylinelta</translation>
+        <translation>&amp;Spline murtoviivasta</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="304"/>
@@ -3661,17 +3662,17 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="311"/>
         <source>&amp;Ellipse Arc (1 Point)</source>
-        <translation>&amp; Ellipse Arc (1 piste)</translation>
+        <translation>&amp;Ellipsin kaari (1 piste)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="330"/>
         <source>Polyline from Existing &amp;Segments</source>
-        <translation>Polyline olemassa olevista &amp; segmenteistä</translation>
+        <translation>Murtoviiva olemassa olevista &amp;segmenteistä</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="332"/>
         <source>Polyline Change Segment Type</source>
-        <translation>Polyline Change Segmentin tyyppi</translation>
+        <translation>Murtoviiva: vaihda segmentin tyyppi</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="343"/>
@@ -3681,7 +3682,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="358"/>
         <source>&amp;Baseline</source>
-        <translation>&amp; Perus</translation>
+        <translation>&amp;Perusviiva</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="359"/>
@@ -3701,7 +3702,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="362"/>
         <source>Ordinates Re-base</source>
-        <translation>Ordinates Rebase</translation>
+        <translation>Ordinaattojen perustan vaihto</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="363"/>
@@ -3716,7 +3717,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="399"/>
         <source>Line Gap</source>
-        <translation>Linjan aukko</translation>
+        <translation>Viivan aukko</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="400"/>
@@ -3802,7 +3803,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="449"/>
         <source>Snap Middle Manual</source>
-        <translation>Kohdista keskipiste manuaalisesti</translation>
+        <translation>Tartunta keskikohtaan käsin</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="455"/>
@@ -3817,7 +3818,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="457"/>
         <source>Snap Center</source>
-        <translation>Kohdista keskipiste</translation>
+        <translation>Tartunta keskipisteeseen</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="458"/>
@@ -3827,12 +3828,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="459"/>
         <source>Snap Distance</source>
-        <translation>Välimatka</translation>
+        <translation>Etäisyystartunta</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="460"/>
         <source>Snap Intersection</source>
-        <translation>Kohdista leikkauspiste</translation>
+        <translation>Tartunta leikkauspisteeseen</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="525"/>
@@ -3897,12 +3898,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="566"/>
         <source>Free Snap</source>
-        <translation>Vapaa kohdistus</translation>
+        <translation>Vapaa tartunta</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="584"/>
         <source>Distance &amp;Entity to Point</source>
-        <translation>Etäisyys &amp; Entity to Point</translation>
+        <translation>Etäisyys &amp;kohteesta pisteeseen</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="585"/>
@@ -3942,7 +3943,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="607"/>
         <source>&amp;Orthogonal Grid</source>
-        <translation>&amp; Orthogonal grid</translation>
+        <translation>&amp;Suorakulmainen ruudukko</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="608"/>
@@ -3952,12 +3953,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="609"/>
         <source>&amp;Isometric Top Grid</source>
-        <translation>&amp; Isometrinen yläverkko</translation>
+        <translation>&amp;Isometrinen ruudukko, yläpinta</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="610"/>
         <source>&amp;Isometric Right Grid</source>
-        <translation>&amp;Isometrinen oikea verkko</translation>
+        <translation>&amp;Isometrinen ruudukko, oikea</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="621"/>
@@ -4022,7 +4023,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="642"/>
         <source>&amp;Insert Block</source>
-        <translation>&amp; Lohko</translation>
+        <translation>&amp;Lisää lohko</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="643"/>
@@ -4240,7 +4241,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="147"/>
         <source>Select second (intersection) point of angle</source>
-        <translation>Valitse kulman toinen (väli) piste</translation>
+        <translation>Valitse kulman toinen piste (leikkauspiste)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="151"/>
@@ -4320,7 +4321,7 @@ Loppureunan piste: (%9, %10)</translation>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="213"/>
         <source>Intersection:</source>
-        <translation>Intersection:</translation>
+        <translation>Leikkauspiste:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="215"/>
@@ -4533,17 +4534,17 @@ Piste: (%8, %9)</translation>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="164"/>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="323"/>
         <source>Intersection:</source>
-        <translation>Intersection:</translation>
+        <translation>Leikkauspiste:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="165"/>
         <source>Line 1 Angle:</source>
-        <translation>Linja 1 kulma:</translation>
+        <translation>Viivan 1 kulma:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="166"/>
         <source>Line 2 Angle:</source>
-        <translation>Linja 2 kulma:</translation>
+        <translation>Viivan 2 kulma:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="288"/>
@@ -4563,7 +4564,7 @@ Piste: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="292"/>
         <source>Select second (intersection) point of angle</source>
-        <translation>Valitse kulman toinen (väli) piste</translation>
+        <translation>Valitse kulman toinen piste (leikkauspiste)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="292"/>
@@ -4795,7 +4796,7 @@ Piste: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="53"/>
         <source>Align action at the moment supports only World Coordinates system, and may not be invoked if User Coordinate System is active.</source>
-        <translation>Kohdista toimintaa tällä hetkellä tukee vain World Coordinations järjestelmä, eikä voi vedota, jos Käyttäjän Coordinate System on aktiivinen.</translation>
+        <translation>Kohdistustoiminto tukee tällä hetkellä vain maailmankoordinaatistoa, eikä sitä voi käyttää, kun käyttäjän koordinaatisto on aktiivinen.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="147"/>
@@ -4931,7 +4932,7 @@ Piste: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_single.cpp" line="54"/>
         <source>Align action at the moment supports only World Coordinates system, and may not be invoked if User Coordinate System is active.</source>
-        <translation>Kohdista toimintaa tällä hetkellä tukee vain World Coordinations järjestelmä, eikä voi vedota, jos Käyttäjän Coordinate System on aktiivinen.</translation>
+        <translation>Kohdistustoiminto tukee tällä hetkellä vain maailmankoordinaatistoa, eikä sitä voi käyttää, kun käyttäjän koordinaatisto on aktiivinen.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_single.cpp" line="115"/>
@@ -5012,12 +5013,12 @@ Piste: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_bevel.cpp" line="182"/>
         <source>Trim</source>
-        <translation type="unfinished">Trim</translation>
+        <translation type="unfinished">Rajaa</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_bevel.cpp" line="183"/>
         <source>Intersection:</source>
-        <translation type="unfinished">Intersection:</translation>
+        <translation type="unfinished">Leikkauspiste:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_bevel.cpp" line="184"/>
@@ -5148,7 +5149,7 @@ Piste: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="520"/>
         <source>Proceed even if no intersections</source>
-        <translation>Jatka, vaikka risteyksiä ei olisikaan</translation>
+        <translation>Jatka, vaikka leikkauspisteitä ei olisi</translation>
     </message>
 </context>
 <context>
@@ -5252,7 +5253,7 @@ Piste: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_delete_free.cpp" line="145"/>
         <source>Specify first break point on a polyline</source>
-        <translation type="unfinished">Määrittele ensimmäinen keskeytyspiste polylinjalla</translation>
+        <translation type="unfinished">Määritä ensimmäinen katkaisukohta murtoviivalla</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_delete_free.cpp" line="148"/>
@@ -5311,7 +5312,7 @@ Piste: (%8, %9)</translation>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_gap.cpp" line="91"/>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_gap.cpp" line="116"/>
         <source>Line Gap</source>
-        <translation>Linjan aukko</translation>
+        <translation>Viivan aukko</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_gap.cpp" line="92"/>
@@ -5356,7 +5357,7 @@ Piste: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_join.cpp" line="135"/>
         <source>Intersection:</source>
-        <translation>Intersection:</translation>
+        <translation>Leikkauspiste:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_join.cpp" line="188"/>
@@ -5367,7 +5368,7 @@ Piste: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_join.cpp" line="210"/>
         <source>Lines are parallel, can&apos;t merge</source>
-        <translation>Linjat ovat rinnakkain, ei voi yhdistyä</translation>
+        <translation>Viivat ovat yhdensuuntaiset, niitä ei voi yhdistää</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_join.cpp" line="215"/>
@@ -5395,7 +5396,7 @@ Piste: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_mirror.cpp" line="148"/>
         <source>Mirror</source>
-        <translation type="unfinished">Peili</translation>
+        <translation type="unfinished">Peilaus</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_mirror.cpp" line="149"/>
@@ -5415,7 +5416,7 @@ Piste: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_mirror.cpp" line="152"/>
         <source>Line To:</source>
-        <translation type="unfinished">Linja mihin:</translation>
+        <translation type="unfinished">Viiva mihin:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_mirror.cpp" line="251"/>
@@ -5507,7 +5508,7 @@ Piste: (%8, %9)</translation>
         <location filename="../src/actions/drawing/modify/lc_action_modify_move_rotate.cpp" line="124"/>
         <location filename="../src/actions/drawing/modify/lc_action_modify_move_rotate.cpp" line="153"/>
         <source>Moving with rotation</source>
-        <translation type="unfinished">Liikkuminen pyörimällä</translation>
+        <translation type="unfinished">Siirto ja kierto</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_move_rotate.cpp" line="124"/>
@@ -5786,7 +5787,7 @@ Piste: (%8, %9)</translation>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate.cpp" line="204"/>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate.cpp" line="211"/>
         <source>Center Point:</source>
-        <translation type="unfinished">Keskuspiste:</translation>
+        <translation type="unfinished">Keskipiste:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate.cpp" line="205"/>
@@ -5800,7 +5801,7 @@ Piste: (%8, %9)</translation>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate.cpp" line="288"/>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate.cpp" line="322"/>
         <source>Source Point:</source>
-        <translation type="unfinished">Lähde:</translation>
+        <translation type="unfinished">Lähtöpiste:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate.cpp" line="289"/>
@@ -5865,7 +5866,7 @@ Piste: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate_twice.cpp" line="146"/>
         <source>Center 1:</source>
-        <translation type="unfinished">Keskus 1:</translation>
+        <translation type="unfinished">Keskipiste 1:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate_twice.cpp" line="147"/>
@@ -5875,7 +5876,7 @@ Piste: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate_twice.cpp" line="148"/>
         <source>Center 2:</source>
-        <translation type="unfinished">Keskus 2:</translation>
+        <translation type="unfinished">Keskipiste 2:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate_twice.cpp" line="149"/>
@@ -5952,17 +5953,17 @@ Piste: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_scale.cpp" line="223"/>
         <source>Scale</source>
-        <translation type="unfinished">Mittakaava</translation>
+        <translation type="unfinished">Skaalaus</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_scale.cpp" line="224"/>
         <source>Center:</source>
-        <translation type="unfinished">Keskus:</translation>
+        <translation type="unfinished">Keskipiste:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_scale.cpp" line="225"/>
         <source>Source Point:</source>
-        <translation type="unfinished">Lähde:</translation>
+        <translation type="unfinished">Lähtöpiste:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_scale.cpp" line="226"/>
@@ -5987,7 +5988,7 @@ Piste: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_scale.cpp" line="413"/>
         <source>Specify scale center</source>
-        <translation type="unfinished">Määritä asteikon keskus</translation>
+        <translation type="unfinished">Määritä skaalauksen keskipiste</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_scale.cpp" line="413"/>
@@ -6086,17 +6087,17 @@ Piste: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim.cpp" line="130"/>
         <source>Trim Two</source>
-        <translation type="unfinished">Trim 2</translation>
+        <translation type="unfinished">Rajaa kaksi</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim.cpp" line="130"/>
         <source>Trim</source>
-        <translation type="unfinished">Trim</translation>
+        <translation type="unfinished">Rajaa</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim.cpp" line="131"/>
         <source>Intersection:</source>
-        <translation type="unfinished">Intersection:</translation>
+        <translation type="unfinished">Leikkauspiste:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim.cpp" line="133"/>
@@ -6152,7 +6153,7 @@ Piste: (%8, %9)</translation>
     <message>
         <location filename="../src/ui/action_options/lc_action_options_properties_filler_base.cpp" line="294"/>
         <source>Snap Distance</source>
-        <translation type="unfinished">Välimatka</translation>
+        <translation type="unfinished">Etäisyystartunta</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/lc_action_options_properties_filler_base.cpp" line="294"/>
@@ -6263,12 +6264,12 @@ Piste: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_add.cpp" line="147"/>
         <source>Adding point is not on entity.</source>
-        <translation type="unfinished">Lisäkohta ei ole entiteetti.</translation>
+        <translation type="unfinished">Lisättävä piste ei ole kohteella.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_add.cpp" line="180"/>
         <source>Specify polyline to add nodes</source>
-        <translation type="unfinished">Määritä polyline lisätä solmuja</translation>
+        <translation type="unfinished">Määritä murtoviiva, johon solmuja lisätään</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_add.cpp" line="183"/>
@@ -6291,22 +6292,22 @@ Piste: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_append.cpp" line="132"/>
         <source>Can not append nodes in a closed polyline.</source>
-        <translation type="unfinished">Ei voi lisätä solmuja suljettuun polyline.</translation>
+        <translation type="unfinished">Suljettuun murtoviivaan ei voi lisätä solmuja.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_append.cpp" line="171"/>
         <source>Click somewhere near the beginning or end of existing polyline.</source>
-        <translation type="unfinished">Klikkaa jossain lähellä alkua tai loppua olemassa polyline.</translation>
+        <translation type="unfinished">Napsauta olemassa olevan murtoviivan alun tai lopun läheltä.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_append.cpp" line="294"/>
         <source>Enter number of polylines</source>
-        <translation type="unfinished">Anna polylinjojen lukumäärä</translation>
+        <translation type="unfinished">Anna murtoviivojen lukumäärä</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_append.cpp" line="309"/>
         <source>Specify the polyline somewhere near the beginning or end point</source>
-        <translation type="unfinished">Määrittele polyline jonnekin alku- tai päätepisteen lähelle</translation>
+        <translation type="unfinished">Osoita murtoviivaa sen alku- tai päätepisteen läheltä</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_append.cpp" line="329"/>
@@ -6407,12 +6408,12 @@ Piste: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node_between.cpp" line="174"/>
         <source>No polyline found.</source>
-        <translation type="unfinished">Polylinjaa ei löytynyt.</translation>
+        <translation type="unfinished">Murtoviivaa ei löytynyt.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node_between.cpp" line="195"/>
         <source>At least two segments of polyline should be between selected points.</source>
-        <translation type="unfinished">Valittujen pisteiden välillä olisi oltava vähintään kaksi polyline-segmenttiä.</translation>
+        <translation type="unfinished">Valittujen pisteiden välissä pitää olla vähintään kaksi murtoviivan segmenttiä.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node_between.cpp" line="213"/>
@@ -6445,7 +6446,7 @@ Piste: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_equidistant.cpp" line="403"/>
         <source>Choose the original polyline</source>
-        <translation type="unfinished">Valitse alkuperäinen polyline</translation>
+        <translation type="unfinished">Valitse alkuperäinen murtoviiva</translation>
     </message>
 </context>
 <context>
@@ -6454,7 +6455,7 @@ Piste: (%8, %9)</translation>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_from_segment.cpp" line="62"/>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_from_segment.cpp" line="82"/>
         <source>Polyline created</source>
-        <translation type="unfinished">Polyline luotu</translation>
+        <translation type="unfinished">Murtoviiva luotu</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_from_segment.cpp" line="326"/>
@@ -6469,7 +6470,7 @@ Piste: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_from_segment.cpp" line="352"/>
         <source>Choose one of the segments on the original polyline</source>
-        <translation type="unfinished">Valitse yksi alkuperäisen polylinen segmenteistä</translation>
+        <translation type="unfinished">Valitse yksi alkuperäisen murtoviivan segmenteistä</translation>
     </message>
 </context>
 <context>
@@ -6487,12 +6488,12 @@ Piste: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_trim.cpp" line="143"/>
         <source>First segment should be on selected polyline.</source>
-        <translation type="unfinished">Ensimmäinen segmentti olisi valittu polyline.</translation>
+        <translation type="unfinished">Ensimmäisen segmentin on oltava valitulla murtoviivalla.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_trim.cpp" line="155"/>
         <source>Second segment should be on selected polyline and not equal to first one.</source>
-        <translation type="unfinished">Toisen segmentin pitäisi olla valitulla polyline eikä yhtä ensimmäinen.</translation>
+        <translation type="unfinished">Toisen segmentin on oltava valitulla murtoviivalla, eikä se saa olla sama kuin ensimmäinen.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_trim.cpp" line="188"/>
@@ -6550,7 +6551,7 @@ Piste: (%8, %9)</translation>
     <message>
         <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="246"/>
         <source>Select Intersecting</source>
-        <translation>Valitse leikkaaminen</translation>
+        <translation>Valitse leikkaavat</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="276"/>
@@ -6722,12 +6723,12 @@ Piste: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_window.cpp" line="184"/>
         <source>Select Intersecting</source>
-        <translation type="unfinished">Valitse leikkaaminen</translation>
+        <translation type="unfinished">Valitse leikkaavat</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_window.cpp" line="184"/>
         <source>De-select intersecting</source>
-        <translation type="unfinished">Poista päällekkäisten valinta</translation>
+        <translation type="unfinished">Poista leikkaavien valinta</translation>
     </message>
 </context>
 <context>
@@ -6802,7 +6803,7 @@ Piste: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_action_spline_from_polyline.cpp" line="162"/>
         <source>Select polyline to create spline or spline points</source>
-        <translation>Valitse polyline luoda spline tai spline pisteitä</translation>
+        <translation>Valitse murtoviiva, josta luodaan spline tai splinin pisteet</translation>
     </message>
 </context>
 <context>
@@ -7432,7 +7433,7 @@ Oletko varma, että aiot hylätä muutokset?</translation>
     <message>
         <location filename="../src/ui/components/status_bar/lc_anglesbasiswidget.ui" line="96"/>
         <source>Zero base angle relative to the current user coordinate system. 0.0 is 3pm.</source>
-        <translation>Nolla peruskulma suhteessa nykyiseen käyttäjän koordinaattijärjestelmään. 0.0 on kolme.</translation>
+        <translation>Peruskulman nollasuunta suhteessa nykyiseen käyttäjän koordinaatistoon. 0.0 on kello 3:n suunta.</translation>
     </message>
     <message>
         <location filename="../src/ui/components/status_bar/lc_anglesbasiswidget.ui" line="105"/>
@@ -7655,7 +7656,7 @@ Oletko varma, että aiot hylätä muutokset?</translation>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_center_point_param_options_widget.ui" line="26"/>
         <source>Arc Options</source>
-        <translation type="unfinished">Arc- asetukset</translation>
+        <translation type="unfinished">Kaaren asetukset</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_center_point_param_options_widget.ui" line="56"/>
@@ -7683,27 +7684,27 @@ Oletko varma, että aiot hylätä muutokset?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="65"/>
         <source>Center (x):</source>
-        <translation>Keskus (x):</translation>
+        <translation>Keskipiste (x):</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="87"/>
         <source>X Coordinate of arc&apos;s center</source>
-        <translation>X-koordinaatti kaaren keskustasta</translation>
+        <translation>Kaaren keskipisteen X-koordinaatti</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="112"/>
         <source>Pick center coordinate from the drawing</source>
-        <translation>Valitse keskustan koordinaatti piirroksesta</translation>
+        <translation>Poimi keskipisteen koordinaatti piirustuksesta</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="131"/>
         <source>Center (y):</source>
-        <translation>Keskus (y):</translation>
+        <translation>Keskipiste (y):</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="153"/>
         <source>Y Coordinate of arc&apos;s center</source>
-        <translation>Y-koordinaatti kaaren keskustasta</translation>
+        <translation>Kaaren keskipisteen Y-koordinaatti</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="172"/>
@@ -7915,7 +7916,7 @@ Oletko varma, että aiot hylätä muutokset?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_filler.cpp" line="31"/>
         <source>Trim</source>
-        <translation type="unfinished">Trim</translation>
+        <translation type="unfinished">Rajaa</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_filler.cpp" line="31"/>
@@ -7958,7 +7959,7 @@ Oletko varma, että aiot hylätä muutokset?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_widget.ui" line="62"/>
         <source>Trim</source>
-        <translation type="unfinished">Trim</translation>
+        <translation type="unfinished">Rajaa</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_widget.ui" line="85"/>
@@ -8315,7 +8316,7 @@ Oletko varma, että aiot hylätä muutokset?</translation>
     <message>
         <location filename="../src/ui/action_options/misc/lc_center_mark_options_filler.cpp" line="57"/>
         <source>Vertical dimension of the cross</source>
-        <translation type="unfinished">Ristin pystyulottuvuus</translation>
+        <translation type="unfinished">Ristin pystysuuntainen koko</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/misc/lc_center_mark_options_filler.cpp" line="63"/>
@@ -8325,7 +8326,7 @@ Oletko varma, että aiot hylätä muutokset?</translation>
     <message>
         <location filename="../src/ui/action_options/misc/lc_center_mark_options_filler.cpp" line="63"/>
         <source>Rotation angle for cross around center</source>
-        <translation type="unfinished">Kiertokulma keskelle ristiin</translation>
+        <translation type="unfinished">Ristin kiertokulma keskipisteen ympäri</translation>
     </message>
 </context>
 <context>
@@ -8343,7 +8344,7 @@ Oletko varma, että aiot hylätä muutokset?</translation>
     <message>
         <location filename="../src/ui/action_options/misc/lc_center_mark_options_widget.ui" line="63"/>
         <source>Vertical dimension of the cross</source>
-        <translation type="unfinished">Ristin pystyulottuvuus</translation>
+        <translation type="unfinished">Ristin pystysuuntainen koko</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/misc/lc_center_mark_options_widget.ui" line="83"/>
@@ -8353,7 +8354,7 @@ Oletko varma, että aiot hylätä muutokset?</translation>
     <message>
         <location filename="../src/ui/action_options/misc/lc_center_mark_options_widget.ui" line="108"/>
         <source>Rotation angle for cross around center</source>
-        <translation type="unfinished">Kiertokulma keskelle ristiin</translation>
+        <translation type="unfinished">Ristin kiertokulma keskipisteen ympäri</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/misc/lc_center_mark_options_widget.ui" line="133"/>
@@ -8600,27 +8601,27 @@ Oletko varma, että aiot hylätä muutokset?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_circle.ui" line="47"/>
         <source>Center (x):</source>
-        <translation>Keskus (x):</translation>
+        <translation>Keskipiste (x):</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_circle.ui" line="63"/>
         <source>X Coordinate of circle&apos;s center</source>
-        <translation>X-koordinaatti ympyrän keskustasta</translation>
+        <translation>Ympyrän keskipisteen X-koordinaatti</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_circle.ui" line="88"/>
         <source>Pick center coordinate from drawing</source>
-        <translation>Valitse keskustan koordinaatti piirroksesta</translation>
+        <translation>Poimi keskipisteen koordinaatti piirustuksesta</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_circle.ui" line="95"/>
         <source>Center (y):</source>
-        <translation>Keskus (y):</translation>
+        <translation>Keskipiste (y):</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_circle.ui" line="111"/>
         <source>Y Coordinate of circle&apos;s center</source>
-        <translation>Y-koordinaatti ympyrän keskustasta</translation>
+        <translation>Ympyrän keskipisteen Y-koordinaatti</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_circle.ui" line="118"/>
@@ -8671,7 +8672,7 @@ Oletko varma, että aiot hylätä muutokset?</translation>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_tangental_2_entities_radius_options_widget.ui" line="32"/>
         <source>Circle Tangential2 Options</source>
-        <translation type="unfinished">Circle Tangential2 asetukset</translation>
+        <translation type="unfinished">Kahta kohdetta sivuavan ympyrän asetukset</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_tangental_2_entities_radius_options_widget.ui" line="56"/>
@@ -8844,7 +8845,7 @@ Oletko varma, että aiot hylätä muutokset?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/lc_dimstyleitem.cpp" line="99"/>
         <source>Diametric</source>
-        <translation>Diametrinen</translation>
+        <translation>Halkaisija</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/lc_dimstyleitem.cpp" line="103"/>
@@ -8946,7 +8947,7 @@ Oletko varma, että aiot hylätä muutokset?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="175"/>
         <source>Dimension styles were imported.</source>
-        <translation>Dimension tyylejä tuotiin.</translation>
+        <translation>Mittatyylit tuotiin.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="183"/>
@@ -9078,7 +9079,7 @@ Oletko varma, että aiot hylätä muutokset?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="55"/>
         <source>Dimension Lines</source>
-        <translation>Mitat</translation>
+        <translation>Mittaviivat</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="74"/>
@@ -9094,7 +9095,7 @@ Oletko varma, että aiot hylätä muutokset?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="81"/>
         <source>Linetype:</source>
-        <translation>Linjatyyppi:</translation>
+        <translation>Viivatyyppi:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="67"/>
@@ -9104,12 +9105,12 @@ Oletko varma, että aiot hylätä muutokset?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="88"/>
         <source>Linewidth:</source>
-        <translation>Linjanleveys:</translation>
+        <translation>Viivan leveys:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="137"/>
         <source>Sets the lineweight of the dimension line. (DIMLWD system variable)</source>
-        <translation>Asettaa mittaviivan linjan painon. (DIMLWD-järjestelmän muuttuja)</translation>
+        <translation>Asettaa mittaviivan viivan leveyden. (DIMLWD-järjestelmän muuttuja)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="111"/>
@@ -9169,7 +9170,7 @@ Oletko varma, että aiot hylätä muutokset?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="338"/>
         <source>Linetype ext line 2:</source>
-        <translation>Linetytype ext line 2:</translation>
+        <translation>Mitta-apuviivan 2 viivatyyppi:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="308"/>
@@ -9179,7 +9180,7 @@ Oletko varma, että aiot hylätä muutokset?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="331"/>
         <source>Lineweight:</source>
-        <translation>Linjapaino:</translation>
+        <translation>Viivan leveys:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="236"/>
@@ -9194,7 +9195,7 @@ Oletko varma, että aiot hylätä muutokset?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="285"/>
         <source>Specifies a distance to extend the extension lines above the dimension line. (DIMEXE system variable)</source>
-        <translation>Määrittää etäisyyden mittaviivan yläpäähän. (DIMEXE-järjestelmän muuttuja)</translation>
+        <translation>Määrittää, kuinka paljon mitta-apuviivat jatkuvat mittaviivan yli. (DIMEXE-järjestelmän muuttuja)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="375"/>
@@ -9204,7 +9205,7 @@ Oletko varma, että aiot hylätä muutokset?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="404"/>
         <source>Sets the distance to offset the extension lines from the points on the drawing that define the dimension. (DIMEXO system variable)</source>
-        <translation>Asettaa etäisyyden tasoittaa jatkolinjat piirroksen pisteistä, jotka määrittävät mitta. (DIMEXO-järjestelmän muuttuja)</translation>
+        <translation>Asettaa mitta-apuviivojen etäisyyden piirustuksen pisteistä, jotka määrittävät mitan. (DIMEXO-järjestelmän muuttuja)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="223"/>
@@ -9219,12 +9220,12 @@ Oletko varma, että aiot hylätä muutokset?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="345"/>
         <source>Enables fixed length extension lines. (DIMFXLON system variable)</source>
-        <translation>Mahdollistaa kiinteän pituuden jatkolinjat. (DIMFXLON-järjestelmän muuttuja)</translation>
+        <translation>Ottaa käyttöön kiinteäpituiset mitta-apuviivat. (DIMFXLON-järjestelmän muuttuja)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="348"/>
         <source>Fixed length extension lines</source>
-        <translation>Kiinteät jatkolinjat</translation>
+        <translation>Kiinteäpituiset mitta-apuviivat</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="269"/>
@@ -9234,7 +9235,7 @@ Oletko varma, että aiot hylätä muutokset?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="272"/>
         <source>Suppress Ext line 1</source>
-        <translation>Paina Ext line 1</translation>
+        <translation>Piilota mitta-apuviiva 1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="321"/>
@@ -9244,7 +9245,7 @@ Oletko varma, että aiot hylätä muutokset?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="324"/>
         <source>Suppress Ext line 2</source>
-        <translation>Paina etulinja 2</translation>
+        <translation>Piilota mitta-apuviiva 2</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="429"/>
@@ -9290,7 +9291,7 @@ Oletko varma, että aiot hylätä muutokset?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="486"/>
         <source>Determines the angle of the transverse segment of the dimension line in a jogged radius dimension. (DIMJOGANG system variable)</source>
-        <translation>Määrittää mittaviivan poikittaisen segmentin kulman jogurttisäteessä. (DIMJOGANG-järjestelmän muuttuja)</translation>
+        <translation>Määrittää taitetun sädemitan mittaviivan poikittaisen osan kulman. (DIMJOGANG-järjestelmän muuttuja)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="505"/>
@@ -9325,7 +9326,7 @@ Oletko varma, että aiot hylätä muutokset?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="570"/>
         <source>Use the same arrowhead for dimension line</source>
-        <translation>Käytä samaa nuolinäppää mittaviivaan</translation>
+        <translation>Käytä samaa nuolenpäätä mittaviivalle</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="546"/>
@@ -9335,7 +9336,7 @@ Oletko varma, että aiot hylätä muutokset?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="525"/>
         <source>First:</source>
-        <translation>Ensinnäkin:</translation>
+        <translation>Ensimmäinen:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="563"/>
@@ -9360,12 +9361,12 @@ Oletko varma, että aiot hylätä muutokset?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="624"/>
         <source>Arc length symbol</source>
-        <translation>Arc pituussymboli</translation>
+        <translation>Kaaren pituuden symboli</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="630"/>
         <source>Suppresses the display of arc length symbols. (DIMARCSYM system variable)</source>
-        <translation>Se näyttää kaaren pituuden symbolit. (DIMARCSYM-järjestelmän muuttuja)</translation>
+        <translation>Piilottaa kaaren pituuden symbolit. (DIMARCSYM-järjestelmän muuttuja)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="633"/>
@@ -9387,7 +9388,7 @@ Oletko varma, että aiot hylätä muutokset?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="650"/>
         <source>Places arc length symbols above the dimension text. (DIMARCSYM system variable)</source>
-        <translation>Paikat kaaren pituussymbolit mittatekstin yläpuolella. (DIMARCSYM-järjestelmän muuttuja)</translation>
+        <translation>Sijoittaa kaaren pituuden symbolin mittatekstin yläpuolelle. (DIMARCSYM-järjestelmän muuttuja)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="653"/>
@@ -9402,12 +9403,12 @@ Oletko varma, että aiot hylätä muutokset?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="669"/>
         <source>Creates no center mark or centerline. The value is stored as 0 in the DIMCEN system variable.</source>
-        <translation>Ei luo keskiviivaa. Arvo tallennetaan 0:na DIMCEN-järjestelmän muuttujaan.</translation>
+        <translation>Ei luo keskimerkkiä eikä keskiviivaa. Arvo tallennetaan 0:na DIMCEN-järjestelmän muuttujaan.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="679"/>
         <source>Creates a center mark. The size of the center mark is stored as a positive value in the DIMCEN system variable.</source>
-        <translation>Luo keskiviivan. Keskimerkin koko tallennetaan positiivisena arvona DIMCEN-järjestelmän muuttujaan.</translation>
+        <translation>Luo keskimerkin. Keskimerkin koko tallennetaan positiivisena arvona DIMCEN-järjestelmän muuttujaan.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="682"/>
@@ -9417,7 +9418,7 @@ Oletko varma, että aiot hylätä muutokset?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="689"/>
         <source>Creates a centerline. The size of the centerline is stored as a negative value in the DIMCEN system variable.</source>
-        <translation>Luo keskilinjan. Keskilinjan koko tallennetaan negatiivisena arvona DIMCEN-järjestelmän muuttujaan.</translation>
+        <translation>Luo keskiviivan. Keskiviivan koko tallennetaan negatiivisena arvona DIMCEN-järjestelmän muuttujaan.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="692"/>
@@ -9432,7 +9433,7 @@ Oletko varma, että aiot hylätä muutokset?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="706"/>
         <source>Displays and sets the size of the center mark or centerline. (DIMCEN system variable)</source>
-        <translation>Näyttää ja asettaa koko keskustamerkin tai keskilinjan. (DIMCEN-järjestelmän muuttuja)</translation>
+        <translation>Näyttää ja asettaa keskimerkin tai keskiviivan koon. (DIMCEN-järjestelmän muuttuja)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="746"/>
@@ -9483,7 +9484,7 @@ Oletko varma, että aiot hylätä muutokset?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="822"/>
         <source>Fraction height scale:</source>
-        <translation>Murtokorkeuden asteikko:</translation>
+        <translation>Murtolukujen korkeuskerroin:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="829"/>
@@ -9498,12 +9499,12 @@ Oletko varma, että aiot hylätä muutokset?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="849"/>
         <source>Defines whether text background will be filled by color</source>
-        <translation>Määrittää onko teksti tausta täytetään värillä</translation>
+        <translation>Määrittää, täytetäänkö tekstin tausta värillä</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="852"/>
         <source>Fill text background by color</source>
-        <translation>Täytä tekstin tausta värin mukaan</translation>
+        <translation>Täytä tekstin tausta värillä</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="859"/>
@@ -9518,7 +9519,7 @@ Oletko varma, että aiot hylätä muutokset?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="885"/>
         <source>Text Alignment</source>
-        <translation>Tekstin yhdenmukaistaminen</translation>
+        <translation>Tekstin tasaus</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="891"/>
@@ -9544,7 +9545,7 @@ Oletko varma, että aiot hylätä muutokset?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="904"/>
         <source>Aligned with dimension line</source>
-        <translation>Mittaviivalla</translation>
+        <translation>Mittaviivan suuntaisesti</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="150"/>
@@ -9559,8 +9560,8 @@ Oletko varma, että aiot hylätä muutokset?</translation>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="577"/>
         <source>Specifies the size of oblique strokes drawn instead of arrowheads for linear, radius, and diameter dimensioning. If = 0 – draws arrowheads.
 &gt;0 – Draws oblique strokes instead of arrowheads (DIMTSZ variable). </source>
-        <translation>Määrittää vinoviivan koon nuolenkärkien sijaan lineaarisen, säde- ja halkaisijan mittaukseen. Jos = 0 
-&gt;0 .</translation>
+        <translation>Määrittää nuolenpäiden sijasta piirrettävien vinoviivojen koon lineaarisissa mitoissa sekä säde- ja halkaisijamitoissa. Jos = 0 – piirtää nuolenpäät.
+&gt;0 – Piirtää vinoviivat nuolenpäiden sijasta (DIMTSZ-muuttuja). </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="914"/>
@@ -9601,7 +9602,7 @@ Oletko varma, että aiot hylätä muutokset?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="961"/>
         <source>Controls the horizontal placement of dimension text along the dimension line, in relation to the extension lines. (DIMJUST system variable)</source>
-        <translation>Valvoo mittatekstin vaakasuuntaista sijoittamista mittalinjaa pitkin suhteessa laajennusviivoihin. (DIMJUST-järjestelmän muuttuja)</translation>
+        <translation>Ohjaa mittatekstin vaakasuuntaista sijoittelua mittaviivalla suhteessa mitta-apuviivoihin. (DIMJUST-järjestelmän muuttuja)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="965"/>
@@ -9612,27 +9613,27 @@ Oletko varma, että aiot hylätä muutokset?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="970"/>
         <source>At Ext Line 1</source>
-        <translation>Ext-linjalla 1</translation>
+        <translation>Mitta-apuviivan 1 kohdalla</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="975"/>
         <source>At Ext Line 2</source>
-        <translation>Ext-linjalla 2</translation>
+        <translation>Mitta-apuviivan 2 kohdalla</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="980"/>
         <source>Over Ext Line 1</source>
-        <translation>Ulkolinjan 1 yläpuolella</translation>
+        <translation>Mitta-apuviivan 1 yläpuolella</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="985"/>
         <source>Over Ext Line 2</source>
-        <translation>Ext-linjan 2 yläpuolella</translation>
+        <translation>Mitta-apuviivan 2 yläpuolella</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="993"/>
         <source>View Direction:</source>
-        <translation>Näytä suunta:</translation>
+        <translation>Katselusuunta:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1000"/>
@@ -9692,7 +9693,7 @@ Oletko varma, että aiot hylätä muutokset?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1098"/>
         <source>Ignores any horizontal justification settings and places the text at the position you specify at the Dimension Line Location prompt. (DIMUPT system variable)</source>
-        <translation>Ohittaa kaikki horisontaaliset oikeutusasetukset ja asettaa tekstin valitsemaasi asentoon Dimension Line Sijainti -kehossa. (DIMUPT-järjestelmän muuttuja)</translation>
+        <translation>Ohittaa vaakasuuntaiset tasausasetukset ja sijoittaa tekstin kohtaan, jonka osoitat mittaviivan sijainnin kehotteessa. (DIMUPT-järjestelmän muuttuja)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1101"/>
@@ -9718,12 +9719,12 @@ Oletko varma, että aiot hylätä muutokset?</translation>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1127"/>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1137"/>
         <source>Sets a scale for all dimension style settings that specify size, distance, or spacing, including text and arrowhead sizes. This scale does not change dimension measurement values. (DIMSCALE system variable)</source>
-        <translation>Asettaa asteikon kaikille mittatyyleille, jotka määrittelevät koon, etäisyyden tai välin, mukaan lukien tekstin ja nuolenpään koot. Tämä asteikko ei muuta mittojen mittausarvoja. (DIMSCALE-järjestelmän muuttuja)</translation>
+        <translation>Asettaa mittakaavan kaikille mittatyylin asetuksille, jotka määrittävät koon, etäisyyden tai välin, myös tekstin ja nuolenpäiden koot. Tämä mittakaava ei muuta mittojen mittausarvoja. (DIMSCALE-järjestelmän muuttuja)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1130"/>
         <source>Use overall scale of:</source>
-        <translation>Käytä:</translation>
+        <translation>Käytä kokonaismittakaavaa:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1147"/>
@@ -9743,7 +9744,7 @@ Oletko varma, että aiot hylätä muutokset?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1178"/>
         <source>Beside the dimention line</source>
-        <translation>Dimentiolinjan vieressä</translation>
+        <translation>Mittaviivan viereen</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1185"/>
@@ -9783,12 +9784,12 @@ Oletko varma, että aiot hylätä muutokset?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1250"/>
         <source>Suppresses arrowheads if not enough space is available inside the extension lines. (DIMSOXD system variable)</source>
-        <translation>Pukee nuolinkärkiä, jos ei ole tarpeeksi tilaa on käytettävissä sisällä jatkolinjat. (DIMSOXD-järjestelmän muuttuja)</translation>
+        <translation>Piilottaa nuolenpäät, jos mitta-apuviivojen välissä ei ole tarpeeksi tilaa. (DIMSOXD-järjestelmän muuttuja)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1253"/>
         <source>Suppress arrows if they don&apos;t fit inside extension lines</source>
-        <translation>Paina nuolia, jos ne eivät sovi jatkolinjojen sisäpuolelle</translation>
+        <translation>Piilota nuolet, jos ne eivät mahdu mitta-apuviivojen väliin</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1260"/>
@@ -9808,7 +9809,7 @@ Oletko varma, että aiot hylätä muutokset?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1273"/>
         <source>Either text or arrows (best fit)</source>
-        <translation>Joko teksti tai nuolia (paras sopii)</translation>
+        <translation>Joko teksti tai nuolet (paras sovitus)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1280"/>
@@ -9861,12 +9862,12 @@ Oletko varma, että aiot hylätä muutokset?</translation>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2010"/>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2234"/>
         <source>Zero suppression</source>
-        <translation>Nolla esto</translation>
+        <translation>Nollien piilotus</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1352"/>
         <source>Controls the suppression of leading zeros (DIMAZIN system variable)</source>
-        <translation>Kontrolloi johtavien nollien vaimennusta (DIMAZIN-järjestelmän muuttuja)</translation>
+        <translation>Ohjaa alkunollien piilotusta (DIMAZIN-järjestelmän muuttuja)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1355"/>
@@ -9875,12 +9876,12 @@ Oletko varma, että aiot hylätä muutokset?</translation>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2019"/>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2243"/>
         <source>Leading</source>
-        <translation>Johtava</translation>
+        <translation>Alkunollat</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1362"/>
         <source>Controls the suppression of  trailing zeros. (DIMAZIN system variable)</source>
-        <translation>Ohjaa nollien jäljittämistä. (DIMAZIN järjestelmämuuttuja)</translation>
+        <translation>Ohjaa loppunollien piilotusta. (DIMAZIN-järjestelmän muuttuja)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1365"/>
@@ -9889,7 +9890,7 @@ Oletko varma, että aiot hylätä muutokset?</translation>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2029"/>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2253"/>
         <source>Trailing</source>
-        <translation>Kuljettaminen</translation>
+        <translation>Loppunollat</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1375"/>
@@ -9927,7 +9928,7 @@ Oletko varma, että aiot hylätä muutokset?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1450"/>
         <source>Sets a scale factor for linear dimension measurements. It is recommended that you do not change this value from the default value of 1.00. (DIMLFAC system variable)</source>
-        <translation>Asettaa lineaaristen mittojen mittakertoimen. On suositeltavaa, että et muuta tätä arvoa oletusarvo 1.00. (DIMLFAC-järjestelmän muuttuja)</translation>
+        <translation>Asettaa lineaaristen mittojen mittakertoimen. Tätä arvoa ei ole suositeltavaa muuttaa oletusarvosta 1.00. (DIMLFAC-järjestelmän muuttuja)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1460"/>
@@ -10030,7 +10031,7 @@ Oletko varma, että aiot hylätä muutokset?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1617"/>
         <source>Suppresses trailing zeros in all decimal dimensions. (DIMZIN system variable)</source>
-        <translation>Pyörittää nollia kaikissa desimaalimitoissa. (DIMZIN-järjestelmän muuttuja)</translation>
+        <translation>Piilottaa loppunollat kaikista desimaalimitoista. (DIMZIN-järjestelmän muuttuja)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1627"/>
@@ -10061,7 +10062,7 @@ Oletko varma, että aiot hylätä muutokset?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1647"/>
         <source>Suppresses leading zeros in all decimal dimensions (DIMZIN system variable)</source>
-        <translation>Supples leading nollia kaikissa desimaalimitoissa (DIMZIN järjestelmän muuttuja)</translation>
+        <translation>Piilottaa alkunollat kaikista desimaalimitoista (DIMZIN-järjestelmän muuttuja)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1657"/>
@@ -10107,17 +10108,17 @@ Oletko varma, että aiot hylätä muutokset?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1772"/>
         <source>Multiplier for alt units:</source>
-        <translation>Alt-yksiköiden kerroin:</translation>
+        <translation>Varayksiköiden kerroin:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1779"/>
         <source>Sets rounding rules for alternate units for all dimension types except Angular. If you enter a value of 0.25, all alternate measurements are rounded to the nearest 0.25 unit. If you enter a value of 1.0, all dimension measurements are rounded to the nearest integer. The number of digits displayed after the decimal point depends on the Precision setting. (DIMALTRND system variable)</source>
-        <translation>Asettaa pyöristyssäännöt vaihtoehtoisille yksiköille kaikkia mittatyyppejä lukuun ottamatta kulmaa. Jos annat arvon 0,25, kaikki vaihtoehtoiset mittaukset pyöristetään lähimpään 0,25 yksikköön. Jos annat arvon 1,0, kaikki mitat pyöristetään lähimpään kokonaislukuun. Desimaalipisteen jälkeen näkyvien numeroiden lukumäärä riippuu tarkkuudesta. (DImalTRND-järjestelmän muuttuja)</translation>
+        <translation>Asettaa varayksiköiden pyöristyssäännöt kaikille mittatyypeille paitsi kulmamitoille. Jos annat arvon 0.25, kaikki varayksikkömitat pyöristetään lähimpään 0.25 yksikköön. Jos annat arvon 1.0, kaikki mitat pyöristetään lähimpään kokonaislukuun. Desimaalipilkun jälkeen näytettävien numeroiden määrä riippuu tarkkuusasetuksesta. (DIMALTRND-järjestelmän muuttuja)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1789"/>
         <source>Sets the unit format for alternate units. (DIMALTU system variable)</source>
-        <translation>Asettaa yksikkömuodon vaihtoehtoisille yksiköille. (DImalTU-järjestelmän muuttuja)</translation>
+        <translation>Asettaa varayksiköiden yksikkömuodon. (DIMALTU-järjestelmän muuttuja)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1796"/>
@@ -10152,22 +10153,22 @@ Oletko varma, että aiot hylätä muutokset?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1845"/>
         <source>Round distances to:</source>
-        <translation>Pyöreät etäisyydet:</translation>
+        <translation>Pyöristä etäisyydet:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1858"/>
         <source>Suppresses leading zeros in all decimal dimensions. For example, 0.5000 becomes .5000.</source>
-        <translation>Supples johtaa nollat kaikissa desimaalimitoissa. Esimerkiksi 0,5000 tulee .5000.</translation>
+        <translation>Piilottaa alkunollat kaikista desimaalimitoista. Esimerkiksi 0.5000 muuttuu muotoon .5000.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1888"/>
         <source>Suppresses trailing zeros in all decimal dimensions. For example, 12.5000 becomes 12.5, and 30.0000 becomes 30 (DIMALTZ system variable).</source>
-        <translation>Pyörittää nollia kaikissa desimaalimitoissa. Esimerkiksi 125000 tulee 12.5, ja 30 0000 tulee 30 (DImalTZ järjestelmän muuttuja).</translation>
+        <translation>Piilottaa loppunollat kaikista desimaalimitoista. Esimerkiksi 12.5000 muuttuu muotoon 12.5 ja 30.0000 muotoon 30 (DIMALTZ-järjestelmän muuttuja).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1915"/>
         <source>Suppresses the feet portion of a feet-and-inches dimension when the distance is less than 1 foot. For example, 0&apos;-6 1/2&quot; becomes 6 1/2&quot; (DIMALTZ system variable)</source>
-        <translation>Se sopii jalkoihin, kun etäisyys on alle 1 jalka. Esimerkiksi 0&apos;-6 1/2&quot; tulee 6 1/2&quot; (DImaltz järjestelmän muuttuja)</translation>
+        <translation>Piilottaa jalka-tuumamitan jalkaosan, kun etäisyys on alle 1 jalka. Esimerkiksi 0&apos;-6 1/2&quot; muuttuu muotoon 6 1/2&quot; (DIMALTZ-järjestelmän muuttuja)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1925"/>
@@ -10177,7 +10178,7 @@ Oletko varma, että aiot hylätä muutokset?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1938"/>
         <source>Sets the number of decimal places for alternate units. (DIMALTD system variable)</source>
-        <translation>Määritetään desimaalien määrä varayksiköille. (DImalTD-järjestelmän muuttuja)</translation>
+        <translation>Asettaa varayksiköiden desimaalien määrän. (DIMALTD-järjestelmän muuttuja)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1958"/>
@@ -10197,17 +10198,17 @@ Oletko varma, että aiot hylätä muutokset?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2016"/>
         <source>Suppresses leading zeros in all decimal dimensions (DIMTZIN system variable).</source>
-        <translation>Supples leading nollia kaikissa desimaalimitoissa (DIMTZIN järjestelmän muuttuja).</translation>
+        <translation>Piilottaa alkunollat kaikista desimaalimitoista (DIMTZIN-järjestelmän muuttuja).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2026"/>
         <source>Suppresses trailing zeros in all decimal dimensions (DIMTZIN system variable).</source>
-        <translation>Supples training nollia kaikissa desimaalimitoissa (DIMTZIN järjestelmän muuttuja).</translation>
+        <translation>Piilottaa loppunollat kaikista desimaalimitoista (DIMTZIN-järjestelmän muuttuja).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2036"/>
         <source>Suppresses the feet portion of a feet-and-inches dimension when the distance is less than 1 foot (DIMTZIN system variable). </source>
-        <translation>Säädä jalkoja ja tuumia, kun etäisyys on alle 1 jalka (DITTZIN järjestelmän muuttuja).</translation>
+        <translation>Piilottaa jalka-tuumamitan jalkaosan, kun etäisyys on alle 1 jalka (DIMTZIN-järjestelmän muuttuja). </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2046"/>
@@ -10227,7 +10228,7 @@ Oletko varma, että aiot hylätä muutokset?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2073"/>
         <source>Deviation</source>
-        <translation>Poikkeaminen</translation>
+        <translation>Poikkeama</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2078"/>
@@ -10242,7 +10243,7 @@ Oletko varma, että aiot hylätä muutokset?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2091"/>
         <source>Controls text justification for symmetrical and deviation tolerances (DIMTOLJ system variable).</source>
-        <translation>Controls tekstin perustelut symmetrinen ja poikkeamat toleranssit (DIMTOLJ järjestelmän muuttuja).</translation>
+        <translation>Ohjaa tekstin tasausta symmetrisissä toleransseissa ja poikkeamatoleransseissa (DIMTOLJ-järjestelmän muuttuja).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2095"/>
@@ -10257,7 +10258,7 @@ Oletko varma, että aiot hylätä muutokset?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2105"/>
         <source>Bottom</source>
-        <translation>Pohja</translation>
+        <translation>Alhaalla</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2113"/>
@@ -10277,7 +10278,7 @@ Oletko varma, että aiot hylätä muutokset?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2141"/>
         <source>Sets the maximum or upper tolerance value. When you select Symmetrical in Method, this value is used for the tolerance. (DIMTP system variable)</source>
-        <translation>Asettaa enimmäis- tai ylärajan. Kun valitset Symmetrical Method, tätä arvoa käytetään toleranssi. (DIMTP-järjestelmän muuttuja)</translation>
+        <translation>Asettaa suurimman eli ylemmän toleranssiarvon. Kun valitset menetelmäksi Symmetrinen, tätä arvoa käytetään toleranssina. (DIMTP-järjestelmän muuttuja)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2151"/>
@@ -10312,17 +10313,17 @@ Oletko varma, että aiot hylätä muutokset?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2191"/>
         <source>Align decimal separators</source>
-        <translation>Desimaalien erottimien yhdenmukaistaminen</translation>
+        <translation>Tasaa desimaalierottimet</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2198"/>
         <source>Values are stacked by their operational symbols.</source>
-        <translation>Arvot pinotaan niiden toimintasymbolit.</translation>
+        <translation>Arvot pinotaan operaattorimerkkien mukaan.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2201"/>
         <source>Align operational symbols</source>
-        <translation>Aseta toimintasymbolit</translation>
+        <translation>Tasaa operaattorimerkit</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2214"/>
@@ -10332,17 +10333,17 @@ Oletko varma, että aiot hylätä muutokset?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2227"/>
         <source>Displays and sets the number of decimal places. (DIMALTTD system variable)</source>
-        <translation>Näyttää ja asettaa desimaalien määrän. (DIMATTD-järjestelmän muuttuja)</translation>
+        <translation>Näyttää ja asettaa desimaalien määrän. (DIMALTTD-järjestelmän muuttuja)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2240"/>
         <source>Suppresses leading zeros in all decimal dimensions (DIMALTTZ system variable). </source>
-        <translation>Supples johtava nollat kaikissa desimaalin mitoissa (DImaltz järjestelmän muuttuja).</translation>
+        <translation>Piilottaa alkunollat kaikista desimaalimitoista (DIMALTTZ-järjestelmän muuttuja). </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2250"/>
         <source>Suppresses trailing zeros in all decimal dimensions (DIMALTTZ system variable).</source>
-        <translation>Supples training nollia kaikissa desimaalin mitoissa (DIMALTTZ järjestelmän muuttuja).</translation>
+        <translation>Piilottaa loppunollat kaikista desimaalimitoista (DIMALTTZ-järjestelmän muuttuja).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2260"/>
@@ -10606,7 +10607,7 @@ Oletko varma, että aiot hylätä muutokset?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="465"/>
         <source>New Dimension Style Override - </source>
-        <translation>Uusi Dimension Style Ohita -</translation>
+        <translation>Uusi mittatyylin ohitus - </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="515"/>
@@ -10726,7 +10727,7 @@ Oletko varma, että aiot hylätä muutokset?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="187"/>
         <source>Arc Properties</source>
-        <translation>Arcin ominaisuudet</translation>
+        <translation>Kaaren ominaisuudet</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="193"/>
@@ -11003,7 +11004,7 @@ Oletko varma, että aiot hylätä muutokset?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.ui" line="37"/>
         <source>This shortcut is already assigned to &quot;Dimensions My&quot; menu!</source>
-        <translation>Tämä oikotie on jo varattu &quot;Dimensions My&quot; -valikkoon!</translation>
+        <translation>Tämä pikanäppäin on jo määritetty valikolle &quot;Omat mitat&quot;!</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.ui" line="163"/>
@@ -11138,12 +11139,12 @@ Oletko varma, että aiot hylätä muutokset?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="112"/>
         <source>Arc</source>
-        <translation>Arc</translation>
+        <translation>Kaari</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="113"/>
         <source>Polyline</source>
-        <translation>Polyline</translation>
+        <translation>Murtoviiva</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="114"/>
@@ -11188,52 +11189,52 @@ Oletko varma, että aiot hylätä muutokset?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="122"/>
         <source>Dimension Linear</source>
-        <translation>Mitat Lineaarinen</translation>
+        <translation>Lineaarinen mitta</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="123"/>
         <source>Dimension Aligned</source>
-        <translation>Mitat linjassa</translation>
+        <translation>Tasattu mitta</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="124"/>
         <source>Dimension Diametric</source>
-        <translation>Mitat Diametrinen</translation>
+        <translation>Halkaisijamitta</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="125"/>
         <source>Dimension Radial</source>
-        <translation>Mitat</translation>
+        <translation>Sädemitta</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="126"/>
         <source>Dimension Ordinate</source>
-        <translation>Mitat</translation>
+        <translation>Ordinaattamitta</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="127"/>
         <source>Dimension Arc</source>
-        <translation>Mitat</translation>
+        <translation>Kaaren pituusmitta</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="128"/>
         <source>Leader</source>
-        <translation>Leader</translation>
+        <translation>Viiteviiva</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="231"/>
         <source>NOTE: Menu assignment will be ignored. It is reserved for &apos;Entity Properties&apos;.</source>
-        <translation>HUOM: Valikkotehtävä jätetään huomiotta. Se on varattu &apos;Entity Properties&apos;.</translation>
+        <translation>HUOM: Valikkomääritys ohitetaan. Se on varattu toiminnolle &apos;Kohteen ominaisuudet&apos;.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="234"/>
         <source>NOTE: Menu assignment will be ignored. It is reserved for &apos;Entity Select&apos;.</source>
-        <translation>HUOM: Valikkotehtävä jätetään huomiotta. Se on varattu &apos;Entity Select&apos;:lle.</translation>
+        <translation>HUOM: Valikkomääritys ohitetaan. Se on varattu toiminnolle &apos;Kohteen valinta&apos;.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="237"/>
         <source>NOTE: Menu assignment will be ignored. It is reserved for &apos;Pan&apos;.</source>
-        <translation>HUOM: Valikkotehtävä jätetään huomiotta. Se on varattu Panille.</translation>
+        <translation>HUOM: Valikkomääritys ohitetaan. Se on varattu toiminnolle &apos;Panorointi&apos;.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="242"/>
@@ -11311,7 +11312,7 @@ Oletko varma, että aiot hylätä muutokset?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="88"/>
         <source>Grid Type icon column</source>
-        <translation>Verkkotyypin kuvake- sarake</translation>
+        <translation>Ruudukon tyypin kuvake -sarake</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="58"/>
@@ -12215,7 +12216,7 @@ Oletko varma, että aiot hylätä muutokset?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="59"/>
         <source>Grid Type column</source>
-        <translation>Verkkotyypin sarake</translation>
+        <translation>Ruudukon tyyppi -sarake</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="89"/>
@@ -12275,12 +12276,12 @@ Oletko varma, että aiot hylätä muutokset?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="140"/>
         <source>Pan, UCS Origin in Center</source>
-        <translation>Siirrä, UCS:n alku keskelle.</translation>
+        <translation>Panoroi, UCS:n origo keskelle</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="145"/>
         <source>Pan, UCS Origin in Left-Bottom</source>
-        <translation>Pan, UCS Origin in Vasen-Bottom</translation>
+        <translation>Panoroi, UCS:n origo vasempaan alakulmaan</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="153"/>
@@ -12627,7 +12628,7 @@ Oletko varma, että aiot hylätä muutokset?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_widget_creator.ui" line="384"/>
         <source>Bottom</source>
-        <translation>Pohja</translation>
+        <translation>Alhaalla</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_widget_creator.ui" line="389"/>
@@ -12817,12 +12818,12 @@ Oletko varma, että aiot hylätä muutokset?</translation>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_filler.cpp" line="42"/>
         <source>Polyline</source>
-        <translation type="unfinished">Polyline</translation>
+        <translation type="unfinished">Murtoviiva</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_filler.cpp" line="42"/>
         <source>If selected, bounding box is drawn as polyline</source>
-        <translation type="unfinished">Jos valittu, rajausruutu on piirretty polyline</translation>
+        <translation type="unfinished">Jos valittuna, rajausruutu piirretään murtoviivana</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_filler.cpp" line="48"/>
@@ -12865,12 +12866,12 @@ Oletko varma, että aiot hylätä muutokset?</translation>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_widget.ui" line="63"/>
         <source>If selected, bounding box is drawn as polyline</source>
-        <translation type="unfinished">Jos valittu, rajausruutu on piirretty polyline</translation>
+        <translation type="unfinished">Jos valittuna, rajausruutu piirretään murtoviivana</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_widget.ui" line="69"/>
         <source>Polyline</source>
-        <translation type="unfinished">Polyline</translation>
+        <translation type="unfinished">Murtoviiva</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_widget.ui" line="76"/>
@@ -13071,7 +13072,7 @@ Oletko varma, että aiot hylätä muutokset?</translation>
     <message>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse_1_point_options_filler.cpp" line="31"/>
         <source>Major Radius</source>
-        <translation type="unfinished">Majuri Radius</translation>
+        <translation type="unfinished">Suuri säde</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse_1_point_options_filler.cpp" line="31"/>
@@ -13106,7 +13107,7 @@ Oletko varma, että aiot hylätä muutokset?</translation>
     <message>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse_1_point_options_filler.cpp" line="50"/>
         <source>If checked, major radius angle is specified by mouse</source>
-        <translation type="unfinished">Jos valittu, suuri sädekulma määritetään hiirellä</translation>
+        <translation type="unfinished">Jos valittuna, suuren säteen kulma määritetään hiirellä</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse_1_point_options_filler.cpp" line="55"/>
@@ -13149,7 +13150,7 @@ Oletko varma, että aiot hylätä muutokset?</translation>
     <message>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse_1point_options_widget.ui" line="90"/>
         <source>Length of major radius of ellipse</source>
-        <translation type="unfinished">Pituus suuri säde ellipsi</translation>
+        <translation type="unfinished">Ellipsin suuren säteen pituus</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse_1point_options_widget.ui" line="97"/>
@@ -13164,7 +13165,7 @@ Oletko varma, että aiot hylätä muutokset?</translation>
     <message>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse_1point_options_widget.ui" line="107"/>
         <source>If checked, major radius angle is specified by mouse</source>
-        <translation type="unfinished">Jos valittu, suuri sädekulma määritetään hiirellä</translation>
+        <translation type="unfinished">Jos valittuna, suuren säteen kulma määritetään hiirellä</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse_1point_options_widget.ui" line="110"/>
@@ -13199,7 +13200,7 @@ Oletko varma, että aiot hylätä muutokset?</translation>
     <message>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse_1point_options_widget.ui" line="185"/>
         <source>Major Radius:</source>
-        <translation type="unfinished">Majuri Radius:</translation>
+        <translation type="unfinished">Suuri säde:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse_1point_options_widget.ui" line="199"/>
@@ -13225,7 +13226,7 @@ Oletko varma, että aiot hylätä muutokset?</translation>
     <message>
         <location filename="../src/ui/action_options/curve/lc_ellipse_arc_options_widget.ui" line="26"/>
         <source>Arc Options</source>
-        <translation type="unfinished">Arc- asetukset</translation>
+        <translation type="unfinished">Kaaren asetukset</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_ellipse_arc_options_widget.ui" line="56"/>
@@ -13253,27 +13254,27 @@ Oletko varma, että aiot hylätä muutokset?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_ellipse.ui" line="59"/>
         <source>Center (x):</source>
-        <translation>Keskus (x):</translation>
+        <translation>Keskipiste (x):</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_ellipse.ui" line="81"/>
         <source>X Coordinate of ellipse&apos;s center</source>
-        <translation>X-koordinaatti ellipsin keskustasta</translation>
+        <translation>Ellipsin keskipisteen X-koordinaatti</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_ellipse.ui" line="106"/>
         <source>Pick center coordinate from drawing</source>
-        <translation>Valitse keskustan koordinaatti piirroksesta</translation>
+        <translation>Poimi keskipisteen koordinaatti piirustuksesta</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_ellipse.ui" line="119"/>
         <source>Center (y):</source>
-        <translation>Keskus (y):</translation>
+        <translation>Keskipiste (y):</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_ellipse.ui" line="141"/>
         <source>Y Coordinate of arc&apos;s center</source>
-        <translation>Y-koordinaatti kaaren keskustasta</translation>
+        <translation>Kaaren keskipisteen Y-koordinaatti</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_ellipse.ui" line="154"/>
@@ -13393,12 +13394,12 @@ Oletko varma, että aiot hylätä muutokset?</translation>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="81"/>
         <source>Arc</source>
-        <translation type="unfinished">Arc</translation>
+        <translation type="unfinished">Kaari</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="82"/>
         <source>Polyline</source>
-        <translation type="unfinished">Polyline</translation>
+        <translation type="unfinished">Murtoviiva</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="83"/>
@@ -13443,17 +13444,17 @@ Oletko varma, että aiot hylätä muutokset?</translation>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="91"/>
         <source>Dimension Aligned</source>
-        <translation type="unfinished">Mitat linjassa</translation>
+        <translation type="unfinished">Tasattu mitta</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="92"/>
         <source>Dimension Linear</source>
-        <translation type="unfinished">Mitat Lineaarinen</translation>
+        <translation type="unfinished">Lineaarinen mitta</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="93"/>
         <source>Dimension Ordinate</source>
-        <translation type="unfinished">Mitat</translation>
+        <translation type="unfinished">Ordinaattamitta</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="94"/>
@@ -13463,17 +13464,17 @@ Oletko varma, että aiot hylätä muutokset?</translation>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="95"/>
         <source>Dimension Radial</source>
-        <translation type="unfinished">Mitat</translation>
+        <translation type="unfinished">Sädemitta</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="96"/>
         <source>Dimension Diametric</source>
-        <translation type="unfinished">Mitat Diametrinen</translation>
+        <translation type="unfinished">Halkaisijamitta</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="97"/>
         <source>Dimension Arc</source>
-        <translation type="unfinished">Mitat</translation>
+        <translation type="unfinished">Kaaren pituusmitta</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="98"/>
@@ -13483,7 +13484,7 @@ Oletko varma, että aiot hylätä muutokset?</translation>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="99"/>
         <source>Leader</source>
-        <translation type="unfinished">Leader</translation>
+        <translation type="unfinished">Viiteviiva</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="100"/>
@@ -13596,7 +13597,7 @@ Oletko varma, että aiot hylätä muutokset?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="95"/>
         <source>Mirror</source>
-        <translation type="unfinished">Peili</translation>
+        <translation type="unfinished">Peilaus</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="95"/>
@@ -13902,7 +13903,7 @@ Oletko varma, että aiot hylätä muutokset?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_hatchpropertieseditingwidget.ui" line="187"/>
         <source>Second moment about x-axis (central): ∬(x−cx)² dA</source>
-        <translation>Toinen momentti x-akselin suhteen (keskus): ∬(x−cx)² dA</translation>
+        <translation>Toinen momentti x-akselin suhteen (keskeinen): ∬(x−cx)² dA</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_hatchpropertieseditingwidget.ui" line="190"/>
@@ -13917,7 +13918,7 @@ Oletko varma, että aiot hylätä muutokset?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_hatchpropertieseditingwidget.ui" line="207"/>
         <source>Second moment about y-axis (central): ∬(y−cy)² dA</source>
-        <translation>Toinen momentti y-akselin suhteen (keskus): ∬(y−cy)² dA</translation>
+        <translation>Toinen momentti y-akselin suhteen (keskeinen): ∬(y−cy)² dA</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_hatchpropertieseditingwidget.ui" line="210"/>
@@ -14028,7 +14029,7 @@ Oletko varma, että aiot hylätä muutokset?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_hyperbola.ui" line="35"/>
         <source>Center X:</source>
-        <translation>Keskus X:</translation>
+        <translation>Keskipiste X:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_hyperbola.ui" line="45"/>
@@ -14042,7 +14043,7 @@ Oletko varma, että aiot hylätä muutokset?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_hyperbola.ui" line="55"/>
         <source>Major Radius (a):</source>
-        <translation>Majuri Radius (a):</translation>
+        <translation>Suuri säde (a):</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_hyperbola.ui" line="65"/>
@@ -14247,7 +14248,7 @@ Oletko varma, että aiot hylätä muutokset?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="191"/>
         <source>X coordinate of insertion point</source>
-        <translation>Lisäämispisteen X-koordinaatti</translation>
+        <translation>Lisäyspisteen X-koordinaatti</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="212"/>
@@ -14267,7 +14268,7 @@ Oletko varma, että aiot hylätä muutokset?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="298"/>
         <source>Pick insertion point coordinates from drawing</source>
-        <translation>Valitse pistekoordinaatit piirroksesta</translation>
+        <translation>Poimi lisäyspisteen koordinaatit piirustuksesta</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="91"/>
@@ -14277,7 +14278,7 @@ Oletko varma, että aiot hylätä muutokset?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="253"/>
         <source>Y coordinate of insertion point</source>
-        <translation>Y-koordinaatti, lisäyspiste</translation>
+        <translation>Lisäyspisteen Y-koordinaatti</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="50"/>
@@ -14303,7 +14304,7 @@ Oletko varma, että aiot hylätä muutokset?</translation>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="77"/>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="233"/>
         <source>Pick scale from drawing</source>
-        <translation>Valitse asteikko piirroksesta</translation>
+        <translation>Poimi skaalaus piirustuksesta</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="152"/>
@@ -14359,7 +14360,7 @@ Oletko varma, että aiot hylätä muutokset?</translation>
     <message>
         <location filename="../src/ui/action_options/info/lc_info_dist_point_to_entity_options_filler.cpp" line="33"/>
         <source>Snap On Entity</source>
-        <translation type="unfinished">Snap on entity</translation>
+        <translation type="unfinished">Tartunta kohteeseen</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/info/lc_info_dist_point_to_entity_options_filler.cpp" line="33"/>
@@ -14382,7 +14383,7 @@ Oletko varma, että aiot hylätä muutokset?</translation>
     <message>
         <location filename="../src/ui/action_options/info/lc_info_dist_point_to_entity_options_widget.ui" line="35"/>
         <source>Snap On Entity</source>
-        <translation type="unfinished">Snap on entity</translation>
+        <translation type="unfinished">Tartunta kohteeseen</translation>
     </message>
 </context>
 <context>
@@ -14413,17 +14414,17 @@ Oletko varma, että aiot hylätä muutokset?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_insert.ui" line="41"/>
         <source>Insertion point (x):</source>
-        <translation>Lisäyskohta x:</translation>
+        <translation>Lisäyspiste (x):</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_insert.ui" line="60"/>
         <source>X coordinate of insertion point</source>
-        <translation>Lisäämispisteen X-koordinaatti</translation>
+        <translation>Lisäyspisteen X-koordinaatti</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_insert.ui" line="85"/>
         <source>Pick insertion point coordinates from drawing</source>
-        <translation>Valitse pistekoordinaatit piirroksesta</translation>
+        <translation>Poimi lisäyspisteen koordinaatit piirustuksesta</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_insert.ui" line="92"/>
@@ -14433,7 +14434,7 @@ Oletko varma, että aiot hylätä muutokset?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_insert.ui" line="111"/>
         <source>Y coordinate of insertion point</source>
-        <translation>Y-koordinaatti, lisäyspiste</translation>
+        <translation>Lisäyspisteen Y-koordinaatti</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_insert.ui" line="118"/>
@@ -14443,12 +14444,12 @@ Oletko varma, että aiot hylätä muutokset?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_insert.ui" line="137"/>
         <source>Scaling factor by X axis</source>
-        <translation>Kavennuskerroin X-akselin mukaan</translation>
+        <translation>Skaalauskerroin X-akselin suunnassa</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_insert.ui" line="144"/>
         <source>Pick scale by X value from drawing</source>
-        <translation>Valitse asteikko piirroksesta X-arvolla</translation>
+        <translation>Poimi X-skaalauskerroin piirustuksesta</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_insert.ui" line="158"/>
@@ -14458,12 +14459,12 @@ Oletko varma, että aiot hylätä muutokset?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_insert.ui" line="177"/>
         <source>Scaling factor by Y axis</source>
-        <translation>Kavennuskerroin Y-akselin mukaan</translation>
+        <translation>Skaalauskerroin Y-akselin suunnassa</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_insert.ui" line="184"/>
         <source>Pick scale Y value from drawing</source>
-        <translation>Valitse asteikon Y arvo piirroksesta</translation>
+        <translation>Poimi Y-skaalauskerroin piirustuksesta</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_insert.ui" line="198"/>
@@ -15580,7 +15581,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="80"/>
         <source>Snap Distance</source>
-        <translation type="unfinished">Välimatka</translation>
+        <translation type="unfinished">Etäisyystartunta</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="95"/>
@@ -15836,7 +15837,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="48"/>
         <source>To Intersection</source>
-        <translation type="unfinished">Inter section</translation>
+        <translation type="unfinished">Leikkauspisteeseen</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="49"/>
@@ -15989,7 +15990,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="322"/>
         <source>To Intersection</source>
-        <translation type="unfinished">Inter section</translation>
+        <translation type="unfinished">Leikkauspisteeseen</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="327"/>
@@ -16214,7 +16215,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="41"/>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="59"/>
         <source>Line 1</source>
-        <translation type="unfinished">Linja 1</translation>
+        <translation type="unfinished">Viiva 1</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="41"/>
@@ -16225,7 +16226,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="48"/>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="60"/>
         <source>Line 2</source>
-        <translation type="unfinished">Linja 2</translation>
+        <translation type="unfinished">Viiva 2</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="48"/>
@@ -16255,7 +16256,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="78"/>
         <source>Polyline</source>
-        <translation type="unfinished">Polyline</translation>
+        <translation type="unfinished">Murtoviiva</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="78"/>
@@ -16288,7 +16289,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="41"/>
         <source>Create Polyline</source>
-        <translation type="unfinished">Luo polyline</translation>
+        <translation type="unfinished">Luo murtoviiva</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="66"/>
@@ -16316,7 +16317,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="88"/>
         <source>Line 1:</source>
-        <translation type="unfinished">Linja 1:</translation>
+        <translation type="unfinished">Viiva 1:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="95"/>
@@ -16341,12 +16342,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="169"/>
         <source>Line 1</source>
-        <translation type="unfinished">Linja 1</translation>
+        <translation type="unfinished">Viiva 1</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="174"/>
         <source>Line 2</source>
-        <translation type="unfinished">Linja 2</translation>
+        <translation type="unfinished">Viiva 2</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="179"/>
@@ -16587,7 +16588,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/point/lc_points_line_options_widget.ui" line="38"/>
         <source>If checked, line of points will be drawn with specified angle</source>
-        <translation type="unfinished">Jos valittuna, pistelinja piirretään määritetyllä kulmalla</translation>
+        <translation type="unfinished">Jos valittuna, pisterivi piirretään määritetyssä kulmassa</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/point/lc_points_line_options_widget.ui" line="41"/>
@@ -16705,7 +16706,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_line.ui" line="114"/>
         <source>End point (y):</source>
-        <translation>Loppukohta (y):</translation>
+        <translation>Päätepiste (y):</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_line.ui" line="130"/>
@@ -16735,7 +16736,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_line.ui" line="214"/>
         <source>End point (x):</source>
-        <translation>Päätekohta (x):</translation>
+        <translation>Päätepiste (x):</translation>
     </message>
 </context>
 <context>
@@ -16948,7 +16949,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_rel_angle_options_widget.ui" line="32"/>
         <source>Line Relative Angle Options</source>
-        <translation type="unfinished">Linjan suhteellisen kulman asetukset</translation>
+        <translation type="unfinished">Viivan suhteellisen kulman asetukset</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_rel_angle_options_widget.ui" line="56"/>
@@ -17042,7 +17043,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="64"/>
         <source>Polyline</source>
-        <translation type="unfinished">Polyline</translation>
+        <translation type="unfinished">Murtoviiva</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="65"/>
@@ -17126,7 +17127,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="237"/>
         <source>Line by specified angle</source>
-        <translation type="unfinished">Linja määritellyn kulman mukaan</translation>
+        <translation type="unfinished">Viiva määritetyssä kulmassa</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="240"/>
@@ -17182,7 +17183,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="324"/>
         <source>Polyline</source>
-        <translation type="unfinished">Polyline</translation>
+        <translation type="unfinished">Murtoviiva</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="331"/>
@@ -17349,7 +17350,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_arc.cpp" line="29"/>
         <source>Arc</source>
-        <translation type="unfinished">Arc</translation>
+        <translation type="unfinished">Kaari</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_arc.cpp" line="34"/>
@@ -17660,7 +17661,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimaligned.cpp" line="29"/>
         <source>Dimension Aligned</source>
-        <translation type="unfinished">Mitat linjassa</translation>
+        <translation type="unfinished">Tasattu mitta</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimaligned.cpp" line="35"/>
@@ -17756,7 +17757,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimarc.cpp" line="29"/>
         <source>Dimension Arc</source>
-        <translation type="unfinished">Mitat</translation>
+        <translation type="unfinished">Kaaren pituusmitta</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimarc.cpp" line="34"/>
@@ -18225,7 +18226,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="397"/>
         <source>Arc length symbol</source>
-        <translation type="unfinished">Arc pituussymboli</translation>
+        <translation type="unfinished">Kaaren pituuden symboli</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="399"/>
@@ -18861,7 +18862,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="790"/>
         <source>Deviation</source>
-        <translation type="unfinished">Poikkeaminen</translation>
+        <translation type="unfinished">Poikkeama</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="791"/>
@@ -19036,7 +19037,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimdiametric.cpp" line="29"/>
         <source>Dimension Diametric</source>
-        <translation type="unfinished">Mitat Diametrinen</translation>
+        <translation type="unfinished">Halkaisijamitta</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimdiametric.cpp" line="34"/>
@@ -19064,7 +19065,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimlinear.cpp" line="30"/>
         <source>Dimension Linear</source>
-        <translation type="unfinished">Mitat Lineaarinen</translation>
+        <translation type="unfinished">Lineaarinen mitta</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimlinear.cpp" line="36"/>
@@ -19172,7 +19173,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimordinate.cpp" line="29"/>
         <source>Dimension Ordinate</source>
-        <translation type="unfinished">Mitat</translation>
+        <translation type="unfinished">Ordinaattamitta</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimordinate.cpp" line="35"/>
@@ -19290,7 +19291,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimradial.cpp" line="29"/>
         <source>Dimension Radial</source>
-        <translation type="unfinished">Mitat</translation>
+        <translation type="unfinished">Sädemitta</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimradial.cpp" line="34"/>
@@ -19343,7 +19344,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_ellipse.cpp" line="41"/>
         <source>Major Radius</source>
-        <translation type="unfinished">Majuri Radius</translation>
+        <translation type="unfinished">Suuri säde</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_ellipse.cpp" line="41"/>
@@ -19597,7 +19598,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_hyperbola.cpp" line="54"/>
         <source>Major Radius</source>
-        <translation type="unfinished">Majuri Radius</translation>
+        <translation type="unfinished">Suuri säde</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_hyperbola.cpp" line="54"/>
@@ -19944,7 +19945,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_leader.cpp" line="29"/>
         <source>Leader</source>
-        <translation type="unfinished">Leader</translation>
+        <translation type="unfinished">Viiteviiva</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_leader.cpp" line="33"/>
@@ -20382,7 +20383,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_polyline.cpp" line="29"/>
         <source>Polyline</source>
-        <translation type="unfinished">Polyline</translation>
+        <translation type="unfinished">Murtoviiva</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_polyline.cpp" line="33"/>
@@ -20862,7 +20863,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="143"/>
         <source>Polyline</source>
-        <translation type="unfinished">Polyline</translation>
+        <translation type="unfinished">Murtoviiva</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="147"/>
@@ -20877,7 +20878,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="155"/>
         <source>Arc</source>
-        <translation type="unfinished">Arc</translation>
+        <translation type="unfinished">Kaari</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="159"/>
@@ -20887,7 +20888,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="162"/>
         <source>Polyline/Spline</source>
-        <translation type="unfinished">Polyline/Spline</translation>
+        <translation type="unfinished">Murtoviiva/spline</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="173"/>
@@ -21045,7 +21046,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="763"/>
         <source>Modify Polyline</source>
-        <translation type="unfinished">Muokkaa polylinea</translation>
+        <translation type="unfinished">Muokkaa murtoviivaa</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="815"/>
@@ -21095,7 +21096,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="125"/>
         <source>On&amp;line Docs</source>
-        <translation type="unfinished">&amp; Online Docs</translation>
+        <translation type="unfinished">&amp;Verkko-ohjeet</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="126"/>
@@ -21189,7 +21190,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="215"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="250"/>
         <source>&amp;Arc</source>
-        <translation type="unfinished">&amp; Arc</translation>
+        <translation type="unfinished">&amp;Kaari</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="190"/>
@@ -21215,7 +21216,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="221"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="258"/>
         <source>&amp;Polyline</source>
-        <translation type="unfinished">&amp;Polyline</translation>
+        <translation type="unfinished">&amp;Murtoviiva</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="206"/>
@@ -21260,7 +21261,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="238"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="269"/>
         <source>&amp;Info</source>
-        <translation type="unfinished">&amp; Tiedosto</translation>
+        <translation type="unfinished">&amp;Tiedot</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="244"/>
@@ -22132,12 +22133,12 @@ Varoitus: tätä toimintaa ei voida perua!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="383"/>
         <source>Center X: </source>
-        <translation>Keskus X:</translation>
+        <translation>Keskipiste X: </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="384"/>
         <source>Center Y: </source>
-        <translation>Y-keskus:</translation>
+        <translation>Keskipiste Y: </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="385"/>
@@ -22163,7 +22164,7 @@ Varoitus: tätä toimintaa ei voida perua!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="399"/>
         <source>Grid View: </source>
-        <translation>Verkkonäkymä:</translation>
+        <translation>Ruudukkonäkymä: </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="400"/>
@@ -22416,7 +22417,7 @@ Varoitus: tätä toimintaa ei voida perua!</translation>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_to_points_options_filler.cpp" line="46"/>
         <source>If selected, the point entity used as insertion point will be deleted after paste operation. Otherwise, it will survive.</source>
-        <translation type="unfinished">Jos valittuna, lisäkohtana käytetty piste-elementti poistetaan tahnan käytön jälkeen. Muuten se selviää.</translation>
+        <translation type="unfinished">Jos valittuna, lisäyspisteenä käytetty pistekohde poistetaan liittämisen jälkeen. Muuten se säilyy.</translation>
     </message>
 </context>
 <context>
@@ -22439,7 +22440,7 @@ Varoitus: tätä toimintaa ei voida perua!</translation>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_to_points_options_widget.ui" line="101"/>
         <source>If selected, the point entity used as insertion point will be deleted after paste operation. Otherwise, it will survive.</source>
-        <translation type="unfinished">Jos valittuna, lisäkohtana käytetty piste-elementti poistetaan tahnan käytön jälkeen. Muuten se selviää.</translation>
+        <translation type="unfinished">Jos valittuna, lisäyspisteenä käytetty pistekohde poistetaan liittämisen jälkeen. Muuten se säilyy.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_to_points_options_widget.ui" line="104"/>
@@ -22821,7 +22822,7 @@ Varoitus: tätä toimintaa ei voida perua!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="303"/>
         <source>Dot (tiny)</source>
-        <translation>Piste (pieni)</translation>
+        <translation>Piste (hyvin pieni)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="304"/>
@@ -22836,22 +22837,22 @@ Varoitus: tätä toimintaa ei voida perua!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="306"/>
         <source>Dash</source>
-        <translation>Dash</translation>
+        <translation>Katkoviiva</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="307"/>
         <source>Dash (tiny)</source>
-        <translation>Dash (pieni)</translation>
+        <translation>Katkoviiva (hyvin pieni)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="308"/>
         <source>Dash (small)</source>
-        <translation>Dash (pieni)</translation>
+        <translation>Katkoviiva (pieni)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="309"/>
         <source>Dash (large)</source>
-        <translation>Dash (suuri)</translation>
+        <translation>Katkoviiva (suuri)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="310"/>
@@ -22896,22 +22897,22 @@ Varoitus: tätä toimintaa ei voida perua!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="314"/>
         <source>Divide</source>
-        <translation>Jaa</translation>
+        <translation>Jako</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="315"/>
         <source>Divide (tiny)</source>
-        <translation>Jakaudu (pieni)</translation>
+        <translation>Jako (hyvin pieni)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="316"/>
         <source>Divide (small)</source>
-        <translation>Jaa (pieni)</translation>
+        <translation>Jako (pieni)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="317"/>
         <source>Divide (large)</source>
-        <translation>Jakaudu (suuri)</translation>
+        <translation>Jako (suuri)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="318"/>
@@ -22921,17 +22922,17 @@ Varoitus: tätä toimintaa ei voida perua!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="319"/>
         <source>Center (tiny)</source>
-        <translation>Keskellä (pieni)</translation>
+        <translation>Keskiviiva (hyvin pieni)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="320"/>
         <source>Center (small)</source>
-        <translation>Keskus (pieni)</translation>
+        <translation>Keskiviiva (pieni)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="321"/>
         <source>Center (large)</source>
-        <translation>Keskus (suuri)</translation>
+        <translation>Keskiviiva (suuri)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="326"/>
@@ -22961,7 +22962,7 @@ Varoitus: tätä toimintaa ei voida perua!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="323"/>
         <source>Border (tiny)</source>
-        <translation>Raja (pieni)</translation>
+        <translation>Raja (hyvin pieni)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="324"/>
@@ -23174,7 +23175,7 @@ Varoitus: tätä toimintaa ei voida perua!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="300"/>
         <source>Case-insensitive pens filtering</source>
-        <translation>Koteloiden suodatus</translation>
+        <translation>Kynien suodatus kirjainkoosta riippumatta</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="130"/>
@@ -23272,7 +23273,7 @@ Varoitus: tätä toimintaa ei voida perua!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="49"/>
         <source>Fill Pen Editor by Entity Drawing Pen</source>
-        <translation>Fill Pen Editor entity Drawing Pen</translation>
+        <translation>Täytä kynäeditori kohteen piirtokynällä</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="66"/>
@@ -23600,7 +23601,7 @@ Huomaa, että jos tallennat kynän editorin kautta ilman uudelleenkäynnistystä
     <message>
         <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="35"/>
         <source>If checked, line of points will be drawn with specified angle</source>
-        <translation type="unfinished">Jos valittuna, pistelinja piirretään määritetyllä kulmalla</translation>
+        <translation type="unfinished">Jos valittuna, pisterivi piirretään määritetyssä kulmassa</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="50"/>
@@ -23700,7 +23701,7 @@ Huomaa, että jos tallennat kynän editorin kautta ilman uudelleenkäynnistystä
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_options_filler.cpp" line="37"/>
         <source>Polyline</source>
-        <translation type="unfinished">Polyline</translation>
+        <translation type="unfinished">Murtoviiva</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_options_filler.cpp" line="37"/>
@@ -23743,7 +23744,7 @@ Huomaa, että jos tallennat kynän editorin kautta ilman uudelleenkäynnistystä
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_options_widget.ui" line="73"/>
         <source>Vertex to Vertex</source>
-        <translation type="unfinished">Vertexille</translation>
+        <translation type="unfinished">Kärkipisteestä kärkipisteeseen</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_options_widget.ui" line="80"/>
@@ -23778,7 +23779,7 @@ Huomaa, että jos tallennat kynän editorin kautta ilman uudelleenkäynnistystä
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_options_widget.ui" line="129"/>
         <source>Polyline</source>
-        <translation type="unfinished">Polyline</translation>
+        <translation type="unfinished">Murtoviiva</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_options_widget.ui" line="143"/>
@@ -23791,7 +23792,7 @@ Huomaa, että jos tallennat kynän editorin kautta ilman uudelleenkäynnistystä
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_side_side_options_filler.cpp" line="34"/>
         <source>Vertex to Vertex</source>
-        <translation type="unfinished">Vertexille</translation>
+        <translation type="unfinished">Kärkipisteestä kärkipisteeseen</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_side_side_options_filler.cpp" line="35"/>
@@ -23809,7 +23810,7 @@ Huomaa, että jos tallennat kynän editorin kautta ilman uudelleenkäynnistystä
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_equidistant_options_filler.cpp" line="31"/>
         <source>Distance from original polyline</source>
-        <translation type="unfinished">Etäisyys alkuperäisestä polylinjasta</translation>
+        <translation type="unfinished">Etäisyys alkuperäisestä murtoviivasta</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_equidistant_options_filler.cpp" line="37"/>
@@ -23827,7 +23828,7 @@ Huomaa, että jos tallennat kynän editorin kautta ilman uudelleenkäynnistystä
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_equidistant_options_widget.ui" line="32"/>
         <source>Line Relative Angle Options</source>
-        <translation type="unfinished">Linjan suhteellisen kulman asetukset</translation>
+        <translation type="unfinished">Viivan suhteellisen kulman asetukset</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_equidistant_options_widget.ui" line="56"/>
@@ -23837,7 +23838,7 @@ Huomaa, että jos tallennat kynän editorin kautta ilman uudelleenkäynnistystä
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_equidistant_options_widget.ui" line="81"/>
         <source>Distance from original polyline</source>
-        <translation type="unfinished">Etäisyys alkuperäisestä polylinjasta</translation>
+        <translation type="unfinished">Etäisyys alkuperäisestä murtoviivasta</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_equidistant_options_widget.ui" line="94"/>
@@ -23880,7 +23881,7 @@ Huomaa, että jos tallennat kynän editorin kautta ilman uudelleenkäynnistystä
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_filler.cpp" line="39"/>
         <source>Arc</source>
-        <translation type="unfinished">Arc</translation>
+        <translation type="unfinished">Kaari</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_filler.cpp" line="43"/>
@@ -23958,7 +23959,7 @@ Huomaa, että jos tallennat kynän editorin kautta ilman uudelleenkäynnistystä
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_widget.ui" line="53"/>
         <source>Connects ends of the polyline so closed contour is created</source>
-        <translation type="unfinished">Yhdistää polylinjan päät niin suljettu ääriviiva luodaan</translation>
+        <translation type="unfinished">Yhdistää murtoviivan päät, jolloin syntyy suljettu ääriviiva</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_widget.ui" line="56"/>
@@ -24003,7 +24004,7 @@ Huomaa, että jos tallennat kynän editorin kautta ilman uudelleenkäynnistystä
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_widget.ui" line="160"/>
         <source>Arc with angle</source>
-        <translation type="unfinished">Arc kulmalla</translation>
+        <translation type="unfinished">Kaari kulmalla</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_widget.ui" line="180"/>
@@ -24061,7 +24062,7 @@ Huomaa, että jos tallennat kynän editorin kautta ilman uudelleenkäynnistystä
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_polyline.ui" line="69"/>
         <source>Defines whether polyline is closed contour</source>
-        <translation>Määrittää, onko polyline suljettu ääriviiva</translation>
+        <translation>Määrittää, onko murtoviiva suljettu ääriviiva</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_polyline.ui" line="72"/>
@@ -24149,7 +24150,7 @@ Huomaa, että jos tallennat kynän editorin kautta ilman uudelleenkäynnistystä
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="72"/>
         <source>Apply Print Scale to line width</source>
-        <translation type="unfinished">Käytä tulostusasteikkoa viivan leveydelle</translation>
+        <translation type="unfinished">Sovella tulostusmittakaavaa viivan leveyteen</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="78"/>
@@ -24292,7 +24293,7 @@ Huomaa, että jos tallennat kynän editorin kautta ilman uudelleenkäynnistystä
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_widget.ui" line="105"/>
         <source>Apply Print Scale to line width</source>
-        <translation type="unfinished">Käytä tulostusasteikkoa viivan leveydelle</translation>
+        <translation type="unfinished">Sovella tulostusmittakaavaa viivan leveyteen</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_widget.ui" line="134"/>
@@ -24397,17 +24398,17 @@ Huomaa, että jos tallennat kynän editorin kautta ilman uudelleenkäynnistystä
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_widget.cpp" line="370"/>
         <source>Invalid scale provided</source>
-        <translation type="unfinished">Virheellinen asteikko annettu</translation>
+        <translation type="unfinished">Annettu mittakaava on virheellinen</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_widget.cpp" line="428"/>
         <source>Paper scale factor larger than max print ratio</source>
-        <translation type="unfinished">Paperin mittakaavakerroin, joka on suurempi kuin max-painosuhde</translation>
+        <translation type="unfinished">Paperin mittakaavakerroin on suurempi kuin suurin tulostussuhde</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_widget.cpp" line="432"/>
         <source>Paper scale factor smaller than min print ratio</source>
-        <translation type="unfinished">Paperin mittakaavakerroin pienempi kuin min painosuhde</translation>
+        <translation type="unfinished">Paperin mittakaavakerroin on pienempi kuin pienin tulostussuhde</translation>
     </message>
 </context>
 <context>
@@ -24425,7 +24426,7 @@ Huomaa, että jos tallennat kynän editorin kautta ilman uudelleenkäynnistystä
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_hyperbola.cpp" line="124"/>
         <source>Invalid center coordinates</source>
-        <translation type="unfinished">Virheelliset keskuskoordinaatit</translation>
+        <translation type="unfinished">Virheelliset keskipisteen koordinaatit</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_hyperbola.cpp" line="128"/>
@@ -24440,7 +24441,7 @@ Huomaa, että jos tallennat kynän editorin kautta ilman uudelleenkäynnistystä
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_hyperbola.cpp" line="141"/>
         <source>Ratio or minor radius must be positive</source>
-        <translation type="unfinished">Suhde tai vähäinen säde on oltava positiivinen</translation>
+        <translation type="unfinished">Suhteen tai pienen säteen on oltava positiivinen</translation>
     </message>
 </context>
 <context>
@@ -24744,7 +24745,7 @@ Huomaa, että jos tallennat kynän editorin kautta ilman uudelleenkäynnistystä
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="144"/>
         <source>Trim</source>
-        <translation type="unfinished">Trim</translation>
+        <translation type="unfinished">Rajaa</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="144"/>
@@ -25148,7 +25149,7 @@ Huomaa, että jos tallennat kynän editorin kautta ilman uudelleenkäynnistystä
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="79"/>
         <source>Trim</source>
-        <translation type="unfinished">Trim</translation>
+        <translation type="unfinished">Rajaa</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="79"/>
@@ -25375,7 +25376,7 @@ Huomaa, että jos tallennat kynän editorin kautta ilman uudelleenkäynnistystä
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="124"/>
         <source>Leader</source>
-        <translation type="unfinished">Leader</translation>
+        <translation type="unfinished">Viiteviiva</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="124"/>
@@ -26041,7 +26042,7 @@ Huomaa, että jos tallennat kynän editorin kautta ilman uudelleenkäynnistystä
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="707"/>
         <source>Arc length symbol</source>
-        <translation type="unfinished">Arc pituussymboli</translation>
+        <translation type="unfinished">Kaaren pituuden symboli</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="719"/>
@@ -26562,7 +26563,7 @@ Huomaa, että jos tallennat kynän editorin kautta ilman uudelleenkäynnistystä
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1369"/>
         <source>Deviation</source>
-        <translation type="unfinished">Poikkeaminen</translation>
+        <translation type="unfinished">Poikkeama</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1369"/>
@@ -27369,7 +27370,7 @@ Huomaa, että jos tallennat kynän editorin kautta ilman uudelleenkäynnistystä
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_grid.cpp" line="72"/>
         <source>Isometric Top</source>
-        <translation type="unfinished">Isometrinen huippu</translation>
+        <translation type="unfinished">Isometrinen yläpinta</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_grid.cpp" line="112"/>
@@ -27786,7 +27787,7 @@ Huomaa, että jos tallennat kynän editorin kautta ilman uudelleenkäynnistystä
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_ucs.cpp" line="116"/>
         <source>Isometric Top</source>
-        <translation type="unfinished">Isometrinen huippu</translation>
+        <translation type="unfinished">Isometrinen yläpinta</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_ucs.cpp" line="125"/>
@@ -28615,7 +28616,7 @@ Huomaa, että jos tallennat kynän editorin kautta ilman uudelleenkäynnistystä
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_leader.cpp" line="64"/>
         <source>Vertex</source>
-        <translation type="unfinished">Vertex</translation>
+        <translation type="unfinished">Kärkipiste</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_leader.cpp" line="64"/>
@@ -28734,7 +28735,7 @@ Huomaa, että jos tallennat kynän editorin kautta ilman uudelleenkäynnistystä
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="104"/>
         <source>Trim</source>
-        <translation type="unfinished">Trim</translation>
+        <translation type="unfinished">Rajaa</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="104"/>
@@ -28744,7 +28745,7 @@ Huomaa, että jos tallennat kynän editorin kautta ilman uudelleenkäynnistystä
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="105"/>
         <source>Trim Two</source>
-        <translation type="unfinished">Trim 2</translation>
+        <translation type="unfinished">Rajaa kaksi</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="105"/>
@@ -28769,7 +28770,7 @@ Huomaa, että jos tallennat kynän editorin kautta ilman uudelleenkäynnistystä
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="110"/>
         <source>Line Gap</source>
-        <translation type="unfinished">Linjan aukko</translation>
+        <translation type="unfinished">Viivan aukko</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="110"/>
@@ -28955,7 +28956,7 @@ Huomaa, että jos tallennat kynän editorin kautta ilman uudelleenkäynnistystä
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="170"/>
         <source>Bevel</source>
-        <translation type="unfinished">Bevel</translation>
+        <translation type="unfinished">Viiste</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="170"/>
@@ -29000,7 +29001,7 @@ Huomaa, että jos tallennat kynän editorin kautta ilman uudelleenkäynnistystä
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="179"/>
         <source>Centerline</source>
-        <translation type="unfinished">Keskilinja</translation>
+        <translation type="unfinished">Keskiviiva</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="179"/>
@@ -29311,7 +29312,7 @@ Huomaa, että jos tallennat kynän editorin kautta ilman uudelleenkäynnistystä
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_parabola.cpp" line="39"/>
         <source>Vertex</source>
-        <translation type="unfinished">Vertex</translation>
+        <translation type="unfinished">Kärkipiste</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_parabola.cpp" line="39"/>
@@ -29478,7 +29479,7 @@ Huomaa, että jos tallennat kynän editorin kautta ilman uudelleenkäynnistystä
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_polyline.cpp" line="60"/>
         <source>Vertex</source>
-        <translation type="unfinished">Vertex</translation>
+        <translation type="unfinished">Kärkipiste</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_polyline.cpp" line="60"/>
@@ -30607,7 +30608,7 @@ Huomaa, että jos tallennat kynän editorin kautta ilman uudelleenkäynnistystä
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="856"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="869"/>
         <source>POLYLINE</source>
-        <translation>POLYLIN</translation>
+        <translation>POLYLINE</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="666"/>
@@ -30925,7 +30926,7 @@ Huomaa, että jos tallennat kynän editorin kautta ilman uudelleenkäynnistystä
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="806"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="826"/>
         <source>Major Radius</source>
-        <translation>Majuri Radius</translation>
+        <translation>Suuri säde</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="719"/>
@@ -31209,7 +31210,7 @@ Taso: </translation>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1073"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1091"/>
         <source>Bottom</source>
-        <translation>Pohja</translation>
+        <translation>Alhaalla</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1077"/>
@@ -31225,12 +31226,12 @@ Taso: </translation>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1111"/>
         <source>Mirrored in X</source>
-        <translation>Peili X:nä</translation>
+        <translation>Peilattu X-suunnassa</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1113"/>
         <source>Mirrored in Y</source>
-        <translation>Peili Y:nä</translation>
+        <translation>Peilattu Y-suunnassa</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1120"/>
@@ -31409,7 +31410,7 @@ Taso: </translation>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1331"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1347"/>
         <source>Vertex</source>
-        <translation>Vertex</translation>
+        <translation>Kärkipiste</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1332"/>
@@ -31754,7 +31755,7 @@ p, li {white- space: pre- wrap; }
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="372"/>
         <source>&amp;Insert Coordinates</source>
-        <translation>&amp; Palauta koordinaatit</translation>
+        <translation>&amp;Lisää koordinaatit</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="392"/>
@@ -31812,7 +31813,7 @@ p, li {white- space: pre- wrap; }
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="39"/>
         <source>Display distance and angle to point in addition to coordinates</source>
-        <translation>Näytä etäisyys ja kulma koordinaatteihin koordinaattien lisäksi</translation>
+        <translation>Näytä koordinaattien lisäksi etäisyys ja kulma pisteeseen</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="46"/>
@@ -31832,7 +31833,7 @@ p, li {white- space: pre- wrap; }
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="81"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If selected, more detailed information about lines and arcs that are part of polyline will be shown in Entity Info widget.&lt;br/&gt;Otherwise, only information about vertexes/bulges will be displayed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Jos valittuna, Entiteetti-info-widgetissä näytetään yksityiskohtaisempaa tietoa viivaketjun osana olevista viivoista ja kaarista.&lt;br/&gt;Muuten näytetään vain tietoja kärkipisteistä/ulkoneman.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Jos valittuna, kohteen tietopaneelissa näytetään tarkemmat tiedot murtoviivan osina olevista viivoista ja kaarista.&lt;br/&gt;Muuten näytetään vain kärkipisteiden ja kaarevuuksien tiedot.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="84"/>
@@ -31990,7 +31991,7 @@ p, li {white- space: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1_point_options_filler.cpp" line="83"/>
         <source>Polyline</source>
-        <translation type="unfinished">Polyline</translation>
+        <translation type="unfinished">Murtoviiva</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1_point_options_filler.cpp" line="83"/>
@@ -32013,12 +32014,12 @@ p, li {white- space: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="46"/>
         <source>If checked, rectangle will be created as polyline instead of individual segments.</source>
-        <translation type="unfinished">Jos valittu, suorakulmio luodaan polyline sijaan yksittäisiä segmenttejä.</translation>
+        <translation type="unfinished">Jos valittuna, suorakulmio luodaan murtoviivana erillisten segmenttien sijaan.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="49"/>
         <source>Polyline</source>
-        <translation type="unfinished">Polyline</translation>
+        <translation type="unfinished">Murtoviiva</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="56"/>
@@ -32033,7 +32034,7 @@ p, li {white- space: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="82"/>
         <source>Point of rectangle wich will be placed to insertion point.</source>
-        <translation type="unfinished">Piste suorakulmion wich sijoitetaan insertointipiste.</translation>
+        <translation type="unfinished">Suorakulmion piste, joka sijoitetaan lisäyspisteeseen.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="86"/>
@@ -32098,7 +32099,7 @@ p, li {white- space: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="181"/>
         <source>Pick radius of rounded corners from drawing.</source>
-        <translation type="unfinished">Valitse pyöristetyt kulmat piirustuksesta.</translation>
+        <translation type="unfinished">Poimi pyöristettyjen kulmien säde piirustuksesta.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="195"/>
@@ -32143,12 +32144,12 @@ p, li {white- space: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="250"/>
         <source>Bevel</source>
-        <translation type="unfinished">Bevel</translation>
+        <translation type="unfinished">Viiste</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="258"/>
         <source>If checked, specified height and width of rectangle defines distance between centers of arcs for rounding corners. Otherwise, these values defines outer size of the rectangle.</source>
-        <translation type="unfinished">Jos valittu, suorakulmion korkeus ja leveys määrittelee kaarien keskusten välisen etäisyyden pyöristyskulmille. Muussa tapauksessa nämä arvot määrittelevät suorakulmion ulkomitan.</translation>
+        <translation type="unfinished">Jos valittuna, annettu suorakulmion korkeus ja leveys määrittävät kulmien pyöristyskaarten keskipisteiden välisen etäisyyden. Muuten nämä arvot määrittävät suorakulmion ulkomitat.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="261"/>
@@ -32311,7 +32312,7 @@ p, li {white- space: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_filler.cpp" line="68"/>
         <source>Polyline</source>
-        <translation type="unfinished">Polyline</translation>
+        <translation type="unfinished">Murtoviiva</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_filler.cpp" line="68"/>
@@ -32358,12 +32359,12 @@ p, li {white- space: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="59"/>
         <source>If checked, the entire rectangle will be drawn as polyline.</source>
-        <translation type="unfinished">Jos valittu, koko suorakulmio piirretään polyline.</translation>
+        <translation type="unfinished">Jos valittuna, koko suorakulmio piirretään murtoviivana.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="62"/>
         <source>Polyline</source>
-        <translation type="unfinished">Polyline</translation>
+        <translation type="unfinished">Murtoviiva</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="69"/>
@@ -32383,7 +32384,7 @@ p, li {white- space: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="83"/>
         <source>Bevel</source>
-        <translation type="unfinished">Bevel</translation>
+        <translation type="unfinished">Viiste</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="91"/>
@@ -32403,7 +32404,7 @@ p, li {white- space: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="138"/>
         <source>Pick radius of rounded corners from drawing. </source>
-        <translation type="unfinished">Valitse pyöristetyt kulmat piirustuksesta.</translation>
+        <translation type="unfinished">Poimi pyöristettyjen kulmien säde piirustuksesta. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="164"/>
@@ -32561,7 +32562,7 @@ p, li {white- space: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3_points_options_filler.cpp" line="64"/>
         <source>Polyline</source>
-        <translation type="unfinished">Polyline</translation>
+        <translation type="unfinished">Murtoviiva</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3_points_options_filler.cpp" line="64"/>
@@ -32579,12 +32580,12 @@ p, li {white- space: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="32"/>
         <source>If checked, the shape will be created as polyline. </source>
-        <translation type="unfinished">Jos valittu, muoto luodaan polyline.</translation>
+        <translation type="unfinished">Jos valittuna, muoto luodaan murtoviivana. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="35"/>
         <source>Polyline</source>
-        <translation type="unfinished">Polyline</translation>
+        <translation type="unfinished">Murtoviiva</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="86"/>
@@ -32679,7 +32680,7 @@ p, li {white- space: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="354"/>
         <source>Pick radius of rounded corners from drawing.</source>
-        <translation type="unfinished">Valitse pyöristetyt kulmat piirustuksesta.</translation>
+        <translation type="unfinished">Poimi pyöristettyjen kulmien säde piirustuksesta.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="368"/>
@@ -32699,7 +32700,7 @@ p, li {white- space: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="382"/>
         <source>Bevel</source>
-        <translation type="unfinished">Bevel</translation>
+        <translation type="unfinished">Viiste</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="390"/>
@@ -32782,7 +32783,7 @@ p, li {white- space: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_abstract_options_filler.cpp" line="58"/>
         <source>Bevel</source>
-        <translation type="unfinished">Bevel</translation>
+        <translation type="unfinished">Viiste</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_abstract_options_filler.cpp" line="62"/>
@@ -33247,7 +33248,7 @@ p, li {white- space: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="50"/>
         <source>Adjust secondary angle so the sum of angles (relative rotation angle) is 0. With such setting entity will be moved but not rotated.</source>
-        <translation type="unfinished">Säädä toissijainen kulma niin, että kulmien summa (suhteellinen pyörimiskulma) on 0. Tällaisen asetus entity siirretään, mutta ei kierrä.</translation>
+        <translation type="unfinished">Säädä toissijainen kulma niin, että kulmien summa (suhteellinen kiertokulma) on 0. Tällöin kohdetta siirretään mutta ei kierretä.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="53"/>
@@ -33390,7 +33391,7 @@ p, li {white- space: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_filler.cpp" line="73"/>
         <source>If checked, second rotation is around reference point</source>
-        <translation type="unfinished">Jos valittu, toinen kierros on vertailupisteen ympärillä</translation>
+        <translation type="unfinished">Jos valittuna, toinen kierto tehdään viitepisteen ympäri</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_filler.cpp" line="80"/>
@@ -33543,7 +33544,7 @@ p, li {white- space: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="199"/>
         <source>If checked, second rotation is around reference point</source>
-        <translation type="unfinished">Jos valittu, toinen kierros on vertailupisteen ympärillä</translation>
+        <translation type="unfinished">Jos valittuna, toinen kierto tehdään viitepisteen ympäri</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="202"/>
@@ -33617,7 +33618,7 @@ p, li {white- space: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_round_options_filler.cpp" line="31"/>
         <source>Trim</source>
-        <translation type="unfinished">Trim</translation>
+        <translation type="unfinished">Rajaa</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_round_options_filler.cpp" line="31"/>
@@ -33650,7 +33651,7 @@ p, li {white- space: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_round_options_widget.ui" line="62"/>
         <source>Trim</source>
-        <translation type="unfinished">Trim</translation>
+        <translation type="unfinished">Rajaa</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_round_options_widget.ui" line="85"/>
@@ -33899,7 +33900,7 @@ p, li {white- space: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="74"/>
         <source>Polyline</source>
-        <translation>Polyline</translation>
+        <translation>Murtoviiva</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="81"/>
@@ -33934,7 +33935,7 @@ p, li {white- space: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="123"/>
         <source>Arc</source>
-        <translation>Arc</translation>
+        <translation>Kaari</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="130"/>
@@ -34423,7 +34424,7 @@ p, li {white- space: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="382"/>
         <source>Start Circle Angle:</source>
-        <translation type="unfinished">Käynnistä Circle Angle:</translation>
+        <translation type="unfinished">Ympyrän alkukulma:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="389"/>
@@ -34474,7 +34475,7 @@ p, li {white- space: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="34"/>
         <source>If checked, it is possible to specify custom amount of line segments. Otherwise, the value from settings for current drawing will be used.</source>
-        <translation type="unfinished">Jos valittu, on mahdollista määrittää mukautetun määrän linjasegmenttejä. Muussa tapauksessa käytetään nykyisen piirroksen arvoa asetuksista.</translation>
+        <translation type="unfinished">Jos valittuna, viivasegmenttien määrän voi määrittää itse. Muuten käytetään nykyisen piirustuksen asetusten arvoa.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="43"/>
@@ -34494,7 +34495,7 @@ p, li {white- space: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="50"/>
         <source>If checked, line segments will be part of polyline. Otherwise, they will be individual lines</source>
-        <translation type="unfinished">Jos valittu, linja segmentit ovat osa polyline. Muuten ne ovat yksittäisiä linjoja</translation>
+        <translation type="unfinished">Jos valittuna, viivasegmentit ovat osa murtoviivaa. Muuten ne ovat erillisiä viivoja</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="57"/>
@@ -34542,7 +34543,7 @@ p, li {white- space: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="39"/>
         <source>If unchecked, original spline will be removed, otherwise it will survive.</source>
-        <translation type="unfinished">Jos ei tarkisteta, alkuperäinen spline poistetaan, muuten se selviää.</translation>
+        <translation type="unfinished">Jos ei valittuna, alkuperäinen spline poistetaan, muuten se säilyy.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="42"/>
@@ -34572,7 +34573,7 @@ p, li {white- space: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="83"/>
         <source>If checked, it is possible to specify custom amount of line segments. Otherwise, the value from settings for current drawing will be used.</source>
-        <translation type="unfinished">Jos valittu, on mahdollista määrittää mukautetun määrän linjasegmenttejä. Muussa tapauksessa käytetään nykyisen piirroksen arvoa asetuksista.</translation>
+        <translation type="unfinished">Jos valittuna, viivasegmenttien määrän voi määrittää itse. Muuten käytetään nykyisen piirustuksen asetusten arvoa.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="86"/>
@@ -34582,12 +34583,12 @@ p, li {white- space: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="93"/>
         <source>If checked, line segments will be part of polyline. Otherwise, they will be individual lines</source>
-        <translation type="unfinished">Jos valittu, linja segmentit ovat osa polyline. Muuten ne ovat yksittäisiä linjoja</translation>
+        <translation type="unfinished">Jos valittuna, viivasegmentit ovat osa murtoviivaa. Muuten ne ovat erillisiä viivoja</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="96"/>
         <source>To Polyline</source>
-        <translation type="unfinished">Polyline</translation>
+        <translation type="unfinished">Murtoviivaksi</translation>
     </message>
 </context>
 <context>
@@ -34683,7 +34684,7 @@ p, li {white- space: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="68"/>
         <source>If unchecked, original polyline will be removed, otherwise it will survive.</source>
-        <translation type="unfinished">Jos ei tarkisteta, alkuperäinen polyline poistetaan, muuten se selviää.</translation>
+        <translation type="unfinished">Jos ei valittuna, alkuperäinen murtoviiva poistetaan, muuten se säilyy.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="71"/>
@@ -34713,7 +34714,7 @@ p, li {white- space: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="102"/>
         <source>If checked, polyline vertexes are considered as spline points and spline by points will be created. Otherwise, they are considered as control points and ordinary spline will be created.</source>
-        <translation type="unfinished">Jos valittuna, viivaketjun kulmapisteet tulkitaan splinipisteiksi ja luodaan pisteiden kautta kulkeva splini. Muuten ne tulkitaan ohjauspisteinä ja luodaan tavallinen splini.</translation>
+        <translation type="unfinished">Jos valittuna, murtoviivan kärkipisteet tulkitaan splinipisteiksi ja luodaan pisteiden kautta kulkeva splini. Muuten ne tulkitaan ohjauspisteiksi ja luodaan tavallinen splini.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="105"/>
@@ -34902,7 +34903,7 @@ p, li {white- space: pre- wrap; }
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="177"/>
         <source>Control points with coordinates and weights</source>
-        <translation>Koordinaatit ja painot</translation>
+        <translation>Ohjauspisteet koordinaatteineen ja painoineen</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="180"/>
@@ -34948,7 +34949,7 @@ p, li {white- space: pre- wrap; }
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="261"/>
         <source>Edit knot values for the spline (must be non-decreasing)</source>
-        <translation>Muokkaa spllinen solmuarvoja (ei saa laskea)</translation>
+        <translation>Muokkaa splinin solmuarvoja (arvot eivät saa pienentyä)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="276"/>
@@ -34969,7 +34970,7 @@ p, li {white- space: pre- wrap; }
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="309"/>
         <source>Add Control Point Button</source>
-        <translation>Lisää ohjauspainike</translation>
+        <translation>Lisää ohjauspiste -painike</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="325"/>
@@ -34985,7 +34986,7 @@ p, li {white- space: pre- wrap; }
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="331"/>
         <source>Remove Control Point Button</source>
-        <translation>Poista ohjauspainike</translation>
+        <translation>Poista ohjauspiste -painike</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="83"/>
@@ -35096,12 +35097,12 @@ p, li {white- space: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/polygon/lc_star_options_widget.ui" line="82"/>
         <source>If checked, the star will be drawn as polyline. </source>
-        <translation type="unfinished">Jos valittu, tähti vedetään polyline.</translation>
+        <translation type="unfinished">Jos valittuna, tähti piirretään murtoviivana. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_star_options_widget.ui" line="85"/>
         <source>Polyline</source>
-        <translation type="unfinished">Polyline</translation>
+        <translation type="unfinished">Murtoviiva</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_star_options_widget.ui" line="92"/>
@@ -35341,7 +35342,7 @@ p, li {white- space: pre- wrap; }
     <message>
         <location filename="../src/ui/dialogs/entity/lc_textpropertieseditingwidget.cpp" line="47"/>
         <source>Top Center</source>
-        <translation>Yläkeskus</translation>
+        <translation>Ylhäällä keskellä</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_textpropertieseditingwidget.cpp" line="48"/>
@@ -35386,7 +35387,7 @@ p, li {white- space: pre- wrap; }
     <message>
         <location filename="../src/ui/dialogs/entity/lc_textpropertieseditingwidget.cpp" line="56"/>
         <source>Bottom Center</source>
-        <translation>Alakeskus</translation>
+        <translation>Alhaalla keskellä</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_textpropertieseditingwidget.cpp" line="57"/>
@@ -35506,7 +35507,7 @@ p, li {white- space: pre- wrap; }
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="331"/>
         <source>Arc</source>
-        <translation>Arc</translation>
+        <translation>Kaari</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="332"/>
@@ -35521,7 +35522,7 @@ p, li {white- space: pre- wrap; }
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="334"/>
         <source>Polyline</source>
-        <translation>Polyline</translation>
+        <translation>Murtoviiva</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="335"/>
@@ -35594,7 +35595,7 @@ p, li {white- space: pre- wrap; }
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="367"/>
         <source>PolyLines</source>
-        <translation>PolyLines</translation>
+        <translation>Murtoviivat</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="369"/>
@@ -35647,12 +35648,12 @@ p, li {white- space: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_trim_amount_options_filler.cpp" line="43"/>
         <source>Trim</source>
-        <translation type="unfinished">Trim</translation>
+        <translation type="unfinished">Rajaa</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_trim_amount_options_filler.cpp" line="43"/>
         <source>If checked, trim/extension is performed for both sides of line.</source>
-        <translation type="unfinished">Jos valittu, tehdään leikkaus/laajennus molemmille puolille.</translation>
+        <translation type="unfinished">Jos valittuna, rajaus/jatkaminen tehdään viivan molempiin päihin.</translation>
     </message>
 </context>
 <context>
@@ -35660,7 +35661,7 @@ p, li {white- space: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_trim_amount_options_widget.ui" line="20"/>
         <source>Trim Amount Options</source>
-        <translation type="unfinished">Trim määrä asetukset</translation>
+        <translation type="unfinished">Rajausmäärän asetukset</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_trim_amount_options_widget.ui" line="23"/>
@@ -35695,7 +35696,7 @@ p, li {white- space: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_trim_amount_options_widget.ui" line="137"/>
         <source>If checked, trim/extension is performed for both sides of line.</source>
-        <translation type="unfinished">Jos valittu, tehdään leikkaus/laajennus molemmille puolille.</translation>
+        <translation type="unfinished">Jos valittuna, rajaus/jatkaminen tehdään viivan molempiin päihin.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_trim_amount_options_widget.ui" line="140"/>
@@ -35974,7 +35975,7 @@ Varoitus: tätä toimintaa ei voida perua!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="560"/>
         <source>R&amp;emove UCS</source>
-        <translation>UPS</translation>
+        <translation>&amp;Poista UCS</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="565"/>
@@ -36009,7 +36010,7 @@ Varoitus: tätä toimintaa ei voida perua!</translation>
     <message>
         <location filename="../src/ui/components/status_bar/lc_ucsstatewidget.ui" line="115"/>
         <source>Position of origin and angle of current UCS&apos;s in world coordinates.</source>
-        <translation>Nykyisen UCS:n lähtö- ja kulmapaikka maailman koordinaateissa.</translation>
+        <translation>Nykyisen UCS:n origon sijainti ja kulma maailmankoordinaateissa.</translation>
     </message>
 </context>
 <context>
@@ -36058,7 +36059,7 @@ Varoitus: tätä toimintaa ei voida perua!</translation>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="137"/>
         <source>Polyline</source>
-        <translation>Polyline</translation>
+        <translation>Murtoviiva</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="139"/>
@@ -36104,7 +36105,7 @@ Varoitus: tätä toimintaa ei voida perua!</translation>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="134"/>
         <source>Arc</source>
-        <translation>Arc</translation>
+        <translation>Kaari</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="135"/>
@@ -36242,7 +36243,7 @@ Varoitus: tätä toimintaa ei voida perua!</translation>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="547"/>
         <source>Current size of Grid/MetaGrid. Click to change grid size.</source>
-        <translation>Nykyinen koko Grid/MetaGrid. Napsauta muuttaaksesi ruudun kokoa.</translation>
+        <translation>Ruudukon/metaruudukon nykyinen koko. Muuta ruudukon kokoa napsauttamalla.</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="141"/>
@@ -37185,12 +37186,12 @@ Automaattitallennus otettu pois käytöstä.</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dimensionlabeleditor.ui" line="20"/>
         <source>Dimension Label Editor</source>
-        <translation>Mitat</translation>
+        <translation>Mittatekstin muokkain</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dimensionlabeleditor.ui" line="38"/>
         <source>Dimension Label:</source>
-        <translation>Mitat:</translation>
+        <translation>Mittateksti:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dimensionlabeleditor.ui" line="165"/>
@@ -37225,7 +37226,7 @@ Automaattitallennus otettu pois käytöstä.</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dimensionlabeleditor.ui" line="187"/>
         <source>Format of the dimension text, &lt;&gt; can be used as a placeholder for the dimension measurement value</source>
-        <translation>Mittatekstin muotoa &lt;&gt; voidaan käyttää paikkana mittamittausarvon osalta</translation>
+        <translation>Mittatekstin muoto, &lt;&gt; toimii mitta-arvon paikkamerkkinä</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dimensionlabeleditor.ui" line="200"/>
@@ -37512,12 +37513,12 @@ Tämä muuttaa rekursiivisesti kaikkia itse lohkon kohteita.</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="468"/>
         <source>Bottom Center</source>
-        <translation>Alakeskus</translation>
+        <translation>Alhaalla keskellä</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="436"/>
         <source>Top Center</source>
-        <translation>Yläkeskus</translation>
+        <translation>Ylhäällä keskellä</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="70"/>
@@ -37617,7 +37618,7 @@ Tämä muuttaa rekursiivisesti kaikkia itse lohkon kohteita.</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="829"/>
         <source>Text lines to insert</source>
-        <translation>Asetettavat rivit</translation>
+        <translation>Lisättävät tekstirivit</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="860"/>
@@ -37737,12 +37738,12 @@ Tämä muuttaa rekursiivisesti kaikkia itse lohkon kohteita.</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1013"/>
         <source>[0100-017F] Latin Extended-A</source>
-        <translation>[0100-017F] [010-017F] Latinankielinen laajennettu A</translation>
+        <translation>[0100-017F] Laajennettu latina A</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1018"/>
         <source>[0180-024F] Latin Extended-B</source>
-        <translation>[0180-024F] Latinankielinen laajennettu-B</translation>
+        <translation>[0180-024F] Laajennettu latina B</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1023"/>
@@ -37892,7 +37893,7 @@ Tämä muuttaa rekursiivisesti kaikkia itse lohkon kohteita.</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1168"/>
         <source>[1400-167F] Unified Canadian Aboriginal Syllabic</source>
-        <translation>[1400-167F] Yhdistetty kanadaksi</translation>
+        <translation>[1400-167F] Yhtenäistetty kanadalainen alkuperäiskansojen tavukirjoitus</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1173"/>
@@ -37942,7 +37943,7 @@ Tämä muuttaa rekursiivisesti kaikkia itse lohkon kohteita.</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1218"/>
         <source>[1F00-1FFF] Greek Extended</source>
-        <translation>[1F00-1FFF] Kreikka</translation>
+        <translation>[1F00-1FFF] Laajennettu kreikka</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1223"/>
@@ -38012,7 +38013,7 @@ Tämä muuttaa rekursiivisesti kaikkia itse lohkon kohteita.</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1288"/>
         <source>[2580-259F] Block Elements</source>
-        <translation>[2580-259F] [2580-259]</translation>
+        <translation>[2580-259F] Lohkoelementit</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1293"/>
@@ -38439,7 +38440,7 @@ Tämä muuttaa rekursiivisesti kaikkia itse lohkon kohteita.</translation>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="183"/>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="203"/>
         <source>Bottom</source>
-        <translation>Pohja</translation>
+        <translation>Alhaalla</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="258"/>
@@ -38464,7 +38465,7 @@ Tämä muuttaa rekursiivisesti kaikkia itse lohkon kohteita.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="794"/>
         <source>Orthogonal Grid</source>
-        <translation>Ortogonaalinen Ruudukko</translation>
+        <translation>Suorakulmainen ruudukko</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="929"/>
@@ -38539,7 +38540,7 @@ Tämä muuttaa rekursiivisesti kaikkia itse lohkon kohteita.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="576"/>
         <source>Zero base angle relative to the current user coordinate system. Affects polar coordinates input, snap to angle. 0.0 is 3pm.</source>
-        <translation>Nolla peruskulma suhteessa nykyiseen käyttäjän koordinaattijärjestelmään. Se vaikuttaa napakoordinaatteihin. 0,0 on kolmelta.</translation>
+        <translation>Peruskulman nollasuunta suhteessa nykyiseen käyttäjän koordinaatistoon. Vaikuttaa napakoordinaattien syöttöön ja kulmatartuntaan. 0.0 on kello 3:n suunta.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="586"/>
@@ -38599,7 +38600,7 @@ Tämä muuttaa rekursiivisesti kaikkia itse lohkon kohteita.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="829"/>
         <source>Isometric Top</source>
-        <translation>Isometrinen huippu</translation>
+        <translation>Isometrinen yläpinta</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="852"/>
@@ -38614,7 +38615,7 @@ Tämä muuttaa rekursiivisesti kaikkia itse lohkon kohteita.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="865"/>
         <source>Unitless Grid:</source>
-        <translation>Yksittäinen verkko:</translation>
+        <translation>Yksikötön ruudukko:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="872"/>
@@ -38628,12 +38629,12 @@ Tämä muuttaa rekursiivisesti kaikkia itse lohkon kohteita.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="879"/>
         <source>Automatically Scale Grid:</source>
-        <translation>Skaalaa automaattisesti:</translation>
+        <translation>Skaalaa ruudukko automaattisesti:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="886"/>
         <source>Draw Meta Grid:</source>
-        <translation>Piirrä metaverkko:</translation>
+        <translation>Piirrä metaruudukko:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="917"/>
@@ -38725,12 +38726,12 @@ Tämä muuttaa rekursiivisesti kaikkia itse lohkon kohteita.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1406"/>
         <source>General Scale:</source>
-        <translation>Yleisasteikko:</translation>
+        <translation>Yleinen mittakaava:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1771"/>
         <source>fixed extension line length</source>
-        <translation>kiinteä jatkolinjan pituus</translation>
+        <translation>kiinteä mitta-apuviivan pituus</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1798"/>
@@ -38837,7 +38838,7 @@ Tämä muuttaa rekursiivisesti kaikkia itse lohkon kohteita.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2116"/>
         <source>Mode of lines joining in polylines or paths</source>
-        <translation>Polylinjoja tai polkuja yhdistävien linjojen muoto</translation>
+        <translation>Viivojen liitostapa murtoviivoissa ja poluissa</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2135"/>
@@ -39172,7 +39173,7 @@ Tämä muuttaa rekursiivisesti kaikkia itse lohkon kohteita.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1675"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Offset from origin point.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html &gt; &lt;head/&gt; &lt;body &gt;&lt;p&gt; Lähtöpiste &lt;/p&gt; &lt;/keho&gt; &lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Siirtymä origosta.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1707"/>
@@ -39187,7 +39188,7 @@ Tämä muuttaa rekursiivisesti kaikkia itse lohkon kohteita.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1351"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scale to multiply all dimension geometries.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html &gt; &lt;head/&gt; &lt;body&gt;&lt;p&gt;Scale to montence all dimension geometries. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Mittakaava, jolla kaikki mittojen geometriat kerrotaan.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1220"/>
@@ -39561,7 +39562,7 @@ Tämä muuttaa rekursiivisesti kaikkia itse lohkon kohteita.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1064"/>
         <source>Minimal Grid Spacing (p&amp;x):</source>
-        <translation>Minimal grid Spacing (p&amp;x):</translation>
+        <translation>Ruudukon pienin väli (p&amp;x):</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4753"/>
@@ -39756,17 +39757,17 @@ Tämä muuttaa rekursiivisesti kaikkia itse lohkon kohteita.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1678"/>
         <source>Gap</source>
-        <translation>Gap</translation>
+        <translation>Väli</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1626"/>
         <source>Snap Indicator Color:</source>
-        <translation>Snap ilmaisin väri:</translation>
+        <translation>Tartuntaosoittimen väri:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1633"/>
         <source>Color for snap indicator shape</source>
-        <translation>Väri snap indikaattorin muotoon</translation>
+        <translation>Tartuntaosoittimen muodon väri</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1967"/>
@@ -39776,7 +39777,7 @@ Tämä muuttaa rekursiivisesti kaikkia itse lohkon kohteita.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1974"/>
         <source>Angle between steps for Angle Snap (which is usually by corresponding actions if SHIFT is pressed)</source>
-        <translation>Kulma vaiheiden välillä kulma Snap (joka on yleensä vastaavia toimia, jos SHIFT painetaan)</translation>
+        <translation>Kulmatartunnan askelten välinen kulma (käytetään yleensä vastaavissa toiminnoissa, kun SHIFT on painettuna)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1978"/>
@@ -39851,7 +39852,7 @@ Tämä muuttaa rekursiivisesti kaikkia itse lohkon kohteita.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="771"/>
         <source>Color for start handle of entity</source>
-        <translation>Color for Start handle of entity</translation>
+        <translation>Kohteen alkukahvan väri</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="854"/>
@@ -40017,7 +40018,7 @@ Tämä muuttaa rekursiivisesti kaikkia itse lohkon kohteita.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="150"/>
         <source>Pan on wheel zoom</source>
-        <translation>Pyörän zoomaus</translation>
+        <translation>Panoroi rullalla zoomattaessa</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="134"/>
@@ -40034,7 +40035,7 @@ Tämä muuttaa rekursiivisesti kaikkia itse lohkon kohteita.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1176"/>
         <source>Points Grid</source>
-        <translation>Pisteverkko</translation>
+        <translation>Pisteruudukko</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1234"/>
@@ -40049,7 +40050,7 @@ Tämä muuttaa rekursiivisesti kaikkia itse lohkon kohteita.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1268"/>
         <source>Width of Meta Grid line if grid is drawn by points</source>
-        <translation>Metaverkkolinjan leveys, jos ruudukko on pisteillä</translation>
+        <translation>Metaruudukon viivan leveys, kun ruudukko piirretään pisteinä</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1284"/>
@@ -40067,7 +40068,7 @@ Tämä muuttaa rekursiivisesti kaikkia itse lohkon kohteita.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1298"/>
         <source>Color for Meta Grid lines if grid drawn by points</source>
-        <translation>Väri Meta Grid- viivoja, jos ruudukko piirtää pistettä</translation>
+        <translation>Metaruudukon viivojen väri, kun ruudukko piirretään pisteinä</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1353"/>
@@ -40077,7 +40078,7 @@ Tämä muuttaa rekursiivisesti kaikkia itse lohkon kohteita.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1462"/>
         <source>Width of grid lines</source>
-        <translation>Verkkolinjojen leveys</translation>
+        <translation>Ruudukon viivojen leveys</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1478"/>
@@ -40087,22 +40088,22 @@ Tämä muuttaa rekursiivisesti kaikkia itse lohkon kohteita.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1485"/>
         <source>Color for grid lines</source>
-        <translation>Ruudukkolinjojen väri</translation>
+        <translation>Ruudukon viivojen väri</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1365"/>
         <source>Type of Meta Grid lines if grid is drawn by lines</source>
-        <translation>Metaverkon viivojen tyyppi, jos ruudukko on piirretty viivoilla</translation>
+        <translation>Metaruudukon viivojen tyyppi, kun ruudukko piirretään viivoina</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1372"/>
         <source>Width of Meta Grid lines if grid is drawn by lines</source>
-        <translation>Metaverkkolinjojen leveys, jos ruudukko on piirretty viivoilla</translation>
+        <translation>Metaruudukon viivojen leveys, kun ruudukko piirretään viivoina</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1402"/>
         <source>Color of Meta Grid if grid drawn by lines</source>
-        <translation>Metaverkon väri, jos ruudukko piirretään viivoina</translation>
+        <translation>Metaruudukon väri, kun ruudukko piirretään viivoina</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3272"/>
@@ -40181,7 +40182,7 @@ Tämä muuttaa rekursiivisesti kaikkia itse lohkon kohteita.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3302"/>
         <source>Size of Axis Lines drawn in absolute zero point</source>
-        <translation>Akselilinjojen koko absoluuttisena nollapisteenä</translation>
+        <translation>Absoluuttiseen nollapisteeseen piirrettävien akseliviivojen koko</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3428"/>
@@ -40231,12 +40232,12 @@ Tämä muuttaa rekursiivisesti kaikkia itse lohkon kohteita.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1005"/>
         <source>If checked, grid will not be drawn within view pan by mouse operation</source>
-        <translation>Jos valittuna, ruudukkoa ei piirretään näkyviin hiirellä</translation>
+        <translation>Jos valittuna, ruudukkoa ei piirretä, kun näkymää panoroidaan hiirellä</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1008"/>
         <source>Don&apos;t draw grid on panning</source>
-        <translation>Älä piirrä verkkoa panorointiin</translation>
+        <translation>Älä piirrä ruudukkoa panoroinnin aikana</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1044"/>
@@ -40266,22 +40267,22 @@ Tämä muuttaa rekursiivisesti kaikkia itse lohkon kohteita.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1077"/>
         <source>&amp;Grid type:</source>
-        <translation>&amp; Grid- tyyppi:</translation>
+        <translation>&amp;Ruudukon tyyppi:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="972"/>
         <source>If checked, metagrid will be drawn as part of grid drawing.</source>
-        <translation>Jos valittuna, metagrid vedetään osaksi ruudukkoa.</translation>
+        <translation>Jos valittuna, metaruudukko piirretään osana ruudukkoa.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="995"/>
         <source>If unchecked, vertical line will not be drawn for &quot;Top&quot; isometric view</source>
-        <translation>Jos valittuna, pystyviivaa ei piirretään &quot;Top&quot; isometriselle näkymälle</translation>
+        <translation>Jos ei valittuna, pystyviivaa ei piirretä isometriseen näkymään &quot;Yläpinta&quot;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="998"/>
         <source>Draw vertical lines for &quot;Top&quot; isometric grid</source>
-        <translation>Piirrä pystyviivat &quot;Top&quot; isometriselle ruudulle</translation>
+        <translation>Piirrä pystyviivat isometriseen ruudukkoon &quot;Yläpinta&quot;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3700"/>
@@ -40376,13 +40377,13 @@ Tämä muuttaa rekursiivisesti kaikkia itse lohkon kohteita.</translation>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1255"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1359"/>
         <source>Meta-grid</source>
-        <translation>Metagrid</translation>
+        <translation>Metaruudukko</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1316"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1420"/>
         <source>&amp;Meta-grid Color:</source>
-        <translation>&amp; Meta- grid väri:</translation>
+        <translation>&amp;Metaruudukon väri:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="689"/>
@@ -40404,7 +40405,7 @@ Tämä muuttaa rekursiivisesti kaikkia itse lohkon kohteita.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="975"/>
         <source>Draw meta-grid</source>
-        <translation>Piirrä metaverkko</translation>
+        <translation>Piirrä metaruudukko</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="965"/>
@@ -40434,7 +40435,7 @@ Tämä muuttaa rekursiivisesti kaikkia itse lohkon kohteita.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3779"/>
         <source>Highlight with screen linewidth in &quot;Draft&quot; mode</source>
-        <translation>Korosta näytön linjanleveys &quot;Draft&quot;-tilassa</translation>
+        <translation>Korosta näytön viivan leveydellä luonnostilassa</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3799"/>
@@ -40605,22 +40606,22 @@ Tämä muuttaa rekursiivisesti kaikkia itse lohkon kohteita.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5267"/>
         <source>RIght Isometric Grid</source>
-        <translation>Right Isometrinen ruudukko</translation>
+        <translation>Isometrinen ruudukko, oikea</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5205"/>
         <source>Orthogonal Grid</source>
-        <translation>Orthogonal grid</translation>
+        <translation>Suorakulmainen ruudukko</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5287"/>
         <source>Top Isometric Grid</source>
-        <translation>Top isometric grid</translation>
+        <translation>Isometrinen ruudukko, yläpinta</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4726"/>
         <source>Show operation&apos;s preview explanatory entities </source>
-        <translation>Näytä operaation selitykset</translation>
+        <translation>Näytä toiminnon esikatselun selittävät kohteet </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5785"/>
@@ -40766,17 +40767,17 @@ Tämä muuttaa rekursiivisesti kaikkia itse lohkon kohteita.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6163"/>
         <source>If selected, text baselines will be drawn instead of the text letters (similar to draft mode) during panning. </source>
-        <translation>Valittaessa tekstin perusarvot piirretään tekstikirjainten sijaan (kuten luonnostilassa) panoroinnin aikana.</translation>
+        <translation>Jos valittuna, panoroinnin aikana piirretään kirjainten sijaan tekstin perusviivat (kuten luonnostilassa). </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6166"/>
         <source>Draw text as draft within paning operations</source>
-        <translation>Piirrä teksti luonnoksena paning-toiminnoissa</translation>
+        <translation>Piirrä teksti luonnoksena panoroinnin aikana</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6173"/>
         <source>If selected, text baselines will be drawn instead of the text letters (similar to draft mode) in preview. </source>
-        <translation>Jos valittu, tekstin perusviivat piirretään tekstikirjeiden sijaan (sama kuin luonnostila) esikatselussa.</translation>
+        <translation>Jos valittuna, esikatselussa piirretään kirjainten sijaan tekstin perusviivat (kuten luonnostilassa). </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6176"/>
@@ -40786,7 +40787,7 @@ Tämä muuttaa rekursiivisesti kaikkia itse lohkon kohteita.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6221"/>
         <source>If selected, the angle of the line interpolation segment is calculated to ensure that resulting sagitta (height of arc segment) is less than specified.</source>
-        <translation>Jos valittu, linjan interpolointisegmentin kulma lasketaan sen varmistamiseksi, että tuloksena oleva sagitta (kaarisegmentin korkeus) on pienempi kuin määritelty.</translation>
+        <translation>Jos valittuna, viivainterpoloinnin segmentin kulma lasketaan niin, että syntyvä kaaren nuoli (kaarisegmentin korkeus) on määritettyä pienempi.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6288"/>
@@ -40816,7 +40817,7 @@ Tämä muuttaa rekursiivisesti kaikkia itse lohkon kohteita.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3061"/>
         <source>If checked, components of coordinate will be drawn in one line. Otherwise, each component will be on own line. </source>
-        <translation>Jos valittuna, koordinaatin osat piirretään yhdellä rivillä. Muuten jokainen komponentti on omalla linjalla.</translation>
+        <translation>Jos valittuna, koordinaatin osat piirretään yhdelle riville. Muuten kukin osa on omalla rivillään. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3064"/>
@@ -40867,7 +40868,7 @@ Tämä muuttaa rekursiivisesti kaikkia itse lohkon kohteita.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1827"/>
         <source>If checked, &quot;Snap To Grid&quot; is ignored if grid is not drawn.</source>
-        <translation>Jos valittuna, &quot;Snap To Grid&quot; jätetään huomiotta, jos ruudukkoa ei piirretään.</translation>
+        <translation>Jos valittuna, &quot;Tartu ruudukkoon&quot; ohitetaan, kun ruudukkoa ei piirretä.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1830"/>
@@ -40917,7 +40918,7 @@ Tämä muuttaa rekursiivisesti kaikkia itse lohkon kohteita.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2884"/>
         <source>Color for absolute snap coordinates.</source>
-        <translation>Täydellisten koordinaattien väri.</translation>
+        <translation>Absoluuttisten tartuntakoordinaattien väri.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2794"/>
@@ -40932,7 +40933,7 @@ Tämä muuttaa rekursiivisesti kaikkia itse lohkon kohteita.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2907"/>
         <source>Color for snap type/restriction</source>
-        <translation>Snap-tyypin väri/rajoitus</translation>
+        <translation>Tartuntatyypin/-rajoituksen väri</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2844"/>
@@ -41002,7 +41003,7 @@ Tämä muuttaa rekursiivisesti kaikkia itse lohkon kohteita.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1934"/>
         <source>Angle Snap</source>
-        <translation>Kulma</translation>
+        <translation>Kulmatartunta</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1993"/>
@@ -41118,7 +41119,7 @@ Tämä muuttaa rekursiivisesti kaikkia itse lohkon kohteita.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3216"/>
         <source>Base Angle Ray Color:</source>
-        <translation>Base Angle Ray väri:</translation>
+        <translation>Peruskulman puolisuoran väri:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3249"/>
@@ -41143,12 +41144,12 @@ Tämä muuttaa rekursiivisesti kaikkia itse lohkon kohteita.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1146"/>
         <source>Decimal meta-grid every:</source>
-        <translation>Desimaalimetaverkko joka:</translation>
+        <translation>Desimaalinen metaruudukko joka:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1153"/>
         <source>Controls the frequency of major grid lines compared to minor grid lines.</source>
-        <translation>Valvoo suurten verkkolinjojen tiheyttä verrattuna pieniin verkkolinjoihin.</translation>
+        <translation>Ohjaa ruudukon pääviivojen tiheyttä suhteessa väliviivoihin.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1940"/>
@@ -41163,12 +41164,12 @@ Tämä muuttaa rekursiivisesti kaikkia itse lohkon kohteita.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1853"/>
         <source>Advanced Snap Fine-tuning settings</source>
-        <translation>Hienosäätöasetukset</translation>
+        <translation>Tartunnan hienosäätöasetukset</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1905"/>
         <source>Snap on Entity &quot;Free snap&quot; distance switch:</source>
-        <translation>Snap on Entity &quot;Free snap&quot; etäisyyskytkin:</translation>
+        <translation>Kohteeseen tarttumisen etäisyysraja &quot;vapaalle tartunnalle&quot;:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1912"/>
@@ -41203,7 +41204,7 @@ Tämä muuttaa rekursiivisesti kaikkia itse lohkon kohteita.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1882"/>
         <source>Grid cell factor used for snap to grid.</source>
-        <translation>Ruudukkosolukerroin, jota käytetään snap to grid.</translation>
+        <translation>Ruudukkoon tarttumisessa käytettävä ruudukon solukerroin.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3153"/>
@@ -41249,7 +41250,7 @@ Tämä muuttaa rekursiivisesti kaikkia itse lohkon kohteita.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5427"/>
         <source>If selected, separate menu will be created for each group of entity-related commands. Otherwise, these command will be under the same menu. </source>
-        <translation>Jos valittu, kullekin ryhmälle luodaan erillinen valikko. Muuten tämä komento on samassa valikossa.</translation>
+        <translation>Jos valittuna, kullekin kohteisiin liittyvien komentojen ryhmälle luodaan oma valikko. Muuten nämä komennot ovat samassa valikossa. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5157"/>
@@ -41896,7 +41897,7 @@ Tämä muuttaa rekursiivisesti kaikkia itse lohkon kohteita.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6473"/>
         <source>Contains the number of columns in one row for rendering font letter blocks. If 0 - all letters in one row. </source>
-        <translation>Sisältää yhden rivin sarakkeiden määrän kirjasimen kirjasinten blokkeja varten. Jos 0 - kaikki kirjaimet yhdellä rivillä.</translation>
+        <translation>Kirjasimen merkkilohkojen piirrossa yhdelle riville tulevien sarakkeiden määrä. Jos 0, kaikki kirjaimet ovat yhdellä rivillä. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6154"/>
@@ -41906,7 +41907,7 @@ Tämä muuttaa rekursiivisesti kaikkia itse lohkon kohteita.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6160"/>
         <source>If enabled, during pan operation TEXT and MTEXT objects will be drawn schematically</source>
-        <translation>Jos käytössä, aikana pan operation TEKSTI ja MTEXT objektit piirretään kaaviossa</translation>
+        <translation>Jos käytössä, TEXT- ja MTEXT-objektit piirretään panoroinnin aikana kaavamaisesti</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6186"/>
@@ -41921,7 +41922,7 @@ Tämä muuttaa rekursiivisesti kaikkia itse lohkon kohteita.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6189"/>
         <source>Arcs Rendering Method</source>
-        <translation>Arcs Renderointimenetelmä</translation>
+        <translation>Kaarten renderöintitapa</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6198"/>
@@ -41941,7 +41942,7 @@ Tämä muuttaa rekursiivisesti kaikkia itse lohkon kohteita.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6231"/>
         <source>If selected, the fixed angle of line interpolation segment will be used. Smaller angle deliver more smooth arc yet is slower.</source>
-        <translation>Jos valittu, käytetään line interpolointisegmentin kiinteää kulmaa. Pienempi kulma tuottaa enemmän sileä kaaren vielä on hitaampi.</translation>
+        <translation>Jos valittuna, viivainterpoloinnin segmentille käytetään kiinteää kulmaa. Pienempi kulma tuottaa tasaisemman kaaren, mutta on hitaampi.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6234"/>
@@ -41961,12 +41962,12 @@ Tämä muuttaa rekursiivisesti kaikkia itse lohkon kohteita.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6263"/>
         <source>Maximal distance betwen arc and segment interpolation line</source>
-        <translation>Maximal distance betwen arch and segment interpoling line</translation>
+        <translation>Kaaren ja interpolointisegmentin suurin etäisyys</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6291"/>
         <source>Render circles in the same way as arcs.</source>
-        <translation>Renderöi samoin kuin kaaret.</translation>
+        <translation>Renderöi ympyrät samalla tavalla kuin kaaret.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3028"/>
@@ -41986,7 +41987,7 @@ Tämä muuttaa rekursiivisesti kaikkia itse lohkon kohteita.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5480"/>
         <source>If checked, any changes of zoom or pan for drawing will mark drawing as modified. Otherwise, changing view only will not affect modified status of the drawing. </source>
-        <translation>Jos valittuna, mahdolliset piirroksen zoom- tai pannumuutokset merkitsevät piirustuksen muokatuksi. Muussa tapauksessa näkymän muuttaminen vain ei vaikuta piirroksen muutettuun tilaan.</translation>
+        <translation>Jos valittuna, piirustuksen zoomaus- tai panorointimuutokset merkitsevät piirustuksen muutetuksi. Muuten pelkkä näkymän muuttaminen ei vaikuta piirustuksen muutostilaan. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5483"/>
@@ -42021,7 +42022,7 @@ Tämä muuttaa rekursiivisesti kaikkia itse lohkon kohteita.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5221"/>
         <source>Zero base angle relative to the current user coordinate system. Affects polar coordinates input, snap to angle. 0.0 is 3pm.</source>
-        <translation>Nolla peruskulma suhteessa nykyiseen käyttäjän koordinaattijärjestelmään. Se vaikuttaa napakoordinaatteihin. 0,0 on kolmelta.</translation>
+        <translation>Peruskulman nollasuunta suhteessa nykyiseen käyttäjän koordinaatistoon. Vaikuttaa napakoordinaattien syöttöön ja kulmatartuntaan. 0.0 on kello 3:n suunta.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5260"/>
@@ -42055,7 +42056,7 @@ Tämä muuttaa rekursiivisesti kaikkia itse lohkon kohteita.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5633"/>
         <source>Restores program geometry/layout to original state</source>
-        <translation>Palauttaa ohjelman geometria / layout alkuperäiseen tilaan</translation>
+        <translation>Palauttaa ohjelman ikkunageometrian/asettelun alkuperäiseen tilaan</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5649"/>
@@ -42239,7 +42240,7 @@ Tämä muuttaa rekursiivisesti kaikkia itse lohkon kohteita.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1329"/>
         <source>Select Hatch Patterns Folder</source>
-        <translation>Valitse kansio</translation>
+        <translation>Valitse kuviointikuvioiden kansio</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1336"/>
@@ -42348,9 +42349,9 @@ koska siinä ei oteta huomioon &lt;use&gt;:n vertailupistettä.</translation>
         <source>MakerCAM as of March 2015 cannot display ellipses and ellipse arcs correctly, 
 when they are created using the &lt;ellipse&gt; tag  with a rotation in 
 the &lt;transform&gt; attribute or as &lt;path&gt; using elliptic arc segments.</source>
-        <translation>MakerCAM ei maaliskuusta 2015 alkaen pysty näyttämään ellipsiä ja ellipsikaaria oikein,
-kun ne on luotu käyttämällä &lt;ellipse&gt; tag kanssa pyörimisaika
-&lt;transform&gt; attribuutti tai &lt;path&gt; käyttäen ellipsikaarisegmenttejä.</translation>
+        <translation>MakerCAM ei maaliskuun 2015 versiossa pysty näyttämään ellipsejä ja ellipsin kaaria oikein, 
+kun ne on luotu &lt;ellipse&gt;-tagilla, jonka kierto on 
+&lt;transform&gt;-attribuutissa, tai &lt;path&gt;-elementtinä elliptisillä kaarisegmenteillä.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.cpp" line="38"/>
@@ -42363,8 +42364,8 @@ Mutta välttelin CAM: llä.</translation>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.cpp" line="39"/>
         <source>Many CAM&apos;s(MakerCAM, EleskCAM, LaserWeb) ignore dashed/doted line style, 
 which can be useful in lasercut of plywood or for papercraft. </source>
-        <translation>Monet CAM&apos;s(MakerCAM, EleskCAM, LaserWeb) sivuuttaa katkottu / pistetty linja tyyli,
-jotka voivat olla hyödyllisiä laserleikkauksessa vanerista tai paperikoneista.</translation>
+        <translation>Monet CAM-ohjelmat (MakerCAM, EleskCAM, LaserWeb) jättävät katko- ja pisteviivatyylit huomiotta, 
+mikä voi olla hyödyllistä vanerin laserleikkauksessa tai paperiaskartelussa. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.cpp" line="42"/>
@@ -42441,12 +42442,12 @@ niin oletus askelarvo tarvitaan leivonta</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="476"/>
         <source>Bottom Center</source>
-        <translation>Alakeskus</translation>
+        <translation>Alhaalla keskellä</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="725"/>
         <source>Top Center</source>
-        <translation>Yläkeskus</translation>
+        <translation>Ylhäällä keskellä</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="33"/>
@@ -42724,12 +42725,12 @@ niin oletus askelarvo tarvitaan leivonta</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1055"/>
         <source>[0100-017F] Latin Extended-A</source>
-        <translation>[0100-017F] [010-017F] Latinankielinen laajennettu A</translation>
+        <translation>[0100-017F] Laajennettu latina A</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1060"/>
         <source>[0180-024F] Latin Extended-B</source>
-        <translation>[0180-024F] Latinankielinen laajennettu-B</translation>
+        <translation>[0180-024F] Laajennettu latina B</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1065"/>
@@ -42879,7 +42880,7 @@ niin oletus askelarvo tarvitaan leivonta</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1210"/>
         <source>[1400-167F] Unified Canadian Aboriginal Syllabic</source>
-        <translation>[1400-167F] Yhdistetty kanadaksi</translation>
+        <translation>[1400-167F] Yhtenäistetty kanadalainen alkuperäiskansojen tavukirjoitus</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1215"/>
@@ -42929,7 +42930,7 @@ niin oletus askelarvo tarvitaan leivonta</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1260"/>
         <source>[1F00-1FFF] Greek Extended</source>
-        <translation>[1F00-1FFF] Kreikka</translation>
+        <translation>[1F00-1FFF] Laajennettu kreikka</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1265"/>
@@ -42999,7 +43000,7 @@ niin oletus askelarvo tarvitaan leivonta</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1330"/>
         <source>[2580-259F] Block Elements</source>
-        <translation>[2580-259F] [2580-259]</translation>
+        <translation>[2580-259F] Lohkoelementit</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1335"/>
@@ -43743,22 +43744,22 @@ Apuviivatason sisällön ei pitäisi näkyä tulosteessa.</translation>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="102"/>
         <source>Divide</source>
-        <translation>Jaa</translation>
+        <translation>Jako</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="103"/>
         <source>Divide (tiny)</source>
-        <translation>Jakaudu (pieni)</translation>
+        <translation>Jako (hyvin pieni)</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="104"/>
         <source>Divide (small)</source>
-        <translation>Jaa (pieni)</translation>
+        <translation>Jako (pieni)</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="105"/>
         <source>Divide (large)</source>
-        <translation>Jakaudu (suuri)</translation>
+        <translation>Jako (suuri)</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="106"/>
@@ -43768,17 +43769,17 @@ Apuviivatason sisällön ei pitäisi näkyä tulosteessa.</translation>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="107"/>
         <source>Center (tiny)</source>
-        <translation>Keskellä (pieni)</translation>
+        <translation>Keskiviiva (hyvin pieni)</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="108"/>
         <source>Center (small)</source>
-        <translation>Keskus (pieni)</translation>
+        <translation>Keskiviiva (pieni)</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="109"/>
         <source>Center (large)</source>
-        <translation>Keskus (suuri)</translation>
+        <translation>Keskiviiva (suuri)</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="114"/>
@@ -43808,7 +43809,7 @@ Apuviivatason sisällön ei pitäisi näkyä tulosteessa.</translation>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="111"/>
         <source>Border (tiny)</source>
-        <translation>Raja (pieni)</translation>
+        <translation>Raja (hyvin pieni)</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="112"/>
@@ -44233,7 +44234,7 @@ Määrittele jokin muu arvo.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1404"/>
         <source>Pen will be removed from palette, drawing entities will not be affected.</source>
-        <translation>Kynä poistetaan paletista, piirtäminen ei vaikuta.</translation>
+        <translation>Kynä poistetaan paletista, piirustuksen kohteisiin tämä ei vaikuta.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1406"/>
@@ -44254,7 +44255,7 @@ Määrittele jokin muu arvo.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1426"/>
         <source>Pens will be removed from palette, drawing entities will not be affected.</source>
-        <translation>Kynät poistetaan paletista, piirtäminen ei vaikuta.</translation>
+        <translation>Kynät poistetaan paletista, piirustuksen kohteisiin tämä ei vaikuta.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1430"/>
@@ -44919,7 +44920,7 @@ Haluatko korvata sen?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="541"/>
         <source>polyline</source>
         <comment>draw polyline</comment>
-        <translation>polyline</translation>
+        <translation>murtoviiva</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="542"/>
@@ -45336,7 +45337,7 @@ Haluatko korvata sen?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="95"/>
         <source>line2p</source>
         <comment>draw line</comment>
-        <translation>linja2p</translation>
+        <translation>viiva2p</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="103"/>
@@ -45540,7 +45541,7 @@ Haluatko korvata sen?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="195"/>
         <source>midline</source>
         <comment>draw middle line</comment>
-        <translation>keskilinja</translation>
+        <translation>keskiviiva</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="196"/>
@@ -45654,7 +45655,7 @@ Haluatko korvata sen?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="258"/>
         <source>gapline</source>
         <comment>line gap</comment>
-        <translation>välilinja</translation>
+        <translation>viivanaukko</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="259"/>
@@ -46170,7 +46171,7 @@ Haluatko korvata sen?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="547"/>
         <source>angleline</source>
         <comment>draw angle from line</comment>
-        <translation>kulmalinja</translation>
+        <translation>kulmaviiva</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="548"/>
@@ -47978,7 +47979,7 @@ Haluatko korvata sen?</translation>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="109"/>
         <source>Auto center drawing on page.</source>
-        <translation>Auto keskustan piirustus sivulla.</translation>
+        <translation>Keskitä piirustus automaattisesti sivulle.</translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="113"/>
@@ -48013,7 +48014,7 @@ Haluatko korvata sen?</translation>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="129"/>
         <source>Output scale. E.g.: 0.01 (for 1:100 scale).</source>
-        <translation>Tulosasteikko. Esimerkiksi: 0,01 (asteikolla 1:100).</translation>
+        <translation>Tulosteen mittakaava. Esim. 0.01 (mittakaavalle 1:100).</translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="133"/>
@@ -48086,7 +48087,7 @@ Haluatko korvata sen?</translation>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="39"/>
         <source>/CustomColor%1</source>
-        <translation>/ Oma väri%1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="40"/>
@@ -48107,17 +48108,17 @@ Haluatko korvata sen?</translation>
     <message>
         <location filename="../src/lib/actions/lc_modifiersinfo.h" line="29"/>
         <source>Angle Snap</source>
-        <translation>Kulma</translation>
+        <translation>Kulmatartunta</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/lc_modifiersinfo.h" line="30"/>
         <source>Free Snap</source>
-        <translation>Vapaa kohdistus</translation>
+        <translation>Vapaa tartunta</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/lc_modifiersinfo.h" line="31"/>
         <source>Use Mirrored Angle</source>
-        <translation>Käytä peilikulmaa</translation>
+        <translation>Käytä peilattua kulmaa</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/lc_modifiersinfo.h" line="32"/>
@@ -48620,7 +48621,7 @@ Haluatko korvata sen?</translation>
     <message>
         <location filename="../src/lib/engine/document/rs_graphic.cpp" line="668"/>
         <source>Invalid printing scale %1. Cannot fit print preview to page</source>
-        <translation>Virheellinen tulostusasteikko%1. Tulostuksen esikatselua ei voitu asentaa sivulle</translation>
+        <translation>Virheellinen tulostusmittakaava %1. Tulostuksen esikatselua ei voi sovittaa sivulle</translation>
     </message>
     <message>
         <location filename="../src/lib/printing/lc_printing.cpp" line="164"/>
@@ -48713,12 +48714,12 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="480"/>
         <source>Arc</source>
-        <translation>Arc</translation>
+        <translation>Kaari</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="484"/>
         <source>Polyline</source>
-        <translation>Polyline</translation>
+        <translation>Murtoviiva</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="488"/>
@@ -48763,37 +48764,37 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="520"/>
         <source>Dim. Linear</source>
-        <translation>Dim. Lineaarinen</translation>
+        <translation>Lineaarinen mitta</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="524"/>
         <source>Dim. Aligned</source>
-        <translation>Dim. Tasattu</translation>
+        <translation>Tasattu mitta</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="528"/>
         <source>Dim. Diametric</source>
-        <translation>Dim. Diametrinen</translation>
+        <translation>Halkaisijamitta</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="532"/>
         <source>Dim. Radial</source>
-        <translation>Dim. Säde</translation>
+        <translation>Sädemitta</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="536"/>
         <source>Dim. Arc</source>
-        <translation>Dim. Kaari</translation>
+        <translation>Kaaren pituusmitta</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="540"/>
         <source>Dim. Ordinate</source>
-        <translation>Dim. Ordinaatti</translation>
+        <translation>Ordinaattamitta</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="544"/>
         <source>Leader</source>
-        <translation>Leader</translation>
+        <translation>Viiteviiva</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="552"/>
@@ -48917,7 +48918,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="633"/>
         <source>Arc</source>
-        <translation>Arc</translation>
+        <translation>Kaari</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="504"/>
@@ -48949,7 +48950,7 @@ Please check the filename and permissions.</source>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="635"/>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="646"/>
         <source>Center:</source>
-        <translation>Keskus:</translation>
+        <translation>Keskipiste:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="636"/>
@@ -48984,7 +48985,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1002"/>
         <source>Lengthen Line</source>
-        <translation>Linjan pituus</translation>
+        <translation>Pidennä viivaa</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1005"/>
@@ -48994,7 +48995,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1005"/>
         <source>Lengthen Chord</source>
-        <translation>Pituus</translation>
+        <translation>Pidennä jännettä</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1008"/>
@@ -49014,7 +49015,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1018"/>
         <source>Zoom, pan or select entity</source>
-        <translation>Zoom, pan tai select entity</translation>
+        <translation>Zoomaa, panoroi tai valitse kohde</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1018"/>
@@ -49034,7 +49035,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1023"/>
         <source>Select Intersecting</source>
-        <translation>Valitse leikkaaminen</translation>
+        <translation>Valitse leikkaavat</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1023"/>
@@ -49109,7 +49110,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimlinear.cpp" line="224"/>
         <source>Snap to Adjacent Dim</source>
-        <translation>Kohdista viereiseen mittaviivaan</translation>
+        <translation>Tartu viereiseen mittaan</translation>
     </message>
 </context>
 <context>
@@ -49152,7 +49153,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/lc_action_draw_ellipse_axis.cpp" line="398"/>
         <source>Specify ellipse center</source>
-        <translation>Määrittele ellipsikeskus</translation>
+        <translation>Määritä ellipsin keskipiste</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/lc_action_draw_ellipse_axis.cpp" line="401"/>
@@ -49180,7 +49181,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsecenter3points.cpp" line="248"/>
         <source>Specify the center of ellipse</source>
-        <translation>Määrittele ellipsin keskus</translation>
+        <translation>Määritä ellipsin keskipiste</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsecenter3points.cpp" line="251"/>
@@ -49344,7 +49345,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineorthtan.cpp" line="253"/>
         <source>Alternate Point</source>
-        <translation>Varakohta</translation>
+        <translation>Vaihtoehtoinen piste</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineorthtan.cpp" line="260"/>
@@ -49377,7 +49378,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_simple.cpp" line="107"/>
         <source>Center:</source>
-        <translation>Keskus:</translation>
+        <translation>Keskipiste:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_simple.cpp" line="151"/>
@@ -49401,7 +49402,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent1.cpp" line="199"/>
         <source>Alternate Point</source>
-        <translation>Varakohta</translation>
+        <translation>Vaihtoehtoinen piste</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent1.cpp" line="206"/>
@@ -49510,7 +49511,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="251"/>
         <source>Single Line Mode</source>
-        <translation>Yksisuuntainen tila</translation>
+        <translation>Yhden viivan tila</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="96"/>
@@ -49587,12 +49588,12 @@ Intersection: @(%7,%8)</translation>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="275"/>
         <source>Line To:</source>
-        <translation>Linja mihin:</translation>
+        <translation>Viiva mihin:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="276"/>
         <source>Line Angle 1:</source>
-        <translation>Linja 1:</translation>
+        <translation>Viivan 1 kulma:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="276"/>
@@ -49602,17 +49603,17 @@ Intersection: @(%7,%8)</translation>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="292"/>
         <source>Intersection:</source>
-        <translation>Intersection:</translation>
+        <translation>Leikkauspiste:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="292"/>
         <source>Line 1 Angle:</source>
-        <translation>Linja 1 kulma:</translation>
+        <translation>Viivan 1 kulma:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="292"/>
         <source>Line 2 Angle:</source>
-        <translation>Linja 2 kulma:</translation>
+        <translation>Viivan 2 kulma:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="254"/>
@@ -49708,7 +49709,7 @@ Loppu: (%8,%9)</translation>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="166"/>
         <source>Don&apos;t move relative zero</source>
-        <translation>Älä liiku suhteellista nollaa</translation>
+        <translation>Älä siirrä suhteellista nollapistettä</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="166"/>
@@ -49845,7 +49846,7 @@ Loppu: (%8,%9)</translation>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="516"/>
         <source>Drag with Left Button to Position Paper or with Middle Button to Pan</source>
-        <translation>Vedä vasemmalla napilla asentoon paperi tai keskipainikkeella Pan</translation>
+        <translation>Siirrä paperia vetämällä vasemmalla painikkeella tai panoroi keskipainikkeella</translation>
     </message>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="517"/>
@@ -49915,12 +49916,12 @@ Loppu: (%8,%9)</translation>
     <message>
         <location filename="../src/actions/drawing/zoom/rs_actionzoompan.cpp" line="109"/>
         <source>Click and drag to pan zoom</source>
-        <translation>Klikkaa ja vedä pan zoom</translation>
+        <translation>Panoroi napsauttamalla ja vetämällä</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/zoom/rs_actionzoompan.cpp" line="112"/>
         <source>Zoom panning</source>
-        <translation>Raahaa näkymää</translation>
+        <translation>Panorointi</translation>
     </message>
 </context>
 <context>
@@ -49971,7 +49972,7 @@ Loppu: (%8,%9)</translation>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1347"/>
         <source>Intersection</source>
-        <translation>Välileikkaus</translation>
+        <translation>Leikkauspiste</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1349"/>
@@ -50195,7 +50196,7 @@ Loppu: (%8,%9)</translation>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="57"/>
         <source>Dimension style</source>
-        <translation>Mitat</translation>
+        <translation>Mittatyyli</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="76"/>
@@ -50272,17 +50273,17 @@ Loppu: (%8,%9)</translation>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="265"/>
         <source>Dimension angle</source>
-        <translation>Mitat</translation>
+        <translation>Mitan kulma</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="287"/>
         <source>Horizontal Dimension</source>
-        <translation>Vaaka</translation>
+        <translation>Vaakamitta</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="316"/>
         <source>Vertical Dimension</source>
-        <translation>Pystysuunnassa</translation>
+        <translation>Pystymitta</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="333"/>
@@ -50349,7 +50350,7 @@ Loppu: (%8,%9)</translation>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapmiddleoptions.ui" line="59"/>
         <source>Snap Middle Points:</source>
-        <translation>Snap keskipisteet:</translation>
+        <translation>Tartunnan keskikohdat:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapmiddleoptions.ui" line="81"/>

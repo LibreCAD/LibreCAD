@@ -294,7 +294,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="174"/>
         <source>MTEXT</source>
-        <translation>MTEXTO</translation>
+        <translation>TEXTOM</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="177"/>
@@ -379,7 +379,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="235"/>
         <source>SPLINEPOINTS</source>
-        <translation>PUNTOS DE LA CURVA</translation>
+        <translation>SPLINE POR PUNTOS</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="238"/>

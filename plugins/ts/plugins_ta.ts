@@ -132,7 +132,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
         <location filename="../list/list.cpp" line="22"/>
         <location filename="../list/list.cpp" line="29"/>
         <source>List entities</source>
-        <translation>உருப்படிகளைப் பட்டியலிடு</translation>
+        <translation>பொருள்களைப் பட்டியலிடு</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="30"/>
@@ -147,7 +147,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="58"/>
         <source>Empty Entity</source>
-        <translation>வெற்று உருப்படி</translation>
+        <translation>வெற்று பொருள்</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="65"/>
@@ -389,7 +389,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="238"/>
         <source>HATCH</source>
-        <translation>ஹாட்ச்</translation>
+        <translation>ஹேட்ச்</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="241"/>
@@ -443,12 +443,12 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../sameprop/sameprop.cpp" line="40"/>
         <source>select original entity:</source>
-        <translation>மூல உருப்படியைத் தேர்ந்தெடுக்கவும்:</translation>
+        <translation>அசல் பொருளைத் தேர்ந்தெடுக்கவும்:</translation>
     </message>
     <message>
         <location filename="../sameprop/sameprop.cpp" line="42"/>
         <source>select entities to change</source>
-        <translation>மாற்ற வேண்டிய உருப்படிகளைத் தேர்ந்தெடுக்கவும்</translation>
+        <translation>மாற்ற வேண்டிய பொருள்களைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
 </context>
 <context>
@@ -677,7 +677,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../divide/divide.cpp" line="53"/>
         <source>Select a line, circle or arc and press return</source>
-        <translation>ஒரு கோடு, வட்டம் அல்லது வில் பகுதியைத் தேர்ந்தெடுத்து, எண்டர் விசையை அழுத்தவும்</translation>
+        <translation>ஒரு கோடு, வட்டம் அல்லது வளைவுப் பகுதியைத் தேர்ந்தெடுத்து, எண்டர் விசையை அழுத்தவும்</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="64"/>
@@ -806,7 +806,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../divide/divide.cpp" line="525"/>
         <source>POLYLINE</source>
-        <translation>பல கோடு</translation>
+        <translation>பாலிலைன்</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="526"/>
@@ -1063,7 +1063,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../list/list.cpp" line="276"/>
         <source>List entities</source>
-        <translation>உருப்படிகளைப் பட்டியலிடு</translation>
+        <translation>பொருள்களைப் பட்டியலிடு</translation>
     </message>
 </context>
 <context>
@@ -1271,7 +1271,7 @@ Use t or x in your equation as a variable/parameter.
         <location filename="../plotequation/plotdialog.cpp" line="60"/>
         <source>Polyline</source>
         <comment>Plot Equation to generate RS_Polyline</comment>
-        <translation>பல கோடுகள்</translation>
+        <translation>பாலிலைன்</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="61"/>

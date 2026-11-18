@@ -61,7 +61,7 @@
     <message>
         <location filename="../src/actions/drawing/lc_abstractactionwithpreview.cpp" line="652"/>
         <source> is not divided as it is part of polyline. Expand polyline first.</source>
-        <translation>ni razdeljena, saj je del polilina. Najprej razširi polilin.</translation>
+        <translation> ni razdeljena, ker je del polilinije. Najprej razstavite polilinijo.</translation>
     </message>
 </context>
 <context>
@@ -82,7 +82,8 @@
         <location filename="../src/actions/dock_widgets/block/lc_action_block_insert.cpp" line="97"/>
         <source>
 This block cannot be inserted.</source>
-        <translation type="unfinished">Tega bloka ni mogoče vstaviti.</translation>
+        <translation type="unfinished">
+Tega bloka ni mogoče vstaviti.</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/block/lc_action_block_insert.cpp" line="226"/>
@@ -169,7 +170,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_block_explode.cpp" line="63"/>
         <source>Select and explode</source>
-        <translation type="unfinished">Izberi in eksplodiraj</translation>
+        <translation type="unfinished">Izberi in razbij</translation>
     </message>
 </context>
 <context>
@@ -187,7 +188,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="215"/>
         <source>Select arc or circle entity</source>
-        <translation>Izberite obločnico ali krožnico</translation>
+        <translation>Izberite lok ali krog</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="215"/>
@@ -197,7 +198,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="218"/>
         <source>Specify dimension line position or enter angle:</source>
-        <translation>Določite položaj črte ali vnesite kot:</translation>
+        <translation>Določite položaj kotirne črte ali vnesite kot:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="221"/>
@@ -210,7 +211,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimarc.cpp" line="188"/>
         <source>Select arc entity</source>
-        <translation>Izberite obločno entiteto</translation>
+        <translation>Izberite lok</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimarc.cpp" line="191"/>
@@ -248,7 +249,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="322"/>
         <source>Enter dimension line angle:</source>
-        <translation>Vnesite kot črte:</translation>
+        <translation>Vnesite kot kotirne črte:</translation>
     </message>
 </context>
 <context>
@@ -463,7 +464,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_center_point_param.cpp" line="552"/>
         <source>Specify included angle:</source>
-        <translation type="unfinished">Navedite kot:</translation>
+        <translation type="unfinished">Navedite središčni kot:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_center_point_param.cpp" line="555"/>
@@ -552,7 +553,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_center_line.cpp" line="303"/>
         <source>Enter offset value</source>
-        <translation type="unfinished">Vnesite zamik</translation>
+        <translation type="unfinished">Vnesite odmik</translation>
     </message>
 </context>
 <context>
@@ -716,12 +717,12 @@ razdalja med točkami =%2 je večja od premera = %3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_1entity_2points.cpp" line="449"/>
         <source>Specify a line/arc/circle</source>
-        <translation type="unfinished">Navedite črto/arc/krog</translation>
+        <translation type="unfinished">Navedite črto/lok/krog</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_1entity_2points.cpp" line="452"/>
         <source>Specify the first point on the tangent circle</source>
-        <translation type="unfinished">Navedite prvo točko kroga tangenta</translation>
+        <translation type="unfinished">Navedite prvo točko na tangentnem krogu</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_1entity_2points.cpp" line="455"/>
@@ -731,7 +732,7 @@ razdalja med točkami =%2 je večja od premera = %3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_1entity_2points.cpp" line="458"/>
         <source>Select the center of the tangent circle</source>
-        <translation type="unfinished">Izberite središče kroga tangenta</translation>
+        <translation type="unfinished">Izberite središče tangentnega kroga</translation>
     </message>
 </context>
 <context>
@@ -739,22 +740,22 @@ razdalja med točkami =%2 je večja od premera = %3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_2entities_1point.cpp" line="338"/>
         <source>Specify a line/arc/circle</source>
-        <translation type="unfinished">Navedite črto/arc/krog</translation>
+        <translation type="unfinished">Navedite črto/lok/krog</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_2entities_1point.cpp" line="341"/>
         <source>Specify the another line/arc/circle</source>
-        <translation type="unfinished">Navedite drugo črto/arc/krog</translation>
+        <translation type="unfinished">Navedite drugo črto/lok/krog</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_2entities_1point.cpp" line="344"/>
         <source>Specify a point on the tangent circle</source>
-        <translation type="unfinished">Navedite točko kroga tangenta</translation>
+        <translation type="unfinished">Navedite točko na tangentnem krogu</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_2entities_1point.cpp" line="347"/>
         <source>Select the center of the tangent circle</source>
-        <translation type="unfinished">Izberite središče kroga tangenta</translation>
+        <translation type="unfinished">Izberite središče tangentnega kroga</translation>
     </message>
 </context>
 <context>
@@ -777,7 +778,7 @@ razdalja med točkami =%2 je večja od premera = %3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_2entities_radius.cpp" line="298"/>
         <source>Select the center of the tangent circle</source>
-        <translation type="unfinished">Izberite središče kroga tangenta</translation>
+        <translation type="unfinished">Izberite središče tangentnega kroga</translation>
     </message>
 </context>
 <context>
@@ -800,12 +801,12 @@ razdalja med točkami =%2 je večja od premera = %3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_3entities.cpp" line="526"/>
         <source>Specify the third line/arc/circle</source>
-        <translation type="unfinished">Navedite tretjo črto/arc/krog</translation>
+        <translation type="unfinished">Navedite tretjo črto/lok/krog</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_3entities.cpp" line="529"/>
         <source>Select the center of the tangent circle</source>
-        <translation type="unfinished">Izberite središče kroga tangenta</translation>
+        <translation type="unfinished">Izberite središče tangentnega kroga</translation>
     </message>
 </context>
 <context>
@@ -856,7 +857,7 @@ razdalja med točkami =%2 je večja od premera = %3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="68"/>
         <source>No entities selected. Dual creation cancelled.</source>
-        <translation>Ni izbranih entitet. Dvojna kreacija preklicana.</translation>
+        <translation>Ni izbranih entitet. Ustvarjanje dualne geometrije je preklicano.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="122"/>
@@ -915,7 +916,7 @@ razdalja med točkami =%2 je večja od premera = %3</translation>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawhyperbolafp.cpp" line="98"/>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawhyperbolafp.cpp" line="241"/>
         <source>Foci cannot be coincident</source>
-        <translation>Foci ne more biti sovražen</translation>
+        <translation>Gorišči ne smeta sovpadati</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawhyperbolafp.cpp" line="104"/>
@@ -926,7 +927,7 @@ razdalja med točkami =%2 je večja od premera = %3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawhyperbolafp.cpp" line="112"/>
         <source>Invalid foci or point</source>
-        <translation>Neveljavna foci ali točka</translation>
+        <translation>Neveljavni gorišči ali točka</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawhyperbolafp.cpp" line="124"/>
@@ -936,12 +937,12 @@ razdalja med točkami =%2 je večja od premera = %3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawhyperbolafp.cpp" line="276"/>
         <source>Specify first focus</source>
-        <translation>Navedite prvi poudarek</translation>
+        <translation>Navedite prvo gorišče</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawhyperbolafp.cpp" line="279"/>
         <source>Specify second focus</source>
-        <translation>Določitev drugega fokusa</translation>
+        <translation>Navedite drugo gorišče</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawhyperbolafp.cpp" line="282"/>
@@ -1593,12 +1594,12 @@ razdalja med točkami =%2 je večja od premera = %3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabolaFD.cpp" line="290"/>
         <source>Specify the focus of parabola</source>
-        <translation>Navedite fokus parabole</translation>
+        <translation>Navedite gorišče parabole</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabolaFD.cpp" line="293"/>
         <source>Select line that is parallel to directrix of parabola or set vertex point</source>
-        <translation>Izberite črto, ki je vzporedna z neposredno točko parabole ali nastavljene točke vertexa</translation>
+        <translation>Izberite črto, vzporedno z vodnico parabole, ali določite teme</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabolaFD.cpp" line="297"/>
@@ -1796,12 +1797,12 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_action_draw_polygon_base.cpp" line="290"/>
         <source>Polygon</source>
-        <translation type="unfinished">Poligon</translation>
+        <translation type="unfinished">Mnogokotnik</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_action_draw_polygon_base.cpp" line="291"/>
         <source>Center:</source>
-        <translation type="unfinished">Center:</translation>
+        <translation type="unfinished">Središče:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_action_draw_polygon_base.cpp" line="292"/>
@@ -1831,7 +1832,7 @@ or [%2]</source>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_draw_polyline.cpp" line="439"/>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_draw_polyline.cpp" line="606"/>
         <source>Enter number of polylines</source>
-        <translation type="unfinished">Vnesite število polilin</translation>
+        <translation type="unfinished">Vnesite število polilinij</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_draw_polyline.cpp" line="564"/>
@@ -2029,7 +2030,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_abstract.cpp" line="195"/>
         <source>Center:</source>
-        <translation type="unfinished">Center:</translation>
+        <translation type="unfinished">Središče:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_abstract.cpp" line="224"/>
@@ -2096,7 +2097,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_slice_divide.cpp" line="248"/>
         <source>Arc</source>
-        <translation>Arc</translation>
+        <translation>Lok</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_slice_divide.cpp" line="258"/>
@@ -2186,7 +2187,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_action_draw_star.cpp" line="222"/>
         <source>Invalid rays number, should be in range [3..99]</source>
-        <translation>Neveljavna številka žarkov mora biti v območju [3..99]</translation>
+        <translation>Neveljavno število žarkov; dovoljeno območje je [3..99]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_action_draw_star.cpp" line="232"/>
@@ -2278,12 +2279,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="597"/>
         <source>&amp;Window Zoom</source>
-        <translation>Povečava okna</translation>
+        <translation>Povečava &amp;okna</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="338"/>
         <source>Zoom &amp;Panning</source>
-        <translation>Povečava in panning</translation>
+        <translation>Premik &amp;pogleda</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="246"/>
@@ -2303,7 +2304,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="249"/>
         <source>(De-)Select &amp;Contour</source>
-        <translation>Izbor &amp; kontour</translation>
+        <translation>(Od)izberi &amp;obris</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="250"/>
@@ -2323,23 +2324,23 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="235"/>
         <source>&amp;Points</source>
-        <translation>&amp; Točke</translation>
+        <translation>&amp;Točke</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="206"/>
         <source>&amp;2 Points</source>
-        <translation>Točke &amp; 2</translation>
+        <translation>&amp;2 točki</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="207"/>
         <source>&amp;Angle</source>
-        <translation>&amp; Kot</translation>
+        <translation>&amp;Kot</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="208"/>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="351"/>
         <source>&amp;Horizontal</source>
-        <translation>&amp; Horizontal</translation>
+        <translation>&amp;Vodoravno</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="209"/>
@@ -2354,7 +2355,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="211"/>
         <source>&amp;Parallel</source>
-        <translation>&amp; Paralel</translation>
+        <translation>&amp;Vzporedno</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="212"/>
@@ -2399,7 +2400,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="193"/>
         <source>Pol&amp;ygon (Cen,Cor)</source>
-        <translation>Poligon (središče, sredina)</translation>
+        <translation>&amp;Mnogokotnik (središče, oglišče)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="195"/>
@@ -2459,12 +2460,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="227"/>
         <source>Slice/Divide Line</source>
-        <translation>Črta reže/dive</translation>
+        <translation>Razreži/razdeli črto</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="228"/>
         <source>Slice/Divide Circle</source>
-        <translation>Krog reže/dive</translation>
+        <translation>Razreži/razdeli krog</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="236"/>
@@ -2474,7 +2475,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="261"/>
         <source>Center, &amp;Point</source>
-        <translation>Center, &amp; točka</translation>
+        <translation>Središče, &amp;točka</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="262"/>
@@ -2505,12 +2506,12 @@ or [%2]</source>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="267"/>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="286"/>
         <source>&amp;Concentric</source>
-        <translation>&amp; Koncentrični</translation>
+        <translation>&amp;Koncentrično</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="268"/>
         <source>Circle &amp;Inscribed</source>
-        <translation>&amp; Vpisan krog</translation>
+        <translation>Včrtan &amp;krog</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="272"/>
@@ -2520,52 +2521,52 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="278"/>
         <source>&amp;Center, Point, Angles</source>
-        <translation>&amp; Center, točka, koti</translation>
+        <translation>&amp;Središče, točka, kota</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="281"/>
         <source>&amp;3 Points</source>
-        <translation>&amp; Točke</translation>
+        <translation>&amp;3 točke</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="284"/>
         <source>&amp;2 Points, Length</source>
-        <translation>Točke &amp; 2, dolžina</translation>
+        <translation>&amp;2 točki, dolžina</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="285"/>
         <source>&amp;2 Points, Height</source>
-        <translation>Točke &amp; 2, višina</translation>
+        <translation>&amp;2 točki, višina</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="287"/>
         <source>Arc &amp;Tangential</source>
-        <translation>Arc &amp; Tangential</translation>
+        <translation>&amp;Tangencialni lok</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="299"/>
         <source>&amp;Append spline point</source>
-        <translation>&amp; Dodaj točko krivulje</translation>
+        <translation>&amp;Dodaj točko zlepka</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="301"/>
         <source>&amp;Insert spline points</source>
-        <translation>&amp; Vstavi krivulje</translation>
+        <translation>&amp;Vstavi točke zlepka</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="312"/>
         <source>&amp;Ellipse (Axis)</source>
-        <translation>&amp; Ellipse (Axis)</translation>
+        <translation>&amp;Elipsa (os)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="313"/>
         <source>Ellipse &amp;Arc (Axis)</source>
-        <translation>Elipsa in arc (Axis)</translation>
+        <translation>Eliptični &amp;lok (os)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="314"/>
         <source>Ellipse &amp;Foci Point</source>
-        <translation>Točka Elipse &amp; Foci</translation>
+        <translation>Elipsa, &amp;gorišči in točka</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="315"/>
@@ -2585,22 +2586,22 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="297"/>
         <source>&amp;Spline</source>
-        <translation>&amp; Spline</translation>
+        <translation>&amp;Zlepek</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="298"/>
         <source>&amp;Spline through points</source>
-        <translation>&amp; Spline skozi točke</translation>
+        <translation>Zlepek &amp;skozi točke</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="323"/>
         <source>&amp;Polyline</source>
-        <translation>&amp; Polilin</translation>
+        <translation>&amp;Polilinija</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="324"/>
         <source>&amp;Add node</source>
-        <translation>&amp; Dodaj vozlišče</translation>
+        <translation>&amp;Dodaj vozlišče</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="325"/>
@@ -2610,22 +2611,22 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="326"/>
         <source>&amp;Delete node</source>
-        <translation>&amp; Izbriši vozlišče</translation>
+        <translation>&amp;Izbriši vozlišče</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="327"/>
         <source>Delete &amp;between two nodes</source>
-        <translation>Zbriši &amp; med dvema vozliščema</translation>
+        <translation>Izbriši &amp;med dvema vozliščema</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="328"/>
         <source>&amp;Trim segments</source>
-        <translation>&amp; Trim segmenti</translation>
+        <translation>&amp;Obreži segmente</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="329"/>
         <source>Create &amp;Equidistant Polylines</source>
-        <translation>Ustvari &amp; enake poliline</translation>
+        <translation>Ustvari &amp;ekvidistantne polilinije</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="331"/>
@@ -2635,22 +2636,22 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="339"/>
         <source>&amp;MText</source>
-        <translation>&amp; MText</translation>
+        <translation>&amp;Večvrstično besedilo</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="340"/>
         <source>&amp;Text</source>
-        <translation>&amp; Besedilo</translation>
+        <translation>&amp;Besedilo</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="341"/>
         <source>&amp;Hatch</source>
-        <translation>&amp; Hatch</translation>
+        <translation>&amp;Šrafura</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="342"/>
         <source>Insert &amp;Image</source>
-        <translation>Vstavi &amp; sliko</translation>
+        <translation>Vstavi &amp;sliko</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="349"/>
@@ -2660,47 +2661,47 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="350"/>
         <source>&amp;Linear</source>
-        <translation>&amp; Linear</translation>
+        <translation>&amp;Linearna</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="352"/>
         <source>&amp;Vertical</source>
-        <translation>&amp; Vertikalno</translation>
+        <translation>&amp;Navpično</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="353"/>
         <source>&amp;Radial</source>
-        <translation>&amp; Radial</translation>
+        <translation>&amp;Radialna</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="354"/>
         <source>&amp;Diametric</source>
-        <translation>&amp; Diametrično</translation>
+        <translation>&amp;Diametrična</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="355"/>
         <source>&amp;Angular</source>
-        <translation>&amp; Kot</translation>
+        <translation>&amp;Kotna</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="357"/>
         <source>&amp;Leader</source>
-        <translation>&amp; Leader</translation>
+        <translation>&amp;Kazalna črta</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="378"/>
         <source>&amp;Attributes</source>
-        <translation>&amp; Atributi</translation>
+        <translation>&amp;Atributi</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="379"/>
         <source>&amp;Delete</source>
-        <translation>&amp; Izbriši</translation>
+        <translation>&amp;Izbriši</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="380"/>
         <source>&amp;Move / Copy</source>
-        <translation>Premakni / Kopiraj</translation>
+        <translation>&amp;Premakni / kopiraj</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="381"/>
@@ -2840,7 +2841,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="664"/>
         <source>Print Pre&amp;view</source>
-        <translation>Natisni pred &amp; ogled</translation>
+        <translation>Pred&amp;ogled tiskanja</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="683"/>
@@ -2905,7 +2906,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="730"/>
         <source>&amp;Save View</source>
-        <translation>&amp; Shrani prikaz</translation>
+        <translation>&amp;Shrani pogled</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="732"/>
@@ -2940,7 +2941,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="382"/>
         <source>&amp;Rotate</source>
-        <translation>&amp; Rotate</translation>
+        <translation>&amp;Zavrti</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="383"/>
@@ -2950,12 +2951,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="384"/>
         <source>&amp;Mirror</source>
-        <translation>&amp; Mirror</translation>
+        <translation>&amp;Zrcali</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="386"/>
         <source>Rotate T&amp;wo</source>
-        <translation>Zavrtite T&amp;wo</translation>
+        <translation>Zavrti &amp;dvakrat</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="387"/>
@@ -2965,42 +2966,42 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="388"/>
         <source>&amp;Trim</source>
-        <translation>&amp; Trim</translation>
+        <translation>&amp;Obreži</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="390"/>
         <source>&amp;Lengthen</source>
-        <translation>&amp; Lengthen</translation>
+        <translation>&amp;Podaljšaj</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="392"/>
         <source>&amp;Divide</source>
-        <translation>&amp; Divide</translation>
+        <translation>&amp;Razdeli</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="393"/>
         <source>&amp;Stretch</source>
-        <translation>&amp; Raztegni</translation>
+        <translation>&amp;Raztegni</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="394"/>
         <source>&amp;Bevel</source>
-        <translation>&amp; Bevel</translation>
+        <translation>&amp;Posnetje</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="395"/>
         <source>&amp;Fillet</source>
-        <translation>&amp; Fillet</translation>
+        <translation>&amp;Zaokroži</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="396"/>
         <source>&amp;Explode Text into Letters</source>
-        <translation>&amp; Eksplodiraj besedilo v črke</translation>
+        <translation>&amp;Razbij besedilo v črke</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="583"/>
         <source>&amp;Distance Point to Point</source>
-        <translation>&amp; Oddaljenost od točke do točke</translation>
+        <translation>&amp;Razdalja med točkama</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="586"/>
@@ -3010,17 +3011,17 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="588"/>
         <source>Polygonal &amp;Area</source>
-        <translation>Poligonalno &amp; območje</translation>
+        <translation>Ploščina &amp;mnogokotnika</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="751"/>
         <source>&amp;Undo</source>
-        <translation>&amp; Razveljavi</translation>
+        <translation>&amp;Razveljavi</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="752"/>
         <source>&amp;Redo</source>
-        <translation>&amp; Obnovi</translation>
+        <translation>&amp;Uveljavi</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="773"/>
@@ -3035,17 +3036,17 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="782"/>
         <source>Cu&amp;t</source>
-        <translation>Cu&amp;t</translation>
+        <translation>&amp;Izreži</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="784"/>
         <source>&amp;Copy</source>
-        <translation>&amp; Kopiraj</translation>
+        <translation>&amp;Kopiraj</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="786"/>
         <source>&amp;Paste</source>
-        <translation>&amp; Paste</translation>
+        <translation>&amp;Prilepi</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="196"/>
@@ -3080,17 +3081,17 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="280"/>
         <source>&amp;Center, Point, Arc Angle</source>
-        <translation>&amp; Center, točka, kot loka</translation>
+        <translation>&amp;Središče, točka, kot loka</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="282"/>
         <source>&amp;2 Points, Angle</source>
-        <translation>Točke &amp; 2, kot</translation>
+        <translation>&amp;2 točki, kot</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="283"/>
         <source>&amp;2 Points, Radius</source>
-        <translation>Točke &amp; 2, polmer</translation>
+        <translation>&amp;2 točki, polmer</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="294"/>
@@ -3100,12 +3101,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="295"/>
         <source>Parabola &amp;Focus Directrix</source>
-        <translation>Parabola &amp; Focus Directrix</translation>
+        <translation>Parabola, &amp;gorišče in vodnica</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="300"/>
         <source>&amp;Remove spline points</source>
-        <translation>Odstranjevanje točk krivulje</translation>
+        <translation>&amp;Odstrani točke zlepka</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="302"/>
@@ -3115,7 +3116,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="303"/>
         <source>&amp;Spline from polyline</source>
-        <translation>&amp; Spline iz poliline</translation>
+        <translation>&amp;Zlepek iz polilinije</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="304"/>
@@ -3125,22 +3126,22 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="310"/>
         <source>&amp;Ellipse (1 Point)</source>
-        <translation>&amp; Ellipse (1 točka)</translation>
+        <translation>&amp;Elipsa (1 točka)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="311"/>
         <source>&amp;Ellipse Arc (1 Point)</source>
-        <translation>&amp; Ellipse Arc (1 točka)</translation>
+        <translation>&amp;Eliptični lok (1 točka)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="330"/>
         <source>Polyline from Existing &amp;Segments</source>
-        <translation>Polilin iz obstoječih &amp; segmentov</translation>
+        <translation>Polilinija iz obstoječih &amp;segmentov</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="332"/>
         <source>Polyline Change Segment Type</source>
-        <translation>Vrsta segmenta</translation>
+        <translation>Spremeni vrsto segmenta polilinije</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="343"/>
@@ -3150,12 +3151,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="358"/>
         <source>&amp;Baseline</source>
-        <translation>&amp; Baza</translation>
+        <translation>&amp;Vzporedno kotiranje</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="359"/>
         <source>&amp;Continue</source>
-        <translation>&amp; Nadaljuj</translation>
+        <translation>&amp;Zaporedno kotiranje</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="398"/>
@@ -3185,12 +3186,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="403"/>
         <source>Align One</source>
-        <translation>Uskladi eno</translation>
+        <translation>Poravnaj eno</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="404"/>
         <source>Align Reference Points</source>
-        <translation>Uskladi referenčne točke</translation>
+        <translation>Poravnaj referenčne točke</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="410"/>
@@ -3200,22 +3201,22 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="416"/>
         <source>&amp;Pick Pen From Entity</source>
-        <translation>&amp; Pick Pen iz entitete</translation>
+        <translation>&amp;Prevzemi pero iz entitete</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="417"/>
         <source>&amp;Pick Pen From Entity (Resolved)</source>
-        <translation>&amp; Pick Pen iz entitete (Rešen)</translation>
+        <translation>&amp;Prevzemi pero iz entitete (razrešeno)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="418"/>
         <source>Apply Pen to Entity</source>
-        <translation>Namesti Pen na entiteto</translation>
+        <translation>Uporabi pero na entiteti</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="419"/>
         <source>Copy Pen</source>
-        <translation>Kopiraj peresnik</translation>
+        <translation>Kopiraj pero</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="425"/>
@@ -3261,7 +3262,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="59"/>
         <source>Arc</source>
-        <translation>Arc</translation>
+        <translation>Lok</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="59"/>
@@ -3271,7 +3272,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="60"/>
         <source>Spline</source>
-        <translation>Spline</translation>
+        <translation>Zlepek</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="60"/>
@@ -3361,12 +3362,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="69"/>
         <source>Polygon</source>
-        <translation>Poligon</translation>
+        <translation>Mnogokotnik</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="69"/>
         <source>Polygon drawing commands</source>
-        <translation>Ukazi za risanje iz poligona</translation>
+        <translation>Ukazi za risanje mnogokotnikov</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="70"/>
@@ -3402,17 +3403,17 @@ or [%2]</source>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="73"/>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="73"/>
         <source>Relative Zero</source>
-        <translation>Relativni nič</translation>
+        <translation>Relativna ničla</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="74"/>
         <source>Polyline</source>
-        <translation>Polilin</translation>
+        <translation>Polilinija</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="74"/>
         <source>Polyline drawing commands</source>
-        <translation>Ukazi za risanje po polilini</translation>
+        <translation>Ukazi za risanje polilinij</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="75"/>
@@ -3422,7 +3423,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="75"/>
         <source>Pen related operations</source>
-        <translation>Postopki, povezani s peresnikom</translation>
+        <translation>Postopki s peresi</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="76"/>
@@ -3432,7 +3433,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="76"/>
         <source>Snap restrictions</source>
-        <translation>Omejitve pripetosti</translation>
+        <translation>Omejitve pripenjanja</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="77"/>
@@ -3452,7 +3453,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="79"/>
         <source>Snap Extras</source>
-        <translation>Pripni dodatne</translation>
+        <translation>Dodatna pripenjanja</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="79"/>
@@ -3628,12 +3629,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="288"/>
         <source>&amp;Dual Curve</source>
-        <translation>&amp; Dvojna krivulja</translation>
+        <translation>&amp;Dualna krivulja</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="296"/>
         <source>&amp;Hyperbola &amp;Foci Point</source>
-        <translation>Točka &amp; Hyperbola &amp; Foci</translation>
+        <translation>Hiperbola, &amp;gorišči in točka</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="360"/>
@@ -3688,17 +3689,17 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="456"/>
         <source>Snap on Entity</source>
-        <translation>Pripni entiteto</translation>
+        <translation>Pripni na entiteto</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="457"/>
         <source>Snap Center</source>
-        <translation>Pripni središče</translation>
+        <translation>Pripni na središče</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="458"/>
         <source>Snap Middle</source>
-        <translation>Pripni sredino</translation>
+        <translation>Pripni na sredino</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="459"/>
@@ -3708,7 +3709,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="460"/>
         <source>Snap Intersection</source>
-        <translation>Pripni presečišče</translation>
+        <translation>Pripni na presečišče</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="525"/>
@@ -3763,12 +3764,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="554"/>
         <source>Set relative zero position</source>
-        <translation>Nastavi relativni položaj nič</translation>
+        <translation>Nastavi položaj relativne ničle</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="557"/>
         <source>Lock relative zero position</source>
-        <translation>Name</translation>
+        <translation>Zakleni položaj relativne ničle</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="565"/>
@@ -3788,17 +3789,17 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="582"/>
         <source>&amp;Point Coordinates</source>
-        <translation>Koordinate &amp; točke</translation>
+        <translation>&amp;Koordinate točke</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="584"/>
         <source>Distance &amp;Entity to Point</source>
-        <translation>Razdalja do točke</translation>
+        <translation>Razdalja od &amp;entitete do točke</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="585"/>
         <source>Distance &amp;Point to Entity</source>
-        <translation>Razdalja do entitete</translation>
+        <translation>Razdalja od &amp;točke do entitete</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="587"/>
@@ -3813,7 +3814,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="590"/>
         <source>Collect &amp;Coordinates</source>
-        <translation>Zbiraj &amp; koordinate</translation>
+        <translation>Zberi &amp;koordinate</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="591"/>
@@ -3823,32 +3824,32 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="604"/>
         <source>&amp;Draft Lines</source>
-        <translation>&amp; Kraft linije</translation>
+        <translation>&amp;Črte kot osnutek</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="605"/>
         <source>&amp;Antialiasing</source>
-        <translation>&amp; Antitelesa</translation>
+        <translation>&amp;Glajenje robov</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="607"/>
         <source>&amp;Orthogonal Grid</source>
-        <translation>&amp; Ortogonalna mreža</translation>
+        <translation>&amp;Ortogonalna mreža</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="608"/>
         <source>&amp;Isometric Left Grid</source>
-        <translation>&amp; Izometrična leva mreža</translation>
+        <translation>&amp;Leva izometrična mreža</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="609"/>
         <source>&amp;Isometric Top Grid</source>
-        <translation>&amp; Izometrična mreža</translation>
+        <translation>&amp;Zgornja izometrična mreža</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="610"/>
         <source>&amp;Isometric Right Grid</source>
-        <translation>&amp; Izometrična mreža desno</translation>
+        <translation>&amp;Desna izometrična mreža</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="621"/>
@@ -3888,7 +3889,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="637"/>
         <source>&amp;Add Block</source>
-        <translation>&amp; Dodaj blok</translation>
+        <translation>&amp;Dodaj blok</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="638"/>
@@ -3898,22 +3899,22 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="639"/>
         <source>&amp;Rename Block</source>
-        <translation>&amp; Preimenuj blok</translation>
+        <translation>&amp;Preimenuj blok</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="640"/>
         <source>&amp;Edit Block</source>
-        <translation>&amp; Uredi blok</translation>
+        <translation>&amp;Uredi blok</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="641"/>
         <source>&amp;Save Block</source>
-        <translation>&amp; Shrani blok</translation>
+        <translation>&amp;Shrani blok</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="642"/>
         <source>&amp;Insert Block</source>
-        <translation>&amp; Vstavi blok</translation>
+        <translation>&amp;Vstavi blok</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="643"/>
@@ -3923,27 +3924,27 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="644"/>
         <source>&amp;Create Block</source>
-        <translation>&amp; Ustvari blok</translation>
+        <translation>&amp;Ustvari blok</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="397"/>
         <source>Ex&amp;plode</source>
-        <translation>Ex&amp;plode</translation>
+        <translation>Raz&amp;bij</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="654"/>
         <source>&amp;Application Preferences</source>
-        <translation>Lastnosti &amp; prijave</translation>
+        <translation>&amp;Nastavitve programa</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="743"/>
         <source>Select &amp;All</source>
-        <translation>Izberi &amp; vse</translation>
+        <translation>Izberi &amp;vse</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="744"/>
         <source>Deselect &amp;all</source>
-        <translation>Odizberi &amp; vse</translation>
+        <translation>Odstrani izbor &amp;vsega</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="745"/>
@@ -3953,22 +3954,22 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="716"/>
         <source>Focus on &amp;Options Widget</source>
-        <translation>Fokus na gradnik &amp; Options</translation>
+        <translation>Fokus na pripomoček &amp;možnosti</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="720"/>
         <source>Zoom &amp;In</source>
-        <translation>Povečaj V</translation>
+        <translation>Po&amp;večaj</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="721"/>
         <source>Zoom &amp;Out</source>
-        <translation>Povečaj</translation>
+        <translation>Po&amp;manjšaj</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="722"/>
         <source>&amp;Auto Zoom</source>
-        <translation>&amp; Samodejno povečavo</translation>
+        <translation>&amp;Samodejna povečava</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="723"/>
@@ -3983,42 +3984,42 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="678"/>
         <source>&amp;New</source>
-        <translation>&amp; Novo</translation>
+        <translation>&amp;Novo</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="679"/>
         <source>New From &amp;Template</source>
-        <translation>Novo iz &amp; template</translation>
+        <translation>Novo iz &amp;predloge</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="680"/>
         <source>&amp;Open...</source>
-        <translation>&amp; Odpri...</translation>
+        <translation>&amp;Odpri...</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="681"/>
         <source>&amp;Save</source>
-        <translation>&amp; Shrani</translation>
+        <translation>&amp;Shrani</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="682"/>
         <source>Save &amp;as...</source>
-        <translation>Shrani &amp; kot...</translation>
+        <translation>Shrani &amp;kot...</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="674"/>
         <source>&amp;Export as image</source>
-        <translation>&amp; Izvozi kot sliko</translation>
+        <translation>&amp;Izvozi kot sliko</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="670"/>
         <source>&amp;Close</source>
-        <translation>&amp; Zapri</translation>
+        <translation>&amp;Zapri</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="684"/>
         <source>&amp;Print...</source>
-        <translation>&amp; Natisni...</translation>
+        <translation>&amp;Natisni...</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="676"/>
@@ -4028,12 +4029,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="685"/>
         <source>&amp;Quit</source>
-        <translation>&amp; Končaj</translation>
+        <translation>&amp;Končaj</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="677"/>
         <source>&amp;Block</source>
-        <translation>&amp; Blok</translation>
+        <translation>&amp;Blok</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="601"/>
@@ -4043,17 +4044,17 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="602"/>
         <source>&amp;Grid</source>
-        <translation>&amp; Grid</translation>
+        <translation>&amp;Mreža</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="603"/>
         <source>&amp;Draft</source>
-        <translation>&amp;Skica</translation>
+        <translation>&amp;Osnutek</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="606"/>
         <source>&amp;Statusbar</source>
-        <translation>&amp; Vrstica stanja</translation>
+        <translation>&amp;Vrstica stanja</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="715"/>
@@ -4078,7 +4079,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="385"/>
         <source>Mo&amp;ve and Rotate</source>
-        <translation>Mo&amp;ve in rotacija</translation>
+        <translation>&amp;Premakni in zavrti</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="389"/>
@@ -4088,7 +4089,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="391"/>
         <source>O&amp;ffset</source>
-        <translation>O&amp;ffset</translation>
+        <translation>&amp;Odmik</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="759"/>
@@ -4108,7 +4109,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="775"/>
         <source>Pick Distance</source>
-        <translation>Razdalja izbiranja</translation>
+        <translation>Izberi razdaljo</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="776"/>
@@ -4123,32 +4124,32 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="785"/>
         <source>Copy &amp;Quick</source>
-        <translation>&amp; Hitro kopiraj</translation>
+        <translation>&amp;Hitro kopiraj</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="787"/>
         <source>Paste &amp;Transform</source>
-        <translation>Prilepi &amp; prehod</translation>
+        <translation>Prilepi s &amp;preoblikovanjem</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="753"/>
         <source>&amp;Delete Selected</source>
-        <translation>&amp; Izbriši izbrano</translation>
+        <translation>&amp;Izbriši izbrano</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="754"/>
         <source>&amp;Selection Pointer</source>
-        <translation>&amp; Izbirni kazalec</translation>
+        <translation>&amp;Izbirni kazalec</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="194"/>
         <source>Pol&amp;ygon (Cen,Tan)</source>
-        <translation>Pol&amp;ygon (Cen, Tan)</translation>
+        <translation>&amp;Mnogokotnik (središče, tangenta)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="356"/>
         <source>&amp;Arc</source>
-        <translation>&amp; Arc</translation>
+        <translation>&amp;Lok</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="617"/>
@@ -4236,22 +4237,22 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="143"/>
         <source>Select first edge point of angle</source>
-        <translation>Izberite kotno točko prvega roba</translation>
+        <translation>Izberite točko na prvem kraku kota</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="147"/>
         <source>Select second (intersection) point of angle</source>
-        <translation>Izberite drugo točko kota (presek)</translation>
+        <translation>Izberite drugo točko kota (presečišče)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="151"/>
         <source>Select second edge point of angle</source>
-        <translation>Izberite kotno točko drugega roba</translation>
+        <translation>Izberite točko na drugem kraku kota</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="192"/>
         <source>Distance:</source>
-        <translation>Oddaljenost:</translation>
+        <translation>Razdalja:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="193"/>
@@ -4388,7 +4389,7 @@ Točka: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/info/lc_action_info_dist_point_to_entity.cpp" line="333"/>
         <source>Distance:</source>
-        <translation type="unfinished">Oddaljenost:</translation>
+        <translation type="unfinished">Razdalja:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_action_info_dist_point_to_entity.cpp" line="333"/>
@@ -4549,7 +4550,7 @@ Točka: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="288"/>
         <source>Select first edge point of angle</source>
-        <translation>Izberite kotno točko prvega roba</translation>
+        <translation>Izberite točko na prvem kraku kota</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="288"/>
@@ -4564,17 +4565,17 @@ Točka: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="292"/>
         <source>Select second (intersection) point of angle</source>
-        <translation>Izberite drugo točko kota (presek)</translation>
+        <translation>Izberite drugo točko kota (presečišče)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="292"/>
         <source>Pick angle</source>
-        <translation>Kot izbiranja</translation>
+        <translation>Izberi kot</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="296"/>
         <source>Select second edge point of angle</source>
-        <translation>Izberite kotno točko drugega roba</translation>
+        <translation>Izberite točko na drugem kraku kota</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="296"/>
@@ -4633,7 +4634,7 @@ Točka: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="336"/>
         <source>Distance:</source>
-        <translation>Oddaljenost:</translation>
+        <translation>Razdalja:</translation>
     </message>
 </context>
 <context>
@@ -4642,7 +4643,7 @@ Točka: (%8 , %9)</translation>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickdistance.cpp" line="169"/>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickdistance.cpp" line="181"/>
         <source>Pick Distance</source>
-        <translation>Razdalja izbiranja</translation>
+        <translation>Izberi razdaljo</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickdistance.cpp" line="170"/>
@@ -4667,7 +4668,7 @@ Točka: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickdistance.cpp" line="182"/>
         <source>Distance:</source>
-        <translation>Oddaljenost:</translation>
+        <translation>Razdalja:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickdistance.cpp" line="183"/>
@@ -4750,7 +4751,7 @@ Točka: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickposition.cpp" line="153"/>
         <source>Pick relative zero coordinates</source>
-        <translation>Izberite relativne ničelne koordinate</translation>
+        <translation>Izberite koordinate relativne ničle</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickposition.cpp" line="153"/>
@@ -4796,12 +4797,12 @@ Točka: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="53"/>
         <source>Align action at the moment supports only World Coordinates system, and may not be invoked if User Coordinate System is active.</source>
-        <translation>Ukrepanje v tem trenutku podpira samo svetovni koordinatni sistem in se ne more sklicevati, če je uporabniški koordinatni sistem aktiven.</translation>
+        <translation>Dejanje poravnave trenutno podpira le svetovni koordinatni sistem in ga ni mogoče zagnati, ko je aktiven uporabniški koordinatni sistem.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="147"/>
         <source>Align to </source>
-        <translation>Uskladi z</translation>
+        <translation>Poravnaj z </translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="150"/>
@@ -4816,7 +4817,7 @@ Točka: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="158"/>
         <source>Drawing</source>
-        <translation>Risanje</translation>
+        <translation>Risba</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="165"/>
@@ -4894,7 +4895,7 @@ Točka: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_ref.cpp" line="244"/>
         <source>Align immediately after selection</source>
-        <translation>Uskladite takoj po izbiri</translation>
+        <translation>Poravnaj takoj po izbiri</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_ref.cpp" line="244"/>
@@ -4932,7 +4933,7 @@ Točka: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_single.cpp" line="54"/>
         <source>Align action at the moment supports only World Coordinates system, and may not be invoked if User Coordinate System is active.</source>
-        <translation>Ukrepanje v tem trenutku podpira samo svetovni koordinatni sistem in se ne more sklicevati, če je uporabniški koordinatni sistem aktiven.</translation>
+        <translation>Dejanje poravnave trenutno podpira le svetovni koordinatni sistem in ga ni mogoče zagnati, ko je aktiven uporabniški koordinatni sistem.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_single.cpp" line="115"/>
@@ -4942,7 +4943,7 @@ Točka: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_single.cpp" line="201"/>
         <source>Align to </source>
-        <translation>Uskladi z</translation>
+        <translation>Poravnaj z </translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_single.cpp" line="204"/>
@@ -4957,7 +4958,7 @@ Točka: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_single.cpp" line="212"/>
         <source>Drawing</source>
-        <translation>Risanje</translation>
+        <translation>Risba</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_single.cpp" line="219"/>
@@ -5013,7 +5014,7 @@ Točka: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_bevel.cpp" line="182"/>
         <source>Trim</source>
-        <translation type="unfinished">Trim</translation>
+        <translation type="unfinished">Obreži</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_bevel.cpp" line="183"/>
@@ -5122,7 +5123,7 @@ Točka: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="369"/>
         <source>Break/Divide Circle</source>
-        <translation>Krog Break/Divide</translation>
+        <translation>Prelomi/razdeli krog</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="370"/>
@@ -5172,7 +5173,7 @@ Točka: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_cut.cpp" line="125"/>
         <source>Entity must be a line, arc, circle, ellipse or interpolation spline.</source>
-        <translation type="unfinished">Entiteta mora biti črta, lok, krog, elipsa ali interpolacija.</translation>
+        <translation type="unfinished">Entiteta mora biti črta, lok, krog, elipsa ali interpolacijski zlepek.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_cut.cpp" line="134"/>
@@ -5233,7 +5234,7 @@ Točka: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_delete_free.cpp" line="109"/>
         <source>Parent of first entity is not a polyline</source>
-        <translation type="unfinished">Roditelj prve entitete ni polilin</translation>
+        <translation type="unfinished">Nadrejeni element prve entitete ni polilinija</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_delete_free.cpp" line="113"/>
@@ -5253,12 +5254,12 @@ Točka: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_delete_free.cpp" line="145"/>
         <source>Specify first break point on a polyline</source>
-        <translation type="unfinished">Določite prvo prelomno točko na polilinu</translation>
+        <translation type="unfinished">Določite prvo točko preloma na poliliniji</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_delete_free.cpp" line="148"/>
         <source>Specify second break point on the same polyline</source>
-        <translation type="unfinished">Navedite drugo točko preloma na istem polilinu</translation>
+        <translation type="unfinished">Določite drugo točko preloma na isti poliliniji</translation>
     </message>
 </context>
 <context>
@@ -5282,7 +5283,7 @@ Točka: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_duplicate.cpp" line="290"/>
         <source>Select direction of offset</source>
-        <translation>Izberite smer za zamik</translation>
+        <translation>Izberite smer odmika</translation>
     </message>
 </context>
 <context>
@@ -5303,7 +5304,7 @@ Točka: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_explode_text.cpp" line="54"/>
         <source>Explode immediately after selection</source>
-        <translation type="unfinished">Eksplodiraj takoj po izboru</translation>
+        <translation type="unfinished">Razbij takoj po izbiri</translation>
     </message>
 </context>
 <context>
@@ -5464,7 +5465,7 @@ Točka: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_move.cpp" line="140"/>
         <source>Moving Offset</source>
-        <translation type="unfinished">Premikanje odmik</translation>
+        <translation type="unfinished">Odmik pri premikanju</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_move.cpp" line="204"/>
@@ -5508,7 +5509,7 @@ Točka: (%8 , %9)</translation>
         <location filename="../src/actions/drawing/modify/lc_action_modify_move_rotate.cpp" line="124"/>
         <location filename="../src/actions/drawing/modify/lc_action_modify_move_rotate.cpp" line="153"/>
         <source>Moving with rotation</source>
-        <translation type="unfinished">Gibanje z vrtenjem</translation>
+        <translation type="unfinished">Premikanje z vrtenjem</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_move_rotate.cpp" line="124"/>
@@ -5708,7 +5709,7 @@ Točka: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="145"/>
         <source>Distance:</source>
-        <translation type="unfinished">Oddaljenost:</translation>
+        <translation type="unfinished">Razdalja:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="436"/>
@@ -5787,7 +5788,7 @@ Točka: (%8 , %9)</translation>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate.cpp" line="204"/>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate.cpp" line="211"/>
         <source>Center Point:</source>
-        <translation type="unfinished">Center:</translation>
+        <translation type="unfinished">Središčna točka:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate.cpp" line="205"/>
@@ -5843,7 +5844,7 @@ Točka: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate.cpp" line="711"/>
         <source>Specify rotation center</source>
-        <translation type="unfinished">Navedite center vrtenja</translation>
+        <translation type="unfinished">Navedite središče vrtenja</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate.cpp" line="714"/>
@@ -5958,7 +5959,7 @@ Točka: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_scale.cpp" line="224"/>
         <source>Center:</source>
-        <translation type="unfinished">Center:</translation>
+        <translation type="unfinished">Središče:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_scale.cpp" line="225"/>
@@ -6092,7 +6093,7 @@ Točka: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim.cpp" line="130"/>
         <source>Trim</source>
-        <translation type="unfinished">Trim</translation>
+        <translation type="unfinished">Obreži</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim.cpp" line="131"/>
@@ -6117,7 +6118,7 @@ Točka: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim.cpp" line="225"/>
         <source>Select second trim entity</source>
-        <translation type="unfinished">Izberite drugo trim entiteto</translation>
+        <translation type="unfinished">Izberite drugo entiteto za obrezovanje</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim.cpp" line="228"/>
@@ -6145,7 +6146,7 @@ Točka: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim_amount.cpp" line="267"/>
         <source>Select line/arc to trim OR enter length value:</source>
-        <translation type="unfinished">Izberite linijo/arc za obrezovanje ALI vnesite vrednost dolžine:</translation>
+        <translation type="unfinished">Izberite črto/lok za obrezovanje ALI vnesite dolžino:</translation>
     </message>
 </context>
 <context>
@@ -6222,17 +6223,17 @@ Točka: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/pen/lc_actionpenapply.cpp" line="183"/>
         <source>Specify entity to pick the pen</source>
-        <translation>Določite entiteto za izbiro peresnika</translation>
+        <translation>Določite entiteto, iz katere prevzamete pero</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pen/lc_actionpenapply.cpp" line="186"/>
         <source>Specify entity to apply pen</source>
-        <translation>Določitev entitete za uporabo peresnika</translation>
+        <translation>Določite entiteto, na kateri uporabite pero</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pen/lc_actionpenapply.cpp" line="186"/>
         <source>Apply Resolved Pen</source>
-        <translation>Namesti Rešeni injekcijski peresnik</translation>
+        <translation>Uporabi razrešeno pero</translation>
     </message>
 </context>
 <context>
@@ -6240,7 +6241,7 @@ Točka: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/pen/lc_actionpenpick.cpp" line="87"/>
         <source>Specify entity to pick the pen</source>
-        <translation>Določite entiteto za izbiro peresnika</translation>
+        <translation>Določite entiteto, iz katere prevzamete pero</translation>
     </message>
 </context>
 <context>
@@ -6254,7 +6255,7 @@ Točka: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_add.cpp" line="113"/>
         <source>Entity must be a polyline.</source>
-        <translation type="unfinished">Entiteta mora biti polilin.</translation>
+        <translation type="unfinished">Entiteta mora biti polilinija.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_add.cpp" line="142"/>
@@ -6269,7 +6270,7 @@ Točka: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_add.cpp" line="180"/>
         <source>Specify polyline to add nodes</source>
-        <translation type="unfinished">Določite poliline za dodajanje vozlišč</translation>
+        <translation type="unfinished">Določite polilinijo za dodajanje vozlišč</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_add.cpp" line="183"/>
@@ -6287,27 +6288,27 @@ Točka: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_append.cpp" line="128"/>
         <source>Entity must be a polyline.</source>
-        <translation type="unfinished">Entiteta mora biti polilin.</translation>
+        <translation type="unfinished">Entiteta mora biti polilinija.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_append.cpp" line="132"/>
         <source>Can not append nodes in a closed polyline.</source>
-        <translation type="unfinished">Ni mogoče pripeti vozlišč v zaprtem polilinu.</translation>
+        <translation type="unfinished">Zaprti poliliniji ni mogoče dodajati vozlišč.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_append.cpp" line="171"/>
         <source>Click somewhere near the beginning or end of existing polyline.</source>
-        <translation type="unfinished">Kliknite nekje blizu začetka ali konca obstoječega polilina.</translation>
+        <translation type="unfinished">Kliknite blizu začetka ali konca obstoječe polilinije.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_append.cpp" line="294"/>
         <source>Enter number of polylines</source>
-        <translation type="unfinished">Vnesite število polilin</translation>
+        <translation type="unfinished">Vnesite število polilinij</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_append.cpp" line="309"/>
         <source>Specify the polyline somewhere near the beginning or end point</source>
-        <translation type="unfinished">Določite polilin nekje blizu začetne ali končne točke</translation>
+        <translation type="unfinished">Določite polilinijo blizu njene začetne ali končne točke</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_append.cpp" line="329"/>
@@ -6320,7 +6321,7 @@ Točka: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_arcs_to_lines.cpp" line="116"/>
         <source>Specify polyline with arc segments</source>
-        <translation>Določitev poliline z lok segmenti</translation>
+        <translation>Določite polilinijo z ločnimi segmenti</translation>
     </message>
 </context>
 <context>
@@ -6333,12 +6334,12 @@ Točka: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_change_segment_type.cpp" line="242"/>
         <source>Select polyline to modify</source>
-        <translation>Izberite polilin za spreminjanje</translation>
+        <translation>Izberite polilinijo za spreminjanje</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_change_segment_type.cpp" line="246"/>
         <source>Select segment of polyline to modify</source>
-        <translation>Izberite segment poliline za spreminjanje</translation>
+        <translation>Izberite segment polilinije za spreminjanje</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_change_segment_type.cpp" line="250"/>
@@ -6357,7 +6358,7 @@ Točka: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node.cpp" line="107"/>
         <source>Entity must be a polyline.</source>
-        <translation type="unfinished">Entiteta mora biti polilin.</translation>
+        <translation type="unfinished">Entiteta mora biti polilinija.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node.cpp" line="132"/>
@@ -6372,7 +6373,7 @@ Točka: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node.cpp" line="155"/>
         <source>Specify polyline to delete node</source>
-        <translation type="unfinished">Določite poliline za brisanje vozlišča</translation>
+        <translation type="unfinished">Določite polilinijo za brisanje vozlišča</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node.cpp" line="158"/>
@@ -6391,7 +6392,7 @@ Točka: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node_between.cpp" line="131"/>
         <source>Entity must be a polyline.</source>
-        <translation type="unfinished">Entiteta mora biti polilin.</translation>
+        <translation type="unfinished">Entiteta mora biti polilinija.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node_between.cpp" line="159"/>
@@ -6408,17 +6409,17 @@ Točka: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node_between.cpp" line="174"/>
         <source>No polyline found.</source>
-        <translation type="unfinished">Polilin ni najden.</translation>
+        <translation type="unfinished">Polilinija ni najdena.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node_between.cpp" line="195"/>
         <source>At least two segments of polyline should be between selected points.</source>
-        <translation type="unfinished">Med izbranimi točkami morata biti vsaj dva segmenta polilina.</translation>
+        <translation type="unfinished">Med izbranima točkama morata biti vsaj dva segmenta polilinije.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node_between.cpp" line="213"/>
         <source>Specify polyline to delete between two nodes</source>
-        <translation type="unfinished">Določite poliline za brisanje med dvema vozliščema</translation>
+        <translation type="unfinished">Določite polilinijo za brisanje med dvema vozliščema</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node_between.cpp" line="216"/>
@@ -6441,12 +6442,12 @@ Točka: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_equidistant.cpp" line="338"/>
         <source>Entity must be a polyline.</source>
-        <translation type="unfinished">Entiteta mora biti polilin.</translation>
+        <translation type="unfinished">Entiteta mora biti polilinija.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_equidistant.cpp" line="403"/>
         <source>Choose the original polyline</source>
-        <translation type="unfinished">Izberite prvotno polilino</translation>
+        <translation type="unfinished">Izberite prvotno polilinijo</translation>
     </message>
 </context>
 <context>
@@ -6455,7 +6456,7 @@ Točka: (%8 , %9)</translation>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_from_segment.cpp" line="62"/>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_from_segment.cpp" line="82"/>
         <source>Polyline created</source>
-        <translation type="unfinished">Ustvari polilin</translation>
+        <translation type="unfinished">Polilinija je ustvarjena</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_from_segment.cpp" line="326"/>
@@ -6465,12 +6466,12 @@ Točka: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_from_segment.cpp" line="329"/>
         <source>Entity can not be a closed polyline.</source>
-        <translation type="unfinished">Entiteta ne more biti zaprt polilin.</translation>
+        <translation type="unfinished">Entiteta ne sme biti zaprta polilinija.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_from_segment.cpp" line="352"/>
         <source>Choose one of the segments on the original polyline</source>
-        <translation type="unfinished">Izberite enega od segmentov na prvotnem polilinu</translation>
+        <translation type="unfinished">Izberite enega od segmentov prvotne polilinije</translation>
     </message>
 </context>
 <context>
@@ -6483,22 +6484,22 @@ Točka: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_trim.cpp" line="118"/>
         <source>Entity must be a polyline.</source>
-        <translation type="unfinished">Entiteta mora biti polilin.</translation>
+        <translation type="unfinished">Entiteta mora biti polilinija.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_trim.cpp" line="143"/>
         <source>First segment should be on selected polyline.</source>
-        <translation type="unfinished">Prvi segment mora biti na izbranem polilinu.</translation>
+        <translation type="unfinished">Prvi segment mora biti na izbrani poliliniji.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_trim.cpp" line="155"/>
         <source>Second segment should be on selected polyline and not equal to first one.</source>
-        <translation type="unfinished">Drugi segment mora biti na izbranem polilinu in ne enak prvemu.</translation>
+        <translation type="unfinished">Drugi segment mora biti na izbrani poliliniji in različen od prvega.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_trim.cpp" line="188"/>
         <source>Specify polyline to trim</source>
-        <translation type="unfinished">Določi polilin do trim</translation>
+        <translation type="unfinished">Določite polilinijo za obrezovanje</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_trim.cpp" line="191"/>
@@ -6531,7 +6532,7 @@ Točka: (%8 , %9)</translation>
     <message>
         <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="222"/>
         <source>that intersect with box</source>
-        <translation>ki sekajo s škatlo</translation>
+        <translation>ki sekajo okvir</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="222"/>
@@ -6551,7 +6552,7 @@ Točka: (%8 , %9)</translation>
     <message>
         <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="246"/>
         <source>Select Intersecting</source>
-        <translation>Izberite seciranje</translation>
+        <translation>Izberi sekajoče</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="276"/>
@@ -6590,7 +6591,7 @@ Točka: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actionselectdimordinatesameorigin.cpp" line="80"/>
         <source>Select reference ordinate dimension</source>
-        <translation>Izberite referenčno mero koordinat</translation>
+        <translation>Izberite referenčno ordinatno koto</translation>
     </message>
 </context>
 <context>
@@ -6621,7 +6622,7 @@ Točka: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_intersected.cpp" line="192"/>
         <source>Select intersecting entity</source>
-        <translation type="unfinished">Izberite sečnjo entiteto</translation>
+        <translation type="unfinished">Izberite sekajočo entiteto</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_intersected.cpp" line="192"/>
@@ -6693,7 +6694,7 @@ Točka: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_window.cpp" line="137"/>
         <source>that intersect with box</source>
-        <translation type="unfinished">ki sekajo s škatlo</translation>
+        <translation type="unfinished">ki sekajo okvir</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_window.cpp" line="137"/>
@@ -6723,12 +6724,12 @@ Točka: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_window.cpp" line="184"/>
         <source>Select Intersecting</source>
-        <translation type="unfinished">Izberite seciranje</translation>
+        <translation type="unfinished">Izberi sekajoče</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_window.cpp" line="184"/>
         <source>De-select intersecting</source>
-        <translation type="unfinished">Odstranjevanje sečnje</translation>
+        <translation type="unfinished">Odstrani izbor sekajočih</translation>
     </message>
 </context>
 <context>
@@ -6769,7 +6770,7 @@ Točka: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_action_spline_add_point.cpp" line="214"/>
         <source>Insert AFTER selected point</source>
-        <translation>Vstavi AFTER izbrano točko</translation>
+        <translation>Vstavi ZA izbrano točko</translation>
     </message>
 </context>
 <context>
@@ -6811,7 +6812,7 @@ Točka: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_action_spline_remove_between.cpp" line="42"/>
         <source>Not enough points remains for the spline</source>
-        <translation>Ni več dovolj točk za krivuljo</translation>
+        <translation>Za zlepek ne ostane dovolj točk</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_action_spline_remove_between.cpp" line="228"/>
@@ -6967,7 +6968,7 @@ Točka: (%8 , %9)</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.ui" line="220"/>
         <source>If checked, matched actions will be highlighted onlye, otherwide - non-matched actions are hidden</source>
-        <translation>Če je možnost omogočena, bodo usklajeni ukrepi poudarjeni le e, po vsem svetu – neprimerljivi ukrepi so skriti</translation>
+        <translation>Če je možnost omogočena, bodo ujemajoča se dejanja le poudarjena, sicer bodo neujemajoča se dejanja skrita</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.ui" line="223"/>
@@ -7073,7 +7074,7 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_options_filler.cpp" line="36"/>
         <source>Drawing</source>
-        <translation type="unfinished">Risanje</translation>
+        <translation type="unfinished">Risba</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_options_filler.cpp" line="37"/>
@@ -7254,7 +7255,7 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_single_options_filler.cpp" line="36"/>
         <source>Drawing</source>
-        <translation type="unfinished">Risanje</translation>
+        <translation type="unfinished">Risba</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_single_options_filler.cpp" line="37"/>
@@ -7334,7 +7335,7 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_single_options_widget.ui" line="32"/>
         <source>Align to:</source>
-        <translation type="unfinished">Uskladi z:</translation>
+        <translation type="unfinished">Poravnaj z:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_single_options_widget.ui" line="60"/>
@@ -7384,7 +7385,7 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_single_options_widget.ui" line="171"/>
         <source>Drawing</source>
-        <translation type="unfinished">Risanje</translation>
+        <translation type="unfinished">Risba</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_single_options_widget.ui" line="200"/>
@@ -7427,7 +7428,7 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/components/status_bar/lc_anglesbasiswidget.ui" line="96"/>
         <source>Zero base angle relative to the current user coordinate system. 0.0 is 3pm.</source>
-        <translation>Ničelni osnovni kot glede na trenutni koordinatni sistem uporabnika. 0, 0 je 3 ure.</translation>
+        <translation>Osnovni ničelni kot glede na trenutni uporabniški koordinatni sistem. 0,0 je smer ob treh.</translation>
     </message>
     <message>
         <location filename="../src/ui/components/status_bar/lc_anglesbasiswidget.ui" line="105"/>
@@ -7437,7 +7438,7 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/components/status_bar/lc_anglesbasiswidget.cpp" line="76"/>
         <source>Positive angles direction is counterclockwise.</source>
-        <translation>Smer kotov je v nasprotni smeri urinega kazalca.</translation>
+        <translation>Pozitivni koti so v nasprotni smeri urinega kazalca.</translation>
     </message>
     <message>
         <location filename="../src/ui/components/status_bar/lc_anglesbasiswidget.cpp" line="80"/>
@@ -7476,7 +7477,7 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/main/support/lc_appwindowdialogsinvoker.cpp" line="137"/>
         <source>Closing Drawing</source>
-        <translation>Risba za zapiranje</translation>
+        <translation>Zapiranje risbe</translation>
     </message>
     <message>
         <location filename="../src/ui/main/support/lc_appwindowdialogsinvoker.cpp" line="143"/>
@@ -7531,7 +7532,7 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_2points_options_widget.ui" line="92"/>
         <source>Radius of arc</source>
-        <translation type="unfinished">Obločni polmer</translation>
+        <translation type="unfinished">Polmer loka</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_2points_options_widget.ui" line="95"/>
@@ -7571,12 +7572,12 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_2points_options_widget.cpp" line="59"/>
         <source>Pick length from drawing</source>
-        <translation type="unfinished">Dolžina nabiranja od risbe</translation>
+        <translation type="unfinished">Izberite dolžino iz risbe</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_2points_options_widget.cpp" line="65"/>
         <source>Pick angle from drawing</source>
-        <translation type="unfinished">Kot izbiranja iz risbe</translation>
+        <translation type="unfinished">Izberite kot iz risbe</translation>
     </message>
 </context>
 <context>
@@ -7688,7 +7689,7 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="112"/>
         <source>Pick center coordinate from the drawing</source>
-        <translation>Izberite središče koordinate iz risbe</translation>
+        <translation>Izberite koordinate središča iz risbe</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="131"/>
@@ -7708,12 +7709,12 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="194"/>
         <source>Radius of arc</source>
-        <translation>Obločni polmer</translation>
+        <translation>Polmer loka</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="201"/>
         <source>Pick radius value from the drawing</source>
-        <translation>Izbirna vrednost polmera iz risbe</translation>
+        <translation>Izberite vrednost polmera iz risbe</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="227"/>
@@ -7728,7 +7729,7 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="256"/>
         <source>Pick diameter value from the drawing</source>
-        <translation>Vrednost izbirnega premera iz risbe</translation>
+        <translation>Izberite vrednost premera iz risbe</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="282"/>
@@ -7743,22 +7744,22 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="311"/>
         <source>Pick arc length value from the drawing</source>
-        <translation>Vrednost dolžine obloka iz risbe</translation>
+        <translation>Izberite dolžino loka iz risbe</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="337"/>
         <source>Sweep Angle:</source>
-        <translation>Kot obsega:</translation>
+        <translation>Središčni kot:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="359"/>
         <source>Sweep angle of the arc (degrees)</source>
-        <translation>Kot snega loka (stopinj)</translation>
+        <translation>Središčni kot loka (stopinje)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="366"/>
         <source>Pick sweep angle from the drawing</source>
-        <translation>Izberite kot premetavanja z risbe</translation>
+        <translation>Izberite središčni kot iz risbe</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="392"/>
@@ -7773,28 +7774,28 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="421"/>
         <source>Pick bulge value from the drawing</source>
-        <translation>Izberite vrednost izboklin iz risbe</translation>
+        <translation>Izberite vrednost izbokline iz risbe</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="447"/>
         <source>Start Angle:</source>
-        <translation>Zaženi kot:</translation>
+        <translation>Začetni kot:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="469"/>
         <source>Starting angle of arc</source>
-        <translation>Zagonski kot loka</translation>
+        <translation>Začetni kot loka</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="476"/>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="531"/>
         <source>Pick angle value from the drawing</source>
-        <translation>Vrednost kota izbire iz risbe</translation>
+        <translation>Izberite vrednost kota iz risbe</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="502"/>
         <source>End Angle:</source>
-        <translation>Kot konca:</translation>
+        <translation>Končni kot:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="524"/>
@@ -7842,7 +7843,7 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_tangential_options_filler.cpp" line="43"/>
         <source>Radius of arc</source>
-        <translation type="unfinished">Obločni polmer</translation>
+        <translation type="unfinished">Polmer loka</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_tangential_options_filler.cpp" line="50"/>
@@ -7870,12 +7871,12 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_tangential_options_widget.ui" line="60"/>
         <source>Total subtending angle of the tangential arc</source>
-        <translation type="unfinished">Skupni kot nagiba tangencialnega loka</translation>
+        <translation type="unfinished">Skupni središčni kot tangencialnega loka</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_tangential_options_widget.ui" line="67"/>
         <source>Pick radius form drawing</source>
-        <translation type="unfinished">Risba obrazca s polmerom pike</translation>
+        <translation type="unfinished">Izberite polmer iz risbe</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_tangential_options_widget.ui" line="87"/>
@@ -7902,7 +7903,7 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_tangential_options_widget.ui" line="128"/>
         <source>Pick angle from drawing</source>
-        <translation type="unfinished">Kot izbiranja iz risbe</translation>
+        <translation type="unfinished">Izberite kot iz risbe</translation>
     </message>
 </context>
 <context>
@@ -7910,7 +7911,7 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_filler.cpp" line="31"/>
         <source>Trim</source>
-        <translation type="unfinished">Trim</translation>
+        <translation type="unfinished">Obreži</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_filler.cpp" line="31"/>
@@ -7953,7 +7954,7 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_widget.ui" line="62"/>
         <source>Trim</source>
-        <translation type="unfinished">Trim</translation>
+        <translation type="unfinished">Obreži</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_widget.ui" line="85"/>
@@ -7968,7 +7969,7 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_widget.ui" line="102"/>
         <source>Pick first length form drawing</source>
-        <translation type="unfinished">Izberite prvo risbo oblike dolžine</translation>
+        <translation type="unfinished">Izberite prvo dolžino iz risbe</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_widget.ui" line="116"/>
@@ -7983,7 +7984,7 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_widget.ui" line="133"/>
         <source>Pick second length form drawing</source>
-        <translation type="unfinished">Izberite drugo dolžino oblika risba</translation>
+        <translation type="unfinished">Izberite drugo dolžino iz risbe</translation>
     </message>
 </context>
 <context>
@@ -8054,12 +8055,12 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/action_options/insert/lc_block_insert_options_widget.ui" line="32"/>
         <source>Insert Options</source>
-        <translation type="unfinished">Vstavi možnosti</translation>
+        <translation type="unfinished">Možnosti vstavljanja</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/insert/lc_block_insert_options_widget.ui" line="53"/>
         <source>Pick row spacing from drawing</source>
-        <translation type="unfinished">Izberite razmik vrstic od risbe</translation>
+        <translation type="unfinished">Izberite razmik vrstic iz risbe</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/insert/lc_block_insert_options_widget.ui" line="79"/>
@@ -8069,7 +8070,7 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/action_options/insert/lc_block_insert_options_widget.ui" line="92"/>
         <source>Pick column spacing from drawing</source>
-        <translation type="unfinished">Izberite razmik med stolpci in risbo</translation>
+        <translation type="unfinished">Izberite razmik stolpcev iz risbe</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/insert/lc_block_insert_options_widget.ui" line="131"/>
@@ -8084,7 +8085,7 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/action_options/insert/lc_block_insert_options_widget.ui" line="167"/>
         <source>Pick angle from drawing</source>
-        <translation type="unfinished">Kot izbiranja iz risbe</translation>
+        <translation type="unfinished">Izberite kot iz risbe</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/insert/lc_block_insert_options_widget.ui" line="193"/>
@@ -8175,7 +8176,7 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/action_options/insert/lc_block_library_insert_options_widget.ui" line="111"/>
         <source>Pick angle from drawing</source>
-        <translation type="unfinished">Kot izbiranja iz risbe</translation>
+        <translation type="unfinished">Izberite kot iz risbe</translation>
     </message>
 </context>
 <context>
@@ -8262,7 +8263,7 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/action_options/misc/lc_center_line_options_widget.ui" line="46"/>
         <source>Pick offset from drawing</source>
-        <translation type="unfinished">Izberi zamik iz risbe</translation>
+        <translation type="unfinished">Izberite odmik iz risbe</translation>
     </message>
 </context>
 <context>
@@ -8300,7 +8301,7 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/action_options/misc/lc_center_mark_options_filler.cpp" line="51"/>
         <source>Horizontal dimension of cross</source>
-        <translation type="unfinished">Horizontalna dimenzija križa</translation>
+        <translation type="unfinished">Vodoravna velikost križa</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/misc/lc_center_mark_options_filler.cpp" line="57"/>
@@ -8310,7 +8311,7 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/action_options/misc/lc_center_mark_options_filler.cpp" line="57"/>
         <source>Vertical dimension of the cross</source>
-        <translation type="unfinished">Navpična dimenzija križa</translation>
+        <translation type="unfinished">Navpična velikost križa</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/misc/lc_center_mark_options_filler.cpp" line="63"/>
@@ -8320,7 +8321,7 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/action_options/misc/lc_center_mark_options_filler.cpp" line="63"/>
         <source>Rotation angle for cross around center</source>
-        <translation type="unfinished">Kot vrtenja za prečno središče</translation>
+        <translation type="unfinished">Kot vrtenja križa okoli središča</translation>
     </message>
 </context>
 <context>
@@ -8338,7 +8339,7 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/action_options/misc/lc_center_mark_options_widget.ui" line="63"/>
         <source>Vertical dimension of the cross</source>
-        <translation type="unfinished">Navpična dimenzija križa</translation>
+        <translation type="unfinished">Navpična velikost križa</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/misc/lc_center_mark_options_widget.ui" line="83"/>
@@ -8348,12 +8349,12 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/action_options/misc/lc_center_mark_options_widget.ui" line="108"/>
         <source>Rotation angle for cross around center</source>
-        <translation type="unfinished">Kot vrtenja za prečno središče</translation>
+        <translation type="unfinished">Kot vrtenja križa okoli središča</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/misc/lc_center_mark_options_widget.ui" line="133"/>
         <source>Horizontal dimension of cross</source>
-        <translation type="unfinished">Horizontalna dimenzija križa</translation>
+        <translation type="unfinished">Vodoravna velikost križa</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/misc/lc_center_mark_options_widget.ui" line="140"/>
@@ -8373,7 +8374,7 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/action_options/misc/lc_center_mark_options_widget.ui" line="193"/>
         <source>Defines how to apply dimensions of cross</source>
-        <translation type="unfinished">Določa, kako uporabiti dimenzije križa</translation>
+        <translation type="unfinished">Določa, kako uporabiti velikosti križa</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/misc/lc_center_mark_options_widget.ui" line="209"/>
@@ -8398,7 +8399,7 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/action_options/misc/lc_center_mark_options_widget.ui" line="241"/>
         <source>Pick angle from drawing</source>
-        <translation type="unfinished">Kot izbiranja iz risbe</translation>
+        <translation type="unfinished">Izberite kot iz risbe</translation>
     </message>
 </context>
 <context>
@@ -8471,7 +8472,7 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="32"/>
         <source>Pen:</source>
-        <translation type="unfinished">Pen:</translation>
+        <translation type="unfinished">Pero:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="39"/>
@@ -8503,7 +8504,7 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="102"/>
         <source>Pen to apply to created circle</source>
-        <translation type="unfinished">Pen za nanašanje na ustvarjen krog</translation>
+        <translation type="unfinished">Pero za ustvarjeni krog</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="106"/>
@@ -8541,7 +8542,7 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="141"/>
         <source>Pick offset value from drawing</source>
-        <translation type="unfinished">Izberite zamik vrednost iz risbe</translation>
+        <translation type="unfinished">Izberite vrednost odmika iz risbe</translation>
     </message>
 </context>
 <context>
@@ -8605,7 +8606,7 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_circle.ui" line="88"/>
         <source>Pick center coordinate from drawing</source>
-        <translation>Izberite središče koordinate iz risbe</translation>
+        <translation>Izberite koordinate središča iz risbe</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_circle.ui" line="95"/>
@@ -8640,12 +8641,12 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_circle.ui" line="178"/>
         <source>Pick diameter value from drawing</source>
-        <translation>Vrednost premera izbiranja iz risbe</translation>
+        <translation>Izberite vrednost premera iz risbe</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_circle.ui" line="141"/>
         <source>Pick radius value from drawing</source>
-        <translation>Vrednost polmera iz risbe</translation>
+        <translation>Izberite vrednost polmera iz risbe</translation>
     </message>
 </context>
 <context>
@@ -8731,7 +8732,7 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/lib/engine/document/dimstyles/lc_dimarrowregistry.cpp" line="201"/>
         <source>Dot</source>
-        <translation>Dot</translation>
+        <translation>Pikčasta</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/document/dimstyles/lc_dimarrowregistry.cpp" line="202"/>
@@ -8761,7 +8762,7 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/lib/engine/document/dimstyles/lc_dimarrowregistry.cpp" line="207"/>
         <source>Right Angle</source>
-        <translation>Desni kot</translation>
+        <translation>Pravi kot</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/document/dimstyles/lc_dimarrowregistry.cpp" line="208"/>
@@ -8834,7 +8835,7 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/lc_dimstyleitem.cpp" line="95"/>
         <source>Angular</source>
-        <translation>Kot</translation>
+        <translation>Kotna</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/lc_dimstyleitem.cpp" line="99"/>
@@ -8844,12 +8845,12 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/lc_dimstyleitem.cpp" line="103"/>
         <source>Radial</source>
-        <translation>Radial</translation>
+        <translation>Radialna</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/lc_dimstyleitem.cpp" line="107"/>
         <source>Ordinate</source>
-        <translation>Ordinat</translation>
+        <translation>Ordinatna</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/lc_dimstyleitem.cpp" line="111"/>
@@ -8867,7 +8868,7 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/support/lc_dimstylepreviewpanel.ui" line="35"/>
         <source>Zoom Auto</source>
-        <translation>Samodejno povečavo</translation>
+        <translation>Samodejna povečava</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/support/lc_dimstylepreviewpanel.ui" line="62"/>
@@ -8882,7 +8883,7 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/support/lc_dimstylepreviewpanel.ui" line="90"/>
         <source>Zoom Pan</source>
-        <translation>Povečaj</translation>
+        <translation>Premik pogleda</translation>
     </message>
 </context>
 <context>
@@ -8985,7 +8986,7 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.ui" line="76"/>
         <source>&amp;Copy Version Info</source>
-        <translation>Podatki o &amp; kopirni različici</translation>
+        <translation>&amp;Kopiraj podatke o različici</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgabout.ui" line="83"/>
@@ -9094,12 +9095,12 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="67"/>
         <source>Sets the linetype of the dimension line. (DIMLTYPE system variable)</source>
-        <translation>Nastavi vrsto črte. (spremenljivka sistema DIMLTYPE)</translation>
+        <translation>Nastavi vrsto črte kotirne črte. (sistemska spremenljivka DIMLTYPE)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="88"/>
         <source>Linewidth:</source>
-        <translation>Črtna širina:</translation>
+        <translation>Debelina črte:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="137"/>
@@ -9119,7 +9120,7 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="162"/>
         <source>Baseline spacing:</source>
-        <translation>Izhodiščni razmik:</translation>
+        <translation>Razmik pri vzporednem kotiranju:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="191"/>
@@ -9129,7 +9130,7 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="194"/>
         <source>Suppress Dim line 1 and arrow</source>
-        <translation>Suppres Dim linija 1 in puščica</translation>
+        <translation>Izpusti kotirno črto 1 in puščico</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="175"/>
@@ -9139,7 +9140,7 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="178"/>
         <source>Suppress Dim line 2 and arrow</source>
-        <translation>Suppres Dim linija 2 in puščica</translation>
+        <translation>Izpusti kotirno črto 2 in puščico</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="204"/>
@@ -9154,7 +9155,7 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="295"/>
         <source>Linetype ext line 1:</source>
-        <translation>Črtna črtica 1:</translation>
+        <translation>Vrsta črte pomožne kotirne črte 1:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="361"/>
@@ -9164,7 +9165,7 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="338"/>
         <source>Linetype ext line 2:</source>
-        <translation>Črtna črtica 2:</translation>
+        <translation>Vrsta črte pomožne kotirne črte 2:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="308"/>
@@ -9214,12 +9215,12 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="345"/>
         <source>Enables fixed length extension lines. (DIMFXLON system variable)</source>
-        <translation>Omogoča fiksne podaljšane linije. (sistemska spremenljivka DIMFXLON)</translation>
+        <translation>Omogoči pomožne kotirne črte stalne dolžine. (sistemska spremenljivka DIMFXLON)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="348"/>
         <source>Fixed length extension lines</source>
-        <translation>Podaljški s fiksno dolžino</translation>
+        <translation>Pomožne kotirne črte stalne dolžine</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="269"/>
@@ -9229,7 +9230,7 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="272"/>
         <source>Suppress Ext line 1</source>
-        <translation>Ext Line 1</translation>
+        <translation>Izpusti pomožno kotirno črto 1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="321"/>
@@ -9239,7 +9240,7 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="324"/>
         <source>Suppress Ext line 2</source>
-        <translation>Ext Line 2</translation>
+        <translation>Izpusti pomožno kotirno črto 2</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="429"/>
@@ -9265,7 +9266,7 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="449"/>
         <source>Jog height factor:</source>
-        <translation>Faktor višine Jog:</translation>
+        <translation>Faktor višine loma:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="463"/>
@@ -9280,7 +9281,7 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="479"/>
         <source>Jog angle:</source>
-        <translation>Kot Jog:</translation>
+        <translation>Kot loma:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="486"/>
@@ -9300,7 +9301,7 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="539"/>
         <source>Sets the arrowhead for the leader line. (DIMLDRBLK system variable)</source>
-        <translation>Nastavi konico puščice za vodilno linijo. (sistemska spremenljivka DIMLDRBLK)</translation>
+        <translation>Nastavi puščico kazalne črte. (sistemska spremenljivka DIMLDRBLK)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="511"/>
@@ -9605,22 +9606,22 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="970"/>
         <source>At Ext Line 1</source>
-        <translation>Na Ext Line 1</translation>
+        <translation>Pri pomožni kotirni črti 1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="975"/>
         <source>At Ext Line 2</source>
-        <translation>Na Ext Line 2</translation>
+        <translation>Pri pomožni kotirni črti 2</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="980"/>
         <source>Over Ext Line 1</source>
-        <translation>Nad ext črto 1</translation>
+        <translation>Nad pomožno kotirno črto 1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="985"/>
         <source>Over Ext Line 2</source>
-        <translation>Nad Ext Line 2</translation>
+        <translation>Nad pomožno kotirno črto 2</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="993"/>
@@ -9700,7 +9701,7 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1111"/>
         <source>Draw dim line betwen ext lines</source>
-        <translation>Nariši črte betwen ext</translation>
+        <translation>Nariši kotirno črto med pomožnima kotirnima črtama</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1121"/>
@@ -9771,7 +9772,7 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1240"/>
         <source>If there isn&apos;t enough room to place both text and arrow inside extension lines, the first thing to move outside the extension lines is:</source>
-        <translation>Če ni dovolj prostora za polaganje besedila in puščice v podaljške, je prva stvar, ki se premakne izven podaljška:</translation>
+        <translation>Če med pomožnima kotirnima črtama ni dovolj prostora za besedilo in puščice, se zunaj pomožnih kotirnih črt najprej premakne:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1250"/>
@@ -9781,7 +9782,7 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1253"/>
         <source>Suppress arrows if they don&apos;t fit inside extension lines</source>
-        <translation>Suppres puščice, če se ne prilegajo znotraj podaljška</translation>
+        <translation>Izpusti puščice, če ne gredo med pomožni kotirni črti</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1260"/>
@@ -9859,7 +9860,7 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1352"/>
         <source>Controls the suppression of leading zeros (DIMAZIN system variable)</source>
-        <translation>Nadzoruje supresijo vodilnih ničel (standardna spremenljivka DIMAZIN)</translation>
+        <translation>Nadzoruje izpuščanje vodilnih ničel (sistemska spremenljivka DIMAZIN)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1355"/>
@@ -10235,7 +10236,7 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2091"/>
         <source>Controls text justification for symmetrical and deviation tolerances (DIMTOLJ system variable).</source>
-        <translation>Nadzoruje besedilno utemeljitev simetričnih toleranc in toleranc odklonov (spremenljivka sistema DIMTOLJ).</translation>
+        <translation>Nadzoruje poravnavo besedila simetričnih in odstopnih toleranc (sistemska spremenljivka DIMTOLJ).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2095"/>
@@ -10315,12 +10316,12 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2201"/>
         <source>Align operational symbols</source>
-        <translation>Uskladite operativne simbole</translation>
+        <translation>Poravnaj operatorje</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2214"/>
         <source>Alternate Unit Tolerance</source>
-        <translation>Alternativna toleranca enote</translation>
+        <translation>Toleranca nadomestnih enot</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2227"/>
@@ -10528,7 +10529,7 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="66"/>
         <source>Ordinate</source>
-        <translation>Ordinat</translation>
+        <translation>Ordinatna</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="76"/>
@@ -10614,23 +10615,23 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="580"/>
         <source>&amp;Apply Style</source>
-        <translation>&amp; Uporabi slog</translation>
+        <translation>&amp;Uporabi slog</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="581"/>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="608"/>
         <source>&amp;Select Style</source>
-        <translation>&amp; Izberi slog</translation>
+        <translation>&amp;Izberi slog</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="586"/>
         <source>&amp;Set as Active</source>
-        <translation>&amp; Namesti kot aktiven</translation>
+        <translation>&amp;Nastavi kot aktiven</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="590"/>
         <source>&amp;Create override</source>
-        <translation>&amp; Ustvari obveljavo</translation>
+        <translation>&amp;Ustvari preglasitev</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="594"/>
@@ -10640,17 +10641,17 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="597"/>
         <source>&amp;Edit override</source>
-        <translation>&amp; Uredi povoz</translation>
+        <translation>&amp;Uredi preglasitev</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="598"/>
         <source>&amp;Save As Style</source>
-        <translation>&amp; Shrani kot slog</translation>
+        <translation>&amp;Shrani kot slog</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="599"/>
         <source>&amp;Remove Override</source>
-        <translation>&amp; Odstranjevanje</translation>
+        <translation>&amp;Odstrani preglasitev</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="603"/>
@@ -10661,7 +10662,7 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="604"/>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="611"/>
         <source>&amp;Import Styles</source>
-        <translation>&amp; Uveljavi sloge</translation>
+        <translation>&amp;Uvozi sloge</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="664"/>
@@ -10739,7 +10740,7 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="211"/>
         <source>Polyline Properties</source>
-        <translation>Lastnosti poliline</translation>
+        <translation>Lastnosti polilinije</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="217"/>
@@ -10749,7 +10750,7 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="223"/>
         <source>Spline Properties</source>
-        <translation>Lastnosti krivulje</translation>
+        <translation>Lastnosti zlepka</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="229"/>
@@ -10764,7 +10765,7 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="241"/>
         <source>Insert Properties</source>
-        <translation>Vstavi lastnosti</translation>
+        <translation>Lastnosti vstavljenega bloka</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="247"/>
@@ -11131,22 +11132,22 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="112"/>
         <source>Arc</source>
-        <translation>Arc</translation>
+        <translation>Lok</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="113"/>
         <source>Polyline</source>
-        <translation>Polilin</translation>
+        <translation>Polilinija</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="114"/>
         <source>Spline</source>
-        <translation>Spline</translation>
+        <translation>Zlepek</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="115"/>
         <source>Spline By Points</source>
-        <translation>Spline po točkah</translation>
+        <translation>Zlepek skozi točke</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="116"/>
@@ -11171,7 +11172,7 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="120"/>
         <source>Hatch</source>
-        <translation>Hatch</translation>
+        <translation>Šrafura</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="121"/>
@@ -11186,17 +11187,17 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="123"/>
         <source>Dimension Aligned</source>
-        <translation>Mera poravnana</translation>
+        <translation>Poravnana kota</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="124"/>
         <source>Dimension Diametric</source>
-        <translation>Diametrično</translation>
+        <translation>Kota premera</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="125"/>
         <source>Dimension Radial</source>
-        <translation>Merski polmer</translation>
+        <translation>Kota polmera</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="126"/>
@@ -11211,12 +11212,12 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="128"/>
         <source>Leader</source>
-        <translation>Leader</translation>
+        <translation>Kazalna črta</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="231"/>
         <source>NOTE: Menu assignment will be ignored. It is reserved for &apos;Entity Properties&apos;.</source>
-        <translation>OPOMBA: Menijeva naloga bo prezrta. Rezerviran je za &apos;Entity Properties&apos;.</translation>
+        <translation>OPOMBA: Dodelitev menija bo prezrta. Rezervirana je za »Lastnosti entitete«.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="234"/>
@@ -11226,7 +11227,7 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="237"/>
         <source>NOTE: Menu assignment will be ignored. It is reserved for &apos;Pan&apos;.</source>
-        <translation>OPOMBA: Menijeva naloga bo prezrta. Rezerviran je za &apos;Pan&apos;.</translation>
+        <translation>OPOMBA: Dodelitev menija bo prezrta. Rezervirana je za »Premik pogleda«.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="242"/>
@@ -11294,7 +11295,7 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="98"/>
         <source>Toolip with view details for table items</source>
-        <translation>Toolip s prikazom podrobnosti za namizne postavke</translation>
+        <translation>Namig s podrobnostmi pogleda za postavke tabele</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="78"/>
@@ -11478,7 +11479,7 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="54"/>
         <source>Diameter Dimensions</source>
-        <translation>Premer Mere</translation>
+        <translation>Kote premera</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="59"/>
@@ -11965,7 +11966,7 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/dialogs/actions/quick_selection/lc_dlgquickselection.ui" line="399"/>
         <source>Pick angle from drawing</source>
-        <translation type="unfinished">Kot izbiranja iz risbe</translation>
+        <translation type="unfinished">Izberite kot iz risbe</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/quick_selection/lc_dlgquickselection.ui" line="425"/>
@@ -12129,7 +12130,7 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="45"/>
         <source>Pen attributes</source>
-        <translation>Atributi pisala</translation>
+        <translation>Atributi peresa</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="58"/>
@@ -12263,7 +12264,7 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="135"/>
         <source>Zoom Auto</source>
-        <translation>Samodejno povečavo</translation>
+        <translation>Samodejna povečava</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="140"/>
@@ -12810,12 +12811,12 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_filler.cpp" line="42"/>
         <source>Polyline</source>
-        <translation type="unfinished">Polilin</translation>
+        <translation type="unfinished">Polilinija</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_filler.cpp" line="42"/>
         <source>If selected, bounding box is drawn as polyline</source>
-        <translation type="unfinished">Če je izbrano, se kot polilin nariše okvir</translation>
+        <translation type="unfinished">Če je izbrano, se omejevalni okvir nariše kot polilinija</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_filler.cpp" line="48"/>
@@ -12858,12 +12859,12 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_widget.ui" line="63"/>
         <source>If selected, bounding box is drawn as polyline</source>
-        <translation type="unfinished">Če je izbrano, se kot polilin nariše okvir</translation>
+        <translation type="unfinished">Če je izbrano, se omejevalni okvir nariše kot polilinija</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_widget.ui" line="69"/>
         <source>Polyline</source>
-        <translation type="unfinished">Polilin</translation>
+        <translation type="unfinished">Polilinija</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_widget.ui" line="76"/>
@@ -12878,7 +12879,7 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_widget.ui" line="93"/>
         <source>Pick offset from drawing</source>
-        <translation type="unfinished">Izberi zamik iz risbe</translation>
+        <translation type="unfinished">Izberite odmik iz risbe</translation>
     </message>
 </context>
 <context>
@@ -12936,7 +12937,7 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_filler.cpp" line="65"/>
         <source>Pen to apply to created duplicate</source>
-        <translation type="unfinished">Pen se nanaša na ustvarjeni dvojnik</translation>
+        <translation type="unfinished">Pero za ustvarjeni dvojnik</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_filler.cpp" line="77"/>
@@ -12993,7 +12994,7 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="69"/>
         <source>Pen to apply to created duplicate</source>
-        <translation type="unfinished">Pen se nanaša na ustvarjeni dvojnik</translation>
+        <translation type="unfinished">Pero za ustvarjeni dvojnik</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="73"/>
@@ -13026,7 +13027,7 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="129"/>
         <source>Pick offset by X from drawing</source>
-        <translation type="unfinished">Izberite zamik X od risanja</translation>
+        <translation type="unfinished">Izberite odmik po X iz risbe</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="150"/>
@@ -13036,7 +13037,7 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="157"/>
         <source>Pen:</source>
-        <translation type="unfinished">Pen:</translation>
+        <translation type="unfinished">Pero:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="164"/>
@@ -13056,7 +13057,7 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="181"/>
         <source>Pick offset by Y from drawing</source>
-        <translation type="unfinished">Izberite zamik z Y iz risbe</translation>
+        <translation type="unfinished">Izberite odmik po Y iz risbe</translation>
     </message>
 </context>
 <context>
@@ -13197,7 +13198,7 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse_1point_options_widget.ui" line="199"/>
         <source>Pick angle from drawing</source>
-        <translation type="unfinished">Kot izbiranja iz risbe</translation>
+        <translation type="unfinished">Izberite kot iz risbe</translation>
     </message>
 </context>
 <context>
@@ -13256,7 +13257,7 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_ellipse.ui" line="106"/>
         <source>Pick center coordinate from drawing</source>
-        <translation>Izberite središče koordinate iz risbe</translation>
+        <translation>Izberite koordinate središča iz risbe</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_ellipse.ui" line="119"/>
@@ -13281,7 +13282,7 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_ellipse.ui" line="183"/>
         <source>Pick length of major axis radius from drawing</source>
-        <translation>Dolžina izbora polmera glavne osi iz risbe</translation>
+        <translation>Izberite dolžino glavne polosi iz risbe</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_ellipse.ui" line="203"/>
@@ -13296,7 +13297,7 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_ellipse.ui" line="232"/>
         <source>Pick length of minor axis radius from drawing</source>
-        <translation>Dolžina izbora manjšega polmera osi iz risbe</translation>
+        <translation>Izberite dolžino stranske polosi iz risbe</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_ellipse.ui" line="252"/>
@@ -13386,12 +13387,12 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="81"/>
         <source>Arc</source>
-        <translation type="unfinished">Arc</translation>
+        <translation type="unfinished">Lok</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="82"/>
         <source>Polyline</source>
-        <translation type="unfinished">Polilin</translation>
+        <translation type="unfinished">Polilinija</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="83"/>
@@ -13406,12 +13407,12 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="85"/>
         <source>Spline</source>
-        <translation type="unfinished">Spline</translation>
+        <translation type="unfinished">Zlepek</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="86"/>
         <source>Spline By Points</source>
-        <translation type="unfinished">Spline po točkah</translation>
+        <translation type="unfinished">Zlepek skozi točke</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="87"/>
@@ -13436,7 +13437,7 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="91"/>
         <source>Dimension Aligned</source>
-        <translation type="unfinished">Mera poravnana</translation>
+        <translation type="unfinished">Poravnana kota</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="92"/>
@@ -13456,12 +13457,12 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="95"/>
         <source>Dimension Radial</source>
-        <translation type="unfinished">Merski polmer</translation>
+        <translation type="unfinished">Kota polmera</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="96"/>
         <source>Dimension Diametric</source>
-        <translation type="unfinished">Diametrično</translation>
+        <translation type="unfinished">Kota premera</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="97"/>
@@ -13471,12 +13472,12 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="98"/>
         <source>Hatch</source>
-        <translation type="unfinished">Hatch</translation>
+        <translation type="unfinished">Šrafura</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="99"/>
         <source>Leader</source>
-        <translation type="unfinished">Leader</translation>
+        <translation type="unfinished">Kazalna črta</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="100"/>
@@ -13735,7 +13736,7 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="245"/>
         <source>Line Width</source>
-        <translation type="unfinished">Širina črte</translation>
+        <translation type="unfinished">Debelina črte</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="245"/>
@@ -14054,12 +14055,12 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_hyperbola.ui" line="85"/>
         <source>Rotation (deg):</source>
-        <translation>Vrtenje (deg):</translation>
+        <translation>Vrtenje (°):</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_hyperbola.ui" line="95"/>
         <source>Vertex X:</source>
-        <translation>Vrhnica X:</translation>
+        <translation>Oglišče X:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_hyperbola.ui" line="123"/>
@@ -14084,17 +14085,17 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_hyperbola.ui" line="160"/>
         <source>Foci &amp; Point on Curve (Alternative Editing)</source>
-        <translation>Foci &amp; Točka na krivulji (Alternativno urejanje)</translation>
+        <translation>Gorišči in točka na krivulji (drugačno urejanje)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_hyperbola.ui" line="166"/>
         <source>Focus 1 X:</source>
-        <translation>Fokus 1 X:</translation>
+        <translation>Gorišče 1 X:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_hyperbola.ui" line="186"/>
         <source>Focus 2 X:</source>
-        <translation>Fokus 2 X:</translation>
+        <translation>Gorišče 2 X:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_hyperbola.ui" line="206"/>
@@ -14150,7 +14151,7 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/action_options/image/lc_image_options_widget.ui" line="32"/>
         <source>Insert Options</source>
-        <translation type="unfinished">Vstavi možnosti</translation>
+        <translation type="unfinished">Možnosti vstavljanja</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/image/lc_image_options_widget.ui" line="53"/>
@@ -14165,7 +14166,7 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/action_options/image/lc_image_options_widget.ui" line="70"/>
         <source>Pick angle from drawing</source>
-        <translation type="unfinished">Kot izbiranja iz risbe</translation>
+        <translation type="unfinished">Izberite kot iz risbe</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/image/lc_image_options_widget.ui" line="84"/>
@@ -14284,7 +14285,7 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="138"/>
         <source>Pick width value from drawing</source>
-        <translation>Vrednost izbirne širine iz risbe</translation>
+        <translation>Izberite vrednost širine iz risbe</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="305"/>
@@ -14445,7 +14446,7 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_insert.ui" line="144"/>
         <source>Pick scale by X value from drawing</source>
-        <translation>Izbor merila po vrednosti X iz risbe</translation>
+        <translation>Izberite merilo po X iz risbe</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_insert.ui" line="158"/>
@@ -14460,7 +14461,7 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_insert.ui" line="184"/>
         <source>Pick scale Y value from drawing</source>
-        <translation>Izberite velikost Y iz risbe</translation>
+        <translation>Izberite merilo po Y iz risbe</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_insert.ui" line="198"/>
@@ -14525,7 +14526,7 @@ Ste prepričani, da boste zavrgli spremembe?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_insert.ui" line="356"/>
         <source>Pick column spacing from drawing</source>
-        <translation>Izberite razmik med stolpci in risbo</translation>
+        <translation>Izberite razmik stolpcev iz risbe</translation>
     </message>
 </context>
 <context>
@@ -14928,7 +14929,7 @@ Vsebina konstrukcijske plasti se ne sme pojaviti v izpisu.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="379"/>
         <source>Appearance</source>
-        <translation type="unfinished">Izgled</translation>
+        <translation type="unfinished">Videz</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="406"/>
@@ -15724,7 +15725,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="233"/>
         <source>Pick angle from drawing</source>
-        <translation type="unfinished">Kot izbiranja iz risbe</translation>
+        <translation type="unfinished">Izberite kot iz risbe</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="265"/>
@@ -15744,12 +15745,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="301"/>
         <source>Pick length from drawing</source>
-        <translation type="unfinished">Dolžina nabiranja od risbe</translation>
+        <translation type="unfinished">Izberite dolžino iz risbe</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="329"/>
         <source>Pick offset from drawing</source>
-        <translation type="unfinished">Izberi zamik iz risbe</translation>
+        <translation type="unfinished">Izberite odmik iz risbe</translation>
     </message>
 </context>
 <context>
@@ -15772,7 +15773,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_bisector_options_filler.cpp" line="38"/>
         <source>Number of bisectors to create</source>
-        <translation type="unfinished">Število sektorjev, ki jih je treba ustvariti</translation>
+        <translation type="unfinished">Število simetral, ki jih je treba ustvariti</translation>
     </message>
 </context>
 <context>
@@ -15780,7 +15781,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_bisector_options_widget.ui" line="32"/>
         <source>Line Bisector Options</source>
-        <translation type="unfinished">Možnosti linijskega sektorja</translation>
+        <translation type="unfinished">Možnosti simetrale kota</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_bisector_options_widget.ui" line="56"/>
@@ -15805,7 +15806,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_bisector_options_widget.ui" line="103"/>
         <source>Number of bisectors to create</source>
-        <translation type="unfinished">Število sektorjev, ki jih je treba ustvariti</translation>
+        <translation type="unfinished">Število simetral, ki jih je treba ustvariti</translation>
     </message>
 </context>
 <context>
@@ -15911,7 +15912,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="51"/>
         <source>Pick angle from drawing</source>
-        <translation type="unfinished">Kot izbiranja iz risbe</translation>
+        <translation type="unfinished">Izberite kot iz risbe</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="65"/>
@@ -15946,7 +15947,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="142"/>
         <source>Snap:</source>
-        <translation type="unfinished">Snap:</translation>
+        <translation type="unfinished">Pripenjanje:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="171"/>
@@ -15961,7 +15962,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="203"/>
         <source>Pick length from drawing</source>
-        <translation type="unfinished">Dolžina nabiranja od risbe</translation>
+        <translation type="unfinished">Izberite dolžino iz risbe</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="259"/>
@@ -15971,12 +15972,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="266"/>
         <source>End offset:</source>
-        <translation type="unfinished">Končni zamik:</translation>
+        <translation type="unfinished">Končni odmik:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="273"/>
         <source>Pick offset from drawing</source>
-        <translation type="unfinished">Izberi zamik iz risbe</translation>
+        <translation type="unfinished">Izberite odmik iz risbe</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="318"/>
@@ -16014,7 +16015,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="32"/>
         <source>If cheched, the size of the gap is determined by mouse</source>
-        <translation type="unfinished">Če je izžrebana, velikost vrzeli določi miška</translation>
+        <translation type="unfinished">Če je možnost omogočena, velikost vrzeli določi miška</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="38"/>
@@ -16057,7 +16058,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="56"/>
         <source>Snap point for gap on the line</source>
-        <translation type="unfinished">Točka presledka na črti</translation>
+        <translation type="unfinished">Točka pripenjanja za vrzel na črti</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="63"/>
@@ -16123,7 +16124,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="68"/>
         <source>Snap point for gap on the line</source>
-        <translation type="unfinished">Točka presledka na črti</translation>
+        <translation type="unfinished">Točka pripenjanja za vrzel na črti</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="72"/>
@@ -16162,12 +16163,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="141"/>
         <source>PIck gap size from drawing</source>
-        <translation type="unfinished">PIC velikost vrzeli iz risbe</translation>
+        <translation type="unfinished">Izberite velikost vrzeli iz risbe</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="155"/>
         <source>If cheched, the size of the gap is determined by mouse</source>
-        <translation type="unfinished">Če je izžrebana, velikost vrzeli določi miška</translation>
+        <translation type="unfinished">Če je možnost omogočena, velikost vrzeli določi miška</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="158"/>
@@ -16195,7 +16196,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="35"/>
         <source>Extend/Trim</source>
-        <translation type="unfinished">Extended/Trim</translation>
+        <translation type="unfinished">Podaljšaj/obreži</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="36"/>
@@ -16216,7 +16217,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="41"/>
         <source>Policy for joining line that was selected first</source>
-        <translation type="unfinished">Politika pridruževanja, ki je bila najprej izbrana</translation>
+        <translation type="unfinished">Način spajanja črte, ki je bila izbrana prva</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="48"/>
@@ -16247,12 +16248,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="65"/>
         <source>Defines how pen should be applied to created entities</source>
-        <translation type="unfinished">Določa način nanašanja injekcijskega peresnika na ustvarjene entitete</translation>
+        <translation type="unfinished">Določa, kako se pero uporabi na ustvarjenih entitetah</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="78"/>
         <source>Polyline</source>
-        <translation type="unfinished">Polilin</translation>
+        <translation type="unfinished">Polilinija</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="78"/>
@@ -16285,7 +16286,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="41"/>
         <source>Create Polyline</source>
-        <translation type="unfinished">Ustvari poli črto</translation>
+        <translation type="unfinished">Ustvari polilinijo</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="66"/>
@@ -16296,7 +16297,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="70"/>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="124"/>
         <source>Extend/Trim</source>
-        <translation type="unfinished">Extended/Trim</translation>
+        <translation type="unfinished">Podaljšaj/obreži</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="75"/>
@@ -16323,12 +16324,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="120"/>
         <source>Policy for joining line that was selected first</source>
-        <translation type="unfinished">Politika pridruževanja, ki je bila najprej izbrana</translation>
+        <translation type="unfinished">Način spajanja črte, ki je bila izbrana prva</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="160"/>
         <source>Defines how pen should be applied to created entities</source>
-        <translation type="unfinished">Določa način nanašanja injekcijskega peresnika na ustvarjene entitete</translation>
+        <translation type="unfinished">Določa, kako se pero uporabi na ustvarjenih entitetah</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="164"/>
@@ -16480,7 +16481,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_parallel_options_widget.ui" line="56"/>
         <source>Distance:</source>
-        <translation type="unfinished">Oddaljenost:</translation>
+        <translation type="unfinished">Razdalja:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_parallel_options_widget.ui" line="72"/>
@@ -16669,7 +16670,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/point/lc_points_line_options_widget.ui" line="264"/>
         <source>Pick angle from drawing</source>
-        <translation type="unfinished">Kot izbiranja iz risbe</translation>
+        <translation type="unfinished">Izberite kot iz risbe</translation>
     </message>
 </context>
 <context>
@@ -16909,7 +16910,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_radiant_options_widget.ui" line="171"/>
         <source>Pick length from drawing</source>
-        <translation type="unfinished">Dolžina nabiranja od risbe</translation>
+        <translation type="unfinished">Izberite dolžino iz risbe</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_radiant_options_widget.ui" line="185"/>
@@ -16960,7 +16961,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_rel_angle_options_widget.ui" line="79"/>
         <source>Pick angle from drawing</source>
-        <translation type="unfinished">Kot izbiranja iz risbe</translation>
+        <translation type="unfinished">Izberite kot iz risbe</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_rel_angle_options_widget.ui" line="99"/>
@@ -16975,7 +16976,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_rel_angle_options_widget.ui" line="122"/>
         <source>Pick length from drawing</source>
-        <translation type="unfinished">Dolžina nabiranja od risbe</translation>
+        <translation type="unfinished">Izberite dolžino iz risbe</translation>
     </message>
 </context>
 <context>
@@ -17039,12 +17040,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="64"/>
         <source>Polyline</source>
-        <translation type="unfinished">Polilin</translation>
+        <translation type="unfinished">Polilinija</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="65"/>
         <source>Creates polyline from line segments</source>
-        <translation type="unfinished">Ustvari polilin iz linijskih segmentov</translation>
+        <translation type="unfinished">Ustvari polilinijo iz daljic</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="72"/>
@@ -17174,17 +17175,17 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="321"/>
         <source>Creates polyline from line segments</source>
-        <translation type="unfinished">Ustvari polilin iz linijskih segmentov</translation>
+        <translation type="unfinished">Ustvari polilinijo iz daljic</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="324"/>
         <source>Polyline</source>
-        <translation type="unfinished">Polilin</translation>
+        <translation type="unfinished">Polilinija</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="331"/>
         <source>Pick angle from drawing</source>
-        <translation type="unfinished">Kot izbiranja iz risbe</translation>
+        <translation type="unfinished">Izberite kot iz risbe</translation>
     </message>
 </context>
 <context>
@@ -17240,7 +17241,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/text/lc_m_text_options_widget.ui" line="117"/>
         <source>Pick angle from drawing</source>
-        <translation type="unfinished">Kot izbiranja iz risbe</translation>
+        <translation type="unfinished">Izberite kot iz risbe</translation>
     </message>
 </context>
 <context>
@@ -17346,7 +17347,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_arc.cpp" line="29"/>
         <source>Arc</source>
-        <translation type="unfinished">Arc</translation>
+        <translation type="unfinished">Lok</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_arc.cpp" line="34"/>
@@ -17376,7 +17377,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_arc.cpp" line="42"/>
         <source>Radius of arc</source>
-        <translation type="unfinished">Obločni polmer</translation>
+        <translation type="unfinished">Polmer loka</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_arc.cpp" line="46"/>
@@ -17545,7 +17546,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_base.h" line="57"/>
         <source>Line Width</source>
-        <translation type="unfinished">Širina črte</translation>
+        <translation type="unfinished">Debelina črte</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_base.h" line="57"/>
@@ -17657,7 +17658,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimaligned.cpp" line="29"/>
         <source>Dimension Aligned</source>
-        <translation type="unfinished">Mera poravnana</translation>
+        <translation type="unfinished">Poravnana kota</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimaligned.cpp" line="35"/>
@@ -19033,7 +19034,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimdiametric.cpp" line="29"/>
         <source>Dimension Diametric</source>
-        <translation type="unfinished">Diametrično</translation>
+        <translation type="unfinished">Kota premera</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimdiametric.cpp" line="34"/>
@@ -19194,7 +19195,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimordinate.cpp" line="43"/>
         <source>Ordinate</source>
-        <translation type="unfinished">Ordinat</translation>
+        <translation type="unfinished">Ordinatna</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimordinate.cpp" line="43"/>
@@ -19287,7 +19288,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimradial.cpp" line="29"/>
         <source>Dimension Radial</source>
-        <translation type="unfinished">Merski polmer</translation>
+        <translation type="unfinished">Kota polmera</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimradial.cpp" line="34"/>
@@ -19480,7 +19481,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_hatch.cpp" line="29"/>
         <source>Hatch</source>
-        <translation type="unfinished">Hatch</translation>
+        <translation type="unfinished">Šrafura</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_hatch.cpp" line="34"/>
@@ -19941,7 +19942,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_leader.cpp" line="29"/>
         <source>Leader</source>
-        <translation type="unfinished">Leader</translation>
+        <translation type="unfinished">Kazalna črta</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_leader.cpp" line="33"/>
@@ -20177,7 +20178,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_mtext.cpp" line="65"/>
         <source>Center</source>
-        <translation type="unfinished">Center</translation>
+        <translation type="unfinished">Sredina</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_mtext.cpp" line="66"/>
@@ -20379,7 +20380,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_polyline.cpp" line="29"/>
         <source>Polyline</source>
-        <translation type="unfinished">Polilin</translation>
+        <translation type="unfinished">Polilinija</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_polyline.cpp" line="33"/>
@@ -20487,7 +20488,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_spline.cpp" line="30"/>
         <source>Spline</source>
-        <translation type="unfinished">Spline</translation>
+        <translation type="unfinished">Zlepek</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_spline.cpp" line="35"/>
@@ -20555,7 +20556,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_splinepoints.cpp" line="31"/>
         <source>Spline By Points</source>
-        <translation type="unfinished">Spline po točkah</translation>
+        <translation type="unfinished">Zlepek skozi točke</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_splinepoints.cpp" line="36"/>
@@ -20743,7 +20744,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_text.cpp" line="68"/>
         <source>Center</source>
-        <translation type="unfinished">Center</translation>
+        <translation type="unfinished">Sredina</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_text.cpp" line="69"/>
@@ -20830,7 +20831,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_base.cpp" line="55"/>
         <source>&amp;Workspaces</source>
-        <translation type="unfinished">&amp; Delovni prostori</translation>
+        <translation type="unfinished">&amp;Delovni prostori</translation>
     </message>
 </context>
 <context>
@@ -20859,7 +20860,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="143"/>
         <source>Polyline</source>
-        <translation type="unfinished">Polilin</translation>
+        <translation type="unfinished">Polilinija</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="147"/>
@@ -20874,17 +20875,17 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="155"/>
         <source>Arc</source>
-        <translation type="unfinished">Arc</translation>
+        <translation type="unfinished">Lok</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="159"/>
         <source>Polygon</source>
-        <translation type="unfinished">Poligon</translation>
+        <translation type="unfinished">Mnogokotnik</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="162"/>
         <source>Polyline/Spline</source>
-        <translation type="unfinished">Polyline/Spline</translation>
+        <translation type="unfinished">Polilinija/zlepek</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="173"/>
@@ -20951,7 +20952,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="412"/>
         <source>&amp;File</source>
-        <translation type="unfinished">&amp; Datoteka</translation>
+        <translation type="unfinished">&amp;Datoteka</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="424"/>
@@ -20966,12 +20967,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="448"/>
         <source>&amp;View</source>
-        <translation type="unfinished">&amp; Pogled</translation>
+        <translation type="unfinished">&amp;Pogled</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="477"/>
         <source>&amp;Named Views</source>
-        <translation type="unfinished">&amp; Imeni prikazov</translation>
+        <translation type="unfinished">&amp;Poimenovani pogledi</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="507"/>
@@ -21042,12 +21043,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="763"/>
         <source>Modify Polyline</source>
-        <translation type="unfinished">Spremeni črto</translation>
+        <translation type="unfinished">Spremeni polilinijo</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="815"/>
         <source>Modify Spline</source>
-        <translation type="unfinished">Spremeni krivuljo</translation>
+        <translation type="unfinished">Spremeni zlepek</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="831"/>
@@ -21082,12 +21083,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="94"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="260"/>
         <source>&amp;Select</source>
-        <translation type="unfinished">&amp; Izberi</translation>
+        <translation type="unfinished">&amp;Izberi</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="122"/>
         <source>&amp;Help</source>
-        <translation type="unfinished">&amp; Pomoč</translation>
+        <translation type="unfinished">&amp;Pomoč</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="125"/>
@@ -21097,22 +21098,22 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="126"/>
         <source>&amp;Wiki</source>
-        <translation type="unfinished">&amp; Wiki</translation>
+        <translation type="unfinished">&amp;Wiki</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="127"/>
         <source>User&apos;s &amp;Manual</source>
-        <translation type="unfinished">Uporabniški &amp; priročnik</translation>
+        <translation type="unfinished">Uporabniški &amp;priročnik</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="128"/>
         <source>&amp;Commands</source>
-        <translation type="unfinished">&amp; Ukazi</translation>
+        <translation type="unfinished">&amp;Ukazi</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="129"/>
         <source>&amp;Style Sheets</source>
-        <translation type="unfinished">&amp; Style listi</translation>
+        <translation type="unfinished">&amp;Slogovne predloge</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="131"/>
@@ -21128,12 +21129,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="142"/>
         <source>&amp;Forum</source>
-        <translation type="unfinished">&amp; Forum</translation>
+        <translation type="unfinished">&amp;Forum</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="143"/>
         <source>Zulip &amp;Chat</source>
-        <translation type="unfinished">Zulip &amp; Chat</translation>
+        <translation type="unfinished">Zulip – &amp;klepet</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="145"/>
@@ -21143,12 +21144,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="146"/>
         <source>&amp;Request Feature</source>
-        <translation type="unfinished">&amp; Zahtevaj</translation>
+        <translation type="unfinished">&amp;Predlagaj funkcijo</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="147"/>
         <source>&amp;Releases Page</source>
-        <translation type="unfinished">&amp; Sprosti stran</translation>
+        <translation type="unfinished">Stran z &amp;izdajami</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="152"/>
@@ -21158,21 +21159,21 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="158"/>
         <source>&amp;Donate</source>
-        <translation type="unfinished">&amp; Donate</translation>
+        <translation type="unfinished">&amp;Doniraj</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="174"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="212"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="246"/>
         <source>&amp;Line</source>
-        <translation type="unfinished">&amp; Line</translation>
+        <translation type="unfinished">&amp;Črta</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="178"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="213"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="247"/>
         <source>Poin&amp;t</source>
-        <translation type="unfinished">Poin&amp;t</translation>
+        <translation type="unfinished">&amp;Točka</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="182"/>
@@ -21186,14 +21187,14 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="215"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="250"/>
         <source>&amp;Arc</source>
-        <translation type="unfinished">&amp; Arc</translation>
+        <translation type="unfinished">&amp;Lok</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="190"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="217"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="252"/>
         <source>Poly&amp;gon</source>
-        <translation type="unfinished">Poligon</translation>
+        <translation type="unfinished">&amp;Mnogokotnik</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="194"/>
@@ -21212,12 +21213,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="221"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="258"/>
         <source>&amp;Polyline</source>
-        <translation type="unfinished">&amp; Polilin</translation>
+        <translation type="unfinished">&amp;Polilinija</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="206"/>
         <source>&amp;Other</source>
-        <translation type="unfinished">&amp; Drugo</translation>
+        <translation type="unfinished">&amp;Drugo</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="211"/>
@@ -21228,25 +21229,25 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="220"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="256"/>
         <source>&amp;Ellipse</source>
-        <translation type="unfinished">&amp; Ellipse</translation>
+        <translation type="unfinished">&amp;Elipsa</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="223"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="265"/>
         <source>Ot&amp;her</source>
-        <translation type="unfinished">Ot&amp;her</translation>
+        <translation type="unfinished">&amp;Drugo</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="228"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="267"/>
         <source>&amp;Modify</source>
-        <translation type="unfinished">&amp; Spremeni</translation>
+        <translation type="unfinished">&amp;Spremeni</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="230"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="270"/>
         <source>&amp;Order</source>
-        <translation type="unfinished">&amp; Naročilo</translation>
+        <translation type="unfinished">&amp;Vrstni red</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="234"/>
@@ -21257,22 +21258,22 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="238"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="269"/>
         <source>&amp;Info</source>
-        <translation type="unfinished">&amp; Info</translation>
+        <translation type="unfinished">&amp;Info</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="244"/>
         <source>&amp;Tools</source>
-        <translation type="unfinished">&amp; Orodja</translation>
+        <translation type="unfinished">&amp;Orodja</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="263"/>
         <source>Dime&amp;nsion</source>
-        <translation type="unfinished">Dime&amp;nsion</translation>
+        <translation type="unfinished">&amp;Kotiranje</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="276"/>
         <source>&amp;File</source>
-        <translation type="unfinished">&amp; Datoteka</translation>
+        <translation type="unfinished">&amp;Datoteka</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="284"/>
@@ -21292,32 +21293,32 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="322"/>
         <source>&amp;Options</source>
-        <translation type="unfinished">&amp; Možnosti</translation>
+        <translation type="unfinished">&amp;Možnosti</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="336"/>
         <source>&amp;Edit</source>
-        <translation type="unfinished">&amp; Edit</translation>
+        <translation type="unfinished">&amp;Urejanje</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="357"/>
         <source>&amp;View</source>
-        <translation type="unfinished">&amp; Pogled</translation>
+        <translation type="unfinished">&amp;Pogled</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="386"/>
         <source>&amp;Views Restore</source>
-        <translation type="unfinished">&amp; Pogledi Obnovi</translation>
+        <translation type="unfinished">&amp;Obnovi pogled</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="399"/>
         <source>Pl&amp;ugins</source>
-        <translation type="unfinished">Pl&amp;ugins</translation>
+        <translation type="unfinished">&amp;Vtičniki</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="405"/>
         <source>&amp;Workspace</source>
-        <translation type="unfinished">&amp; Delovni prostor</translation>
+        <translation type="unfinished">&amp;Delovni prostor</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="415"/>
@@ -21337,12 +21338,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="483"/>
         <source>&amp;Toolbars</source>
-        <translation type="unfinished">&amp; Orodja</translation>
+        <translation type="unfinished">&amp;Orodne vrstice</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="504"/>
         <source>&amp;CAD Toolbars</source>
-        <translation type="unfinished">Orodjarne &amp; CAD</translation>
+        <translation type="unfinished">Orodne vrstice &amp;CAD</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="581"/>
@@ -21357,12 +21358,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="593"/>
         <source>&amp;Window mode</source>
-        <translation type="unfinished">Način &amp; okna</translation>
+        <translation type="unfinished">Način &amp;okna</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="598"/>
         <source>&amp;Layout</source>
-        <translation type="unfinished">&amp; Layout</translation>
+        <translation type="unfinished">&amp;Postavitev</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="602"/>
@@ -21397,32 +21398,32 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="632"/>
         <source>&amp;Arrange</source>
-        <translation type="unfinished">&amp; Uredi</translation>
+        <translation type="unfinished">&amp;Razporedi</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="636"/>
         <source>&amp;Maximized</source>
-        <translation type="unfinished">&amp; Maksimalen</translation>
+        <translation type="unfinished">&amp;Maksimirano</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="640"/>
         <source>&amp;Cascade</source>
-        <translation type="unfinished">&amp; Kaskad</translation>
+        <translation type="unfinished">&amp;Kaskadno</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="641"/>
         <source>&amp;Tile</source>
-        <translation type="unfinished">&amp; Tile</translation>
+        <translation type="unfinished">&amp;Razporedi</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="642"/>
         <source>Tile &amp;Vertically</source>
-        <translation type="unfinished">Tile &amp; vertikalno</translation>
+        <translation type="unfinished">Razporedi &amp;navpično</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="643"/>
         <source>Tile &amp;Horizontally</source>
-        <translation type="unfinished">Tile &amp; Horizontalno</translation>
+        <translation type="unfinished">Razporedi &amp;vodoravno</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="690"/>
@@ -21548,7 +21549,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_options_widget.ui" line="164"/>
         <source>Drawing</source>
-        <translation>Risanje</translation>
+        <translation>Risba</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_options_widget.ui" line="172"/>
@@ -21563,7 +21564,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_options_widget.ui" line="182"/>
         <source>Align to:</source>
-        <translation>Uskladi z:</translation>
+        <translation>Poravnaj z:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_options_widget.ui" line="210"/>
@@ -21908,7 +21909,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="183"/>
         <source>Pick angle from drawing</source>
-        <translation type="unfinished">Kot izbiranja iz risbe</translation>
+        <translation type="unfinished">Izberite kot iz risbe</translation>
     </message>
 </context>
 <context>
@@ -22036,7 +22037,7 @@ Opozorilo: tega dejanja ni mogoče preklicati!</translation>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="479"/>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="493"/>
         <source>&amp;Add View</source>
-        <translation>&amp; Dodaj prikaz</translation>
+        <translation>&amp;Dodaj pogled</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="475"/>
@@ -22046,7 +22047,7 @@ Opozorilo: tega dejanja ni mogoče preklicati!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="482"/>
         <source>&amp;Restore View</source>
-        <translation>&amp; Obnovi pogled</translation>
+        <translation>&amp;Obnovi pogled</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="483"/>
@@ -22056,7 +22057,7 @@ Opozorilo: tega dejanja ni mogoče preklicati!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="484"/>
         <source>&amp;Update View</source>
-        <translation>&amp; Posodobi prikaz</translation>
+        <translation>&amp;Posodobi pogled</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="485"/>
@@ -22271,7 +22272,7 @@ Opozorilo: tega dejanja ni mogoče preklicati!</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="32"/>
         <source>Modify Offset Options</source>
-        <translation type="unfinished">Spremeni možnosti za zamik</translation>
+        <translation type="unfinished">Možnosti odmika</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="63"/>
@@ -22375,7 +22376,7 @@ Opozorilo: tega dejanja ni mogoče preklicati!</translation>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_parabola.ui" line="56"/>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_parabola.ui" line="59"/>
         <source>Points on Spline</source>
-        <translation>Točke na krivulji</translation>
+        <translation>Točke na zlepku</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_parabola.ui" line="88"/>
@@ -22456,7 +22457,7 @@ Opozorilo: tega dejanja ni mogoče preklicati!</translation>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_to_points_options_widget.ui" line="143"/>
         <source>Pick angle from drawing</source>
-        <translation type="unfinished">Kot izbiranja iz risbe</translation>
+        <translation type="unfinished">Izberite kot iz risbe</translation>
     </message>
 </context>
 <context>
@@ -22622,7 +22623,7 @@ Opozorilo: tega dejanja ni mogoče preklicati!</translation>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_widget.ui" line="221"/>
         <source>Pick angle from drawing</source>
-        <translation type="unfinished">Kot izbiranja iz risbe</translation>
+        <translation type="unfinished">Izberite kot iz risbe</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_widget.ui" line="235"/>
@@ -22798,12 +22799,12 @@ Opozorilo: tega dejanja ni mogoče preklicati!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="290"/>
         <source>2.11mm</source>
-        <translation>2.11 mm</translation>
+        <translation>2,11 mm</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="300"/>
         <source>No Pen</source>
-        <translation>Brez peresnika</translation>
+        <translation>Brez peresa</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="301"/>
@@ -22813,42 +22814,42 @@ Opozorilo: tega dejanja ni mogoče preklicati!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="302"/>
         <source>Dot</source>
-        <translation>Dot</translation>
+        <translation>Pikčasta</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="303"/>
         <source>Dot (tiny)</source>
-        <translation>Pikica (majhna)</translation>
+        <translation>Pikčasta (zelo majhna)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="304"/>
         <source>Dot (small)</source>
-        <translation>Pikica (majhna)</translation>
+        <translation>Pikčasta (majhna)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="305"/>
         <source>Dot (large)</source>
-        <translation>Dot (veliko)</translation>
+        <translation>Pikčasta (velika)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="306"/>
         <source>Dash</source>
-        <translation>Dash</translation>
+        <translation>Črtkana</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="307"/>
         <source>Dash (tiny)</source>
-        <translation>Dash (majhna)</translation>
+        <translation>Črtkana (zelo majhna)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="308"/>
         <source>Dash (small)</source>
-        <translation>Dash (manjši)</translation>
+        <translation>Črtkana (majhna)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="309"/>
         <source>Dash (large)</source>
-        <translation>Dash (velika)</translation>
+        <translation>Črtkana (velika)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="310"/>
@@ -22878,57 +22879,57 @@ Opozorilo: tega dejanja ni mogoče preklicati!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="311"/>
         <source>Dash Dot (tiny)</source>
-        <translation>Dash Dot (majhna)</translation>
+        <translation>Črtkana-pikčasta (zelo majhna)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="312"/>
         <source>Dash Dot (small)</source>
-        <translation>Dash Dot (majhna)</translation>
+        <translation>Črtkana-pikčasta (majhna)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="313"/>
         <source>Dash Dot (large)</source>
-        <translation>Dash Dot (velika)</translation>
+        <translation>Črtkana-pikčasta (velika)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="314"/>
         <source>Divide</source>
-        <translation>Deli</translation>
+        <translation>Črta-pika-pika</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="315"/>
         <source>Divide (tiny)</source>
-        <translation>Deli (majhno)</translation>
+        <translation>Črta-pika-pika (zelo majhna)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="316"/>
         <source>Divide (small)</source>
-        <translation>Deli (majhno)</translation>
+        <translation>Črta-pika-pika (majhna)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="317"/>
         <source>Divide (large)</source>
-        <translation>Deli (veliko)</translation>
+        <translation>Črta-pika-pika (velika)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="318"/>
         <source>Center</source>
-        <translation>Center</translation>
+        <translation>Srednjica</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="319"/>
         <source>Center (tiny)</source>
-        <translation>Center (majhno)</translation>
+        <translation>Srednjica (zelo majhna)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="320"/>
         <source>Center (small)</source>
-        <translation>Središče (majhno)</translation>
+        <translation>Srednjica (majhna)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="321"/>
         <source>Center (large)</source>
-        <translation>Središče (veliko)</translation>
+        <translation>Srednjica (velika)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="326"/>
@@ -23066,7 +23067,7 @@ Opozorilo: tega dejanja ni mogoče preklicati!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettemodel.cpp" line="230"/>
         <source>Line Width:</source>
-        <translation>Širina črte:</translation>
+        <translation>Debelina črte:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettemodel.cpp" line="233"/>
@@ -23080,7 +23081,7 @@ Opozorilo: tega dejanja ni mogoče preklicati!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="20"/>
         <source>Pen Palette Settings</source>
-        <translation>Nastavitve palete peresnika</translation>
+        <translation>Nastavitve palete peres</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="187"/>
@@ -23110,17 +23111,17 @@ Opozorilo: tega dejanja ni mogoče preklicati!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="221"/>
         <source>Line Width Icon</source>
-        <translation>Ikona širine črte</translation>
+        <translation>Ikona debeline črte</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="228"/>
         <source>Line Width Name</source>
-        <translation>Ime širine črte</translation>
+        <translation>Ime debeline črte</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="66"/>
         <source>Background color for pen element currently edited in pen&apos;s table</source>
-        <translation>Barva ozadja za element peresnika, ki je trenutno urejen v tabeli peresnika</translation>
+        <translation>Barva ozadja peresa, ki se trenutno ureja v tabeli peres</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="32"/>
@@ -23131,17 +23132,17 @@ Opozorilo: tega dejanja ni mogoče preklicati!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="46"/>
         <source>Active Pen Background:</source>
-        <translation>Ozadje aktivnega peresnika:</translation>
+        <translation>Ozadje aktivnega peresa:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="76"/>
         <source>If set, bold font is used for all elements of active pen item (otherwise, only for name)</source>
-        <translation>Če je nastavljena, se za vse elemente aktivne postavke peresnika uporablja krepko pisavo (drugače samo za ime)</translation>
+        <translation>Če je nastavljeno, se krepka pisava uporabi za vse elemente aktivnega peresa (sicer samo za ime)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="79"/>
         <source>Entire table row is bold for active pen</source>
-        <translation>Celotna tabela je pokončna za aktivni peresnik</translation>
+        <translation>Za aktivno pero je krepka celotna vrstica tabele</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="96"/>
@@ -23166,7 +23167,7 @@ Opozorilo: tega dejanja ni mogoče preklicati!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="297"/>
         <source>If set, filter will igore the case of pen&apos;s name</source>
-        <translation>Če je nastavljeno, bo filter obarval primer imena peresnika</translation>
+        <translation>Če je nastavljeno, filter ne bo razlikoval velikih in malih črk v imenu peresa</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="300"/>
@@ -23181,7 +23182,7 @@ Opozorilo: tega dejanja ni mogoče preklicati!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="26"/>
         <source>Appearance</source>
-        <translation type="unfinished">Izgled</translation>
+        <translation type="unfinished">Videz</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="117"/>
@@ -23251,12 +23252,12 @@ Opozorilo: tega dejanja ni mogoče preklicati!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.cpp" line="53"/>
         <source>Select entities by attributes pen</source>
-        <translation>Izberite entitete po atributih</translation>
+        <translation>Izberi entitete po peresu atributov</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.cpp" line="54"/>
         <source>Select entities by drawing pen</source>
-        <translation>Izberite entitete z risanjem peresnika</translation>
+        <translation>Izberi entitete po risalnem peresu</translation>
     </message>
 </context>
 <context>
@@ -23264,7 +23265,7 @@ Opozorilo: tega dejanja ni mogoče preklicati!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="20"/>
         <source>Pen Palette</source>
-        <translation>Pen Paleta</translation>
+        <translation>Paleta peres</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="49"/>
@@ -23274,7 +23275,7 @@ Opozorilo: tega dejanja ni mogoče preklicati!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="66"/>
         <source>Fill Pen Editor by Entity Attributes</source>
-        <translation>Zapolni urejevalnik pisal po atributih entitet</translation>
+        <translation>Napolni urejevalnik peresa z atributi entitete</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="83"/>
@@ -23284,7 +23285,7 @@ Opozorilo: tega dejanja ni mogoče preklicati!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="100"/>
         <source>Select Entities By Pen Attributes</source>
-        <translation>Izberite entitete po atributih Pen</translation>
+        <translation>Izberi entitete po atributih peresa</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="120"/>
@@ -23295,17 +23296,17 @@ Opozorilo: tega dejanja ni mogoče preklicati!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="137"/>
         <source>Apply Pen To Selection</source>
-        <translation>Namesti Pen za izbiro</translation>
+        <translation>Uporabi pero na izboru</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="154"/>
         <source>Fill Editor Pen by Current Pen</source>
-        <translation>Napolni urejevalnik Pero po trenutnem peresniku</translation>
+        <translation>Napolni pero urejevalnika s trenutnim peresom</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="171"/>
         <source>Apply Editor Pen As Current Pen</source>
-        <translation>Uveljavi urejevalnik kot trenutni peresnik</translation>
+        <translation>Uporabi pero urejevalnika kot trenutno pero</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="174"/>
@@ -23340,12 +23341,12 @@ Opozorilo: tega dejanja ni mogoče preklicati!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="239"/>
         <source>Remove Selected Pen</source>
-        <translation>Odstrani izbrani peresnik</translation>
+        <translation>Odstrani izbrano pero</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="242"/>
         <source>Delete Pen</source>
-        <translation>Zbriši peresnik</translation>
+        <translation>Izbriši pero</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="339"/>
@@ -23365,17 +23366,17 @@ Opozorilo: tega dejanja ni mogoče preklicati!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="372"/>
         <source>Width of line</source>
-        <translation>Širina črte</translation>
+        <translation>Debelina črte</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="402"/>
         <source>Pen Name:</source>
-        <translation>Ime peresnika:</translation>
+        <translation>Ime peresa:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="436"/>
         <source>Name of pen</source>
-        <translation>Ime peresnika</translation>
+        <translation>Ime peresa</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="455"/>
@@ -23400,7 +23401,7 @@ Opozorilo: tega dejanja ni mogoče preklicati!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="550"/>
         <source>If checked, matched pens are highlighted, otherwise non-matching pens are hidden.</source>
-        <translation>Če je možnost omogočena, so ujemajoči se injekcijski peresniki označeni, sicer so neprimerljivi injekcijski peresniki skriti.</translation>
+        <translation>Če je možnost omogočena, so ujemajoča se peresa poudarjena, sicer so neujemajoča se peresa skrita.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="553"/>
@@ -23410,12 +23411,12 @@ Opozorilo: tega dejanja ni mogoče preklicati!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="303"/>
         <source>&amp;Apply Pen To Selection</source>
-        <translation>&amp; Dodaj v izbor</translation>
+        <translation>&amp;Uporabi pero na izboru</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="304"/>
         <source>&amp;Set As Current Pen</source>
-        <translation>&amp; Namesti kot trenutni peresnik</translation>
+        <translation>&amp;Nastavi kot trenutno pero</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="305"/>
@@ -23425,32 +23426,32 @@ Opozorilo: tega dejanja ni mogoče preklicati!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="306"/>
         <source>&amp;Select Entities With Attributes Pen</source>
-        <translation>&amp; Izberi entitete z atributnim peresnikom</translation>
+        <translation>&amp;Izberi entitete s peresom atributov</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="308"/>
         <source>&amp;Select Entities With Drawing Pen</source>
-        <translation>&amp; Izberi entitete z risalnim peresom</translation>
+        <translation>&amp;Izberi entitete z risalnim peresom</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="312"/>
         <source>&amp;Edit Pen</source>
-        <translation>&amp; Edit Pen</translation>
+        <translation>&amp;Uredi pero</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="313"/>
         <source>&amp;Remove Pen</source>
-        <translation>Odstranjevanje peresnika</translation>
+        <translation>&amp;Odstrani pero</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="317"/>
         <source>&amp;Remove Pens</source>
-        <translation>Odstranjevanje injekcijskih peresnikov</translation>
+        <translation>&amp;Odstrani peresa</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="430"/>
         <source>Pen palette</source>
-        <translation>Paleta peresnika</translation>
+        <translation>Paleta peres</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="431"/>
@@ -23695,7 +23696,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_options_filler.cpp" line="37"/>
         <source>Polyline</source>
-        <translation type="unfinished">Polilin</translation>
+        <translation type="unfinished">Polilinija</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_options_filler.cpp" line="37"/>
@@ -23728,22 +23729,22 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_options_widget.ui" line="32"/>
         <source>Polygon Options</source>
-        <translation type="unfinished">Možnosti poligona</translation>
+        <translation type="unfinished">Možnosti mnogokotnika</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_options_widget.ui" line="70"/>
         <source>If selected, reference points are for vertexes of polygon. Otherwise, they are for middle point of edges. </source>
-        <translation type="unfinished">Če je izbrano, so referenčne točke za verteks mnogokotnika. Sicer so za srednjo točko robov.</translation>
+        <translation type="unfinished">Če je izbrano, so referenčne točke oglišča mnogokotnika. Sicer so to razpolovišča robov. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_options_widget.ui" line="73"/>
         <source>Vertex to Vertex</source>
-        <translation type="unfinished">Vertex v Vertex</translation>
+        <translation type="unfinished">Od oglišča do oglišča</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_options_widget.ui" line="80"/>
         <source>If checked, vertexes of polygon will be rounded. </source>
-        <translation type="unfinished">Če je možnost omogočena, bodo verteksi mnogokotnika zaokroženi.</translation>
+        <translation type="unfinished">Če je možnost omogočena, bodo oglišča mnogokotnika zaokrožena. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_options_widget.ui" line="83"/>
@@ -23773,7 +23774,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_options_widget.ui" line="129"/>
         <source>Polyline</source>
-        <translation type="unfinished">Polilin</translation>
+        <translation type="unfinished">Polilinija</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_options_widget.ui" line="143"/>
@@ -23786,12 +23787,12 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_side_side_options_filler.cpp" line="34"/>
         <source>Vertex to Vertex</source>
-        <translation type="unfinished">Vertex v Vertex</translation>
+        <translation type="unfinished">Od oglišča do oglišča</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_side_side_options_filler.cpp" line="35"/>
         <source>If selected, reference points are for vertexes of polygon. Otherwise, they are for middle point of edges. </source>
-        <translation type="unfinished">Če je izbrano, so referenčne točke za verteks mnogokotnika. Sicer so za srednjo točko robov.</translation>
+        <translation type="unfinished">Če je izbrano, so referenčne točke oglišča mnogokotnika. Sicer so to razpolovišča robov. </translation>
     </message>
 </context>
 <context>
@@ -23804,7 +23805,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_equidistant_options_filler.cpp" line="31"/>
         <source>Distance from original polyline</source>
-        <translation type="unfinished">Oddaljenost od prvotnega polilina</translation>
+        <translation type="unfinished">Razdalja od prvotne polilinije</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_equidistant_options_filler.cpp" line="37"/>
@@ -23832,7 +23833,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_equidistant_options_widget.ui" line="81"/>
         <source>Distance from original polyline</source>
-        <translation type="unfinished">Oddaljenost od prvotnega polilina</translation>
+        <translation type="unfinished">Razdalja od prvotne polilinije</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_equidistant_options_widget.ui" line="94"/>
@@ -23875,7 +23876,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_filler.cpp" line="39"/>
         <source>Arc</source>
-        <translation type="unfinished">Arc</translation>
+        <translation type="unfinished">Lok</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_filler.cpp" line="43"/>
@@ -23895,7 +23896,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_filler.cpp" line="51"/>
         <source>Radius of arc</source>
-        <translation type="unfinished">Obločni polmer</translation>
+        <translation type="unfinished">Polmer loka</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_filler.cpp" line="59"/>
@@ -23935,7 +23936,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_filler.cpp" line="79"/>
         <source>Undo for previous vertex</source>
-        <translation type="unfinished">Razveljavi za prejšnji vertex</translation>
+        <translation type="unfinished">Razveljavi do prejšnjega oglišča</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_filler.cpp" line="86"/>
@@ -23948,12 +23949,12 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_widget.ui" line="32"/>
         <source>Polyline Options</source>
-        <translation type="unfinished">Možnosti poliline</translation>
+        <translation type="unfinished">Možnosti polilinije</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_widget.ui" line="53"/>
         <source>Connects ends of the polyline so closed contour is created</source>
-        <translation type="unfinished">Povezuje konce poliline tako zaprta kontura je ustvarjena</translation>
+        <translation type="unfinished">Poveže konca polilinije, tako da nastane zaprt obris</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_widget.ui" line="56"/>
@@ -23963,7 +23964,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_widget.ui" line="63"/>
         <source>Undo for previous vertex</source>
-        <translation type="unfinished">Razveljavi za prejšnji vertex</translation>
+        <translation type="unfinished">Razveljavi do prejšnjega oglišča</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_widget.ui" line="66"/>
@@ -23988,12 +23989,12 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_widget.ui" line="120"/>
         <source>Tangental arc with fixed radius</source>
-        <translation type="unfinished">Tangentalni lok s fiksnim polmerom</translation>
+        <translation type="unfinished">Tangencialni lok s stalnim polmerom</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_widget.ui" line="140"/>
         <source>Tangental arc with fixed angle</source>
-        <translation type="unfinished">Tangentalni lok s fiksnim kotom</translation>
+        <translation type="unfinished">Tangencialni lok s stalnim kotom</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_widget.ui" line="160"/>
@@ -24008,12 +24009,12 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_widget.ui" line="205"/>
         <source>Radius of arc</source>
-        <translation type="unfinished">Obločni polmer</translation>
+        <translation type="unfinished">Polmer loka</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_widget.ui" line="212"/>
         <source>Pick radius form drawing</source>
-        <translation type="unfinished">Risba obrazca s polmerom pike</translation>
+        <translation type="unfinished">Izberite polmer iz risbe</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_widget.ui" line="226"/>
@@ -24028,7 +24029,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_widget.ui" line="258"/>
         <source>Pick angle from drawing</source>
-        <translation type="unfinished">Kot izbiranja iz risbe</translation>
+        <translation type="unfinished">Izberite kot iz risbe</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_widget.ui" line="293"/>
@@ -24056,7 +24057,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_polyline.ui" line="69"/>
         <source>Defines whether polyline is closed contour</source>
-        <translation>Določa, ali je polilin zaprt obris</translation>
+        <translation>Določa, ali je polilinija zaprt obris</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_polyline.ui" line="72"/>
@@ -24104,7 +24105,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="51"/>
         <source>Zoom to Print Area</source>
-        <translation type="unfinished">Povečaj za tiskanje</translation>
+        <translation type="unfinished">Povečaj na območje tiskanja</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="60"/>
@@ -24144,7 +24145,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="72"/>
         <source>Apply Print Scale to line width</source>
-        <translation type="unfinished">Uporabi merilo tiskanja za širino črte</translation>
+        <translation type="unfinished">Uporabi merilo tiskanja za debelino črte</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="78"/>
@@ -24287,7 +24288,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_widget.ui" line="105"/>
         <source>Apply Print Scale to line width</source>
-        <translation type="unfinished">Uporabi merilo tiskanja za širino črte</translation>
+        <translation type="unfinished">Uporabi merilo tiskanja za debelino črte</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_widget.ui" line="134"/>
@@ -24342,7 +24343,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_widget.ui" line="322"/>
         <source>Zoom to Print Area</source>
-        <translation type="unfinished">Povečaj za tiskanje</translation>
+        <translation type="unfinished">Povečaj na območje tiskanja</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_widget.ui" line="349"/>
@@ -24415,7 +24416,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_hyperbola.cpp" line="115"/>
         <source>Foci must be distinct</source>
-        <translation type="unfinished">Foci mora biti ločen</translation>
+        <translation type="unfinished">Gorišči morata biti različni</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_hyperbola.cpp" line="124"/>
@@ -24471,7 +24472,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_active_pen.cpp" line="80"/>
         <source>Line Width</source>
-        <translation type="unfinished">Širina črte</translation>
+        <translation type="unfinished">Debelina črte</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_active_pen.cpp" line="80"/>
@@ -24544,7 +24545,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="34"/>
         <source>Center</source>
-        <translation type="unfinished">Center</translation>
+        <translation type="unfinished">Središče</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="34"/>
@@ -24559,7 +24560,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="40"/>
         <source>Radius of arc</source>
-        <translation type="unfinished">Obločni polmer</translation>
+        <translation type="unfinished">Polmer loka</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="46"/>
@@ -24739,7 +24740,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="144"/>
         <source>Trim</source>
-        <translation type="unfinished">Trim</translation>
+        <translation type="unfinished">Obreži</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="144"/>
@@ -25052,7 +25053,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="31"/>
         <source>Center</source>
-        <translation type="unfinished">Center</translation>
+        <translation type="unfinished">Središče</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="31"/>
@@ -25143,7 +25144,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="79"/>
         <source>Trim</source>
-        <translation type="unfinished">Trim</translation>
+        <translation type="unfinished">Obreži</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="79"/>
@@ -25370,7 +25371,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="124"/>
         <source>Leader</source>
-        <translation type="unfinished">Leader</translation>
+        <translation type="unfinished">Kazalna črta</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="124"/>
@@ -27099,7 +27100,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_ellipse.cpp" line="33"/>
         <source>Center</source>
-        <translation type="unfinished">Center</translation>
+        <translation type="unfinished">Središče</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_ellipse.cpp" line="33"/>
@@ -27458,7 +27459,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="122"/>
         <source>Line Width</source>
-        <translation type="unfinished">Širina črte</translation>
+        <translation type="unfinished">Debelina črte</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="122"/>
@@ -28158,7 +28159,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_hyperbola.cpp" line="31"/>
         <source>Center</source>
-        <translation type="unfinished">Center</translation>
+        <translation type="unfinished">Središče</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_hyperbola.cpp" line="31"/>
@@ -28610,7 +28611,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_leader.cpp" line="64"/>
         <source>Vertex</source>
-        <translation type="unfinished">Vertex</translation>
+        <translation type="unfinished">Oglišče</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_leader.cpp" line="64"/>
@@ -28729,7 +28730,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="104"/>
         <source>Trim</source>
-        <translation type="unfinished">Trim</translation>
+        <translation type="unfinished">Obreži</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="104"/>
@@ -29148,7 +29149,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_mtext.cpp" line="74"/>
         <source>Center</source>
-        <translation type="unfinished">Center</translation>
+        <translation type="unfinished">Sredina</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_mtext.cpp" line="75"/>
@@ -29296,7 +29297,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_parabola.cpp" line="33"/>
         <source>Focus</source>
-        <translation type="unfinished">Fokus</translation>
+        <translation type="unfinished">Gorišče</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_parabola.cpp" line="33"/>
@@ -29306,7 +29307,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_parabola.cpp" line="39"/>
         <source>Vertex</source>
-        <translation type="unfinished">Vertex</translation>
+        <translation type="unfinished">Oglišče</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_parabola.cpp" line="39"/>
@@ -29473,7 +29474,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_polyline.cpp" line="60"/>
         <source>Vertex</source>
-        <translation type="unfinished">Vertex</translation>
+        <translation type="unfinished">Oglišče</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_polyline.cpp" line="60"/>
@@ -29669,7 +29670,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_polyline.cpp" line="126"/>
         <source>Spline</source>
-        <translation type="unfinished">Spline</translation>
+        <translation type="unfinished">Zlepek</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_polyline.cpp" line="126"/>
@@ -30136,7 +30137,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_text.cpp" line="54"/>
         <source>Center</source>
-        <translation type="unfinished">Center</translation>
+        <translation type="unfinished">Sredina</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_text.cpp" line="55"/>
@@ -30548,7 +30549,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="261"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="410"/>
         <source>SOLID</source>
-        <translation>SOLID</translation>
+        <translation>POLNILO</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="264"/>
@@ -30566,19 +30567,19 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="560"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="578"/>
         <source>LINE</source>
-        <translation>LINE</translation>
+        <translation>ČRTA</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="604"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="619"/>
         <source>CIRCLE</source>
-        <translation>CIRCLE</translation>
+        <translation>KROG</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="643"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="670"/>
         <source>ARC</source>
-        <translation>ARC</translation>
+        <translation>LOK</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="724"/>
@@ -30590,7 +30591,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="741"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="747"/>
         <source>ELLIPSE</source>
-        <translation>ELLIPSE</translation>
+        <translation>ELIPSA</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="844"/>
@@ -30602,7 +30603,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="856"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="869"/>
         <source>POLYLINE</source>
-        <translation>POLYLIN</translation>
+        <translation>POLILINIJA</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="666"/>
@@ -30648,7 +30649,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="935"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="956"/>
         <source>INSERT</source>
-        <translation>INSERT</translation>
+        <translation>VSTAVLJEN BLOK</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="971"/>
@@ -30726,7 +30727,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="548"/>
         <source>Line Width</source>
-        <translation>Širina črte</translation>
+        <translation>Debelina črte</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="550"/>
@@ -30805,7 +30806,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1416"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1435"/>
         <source>Center</source>
-        <translation>Center</translation>
+        <translation>Središče</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="612"/>
@@ -30961,7 +30962,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="910"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="924"/>
         <source>Vertex - </source>
-        <translation>Vertex</translation>
+        <translation>Oglišče - </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="931"/>
@@ -31329,7 +31330,7 @@ Plast: </translation>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1256"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1272"/>
         <source>SPLINE</source>
-        <translation>SPLINE</translation>
+        <translation>ZLEPEK</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1258"/>
@@ -31347,7 +31348,7 @@ Plast: </translation>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1287"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1309"/>
         <source>SPLINEPOINTS</source>
-        <translation>SPLINEPOTI</translation>
+        <translation>ZLEPEK SKOZI TOČKE</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1289"/>
@@ -31398,13 +31399,13 @@ Plast: </translation>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1330"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1346"/>
         <source>Focus</source>
-        <translation>Fokus</translation>
+        <translation>Gorišče</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1331"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1347"/>
         <source>Vertex</source>
-        <translation>Vertex</translation>
+        <translation>Oglišče</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1332"/>
@@ -31446,7 +31447,7 @@ Plast: </translation>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1294"/>
         <source>Spline Points</source>
-        <translation>Točke krivulje</translation>
+        <translation>Točke zlepka</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="817"/>
@@ -31458,7 +31459,7 @@ Plast: </translation>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1392"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1403"/>
         <source>DIMLEADER</source>
-        <translation>DIMLEADER</translation>
+        <translation>KAZALNA ČRTA</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1394"/>
@@ -31470,7 +31471,7 @@ Plast: </translation>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1409"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1428"/>
         <source>DIMARC</source>
-        <translation>DIMARKA</translation>
+        <translation>KOTA LOKA</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1415"/>
@@ -31482,13 +31483,13 @@ Plast: </translation>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1446"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1459"/>
         <source>DIMANGULAR</source>
-        <translation>DIMANGULAR</translation>
+        <translation>KOTNA KOTA</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1467"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1475"/>
         <source>DIMDIAMETRIC</source>
-        <translation>DIMDIAMETRIČNI</translation>
+        <translation>KOTA PREMERA</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1470"/>
@@ -31506,13 +31507,13 @@ Plast: </translation>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1483"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1495"/>
         <source>DIMRADIAL</source>
-        <translation>DIMRADIAL</translation>
+        <translation>KOTA POLMERA</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1520"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1537"/>
         <source>DIMLINEAR</source>
-        <translation>DIMLINAR</translation>
+        <translation>LINEARNA KOTA</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1524"/>
@@ -31545,13 +31546,13 @@ Plast: </translation>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1549"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1562"/>
         <source>DIMORDINATE</source>
-        <translation>DIMORDINAT</translation>
+        <translation>ORDINATNA KOTA</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1552"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1567"/>
         <source>Ordinate</source>
-        <translation>Ordinat</translation>
+        <translation>Ordinatna</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1553"/>
@@ -31569,7 +31570,7 @@ Plast: </translation>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1556"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1569"/>
         <source>Leader End Point</source>
-        <translation>Končna točka programa Leader</translation>
+        <translation>Končna točka kazalne črte</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1526"/>
@@ -31584,7 +31585,7 @@ Plast: </translation>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1574"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1589"/>
         <source>DIMALIGNED</source>
-        <translation>DIMALIGN</translation>
+        <translation>PORAVNANA KOTA</translation>
     </message>
 </context>
 <context>
@@ -31597,7 +31598,7 @@ Plast: </translation>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfopointsdata.cpp" line="226"/>
         <source>Relative Zero</source>
-        <translation>Relativni nič</translation>
+        <translation>Relativna ničla</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfopointsdata.cpp" line="231"/>
@@ -31658,7 +31659,7 @@ Plast: </translation>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.ui" line="89"/>
         <source>Properties Edit</source>
-        <translation>Lastnosti Uredi</translation>
+        <translation>Urejanje lastnosti</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.ui" line="103"/>
@@ -31726,20 +31727,20 @@ p, li {beli prostor: pre- wrap; }
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="345"/>
         <source>&amp;Copy All</source>
-        <translation>&amp; Kopiraj vse</translation>
+        <translation>&amp;Kopiraj vse</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="363"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="377"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="387"/>
         <source>&amp;To Cmd</source>
-        <translation>&amp; V Cmd</translation>
+        <translation>&amp;V ukazno vrstico</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="366"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="380"/>
         <source>&amp;Set Relative Zero</source>
-        <translation>&amp; Namesti relativno ničlo</translation>
+        <translation>&amp;Nastavi relativno ničlo</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="369"/>
@@ -31749,32 +31750,32 @@ p, li {beli prostor: pre- wrap; }
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="372"/>
         <source>&amp;Insert Coordinates</source>
-        <translation>&amp; Vstavi koordinate</translation>
+        <translation>&amp;Vstavi koordinate</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="392"/>
         <source>&amp;Clear</source>
-        <translation>&amp; Počisti</translation>
+        <translation>&amp;Počisti</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="393"/>
         <source>&amp;Select Entity</source>
-        <translation>&amp; Izberi entiteto</translation>
+        <translation>&amp;Izberi entiteto</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="396"/>
         <source>&amp;Select in Drawing</source>
-        <translation>&amp; Izberi v risanju</translation>
+        <translation>&amp;Izberi v risbi</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="397"/>
         <source>&amp;Edit Properties</source>
-        <translation>Lastnosti &amp; Edita</translation>
+        <translation>&amp;Uredi lastnosti</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="399"/>
         <source>&amp;Collect Coordinates</source>
-        <translation>&amp; Koordinate</translation>
+        <translation>&amp;Zberi koordinate</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="701"/>
@@ -31832,7 +31833,7 @@ p, li {beli prostor: pre- wrap; }
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="84"/>
         <source>Include polyline child entities information to vertexes</source>
-        <translation>Vključiti polilin otrok entitete informacije za vertexes</translation>
+        <translation>Vključi podatke o podrejenih entitetah polilinije pri ogliščih</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="91"/>
@@ -31872,7 +31873,7 @@ p, li {beli prostor: pre- wrap; }
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.cpp" line="44"/>
         <source>Points highlight pen</source>
-        <translation>Točke poudarjajo pero</translation>
+        <translation>Pero za poudarjanje točk</translation>
     </message>
 </context>
 <context>
@@ -31985,7 +31986,7 @@ p, li {beli prostor: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1_point_options_filler.cpp" line="83"/>
         <source>Polyline</source>
-        <translation type="unfinished">Polilin</translation>
+        <translation type="unfinished">Polilinija</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1_point_options_filler.cpp" line="83"/>
@@ -32008,12 +32009,12 @@ p, li {beli prostor: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="46"/>
         <source>If checked, rectangle will be created as polyline instead of individual segments.</source>
-        <translation type="unfinished">Če je možnost omogočena, bo pravokotnik ustvarjen kot polilin namesto posameznih segmentov.</translation>
+        <translation type="unfinished">Če je možnost omogočena, bo pravokotnik namesto posameznih segmentov ustvarjen kot polilinija.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="49"/>
         <source>Polyline</source>
-        <translation type="unfinished">Polilin</translation>
+        <translation type="unfinished">Polilinija</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="56"/>
@@ -32223,7 +32224,7 @@ p, li {beli prostor: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="419"/>
         <source>Snap:</source>
-        <translation type="unfinished">Snap:</translation>
+        <translation type="unfinished">Pripenjanje:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="438"/>
@@ -32306,7 +32307,7 @@ p, li {beli prostor: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_filler.cpp" line="68"/>
         <source>Polyline</source>
-        <translation type="unfinished">Polilin</translation>
+        <translation type="unfinished">Polilinija</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_filler.cpp" line="68"/>
@@ -32353,12 +32354,12 @@ p, li {beli prostor: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="59"/>
         <source>If checked, the entire rectangle will be drawn as polyline.</source>
-        <translation type="unfinished">Če je možnost omogočena, bo celoten pravokotnik narisan kot polilin.</translation>
+        <translation type="unfinished">Če je možnost omogočena, bo celoten pravokotnik narisan kot polilinija.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="62"/>
         <source>Polyline</source>
-        <translation type="unfinished">Polilin</translation>
+        <translation type="unfinished">Polilinija</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="69"/>
@@ -32556,7 +32557,7 @@ p, li {beli prostor: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3_points_options_filler.cpp" line="64"/>
         <source>Polyline</source>
-        <translation type="unfinished">Polilin</translation>
+        <translation type="unfinished">Polilinija</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3_points_options_filler.cpp" line="64"/>
@@ -32574,12 +32575,12 @@ p, li {beli prostor: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="32"/>
         <source>If checked, the shape will be created as polyline. </source>
-        <translation type="unfinished">Če je možnost omogočena, bo oblika ustvarjena kot polilin.</translation>
+        <translation type="unfinished">Če je možnost omogočena, bo oblika ustvarjena kot polilinija. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="35"/>
         <source>Polyline</source>
-        <translation type="unfinished">Polilin</translation>
+        <translation type="unfinished">Polilinija</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="86"/>
@@ -32850,12 +32851,12 @@ p, li {beli prostor: pre- wrap; }
     <message>
         <location filename="../src/ui/components/status_bar/lc_relzerocoordinateswidget.ui" line="35"/>
         <source>Relative Zero (Cartesian)</source>
-        <translation>Relativni nič (kartezija)</translation>
+        <translation>Relativna ničla (kartezične)</translation>
     </message>
     <message>
         <location filename="../src/ui/components/status_bar/lc_relzerocoordinateswidget.ui" line="45"/>
         <source>Relative Zero (Polar)</source>
-        <translation>Relativni nič (polar)</translation>
+        <translation>Relativna ničla (polarne)</translation>
     </message>
 </context>
 <context>
@@ -32984,7 +32985,7 @@ p, li {beli prostor: pre- wrap; }
     <message>
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="361"/>
         <source>Pick length from drawing</source>
-        <translation type="unfinished">Dolžina nabiranja od risbe</translation>
+        <translation type="unfinished">Izberite dolžino iz risbe</translation>
     </message>
     <message>
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="446"/>
@@ -33005,7 +33006,7 @@ p, li {beli prostor: pre- wrap; }
     <message>
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="501"/>
         <source>Pick angle from drawing</source>
-        <translation type="unfinished">Kot izbiranja iz risbe</translation>
+        <translation type="unfinished">Izberite kot iz risbe</translation>
     </message>
     <message>
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="586"/>
@@ -33046,7 +33047,7 @@ p, li {beli prostor: pre- wrap; }
     <message>
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="940"/>
         <source>Distance:</source>
-        <translation type="unfinished">Oddaljenost:</translation>
+        <translation type="unfinished">Razdalja:</translation>
     </message>
     <message>
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="982"/>
@@ -33612,7 +33613,7 @@ p, li {beli prostor: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_round_options_filler.cpp" line="31"/>
         <source>Trim</source>
-        <translation type="unfinished">Trim</translation>
+        <translation type="unfinished">Obreži</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_round_options_filler.cpp" line="31"/>
@@ -33645,7 +33646,7 @@ p, li {beli prostor: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_round_options_widget.ui" line="62"/>
         <source>Trim</source>
-        <translation type="unfinished">Trim</translation>
+        <translation type="unfinished">Obreži</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_round_options_widget.ui" line="85"/>
@@ -33879,7 +33880,7 @@ p, li {beli prostor: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="53"/>
         <source>Spline</source>
-        <translation>Spline</translation>
+        <translation>Zlepek</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="60"/>
@@ -33894,7 +33895,7 @@ p, li {beli prostor: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="74"/>
         <source>Polyline</source>
-        <translation>Polilin</translation>
+        <translation>Polilinija</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="81"/>
@@ -33919,7 +33920,7 @@ p, li {beli prostor: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="109"/>
         <source>Hatch</source>
-        <translation>Hatch</translation>
+        <translation>Šrafura</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="116"/>
@@ -33929,7 +33930,7 @@ p, li {beli prostor: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="123"/>
         <source>Arc</source>
-        <translation>Arc</translation>
+        <translation>Lok</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="130"/>
@@ -34132,7 +34133,7 @@ p, li {beli prostor: pre- wrap; }
     <message>
         <location filename="../src/test/lc_simpletests.cpp" line="34"/>
         <source>De&amp;bugging</source>
-        <translation>De&amp;bugging</translation>
+        <translation>&amp;Razhroščevanje</translation>
     </message>
     <message>
         <location filename="../src/test/lc_simpletests.cpp" line="78"/>
@@ -34296,7 +34297,7 @@ p, li {beli prostor: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="86"/>
         <source>Distance:</source>
-        <translation type="unfinished">Oddaljenost:</translation>
+        <translation type="unfinished">Razdalja:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="111"/>
@@ -34489,7 +34490,7 @@ p, li {beli prostor: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="50"/>
         <source>If checked, line segments will be part of polyline. Otherwise, they will be individual lines</source>
-        <translation type="unfinished">Če je možnost omogočena, bodo segmenti linij del poliline. Drugače bodo posamezne linije</translation>
+        <translation type="unfinished">Če je možnost omogočena, bodo segmenti del polilinije. V nasprotnem primeru bodo posamezne črte</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="57"/>
@@ -34537,7 +34538,7 @@ p, li {beli prostor: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="39"/>
         <source>If unchecked, original spline will be removed, otherwise it will survive.</source>
-        <translation type="unfinished">Če ne bo preverjeno, bo original odstranjen, drugače bo preživel.</translation>
+        <translation type="unfinished">Če možnost ni omogočena, bo prvotni zlepek odstranjen, sicer bo ohranjen.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="42"/>
@@ -34577,12 +34578,12 @@ p, li {beli prostor: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="93"/>
         <source>If checked, line segments will be part of polyline. Otherwise, they will be individual lines</source>
-        <translation type="unfinished">Če je možnost omogočena, bodo segmenti linij del poliline. Drugače bodo posamezne linije</translation>
+        <translation type="unfinished">Če je možnost omogočena, bodo segmenti del polilinije. V nasprotnem primeru bodo posamezne črte</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="96"/>
         <source>To Polyline</source>
-        <translation type="unfinished">V polilin</translation>
+        <translation type="unfinished">V polilinijo</translation>
     </message>
 </context>
 <context>
@@ -34595,7 +34596,7 @@ p, li {beli prostor: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_filler.cpp" line="31"/>
         <source>Defines degree of the spline</source>
-        <translation type="unfinished">Določa stopnjo krivulje</translation>
+        <translation type="unfinished">Določa stopnjo zlepka</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_filler.cpp" line="38"/>
@@ -34615,7 +34616,7 @@ p, li {beli prostor: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_filler.cpp" line="44"/>
         <source>Amount of middle points of polyline segment that will be added to spline. </source>
-        <translation type="unfinished">Količina srednjih točk segmenta poliline, ki se doda krivulji.</translation>
+        <translation type="unfinished">Število vmesnih točk segmenta polilinije, ki bodo dodane zlepku. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_filler.cpp" line="51"/>
@@ -34668,17 +34669,17 @@ p, li {beli prostor: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="42"/>
         <source>Amount of middle points of polyline segment that will be added to spline. </source>
-        <translation type="unfinished">Količina srednjih točk segmenta poliline, ki se doda krivulji.</translation>
+        <translation type="unfinished">Število vmesnih točk segmenta polilinije, ki bodo dodane zlepku. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="55"/>
         <source>Defines degree of the spline</source>
-        <translation type="unfinished">Določa stopnjo krivulje</translation>
+        <translation type="unfinished">Določa stopnjo zlepka</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="68"/>
         <source>If unchecked, original polyline will be removed, otherwise it will survive.</source>
-        <translation type="unfinished">Če ni preverjeno, se odstrani originalni polilin, sicer bo preživel.</translation>
+        <translation type="unfinished">Če možnost ni omogočena, bo prvotna polilinija odstranjena, sicer bo ohranjena.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="71"/>
@@ -34713,7 +34714,7 @@ p, li {beli prostor: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="105"/>
         <source>Vertexes are spline points</source>
-        <translation type="unfinished">Vertexes so krivulje</translation>
+        <translation type="unfinished">Oglišča so točke zlepka</translation>
     </message>
 </context>
 <context>
@@ -34726,7 +34727,7 @@ p, li {beli prostor: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_options_filler.cpp" line="33"/>
         <source>Defines degree of the spline</source>
-        <translation type="unfinished">Določa stopnjo krivulje</translation>
+        <translation type="unfinished">Določa stopnjo zlepka</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_options_filler.cpp" line="40"/>
@@ -34736,7 +34737,7 @@ p, li {beli prostor: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_options_filler.cpp" line="40"/>
         <source>If selected, closed spline is created</source>
-        <translation type="unfinished">Če je izbrano, se ustvari zaprta krivulja</translation>
+        <translation type="unfinished">Če je izbrano, se ustvari zaprt zlepek</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_options_filler.cpp" line="46"/>
@@ -34759,7 +34760,7 @@ p, li {beli prostor: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_options_widget.ui" line="32"/>
         <source>Spline Options</source>
-        <translation type="unfinished">Možnosti krivulje</translation>
+        <translation type="unfinished">Možnosti zlepka</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_options_widget.ui" line="56"/>
@@ -34769,12 +34770,12 @@ p, li {beli prostor: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_options_widget.ui" line="72"/>
         <source>Spline&apos;s degree used for approximation between points</source>
-        <translation type="unfinished">Stopnja krivulje, uporabljena za približevanje med točkami</translation>
+        <translation type="unfinished">Stopnja zlepka, uporabljena za aproksimacijo med točkami</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_options_widget.ui" line="94"/>
         <source>If selected, closed spline is created</source>
-        <translation type="unfinished">Če je izbrano, se ustvari zaprta krivulja</translation>
+        <translation type="unfinished">Če je izbrano, se ustvari zaprt zlepek</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_options_widget.ui" line="97"/>
@@ -34812,12 +34813,12 @@ p, li {beli prostor: pre- wrap; }
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_splinepoints.ui" line="62"/>
         <source>If selected, spline points are used</source>
-        <translation>Če je izbrano, se uporabijo krivulje</translation>
+        <translation>Če je izbrano, se uporabijo točke zlepka</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_splinepoints.ui" line="65"/>
         <source>Spline Points</source>
-        <translation>Točke krivulje</translation>
+        <translation>Točke zlepka</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_splinepoints.ui" line="75"/>
@@ -34833,7 +34834,7 @@ p, li {beli prostor: pre- wrap; }
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_splinepoints.ui" line="93"/>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_splinepoints.ui" line="96"/>
         <source>Points on Spline</source>
-        <translation>Točke na krivulji</translation>
+        <translation>Točke na zlepku</translation>
     </message>
 </context>
 <context>
@@ -34842,12 +34843,12 @@ p, li {beli prostor: pre- wrap; }
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="14"/>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="17"/>
         <source>Spline Properties Editor</source>
-        <translation>Urejevalnik lastnosti krivulje</translation>
+        <translation>Urejevalnik lastnosti zlepka</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="20"/>
         <source>Edit properties of a spline entity, including degree, closed state, control points, and knot vector</source>
-        <translation>Urejanje lastnosti entitete, vključno s stopnjo, zaprtim stanjem, kontrolnimi točkami in vektorjem vozla</translation>
+        <translation>Urejanje lastnosti zlepka, vključno s stopnjo, zaprtostjo, kontrolnimi točkami in vozelnim vektorjem</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="47"/>
@@ -34862,27 +34863,27 @@ p, li {beli prostor: pre- wrap; }
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="86"/>
         <source>Spline Degree ComboBox</source>
-        <translation>Izbiralnik stopnje krivulje</translation>
+        <translation>Izbiralnik stopnje zlepka</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="89"/>
         <source>Select the degree of the spline curve</source>
-        <translation>Izberite stopnjo krivulje krivulje</translation>
+        <translation>Izberite stopnjo krivulje zlepka</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="119"/>
         <source>Defines whether spline defines closed contour</source>
-        <translation>Določa, ali krivulja določa zaprto obris</translation>
+        <translation>Določa, ali zlepek tvori zaprt obris</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="122"/>
         <source>Closed Spline CheckBox</source>
-        <translation>Zapri potrditveno polje za Spline</translation>
+        <translation>Potrditveno polje za zaprt zlepek</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="125"/>
         <source>Toggle whether the spline forms a closed contour</source>
-        <translation>Če je možnost omogočena, bo krivulja tvorila zaprto obris</translation>
+        <translation>Preklopi, ali zlepek tvori zaprt obris</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="128"/>
@@ -34907,7 +34908,7 @@ p, li {beli prostor: pre- wrap; }
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="183"/>
         <source>Edit control points coordinates and weights for the spline</source>
-        <translation>Uredi koordinate in uteži kontrolnih točk za krivuljo</translation>
+        <translation>Uredi koordinate in uteži kontrolnih točk zlepka</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="196"/>
@@ -34938,12 +34939,12 @@ p, li {beli prostor: pre- wrap; }
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="258"/>
         <source>Knot Vector Table</source>
-        <translation>Tabela vektorja Knot</translation>
+        <translation>Tabela vozelnega vektorja</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="261"/>
         <source>Edit knot values for the spline (must be non-decreasing)</source>
-        <translation>Uredi vrednosti vozla za krivuljo (mora biti nezmanjšana)</translation>
+        <translation>Uredi vrednosti vozlov zlepka (zaporedje mora biti nepadajoče)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="276"/>
@@ -34959,7 +34960,7 @@ p, li {beli prostor: pre- wrap; }
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="306"/>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="312"/>
         <source>Add a new control point to the spline</source>
-        <translation>Dodaj novo kontrolno točko v krivuljo</translation>
+        <translation>Dodaj novo kontrolno točko zlepku</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="309"/>
@@ -34975,7 +34976,7 @@ p, li {beli prostor: pre- wrap; }
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="328"/>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="334"/>
         <source>Remove the selected control point from the spline</source>
-        <translation>Odstrani izbrano kontrolno točko iz krivulje</translation>
+        <translation>Odstrani izbrano kontrolno točko iz zlepka</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="331"/>
@@ -34985,7 +34986,7 @@ p, li {beli prostor: pre- wrap; }
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="83"/>
         <source>Degree used to approximate spline</source>
-        <translation>Stopnja, uporabljena za približevanje krivulje</translation>
+        <translation>Stopnja, uporabljena za aproksimacijo zlepka</translation>
     </message>
 </context>
 <context>
@@ -35091,12 +35092,12 @@ p, li {beli prostor: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/polygon/lc_star_options_widget.ui" line="82"/>
         <source>If checked, the star will be drawn as polyline. </source>
-        <translation type="unfinished">Če je možnost omogočena, bo zvezda narisana kot polilin.</translation>
+        <translation type="unfinished">Če je možnost omogočena, bo zvezda narisana kot polilinija. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_star_options_widget.ui" line="85"/>
         <source>Polyline</source>
-        <translation type="unfinished">Polilin</translation>
+        <translation type="unfinished">Polilinija</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_star_options_widget.ui" line="92"/>
@@ -35218,7 +35219,7 @@ p, li {beli prostor: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/text/lc_text_options_widget.ui" line="83"/>
         <source>Pick angle from drawing</source>
-        <translation type="unfinished">Kot izbiranja iz risbe</translation>
+        <translation type="unfinished">Izberite kot iz risbe</translation>
     </message>
 </context>
 <context>
@@ -35366,7 +35367,7 @@ p, li {beli prostor: pre- wrap; }
     <message>
         <location filename="../src/ui/dialogs/entity/lc_textpropertieseditingwidget.cpp" line="53"/>
         <source>Baseline Center</source>
-        <translation type="unfinished">Izhodiščno središče</translation>
+        <translation type="unfinished">Osnovna črta, sredina</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_textpropertieseditingwidget.cpp" line="54"/>
@@ -35419,7 +35420,7 @@ p, li {beli prostor: pre- wrap; }
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="75"/>
         <source>Snap Selection</source>
-        <translation>Pripni izbiro</translation>
+        <translation>Izbira pripenjanja</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="86"/>
@@ -35491,7 +35492,7 @@ p, li {beli prostor: pre- wrap; }
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="329"/>
         <source>Polygon</source>
-        <translation>Poligon</translation>
+        <translation>Mnogokotnik</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="330"/>
@@ -35501,12 +35502,12 @@ p, li {beli prostor: pre- wrap; }
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="331"/>
         <source>Arc</source>
-        <translation>Arc</translation>
+        <translation>Lok</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="332"/>
         <source>Spline</source>
-        <translation>Spline</translation>
+        <translation>Zlepek</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="333"/>
@@ -35516,7 +35517,7 @@ p, li {beli prostor: pre- wrap; }
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="334"/>
         <source>Polyline</source>
-        <translation>Polilin</translation>
+        <translation>Polilinija</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="335"/>
@@ -35569,7 +35570,7 @@ p, li {beli prostor: pre- wrap; }
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="365"/>
         <source>Polygons</source>
-        <translation>Poligoni</translation>
+        <translation>Mnogokotniki</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="363"/>
@@ -35589,7 +35590,7 @@ p, li {beli prostor: pre- wrap; }
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="367"/>
         <source>PolyLines</source>
-        <translation>Poliline</translation>
+        <translation>Polilinije</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="369"/>
@@ -35642,12 +35643,12 @@ p, li {beli prostor: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_trim_amount_options_filler.cpp" line="43"/>
         <source>Trim</source>
-        <translation type="unfinished">Trim</translation>
+        <translation type="unfinished">Obreži</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_trim_amount_options_filler.cpp" line="43"/>
         <source>If checked, trim/extension is performed for both sides of line.</source>
-        <translation type="unfinished">Če je možnost omogočena, se za obe strani črte opravi trim/podaljšek.</translation>
+        <translation type="unfinished">Če je možnost omogočena, se obrezovanje/podaljšanje izvede na obeh straneh črte.</translation>
     </message>
 </context>
 <context>
@@ -35685,12 +35686,12 @@ p, li {beli prostor: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_trim_amount_options_widget.ui" line="110"/>
         <source>Pick length from drawing</source>
-        <translation type="unfinished">Dolžina nabiranja od risbe</translation>
+        <translation type="unfinished">Izberite dolžino iz risbe</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_trim_amount_options_widget.ui" line="137"/>
         <source>If checked, trim/extension is performed for both sides of line.</source>
-        <translation type="unfinished">Če je možnost omogočena, se za obe strani črte opravi trim/podaljšek.</translation>
+        <translation type="unfinished">Če je možnost omogočena, se obrezovanje/podaljšanje izvede na obeh straneh črte.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_trim_amount_options_widget.ui" line="140"/>
@@ -35751,7 +35752,7 @@ p, li {beli prostor: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/other/lc_ucs_create_options_widget.ui" line="68"/>
         <source>Pick angle from drawing</source>
-        <translation type="unfinished">Kot izbiranja iz risbe</translation>
+        <translation type="unfinished">Izberite kot iz risbe</translation>
     </message>
 </context>
 <context>
@@ -35939,12 +35940,12 @@ Opozorilo: tega dejanja ni mogoče preklicati!</translation>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="548"/>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="574"/>
         <source>&amp;Save UCS</source>
-        <translation>&amp; Shrani UCS</translation>
+        <translation>&amp;Shrani UCS</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="541"/>
         <source>&amp;Update UCS</source>
-        <translation>&amp; Posodobi UCS</translation>
+        <translation>&amp;Posodobi UCS</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="542"/>
@@ -35954,17 +35955,17 @@ Opozorilo: tega dejanja ni mogoče preklicati!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="555"/>
         <source>&amp;Apply UCS</source>
-        <translation>&amp; Uporabi UCS</translation>
+        <translation>&amp;Uporabi UCS</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="556"/>
         <source>&amp;Preview UCS</source>
-        <translation>&amp; Predogled UCS</translation>
+        <translation>&amp;Predogled UCS</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="559"/>
         <source>&amp;Rename UCS</source>
-        <translation>&amp; Preimenuj UCS</translation>
+        <translation>&amp;Preimenuj UCS</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="560"/>
@@ -36054,7 +36055,7 @@ Opozorilo: tega dejanja ni mogoče preklicati!</translation>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="132"/>
         <source>Polygon</source>
-        <translation>Poligon</translation>
+        <translation>Mnogokotnik</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="133"/>
@@ -36069,7 +36070,7 @@ Opozorilo: tega dejanja ni mogoče preklicati!</translation>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="137"/>
         <source>Polyline</source>
-        <translation>Polilin</translation>
+        <translation>Polilinija</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="139"/>
@@ -36095,7 +36096,7 @@ Opozorilo: tega dejanja ni mogoče preklicati!</translation>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="174"/>
         <source>Pens Palette</source>
-        <translation>Paleta peresnikov</translation>
+        <translation>Paleta peres</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="174"/>
@@ -36186,12 +36187,12 @@ Opozorilo: tega dejanja ni mogoče preklicati!</translation>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="134"/>
         <source>Arc</source>
-        <translation>Arc</translation>
+        <translation>Lok</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="135"/>
         <source>Spline</source>
-        <translation>Spline</translation>
+        <translation>Zlepek</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="493"/>
@@ -36207,7 +36208,7 @@ Opozorilo: tega dejanja ni mogoče preklicati!</translation>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="537"/>
         <source>Relative Zero</source>
-        <translation>Relativni nič</translation>
+        <translation>Relativna ničla</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="538"/>
@@ -36677,10 +36678,10 @@ Prosim, preverite dovoljenja.</translation>
 %1
 Please check the permissions.
 Auto-save disabled.</source>
-        <translation>Ne moremsamodejno shraniti datoteke
-&amp;1
-Prosim,preverite dovoljenja.
-Samodejno shranjevanje zaustalvjeno.</translation>
+        <translation>Datoteke ni mogoče samodejno shraniti:
+%1
+Preverite dovoljenja.
+Samodejno shranjevanje je onemogočeno.</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1075"/>
@@ -36744,17 +36745,17 @@ Prosim preverite njegov obstoj in dovoljenja.</translation>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="406"/>
         <source>&amp;Save</source>
-        <translation>&amp; Shrani</translation>
+        <translation>&amp;Shrani</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="407"/>
         <source>Save &amp;as...</source>
-        <translation>Shrani &amp; kot...</translation>
+        <translation>Shrani &amp;kot...</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="411"/>
         <source>&amp;Save %1</source>
-        <translation>&amp; Shrani%1</translation>
+        <translation>&amp;Shrani %1</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="412"/>
@@ -37060,12 +37061,12 @@ The original opens in a separate document. Mixed encodings and raw metadata are 
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandhistory.cpp" line="32"/>
         <source>&amp;Copy</source>
-        <translation>&amp; Kopiraj</translation>
+        <translation>&amp;Kopiraj</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandhistory.cpp" line="39"/>
         <source>Select &amp;All</source>
-        <translation>Izberi &amp; vse</translation>
+        <translation>Izberi &amp;vse</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandhistory.cpp" line="44"/>
@@ -37189,7 +37190,7 @@ The original opens in a separate document. Mixed encodings and raw metadata are 
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dimensionlabeleditor.ui" line="38"/>
         <source>Dimension Label:</source>
-        <translation>Merska oznaka:</translation>
+        <translation>Oznaka kote:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dimensionlabeleditor.ui" line="165"/>
@@ -37300,7 +37301,7 @@ The original opens in a separate document. Mixed encodings and raw metadata are 
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.ui" line="69"/>
         <source>Pen attributes</source>
-        <translation>Atributi pisala</translation>
+        <translation>Atributi peresa</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.ui" line="76"/>
@@ -37325,7 +37326,7 @@ To rekurzivno spreminja vse entitete bloka.</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="14"/>
         <source>Choose Hatch Attributes</source>
-        <translation>Izberite atribute Hatch</translation>
+        <translation>Izberite lastnosti šrafure</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="22"/>
@@ -37441,12 +37442,12 @@ To rekurzivno spreminja vse entitete bloka.</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="241"/>
         <source>&amp;Height:</source>
-        <translation>&amp; Višina:</translation>
+        <translation>&amp;Višina:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="147"/>
         <source>&amp;Default line spacing</source>
-        <translation>Razmik med vrsticami &amp; Default</translation>
+        <translation>&amp;Privzeti razmik vrstic</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="150"/>
@@ -38349,7 +38350,7 @@ To rekurzivno spreminja vse entitete bloka.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="551"/>
         <source>angular</source>
-        <translation>kot</translation>
+        <translation>kotno</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1272"/>
@@ -38413,28 +38414,28 @@ To rekurzivno spreminja vse entitete bloka.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="467"/>
         <source>&amp;Set as Active</source>
-        <translation>&amp; Namesti kot aktiven</translation>
+        <translation>&amp;Nastavi kot aktiven</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="470"/>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="486"/>
         <source>&amp;Create Style</source>
-        <translation>&amp; Ustvari slog</translation>
+        <translation>&amp;Ustvari slog</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="472"/>
         <source>&amp;Edit Style</source>
-        <translation>&amp; Uredi slog</translation>
+        <translation>&amp;Uredi slog</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="476"/>
         <source>&amp;Rename Style</source>
-        <translation>&amp; Preimenuj slog</translation>
+        <translation>&amp;Preimenuj slog</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="478"/>
         <source>&amp;Delete Style</source>
-        <translation>&amp; Izbriši slog</translation>
+        <translation>&amp;Izbriši slog</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="482"/>
@@ -38445,7 +38446,7 @@ To rekurzivno spreminja vse entitete bloka.</translation>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="483"/>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="487"/>
         <source>&amp;Import Styles</source>
-        <translation>&amp; Uveljavi sloge</translation>
+        <translation>&amp;Uvozi sloge</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="575"/>
@@ -38557,22 +38558,22 @@ To rekurzivno spreminja vse entitete bloka.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="34"/>
         <source>&amp;Paper</source>
-        <translation>&amp; Paper</translation>
+        <translation>&amp;Papir</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="123"/>
         <source>&amp;Landscape</source>
-        <translation>&amp; Landscape</translation>
+        <translation>&amp;Ležeče</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="133"/>
         <source>P&amp;ortrait</source>
-        <translation>P&amp;ortrait</translation>
+        <translation>&amp;Pokončno</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="353"/>
         <source>&amp;Units</source>
-        <translation>&amp; Enote</translation>
+        <translation>&amp;Enote</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="365"/>
@@ -38582,17 +38583,17 @@ To rekurzivno spreminja vse entitete bloka.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="414"/>
         <source>&amp;Format:</source>
-        <translation>&amp; Format:</translation>
+        <translation>&amp;Oblika:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="433"/>
         <source>P&amp;recision:</source>
-        <translation>P&amp;recision:</translation>
+        <translation>&amp;Natančnost:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="529"/>
         <source>F&amp;ormat:</source>
-        <translation>F&amp;ormat:</translation>
+        <translation>&amp;Oblika:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="513"/>
@@ -38637,7 +38638,7 @@ To rekurzivno spreminja vse entitete bloka.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="723"/>
         <source>&amp;Grid</source>
-        <translation>&amp; Grid</translation>
+        <translation>&amp;Mreža</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2007"/>
@@ -38652,7 +38653,7 @@ To rekurzivno spreminja vse entitete bloka.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2056"/>
         <source>Number of line segments per spline patch:</source>
-        <translation>Število linijskih segmentov na spline obliž:</translation>
+        <translation>Število daljic na odsek zlepka:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="170"/>
@@ -38770,7 +38771,7 @@ To rekurzivno spreminja vse entitete bloka.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="576"/>
         <source>Zero base angle relative to the current user coordinate system. Affects polar coordinates input, snap to angle. 0.0 is 3pm.</source>
-        <translation>Ničelni osnovni kot glede na trenutni koordinatni sistem uporabnika. Vpliva na polarne koordinate. 0, 0 je 3 ure.</translation>
+        <translation>Osnovni ničelni kot glede na trenutni uporabniški koordinatni sistem. Vpliva na vnos polarnih koordinat in pripenjanje na kot. 0,0 je smer ob treh.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="586"/>
@@ -38810,7 +38811,7 @@ To rekurzivno spreminja vse entitete bloka.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="775"/>
         <source>Left isometric grid</source>
-        <translation>Levo izometrična mreža</translation>
+        <translation>Leva izometrična mreža</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="778"/>
@@ -38825,7 +38826,7 @@ To rekurzivno spreminja vse entitete bloka.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="826"/>
         <source>Top isometric grid</source>
-        <translation>Vrhnja izometrična mreža</translation>
+        <translation>Zgornja izometrična mreža</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="829"/>
@@ -39012,7 +39013,7 @@ To rekurzivno spreminja vse entitete bloka.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1727"/>
         <source>Extension lines</source>
-        <translation>Podaljški</translation>
+        <translation>Pomožne kotirne črte</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1734"/>
@@ -39124,7 +39125,7 @@ To rekurzivno spreminja vse entitete bloka.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2116"/>
         <source>Mode of lines joining in polylines or paths</source>
-        <translation>Način spajanja črt v polilinih ali stezah</translation>
+        <translation>Način spajanja črt v polilinijah ali poteh</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2135"/>
@@ -39199,7 +39200,7 @@ To rekurzivno spreminja vse entitete bloka.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="3355"/>
         <source>Custom Properties</source>
-        <translation>Lastne lastnosti</translation>
+        <translation>Lastnosti po meri</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="3361"/>
@@ -39316,12 +39317,12 @@ To rekurzivno spreminja vse entitete bloka.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="74"/>
         <source>&amp;Height:</source>
-        <translation>&amp; Višina:</translation>
+        <translation>&amp;Višina:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="94"/>
         <source>&amp;Width:</source>
-        <translation>&amp; Širina:</translation>
+        <translation>&amp;Širina:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="114"/>
@@ -39357,12 +39358,12 @@ To rekurzivno spreminja vse entitete bloka.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1771"/>
         <source>fixed extension line length</source>
-        <translation>fiksna dolžina podaljška</translation>
+        <translation>stalna dolžina pomožne kotirne črte</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2176"/>
         <source>&amp;Points</source>
-        <translation>&amp; Točke</translation>
+        <translation>&amp;Točke</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2203"/>
@@ -39497,27 +39498,27 @@ To rekurzivno spreminja vse entitete bloka.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5681"/>
         <source>&amp;GUI Language:</source>
-        <translation>&amp; GUI jezik:</translation>
+        <translation>&amp;Jezik vmesnika:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5701"/>
         <source>&amp;Command Language:</source>
-        <translation>&amp; Jezik ukaza:</translation>
+        <translation>&amp;Jezik ukazov:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5874"/>
         <source>&amp;Paths</source>
-        <translation>&amp; Pot</translation>
+        <translation>&amp;Poti</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4909"/>
         <source>&amp;Defaults</source>
-        <translation>&amp; Privzeti</translation>
+        <translation>&amp;Privzete vrednosti</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5247"/>
         <source>&amp;Unit:</source>
-        <translation>&amp; Enota:</translation>
+        <translation>&amp;Enota:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1201"/>
@@ -39568,7 +39569,7 @@ To rekurzivno spreminja vse entitete bloka.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="761"/>
         <source>St&amp;art Handle Color:</source>
-        <translation>Barva ročaja St&amp;art:</translation>
+        <translation>Barva &amp;začetne ročice:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="872"/>
@@ -39578,7 +39579,7 @@ To rekurzivno spreminja vse entitete bloka.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="751"/>
         <source>&amp;End Handle Color:</source>
-        <translation>Barva &amp; končnega ročaja:</translation>
+        <translation>Barva &amp;končne ročice:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="105"/>
@@ -39620,17 +39621,17 @@ To rekurzivno spreminja vse entitete bloka.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5147"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Temporarily toggle free snapping when the spacebar is pressed and the command window is activated&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt; &lt; glave/&gt; &lt; telesa&gt; &lt; p&gt; Ob pritisku na preslednico in aktiviranju ukaznega okna &lt;/ p&gt; &lt;/ telo&gt; &lt;/ html&gt; se začasno zaskoči prosto</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ob pritisku na preslednico, ko je ukazno okno aktivno, začasno preklopi prosto pripenjanje&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5277"/>
         <source>Left  Isometric Grid</source>
-        <translation>Levi izometrični sistem</translation>
+        <translation>Leva izometrična mreža</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5267"/>
         <source>RIght Isometric Grid</source>
-        <translation>Izometrična mreža RIght</translation>
+        <translation>Desna izometrična mreža</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5205"/>
@@ -39640,7 +39641,7 @@ To rekurzivno spreminja vse entitete bloka.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5287"/>
         <source>Top Isometric Grid</source>
-        <translation>Vrhnja izometrična mreža</translation>
+        <translation>Zgornja izometrična mreža</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1255"/>
@@ -39698,7 +39699,7 @@ To rekurzivno spreminja vse entitete bloka.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3779"/>
         <source>Highlight with screen linewidth in &quot;Draft&quot; mode</source>
-        <translation>Poudari z zaslonsko širino v načinu &quot;Draft&quot;</translation>
+        <translation>V načinu osnutka poudari z zaslonsko debelino črte</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3799"/>
@@ -39843,7 +39844,7 @@ To rekurzivno spreminja vse entitete bloka.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1810"/>
         <source>Hide cursor when snapping</source>
-        <translation>Skrij kazalec med snappingom</translation>
+        <translation>Skrij kazalec med pripenjanjem</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5739"/>
@@ -39922,7 +39923,7 @@ To rekurzivno spreminja vse entitete bloka.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1329"/>
         <source>Select Hatch Patterns Folder</source>
-        <translation>Izberite mapo vzorcev za Hatch</translation>
+        <translation>Izberite mapo vzorcev šrafur</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1336"/>
@@ -39982,7 +39983,7 @@ To rekurzivno spreminja vse entitete bloka.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="46"/>
         <source>&amp;Graphic View</source>
-        <translation>&amp; Grafični prikaz</translation>
+        <translation>&amp;Grafični pogled</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1571"/>
@@ -40077,7 +40078,7 @@ To rekurzivno spreminja vse entitete bloka.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1743"/>
         <source>Line Width</source>
-        <translation>Širina črte</translation>
+        <translation>Debelina črte</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1750"/>
@@ -40092,7 +40093,7 @@ To rekurzivno spreminja vse entitete bloka.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1729"/>
         <source>Snap Indicator shape</source>
-        <translation>Oblika kazalca pripetosti</translation>
+        <translation>Oblika indikatorja pripenjanja</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1656"/>
@@ -40117,7 +40118,7 @@ To rekurzivno spreminja vse entitete bloka.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1678"/>
         <source>Gap</source>
-        <translation>Gap</translation>
+        <translation>Vrzel</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1626"/>
@@ -40182,7 +40183,7 @@ To rekurzivno spreminja vse entitete bloka.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1807"/>
         <source>If checked, cursor will be hidden during snapping</source>
-        <translation>Če je omogočeno, bo med snappingom skrit kazalec</translation>
+        <translation>Če je omogočeno, bo kazalec med pripenjanjem skrit</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1817"/>
@@ -40207,12 +40208,12 @@ To rekurzivno spreminja vse entitete bloka.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="809"/>
         <source>Color of end handle for entity</source>
-        <translation>Barva končnega ročaja za entiteto</translation>
+        <translation>Barva končne ročice entitete</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="771"/>
         <source>Color for start handle of entity</source>
-        <translation>Barva za začetni ročaj entitete</translation>
+        <translation>Barva začetne ročice entitete</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="854"/>
@@ -40222,17 +40223,17 @@ To rekurzivno spreminja vse entitete bloka.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="847"/>
         <source>Handle Size:</source>
-        <translation>Velikost ročaja:</translation>
+        <translation>Velikost ročice:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="933"/>
         <source>If enabled, entity handles are highlighted on hover (requires &quot;highlight entities on hover&quot; to be enabled)</source>
-        <translation>Če je omogočena, so ročice entitete poudarjene na lebdenju (potrebuje, da se omogoči &quot;highlight entitete na lebdenju&quot;)</translation>
+        <translation>Če je omogočeno, so ročice entitete poudarjene ob lebdenju miške (zahteva omogočeno možnost »poudari entitete ob lebdenju«)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="939"/>
         <source>Show entity handles on mouse hover</source>
-        <translation>Prikaži ročice entitete na miškinem lebdenju</translation>
+        <translation>Prikaži ročice entitete ob lebdenju miške</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="268"/>
@@ -40318,7 +40319,7 @@ To rekurzivno spreminja vse entitete bloka.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="605"/>
         <source>Backgr&amp;ound Color:</source>
-        <translation>Barva backgr&amp; aund:</translation>
+        <translation>Barva &amp;ozadja:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="198"/>
@@ -40368,7 +40369,7 @@ To rekurzivno spreminja vse entitete bloka.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="236"/>
         <source>Controls how quickly the scroll wheel will zoom in &amp; out. Higher values - faster zoom.</source>
-        <translation>Kontrolira, kako hitro bo drseče kolo pomanjšalo &amp; ven. Višje vrednosti - hitrejša povečava.</translation>
+        <translation>Določa, kako hitro kolesce miške povečuje in pomanjšuje pogled. Večje vrednosti – hitrejša povečava.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="147"/>
@@ -40378,7 +40379,7 @@ To rekurzivno spreminja vse entitete bloka.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="150"/>
         <source>Pan on wheel zoom</source>
-        <translation>Zoom s Pan na kolesu</translation>
+        <translation>Premik pogleda pri povečavi s kolescem</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="134"/>
@@ -40423,7 +40424,7 @@ To rekurzivno spreminja vse entitete bloka.</translation>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1395"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1543"/>
         <source>Line Width:</source>
-        <translation>Širina črte:</translation>
+        <translation>Debelina črte:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1298"/>
@@ -40434,7 +40435,7 @@ To rekurzivno spreminja vse entitete bloka.</translation>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1316"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1420"/>
         <source>&amp;Meta-grid Color:</source>
-        <translation>Barva &amp; mreže:</translation>
+        <translation>Barva &amp;metamreže:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1353"/>
@@ -40563,7 +40564,7 @@ To rekurzivno spreminja vse entitete bloka.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3660"/>
         <source>Color of relative zero marker</source>
-        <translation>Barva relativnega ničelnega označevalca</translation>
+        <translation>Barva označevalca relativne ničle</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3683"/>
@@ -40573,7 +40574,7 @@ To rekurzivno spreminja vse entitete bloka.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3614"/>
         <source>Radius of relative zero marker</source>
-        <translation>Polmer relativnega ničelnega označevalca</translation>
+        <translation>Polmer označevalca relativne ničle</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="956"/>
@@ -40598,7 +40599,7 @@ To rekurzivno spreminja vse entitete bloka.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1005"/>
         <source>If checked, grid will not be drawn within view pan by mouse operation</source>
-        <translation>Če je možnost omogočena, mreža z miškinim delovanjem ne bo izrisana znotraj vidnega polja</translation>
+        <translation>Če je možnost omogočena, se mreža med premikanjem pogleda z miško ne izrisuje</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1008"/>
@@ -40633,7 +40634,7 @@ To rekurzivno spreminja vse entitete bloka.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1077"/>
         <source>&amp;Grid type:</source>
-        <translation>Vrsta &amp; grida:</translation>
+        <translation>Vrsta &amp;mreže:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="972"/>
@@ -40643,12 +40644,12 @@ To rekurzivno spreminja vse entitete bloka.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="995"/>
         <source>If unchecked, vertical line will not be drawn for &quot;Top&quot; isometric view</source>
-        <translation>Če ni preverjeno, navpična črta ne bo vrisana za izometrični prikaz » Top «</translation>
+        <translation>Če možnost ni omogočena, se za zgornji izometrični pogled navpična črta ne izriše</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="998"/>
         <source>Draw vertical lines for &quot;Top&quot; isometric grid</source>
-        <translation>Nariši navpične črte za izometrično mrežo &quot;Top&quot;</translation>
+        <translation>Nariši navpične črte za zgornjo izometrično mrežo</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3700"/>
@@ -40727,7 +40728,7 @@ To rekurzivno spreminja vse entitete bloka.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3776"/>
         <source>If selected, entity will be highlighted in &quot;Draft&quot; mode using entity&apos;s linewidth instead of 1px</source>
-        <translation>Če je izbrano, bo entiteta v načinu „Skica“ poudarjena s svojo širino črte namesto z 1px</translation>
+        <translation>Če je izbrano, bo entiteta v načinu osnutka poudarjena s svojo debelino črte namesto z 1 px</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3881"/>
@@ -40802,7 +40803,7 @@ To rekurzivno spreminja vse entitete bloka.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6401"/>
         <source>Arc Radius:</source>
-        <translation>Arc Polmer:</translation>
+        <translation>Polmer loka:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6346"/>
@@ -40822,12 +40823,12 @@ To rekurzivno spreminja vse entitete bloka.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6163"/>
         <source>If selected, text baselines will be drawn instead of the text letters (similar to draft mode) during panning. </source>
-        <translation>Če je izbrano, bodo med paningom namesto besedilnih črk (podobno kot v načinu osnutkov) narisane besedilne osnove.</translation>
+        <translation>Če je izbrano, se med premikanjem pogleda namesto črk besedila izrišejo osnovne črte besedila (podobno kot v načinu osnutka). </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6166"/>
         <source>Draw text as draft within paning operations</source>
-        <translation>Nariši besedilo kot osnutek med operacijami paniranja</translation>
+        <translation>Med premikanjem pogleda riši besedilo kot osnutek</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6173"/>
@@ -40852,7 +40853,7 @@ To rekurzivno spreminja vse entitete bloka.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3048"/>
         <source>Appearance</source>
-        <translation>Izgled</translation>
+        <translation>Videz</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3054"/>
@@ -40862,7 +40863,7 @@ To rekurzivno spreminja vse entitete bloka.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3061"/>
         <source>If checked, components of coordinate will be drawn in one line. Otherwise, each component will be on own line. </source>
-        <translation>Če je možnost omogočena, bodo sestavni deli koordinat črpani v eni vrstici. V nasprotnem primeru bo vsaka komponenta na svoji liniji.</translation>
+        <translation>Če je možnost omogočena, bodo komponente koordinat izpisane v eni vrstici. Sicer bo vsaka komponenta v svoji vrstici. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3064"/>
@@ -40968,7 +40969,7 @@ To rekurzivno spreminja vse entitete bloka.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2794"/>
         <source>If checked, relative distance and angle from relative zero point to snap point will be shown.</source>
-        <translation>Če je možnost omogočena, bosta prikazana relativna razdalja in kot od relativne točke nič do točke preloma.</translation>
+        <translation>Če je možnost omogočena, bosta prikazana relativna razdalja in kot od relativne ničle do točke pripenjanja.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2797"/>
@@ -41275,7 +41276,7 @@ To rekurzivno spreminja vse entitete bloka.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3216"/>
         <source>Base Angle Ray Color:</source>
-        <translation>Barva kota kota:</translation>
+        <translation>Barva poltraka osnovnega kota:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3249"/>
@@ -41381,7 +41382,7 @@ To rekurzivno spreminja vse entitete bloka.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3256"/>
         <source>Color of the ray that displays zero angle position</source>
-        <translation>Barva žarka, ki prikazuje položaj ničelnega kota</translation>
+        <translation>Barva poltraka, ki prikazuje položaj ničelnega kota</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5101"/>
@@ -42018,7 +42019,7 @@ To rekurzivno spreminja vse entitete bloka.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6097"/>
         <source>Directory where various settings are located (shortcuts, workspaces, pens etc.)</source>
-        <translation>Imenik, kjer se nahajajo različne nastavitve (kratice, delovni prostori, pisala itd.)</translation>
+        <translation>Mapa z različnimi nastavitvami (bližnjice, delovni prostori, peresa itd.)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6148"/>
@@ -42028,7 +42029,7 @@ To rekurzivno spreminja vse entitete bloka.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6195"/>
         <source>If checked, archs are drawn using line segments interpolation.  This sliminates drawing artefacts near to endpoints, yet may result drawing of less smooth arcs.  No drawing errors near endpoints on large zooms.</source>
-        <translation>Če je omogočeno, se loki vlečejo z interpolacijo linijskih segmentov. Ta sliminati risanje artefaktov blizu končne točke, vendar lahko povzroči risanje manj gladkih lokov. Pri velikih povečavah ni napak pri risanju blizu končnih točk.</translation>
+        <translation>Če je omogočeno, se loki izrisujejo z interpolacijo z daljicami. To odpravi napake izrisa blizu končnih točk, vendar so loki lahko manj gladki. Pri velikih povečavah ni napak izrisa blizu končnih točk.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6205"/>
@@ -42063,12 +42064,12 @@ To rekurzivno spreminja vse entitete bloka.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6160"/>
         <source>If enabled, during pan operation TEXT and MTEXT objects will be drawn schematically</source>
-        <translation>Če je omogočeno, bodo med delovanjem pan BESEDILO in MTEXT predmeti narisani shematsko</translation>
+        <translation>Če je omogočeno, bodo predmeti TEXT in MTEXT med premikanjem pogleda narisani shematsko</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6186"/>
         <source>Defines how arcs are rendered in UI. </source>
-        <translation>Definira, kako se loki prevajajo v UI.</translation>
+        <translation>Določa, kako se loki izrisujejo v vmesniku. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5589"/>
@@ -42083,7 +42084,7 @@ To rekurzivno spreminja vse entitete bloka.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6198"/>
         <source>Interpolate by line segments</source>
-        <translation>Interpolate po odsekih linij</translation>
+        <translation>Interpoliraj z daljicami</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6215"/>
@@ -42138,7 +42139,7 @@ To rekurzivno spreminja vse entitete bloka.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5480"/>
         <source>If checked, any changes of zoom or pan for drawing will mark drawing as modified. Otherwise, changing view only will not affect modified status of the drawing. </source>
-        <translation>Če je možnost omogočena, bo vsaka sprememba povečave ali ponve za risanje označila risbo kot spremenjeno. V nasprotnem primeru spreminjanje pogleda ne bo vplivalo na spremenjeno stanje risbe.</translation>
+        <translation>Če je možnost omogočena, vsaka sprememba povečave ali premik pogleda označi risbo kot spremenjeno. Sicer sprememba samo pogleda ne vpliva na stanje spremembe risbe. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5483"/>
@@ -42163,7 +42164,7 @@ To rekurzivno spreminja vse entitete bloka.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5221"/>
         <source>Zero base angle relative to the current user coordinate system. Affects polar coordinates input, snap to angle. 0.0 is 3pm.</source>
-        <translation>Ničelni osnovni kot glede na trenutni koordinatni sistem uporabnika. Vpliva na polarne koordinate. 0, 0 je 3 ure.</translation>
+        <translation>Osnovni ničelni kot glede na trenutni uporabniški koordinatni sistem. Vpliva na vnos polarnih koordinat in pripenjanje na kot. 0,0 je smer ob treh.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5260"/>
@@ -42326,7 +42327,7 @@ To rekurzivno spreminja vse entitete bloka.</translation>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.ui" line="199"/>
         <source>Bake dash/dot lines to SVG path</source>
-        <translation>Spekel pomišljaj/dot linije na pot SVG</translation>
+        <translation>Pretvori črtkane/pikčaste črte v pot SVG</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.cpp" line="31"/>
@@ -43185,7 +43186,7 @@ Privzeta vrednost koraka, potrebna za peko</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="353"/>
         <source>&amp;Height:</source>
-        <translation>&amp; Višina:</translation>
+        <translation>&amp;Višina:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="178"/>
@@ -43232,7 +43233,7 @@ Privzeta vrednost koraka, potrebna za peko</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="572"/>
         <source>Baseline Center</source>
-        <translation>Izhodiščno središče</translation>
+        <translation>Osnovna črta, sredina</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="547"/>
@@ -43253,7 +43254,7 @@ Privzeta vrednost koraka, potrebna za peko</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="633"/>
         <source>&amp;Middle</source>
-        <translation>&amp; Middle</translation>
+        <translation>&amp;Sredina</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.cpp" line="213"/>
@@ -43356,7 +43357,7 @@ Privzeta vrednost koraka, potrebna za peko</translation>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="152"/>
         <source>Drawing</source>
         <comment>drawing file</comment>
-        <translation>Risanje</translation>
+        <translation>Risba</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="174"/>
@@ -43554,7 +43555,7 @@ Privzeta vrednost koraka, potrebna za peko</translation>
     <message>
         <location filename="../src/ui/dialogs/file/export/image/qg_dlgimageoptions.ui" line="219"/>
         <source>B&amp;lack</source>
-        <translation>B&amp;lack</translation>
+        <translation>&amp;Črna</translation>
     </message>
 </context>
 <context>
@@ -43647,7 +43648,7 @@ Vsebina konstrukcijske plasti se ne sme pojaviti v izpisu.</translation>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="87"/>
         <source>No Pen</source>
-        <translation>Brez peresnika</translation>
+        <translation>Brez peresa</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="89"/>
@@ -43657,32 +43658,32 @@ Vsebina konstrukcijske plasti se ne sme pojaviti v izpisu.</translation>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="90"/>
         <source>Dot</source>
-        <translation>Dot</translation>
+        <translation>Pikčasta</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="92"/>
         <source>Dot (small)</source>
-        <translation>Pikica (majhna)</translation>
+        <translation>Pikčasta (majhna)</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="93"/>
         <source>Dot (large)</source>
-        <translation>Dot (veliko)</translation>
+        <translation>Pikčasta (velika)</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="94"/>
         <source>Dash</source>
-        <translation>Dash</translation>
+        <translation>Črtkana</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="96"/>
         <source>Dash (small)</source>
-        <translation>Dash (manjši)</translation>
+        <translation>Črtkana (majhna)</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="97"/>
         <source>Dash (large)</source>
-        <translation>Dash (velika)</translation>
+        <translation>Črtkana (velika)</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="98"/>
@@ -43712,42 +43713,42 @@ Vsebina konstrukcijske plasti se ne sme pojaviti v izpisu.</translation>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="100"/>
         <source>Dash Dot (small)</source>
-        <translation>Dash Dot (majhna)</translation>
+        <translation>Črtkana-pikčasta (majhna)</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="101"/>
         <source>Dash Dot (large)</source>
-        <translation>Dash Dot (velika)</translation>
+        <translation>Črtkana-pikčasta (velika)</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="102"/>
         <source>Divide</source>
-        <translation>Deli</translation>
+        <translation>Črta-pika-pika</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="104"/>
         <source>Divide (small)</source>
-        <translation>Deli (majhno)</translation>
+        <translation>Črta-pika-pika (majhna)</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="105"/>
         <source>Divide (large)</source>
-        <translation>Deli (veliko)</translation>
+        <translation>Črta-pika-pika (velika)</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="106"/>
         <source>Center</source>
-        <translation>Center</translation>
+        <translation>Srednjica</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="108"/>
         <source>Center (small)</source>
-        <translation>Središče (majhno)</translation>
+        <translation>Srednjica (majhna)</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="109"/>
         <source>Center (large)</source>
-        <translation>Središče (veliko)</translation>
+        <translation>Srednjica (velika)</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="114"/>
@@ -43792,27 +43793,27 @@ Vsebina konstrukcijske plasti se ne sme pojaviti v izpisu.</translation>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="91"/>
         <source>Dot (tiny)</source>
-        <translation>Pikica (majhna)</translation>
+        <translation>Pikčasta (zelo majhna)</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="95"/>
         <source>Dash (tiny)</source>
-        <translation>Dash (majhna)</translation>
+        <translation>Črtkana (zelo majhna)</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="99"/>
         <source>Dash Dot (tiny)</source>
-        <translation>Dash Dot (majhna)</translation>
+        <translation>Črtkana-pikčasta (zelo majhna)</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="103"/>
         <source>Divide (tiny)</source>
-        <translation>Deli (majhno)</translation>
+        <translation>Črta-pika-pika (zelo majhna)</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="107"/>
         <source>Center (tiny)</source>
-        <translation>Center (majhno)</translation>
+        <translation>Srednjica (zelo majhna)</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="111"/>
@@ -43866,7 +43867,7 @@ p, li {beli prostor: pre- wrap; }
     <message>
         <location filename="../src/ui/components/toolbars/qg_pentoolbar.cpp" line="42"/>
         <source>Line width</source>
-        <translation>Širina črte</translation>
+        <translation>Debelina črte</translation>
     </message>
     <message>
         <location filename="../src/ui/components/toolbars/qg_pentoolbar.cpp" line="45"/>
@@ -43964,7 +43965,7 @@ p, li {beli prostor: pre- wrap; }
     <message>
         <location filename="../src/ui/components/pen/qg_widgetpen.ui" line="130"/>
         <source>Width of line</source>
-        <translation>Širina črte</translation>
+        <translation>Debelina črte</translation>
     </message>
     <message>
         <location filename="../src/ui/components/pen/qg_widgetpen.ui" line="137"/>
@@ -44225,12 +44226,12 @@ Prosimo, navedite drugačno vrednost.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1402"/>
         <source>Remove pen</source>
-        <translation>Odstrani injekcijski peresnik</translation>
+        <translation>Odstrani pero</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1404"/>
         <source>Pen will be removed from palette, drawing entities will not be affected.</source>
-        <translation>Pen bo odstranjen iz palete, risalni elementi ne bodo prizadeti.</translation>
+        <translation>Pero bo odstranjeno iz palete, entitete risbe ostanejo nespremenjene.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1406"/>
@@ -44241,12 +44242,12 @@ Prosimo, navedite drugačno vrednost.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1408"/>
         <source>Pen for removal:</source>
-        <translation>Peresnik za odstranjevanje:</translation>
+        <translation>Pero za odstranitev:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1424"/>
         <source>Remove pens</source>
-        <translation>Odstrani injekcijske peresnike</translation>
+        <translation>Odstrani peresa</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1426"/>
@@ -44256,7 +44257,7 @@ Prosimo, navedite drugačno vrednost.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1430"/>
         <source>Pens for removal:</source>
-        <translation>Injekcijski peresniki za odstranjevanje:</translation>
+        <translation>Peresa za odstranitev:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1451"/>
@@ -44285,17 +44286,17 @@ Prosimo, navedite drugačno vrednost.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1456"/>
         <source>Please use different pen attributes.</source>
-        <translation>Uporabite različne atribute peresnika.</translation>
+        <translation>Uporabite drugačne atribute peresa.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1466"/>
         <source>Set pen by entity</source>
-        <translation>Nastavi injekcijski peresnik po entiteti</translation>
+        <translation>Nastavi pero po entiteti</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1467"/>
         <source>Please select only one entity to pick pen setting.</source>
-        <translation>Za izbiro nastavitev peresnika izberite samo eno entiteto.</translation>
+        <translation>Za prevzem nastavitev peresa izberite samo eno entiteto.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1477"/>
@@ -44305,7 +44306,7 @@ Prosimo, navedite drugačno vrednost.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1478"/>
         <source>Unable to save pens data to specified pens file. Would you like to specify correct path to the file?</source>
-        <translation>Ni moč shraniti podatkov o peresnikih v določeno datoteko s peresniki. Želite določiti pravilno pot do datoteke?</translation>
+        <translation>Podatkov o peresih ni mogoče shraniti v navedeno datoteko peres. Želite določiti pravilno pot do datoteke?</translation>
     </message>
 </context>
 <context>
@@ -44604,7 +44605,7 @@ Jo želiš zamenjati?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="457"/>
         <source>spline</source>
         <comment>draw spline</comment>
-        <translation>krivulja</translation>
+        <translation>zlepek</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="459"/>
@@ -44616,7 +44617,7 @@ Jo želiš zamenjati?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="464"/>
         <source>spline2</source>
         <comment>spline through points</comment>
-        <translation>krivulja2</translation>
+        <translation>zlepek2</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="466"/>
@@ -47283,7 +47284,7 @@ Jo želiš zamenjati?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="781"/>
         <source>offset</source>
         <comment>modify - offset</comment>
-        <translation>zamik</translation>
+        <translation>odmik</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="783"/>
@@ -48077,7 +48078,7 @@ Jo želiš zamenjati?</translation>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="39"/>
         <source>/CustomColor%1</source>
-        <translation>/CustomColor%1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="40"/>
@@ -48141,12 +48142,12 @@ Jo želiš zamenjati?</translation>
     <message>
         <location filename="../src/lib/engine/document/container/rs_entitycontainer.cpp" line="1499"/>
         <source>Hatch failed due to a gap=%1 between (%2, %3) and (%4, %5)</source>
-        <translation>Hatch ni uspel zaradi vrzeli=%1 med (%2,%3) in (%4,%5)</translation>
+        <translation>Šrafiranje ni uspelo zaradi vrzeli=%1 med (%2, %3) in (%4, %5)</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/document/patterns/rs_patternlist.cpp" line="66"/>
         <source>Hatch:: no pattern found. Please set pattern path in application preferences</source>
-        <translation>Ni najdenega vzorca. Prosim nastavite pot vzorca v nastavitvah programa</translation>
+        <translation>Šrafura: ni najdenega vzorca. Nastavite pot do vzorcev v nastavitvah programa.</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/document/patterns/rs_patternlist.cpp" line="93"/>
@@ -48435,7 +48436,7 @@ Jo želiš zamenjati?</translation>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="12447"/>
         <source>error reading offsets in dwg file</source>
-        <translation>odmik od branja napak v datoteki dwg</translation>
+        <translation>napaka pri branju odmikov v datoteki DWG</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="12450"/>
@@ -48585,7 +48586,7 @@ Jo želiš zamenjati?</translation>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="87"/>
         <source>2.11mm</source>
-        <translation>2.11 mm</translation>
+        <translation>2,11 mm</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/document/ucs/lc_ucs.cpp" line="133"/>
@@ -48718,22 +48719,22 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="480"/>
         <source>Arc</source>
-        <translation>Arc</translation>
+        <translation>Lok</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="484"/>
         <source>Polyline</source>
-        <translation>Polilin</translation>
+        <translation>Polilinija</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="488"/>
         <source>Spline</source>
-        <translation>Spline</translation>
+        <translation>Zlepek</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="492"/>
         <source>Spline by Points</source>
-        <translation>Spline s točkami</translation>
+        <translation>Zlepek skozi točke</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="496"/>
@@ -48758,7 +48759,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="512"/>
         <source>Hatch</source>
-        <translation>Hatch</translation>
+        <translation>Šrafura</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="516"/>
@@ -48768,7 +48769,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="520"/>
         <source>Dim. Linear</source>
-        <translation>Dim. Linearna</translation>
+        <translation>Linearna kota</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="524"/>
@@ -48778,27 +48779,27 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="528"/>
         <source>Dim. Diametric</source>
-        <translation>Dim. Diametrična</translation>
+        <translation>Kota premera</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="532"/>
         <source>Dim. Radial</source>
-        <translation>Rad. mera</translation>
+        <translation>Kota polmera</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="536"/>
         <source>Dim. Arc</source>
-        <translation>Mera loka</translation>
+        <translation>Kota loka</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="540"/>
         <source>Dim. Ordinate</source>
-        <translation>Dim. Ordinat</translation>
+        <translation>Ordinatna kota</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="544"/>
         <source>Leader</source>
-        <translation>Leader</translation>
+        <translation>Kazalna črta</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="552"/>
@@ -48897,7 +48898,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="578"/>
         <source>that intersect with box</source>
-        <translation>ki sekajo s škatlo</translation>
+        <translation>ki sekajo okvir</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="578"/>
@@ -48922,7 +48923,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="633"/>
         <source>Arc</source>
-        <translation>Arc</translation>
+        <translation>Lok</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="504"/>
@@ -48954,7 +48955,7 @@ Please check the filename and permissions.</source>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="635"/>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="646"/>
         <source>Center:</source>
-        <translation>Center:</translation>
+        <translation>Središče:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="636"/>
@@ -49039,7 +49040,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1023"/>
         <source>Select Intersecting</source>
-        <translation>Izberite seciranje</translation>
+        <translation>Izberi sekajoče</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1023"/>
@@ -49062,7 +49063,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimangular.cpp" line="222"/>
         <source>Specify dimension arc line location</source>
-        <translation>Določitev lokacije obločne črte</translation>
+        <translation>Določite položaj kotirnega loka</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimangular.cpp" line="225"/>
@@ -49213,27 +49214,27 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsefocipoint.cpp" line="213"/>
         <source>Specify first focus of ellipse</source>
-        <translation>Določite prvi fokus elipse</translation>
+        <translation>Določite prvo gorišče elipse</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsefocipoint.cpp" line="216"/>
         <source>Specify second focus of ellipse</source>
-        <translation>Določitev drugega fokusa elipse</translation>
+        <translation>Določite drugo gorišče elipse</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsefocipoint.cpp" line="219"/>
         <source>Specify a point on ellipse or total distance to foci</source>
-        <translation>Določite točko na elipsi ali skupni razdalji do foci</translation>
+        <translation>Določite točko na elipsi ali skupno razdaljo do gorišč</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsefocipoint.cpp" line="180"/>
         <source>specify a point on ellipse, or total distance to foci</source>
-        <translation>določi točko na elipsi ali skupno razdaljo do foci</translation>
+        <translation>določite točko na elipsi ali skupno razdaljo do gorišč</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsefocipoint.cpp" line="196"/>
         <source>Total distance %1 is smaller than distance between foci</source>
-        <translation>Skupna razdalja%1 je manjša od razdalje med foci</translation>
+        <translation>Skupna razdalja %1 je manjša od razdalje med goriščema</translation>
     </message>
 </context>
 <context>
@@ -49274,7 +49275,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="131"/>
         <source>Hatch created successfully.</source>
-        <translation>Hatch je uspešno ustvarjen.</translation>
+        <translation>Šrafura je uspešno ustvarjena.</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="134"/>
@@ -49294,17 +49295,17 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="138"/>
         <source>Hatch Error: Pattern not found!</source>
-        <translation>Napaka v hatch: Vzorec ni bil najden!</translation>
+        <translation>Napaka pri šrafuri: vzorec ni najden!</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="141"/>
         <source>Hatch Error: Contour or pattern too small!</source>
-        <translation>Hatch Napaka: Preostanek ali vzorec premajhen!</translation>
+        <translation>Napaka pri šrafuri: obris ali vzorec je premajhen!</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="144"/>
         <source>Hatch Error: Contour too big!</source>
-        <translation>Hatch Napaka: Contour prevelik!</translation>
+        <translation>Napaka pri šrafuri: obris je prevelik!</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="147"/>
@@ -49324,7 +49325,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="185"/>
         <source>Hatch immediately after selection</source>
-        <translation>Hatch takoj po izbiri</translation>
+        <translation>Šrafiraj takoj po izbiri</translation>
     </message>
 </context>
 <context>
@@ -49384,7 +49385,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_simple.cpp" line="107"/>
         <source>Center:</source>
-        <translation>Center:</translation>
+        <translation>Središče:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_simple.cpp" line="151"/>
@@ -49690,7 +49691,7 @@ Konec: (%8 ,%9)</translation>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="103"/>
         <source>Distance:</source>
-        <translation>Oddaljenost:</translation>
+        <translation>Razdalja:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="104"/>
@@ -49847,7 +49848,7 @@ Konec: (%8 ,%9)</translation>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="516"/>
         <source>Drag with Left Button to Position Paper or with Middle Button to Pan</source>
-        <translation>Povlecite z levim gumbom za položaj papirja ali s srednjim gumbom za Pan</translation>
+        <translation>Povlecite z levim gumbom za premik papirja ali s srednjim gumbom za premik pogleda</translation>
     </message>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="517"/>
@@ -49862,7 +49863,7 @@ Konec: (%8 ,%9)</translation>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="253"/>
         <source>Printout offset ignores relative zero. Ignoring &apos;@&apos;</source>
-        <translation>Zamik izpisa prezre relativno ničlo. Ignoring &apos;@&apos;</translation>
+        <translation>Zamik izpisa ne upošteva relativne ničle. Znak &apos;@&apos; je prezrt</translation>
     </message>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="230"/>
@@ -49922,12 +49923,12 @@ Konec: (%8 ,%9)</translation>
     <message>
         <location filename="../src/actions/drawing/zoom/rs_actionzoompan.cpp" line="109"/>
         <source>Click and drag to pan zoom</source>
-        <translation>Kliknite in povlecite za povečavo</translation>
+        <translation>Kliknite in povlecite za premik pogleda</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/zoom/rs_actionzoompan.cpp" line="112"/>
         <source>Zoom panning</source>
-        <translation>Povečava</translation>
+        <translation>Premik pogleda</translation>
     </message>
 </context>
 <context>
@@ -49993,7 +49994,7 @@ Konec: (%8 ,%9)</translation>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1353"/>
         <source>Center</source>
-        <translation>Center</translation>
+        <translation>Središče</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1355"/>
@@ -50294,12 +50295,12 @@ Konec: (%8 ,%9)</translation>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="333"/>
         <source>Distance:</source>
-        <translation>Oddaljenost:</translation>
+        <translation>Razdalja:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="346"/>
         <source>Distance between dimensions in baseline</source>
-        <translation>Razdalja med kotami pri kotiranju od osnovne črte</translation>
+        <translation>Razdalja med kotami pri vzporednem kotiranju</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="353"/>
@@ -50320,7 +50321,7 @@ Konec: (%8 ,%9)</translation>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="383"/>
         <source>If checked, angle for dimension is defined by mouse</source>
-        <translation>Če je možnost omogočena, kot za mere določi miška</translation>
+        <translation>Če je možnost omogočena, kot kote določi miška</translation>
     </message>
 </context>
 <context>

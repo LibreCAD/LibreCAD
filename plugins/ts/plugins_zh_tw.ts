@@ -68,23 +68,24 @@
         <location filename="../align/align.cpp" line="55"/>
         <source>Click on options to set/unset,
 Ok to accept and start alignment.</source>
-        <translation>點擊選項以設定/取消設定，然後點擊「確定」以接受並開始對齊。</translation>
+        <translation>點擊選項以設定/取消設定，
+然後點擊「確定」以接受並開始對齊。</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="79"/>
         <source>first base point:</source>
-        <translation>第一基點</translation>
+        <translation>第一個基點：</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="84"/>
         <source>first target point:</source>
-        <translation>第一個目標點</translation>
+        <translation>第一個目標點：</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="82"/>
         <location filename="../align/align.cpp" line="87"/>
         <source>second base point:</source>
-        <translation>第二基點</translation>
+        <translation>第二個基點：</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="58"/>
@@ -97,14 +98,14 @@ first base, second base, first target, second target.</source>
         <translation type="unfinished">如果勾選「保留原始物件」，
 對齊將複製而不是移動所選物件。
 
-如果勾選「首先指定基點」，
+如果勾選「先指定基準點」，
 對齊將按以下順序提示對齊點：
 第一個基點，第二個基點，第一個目標，第二個目標。</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="89"/>
         <source>second target point:</source>
-        <translation>第二個目標點</translation>
+        <translation>第二個目標點：</translation>
     </message>
 </context>
 <context>
@@ -124,7 +125,7 @@ first base, second base, first target, second target.</source>
         <source>Select point for center of gear and press left mouse button.
 Then fill in the fields and press &apos;Accept&apos; button.</source>
         <translation>選取齒輪中心的點，然後按一下滑鼠左鍵。
-接著填寫欄位，然後按一下「確定」按鈕。</translation>
+接著填寫欄位，然後按一下「接受」按鈕。</translation>
     </message>
 </context>
 <context>
@@ -133,7 +134,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
         <location filename="../list/list.cpp" line="22"/>
         <location filename="../list/list.cpp" line="29"/>
         <source>List entities</source>
-        <translation>列出實體</translation>
+        <translation>列出物件</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="30"/>
@@ -148,7 +149,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="58"/>
         <source>Empty Entity</source>
-        <translation>空實體</translation>
+        <translation>空物件</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="65"/>
@@ -173,7 +174,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="78"/>
         <source>Line type</source>
-        <translation>線條類型</translation>
+        <translation>線型</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="79"/>
@@ -221,12 +222,12 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="110"/>
         <source>Angle in XY plane</source>
-        <translation>平面角度</translation>
+        <translation>XY 平面角度</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="111"/>
         <source>Inc.</source>
-        <translation>偏移量</translation>
+        <translation>增量</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="116"/>
@@ -285,7 +286,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="164"/>
         <source>CONSTRUCTIONLINE</source>
-        <translation>輔助線</translation>
+        <translation>建構線</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="167"/>
@@ -295,17 +296,17 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="170"/>
         <source>SOLID</source>
-        <translation>實心</translation>
+        <translation>2D 實體</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="174"/>
         <source>MTEXT</source>
-        <translation>多行文本</translation>
+        <translation>多行文字</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="177"/>
         <source>TEXT</source>
-        <translation>文本</translation>
+        <translation>文字</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="181"/>
@@ -320,7 +321,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="187"/>
         <source>Name</source>
-        <translation>名</translation>
+        <translation>名稱</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="189"/>
@@ -350,7 +351,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="212"/>
         <source>POLYLINE</source>
-        <translation>折線</translation>
+        <translation>聚合線</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="213"/>
@@ -360,7 +361,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="214"/>
         <source>No</source>
-        <translation>不</translation>
+        <translation>否</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="214"/>
@@ -380,12 +381,12 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="232"/>
         <source>SPLINE</source>
-        <translation>樣條曲線</translation>
+        <translation>雲形線</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="235"/>
         <source>SPLINEPOINTS</source>
-        <translation>樣條曲線點</translation>
+        <translation>雲形線點</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="238"/>
@@ -400,7 +401,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="244"/>
         <source>DIMALIGNED</source>
-        <translation>Duìqí biāozhù對齊標註</translation>
+        <translation>對齊標註</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="247"/>
@@ -420,7 +421,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="256"/>
         <source>DIMANGULAR</source>
-        <translation>角度标注</translation>
+        <translation>角度標註</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="259"/>
@@ -444,12 +445,12 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../sameprop/sameprop.cpp" line="40"/>
         <source>select original entity:</source>
-        <translation>選擇原始實體：</translation>
+        <translation>選取原始物件：</translation>
     </message>
     <message>
         <location filename="../sameprop/sameprop.cpp" line="42"/>
         <source>select entities to change</source>
-        <translation>選擇需要改變的實體</translation>
+        <translation>選取要變更的物件</translation>
     </message>
 </context>
 <context>
@@ -458,7 +459,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
         <location filename="../sample/sample.cpp" line="26"/>
         <location filename="../sample/sample.cpp" line="33"/>
         <source>Sample plugin</source>
-        <translation>示例插件</translation>
+        <translation>範例外掛程式</translation>
     </message>
     <message>
         <location filename="../sample/sample.cpp" line="34"/>
@@ -494,7 +495,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="226"/>
         <source>File...</source>
-        <translation>文檔...</translation>
+        <translation>檔案...</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="233"/>
@@ -504,22 +505,22 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="235"/>
         <source>Space Separator</source>
-        <translation>空格分隔符</translation>
+        <translation>空格分隔符號</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="235"/>
         <source>Tab Separator</source>
-        <translation>Tab鍵分隔符</translation>
+        <translation>Tab 分隔符號</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="235"/>
         <source>Comma Separator</source>
-        <translation>逗號分隔符</translation>
+        <translation>逗號分隔符號</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="235"/>
         <source>Space in Columns</source>
-        <translation>列包含空格</translation>
+        <translation>以空格對齊欄位</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="235"/>
@@ -544,12 +545,12 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="246"/>
         <source>3D Point</source>
-        <translation>繪製3維點</translation>
+        <translation>3維點</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="246"/>
         <source>Draw 3D Point</source>
-        <translation>點編號</translation>
+        <translation>繪製3維點</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="247"/>
@@ -594,7 +595,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="298"/>
         <source>Select file</source>
-        <translation>選擇文檔</translation>
+        <translation>選取檔案</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="304"/>
@@ -634,7 +635,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="317"/>
         <source>Point number separation is empty</source>
-        <translation>點編號分隔為空</translation>
+        <translation>點編號間距為空</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="320"/>
@@ -649,17 +650,17 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="322"/>
         <source>Point code separation is empty</source>
-        <translation>點代碼分隔為空</translation>
+        <translation>點代碼間距為空</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="358"/>
         <source>The file %1 not exist</source>
-        <translation>文檔%1不存在</translation>
+        <translation>檔案 %1 不存在</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="363"/>
         <source>Can&apos;t open the file %1</source>
-        <translation>無法打開文檔 %1</translation>
+        <translation>無法開啟檔案 %1</translation>
     </message>
 </context>
 <context>
@@ -688,12 +689,12 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../divide/divide.cpp" line="101"/>
         <source>n</source>
-        <translation>除</translation>
+        <translation>編號</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="439"/>
         <source>Empty Entity</source>
-        <translation>空白實體</translation>
+        <translation>空物件</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="447"/>
@@ -718,7 +719,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../divide/divide.cpp" line="458"/>
         <source>Line type</source>
-        <translation>線條類型</translation>
+        <translation>線型</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="460"/>
@@ -845,7 +846,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../divide/dividedlg.cpp" line="47"/>
         <source>Divide - </source>
-        <translation>分割 -</translation>
+        <translation>分割 - </translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="68"/>
@@ -865,7 +866,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../divide/dividedlg.cpp" line="84"/>
         <source>Divide at</source>
-        <translation>在以下位置分割</translation>
+        <translation>分割於</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="91"/>
@@ -885,12 +886,12 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../divide/dividedlg.cpp" line="133"/>
         <source>Breaks - Off</source>
-        <translation>間隔 - 關閉</translation>
+        <translation>切斷 - 關閉</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="178"/>
         <source>&lt;i&gt;New&lt;/i&gt;</source>
-        <translation>&lt;i&gt;新增&lt;/i &gt;</translation>
+        <translation>&lt;i&gt;新增&lt;/i&gt;</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="209"/>
@@ -900,12 +901,17 @@ decimal degrees
 0° at 3 o&apos;clock
 goes
 anti-clockwise.</source>
-        <translation>輸入起始角度，以小數度的形式表示。3 點鐘為 0°，逆時針方向。</translation>
+        <translation>輸入起始角度，
+以十進位度數
+表示。
+0° 位於 3 點鐘
+方向，沿逆時針
+方向遞增。</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="245"/>
         <source>&lt;i&gt;&quot;New&quot;&lt;/i&gt;&lt;br&gt;Enter name&lt;br&gt;for a new layer&lt;br&gt;(if required?) to&lt;br&gt;draw ticks on.</source>
-        <translation>&lt;i&gt;「新增」&lt;/i&gt;&lt;br&gt;輸入新圖層的名稱（如果需要），以便繪製刻度。</translation>
+        <translation>&lt;i&gt;「新增」&lt;/i&gt;&lt;br&gt;輸入新圖層&lt;br&gt;的名稱&lt;br&gt;（如有需要），&lt;br&gt;用於繪製刻度。</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="250"/>
@@ -976,22 +982,22 @@ anti-clockwise.</source>
     <message>
         <location filename="../gear/gear.cpp" line="116"/>
         <source>Addendum (rel. to modulus)</source>
-        <translation>頂隙（相對於模數）</translation>
+        <translation>齒冠（相對於模數）</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="117"/>
         <source>Dedendum (rel. to modulus)</source>
-        <translation>根隙（相對於模數）</translation>
+        <translation>齒根（相對於模數）</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="118"/>
         <source>Number of segments to draw (dedendum)</source>
-        <translation>繪製根隙時的分割段數</translation>
+        <translation>要繪製的區段數（齒根）</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="119"/>
         <source>Number of segments to draw (addendum)</source>
-        <translation>繪製頂隙時的分割段數</translation>
+        <translation>要繪製的區段數（齒冠）</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="120"/>
@@ -1064,7 +1070,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../list/list.cpp" line="276"/>
         <source>List entities</source>
-        <translation>實體列表</translation>
+        <translation>列出物件</translation>
     </message>
 </context>
 <context>
@@ -1127,7 +1133,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../sample/sample.cpp" line="128"/>
         <source>Sample plugin</source>
-        <translation>示例插件</translation>
+        <translation>範例外掛程式</translation>
     </message>
 </context>
 <context>
@@ -1272,13 +1278,13 @@ Use t or x in your equation as a variable/parameter.
         <location filename="../plotequation/plotdialog.cpp" line="60"/>
         <source>Polyline</source>
         <comment>Plot Equation to generate RS_Polyline</comment>
-        <translation>多線段</translation>
+        <translation>聚合線</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="61"/>
         <source>SplinePoints</source>
         <comment>Plot Equation to generate 2nd spline by LC_SplinePoints</comment>
-        <translation>樣條曲線點</translation>
+        <translation>雲形線點</translation>
     </message>
 </context>
 <context>
@@ -1286,7 +1292,7 @@ Use t or x in your equation as a variable/parameter.
     <message>
         <location filename="../asciifile/asciifile.cpp" line="176"/>
         <source>Layer:</source>
-        <translation>層:</translation>
+        <translation>圖層：</translation>
     </message>
 </context>
 <context>
@@ -1294,7 +1300,7 @@ Use t or x in your equation as a variable/parameter.
     <message>
         <location filename="../asciifile/asciifile.cpp" line="204"/>
         <source>Style:</source>
-        <translation>類型:</translation>
+        <translation>樣式：</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="205"/>
@@ -1304,7 +1310,7 @@ Use t or x in your equation as a variable/parameter.
     <message>
         <location filename="../asciifile/asciifile.cpp" line="206"/>
         <source>Separation</source>
-        <translation>分隔</translation>
+        <translation>間距</translation>
     </message>
 </context>
 </TS>

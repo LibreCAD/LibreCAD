@@ -909,7 +909,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../divide/dividedlg.cpp" line="250"/>
         <source>Ticks</source>
-        <translation>Marcature</translation>
+        <translation>Tacche</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="256"/>

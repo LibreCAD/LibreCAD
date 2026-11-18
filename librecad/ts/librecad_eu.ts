@@ -61,7 +61,7 @@
     <message>
         <location filename="../src/actions/drawing/lc_abstractactionwithpreview.cpp" line="652"/>
         <source> is not divided as it is part of polyline. Expand polyline first.</source>
-        <translation>ez dago banatua, polilerroaren parte baita. Zabaldu polilerroa lehenik.</translation>
+        <translation> ez da zatitu, polilinea baten zati delako. Deskonposatu polilinea lehenik.</translation>
     </message>
 </context>
 <context>
@@ -81,7 +81,8 @@
         <location filename="../src/actions/dock_widgets/block/lc_action_block_insert.cpp" line="97"/>
         <source>
 This block cannot be inserted.</source>
-        <translation type="unfinished">Ezin da bloke hau sartu.</translation>
+        <translation type="unfinished">
+Ezin da bloke hau txertatu.</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/block/lc_action_block_insert.cpp" line="226"/>
@@ -168,7 +169,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_block_explode.cpp" line="63"/>
         <source>Select and explode</source>
-        <translation type="unfinished">Hautatu eta lehertu</translation>
+        <translation type="unfinished">Hautatu eta deskonposatu</translation>
     </message>
 </context>
 <context>
@@ -237,7 +238,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="304"/>
         <source>Snap to Adjacent Dim</source>
-        <translation>Atxiki ondoko Dim-i</translation>
+        <translation>Atxiki ondoko kotari</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="319"/>
@@ -260,12 +261,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimordinate.cpp" line="211"/>
         <source>Specify leader end point</source>
-        <translation>Zehaztu amaierako puntua</translation>
+        <translation>Zehaztu gida-lerroaren amaiera-puntua</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimordinate.cpp" line="211"/>
         <source>Change Ordinate</source>
-        <translation>Aldatu Ordinata</translation>
+        <translation>Aldatu ordenatua</translation>
     </message>
 </context>
 <context>
@@ -606,7 +607,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_2points_radius.cpp" line="219"/>
         <source>Select circle center</source>
-        <translation type="unfinished">Zirkuluaren zentrua aukeratu</translation>
+        <translation type="unfinished">Hautatu zirkuluaren zentroa</translation>
     </message>
 </context>
 <context>
@@ -836,7 +837,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="422"/>
         <source>Snap to Adjacent Dim</source>
-        <translation>Atxiki ondoko Dim-i</translation>
+        <translation>Atxiki ondoko kotari</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="425"/>
@@ -1794,12 +1795,12 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_action_draw_polygon_base.cpp" line="290"/>
         <source>Polygon</source>
-        <translation type="unfinished">Polygon</translation>
+        <translation type="unfinished">Poligonoa</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_action_draw_polygon_base.cpp" line="291"/>
         <source>Center:</source>
-        <translation type="unfinished">Zentrua:</translation>
+        <translation type="unfinished">Zentroa:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_action_draw_polygon_base.cpp" line="292"/>
@@ -1829,7 +1830,7 @@ or [%2]</source>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_draw_polyline.cpp" line="439"/>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_draw_polyline.cpp" line="606"/>
         <source>Enter number of polylines</source>
-        <translation type="unfinished">Sartu polilerro kopurua</translation>
+        <translation type="unfinished">Sartu polilinea kopurua</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_draw_polyline.cpp" line="564"/>
@@ -2027,7 +2028,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_abstract.cpp" line="195"/>
         <source>Center:</source>
-        <translation type="unfinished">Zentrua:</translation>
+        <translation type="unfinished">Zentroa:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_abstract.cpp" line="224"/>
@@ -2069,7 +2070,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_abstract.cpp" line="452"/>
         <source>Specify corner bevel length (x,y)</source>
-        <translation type="unfinished">Zehaztu ertzaren luzera (x,y)</translation>
+        <translation type="unfinished">Zehaztu izkinaren alakaren luzera (x,y)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_abstract.cpp" line="455"/>
@@ -2194,7 +2195,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_action_draw_star.cpp" line="652"/>
         <source>Set center point</source>
-        <translation>Ezarri erdiko puntua</translation>
+        <translation>Ezarri zentro-puntua</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_action_draw_star.cpp" line="655"/>
@@ -2372,17 +2373,17 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="214"/>
         <source>Tangent (P,C)</source>
-        <translation>Tantengea</translation>
+        <translation>Tangentea (P,Z)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="215"/>
         <source>Tangent (C,C)</source>
-        <translation>Tangentea</translation>
+        <translation>Tangentea (Z,Z)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="216"/>
         <source>Tangent &amp;Orthogonal</source>
-        <translation>Tangetea &amp;Ortotogonala</translation>
+        <translation>Tangente &amp;ortogonala</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="217"/>
@@ -2472,7 +2473,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="261"/>
         <source>Center, &amp;Point</source>
-        <translation>Zentrua, &amp;Puntua</translation>
+        <translation>Zentroa, &amp;Puntua</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="262"/>
@@ -2482,7 +2483,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="263"/>
         <source>Center, &amp;Radius</source>
-        <translation>Zentrua, &amp;Erradioa</translation>
+        <translation>Zentroa, &amp;Erradioa</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="264"/>
@@ -2518,7 +2519,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="278"/>
         <source>&amp;Center, Point, Angles</source>
-        <translation>&amp;Zentrua, Puntua, Angeluak</translation>
+        <translation>&amp;Zentroa, Puntua, Angeluak</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="281"/>
@@ -2553,7 +2554,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="316"/>
         <source>Ellipse Center and &amp;3 Points</source>
-        <translation>Elipse Zentrua eta &amp;3 Puntu</translation>
+        <translation>Elipsea: zentroa eta &amp;3 puntu</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="317"/>
@@ -2598,7 +2599,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="328"/>
         <source>&amp;Trim segments</source>
-        <translation>&amp;Segmentuak ebaki</translation>
+        <translation>&amp;Moztu segmentuak</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="329"/>
@@ -2618,12 +2619,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="341"/>
         <source>&amp;Hatch</source>
-        <translation>&amp;Hatch</translation>
+        <translation>&amp;Marradura</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="342"/>
         <source>Insert &amp;Image</source>
-        <translation>Sartu &amp;Irudia</translation>
+        <translation>Txertatu &amp;irudia</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="349"/>
@@ -2658,7 +2659,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="357"/>
         <source>&amp;Leader</source>
-        <translation>&amp;Leader</translation>
+        <translation>&amp;Gida-lerroa</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="378"/>
@@ -2698,7 +2699,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="331"/>
         <source>Polyline Arcs to Chords</source>
-        <translation>Polilerroaren arkuak kordetara</translation>
+        <translation>Polilinearen arkuak kordetara</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="383"/>
@@ -2738,12 +2739,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="393"/>
         <source>&amp;Stretch</source>
-        <translation>&amp;Hedatu</translation>
+        <translation>&amp;Tiratu</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="394"/>
         <source>&amp;Bevel</source>
-        <translation>&amp;Bevel</translation>
+        <translation>&amp;Alaka</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="395"/>
@@ -2858,12 +2859,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="302"/>
         <source>&amp;Explode spline to lines</source>
-        <translation>&amp;Explode spline lerroetara</translation>
+        <translation>&amp;Deskonposatu spline-a lerrotan</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="303"/>
         <source>&amp;Spline from polyline</source>
-        <translation>&amp;Spline polilerrotik</translation>
+        <translation>&amp;Spline polilineatik</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="304"/>
@@ -2883,12 +2884,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="330"/>
         <source>Polyline from Existing &amp;Segments</source>
-        <translation>Polilerroa lehendik dauden &amp;segmentuetatik</translation>
+        <translation>Polilinea lehendik dauden &amp;segmentuetatik</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="332"/>
         <source>Polyline Change Segment Type</source>
-        <translation>Polilerroa aldatu segmentu mota</translation>
+        <translation>Polilinea: aldatu segmentu-mota</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="343"/>
@@ -2898,7 +2899,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="358"/>
         <source>&amp;Baseline</source>
-        <translation>&amp;Baseline</translation>
+        <translation>&amp;Oinarri-lerroa</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="359"/>
@@ -2908,7 +2909,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="398"/>
         <source>Break/Divide</source>
-        <translation>Break/Divide</translation>
+        <translation>Eten/Zatitu</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="399"/>
@@ -2943,7 +2944,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="410"/>
         <source>Update Current Pen by Active Layer&apos; Pen</source>
-        <translation>Eguneratu uneko arkatza geruza aktiboaren arkatzaren arabera</translation>
+        <translation>Eguneratu uneko luma geruza aktiboaren lumaren arabera</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="416"/>
@@ -3109,7 +3110,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="69"/>
         <source>Polygon</source>
-        <translation>Polygon</translation>
+        <translation>Poligonoa</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="69"/>
@@ -3155,12 +3156,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="74"/>
         <source>Polyline</source>
-        <translation>Polilerroa</translation>
+        <translation>Polilinea</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="74"/>
         <source>Polyline drawing commands</source>
-        <translation>Polilerroa marrazteko komandoak</translation>
+        <translation>Polilinea marrazteko komandoak</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="75"/>
@@ -3200,7 +3201,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="79"/>
         <source>Snap Extras</source>
-        <translation>Atxiki estrak</translation>
+        <translation>Atxikitze gehigarriak</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="79"/>
@@ -3361,7 +3362,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="269"/>
         <source>Tangential 2 Entities, Radius</source>
-        <translation>Tangential 2 Entitateak, Radius</translation>
+        <translation>2 entitateri tangentea, erradioa</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="270"/>
@@ -3371,7 +3372,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="271"/>
         <source>Tangential &amp;3 Entities</source>
-        <translation>&amp;3 entitateak</translation>
+        <translation>&amp;3 entitateri tangentea</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="288"/>
@@ -3386,17 +3387,17 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="360"/>
         <source>&amp;Ordinate</source>
-        <translation>&amp;Ordinatu</translation>
+        <translation>&amp;Ordenatua</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="361"/>
         <source>Select Ordinates by base</source>
-        <translation>Hautatu Ordinatoak oinarriaren arabera</translation>
+        <translation>Hautatu ordenatuak oinarriaren arabera</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="362"/>
         <source>Ordinates Re-base</source>
-        <translation>Ordinates Rebase</translation>
+        <translation>Aldatu ordenatuen oinarria</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="363"/>
@@ -3451,12 +3452,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="459"/>
         <source>Snap Distance</source>
-        <translation>Atxikitu distantzia</translation>
+        <translation>Atxikitu distantzian</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="460"/>
         <source>Snap Intersection</source>
-        <translation>Ebakidura</translation>
+        <translation>Atxikitu ebakiduran</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="466"/>
@@ -3601,7 +3602,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="590"/>
         <source>Collect &amp;Coordinates</source>
-        <translation>Bildu &amp; koordenatuak</translation>
+        <translation>Bildu &amp;koordenatuak</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="591"/>
@@ -3636,7 +3637,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="609"/>
         <source>&amp;Isometric Top Grid</source>
-        <translation>&amp;Isometria, goiko sare</translation>
+        <translation>&amp;Goiko sareta isometrikoa</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="610"/>
@@ -3706,7 +3707,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="642"/>
         <source>&amp;Insert Block</source>
-        <translation>&amp;Blokea Sartu</translation>
+        <translation>&amp;Txertatu blokea</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="643"/>
@@ -3856,7 +3857,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="602"/>
         <source>&amp;Grid</source>
-        <translation>&amp;Sarea</translation>
+        <translation>&amp;Sareta</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="603"/>
@@ -3911,7 +3912,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="391"/>
         <source>O&amp;ffset</source>
-        <translation>O&amp;ffset</translation>
+        <translation>&amp;Desplazamendua</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="433"/>
@@ -4081,7 +4082,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="762"/>
         <source>&amp;Dimension Styles</source>
-        <translation>&amp;Dimension estiloak</translation>
+        <translation>&amp;Kota-estiloak</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="772"/>
@@ -4319,7 +4320,7 @@ Amaierako ertz-puntua: (%9, %10)</translation>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="213"/>
         <source>Intersection:</source>
-        <translation>Intersekzioa:</translation>
+        <translation>Ebakidura:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="215"/>
@@ -4532,7 +4533,7 @@ Puntua: (%8, %9)</translation>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="164"/>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="323"/>
         <source>Intersection:</source>
-        <translation>Intersekzioa:</translation>
+        <translation>Ebakidura:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="165"/>
@@ -5011,12 +5012,12 @@ Puntua: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_bevel.cpp" line="182"/>
         <source>Trim</source>
-        <translation type="unfinished">Trim</translation>
+        <translation type="unfinished">Moztu</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_bevel.cpp" line="183"/>
         <source>Intersection:</source>
-        <translation type="unfinished">Intersekzioa:</translation>
+        <translation type="unfinished">Ebakidura:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_bevel.cpp" line="184"/>
@@ -5031,7 +5032,7 @@ Puntua: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_bevel.cpp" line="233"/>
         <source>Invalid entity selected (non-trimmable).</source>
-        <translation type="unfinished">Baliogabeko entitatea hautatuta (ez-trimmable).</translation>
+        <translation type="unfinished">Entitate baliogabea hautatu da (ezin da moztu).</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_bevel.cpp" line="236"/>
@@ -5047,7 +5048,7 @@ Puntua: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_bevel.cpp" line="257"/>
         <source>Selected lines are not children of the same polyline</source>
-        <translation type="unfinished">Hautatutako lerroak ez dira polilerro bereko umeak</translation>
+        <translation type="unfinished">Hautatutako lerroak ez dira polilinea bereko umeak</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_bevel.cpp" line="261"/>
@@ -5211,12 +5212,12 @@ Puntua: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_delete_free.cpp" line="79"/>
         <source>Entities not in the same polyline.</source>
-        <translation type="unfinished">Polilerro berean ez dauden entitateak.</translation>
+        <translation type="unfinished">Polilinea berean ez dauden entitateak.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_delete_free.cpp" line="83"/>
         <source>Parent of second entity is not a polyline</source>
-        <translation type="unfinished">Bigarren entitatearen gurasoa ez da polilerroa</translation>
+        <translation type="unfinished">Bigarren entitatearen gurasoa ez da polilinea</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_delete_free.cpp" line="87"/>
@@ -5231,7 +5232,7 @@ Puntua: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_delete_free.cpp" line="109"/>
         <source>Parent of first entity is not a polyline</source>
-        <translation type="unfinished">Lehen entitatearen gurasoa ez da polilerroa</translation>
+        <translation type="unfinished">Lehen entitatearen gurasoa ez da polilinea</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_delete_free.cpp" line="113"/>
@@ -5251,7 +5252,7 @@ Puntua: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_delete_free.cpp" line="145"/>
         <source>Specify first break point on a polyline</source>
-        <translation type="unfinished">Zehaztu polilerroko lehen eten-puntua</translation>
+        <translation type="unfinished">Zehaztu polilineako lehen eten-puntua</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_delete_free.cpp" line="148"/>
@@ -5301,7 +5302,7 @@ Puntua: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_explode_text.cpp" line="54"/>
         <source>Explode immediately after selection</source>
-        <translation type="unfinished">Lehertu hautapenaren ondoren</translation>
+        <translation type="unfinished">Deskonposatu hautapenaren ondoren berehala</translation>
     </message>
 </context>
 <context>
@@ -5355,7 +5356,7 @@ Puntua: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_join.cpp" line="135"/>
         <source>Intersection:</source>
-        <translation>Intersekzioa:</translation>
+        <translation>Ebakidura:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_join.cpp" line="188"/>
@@ -5386,7 +5387,7 @@ Puntua: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_join.cpp" line="842"/>
         <source>Select part of first line that should remain after trim</source>
-        <translation>Hautatu trimaren ondoren geratu beharko litzatekeen lehen lerroaren zatia</translation>
+        <translation>Hautatu moztu ondoren geratu behar den lehen lerroaren zatia</translation>
     </message>
 </context>
 <context>
@@ -5785,7 +5786,7 @@ Puntua: (%8, %9)</translation>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate.cpp" line="204"/>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate.cpp" line="211"/>
         <source>Center Point:</source>
-        <translation type="unfinished">Zentru-puntua:</translation>
+        <translation type="unfinished">Zentro-puntua:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate.cpp" line="205"/>
@@ -5956,7 +5957,7 @@ Puntua: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_scale.cpp" line="224"/>
         <source>Center:</source>
-        <translation type="unfinished">Zentrua:</translation>
+        <translation type="unfinished">Zentroa:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_scale.cpp" line="225"/>
@@ -6006,7 +6007,7 @@ Puntua: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_scale.cpp" line="420"/>
         <source>Free snap</source>
-        <translation type="unfinished">Libreki</translation>
+        <translation type="unfinished">Atxikitze librea</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_scale.cpp" line="429"/>
@@ -6085,17 +6086,17 @@ Puntua: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim.cpp" line="130"/>
         <source>Trim Two</source>
-        <translation type="unfinished">Bi</translation>
+        <translation type="unfinished">Moztu bi</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim.cpp" line="130"/>
         <source>Trim</source>
-        <translation type="unfinished">Trim</translation>
+        <translation type="unfinished">Moztu</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim.cpp" line="131"/>
         <source>Intersection:</source>
-        <translation type="unfinished">Intersekzioa:</translation>
+        <translation type="unfinished">Ebakidura:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim.cpp" line="133"/>
@@ -6105,7 +6106,7 @@ Puntua: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim.cpp" line="217"/>
         <source>Select first trim entity</source>
-        <translation type="unfinished">Hautatu lehen trim entitatea</translation>
+        <translation type="unfinished">Hautatu mozteko lehen entitatea</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim.cpp" line="220"/>
@@ -6120,7 +6121,7 @@ Puntua: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim.cpp" line="228"/>
         <source>Select entity to trim</source>
-        <translation type="unfinished">Hautatu entitatea trimatzeko</translation>
+        <translation type="unfinished">Hautatu moztu beharreko entitatea</translation>
     </message>
 </context>
 <context>
@@ -6151,12 +6152,12 @@ Puntua: (%8, %9)</translation>
     <message>
         <location filename="../src/ui/action_options/lc_action_options_properties_filler_base.cpp" line="294"/>
         <source>Snap Distance</source>
-        <translation type="unfinished">Atxikitu distantzia</translation>
+        <translation type="unfinished">Atxikitu distantzian</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/lc_action_options_properties_filler_base.cpp" line="294"/>
         <source>Distance of snap point from initially resolved snap point</source>
-        <translation type="unfinished">Hasiera batean ebatzitako puntuaren distantzia</translation>
+        <translation type="unfinished">Atxikitze-puntuaren distantzia hasieran ebatzitako atxikitze-puntutik</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/lc_action_options_properties_filler_base.cpp" line="308"/>
@@ -6220,7 +6221,7 @@ Puntua: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/pen/lc_actionpenapply.cpp" line="183"/>
         <source>Specify entity to pick the pen</source>
-        <translation>Zehaztu arkatza hartzeko entitatea</translation>
+        <translation>Zehaztu luma hartzeko entitatea</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pen/lc_actionpenapply.cpp" line="186"/>
@@ -6238,7 +6239,7 @@ Puntua: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/pen/lc_actionpenpick.cpp" line="87"/>
         <source>Specify entity to pick the pen</source>
-        <translation>Zehaztu arkatza hartzeko entitatea</translation>
+        <translation>Zehaztu luma hartzeko entitatea</translation>
     </message>
 </context>
 <context>
@@ -6252,7 +6253,7 @@ Puntua: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_add.cpp" line="113"/>
         <source>Entity must be a polyline.</source>
-        <translation type="unfinished">Entitateak polilerroa izan behar du.</translation>
+        <translation type="unfinished">Entitateak polilinea izan behar du.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_add.cpp" line="142"/>
@@ -6267,7 +6268,7 @@ Puntua: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_add.cpp" line="180"/>
         <source>Specify polyline to add nodes</source>
-        <translation type="unfinished">Zehaztu polilerroa nodoak gehitzeko</translation>
+        <translation type="unfinished">Zehaztu polilinea nodoak gehitzeko</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_add.cpp" line="183"/>
@@ -6285,27 +6286,27 @@ Puntua: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_append.cpp" line="128"/>
         <source>Entity must be a polyline.</source>
-        <translation type="unfinished">Entitateak polilerroa izan behar du.</translation>
+        <translation type="unfinished">Entitateak polilinea izan behar du.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_append.cpp" line="132"/>
         <source>Can not append nodes in a closed polyline.</source>
-        <translation type="unfinished">Ezin zaio nodorik erantsi polilerro itxi bati.</translation>
+        <translation type="unfinished">Ezin zaio nodorik erantsi polilinea itxi bati.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_append.cpp" line="171"/>
         <source>Click somewhere near the beginning or end of existing polyline.</source>
-        <translation type="unfinished">Egin klik existitzen den polilerroaren hasiera edo amaieratik gertu.</translation>
+        <translation type="unfinished">Egin klik existitzen den polilinearen hasiera edo amaieratik gertu.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_append.cpp" line="294"/>
         <source>Enter number of polylines</source>
-        <translation type="unfinished">Sartu polilerro kopurua</translation>
+        <translation type="unfinished">Sartu polilinea kopurua</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_append.cpp" line="309"/>
         <source>Specify the polyline somewhere near the beginning or end point</source>
-        <translation type="unfinished">Zehaztu polilerroa hasiera- edo amaiera-puntutik gertu</translation>
+        <translation type="unfinished">Zehaztu polilinea hasiera- edo amaiera-puntutik gertu</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_append.cpp" line="329"/>
@@ -6318,7 +6319,7 @@ Puntua: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_arcs_to_lines.cpp" line="116"/>
         <source>Specify polyline with arc segments</source>
-        <translation>Zehaztu polilerroa arku-segmentuekin</translation>
+        <translation>Zehaztu polilinea arku-segmentuekin</translation>
     </message>
 </context>
 <context>
@@ -6331,12 +6332,12 @@ Puntua: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_change_segment_type.cpp" line="242"/>
         <source>Select polyline to modify</source>
-        <translation>Hautatu polilerroa aldatzeko</translation>
+        <translation>Hautatu polilinea aldatzeko</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_change_segment_type.cpp" line="246"/>
         <source>Select segment of polyline to modify</source>
-        <translation>Hautatu polilerroaren segmentua aldatzeko</translation>
+        <translation>Hautatu polilinearen segmentua aldatzeko</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_change_segment_type.cpp" line="250"/>
@@ -6355,7 +6356,7 @@ Puntua: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node.cpp" line="107"/>
         <source>Entity must be a polyline.</source>
-        <translation type="unfinished">Entitateak polilerroa izan behar du.</translation>
+        <translation type="unfinished">Entitateak polilinea izan behar du.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node.cpp" line="132"/>
@@ -6370,7 +6371,7 @@ Puntua: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node.cpp" line="155"/>
         <source>Specify polyline to delete node</source>
-        <translation type="unfinished">Zehaztu nodoa ezabatzeko polilerroa</translation>
+        <translation type="unfinished">Zehaztu nodoa ezabatzeko polilinea</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node.cpp" line="158"/>
@@ -6389,7 +6390,7 @@ Puntua: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node_between.cpp" line="131"/>
         <source>Entity must be a polyline.</source>
-        <translation type="unfinished">Entitateak polilerroa izan behar du.</translation>
+        <translation type="unfinished">Entitateak polilinea izan behar du.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node_between.cpp" line="159"/>
@@ -6406,7 +6407,7 @@ Puntua: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node_between.cpp" line="174"/>
         <source>No polyline found.</source>
-        <translation type="unfinished">Ez da polilerroa aurkitu.</translation>
+        <translation type="unfinished">Ez da polilinea aurkitu.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node_between.cpp" line="195"/>
@@ -6416,7 +6417,7 @@ Puntua: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node_between.cpp" line="213"/>
         <source>Specify polyline to delete between two nodes</source>
-        <translation type="unfinished">Zehaztu polilerroa bi nodoren artean ezabatzeko</translation>
+        <translation type="unfinished">Zehaztu polilinea bi nodoren artean ezabatzeko</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node_between.cpp" line="216"/>
@@ -6439,12 +6440,12 @@ Puntua: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_equidistant.cpp" line="338"/>
         <source>Entity must be a polyline.</source>
-        <translation type="unfinished">Entitateak polilerroa izan behar du.</translation>
+        <translation type="unfinished">Entitateak polilinea izan behar du.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_equidistant.cpp" line="403"/>
         <source>Choose the original polyline</source>
-        <translation type="unfinished">Aukeratu jatorrizko polilerroa</translation>
+        <translation type="unfinished">Aukeratu jatorrizko polilinea</translation>
     </message>
 </context>
 <context>
@@ -6453,7 +6454,7 @@ Puntua: (%8, %9)</translation>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_from_segment.cpp" line="62"/>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_from_segment.cpp" line="82"/>
         <source>Polyline created</source>
-        <translation type="unfinished">Sortutako polilerroa</translation>
+        <translation type="unfinished">Polilinea sortu da</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_from_segment.cpp" line="326"/>
@@ -6463,12 +6464,12 @@ Puntua: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_from_segment.cpp" line="329"/>
         <source>Entity can not be a closed polyline.</source>
-        <translation type="unfinished">Entitatea ezin da polilerro itxia izan.</translation>
+        <translation type="unfinished">Entitatea ezin da polilinea itxia izan.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_from_segment.cpp" line="352"/>
         <source>Choose one of the segments on the original polyline</source>
-        <translation type="unfinished">Aukeratu jatorrizko polilerroko segmentuetako bat</translation>
+        <translation type="unfinished">Aukeratu jatorrizko polilineako segmentuetako bat</translation>
     </message>
 </context>
 <context>
@@ -6481,12 +6482,12 @@ Puntua: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_trim.cpp" line="118"/>
         <source>Entity must be a polyline.</source>
-        <translation type="unfinished">Entitateak polilerroa izan behar du.</translation>
+        <translation type="unfinished">Entitateak polilinea izan behar du.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_trim.cpp" line="143"/>
         <source>First segment should be on selected polyline.</source>
-        <translation type="unfinished">Lehen segmentuak hautatutako polilerroa izan behar du.</translation>
+        <translation type="unfinished">Lehen segmentuak hautatutako polilinean egon behar du.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_trim.cpp" line="155"/>
@@ -6496,7 +6497,7 @@ Puntua: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_trim.cpp" line="188"/>
         <source>Specify polyline to trim</source>
-        <translation type="unfinished">Zehaztu polilerroa trimera</translation>
+        <translation type="unfinished">Zehaztu moztu beharreko polilinea</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_trim.cpp" line="191"/>
@@ -6767,7 +6768,7 @@ Puntua: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_action_spline_add_point.cpp" line="214"/>
         <source>Insert AFTER selected point</source>
-        <translation>Txertatu AFTER hautatutako puntua</translation>
+        <translation>Txertatu hautatutako puntuaren ONDOREN</translation>
     </message>
 </context>
 <context>
@@ -6801,7 +6802,7 @@ Puntua: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_action_spline_from_polyline.cpp" line="162"/>
         <source>Select polyline to create spline or spline points</source>
-        <translation>Hautatu polilerroa spline edo spline puntuak sortzeko</translation>
+        <translation>Hautatu polilinea spline-a edo spline-puntuak sortzeko</translation>
     </message>
 </context>
 <context>
@@ -7549,7 +7550,7 @@ Ziur zaude aldaketak baztertuko dituzula?</translation>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_2points_options_widget.ui" line="127"/>
         <source>Counterclockwise</source>
-        <translation type="unfinished">Counterclockwise</translation>
+        <translation type="unfinished">Erlojuaren orratzen aurkako noranzkoan</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_2points_options_widget.ui" line="144"/>
@@ -7658,7 +7659,7 @@ Ziur zaude aldaketak baztertuko dituzula?</translation>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_center_point_param_options_widget.ui" line="85"/>
         <source>Counterclockwise</source>
-        <translation type="unfinished">Counterclockwise</translation>
+        <translation type="unfinished">Erlojuaren orratzen aurkako noranzkoan</translation>
     </message>
 </context>
 <context>
@@ -7676,7 +7677,7 @@ Ziur zaude aldaketak baztertuko dituzula?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="65"/>
         <source>Center (x):</source>
-        <translation>Zentrua (x):</translation>
+        <translation>Zentroa (x):</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="87"/>
@@ -7691,7 +7692,7 @@ Ziur zaude aldaketak baztertuko dituzula?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="131"/>
         <source>Center (y):</source>
-        <translation>Zentrua (y):</translation>
+        <translation>Zentroa (y):</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="153"/>
@@ -7908,7 +7909,7 @@ Ziur zaude aldaketak baztertuko dituzula?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_filler.cpp" line="31"/>
         <source>Trim</source>
-        <translation type="unfinished">Trim</translation>
+        <translation type="unfinished">Moztu</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_filler.cpp" line="31"/>
@@ -7951,7 +7952,7 @@ Ziur zaude aldaketak baztertuko dituzula?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_widget.ui" line="62"/>
         <source>Trim</source>
-        <translation type="unfinished">Trim</translation>
+        <translation type="unfinished">Moztu</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_widget.ui" line="85"/>
@@ -8469,7 +8470,7 @@ Ziur zaude aldaketak baztertuko dituzula?</translation>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="32"/>
         <source>Pen:</source>
-        <translation type="unfinished">Pen:</translation>
+        <translation type="unfinished">Luma:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="39"/>
@@ -8501,7 +8502,7 @@ Ziur zaude aldaketak baztertuko dituzula?</translation>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="102"/>
         <source>Pen to apply to created circle</source>
-        <translation type="unfinished">Sortutako zirkuluari aplikatzekoa</translation>
+        <translation type="unfinished">Sortutako zirkuluari aplikatzeko luma</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="106"/>
@@ -8593,7 +8594,7 @@ Ziur zaude aldaketak baztertuko dituzula?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_circle.ui" line="47"/>
         <source>Center (x):</source>
-        <translation>Zentrua (x):</translation>
+        <translation>Zentroa (x):</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_circle.ui" line="63"/>
@@ -8608,7 +8609,7 @@ Ziur zaude aldaketak baztertuko dituzula?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_circle.ui" line="95"/>
         <source>Center (y):</source>
-        <translation>Zentrua (y):</translation>
+        <translation>Zentroa (y):</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_circle.ui" line="111"/>
@@ -8729,7 +8730,7 @@ Ziur zaude aldaketak baztertuko dituzula?</translation>
     <message>
         <location filename="../src/lib/engine/document/dimstyles/lc_dimarrowregistry.cpp" line="201"/>
         <source>Dot</source>
-        <translation>Dot</translation>
+        <translation>Puntua</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/document/dimstyles/lc_dimarrowregistry.cpp" line="202"/>
@@ -8784,7 +8785,7 @@ Ziur zaude aldaketak baztertuko dituzula?</translation>
     <message>
         <location filename="../src/lib/engine/document/dimstyles/lc_dimarrowregistry.cpp" line="212"/>
         <source>Oblique</source>
-        <translation>Oblique</translation>
+        <translation>Zeiharra</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/document/dimstyles/lc_dimarrowregistry.cpp" line="213"/>
@@ -8832,7 +8833,7 @@ Ziur zaude aldaketak baztertuko dituzula?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/lc_dimstyleitem.cpp" line="95"/>
         <source>Angular</source>
-        <translation>Angular</translation>
+        <translation>Angeluarra</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/lc_dimstyleitem.cpp" line="99"/>
@@ -8847,12 +8848,12 @@ Ziur zaude aldaketak baztertuko dituzula?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/lc_dimstyleitem.cpp" line="107"/>
         <source>Ordinate</source>
-        <translation>Ordinate</translation>
+        <translation>Ordenatua</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/lc_dimstyleitem.cpp" line="111"/>
         <source>Leader and Tolerance</source>
-        <translation>Gida-lerroa eta tolerantzia</translation>
+        <translation>Gida-lerroa eta perdoia</translation>
     </message>
 </context>
 <context>
@@ -9097,7 +9098,7 @@ Ziur zaude aldaketak baztertuko dituzula?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="88"/>
         <source>Linewidth:</source>
-        <translation>Linea-zabalera:</translation>
+        <translation>Lerro-lodiera:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="137"/>
@@ -9127,7 +9128,7 @@ Ziur zaude aldaketak baztertuko dituzula?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="194"/>
         <source>Suppress Dim line 1 and arrow</source>
-        <translation>Suppress Dim 1. lerroa eta gezia</translation>
+        <translation>Ezkutatu 1. kota-lerroa eta gezia</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="175"/>
@@ -9137,7 +9138,7 @@ Ziur zaude aldaketak baztertuko dituzula?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="178"/>
         <source>Suppress Dim line 2 and arrow</source>
-        <translation>Suppress Dim 2. lerroa eta gezia</translation>
+        <translation>Ezkutatu 2. kota-lerroa eta gezia</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="204"/>
@@ -9192,7 +9193,7 @@ Ziur zaude aldaketak baztertuko dituzula?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="375"/>
         <source>Offset from origin:</source>
-        <translation>Jatorrizko desplazamendua:</translation>
+        <translation>Desplazamendua jatorritik:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="404"/>
@@ -9395,7 +9396,7 @@ Ziur zaude aldaketak baztertuko dituzula?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="669"/>
         <source>Creates no center mark or centerline. The value is stored as 0 in the DIMCEN system variable.</source>
-        <translation>Ez du erdiko markarik edo erdiko lerrorik sortzen. Balioa 0 gisa gordetzen da DIMCEN sistemaren aldagaian.</translation>
+        <translation>Ez du zentro-markarik edo ardatz-lerrorik sortzen. Balioa 0 gisa gordetzen da DIMCEN sistemaren aldagaian.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="679"/>
@@ -9425,7 +9426,7 @@ Ziur zaude aldaketak baztertuko dituzula?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="706"/>
         <source>Displays and sets the size of the center mark or centerline. (DIMCEN system variable)</source>
-        <translation>Erdigunearen edo erdiko lerroaren tamaina erakusten eta ezartzen du. (DIMCEN sistemaren aldagaia)</translation>
+        <translation>Zentro-markaren edo ardatz-lerroaren tamaina erakusten eta ezartzen du. (DIMCEN sistemaren aldagaia)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="746"/>
@@ -10093,7 +10094,7 @@ Ziur zaude aldaketak baztertuko dituzula?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1762"/>
         <source>Specifies the multiplier used as the conversion factor between primary and alternate units.For example, to convert inches to millimeters, enter 25.4. The value has no effect on angular dimensions, and it is not applied to the rounding value or the plus or minus tolerance values. (DIMALTF system variable)</source>
-        <translation>Lehen mailako eta ordezko unitateen arteko bihurketa-faktore gisa erabiltzen den biderkatzailea zehazten du. Adibidez, hazbeteak milimetro bihurtzeko, sartu 25,4. Balioak ez du eraginik kota angeluarretan, eta ez da aplikatzen biribiltze-balioari edo plus edo minus tolerantzia-balioei. (DIMALTF sistemaren aldagaia)</translation>
+        <translation>Lehen mailako eta ordezko unitateen arteko bihurketa-faktore gisa erabiltzen den biderkatzailea zehazten du. Adibidez, hazbeteak milimetro bihurtzeko, sartu 25,4. Balioak ez du eraginik kota angeluarretan, eta ez zaie aplikatzen ez biribiltze-balioari ez perdoi positibo edo negatiboen balioei. (DIMALTF sistemaren aldagaia)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1772"/>
@@ -10178,12 +10179,12 @@ Ziur zaude aldaketak baztertuko dituzula?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1982"/>
         <source>Tolerances</source>
-        <translation>Tolerantzia</translation>
+        <translation>Perdoiak</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2000"/>
         <source>Sets the minimum or lower tolerance value. (DIMTM system variable)</source>
-        <translation>Tolerantziaren gutxieneko edo beheko balioa ezartzen du. (DIMTM sistemaren aldagaia)</translation>
+        <translation>Perdoiaren gutxieneko edo beheko balioa ezartzen du. (DIMTM sistemaren aldagaia)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2016"/>
@@ -10208,7 +10209,7 @@ Ziur zaude aldaketak baztertuko dituzula?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2059"/>
         <source>Sets the method for calculating the tolerance. (DIMTOL system variable)</source>
-        <translation>Tolerantzia kalkulatzeko metodoa ezartzen du. (DIMTOL sistemaren aldagaia)</translation>
+        <translation>Perdoia kalkulatzeko metodoa ezartzen du. (DIMTOL sistemaren aldagaia)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2068"/>
@@ -10233,7 +10234,7 @@ Ziur zaude aldaketak baztertuko dituzula?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2091"/>
         <source>Controls text justification for symmetrical and deviation tolerances (DIMTOLJ system variable).</source>
-        <translation>Testuaren justifikazioa kontrolatzen du tolerantzia simetriko eta desbideratzerako (DIMTOLJ sistemaren aldagaia).</translation>
+        <translation>Perdoi simetrikoen eta desbideratze-perdoien testu-justifikazioa kontrolatzen du (DIMTOLJ sistemaren aldagaia).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2095"/>
@@ -10268,7 +10269,7 @@ Ziur zaude aldaketak baztertuko dituzula?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2141"/>
         <source>Sets the maximum or upper tolerance value. When you select Symmetrical in Method, this value is used for the tolerance. (DIMTP system variable)</source>
-        <translation>Tolerantziaren balio maximoa edo goikoa ezartzen du. Metodoaren simetrikoa hautatzen duzunean, balio hau tolerantziarako erabiltzen da. (DIMTP sistemaren aldagaia)</translation>
+        <translation>Perdoiaren balio maximoa edo goikoa ezartzen du. Metodoan Simetrikoa hautatzen duzunean, balio hau erabiltzen da perdoirako. (DIMTP sistemaren aldagaia)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2151"/>
@@ -10283,7 +10284,7 @@ Ziur zaude aldaketak baztertuko dituzula?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2165"/>
         <source>Sets the current height for the tolerance text. The ratio of the tolerance height to the main dimension text height is calculated and stored in the DIMTFAC system variable.</source>
-        <translation>Tolerantziaren testuaren uneko altuera ezartzen du. Kota nagusiko testuaren altuerarekiko tolerantzia-altueraren erlazioa DIMTFAC sistemaren aldagaian kalkulatu eta gordetzen da.</translation>
+        <translation>Perdoiaren testuaren uneko altuera ezartzen du. Perdoiaren altueraren eta kota nagusiko testuaren altueraren arteko erlazioa DIMTFAC sistemaren aldagaian kalkulatu eta gordetzen da.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2175"/>
@@ -10293,7 +10294,7 @@ Ziur zaude aldaketak baztertuko dituzula?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2182"/>
         <source>Tolerance Adjustment</source>
-        <translation>Tolerantzia doitzea</translation>
+        <translation>Perdoiaren doikuntza</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2188"/>
@@ -10318,7 +10319,7 @@ Ziur zaude aldaketak baztertuko dituzula?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2214"/>
         <source>Alternate Unit Tolerance</source>
-        <translation>Bestelako unitate tolerantzia</translation>
+        <translation>Ordezko unitateen perdoia</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2227"/>
@@ -10526,7 +10527,7 @@ Ziur zaude aldaketak baztertuko dituzula?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="66"/>
         <source>Ordinate</source>
-        <translation>Ordinate</translation>
+        <translation>Ordenatua</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="76"/>
@@ -10576,7 +10577,7 @@ Ziur zaude aldaketak baztertuko dituzula?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="210"/>
         <source>Pen</source>
-        <translation>Pen</translation>
+        <translation>Luma</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="411"/>
@@ -10702,7 +10703,7 @@ Ziur zaude aldaketak baztertuko dituzula?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="148"/>
         <source>Pen</source>
-        <translation>Pen</translation>
+        <translation>Luma</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="175"/>
@@ -10737,7 +10738,7 @@ Ziur zaude aldaketak baztertuko dituzula?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="211"/>
         <source>Polyline Properties</source>
-        <translation>Polilerroa</translation>
+        <translation>Polilinearen propietateak</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="217"/>
@@ -11134,7 +11135,7 @@ Ziur zaude aldaketak baztertuko dituzula?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="113"/>
         <source>Polyline</source>
-        <translation>Polilerroa</translation>
+        <translation>Polilinea</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="114"/>
@@ -11169,7 +11170,7 @@ Ziur zaude aldaketak baztertuko dituzula?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="120"/>
         <source>Hatch</source>
-        <translation>Hatch</translation>
+        <translation>Marradura</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="121"/>
@@ -11317,7 +11318,7 @@ Ziur zaude aldaketak baztertuko dituzula?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="85"/>
         <source>If checked, type of grid for saved view will be shown.</source>
-        <translation>Hautatzen bada, gordetako ikuspegiaren sare-mota erakutsiko da.</translation>
+        <translation>Hautatzen bada, gordetako ikuspegiaren sareta-mota erakutsiko da.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="55"/>
@@ -11486,7 +11487,7 @@ Ziur zaude aldaketak baztertuko dituzula?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="64"/>
         <source>Leader And Tolerances</source>
-        <translation>Gida-lerroa eta tolerantziak</translation>
+        <translation>Gida-lerroa eta perdoiak</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="95"/>
@@ -11825,7 +11826,7 @@ Ziur zaude aldaketak baztertuko dituzula?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="138"/>
         <source>Active Pen</source>
-        <translation type="unfinished">Arkatza aktibo</translation>
+        <translation type="unfinished">Luma aktiboa</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="145"/>
@@ -12147,7 +12148,7 @@ Ziur zaude aldaketak baztertuko dituzula?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="127"/>
         <source>Stated Tolerance</source>
-        <translation>Adierazitako tolerantzia</translation>
+        <translation>Adierazitako perdoia</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="133"/>
@@ -12173,7 +12174,7 @@ Ziur zaude aldaketak baztertuko dituzula?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.cpp" line="76"/>
         <source>Pen</source>
-        <translation>Pen</translation>
+        <translation>Luma</translation>
     </message>
 </context>
 <context>
@@ -12231,7 +12232,7 @@ Ziur zaude aldaketak baztertuko dituzula?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="56"/>
         <source>If checked, the column with type of grid for UCS will be shown.</source>
-        <translation>Hautatzen bada, taulan UCS-ren sare-mota erakusten duen zutabea agertuko da.</translation>
+        <translation>Hautatzen bada, taulan UCS-ren sareta-mota erakusten duen zutabea agertuko da.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="98"/>
@@ -12808,7 +12809,7 @@ Ziur zaude aldaketak baztertuko dituzula?</translation>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_filler.cpp" line="42"/>
         <source>Polyline</source>
-        <translation type="unfinished">Polilerroa</translation>
+        <translation type="unfinished">Polilinea</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_filler.cpp" line="42"/>
@@ -12861,7 +12862,7 @@ Ziur zaude aldaketak baztertuko dituzula?</translation>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_widget.ui" line="69"/>
         <source>Polyline</source>
-        <translation type="unfinished">Polilerroa</translation>
+        <translation type="unfinished">Polilinea</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_widget.ui" line="76"/>
@@ -12934,7 +12935,7 @@ Ziur zaude aldaketak baztertuko dituzula?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_filler.cpp" line="65"/>
         <source>Pen to apply to created duplicate</source>
-        <translation type="unfinished">Sortutako bikoiztutakoari aplikatzekoa</translation>
+        <translation type="unfinished">Sortutako bikoiztuari aplikatzeko luma</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_filler.cpp" line="77"/>
@@ -12991,7 +12992,7 @@ Ziur zaude aldaketak baztertuko dituzula?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="69"/>
         <source>Pen to apply to created duplicate</source>
-        <translation type="unfinished">Sortutako bikoiztutakoari aplikatzekoa</translation>
+        <translation type="unfinished">Sortutako bikoiztuari aplikatzeko luma</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="73"/>
@@ -13034,7 +13035,7 @@ Ziur zaude aldaketak baztertuko dituzula?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="157"/>
         <source>Pen:</source>
-        <translation type="unfinished">Pen:</translation>
+        <translation type="unfinished">Luma:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="164"/>
@@ -13170,7 +13171,7 @@ Ziur zaude aldaketak baztertuko dituzula?</translation>
     <message>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse_1point_options_widget.ui" line="136"/>
         <source>Counterclockwise</source>
-        <translation type="unfinished">Counterclockwise</translation>
+        <translation type="unfinished">Erlojuaren orratzen aurkako noranzkoan</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse_1point_options_widget.ui" line="150"/>
@@ -13226,7 +13227,7 @@ Ziur zaude aldaketak baztertuko dituzula?</translation>
     <message>
         <location filename="../src/ui/action_options/curve/lc_ellipse_arc_options_widget.ui" line="85"/>
         <source>Counterclockwise</source>
-        <translation type="unfinished">Counterclockwise</translation>
+        <translation type="unfinished">Erlojuaren orratzen aurkako noranzkoan</translation>
     </message>
 </context>
 <context>
@@ -13244,7 +13245,7 @@ Ziur zaude aldaketak baztertuko dituzula?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_ellipse.ui" line="59"/>
         <source>Center (x):</source>
-        <translation>Zentrua (x):</translation>
+        <translation>Zentroa (x):</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_ellipse.ui" line="81"/>
@@ -13259,7 +13260,7 @@ Ziur zaude aldaketak baztertuko dituzula?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_ellipse.ui" line="119"/>
         <source>Center (y):</source>
-        <translation>Zentrua (y):</translation>
+        <translation>Zentroa (y):</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_ellipse.ui" line="141"/>
@@ -13389,7 +13390,7 @@ Ziur zaude aldaketak baztertuko dituzula?</translation>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="82"/>
         <source>Polyline</source>
-        <translation type="unfinished">Polilerroa</translation>
+        <translation type="unfinished">Polilinea</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="83"/>
@@ -13469,7 +13470,7 @@ Ziur zaude aldaketak baztertuko dituzula?</translation>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="98"/>
         <source>Hatch</source>
-        <translation type="unfinished">Hatch</translation>
+        <translation type="unfinished">Marradura</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="99"/>
@@ -13733,7 +13734,7 @@ Ziur zaude aldaketak baztertuko dituzula?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="245"/>
         <source>Line Width</source>
-        <translation type="unfinished">Marra-zabalera</translation>
+        <translation type="unfinished">Lerro-lodiera</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="245"/>
@@ -14631,7 +14632,7 @@ Eraikuntza-geruza baten edukia ez litzateke inprimatu behar.</translation>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="183"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="221"/>
         <source>Default Pen</source>
-        <translation>Arkatz lehenetsia</translation>
+        <translation>Luma lehenetsia</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="200"/>
@@ -14962,12 +14963,12 @@ Eraikuntza-geruza baten edukia ez litzateke inprimatu behar.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="599"/>
         <source>Pens that will be set for newly created layers of different types.</source>
-        <translation>Sortu berri diren geruza ezberdinetarako ezarritako arkatzak.</translation>
+        <translation>Mota desberdinetako geruza berrietarako ezarriko diren lumak.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="602"/>
         <source>Default Pens</source>
-        <translation>Arkatz lehenetsiak</translation>
+        <translation>Luma lehenetsiak</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="68"/>
@@ -15571,7 +15572,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="80"/>
         <source>Snap Distance</source>
-        <translation type="unfinished">Atxikitu distantzia</translation>
+        <translation type="unfinished">Atxikitu distantzian</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="95"/>
@@ -15581,7 +15582,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="95"/>
         <source>Defines which part of created line will be snapped to intersection point</source>
-        <translation type="unfinished">Sortutako lerroaren zein zati moztuko den ebakitzeko puntura</translation>
+        <translation type="unfinished">Sortutako lerroaren zein zati atxikiko den ebakidura-puntura zehazten du</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="102"/>
@@ -15591,7 +15592,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="102"/>
         <source>Offset of tick snap point from intersection point</source>
-        <translation type="unfinished">Ebakidura-puntutik puntu-puntu bateko puntu-puntuaren desplazamendua</translation>
+        <translation type="unfinished">Markaren atxikitze-puntuaren desplazamendua ebakidura-puntutik</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="108"/>
@@ -15708,12 +15709,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="212"/>
         <source>Pick snap distance from drawing</source>
-        <translation type="unfinished">Hartu distantzia bat marrazkitik</translation>
+        <translation type="unfinished">Hartu atxikitze-distantzia marrazkitik</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="226"/>
         <source>Tick Snap:</source>
-        <translation type="unfinished">Markatu angeluetan:</translation>
+        <translation type="unfinished">Markaren atxikitzea:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="233"/>
@@ -15723,12 +15724,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="265"/>
         <source>Offset of tick snap point from intersection point</source>
-        <translation type="unfinished">Ebakidura-puntutik puntu-puntu bateko puntu-puntuaren desplazamendua</translation>
+        <translation type="unfinished">Markaren atxikitze-puntuaren desplazamendua ebakidura-puntutik</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="272"/>
         <source>Defines which part of created line will be snapped to intersection point</source>
-        <translation type="unfinished">Sortutako lerroaren zein zati moztuko den ebakitzeko puntura</translation>
+        <translation type="unfinished">Sortutako lerroaren zein zati atxikiko den ebakidura-puntura zehazten du</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="294"/>
@@ -15827,7 +15828,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="48"/>
         <source>To Intersection</source>
-        <translation type="unfinished">Intersekziora</translation>
+        <translation type="unfinished">Ebakidurara</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="49"/>
@@ -15852,7 +15853,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="66"/>
         <source>Offset for created line from intersection point</source>
-        <translation type="unfinished">Sortutako lerroa ebakitze-puntutik</translation>
+        <translation type="unfinished">Sortutako lerroaren desplazamendua ebakidura-puntutik</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="73"/>
@@ -15960,7 +15961,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="259"/>
         <source>Offset for created line from intersection point</source>
-        <translation type="unfinished">Sortutako lerroa ebakitze-puntutik</translation>
+        <translation type="unfinished">Sortutako lerroaren desplazamendua ebakidura-puntutik</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="266"/>
@@ -15980,7 +15981,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="322"/>
         <source>To Intersection</source>
-        <translation type="unfinished">Intersekziora</translation>
+        <translation type="unfinished">Ebakidurara</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="327"/>
@@ -16112,7 +16113,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="61"/>
         <source>Gap Snap:</source>
-        <translation type="unfinished">Markatu tarteetan:</translation>
+        <translation type="unfinished">Tartearen atxikitzea:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="68"/>
@@ -16181,7 +16182,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="191"/>
         <source>Pick snap distance from drawing</source>
-        <translation type="unfinished">Hartu distantzia bat marrazkitik</translation>
+        <translation type="unfinished">Hartu atxikitze-distantzia marrazkitik</translation>
     </message>
 </context>
 <context>
@@ -16226,7 +16227,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="58"/>
         <source>Active Pen</source>
-        <translation type="unfinished">Arkatza aktibo</translation>
+        <translation type="unfinished">Luma aktiboa</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="61"/>
@@ -16246,12 +16247,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="78"/>
         <source>Polyline</source>
-        <translation type="unfinished">Polilerroa</translation>
+        <translation type="unfinished">Polilinea</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="78"/>
         <source>If checked, polyline will be created instead of individual lines</source>
-        <translation type="unfinished">Hautatzen bada, polilerroa sortuko da lerro indibidualen ordez</translation>
+        <translation type="unfinished">Hautatzen bada, polilinea sortuko da lerro indibidualen ordez</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="89"/>
@@ -16274,12 +16275,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="38"/>
         <source>If checked, polyline will be created instead of individual lines</source>
-        <translation type="unfinished">Hautatzen bada, polilerroa sortuko da lerro indibidualen ordez</translation>
+        <translation type="unfinished">Hautatzen bada, polilinea sortuko da lerro indibidualen ordez</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="41"/>
         <source>Create Polyline</source>
-        <translation type="unfinished">Sortu polilerroa</translation>
+        <translation type="unfinished">Sortu polilinea</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="66"/>
@@ -16327,7 +16328,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="164"/>
         <source>Active Pen</source>
-        <translation type="unfinished">Arkatza aktibo</translation>
+        <translation type="unfinished">Luma aktiboa</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="169"/>
@@ -17033,12 +17034,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="64"/>
         <source>Polyline</source>
-        <translation type="unfinished">Polilerroa</translation>
+        <translation type="unfinished">Polilinea</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="65"/>
         <source>Creates polyline from line segments</source>
-        <translation type="unfinished">Lerro-segmentuetatik polilerroa sortzen du</translation>
+        <translation type="unfinished">Lerro-segmentuetatik polilinea sortzen du</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="72"/>
@@ -17168,12 +17169,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="321"/>
         <source>Creates polyline from line segments</source>
-        <translation type="unfinished">Lerro-segmentuetatik polilerroa sortzen du</translation>
+        <translation type="unfinished">Lerro-segmentuetatik polilinea sortzen du</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="324"/>
         <source>Polyline</source>
-        <translation type="unfinished">Polilerroa</translation>
+        <translation type="unfinished">Polilinea</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="331"/>
@@ -17539,7 +17540,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_base.h" line="57"/>
         <source>Line Width</source>
-        <translation type="unfinished">Marra-zabalera</translation>
+        <translation type="unfinished">Lerro-lodiera</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_base.h" line="57"/>
@@ -17638,7 +17639,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_circle.cpp" line="54"/>
         <source>Area</source>
-        <translation type="unfinished">Area</translation>
+        <translation type="unfinished">Azalera</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_circle.cpp" line="54"/>
@@ -19150,7 +19151,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimlinear.cpp" line="72"/>
         <source>Oblique</source>
-        <translation type="unfinished">Oblique</translation>
+        <translation type="unfinished">Zeiharra</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimlinear.cpp" line="72"/>
@@ -19188,7 +19189,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimordinate.cpp" line="43"/>
         <source>Ordinate</source>
-        <translation type="unfinished">Ordinate</translation>
+        <translation type="unfinished">Ordenatua</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimordinate.cpp" line="43"/>
@@ -19386,7 +19387,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_ellipse.cpp" line="61"/>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_ellipse.cpp" line="61"/>
         <source>Area</source>
-        <translation type="unfinished">Area</translation>
+        <translation type="unfinished">Azalera</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_ellipse.cpp" line="65"/>
@@ -19474,7 +19475,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_hatch.cpp" line="29"/>
         <source>Hatch</source>
-        <translation type="unfinished">Hatch</translation>
+        <translation type="unfinished">Marradura</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_hatch.cpp" line="34"/>
@@ -19711,7 +19712,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_hyperbola.cpp" line="102"/>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_hyperbola.cpp" line="102"/>
         <source>Area</source>
-        <translation type="unfinished">Area</translation>
+        <translation type="unfinished">Azalera</translation>
     </message>
 </context>
 <context>
@@ -20373,7 +20374,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_polyline.cpp" line="29"/>
         <source>Polyline</source>
-        <translation type="unfinished">Polilerroa</translation>
+        <translation type="unfinished">Polilinea</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_polyline.cpp" line="33"/>
@@ -20773,7 +20774,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_text.cpp" line="78"/>
         <source>Baseline</source>
-        <translation type="unfinished">Baseline</translation>
+        <translation type="unfinished">Oinarri-lerroa</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_text.cpp" line="79"/>
@@ -20853,7 +20854,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="143"/>
         <source>Polyline</source>
-        <translation type="unfinished">Polilerroa</translation>
+        <translation type="unfinished">Polilinea</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="147"/>
@@ -20873,12 +20874,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="159"/>
         <source>Polygon</source>
-        <translation type="unfinished">Polygon</translation>
+        <translation type="unfinished">Poligonoa</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="162"/>
         <source>Polyline/Spline</source>
-        <translation type="unfinished">Polilerroa/Spline</translation>
+        <translation type="unfinished">Polilinea/Spline</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="173"/>
@@ -21036,7 +21037,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="763"/>
         <source>Modify Polyline</source>
-        <translation type="unfinished">Aldatu polilerroa</translation>
+        <translation type="unfinished">Aldatu polilinea</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="815"/>
@@ -21159,76 +21160,76 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="212"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="246"/>
         <source>&amp;Line</source>
-        <translation type="unfinished">&amp;Linea</translation>
+        <translation type="unfinished">&amp;Lerroa</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="178"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="213"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="247"/>
         <source>Poin&amp;t</source>
-        <translation type="unfinished">Poin&amp;t</translation>
+        <translation type="unfinished">Pun&amp;tua</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="182"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="214"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="248"/>
         <source>&amp;Circle</source>
-        <translation type="unfinished">&amp;Circle</translation>
+        <translation type="unfinished">&amp;Zirkulua</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="186"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="215"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="250"/>
         <source>&amp;Arc</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Arkua</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="190"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="217"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="252"/>
         <source>Poly&amp;gon</source>
-        <translation type="unfinished">Poly&amp;gon</translation>
+        <translation type="unfinished">Poli&amp;gonoa</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="194"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="219"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="254"/>
         <source>Splin&amp;e</source>
-        <translation type="unfinished">Splin &amp;e</translation>
+        <translation type="unfinished">Splin&amp;e</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="198"/>
         <source>Ellip&amp;se</source>
-        <translation type="unfinished">Ellip &amp;se</translation>
+        <translation type="unfinished">Elip&amp;sea</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="202"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="221"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="258"/>
         <source>&amp;Polyline</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Polilinea</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="206"/>
         <source>&amp;Other</source>
-        <translation type="unfinished">&amp; Bestelakoak</translation>
+        <translation type="unfinished">&amp;Bestelakoak</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="211"/>
         <source>&amp;Draw</source>
-        <translation type="unfinished">&amp;Draw</translation>
+        <translation type="unfinished">&amp;Marraztu</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="220"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="256"/>
         <source>&amp;Ellipse</source>
-        <translation type="unfinished">&amp; Elipsea</translation>
+        <translation type="unfinished">&amp;Elipsea</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="223"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="265"/>
         <source>Ot&amp;her</source>
-        <translation type="unfinished">Ot&amp;her</translation>
+        <translation type="unfinished">Bes&amp;te batzuk</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="228"/>
@@ -21240,18 +21241,18 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="230"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="270"/>
         <source>&amp;Order</source>
-        <translation type="unfinished">&amp;Order</translation>
+        <translation type="unfinished">&amp;Ordena</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="234"/>
         <source>&amp;Dimensions</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Kotak</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="238"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="269"/>
         <source>&amp;Info</source>
-        <translation type="unfinished">&amp;Info</translation>
+        <translation type="unfinished">&amp;Informazioa</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="244"/>
@@ -21261,7 +21262,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="263"/>
         <source>Dime&amp;nsion</source>
-        <translation type="unfinished">Dime &amp;nsion</translation>
+        <translation type="unfinished">&amp;Kota</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="276"/>
@@ -21356,7 +21357,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="598"/>
         <source>&amp;Layout</source>
-        <translation type="unfinished">&amp;Layout</translation>
+        <translation type="unfinished">&amp;Diseinua</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="602"/>
@@ -22752,7 +22753,7 @@ Abisua: ekintza hau ezin da desegin!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="282"/>
         <source>0.80mm</source>
-        <translation>0,0mm</translation>
+        <translation>0.80mm</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="283"/>
@@ -22797,7 +22798,7 @@ Abisua: ekintza hau ezin da desegin!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="300"/>
         <source>No Pen</source>
-        <translation>Penik ez</translation>
+        <translation>Lumarik ez</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="301"/>
@@ -22807,37 +22808,37 @@ Abisua: ekintza hau ezin da desegin!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="302"/>
         <source>Dot</source>
-        <translation>Dot</translation>
+        <translation>Puntua</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="303"/>
         <source>Dot (tiny)</source>
-        <translation>Puntua (txikia)</translation>
+        <translation>Puntua (oso txikia)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="304"/>
         <source>Dot (small)</source>
-        <translation>Dot (txikia)</translation>
+        <translation>Puntua (txikia)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="305"/>
         <source>Dot (large)</source>
-        <translation>Dot (handia)</translation>
+        <translation>Puntua (handia)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="306"/>
         <source>Dash</source>
-        <translation>Dash</translation>
+        <translation>Marra</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="307"/>
         <source>Dash (tiny)</source>
-        <translation>Marra (txikia)</translation>
+        <translation>Marra (oso txikia)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="308"/>
         <source>Dash (small)</source>
-        <translation>Marratxoa (txikia)</translation>
+        <translation>Marra (txikia)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="309"/>
@@ -22872,27 +22873,27 @@ Abisua: ekintza hau ezin da desegin!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="311"/>
         <source>Dash Dot (tiny)</source>
-        <translation>Marra-puntua (txikia)</translation>
+        <translation>Marra-puntua (oso txikia)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="312"/>
         <source>Dash Dot (small)</source>
-        <translation>Marratxoa (txikia)</translation>
+        <translation>Marra-puntua (txikia)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="313"/>
         <source>Dash Dot (large)</source>
-        <translation>Marratxoa (handia)</translation>
+        <translation>Marra-puntua (handia)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="314"/>
         <source>Divide</source>
-        <translation>Zatitu</translation>
+        <translation>Zatiketa</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="315"/>
         <source>Divide (tiny)</source>
-        <translation>Zatiketa (oraindik)</translation>
+        <translation>Zatiketa (oso txikia)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="316"/>
@@ -22912,17 +22913,17 @@ Abisua: ekintza hau ezin da desegin!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="319"/>
         <source>Center (tiny)</source>
-        <translation>Erdialdea (tiny)</translation>
+        <translation>Zentroa (oso txikia)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="320"/>
         <source>Center (small)</source>
-        <translation>Zentratua (txikia)</translation>
+        <translation>Zentroa (txikia)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="321"/>
         <source>Center (large)</source>
-        <translation>Erdialdea (handia)</translation>
+        <translation>Zentroa (handia)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="326"/>
@@ -22952,7 +22953,7 @@ Abisua: ekintza hau ezin da desegin!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="323"/>
         <source>Border (tiny)</source>
-        <translation>Ertza (tiny)</translation>
+        <translation>Ertza (oso txikia)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="324"/>
@@ -23060,7 +23061,7 @@ Abisua: ekintza hau ezin da desegin!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettemodel.cpp" line="230"/>
         <source>Line Width:</source>
-        <translation>Lerroaren zabalera:</translation>
+        <translation>Lerro-lodiera:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettemodel.cpp" line="233"/>
@@ -23104,12 +23105,12 @@ Abisua: ekintza hau ezin da desegin!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="221"/>
         <source>Line Width Icon</source>
-        <translation>Lerro-zabaleraren ikonoa</translation>
+        <translation>Lerro-lodieraren ikonoa</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="228"/>
         <source>Line Width Name</source>
-        <translation>Marra-zabaleraren izena</translation>
+        <translation>Lerro-lodieraren izena</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="66"/>
@@ -23125,17 +23126,17 @@ Abisua: ekintza hau ezin da desegin!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="46"/>
         <source>Active Pen Background:</source>
-        <translation>Atzeko plano aktiboa:</translation>
+        <translation>Luma aktiboaren atzeko planoa:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="76"/>
         <source>If set, bold font is used for all elements of active pen item (otherwise, only for name)</source>
-        <translation>Ezarrita badago, letra-tipo lodia erabiltzen da boligrafo aktiboaren elementu guztietan (bestela, izena bakarrik)</translation>
+        <translation>Ezarrita badago, letra lodia erabiltzen da luma aktiboaren elementu guztietan (bestela, izenean soilik)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="79"/>
         <source>Entire table row is bold for active pen</source>
-        <translation>Mahaiaren errenkada osoa ausarta da luma aktiboarentzat</translation>
+        <translation>Taulako errenkada osoa letra lodiz agertzen da luma aktiboarentzat</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="96"/>
@@ -23160,7 +23161,7 @@ Abisua: ekintza hau ezin da desegin!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="297"/>
         <source>If set, filter will igore the case of pen&apos;s name</source>
-        <translation>Ezarriz gero, iragazkia igo egingo da lumaren izenaren kasuan</translation>
+        <translation>Ezarrita badago, iragazkiak ez ditu maiuskulak eta minuskulak bereiziko lumaren izenean</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="300"/>
@@ -23250,7 +23251,7 @@ Abisua: ekintza hau ezin da desegin!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.cpp" line="54"/>
         <source>Select entities by drawing pen</source>
-        <translation>Hautatu entitateak luma marraztuz</translation>
+        <translation>Hautatu entitateak marrazki-lumaren arabera</translation>
     </message>
 </context>
 <context>
@@ -23263,17 +23264,17 @@ Abisua: ekintza hau ezin da desegin!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="49"/>
         <source>Fill Pen Editor by Entity Drawing Pen</source>
-        <translation>Bete arkatzaren editorea entitatearen marrazkiaren arabera</translation>
+        <translation>Bete luma-editorea entitatearen marrazki-lumarekin</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="66"/>
         <source>Fill Pen Editor by Entity Attributes</source>
-        <translation>Bete arkatzaren editorea entitatearen atributuen arabera</translation>
+        <translation>Bete luma-editorea entitatearen atributuekin</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="83"/>
         <source>Select Entities By Drawing Pen</source>
-        <translation>Hautatu entitateak arkatza marraztuz</translation>
+        <translation>Hautatu entitateak marrazki-lumaren arabera</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="100"/>
@@ -23289,12 +23290,12 @@ Abisua: ekintza hau ezin da desegin!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="137"/>
         <source>Apply Pen To Selection</source>
-        <translation>Aplikatu arkatza hautapenari</translation>
+        <translation>Aplikatu luma hautapenari</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="154"/>
         <source>Fill Editor Pen by Current Pen</source>
-        <translation>Bete editorearen arkatza uneko arkatzaren arabera</translation>
+        <translation>Bete editoreko luma uneko lumarekin</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="171"/>
@@ -23309,12 +23310,12 @@ Abisua: ekintza hau ezin da desegin!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="188"/>
         <source>Update Current Pen by Active Layer&apos; Pen</source>
-        <translation>Eguneratu uneko arkatza geruza aktiboaren arkatzaren arabera</translation>
+        <translation>Eguneratu uneko luma geruza aktiboaren lumaren arabera</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="205"/>
         <source>Fill Pen Editor from Active Layer&apos;s Pen</source>
-        <translation>Bete arkatzaren editorea geruza aktiboaren arkatzaren arabera</translation>
+        <translation>Bete luma-editorea geruza aktiboaren lumarekin</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="208"/>
@@ -23324,7 +23325,7 @@ Abisua: ekintza hau ezin da desegin!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="222"/>
         <source>Apply Editor Pen to Active Layer Pen</source>
-        <translation>Aplikatu editorearen arkatza geruza aktiboaren arkatzari</translation>
+        <translation>Aplikatu editoreko luma geruza aktiboaren lumari</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="225"/>
@@ -23339,7 +23340,7 @@ Abisua: ekintza hau ezin da desegin!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="242"/>
         <source>Delete Pen</source>
-        <translation>Ezabatu</translation>
+        <translation>Ezabatu luma</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="339"/>
@@ -23364,7 +23365,7 @@ Abisua: ekintza hau ezin da desegin!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="402"/>
         <source>Pen Name:</source>
-        <translation>Izena:</translation>
+        <translation>Lumaren izena:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="436"/>
@@ -23384,7 +23385,7 @@ Abisua: ekintza hau ezin da desegin!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="518"/>
         <source>Filtering pens by name</source>
-        <translation>Izenez arkatzak iragaztea</translation>
+        <translation>Lumak izenaren arabera iragaztea</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="521"/>
@@ -23404,17 +23405,17 @@ Abisua: ekintza hau ezin da desegin!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="303"/>
         <source>&amp;Apply Pen To Selection</source>
-        <translation>&amp;Aplikatu arkatza hautapenera</translation>
+        <translation>&amp;Aplikatu luma hautapenari</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="304"/>
         <source>&amp;Set As Current Pen</source>
-        <translation>Ezarri uneko arkatz gisa</translation>
+        <translation>&amp;Ezarri uneko luma gisa</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="305"/>
         <source>&amp;Apply Pen To Active Layer</source>
-        <translation>&amp;Aplikatu arkatza geruza aktiboan</translation>
+        <translation>&amp;Aplikatu luma geruza aktiboari</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="306"/>
@@ -23434,12 +23435,12 @@ Abisua: ekintza hau ezin da desegin!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="313"/>
         <source>&amp;Remove Pen</source>
-        <translation>&amp;Kendu</translation>
+        <translation>&amp;Kendu luma</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="317"/>
         <source>&amp;Remove Pens</source>
-        <translation>&amp;Kendu arkatzak</translation>
+        <translation>&amp;Kendu lumak</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="430"/>
@@ -23689,7 +23690,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_options_filler.cpp" line="37"/>
         <source>Polyline</source>
-        <translation type="unfinished">Polilerroa</translation>
+        <translation type="unfinished">Polilinea</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_options_filler.cpp" line="37"/>
@@ -23757,17 +23758,17 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_options_widget.ui" line="119"/>
         <source>Rounding radius for vertex bevel.</source>
-        <translation type="unfinished">Biribiltzeko erradioa erpin-sortarako.</translation>
+        <translation type="unfinished">Erpineko alakaren biribiltze-erradioa.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_options_widget.ui" line="126"/>
         <source>If checked, the polygon will be drawn as polyline. Otherwise, individual entities will be created. </source>
-        <translation type="unfinished">Hautatzen bada, poligonoa polilerro gisa marraztuko da. Bestela, entitate indibidualak sortuko dira.</translation>
+        <translation type="unfinished">Hautatzen bada, poligonoa polilinea gisa marraztuko da. Bestela, entitate indibidualak sortuko dira. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_options_widget.ui" line="129"/>
         <source>Polyline</source>
-        <translation type="unfinished">Polilerroa</translation>
+        <translation type="unfinished">Polilinea</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_options_widget.ui" line="143"/>
@@ -23942,12 +23943,12 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_widget.ui" line="32"/>
         <source>Polyline Options</source>
-        <translation type="unfinished">Polilerroa</translation>
+        <translation type="unfinished">Polilinearen aukerak</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_widget.ui" line="53"/>
         <source>Connects ends of the polyline so closed contour is created</source>
-        <translation type="unfinished">Polilinearen amaierak sortzen dira, hain itxitako ingurunea</translation>
+        <translation type="unfinished">Polilinearen muturrak lotzen ditu, kontorno itxia sor dadin</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_widget.ui" line="56"/>
@@ -23982,12 +23983,12 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_widget.ui" line="120"/>
         <source>Tangental arc with fixed radius</source>
-        <translation type="unfinished">Tangental arkua erradio finkoarekin</translation>
+        <translation type="unfinished">Arku tangentea erradio finkoarekin</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_widget.ui" line="140"/>
         <source>Tangental arc with fixed angle</source>
-        <translation type="unfinished">Tangental arkua angelu finkoarekin</translation>
+        <translation type="unfinished">Arku tangentea angelu finkoarekin</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_widget.ui" line="160"/>
@@ -24050,7 +24051,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_polyline.ui" line="69"/>
         <source>Defines whether polyline is closed contour</source>
-        <translation>Polilerroa itxita dagoen ala ez zehazten du</translation>
+        <translation>Polilinea itxita dagoen ala ez zehazten du</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_polyline.ui" line="72"/>
@@ -24138,7 +24139,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="72"/>
         <source>Apply Print Scale to line width</source>
-        <translation type="unfinished">Aplikatu inprimatzeko eskala marra-zabaleran</translation>
+        <translation type="unfinished">Aplikatu inprimatze-eskala lerro-lodierari</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="78"/>
@@ -24281,7 +24282,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_widget.ui" line="105"/>
         <source>Apply Print Scale to line width</source>
-        <translation type="unfinished">Aplikatu inprimatzeko eskala marra-zabaleran</translation>
+        <translation type="unfinished">Aplikatu inprimatze-eskala lerro-lodierari</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_widget.ui" line="134"/>
@@ -24414,7 +24415,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_hyperbola.cpp" line="124"/>
         <source>Invalid center coordinates</source>
-        <translation type="unfinished">Zentruaren koordenatu baliogabeak</translation>
+        <translation type="unfinished">Zentroaren koordenatu baliogabeak</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_hyperbola.cpp" line="128"/>
@@ -24445,7 +24446,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_active_pen.cpp" line="44"/>
         <source>Active Pen</source>
-        <translation type="unfinished">Arkatza aktibo</translation>
+        <translation type="unfinished">Luma aktiboa</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_active_pen.cpp" line="44"/>
@@ -24465,7 +24466,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_active_pen.cpp" line="80"/>
         <source>Line Width</source>
-        <translation type="unfinished">Marra-zabalera</translation>
+        <translation type="unfinished">Lerro-lodiera</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_active_pen.cpp" line="80"/>
@@ -24733,7 +24734,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="144"/>
         <source>Trim</source>
-        <translation type="unfinished">Trim</translation>
+        <translation type="unfinished">Moztu</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="144"/>
@@ -24835,7 +24836,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="158"/>
         <source>Tangent (P,C)</source>
-        <translation type="unfinished">Tantengea</translation>
+        <translation type="unfinished">Tangentea (P,Z)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="158"/>
@@ -24845,7 +24846,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="159"/>
         <source>Tangent (C,C)</source>
-        <translation type="unfinished">Tangentea</translation>
+        <translation type="unfinished">Tangentea (Z,Z)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="159"/>
@@ -24920,7 +24921,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="174"/>
         <source>Break/Divide</source>
-        <translation type="unfinished">Break/Divide</translation>
+        <translation type="unfinished">Eten/Zatitu</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="177"/>
@@ -25087,7 +25088,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="56"/>
         <source>Area</source>
-        <translation type="unfinished">Area</translation>
+        <translation type="unfinished">Azalera</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="56"/>
@@ -25137,7 +25138,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="79"/>
         <source>Trim</source>
-        <translation type="unfinished">Trim</translation>
+        <translation type="unfinished">Moztu</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="79"/>
@@ -25224,7 +25225,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="93"/>
         <source>Tangent (P,C)</source>
-        <translation type="unfinished">Tantengea</translation>
+        <translation type="unfinished">Tangentea (P,Z)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="93"/>
@@ -25234,7 +25235,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="94"/>
         <source>Tangent (C,C)</source>
-        <translation type="unfinished">Tangentea</translation>
+        <translation type="unfinished">Tangentea (Z,Z)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="94"/>
@@ -25284,7 +25285,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="104"/>
         <source>Break/Divide</source>
-        <translation type="unfinished">Break/Divide</translation>
+        <translation type="unfinished">Eten/Zatitu</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="108"/>
@@ -25437,7 +25438,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_aligned.cpp" line="56"/>
         <source>Baseline</source>
-        <translation type="unfinished">Baseline</translation>
+        <translation type="unfinished">Oinarri-lerroa</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_aligned.cpp" line="56"/>
@@ -26516,7 +26517,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1350"/>
         <source>Tolerances</source>
-        <translation type="unfinished">Tolerantzia</translation>
+        <translation type="unfinished">Perdoiak</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1350"/>
@@ -26921,7 +26922,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_linear.cpp" line="69"/>
         <source>Baseline</source>
-        <translation type="unfinished">Baseline</translation>
+        <translation type="unfinished">Oinarri-lerroa</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_linear.cpp" line="69"/>
@@ -27174,7 +27175,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_ellipse.cpp" line="101"/>
         <source>Area</source>
-        <translation type="unfinished">Area</translation>
+        <translation type="unfinished">Azalera</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_ellipse.cpp" line="101"/>
@@ -27245,7 +27246,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_ellipse.cpp" line="126"/>
         <source>Tangent (P,C)</source>
-        <translation type="unfinished">Tantengea</translation>
+        <translation type="unfinished">Tangentea (P,Z)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_ellipse.cpp" line="126"/>
@@ -27255,7 +27256,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_ellipse.cpp" line="127"/>
         <source>Tangent (C,C)</source>
-        <translation type="unfinished">Tangentea</translation>
+        <translation type="unfinished">Tangentea (Z,Z)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_ellipse.cpp" line="131"/>
@@ -27452,7 +27453,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="122"/>
         <source>Line Width</source>
-        <translation type="unfinished">Marra-zabalera</translation>
+        <translation type="unfinished">Lerro-lodiera</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="122"/>
@@ -28129,7 +28130,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_hatch.cpp" line="67"/>
         <source>Area</source>
-        <translation type="unfinished">Area</translation>
+        <translation type="unfinished">Azalera</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_hatch.cpp" line="67"/>
@@ -28273,7 +28274,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_hyperbola.cpp" line="117"/>
         <source>Area</source>
-        <translation type="unfinished">Area</translation>
+        <translation type="unfinished">Azalera</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_hyperbola.cpp" line="117"/>
@@ -28604,7 +28605,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_leader.cpp" line="64"/>
         <source>Vertex</source>
-        <translation type="unfinished">Vertex</translation>
+        <translation type="unfinished">Erpina</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_leader.cpp" line="64"/>
@@ -28723,7 +28724,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="104"/>
         <source>Trim</source>
-        <translation type="unfinished">Trim</translation>
+        <translation type="unfinished">Moztu</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="104"/>
@@ -28733,7 +28734,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="105"/>
         <source>Trim Two</source>
-        <translation type="unfinished">Bi</translation>
+        <translation type="unfinished">Moztu bi</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="105"/>
@@ -28944,7 +28945,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="170"/>
         <source>Bevel</source>
-        <translation type="unfinished">Bevel</translation>
+        <translation type="unfinished">Alaka</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="170"/>
@@ -28979,7 +28980,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="176"/>
         <source>Break/Divide</source>
-        <translation type="unfinished">Break/Divide</translation>
+        <translation type="unfinished">Eten/Zatitu</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="178"/>
@@ -29300,7 +29301,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_parabola.cpp" line="39"/>
         <source>Vertex</source>
-        <translation type="unfinished">Vertex</translation>
+        <translation type="unfinished">Erpina</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_parabola.cpp" line="39"/>
@@ -29467,7 +29468,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_polyline.cpp" line="60"/>
         <source>Vertex</source>
-        <translation type="unfinished">Vertex</translation>
+        <translation type="unfinished">Erpina</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_polyline.cpp" line="60"/>
@@ -30057,7 +30058,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="115"/>
         <source>Tangent (P,C)</source>
-        <translation type="unfinished">Tantengea</translation>
+        <translation type="unfinished">Tangentea (P,Z)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="115"/>
@@ -30156,7 +30157,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_text.cpp" line="65"/>
         <source>Baseline</source>
-        <translation type="unfinished">Baseline</translation>
+        <translation type="unfinished">Oinarri-lerroa</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_text.cpp" line="66"/>
@@ -30720,7 +30721,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="548"/>
         <source>Line Width</source>
-        <translation>Marra-zabalera</translation>
+        <translation>Lerro-lodiera</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="550"/>
@@ -30828,7 +30829,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="836"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1365"/>
         <source>Area</source>
-        <translation>Area</translation>
+        <translation>Azalera</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="659"/>
@@ -31192,7 +31193,7 @@ Geruza: </translation>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1071"/>
         <source>Baseline</source>
-        <translation>Baseline</translation>
+        <translation>Oinarri-lerroa</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1073"/>
@@ -31398,7 +31399,7 @@ Geruza: </translation>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1331"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1347"/>
         <source>Vertex</source>
-        <translation>Vertex</translation>
+        <translation>Erpina</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1332"/>
@@ -31533,19 +31534,19 @@ Geruza: </translation>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1528"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1545"/>
         <source>Oblique</source>
-        <translation>Oblique</translation>
+        <translation>Zeiharra</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1549"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1562"/>
         <source>DIMORDINATE</source>
-        <translation>DIMORDINATEA</translation>
+        <translation>DIMORDINATE</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1552"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1567"/>
         <source>Ordinate</source>
-        <translation>Ordinate</translation>
+        <translation>Ordenatua</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1553"/>
@@ -31768,7 +31769,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="399"/>
         <source>&amp;Collect Coordinates</source>
-        <translation>Koordenatuak</translation>
+        <translation>&amp;Bildu koordenatuak</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="701"/>
@@ -31826,7 +31827,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="84"/>
         <source>Include polyline child entities information to vertexes</source>
-        <translation>Sartu entitate polilineoen informazioavertexe-etan</translation>
+        <translation>Gehitu polilinearen ume-entitateen informazioa erpinei</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="91"/>
@@ -31866,7 +31867,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.cpp" line="44"/>
         <source>Points highlight pen</source>
-        <translation>Puntuak nabarmendu</translation>
+        <translation>Puntuak nabarmentzeko luma</translation>
     </message>
 </context>
 <context>
@@ -31979,7 +31980,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1_point_options_filler.cpp" line="83"/>
         <source>Polyline</source>
-        <translation type="unfinished">Polilerroa</translation>
+        <translation type="unfinished">Polilinea</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1_point_options_filler.cpp" line="83"/>
@@ -32002,12 +32003,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="46"/>
         <source>If checked, rectangle will be created as polyline instead of individual segments.</source>
-        <translation type="unfinished">Hautatzen bada, laukizuzena polilerro gisa sortuko da, segmentu indibidualen ordez.</translation>
+        <translation type="unfinished">Hautatzen bada, laukizuzena polilinea gisa sortuko da, segmentu indibidualen ordez.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="49"/>
         <source>Polyline</source>
-        <translation type="unfinished">Polilerroa</translation>
+        <translation type="unfinished">Polilinea</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="56"/>
@@ -32112,7 +32113,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="229"/>
         <source>Length of bevel corner for Y direction. </source>
-        <translation type="unfinished">Izkina luzea Y norabidean.</translation>
+        <translation type="unfinished">Izkinako alakaren luzera Y norabidean. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="236"/>
@@ -32132,12 +32133,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="250"/>
         <source>Bevel</source>
-        <translation type="unfinished">Bevel</translation>
+        <translation type="unfinished">Alaka</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="258"/>
         <source>If checked, specified height and width of rectangle defines distance between centers of arcs for rounding corners. Otherwise, these values defines outer size of the rectangle.</source>
-        <translation type="unfinished">Aktibatzen bada, laukizuzenaren altuerak eta zabalerak arku-zentruen arteko distantzia definitzen du biribiltzeko izkinetarako. Bestela, balio hauek laukizuzenaren kanpoko tamaina definitzen dute.</translation>
+        <translation type="unfinished">Aktibatzen bada, laukizuzenaren altuerak eta zabalerak izkinak biribiltzeko arkuen zentroen arteko distantzia definitzen dute. Bestela, balio horiek laukizuzenaren kanpoko tamaina definitzen dute.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="261"/>
@@ -32202,7 +32203,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="391"/>
         <source>Snap shift</source>
-        <translation type="unfinished">Atxikitu desplazamendua</translation>
+        <translation type="unfinished">Atxikitze-desplazamendua</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="405"/>
@@ -32227,12 +32228,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="445"/>
         <source>Pick length of bevel corner for X direction from drawing.</source>
-        <translation type="unfinished">Aukeratu ertzaren luzera X norabidean, marrazkitik.</translation>
+        <translation type="unfinished">Hartu izkinako alakaren luzera X norabidean, marrazkitik.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="459"/>
         <source>Pick length of bevel corner for Y direction from drawing.</source>
-        <translation type="unfinished">Hartu ertzaren luzera Y norabidean, marrazkitik.</translation>
+        <translation type="unfinished">Hartu izkinako alakaren luzera Y norabidean, marrazkitik.</translation>
     </message>
 </context>
 <context>
@@ -32240,7 +32241,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_filler.cpp" line="36"/>
         <source>Corner</source>
-        <translation type="unfinished">Corner</translation>
+        <translation type="unfinished">Izkina</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_filler.cpp" line="37"/>
@@ -32300,7 +32301,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_filler.cpp" line="68"/>
         <source>Polyline</source>
-        <translation type="unfinished">Polilerroa</translation>
+        <translation type="unfinished">Polilinea</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_filler.cpp" line="68"/>
@@ -32324,7 +32325,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="36"/>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="201"/>
         <source>Corner</source>
-        <translation type="unfinished">Corner</translation>
+        <translation type="unfinished">Izkina</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="41"/>
@@ -32352,7 +32353,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="62"/>
         <source>Polyline</source>
-        <translation type="unfinished">Polilerroa</translation>
+        <translation type="unfinished">Polilinea</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="69"/>
@@ -32372,7 +32373,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="83"/>
         <source>Bevel</source>
-        <translation type="unfinished">Bevel</translation>
+        <translation type="unfinished">Alaka</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="91"/>
@@ -32467,12 +32468,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="318"/>
         <source>If checked, specifies that snap points should be shifted by radius of corners.</source>
-        <translation type="unfinished">Aktibatzen bada, zehazten du kaptura-puntuak ertzen erradioaren arabera aldatu behar direla.</translation>
+        <translation type="unfinished">Aktibatzen bada, atxikitze-puntuak izkinen erradioaren arabera desplazatu behar direla zehazten du.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="321"/>
         <source>Snap shift</source>
-        <translation type="unfinished">Atxikitu desplazamendua</translation>
+        <translation type="unfinished">Atxikitze-desplazamendua</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="340"/>
@@ -32482,7 +32483,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="347"/>
         <source>End Snap:</source>
-        <translation type="unfinished">Bukaerako lotura:</translation>
+        <translation type="unfinished">Amaierako atxikitzea:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="354"/>
@@ -32550,7 +32551,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3_points_options_filler.cpp" line="64"/>
         <source>Polyline</source>
-        <translation type="unfinished">Polilerroa</translation>
+        <translation type="unfinished">Polilinea</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3_points_options_filler.cpp" line="64"/>
@@ -32573,7 +32574,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="35"/>
         <source>Polyline</source>
-        <translation type="unfinished">Polilerroa</translation>
+        <translation type="unfinished">Polilinea</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="86"/>
@@ -32628,12 +32629,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="248"/>
         <source>If checked, specifies that snap points should be shifted by radius of corners.</source>
-        <translation type="unfinished">Aktibatzen bada, zehazten du kaptura-puntuak ertzen erradioaren arabera aldatu behar direla.</translation>
+        <translation type="unfinished">Aktibatzen bada, atxikitze-puntuak izkinen erradioaren arabera desplazatu behar direla zehazten du.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="251"/>
         <source>Snap shift</source>
-        <translation type="unfinished">Atxikitu desplazamendua</translation>
+        <translation type="unfinished">Atxikitze-desplazamendua</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="258"/>
@@ -32688,7 +32689,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="382"/>
         <source>Bevel</source>
-        <translation type="unfinished">Bevel</translation>
+        <translation type="unfinished">Alaka</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="390"/>
@@ -32771,7 +32772,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_abstract_options_filler.cpp" line="58"/>
         <source>Bevel</source>
-        <translation type="unfinished">Bevel</translation>
+        <translation type="unfinished">Alaka</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_abstract_options_filler.cpp" line="62"/>
@@ -33606,7 +33607,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_round_options_filler.cpp" line="31"/>
         <source>Trim</source>
-        <translation type="unfinished">Trim</translation>
+        <translation type="unfinished">Moztu</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_round_options_filler.cpp" line="31"/>
@@ -33639,7 +33640,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_round_options_widget.ui" line="62"/>
         <source>Trim</source>
-        <translation type="unfinished">Trim</translation>
+        <translation type="unfinished">Moztu</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_round_options_widget.ui" line="85"/>
@@ -33888,7 +33889,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="74"/>
         <source>Polyline</source>
-        <translation>Polilerroa</translation>
+        <translation>Polilinea</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="81"/>
@@ -33898,7 +33899,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="88"/>
         <source>MText</source>
-        <translation>MText</translation>
+        <translation>MTestua</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="95"/>
@@ -33913,7 +33914,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="109"/>
         <source>Hatch</source>
-        <translation>Hatch</translation>
+        <translation>Marradura</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="116"/>
@@ -34131,7 +34132,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/test/lc_simpletests.cpp" line="78"/>
         <source>Insert Image</source>
-        <translation>Irudia sartu</translation>
+        <translation>Txertatu irudia</translation>
     </message>
 </context>
 <context>
@@ -34377,7 +34378,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="284"/>
         <source>Offset of tick snap point to intersection point. </source>
-        <translation type="unfinished">Puntua ebakitzeko puntuaren desplazamendua.</translation>
+        <translation type="unfinished">Markaren atxikitze-puntuaren desplazamendua ebakidura-puntuarekiko. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="291"/>
@@ -34483,7 +34484,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="50"/>
         <source>If checked, line segments will be part of polyline. Otherwise, they will be individual lines</source>
-        <translation type="unfinished">Aktibatzen bada, lerro-segmentuak polilerroa izango dira. Bestela lerro indibidualak izango dira</translation>
+        <translation type="unfinished">Aktibatzen bada, lerro-segmentuak polilinearen parte izango dira. Bestela, lerro indibidualak izango dira</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="57"/>
@@ -34571,12 +34572,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="93"/>
         <source>If checked, line segments will be part of polyline. Otherwise, they will be individual lines</source>
-        <translation type="unfinished">Aktibatzen bada, lerro-segmentuak polilerroa izango dira. Bestela lerro indibidualak izango dira</translation>
+        <translation type="unfinished">Aktibatzen bada, lerro-segmentuak polilinearen parte izango dira. Bestela, lerro indibidualak izango dira</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="96"/>
         <source>To Polyline</source>
-        <translation type="unfinished">Polilerroa</translation>
+        <translation type="unfinished">Polilineara</translation>
     </message>
 </context>
 <context>
@@ -34672,7 +34673,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="68"/>
         <source>If unchecked, original polyline will be removed, otherwise it will survive.</source>
-        <translation type="unfinished">Egiaztatu gabe, jatorrizko polilerroa kenduko da, bestela bizirik aterako da.</translation>
+        <translation type="unfinished">Aktibatuta ez badago, jatorrizko polilinea kendu egingo da; bestela, mantendu egingo da.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="71"/>
@@ -35085,12 +35086,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/polygon/lc_star_options_widget.ui" line="82"/>
         <source>If checked, the star will be drawn as polyline. </source>
-        <translation type="unfinished">Aktibatzen bada, izarra polilerroa bezala marraztuko da.</translation>
+        <translation type="unfinished">Aktibatzen bada, izarra polilinea gisa marraztuko da. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_star_options_widget.ui" line="85"/>
         <source>Polyline</source>
-        <translation type="unfinished">Polilerroa</translation>
+        <translation type="unfinished">Polilinea</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_star_options_widget.ui" line="92"/>
@@ -35403,7 +35404,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="53"/>
         <source>Pen</source>
-        <translation>Pen</translation>
+        <translation>Luma</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="69"/>
@@ -35413,7 +35414,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="75"/>
         <source>Snap Selection</source>
-        <translation>Atxikitu hautapena</translation>
+        <translation>Atxikitze-hautapena</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="86"/>
@@ -35485,7 +35486,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="329"/>
         <source>Polygon</source>
-        <translation>Polygon</translation>
+        <translation>Poligonoa</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="330"/>
@@ -35510,7 +35511,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="334"/>
         <source>Polyline</source>
-        <translation>Polilerroa</translation>
+        <translation>Polilinea</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="335"/>
@@ -35573,7 +35574,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="364"/>
         <source>Splines</source>
-        <translation>Splines</translation>
+        <translation>Spline-ak</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="366"/>
@@ -35583,7 +35584,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="367"/>
         <source>PolyLines</source>
-        <translation>Polilerroa</translation>
+        <translation>Polilineak</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="369"/>
@@ -35621,7 +35622,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_trim_amount_options_filler.cpp" line="31"/>
         <source>The input length is used as total length after trimming, instead of length increase</source>
-        <translation type="unfinished">Jarritako luzera luzera osoa bezala erabiliko da, luzera luzatu ordez.</translation>
+        <translation type="unfinished">Sartutako luzera moztu ondoko luzera osotzat erabiltzen da, ez luzera-gehikuntzatzat.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_trim_amount_options_filler.cpp" line="37"/>
@@ -35636,12 +35637,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_trim_amount_options_filler.cpp" line="43"/>
         <source>Trim</source>
-        <translation type="unfinished">Trim</translation>
+        <translation type="unfinished">Moztu</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_trim_amount_options_filler.cpp" line="43"/>
         <source>If checked, trim/extension is performed for both sides of line.</source>
-        <translation type="unfinished">Aktibatzen bada, marraren bi aldeetarako trim/extensioa egiten da.</translation>
+        <translation type="unfinished">Aktibatzen bada, lerroaren bi aldeetan egiten da moztea/luzatzea.</translation>
     </message>
 </context>
 <context>
@@ -35649,7 +35650,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_trim_amount_options_widget.ui" line="20"/>
         <source>Trim Amount Options</source>
-        <translation type="unfinished">Moztu Aukerak</translation>
+        <translation type="unfinished">Mozte-kopuruaren aukerak</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_trim_amount_options_widget.ui" line="23"/>
@@ -35659,7 +35660,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_trim_amount_options_widget.ui" line="50"/>
         <source>The input length is used as total length after trimming, instead of length increase</source>
-        <translation type="unfinished">Jarritako luzera luzera osoa bezala erabiliko da, luzera luzatu ordez.</translation>
+        <translation type="unfinished">Sartutako luzera moztu ondoko luzera osotzat erabiltzen da, ez luzera-gehikuntzatzat.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_trim_amount_options_widget.ui" line="53"/>
@@ -35674,7 +35675,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_trim_amount_options_widget.ui" line="97"/>
         <source>Distance. Negative values for trimming, positive values for extending. Negative sign is ignored when trimming to final total length.</source>
-        <translation type="unfinished">Distantzia: Balio negatiboak mozteko, positiboak luzatzeko. Balio negatikoak alde batera utziko dira mozterako orduan.</translation>
+        <translation type="unfinished">Distantzia. Balio negatiboak mozteko, positiboak luzatzeko. Zeinu negatiboa ez da kontuan hartzen azken luzera osora moztean.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_trim_amount_options_widget.ui" line="110"/>
@@ -35684,7 +35685,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_trim_amount_options_widget.ui" line="137"/>
         <source>If checked, trim/extension is performed for both sides of line.</source>
-        <translation type="unfinished">Aktibatzen bada, marraren bi aldeetarako trim/extensioa egiten da.</translation>
+        <translation type="unfinished">Aktibatzen bada, lerroaren bi aldeetan egiten da moztea/luzatzea.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_trim_amount_options_widget.ui" line="140"/>
@@ -36032,7 +36033,7 @@ Abisua: ekintza hau ezin da desegin!</translation>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="132"/>
         <source>Polygon</source>
-        <translation>Polygon</translation>
+        <translation>Poligonoa</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="133"/>
@@ -36047,7 +36048,7 @@ Abisua: ekintza hau ezin da desegin!</translation>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="137"/>
         <source>Polyline</source>
-        <translation>Polilerroa</translation>
+        <translation>Polilinea</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="139"/>
@@ -36108,7 +36109,7 @@ Abisua: ekintza hau ezin da desegin!</translation>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="174"/>
         <source>Pens</source>
-        <translation>Pens</translation>
+        <translation>Lumak</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="188"/>
@@ -36709,7 +36710,7 @@ Baimenak ikusi.
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="242"/>
         <source>Draft Mode</source>
-        <translation>Draft Modua</translation>
+        <translation>Zirriborro modua</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1089"/>
@@ -37204,7 +37205,7 @@ The original opens in a separate document. Mixed encodings and raw metadata are 
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dimensionlabeleditor.ui" line="124"/>
         <source>Insert:</source>
-        <translation>Sartu:</translation>
+        <translation>Txertatu:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dimensionlabeleditor.ui" line="69"/>
@@ -37296,7 +37297,7 @@ The original opens in a separate document. Mixed encodings and raw metadata are 
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.ui" line="76"/>
         <source>Apply attributes also to all sub-entities of selected INSERT.
 This recursively modifies all entities of the Block itself.</source>
-        <translation>Aplikatu atributuak hautatutako INSERTaren azpi-entitate guztiei ere.
+        <translation>Aplikatu atributuak hautatutako txertaketaren (INSERT) azpi-entitate guztiei ere.
 Honek errekurtsiboki aldatzen ditu blokearen beraren entitate guztiak.</translation>
     </message>
     <message>
@@ -37307,7 +37308,7 @@ Honek errekurtsiboki aldatzen ditu blokearen beraren entitate guztiak.</translat
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.cpp" line="61"/>
         <source>Pen</source>
-        <translation>Pen</translation>
+        <translation>Luma</translation>
     </message>
 </context>
 <context>
@@ -37315,7 +37316,7 @@ Honek errekurtsiboki aldatzen ditu blokearen beraren entitate guztiak.</translat
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="14"/>
         <source>Choose Hatch Attributes</source>
-        <translation>Aukeratu itzaleztaduraren atributuak</translation>
+        <translation>Aukeratu marraduraren atributuak</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="22"/>
@@ -37325,7 +37326,7 @@ Honek errekurtsiboki aldatzen ditu blokearen beraren entitate guztiak.</translat
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="28"/>
         <source>Scale factor for hatch pattern</source>
-        <translation>Itzaleztadura-ereduaren eskala-faktorea</translation>
+        <translation>Marradura-ereduaren eskala-faktorea</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="35"/>
@@ -37340,12 +37341,12 @@ Honek errekurtsiboki aldatzen ditu blokearen beraren entitate guztiak.</translat
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="55"/>
         <source>Rotation angle for the hatch</source>
-        <translation>Itzaleztaduraren biraketa-angelua</translation>
+        <translation>Marraduraren biraketa-angelua</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="62"/>
         <source>If checked, solid will will be used instead of pattern hatch</source>
-        <translation>Aktibatzen bada, betegarri solidoa erabiliko da eredudun itzaleztaduraren ordez</translation>
+        <translation>Aktibatzen bada, betegarri solidoa erabiliko da eredudun marraduraren ordez</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="65"/>
@@ -37355,7 +37356,7 @@ Honek errekurtsiboki aldatzen ditu blokearen beraren entitate guztiak.</translat
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="72"/>
         <source>Pattern of hatch</source>
-        <translation>Itzaleztaduraren eredua</translation>
+        <translation>Marraduraren eredua</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="95"/>
@@ -37375,12 +37376,12 @@ Honek errekurtsiboki aldatzen ditu blokearen beraren entitate guztiak.</translat
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="117"/>
         <source>Area</source>
-        <translation>Area</translation>
+        <translation>Azalera</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="124"/>
         <source>Hatched area</source>
-        <translation>Itzaleztatutako eremua</translation>
+        <translation>Marratutako eremua</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.cpp" line="213"/>
@@ -37581,7 +37582,7 @@ Honek errekurtsiboki aldatzen ditu blokearen beraren entitate guztiak.</translat
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="860"/>
         <source>Insert Symbol</source>
-        <translation>Sinboloa sartu</translation>
+        <translation>Txertatu ikurra</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="881"/>
@@ -37661,7 +37662,7 @@ Honek errekurtsiboki aldatzen ditu blokearen beraren entitate guztiak.</translat
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="961"/>
         <source>Insert Unicode</source>
-        <translation>Sartu Unicode</translation>
+        <translation>Txertatu Unicode karakterea</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="967"/>
@@ -38226,7 +38227,7 @@ Honek errekurtsiboki aldatzen ditu blokearen beraren entitate guztiak.</translat
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1583"/>
         <source>Selected character preview. Click to insert to text.</source>
-        <translation>Hautatutako karaktereen aurrebista. Egin klik testua sartzeko.</translation>
+        <translation>Hautatutako karakterearen aurrebista. Egin klik testuan txertatzeko.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="876"/>
@@ -38266,7 +38267,7 @@ Honek errekurtsiboki aldatzen ditu blokearen beraren entitate guztiak.</translat
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.cpp" line="250"/>
         <source>Pen</source>
-        <translation>Pen</translation>
+        <translation>Luma</translation>
     </message>
 </context>
 <context>
@@ -38627,7 +38628,7 @@ Honek errekurtsiboki aldatzen ditu blokearen beraren entitate guztiak.</translat
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="723"/>
         <source>&amp;Grid</source>
-        <translation>&amp;Grid</translation>
+        <translation>&amp;Sareta</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2007"/>
@@ -38637,7 +38638,7 @@ Honek errekurtsiboki aldatzen ditu blokearen beraren entitate guztiak.</translat
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2013"/>
         <source>Splines</source>
-        <translation>Splines</translation>
+        <translation>Spline-ak</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2056"/>
@@ -38780,12 +38781,12 @@ Honek errekurtsiboki aldatzen ditu blokearen beraren entitate guztiak.</translat
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="637"/>
         <source>Counterclockwise, 90 degrees is north.</source>
-        <translation>90 gradu iparraldera.</translation>
+        <translation>Erlojuaren orratzen aurkako noranzkoan; 90 graduak iparraldea adierazten du.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="666"/>
         <source>Clockwise, 90 degrees is sourth.</source>
-        <translation>Erlojuaren noranzkoan, 90 gradu lehor dago.</translation>
+        <translation>Erlojuaren orratzen noranzkoan; 90 graduak hegoaldea adierazten du.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="753"/>
@@ -38800,7 +38801,7 @@ Honek errekurtsiboki aldatzen ditu blokearen beraren entitate guztiak.</translat
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="775"/>
         <source>Left isometric grid</source>
-        <translation>Ezkerreko sare isometrikoa</translation>
+        <translation>Ezkerreko sareta isometrikoa</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="778"/>
@@ -38854,7 +38855,7 @@ Honek errekurtsiboki aldatzen ditu blokearen beraren entitate guztiak.</translat
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="886"/>
         <source>Draw Meta Grid:</source>
-        <translation>Marraztu meta-sarea:</translation>
+        <translation>Marraztu meta-sareta:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="917"/>
@@ -38874,7 +38875,7 @@ Honek errekurtsiboki aldatzen ditu blokearen beraren entitate guztiak.</translat
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1038"/>
         <source>Select or enter values for grid spacing (they will affect Grid drawing and Snap to Grid):</source>
-        <translation>Hautatu edo sartu sareta-tartearen balioak (saretaren marrazkiari eragingo diote eta sarera atxiki):</translation>
+        <translation>Hautatu edo sartu sareta-tartearen balioak (saretaren marrazketari eta saretara atxikitzeari eragingo diote):</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1066"/>
@@ -39457,7 +39458,7 @@ Honek errekurtsiboki aldatzen ditu blokearen beraren entitate guztiak.</translat
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5966"/>
         <source>Hatch Patterns:</source>
-        <translation>Itzaleztadura-ereduak:</translation>
+        <translation>Marradura-ereduak:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5990"/>
@@ -39518,7 +39519,7 @@ Honek errekurtsiboki aldatzen ditu blokearen beraren entitate guztiak.</translat
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="985"/>
         <source>A&amp;utomatically scale grid</source>
-        <translation>Eskala-sarea</translation>
+        <translation>Eskalatu sareta a&amp;utomatikoki</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1123"/>
@@ -39610,12 +39611,12 @@ Honek errekurtsiboki aldatzen ditu blokearen beraren entitate guztiak.</translat
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5147"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Temporarily toggle free snapping when the spacebar is pressed and the command window is activated&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt; Denbora-tartea sakatzen denean eta komando-leihoa aktibatzen denean &apos;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Txandakatu aldi baterako atxikitze librea espazio-barra sakatzen denean eta komando-leihoa aktibatuta dagoenean&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5277"/>
         <source>Left  Isometric Grid</source>
-        <translation>Ezkerreko sare isometrikoa</translation>
+        <translation>Ezkerreko sareta isometrikoa</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5267"/>
@@ -39636,7 +39637,7 @@ Honek errekurtsiboki aldatzen ditu blokearen beraren entitate guztiak.</translat
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1255"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1359"/>
         <source>Meta-grid</source>
-        <translation>Metagrid</translation>
+        <translation>Meta-sareta</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="689"/>
@@ -39658,7 +39659,7 @@ Honek errekurtsiboki aldatzen ditu blokearen beraren entitate guztiak.</translat
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="975"/>
         <source>Draw meta-grid</source>
-        <translation>Marraztu meta-sarea</translation>
+        <translation>Marraztu meta-sareta</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="965"/>
@@ -39688,7 +39689,7 @@ Honek errekurtsiboki aldatzen ditu blokearen beraren entitate guztiak.</translat
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3779"/>
         <source>Highlight with screen linewidth in &quot;Draft&quot; mode</source>
-        <translation>Nabarmendu pantailako marraduna &quot;Draft&quot; moduan</translation>
+        <translation>Nabarmendu pantailako lerro-lodierarekin &quot;Zirriborro&quot; moduan</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3799"/>
@@ -39912,7 +39913,7 @@ Honek errekurtsiboki aldatzen ditu blokearen beraren entitate guztiak.</translat
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1329"/>
         <source>Select Hatch Patterns Folder</source>
-        <translation>Hautatu itzaleztadura-ereduen karpeta</translation>
+        <translation>Hautatu marradura-ereduen karpeta</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1336"/>
@@ -39982,7 +39983,7 @@ Honek errekurtsiboki aldatzen ditu blokearen beraren entitate guztiak.</translat
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1606"/>
         <source>If checked, snap indicator will be shown</source>
-        <translation>Aktibatzen bada, kaptura-adierazlea erakutsiko da</translation>
+        <translation>Aktibatzen bada, atxikitze-adierazlea erakutsiko da</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1766"/>
@@ -40062,17 +40063,17 @@ Honek errekurtsiboki aldatzen ditu blokearen beraren entitate guztiak.</translat
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1736"/>
         <source>Type of line to draw snap indicator</source>
-        <translation>Lerro-mota kaptura-adierazlea marrazteko</translation>
+        <translation>Atxikitze-adierazlea marrazteko lerro-mota</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1743"/>
         <source>Line Width</source>
-        <translation>Marra-zabalera</translation>
+        <translation>Lerro-lodiera</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1750"/>
         <source>Width of line for snap indicator</source>
-        <translation>Lerroaren zabalera kaptura-adierazlearentzat</translation>
+        <translation>Atxikitze-adierazlearen lerroaren zabalera</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1726"/>
@@ -40107,22 +40108,22 @@ Honek errekurtsiboki aldatzen ditu blokearen beraren entitate guztiak.</translat
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1678"/>
         <source>Gap</source>
-        <translation>Gap</translation>
+        <translation>Tartea</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1626"/>
         <source>Snap Indicator Color:</source>
-        <translation>Atxikitzailearen kolorea:</translation>
+        <translation>Atxikitze-adierazlearen kolorea:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1633"/>
         <source>Color for snap indicator shape</source>
-        <translation>Kolorea kaptura-adierazlearen formarako</translation>
+        <translation>Atxikitze-adierazlearen formaren kolorea</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1967"/>
         <source>Angle snap single step</source>
-        <translation>Angelua urrats bakarra</translation>
+        <translation>Angelu-atxikitzearen urrats bakarra</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1974"/>
@@ -40177,7 +40178,7 @@ Honek errekurtsiboki aldatzen ditu blokearen beraren entitate guztiak.</translat
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1817"/>
         <source>If checked, snap options (middle, distance) will be shown in snap toolbar instead of tool properties toolbar</source>
-        <translation>Aktibatzen bada, kaptura-aukerak (erdi-tartea, distantzia) tresna-barraren ordez tresna-propietateetan erakutsiko dira</translation>
+        <translation>Aktibatzen bada, atxikitze-aukerak (erdia, distantzia) atxikitze-tresna-barran erakutsiko dira, tresna-propietateen tresna-barran erakutsi beharrean</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1820"/>
@@ -40413,7 +40414,7 @@ Honek errekurtsiboki aldatzen ditu blokearen beraren entitate guztiak.</translat
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1395"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1543"/>
         <source>Line Width:</source>
-        <translation>Lerroaren zabalera:</translation>
+        <translation>Lerro-lodiera:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1298"/>
@@ -40424,7 +40425,7 @@ Honek errekurtsiboki aldatzen ditu blokearen beraren entitate guztiak.</translat
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1316"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1420"/>
         <source>&amp;Meta-grid Color:</source>
-        <translation>&amp;Meta-sarearen kolorea:</translation>
+        <translation>&amp;Meta-saretaren kolorea:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1353"/>
@@ -40454,12 +40455,12 @@ Honek errekurtsiboki aldatzen ditu blokearen beraren entitate guztiak.</translat
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1372"/>
         <source>Width of Meta Grid lines if grid is drawn by lines</source>
-        <translation>Meta sareta-lerroen zabalera sareta lerroz marratuta badago</translation>
+        <translation>Meta-saretaren lerroen zabalera, sareta lerroz marrazten bada</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1402"/>
         <source>Color of Meta Grid if grid drawn by lines</source>
-        <translation>Meta-saretaren kolorea marraz marra marra marraz marraturiko sareta bada</translation>
+        <translation>Meta-saretaren kolorea, sareta lerroz marrazten bada</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3272"/>
@@ -40628,17 +40629,17 @@ Honek errekurtsiboki aldatzen ditu blokearen beraren entitate guztiak.</translat
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="972"/>
         <source>If checked, metagrid will be drawn as part of grid drawing.</source>
-        <translation>Aktibatzen bada, metagrid sareta marrazkiaren zati gisa marraztuko da.</translation>
+        <translation>Aktibatzen bada, meta-sareta saretaren marrazkiaren zati gisa marraztuko da.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="995"/>
         <source>If unchecked, vertical line will not be drawn for &quot;Top&quot; isometric view</source>
-        <translation>Kontrolik gabe, marra bertikala ez da marratuko ikuspegi isometriko baterako</translation>
+        <translation>Aktibatuta ez badago, ez da lerro bertikala marraztuko &quot;Goiko&quot; ikuspegi isometrikorako</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="998"/>
         <source>Draw vertical lines for &quot;Top&quot; isometric grid</source>
-        <translation>Marraztu marra bertikalak sare isometrikoan</translation>
+        <translation>Marraztu lerro bertikalak &quot;Goiko&quot; sareta isometrikoan</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3700"/>
@@ -40717,7 +40718,7 @@ Honek errekurtsiboki aldatzen ditu blokearen beraren entitate guztiak.</translat
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3776"/>
         <source>If selected, entity will be highlighted in &quot;Draft&quot; mode using entity&apos;s linewidth instead of 1px</source>
-        <translation>Hautatuta badago, entitatea &quot;Draft&quot; moduan nabarmenduko da entitatearen lerroa erabiliz, 1px-en ordez</translation>
+        <translation>Hautatuta badago, entitatea &quot;Zirriborro&quot; moduan nabarmenduko da entitatearen lerro-lodiera erabiliz, 1px-en ordez</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3881"/>
@@ -40958,7 +40959,7 @@ Honek errekurtsiboki aldatzen ditu blokearen beraren entitate guztiak.</translat
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2794"/>
         <source>If checked, relative distance and angle from relative zero point to snap point will be shown.</source>
-        <translation>Aktibatzen bada, distantzia erlatiboa eta angelua erakutsiko dira zero puntutik kaptura-puntura.</translation>
+        <translation>Aktibatzen bada, zero erlatiboko puntutik atxikitze-punturainoko distantzia erlatiboa eta angelua erakutsiko dira.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2797"/>
@@ -41149,7 +41150,7 @@ Honek errekurtsiboki aldatzen ditu blokearen beraren entitate guztiak.</translat
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1934"/>
         <source>Angle Snap</source>
-        <translation>Angelu-lotura</translation>
+        <translation>Angelu-atxikitzea</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1993"/>
@@ -41195,7 +41196,7 @@ Honek errekurtsiboki aldatzen ditu blokearen beraren entitate guztiak.</translat
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3588"/>
         <source>If selected, marker for coodinate system will be shown in zero point of current user coordinates system. </source>
-        <translation>Hautatuta badago, sistema koodinatuaren markatzailea zero puntutan erakutsiko da uneko erabiltzailearen koordenatu-sisteman.</translation>
+        <translation>Hautatuta badago, koordenatu-sistemaren markatzailea uneko erabiltzailearen koordenatu-sistemaren zero puntuan erakutsiko da. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="675"/>
@@ -41215,7 +41216,7 @@ Honek errekurtsiboki aldatzen ditu blokearen beraren entitate guztiak.</translat
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3509"/>
         <source>Coordinates Zero Marker</source>
-        <translation>Koordenatuak zero markatzailea</translation>
+        <translation>Koordenatuen zeroaren markatzailea</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3522"/>
@@ -41230,7 +41231,7 @@ Honek errekurtsiboki aldatzen ditu blokearen beraren entitate guztiak.</translat
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3578"/>
         <source>If selected and view is in user coordinate system, the marker for coodinate system will be shown in zero point of world coordinates system. </source>
-        <translation>Hautatutako eta ikuspegia erabiltzailearen koordenatu-sisteman badago, sistema koodinatuaren markatzailea munduko koordenatuen zero puntutan erakutsiko da.</translation>
+        <translation>Hautatuta badago eta ikuspegia erabiltzailearen koordenatu-sisteman badago, koordenatu-sistemaren markatzailea munduko koordenatu-sistemaren zero puntuan erakutsiko da. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3581"/>
@@ -41265,7 +41266,7 @@ Honek errekurtsiboki aldatzen ditu blokearen beraren entitate guztiak.</translat
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3216"/>
         <source>Base Angle Ray Color:</source>
-        <translation>Oinarri-angeluaren Ray kolorea:</translation>
+        <translation>Oinarri-angeluaren izpiaren kolorea:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3249"/>
@@ -41290,7 +41291,7 @@ Honek errekurtsiboki aldatzen ditu blokearen beraren entitate guztiak.</translat
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1146"/>
         <source>Decimal meta-grid every:</source>
-        <translation>Meta-sare hamartarra:</translation>
+        <translation>Meta-sareta hamartarra, zenbatero:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1153"/>
@@ -41300,12 +41301,12 @@ Honek errekurtsiboki aldatzen ditu blokearen beraren entitate guztiak.</translat
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1940"/>
         <source>Radius of arc within angle snap mark.</source>
-        <translation>Arku-erradioa angelu-markan.</translation>
+        <translation>Angelu-atxikitzearen markako arkuaren erradioa.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1577"/>
         <source>Snap Marker</source>
-        <translation>Atxikitu markatzailea</translation>
+        <translation>Atxikitze-markatzailea</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1853"/>
@@ -41315,7 +41316,7 @@ Honek errekurtsiboki aldatzen ditu blokearen beraren entitate guztiak.</translat
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1905"/>
         <source>Snap on Entity &quot;Free snap&quot; distance switch:</source>
-        <translation>Atxikitu Entitatearen &quot;txikitze librea&quot; distantzia-aldaketa:</translation>
+        <translation>&quot;Atxikitu entitateari&quot; eta &quot;Atxikitze librea&quot; arteko aldaketa-distantzia:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1912"/>
@@ -41335,12 +41336,12 @@ Honek errekurtsiboki aldatzen ditu blokearen beraren entitate guztiak.</translat
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1898"/>
         <source>Min grid cell snap factor:</source>
-        <translation>Gelaxken kaptura-faktorea:</translation>
+        <translation>Saretako gelaxkaren atxikitze-faktore minimoa:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1872"/>
         <source>Snap distance (in pixels) for catching entities.</source>
-        <translation>Atxikitu distantzia (pixeletan) entitateak harrapatzeko.</translation>
+        <translation>Entitateak harrapatzeko atxikitze-distantzia (pixeletan).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1875"/>
@@ -41350,7 +41351,7 @@ Honek errekurtsiboki aldatzen ditu blokearen beraren entitate guztiak.</translat
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1882"/>
         <source>Grid cell factor used for snap to grid.</source>
-        <translation>Sareta-zelula-faktorea sarera atxikitzeko erabiltzen da.</translation>
+        <translation>Saretara atxikitzeko erabiltzen den sareta-gelaxkaren faktorea.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3153"/>
@@ -42018,7 +42019,7 @@ Honek errekurtsiboki aldatzen ditu blokearen beraren entitate guztiak.</translat
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6195"/>
         <source>If checked, archs are drawn using line segments interpolation.  This sliminates drawing artefacts near to endpoints, yet may result drawing of less smooth arcs.  No drawing errors near endpoints on large zooms.</source>
-        <translation>Aktibatzen bada, arkuak marratzen dira lerro-segmentuen interpolazioa erabiliz. Artefaktu argal hauek amaierako puntuetatik hurbil marrazten dituzte, baina arku leunak gutxiago ateratzen dituzte. Ez dago akatsik zoom handietako amaierako puntuetatik hurbil.</translation>
+        <translation>Aktibatzen bada, arkuak lerro-segmentuen interpolazioaren bidez marrazten dira.  Horrek muturretatik hurbileko marrazketa-akatsak ezabatzen ditu, baina arkuak ez dira hain leunak izan daitezke.  Zoom handietan ez dago marrazketa-akatsik muturretatik hurbil.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6205"/>
@@ -42118,7 +42119,7 @@ Honek errekurtsiboki aldatzen ditu blokearen beraren entitate guztiak.</translat
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2996"/>
         <source>If set and user coordinate system is active, absolute coodinate in world coordinate system will be also shown.</source>
-        <translation>Ezarritako eta erabiltzaileen koordenatu-sistema aktibo badago, munduko koordenatu-sistemako koordinazio absolutua ere erakutsiko da.</translation>
+        <translation>Ezarrita badago eta erabiltzailearen koordenatu-sistema aktibo badago, munduko koordenatu-sistemako koordenatu absolutua ere erakutsiko da.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3002"/>
@@ -42163,12 +42164,12 @@ Honek errekurtsiboki aldatzen ditu blokearen beraren entitate guztiak.</translat
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5327"/>
         <source>Counterclockwise, 90 degrees is north.</source>
-        <translation>90 gradu iparraldera.</translation>
+        <translation>Erlojuaren orratzen aurkako noranzkoan; 90 graduak iparraldea adierazten du.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5356"/>
         <source>Clockwise, 90 degrees is sourth.</source>
-        <translation>Erlojuaren noranzkoan, 90 gradu lehor dago.</translation>
+        <translation>Erlojuaren orratzen noranzkoan; 90 graduak hegoaldea adierazten du.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5948"/>
@@ -42203,7 +42204,7 @@ Honek errekurtsiboki aldatzen ditu blokearen beraren entitate guztiak.</translat
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5983"/>
         <source>Path to folder with hatch patterns</source>
-        <translation>Itzaleztadura-ereduen karpetaren bide-izena</translation>
+        <translation>Marradura-ereduen karpetaren bide-izena</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5941"/>
@@ -42545,7 +42546,7 @@ beraz, labean egiteko behar den urrats-balio lehenetsia</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1616"/>
         <source>Selected character preview. Click to insert to text.</source>
-        <translation>Hautatutako karaktereen aurrebista. Egin klik testua sartzeko.</translation>
+        <translation>Hautatutako karakterearen aurrebista. Egin klik testuan txertatzeko.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1626"/>
@@ -43248,7 +43249,7 @@ beraz, labean egiteko behar den urrats-balio lehenetsia</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.cpp" line="213"/>
         <source>Pen</source>
-        <translation>Pen</translation>
+        <translation>Luma</translation>
     </message>
 </context>
 <context>
@@ -43570,7 +43571,7 @@ beraz, labean egiteko behar den urrats-balio lehenetsia</translation>
     <message>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.cpp" line="63"/>
         <source>Default Pen</source>
-        <translation>Arkatz lehenetsia</translation>
+        <translation>Luma lehenetsia</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.ui" line="29"/>
@@ -43637,7 +43638,7 @@ Eraikuntza-geruza baten edukia ez litzateke inprimatu behar.</translation>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="87"/>
         <source>No Pen</source>
-        <translation>Penik ez</translation>
+        <translation>Lumarik ez</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="89"/>
@@ -43647,27 +43648,27 @@ Eraikuntza-geruza baten edukia ez litzateke inprimatu behar.</translation>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="90"/>
         <source>Dot</source>
-        <translation>Dot</translation>
+        <translation>Puntua</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="92"/>
         <source>Dot (small)</source>
-        <translation>Dot (txikia)</translation>
+        <translation>Puntua (txikia)</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="93"/>
         <source>Dot (large)</source>
-        <translation>Dot (handia)</translation>
+        <translation>Puntua (handia)</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="94"/>
         <source>Dash</source>
-        <translation>Dash</translation>
+        <translation>Marra</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="96"/>
         <source>Dash (small)</source>
-        <translation>Marratxoa (txikia)</translation>
+        <translation>Marra (txikia)</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="97"/>
@@ -43697,22 +43698,22 @@ Eraikuntza-geruza baten edukia ez litzateke inprimatu behar.</translation>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="98"/>
         <source>Dash Dot</source>
-        <translation>Marra-puntuatua</translation>
+        <translation>Marra-puntua</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="100"/>
         <source>Dash Dot (small)</source>
-        <translation>Marratxoa (txikia)</translation>
+        <translation>Marra-puntua (txikia)</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="101"/>
         <source>Dash Dot (large)</source>
-        <translation>Marratxoa (handia)</translation>
+        <translation>Marra-puntua (handia)</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="102"/>
         <source>Divide</source>
-        <translation>Zatitu</translation>
+        <translation>Zatiketa</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="104"/>
@@ -43732,12 +43733,12 @@ Eraikuntza-geruza baten edukia ez litzateke inprimatu behar.</translation>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="108"/>
         <source>Center (small)</source>
-        <translation>Zentratua (txikia)</translation>
+        <translation>Zentroa (txikia)</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="109"/>
         <source>Center (large)</source>
-        <translation>Erdialdea (handia)</translation>
+        <translation>Zentroa (handia)</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="114"/>
@@ -43782,32 +43783,32 @@ Eraikuntza-geruza baten edukia ez litzateke inprimatu behar.</translation>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="91"/>
         <source>Dot (tiny)</source>
-        <translation>Puntua (txikia)</translation>
+        <translation>Puntua (oso txikia)</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="95"/>
         <source>Dash (tiny)</source>
-        <translation>Marra (txikia)</translation>
+        <translation>Marra (oso txikia)</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="99"/>
         <source>Dash Dot (tiny)</source>
-        <translation>Marra-puntuatua (txikia)</translation>
+        <translation>Marra-puntua (oso txikia)</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="103"/>
         <source>Divide (tiny)</source>
-        <translation>Zatiketa (oraindik)</translation>
+        <translation>Zatiketa (oso txikia)</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="107"/>
         <source>Center (tiny)</source>
-        <translation>Erdialdea (tiny)</translation>
+        <translation>Zentroa (oso txikia)</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="111"/>
         <source>Border (tiny)</source>
-        <translation>Ertza (tiny)</translation>
+        <translation>Ertza (oso txikia)</translation>
     </message>
 </context>
 <context>
@@ -43856,7 +43857,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/components/toolbars/qg_pentoolbar.cpp" line="42"/>
         <source>Line width</source>
-        <translation>Lerroaren zabalera</translation>
+        <translation>Lerro-lodiera</translation>
     </message>
     <message>
         <location filename="../src/ui/components/toolbars/qg_pentoolbar.cpp" line="45"/>
@@ -43939,7 +43940,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/components/pen/qg_widgetpen.ui" line="26"/>
         <location filename="../src/ui/components/pen/qg_widgetpen.ui" line="53"/>
         <source>Pen</source>
-        <translation>Pen</translation>
+        <translation>Luma</translation>
     </message>
     <message>
         <location filename="../src/ui/components/pen/qg_widgetpen.ui" line="97"/>
@@ -44252,7 +44253,7 @@ Zehaztu beste balio bat.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1453"/>
         <source>There are no entities that matches pen on visible layers.</source>
-        <translation>Ez dago geruza ikusgaietan arkatzarekin bat datorren entitaterik.</translation>
+        <translation>Ez dago geruza ikusgaietan lumarekin bat datorren entitaterik.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1454"/>
@@ -44271,17 +44272,17 @@ Zehaztu beste balio bat.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1456"/>
         <source>Please use different pen attributes.</source>
-        <translation>Erabili arkatzaren atributu desberdinak.</translation>
+        <translation>Erabili lumaren beste atributu batzuk.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1466"/>
         <source>Set pen by entity</source>
-        <translation>Ezarri arkatza entitatearen arabera</translation>
+        <translation>Ezarri luma entitatearen arabera</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1467"/>
         <source>Please select only one entity to pick pen setting.</source>
-        <translation>Hautatu entitate bat arkatzaren ezarpena hautatzeko.</translation>
+        <translation>Hautatu entitate bakar bat lumaren ezarpena hartzeko.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1477"/>
@@ -44566,7 +44567,7 @@ Ordeztea nahi duzu?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="541"/>
         <source>polyline</source>
         <comment>draw polyline</comment>
-        <translation>polilerroa</translation>
+        <translation>polilinea</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="542"/>
@@ -44716,7 +44717,7 @@ Ordeztea nahi duzu?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="897"/>
         <source>hatch</source>
         <comment>draw hatch</comment>
-        <translation>hatch</translation>
+        <translation>marradura</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="898"/>
@@ -47950,7 +47951,7 @@ Ordeztea nahi duzu?</translation>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="105"/>
         <source>Auto fit and center drawing to page.</source>
-        <translation>Doitze automatikoa eta erdiko marrazkia orrian.</translation>
+        <translation>Doitu eta zentratu marrazkia automatikoki orrian.</translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="109"/>
@@ -48063,7 +48064,7 @@ Ordeztea nahi duzu?</translation>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="39"/>
         <source>/CustomColor%1</source>
-        <translation>/Kolore pertsonalizatua%1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="40"/>
@@ -48090,7 +48091,7 @@ Ordeztea nahi duzu?</translation>
     <message>
         <location filename="../src/lib/actions/lc_modifiersinfo.h" line="29"/>
         <source>Angle Snap</source>
-        <translation>Angeluaren Ezarpena</translation>
+        <translation>Angelu-atxikitzea</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/lc_modifiersinfo.h" line="30"/>
@@ -48127,17 +48128,17 @@ Ordeztea nahi duzu?</translation>
     <message>
         <location filename="../src/lib/engine/document/container/rs_entitycontainer.cpp" line="1499"/>
         <source>Hatch failed due to a gap=%1 between (%2, %3) and (%4, %5)</source>
-        <translation>Itzaleztadurak huts egin du (%2, %3) eta (%4, %5) arteko tartearen ondorioz (tartea=%1)</translation>
+        <translation>Marradurak huts egin du (%2, %3) eta (%4, %5) arteko tartearen ondorioz (tartea=%1)</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/document/patterns/rs_patternlist.cpp" line="66"/>
         <source>Hatch:: no pattern found. Please set pattern path in application preferences</source>
-        <translation>Itzaleztadura: ez da eredurik aurkitu. Ezarri ereduen bide-izena aplikazioaren hobespenetan</translation>
+        <translation>Marradura: ez da eredurik aurkitu. Ezarri ereduen bide-izena aplikazioaren hobespenetan</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/document/patterns/rs_patternlist.cpp" line="93"/>
         <source>Hatch:: loading pattern failed: %1</source>
-        <translation>Itzaleztadura: ereduaren kargak huts egin du: %1</translation>
+        <translation>Marradura: ereduaren kargak huts egin du: %1</translation>
     </message>
     <message>
         <location filename="../src/ui/main/persistence/lc_documentsstorage.cpp" line="198"/>
@@ -48523,7 +48524,7 @@ Ordeztea nahi duzu?</translation>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="79"/>
         <source>0.80mm</source>
-        <translation>0,0mm</translation>
+        <translation>0.80mm</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="80"/>
@@ -48701,7 +48702,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="484"/>
         <source>Polyline</source>
-        <translation>Polilerroa</translation>
+        <translation>Polilinea</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="488"/>
@@ -48736,7 +48737,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="512"/>
         <source>Hatch</source>
-        <translation>Hatch</translation>
+        <translation>Marradura</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="516"/>
@@ -48746,32 +48747,32 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="520"/>
         <source>Dim. Linear</source>
-        <translation>Dim. Lineala</translation>
+        <translation>Kota lineala</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="524"/>
         <source>Dim. Aligned</source>
-        <translation>Dim. Lerrokatuta</translation>
+        <translation>Kota lerrokatua</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="528"/>
         <source>Dim. Diametric</source>
-        <translation>Dim. Diametrikoa</translation>
+        <translation>Kota diametrala</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="532"/>
         <source>Dim. Radial</source>
-        <translation>Dim. Erradiala</translation>
+        <translation>Kota erradiala</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="536"/>
         <source>Dim. Arc</source>
-        <translation>Dim. Arkua</translation>
+        <translation>Arku-kota</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="540"/>
         <source>Dim. Ordinate</source>
-        <translation>Dim. Ordenatua</translation>
+        <translation>Kota ordenatua</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="544"/>
@@ -48932,7 +48933,7 @@ Please check the filename and permissions.</source>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="635"/>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="646"/>
         <source>Center:</source>
-        <translation>Zentrua:</translation>
+        <translation>Zentroa:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="636"/>
@@ -49092,7 +49093,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimlinear.cpp" line="224"/>
         <source>Snap to Adjacent Dim</source>
-        <translation>Atxiki ondoko Dim-i</translation>
+        <translation>Atxiki ondoko kotari</translation>
     </message>
 </context>
 <context>
@@ -49247,12 +49248,12 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="160"/>
         <source>Invalid hatch area. Please check that the entities chosen form one or more closed contours.</source>
-        <translation>Itzaleztadura-eremu baliogabea. Mesedez, egiaztatu hautatutako entitateek kontorno itxi bat edo gehiago osatzen dituztela.</translation>
+        <translation>Marradura-eremu baliogabea. Mesedez, egiaztatu hautatutako entitateek kontorno itxi bat edo gehiago osatzen dituztela.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="131"/>
         <source>Hatch created successfully.</source>
-        <translation>Itzaleztadura ongi sortu da.</translation>
+        <translation>Marradura ongi sortu da.</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="134"/>
@@ -49265,32 +49266,32 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="134"/>
         <source>Hatch Error: Invalid contour found!</source>
-        <translation>Itzaleztadura-errorea: ingurune baliogabea aurkitu da!</translation>
+        <translation>Marradura-errorea: kontorno baliogabea aurkitu da!</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="138"/>
         <source>Hatch Error: Pattern not found!</source>
-        <translation>Itzaleztadura-errorea: ez da eredua aurkitu!</translation>
+        <translation>Marradura-errorea: ez da eredua aurkitu!</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="141"/>
         <source>Hatch Error: Contour or pattern too small!</source>
-        <translation>Itzaleztadura-errorea: ingurunea edo eredua txikiegia da!</translation>
+        <translation>Marradura-errorea: kontornoa edo eredua txikiegia da!</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="144"/>
         <source>Hatch Error: Contour too big!</source>
-        <translation>Itzaleztadura-errorea: ingurunea handiegia da!</translation>
+        <translation>Marradura-errorea: kontornoa handiegia da!</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="147"/>
         <source>Hatch Error: Undefined Error!</source>
-        <translation>Itzaleztadura-errorea: errore zehaztugabea!</translation>
+        <translation>Marradura-errorea: errore zehaztugabea!</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="152"/>
         <source>Total hatch area = %1</source>
-        <translation>Itzaleztaduraren azalera osoa = %1</translation>
+        <translation>Marraduraren azalera osoa = %1</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="185"/>
@@ -49300,7 +49301,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="185"/>
         <source>Hatch immediately after selection</source>
-        <translation>Itzaleztatu hautapenaren ondoren berehala</translation>
+        <translation>Marratu hautapenaren ondoren berehala</translation>
     </message>
 </context>
 <context>
@@ -49360,7 +49361,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_simple.cpp" line="107"/>
         <source>Center:</source>
-        <translation>Zentrua:</translation>
+        <translation>Zentroa:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_simple.cpp" line="151"/>
@@ -49521,8 +49522,8 @@ Intersection :@(%7, %8)</source>
 Angelu osagarria: %2
 Angelu betegarria: %3
 Bira osoa − angelua: %4
-Intersekzioa: (%5, %6)
-Intersection :@(%7, %8)</translation>
+Ebakidura: (%5, %6)
+Ebakidura :@(%7, %8)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="254"/>
@@ -49585,7 +49586,7 @@ Intersection :@(%7, %8)</translation>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="292"/>
         <source>Intersection:</source>
-        <translation>Intersekzioa:</translation>
+        <translation>Ebakidura:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="292"/>
@@ -49954,7 +49955,7 @@ Amaiera: (%8, %9)</translation>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1347"/>
         <source>Intersection</source>
-        <translation>Intersection</translation>
+        <translation>Ebakidura</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1349"/>
@@ -50239,12 +50240,12 @@ Amaiera: (%8, %9)</translation>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="188"/>
         <source>Tolerance - Upper Limit</source>
-        <translation>Tolerantzia - Goiko muga</translation>
+        <translation>Perdoia - Goiko muga</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="218"/>
         <source>Tolerance - Lower Limit</source>
-        <translation>Tolerantzia - Muga baxua</translation>
+        <translation>Perdoia - Beheko muga</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="243"/>
@@ -50314,7 +50315,7 @@ Amaiera: (%8, %9)</translation>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapdistoptions.ui" line="60"/>
         <source>Distance of snap point from initially resolved snap point</source>
-        <translation>Hasiera batean ebatzitako puntuaren distantzia</translation>
+        <translation>Atxikitze-puntuaren distantzia hasieran ebatzitako atxikitze-puntutik</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapdistoptions.ui" line="67"/>

@@ -61,7 +61,7 @@
     <message>
         <location filename="../src/actions/drawing/lc_abstractactionwithpreview.cpp" line="652"/>
         <source> is not divided as it is part of polyline. Expand polyline first.</source>
-        <translation>polyline의 일부로 나눌 수 없습니다. polyline를 첫번째로 확장하십시오.</translation>
+        <translation> 은(는) 폴리라인의 일부이므로 분할되지 않습니다. 먼저 폴리라인을 분해하십시오.</translation>
     </message>
 </context>
 <context>
@@ -178,7 +178,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="115"/>
         <source>Not a circle or arc entity</source>
-        <translation>원 또는 arc 엔터티</translation>
+        <translation>원 또는 호 엔티티가 아닙니다</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="192"/>
@@ -224,12 +224,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="310"/>
         <source>Specify first extension line origin</source>
-        <translation>첫 번째 연장선 원점을 지정하십시오</translation>
+        <translation>첫 번째 치수보조선 원점 지정</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="300"/>
         <source>Specify second extension line origin</source>
-        <translation>두 번째 연장선 원점 지정</translation>
+        <translation>두 번째 치수보조선 원점 지정</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="304"/>
@@ -239,7 +239,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="304"/>
         <source>Snap to Adjacent Dim</source>
-        <translation>Adjacent Dim에 스냅</translation>
+        <translation>인접 치수에 스냅</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="319"/>
@@ -306,7 +306,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_2points_angle.cpp" line="62"/>
         <source>Alternate angle to outer arc</source>
-        <translation>외부 아크에 Alternate 각</translation>
+        <translation>외부 호에 대한 대체 각도</translation>
     </message>
 </context>
 <context>
@@ -334,12 +334,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_2points_base.cpp" line="206"/>
         <source>Specify second point of arc</source>
-        <translation>아크의 두 번째 지점 지정</translation>
+        <translation>호의 두 번째 점 지정</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_2points_base.cpp" line="219"/>
         <source>Opposite Arc direction</source>
-        <translation>반대 Arc 방향</translation>
+        <translation>호 방향 반대로</translation>
     </message>
 </context>
 <context>
@@ -347,12 +347,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_2points_height.cpp" line="55"/>
         <source>Enter height of arc</source>
-        <translation>아크의 높이를 입력</translation>
+        <translation>호의 높이 입력</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_2points_height.cpp" line="59"/>
         <source>Alternative arc where diameter is reduced by height</source>
-        <translation>직경이 높이 감소되는 대체 아크</translation>
+        <translation>지름이 높이만큼 줄어드는 대체 호</translation>
     </message>
 </context>
 <context>
@@ -360,12 +360,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_2points_length.cpp" line="38"/>
         <source>The distance between the two points must be less than the arc length</source>
-        <translation>두 점 사이 거리는 아크 길이 보다는 더 적은이어야 합니다</translation>
+        <translation>두 점 사이의 거리는 호 길이보다 작아야 합니다</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_2points_length.cpp" line="53"/>
         <source>Enter length of arc</source>
-        <translation>아크의 길이를 입력</translation>
+        <translation>호의 길이 입력</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_2points_length.cpp" line="57"/>
@@ -378,12 +378,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_2points_radius.cpp" line="55"/>
         <source>Enter radius of arc</source>
-        <translation>아크의 반경을 입력</translation>
+        <translation>호의 반지름 입력</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_2points_radius.cpp" line="59"/>
         <source>Create outer arc</source>
-        <translation>외부 아크 생성</translation>
+        <translation>외부 호 생성</translation>
     </message>
 </context>
 <context>
@@ -391,7 +391,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_3points.cpp" line="75"/>
         <source>Invalid arc data.</source>
-        <translation type="unfinished">잘못된 아크 데이터.</translation>
+        <translation type="unfinished">잘못된 호 데이터입니다.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_3points.cpp" line="233"/>
@@ -459,7 +459,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_center_point_param.cpp" line="549"/>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_center_point_param.cpp" line="552"/>
         <source>Alternative Arc</source>
-        <translation type="unfinished">대안 Arc</translation>
+        <translation type="unfinished">대체 호</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_center_point_param.cpp" line="552"/>
@@ -474,7 +474,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_center_point_param.cpp" line="555"/>
         <source>Use alternative arc point</source>
-        <translation type="unfinished">대안 arc point 사용</translation>
+        <translation type="unfinished">대체 호 점 사용</translation>
     </message>
 </context>
 <context>
@@ -492,17 +492,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_tangential.cpp" line="296"/>
         <source>Alternate arc</source>
-        <translation type="unfinished">Alternate 아크</translation>
+        <translation type="unfinished">대체 호</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_tangential.cpp" line="299"/>
         <source>Specify end point</source>
-        <translation type="unfinished">정의 끝 점</translation>
+        <translation type="unfinished">끝점 지정</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_tangential.cpp" line="299"/>
         <source>Alternate Arc</source>
-        <translation type="unfinished">Alternate 아크</translation>
+        <translation type="unfinished">대체 호</translation>
     </message>
 </context>
 <context>
@@ -561,7 +561,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_center_mark.cpp" line="397"/>
         <source>Select circle, arc or ellipse</source>
-        <translation type="unfinished">원, 아크 또는 엘립스 선택</translation>
+        <translation type="unfinished">원, 호 또는 타원 선택</translation>
     </message>
 </context>
 <context>
@@ -569,7 +569,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_2points.cpp" line="68"/>
         <source>Invalid Circle data.</source>
-        <translation type="unfinished">잘못된 Circle 데이터.</translation>
+        <translation type="unfinished">잘못된 원 데이터입니다.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_2points.cpp" line="157"/>
@@ -639,7 +639,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_by_arc.cpp" line="246"/>
         <source>Select arc or ellipse arc</source>
-        <translation>아크 또는 엘립스 아크 선택</translation>
+        <translation>호 또는 타원 호 선택</translation>
     </message>
 </context>
 <context>
@@ -670,27 +670,27 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_center_radius.cpp" line="161"/>
         <source>radius=%1 is invalid (expression)</source>
-        <translation type="unfinished">반경=%1은 유효하지 않습니다 (압축)</translation>
+        <translation type="unfinished">반지름=%1이(가) 유효하지 않습니다 (표현식)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_center_radius.cpp" line="164"/>
         <source>radius=%1 is invalid (negative)</source>
-        <translation type="unfinished">반경=%1은 유효하지 않습니다 (필수)</translation>
+        <translation type="unfinished">반지름=%1이(가) 유효하지 않습니다 (음수)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_center_radius.cpp" line="168"/>
         <source>radius=%1 is invalid (zero)</source>
-        <translation type="unfinished">반경=%1은 무효 (제로)</translation>
+        <translation type="unfinished">반지름=%1이(가) 유효하지 않습니다 (0)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_center_radius.cpp" line="192"/>
         <source>Specify circle center</source>
-        <translation type="unfinished">원 센터</translation>
+        <translation type="unfinished">원 중심 지정</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_center_radius.cpp" line="195"/>
         <source>Specify circle radius</source>
-        <translation type="unfinished">원형 반경 지정</translation>
+        <translation type="unfinished">원 반지름 지정</translation>
     </message>
 </context>
 <context>
@@ -703,12 +703,12 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_inscribe.cpp" line="218"/>
         <source>Specify the second line</source>
-        <translation type="unfinished">두 번째 라인 지정</translation>
+        <translation type="unfinished">두 번째 선 지정</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_inscribe.cpp" line="221"/>
         <source>Specify the third line</source>
-        <translation type="unfinished">세 번째 라인 지정</translation>
+        <translation type="unfinished">세 번째 선 지정</translation>
     </message>
 </context>
 <context>
@@ -716,22 +716,22 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_1entity_2points.cpp" line="449"/>
         <source>Specify a line/arc/circle</source>
-        <translation type="unfinished">라인/arc/circle 지정</translation>
+        <translation type="unfinished">선/호/원 지정</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_1entity_2points.cpp" line="452"/>
         <source>Specify the first point on the tangent circle</source>
-        <translation type="unfinished">Tangent 원형의 첫 지점을 지정하십시오</translation>
+        <translation type="unfinished">접선 원의 첫 번째 점 지정</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_1entity_2points.cpp" line="455"/>
         <source>Specify the second point on the tangent circle</source>
-        <translation type="unfinished">Tangent 원형의 두 번째 지점을 지정하십시오</translation>
+        <translation type="unfinished">접선 원의 두 번째 점 지정</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_1entity_2points.cpp" line="458"/>
         <source>Select the center of the tangent circle</source>
-        <translation type="unfinished">Tangent 원형의 중심을 선택하십시오</translation>
+        <translation type="unfinished">접선 원의 중심 선택</translation>
     </message>
 </context>
 <context>
@@ -739,22 +739,22 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_2entities_1point.cpp" line="338"/>
         <source>Specify a line/arc/circle</source>
-        <translation type="unfinished">라인/arc/circle 지정</translation>
+        <translation type="unfinished">선/호/원 지정</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_2entities_1point.cpp" line="341"/>
         <source>Specify the another line/arc/circle</source>
-        <translation type="unfinished">다른 선/arc/circle를 지정하십시오</translation>
+        <translation type="unfinished">다른 선/호/원 지정</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_2entities_1point.cpp" line="344"/>
         <source>Specify a point on the tangent circle</source>
-        <translation type="unfinished">Tangent 원형의 지점 지정</translation>
+        <translation type="unfinished">접선 원 위의 점 지정</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_2entities_1point.cpp" line="347"/>
         <source>Select the center of the tangent circle</source>
-        <translation type="unfinished">Tangent 원형의 중심을 선택하십시오</translation>
+        <translation type="unfinished">접선 원의 중심 선택</translation>
     </message>
 </context>
 <context>
@@ -767,17 +767,17 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_2entities_radius.cpp" line="292"/>
         <source>Specify the first line/arc/circle</source>
-        <translation type="unfinished">첫번째 선/arc/circle 지정</translation>
+        <translation type="unfinished">첫 번째 선/호/원 지정</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_2entities_radius.cpp" line="295"/>
         <source>Specify the second line/arc/circle</source>
-        <translation type="unfinished">두번째 선/arc/circle 지정</translation>
+        <translation type="unfinished">두 번째 선/호/원 지정</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_2entities_radius.cpp" line="298"/>
         <source>Select the center of the tangent circle</source>
-        <translation type="unfinished">Tangent 원형의 중심을 선택하십시오</translation>
+        <translation type="unfinished">접선 원의 중심 선택</translation>
     </message>
 </context>
 <context>
@@ -785,27 +785,27 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_3entities.cpp" line="435"/>
         <source>No common tangential circle for selected entities</source>
-        <translation type="unfinished">선택된 entities를 위한 일반적인 tangential 원형 없음</translation>
+        <translation type="unfinished">선택한 엔티티에 공통으로 접하는 원이 없습니다</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_3entities.cpp" line="520"/>
         <source>Specify the first line/arc/circle</source>
-        <translation type="unfinished">첫번째 선/arc/circle 지정</translation>
+        <translation type="unfinished">첫 번째 선/호/원 지정</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_3entities.cpp" line="523"/>
         <source>Specify the second line/arc/circle</source>
-        <translation type="unfinished">두번째 선/arc/circle 지정</translation>
+        <translation type="unfinished">두 번째 선/호/원 지정</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_3entities.cpp" line="526"/>
         <source>Specify the third line/arc/circle</source>
-        <translation type="unfinished">3선/arc/circle 지정</translation>
+        <translation type="unfinished">세 번째 선/호/원 지정</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_3entities.cpp" line="529"/>
         <source>Select the center of the tangent circle</source>
-        <translation type="unfinished">Tangent 원형의 중심을 선택하십시오</translation>
+        <translation type="unfinished">접선 원의 중심 선택</translation>
     </message>
 </context>
 <context>
@@ -823,12 +823,12 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="419"/>
         <source>Specify second extension line origin</source>
-        <translation>두 번째 연장선 원점 지정</translation>
+        <translation>두 번째 치수보조선 원점 지정</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="419"/>
         <source>Mirror offset direction</source>
-        <translation>미러 오프셋 방향</translation>
+        <translation>오프셋 방향 반전</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="422"/>
@@ -838,7 +838,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="422"/>
         <source>Snap to Adjacent Dim</source>
-        <translation>Adjacent Dim에 스냅</translation>
+        <translation>인접 치수에 스냅</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="425"/>
@@ -851,7 +851,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="63"/>
         <source>Select Center</source>
-        <translation>선택 센터</translation>
+        <translation>중심 선택</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="68"/>
@@ -866,7 +866,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="126"/>
         <source>Dual created around center (%1 entities)</source>
-        <translation>센터 주변의 듀얼 생성 (%1 엔티티)</translation>
+        <translation>중심 주위에 듀얼 생성됨 (엔티티 %1개)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="59"/>
@@ -894,12 +894,12 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/lc_action_draw_ellipse_1point.cpp" line="340"/>
         <source>Set start angle of arc</source>
-        <translation>아크의 시작 각도 설정</translation>
+        <translation>호의 시작 각도 설정</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/lc_action_draw_ellipse_1point.cpp" line="344"/>
         <source>Set end angle of arc</source>
-        <translation>아크의 끝 각을 놓으십시오</translation>
+        <translation>호의 끝 각도 설정</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/lc_action_draw_ellipse_1point.cpp" line="382"/>
@@ -931,7 +931,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawhyperbolafp.cpp" line="124"/>
         <source>Points not on hyperbola</source>
-        <translation>하이퍼볼라의 포인트</translation>
+        <translation>점이 쌍곡선 위에 있지 않습니다</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawhyperbolafp.cpp" line="276"/>
@@ -994,7 +994,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line.cpp" line="291"/>
         <source>Specify next point or [%1]</source>
-        <translation type="unfinished">다음 포인트 또는 [%1] 지정</translation>
+        <translation type="unfinished">다음 점 지정 또는 [%1]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line.cpp" line="293"/>
@@ -1114,7 +1114,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_angle_rel.cpp" line="494"/>
         <source>Select base line</source>
-        <translation>기본 라인 선택</translation>
+        <translation>기준선 선택</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_angle_rel.cpp" line="497"/>
@@ -1149,7 +1149,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_bisector.cpp" line="285"/>
         <source>Select second line</source>
-        <translation type="unfinished">두 번째 라인 선택</translation>
+        <translation type="unfinished">두 번째 선 선택</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_bisector.cpp" line="288"/>
@@ -1247,7 +1247,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_from_point_to_line.cpp" line="443"/>
         <source>Select Initial Point</source>
-        <translation>초기 포인트 선택</translation>
+        <translation>시작점 선택</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_from_point_to_line.cpp" line="446"/>
@@ -1356,7 +1356,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_action_draw_polygon_side_side.cpp" line="51"/>
         <source>Specify second tangent</source>
-        <translation type="unfinished">두번째 tangent를 지정하십시오</translation>
+        <translation type="unfinished">두 번째 접선 지정</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_action_draw_polygon_side_side.cpp" line="56"/>
@@ -1366,7 +1366,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_action_draw_polygon_side_side.cpp" line="58"/>
         <source>Specify first tangent</source>
-        <translation type="unfinished">첫번째 tangent를 지정하십시오</translation>
+        <translation type="unfinished">첫 번째 접선 지정</translation>
     </message>
 </context>
 <context>
@@ -1534,7 +1534,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_snake.cpp" line="565"/>
         <source>Specify point or [%1]</source>
-        <translation>포인트 또는 [%1]</translation>
+        <translation>점 지정 또는 [%1]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_snake.cpp" line="621"/>
@@ -1616,13 +1616,13 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_lattice.cpp" line="189"/>
         <source>Second point is too close to the first one</source>
-        <translation>두 번째 포인트는 너무 가까이에 첫 번째 하나</translation>
+        <translation>두 번째 점이 첫 번째 점에 너무 가깝습니다</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_lattice.cpp" line="201"/>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_lattice.cpp" line="213"/>
         <source>Third point is too close to the second one</source>
-        <translation>세 번째 포인트는 두 번째에 너무 가깝습니다</translation>
+        <translation>세 번째 점이 두 번째 점에 너무 가깝습니다</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_lattice.cpp" line="262"/>
@@ -1662,12 +1662,12 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_lattice.cpp" line="297"/>
         <source>Enter number of points by X</source>
-        <translation>X의 포인트 수를 입력</translation>
+        <translation>X 방향 점 개수 입력</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_lattice.cpp" line="301"/>
         <source>Enter number of points by Y</source>
-        <translation>Y의 포인트 수를 입력</translation>
+        <translation>Y 방향 점 개수 입력</translation>
     </message>
 </context>
 <context>
@@ -1675,7 +1675,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="579"/>
         <source>Specify First Point</source>
-        <translation type="unfinished">첫 번째 포인트</translation>
+        <translation type="unfinished">첫 번째 점 지정</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="583"/>
@@ -1753,7 +1753,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="625"/>
         <source>Specify points count</source>
-        <translation type="unfinished">포인트 수</translation>
+        <translation type="unfinished">점 개수 지정</translation>
     </message>
 </context>
 <context>
@@ -1766,7 +1766,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_action_draw_polygon_base.cpp" line="214"/>
         <source>Invalid value of rounding radius</source>
-        <translation type="unfinished">Rounding 반경의 잘못된 값</translation>
+        <translation type="unfinished">모깎기 반지름 값이 잘못되었습니다</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_action_draw_polygon_base.cpp" line="224"/>
@@ -1781,7 +1781,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_action_draw_polygon_base.cpp" line="259"/>
         <source>Enter rounding radius:</source>
-        <translation type="unfinished">둥근 반경을 입력하십시오:</translation>
+        <translation type="unfinished">모깎기 반지름 입력:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_action_draw_polygon_base.cpp" line="267"/>
@@ -1801,7 +1801,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_action_draw_polygon_base.cpp" line="291"/>
         <source>Center:</source>
-        <translation type="unfinished">센터:</translation>
+        <translation type="unfinished">중심:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_action_draw_polygon_base.cpp" line="292"/>
@@ -1811,12 +1811,12 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_action_draw_polygon_base.cpp" line="293"/>
         <source>Radius:</source>
-        <translation type="unfinished">반경:</translation>
+        <translation type="unfinished">반지름:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_action_draw_polygon_base.cpp" line="294"/>
         <source>Radius Inner:</source>
-        <translation type="unfinished">반경 안:</translation>
+        <translation type="unfinished">내부 반지름:</translation>
     </message>
 </context>
 <context>
@@ -1831,7 +1831,7 @@ or [%2]</source>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_draw_polyline.cpp" line="439"/>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_draw_polyline.cpp" line="606"/>
         <source>Enter number of polylines</source>
-        <translation type="unfinished">Polylines의 수를 입력하십시오</translation>
+        <translation type="unfinished">폴리라인 개수 입력</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_draw_polyline.cpp" line="564"/>
@@ -1871,12 +1871,12 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_draw_polyline.cpp" line="787"/>
         <source>Alternative Arc</source>
-        <translation type="unfinished">대안 Arc</translation>
+        <translation type="unfinished">대체 호</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_draw_polyline.cpp" line="798"/>
         <source>Specify next point or [%1]</source>
-        <translation type="unfinished">다음 포인트 또는 [%1] 지정</translation>
+        <translation type="unfinished">다음 점 지정 또는 [%1]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_draw_polyline.cpp" line="800"/>
@@ -1919,7 +1919,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_1point.cpp" line="402"/>
         <source>Specify point that defines base angle for rectangle</source>
-        <translation>Rectangle의 기본 각도를 정의하는 포인트</translation>
+        <translation>직사각형의 기준 각도를 정의하는 점 지정</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_1point.cpp" line="402"/>
@@ -2029,7 +2029,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_abstract.cpp" line="195"/>
         <source>Center:</source>
-        <translation type="unfinished">센터:</translation>
+        <translation type="unfinished">중심:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_abstract.cpp" line="224"/>
@@ -2039,7 +2039,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_abstract.cpp" line="235"/>
         <source>Invalid radius</source>
-        <translation type="unfinished">잘못된 반경</translation>
+        <translation type="unfinished">잘못된 반지름</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_abstract.cpp" line="382"/>
@@ -2071,12 +2071,12 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_abstract.cpp" line="452"/>
         <source>Specify corner bevel length (x,y)</source>
-        <translation type="unfinished">코너 베벨 길이 지정 (x,y)</translation>
+        <translation type="unfinished">모서리 모따기 길이 지정 (x,y)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_abstract.cpp" line="455"/>
         <source>Specify corner radius</source>
-        <translation type="unfinished">코너 반경 지정</translation>
+        <translation type="unfinished">모서리 반지름 지정</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_abstract.cpp" line="458"/>
@@ -2096,7 +2096,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_slice_divide.cpp" line="248"/>
         <source>Arc</source>
-        <translation>·</translation>
+        <translation>호</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_slice_divide.cpp" line="258"/>
@@ -2111,7 +2111,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_slice_divide.cpp" line="631"/>
         <source>Select circle or arc</source>
-        <translation>원형 또는 아크 선택</translation>
+        <translation>원 또는 호 선택</translation>
     </message>
 </context>
 <context>
@@ -2196,7 +2196,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_action_draw_star.cpp" line="652"/>
         <source>Set center point</source>
-        <translation>설정 센터 포인트</translation>
+        <translation>중심점 설정</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_action_draw_star.cpp" line="655"/>
@@ -2211,7 +2211,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_action_draw_star.cpp" line="661"/>
         <source>Set rounding radiuses (outer, inner)</source>
-        <translation>원형 반경 설정 (외부, 내부)</translation>
+        <translation>모깎기 반지름 설정 (외부, 내부)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_action_draw_star.cpp" line="664"/>
@@ -2278,12 +2278,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="597"/>
         <source>&amp;Window Zoom</source>
-        <translation>&amp;Window 줌</translation>
+        <translation>윈도우 줌(&amp;W)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="338"/>
         <source>Zoom &amp;Panning</source>
-        <translation>줌&amp;패닝</translation>
+        <translation>줌 초점이동(&amp;P)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="246"/>
@@ -2308,12 +2308,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="250"/>
         <source>Select Intersected Entities</source>
-        <translation>Intersected 항목 선택</translation>
+        <translation>교차하는 엔티티 선택</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="251"/>
         <source>Deselect Intersected Entities</source>
-        <translation>Intersected 항목 선택</translation>
+        <translation>교차하는 엔티티 선택 해제</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="252"/>
@@ -2323,12 +2323,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="235"/>
         <source>&amp;Points</source>
-        <translation>&amp;포인트</translation>
+        <translation>점(&amp;P)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="206"/>
         <source>&amp;2 Points</source>
-        <translation>&amp;2 포인트</translation>
+        <translation>&amp;2점</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="207"/>
@@ -2379,12 +2379,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="215"/>
         <source>Tangent (C,C)</source>
-        <translation>Tangent (C의 C)</translation>
+        <translation>접선 (C,C)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="216"/>
         <source>Tangent &amp;Orthogonal</source>
-        <translation>탱탱탱 &amp;Orthogonal</translation>
+        <translation>접선 직교(&amp;O)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="217"/>
@@ -2459,47 +2459,47 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="227"/>
         <source>Slice/Divide Line</source>
-        <translation>Slice/Divide 라인</translation>
+        <translation>선 슬라이스/분할</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="228"/>
         <source>Slice/Divide Circle</source>
-        <translation>Slice/Divide 원형</translation>
+        <translation>원 슬라이스/분할</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="236"/>
         <source>Line of Points</source>
-        <translation>포인트 라인</translation>
+        <translation>선을 따라 점 그리기</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="261"/>
         <source>Center, &amp;Point</source>
-        <translation>센터, &amp;포인트</translation>
+        <translation>중심, 점(&amp;P)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="262"/>
         <source>By Arc</source>
-        <translation>으로 Arc</translation>
+        <translation>호로</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="263"/>
         <source>Center, &amp;Radius</source>
-        <translation>센터, &amp;Radius</translation>
+        <translation>중심, 반지름(&amp;R)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="264"/>
         <source>2 Points</source>
-        <translation>2 포인트</translation>
+        <translation>2점</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="265"/>
         <source>2 Points, Radius</source>
-        <translation>2개의 점, 반경</translation>
+        <translation>2점, 반지름</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="266"/>
         <source>3 Points</source>
-        <translation>3 포인트</translation>
+        <translation>3점</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="267"/>
@@ -2515,7 +2515,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="272"/>
         <source>Tangential, 2 P&amp;oints</source>
-        <translation>Tangential, 2개의 P&amp;oints</translation>
+        <translation>접함, 2점(&amp;O)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="278"/>
@@ -2525,32 +2525,32 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="281"/>
         <source>&amp;3 Points</source>
-        <translation>&amp;3 포인트</translation>
+        <translation>&amp;3점</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="284"/>
         <source>&amp;2 Points, Length</source>
-        <translation>&amp;2 포인트, 길이</translation>
+        <translation>&amp;2점, 길이</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="285"/>
         <source>&amp;2 Points, Height</source>
-        <translation>&amp;2 포인트, 높이</translation>
+        <translation>&amp;2점, 높이</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="287"/>
         <source>Arc &amp;Tangential</source>
-        <translation>아크 &amp; Tangential</translation>
+        <translation>접선 호(&amp;T)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="299"/>
         <source>&amp;Append spline point</source>
-        <translation>&amp;Append 스플라인 포인트</translation>
+        <translation>스플라인 점 추가(&amp;A)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="301"/>
         <source>&amp;Insert spline points</source>
-        <translation>&amp;Insert 스플라인 포인트</translation>
+        <translation>스플라인 점 삽입(&amp;I)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="312"/>
@@ -2570,12 +2570,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="315"/>
         <source>Ellipse &amp;4 Point</source>
-        <translation>엘립스 &amp;4 포인트</translation>
+        <translation>타원 4점(&amp;4)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="316"/>
         <source>Ellipse Center and &amp;3 Points</source>
-        <translation>엘립스 센터 및 &amp;3 포인트</translation>
+        <translation>타원 중심 및 3점(&amp;3)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="317"/>
@@ -2585,12 +2585,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="297"/>
         <source>&amp;Spline</source>
-        <translation>·Spline</translation>
+        <translation>스플라인(&amp;S)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="298"/>
         <source>&amp;Spline through points</source>
-        <translation>포인트를 통해 &amp;Spline</translation>
+        <translation>점을 지나는 스플라인(&amp;S)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="323"/>
@@ -2620,17 +2620,17 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="328"/>
         <source>&amp;Trim segments</source>
-        <translation>&amp;Trim 세그먼트</translation>
+        <translation>세그먼트 트림(&amp;T)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="329"/>
         <source>Create &amp;Equidistant Polylines</source>
-        <translation>창조 &amp;Equidistant Polylines</translation>
+        <translation>등간격 폴리라인 만들기(&amp;E)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="331"/>
         <source>Polyline Arcs to Chords</source>
-        <translation>Polyline Arcs로 Chords</translation>
+        <translation>폴리라인 호를 현으로</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="339"/>
@@ -2645,12 +2645,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="341"/>
         <source>&amp;Hatch</source>
-        <translation>&amp;Hatch의 특징</translation>
+        <translation>해치(&amp;H)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="342"/>
         <source>Insert &amp;Image</source>
-        <translation>삽입 &amp;Image</translation>
+        <translation>이미지 삽입(&amp;I)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="349"/>
@@ -2690,7 +2690,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="378"/>
         <source>&amp;Attributes</source>
-        <translation>·Attributes</translation>
+        <translation>속성(&amp;A)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="379"/>
@@ -2700,7 +2700,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="380"/>
         <source>&amp;Move / Copy</source>
-        <translation>&amp;Move / 복사</translation>
+        <translation>이동 / 복사(&amp;M)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="381"/>
@@ -2945,12 +2945,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="383"/>
         <source>&amp;Scale</source>
-        <translation>·Scale</translation>
+        <translation>축척(&amp;S)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="384"/>
         <source>&amp;Mirror</source>
-        <translation>&amp;미러</translation>
+        <translation>대칭(&amp;M)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="386"/>
@@ -2980,17 +2980,17 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="393"/>
         <source>&amp;Stretch</source>
-        <translation>&amp;Stretch는</translation>
+        <translation>신축(&amp;S)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="394"/>
         <source>&amp;Bevel</source>
-        <translation>&amp; 베벨</translation>
+        <translation>모따기(&amp;B)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="395"/>
         <source>&amp;Fillet</source>
-        <translation>·Fillet</translation>
+        <translation>모깎기(&amp;F)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="396"/>
@@ -3000,7 +3000,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="583"/>
         <source>&amp;Distance Point to Point</source>
-        <translation>&amp;Distance 포인트</translation>
+        <translation>점과 점 사이 거리(&amp;D)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="586"/>
@@ -3010,7 +3010,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="588"/>
         <source>Polygonal &amp;Area</source>
-        <translation>다각형 &amp;Area</translation>
+        <translation>다각형 면적(&amp;A)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="751"/>
@@ -3060,7 +3060,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="238"/>
         <source>Lattice of Points</source>
-        <translation>포인트의 격자</translation>
+        <translation>점 격자</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="239"/>
@@ -3080,7 +3080,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="280"/>
         <source>&amp;Center, Point, Arc Angle</source>
-        <translation>&amp;Center의 점, 아크 각</translation>
+        <translation>중심, 점, 호 각도(&amp;C)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="282"/>
@@ -3090,7 +3090,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="283"/>
         <source>&amp;2 Points, Radius</source>
-        <translation>&amp;2 포인트, 반경</translation>
+        <translation>&amp;2점, 반지름</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="294"/>
@@ -3105,17 +3105,17 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="300"/>
         <source>&amp;Remove spline points</source>
-        <translation>&amp;Remove 스플라인 포인트</translation>
+        <translation>스플라인 점 제거(&amp;R)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="302"/>
         <source>&amp;Explode spline to lines</source>
-        <translation>&amp;Explode 스플라인 라인</translation>
+        <translation>스플라인을 선으로 분해(&amp;E)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="303"/>
         <source>&amp;Spline from polyline</source>
-        <translation>Polyline의 &amp;Spline</translation>
+        <translation>폴리라인에서 스플라인(&amp;S)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="304"/>
@@ -3135,12 +3135,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="330"/>
         <source>Polyline from Existing &amp;Segments</source>
-        <translation>Existing &amp;Segments에서 Polyline</translation>
+        <translation>기존 세그먼트로 폴리라인(&amp;S)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="332"/>
         <source>Polyline Change Segment Type</source>
-        <translation>Polyline 변화 세그먼트 유형</translation>
+        <translation>폴리라인 세그먼트 유형 변경</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="343"/>
@@ -3165,7 +3165,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="399"/>
         <source>Line Gap</source>
-        <translation>라인 갭</translation>
+        <translation>선 간격</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="400"/>
@@ -3190,7 +3190,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="404"/>
         <source>Align Reference Points</source>
-        <translation>Align 참조 포인트</translation>
+        <translation>기준점 정렬</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="410"/>
@@ -3220,7 +3220,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="425"/>
         <source>Show Entity Description</source>
-        <translation>엔티티티 보기 Description</translation>
+        <translation>엔티티 설명 표시</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="428"/>
@@ -3261,12 +3261,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="59"/>
         <source>Arc</source>
-        <translation>·</translation>
+        <translation>호</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="59"/>
         <source>Arc drawing commands</source>
-        <translation>Arc 도면 명령</translation>
+        <translation>호 그리기 명령</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="60"/>
@@ -3276,7 +3276,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="60"/>
         <source>Spline drawing commands</source>
-        <translation>Spline 그림 명령</translation>
+        <translation>스플라인 그리기 명령</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="61"/>
@@ -3291,7 +3291,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="62"/>
         <source>Ellipse</source>
-        <translation>엘립스</translation>
+        <translation>타원</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="62"/>
@@ -3356,7 +3356,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="68"/>
         <source>Point drawing commands</source>
-        <translation>점 그림 명령</translation>
+        <translation>점 그리기 명령</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="69"/>
@@ -3366,7 +3366,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="69"/>
         <source>Polygon drawing commands</source>
-        <translation>Polygon 그림 명령</translation>
+        <translation>다각형 그리기 명령</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="70"/>
@@ -3412,7 +3412,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="74"/>
         <source>Polyline drawing commands</source>
-        <translation>Polyline 그림 명령</translation>
+        <translation>폴리라인 그리기 명령</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="75"/>
@@ -3447,12 +3447,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="78"/>
         <source>Snapping operations</source>
-        <translation>Snapping 작업</translation>
+        <translation>스냅 작업</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="79"/>
         <source>Snap Extras</source>
-        <translation>Snap 추가</translation>
+        <translation>추가 스냅</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="79"/>
@@ -3588,7 +3588,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="226"/>
         <source>Center Mark</source>
-        <translation>센터 마크</translation>
+        <translation>중심 표식</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="229"/>
@@ -3613,12 +3613,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="269"/>
         <source>Tangential 2 Entities, Radius</source>
-        <translation>Tangential 2 항목, 반경</translation>
+        <translation>2개 엔티티에 접함, 반지름</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="270"/>
         <source>Tangential 2 Entities, 1 Point</source>
-        <translation>Tangential 2 항목, 1 포인트</translation>
+        <translation>2개 엔티티에 접함, 1점</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="271"/>
@@ -3633,7 +3633,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="296"/>
         <source>&amp;Hyperbola &amp;Foci Point</source>
-        <translation>&amp;Hyperbola &amp;Foci 포인트</translation>
+        <translation>쌍곡선: 초점, 점(&amp;H)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="360"/>
@@ -3683,17 +3683,17 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="455"/>
         <source>Snap on Endpoints</source>
-        <translation>Endpoints에 스냅</translation>
+        <translation>끝점에 스냅</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="456"/>
         <source>Snap on Entity</source>
-        <translation>Entity에 스냅</translation>
+        <translation>엔티티에 스냅</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="457"/>
         <source>Snap Center</source>
-        <translation>스냅 센터</translation>
+        <translation>중심 스냅</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="458"/>
@@ -3788,7 +3788,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="582"/>
         <source>&amp;Point Coordinates</source>
-        <translation>&amp;Point 좌표</translation>
+        <translation>점 좌표(&amp;P)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="584"/>
@@ -3798,7 +3798,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="585"/>
         <source>Distance &amp;Point to Entity</source>
-        <translation>거리 &amp;포인트</translation>
+        <translation>점과 엔티티 사이 거리(&amp;P)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="587"/>
@@ -3833,7 +3833,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="607"/>
         <source>&amp;Orthogonal Grid</source>
-        <translation>&amp;Orthogonal 격자</translation>
+        <translation>직교 그리드(&amp;O)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="608"/>
@@ -3898,12 +3898,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="639"/>
         <source>&amp;Rename Block</source>
-        <translation>&amp;Rename 블록</translation>
+        <translation>블록 이름 바꾸기(&amp;R)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="640"/>
         <source>&amp;Edit Block</source>
-        <translation>&amp;Edit 블록</translation>
+        <translation>블록 편집(&amp;E)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="641"/>
@@ -3913,17 +3913,17 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="642"/>
         <source>&amp;Insert Block</source>
-        <translation>&amp;Insert 블록</translation>
+        <translation>블록 삽입(&amp;I)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="643"/>
         <source>Toggle Block &amp;Visibility</source>
-        <translation>토글 블록 &amp;Visibility</translation>
+        <translation>블록 표시 전환(&amp;V)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="644"/>
         <source>&amp;Create Block</source>
-        <translation>&amp;Create 블록</translation>
+        <translation>블록 만들기(&amp;C)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="397"/>
@@ -4148,7 +4148,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="356"/>
         <source>&amp;Arc</source>
-        <translation>·</translation>
+        <translation>호(&amp;A)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="617"/>
@@ -4188,7 +4188,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="636"/>
         <source>&amp;Hide all blocks</source>
-        <translation>&amp;Hide 모든 블록</translation>
+        <translation>모든 블록 숨기기(&amp;H)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="656"/>
@@ -4367,7 +4367,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/info/lc_action_info_dist_point_to_entity.cpp" line="301"/>
         <source>Do not snap to child entities in container</source>
-        <translation type="unfinished">용기에 아이 엔티티티에 스냅하지 마십시오</translation>
+        <translation type="unfinished">컨테이너 안의 하위 엔티티에 스냅하지 않음</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_action_info_dist_point_to_entity.cpp" line="305"/>
@@ -4444,7 +4444,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfopoint.cpp" line="70"/>
         <source>Point Coordinates</source>
-        <translation>포인트 좌표</translation>
+        <translation>점 좌표</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfopoint.cpp" line="71"/>
@@ -4469,7 +4469,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfopoint.cpp" line="75"/>
         <source>Relative Zero:</source>
-        <translation>상대 0:</translation>
+        <translation>상대 원점:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfopoint.cpp" line="123"/>
@@ -4702,7 +4702,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickdistance.cpp" line="292"/>
         <source>Segment length/Diameter</source>
-        <translation>세그먼트 길이/직경</translation>
+        <translation>세그먼트 길이/지름</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickdistance.cpp" line="295"/>
@@ -4740,17 +4740,17 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickposition.cpp" line="80"/>
         <source>Relative Zero:</source>
-        <translation>상대 0:</translation>
+        <translation>상대 원점:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickposition.cpp" line="152"/>
         <source>Pick coordinates from the drawing</source>
-        <translation>그림에서 좌표</translation>
+        <translation>도면에서 좌표 선택</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickposition.cpp" line="153"/>
         <source>Pick relative zero coordinates</source>
-        <translation>상대 0 좌표를 선택</translation>
+        <translation>상대 원점 좌표 선택</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickposition.cpp" line="153"/>
@@ -4796,7 +4796,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="53"/>
         <source>Align action at the moment supports only World Coordinates system, and may not be invoked if User Coordinate System is active.</source>
-        <translation>현재 Align 동작은 World Coordinates 시스템을 지원하며, User Coordinate System이 활성화된 경우 호출되지 않을 수 있습니다.</translation>
+        <translation>정렬 동작은 현재 WCS만 지원하며, 사용자 좌표계(UCS)가 활성화되어 있으면 실행할 수 없습니다.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="147"/>
@@ -4831,7 +4831,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="245"/>
         <source>Coordinate is accepted only for Align to &quot;Position&quot;</source>
-        <translation>좌표는 Align에서 &quot;Position&quot;에만 허용됩니다</translation>
+        <translation>좌표는 &quot;위치&quot;에 정렬할 때만 허용됩니다</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="261"/>
@@ -4932,7 +4932,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_single.cpp" line="54"/>
         <source>Align action at the moment supports only World Coordinates system, and may not be invoked if User Coordinate System is active.</source>
-        <translation>현재 Align 동작은 World Coordinates 시스템을 지원하며, User Coordinate System이 활성화된 경우 호출되지 않을 수 있습니다.</translation>
+        <translation>정렬 동작은 현재 WCS만 지원하며, 사용자 좌표계(UCS)가 활성화되어 있으면 실행할 수 없습니다.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_single.cpp" line="115"/>
@@ -4987,7 +4987,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_single.cpp" line="378"/>
         <source>Coordinate is accepted only for Align to &quot;Position&quot;</source>
-        <translation>좌표는 Align에서 &quot;Position&quot;에만 허용됩니다</translation>
+        <translation>좌표는 &quot;위치&quot;에 정렬할 때만 허용됩니다</translation>
     </message>
 </context>
 <context>
@@ -5033,7 +5033,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_bevel.cpp" line="233"/>
         <source>Invalid entity selected (non-trimmable).</source>
-        <translation type="unfinished">(non-trimmable)를 선택했습니다.</translation>
+        <translation type="unfinished">잘못된 엔티티를 선택했습니다 (트림할 수 없음).</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_bevel.cpp" line="236"/>
@@ -5059,7 +5059,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_bevel.cpp" line="265"/>
         <source>Invalid entity selected (non-trimmable with first entity).</source>
-        <translation type="unfinished">무효성체 선택 (최체로 무효).</translation>
+        <translation type="unfinished">잘못된 엔티티를 선택했습니다 (첫 번째 엔티티로 트림할 수 없음).</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_bevel.cpp" line="338"/>
@@ -5103,7 +5103,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="248"/>
         <source>Break/Divide Line</source>
-        <translation>Break/Divide 라인</translation>
+        <translation>선 끊기/분할</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="249"/>
@@ -5122,7 +5122,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="369"/>
         <source>Break/Divide Circle</source>
-        <translation>Break/Divide 서클</translation>
+        <translation>원 끊기/분할</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="370"/>
@@ -5139,12 +5139,12 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="468"/>
         <source>Break/Divide Arc</source>
-        <translation>Break/Divide 아크</translation>
+        <translation>호 끊기/분할</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="520"/>
         <source>Select line, arc or circle</source>
-        <translation>선, 아크 또는 원형 선택</translation>
+        <translation>선, 호 또는 원 선택</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="520"/>
@@ -5303,7 +5303,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_explode_text.cpp" line="54"/>
         <source>Explode immediately after selection</source>
-        <translation type="unfinished">선택 후 바로 Explode</translation>
+        <translation type="unfinished">선택 후 바로 분해</translation>
     </message>
 </context>
 <context>
@@ -5312,7 +5312,7 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_gap.cpp" line="91"/>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_gap.cpp" line="116"/>
         <source>Line Gap</source>
-        <translation>라인 갭</translation>
+        <translation>선 간격</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_gap.cpp" line="92"/>
@@ -5334,7 +5334,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_gap.cpp" line="459"/>
         <source>Use Alternative Line Endpoint</source>
-        <translation>사용 대체 라인 Endpoint</translation>
+        <translation>선의 다른 끝점 사용</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_gap.cpp" line="463"/>
@@ -5373,7 +5373,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_join.cpp" line="215"/>
         <source>Lines already intersects, can&apos;t merge</source>
-        <translation>이미 Intersects를 선보일 수 없습니다</translation>
+        <translation>선이 이미 교차하므로 병합할 수 없습니다</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_join.cpp" line="836"/>
@@ -5383,12 +5383,12 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_join.cpp" line="839"/>
         <source>Select second line</source>
-        <translation>두 번째 라인 선택</translation>
+        <translation>두 번째 선 선택</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_join.cpp" line="842"/>
         <source>Select part of first line that should remain after trim</source>
-        <translation>트림 후 남아 있어야하는 첫 번째 라인의 일부를 선택</translation>
+        <translation>트림 후 남길 첫 번째 선의 부분 선택</translation>
     </message>
 </context>
 <context>
@@ -5431,7 +5431,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_mirror.cpp" line="258"/>
         <source>Specify mirror line</source>
-        <translation type="unfinished">미러 라인</translation>
+        <translation type="unfinished">대칭선 지정</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_mirror.cpp" line="258"/>
@@ -5451,7 +5451,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_mirror.cpp" line="266"/>
         <source>Specify second point of mirror line</source>
-        <translation type="unfinished">미러 라인의 두 번째 지점 지정</translation>
+        <translation type="unfinished">대칭선의 두 번째 점 지정</translation>
     </message>
 </context>
 <context>
@@ -5838,7 +5838,7 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate.cpp" line="708"/>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate.cpp" line="711"/>
         <source>Snap to center of selection</source>
-        <translation type="unfinished">선택 센터에 스냅</translation>
+        <translation type="unfinished">선택 중심에 스냅</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate.cpp" line="711"/>
@@ -5848,7 +5848,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate.cpp" line="714"/>
         <source>Specify target point to rotate to</source>
-        <translation type="unfinished">회전 할 대상 포인트를 지정</translation>
+        <translation type="unfinished">회전할 목표점 지정</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate.cpp" line="717"/>
@@ -5866,7 +5866,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate_twice.cpp" line="146"/>
         <source>Center 1:</source>
-        <translation type="unfinished">센터 1:</translation>
+        <translation type="unfinished">중심 1:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate_twice.cpp" line="147"/>
@@ -5876,7 +5876,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate_twice.cpp" line="148"/>
         <source>Center 2:</source>
-        <translation type="unfinished">센터 2:</translation>
+        <translation type="unfinished">중심 2:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate_twice.cpp" line="149"/>
@@ -5945,7 +5945,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_round.cpp" line="414"/>
         <source>Enter radius:</source>
-        <translation type="unfinished">입력 반경:</translation>
+        <translation type="unfinished">반지름 입력:</translation>
     </message>
 </context>
 <context>
@@ -5958,7 +5958,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_scale.cpp" line="224"/>
         <source>Center:</source>
-        <translation type="unfinished">센터:</translation>
+        <translation type="unfinished">중심:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_scale.cpp" line="225"/>
@@ -5988,12 +5988,12 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_scale.cpp" line="413"/>
         <source>Specify scale center</source>
-        <translation type="unfinished">스케일 센터</translation>
+        <translation type="unfinished">축척 중심 지정</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_scale.cpp" line="413"/>
         <source>Snap to center of selection</source>
-        <translation type="unfinished">선택 센터에 스냅</translation>
+        <translation type="unfinished">선택 중심에 스냅</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_scale.cpp" line="417"/>
@@ -6107,7 +6107,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim.cpp" line="217"/>
         <source>Select first trim entity</source>
-        <translation type="unfinished">첫 번째 트리덴셜 선택</translation>
+        <translation type="unfinished">첫 번째 트림 엔티티 선택</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim.cpp" line="220"/>
@@ -6117,7 +6117,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim.cpp" line="225"/>
         <source>Select second trim entity</source>
-        <translation type="unfinished">두 번째 트리덴티를 선택</translation>
+        <translation type="unfinished">두 번째 트림 엔티티 선택</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim.cpp" line="228"/>
@@ -6135,7 +6135,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim_amount.cpp" line="207"/>
         <source>The chosen Entity is not an atomic entity or cannot be trimmed.</source>
-        <translation type="unfinished">선택된 엔티티티는 원자체가 아니며 트리밍할 수 없습니다.</translation>
+        <translation type="unfinished">선택한 엔티티가 단일 엔티티가 아니거나 트림할 수 없습니다.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim_amount.cpp" line="232"/>
@@ -6158,7 +6158,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/lc_action_options_properties_filler_base.cpp" line="294"/>
         <source>Distance of snap point from initially resolved snap point</source>
-        <translation type="unfinished">처음 해결된 스냅 포인트의 거리</translation>
+        <translation type="unfinished">처음 결정된 스냅 점으로부터의 스냅 점 거리</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/lc_action_options_properties_filler_base.cpp" line="308"/>
@@ -6254,27 +6254,27 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_add.cpp" line="113"/>
         <source>Entity must be a polyline.</source>
-        <translation type="unfinished">Entity는 polyline이어야 합니다.</translation>
+        <translation type="unfinished">엔티티는 폴리라인이어야 합니다.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_add.cpp" line="142"/>
         <source>Adding point is invalid.</source>
-        <translation type="unfinished">추가 포인트는 유효하지 않습니다.</translation>
+        <translation type="unfinished">추가할 점이 유효하지 않습니다.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_add.cpp" line="147"/>
         <source>Adding point is not on entity.</source>
-        <translation type="unfinished">추가 포인트는 엔티티티티에 없습니다.</translation>
+        <translation type="unfinished">추가할 점이 엔티티 위에 있지 않습니다.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_add.cpp" line="180"/>
         <source>Specify polyline to add nodes</source>
-        <translation type="unfinished">Polyline을 지정하여 노드를 추가합니다</translation>
+        <translation type="unfinished">노드를 추가할 폴리라인 지정</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_add.cpp" line="183"/>
         <source>Specify adding node&apos;s point</source>
-        <translation type="unfinished">노드의 포인트 추가</translation>
+        <translation type="unfinished">추가할 노드의 점 지정</translation>
     </message>
 </context>
 <context>
@@ -6287,7 +6287,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_append.cpp" line="128"/>
         <source>Entity must be a polyline.</source>
-        <translation type="unfinished">Entity는 polyline이어야 합니다.</translation>
+        <translation type="unfinished">엔티티는 폴리라인이어야 합니다.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_append.cpp" line="132"/>
@@ -6302,7 +6302,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_append.cpp" line="294"/>
         <source>Enter number of polylines</source>
-        <translation type="unfinished">Polylines의 수를 입력하십시오</translation>
+        <translation type="unfinished">폴리라인 개수 입력</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_append.cpp" line="309"/>
@@ -6320,7 +6320,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_arcs_to_lines.cpp" line="116"/>
         <source>Specify polyline with arc segments</source>
-        <translation>아크 세그먼트를 가진 polyline를 지정하십시오</translation>
+        <translation>호 세그먼트가 있는 폴리라인 지정</translation>
     </message>
 </context>
 <context>
@@ -6328,22 +6328,22 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_change_segment_type.cpp" line="59"/>
         <source>Invalid arc point to create arc, select another one</source>
-        <translation>아크를 생성하는 잘못된 아크 포인트, 다른 하나를 선택</translation>
+        <translation>호를 만들 수 없는 호 점입니다. 다른 점을 선택하십시오</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_change_segment_type.cpp" line="242"/>
         <source>Select polyline to modify</source>
-        <translation>Polyline 선택하기</translation>
+        <translation>수정할 폴리라인 선택</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_change_segment_type.cpp" line="246"/>
         <source>Select segment of polyline to modify</source>
-        <translation>Polyline의 세그먼트를 선택하여 수정</translation>
+        <translation>수정할 폴리라인 세그먼트 선택</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_change_segment_type.cpp" line="250"/>
         <source>Specify position on arc to create</source>
-        <translation>아크에 위치 지정</translation>
+        <translation>만들 호 위의 위치 지정</translation>
     </message>
 </context>
 <context>
@@ -6357,7 +6357,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node.cpp" line="107"/>
         <source>Entity must be a polyline.</source>
-        <translation type="unfinished">Entity는 polyline이어야 합니다.</translation>
+        <translation type="unfinished">엔티티는 폴리라인이어야 합니다.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node.cpp" line="132"/>
@@ -6367,12 +6367,12 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node.cpp" line="141"/>
         <source>Deleting point is invalid.</source>
-        <translation type="unfinished">삭제 포인트는 유효하지 않습니다.</translation>
+        <translation type="unfinished">삭제할 점이 유효하지 않습니다.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node.cpp" line="155"/>
         <source>Specify polyline to delete node</source>
-        <translation type="unfinished">노드를 삭제하기 위해 polyline을 지정하십시오</translation>
+        <translation type="unfinished">노드를 삭제할 폴리라인 지정</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node.cpp" line="158"/>
@@ -6391,7 +6391,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node_between.cpp" line="131"/>
         <source>Entity must be a polyline.</source>
-        <translation type="unfinished">Entity는 polyline이어야 합니다.</translation>
+        <translation type="unfinished">엔티티는 폴리라인이어야 합니다.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node_between.cpp" line="159"/>
@@ -6403,7 +6403,7 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node_between.cpp" line="167"/>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node_between.cpp" line="200"/>
         <source>Deleting point is invalid.</source>
-        <translation type="unfinished">삭제 포인트는 유효하지 않습니다.</translation>
+        <translation type="unfinished">삭제할 점이 유효하지 않습니다.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node_between.cpp" line="174"/>
@@ -6418,7 +6418,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node_between.cpp" line="213"/>
         <source>Specify polyline to delete between two nodes</source>
-        <translation type="unfinished">Polyline을 2개의 노드 사이에 삭제합니다</translation>
+        <translation type="unfinished">두 노드 사이를 삭제할 폴리라인 지정</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node_between.cpp" line="216"/>
@@ -6441,7 +6441,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_equidistant.cpp" line="338"/>
         <source>Entity must be a polyline.</source>
-        <translation type="unfinished">Entity는 polyline이어야 합니다.</translation>
+        <translation type="unfinished">엔티티는 폴리라인이어야 합니다.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_equidistant.cpp" line="403"/>
@@ -6455,7 +6455,7 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_from_segment.cpp" line="62"/>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_from_segment.cpp" line="82"/>
         <source>Polyline created</source>
-        <translation type="unfinished">Polyline 생성</translation>
+        <translation type="unfinished">폴리라인이 생성되었습니다</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_from_segment.cpp" line="326"/>
@@ -6465,12 +6465,12 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_from_segment.cpp" line="329"/>
         <source>Entity can not be a closed polyline.</source>
-        <translation type="unfinished">Entity는 닫히는 polyline일 수 없습니다.</translation>
+        <translation type="unfinished">엔티티는 닫힌 폴리라인일 수 없습니다.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_from_segment.cpp" line="352"/>
         <source>Choose one of the segments on the original polyline</source>
-        <translation type="unfinished">Original polyline의 세그먼트 중 하나를 선택하십시오</translation>
+        <translation type="unfinished">원래 폴리라인의 세그먼트 중 하나를 선택하십시오</translation>
     </message>
 </context>
 <context>
@@ -6483,7 +6483,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_trim.cpp" line="118"/>
         <source>Entity must be a polyline.</source>
-        <translation type="unfinished">Entity는 polyline이어야 합니다.</translation>
+        <translation type="unfinished">엔티티는 폴리라인이어야 합니다.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_trim.cpp" line="143"/>
@@ -6531,7 +6531,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="222"/>
         <source>that intersect with box</source>
-        <translation>그것은 상자와 intersect</translation>
+        <translation>상자와 교차하는</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="222"/>
@@ -6551,7 +6551,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="246"/>
         <source>Select Intersecting</source>
-        <translation>Intersecting 선택</translation>
+        <translation>교차하는 엔티티 선택</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="276"/>
@@ -6564,7 +6564,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_action_spline_remove_points.cpp" line="197"/>
         <source>Select spline or spline points entity</source>
-        <translation>스플라인 또는 스플라인 포인트를 선택</translation>
+        <translation>스플라인 또는 스플라인 점 엔티티 선택</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_action_spline_remove_points.cpp" line="201"/>
@@ -6693,7 +6693,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_window.cpp" line="137"/>
         <source>that intersect with box</source>
-        <translation type="unfinished">그것은 상자와 intersect</translation>
+        <translation type="unfinished">상자와 교차하는</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_window.cpp" line="137"/>
@@ -6723,12 +6723,12 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_window.cpp" line="184"/>
         <source>Select Intersecting</source>
-        <translation type="unfinished">Intersecting 선택</translation>
+        <translation type="unfinished">교차하는 엔티티 선택</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_window.cpp" line="184"/>
         <source>De-select intersecting</source>
-        <translation type="unfinished">De-select 연동</translation>
+        <translation type="unfinished">교차하는 엔티티 선택 해제</translation>
     </message>
 </context>
 <context>
@@ -6746,7 +6746,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/snap/lc_actionsnapmiddlemanual.cpp" line="240"/>
         <source>Specify end point</source>
-        <translation>정의 끝 점</translation>
+        <translation>끝점 지정</translation>
     </message>
 </context>
 <context>
@@ -6754,7 +6754,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_action_spline_add_point.cpp" line="206"/>
         <source>Select spline or spline points entity</source>
-        <translation>스플라인 또는 스플라인 포인트를 선택</translation>
+        <translation>스플라인 또는 스플라인 점 엔티티 선택</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_action_spline_add_point.cpp" line="210"/>
@@ -6777,7 +6777,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_action_spline_append_point.cpp" line="258"/>
         <source>Select spline or spline points entity</source>
-        <translation>스플라인 또는 스플라인 포인트를 선택</translation>
+        <translation>스플라인 또는 스플라인 점 엔티티 선택</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_action_spline_append_point.cpp" line="262"/>
@@ -6795,7 +6795,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_action_spline_modify_explode.cpp" line="234"/>
         <source>Select spline or spline points entity</source>
-        <translation>스플라인 또는 스플라인 포인트를 선택</translation>
+        <translation>스플라인 또는 스플라인 점 엔티티 선택</translation>
     </message>
 </context>
 <context>
@@ -6803,7 +6803,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_action_spline_from_polyline.cpp" line="162"/>
         <source>Select polyline to create spline or spline points</source>
-        <translation>스플라인 또는 스플라인 포인트를 만들려면 폴리라인을 선택하십시오</translation>
+        <translation>스플라인 또는 스플라인 점을 만들려면 폴리라인을 선택하십시오</translation>
     </message>
 </context>
 <context>
@@ -6811,12 +6811,12 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_action_spline_remove_between.cpp" line="42"/>
         <source>Not enough points remains for the spline</source>
-        <translation>충분하지 포인트는 스플라인에 남아</translation>
+        <translation>스플라인에 남는 점이 충분하지 않습니다</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_action_spline_remove_between.cpp" line="228"/>
         <source>Select spline or spline points entity</source>
-        <translation>스플라인 또는 스플라인 포인트를 선택</translation>
+        <translation>스플라인 또는 스플라인 점 엔티티 선택</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_action_spline_remove_between.cpp" line="232"/>
@@ -6831,7 +6831,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_action_spline_remove_between.cpp" line="236"/>
         <source>Delete from endpoints TO selected points</source>
-        <translation>선택된 포인트로 endpoints에서 삭제</translation>
+        <translation>끝점에서 선택한 점까지 삭제</translation>
     </message>
 </context>
 <context>
@@ -7100,7 +7100,7 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/action_options/modify/lc_align_options_filler.cpp" line="51"/>
         <location filename="../src/ui/action_options/modify/lc_align_options_filler.cpp" line="68"/>
         <source>None</source>
-        <translation type="unfinished">이름 *</translation>
+        <translation type="unfinished">없음</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_options_filler.cpp" line="52"/>
@@ -7111,7 +7111,7 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/action_options/modify/lc_align_options_filler.cpp" line="53"/>
         <location filename="../src/ui/action_options/modify/lc_align_options_filler.cpp" line="70"/>
         <source>Middle</source>
-        <translation type="unfinished">주요 특징</translation>
+        <translation type="unfinished">중간</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_options_filler.cpp" line="54"/>
@@ -7121,7 +7121,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_options_filler.cpp" line="58"/>
         <source>Horizontal</source>
-        <translation type="unfinished">제품정보</translation>
+        <translation type="unfinished">수평</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_options_filler.cpp" line="58"/>
@@ -7131,12 +7131,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_options_filler.cpp" line="69"/>
         <source>Top</source>
-        <translation type="unfinished">이름 *</translation>
+        <translation type="unfinished">위쪽</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_options_filler.cpp" line="71"/>
         <source>Bottom</source>
-        <translation type="unfinished">제품정보</translation>
+        <translation type="unfinished">아래쪽</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_options_filler.cpp" line="75"/>
@@ -7212,7 +7212,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="46"/>
         <source>If checked, current attributes will be used for mirrored entities, otherwise - original ones. </source>
-        <translation type="unfinished">체크된 경우, 현재 속성은 미러링 된 엔티티티를 위해 사용되며, 그렇지 않으면 - Original ones.</translation>
+        <translation type="unfinished">선택하면 대칭된 엔티티에 현재 속성을 사용하고, 그렇지 않으면 원래 속성을 사용합니다. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="49"/>
@@ -7222,7 +7222,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="56"/>
         <source>If unchecked, original entities will be removed, otherwise they will survive.</source>
-        <translation type="unfinished">확인되지 않은 경우, 원래 엔티티티가 제거 될 것입니다, 그렇지 않으면 그들은 살아남을 것입니다.</translation>
+        <translation type="unfinished">선택하지 않으면 원래 엔티티를 제거하고, 선택하면 유지합니다.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="59"/>
@@ -7232,7 +7232,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="66"/>
         <source>If checked, mirrored entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">체크하면 미러링된 엔티티가 현재 레이어에 배치되고, 그렇지 않으면 원래 레이어에 배치됩니다.</translation>
+        <translation type="unfinished">선택하면 대칭된 엔티티를 현재 레이어에 배치하고, 그렇지 않으면 원래 레이어에 배치합니다.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="69"/>
@@ -7281,7 +7281,7 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/action_options/modify/lc_align_single_options_filler.cpp" line="53"/>
         <location filename="../src/ui/action_options/modify/lc_align_single_options_filler.cpp" line="70"/>
         <source>None</source>
-        <translation type="unfinished">이름 *</translation>
+        <translation type="unfinished">없음</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_single_options_filler.cpp" line="54"/>
@@ -7292,7 +7292,7 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/action_options/modify/lc_align_single_options_filler.cpp" line="55"/>
         <location filename="../src/ui/action_options/modify/lc_align_single_options_filler.cpp" line="72"/>
         <source>Middle</source>
-        <translation type="unfinished">주요 특징</translation>
+        <translation type="unfinished">중간</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_single_options_filler.cpp" line="56"/>
@@ -7302,7 +7302,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_single_options_filler.cpp" line="60"/>
         <source>Horizontal</source>
-        <translation type="unfinished">제품정보</translation>
+        <translation type="unfinished">수평</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_single_options_filler.cpp" line="60"/>
@@ -7312,12 +7312,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_single_options_filler.cpp" line="71"/>
         <source>Top</source>
-        <translation type="unfinished">이름 *</translation>
+        <translation type="unfinished">위쪽</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_single_options_filler.cpp" line="73"/>
         <source>Bottom</source>
-        <translation type="unfinished">제품정보</translation>
+        <translation type="unfinished">아래쪽</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_single_options_filler.cpp" line="77"/>
@@ -7375,7 +7375,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_single_options_widget.ui" line="157"/>
         <source>Defines the way of selected entities alignment.</source>
-        <translation type="unfinished">선택한 엔티티티 정렬의 방법을 결정합니다.</translation>
+        <translation type="unfinished">선택한 엔티티의 정렬 방법을 정의합니다.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_single_options_widget.ui" line="161"/>
@@ -7482,7 +7482,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/main/support/lc_appwindowdialogsinvoker.cpp" line="137"/>
         <source>Closing Drawing</source>
-        <translation>닫기 그림</translation>
+        <translation>도면 닫기</translation>
     </message>
     <message>
         <location filename="../src/ui/main/support/lc_appwindowdialogsinvoker.cpp" line="143"/>
@@ -7517,7 +7517,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_2points_options_widget.ui" line="61"/>
         <source>Height of the arc (the distanсe between chord and top arc point)</source>
-        <translation type="unfinished">아크의 높이 ( chord와 top arc point 사이의 distanсe)</translation>
+        <translation type="unfinished">호의 높이 (현과 호 꼭대기 점 사이의 거리)</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_2points_options_widget.ui" line="64"/>
@@ -7527,7 +7527,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_2points_options_widget.ui" line="71"/>
         <source>Length of the arc</source>
-        <translation type="unfinished">아크의 길이</translation>
+        <translation type="unfinished">호의 길이</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_2points_options_widget.ui" line="74"/>
@@ -7537,17 +7537,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_2points_options_widget.ui" line="92"/>
         <source>Radius of arc</source>
-        <translation type="unfinished">아크의 반경</translation>
+        <translation type="unfinished">호의 반지름</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_2points_options_widget.ui" line="95"/>
         <source>Radius:</source>
-        <translation type="unfinished">반경:</translation>
+        <translation type="unfinished">반지름:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_2points_options_widget.ui" line="105"/>
         <source>Central angle of the arc</source>
-        <translation type="unfinished">아크의 중앙 각</translation>
+        <translation type="unfinished">호의 중심각</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_2points_options_widget.ui" line="108"/>
@@ -7562,7 +7562,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_2points_options_widget.ui" line="144"/>
         <source>Pick angle from the drawing</source>
-        <translation type="unfinished">그림에서 각을 선택합니다</translation>
+        <translation type="unfinished">도면에서 각도 선택</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_2points_options_widget.cpp" line="47"/>
@@ -7572,7 +7572,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_2points_options_widget.cpp" line="53"/>
         <source>Pick height from drawing</source>
-        <translation type="unfinished">그림에서 고도를 선택하십시오</translation>
+        <translation type="unfinished">도면에서 높이 선택</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_2points_options_widget.cpp" line="59"/>
@@ -7582,7 +7582,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_2points_options_widget.cpp" line="65"/>
         <source>Pick angle from drawing</source>
-        <translation type="unfinished">그림에서 선택 각</translation>
+        <translation type="unfinished">도면에서 각도 선택</translation>
     </message>
 </context>
 <context>
@@ -7656,7 +7656,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_center_point_param_options_widget.ui" line="26"/>
         <source>Arc Options</source>
-        <translation type="unfinished">Arc 옵션</translation>
+        <translation type="unfinished">호 옵션</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_center_point_param_options_widget.ui" line="56"/>
@@ -7689,67 +7689,67 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="87"/>
         <source>X Coordinate of arc&apos;s center</source>
-        <translation>X 아크의 중심</translation>
+        <translation>호 중심의 X 좌표</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="112"/>
         <source>Pick center coordinate from the drawing</source>
-        <translation>도면에서 선택 센터 좌표</translation>
+        <translation>도면에서 중심 좌표 선택</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="131"/>
         <source>Center (y):</source>
-        <translation>센터 (y):</translation>
+        <translation>중심 (y):</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="153"/>
         <source>Y Coordinate of arc&apos;s center</source>
-        <translation>Y 아크 센터 좌표</translation>
+        <translation>호 중심의 Y 좌표</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="172"/>
         <source>Radius:</source>
-        <translation>반경:</translation>
+        <translation>반지름:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="194"/>
         <source>Radius of arc</source>
-        <translation>아크의 반경</translation>
+        <translation>호의 반지름</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="201"/>
         <source>Pick radius value from the drawing</source>
-        <translation>도면에서 반경 값을 선택합니다</translation>
+        <translation>도면에서 반지름 값 선택</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="227"/>
         <source>Diameter:</source>
-        <translation>직경:</translation>
+        <translation>지름:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="249"/>
         <source>Diameter of arc</source>
-        <translation>아크의 직경</translation>
+        <translation>호의 지름</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="256"/>
         <source>Pick diameter value from the drawing</source>
-        <translation>도면에서 직경 값을 선택합니다</translation>
+        <translation>도면에서 지름 값 선택</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="282"/>
         <source>Arc Length:</source>
-        <translation>아크 길이:</translation>
+        <translation>호 길이:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="304"/>
         <source>Length of the arc</source>
-        <translation>아크의 길이</translation>
+        <translation>호의 길이</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="311"/>
         <source>Pick arc length value from the drawing</source>
-        <translation>그림에서 아크 길이 값을 선택합니다</translation>
+        <translation>도면에서 호 길이 값 선택</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="337"/>
@@ -7759,12 +7759,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="359"/>
         <source>Sweep angle of the arc (degrees)</source>
-        <translation>아크의 스윕 각도 (도)</translation>
+        <translation>호의 스윕 각도 (도)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="366"/>
         <source>Pick sweep angle from the drawing</source>
-        <translation>그림에서 스윕 각도를 선택</translation>
+        <translation>도면에서 스윕 각도 선택</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="392"/>
@@ -7774,12 +7774,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="414"/>
         <source>Bulge (sagitta) of the arc</source>
-        <translation>아크의 Bulge (sagitta)</translation>
+        <translation>호의 볼록 (호 높이)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="421"/>
         <source>Pick bulge value from the drawing</source>
-        <translation>그림에서 bulge 값을 선택하십시오</translation>
+        <translation>도면에서 볼록 값 선택</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="447"/>
@@ -7789,13 +7789,13 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="469"/>
         <source>Starting angle of arc</source>
-        <translation>아크의 시작 각</translation>
+        <translation>호의 시작 각도</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="476"/>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="531"/>
         <source>Pick angle value from the drawing</source>
-        <translation>그림에서 각 값 선택</translation>
+        <translation>도면에서 각도 값 선택</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="502"/>
@@ -7805,12 +7805,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="524"/>
         <source>End angle of arc</source>
-        <translation>아크의 끝 각</translation>
+        <translation>호의 끝 각도</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="567"/>
         <source>Defines whether arc is reversed (clockwise)</source>
-        <translation>아크가 반전되는지 여부를 결정 (시 방향)</translation>
+        <translation>호가 반전되었는지(시계 방향) 여부를 지정</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="570"/>
@@ -7848,7 +7848,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_tangential_options_filler.cpp" line="43"/>
         <source>Radius of arc</source>
-        <translation type="unfinished">아크의 반경</translation>
+        <translation type="unfinished">호의 반지름</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_tangential_options_filler.cpp" line="50"/>
@@ -7858,7 +7858,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_tangential_options_filler.cpp" line="50"/>
         <source>Central angle of the arc</source>
-        <translation type="unfinished">아크의 중앙 각</translation>
+        <translation type="unfinished">호의 중심각</translation>
     </message>
 </context>
 <context>
@@ -7866,12 +7866,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_tangential_options_widget.ui" line="26"/>
         <source>Tangential Arc Options</source>
-        <translation type="unfinished">Tangential 아크 옵션</translation>
+        <translation type="unfinished">접선 호 옵션</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_tangential_options_widget.ui" line="47"/>
         <source>Radius of the tangential arc</source>
-        <translation type="unfinished">Tangential 아크의 반경</translation>
+        <translation type="unfinished">접선 호의 반지름</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_tangential_options_widget.ui" line="60"/>
@@ -7886,7 +7886,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_tangential_options_widget.ui" line="87"/>
         <source>If selected, tangental arc with specified radius will be created</source>
-        <translation type="unfinished">선택한 경우 지정된 반경이있는 tangental arc가 생성됩니다</translation>
+        <translation type="unfinished">선택하면 지정한 반지름의 접선 호가 생성됩니다</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_tangential_options_widget.ui" line="90"/>
@@ -7897,7 +7897,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_tangential_options_widget.ui" line="112"/>
         <source>If selected, arc with specified angle will be created</source>
-        <translation type="unfinished">선택하면 지정된 각도로 아크가 생성됩니다</translation>
+        <translation type="unfinished">선택하면 지정된 각도로 호가 생성됩니다</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_tangential_options_widget.ui" line="115"/>
@@ -7908,7 +7908,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_tangential_options_widget.ui" line="128"/>
         <source>Pick angle from drawing</source>
-        <translation type="unfinished">그림에서 선택 각</translation>
+        <translation type="unfinished">도면에서 각도 선택</translation>
     </message>
 </context>
 <context>
@@ -7921,7 +7921,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_filler.cpp" line="31"/>
         <source>Check to trim both entities to the bevel</source>
-        <translation type="unfinished">두 엔티티를 베벨에 맞춰 트림하려면 체크</translation>
+        <translation type="unfinished">두 엔티티를 모따기에 맞춰 트림하려면 선택</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_filler.cpp" line="37"/>
@@ -7954,7 +7954,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_widget.ui" line="59"/>
         <source>Check to trim both entities to the bevel</source>
-        <translation type="unfinished">두 엔티티를 베벨에 맞춰 트림하려면 체크</translation>
+        <translation type="unfinished">두 엔티티를 모따기에 맞춰 트림하려면 선택</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_widget.ui" line="62"/>
@@ -7969,12 +7969,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_widget.ui" line="95"/>
         <source>Length of bevel in X direction.</source>
-        <translation type="unfinished">X 방향의 베벨 길이.</translation>
+        <translation type="unfinished">X 방향의 모따기 길이.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_widget.ui" line="102"/>
         <source>Pick first length form drawing</source>
-        <translation type="unfinished">첫번째 길이 모양 그림</translation>
+        <translation type="unfinished">도면에서 첫 번째 길이 선택</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_widget.ui" line="116"/>
@@ -7984,12 +7984,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_widget.ui" line="126"/>
         <source>Length of bevel in Y direction. </source>
-        <translation type="unfinished">Y 방향에서 베벨의 길이.</translation>
+        <translation type="unfinished">Y 방향의 모따기 길이. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_widget.ui" line="133"/>
         <source>Pick second length form drawing</source>
-        <translation type="unfinished">두번째 길이 모양 그림 선택</translation>
+        <translation type="unfinished">도면에서 두 번째 길이 선택</translation>
     </message>
 </context>
 <context>
@@ -8065,7 +8065,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/insert/lc_block_insert_options_widget.ui" line="53"/>
         <source>Pick row spacing from drawing</source>
-        <translation type="unfinished">그림에서 두 간격을 두십시오</translation>
+        <translation type="unfinished">도면에서 행 간격 선택</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/insert/lc_block_insert_options_widget.ui" line="79"/>
@@ -8075,7 +8075,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/insert/lc_block_insert_options_widget.ui" line="92"/>
         <source>Pick column spacing from drawing</source>
-        <translation type="unfinished">그림에서 열 간격을 두십시오</translation>
+        <translation type="unfinished">도면에서 열 간격 선택</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/insert/lc_block_insert_options_widget.ui" line="131"/>
@@ -8090,7 +8090,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/insert/lc_block_insert_options_widget.ui" line="167"/>
         <source>Pick angle from drawing</source>
-        <translation type="unfinished">그림에서 선택 각</translation>
+        <translation type="unfinished">도면에서 각도 선택</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/insert/lc_block_insert_options_widget.ui" line="193"/>
@@ -8156,7 +8156,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/insert/lc_block_library_insert_options_widget.ui" line="32"/>
         <source>Library Insert Options</source>
-        <translation type="unfinished">Library 삽입 옵션</translation>
+        <translation type="unfinished">라이브러리 삽입 옵션</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/insert/lc_block_library_insert_options_widget.ui" line="59"/>
@@ -8181,7 +8181,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/insert/lc_block_library_insert_options_widget.ui" line="111"/>
         <source>Pick angle from drawing</source>
-        <translation type="unfinished">그림에서 선택 각</translation>
+        <translation type="unfinished">도면에서 각도 선택</translation>
     </message>
 </context>
 <context>
@@ -8301,7 +8301,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/misc/lc_center_mark_options_filler.cpp" line="51"/>
         <source>Horizontal</source>
-        <translation type="unfinished">제품정보</translation>
+        <translation type="unfinished">수평</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/misc/lc_center_mark_options_filler.cpp" line="51"/>
@@ -8369,7 +8369,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/misc/lc_center_mark_options_widget.ui" line="154"/>
         <source>Pick X value from drawing</source>
-        <translation type="unfinished">그림에서 X 값을 선택합니다</translation>
+        <translation type="unfinished">도면에서 X 값 선택</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/misc/lc_center_mark_options_widget.ui" line="168"/>
@@ -8399,12 +8399,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/misc/lc_center_mark_options_widget.ui" line="227"/>
         <source>Pick Y value from drawing</source>
-        <translation type="unfinished">그림에서 Y 값 선택</translation>
+        <translation type="unfinished">도면에서 Y 값 선택</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/misc/lc_center_mark_options_widget.ui" line="241"/>
         <source>Pick angle from drawing</source>
-        <translation type="unfinished">그림에서 선택 각</translation>
+        <translation type="unfinished">도면에서 각도 선택</translation>
     </message>
 </context>
 <context>
@@ -8412,12 +8412,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="32"/>
         <source>Replace arc</source>
-        <translation type="unfinished">아크 교체</translation>
+        <translation type="unfinished">호 교체</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="32"/>
         <source>If checked, original arc will be removed</source>
-        <translation type="unfinished">확인되면, 원래 아크가 제거됩니다</translation>
+        <translation type="unfinished">선택하면 원래 호를 제거합니다</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="39"/>
@@ -8427,7 +8427,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="39"/>
         <source>Delta of circle&apos;s radius to arc&apos;s radius</source>
-        <translation type="unfinished">아크의 반경에 원형의 반경의 델타</translation>
+        <translation type="unfinished">호 반지름에 대한 원 반지름의 차이</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="46"/>
@@ -8482,12 +8482,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="39"/>
         <source>Delta of circle&apos;s radius to arc&apos;s radius</source>
-        <translation type="unfinished">아크의 반경에 원형의 반경의 델타</translation>
+        <translation type="unfinished">호 반지름에 대한 원 반지름의 차이</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="42"/>
         <source>Radius Shift:</source>
-        <translation type="unfinished">반경 교대:</translation>
+        <translation type="unfinished">반지름 이동:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="62"/>
@@ -8509,7 +8509,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="102"/>
         <source>Pen to apply to created circle</source>
-        <translation type="unfinished">창조적인 원형에 적용하는 펜</translation>
+        <translation type="unfinished">생성된 원에 적용할 펜</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="106"/>
@@ -8537,17 +8537,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="131"/>
         <source>If checked, original arc will be removed</source>
-        <translation type="unfinished">확인되면, 원래 아크가 제거됩니다</translation>
+        <translation type="unfinished">선택하면 원래 호를 제거합니다</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="134"/>
         <source>Replace arc</source>
-        <translation type="unfinished">아크 교체</translation>
+        <translation type="unfinished">호 교체</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="141"/>
         <source>Pick offset value from drawing</source>
-        <translation type="unfinished">그림에서 오프셋값을 선택</translation>
+        <translation type="unfinished">도면에서 오프셋 값 선택</translation>
     </message>
 </context>
 <context>
@@ -8568,17 +8568,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_center_radius_options_widget.ui" line="32"/>
         <source>Circle Options</source>
-        <translation type="unfinished">원형 옵션</translation>
+        <translation type="unfinished">원 옵션</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_center_radius_options_widget.ui" line="50"/>
         <source>Radius:</source>
-        <translation type="unfinished">반경:</translation>
+        <translation type="unfinished">반지름:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_center_radius_options_widget.ui" line="66"/>
         <source>Radius of circle</source>
-        <translation type="unfinished">원형의 반경</translation>
+        <translation type="unfinished">원의 반지름</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_center_radius_options_widget.ui" line="73"/>
@@ -8606,47 +8606,47 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_circle.ui" line="63"/>
         <source>X Coordinate of circle&apos;s center</source>
-        <translation>X 원형의 중심</translation>
+        <translation>원 중심의 X 좌표</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_circle.ui" line="88"/>
         <source>Pick center coordinate from drawing</source>
-        <translation>도면에서 선택 센터 좌표</translation>
+        <translation>도면에서 중심 좌표 선택</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_circle.ui" line="95"/>
         <source>Center (y):</source>
-        <translation>센터 (y):</translation>
+        <translation>중심 (y):</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_circle.ui" line="111"/>
         <source>Y Coordinate of circle&apos;s center</source>
-        <translation>Y 원 센터의 좌표</translation>
+        <translation>원 중심의 Y 좌표</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_circle.ui" line="118"/>
         <source>Radius:</source>
-        <translation>반경:</translation>
+        <translation>반지름:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_circle.ui" line="134"/>
         <source>Radius of circle</source>
-        <translation>원형의 반경</translation>
+        <translation>원의 반지름</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_circle.ui" line="155"/>
         <source>Diameter:</source>
-        <translation>직경:</translation>
+        <translation>지름:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_circle.ui" line="171"/>
         <source>Diameter of circle</source>
-        <translation>원형의 직경</translation>
+        <translation>원의 지름</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_circle.ui" line="178"/>
         <source>Pick diameter value from drawing</source>
-        <translation>도면에서 직경 값을 선택합니다</translation>
+        <translation>도면에서 지름 값 선택</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_circle.ui" line="141"/>
@@ -8664,7 +8664,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_tangental_2_entities_radius_options_filler.cpp" line="31"/>
         <source>Radius of tangential circle</source>
-        <translation type="unfinished">Tangential 원형의 반경</translation>
+        <translation type="unfinished">접선 원의 반지름</translation>
     </message>
 </context>
 <context>
@@ -8672,22 +8672,22 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_tangental_2_entities_radius_options_widget.ui" line="32"/>
         <source>Circle Tangential2 Options</source>
-        <translation type="unfinished">Circle Tangential2 옵션</translation>
+        <translation type="unfinished">원 접선2 옵션</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_tangental_2_entities_radius_options_widget.ui" line="56"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Radius of the tangential circle to draw&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt; 의 반경 의 tangential 원형을 그리기&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;그릴 접선 원의 반지름&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_tangental_2_entities_radius_options_widget.ui" line="59"/>
         <source>Radius:</source>
-        <translation type="unfinished">반경:</translation>
+        <translation type="unfinished">반지름:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_tangental_2_entities_radius_options_widget.ui" line="75"/>
         <source>Radius of tangential circle</source>
-        <translation type="unfinished">Tangential 원형의 반경</translation>
+        <translation type="unfinished">접선 원의 반지름</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_tangental_2_entities_radius_options_widget.ui" line="82"/>
@@ -8787,7 +8787,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/lib/engine/document/dimstyles/lc_dimarrowregistry.cpp" line="211"/>
         <source>None</source>
-        <translation>이름 *</translation>
+        <translation>없음</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/document/dimstyles/lc_dimarrowregistry.cpp" line="212"/>
@@ -8845,7 +8845,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/lc_dimstyleitem.cpp" line="99"/>
         <source>Diametric</source>
-        <translation>직경</translation>
+        <translation>지름</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/lc_dimstyleitem.cpp" line="103"/>
@@ -8888,7 +8888,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/support/lc_dimstylepreviewpanel.ui" line="90"/>
         <source>Zoom Pan</source>
-        <translation>줌 팬</translation>
+        <translation>줌 초점이동</translation>
     </message>
 </context>
 <context>
@@ -9069,7 +9069,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="14"/>
         <source>Dialog</source>
-        <translation>채용공고</translation>
+        <translation>대화상자</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="43"/>
@@ -9085,17 +9085,17 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="74"/>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="243"/>
         <source>Color:</source>
-        <translation>색깔:</translation>
+        <translation>색상:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="124"/>
         <source>Displays and sets the color for the dimension line (DIMCLRD system variable).</source>
-        <translation>디스플레이 및 치수 라인 (DIMCLRD 시스템 변수) 색상을 설정합니다.</translation>
+        <translation>치수선의 색상을 표시하고 설정합니다 (DIMCLRD 시스템 변수).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="81"/>
         <source>Linetype:</source>
-        <translation>선 유형:</translation>
+        <translation>선종류:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="67"/>
@@ -9105,7 +9105,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="88"/>
         <source>Linewidth:</source>
-        <translation>선폭:</translation>
+        <translation>선가중치:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="137"/>
@@ -9120,7 +9120,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="101"/>
         <source>Specifies a distance to extend the dimension line past the extension line when you use oblique, architectural, tick, integral, and no marks for arrowheads. (DIMDLE system variable)</source>
-        <translation>화살표로 기울기, 건축 눈금, 틱, 적분 표시 또는 표시 없음을 사용할 때 치수선이 연장선을 지나 연장되는 거리를 지정합니다. (DIMDLE 시스템 변수)</translation>
+        <translation>화살표로 기울기, 건축 눈금, 틱, 적분 표시 또는 표시 없음을 사용할 때 치수선이 치수보조선을 지나 연장되는 거리를 지정합니다. (DIMDLE 시스템 변수)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="162"/>
@@ -9135,47 +9135,47 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="194"/>
         <source>Suppress Dim line 1 and arrow</source>
-        <translation>Suppress Dim 라인 1과 화살표</translation>
+        <translation>치수선 1 및 화살표 억제</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="175"/>
         <source>Suppresses display of second dimension line (DIMSD2 system variable)</source>
-        <translation>두 번째 치수 라인 (DIMSD2 시스템 변수)의 Suppresses 디스플레이</translation>
+        <translation>두 번째 치수선을 표시하지 않습니다 (DIMSD2 시스템 변수)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="178"/>
         <source>Suppress Dim line 2 and arrow</source>
-        <translation>Suppress Dim 라인 2와 화살표</translation>
+        <translation>치수선 2 및 화살표 억제</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="204"/>
         <source>Extension Lines</source>
-        <translation>연장선</translation>
+        <translation>치수보조선</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="216"/>
         <source>Sets the color for the extension line (DIMCLRE system variable.)</source>
-        <translation>연장선의 색상을 설정합니다. (DIMCLRE 시스템 변수)</translation>
+        <translation>치수보조선의 색상을 설정합니다. (DIMCLRE 시스템 변수)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="295"/>
         <source>Linetype ext line 1:</source>
-        <translation>연장선 1 선종류:</translation>
+        <translation>치수보조선 1 선종류:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="361"/>
         <source>Sets the linetype of the first extension line. (DIMLTEX1 system variable)</source>
-        <translation>첫번째 연장 선의 선 유형을 놓습니다. (DIMLTEX1 시스템 변수)</translation>
+        <translation>첫 번째 치수보조선의 선종류를 설정합니다. (DIMLTEX1 시스템 변수)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="338"/>
         <source>Linetype ext line 2:</source>
-        <translation>Linetype ext 선 2:</translation>
+        <translation>치수보조선 2 선종류:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="308"/>
         <source>Sets the linetype of the second extension line. (DIMLTEX2 system variable)</source>
-        <translation>두 번째 연장선의 선종류를 설정합니다. (DIMLTEX2 시스템 변수)</translation>
+        <translation>두 번째 치수보조선의 선종류를 설정합니다. (DIMLTEX2 시스템 변수)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="331"/>
@@ -9185,17 +9185,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="236"/>
         <source>Sets the lineweight of the extension line. (DIMLWE system variable)</source>
-        <translation>연장선의 선가중치를 설정합니다. (DIMLWE 시스템 변수)</translation>
+        <translation>치수보조선의 선가중치를 설정합니다. (DIMLWE 시스템 변수)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="368"/>
         <source>Extend beyond dim lines:</source>
-        <translation>Dim 선을 넘어서 확장하십시오:</translation>
+        <translation>치수선 너머로 연장:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="285"/>
         <source>Specifies a distance to extend the extension lines above the dimension line. (DIMEXE system variable)</source>
-        <translation>연장선이 치수선 위로 연장되는 거리를 지정합니다. (DIMEXE 시스템 변수)</translation>
+        <translation>치수보조선이 치수선 위로 연장되는 거리를 지정합니다. (DIMEXE 시스템 변수)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="375"/>
@@ -9205,7 +9205,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="404"/>
         <source>Sets the distance to offset the extension lines from the points on the drawing that define the dimension. (DIMEXO system variable)</source>
-        <translation>치수를 정의하는 도면의 점으로부터 연장선을 띄울 거리를 설정합니다. (DIMEXO 시스템 변수)</translation>
+        <translation>치수를 정의하는 도면의 점으로부터 치수보조선을 띄울 거리를 설정합니다. (DIMEXO 시스템 변수)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="223"/>
@@ -9215,37 +9215,37 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="388"/>
         <source>Sets the total length of the extension lines starting from the dimension line toward the dimension origin. (DIMFXL system variable)</source>
-        <translation>치수선에서 치수 원점 방향으로 시작하는 연장선의 전체 길이를 설정합니다. (DIMFXL 시스템 변수)</translation>
+        <translation>치수선에서 치수 원점 방향으로 시작하는 치수보조선의 전체 길이를 설정합니다. (DIMFXL 시스템 변수)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="345"/>
         <source>Enables fixed length extension lines. (DIMFXLON system variable)</source>
-        <translation>고정 길이 연장 선을 가능하게 합니다. (DIMFXLON 시스템 변수)</translation>
+        <translation>고정 길이 치수보조선을 사용합니다. (DIMFXLON 시스템 변수)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="348"/>
         <source>Fixed length extension lines</source>
-        <translation>고정 길이 연장 선</translation>
+        <translation>고정 길이 치수보조선</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="269"/>
         <source>Suppresses the display of first extension line (DIMSE1 system variable).</source>
-        <translation>첫 번째 연장선을 표시하지 않습니다 (DIMSE1 시스템 변수).</translation>
+        <translation>첫 번째 치수보조선을 표시하지 않습니다 (DIMSE1 시스템 변수).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="272"/>
         <source>Suppress Ext line 1</source>
-        <translation>Suppress Ext 라인 1</translation>
+        <translation>치수보조선 1 억제</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="321"/>
         <source>Suppresses the display of second extension line (DIMSE2 system variable).</source>
-        <translation>두 번째 연장선을 표시하지 않습니다 (DIMSE2 시스템 변수).</translation>
+        <translation>두 번째 치수보조선을 표시하지 않습니다 (DIMSE2 시스템 변수).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="324"/>
         <source>Suppress Ext line 2</source>
-        <translation>Suppress Ext 라인 2</translation>
+        <translation>치수보조선 2 억제</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="429"/>
@@ -9256,12 +9256,12 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1719"/>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2305"/>
         <source>Preview</source>
-        <translation>다운로드</translation>
+        <translation>미리보기</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="437"/>
         <source>Symbols and Arrows</source>
-        <translation>상징과 화살표</translation>
+        <translation>기호 및 화살표</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="443"/>
@@ -9271,12 +9271,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="449"/>
         <source>Jog height factor:</source>
-        <translation>Jog 고도 요인:</translation>
+        <translation>꺾기 높이 비율:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="463"/>
         <source>* Text height</source>
-        <translation>* 텍스트 높이</translation>
+        <translation>* 문자 높이</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="473"/>
@@ -9286,7 +9286,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="479"/>
         <source>Jog angle:</source>
-        <translation>Jog 각:</translation>
+        <translation>꺾기 각도:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="486"/>
@@ -9301,7 +9301,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="553"/>
         <source>Displays and sets the size of arrowheads. (DIMASZ system variable)</source>
-        <translation>표시 및 화살표 헤드의 크기를 설정합니다. (DIMASZ 시스템 변수)</translation>
+        <translation>화살촉의 크기를 표시하고 설정합니다. (DIMASZ 시스템 변수)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="539"/>
@@ -9321,7 +9321,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="588"/>
         <source>Sets the arrowhead for the second dimension line. (DIMBLK2 system variable)</source>
-        <translation>두 번째 치수 라인의 화살표 헤드를 설정합니다. (DIMBLK2 시스템 변수)</translation>
+        <translation>두 번째 치수선의 화살촉을 설정합니다. (DIMBLK2 시스템 변수)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="570"/>
@@ -9331,12 +9331,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="546"/>
         <source>Second:</source>
-        <translation>둘째:</translation>
+        <translation>두 번째:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="525"/>
         <source>First:</source>
-        <translation>처음 :</translation>
+        <translation>첫 번째:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="563"/>
@@ -9346,7 +9346,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="532"/>
         <source>Tick Size:</source>
-        <translation>Tick 크기:</translation>
+        <translation>눈금 크기:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="598"/>
@@ -9361,19 +9361,19 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="624"/>
         <source>Arc length symbol</source>
-        <translation>Arc 길이 기호</translation>
+        <translation>호 길이 기호</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="630"/>
         <source>Suppresses the display of arc length symbols. (DIMARCSYM system variable)</source>
-        <translation>아크 길이 기호의 디스플레이를 압축합니다. (DIMARCSYM 시스템 변수)</translation>
+        <translation>호 길이 기호를 표시하지 않습니다. (DIMARCSYM 시스템 변수)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="633"/>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="672"/>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2063"/>
         <source>None</source>
-        <translation>이름 *</translation>
+        <translation>없음</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="640"/>
@@ -9388,7 +9388,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="650"/>
         <source>Places arc length symbols above the dimension text. (DIMARCSYM system variable)</source>
-        <translation>치수 텍스트 위에 아크 길이 기호를 배치합니다. (DIMARCSYM 시스템 변수)</translation>
+        <translation>치수 문자 위에 호 길이 기호를 배치합니다. (DIMARCSYM 시스템 변수)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="653"/>
@@ -9398,27 +9398,27 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="663"/>
         <source>Centermarks</source>
-        <translation>센터마크</translation>
+        <translation>중심 표식</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="669"/>
         <source>Creates no center mark or centerline. The value is stored as 0 in the DIMCEN system variable.</source>
-        <translation>센터 마크 또는 중심가를 만드십시오. 값은 DIMCEN 시스템 변수에 0으로 저장됩니다.</translation>
+        <translation>중심 표식이나 중심선을 만들지 않습니다. 값은 DIMCEN 시스템 변수에 0으로 저장됩니다.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="679"/>
         <source>Creates a center mark. The size of the center mark is stored as a positive value in the DIMCEN system variable.</source>
-        <translation>센터 마크를 만듭니다. 중심 마크의 크기는 DIMCEN 시스템 변수의 긍정적인 값으로 저장됩니다.</translation>
+        <translation>중심 표식을 만듭니다. 중심 표식의 크기는 DIMCEN 시스템 변수에 양수 값으로 저장됩니다.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="682"/>
         <source>Mark</source>
-        <translation>팟캐스트</translation>
+        <translation>표식</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="689"/>
         <source>Creates a centerline. The size of the centerline is stored as a negative value in the DIMCEN system variable.</source>
-        <translation>센터라인을 만듭니다. centerline의 크기는 DIMCEN 시스템 변수의 부정적인 값으로 저장됩니다.</translation>
+        <translation>중심선을 만듭니다. 중심선의 크기는 DIMCEN 시스템 변수에 음수 값으로 저장됩니다.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="692"/>
@@ -9433,7 +9433,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="706"/>
         <source>Displays and sets the size of the center mark or centerline. (DIMCEN system variable)</source>
-        <translation>디스플레이 및 센터 마크 또는 중심의 크기를 설정합니다. (DIMCEN 시스템 변수)</translation>
+        <translation>중심 표식 또는 중심선의 크기를 표시하고 설정합니다. (DIMCEN 시스템 변수)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="746"/>
@@ -9444,27 +9444,27 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="758"/>
         <source>Text Appearance</source>
-        <translation>텍스트 외관</translation>
+        <translation>문자 모양</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="764"/>
         <source>Lists the available text styles.</source>
-        <translation>가능한 텍스트 스타일을 나열합니다.</translation>
+        <translation>사용 가능한 문자 스타일을 나열합니다.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="774"/>
         <source>Fill Color:</source>
-        <translation>채우는 색깔:</translation>
+        <translation>채우기 색상:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="781"/>
         <source>Text Style:</source>
-        <translation>텍스트 스타일:</translation>
+        <translation>문자 스타일:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="788"/>
         <source>Sets the color for the text background in dimensions (DIMTFILLCLR system variable)</source>
-        <translation>치수의 텍스트 배경 색상 설정 (DIMTFILLCLR 시스템 변수)</translation>
+        <translation>치수의 문자 배경 색상을 설정합니다 (DIMTFILLCLR 시스템 변수)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="795"/>
@@ -9474,12 +9474,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="802"/>
         <source>Text Height</source>
-        <translation>텍스트 높이</translation>
+        <translation>문자 높이</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="809"/>
         <source>Sets the scale of fractions relative to dimension text. (DIMTFAC system variable)</source>
-        <translation>치수 텍스트와 친화의 스케일을 설정합니다. (DIMTFAC 시스템 변수)</translation>
+        <translation>치수 문자에 대한 분수의 축척을 설정합니다. (DIMTFAC 시스템 변수)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="822"/>
@@ -9494,43 +9494,43 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="842"/>
         <source>Sets the color for the dimension text (DIMCLRT system variable)</source>
-        <translation>치수 텍스트 색상 설정 (DIMCLRT 시스템 변수)</translation>
+        <translation>치수 문자의 색상을 설정합니다 (DIMCLRT 시스템 변수)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="849"/>
         <source>Defines whether text background will be filled by color</source>
-        <translation>텍스트 배경이 색상에 의해 채워지는지 여부</translation>
+        <translation>문자 배경을 색상으로 채울지 여부를 정의합니다</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="852"/>
         <source>Fill text background by color</source>
-        <translation>색상으로 텍스트 배경을 작성</translation>
+        <translation>문자 배경을 색상으로 채우기</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="859"/>
         <source>Displays a rectangular frame around the dimension text. This option changes the value stored in the DIMGAP system variable to a negative value.</source>
-        <translation>치수 텍스트 주위에 직사각형 프레임을 표시합니다. 이 옵션은 DIMGAP 시스템 변수에 저장된 값을 부정적인 값으로 변경합니다.</translation>
+        <translation>치수 문자 주위에 직사각형 프레임을 표시합니다. 이 옵션은 DIMGAP 시스템 변수에 저장된 값을 음수 값으로 변경합니다.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="862"/>
         <source>Draw frame around text</source>
-        <translation>텍스트의 주위에 그리기 프레임</translation>
+        <translation>문자 주위에 프레임 그리기</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="885"/>
         <source>Text Alignment</source>
-        <translation>텍스트 정렬</translation>
+        <translation>문자 정렬</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="891"/>
         <source>Places text in a horizontal position (DIMTIH and DIMTOH system variables).</source>
-        <translation>수평 위치 (DIMTIH 및 DIMTOH 시스템 변수)의 텍스트를 배치합니다.</translation>
+        <translation>문자를 수평 위치에 배치합니다 (DIMTIH 및 DIMTOH 시스템 변수).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="894"/>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1579"/>
         <source>Horizontal</source>
-        <translation>제품정보</translation>
+        <translation>수평</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="901"/>
@@ -9540,7 +9540,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="911"/>
         <source>Aligns text with the dimension line when text is inside the extension lines, but aligns it horizontally when text is outside the extension lines (DIMTIH and DIMTOH system variables).</source>
-        <translation>문자가 연장선 안쪽에 있으면 치수선에 맞춰 정렬하고, 연장선 바깥쪽에 있으면 수평으로 정렬합니다 (DIMTIH 및 DIMTOH 시스템 변수).</translation>
+        <translation>문자가 치수보조선 안쪽에 있으면 치수선에 맞춰 정렬하고, 치수보조선 바깥쪽에 있으면 수평으로 정렬합니다 (DIMTIH 및 DIMTOH 시스템 변수).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="904"/>
@@ -9560,8 +9560,8 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="577"/>
         <source>Specifies the size of oblique strokes drawn instead of arrowheads for linear, radius, and diameter dimensioning. If = 0 – draws arrowheads.
 &gt;0 – Draws oblique strokes instead of arrowheads (DIMTSZ variable). </source>
-        <translation>선형, 반경 및 직경 치수를 재는 화살표헤드 대신 그려진 액슬 스트로크의 크기를 지정합니다. 0이면 화살표 헤드를 그릴 수 있습니다.
-&gt;0 – arrowheads 대신 oblique 스트로크 (DIMTSZ 변수).</translation>
+        <translation>선형, 반지름 및 지름 치수에서 화살촉 대신 그리는 사선의 크기를 지정합니다. 0이면 화살촉을 그립니다.
+&gt;0이면 화살촉 대신 사선을 그립니다 (DIMTSZ 변수). </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="914"/>
@@ -9582,12 +9582,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="934"/>
         <source>Left-To-Right</source>
-        <translation>왼쪽으로</translation>
+        <translation>왼쪽에서 오른쪽으로</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="939"/>
         <source>Right-To-Left</source>
-        <translation>오른쪽-왼쪽</translation>
+        <translation>오른쪽에서 왼쪽으로</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="947"/>
@@ -9597,12 +9597,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="954"/>
         <source>Horizontal:</source>
-        <translation>수평한:</translation>
+        <translation>수평:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="961"/>
         <source>Controls the horizontal placement of dimension text along the dimension line, in relation to the extension lines. (DIMJUST system variable)</source>
-        <translation>연장선을 기준으로 치수선을 따라 치수 문자의 수평 배치를 제어합니다. (DIMJUST 시스템 변수)</translation>
+        <translation>치수보조선을 기준으로 치수선을 따라 치수 문자의 수평 배치를 제어합니다. (DIMJUST 시스템 변수)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="965"/>
@@ -9613,22 +9613,22 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="970"/>
         <source>At Ext Line 1</source>
-        <translation>Ext 라인 1</translation>
+        <translation>치수보조선 1에</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="975"/>
         <source>At Ext Line 2</source>
-        <translation>Ext 라인 2</translation>
+        <translation>치수보조선 2에</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="980"/>
         <source>Over Ext Line 1</source>
-        <translation>Ext 라인 1 이상</translation>
+        <translation>치수보조선 1 위</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="985"/>
         <source>Over Ext Line 2</source>
-        <translation>Ext 라인 2 이상</translation>
+        <translation>치수보조선 2 위</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="993"/>
@@ -9648,37 +9648,37 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1016"/>
         <source>Above</source>
-        <translation>상세 정보</translation>
+        <translation>위</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1021"/>
         <source>Outside</source>
-        <translation>기타 제품</translation>
+        <translation>바깥쪽</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1026"/>
         <source>JIS</source>
-        <translation>사이트맵</translation>
+        <translation>JIS</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1031"/>
         <source>Below</source>
-        <translation>이름 *</translation>
+        <translation>아래</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1039"/>
         <source>Vertical position of text above or below dimension line if vertical placement (DIMTAD) is not &quot;Centered&quot; (DIMTVP variable).</source>
-        <translation>수직 배치 (DIMTAD)가 &quot;Centered&quot;(DIMTVP 변수)가 아닌 경우 위의 텍스트의 수직 위치.</translation>
+        <translation>수직 배치(DIMTAD)가 &quot;중앙&quot;이 아닐 때 치수선 위 또는 아래 문자의 수직 위치 (DIMTVP 변수).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1052"/>
         <source>Broken dim line text gap:</source>
-        <translation>Broken dim 라인 텍스트 간격 :</translation>
+        <translation>끊긴 치수선 문자 간격:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1059"/>
         <source>Sets the current text gap, which is the distance around the dimension text when the dimension line is broken to accommodate the dimension text (DIMGAP system variable).</source>
-        <translation>치수 텍스트 (DIMGAP 시스템 변수)를 수용 할 때 치수 텍스트의 거리를 설정한다.</translation>
+        <translation>치수 문자를 넣기 위해 치수선이 끊길 때 치수 문자 주위의 거리인 현재 문자 간격을 설정합니다 (DIMGAP 시스템 변수).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1086"/>
@@ -9688,12 +9688,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1092"/>
         <source>Fine tuning</source>
-        <translation>연락처</translation>
+        <translation>미세 조정</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1098"/>
         <source>Ignores any horizontal justification settings and places the text at the position you specify at the Dimension Line Location prompt. (DIMUPT system variable)</source>
-        <translation>모든 수평 단화 설정을 무시하고 치수 라인 위치 프롬프트에 지정된 위치에 텍스트를 배치합니다. (DIMUPT 시스템 변수)</translation>
+        <translation>수평 자리맞추기 설정을 무시하고 치수선 위치 프롬프트에서 지정한 위치에 문자를 배치합니다. (DIMUPT 시스템 변수)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1101"/>
@@ -9708,7 +9708,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1111"/>
         <source>Draw dim line betwen ext lines</source>
-        <translation>Draw dim 선 betwen 선</translation>
+        <translation>치수보조선 사이에 치수선 그리기</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1121"/>
@@ -9719,7 +9719,7 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1127"/>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1137"/>
         <source>Sets a scale for all dimension style settings that specify size, distance, or spacing, including text and arrowhead sizes. This scale does not change dimension measurement values. (DIMSCALE system variable)</source>
-        <translation>텍스트와 화살표 헤드 크기를 포함하여 크기, 거리, 또는 간격을 지정하는 모든 치수 스타일 설정에 대한 스케일을 설정합니다. 이 스케일은 치수 측정 값을 변경하지 않습니다. (DIMSCALE 시스템 변수)</translation>
+        <translation>문자 및 화살촉 크기를 포함하여 크기, 거리 또는 간격을 지정하는 모든 치수 스타일 설정의 축척을 설정합니다. 이 축척은 치수 측정값을 변경하지 않습니다. (DIMSCALE 시스템 변수)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1130"/>
@@ -9729,22 +9729,22 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1147"/>
         <source>Determines a scale factor based on the scaling between the current model space viewport and paper space. (DIMSCALE system variable)</source>
-        <translation>현재 모델 공간 뷰포트와 종이 공간 사이의 스케일링을 기반으로 한 스케일 요소를 결정합니다. (DIMSCALE 시스템 변수)</translation>
+        <translation>현재 모형 공간 뷰포트와 도면 공간 사이의 축척을 기준으로 축척 비율을 결정합니다. (DIMSCALE 시스템 변수)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1150"/>
         <source>Scale to layout</source>
-        <translation>배치하기</translation>
+        <translation>배치에 맞게 축척</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1175"/>
         <source>If selected, moves the dimension line whenever dimension text is moved. (DIMTMOVE system variable)</source>
-        <translation>선택한 경우, 치수 텍스트가 이동할 때마다 치수 라인을 이동합니다. (DIMTMOVE 시스템 변수)</translation>
+        <translation>선택하면 치수 문자를 이동할 때마다 치수선을 이동합니다. (DIMTMOVE 시스템 변수)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1178"/>
         <source>Beside the dimention line</source>
-        <translation>Dimention 라인 옆에</translation>
+        <translation>치수선 옆에</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1185"/>
@@ -9759,7 +9759,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1195"/>
         <source>When text is not in the default position, place it:</source>
-        <translation>텍스트가 기본 위치에 있지 않을 때, 그것을 배치:</translation>
+        <translation>문자가 기본 위치에 있지 않을 때 배치 위치:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1202"/>
@@ -9774,47 +9774,47 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1234"/>
         <source>Fit Options</source>
-        <translation>부속품</translation>
+        <translation>맞춤 옵션</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1240"/>
         <source>If there isn&apos;t enough room to place both text and arrow inside extension lines, the first thing to move outside the extension lines is:</source>
-        <translation>연장선 안에 문자와 화살표를 모두 놓을 공간이 부족할 때 먼저 연장선 밖으로 옮길 항목:</translation>
+        <translation>치수보조선 안에 문자와 화살표를 모두 놓을 공간이 부족할 때 먼저 치수보조선 밖으로 옮길 항목:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1250"/>
         <source>Suppresses arrowheads if not enough space is available inside the extension lines. (DIMSOXD system variable)</source>
-        <translation>연장선 안에 공간이 부족하면 화살표를 표시하지 않습니다. (DIMSOXD 시스템 변수)</translation>
+        <translation>치수보조선 안에 공간이 부족하면 화살표를 표시하지 않습니다. (DIMSOXD 시스템 변수)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1253"/>
         <source>Suppress arrows if they don&apos;t fit inside extension lines</source>
-        <translation>화살표가 연장선 안에 들어가지 않으면 표시 안 함</translation>
+        <translation>화살표가 치수보조선 안에 들어가지 않으면 표시 안 함</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1260"/>
         <source>When not enough space is available for text and arrowheads, moves both outside the extension lines (DIMATFIT system variable).</source>
-        <translation>문자와 화살표를 놓을 공간이 부족하면 둘 다 연장선 밖으로 옮깁니다 (DIMATFIT 시스템 변수).</translation>
+        <translation>문자와 화살표를 놓을 공간이 부족하면 둘 다 치수보조선 밖으로 옮깁니다 (DIMATFIT 시스템 변수).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1263"/>
         <source>Both text and arrows</source>
-        <translation>텍스트와 화살표 모두</translation>
+        <translation>문자와 화살표 모두</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1270"/>
         <source>Moves either the text or the arrowheads outside the extension lines based on the best fit (DIMATFIT system variable).</source>
-        <translation>가장 잘 맞도록 문자 또는 화살표를 연장선 밖으로 옮깁니다 (DIMATFIT 시스템 변수).</translation>
+        <translation>가장 잘 맞도록 문자 또는 화살표를 치수보조선 밖으로 옮깁니다 (DIMATFIT 시스템 변수).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1273"/>
         <source>Either text or arrows (best fit)</source>
-        <translation>텍스트 또는 화살표 (best fit)</translation>
+        <translation>문자 또는 화살표 (최적 맞춤)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1280"/>
         <source>Moves arrowheads outside the extension lines first, then text (DIMATFIT system variable).</source>
-        <translation>화살표를 먼저 연장선 밖으로 옮기고 그다음 문자를 옮깁니다 (DIMATFIT 시스템 변수).</translation>
+        <translation>화살표를 먼저 치수보조선 밖으로 옮기고 그다음 문자를 옮깁니다 (DIMATFIT 시스템 변수).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1283"/>
@@ -9824,22 +9824,22 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1290"/>
         <source>Moves text outside the extension lines first, then arrowheads (DIMATFIT system variable).</source>
-        <translation>문자를 먼저 연장선 밖으로 옮기고 그다음 화살표를 옮깁니다 (DIMATFIT 시스템 변수).</translation>
+        <translation>문자를 먼저 치수보조선 밖으로 옮기고 그다음 화살표를 옮깁니다 (DIMATFIT 시스템 변수).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1300"/>
         <source>Always places text between extension lines. (DIMTIX system variable)</source>
-        <translation>문자를 항상 연장선 사이에 놓습니다. (DIMTIX 시스템 변수)</translation>
+        <translation>문자를 항상 치수보조선 사이에 놓습니다. (DIMTIX 시스템 변수)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1303"/>
         <source>Always fit text between ext lines</source>
-        <translation>항상 ext 선 사이 텍스트에 맞는</translation>
+        <translation>항상 치수보조선 사이에 문자 맞춤</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1327"/>
         <source>Primary Units</source>
-        <translation>1 차 단위</translation>
+        <translation>1차 단위</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1333"/>
@@ -9862,12 +9862,12 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2010"/>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2234"/>
         <source>Zero suppression</source>
-        <translation>영 억제</translation>
+        <translation>0 억제</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1352"/>
         <source>Controls the suppression of leading zeros (DIMAZIN system variable)</source>
-        <translation>최고의 제로의 억제를 제어 (DIMAZIN 시스템 변수)</translation>
+        <translation>선행 0의 억제를 제어합니다 (DIMAZIN 시스템 변수)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1355"/>
@@ -9876,12 +9876,12 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2019"/>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2243"/>
         <source>Leading</source>
-        <translation>제품정보</translation>
+        <translation>선행</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1362"/>
         <source>Controls the suppression of  trailing zeros. (DIMAZIN system variable)</source>
-        <translation>제로를 추적하는 억제를 제어합니다. (DIMAZIN 시스템 변수)</translation>
+        <translation>후행 0의 억제를 제어합니다. (DIMAZIN 시스템 변수)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1365"/>
@@ -9890,24 +9890,24 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2029"/>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2253"/>
         <source>Trailing</source>
-        <translation>오시는 길</translation>
+        <translation>후행</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1375"/>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1568"/>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1945"/>
         <source>Unit Format:</source>
-        <translation>단위 체재:</translation>
+        <translation>단위 형식:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1382"/>
         <source>Sets the number of decimal places for angular dimensions. DIMADEC system variable)</source>
-        <translation>각 치수의 소수점을 설정한다. DIMADEC 시스템 변수)</translation>
+        <translation>각도 치수의 소수 자릿수를 설정합니다. DIMADEC 시스템 변수)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1389"/>
         <source>Sets the angular units format. (DIMAUNIT system variable)</source>
-        <translation>각 단위 형식을 설정합니다. (DIMAUNIT 시스템 변수)</translation>
+        <translation>각도 단위 형식을 설정합니다. (DIMAUNIT 시스템 변수)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1418"/>
@@ -9928,12 +9928,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1450"/>
         <source>Sets a scale factor for linear dimension measurements. It is recommended that you do not change this value from the default value of 1.00. (DIMLFAC system variable)</source>
-        <translation>선형 치수 측정의 스케일 인자를 설정합니다. 1.00의 기본 값에서 이 값을 변경하지 않는 것이 좋습니다. (DIMLFAC 시스템 변수)</translation>
+        <translation>선형 치수 측정값의 축척 비율을 설정합니다. 기본값 1.00에서 이 값을 변경하지 않는 것이 좋습니다. (DIMLFAC 시스템 변수)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1460"/>
         <source>Applies the measurement scale factor only to dimensions created in layout viewports. </source>
-        <translation>Layout viewports에서 생성된 치수에만 측정값을 적용합니다.</translation>
+        <translation>배치 뷰포트에서 작성된 치수에만 측정 축척 비율을 적용합니다. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1463"/>
@@ -9943,7 +9943,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1473"/>
         <source>Fraction format:</source>
-        <translation>Fraction 체재:</translation>
+        <translation>분수 형식:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1480"/>
@@ -9953,7 +9953,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1487"/>
         <source>Decimal separator:</source>
-        <translation>Decimal 분리기:</translation>
+        <translation>소수 구분 기호:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1500"/>
@@ -9963,28 +9963,28 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1507"/>
         <source>Sets the current units format for all dimension types except Angular. (DIMLUNIT system variable)</source>
-        <translation>Angular를 제외한 모든 치수 유형의 현재 단위 형식을 설정합니다. (DIMLUNIT 시스템 변수)</translation>
+        <translation>각도를 제외한 모든 치수 유형의 현재 단위 형식을 설정합니다. (DIMLUNIT 시스템 변수)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1514"/>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1838"/>
         <source>Prefix:</source>
-        <translation>접점:</translation>
+        <translation>접두사:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1521"/>
         <source>Sets the separator for decimal formats. (DIMDSEP system variable)</source>
-        <translation>소수 형식의 분리기를 설정합니다. (DIMDSEP 시스템 변수)</translation>
+        <translation>소수 형식의 구분 기호를 설정합니다. (DIMDSEP 시스템 변수)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1525"/>
         <source>&apos;.&apos; (Period)</source>
-        <translation>&apos;.&apos; (기간)</translation>
+        <translation>&apos;.&apos; (마침표)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1530"/>
         <source>&apos;,&apos; (Comma)</source>
-        <translation>&apos;,&apos; (코마)</translation>
+        <translation>&apos;,&apos; (쉼표)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1538"/>
@@ -9994,7 +9994,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1548"/>
         <source>Displays and sets the number of decimal places in the dimension text. (DIMDEC system variable)</source>
-        <translation>표시 및 치수 텍스트의 소수점 장소의 번호를 설정합니다. (DIMDEC 시스템 변수)</translation>
+        <translation>치수 문자의 소수 자릿수를 표시하고 설정합니다. (DIMDEC 시스템 변수)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1561"/>
@@ -10009,24 +10009,24 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1584"/>
         <source>Diagonal Stacked</source>
-        <translation>Diagonal 겹쳐 쌓이는</translation>
+        <translation>대각선 스택</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1589"/>
         <source>Not Stacked</source>
-        <translation>분류되지 않음</translation>
+        <translation>스택 안 함</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1597"/>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1755"/>
         <source>Suffix:</source>
-        <translation>스프록:</translation>
+        <translation>접미사:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1610"/>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1868"/>
         <source>Sub-units factor:</source>
-        <translation>하위 단위 요인:</translation>
+        <translation>보조 단위 비율:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1617"/>
@@ -10036,7 +10036,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1627"/>
         <source> Suppresses the inches portion of a feet-and-inches dimension when the distance is an integral number of feet (DIMZIN system variable)</source>
-        <translation>거리가 발 (DIMZIN 시스템 변수)의 필수적인 수 인 피트 앤 인치 치수의 인치 부분을 압축합니다</translation>
+        <translation> 거리가 정수 피트일 때 피트-인치 치수의 인치 부분을 표시하지 않습니다 (DIMZIN 시스템 변수)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1630"/>
@@ -10049,7 +10049,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1637"/>
         <source>Suppresses the feet portion of a feet-and-inches dimension when the distance is less than one foot.  (DIMZIN system variable)</source>
-        <translation>거리가 1 피트 미만일 때 발과 인치 치수의 발 부분을 압축합니다. (DIMZIN 시스템 변수)</translation>
+        <translation>거리가 1피트 미만일 때 피트-인치 치수의 피트 부분을 표시하지 않습니다. (DIMZIN 시스템 변수)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1640"/>
@@ -10068,7 +10068,7 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1657"/>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1898"/>
         <source>Sub-unit suffix:</source>
-        <translation>서브 단위 suffix:</translation>
+        <translation>보조 단위 접미사:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1664"/>
@@ -10078,7 +10078,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1680"/>
         <source>Includes a suffix to the dimension value sub unit. You can enter text or use control codes to display special symbols.</source>
-        <translation>치수 값 서브 단위에 suffix를 포함합니다. 텍스트를 입력하거나 특별한 기호를 표시하는 제어 코드를 사용합니다.</translation>
+        <translation>치수 값의 보조 단위에 접미사를 포함합니다. 문자를 입력하거나 제어 코드를 사용하여 특수 기호를 표시할 수 있습니다.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1707"/>
@@ -10088,12 +10088,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1726"/>
         <source>Adds alternate measurement units to dimension text. Sets the DIMALT system variable to 1.</source>
-        <translation>치수 텍스트에 교체 측정 단위를 추가합니다. DIMALT 시스템 변수를 1로 설정합니다.</translation>
+        <translation>치수 문자에 대체 측정 단위를 추가합니다. DIMALT 시스템 변수를 1로 설정합니다.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1729"/>
         <source>Display alternate units</source>
-        <translation>전시 교체 단위</translation>
+        <translation>대체 단위 표시</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1742"/>
@@ -10108,7 +10108,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1772"/>
         <source>Multiplier for alt units:</source>
-        <translation>Alt 단위를 위한 Multiplier:</translation>
+        <translation>대체 단위 승수:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1779"/>
@@ -10118,32 +10118,32 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1789"/>
         <source>Sets the unit format for alternate units. (DIMALTU system variable)</source>
-        <translation>교체 단위의 단위 형식을 설정합니다. (DIMALTU 시스템 변수)</translation>
+        <translation>대체 단위의 단위 형식을 설정합니다. (DIMALTU 시스템 변수)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1796"/>
         <source>Placement</source>
-        <translation>회사연혁</translation>
+        <translation>배치</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1802"/>
         <source>Places alternate units after the primary units in dimension text.</source>
-        <translation>치수 텍스트의 1 차 단위 후 교체 단위를 배치합니다.</translation>
+        <translation>치수 문자에서 대체 단위를 주 단위 뒤에 배치합니다.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1805"/>
         <source>After primary value</source>
-        <translation>1 차적인 가치 후에</translation>
+        <translation>1차 값 뒤</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1812"/>
         <source>Places alternate units below the primary units in dimension text.</source>
-        <translation>치수 텍스트의 1 차 단위의 교체 단위를 배치합니다.</translation>
+        <translation>치수 문자에서 대체 단위를 주 단위 아래에 배치합니다.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1815"/>
         <source>Below primary value</source>
-        <translation>기본 값</translation>
+        <translation>1차 값 아래</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1831"/>
@@ -10158,7 +10158,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1858"/>
         <source>Suppresses leading zeros in all decimal dimensions. For example, 0.5000 becomes .5000.</source>
-        <translation>모든 소수 치수의 영을 선도합니다. 예를 들어, 0.5000은 .5000입니다.</translation>
+        <translation>모든 십진 치수에서 선행 0을 표시하지 않습니다. 예를 들어 0.5000은 .5000이 됩니다.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1888"/>
@@ -10168,7 +10168,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1915"/>
         <source>Suppresses the feet portion of a feet-and-inches dimension when the distance is less than 1 foot. For example, 0&apos;-6 1/2&quot; becomes 6 1/2&quot; (DIMALTZ system variable)</source>
-        <translation>거리가 1 피트 미만일 때 발과 인치 치수의 발 부분을 압축합니다. 예를 들면, 0&apos;-6 1/2”는 6 1/2” (DIMALTZ 체계 변하기 쉬운)</translation>
+        <translation>거리가 1피트 미만일 때 피트-인치 치수의 피트 부분을 표시하지 않습니다. 예를 들어 0&apos;-6 1/2&quot;은 6 1/2&quot;이 됩니다 (DIMALTZ 시스템 변수)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1925"/>
@@ -10178,7 +10178,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1938"/>
         <source>Sets the number of decimal places for alternate units. (DIMALTD system variable)</source>
-        <translation>교체 단위를 위한 소수의 장소의 수를 놓습니다. (DIMALTD 시스템 변수)</translation>
+        <translation>대체 단위의 소수 자릿수를 설정합니다. (DIMALTD 시스템 변수)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1958"/>
@@ -10193,7 +10193,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2000"/>
         <source>Sets the minimum or lower tolerance value. (DIMTM system variable)</source>
-        <translation>최소 또는 낮은 공차 값을 설정합니다. (DIMTM 시스템 변수)</translation>
+        <translation>최소 또는 하한 공차 값을 설정합니다. (DIMTM 시스템 변수)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2016"/>
@@ -10208,12 +10208,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2036"/>
         <source>Suppresses the feet portion of a feet-and-inches dimension when the distance is less than 1 foot (DIMTZIN system variable). </source>
-        <translation>거리가 1 피트 (DIMTZIN 시스템 변수) 미만일 때 피트 앤 인치 치수의 발 부분을 압축합니다.</translation>
+        <translation>거리가 1피트 미만일 때 피트-인치 치수의 피트 부분을 표시하지 않습니다 (DIMTZIN 시스템 변수). </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2046"/>
         <source>Suppresses the inches portion of a feet-and-inches dimension when the distance is an integral number of feet (DIMTZIN system variable). </source>
-        <translation>거리가 발 (DIMTZIN 시스템 변수)의 필수적인 수 인 피트 앤 인치 치수의 인치 부분을 압축합니다.</translation>
+        <translation>거리가 정수 피트일 때 피트-인치 치수의 인치 부분을 표시하지 않습니다 (DIMTZIN 시스템 변수). </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2059"/>
@@ -10223,22 +10223,22 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2068"/>
         <source>Symmetrical</source>
-        <translation>관련 기사</translation>
+        <translation>대칭</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2073"/>
         <source>Deviation</source>
-        <translation>관련 기사</translation>
+        <translation>편차</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2078"/>
         <source>Limits</source>
-        <translation>지원하다</translation>
+        <translation>한계</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2083"/>
         <source>Basic</source>
-        <translation>기본 정보</translation>
+        <translation>기준</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2091"/>
@@ -10248,32 +10248,32 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2095"/>
         <source>Top</source>
-        <translation>이름 *</translation>
+        <translation>위쪽</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2100"/>
         <source>Middle</source>
-        <translation>주요 특징</translation>
+        <translation>중간</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2105"/>
         <source>Bottom</source>
-        <translation>제품정보</translation>
+        <translation>아래쪽</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2113"/>
         <source>Upper value:</source>
-        <translation>위 가치:</translation>
+        <translation>최대값:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2127"/>
         <source>Lower value:</source>
-        <translation>낮은 가치:</translation>
+        <translation>최소값:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2134"/>
         <source>Sets the number of decimal places. (DIMTDEC system variable)</source>
-        <translation>소수의 장소의 수를 설정합니다. (DIMTDEC 시스템 변수)</translation>
+        <translation>소수 자릿수를 설정합니다. (DIMTDEC 시스템 변수)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2141"/>
@@ -10298,7 +10298,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2175"/>
         <source>Scaling for height:</source>
-        <translation>고도를 위해 확장:</translation>
+        <translation>높이에 대한 축척:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2182"/>
@@ -10308,22 +10308,22 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2188"/>
         <source>Values are stacked by their decimal separators.</source>
-        <translation>가치는 그들의 소수 분리기에 의해 겹쳐 쌓입니다.</translation>
+        <translation>값을 소수 구분 기호 기준으로 쌓습니다.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2191"/>
         <source>Align decimal separators</source>
-        <translation>Align 소수 분리기</translation>
+        <translation>소수 구분 기호 정렬</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2198"/>
         <source>Values are stacked by their operational symbols.</source>
-        <translation>가치는 그들의 조작상 상징에 의해 겹쳐 쌓입니다.</translation>
+        <translation>값을 연산 기호 기준으로 쌓습니다.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2201"/>
         <source>Align operational symbols</source>
-        <translation>Align 운영 상징</translation>
+        <translation>연산 기호 정렬</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2214"/>
@@ -10333,7 +10333,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2227"/>
         <source>Displays and sets the number of decimal places. (DIMALTTD system variable)</source>
-        <translation>디스플레이와 소수의 장소의 번호를 설정합니다. (DIMALTTD 시스템 변수)</translation>
+        <translation>소수 자릿수를 표시하고 설정합니다. (DIMALTTD 시스템 변수)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2240"/>
@@ -10348,12 +10348,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2260"/>
         <source>Suppresses the feet portion of a feet-and-inches dimension when the distance is less than 1 foot (DIMALTTZ system variable).</source>
-        <translation>거리가 1 피트 (DIMALTTZ 시스템 변수) 미만일 때 피트 앤 인치 치수의 발 부분을 압축합니다.</translation>
+        <translation>거리가 1피트 미만일 때 피트-인치 치수의 피트 부분을 표시하지 않습니다 (DIMALTTZ 시스템 변수).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2270"/>
         <source>Suppresses the inches portion of a feet-and-inches dimension when the distance is an integral number of feet (DIMALTTZ system variable).</source>
-        <translation>거리가 발 (DIMALTTZ 시스템 변수)의 필수적인 수 인 피트 앤 인치 치수의 인치 부분을 압축합니다.</translation>
+        <translation>거리가 정수 피트일 때 피트-인치 치수의 인치 부분을 표시하지 않습니다 (DIMALTTZ 시스템 변수).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.cpp" line="354"/>
@@ -10365,7 +10365,7 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.cpp" line="1139"/>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.cpp" line="1140"/>
         <source>User Block...</source>
-        <translation>사용자 블록 ...</translation>
+        <translation>사용자 블록...</translation>
     </message>
 </context>
 <context>
@@ -10515,7 +10515,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="489"/>
         <source>Preview</source>
-        <translation>다운로드</translation>
+        <translation>미리보기</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="42"/>
@@ -10687,12 +10687,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.ui" line="20"/>
         <source>Dialog</source>
-        <translation>채용공고</translation>
+        <translation>대화상자</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.ui" line="29"/>
         <source>Object ID: 121</source>
-        <translation>오브젝트 ID: 121</translation>
+        <translation>객체 ID: 121</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.ui" line="64"/>
@@ -10722,17 +10722,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="181"/>
         <source>Line Properties</source>
-        <translation>라인 속성</translation>
+        <translation>선 속성</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="187"/>
         <source>Arc Properties</source>
-        <translation>Arc 속성</translation>
+        <translation>호 속성</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="193"/>
         <source>Circle Properties</source>
-        <translation>원형 속성</translation>
+        <translation>원 속성</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="199"/>
@@ -10747,7 +10747,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="211"/>
         <source>Polyline Properties</source>
-        <translation>Polyline 특성</translation>
+        <translation>폴리라인 속성</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="217"/>
@@ -10757,12 +10757,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="223"/>
         <source>Spline Properties</source>
-        <translation>Spline 속성</translation>
+        <translation>스플라인 속성</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="229"/>
         <source>Spline Points Properties</source>
-        <translation>Spline Points 속성</translation>
+        <translation>스플라인 점 속성</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="235"/>
@@ -10974,7 +10974,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.ui" line="14"/>
         <source>Dialog</source>
-        <translation>채용공고</translation>
+        <translation>대화상자</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.ui" line="212"/>
@@ -10994,7 +10994,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.ui" line="224"/>
         <source>CTRL+ALT+SHIFT+Middle Button Double-Click</source>
-        <translation>CTRL+ALT+SHIFT+Middle 단추 두 배 클릭</translation>
+        <translation>CTRL+ALT+SHIFT+가운데 버튼 두 번 클릭</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.ui" line="26"/>
@@ -11004,7 +11004,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.ui" line="37"/>
         <source>This shortcut is already assigned to &quot;Dimensions My&quot; menu!</source>
-        <translation>이 단축키는 이미 &quot;Dimensions My&quot; 메뉴에 할당됩니다!</translation>
+        <translation>이 단축키는 이미 &quot;Dimensions My&quot; 메뉴에 할당되어 있습니다!</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.ui" line="163"/>
@@ -11019,7 +11019,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.ui" line="176"/>
         <source>Defines the context for menu and whether click on specific entity will trigger menu invocation. </source>
-        <translation>메뉴에 대한 컨텍스트를 작성하고 특정 엔티티티티를 클릭하면 메뉴를 호출합니다.</translation>
+        <translation>메뉴의 컨텍스트와 특정 엔티티를 클릭할 때 메뉴를 호출할지 여부를 정의합니다. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.ui" line="186"/>
@@ -11084,7 +11084,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.ui" line="92"/>
         <source>Middle</source>
-        <translation>주요 특징</translation>
+        <translation>중간</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.ui" line="99"/>
@@ -11139,7 +11139,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="112"/>
         <source>Arc</source>
-        <translation>·</translation>
+        <translation>호</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="113"/>
@@ -11159,7 +11159,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="116"/>
         <source>Ellipse</source>
-        <translation>엘립스</translation>
+        <translation>타원</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="117"/>
@@ -11234,7 +11234,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="237"/>
         <source>NOTE: Menu assignment will be ignored. It is reserved for &apos;Pan&apos;.</source>
-        <translation>참고: 메뉴 할당은 무시됩니다. &apos;팬&apos;용으로 예약되어 있습니다.</translation>
+        <translation>참고: 메뉴 할당은 무시됩니다. &apos;초점이동&apos;용으로 예약되어 있습니다.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="242"/>
@@ -11661,7 +11661,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_new_widget.ui" line="14"/>
         <source>Dialog</source>
-        <translation>채용공고</translation>
+        <translation>대화상자</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_new_widget.ui" line="20"/>
@@ -11973,12 +11973,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/actions/quick_selection/lc_dlgquickselection.ui" line="399"/>
         <source>Pick angle from drawing</source>
-        <translation type="unfinished">그림에서 선택 각</translation>
+        <translation type="unfinished">도면에서 각도 선택</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/quick_selection/lc_dlgquickselection.ui" line="425"/>
         <source>Pick distance from drawing</source>
-        <translation type="unfinished">그림에서 거리</translation>
+        <translation type="unfinished">도면에서 거리 선택</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/quick_selection/lc_dlgquickselection.ui" line="451"/>
@@ -12137,7 +12137,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="45"/>
         <source>Pen attributes</source>
-        <translation>Pen 속성</translation>
+        <translation>펜 속성</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="58"/>
@@ -12201,7 +12201,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="26"/>
         <source>If сhecked, the tooltip with additional information about UCS will be shown for table item.</source>
-        <translation>Сhecked 경우, UCS에 대한 추가 정보가 테이블 아이템에 표시됩니다.</translation>
+        <translation>선택하면 표 항목에 UCS에 대한 추가 정보가 담긴 도구 설명을 표시합니다.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="39"/>
@@ -12216,7 +12216,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="59"/>
         <source>Grid Type column</source>
-        <translation>격자 유형 란</translation>
+        <translation>그리드 유형 열</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="89"/>
@@ -12276,12 +12276,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="140"/>
         <source>Pan, UCS Origin in Center</source>
-        <translation>팬, UCS 원점을 중심에</translation>
+        <translation>초점이동, UCS 원점을 중심에</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="145"/>
         <source>Pan, UCS Origin in Left-Bottom</source>
-        <translation>팬, UCS 원점을 왼쪽 아래에</translation>
+        <translation>초점이동, UCS 원점을 왼쪽 아래에</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="153"/>
@@ -12424,7 +12424,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucsproperties.ui" line="88"/>
         <source>Grid Type:</source>
-        <translation>격자 유형:</translation>
+        <translation>그리드 유형:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucsproperties.ui" line="141"/>
@@ -12460,7 +12460,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucsproperties.cpp" line="109"/>
         <source>Top</source>
-        <translation>이름 *</translation>
+        <translation>위쪽</translation>
     </message>
 </context>
 <context>
@@ -12468,7 +12468,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_widget_creator.ui" line="14"/>
         <source>Dialog</source>
-        <translation>채용공고</translation>
+        <translation>대화상자</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_widget_creator.ui" line="360"/>
@@ -12493,7 +12493,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_widget_creator.ui" line="285"/>
         <source>Define a custom menu by specifing the set of included actions. Menu will be shown as a popup in the drawing area as soon as menu invocation shortcut is invoked. </source>
-        <translation>지정된 작업을 지정하여 사용자 정의 메뉴를 정의합니다. 메뉴는 그림 영역에서 팝업으로 표시됩니다.</translation>
+        <translation>포함할 동작 집합을 지정하여 사용자 정의 메뉴를 정의합니다. 메뉴 호출 단축키를 누르면 도면 영역에 팝업으로 메뉴가 표시됩니다. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_widget_creator.ui" line="35"/>
@@ -12628,7 +12628,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_widget_creator.ui" line="384"/>
         <source>Bottom</source>
-        <translation>제품정보</translation>
+        <translation>아래쪽</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_widget_creator.ui" line="389"/>
@@ -12643,7 +12643,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_widget_creator.ui" line="399"/>
         <source>Top</source>
-        <translation>이름 *</translation>
+        <translation>위쪽</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_widget_creator.cpp" line="61"/>
@@ -12658,7 +12658,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_widget_creator.cpp" line="64"/>
         <source>Define a custom menu by specifying the set of used actions. Menu will be shown as a popup in the drawing area as soon as menu invocation shortcut is invoked. </source>
-        <translation>사용 된 행동의 집합을 지정하여 사용자 정의 메뉴를 정의합니다. 메뉴는 그림 영역에서 팝업으로 표시됩니다.</translation>
+        <translation>사용할 동작 집합을 지정하여 사용자 정의 메뉴를 정의합니다. 메뉴 호출 단축키를 누르면 도면 영역에 팝업으로 메뉴가 표시됩니다. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_widget_creator.cpp" line="59"/>
@@ -12808,7 +12808,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_filler.cpp" line="36"/>
         <source>Corner points only</source>
-        <translation type="unfinished">코너 포인트 만</translation>
+        <translation type="unfinished">모서리 점만</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_filler.cpp" line="36"/>
@@ -12851,12 +12851,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_widget.ui" line="46"/>
         <source>If selected, only corner points will be drawn for bounding box. Otherwise, edge lines will be drawn.</source>
-        <translation type="unfinished">선택된 경우에만 코너 포인트만 묶을 수 있습니다. 그렇지 않으면, 가장자리 선은 그려질 것입니다.</translation>
+        <translation type="unfinished">선택하면 경계 상자의 모서리 점만 그립니다. 그렇지 않으면 가장자리 선을 그립니다.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_widget.ui" line="49"/>
         <source>Corner points only</source>
-        <translation type="unfinished">코너 포인트 만</translation>
+        <translation type="unfinished">모서리 점만</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_widget.ui" line="56"/>
@@ -12919,7 +12919,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_filler.cpp" line="48"/>
         <source>Vertical offset of duplicate from original entity</source>
-        <translation type="unfinished">Original entity에서 중복의 수직 오프셋</translation>
+        <translation type="unfinished">원래 엔티티로부터 복제본의 수직 오프셋</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_filler.cpp" line="59"/>
@@ -13029,7 +13029,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="122"/>
         <source>Vertical offset of duplicate from original entity</source>
-        <translation type="unfinished">Original entity에서 중복의 수직 오프셋</translation>
+        <translation type="unfinished">원래 엔티티로부터 복제본의 수직 오프셋</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="129"/>
@@ -13072,7 +13072,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse_1_point_options_filler.cpp" line="31"/>
         <source>Major Radius</source>
-        <translation type="unfinished">주요 반경</translation>
+        <translation type="unfinished">장축 반지름</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse_1_point_options_filler.cpp" line="31"/>
@@ -13082,7 +13082,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse_1_point_options_filler.cpp" line="37"/>
         <source>Minor Radius</source>
-        <translation type="unfinished">Minor 반경</translation>
+        <translation type="unfinished">단축 반지름</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse_1_point_options_filler.cpp" line="37"/>
@@ -13107,7 +13107,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse_1_point_options_filler.cpp" line="50"/>
         <source>If checked, major radius angle is specified by mouse</source>
-        <translation type="unfinished">확인되면, 주요 반경 각도는 마우스에 의해 지정됩니다</translation>
+        <translation type="unfinished">선택하면 장축 반지름의 각도를 마우스로 지정합니다</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse_1_point_options_filler.cpp" line="55"/>
@@ -13117,7 +13117,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse_1_point_options_filler.cpp" line="55"/>
         <source>Value of angle for major radius</source>
-        <translation type="unfinished">주요 반경을 위한 각의 가치</translation>
+        <translation type="unfinished">장축 반지름의 각도 값</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse_1_point_options_filler.cpp" line="60"/>
@@ -13155,7 +13155,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse_1point_options_widget.ui" line="97"/>
         <source>If checked, angle for major radius may be specified</source>
-        <translation type="unfinished">검사된 경우에, 주요 반경을 위한 각은 지정될지도 모릅니다</translation>
+        <translation type="unfinished">선택하면 장축 반지름의 각도를 지정할 수 있습니다</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse_1point_options_widget.ui" line="100"/>
@@ -13165,7 +13165,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse_1point_options_widget.ui" line="107"/>
         <source>If checked, major radius angle is specified by mouse</source>
-        <translation type="unfinished">확인되면, 주요 반경 각도는 마우스에 의해 지정됩니다</translation>
+        <translation type="unfinished">선택하면 장축 반지름의 각도를 마우스로 지정합니다</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse_1point_options_widget.ui" line="110"/>
@@ -13175,7 +13175,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse_1point_options_widget.ui" line="129"/>
         <source>Value of angle for major radius</source>
-        <translation type="unfinished">주요 반경을 위한 각의 가치</translation>
+        <translation type="unfinished">장축 반지름의 각도 값</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse_1point_options_widget.ui" line="136"/>
@@ -13185,12 +13185,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse_1point_options_widget.ui" line="150"/>
         <source>Pick major actions from drawing</source>
-        <translation type="unfinished">그림에서 중요한 작업을 선택</translation>
+        <translation type="unfinished">도면에서 장축 선택</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse_1point_options_widget.ui" line="164"/>
         <source>Minor Radius:</source>
-        <translation type="unfinished">Minor 반경:</translation>
+        <translation type="unfinished">단축 반지름:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse_1point_options_widget.ui" line="171"/>
@@ -13200,12 +13200,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse_1point_options_widget.ui" line="185"/>
         <source>Major Radius:</source>
-        <translation type="unfinished">주요 반경:</translation>
+        <translation type="unfinished">장축 반지름:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse_1point_options_widget.ui" line="199"/>
         <source>Pick angle from drawing</source>
-        <translation type="unfinished">그림에서 선택 각</translation>
+        <translation type="unfinished">도면에서 각도 선택</translation>
     </message>
 </context>
 <context>
@@ -13226,7 +13226,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/curve/lc_ellipse_arc_options_widget.ui" line="26"/>
         <source>Arc Options</source>
-        <translation type="unfinished">Arc 옵션</translation>
+        <translation type="unfinished">호 옵션</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_ellipse_arc_options_widget.ui" line="56"/>
@@ -13259,22 +13259,22 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_ellipse.ui" line="81"/>
         <source>X Coordinate of ellipse&apos;s center</source>
-        <translation>X ellipse의 중심</translation>
+        <translation>타원 중심의 X 좌표</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_ellipse.ui" line="106"/>
         <source>Pick center coordinate from drawing</source>
-        <translation>도면에서 선택 센터 좌표</translation>
+        <translation>도면에서 중심 좌표 선택</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_ellipse.ui" line="119"/>
         <source>Center (y):</source>
-        <translation>센터 (y):</translation>
+        <translation>중심 (y):</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_ellipse.ui" line="141"/>
         <source>Y Coordinate of arc&apos;s center</source>
-        <translation>Y 아크 센터 좌표</translation>
+        <translation>호 중심의 Y 좌표</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_ellipse.ui" line="154"/>
@@ -13326,7 +13326,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_ellipse.ui" line="284"/>
         <source>Pick rotation angle from drawing</source>
-        <translation>그림에서 회전 각도 선택</translation>
+        <translation>도면에서 회전 각도 선택</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_ellipse.ui" line="307"/>
@@ -13336,12 +13336,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_ellipse.ui" line="329"/>
         <source>Start angle of elliptic arc, degrees</source>
-        <translation>Elliptic 아크의 시작 각, 도</translation>
+        <translation>타원형 호의 시작 각도, 도</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_ellipse.ui" line="336"/>
         <source>Pick start angle from drawing</source>
-        <translation>그림에서 시작 각도를 선택</translation>
+        <translation>도면에서 시작 각도 선택</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_ellipse.ui" line="359"/>
@@ -13351,12 +13351,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_ellipse.ui" line="381"/>
         <source>End angle of elliptic arc, degrees</source>
-        <translation>Elliptic 아크의 끝 각, 도</translation>
+        <translation>타원형 호의 끝 각도, 도</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_ellipse.ui" line="388"/>
         <source>Pick end angle from drawing</source>
-        <translation>그림에서 끝 각을 비추십시오</translation>
+        <translation>도면에서 끝 각도 선택</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_ellipse.ui" line="408"/>
@@ -13394,7 +13394,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="81"/>
         <source>Arc</source>
-        <translation type="unfinished">·</translation>
+        <translation type="unfinished">호</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="82"/>
@@ -13424,7 +13424,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="87"/>
         <source>Ellipse</source>
-        <translation type="unfinished">엘립스</translation>
+        <translation type="unfinished">타원</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="88"/>
@@ -13733,7 +13733,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="227"/>
         <source>Line Type</source>
-        <translation type="unfinished">선 유형</translation>
+        <translation type="unfinished">선종류</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="227"/>
@@ -13743,7 +13743,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="245"/>
         <source>Line Width</source>
-        <translation type="unfinished">선 폭</translation>
+        <translation type="unfinished">선가중치</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="245"/>
@@ -14041,7 +14041,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_hyperbola.ui" line="55"/>
         <source>Major Radius (a):</source>
-        <translation>주요 반경 (a):</translation>
+        <translation>장축 반지름 (a):</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_hyperbola.ui" line="65"/>
@@ -14056,12 +14056,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_hyperbola.ui" line="85"/>
         <source>Rotation (deg):</source>
-        <translation>회전 (deg):</translation>
+        <translation>회전 (도):</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_hyperbola.ui" line="95"/>
         <source>Vertex X:</source>
-        <translation>버텍스 X:</translation>
+        <translation>정점 X:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_hyperbola.ui" line="123"/>
@@ -14086,7 +14086,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_hyperbola.ui" line="160"/>
         <source>Foci &amp; Point on Curve (Alternative Editing)</source>
-        <translation>Foci &amp; Curve의 포인트 (Alternative Editing)</translation>
+        <translation>초점 및 곡선 위의 점 (대체 편집)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_hyperbola.ui" line="166"/>
@@ -14167,7 +14167,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/image/lc_image_options_widget.ui" line="70"/>
         <source>Pick angle from drawing</source>
-        <translation type="unfinished">그림에서 선택 각</translation>
+        <translation type="unfinished">도면에서 각도 선택</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/image/lc_image_options_widget.ui" line="84"/>
@@ -14286,7 +14286,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="138"/>
         <source>Pick width value from drawing</source>
-        <translation>그림에서 폭 가치 선택</translation>
+        <translation>도면에서 너비 값 선택</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="305"/>
@@ -14296,7 +14296,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="219"/>
         <source>Pick height value from the drawing</source>
-        <translation>그림에서 높이 값을 선택합니다</translation>
+        <translation>도면에서 높이 값 선택</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="77"/>
@@ -14312,7 +14312,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="198"/>
         <source>Pick angle from the drawing</source>
-        <translation>그림에서 각을 선택합니다</translation>
+        <translation>도면에서 각도 선택</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="312"/>
@@ -14358,7 +14358,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/info/lc_info_dist_point_to_entity_options_filler.cpp" line="33"/>
         <source>Snap On Entity</source>
-        <translation type="unfinished">Entity에 스냅</translation>
+        <translation type="unfinished">엔티티에 스냅</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/info/lc_info_dist_point_to_entity_options_filler.cpp" line="33"/>
@@ -14381,7 +14381,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/info/lc_info_dist_point_to_entity_options_widget.ui" line="35"/>
         <source>Snap On Entity</source>
-        <translation type="unfinished">Entity에 스냅</translation>
+        <translation type="unfinished">엔티티에 스냅</translation>
     </message>
 </context>
 <context>
@@ -14389,7 +14389,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/lc_inputtextdialog.ui" line="14"/>
         <source>Dialog</source>
-        <translation>채용공고</translation>
+        <translation>대화상자</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/lc_inputtextdialog.ui" line="20"/>
@@ -14477,7 +14477,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_insert.ui" line="224"/>
         <source>Pick Angle value from drawing</source>
-        <translation>그림에서 각 가치 선택</translation>
+        <translation>도면에서 각도 값 선택</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_insert.ui" line="238"/>
@@ -14512,7 +14512,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_insert.ui" line="316"/>
         <source>Pick row spacing value from drawing</source>
-        <translation>그림에서 줄 간격 값</translation>
+        <translation>도면에서 행 간격 값 선택</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_insert.ui" line="330"/>
@@ -14527,7 +14527,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_insert.ui" line="356"/>
         <source>Pick column spacing from drawing</source>
-        <translation>그림에서 열 간격을 두십시오</translation>
+        <translation>도면에서 열 간격 선택</translation>
     </message>
 </context>
 <context>
@@ -15375,7 +15375,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_filler.cpp" line="78"/>
         <source>Middle</source>
-        <translation type="unfinished">주요 특징</translation>
+        <translation type="unfinished">중간</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_filler.cpp" line="79"/>
@@ -15390,7 +15390,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_filler.cpp" line="86"/>
         <source>Snap point for position of intersection point between created line and source entity (within original line)</source>
-        <translation type="unfinished">생성된 선과 근원체 사이 교차점의 위치를 위한 스냅 점 (원래 선에서)</translation>
+        <translation type="unfinished">생성된 선과 원본 엔티티 사이 교차점 위치의 스냅 점 (원래 선 내)</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_filler.cpp" line="98"/>
@@ -15408,7 +15408,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_widget.ui" line="32"/>
         <source>Line Angle Options</source>
-        <translation type="unfinished">라인 각도 옵션</translation>
+        <translation type="unfinished">선 각도 옵션</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_widget.ui" line="62"/>
@@ -15428,7 +15428,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_widget.ui" line="135"/>
         <source>Point on created line that will be placed into insertion point</source>
-        <translation type="unfinished">인서트 포인트로 배치됩니다</translation>
+        <translation type="unfinished">삽입점에 놓일 생성된 선 위의 점</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_widget.ui" line="139"/>
@@ -15438,7 +15438,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_widget.ui" line="144"/>
         <source>Middle</source>
-        <translation type="unfinished">주요 특징</translation>
+        <translation type="unfinished">중간</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_widget.ui" line="149"/>
@@ -15468,12 +15468,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_widget.ui" line="205"/>
         <source>Pick line angle from drawing</source>
-        <translation type="unfinished">그림에서 선 각을 비추십시오</translation>
+        <translation type="unfinished">도면에서 선 각도 선택</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_widget.ui" line="219"/>
         <source>PIck line length from drawing</source>
-        <translation type="unfinished">그림에서 PIck 선 길이</translation>
+        <translation type="unfinished">도면에서 선 길이 선택</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_widget.ui" line="246"/>
@@ -15511,7 +15511,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="32"/>
         <source>If checked, the length of line is defined by mouse position instead of setting</source>
-        <translation type="unfinished">체크하면, 라인의 길이는 설정 대신 마우스 위치에 의해 정의됩니다</translation>
+        <translation type="unfinished">선택하면 선의 길이를 설정값 대신 마우스 위치로 정의합니다</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="40"/>
@@ -15558,7 +15558,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="65"/>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="90"/>
         <source>Middle</source>
-        <translation type="unfinished">주요 특징</translation>
+        <translation type="unfinished">중간</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="66"/>
@@ -15574,7 +15574,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="73"/>
         <source>Snap point for position of intersection point between created line and source entity (within original line)</source>
-        <translation type="unfinished">생성된 선과 근원체 사이 교차점의 위치를 위한 스냅 점 (원래 선에서)</translation>
+        <translation type="unfinished">생성된 선과 원본 엔티티 사이 교차점 위치의 스냅 점 (원래 선 내)</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="80"/>
@@ -15622,12 +15622,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="50"/>
         <source>Distance of intersection point from specified line snap point</source>
-        <translation type="unfinished">지정된 선 스냅 포인트에서 교차점의 거리</translation>
+        <translation type="unfinished">지정된 선 스냅 점에서 교차점의 거리</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="57"/>
         <source>Snap point for position of intersection point between created line and source entity (within original line)</source>
-        <translation type="unfinished">생성된 선과 근원체 사이 교차점의 위치를 위한 스냅 점 (원래 선에서)</translation>
+        <translation type="unfinished">생성된 선과 원본 엔티티 사이 교차점 위치의 스냅 점 (원래 선 내)</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="61"/>
@@ -15645,7 +15645,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="71"/>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="281"/>
         <source>Middle</source>
-        <translation type="unfinished">주요 특징</translation>
+        <translation type="unfinished">중간</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="76"/>
@@ -15696,7 +15696,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="163"/>
         <source>If checked, the length of line is defined by mouse position instead of setting</source>
-        <translation type="unfinished">체크하면, 라인의 길이는 설정 대신 마우스 위치에 의해 정의됩니다</translation>
+        <translation type="unfinished">선택하면 선의 길이를 설정값 대신 마우스 위치로 정의합니다</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="166"/>
@@ -15716,17 +15716,17 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="212"/>
         <source>Pick snap distance from drawing</source>
-        <translation type="unfinished">그림에서 스냅 거리</translation>
+        <translation type="unfinished">도면에서 스냅 거리 선택</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="226"/>
         <source>Tick Snap:</source>
-        <translation type="unfinished">Tick 스냅:</translation>
+        <translation type="unfinished">눈금 스냅:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="233"/>
         <source>Pick angle from drawing</source>
-        <translation type="unfinished">그림에서 선택 각</translation>
+        <translation type="unfinished">도면에서 각도 선택</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="265"/>
@@ -15797,7 +15797,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_bisector_options_widget.ui" line="79"/>
         <source>Pick line length from drawing</source>
-        <translation type="unfinished">그림에서 선 길이를 선택하십시오</translation>
+        <translation type="unfinished">도면에서 선 길이 선택</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_bisector_options_widget.ui" line="93"/>
@@ -15820,7 +15820,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="34"/>
         <source>If checked, created line will be orthogonal to selected line</source>
-        <translation type="unfinished">선택된 라인은 선택된 라인에 직각선이 될 것입니다</translation>
+        <translation type="unfinished">선택하면 생성된 선이 선택한 선에 직교합니다</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="41"/>
@@ -15880,7 +15880,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="83"/>
         <source>Middle</source>
-        <translation type="unfinished">주요 특징</translation>
+        <translation type="unfinished">중간</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="84"/>
@@ -15913,12 +15913,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="51"/>
         <source>Pick angle from drawing</source>
-        <translation type="unfinished">그림에서 선택 각</translation>
+        <translation type="unfinished">도면에서 각도 선택</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="65"/>
         <source>If checked, created line will be orthogonal to selected line</source>
-        <translation type="unfinished">선택된 라인은 선택된 라인에 직각선이 될 것입니다</translation>
+        <translation type="unfinished">선택하면 생성된 선이 선택한 선에 직교합니다</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="68"/>
@@ -15938,7 +15938,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="129"/>
         <source>Middle</source>
-        <translation type="unfinished">주요 특징</translation>
+        <translation type="unfinished">중간</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="134"/>
@@ -16043,7 +16043,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="51"/>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="75"/>
         <source>Middle</source>
-        <translation type="unfinished">주요 특징</translation>
+        <translation type="unfinished">중간</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="52"/>
@@ -16069,7 +16069,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="63"/>
         <source>Distance from snap point</source>
-        <translation type="unfinished">스냅 포인트에서 거리</translation>
+        <translation type="unfinished">스냅 점으로부터의 거리</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="80"/>
@@ -16079,7 +16079,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="80"/>
         <source>Snap point of gap to line snap point</source>
-        <translation type="unfinished">선 스냅 포인트에 간격의 스냅 포인트</translation>
+        <translation type="unfinished">선 스냅 점에 대한 간격의 스냅 점</translation>
     </message>
 </context>
 <context>
@@ -16092,7 +16092,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="32"/>
         <source>Snap point of gap to line snap point</source>
-        <translation type="unfinished">선 스냅 포인트에 간격의 스냅 포인트</translation>
+        <translation type="unfinished">선 스냅 점에 대한 간격의 스냅 점</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="36"/>
@@ -16104,7 +16104,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="41"/>
         <source>Middle</source>
         <comment>gap</comment>
-        <translation type="unfinished">주요 특징</translation>
+        <translation type="unfinished">중간</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="46"/>
@@ -16120,7 +16120,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="61"/>
         <source>Gap Snap:</source>
-        <translation type="unfinished">Gap 스냅:</translation>
+        <translation type="unfinished">간격 스냅:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="68"/>
@@ -16143,7 +16143,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="82"/>
         <source>Middle</source>
         <comment>snap</comment>
-        <translation type="unfinished">주요 특징</translation>
+        <translation type="unfinished">중간</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="87"/>
@@ -16164,7 +16164,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="141"/>
         <source>PIck gap size from drawing</source>
-        <translation type="unfinished">그림에서 PIck 간격 크기</translation>
+        <translation type="unfinished">도면에서 간격 크기 선택</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="155"/>
@@ -16179,7 +16179,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="177"/>
         <source>Distance from snap point</source>
-        <translation type="unfinished">스냅 포인트에서 거리</translation>
+        <translation type="unfinished">스냅 점으로부터의 거리</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="184"/>
@@ -16189,7 +16189,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="191"/>
         <source>Pick snap distance from drawing</source>
-        <translation type="unfinished">그림에서 스냅 거리</translation>
+        <translation type="unfinished">도면에서 스냅 거리 선택</translation>
     </message>
 </context>
 <context>
@@ -16197,7 +16197,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="35"/>
         <source>Extend/Trim</source>
-        <translation type="unfinished">확장/Trim</translation>
+        <translation type="unfinished">연장/트림</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="36"/>
@@ -16213,7 +16213,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="41"/>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="59"/>
         <source>Line 1</source>
-        <translation type="unfinished">라인 1</translation>
+        <translation type="unfinished">선 1</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="41"/>
@@ -16224,7 +16224,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="48"/>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="60"/>
         <source>Line 2</source>
-        <translation type="unfinished">라인 2</translation>
+        <translation type="unfinished">선 2</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="48"/>
@@ -16249,7 +16249,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="65"/>
         <source>Defines how pen should be applied to created entities</source>
-        <translation type="unfinished">펜이 엔티티티티티에 적용되어야 하는 방법</translation>
+        <translation type="unfinished">생성된 엔티티에 펜을 적용하는 방법을 정의합니다</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="78"/>
@@ -16259,7 +16259,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="78"/>
         <source>If checked, polyline will be created instead of individual lines</source>
-        <translation type="unfinished">체크된 경우, 폴린은 개별 라인 대신 생성됩니다</translation>
+        <translation type="unfinished">선택하면 개별 선 대신 폴리라인을 생성합니다</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="89"/>
@@ -16282,12 +16282,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="38"/>
         <source>If checked, polyline will be created instead of individual lines</source>
-        <translation type="unfinished">체크된 경우, 폴린은 개별 라인 대신 생성됩니다</translation>
+        <translation type="unfinished">선택하면 개별 선 대신 폴리라인을 생성합니다</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="41"/>
         <source>Create Polyline</source>
-        <translation type="unfinished">Polyline 만들기</translation>
+        <translation type="unfinished">폴리라인 만들기</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="66"/>
@@ -16298,7 +16298,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="70"/>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="124"/>
         <source>Extend/Trim</source>
-        <translation type="unfinished">확장/Trim</translation>
+        <translation type="unfinished">연장/트림</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="75"/>
@@ -16330,7 +16330,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="160"/>
         <source>Defines how pen should be applied to created entities</source>
-        <translation type="unfinished">펜이 엔티티티티티에 적용되어야 하는 방법</translation>
+        <translation type="unfinished">생성된 엔티티에 펜을 적용하는 방법을 정의합니다</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="164"/>
@@ -16340,12 +16340,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="169"/>
         <source>Line 1</source>
-        <translation type="unfinished">라인 1</translation>
+        <translation type="unfinished">선 1</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="174"/>
         <source>Line 2</source>
-        <translation type="unfinished">라인 2</translation>
+        <translation type="unfinished">선 2</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="179"/>
@@ -16378,7 +16378,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_options_filler.cpp" line="31"/>
         <source>Form a closed contour from lines drawn</source>
-        <translation type="unfinished">라인에서 닫힌 윤곽을 형성</translation>
+        <translation type="unfinished">그린 선으로 닫힌 윤곽 형성</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_options_filler.cpp" line="36"/>
@@ -16393,7 +16393,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_options_filler.cpp" line="38"/>
         <source>Undo the last line drawing</source>
-        <translation type="unfinished">마지막 선 그림</translation>
+        <translation type="unfinished">마지막 선 그리기 실행 취소</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_options_filler.cpp" line="38"/>
@@ -16403,7 +16403,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_options_filler.cpp" line="38"/>
         <source>Redo the last line drawing</source>
-        <translation type="unfinished">Redo 마지막 선 그림</translation>
+        <translation type="unfinished">마지막 선 그리기 다시 실행</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_options_filler.cpp" line="46"/>
@@ -16416,12 +16416,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_options_widget.ui" line="32"/>
         <source>Line Options</source>
-        <translation type="unfinished">라인 옵션</translation>
+        <translation type="unfinished">선 옵션</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_options_widget.ui" line="53"/>
         <source>Form a closed contour from lines drawn</source>
-        <translation type="unfinished">라인에서 닫힌 윤곽을 형성</translation>
+        <translation type="unfinished">그린 선으로 닫힌 윤곽 형성</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_options_widget.ui" line="56"/>
@@ -16431,7 +16431,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_options_widget.ui" line="72"/>
         <source>Undo the last line drawing</source>
-        <translation type="unfinished">마지막 선 그림</translation>
+        <translation type="unfinished">마지막 선 그리기 실행 취소</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_options_widget.ui" line="75"/>
@@ -16441,7 +16441,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_options_widget.ui" line="82"/>
         <source>Redo the last line drawing</source>
-        <translation type="unfinished">Redo 마지막 선 그림</translation>
+        <translation type="unfinished">마지막 선 그리기 다시 실행</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_options_widget.ui" line="85"/>
@@ -16492,7 +16492,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_parallel_options_widget.ui" line="79"/>
         <source>Pick distance from drawing</source>
-        <translation type="unfinished">그림에서 거리</translation>
+        <translation type="unfinished">도면에서 거리 선택</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_parallel_options_widget.ui" line="99"/>
@@ -16586,7 +16586,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/point/lc_points_line_options_widget.ui" line="38"/>
         <source>If checked, line of points will be drawn with specified angle</source>
-        <translation type="unfinished">확인된 경우, 포인트의 선은 지정된 각도로 그려집니다</translation>
+        <translation type="unfinished">선택하면 점 선을 지정한 각도로 그립니다</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/point/lc_points_line_options_widget.ui" line="41"/>
@@ -16601,7 +16601,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/point/lc_points_line_options_widget.ui" line="71"/>
         <source>None</source>
-        <translation type="unfinished">이름 *</translation>
+        <translation type="unfinished">없음</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/point/lc_points_line_options_widget.ui" line="76"/>
@@ -16621,7 +16621,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/point/lc_points_line_options_widget.ui" line="115"/>
         <source>Specifies whether all points should fit between start/end points of line or whether the length of line is calculated based on number of points and distance between points.</source>
-        <translation type="unfinished">라인의 시작/엔드 포인트 또는 라인의 길이가 점과 거리를 기준으로 계산되는지 여부를 지정합니다.</translation>
+        <translation type="unfinished">모든 점이 선의 시작점/끝점 사이에 맞춰져야 하는지, 아니면 점 개수와 점 사이 거리를 기준으로 선 길이를 계산할지 지정합니다.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/point/lc_points_line_options_widget.ui" line="118"/>
@@ -16636,12 +16636,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/point/lc_points_line_options_widget.ui" line="153"/>
         <source>Pick distance from drawing</source>
-        <translation type="unfinished">그림에서 거리</translation>
+        <translation type="unfinished">도면에서 거리 선택</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/point/lc_points_line_options_widget.ui" line="176"/>
         <source>If checked, fixed specified distance between points will be used. Otherwise, distance will be calculated.</source>
-        <translation type="unfinished">체크하면 포인트 사이의 고정 지정된 거리가 사용됩니다. 그렇지 않으면 거리가 계산됩니다.</translation>
+        <translation type="unfinished">선택하면 점 사이의 지정된 고정 거리를 사용합니다. 그렇지 않으면 거리를 계산합니다.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/point/lc_points_line_options_widget.ui" line="179"/>
@@ -16651,7 +16651,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/point/lc_points_line_options_widget.ui" line="193"/>
         <source>Number of points to create</source>
-        <translation type="unfinished">포인트 수</translation>
+        <translation type="unfinished">만들 점의 개수</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/point/lc_points_line_options_widget.ui" line="212"/>
@@ -16671,7 +16671,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/point/lc_points_line_options_widget.ui" line="264"/>
         <source>Pick angle from drawing</source>
-        <translation type="unfinished">그림에서 선택 각</translation>
+        <translation type="unfinished">도면에서 각도 선택</translation>
     </message>
 </context>
 <context>
@@ -16689,7 +16689,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_line.ui" line="68"/>
         <source>Pick endpoint from the drawing</source>
-        <translation>그림에서 끝점 선택</translation>
+        <translation>도면에서 끝점 선택</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_line.ui" line="75"/>
@@ -16704,7 +16704,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_line.ui" line="114"/>
         <source>End point (y):</source>
-        <translation>끝 점 (y):</translation>
+        <translation>끝점 (y):</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_line.ui" line="130"/>
@@ -16729,12 +16729,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_line.ui" line="191"/>
         <source>Pick start point from the drawing</source>
-        <translation>그림에서 출발점</translation>
+        <translation>도면에서 시작점 선택</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_line.ui" line="214"/>
         <source>End point (x):</source>
-        <translation>끝 점 (x):</translation>
+        <translation>끝점 (x):</translation>
     </message>
 </context>
 <context>
@@ -16962,7 +16962,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_rel_angle_options_widget.ui" line="79"/>
         <source>Pick angle from drawing</source>
-        <translation type="unfinished">그림에서 선택 각</translation>
+        <translation type="unfinished">도면에서 각도 선택</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_rel_angle_options_widget.ui" line="99"/>
@@ -17036,7 +17036,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="64"/>
         <source>Form a closed contour from lines drawn</source>
-        <translation type="unfinished">라인에서 닫힌 윤곽을 형성</translation>
+        <translation type="unfinished">그린 선으로 닫힌 윤곽 형성</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="64"/>
@@ -17046,7 +17046,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="65"/>
         <source>Creates polyline from line segments</source>
-        <translation type="unfinished">라인 세그먼트에서 polyline 생성</translation>
+        <translation type="unfinished">선 세그먼트로 폴리라인 생성</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="72"/>
@@ -17062,7 +17062,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="74"/>
         <source>Undo the last line drawing</source>
-        <translation type="unfinished">마지막 선 그림</translation>
+        <translation type="unfinished">마지막 선 그리기 실행 취소</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="74"/>
@@ -17072,7 +17072,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="74"/>
         <source>Redo the last line drawing</source>
-        <translation type="unfinished">Redo 마지막 선 그림</translation>
+        <translation type="unfinished">마지막 선 그리기 다시 실행</translation>
     </message>
 </context>
 <context>
@@ -17080,7 +17080,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="32"/>
         <source>Line Options</source>
-        <translation type="unfinished">라인 옵션</translation>
+        <translation type="unfinished">선 옵션</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="62"/>
@@ -17135,7 +17135,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="247"/>
         <source>Redo the last line drawing</source>
-        <translation type="unfinished">Redo 마지막 선 그림</translation>
+        <translation type="unfinished">마지막 선 그리기 다시 실행</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="250"/>
@@ -17145,7 +17145,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="257"/>
         <source>Undo the last line drawing</source>
-        <translation type="unfinished">마지막 선 그림</translation>
+        <translation type="unfinished">마지막 선 그리기 실행 취소</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="260"/>
@@ -17155,7 +17155,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="267"/>
         <source>Form a closed contour from lines drawn</source>
-        <translation type="unfinished">라인에서 닫힌 윤곽을 형성</translation>
+        <translation type="unfinished">그린 선으로 닫힌 윤곽 형성</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="270"/>
@@ -17176,7 +17176,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="321"/>
         <source>Creates polyline from line segments</source>
-        <translation type="unfinished">라인 세그먼트에서 polyline 생성</translation>
+        <translation type="unfinished">선 세그먼트로 폴리라인 생성</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="324"/>
@@ -17186,7 +17186,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="331"/>
         <source>Pick angle from drawing</source>
-        <translation type="unfinished">그림에서 선택 각</translation>
+        <translation type="unfinished">도면에서 각도 선택</translation>
     </message>
 </context>
 <context>
@@ -17242,7 +17242,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/text/lc_m_text_options_widget.ui" line="117"/>
         <source>Pick angle from drawing</source>
-        <translation type="unfinished">그림에서 선택 각</translation>
+        <translation type="unfinished">도면에서 각도 선택</translation>
     </message>
 </context>
 <context>
@@ -17348,7 +17348,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_arc.cpp" line="29"/>
         <source>Arc</source>
-        <translation type="unfinished">·</translation>
+        <translation type="unfinished">호</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_arc.cpp" line="34"/>
@@ -17378,7 +17378,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_arc.cpp" line="42"/>
         <source>Radius of arc</source>
-        <translation type="unfinished">아크의 반경</translation>
+        <translation type="unfinished">호의 반지름</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_arc.cpp" line="46"/>
@@ -17398,7 +17398,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_arc.cpp" line="50"/>
         <source>Diameter of arc</source>
-        <translation type="unfinished">아크의 직경</translation>
+        <translation type="unfinished">호의 지름</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_arc.cpp" line="54"/>
@@ -17499,7 +17499,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_arc.cpp" line="90"/>
         <source>End angle of arc</source>
-        <translation type="unfinished">아크의 끝 각</translation>
+        <translation type="unfinished">호의 끝 각도</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_arc.cpp" line="94"/>
@@ -17547,7 +17547,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_base.h" line="57"/>
         <source>Line Width</source>
-        <translation type="unfinished">선 폭</translation>
+        <translation type="unfinished">선가중치</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_base.h" line="57"/>
@@ -17567,7 +17567,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_base.h" line="69"/>
         <source>Line Type</source>
-        <translation type="unfinished">선 유형</translation>
+        <translation type="unfinished">선종류</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_base.h" line="69"/>
@@ -17620,7 +17620,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_circle.cpp" line="41"/>
         <source>Radius of circle</source>
-        <translation type="unfinished">원형의 반경</translation>
+        <translation type="unfinished">원의 반지름</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_circle.cpp" line="45"/>
@@ -17630,7 +17630,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_circle.cpp" line="45"/>
         <source>Diameter of circle</source>
-        <translation type="unfinished">원형의 직경</translation>
+        <translation type="unfinished">원의 지름</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_circle.cpp" line="49"/>
@@ -17868,7 +17868,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="211"/>
         <source>Mark</source>
-        <translation type="unfinished">팟캐스트</translation>
+        <translation type="unfinished">표식</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="212"/>
@@ -18164,22 +18164,22 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="366"/>
         <source>Above</source>
-        <translation type="unfinished">상세 정보</translation>
+        <translation type="unfinished">위</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="367"/>
         <source>Outside</source>
-        <translation type="unfinished">기타 제품</translation>
+        <translation type="unfinished">바깥쪽</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="368"/>
         <source>JIS</source>
-        <translation type="unfinished">사이트맵</translation>
+        <translation type="unfinished">JIS</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="369"/>
         <source>Below</source>
-        <translation type="unfinished">이름 *</translation>
+        <translation type="unfinished">아래</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="378"/>
@@ -18224,7 +18224,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="397"/>
         <source>Arc length symbol</source>
-        <translation type="unfinished">Arc 길이 기호</translation>
+        <translation type="unfinished">호 길이 기호</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="399"/>
@@ -18235,7 +18235,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="400"/>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="788"/>
         <source>None</source>
-        <translation type="unfinished">이름 *</translation>
+        <translation type="unfinished">없음</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="408"/>
@@ -18855,22 +18855,22 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="789"/>
         <source>Symmetrical</source>
-        <translation type="unfinished">관련 기사</translation>
+        <translation type="unfinished">대칭</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="790"/>
         <source>Deviation</source>
-        <translation type="unfinished">관련 기사</translation>
+        <translation type="unfinished">편차</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="791"/>
         <source>Limits</source>
-        <translation type="unfinished">지원하다</translation>
+        <translation type="unfinished">한계</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="792"/>
         <source>Basic</source>
-        <translation type="unfinished">기본 정보</translation>
+        <translation type="unfinished">기준</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="797"/>
@@ -18905,17 +18905,17 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="814"/>
         <source>Bottom</source>
-        <translation type="unfinished">제품정보</translation>
+        <translation type="unfinished">아래쪽</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="815"/>
         <source>Middle</source>
-        <translation type="unfinished">주요 특징</translation>
+        <translation type="unfinished">중간</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="816"/>
         <source>Top</source>
-        <translation type="unfinished">이름 *</translation>
+        <translation type="unfinished">위쪽</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="825"/>
@@ -19276,7 +19276,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimordinate.cpp" line="71"/>
         <source>Horizontal</source>
-        <translation type="unfinished">제품정보</translation>
+        <translation type="unfinished">수평</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimordinate.cpp" line="71"/>
@@ -19317,7 +19317,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_ellipse.cpp" line="29"/>
         <source>Ellipse</source>
-        <translation type="unfinished">엘립스</translation>
+        <translation type="unfinished">타원</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_ellipse.cpp" line="33"/>
@@ -19342,7 +19342,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_ellipse.cpp" line="41"/>
         <source>Major Radius</source>
-        <translation type="unfinished">주요 반경</translation>
+        <translation type="unfinished">장축 반지름</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_ellipse.cpp" line="41"/>
@@ -19352,7 +19352,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_ellipse.cpp" line="45"/>
         <source>Minor Radius</source>
-        <translation type="unfinished">Minor 반경</translation>
+        <translation type="unfinished">단축 반지름</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_ellipse.cpp" line="45"/>
@@ -19474,7 +19474,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_ellipse.cpp" line="93"/>
         <source>End angle of arc</source>
-        <translation type="unfinished">아크의 끝 각</translation>
+        <translation type="unfinished">호의 끝 각도</translation>
     </message>
 </context>
 <context>
@@ -19596,7 +19596,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_hyperbola.cpp" line="54"/>
         <source>Major Radius</source>
-        <translation type="unfinished">주요 반경</translation>
+        <translation type="unfinished">장축 반지름</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_hyperbola.cpp" line="54"/>
@@ -19606,7 +19606,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_hyperbola.cpp" line="58"/>
         <source>Minor Radius</source>
-        <translation type="unfinished">Minor 반경</translation>
+        <translation type="unfinished">단축 반지름</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_hyperbola.cpp" line="58"/>
@@ -19880,7 +19880,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_insert.cpp" line="66"/>
         <source>Scale X</source>
-        <translation type="unfinished">스케일 X</translation>
+        <translation type="unfinished">X 축척</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_insert.cpp" line="66"/>
@@ -20199,17 +20199,17 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_mtext.cpp" line="72"/>
         <source>Bottom</source>
-        <translation type="unfinished">제품정보</translation>
+        <translation type="unfinished">아래쪽</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_mtext.cpp" line="73"/>
         <source>Middle</source>
-        <translation type="unfinished">주요 특징</translation>
+        <translation type="unfinished">중간</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_mtext.cpp" line="74"/>
         <source>Top</source>
-        <translation type="unfinished">이름 *</translation>
+        <translation type="unfinished">위쪽</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_mtext.cpp" line="79"/>
@@ -20761,7 +20761,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_text.cpp" line="71"/>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_text.cpp" line="80"/>
         <source>Middle</source>
-        <translation type="unfinished">주요 특징</translation>
+        <translation type="unfinished">중간</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_text.cpp" line="72"/>
@@ -20786,12 +20786,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_text.cpp" line="79"/>
         <source>Bottom</source>
-        <translation type="unfinished">제품정보</translation>
+        <translation type="unfinished">아래쪽</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_text.cpp" line="81"/>
         <source>Top</source>
-        <translation type="unfinished">이름 *</translation>
+        <translation type="unfinished">위쪽</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_text.cpp" line="86"/>
@@ -20806,7 +20806,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_text.cpp" line="87"/>
         <source>None</source>
-        <translation type="unfinished">이름 *</translation>
+        <translation type="unfinished">없음</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_text.cpp" line="88"/>
@@ -20876,7 +20876,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="155"/>
         <source>Arc</source>
-        <translation type="unfinished">·</translation>
+        <translation type="unfinished">호</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="159"/>
@@ -20886,12 +20886,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="162"/>
         <source>Polyline/Spline</source>
-        <translation type="unfinished">Polyline/스플라인</translation>
+        <translation type="unfinished">폴리라인/스플라인</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="173"/>
         <source>Ellipse</source>
-        <translation type="unfinished">엘립스</translation>
+        <translation type="unfinished">타원</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="177"/>
@@ -21019,7 +21019,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="667"/>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="722"/>
         <source>Draw Circle</source>
-        <translation type="unfinished">Draw 원형</translation>
+        <translation type="unfinished">원 그리기</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="629"/>
@@ -21039,22 +21039,22 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="705"/>
         <source>Modify Arc</source>
-        <translation type="unfinished">Arc 수정</translation>
+        <translation type="unfinished">호 수정</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="763"/>
         <source>Modify Polyline</source>
-        <translation type="unfinished">Polyline 수정</translation>
+        <translation type="unfinished">폴리라인 수정</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="815"/>
         <source>Modify Spline</source>
-        <translation type="unfinished">Spline을 수정</translation>
+        <translation type="unfinished">스플라인 수정</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="831"/>
         <source>Modify Spline Points</source>
-        <translation type="unfinished">Spline 포인트 수정</translation>
+        <translation type="unfinished">스플라인 점 수정</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="854"/>
@@ -21167,7 +21167,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="212"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="246"/>
         <source>&amp;Line</source>
-        <translation type="unfinished">&amp;라인</translation>
+        <translation type="unfinished">선(&amp;L)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="178"/>
@@ -21181,14 +21181,14 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="214"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="248"/>
         <source>&amp;Circle</source>
-        <translation type="unfinished">&amp;Circle는</translation>
+        <translation type="unfinished">원(&amp;C)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="186"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="215"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="250"/>
         <source>&amp;Arc</source>
-        <translation type="unfinished">·</translation>
+        <translation type="unfinished">호(&amp;A)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="190"/>
@@ -21230,7 +21230,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="220"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="256"/>
         <source>&amp;Ellipse</source>
-        <translation type="unfinished">&amp;엘립스</translation>
+        <translation type="unfinished">타원(&amp;E)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="223"/>
@@ -21364,7 +21364,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="598"/>
         <source>&amp;Layout</source>
-        <translation type="unfinished">&amp;Layout 정보</translation>
+        <translation type="unfinished">레이아웃(&amp;L)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="602"/>
@@ -21535,7 +21535,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_options_widget.ui" line="150"/>
         <source>Defines the way of selected entities alignment.</source>
-        <translation>선택한 엔티티티 정렬의 방법을 결정합니다.</translation>
+        <translation>선택한 엔티티의 정렬 방법을 정의합니다.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_options_widget.ui" line="154"/>
@@ -21598,7 +21598,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="32"/>
         <source>If checked, mirror will be performed by selected line entity.</source>
-        <translation type="unfinished">체크된 경우, 미러가 선택한 라인 엔터티에 의해 수행됩니다.</translation>
+        <translation type="unfinished">선택하면 선택한 선 엔티티를 기준으로 대칭합니다.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="35"/>
@@ -21608,7 +21608,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="42"/>
         <source>If unchecked, original entities will be removed, otherwise they will survive.</source>
-        <translation type="unfinished">확인되지 않은 경우, 원래 엔티티티가 제거 될 것입니다, 그렇지 않으면 그들은 살아남을 것입니다.</translation>
+        <translation type="unfinished">선택하지 않으면 원래 엔티티를 제거하고, 선택하면 유지합니다.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="45"/>
@@ -21618,7 +21618,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="59"/>
         <source>If checked, current attributes will be used for mirrored entities, otherwise - original ones. </source>
-        <translation type="unfinished">체크된 경우, 현재 속성은 미러링 된 엔티티티를 위해 사용되며, 그렇지 않으면 - Original ones.</translation>
+        <translation type="unfinished">선택하면 대칭된 엔티티에 현재 속성을 사용하고, 그렇지 않으면 원래 속성을 사용합니다. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="62"/>
@@ -21628,7 +21628,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="82"/>
         <source>If checked, mirrored entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">체크하면 미러링된 엔티티가 현재 레이어에 배치되고, 그렇지 않으면 원래 레이어에 배치됩니다.</translation>
+        <translation type="unfinished">선택하면 대칭된 엔티티를 현재 레이어에 배치하고, 그렇지 않으면 원래 레이어에 배치합니다.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="85"/>
@@ -21714,7 +21714,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_widget.ui" line="68"/>
         <source>If checked, current attributes will be applied to created entities, owtherwise original ones will be used. </source>
-        <translation type="unfinished">체크된 경우, 현재 속성은 생성된 엔티티티에 적용되며, owtherwise Original ones가 사용됩니다.</translation>
+        <translation type="unfinished">선택하면 생성된 엔티티에 현재 속성을 적용하고, 그렇지 않으면 원래 속성을 사용합니다. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_widget.ui" line="71"/>
@@ -21724,7 +21724,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_widget.ui" line="78"/>
         <source>If checked, original entities will survive, otherwise they will be removed.</source>
-        <translation type="unfinished">확인된 경우, 원본 엔티티티는 살아남을 것입니다. 그렇지 않으면 제거됩니다.</translation>
+        <translation type="unfinished">선택하면 원래 엔티티를 유지하고, 그렇지 않으면 제거합니다.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_widget.ui" line="81"/>
@@ -21830,12 +21830,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="32"/>
         <source>Move Rotate Options</source>
-        <translation type="unfinished">Rotate 옵션 이동</translation>
+        <translation type="unfinished">이동 회전 옵션</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="50"/>
         <source>If checked, current attributes will be applied to created entities, otherwise original ones will be used. </source>
-        <translation type="unfinished">체크된 경우, 현재 속성은 생성 된 엔티티티에 적용됩니다. 그렇지 않으면 원래 것들이 사용됩니다.</translation>
+        <translation type="unfinished">선택하면 생성된 엔티티에 현재 속성을 적용하고, 그렇지 않으면 원래 속성을 사용합니다. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="53"/>
@@ -21850,7 +21850,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="80"/>
         <source>If checked, original entities will survive, otherwise they will be removed. </source>
-        <translation type="unfinished">확인된 경우, 원본 엔티티티는 살아남을 것입니다. 그렇지 않으면 제거됩니다.</translation>
+        <translation type="unfinished">선택하면 원래 엔티티를 유지하고, 그렇지 않으면 제거합니다. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="83"/>
@@ -21910,7 +21910,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="183"/>
         <source>Pick angle from drawing</source>
-        <translation type="unfinished">그림에서 선택 각</translation>
+        <translation type="unfinished">도면에서 각도 선택</translation>
     </message>
 </context>
 <context>
@@ -22115,7 +22115,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="311"/>
         <source>Top</source>
-        <translation>이름 *</translation>
+        <translation>위쪽</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="370"/>
@@ -22136,7 +22136,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="384"/>
         <source>Center Y: </source>
-        <translation>센터 Y:</translation>
+        <translation>중심 Y: </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="385"/>
@@ -22162,7 +22162,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="399"/>
         <source>Grid View: </source>
-        <translation>격자 전망:</translation>
+        <translation>그리드 보기: </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="400"/>
@@ -22215,7 +22215,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_filler.cpp" line="41"/>
         <source>Distance for offset from original entity</source>
-        <translation type="unfinished">Original entity에서 오프셋을 위한 거리</translation>
+        <translation type="unfinished">원래 엔티티로부터의 오프셋 거리</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_filler.cpp" line="49"/>
@@ -22313,7 +22313,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="119"/>
         <source>If checked, current attributes will be applied to created entities, otherwise original ones will be used. </source>
-        <translation type="unfinished">체크된 경우, 현재 속성은 생성 된 엔티티티에 적용됩니다. 그렇지 않으면 원래 것들이 사용됩니다.</translation>
+        <translation type="unfinished">선택하면 생성된 엔티티에 현재 속성을 적용하고, 그렇지 않으면 원래 속성을 사용합니다. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="122"/>
@@ -22323,7 +22323,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="136"/>
         <source>If checked, original entities will survive, otherwise they will be removed. </source>
-        <translation type="unfinished">확인된 경우, 원본 엔티티티는 살아남을 것입니다. 그렇지 않으면 제거됩니다.</translation>
+        <translation type="unfinished">선택하면 원래 엔티티를 유지하고, 그렇지 않으면 제거합니다. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="139"/>
@@ -22333,12 +22333,12 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="158"/>
         <source>Distance for offset from original entity</source>
-        <translation type="unfinished">Original entity에서 오프셋을 위한 거리</translation>
+        <translation type="unfinished">원래 엔티티로부터의 오프셋 거리</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="172"/>
         <source>Pick distance from the drawing</source>
-        <translation type="unfinished">그림에서 거리</translation>
+        <translation type="unfinished">도면에서 거리 선택</translation>
     </message>
 </context>
 <context>
@@ -22377,12 +22377,12 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_parabola.ui" line="56"/>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_parabola.ui" line="59"/>
         <source>Points on Spline</source>
-        <translation>Spline의 포인트</translation>
+        <translation>스플라인 위의 점</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_parabola.ui" line="88"/>
         <source>Control Points</source>
-        <translation>제어 포인트</translation>
+        <translation>제어점</translation>
     </message>
 </context>
 <context>
@@ -22458,7 +22458,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_to_points_options_widget.ui" line="143"/>
         <source>Pick angle from drawing</source>
-        <translation type="unfinished">그림에서 선택 각</translation>
+        <translation type="unfinished">도면에서 각도 선택</translation>
     </message>
 </context>
 <context>
@@ -22599,7 +22599,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_widget.ui" line="131"/>
         <source>Pick array spacing by X from drawing</source>
-        <translation type="unfinished">그림에서 X에 의해 배열 간격을 두기</translation>
+        <translation type="unfinished">도면에서 X 방향 배열 간격 선택</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_widget.ui" line="158"/>
@@ -22619,12 +22619,12 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_widget.ui" line="207"/>
         <source>Pick array spacing by Y from drawing</source>
-        <translation type="unfinished">그림에서 Y에 의해 배열 간격을 두기</translation>
+        <translation type="unfinished">도면에서 Y 방향 배열 간격 선택</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_widget.ui" line="221"/>
         <source>Pick angle from drawing</source>
-        <translation type="unfinished">그림에서 선택 각</translation>
+        <translation type="unfinished">도면에서 각도 선택</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_widget.ui" line="235"/>
@@ -22634,7 +22634,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_widget.ui" line="260"/>
         <source>Spacing between insertion points of entities in columns.</source>
-        <translation type="unfinished">열에 있는 entities의 삽입 점 사이 간격.</translation>
+        <translation type="unfinished">열에 있는 엔티티의 삽입점 사이 간격.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_widget.ui" line="267"/>
@@ -22654,7 +22654,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_widget.ui" line="294"/>
         <source>Pick array angle from drawing</source>
-        <translation type="unfinished">그림에서 배열 각을 비추십시오</translation>
+        <translation type="unfinished">도면에서 배열 각도 선택</translation>
     </message>
 </context>
 <context>
@@ -22920,17 +22920,17 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="319"/>
         <source>Center (tiny)</source>
-        <translation>센터 (tiny)</translation>
+        <translation>중심 (극소)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="320"/>
         <source>Center (small)</source>
-        <translation>센터 (small)</translation>
+        <translation>중심 (소)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="321"/>
         <source>Center (large)</source>
-        <translation>센터 (대)</translation>
+        <translation>중심 (대)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="326"/>
@@ -23063,18 +23063,18 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettemodel.cpp" line="229"/>
         <source>Line Type:</source>
-        <translation>선 유형:</translation>
+        <translation>선종류:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettemodel.cpp" line="230"/>
         <source>Line Width:</source>
-        <translation>선 폭:</translation>
+        <translation>선가중치:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettemodel.cpp" line="233"/>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettemodel.cpp" line="235"/>
         <source>Color:</source>
-        <translation>색깔:</translation>
+        <translation>색상:</translation>
     </message>
 </context>
 <context>
@@ -23092,7 +23092,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="193"/>
         <source>Line Type Name</source>
-        <translation>선 유형 이름</translation>
+        <translation>선종류 이름</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="200"/>
@@ -23102,7 +23102,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="207"/>
         <source>Line Type Icon</source>
-        <translation>라인 타입 Icon</translation>
+        <translation>선종류 아이콘</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="214"/>
@@ -23112,12 +23112,12 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="221"/>
         <source>Line Width Icon</source>
-        <translation>선 폭 아이콘</translation>
+        <translation>선가중치 아이콘</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="228"/>
         <source>Line Width Name</source>
-        <translation>선 폭 이름</translation>
+        <translation>선가중치 이름</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="66"/>
@@ -23258,7 +23258,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.cpp" line="54"/>
         <source>Select entities by drawing pen</source>
-        <translation>드로잉 펜으로 엔티티티를 선택</translation>
+        <translation>도면 펜으로 엔티티 선택</translation>
     </message>
 </context>
 <context>
@@ -23276,7 +23276,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="66"/>
         <source>Fill Pen Editor by Entity Attributes</source>
-        <translation>Entity Attributes의 필 펜 편집기</translation>
+        <translation>엔티티 속성으로 펜 편집기 채우기</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="83"/>
@@ -23286,7 +23286,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="100"/>
         <source>Select Entities By Pen Attributes</source>
-        <translation>Pen Attributes의 항목 선택</translation>
+        <translation>펜 속성으로 엔티티 선택</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="120"/>
@@ -23357,7 +23357,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="346"/>
         <source>Line type</source>
-        <translation>라인 타입</translation>
+        <translation>선종류</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="365"/>
@@ -23382,7 +23382,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="455"/>
         <source>Color:</source>
-        <translation>색깔:</translation>
+        <translation>색상:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="487"/>
@@ -23427,7 +23427,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="306"/>
         <source>&amp;Select Entities With Attributes Pen</source>
-        <translation>&amp;Attributes 펜을 선택</translation>
+        <translation>속성 펜으로 엔티티 선택(&amp;S)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="308"/>
@@ -23495,7 +23495,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_point.ui" line="63"/>
         <source>Position of point by Y coordinate</source>
-        <translation>Y 좌표로 포인트의 위치</translation>
+        <translation>점의 Y 좌표 위치</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_point.ui" line="70"/>
@@ -23510,12 +23510,12 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_point.ui" line="96"/>
         <source>Position of point by X coordinate</source>
-        <translation>X 좌표로 포인트의 위치</translation>
+        <translation>점의 X 좌표 위치</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_point.ui" line="103"/>
         <source>Pick position from the drawing</source>
-        <translation>그림에서 위치</translation>
+        <translation>도면에서 위치 선택</translation>
     </message>
 </context>
 <context>
@@ -23528,7 +23528,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/point/lc_points_lattice_options_filler.cpp" line="31"/>
         <source>Number of points by X lattice direction (count of lattice columns)</source>
-        <translation type="unfinished">X 격자 방향의 포인트 수 ( 격자 기둥의 카운트)</translation>
+        <translation type="unfinished">X 격자 방향의 점 개수 (격자 열 수)</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/point/lc_points_lattice_options_filler.cpp" line="38"/>
@@ -23538,7 +23538,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/point/lc_points_lattice_options_filler.cpp" line="38"/>
         <source>Number of points by lattice Y direction (count of lattice rows)</source>
-        <translation type="unfinished">Lattice Y 방향의 포인트 수 ( 격자 줄의 카운트)</translation>
+        <translation type="unfinished">Y 격자 방향의 점 개수 (격자 행 수)</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/point/lc_points_lattice_options_filler.cpp" line="47"/>
@@ -23561,7 +23561,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/point/lc_points_lattice_options_widget.ui" line="32"/>
         <source>Number of points by lattice Y direction (count of lattice rows)</source>
-        <translation type="unfinished">Lattice Y 방향의 포인트 수 ( 격자 줄의 카운트)</translation>
+        <translation type="unfinished">Y 격자 방향의 점 개수 (격자 행 수)</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/point/lc_points_lattice_options_widget.ui" line="42"/>
@@ -23576,7 +23576,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/point/lc_points_lattice_options_widget.ui" line="56"/>
         <source>Number of points by X lattice direction (count of lattice columns)</source>
-        <translation type="unfinished">X 격자 방향의 포인트 수 ( 격자 기둥의 카운트)</translation>
+        <translation type="unfinished">X 격자 방향의 점 개수 (격자 열 수)</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/point/lc_points_lattice_options_widget.ui" line="66"/>
@@ -23599,7 +23599,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="35"/>
         <source>If checked, line of points will be drawn with specified angle</source>
-        <translation type="unfinished">확인된 경우, 포인트의 선은 지정된 각도로 그려집니다</translation>
+        <translation type="unfinished">선택하면 점 선을 지정한 각도로 그립니다</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="50"/>
@@ -23631,7 +23631,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="62"/>
         <source>If checked, fixed specified distance between points will be used. Otherwise, distance will be calculated.</source>
-        <translation type="unfinished">체크하면 포인트 사이의 고정 지정된 거리가 사용됩니다. 그렇지 않으면 거리가 계산됩니다.</translation>
+        <translation type="unfinished">선택하면 점 사이의 지정된 고정 거리를 사용합니다. 그렇지 않으면 거리를 계산합니다.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="70"/>
@@ -23656,7 +23656,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="84"/>
         <source>None</source>
-        <translation type="unfinished">이름 *</translation>
+        <translation type="unfinished">없음</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="85"/>
@@ -23732,12 +23732,12 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_options_widget.ui" line="32"/>
         <source>Polygon Options</source>
-        <translation type="unfinished">Polygon 옵션</translation>
+        <translation type="unfinished">다각형 옵션</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_options_widget.ui" line="70"/>
         <source>If selected, reference points are for vertexes of polygon. Otherwise, they are for middle point of edges. </source>
-        <translation type="unfinished">선택된 경우, 참고 포인트는 다각형의 vertexes입니다. 그렇지 않으면, 그들은 가장자리의 중간 지점입니다.</translation>
+        <translation type="unfinished">선택하면 기준점이 다각형의 정점입니다. 그렇지 않으면 변의 중간점입니다. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_options_widget.ui" line="73"/>
@@ -23747,7 +23747,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_options_widget.ui" line="80"/>
         <source>If checked, vertexes of polygon will be rounded. </source>
-        <translation type="unfinished">체크된 경우, 다각형의 꼭짓점이 둥글게 처리됩니다. </translation>
+        <translation type="unfinished">선택하면 다각형의 정점을 둥글게 처리합니다. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_options_widget.ui" line="83"/>
@@ -23767,7 +23767,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_options_widget.ui" line="119"/>
         <source>Rounding radius for vertex bevel.</source>
-        <translation type="unfinished">Vertex 베벨의 원형 반경.</translation>
+        <translation type="unfinished">정점 모서리의 모깎기 반지름.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_options_widget.ui" line="126"/>
@@ -23795,7 +23795,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_side_side_options_filler.cpp" line="35"/>
         <source>If selected, reference points are for vertexes of polygon. Otherwise, they are for middle point of edges. </source>
-        <translation type="unfinished">선택된 경우, 참고 포인트는 다각형의 vertexes입니다. 그렇지 않으면, 그들은 가장자리의 중간 지점입니다.</translation>
+        <translation type="unfinished">선택하면 기준점이 다각형의 정점입니다. 그렇지 않으면 변의 중간점입니다. </translation>
     </message>
 </context>
 <context>
@@ -23808,7 +23808,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_equidistant_options_filler.cpp" line="31"/>
         <source>Distance from original polyline</source>
-        <translation type="unfinished">본래 polyline에서 거리</translation>
+        <translation type="unfinished">원래 폴리라인으로부터의 거리</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_equidistant_options_filler.cpp" line="37"/>
@@ -23836,7 +23836,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_equidistant_options_widget.ui" line="81"/>
         <source>Distance from original polyline</source>
-        <translation type="unfinished">본래 polyline에서 거리</translation>
+        <translation type="unfinished">원래 폴리라인으로부터의 거리</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_equidistant_options_widget.ui" line="94"/>
@@ -23851,7 +23851,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_equidistant_options_widget.ui" line="127"/>
         <source>Pick spacing from drawing</source>
-        <translation type="unfinished">그림에서 간격을 두기</translation>
+        <translation type="unfinished">도면에서 간격 선택</translation>
     </message>
 </context>
 <context>
@@ -23879,7 +23879,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_filler.cpp" line="39"/>
         <source>Arc</source>
-        <translation type="unfinished">·</translation>
+        <translation type="unfinished">호</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_filler.cpp" line="43"/>
@@ -23899,7 +23899,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_filler.cpp" line="51"/>
         <source>Radius of arc</source>
-        <translation type="unfinished">아크의 반경</translation>
+        <translation type="unfinished">호의 반지름</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_filler.cpp" line="59"/>
@@ -23909,7 +23909,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_filler.cpp" line="59"/>
         <source>Angle of arc</source>
-        <translation type="unfinished">아크의 각</translation>
+        <translation type="unfinished">호의 각도</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_filler.cpp" line="69"/>
@@ -23952,7 +23952,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_widget.ui" line="32"/>
         <source>Polyline Options</source>
-        <translation type="unfinished">Polyline 옵션</translation>
+        <translation type="unfinished">폴리라인 옵션</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_widget.ui" line="53"/>
@@ -23987,32 +23987,32 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_widget.ui" line="100"/>
         <source>Tangential arc</source>
-        <translation type="unfinished">Tangential 아크</translation>
+        <translation type="unfinished">접선 호</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_widget.ui" line="120"/>
         <source>Tangental arc with fixed radius</source>
-        <translation type="unfinished">고정 반경을 가진 Tangental 아크</translation>
+        <translation type="unfinished">고정 반지름의 접선 호</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_widget.ui" line="140"/>
         <source>Tangental arc with fixed angle</source>
-        <translation type="unfinished">조정 각을 가진 Tangental 아크</translation>
+        <translation type="unfinished">고정 각도의 접선 호</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_widget.ui" line="160"/>
         <source>Arc with angle</source>
-        <translation type="unfinished">각을 가진 아크</translation>
+        <translation type="unfinished">각도 지정 호</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_widget.ui" line="180"/>
         <source>Radius:</source>
-        <translation type="unfinished">반경:</translation>
+        <translation type="unfinished">반지름:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_widget.ui" line="205"/>
         <source>Radius of arc</source>
-        <translation type="unfinished">아크의 반경</translation>
+        <translation type="unfinished">호의 반지름</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_widget.ui" line="212"/>
@@ -24027,12 +24027,12 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_widget.ui" line="251"/>
         <source>Angle of arc</source>
-        <translation type="unfinished">아크의 각</translation>
+        <translation type="unfinished">호의 각도</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_widget.ui" line="258"/>
         <source>Pick angle from drawing</source>
-        <translation type="unfinished">그림에서 선택 각</translation>
+        <translation type="unfinished">도면에서 각도 선택</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_widget.ui" line="293"/>
@@ -24060,7 +24060,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_polyline.ui" line="69"/>
         <source>Defines whether polyline is closed contour</source>
-        <translation>Polyline이 오염되는지 여부를 결정합니다</translation>
+        <translation>폴리라인이 닫힌 윤곽인지 여부를 정의합니다</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_polyline.ui" line="72"/>
@@ -24098,7 +24098,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="50"/>
         <source>Page in center of drawing</source>
-        <translation type="unfinished">그림의 중심의 페이지</translation>
+        <translation type="unfinished">도면 중앙에 페이지 배치</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="50"/>
@@ -24108,7 +24108,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="51"/>
         <source>Zoom to Print Area</source>
-        <translation type="unfinished">인쇄 영역에 Zoom</translation>
+        <translation type="unfinished">인쇄 영역으로 줌</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="60"/>
@@ -24148,7 +24148,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="72"/>
         <source>Apply Print Scale to line width</source>
-        <translation type="unfinished">선 폭에 인쇄 축척 적용</translation>
+        <translation type="unfinished">선가중치에 인쇄 축척 적용</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="78"/>
@@ -24286,12 +24286,12 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_widget.ui" line="78"/>
         <source>Drawing Settings</source>
-        <translation type="unfinished">그림 설정</translation>
+        <translation type="unfinished">도면 설정</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_widget.ui" line="105"/>
         <source>Apply Print Scale to line width</source>
-        <translation type="unfinished">선 폭에 인쇄 축척 적용</translation>
+        <translation type="unfinished">선가중치에 인쇄 축척 적용</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_widget.ui" line="134"/>
@@ -24321,7 +24321,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_widget.ui" line="243"/>
         <source>Drawing units</source>
-        <translation type="unfinished">그림 단위</translation>
+        <translation type="unfinished">도면 단위</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_widget.ui" line="250"/>
@@ -24341,12 +24341,12 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_widget.ui" line="296"/>
         <source>Page in center of drawing</source>
-        <translation type="unfinished">그림의 중심의 페이지</translation>
+        <translation type="unfinished">도면 중앙에 페이지 배치</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_widget.ui" line="322"/>
         <source>Zoom to Print Area</source>
-        <translation type="unfinished">인쇄 영역에 Zoom</translation>
+        <translation type="unfinished">인쇄 영역으로 줌</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_widget.ui" line="349"/>
@@ -24396,7 +24396,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_widget.cpp" line="370"/>
         <source>Invalid scale provided</source>
-        <translation type="unfinished">잘못된 스케일 제공</translation>
+        <translation type="unfinished">잘못된 축척입니다</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_widget.cpp" line="428"/>
@@ -24429,7 +24429,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_hyperbola.cpp" line="128"/>
         <source>Major radius must be positive</source>
-        <translation type="unfinished">주요 반경은 긍정적이어야 합니다</translation>
+        <translation type="unfinished">장축 반지름은 양수여야 합니다</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_hyperbola.cpp" line="132"/>
@@ -24475,7 +24475,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_active_pen.cpp" line="80"/>
         <source>Line Width</source>
-        <translation type="unfinished">선 폭</translation>
+        <translation type="unfinished">선가중치</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_active_pen.cpp" line="80"/>
@@ -24485,7 +24485,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_active_pen.cpp" line="101"/>
         <source>Line Type</source>
-        <translation type="unfinished">선 유형</translation>
+        <translation type="unfinished">선종류</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_active_pen.cpp" line="101"/>
@@ -24563,7 +24563,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="40"/>
         <source>Radius of arc</source>
-        <translation type="unfinished">아크의 반경</translation>
+        <translation type="unfinished">호의 반지름</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="46"/>
@@ -24573,7 +24573,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="46"/>
         <source>Diameter of arc</source>
-        <translation type="unfinished">아크의 직경</translation>
+        <translation type="unfinished">호의 지름</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="52"/>
@@ -24603,7 +24603,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="65"/>
         <source>End angle of arc</source>
-        <translation type="unfinished">아크의 끝 각</translation>
+        <translation type="unfinished">호의 끝 각도</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="73"/>
@@ -24633,7 +24633,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="81"/>
         <source>Arc Length</source>
-        <translation type="unfinished">아크 길이</translation>
+        <translation type="unfinished">호 길이</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="81"/>
@@ -24855,7 +24855,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="159"/>
         <source>Tangent (C,C)</source>
-        <translation type="unfinished">Tangent (C의 C)</translation>
+        <translation type="unfinished">접선 (C,C)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="159"/>
@@ -25071,7 +25071,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="37"/>
         <source>Radius of circle</source>
-        <translation type="unfinished">원형의 반경</translation>
+        <translation type="unfinished">원의 반지름</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="43"/>
@@ -25081,7 +25081,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="43"/>
         <source>Diameter of circle</source>
-        <translation type="unfinished">원형의 직경</translation>
+        <translation type="unfinished">원의 지름</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="49"/>
@@ -25244,7 +25244,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="94"/>
         <source>Tangent (C,C)</source>
-        <translation type="unfinished">Tangent (C의 C)</translation>
+        <translation type="unfinished">접선 (C,C)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="94"/>
@@ -25631,7 +25631,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="221"/>
         <source>User Block...</source>
-        <translation type="unfinished">사용자 블록 ...</translation>
+        <translation type="unfinished">사용자 블록...</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="235"/>
@@ -25671,7 +25671,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="329"/>
         <source>Mark</source>
-        <translation type="unfinished">팟캐스트</translation>
+        <translation type="unfinished">표식</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="330"/>
@@ -25683,7 +25683,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="701"/>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1369"/>
         <source>None</source>
-        <translation type="unfinished">이름 *</translation>
+        <translation type="unfinished">없음</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="334"/>
@@ -25980,22 +25980,22 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="652"/>
         <source>Above</source>
-        <translation type="unfinished">상세 정보</translation>
+        <translation type="unfinished">위</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="653"/>
         <source>Outside</source>
-        <translation type="unfinished">기타 제품</translation>
+        <translation type="unfinished">바깥쪽</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="654"/>
         <source>JIS</source>
-        <translation type="unfinished">사이트맵</translation>
+        <translation type="unfinished">JIS</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="655"/>
         <source>Below</source>
-        <translation type="unfinished">이름 *</translation>
+        <translation type="unfinished">아래</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="659"/>
@@ -26040,7 +26040,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="707"/>
         <source>Arc length symbol</source>
-        <translation type="unfinished">Arc 길이 기호</translation>
+        <translation type="unfinished">호 길이 기호</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="719"/>
@@ -26246,7 +26246,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="968"/>
         <source>Primary Units</source>
-        <translation type="unfinished">1 차 단위</translation>
+        <translation type="unfinished">1차 단위</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="968"/>
@@ -26556,22 +26556,22 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1369"/>
         <source>Symmetrical</source>
-        <translation type="unfinished">관련 기사</translation>
+        <translation type="unfinished">대칭</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1369"/>
         <source>Deviation</source>
-        <translation type="unfinished">관련 기사</translation>
+        <translation type="unfinished">편차</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1369"/>
         <source>Limits</source>
-        <translation type="unfinished">지원하다</translation>
+        <translation type="unfinished">한계</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1369"/>
         <source>Basic</source>
-        <translation type="unfinished">기본 정보</translation>
+        <translation type="unfinished">기준</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1374"/>
@@ -26606,17 +26606,17 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1435"/>
         <source>Bottom</source>
-        <translation type="unfinished">제품정보</translation>
+        <translation type="unfinished">아래쪽</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1436"/>
         <source>Middle</source>
-        <translation type="unfinished">주요 특징</translation>
+        <translation type="unfinished">중간</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1437"/>
         <source>Top</source>
-        <translation type="unfinished">이름 *</translation>
+        <translation type="unfinished">위쪽</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1443"/>
@@ -27265,7 +27265,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_ellipse.cpp" line="127"/>
         <source>Tangent (C,C)</source>
-        <translation type="unfinished">Tangent (C의 C)</translation>
+        <translation type="unfinished">접선 (C,C)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_ellipse.cpp" line="131"/>
@@ -27462,7 +27462,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="122"/>
         <source>Line Width</source>
-        <translation type="unfinished">선 폭</translation>
+        <translation type="unfinished">선가중치</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="122"/>
@@ -27472,7 +27472,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="144"/>
         <source>Line Type</source>
-        <translation type="unfinished">선 유형</translation>
+        <translation type="unfinished">선종류</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="144"/>
@@ -27933,7 +27933,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_units.cpp" line="130"/>
         <source>Primary Units</source>
-        <translation type="unfinished">1 차 단위</translation>
+        <translation type="unfinished">1차 단위</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_units.cpp" line="130"/>
@@ -28408,7 +28408,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_image.cpp" line="141"/>
         <source>Size in drawing units</source>
-        <translation type="unfinished">그림 단위에 있는 크기</translation>
+        <translation type="unfinished">도면 단위 크기</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_image.cpp" line="149"/>
@@ -28486,7 +28486,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_insert.cpp" line="60"/>
         <source>Scale X</source>
-        <translation type="unfinished">스케일 X</translation>
+        <translation type="unfinished">X 축척</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_insert.cpp" line="60"/>
@@ -28614,7 +28614,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_leader.cpp" line="64"/>
         <source>Vertex</source>
-        <translation type="unfinished">버텍스</translation>
+        <translation type="unfinished">정점</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_leader.cpp" line="64"/>
@@ -28768,7 +28768,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="110"/>
         <source>Line Gap</source>
-        <translation type="unfinished">라인 갭</translation>
+        <translation type="unfinished">선 간격</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="110"/>
@@ -28954,7 +28954,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="170"/>
         <source>Bevel</source>
-        <translation type="unfinished">베벨</translation>
+        <translation type="unfinished">모따기</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="170"/>
@@ -29172,17 +29172,17 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_mtext.cpp" line="90"/>
         <source>Bottom</source>
-        <translation type="unfinished">제품정보</translation>
+        <translation type="unfinished">아래쪽</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_mtext.cpp" line="91"/>
         <source>Middle</source>
-        <translation type="unfinished">주요 특징</translation>
+        <translation type="unfinished">중간</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_mtext.cpp" line="92"/>
         <source>Top</source>
-        <translation type="unfinished">이름 *</translation>
+        <translation type="unfinished">위쪽</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_mtext.cpp" line="96"/>
@@ -29310,7 +29310,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_parabola.cpp" line="39"/>
         <source>Vertex</source>
-        <translation type="unfinished">버텍스</translation>
+        <translation type="unfinished">정점</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_parabola.cpp" line="39"/>
@@ -29477,7 +29477,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_polyline.cpp" line="60"/>
         <source>Vertex</source>
-        <translation type="unfinished">버텍스</translation>
+        <translation type="unfinished">정점</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_polyline.cpp" line="60"/>
@@ -30115,7 +30115,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_text.cpp" line="38"/>
         <source>Second Point</source>
-        <translation type="unfinished">두 번째 포인트</translation>
+        <translation type="unfinished">두 번째 점</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_text.cpp" line="38"/>
@@ -30156,7 +30156,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_text.cpp" line="57"/>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_text.cpp" line="67"/>
         <source>Middle</source>
-        <translation type="unfinished">주요 특징</translation>
+        <translation type="unfinished">중간</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_text.cpp" line="58"/>
@@ -30171,17 +30171,17 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_text.cpp" line="66"/>
         <source>Bottom</source>
-        <translation type="unfinished">제품정보</translation>
+        <translation type="unfinished">아래쪽</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_text.cpp" line="68"/>
         <source>Top</source>
-        <translation type="unfinished">이름 *</translation>
+        <translation type="unfinished">위쪽</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_text.cpp" line="75"/>
         <source>None</source>
-        <translation type="unfinished">이름 *</translation>
+        <translation type="unfinished">없음</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_text.cpp" line="76"/>
@@ -30464,12 +30464,12 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/properties/rect/lc_property_rect.cpp" line="64"/>
         <source>Top</source>
-        <translation type="unfinished">이름 *</translation>
+        <translation type="unfinished">위쪽</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/properties/rect/lc_property_rect.cpp" line="68"/>
         <source>Bottom</source>
-        <translation type="unfinished">제품정보</translation>
+        <translation type="unfinished">아래쪽</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/properties/rect/lc_property_rect.cpp" line="88"/>
@@ -30693,12 +30693,12 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1075"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1093"/>
         <source>Middle</source>
-        <translation>주요 특징</translation>
+        <translation>중간</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="440"/>
         <source>Set Relative Zero</source>
-        <translation>상대 0</translation>
+        <translation>상대 원점 설정</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="450"/>
@@ -30725,12 +30725,12 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="543"/>
         <source>Line Type</source>
-        <translation>선 유형</translation>
+        <translation>선종류</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="548"/>
         <source>Line Width</source>
-        <translation>선 폭</translation>
+        <translation>선가중치</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="550"/>
@@ -30916,7 +30916,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="807"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="827"/>
         <source>Minor Radius</source>
-        <translation>Minor 반경</translation>
+        <translation>단축 반지름</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="718"/>
@@ -30924,7 +30924,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="806"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="826"/>
         <source>Major Radius</source>
-        <translation>주요 반경</translation>
+        <translation>장축 반지름</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="719"/>
@@ -30959,13 +30959,13 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="885"/>
         <source>Vertex - 0:</source>
-        <translation>버텍스 - 0:</translation>
+        <translation>정점 - 0:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="910"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="924"/>
         <source>Vertex - </source>
-        <translation>버텍스 -</translation>
+        <translation>정점 - </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="931"/>
@@ -30994,7 +30994,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="941"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="962"/>
         <source>Scale X</source>
-        <translation>스케일 X</translation>
+        <translation>X 축척</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="942"/>
@@ -31030,7 +31030,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="974"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1003"/>
         <source>Second Point</source>
-        <translation>두 번째 포인트</translation>
+        <translation>두 번째 점</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="978"/>
@@ -31208,13 +31208,13 @@ Layer: </source>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1073"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1091"/>
         <source>Bottom</source>
-        <translation>제품정보</translation>
+        <translation>아래쪽</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1077"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1095"/>
         <source>Top</source>
-        <translation>이름 *</translation>
+        <translation>위쪽</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1109"/>
@@ -31224,12 +31224,12 @@ Layer: </source>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1111"/>
         <source>Mirrored in X</source>
-        <translation>X에 미러링</translation>
+        <translation>X 방향 대칭</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1113"/>
         <source>Mirrored in Y</source>
-        <translation>Y에 미러링</translation>
+        <translation>Y 방향 대칭</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1120"/>
@@ -31267,7 +31267,7 @@ Layer: </source>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1144"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1177"/>
         <source>Line Spacing</source>
-        <translation>라인 간격</translation>
+        <translation>선 간격</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1188"/>
@@ -31345,7 +31345,7 @@ Layer: </source>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1259"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1291"/>
         <source>Control Points</source>
-        <translation>제어 포인트</translation>
+        <translation>제어점</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1287"/>
@@ -31357,7 +31357,7 @@ Layer: </source>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1289"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1312"/>
         <source>Use Control Points</source>
-        <translation>제어 포인트</translation>
+        <translation>제어점 사용</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1396"/>
@@ -31390,7 +31390,7 @@ Layer: </source>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1321"/>
         <source>Spline Point </source>
-        <translation>스플라인 포인트</translation>
+        <translation>스플라인 점 </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1328"/>
@@ -31408,7 +31408,7 @@ Layer: </source>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1331"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1347"/>
         <source>Vertex</source>
-        <translation>버텍스</translation>
+        <translation>정점</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1332"/>
@@ -31450,7 +31450,7 @@ Layer: </source>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1294"/>
         <source>Spline Points</source>
-        <translation>스플라인 포인트</translation>
+        <translation>스플라인 점</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="817"/>
@@ -31480,7 +31480,7 @@ Layer: </source>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1415"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1434"/>
         <source>Arc Length</source>
-        <translation>아크 길이</translation>
+        <translation>호 길이</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1446"/>
@@ -31537,7 +31537,7 @@ Layer: </source>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1557"/>
         <source>Text Middle Point </source>
-        <translation>텍스트 중간 지점</translation>
+        <translation>문자 중간점 </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1528"/>
@@ -31582,7 +31582,7 @@ Layer: </source>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1580"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1596"/>
         <source>Text Middle Point</source>
-        <translation>텍스트 중간 지점</translation>
+        <translation>문자 중간점</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1574"/>
@@ -31612,7 +31612,7 @@ Layer: </source>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfopointsdata.cpp" line="233"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfopointsdata.cpp" line="250"/>
         <source>Set Relative Zero</source>
-        <translation>상대 0</translation>
+        <translation>상대 원점 설정</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfopointsdata.cpp" line="235"/>
@@ -31748,12 +31748,12 @@ p, li { 흰색 공간 : 사전 랩; }
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="369"/>
         <source>&amp;Remove Coordinate</source>
-        <translation>&amp;Remove 좌표</translation>
+        <translation>좌표 제거(&amp;R)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="372"/>
         <source>&amp;Insert Coordinates</source>
-        <translation>&amp;Insert 좌표</translation>
+        <translation>좌표 삽입(&amp;I)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="392"/>
@@ -31768,7 +31768,7 @@ p, li { 흰색 공간 : 사전 랩; }
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="396"/>
         <source>&amp;Select in Drawing</source>
-        <translation>&amp;그림 선택</translation>
+        <translation>도면에서 선택(&amp;S)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="397"/>
@@ -31778,7 +31778,7 @@ p, li { 흰색 공간 : 사전 랩; }
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="399"/>
         <source>&amp;Collect Coordinates</source>
-        <translation>&amp;Collect 좌표</translation>
+        <translation>좌표 수집(&amp;C)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="701"/>
@@ -31796,7 +31796,7 @@ p, li { 흰색 공간 : 사전 랩; }
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="14"/>
         <source>Dialog</source>
-        <translation>채용공고</translation>
+        <translation>대화상자</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="30"/>
@@ -31816,12 +31816,12 @@ p, li { 흰색 공간 : 사전 랩; }
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="46"/>
         <source>If selected, all points collected will be connected by path that shows how they will be selected during point preview</source>
-        <translation>선택한 경우, 수집된 모든 포인트는 포인트 미리보기 중에 선택된 방법을 보여주는 경로에 의해 연결됩니다</translation>
+        <translation>선택하면 수집된 모든 점을 점 미리보기 중 선택 순서를 보여주는 경로로 연결합니다</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="49"/>
         <source>Draw points path on preview</source>
-        <translation>미리보기의 포인트 경로</translation>
+        <translation>미리보기에 점 경로 그리기</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="75"/>
@@ -31831,22 +31831,22 @@ p, li { 흰색 공간 : 사전 랩; }
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="81"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If selected, more detailed information about lines and arcs that are part of polyline will be shown in Entity Info widget.&lt;br/&gt;Otherwise, only information about vertexes/bulges will be displayed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;선택하면 폴리선을 구성하는 선과 호에 대한 더 자세한 정보가 개체 정보 위젯에 표시됩니다.&lt;br/&gt;그렇지 않으면 꼭짓점/돌출부 정보만 표시됩니다.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;선택하면 폴리라인을 구성하는 선과 호에 대한 더 자세한 정보가 엔티티 정보 위젯에 표시됩니다.&lt;br/&gt;그렇지 않으면 정점/볼록 정보만 표시됩니다.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="84"/>
         <source>Include polyline child entities information to vertexes</source>
-        <translation>Vertexes에 polyline 아이 엔티티 정보를 포함</translation>
+        <translation>폴리라인 하위 엔티티 정보를 정점에 포함</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="91"/>
         <source>If selected, coordinates of boundary box area for the entity will be also shown</source>
-        <translation>선택한 경우, 엔티티티티에 대한 경계 상자 영역의 좌표도 표시됩니다</translation>
+        <translation>선택하면 엔티티의 경계 상자 영역 좌표도 표시합니다</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="94"/>
         <source>Display entity boundaries (Min, Max) coordinates</source>
-        <translation>Display entity 경계 (최소, 최대) 좌표</translation>
+        <translation>엔티티 경계 (최소, 최대) 좌표 표시</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="104"/>
@@ -31871,12 +31871,12 @@ p, li { 흰색 공간 : 사전 랩; }
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="129"/>
         <source>Always select entity under cursor if no active action</source>
-        <translation>항상 cursor 아래 엔티티티를 선택하지 않는 경우 활성 동작</translation>
+        <translation>활성 동작이 없으면 항상 커서 아래의 엔티티 선택</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.cpp" line="44"/>
         <source>Points highlight pen</source>
-        <translation>포인트 하이라이트 펜</translation>
+        <translation>점 강조 표시 펜</translation>
     </message>
 </context>
 <context>
@@ -31909,7 +31909,7 @@ p, li { 흰색 공간 : 사전 랩; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1_point_options_filler.cpp" line="48"/>
         <source>Top</source>
-        <translation type="unfinished">이름 *</translation>
+        <translation type="unfinished">위쪽</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1_point_options_filler.cpp" line="49"/>
@@ -31924,7 +31924,7 @@ p, li { 흰색 공간 : 사전 랩; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1_point_options_filler.cpp" line="51"/>
         <source>Middle</source>
-        <translation type="unfinished">주요 특징</translation>
+        <translation type="unfinished">중간</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1_point_options_filler.cpp" line="52"/>
@@ -31939,7 +31939,7 @@ p, li { 흰색 공간 : 사전 랩; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1_point_options_filler.cpp" line="54"/>
         <source>Bottom</source>
-        <translation type="unfinished">제품정보</translation>
+        <translation type="unfinished">아래쪽</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1_point_options_filler.cpp" line="55"/>
@@ -32012,7 +32012,7 @@ p, li { 흰색 공간 : 사전 랩; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="46"/>
         <source>If checked, rectangle will be created as polyline instead of individual segments.</source>
-        <translation type="unfinished">체크하면, 직사각형은 개별 세그먼트 대신 폴리 라인으로 만들 것입니다.</translation>
+        <translation type="unfinished">선택하면 직사각형을 개별 세그먼트 대신 폴리라인으로 만듭니다.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="49"/>
@@ -32042,7 +32042,7 @@ p, li { 흰색 공간 : 사전 랩; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="91"/>
         <source>Top</source>
-        <translation type="unfinished">이름 *</translation>
+        <translation type="unfinished">위쪽</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="96"/>
@@ -32057,7 +32057,7 @@ p, li { 흰색 공간 : 사전 랩; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="106"/>
         <source>Middle</source>
-        <translation type="unfinished">주요 특징</translation>
+        <translation type="unfinished">중간</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="111"/>
@@ -32072,7 +32072,7 @@ p, li { 흰색 공간 : 사전 랩; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="121"/>
         <source>Bottom</source>
-        <translation type="unfinished">제품정보</translation>
+        <translation type="unfinished">아래쪽</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="126"/>
@@ -32082,17 +32082,17 @@ p, li { 흰색 공간 : 사전 랩; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="146"/>
         <source>Length of bevel corner for X direction. </source>
-        <translation type="unfinished">X 방향의 베벨 코너 길이.</translation>
+        <translation type="unfinished">X 방향 모따기 모서리 길이. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="160"/>
         <source>Pick rotation angle from drawing</source>
-        <translation type="unfinished">그림에서 회전 각도 선택</translation>
+        <translation type="unfinished">도면에서 회전 각도 선택</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="174"/>
         <source>Radius:</source>
-        <translation type="unfinished">반경:</translation>
+        <translation type="unfinished">반지름:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="181"/>
@@ -32117,12 +32117,12 @@ p, li { 흰색 공간 : 사전 랩; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="209"/>
         <source>Horizontal</source>
-        <translation type="unfinished">제품정보</translation>
+        <translation type="unfinished">수평</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="229"/>
         <source>Length of bevel corner for Y direction. </source>
-        <translation type="unfinished">Y 방향을 위한 베벨 구석의 길이.</translation>
+        <translation type="unfinished">Y 방향 모따기 모서리 길이. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="236"/>
@@ -32142,12 +32142,12 @@ p, li { 흰색 공간 : 사전 랩; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="250"/>
         <source>Bevel</source>
-        <translation type="unfinished">베벨</translation>
+        <translation type="unfinished">모따기</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="258"/>
         <source>If checked, specified height and width of rectangle defines distance between centers of arcs for rounding corners. Otherwise, these values defines outer size of the rectangle.</source>
-        <translation type="unfinished">체크된 경우, 지정된 높이와 폭의 직사각형은 둥근 구석을 위한 아크의 센터 사이 거리를 정의합니다. 그렇지 않으면, 이 값은 직사각형의 외부 크기를 정의합니다.</translation>
+        <translation type="unfinished">선택하면 지정한 직사각형의 높이와 너비가 모서리를 둥글게 하는 호의 중심 사이 거리를 정의합니다. 그렇지 않으면 이 값은 직사각형의 바깥 크기를 정의합니다.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="261"/>
@@ -32187,12 +32187,12 @@ p, li { 흰색 공간 : 사전 랩; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="346"/>
         <source>Pick height of rectangle from drawing</source>
-        <translation type="unfinished">그림에서 장방형의 고도</translation>
+        <translation type="unfinished">도면에서 직사각형의 높이 선택</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="360"/>
         <source>Pick width of rectangle from drawing</source>
-        <translation type="unfinished">그림에서 사각형의 폭</translation>
+        <translation type="unfinished">도면에서 직사각형의 너비 선택</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="374"/>
@@ -32207,7 +32207,7 @@ p, li { 흰색 공간 : 사전 랩; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="388"/>
         <source>If checked, specifies that snap point should be shifted by radius of corners.</source>
-        <translation type="unfinished">체크하면 스냅 포인트가 코너 반경으로 이동해야합니다.</translation>
+        <translation type="unfinished">선택하면 스냅 점을 모서리 반지름만큼 이동합니다.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="391"/>
@@ -32232,17 +32232,17 @@ p, li { 흰색 공간 : 사전 랩; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="438"/>
         <source>Radius of rounded corners.</source>
-        <translation type="unfinished">둥근 구석의 반경.</translation>
+        <translation type="unfinished">둥근 모서리의 반지름.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="445"/>
         <source>Pick length of bevel corner for X direction from drawing.</source>
-        <translation type="unfinished">그림에서 X 방향을위한 베벨 코너의 길이를 선택합니다.</translation>
+        <translation type="unfinished">도면에서 X 방향 모따기 모서리 길이를 선택합니다.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="459"/>
         <source>Pick length of bevel corner for Y direction from drawing.</source>
-        <translation type="unfinished">그림에서 Y 방향을위한 베벨 코너의 길이를 선택합니다.</translation>
+        <translation type="unfinished">도면에서 Y 방향 모따기 모서리 길이를 선택합니다.</translation>
     </message>
 </context>
 <context>
@@ -32265,7 +32265,7 @@ p, li { 흰색 공간 : 사전 랩; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_filler.cpp" line="39"/>
         <source>Middle</source>
-        <translation type="unfinished">주요 특징</translation>
+        <translation type="unfinished">중간</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_filler.cpp" line="43"/>
@@ -32352,12 +32352,12 @@ p, li { 흰색 공간 : 사전 랩; }
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="51"/>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="216"/>
         <source>Middle</source>
-        <translation type="unfinished">주요 특징</translation>
+        <translation type="unfinished">중간</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="59"/>
         <source>If checked, the entire rectangle will be drawn as polyline.</source>
-        <translation type="unfinished">체크하면 전체 직사각형이 폴리 라인으로 그려집니다.</translation>
+        <translation type="unfinished">선택하면 직사각형 전체를 폴리라인으로 그립니다.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="62"/>
@@ -32382,7 +32382,7 @@ p, li { 흰색 공간 : 사전 랩; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="83"/>
         <source>Bevel</source>
-        <translation type="unfinished">베벨</translation>
+        <translation type="unfinished">모따기</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="91"/>
@@ -32397,7 +32397,7 @@ p, li { 흰색 공간 : 사전 랩; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="131"/>
         <source>Radius of rounded corners. </source>
-        <translation type="unfinished">둥근 구석의 반경.</translation>
+        <translation type="unfinished">둥근 모서리의 반지름. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="138"/>
@@ -32417,7 +32417,7 @@ p, li { 흰색 공간 : 사전 랩; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="190"/>
         <source>Length of bevel in Y direction. </source>
-        <translation type="unfinished">Y 방향에서 베벨의 길이.</translation>
+        <translation type="unfinished">Y 방향의 모따기 길이. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="197"/>
@@ -32447,12 +32447,12 @@ p, li { 흰색 공간 : 사전 랩; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="265"/>
         <source>Horizontal</source>
-        <translation type="unfinished">제품정보</translation>
+        <translation type="unfinished">수평</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="280"/>
         <source>Pick length of bevel in X direction from drawing.</source>
-        <translation type="unfinished">그림에서 X 방향에서 베벨의 길이를 선택합니다.</translation>
+        <translation type="unfinished">도면에서 X 방향 모따기 길이를 선택합니다.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="294"/>
@@ -32472,12 +32472,12 @@ p, li { 흰색 공간 : 사전 랩; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="311"/>
         <source>Radius:</source>
-        <translation type="unfinished">반경:</translation>
+        <translation type="unfinished">반지름:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="318"/>
         <source>If checked, specifies that snap points should be shifted by radius of corners.</source>
-        <translation type="unfinished">체크하면 스냅 포인트가 코너 반경으로 이동해야합니다.</translation>
+        <translation type="unfinished">선택하면 스냅 점을 모서리 반지름만큼 이동합니다.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="321"/>
@@ -32487,7 +32487,7 @@ p, li { 흰색 공간 : 사전 랩; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="340"/>
         <source>Length of bevel in X direction.</source>
-        <translation type="unfinished">X 방향의 베벨 길이.</translation>
+        <translation type="unfinished">X 방향의 모따기 길이.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="347"/>
@@ -32502,7 +32502,7 @@ p, li { 흰색 공간 : 사전 랩; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="361"/>
         <source>Pick length of bevel in Y direction from drawing. </source>
-        <translation type="unfinished">그림에서 Y 방향에서 베벨의 길이를 선택합니다.</translation>
+        <translation type="unfinished">도면에서 Y 방향 모따기 길이를 선택합니다. </translation>
     </message>
 </context>
 <context>
@@ -32578,7 +32578,7 @@ p, li { 흰색 공간 : 사전 랩; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="32"/>
         <source>If checked, the shape will be created as polyline. </source>
-        <translation type="unfinished">체크된 경우, 모양은 polyline로 창조될 것입니다.</translation>
+        <translation type="unfinished">선택하면 도형을 폴리라인으로 만듭니다. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="35"/>
@@ -32603,7 +32603,7 @@ p, li { 흰색 공간 : 사전 랩; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="128"/>
         <source>Pick inner angle of quadrangle from drawing.</source>
-        <translation type="unfinished">그림에서 사각형의 안 각을 선택합니다.</translation>
+        <translation type="unfinished">도면에서 사각형의 내각 선택.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="152"/>
@@ -32638,7 +32638,7 @@ p, li { 흰색 공간 : 사전 랩; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="248"/>
         <source>If checked, specifies that snap points should be shifted by radius of corners.</source>
-        <translation type="unfinished">체크하면 스냅 포인트가 코너 반경으로 이동해야합니다.</translation>
+        <translation type="unfinished">선택하면 스냅 점을 모서리 반지름만큼 이동합니다.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="251"/>
@@ -32653,17 +32653,17 @@ p, li { 흰색 공간 : 사전 랩; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="265"/>
         <source>Radius:</source>
-        <translation type="unfinished">반경:</translation>
+        <translation type="unfinished">반지름:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="290"/>
         <source>Length of bevel in X direction.</source>
-        <translation type="unfinished">X 방향의 베벨 길이.</translation>
+        <translation type="unfinished">X 방향의 모따기 길이.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="315"/>
         <source>Length of bevel in Y direction. </source>
-        <translation type="unfinished">Y 방향에서 베벨의 길이.</translation>
+        <translation type="unfinished">Y 방향의 모따기 길이. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="322"/>
@@ -32673,7 +32673,7 @@ p, li { 흰색 공간 : 사전 랩; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="347"/>
         <source>Radius of rounded corners.</source>
-        <translation type="unfinished">둥근 구석의 반경.</translation>
+        <translation type="unfinished">둥근 모서리의 반지름.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="354"/>
@@ -32698,7 +32698,7 @@ p, li { 흰색 공간 : 사전 랩; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="382"/>
         <source>Bevel</source>
-        <translation type="unfinished">베벨</translation>
+        <translation type="unfinished">모따기</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="390"/>
@@ -32708,12 +32708,12 @@ p, li { 흰색 공간 : 사전 랩; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="397"/>
         <source>Pick length of bevel in X direction from drawing.</source>
-        <translation type="unfinished">그림에서 X 방향에서 베벨의 길이를 선택합니다.</translation>
+        <translation type="unfinished">도면에서 X 방향 모따기 길이를 선택합니다.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="411"/>
         <source>Pick length of bevel in Y direction from drawing.</source>
-        <translation type="unfinished">그림에서 Y 방향에서 베벨의 길이를 선택합니다.</translation>
+        <translation type="unfinished">도면에서 Y 방향 모따기 길이를 선택합니다.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="428"/>
@@ -32733,12 +32733,12 @@ p, li { 흰색 공간 : 사전 랩; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="442"/>
         <source>Horizontal</source>
-        <translation type="unfinished">제품정보</translation>
+        <translation type="unfinished">수평</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="450"/>
         <source>Pick base angle of rectangle from drawing</source>
-        <translation type="unfinished">그림에서 사각형의 기본 각도를 선택합니다</translation>
+        <translation type="unfinished">도면에서 직사각형의 기준 각도 선택</translation>
     </message>
 </context>
 <context>
@@ -32756,7 +32756,7 @@ p, li { 흰색 공간 : 사전 랩; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_abstract_options_filler.cpp" line="35"/>
         <source>Horizontal</source>
-        <translation type="unfinished">제품정보</translation>
+        <translation type="unfinished">수평</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_abstract_options_filler.cpp" line="41"/>
@@ -32781,7 +32781,7 @@ p, li { 흰색 공간 : 사전 랩; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_abstract_options_filler.cpp" line="58"/>
         <source>Bevel</source>
-        <translation type="unfinished">베벨</translation>
+        <translation type="unfinished">모따기</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_abstract_options_filler.cpp" line="62"/>
@@ -32811,7 +32811,7 @@ p, li { 흰색 공간 : 사전 랩; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_abstract_options_filler.cpp" line="86"/>
         <source>If checked, specifies that snap point should be shifted by radius of corners.</source>
-        <translation type="unfinished">체크하면 스냅 포인트가 코너 반경으로 이동해야합니다.</translation>
+        <translation type="unfinished">선택하면 스냅 점을 모서리 반지름만큼 이동합니다.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_abstract_options_filler.cpp" line="97"/>
@@ -32859,7 +32859,7 @@ p, li { 흰색 공간 : 사전 랩; }
     <message>
         <location filename="../src/ui/components/status_bar/lc_relzerocoordinateswidget.ui" line="45"/>
         <source>Relative Zero (Polar)</source>
-        <translation>상대 0 (폴)</translation>
+        <translation>상대 원점 (극좌표)</translation>
     </message>
 </context>
 <context>
@@ -33009,7 +33009,7 @@ p, li { 흰색 공간 : 사전 랩; }
     <message>
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="501"/>
         <source>Pick angle from drawing</source>
-        <translation type="unfinished">그림에서 선택 각</translation>
+        <translation type="unfinished">도면에서 각도 선택</translation>
     </message>
     <message>
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="586"/>
@@ -33241,7 +33241,7 @@ p, li { 흰색 공간 : 사전 랩; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="32"/>
         <source>Move Rotate Options</source>
-        <translation type="unfinished">Rotate 옵션 이동</translation>
+        <translation type="unfinished">이동 회전 옵션</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="50"/>
@@ -33291,7 +33291,7 @@ p, li { 흰색 공간 : 사전 랩; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="177"/>
         <source>If checked, original entities will survive, otherwise they will be removed. </source>
-        <translation type="unfinished">확인된 경우, 원본 엔티티티는 살아남을 것입니다. 그렇지 않으면 제거됩니다.</translation>
+        <translation type="unfinished">선택하면 원래 엔티티를 유지하고, 그렇지 않으면 제거합니다. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="180"/>
@@ -33301,7 +33301,7 @@ p, li { 흰색 공간 : 사전 랩; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="194"/>
         <source>Pick primary angle from drawing</source>
-        <translation type="unfinished">그림에서 1 차적인 각을 선택하십시오</translation>
+        <translation type="unfinished">도면에서 1차 각도 선택</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="208"/>
@@ -33326,7 +33326,7 @@ p, li { 흰색 공간 : 사전 랩; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="228"/>
         <source>Defines whether current or original drawing attributes will be applied</source>
-        <translation type="unfinished">현재 또는 원래 그림 속성이 적용 될지 여부를 결정</translation>
+        <translation type="unfinished">현재 속성 또는 원래 속성 중 무엇을 적용할지 지정</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="231"/>
@@ -33336,7 +33336,7 @@ p, li { 흰색 공간 : 사전 랩; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="238"/>
         <source>Pick secondary angle from drawing</source>
-        <translation type="unfinished">그림에서 2 차 각을 비추십시오</translation>
+        <translation type="unfinished">도면에서 2차 각도 선택</translation>
     </message>
 </context>
 <context>
@@ -33477,7 +33477,7 @@ p, li { 흰색 공간 : 사전 랩; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="32"/>
         <source>Move Rotate Options</source>
-        <translation type="unfinished">Rotate 옵션 이동</translation>
+        <translation type="unfinished">이동 회전 옵션</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="63"/>
@@ -33487,7 +33487,7 @@ p, li { 흰색 공간 : 사전 랩; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="89"/>
         <source>If checked, current attributes will be applied to created entities, othewise original ones will be used. </source>
-        <translation type="unfinished">체크된 경우, 현재 속성은 생성 된 엔티티티에 적용되며, 현명한 원본은 사용됩니다.</translation>
+        <translation type="unfinished">선택하면 생성된 엔티티에 현재 속성을 적용하고, 그렇지 않으면 원래 속성을 사용합니다. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="92"/>
@@ -33502,7 +33502,7 @@ p, li { 흰색 공간 : 사전 랩; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="141"/>
         <source>Pick rotation angle from drawing</source>
-        <translation type="unfinished">그림에서 회전 각도 선택</translation>
+        <translation type="unfinished">도면에서 회전 각도 선택</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="155"/>
@@ -33527,12 +33527,12 @@ p, li { 흰색 공간 : 사전 랩; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="175"/>
         <source>Pick second rotation angle from drawing</source>
-        <translation type="unfinished">그림에서 두 번째 회전 각도를 선택</translation>
+        <translation type="unfinished">도면에서 두 번째 회전 각도 선택</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="189"/>
         <source>If checked, original entities will be survive, otherwise they will be removed.</source>
-        <translation type="unfinished">확인된 경우, 원본 엔티티티는 살아남을 것입니다. 그렇지 않으면 제거됩니다.</translation>
+        <translation type="unfinished">선택하면 원래 엔티티를 유지하고, 그렇지 않으면 제거합니다.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="192"/>
@@ -33631,7 +33631,7 @@ p, li { 흰색 공간 : 사전 랩; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_round_options_filler.cpp" line="37"/>
         <source>Rounding radius</source>
-        <translation type="unfinished">둥근 반경</translation>
+        <translation type="unfinished">모깎기 반지름</translation>
     </message>
 </context>
 <context>
@@ -33654,12 +33654,12 @@ p, li { 흰색 공간 : 사전 랩; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_round_options_widget.ui" line="85"/>
         <source>Radius:</source>
-        <translation type="unfinished">반경:</translation>
+        <translation type="unfinished">반지름:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_round_options_widget.ui" line="95"/>
         <source>Rounding radius</source>
-        <translation type="unfinished">둥근 반경</translation>
+        <translation type="unfinished">모깎기 반지름</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_round_options_widget.ui" line="102"/>
@@ -33677,7 +33677,7 @@ p, li { 흰색 공간 : 사전 랩; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_filler.cpp" line="31"/>
         <source>If checked, the same scaling factor for X and Y axis will be applied.</source>
-        <translation type="unfinished">체크하면 X 및 Y 축의 동일한 스케일링 요소가 적용됩니다.</translation>
+        <translation type="unfinished">선택하면 X축과 Y축에 같은 축척 비율을 적용합니다.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_filler.cpp" line="40"/>
@@ -33765,7 +33765,7 @@ p, li { 흰색 공간 : 사전 랩; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="32"/>
         <source>Move Rotate Options</source>
-        <translation type="unfinished">Rotate 옵션 이동</translation>
+        <translation type="unfinished">이동 회전 옵션</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="50"/>
@@ -33785,7 +33785,7 @@ p, li { 흰색 공간 : 사전 랩; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="73"/>
         <source>If checked, original entities will survive, otherwise they will be removed.</source>
-        <translation type="unfinished">확인된 경우, 원본 엔티티티는 살아남을 것입니다. 그렇지 않으면 제거됩니다.</translation>
+        <translation type="unfinished">선택하면 원래 엔티티를 유지하고, 그렇지 않으면 제거합니다.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="76"/>
@@ -33820,7 +33820,7 @@ p, li { 흰색 공간 : 사전 랩; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="147"/>
         <source>If checked, the same scaling factor for X and Y axis will be applied.</source>
-        <translation type="unfinished">체크하면 X 및 Y 축의 동일한 스케일링 요소가 적용됩니다.</translation>
+        <translation type="unfinished">선택하면 X축과 Y축에 같은 축척 비율을 적용합니다.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="150"/>
@@ -33840,7 +33840,7 @@ p, li { 흰색 공간 : 사전 랩; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="199"/>
         <source>If checked, current attributes will be applied to created entities, otherwise original ones will be used. </source>
-        <translation type="unfinished">체크된 경우, 현재 속성은 생성 된 엔티티티에 적용됩니다. 그렇지 않으면 원래 것들이 사용됩니다.</translation>
+        <translation type="unfinished">선택하면 생성된 엔티티에 현재 속성을 적용하고, 그렇지 않으면 원래 속성을 사용합니다. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="202"/>
@@ -33868,7 +33868,7 @@ p, li { 흰색 공간 : 사전 랩; }
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="32"/>
         <source>Ellipse</source>
-        <translation>엘립스</translation>
+        <translation>타원</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="39"/>
@@ -33933,7 +33933,7 @@ p, li { 흰색 공간 : 사전 랩; }
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="123"/>
         <source>Arc</source>
-        <translation>·</translation>
+        <translation>호</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="130"/>
@@ -34216,7 +34216,7 @@ p, li { 흰색 공간 : 사전 랩; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="95"/>
         <source>Middle</source>
-        <translation type="unfinished">주요 특징</translation>
+        <translation type="unfinished">중간</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="96"/>
@@ -34247,7 +34247,7 @@ p, li { 흰색 공간 : 사전 랩; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="116"/>
         <source>None</source>
-        <translation type="unfinished">이름 *</translation>
+        <translation type="unfinished">없음</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="117"/>
@@ -34295,7 +34295,7 @@ p, li { 흰색 공간 : 사전 랩; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="66"/>
         <source>Pick distance from drawing</source>
-        <translation type="unfinished">그림에서 거리</translation>
+        <translation type="unfinished">도면에서 거리 선택</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="86"/>
@@ -34315,7 +34315,7 @@ p, li { 흰색 공간 : 사전 랩; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="146"/>
         <source>None</source>
-        <translation type="unfinished">이름 *</translation>
+        <translation type="unfinished">없음</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="151"/>
@@ -34362,7 +34362,7 @@ p, li { 흰색 공간 : 사전 랩; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="203"/>
         <source>Pick tick offset from drawing</source>
-        <translation type="unfinished">그림에서 틱 오프셋 선택</translation>
+        <translation type="unfinished">도면에서 눈금 오프셋 선택</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="229"/>
@@ -34372,7 +34372,7 @@ p, li { 흰색 공간 : 사전 랩; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="236"/>
         <source>Pick tick angle from drawing</source>
-        <translation type="unfinished">그림에서 tick 각을 비추십시오</translation>
+        <translation type="unfinished">도면에서 눈금 각도 선택</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="250"/>
@@ -34382,7 +34382,7 @@ p, li { 흰색 공간 : 사전 랩; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="259"/>
         <source>Middle</source>
-        <translation type="unfinished">주요 특징</translation>
+        <translation type="unfinished">중간</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="284"/>
@@ -34392,7 +34392,7 @@ p, li { 흰색 공간 : 사전 랩; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="291"/>
         <source>Tick snap:</source>
-        <translation type="unfinished">Tick 스냅:</translation>
+        <translation type="unfinished">눈금 스냅:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="298"/>
@@ -34412,7 +34412,7 @@ p, li { 흰색 공간 : 사전 랩; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="322"/>
         <source>Pick tick length from drawing</source>
-        <translation type="unfinished">그림에서 tick 길이를 선택하십시오</translation>
+        <translation type="unfinished">도면에서 눈금 길이 선택</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="375"/>
@@ -34422,12 +34422,12 @@ p, li { 흰색 공간 : 사전 랩; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="382"/>
         <source>Start Circle Angle:</source>
-        <translation type="unfinished">시작 원형 각:</translation>
+        <translation type="unfinished">시작 원 각도:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="389"/>
         <source>PIck start circle angle from drawing</source>
-        <translation type="unfinished">그림에서 PICK 시작 원형 각</translation>
+        <translation type="unfinished">도면에서 시작 원 각도 선택</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="413"/>
@@ -34473,7 +34473,7 @@ p, li { 흰색 공간 : 사전 랩; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="34"/>
         <source>If checked, it is possible to specify custom amount of line segments. Otherwise, the value from settings for current drawing will be used.</source>
-        <translation type="unfinished">체크하면, 라인 세그먼트의 사용자 지정 금액을 지정할 수 있습니다. 그렇지 않으면 현재 그림에 대한 설정에서 값이 사용됩니다.</translation>
+        <translation type="unfinished">선택하면 선 세그먼트 수를 직접 지정할 수 있습니다. 그렇지 않으면 현재 도면 설정의 값을 사용합니다.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="43"/>
@@ -34493,7 +34493,7 @@ p, li { 흰색 공간 : 사전 랩; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="50"/>
         <source>If checked, line segments will be part of polyline. Otherwise, they will be individual lines</source>
-        <translation type="unfinished">검사된 경우, 선 세그먼트는 polyline의 부분일 것입니다. 그렇지 않으면 개별 줄이 될 것입니다</translation>
+        <translation type="unfinished">선택하면 선 세그먼트를 폴리라인의 일부로 만듭니다. 그렇지 않으면 개별 선이 됩니다</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="57"/>
@@ -34551,7 +34551,7 @@ p, li { 흰색 공간 : 사전 랩; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="56"/>
         <source>If checked, current attributes will be used for created entities, otherwise - original ones. </source>
-        <translation type="unfinished">체크된 경우, 현재 속성은 생성 된 엔티티티에 사용되며, 그렇지 않으면 - 원래의 것.</translation>
+        <translation type="unfinished">선택하면 생성된 엔티티에 현재 속성을 사용하고, 그렇지 않으면 원래 속성을 사용합니다. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="59"/>
@@ -34571,7 +34571,7 @@ p, li { 흰색 공간 : 사전 랩; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="83"/>
         <source>If checked, it is possible to specify custom amount of line segments. Otherwise, the value from settings for current drawing will be used.</source>
-        <translation type="unfinished">체크하면, 라인 세그먼트의 사용자 지정 금액을 지정할 수 있습니다. 그렇지 않으면 현재 그림에 대한 설정에서 값이 사용됩니다.</translation>
+        <translation type="unfinished">선택하면 선 세그먼트 수를 직접 지정할 수 있습니다. 그렇지 않으면 현재 도면 설정의 값을 사용합니다.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="86"/>
@@ -34581,12 +34581,12 @@ p, li { 흰색 공간 : 사전 랩; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="93"/>
         <source>If checked, line segments will be part of polyline. Otherwise, they will be individual lines</source>
-        <translation type="unfinished">검사된 경우, 선 세그먼트는 polyline의 부분일 것입니다. 그렇지 않으면 개별 줄이 될 것입니다</translation>
+        <translation type="unfinished">선택하면 선 세그먼트를 폴리라인의 일부로 만듭니다. 그렇지 않으면 개별 선이 됩니다</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="96"/>
         <source>To Polyline</source>
-        <translation type="unfinished">Polyline에</translation>
+        <translation type="unfinished">폴리라인으로</translation>
     </message>
 </context>
 <context>
@@ -34619,7 +34619,7 @@ p, li { 흰색 공간 : 사전 랩; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_filler.cpp" line="44"/>
         <source>Amount of middle points of polyline segment that will be added to spline. </source>
-        <translation type="unfinished">스플라인에 추가 될 polyline 세그먼트의 중간 지점의 금액.</translation>
+        <translation type="unfinished">스플라인에 추가할 폴리라인 세그먼트의 중간점 개수. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_filler.cpp" line="51"/>
@@ -34672,7 +34672,7 @@ p, li { 흰색 공간 : 사전 랩; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="42"/>
         <source>Amount of middle points of polyline segment that will be added to spline. </source>
-        <translation type="unfinished">스플라인에 추가 될 polyline 세그먼트의 중간 지점의 금액.</translation>
+        <translation type="unfinished">스플라인에 추가할 폴리라인 세그먼트의 중간점 개수. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="55"/>
@@ -34682,7 +34682,7 @@ p, li { 흰색 공간 : 사전 랩; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="68"/>
         <source>If unchecked, original polyline will be removed, otherwise it will survive.</source>
-        <translation type="unfinished">검사되지 않은 경우, 원래 폴리 라인 제거 될 것입니다, 그렇지 않으면 살아남을 것입니다.</translation>
+        <translation type="unfinished">선택하지 않으면 원래 폴리라인을 제거하고, 선택하면 유지합니다.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="71"/>
@@ -34697,7 +34697,7 @@ p, li { 흰색 공간 : 사전 랩; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="85"/>
         <source>If checked, current attributes will be used for created entities, otherwise - original ones. </source>
-        <translation type="unfinished">체크된 경우, 현재 속성은 생성 된 엔티티티에 사용되며, 그렇지 않으면 - 원래의 것.</translation>
+        <translation type="unfinished">선택하면 생성된 엔티티에 현재 속성을 사용하고, 그렇지 않으면 원래 속성을 사용합니다. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="88"/>
@@ -34712,12 +34712,12 @@ p, li { 흰색 공간 : 사전 랩; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="102"/>
         <source>If checked, polyline vertexes are considered as spline points and spline by points will be created. Otherwise, they are considered as control points and ordinary spline will be created.</source>
-        <translation type="unfinished">선택하면 폴리선의 꼭짓점이 스플라인 점으로 간주되어 점 통과 스플라인이 생성됩니다. 그렇지 않으면 제어점으로 간주되어 일반 스플라인이 생성됩니다.</translation>
+        <translation type="unfinished">선택하면 폴리라인의 정점이 스플라인 점으로 간주되어 점 통과 스플라인이 생성됩니다. 그렇지 않으면 제어점으로 간주되어 일반 스플라인이 생성됩니다.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="105"/>
         <source>Vertexes are spline points</source>
-        <translation type="unfinished">Vertexes는 스플라인 포인트입니다</translation>
+        <translation type="unfinished">정점을 스플라인 점으로 사용</translation>
     </message>
 </context>
 <context>
@@ -34750,7 +34750,7 @@ p, li { 흰색 공간 : 사전 랩; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_options_filler.cpp" line="46"/>
         <source>Form a closed contour from lines drawn</source>
-        <translation type="unfinished">라인에서 닫힌 윤곽을 형성</translation>
+        <translation type="unfinished">그린 선으로 닫힌 윤곽 형성</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_options_filler.cpp" line="51"/>
@@ -34763,7 +34763,7 @@ p, li { 흰색 공간 : 사전 랩; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_options_widget.ui" line="32"/>
         <source>Spline Options</source>
-        <translation type="unfinished">Spline 옵션</translation>
+        <translation type="unfinished">스플라인 옵션</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_options_widget.ui" line="56"/>
@@ -34816,28 +34816,28 @@ p, li { 흰색 공간 : 사전 랩; }
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_splinepoints.ui" line="62"/>
         <source>If selected, spline points are used</source>
-        <translation>선택하면 스플라인 포인트가 사용됩니다</translation>
+        <translation>선택하면 스플라인 점을 사용합니다</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_splinepoints.ui" line="65"/>
         <source>Spline Points</source>
-        <translation>스플라인 포인트</translation>
+        <translation>스플라인 점</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_splinepoints.ui" line="75"/>
         <source>If selected, control points are used</source>
-        <translation>선택된 경우, 컨트롤 포인트가 사용됩니다</translation>
+        <translation>선택하면 제어점을 사용합니다</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_splinepoints.ui" line="78"/>
         <source>Control Points</source>
-        <translation>제어 포인트</translation>
+        <translation>제어점</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_splinepoints.ui" line="93"/>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_splinepoints.ui" line="96"/>
         <source>Points on Spline</source>
-        <translation>Spline의 포인트</translation>
+        <translation>스플라인 위의 점</translation>
     </message>
 </context>
 <context>
@@ -34846,7 +34846,7 @@ p, li { 흰색 공간 : 사전 랩; }
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="14"/>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="17"/>
         <source>Spline Properties Editor</source>
-        <translation>Spline 속성 편집기</translation>
+        <translation>스플라인 속성 편집기</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="20"/>
@@ -34876,12 +34876,12 @@ p, li { 흰색 공간 : 사전 랩; }
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="119"/>
         <source>Defines whether spline defines closed contour</source>
-        <translation>Spline이 닫히는 contour를 정의하는지 결정합니다</translation>
+        <translation>스플라인이 닫힌 윤곽을 정의하는지 여부를 정의합니다</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="122"/>
         <source>Closed Spline CheckBox</source>
-        <translation>닫히는 스플라인 CheckBox</translation>
+        <translation>닫힌 스플라인 확인란</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="125"/>
@@ -34906,7 +34906,7 @@ p, li { 흰색 공간 : 사전 랩; }
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="180"/>
         <source>Control Points Table</source>
-        <translation>제어 포인트 테이블</translation>
+        <translation>제어점 표</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="183"/>
@@ -34937,7 +34937,7 @@ p, li { 흰색 공간 : 사전 랩; }
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="255"/>
         <source>Knot values control the spline’s curve shape (non-decreasing sequence)</source>
-        <translation>Knot 값은 스플라인 곡선 모양을 제어합니다 (비 감소 순서)</translation>
+        <translation>매듭 값은 스플라인의 곡선 모양을 제어합니다 (감소하지 않는 수열)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="258"/>
@@ -34963,7 +34963,7 @@ p, li { 흰색 공간 : 사전 랩; }
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="306"/>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="312"/>
         <source>Add a new control point to the spline</source>
-        <translation>Spline에 새로운 제어 지점 추가</translation>
+        <translation>스플라인에 새 제어점 추가</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="309"/>
@@ -34979,7 +34979,7 @@ p, li { 흰색 공간 : 사전 랩; }
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="328"/>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="334"/>
         <source>Remove the selected control point from the spline</source>
-        <translation>스플라인에서 선택한 컨트롤 포인트 제거</translation>
+        <translation>스플라인에서 선택한 제어점 제거</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="331"/>
@@ -35110,7 +35110,7 @@ p, li { 흰색 공간 : 사전 랩; }
     <message>
         <location filename="../src/ui/action_options/polygon/lc_star_options_widget.ui" line="114"/>
         <source>Radius for inner edges.</source>
-        <translation type="unfinished">내부 가장자리에 반경.</translation>
+        <translation type="unfinished">내부 모서리의 반지름.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_star_options_widget.ui" line="121"/>
@@ -35135,12 +35135,12 @@ p, li { 흰색 공간 : 사전 랩; }
     <message>
         <location filename="../src/ui/action_options/polygon/lc_star_options_widget.ui" line="157"/>
         <source>Pick outer radius from drawing</source>
-        <translation type="unfinished">그림에서 외부 반경을 선택하십시오</translation>
+        <translation type="unfinished">도면에서 외부 반지름 선택</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_star_options_widget.ui" line="171"/>
         <source>Pick inner radius from drawing</source>
-        <translation type="unfinished">그림에서 안 반경을 비추십시오</translation>
+        <translation type="unfinished">도면에서 내부 반지름 선택</translation>
     </message>
 </context>
 <context>
@@ -35166,7 +35166,7 @@ p, li { 흰색 공간 : 사전 랩; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_stretch_options_widget.ui" line="32"/>
         <source>If checked, original entities will survive, otherwise they will be removed.</source>
-        <translation type="unfinished">확인된 경우, 원본 엔티티티는 살아남을 것입니다. 그렇지 않으면 제거됩니다.</translation>
+        <translation type="unfinished">선택하면 원래 엔티티를 유지하고, 그렇지 않으면 제거합니다.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_stretch_options_widget.ui" line="35"/>
@@ -35222,7 +35222,7 @@ p, li { 흰색 공간 : 사전 랩; }
     <message>
         <location filename="../src/ui/action_options/text/lc_text_options_widget.ui" line="83"/>
         <source>Pick angle from drawing</source>
-        <translation type="unfinished">그림에서 선택 각</translation>
+        <translation type="unfinished">도면에서 각도 선택</translation>
     </message>
 </context>
 <context>
@@ -35405,7 +35405,7 @@ p, li { 흰색 공간 : 사전 랩; }
     <message>
         <location filename="../src/ui/dialogs/entity/lc_textpropertieseditingwidget.cpp" line="60"/>
         <source>Middle</source>
-        <translation>주요 특징</translation>
+        <translation>중간</translation>
     </message>
 </context>
 <context>
@@ -35423,7 +35423,7 @@ p, li { 흰색 공간 : 사전 랩; }
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="75"/>
         <source>Snap Selection</source>
-        <translation>Snap 선택</translation>
+        <translation>스냅 선택</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="86"/>
@@ -35505,7 +35505,7 @@ p, li { 흰색 공간 : 사전 랩; }
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="331"/>
         <source>Arc</source>
-        <translation>·</translation>
+        <translation>호</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="332"/>
@@ -35515,7 +35515,7 @@ p, li { 흰색 공간 : 사전 랩; }
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="333"/>
         <source>Ellipse</source>
-        <translation>엘립스</translation>
+        <translation>타원</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="334"/>
@@ -35588,7 +35588,7 @@ p, li { 흰색 공간 : 사전 랩; }
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="366"/>
         <source>Ellipses</source>
-        <translation>엘립스</translation>
+        <translation>타원</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="367"/>
@@ -35664,7 +35664,7 @@ p, li { 흰색 공간 : 사전 랩; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_trim_amount_options_widget.ui" line="23"/>
         <source>Distance. Negative values for trimming, positive values for extending.</source>
-        <translation type="unfinished">거리. 트리밍을위한 부정적인 값, 확장을위한 긍정적 인 값.</translation>
+        <translation type="unfinished">거리. 음수 값은 트림, 양수 값은 연장입니다.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_trim_amount_options_widget.ui" line="50"/>
@@ -35684,7 +35684,7 @@ p, li { 흰색 공간 : 사전 랩; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_trim_amount_options_widget.ui" line="97"/>
         <source>Distance. Negative values for trimming, positive values for extending. Negative sign is ignored when trimming to final total length.</source>
-        <translation type="unfinished">거리. 트리밍을위한 부정적인 값, 확장을위한 긍정적 인 값. 부정적인 표시는 최종 총 길이로 트리밍 할 때 무시됩니다.</translation>
+        <translation type="unfinished">거리. 음수 값은 트림, 양수 값은 연장입니다. 최종 전체 길이로 트림할 때는 음수 부호가 무시됩니다.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_trim_amount_options_widget.ui" line="110"/>
@@ -35755,7 +35755,7 @@ p, li { 흰색 공간 : 사전 랩; }
     <message>
         <location filename="../src/ui/action_options/other/lc_ucs_create_options_widget.ui" line="68"/>
         <source>Pick angle from drawing</source>
-        <translation type="unfinished">그림에서 선택 각</translation>
+        <translation type="unfinished">도면에서 각도 선택</translation>
     </message>
 </context>
 <context>
@@ -35779,7 +35779,7 @@ p, li { 흰색 공간 : 사전 랩; }
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistmodel.cpp" line="250"/>
         <source>Top</source>
-        <translation>이름 *</translation>
+        <translation>위쪽</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistmodel.cpp" line="311"/>
@@ -35809,7 +35809,7 @@ p, li { 흰색 공간 : 사전 랩; }
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistmodel.cpp" line="332"/>
         <source>Grid: </source>
-        <translation>격자:</translation>
+        <translation>그리드: </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistmodel.cpp" line="333"/>
@@ -35894,7 +35894,7 @@ p, li { 흰색 공간 : 사전 랩; }
         <source>Are you sure to delete ALL UCS?
  Warning: this action can NOT be undone!</source>
         <translation>모든 UCS를 삭제하시겠습니까?
-경고: 이 활동은 undone일 수 없습니다!</translation>
+경고: 이 작업은 되돌릴 수 없습니다!</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="367"/>
@@ -35906,9 +35906,9 @@ p, li { 흰색 공간 : 사전 랩; }
         <source>Are you sure to delete UCS
  &quot;%1&quot;?
  Warning: this action can NOT be undone!</source>
-        <translation>UCS를 삭제해야 합니다.
-&quot;%1&quot;?
-경고: 이 활동은 undone일 수 없습니다!</translation>
+        <translation>UCS
+&quot;%1&quot;을(를) 삭제하시겠습니까?
+경고: 이 작업은 되돌릴 수 없습니다!</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="412"/>
@@ -35919,8 +35919,8 @@ p, li { 흰색 공간 : 사전 랩; }
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="413"/>
         <source>Are you sure to delete UCS %1?
 Warning: this action can NOT be undone!</source>
-        <translation>UCS %1을 삭제해야 합니까?
-경고: 이 활동은 undone일 수 없습니다!</translation>
+        <translation>UCS %1을(를) 삭제하시겠습니까?
+경고: 이 작업은 되돌릴 수 없습니다!</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="478"/>
@@ -35953,7 +35953,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="542"/>
         <source>R&amp;emove Selected UCSs</source>
-        <translation>R&amp;emove 선정된 UCS</translation>
+        <translation>선택한 UCS 제거(&amp;E)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="555"/>
@@ -35963,7 +35963,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="556"/>
         <source>&amp;Preview UCS</source>
-        <translation>&amp;Preview UCS 소개</translation>
+        <translation>UCS 미리보기(&amp;P)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="559"/>
@@ -36068,7 +36068,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="136"/>
         <source>Ellipse</source>
-        <translation>엘립스</translation>
+        <translation>타원</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="137"/>
@@ -36190,7 +36190,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="134"/>
         <source>Arc</source>
-        <translation>·</translation>
+        <translation>호</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="135"/>
@@ -36417,7 +36417,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="452"/>
         <source>If checked, buttons for picking values from drawing will be flat</source>
-        <translation>체크된 경우, 그림에서 픽업 값을 위한 버튼은 평평하게 됩니다</translation>
+        <translation>선택하면 도면에서 값을 선택하는 버튼을 평면 스타일로 표시합니다</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="455"/>
@@ -36673,7 +36673,7 @@ Please check the permissions.</source>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1240"/>
         <source>Auto-saved drawing</source>
-        <translation>자동 새겨진 그림</translation>
+        <translation>자동 저장된 도면</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1248"/>
@@ -37150,7 +37150,7 @@ The original opens in a separate document. Mixed encodings and raw metadata are 
     <message>
         <location filename="../src/ui/components/status_bar/qg_coordinatewidget.ui" line="70"/>
         <source>Absolute Coordinates (Cartesian)</source>
-        <translation>절대 좌표 (Cartesian)</translation>
+        <translation>절대 좌표 (직교)</translation>
     </message>
     <message>
         <location filename="../src/ui/components/status_bar/qg_coordinatewidget.ui" line="89"/>
@@ -37160,12 +37160,12 @@ The original opens in a separate document. Mixed encodings and raw metadata are 
     <message>
         <location filename="../src/ui/components/status_bar/qg_coordinatewidget.ui" line="137"/>
         <source>Relative Coordinates (Cartesian)</source>
-        <translation>상대 좌표 (Cartesian)</translation>
+        <translation>상대 좌표 (직교)</translation>
     </message>
     <message>
         <location filename="../src/ui/components/status_bar/qg_coordinatewidget.ui" line="150"/>
         <source>Relative Coordinates (Polar)</source>
-        <translation>상대 좌표 (Polar)</translation>
+        <translation>상대 좌표 (극좌표)</translation>
     </message>
 </context>
 <context>
@@ -37222,12 +37222,12 @@ The original opens in a separate document. Mixed encodings and raw metadata are 
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dimensionlabeleditor.ui" line="187"/>
         <source>Format of the dimension text, &lt;&gt; can be used as a placeholder for the dimension measurement value</source>
-        <translation>치수 텍스트의 형식, &lt;&gt; 치수 측정 값의 위주로 사용할 수 있습니다</translation>
+        <translation>치수 문자의 형식입니다. &lt;&gt;를 치수 측정값의 자리 표시자로 사용할 수 있습니다</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dimensionlabeleditor.ui" line="200"/>
         <source>Symbol to insert</source>
-        <translation>삽입을 위한 Symbol</translation>
+        <translation>삽입할 기호</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dimensionlabeleditor.ui" line="209"/>
@@ -37257,7 +37257,7 @@ The original opens in a separate document. Mixed encodings and raw metadata are 
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dimensionlabeleditor.ui" line="204"/>
         <source>⌀ (Diameter)</source>
-        <translation>⌀ (직경)</translation>
+        <translation>⌀ (지름)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dimensionlabeleditor.ui" line="224"/>
@@ -37298,19 +37298,19 @@ The original opens in a separate document. Mixed encodings and raw metadata are 
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.ui" line="69"/>
         <source>Pen attributes</source>
-        <translation>Pen 속성</translation>
+        <translation>펜 속성</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.ui" line="76"/>
         <source>Apply attributes also to all sub-entities of selected INSERT.
 This recursively modifies all entities of the Block itself.</source>
-        <translation>선택된 INSERT의 모든 하위 항목에 속성을 적용하십시오.
-이 반복적으로 블록 자체의 모든 엔티티티를 수정합니다.</translation>
+        <translation>선택한 INSERT의 모든 하위 엔티티에도 속성을 적용합니다.
+이렇게 하면 블록 자체의 모든 엔티티가 재귀적으로 수정됩니다.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.ui" line="80"/>
         <source>Apply attributes Block-deep</source>
-        <translation>속성을 적용 Block-deep</translation>
+        <translation>블록 내부까지 속성 적용</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.cpp" line="61"/>
@@ -37323,7 +37323,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="14"/>
         <source>Choose Hatch Attributes</source>
-        <translation>Hatch 속성</translation>
+        <translation>해치 속성 선택</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="22"/>
@@ -37333,7 +37333,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="28"/>
         <source>Scale factor for hatch pattern</source>
-        <translation>Hatch 패턴의 스케일 인자</translation>
+        <translation>해치 패턴의 축척 비율</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="35"/>
@@ -37363,12 +37363,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="72"/>
         <source>Pattern of hatch</source>
-        <translation>Hatch의 패턴</translation>
+        <translation>해치 패턴</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="95"/>
         <source>Preview</source>
-        <translation>다운로드</translation>
+        <translation>미리보기</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="101"/>
@@ -37584,7 +37584,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="829"/>
         <source>Text lines to insert</source>
-        <translation>텍스트 라인 삽입</translation>
+        <translation>삽입할 문자 줄</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="860"/>
@@ -37644,7 +37644,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="872"/>
         <source>Symbol to insert</source>
-        <translation>삽입을 위한 Symbol</translation>
+        <translation>삽입할 기호</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="935"/>
@@ -38239,7 +38239,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="876"/>
         <source>Diameter (⌀)</source>
-        <translation>직경 (⌀)</translation>
+        <translation>지름 (⌀)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="125"/>
@@ -38401,7 +38401,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="432"/>
         <source>Drawing Options</source>
-        <translation>그림 선택권</translation>
+        <translation>도면 옵션</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="433"/>
@@ -38605,12 +38605,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="735"/>
         <source>Grid Settings</source>
-        <translation>격자 설정</translation>
+        <translation>그리드 설정</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="807"/>
         <source>Show Grid</source>
-        <translation>격자 표시</translation>
+        <translation>그리드 표시</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="929"/>
@@ -38635,12 +38635,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="723"/>
         <source>&amp;Grid</source>
-        <translation>격자(&amp;G)</translation>
+        <translation>그리드(&amp;G)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2007"/>
         <source>&amp;Splines and Lines</source>
-        <translation>&amp;Splines와 선</translation>
+        <translation>스플라인 및 선(&amp;S)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2013"/>
@@ -38662,7 +38662,7 @@ This recursively modifies all entities of the Block itself.</source>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="213"/>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="246"/>
         <source>Top</source>
-        <translation>이름 *</translation>
+        <translation>위쪽</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="196"/>
@@ -38673,12 +38673,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="791"/>
         <source>Use orthogonal grid</source>
-        <translation>사용 Orthogonal 격자</translation>
+        <translation>직교 그리드 사용</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="794"/>
         <source>Orthogonal Grid</source>
-        <translation>Orthogonal 격자</translation>
+        <translation>직교 그리드</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1220"/>
@@ -38693,7 +38693,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1634"/>
         <source>Horizontal</source>
-        <translation>제품정보</translation>
+        <translation>수평</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1406"/>
@@ -38703,7 +38703,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1142"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scale to multiply all dimension values.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt; 모든 치수 값을 곱합니다.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;모든 치수 값에 곱할 축척입니다.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1351"/>
@@ -38818,7 +38818,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="804"/>
         <source>If checked, grid will be shown for this drawing</source>
-        <translation>확인되면 그리드가이 그림에 표시됩니다</translation>
+        <translation>선택하면 이 도면에 그리드를 표시합니다</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="826"/>
@@ -38843,7 +38843,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="865"/>
         <source>Unitless Grid:</source>
-        <translation>Unitless 격자:</translation>
+        <translation>단위 없는 그리드:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="872"/>
@@ -38867,7 +38867,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="917"/>
         <source>Grid Spacing</source>
-        <translation>격자 간격</translation>
+        <translation>그리드 간격</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="955"/>
@@ -38877,27 +38877,27 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="990"/>
         <source>Select or input grid spacing value by Y axis</source>
-        <translation>Y 축선에 의하여 선택하거나 입력 격자 간격 가치</translation>
+        <translation>Y축 그리드 간격 값을 선택하거나 입력</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1038"/>
         <source>Select or enter values for grid spacing (they will affect Grid drawing and Snap to Grid):</source>
-        <translation>그리드 간격에 대한 값을 선택하거나 입력합니다 (그들은 그리드 도면 및 Snap에 영향을 줄 것입니다) :</translation>
+        <translation>그리드 간격 값을 선택하거나 입력합니다 (그리드 그리기와 그리드 스냅에 영향을 줍니다):</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1066"/>
         <source>&apos;.&apos; (Period)</source>
-        <translation>&apos;.&apos; (기간)</translation>
+        <translation>&apos;.&apos; (마침표)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1071"/>
         <source>&apos;,&apos; (Comma)</source>
-        <translation>&apos;,&apos; (코마)</translation>
+        <translation>&apos;,&apos; (쉼표)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1079"/>
         <source>Decimal separator:</source>
-        <translation>Decimal 분리기:</translation>
+        <translation>소수 구분 기호:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1106"/>
@@ -38909,7 +38909,7 @@ This recursively modifies all entities of the Block itself.</source>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1557"/>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1744"/>
         <source>Color:</source>
-        <translation>색깔:</translation>
+        <translation>색상:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1132"/>
@@ -38990,7 +38990,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1619"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Text alignment &lt;a name=&quot;result_box&quot;/&gt;relative to the dimension line.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt; 텍스트 정렬 &lt;a name=&quot;result box&quot;/&gt;relative to the Dimension line.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;치수선에 대한 &lt;a name=&quot;result_box&quot;/&gt;문자 정렬.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1629"/>
@@ -39010,7 +39010,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1727"/>
         <source>Extension lines</source>
-        <translation>연장선</translation>
+        <translation>치수보조선</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1734"/>
@@ -39080,7 +39080,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1989"/>
         <source>Embed arrows blocks on save</source>
-        <translation>Embed 화살표 블록에 저장</translation>
+        <translation>저장 시 화살표 블록 포함</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2069"/>
@@ -39101,7 +39101,7 @@ This recursively modifies all entities of the Block itself.</source>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2086"/>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2120"/>
         <source>None</source>
-        <translation>이름 *</translation>
+        <translation>없음</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2091"/>
@@ -39132,7 +39132,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="3245"/>
         <source>Enter value for points size</source>
-        <translation>포인트 크기에 대한 값을 입력</translation>
+        <translation>점 크기 값 입력</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="3259"/>
@@ -39142,7 +39142,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="3265"/>
         <source>Specifies the title of the drawing.</source>
-        <translation>그림의 제목을 지정합니다.</translation>
+        <translation>도면의 제목을 지정합니다.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="3272"/>
@@ -39162,17 +39162,17 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="3293"/>
         <source>Specifies the subject of the drawing.</source>
-        <translation>그림의 주제를 지정합니다.</translation>
+        <translation>도면의 주제를 지정합니다.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="3300"/>
         <source>Specifies the author of the drawing.</source>
-        <translation>그림의 저자를 지정합니다.</translation>
+        <translation>도면의 저자를 지정합니다.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="3307"/>
         <source>Specifies drawing-specific keywords.</source>
-        <translation>그림 별 키워드를 지정합니다.</translation>
+        <translation>도면별 키워드를 지정합니다.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="3314"/>
@@ -39187,7 +39187,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="3341"/>
         <source>Provides a space to add comments to the drawing.</source>
-        <translation>그림을 추가하는 공간을 제공합니다.</translation>
+        <translation>도면에 주석을 추가하는 공간을 제공합니다.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="3349"/>
@@ -39212,7 +39212,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="3394"/>
         <source>Floating point variables</source>
-        <translation>플로팅 포인트 변수</translation>
+        <translation>부동 소수점 변수</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="3400"/>
@@ -39277,7 +39277,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="3542"/>
         <source>Drawing&apos;s Variables</source>
-        <translation>그림의 변수</translation>
+        <translation>도면의 변수</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="3548"/>
@@ -39335,7 +39335,7 @@ This recursively modifies all entities of the Block itself.</source>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="183"/>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="203"/>
         <source>Bottom</source>
-        <translation>제품정보</translation>
+        <translation>아래쪽</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="258"/>
@@ -39355,12 +39355,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1771"/>
         <source>fixed extension line length</source>
-        <translation>고정 연장 선 길이</translation>
+        <translation>고정 치수보조선 길이</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2176"/>
         <source>&amp;Points</source>
-        <translation>&amp;포인트</translation>
+        <translation>점(&amp;P)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2203"/>
@@ -39421,12 +39421,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="3183"/>
         <source>Size will be defined in drawing units of current drawing</source>
-        <translation>크기는 현재 그림의 그림 단위에서 정의될 것입니다</translation>
+        <translation>크기는 현재 도면의 도면 단위로 정의됩니다</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="3186"/>
         <source>Size in drawing units</source>
-        <translation>그림 단위에 있는 크기</translation>
+        <translation>도면 단위 크기</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="3213"/>
@@ -39465,7 +39465,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5966"/>
         <source>Hatch Patterns:</source>
-        <translation>해칭 패턴:</translation>
+        <translation>해치 패턴:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5990"/>
@@ -39526,7 +39526,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="985"/>
         <source>A&amp;utomatically scale grid</source>
-        <translation>자동(&amp;A) 축척 모눈</translation>
+        <translation>그리드 자동 축척(&amp;U)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1123"/>
@@ -39618,7 +39618,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5147"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Temporarily toggle free snapping when the spacebar is pressed and the command window is activated&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt; spacebar가 누르면 명령 창이 활성화된&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;스페이스바를 누르고 명령 창이 활성화되어 있으면 자유 스냅을 일시적으로 전환합니다&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5277"/>
@@ -39633,7 +39633,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5205"/>
         <source>Orthogonal Grid</source>
-        <translation>Orthogonal 격자</translation>
+        <translation>직교 그리드</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5287"/>
@@ -39671,7 +39671,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="965"/>
         <source>Draw grid</source>
-        <translation>Draw 격자</translation>
+        <translation>그리드 그리기</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1047"/>
@@ -39706,17 +39706,17 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3891"/>
         <source>Explanatory Reference Point Style</source>
-        <translation>Explanatory 참조 포인트 스타일</translation>
+        <translation>설명용 기준점 스타일</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6221"/>
         <source>If selected, the angle of the line interpolation segment is calculated to ensure that resulting sagitta (height of arc segment) is less than specified.</source>
-        <translation>선택된 경우, 선 개입 세그먼트의 각도는 sagitta (고도 아크 세그먼트의 높이)가 지정하는 것보다 적은 것을 보장하기 위해 계산됩니다.</translation>
+        <translation>선택하면 결과 호 높이(호 세그먼트의 높이, sagitta)가 지정한 값보다 작도록 선 보간 세그먼트의 각도를 계산합니다.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6288"/>
         <source>If selected, the same rendering settings will be applied also to circles.</source>
-        <translation>선택한 경우 동일한 렌더링 설정도 원형에 적용됩니다.</translation>
+        <translation>선택한 경우 동일한 렌더링 설정도 원에 적용됩니다.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5450"/>
@@ -39761,12 +39761,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5376"/>
         <source>If checked, new drawing will be created with grid disabled</source>
-        <translation>확인된 경우, 새로운 그림은 그리드로 생성됩니다</translation>
+        <translation>선택하면 새 도면을 그리드가 꺼진 상태로 만듭니다</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5379"/>
         <source>Grid is Off </source>
-        <translation>격자는 떨어져 있습니다</translation>
+        <translation>그리드 꺼짐 </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5841"/>
@@ -39920,7 +39920,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1329"/>
         <source>Select Hatch Patterns Folder</source>
-        <translation>Hatch 패턴 폴더 선택</translation>
+        <translation>해치 패턴 폴더 선택</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1336"/>
@@ -39940,7 +39940,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1064"/>
         <source>Minimal Grid Spacing (p&amp;x):</source>
-        <translation>Minimal 격자 간격 (p&amp;x):</translation>
+        <translation>최소 그리드 간격 (p&amp;x):</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4753"/>
@@ -39955,7 +39955,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="217"/>
         <source>Auto-panning</source>
-        <translation>자동 패닝</translation>
+        <translation>자동 초점이동</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3689"/>
@@ -39995,7 +39995,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1766"/>
         <source>Type of snap lines indicator</source>
-        <translation>스냅 라인 표시의 유형</translation>
+        <translation>스냅 선 표시기의 유형</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1773"/>
@@ -40065,7 +40065,7 @@ This recursively modifies all entities of the Block itself.</source>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1536"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1791"/>
         <source>Line Type:</source>
-        <translation>선 유형:</translation>
+        <translation>선종류:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1736"/>
@@ -40075,7 +40075,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1743"/>
         <source>Line Width</source>
-        <translation>선 폭</translation>
+        <translation>선가중치</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1750"/>
@@ -40180,7 +40180,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1807"/>
         <source>If checked, cursor will be hidden during snapping</source>
-        <translation>확인된 경우, cursor는 snapping 도중 숨겨질 것입니다</translation>
+        <translation>선택하면 스냅하는 동안 커서를 숨깁니다</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1817"/>
@@ -40190,7 +40190,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1820"/>
         <source>Show snap options in Snap Selection Toolbar</source>
-        <translation>Snap Selection Toolbar의 Snap 옵션 보기</translation>
+        <translation>스냅 선택 도구 모음에 스냅 옵션 표시</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="745"/>
@@ -40230,7 +40230,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="939"/>
         <source>Show entity handles on mouse hover</source>
-        <translation>마우스 hover에 엔티티티티 핸들 표시</translation>
+        <translation>마우스를 올리면 엔티티 핸들 표시</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="268"/>
@@ -40261,7 +40261,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="427"/>
         <source>Fill Color:</source>
-        <translation>채우는 색깔:</translation>
+        <translation>채우기 색상:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="448"/>
@@ -40306,7 +40306,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="214"/>
         <source>If selected, drawing will be panned automatically if mouse is near drawing view boundaries</source>
-        <translation>선택하면 마우스가 도면 보기 경계 근처에 있을 때 도면이 자동으로 패닝됩니다</translation>
+        <translation>선택하면 마우스가 도면 보기 경계 근처에 있을 때 도면이 자동으로 초점이동됩니다</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="166"/>
@@ -40331,7 +40331,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="526"/>
         <source>Color for drawing background</source>
-        <translation>그림 배경을 위한 색깔</translation>
+        <translation>도면 배경 색상</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="179"/>
@@ -40371,17 +40371,17 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="147"/>
         <source>On mouse wheel zoom, pan to the middle of the window.</source>
-        <translation>마우스 휠 줌에서 창의 중간에 팬.</translation>
+        <translation>마우스 휠로 줌할 때 창 가운데로 초점이동합니다.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="150"/>
         <source>Pan on wheel zoom</source>
-        <translation>휠 줌 시 팬</translation>
+        <translation>휠 줌 시 초점이동</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="134"/>
         <source>First time only pan</source>
-        <translation>첫 번째 시간 만 팬</translation>
+        <translation>처음에만 초점이동</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="950"/>
@@ -40393,86 +40393,86 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1176"/>
         <source>Points Grid</source>
-        <translation>점 격자</translation>
+        <translation>점 그리드</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1234"/>
         <source>Color for grid points</source>
-        <translation>격자 점을 위한 색깔</translation>
+        <translation>그리드 점 색상</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1261"/>
         <source>Type of Meta Grid line if grid is drawn as points</source>
-        <translation>그리드가 포인트로 그려지면 Meta Grid 라인의 유형</translation>
+        <translation>그리드를 점으로 그릴 때 메타 그리드 선의 유형</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1268"/>
         <source>Width of Meta Grid line if grid is drawn by points</source>
-        <translation>그리드가 포인트로 그려지면 Meta Grid line의 너비</translation>
+        <translation>그리드를 점으로 그릴 때 메타 그리드 선의 너비</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1284"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1388"/>
         <source>Line Type: </source>
-        <translation>선 유형:</translation>
+        <translation>선종류: </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1291"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1395"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1543"/>
         <source>Line Width:</source>
-        <translation>선 폭:</translation>
+        <translation>선가중치:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1298"/>
         <source>Color for Meta Grid lines if grid drawn by points</source>
-        <translation>그리드가 포인트로 그려진 경우 Meta Grid 라인의 색상</translation>
+        <translation>그리드를 점으로 그릴 때 메타 그리드 선의 색상</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1316"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1420"/>
         <source>&amp;Meta-grid Color:</source>
-        <translation>&amp;Meta 격자 색깔:</translation>
+        <translation>메타 그리드 색상(&amp;M):</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1353"/>
         <source>Lines Grid</source>
-        <translation>라인 그리드</translation>
+        <translation>선 그리드</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1462"/>
         <source>Width of grid lines</source>
-        <translation>격자 선의 폭</translation>
+        <translation>그리드 선의 너비</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1478"/>
         <source>Line type for grid lines</source>
-        <translation>격자 선을 위한 선 유형</translation>
+        <translation>그리드 선의 선종류</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1485"/>
         <source>Color for grid lines</source>
-        <translation>격자 선을 위한 색깔</translation>
+        <translation>그리드 선 색상</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1365"/>
         <source>Type of Meta Grid lines if grid is drawn by lines</source>
-        <translation>그리드가 선에 의해 그려지면 Meta Grid 라인의 유형</translation>
+        <translation>그리드를 선으로 그릴 때 메타 그리드 선의 유형</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1372"/>
         <source>Width of Meta Grid lines if grid is drawn by lines</source>
-        <translation>그리드가 선에 의해 그려지면 Meta Grid 라인의 너비</translation>
+        <translation>그리드를 선으로 그릴 때 메타 그리드 선의 너비</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1402"/>
         <source>Color of Meta Grid if grid drawn by lines</source>
-        <translation>선에 의해 그려지는 격자의 색깔</translation>
+        <translation>그리드를 선으로 그릴 때 메타 그리드의 색상</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3272"/>
         <source>Axis Lines</source>
-        <translation>축 라인</translation>
+        <translation>축선</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3361"/>
@@ -40502,7 +40502,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3421"/>
         <source>Extend axis lines</source>
-        <translation>축선 선을 확장하십시오</translation>
+        <translation>축선 연장</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3475"/>
@@ -40541,7 +40541,7 @@ This recursively modifies all entities of the Block itself.</source>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3337"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3460"/>
         <source>None</source>
-        <translation>이름 *</translation>
+        <translation>없음</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3302"/>
@@ -40566,7 +40566,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3683"/>
         <source>If checked, relative zero marker will not be drawn</source>
-        <translation>확인되면 상대 0 마커가 그려지지 않습니다</translation>
+        <translation>선택하면 상대 원점 마커를 그리지 않습니다</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3614"/>
@@ -40586,32 +40586,32 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1054"/>
         <source>If checked, grid will not be adjusted to current units of drawing</source>
-        <translation>검사된 경우, 격자는 그림의 현재 단위에 조정되지 않을 것입니다</translation>
+        <translation>선택하면 그리드를 도면의 현재 단위에 맞게 조정하지 않습니다</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1057"/>
         <source>Unitless grid</source>
-        <translation>Unitless 격자</translation>
+        <translation>단위 없는 그리드</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1005"/>
         <source>If checked, grid will not be drawn within view pan by mouse operation</source>
-        <translation>체크된 경우, 격자는 쥐 가동에 의하여 전망 팬 안에 그려질 것입니다</translation>
+        <translation>선택하면 마우스로 뷰를 초점이동하는 동안 그리드를 그리지 않습니다</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1008"/>
         <source>Don&apos;t draw grid on panning</source>
-        <translation>Panning에 격자를 그리지 마십시오</translation>
+        <translation>초점이동 중 그리드 그리지 않기</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1044"/>
         <source>If checked, Meta Grid lines will be drawn on top of grid. Simple grid is faster yet is less visually lean.</source>
-        <translation>체크된 경우, 메타 그리드 라인은 그리드의 상단에 그려집니다. 간단한 격자는 더 빠릅니다 그러나 시각적으로 야윈입니다.</translation>
+        <translation>선택하면 메타 그리드 선을 그리드 위에 그립니다. 단순 그리드는 더 빠르지만 시각적으로 덜 깔끔합니다.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1096"/>
         <source>Minimal spacing between grid until grid rescale</source>
-        <translation>격자 rescale까지 격자 사이 최소 간격</translation>
+        <translation>그리드 축척이 다시 조정되기 전 그리드 사이 최소 간격</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1031"/>
@@ -40636,7 +40636,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="972"/>
         <source>If checked, metagrid will be drawn as part of grid drawing.</source>
-        <translation>체크된 경우, metagrid는 격자 그림의 부분으로 그려질 것입니다.</translation>
+        <translation>선택하면 메타 그리드를 그리드 그리기의 일부로 그립니다.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="995"/>
@@ -40680,7 +40680,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4717"/>
         <source>Preview</source>
-        <translation>다운로드</translation>
+        <translation>미리보기</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4723"/>
@@ -40690,7 +40690,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4766"/>
         <source>If more entities in preview than specified, rect will be drawn instead of entities.</source>
-        <translation>지정된 것보다 미리보기에 더 많은 엔티티티가 있다면, rect은 엔티티티 대신 그려집니다.</translation>
+        <translation>미리보기의 엔티티가 지정한 수보다 많으면 엔티티 대신 사각형을 그립니다.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4806"/>
@@ -40755,7 +40755,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3865"/>
         <source>Size in drawing units</source>
-        <translation>그림 단위에 있는 크기</translation>
+        <translation>도면 단위 크기</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6301"/>
@@ -40765,12 +40765,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6422"/>
         <source>If height of text line on the screen is less than specified pixels, placholder will be drawn instead of text</source>
-        <translation>화면에 텍스트 라인의 높이가 지정된 픽셀보다 적은 경우, placholder는 텍스트 대신 그려집니다</translation>
+        <translation>화면에서 문자 줄 높이가 지정한 픽셀보다 작으면 문자 대신 자리 표시자를 그립니다</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6362"/>
         <source>Height of text line:</source>
-        <translation>텍스트 라인의 높이 :</translation>
+        <translation>문자 줄 높이:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6415"/>
@@ -40790,22 +40790,22 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6369"/>
         <source>If screen radius of circle is less than value, circle is drawn as point</source>
-        <translation>원형의 스크린 반경이 값이 적은 경우에, 원형은 점으로 그려집니다</translation>
+        <translation>화면상의 원 반지름이 이 값보다 작으면 원을 점으로 그립니다</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6444"/>
         <source>Circle Radius:</source>
-        <translation>원형 반경:</translation>
+        <translation>원 반지름:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6401"/>
         <source>Arc Radius:</source>
-        <translation>아크 반경:</translation>
+        <translation>호 반지름:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6346"/>
         <source>If screen radius of arc is less than value, arc is drawn as point</source>
-        <translation>아크의 스크린 반경이 가치 보다는 더 적은 경우에, 아크는 점으로 그려집니다</translation>
+        <translation>화면상의 호 반지름이 이 값보다 작으면 호를 점으로 그립니다</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6408"/>
@@ -40855,7 +40855,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3054"/>
         <source>Font that should be used for drawing elements of informational cursor.</source>
-        <translation>Informational cursor의 그림 요소에 사용되어야 글꼴.</translation>
+        <translation>정보 커서의 요소를 그리는 데 사용할 글꼴.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3061"/>
@@ -40911,22 +40911,22 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1827"/>
         <source>If checked, &quot;Snap To Grid&quot; is ignored if grid is not drawn.</source>
-        <translation>확인되면, &quot;Snap To Grid&quot;는 그리드가 그려지지 않은 경우 무시됩니다.</translation>
+        <translation>선택하면 그리드를 그리지 않을 때 &quot;그리드에 스냅&quot;을 무시합니다.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1830"/>
         <source>Ignore &quot;Snap to Grid&quot; if grid is not drawn</source>
-        <translation>그리드가 그려지지 않는 경우 &quot;Snap to Grid&quot;</translation>
+        <translation>그리드를 그리지 않으면 &quot;그리드에 스냅&quot; 무시</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3114"/>
         <source>Offset of labels from the cursor point.</source>
-        <translation>커서 포인트에서 라벨의 오프셋.</translation>
+        <translation>커서 점으로부터 레이블의 오프셋.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3133"/>
         <source>Cursor position offset:</source>
-        <translation>Cursor 위치 오프셋:</translation>
+        <translation>커서 위치 오프셋:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3038"/>
@@ -40951,7 +40951,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2755"/>
         <source>Show properties for entity that is edited by handles</source>
-        <translation>핸들에 의해 편집 된 엔티티티티의 표시 속성</translation>
+        <translation>핸들로 편집 중인 엔티티의 속성 표시</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2765"/>
@@ -41001,12 +41001,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2854"/>
         <source>If checked, information about the type of snap and restrictions will be shown for snap point (if any)</source>
-        <translation>체크된 경우, 스냅 및 제한 유형에 대한 정보는 스냅 포인트 (if any)에 표시됩니다</translation>
+        <translation>선택하면 스냅 점에 스냅 유형 및 제한 정보를 표시합니다 (있는 경우)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2857"/>
         <source>Show snap info /restriction</source>
-        <translation>표시 스냅 정보 /restriction</translation>
+        <translation>스냅 정보/제한 표시</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2973"/>
@@ -41021,7 +41021,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2784"/>
         <source>If checked, absolute position of snap point will be shown.</source>
-        <translation>체크된 경우, 스냅 포인트의 절대 위치가 표시됩니다.</translation>
+        <translation>선택하면 스냅 점의 절대 위치를 표시합니다.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2787"/>
@@ -41056,12 +41056,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5490"/>
         <source>If checked, close cross button will be shown in tabs for drawings if drawings are in Tab mode</source>
-        <translation>체크된 경우, 닫기 크로스 버튼은 그림이 탭 모드에서 인 경우 그림에 대한 탭에 표시됩니다</translation>
+        <translation>선택하면 도면이 탭 모드일 때 도면 탭에 닫기(×) 버튼을 표시합니다</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5493"/>
         <source>Show Close button on drawings tabs</source>
-        <translation>그림 탭에서 닫기 버튼을 표시</translation>
+        <translation>도면 탭에 닫기 버튼 표시</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3166"/>
@@ -41127,7 +41127,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5234"/>
         <source>Drawing units</source>
-        <translation>그림 단위</translation>
+        <translation>도면 단위</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5674"/>
@@ -41147,7 +41147,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5736"/>
         <source>Controls default mode for drawings</source>
-        <translation>그림에 대한 기본 모드를 제어</translation>
+        <translation>도면의 기본 모드를 제어</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5756"/>
@@ -41177,7 +41177,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1960"/>
         <source>Mark Radius:</source>
-        <translation>표 반경:</translation>
+        <translation>표식 반지름:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="514"/>
@@ -41192,13 +41192,13 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3529"/>
         <source>Font that should be used for drawing name of axis in coordinate system zero.</source>
-        <translation>좌표계 0의 축선의 그림 이름을 위해 사용되어야 하는 글꼴.</translation>
+        <translation>좌표계 원점의 축 이름을 그리는 데 사용할 글꼴.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="716"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3552"/>
         <source>Font size that should be used for drawing name of axis in coordinate system zero.</source>
-        <translation>좌표계 0의 축선의 그림 이름을 위해 사용되어야 하는 글꼴 크기.</translation>
+        <translation>좌표계 원점의 축 이름을 그리는 데 사용할 글꼴 크기.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3588"/>
@@ -41223,7 +41223,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3509"/>
         <source>Coordinates Zero Marker</source>
-        <translation>좌표 Zero Marker</translation>
+        <translation>좌표 원점 마커</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3522"/>
@@ -41243,7 +41243,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3581"/>
         <source>Show WCS zero marker</source>
-        <translation>WCS 제로 마커</translation>
+        <translation>WCS 원점 마커 표시</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3591"/>
@@ -41293,7 +41293,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1021"/>
         <source>Type of grid to be drawn</source>
-        <translation>그려지는 격자의 유형</translation>
+        <translation>그릴 그리드의 유형</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1146"/>
@@ -41303,12 +41303,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1153"/>
         <source>Controls the frequency of major grid lines compared to minor grid lines.</source>
-        <translation>작은 그리드 라인과 비교된 주요 그리드 라인의 주파수를 제어합니다.</translation>
+        <translation>보조 그리드 선에 대한 주 그리드 선의 빈도를 제어합니다.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1940"/>
         <source>Radius of arc within angle snap mark.</source>
-        <translation>각 스냅 표 안에 아크의 반경.</translation>
+        <translation>각도 스냅 표식 내 호의 반지름.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1577"/>
@@ -41318,22 +41318,22 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1853"/>
         <source>Advanced Snap Fine-tuning settings</source>
-        <translation>고급 Snap Fine-tuning 설정</translation>
+        <translation>고급 스냅 미세 조정 설정</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1905"/>
         <source>Snap on Entity &quot;Free snap&quot; distance switch:</source>
-        <translation>Entity “Free 스냅” 거리 스위치에 스냅:</translation>
+        <translation>엔티티에 스냅 &quot;자유 스냅&quot; 전환 거리:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1912"/>
         <source>Snap on entity will be invoked if it is enabled and the distance between mouse and snapped point is larger than specified value.</source>
-        <translation>엔티티티의 스냅은 활성화되고 마우스 사이 거리와 스냅 포인트는 지정된 값보다 더 큰 것입니다.</translation>
+        <translation>엔티티 위 스냅이 활성화되어 있고 마우스와 스냅된 점 사이의 거리가 지정한 값보다 크면 엔티티 위 스냅이 적용됩니다.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1915"/>
         <source> drawing units</source>
-        <translation>그림 단위</translation>
+        <translation> 도면 단위</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1859"/>
@@ -41343,12 +41343,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1898"/>
         <source>Min grid cell snap factor:</source>
-        <translation>최소한도 격자 세포 스냅 요인:</translation>
+        <translation>최소 그리드 셀 스냅 계수:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1872"/>
         <source>Snap distance (in pixels) for catching entities.</source>
-        <translation>스냅 거리 (픽셀에서) 잡기 엔티티티.</translation>
+        <translation>엔티티를 잡는 스냅 거리 (픽셀).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1875"/>
@@ -41394,7 +41394,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5417"/>
         <source>If selected, menu will include top-level items for drawing tools. Otherwise, they will under the same menu item. </source>
-        <translation>선택한 경우, 메뉴는 그림 도구의 최상위 아이템을 포함합니다. 그렇지 않으면, 그들은 같은 메뉴 항목 아래 것입니다.</translation>
+        <translation>선택하면 메뉴에 그리기 도구의 최상위 항목을 포함합니다. 그렇지 않으면 같은 메뉴 항목 아래에 둡니다. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5420"/>
@@ -41409,7 +41409,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5157"/>
         <source>If enabled, it is possible to do with keys - zooming via +/-, scrolling via arrow keys, moving selected entities position via arrow keys and SHIFT/CTRL modifiers.</source>
-        <translation>활성화되면 키로 할 수 있습니다. - 화살표 키를 통해 스크롤, 화살표 키와 SHIFT / CTRL 조절기를 통해 선택한 엔티티티 위치를 이동합니다.</translation>
+        <translation>활성화하면 키보드로 작업할 수 있습니다. +/- 키로 줌, 화살표 키로 스크롤, 화살표 키와 SHIFT/CTRL 수정자로 선택한 엔티티 위치 이동.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5160"/>
@@ -41454,7 +41454,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="434"/>
         <source>Line type:</source>
-        <translation type="unfinished">선 종류:</translation>
+        <translation type="unfinished">선종류:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="504"/>
@@ -41806,7 +41806,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4928"/>
         <source>Auto-Save Drawings</source>
-        <translation>자동 득점방해 그림</translation>
+        <translation>도면 자동 저장</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4984"/>
@@ -42036,7 +42036,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6208"/>
         <source>Qt-native drawing method (unexact near endpoints)</source>
-        <translation>Qt-native 그림 방법 (Endpoints 근처의 실체)</translation>
+        <translation>Qt 기본 그리기 방법 (끝점 근처에서 부정확)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6454"/>
@@ -42061,12 +42061,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6160"/>
         <source>If enabled, during pan operation TEXT and MTEXT objects will be drawn schematically</source>
-        <translation>TEXT 및 MTEXT 개체가 스코네로 그려진 경우</translation>
+        <translation>활성화하면 초점이동 중 TEXT 및 MTEXT 객체를 간략하게 그립니다</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6186"/>
         <source>Defines how arcs are rendered in UI. </source>
-        <translation>아크가 UI에서 렌더링되는 방법을 결정합니다.</translation>
+        <translation>호를 UI에서 렌더링하는 방법을 정의합니다. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5589"/>
@@ -42076,12 +42076,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6189"/>
         <source>Arcs Rendering Method</source>
-        <translation>Arcs 렌더링 방법</translation>
+        <translation>호 렌더링 방법</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6198"/>
         <source>Interpolate by line segments</source>
-        <translation>라인 세그먼트에 의한 Interpolate</translation>
+        <translation>선 세그먼트로 보간</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6215"/>
@@ -42096,7 +42096,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6231"/>
         <source>If selected, the fixed angle of line interpolation segment will be used. Smaller angle deliver more smooth arc yet is slower.</source>
-        <translation>선택된 경우, 선 개입 세그먼트의 고정 각도가 사용됩니다. 더 작은 각은 더 매끄러운 아크를 아직 더 느립니다 전달합니다.</translation>
+        <translation>선택하면 선 보간 세그먼트의 고정 각도를 사용합니다. 각도가 작을수록 호가 더 매끄럽지만 느립니다.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6234"/>
@@ -42116,17 +42116,17 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6263"/>
         <source>Maximal distance betwen arc and segment interpolation line</source>
-        <translation>최대 거리 betwen 아크 및 세그먼트 interpolation 라인</translation>
+        <translation>호와 세그먼트 보간 선 사이의 최대 거리</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6291"/>
         <source>Render circles in the same way as arcs.</source>
-        <translation>아크와 같은 방식으로 원형을 렌더링합니다.</translation>
+        <translation>호와 같은 방식으로 원을 렌더링합니다.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2996"/>
         <source>If set and user coordinate system is active, absolute coodinate in world coordinate system will be also shown.</source>
-        <translation>설정 및 사용자 좌표 시스템이 활성화되면, 세계 좌표계에서 절대 coodinate도 표시될 것입니다.</translation>
+        <translation>설정되어 있고 사용자 좌표계가 활성화되어 있으면 WCS의 절대 좌표도 표시합니다.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3002"/>
@@ -42136,12 +42136,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5480"/>
         <source>If checked, any changes of zoom or pan for drawing will mark drawing as modified. Otherwise, changing view only will not affect modified status of the drawing. </source>
-        <translation>확인된 경우, 도면에 대한 줌이나 팬의 변경 사항이 변경됩니다. 그렇지 않으면, 변경 전망은 그림의 수정된 상태에 영향을 미치지 않습니다.</translation>
+        <translation>선택하면 도면의 줌이나 초점이동을 변경해도 도면이 수정된 것으로 표시됩니다. 그렇지 않으면 뷰만 변경하는 것은 도면의 수정 상태에 영향을 주지 않습니다. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5483"/>
         <source>Changing view only modifies drawing</source>
-        <translation>Changing view 만 modifies 그림</translation>
+        <translation>뷰 변경만으로도 도면 수정됨</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5746"/>
@@ -42195,7 +42195,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5633"/>
         <source>Restores program geometry/layout to original state</source>
-        <translation>프로그램 geometry/layout을 원래 상태로 복원</translation>
+        <translation>프로그램 형상/레이아웃을 원래 상태로 복원</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5649"/>
@@ -42211,7 +42211,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5983"/>
         <source>Path to folder with hatch patterns</source>
-        <translation>Hatch 패턴으로 폴더에 경로</translation>
+        <translation>해치 패턴 폴더 경로</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5941"/>
@@ -42264,12 +42264,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.ui" line="104"/>
         <source>Blocks</source>
-        <translation>블럭</translation>
+        <translation>블록</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.ui" line="112"/>
         <source>Convert blocks to safe inline SVG content</source>
-        <translation>블록을 안전한 inline SVG content로 변환</translation>
+        <translation>블록을 안전한 인라인 SVG 내용으로 변환</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.ui" line="127"/>
@@ -42289,7 +42289,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.ui" line="219"/>
         <source>Export Points</source>
-        <translation>수출 포인트</translation>
+        <translation>점 내보내기</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.ui" line="20"/>
@@ -42314,7 +42314,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.ui" line="167"/>
         <source>Dash/Dot Lines</source>
-        <translation>Dash/Dot 라인</translation>
+        <translation>파선/점선</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.ui" line="177"/>
@@ -42324,7 +42324,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.ui" line="199"/>
         <source>Bake dash/dot lines to SVG path</source>
-        <translation>Bake dash/dot 라인에서 SVG 경로</translation>
+        <translation>파선/점선을 SVG 경로로 변환</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.cpp" line="31"/>
@@ -42337,8 +42337,8 @@ invisibe (&quot;display: none&quot;또는 &quot;visibility: 숨겨진&quot;).</t
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.cpp" line="33"/>
         <source>MakerCAM as of November 2014 cannot correctly deal with blocks,
 because it does not take into account the reference point in the &lt;use&gt;.</source>
-        <translation>2014 년 11 월의 MakerCAM은 블록을 올바르게 처리 할 수 없습니다.
-&lt;use&gt;의 참조점에 들어가지 않기 때문에.</translation>
+        <translation>2014년 11월 기준 MakerCAM은 &lt;use&gt;의 참조점을 고려하지 않기 때문에
+블록을 올바르게 처리할 수 없습니다.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.cpp" line="35"/>
@@ -42374,8 +42374,8 @@ but ignored by other</source>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.cpp" line="44"/>
         <source>Length of line pattern related to zoom, 
 so default step value required for baking</source>
-        <translation>줌과 관련된 라인 패턴의 길이,
-그래서 베이킹에 필요한 기본 단계 값</translation>
+        <translation>선 패턴의 길이가 줌에 따라 달라지므로
+변환에 필요한 기본 단계 값</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.cpp" line="45"/>
@@ -42618,12 +42618,12 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="630"/>
         <source>Middle</source>
-        <translation>주요 특징</translation>
+        <translation>중간</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="934"/>
         <source>Symbol to insert</source>
-        <translation>삽입을 위한 Symbol</translation>
+        <translation>삽입할 기호</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="997"/>
@@ -42648,12 +42648,12 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1055"/>
         <source>[0100-017F] Latin Extended-A</source>
-        <translation>[0100-017F] 라틴어 확장 ·</translation>
+        <translation>[0100-017F] 라틴 확장-A</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1060"/>
         <source>[0180-024F] Latin Extended-B</source>
-        <translation>[0180-024F] 라틴 확장 B</translation>
+        <translation>[0180-024F] 라틴 확장-B</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1065"/>
@@ -42918,7 +42918,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1325"/>
         <source>[2500-257F] Box Drawing</source>
-        <translation>[2500-257F] 상자 그림</translation>
+        <translation>[2500-257F] 상자 그리기</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1330"/>
@@ -43241,7 +43241,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="938"/>
         <source>Diameter (⌀)</source>
-        <translation>직경 (⌀)</translation>
+        <translation>지름 (⌀)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="502"/>
@@ -43740,12 +43740,12 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="108"/>
         <source>Center (small)</source>
-        <translation>센터 (small)</translation>
+        <translation>중심 (소)</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="109"/>
         <source>Center (large)</source>
-        <translation>센터 (대)</translation>
+        <translation>중심 (대)</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="114"/>
@@ -43810,7 +43810,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="107"/>
         <source>Center (tiny)</source>
-        <translation>센터 (tiny)</translation>
+        <translation>중심 (극소)</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="111"/>
@@ -43864,12 +43864,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/components/toolbars/qg_pentoolbar.cpp" line="42"/>
         <source>Line width</source>
-        <translation>선 폭</translation>
+        <translation>선가중치</translation>
     </message>
     <message>
         <location filename="../src/ui/components/toolbars/qg_pentoolbar.cpp" line="45"/>
         <source>Line type</source>
-        <translation>라인 타입</translation>
+        <translation>선종류</translation>
     </message>
 </context>
 <context>
@@ -43913,7 +43913,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="222"/>
         <source>Relative zero position is %1</source>
-        <translation>상대 0 위치는 %1입니다</translation>
+        <translation>상대 원점 위치는 %1입니다</translation>
     </message>
     <message>
         <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="222"/>
@@ -43952,7 +43952,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/components/pen/qg_widgetpen.ui" line="97"/>
         <source>Line type:</source>
-        <translation>선 종류:</translation>
+        <translation>선종류:</translation>
     </message>
     <message>
         <location filename="../src/ui/components/pen/qg_widgetpen.ui" line="123"/>
@@ -43967,7 +43967,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/components/pen/qg_widgetpen.ui" line="137"/>
         <source>Type of line</source>
-        <translation>라인의 종류</translation>
+        <translation>선종류</translation>
     </message>
     <message>
         <location filename="../src/ui/components/pen/qg_widgetpen.ui" line="81"/>
@@ -44024,7 +44024,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="407"/>
         <source>Block &quot;%1&quot; and all its entities will be removed.</source>
-        <translation>블록 &quot;%1&quot;와 그것의 모든 요소들을 제거할 것이다.</translation>
+        <translation>블록 &quot;%1&quot; 및 그 안의 모든 엔티티가 제거됩니다.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.cpp" line="83"/>
@@ -44093,7 +44093,7 @@ This action can NOT be undone.</source>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="465"/>
         <source>Listed blocks and all their entities will be removed.</source>
-        <translation>블록을 나열하고 모든 엔티티티가 제거됩니다.</translation>
+        <translation>나열된 블록과 그 안의 모든 엔티티가 제거됩니다.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="467"/>
@@ -44228,7 +44228,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1404"/>
         <source>Pen will be removed from palette, drawing entities will not be affected.</source>
-        <translation>펜은 팔레트에서 제거 될 것입니다, 그림 엔티티티는 영향을 미치지 않습니다.</translation>
+        <translation>펜이 팔레트에서 제거되지만, 도면 엔티티에는 영향을 미치지 않습니다.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1406"/>
@@ -44249,7 +44249,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1426"/>
         <source>Pens will be removed from palette, drawing entities will not be affected.</source>
-        <translation>펜은 팔레트에서 제거 될 것입니다, 그림 엔티티티는 영향을받지 않습니다.</translation>
+        <translation>펜이 팔레트에서 제거되지만, 도면 엔티티에는 영향을 주지 않습니다.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1430"/>
@@ -44956,12 +44956,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="1126"/>
         <source>entity</source>
-        <translation>개체</translation>
+        <translation>엔티티</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="1127"/>
         <source>entities</source>
-        <translation>개체</translation>
+        <translation>엔티티</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4365"/>
@@ -44987,7 +44987,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="1154"/>
         <source>DWG load: %1 vendor-extension entities not rendered (%2). These are typically AutoCAD Mechanical or other vertical-product custom classes that libdxfrw cannot decode.</source>
-        <translation>DWG 로드: %1개의 공급업체 확장 개체를 렌더링하지 못했습니다 (%2). 일반적으로 libdxfrw가 디코딩할 수 없는 AutoCAD Mechanical 등 전문 제품의 사용자 정의 클래스입니다.</translation>
+        <translation>DWG 로드: %1개의 공급업체 확장 엔티티를 렌더링하지 못했습니다 (%2). 일반적으로 libdxfrw가 디코딩할 수 없는 AutoCAD Mechanical 등 전문 제품의 사용자 정의 클래스입니다.</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="1180"/>
@@ -45077,7 +45077,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="12447"/>
         <source>error reading offsets in dwg file</source>
-        <translation>dwg 파일에서 오프셋 읽는 중 에러</translation>
+        <translation>DWG 파일의 오프셋을 읽는 중 오류</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="12450"/>
@@ -45087,7 +45087,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="12456"/>
         <source>error reading entities in dwg file</source>
-        <translation>dwg 파일에서 요소 읽는 중 에러</translation>
+        <translation>DWG 파일의 엔티티를 읽는 중 오류</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="471"/>
@@ -45102,7 +45102,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/lib/engine/document/container/rs_entitycontainer.cpp" line="1499"/>
         <source>Hatch failed due to a gap=%1 between (%2, %3) and (%4, %5)</source>
-        <translation>(%2, %3) 과 (%4, %5) 사이에서 gap=%1 에 의해 해칭을 실패했다.</translation>
+        <translation>(%2, %3)과 (%4, %5) 사이의 간격(gap=%1) 때문에 해치에 실패했습니다.</translation>
     </message>
     <message>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="104"/>
@@ -45148,12 +45148,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="12453"/>
         <source>error reading blocks in dwg file</source>
-        <translation>dwg 파일에서 블록 읽는 중 에러</translation>
+        <translation>DWG 파일의 블록을 읽는 중 오류</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="12459"/>
         <source>error reading objects in dwg file</source>
-        <translation>dwg 파일에서 오브젝트 읽는 중 에러</translation>
+        <translation>DWG 파일의 객체를 읽는 중 오류</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="515"/>
@@ -46309,7 +46309,7 @@ Do you want to replace it?</source>
         <location filename="../src/lib/engine/rs_units.cpp" line="196"/>
         <source>None</source>
         <comment>unknown length unit</comment>
-        <translation>이름 *</translation>
+        <translation>없음</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandedit.cpp" line="215"/>
@@ -46362,7 +46362,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_wizard/colorwizard.cpp" line="51"/>
         <source>Select objects</source>
-        <translation>개체 선택</translation>
+        <translation>객체 선택</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_wizard/colorwizard.cpp" line="55"/>
@@ -48259,17 +48259,17 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="105"/>
         <source>Auto fit and center drawing to page.</source>
-        <translation>페이지에 자동 적합과 중심 그림.</translation>
+        <translation>도면을 페이지에 자동으로 맞추고 가운데에 배치합니다.</translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="109"/>
         <source>Auto center drawing on page.</source>
-        <translation>페이지에 자동 센터 그림.</translation>
+        <translation>도면을 페이지 가운데에 자동으로 배치합니다.</translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="113"/>
         <source>Print grayscale.</source>
-        <translation>인쇄 그레이 스케일.</translation>
+        <translation>회색조로 인쇄합니다.</translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="117"/>
@@ -48372,7 +48372,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="39"/>
         <source>/CustomColor%1</source>
-        <translation>·CustomColor%1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="40"/>
@@ -48409,12 +48409,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/lib/actions/lc_modifiersinfo.h" line="31"/>
         <source>Use Mirrored Angle</source>
-        <translation>사용 Mirrored 각</translation>
+        <translation>대칭 각도 사용</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/lc_modifiersinfo.h" line="32"/>
         <source>Snap to Relative Zero</source>
-        <translation>상대 0에 스냅</translation>
+        <translation>상대 원점에 스냅</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="50"/>
@@ -48648,7 +48648,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="435"/>
         <source>Middle-</source>
-        <translation>사이트맵</translation>
+        <translation>중간-</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="438"/>
@@ -48704,7 +48704,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="480"/>
         <source>Arc</source>
-        <translation>·</translation>
+        <translation>호</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="484"/>
@@ -48724,7 +48724,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="496"/>
         <source>Ellipse</source>
-        <translation>엘립스</translation>
+        <translation>타원</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="500"/>
@@ -48764,7 +48764,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="528"/>
         <source>Dim. Diametric</source>
-        <translation>디엠. 직경</translation>
+        <translation>지름 치수</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="532"/>
@@ -48774,7 +48774,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="536"/>
         <source>Dim. Arc</source>
-        <translation>디엠. ·</translation>
+        <translation>호 치수</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="540"/>
@@ -48789,7 +48789,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="552"/>
         <source>None</source>
-        <translation>이름 *</translation>
+        <translation>없음</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/lc_dimstylestreemodel.cpp" line="47"/>
@@ -48883,7 +48883,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="578"/>
         <source>that intersect with box</source>
-        <translation>그것은 상자와 intersect</translation>
+        <translation>상자와 교차하는</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="578"/>
@@ -48908,7 +48908,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="633"/>
         <source>Arc</source>
-        <translation>·</translation>
+        <translation>호</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="504"/>
@@ -48934,13 +48934,13 @@ Please check the filename and permissions.</source>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="634"/>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="645"/>
         <source>Radius:</source>
-        <translation>반경:</translation>
+        <translation>반지름:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="635"/>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="646"/>
         <source>Center:</source>
-        <translation>센터:</translation>
+        <translation>중심:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="636"/>
@@ -48975,17 +48975,17 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1002"/>
         <source>Lengthen Line</source>
-        <translation>길이 라인</translation>
+        <translation>선 길이 조정</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1005"/>
         <source>Lengthen/Scale</source>
-        <translation>길이/Scale</translation>
+        <translation>길이 조정/축척</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1005"/>
         <source>Lengthen Chord</source>
-        <translation>길들 Chord</translation>
+        <translation>현 길이 조정</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1008"/>
@@ -49005,7 +49005,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1018"/>
         <source>Zoom, pan or select entity</source>
-        <translation>줌, 팬 또는 엔티티 선택</translation>
+        <translation>줌, 초점이동 또는 엔티티 선택</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1018"/>
@@ -49015,7 +49015,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1018"/>
         <source>Pan / Scroll Vertically / Select Child entities</source>
-        <translation>팬 / 세로 스크롤 / 하위 엔티티 선택</translation>
+        <translation>초점이동 / 세로 스크롤 / 하위 엔티티 선택</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1023"/>
@@ -49025,7 +49025,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1023"/>
         <source>Select Intersecting</source>
-        <translation>Intersecting 선택</translation>
+        <translation>교차하는 엔티티 선택</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1023"/>
@@ -49043,7 +49043,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimangular.cpp" line="219"/>
         <source>Select second line</source>
-        <translation>두 번째 라인 선택</translation>
+        <translation>두 번째 선 선택</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimangular.cpp" line="222"/>
@@ -49084,7 +49084,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimlinear.cpp" line="214"/>
         <source>Specify second extension line origin</source>
-        <translation>두 번째 연장선 원점 지정</translation>
+        <translation>두 번째 치수보조선 원점 지정</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimlinear.cpp" line="214"/>
@@ -49100,7 +49100,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimlinear.cpp" line="224"/>
         <source>Snap to Adjacent Dim</source>
-        <translation>Adjacent Dim에 스냅</translation>
+        <translation>인접 치수에 스냅</translation>
     </message>
 </context>
 <context>
@@ -49108,27 +49108,27 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipse4points.cpp" line="282"/>
         <source>Specify the first point on ellipse</source>
-        <translation>Ellipse의 첫 번째 지점 지정</translation>
+        <translation>타원 위의 첫 번째 점 지정</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipse4points.cpp" line="285"/>
         <source>Specify the second point on ellipse</source>
-        <translation>Ellipse의 두 번째 지점 지정</translation>
+        <translation>타원 위의 두 번째 점 지정</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipse4points.cpp" line="288"/>
         <source>Specify the third point on ellipse</source>
-        <translation>Ellipse의 세 번째 지점 지정</translation>
+        <translation>타원 위의 세 번째 점 지정</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipse4points.cpp" line="291"/>
         <source>Specify the fourth point on ellipse</source>
-        <translation>Ellipse의 네 번째 지점 지정</translation>
+        <translation>타원 위의 네 번째 점 지정</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipse4points.cpp" line="170"/>
         <source>Can not determine uniquely an ellipse</source>
-        <translation>독특하게 ellipse를 결정할 수 없습니다</translation>
+        <translation>타원을 하나로 결정할 수 없습니다</translation>
     </message>
 </context>
 <context>
@@ -49171,22 +49171,22 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsecenter3points.cpp" line="248"/>
         <source>Specify the center of ellipse</source>
-        <translation>Ellipse의 센터 지정</translation>
+        <translation>타원의 중심 지정</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsecenter3points.cpp" line="251"/>
         <source>Specify the first point on ellipse</source>
-        <translation>Ellipse의 첫 번째 지점 지정</translation>
+        <translation>타원 위의 첫 번째 점 지정</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsecenter3points.cpp" line="254"/>
         <source>Specify the second point on ellipse</source>
-        <translation>Ellipse의 두 번째 지점 지정</translation>
+        <translation>타원 위의 두 번째 점 지정</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsecenter3points.cpp" line="257"/>
         <source>Specify the third point on ellipse</source>
-        <translation>Ellipse의 세 번째 지점 지정</translation>
+        <translation>타원 위의 세 번째 점 지정</translation>
     </message>
 </context>
 <context>
@@ -49199,12 +49199,12 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsefocipoint.cpp" line="213"/>
         <source>Specify first focus of ellipse</source>
-        <translation>Ellipse의 첫 초점</translation>
+        <translation>타원의 첫 번째 초점 지정</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsefocipoint.cpp" line="216"/>
         <source>Specify second focus of ellipse</source>
-        <translation>Ellipse의 두 번째 초점 지정</translation>
+        <translation>타원의 두 번째 초점 지정</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsefocipoint.cpp" line="219"/>
@@ -49214,7 +49214,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsefocipoint.cpp" line="180"/>
         <source>specify a point on ellipse, or total distance to foci</source>
-        <translation>ellipse에 포인트를 지정하거나, foci에 총 거리</translation>
+        <translation>타원 위의 점 또는 초점까지의 전체 거리 지정</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsefocipoint.cpp" line="196"/>
@@ -49232,22 +49232,22 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseinscribe.cpp" line="311"/>
         <source>Specify the second line</source>
-        <translation>두 번째 라인 지정</translation>
+        <translation>두 번째 선 지정</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseinscribe.cpp" line="314"/>
         <source>Specify the third line</source>
-        <translation>세 번째 라인 지정</translation>
+        <translation>세 번째 선 지정</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseinscribe.cpp" line="317"/>
         <source>Specify the fourth line</source>
-        <translation>네 번째 라인 지정</translation>
+        <translation>네 번째 선 지정</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseinscribe.cpp" line="227"/>
         <source>Can not determine uniquely an ellipse</source>
-        <translation>독특하게 ellipse를 결정할 수 없습니다</translation>
+        <translation>타원을 하나로 결정할 수 없습니다</translation>
     </message>
 </context>
 <context>
@@ -49260,7 +49260,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="131"/>
         <source>Hatch created successfully.</source>
-        <translation>Hatch는 성공적으로 만들었습니다.</translation>
+        <translation>해치가 성공적으로 생성되었습니다.</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="134"/>
@@ -49272,7 +49272,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="134"/>
         <source>Hatch Error: Invalid contour found!</source>
-        <translation>Hatch Error: 오류가 발생했습니다!</translation>
+        <translation>해치 오류: 잘못된 윤곽선이 발견되었습니다!</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="138"/>
@@ -49292,7 +49292,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="147"/>
         <source>Hatch Error: Undefined Error!</source>
-        <translation>Hatch Error: 정의 오류!</translation>
+        <translation>해치 오류: 정의되지 않은 오류!</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="152"/>
@@ -49334,12 +49334,12 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineorthtan.cpp" line="253"/>
         <source>Alternate Point</source>
-        <translation>Alternate 포인트</translation>
+        <translation>대체 점</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineorthtan.cpp" line="260"/>
         <source>Select circle, arc or ellipse</source>
-        <translation>원, 아크 또는 엘립스 선택</translation>
+        <translation>원, 호 또는 타원 선택</translation>
     </message>
 </context>
 <context>
@@ -49367,7 +49367,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_simple.cpp" line="107"/>
         <source>Center:</source>
-        <translation>센터:</translation>
+        <translation>중심:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_simple.cpp" line="151"/>
@@ -49391,12 +49391,12 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent1.cpp" line="199"/>
         <source>Alternate Point</source>
-        <translation>Alternate 포인트</translation>
+        <translation>대체 점</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent1.cpp" line="206"/>
         <source>Select circle, arc or ellipse</source>
-        <translation>원, 아크 또는 엘립스 선택</translation>
+        <translation>원, 호 또는 타원 선택</translation>
     </message>
 </context>
 <context>
@@ -49404,7 +49404,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent2.cpp" line="220"/>
         <source>Select first circle/ellipse/parabola</source>
-        <translation>첫번째 원형/리pse/parabola를 선정하십시오</translation>
+        <translation>첫 번째 원/타원/포물선 선택</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent2.cpp" line="223"/>
@@ -49414,7 +49414,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent2.cpp" line="226"/>
         <source>Select the tangent line closest to cursor</source>
-        <translation>커서에 가까운 tangent 라인 선택</translation>
+        <translation>커서에 가장 가까운 접선 선택</translation>
     </message>
 </context>
 <context>
@@ -49439,7 +49439,7 @@ Please check the filename and permissions.</source>
         <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="175"/>
         <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="185"/>
         <source>Set point after selection</source>
-        <translation>선택 후 포인트 설정</translation>
+        <translation>선택 후 점 설정</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="180"/>
@@ -49500,7 +49500,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="251"/>
         <source>Single Line Mode</source>
-        <translation>단일 라인 모드</translation>
+        <translation>단일 선 모드</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="96"/>
@@ -49626,7 +49626,7 @@ Intersection :@(%7, %8)</source>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="166"/>
         <source>Point: %1</source>
-        <translation>포인트: %1</translation>
+        <translation>점: %1</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="188"/>
@@ -49636,7 +49636,7 @@ Intersection :@(%7, %8)</source>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="184"/>
         <source>Specify first point of polygon</source>
-        <translation>Polygon의 첫번째 지점을 지정하십시오</translation>
+        <translation>다각형의 첫 번째 점 지정</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="188"/>
@@ -49698,7 +49698,7 @@ End: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="166"/>
         <source>Don&apos;t move relative zero</source>
-        <translation>상대 0을 이동하지 마십시오</translation>
+        <translation>상대 원점을 이동하지 마십시오</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="166"/>
@@ -49711,12 +49711,12 @@ End: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoinside.cpp" line="57"/>
         <source>Point is inside selected contour.</source>
-        <translation>포인트는 선택된 윤곽입니다.</translation>
+        <translation>점이 선택한 윤곽 안에 있습니다.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoinside.cpp" line="59"/>
         <source>Point is outside selected contour.</source>
-        <translation>포인트는 선택된 윤곽입니다.</translation>
+        <translation>점이 선택한 윤곽 밖에 있습니다.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoinside.cpp" line="85"/>
@@ -49800,12 +49800,12 @@ End: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="215"/>
         <source>Printout offset in graph coordinates by (%1, %2)</source>
-        <translation>그래프 좌표의 Printout 오프셋 (%1, %2)</translation>
+        <translation>그래프 좌표의 인쇄 오프셋 (%1, %2)</translation>
     </message>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="240"/>
         <source>Printout offset in graph coordinates</source>
-        <translation>그래프 좌표의 Printout 오프셋</translation>
+        <translation>그래프 좌표의 인쇄 오프셋</translation>
     </message>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="245"/>
@@ -49815,12 +49815,12 @@ End: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="278"/>
         <source>: select printout offset coordinates</source>
-        <translation>: 선택 printout 오프셋 좌표</translation>
+        <translation>: 인쇄 오프셋 좌표 선택</translation>
     </message>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="278"/>
         <source>type in offset from command line to offset printout</source>
-        <translation>명령줄에서 오프셋을 입력하여 printout을 오프셋합니다</translation>
+        <translation>명령행에 오프셋을 입력하여 인쇄물 오프셋</translation>
     </message>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="450"/>
@@ -49830,7 +49830,7 @@ End: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="516"/>
         <source>Drag with Left Button to Position Paper or with Middle Button to Pan</source>
-        <translation>왼쪽 버튼으로 끌어 용지 위치 지정, 가운데 버튼으로 끌어 패닝</translation>
+        <translation>왼쪽 버튼으로 끌어 용지 위치 지정, 가운데 버튼으로 끌어 초점이동</translation>
     </message>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="517"/>
@@ -49845,7 +49845,7 @@ End: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="253"/>
         <source>Printout offset ignores relative zero. Ignoring &apos;@&apos;</source>
-        <translation>Printout 오프셋은 상대 0을 무시합니다. &apos;@&apos;를 무시</translation>
+        <translation>인쇄 오프셋은 상대 원점을 무시합니다. &apos;@&apos; 무시</translation>
     </message>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="230"/>
@@ -49905,12 +49905,12 @@ End: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/zoom/rs_actionzoompan.cpp" line="109"/>
         <source>Click and drag to pan zoom</source>
-        <translation>팬 줌으로 클릭하고 드래그</translation>
+        <translation>클릭하고 끌어서 초점이동</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/zoom/rs_actionzoompan.cpp" line="112"/>
         <source>Zoom panning</source>
-        <translation>줌 팬닝</translation>
+        <translation>줌 초점이동</translation>
     </message>
 </context>
 <context>
@@ -49936,7 +49936,7 @@ End: (%8 , %9)</source>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1285"/>
         <source>Horizontal</source>
-        <translation>제품정보</translation>
+        <translation>수평</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1287"/>
@@ -49966,7 +49966,7 @@ End: (%8 , %9)</source>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1349"/>
         <source>Middle</source>
-        <translation>주요 특징</translation>
+        <translation>중간</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1351"/>
@@ -50007,13 +50007,13 @@ End: (%8 , %9)</source>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1374"/>
         <source>None</source>
         <comment>visual snap</comment>
-        <translation type="unfinished">이름 *</translation>
+        <translation type="unfinished">없음</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1377"/>
         <source>Horizontal</source>
         <comment>visual snap</comment>
-        <translation type="unfinished">제품정보</translation>
+        <translation type="unfinished">수평</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1380"/>
@@ -50070,7 +50070,7 @@ End: (%8 , %9)</source>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1426"/>
         <source>Middle</source>
         <comment>visual snap</comment>
-        <translation type="unfinished">주요 특징</translation>
+        <translation type="unfinished">중간</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1429"/>
@@ -50311,7 +50311,7 @@ End: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapdistoptions.ui" line="32"/>
         <source>Snap Distance Options</source>
-        <translation>Snap 거리 옵션</translation>
+        <translation>스냅 거리 옵션</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapdistoptions.ui" line="50"/>
@@ -50321,12 +50321,12 @@ End: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapdistoptions.ui" line="60"/>
         <source>Distance of snap point from initially resolved snap point</source>
-        <translation>처음 해결된 스냅 포인트의 거리</translation>
+        <translation>처음 결정된 스냅 점으로부터의 스냅 점 거리</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapdistoptions.ui" line="67"/>
         <source>Pick distance from drawing.</source>
-        <translation>그림에서 거리 선택.</translation>
+        <translation>도면에서 거리 선택.</translation>
     </message>
 </context>
 <context>
@@ -50334,7 +50334,7 @@ End: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapmiddleoptions.ui" line="35"/>
         <source>Snap Distance Options</source>
-        <translation>Snap 거리 옵션</translation>
+        <translation>스냅 거리 옵션</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapmiddleoptions.ui" line="59"/>

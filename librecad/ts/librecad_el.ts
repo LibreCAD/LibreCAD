@@ -169,7 +169,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_block_explode.cpp" line="63"/>
         <source>Select and explode</source>
-        <translation type="unfinished">Επιλογή και έκρηξη</translation>
+        <translation type="unfinished">Επιλογή και διάσπαση</translation>
     </message>
 </context>
 <context>
@@ -223,12 +223,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="310"/>
         <source>Specify first extension line origin</source>
-        <translation>Προσδιορίστε την πρώτη γραμμή επέκτασης</translation>
+        <translation>Καθορίστε την αρχή της πρώτης βοηθητικής γραμμής</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="300"/>
         <source>Specify second extension line origin</source>
-        <translation>Προσδιορίστε τη δεύτερη γραμμή επέκτασης</translation>
+        <translation>Καθορίστε την αρχή της δεύτερης βοηθητικής γραμμής</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="304"/>
@@ -266,7 +266,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimordinate.cpp" line="211"/>
         <source>Change Ordinate</source>
-        <translation>Αλλαγή ορντινάτου</translation>
+        <translation>Αλλαγή τεταγμένης</translation>
     </message>
 </context>
 <context>
@@ -552,7 +552,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_center_line.cpp" line="303"/>
         <source>Enter offset value</source>
-        <translation type="unfinished">Εισάγετε τιμή όφσετ</translation>
+        <translation type="unfinished">Εισαγάγετε την τιμή μετατόπισης</translation>
     </message>
 </context>
 <context>
@@ -823,12 +823,12 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="419"/>
         <source>Specify second extension line origin</source>
-        <translation>Προσδιορίστε τη δεύτερη γραμμή επέκτασης</translation>
+        <translation>Καθορίστε την αρχή της δεύτερης βοηθητικής γραμμής</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="419"/>
         <source>Mirror offset direction</source>
-        <translation>Κατοπτρική διεύθυνση όφσετ</translation>
+        <translation>Αντιστροφή κατεύθυνσης μετατόπισης</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="422"/>
@@ -2278,12 +2278,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="597"/>
         <source>&amp;Window Zoom</source>
-        <translation>Παράθυρο Εστίασης</translation>
+        <translation>Εστίαση &amp;παραθύρου</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="338"/>
         <source>Zoom &amp;Panning</source>
-        <translation>&amp;Μετακίνηση εστίασης</translation>
+        <translation>&amp;Μετακίνηση προβολής</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="246"/>
@@ -2474,12 +2474,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="60"/>
         <source>Spline</source>
-        <translation>Σπλάιν</translation>
+        <translation>Spline</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="60"/>
         <source>Spline drawing commands</source>
-        <translation>Εντολή σχεδίασης Spline</translation>
+        <translation>Εντολές σχεδίασης spline</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="61"/>
@@ -2610,7 +2610,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="74"/>
         <source>Polyline</source>
-        <translation>Πολυλίνη</translation>
+        <translation>Πολυγραμμή</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="74"/>
@@ -2660,7 +2660,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="79"/>
         <source>Additional Snaps</source>
-        <translation>Πρόσθετα snaps</translation>
+        <translation>Πρόσθετες έλξεις</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="80"/>
@@ -2917,7 +2917,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="299"/>
         <source>&amp;Append spline point</source>
-        <translation>&amp; Προσάρτηση σημείου spline</translation>
+        <translation>&amp;Προσάρτηση σημείου spline</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="301"/>
@@ -2957,12 +2957,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="297"/>
         <source>&amp;Spline</source>
-        <translation>&amp; Spline</translation>
+        <translation>&amp;Spline</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="298"/>
         <source>&amp;Spline through points</source>
-        <translation>Καμπύλη μέσω σημείων</translation>
+        <translation>&amp;Spline μέσω σημείων</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="323"/>
@@ -3327,7 +3327,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="384"/>
         <source>&amp;Mirror</source>
-        <translation>Καθρεπτισμός</translation>
+        <translation>&amp;Κατοπτρισμός</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="386"/>
@@ -3342,7 +3342,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="388"/>
         <source>&amp;Trim</source>
-        <translation>&amp;Trim</translation>
+        <translation>&amp;Περικοπή</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="390"/>
@@ -3362,7 +3362,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="394"/>
         <source>&amp;Bevel</source>
-        <translation>Λόξευση</translation>
+        <translation>&amp;Λοξοτομή</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="395"/>
@@ -3372,7 +3372,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="396"/>
         <source>&amp;Explode Text into Letters</source>
-        <translation>&amp;Διαχωρισμός κειμένου σε γράμματα</translation>
+        <translation>&amp;Διάσπαση κειμένου σε γράμματα</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="583"/>
@@ -3482,17 +3482,17 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="300"/>
         <source>&amp;Remove spline points</source>
-        <translation>&amp; Αφαίρεση σημείων spline</translation>
+        <translation>&amp;Αφαίρεση σημείων spline</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="302"/>
         <source>&amp;Explode spline to lines</source>
-        <translation>&amp;Explode spline σε γραμμές</translation>
+        <translation>&amp;Διάσπαση spline σε γραμμές</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="303"/>
         <source>&amp;Spline from polyline</source>
-        <translation>&amp; Spline από πολυγραμμή</translation>
+        <translation>&amp;Spline από πολυγραμμή</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="304"/>
@@ -3607,17 +3607,17 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="416"/>
         <source>&amp;Pick Pen From Entity</source>
-        <translation>&amp;Pick στυλό από οντότητα</translation>
+        <translation>&amp;Λήψη πένας από οντότητα</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="417"/>
         <source>&amp;Pick Pen From Entity (Resolved)</source>
-        <translation>&amp;Pick Pen από οντότητα (Επιλύθηκε)</translation>
+        <translation>&amp;Λήψη πένας από οντότητα (επιλυμένη)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="418"/>
         <source>Apply Pen to Entity</source>
-        <translation>Εφαρμόστε το στυλό στην οντότητα</translation>
+        <translation>Εφαρμογή πένας σε οντότητα</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="419"/>
@@ -3693,17 +3693,17 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="456"/>
         <source>Snap on Entity</source>
-        <translation>Snap on Οντότητα</translation>
+        <translation>Έλξη σε οντότητα</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="457"/>
         <source>Snap Center</source>
-        <translation>Κέντρο Snap</translation>
+        <translation>Έλξη σε κέντρο</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="458"/>
         <source>Snap Middle</source>
-        <translation>Μεσαίο snap</translation>
+        <translation>Έλξη στο μέσο</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="459"/>
@@ -3773,7 +3773,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="565"/>
         <source>Exclusive Snap Mode</source>
-        <translation>Αποκλειστική λειτουργία snap</translation>
+        <translation>Αποκλειστική λειτουργία έλξης</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="566"/>
@@ -3813,7 +3813,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="604"/>
         <source>&amp;Draft Lines</source>
-        <translation>Γραμμές &amp;draft</translation>
+        <translation>Γραμμές &amp;προσχεδίου</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="605"/>
@@ -3823,22 +3823,22 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="607"/>
         <source>&amp;Orthogonal Grid</source>
-        <translation>&amp; Ορθογώνιο πλέγμα</translation>
+        <translation>&amp;Ορθογώνιος κάνναβος</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="608"/>
         <source>&amp;Isometric Left Grid</source>
-        <translation>&amp; Ισομετρικό αριστερό πλέγμα</translation>
+        <translation>&amp;Ισομετρικός αριστερός κάνναβος</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="609"/>
         <source>&amp;Isometric Top Grid</source>
-        <translation>&amp; Ισομετρικό πάνω πλέγμα</translation>
+        <translation>&amp;Ισομετρικός πάνω κάνναβος</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="610"/>
         <source>&amp;Isometric Right Grid</source>
-        <translation>&amp; Ισομετρικό δεξιό κάνναβο</translation>
+        <translation>&amp;Ισομετρικός δεξιός κάνναβος</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="621"/>
@@ -4043,7 +4043,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="602"/>
         <source>&amp;Grid</source>
-        <translation>&amp; Γρι</translation>
+        <translation>&amp;Κάνναβος</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="603"/>
@@ -5013,7 +5013,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_bevel.cpp" line="182"/>
         <source>Trim</source>
-        <translation type="unfinished">Κόψιμο</translation>
+        <translation type="unfinished">Περικοπή</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_bevel.cpp" line="183"/>
@@ -5033,7 +5033,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_bevel.cpp" line="233"/>
         <source>Invalid entity selected (non-trimmable).</source>
-        <translation type="unfinished">Επιλέγεται μη έγκυρη οντότητα (μη αναστρέψιμη).</translation>
+        <translation type="unfinished">Επιλέχθηκε μη έγκυρη οντότητα (δεν μπορεί να περικοπεί).</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_bevel.cpp" line="236"/>
@@ -5059,7 +5059,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_bevel.cpp" line="265"/>
         <source>Invalid entity selected (non-trimmable with first entity).</source>
-        <translation type="unfinished">Επιλέγεται μη έγκυρη οντότητα (μη αναστρέψιμη με την πρώτη οντότητα).</translation>
+        <translation type="unfinished">Επιλέχθηκε μη έγκυρη οντότητα (δεν μπορεί να περικοπεί με την πρώτη οντότητα).</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_bevel.cpp" line="338"/>
@@ -5282,7 +5282,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_duplicate.cpp" line="290"/>
         <source>Select direction of offset</source>
-        <translation>Επιλογή κατεύθυνσης όφσετ</translation>
+        <translation>Επιλέξτε την κατεύθυνση μετατόπισης</translation>
     </message>
 </context>
 <context>
@@ -5303,7 +5303,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_explode_text.cpp" line="54"/>
         <source>Explode immediately after selection</source>
-        <translation type="unfinished">Εκρήγνυται αμέσως μετά την επιλογή</translation>
+        <translation type="unfinished">Διάσπαση αμέσως μετά την επιλογή</translation>
     </message>
 </context>
 <context>
@@ -5388,7 +5388,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_join.cpp" line="842"/>
         <source>Select part of first line that should remain after trim</source>
-        <translation>Επιλέξτε μέρος της πρώτης γραμμής που θα παραμείνει μετά το κόψιμο</translation>
+        <translation>Επιλέξτε το τμήμα της πρώτης γραμμής που θα παραμείνει μετά την περικοπή</translation>
     </message>
 </context>
 <context>
@@ -5464,7 +5464,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_move.cpp" line="140"/>
         <source>Moving Offset</source>
-        <translation type="unfinished">Μετακίνηση οφσετ</translation>
+        <translation type="unfinished">Απόσταση μετακίνησης</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_move.cpp" line="204"/>
@@ -6087,12 +6087,12 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim.cpp" line="130"/>
         <source>Trim Two</source>
-        <translation type="unfinished">Κόψιμο Δύο</translation>
+        <translation type="unfinished">Περικοπή δύο</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim.cpp" line="130"/>
         <source>Trim</source>
-        <translation type="unfinished">Κόψιμο</translation>
+        <translation type="unfinished">Περικοπή</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim.cpp" line="131"/>
@@ -6222,7 +6222,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/pen/lc_actionpenapply.cpp" line="183"/>
         <source>Specify entity to pick the pen</source>
-        <translation>Προσδιορίστε την οντότητα για να επιλέξετε το στυλό</translation>
+        <translation>Καθορίστε την οντότητα από την οποία θα ληφθεί η πένα</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pen/lc_actionpenapply.cpp" line="186"/>
@@ -6240,7 +6240,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/pen/lc_actionpenpick.cpp" line="87"/>
         <source>Specify entity to pick the pen</source>
-        <translation>Προσδιορίστε την οντότητα για να επιλέξετε το στυλό</translation>
+        <translation>Καθορίστε την οντότητα από την οποία θα ληφθεί η πένα</translation>
     </message>
 </context>
 <context>
@@ -7226,7 +7226,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="66"/>
         <source>If checked, mirrored entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Εάν ενεργοποιηθεί, οι καθρεπτισμένες οντότητες θα τοποθετηθούν στην τρέχουσα στρώση, διαφορετικά θα τοποθετηθούν στις αρχικές τους στρώσεις.</translation>
+        <translation type="unfinished">Εάν ενεργοποιηθεί, οι κατοπτρισμένες οντότητες θα τοποθετούνται στην τρέχουσα στρώση, αλλιώς στις αρχικές τους στρώσεις.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="69"/>
@@ -7910,7 +7910,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_filler.cpp" line="31"/>
         <source>Trim</source>
-        <translation type="unfinished">Κόψιμο</translation>
+        <translation type="unfinished">Περικοπή</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_filler.cpp" line="31"/>
@@ -7943,7 +7943,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_widget.ui" line="32"/>
         <source>Bevel Options</source>
-        <translation type="unfinished">Επιλογές Bevel</translation>
+        <translation type="unfinished">Επιλογές λοξοτομής</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_widget.ui" line="59"/>
@@ -7953,7 +7953,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_widget.ui" line="62"/>
         <source>Trim</source>
-        <translation type="unfinished">Κόψιμο</translation>
+        <translation type="unfinished">Περικοπή</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_widget.ui" line="85"/>
@@ -7963,7 +7963,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_widget.ui" line="95"/>
         <source>Length of bevel in X direction.</source>
-        <translation type="unfinished">Μήκος του bevel προς την κατεύθυνση X.</translation>
+        <translation type="unfinished">Μήκος λοξοτομής στην κατεύθυνση X.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_widget.ui" line="102"/>
@@ -8262,7 +8262,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/misc/lc_center_line_options_widget.ui" line="46"/>
         <source>Pick offset from drawing</source>
-        <translation type="unfinished">Επιλογή όφσετ από σχέδιο</translation>
+        <translation type="unfinished">Επιλογή μετατόπισης από το σχέδιο</translation>
     </message>
 </context>
 <context>
@@ -8320,7 +8320,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/misc/lc_center_mark_options_filler.cpp" line="63"/>
         <source>Rotation angle for cross around center</source>
-        <translation type="unfinished">Γωνία περιστροφής για το κέντρο διασταύρωσης</translation>
+        <translation type="unfinished">Γωνία περιστροφής του σταυρού γύρω από το κέντρο</translation>
     </message>
 </context>
 <context>
@@ -8348,7 +8348,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/misc/lc_center_mark_options_widget.ui" line="108"/>
         <source>Rotation angle for cross around center</source>
-        <translation type="unfinished">Γωνία περιστροφής για το κέντρο διασταύρωσης</translation>
+        <translation type="unfinished">Γωνία περιστροφής του σταυρού γύρω από το κέντρο</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/misc/lc_center_mark_options_widget.ui" line="133"/>
@@ -8541,7 +8541,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="141"/>
         <source>Pick offset value from drawing</source>
-        <translation type="unfinished">Επιλογή τιμής όφσετ από το σχέδιο</translation>
+        <translation type="unfinished">Επιλογή τιμής μετατόπισης από το σχέδιο</translation>
     </message>
 </context>
 <context>
@@ -8671,7 +8671,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_tangental_2_entities_radius_options_widget.ui" line="56"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Radius of the tangential circle to draw&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">Απόδοση Διαλόγων/Συγχρονισμός: Ακτίνα του εφαπτόμενου κύκλου για την σχεδίαση &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ακτίνα του εφαπτόμενου κύκλου που θα σχεδιαστεί&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_tangental_2_entities_radius_options_widget.ui" line="59"/>
@@ -8786,7 +8786,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/lib/engine/document/dimstyles/lc_dimarrowregistry.cpp" line="212"/>
         <source>Oblique</source>
-        <translation>Ομπλίκ</translation>
+        <translation>Λοξή γραμμή</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/document/dimstyles/lc_dimarrowregistry.cpp" line="213"/>
@@ -8849,7 +8849,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/lc_dimstyleitem.cpp" line="107"/>
         <source>Ordinate</source>
-        <translation>Ορτανικό</translation>
+        <translation>Τεταγμένη</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/lc_dimstyleitem.cpp" line="111"/>
@@ -8872,7 +8872,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/support/lc_dimstylepreviewpanel.ui" line="62"/>
         <source>Zoom In</source>
-        <translation>Εστίαση</translation>
+        <translation>Μεγέθυνση</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/support/lc_dimstylepreviewpanel.ui" line="76"/>
@@ -8882,7 +8882,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/support/lc_dimstylepreviewpanel.ui" line="90"/>
         <source>Zoom Pan</source>
-        <translation>Εστίαση</translation>
+        <translation>Μετακίνηση προβολής</translation>
     </message>
 </context>
 <context>
@@ -9104,7 +9104,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="137"/>
         <source>Sets the lineweight of the dimension line. (DIMLWD system variable)</source>
-        <translation>Ορίζει το βάρος γραμμής της γραμμής διάστασης. (μεταβλητή συστήματος DIMLWD)</translation>
+        <translation>Ορίζει το πάχος της γραμμής διάστασης. (μεταβλητή συστήματος DIMLWD)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="111"/>
@@ -9114,7 +9114,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="101"/>
         <source>Specifies a distance to extend the dimension line past the extension line when you use oblique, architectural, tick, integral, and no marks for arrowheads. (DIMDLE system variable)</source>
-        <translation>Καθορίζει μια απόσταση για να επεκτείνει τη γραμμή διάστασης πέρα από τη γραμμή επέκτασης όταν χρησιμοποιείτε λοξό, αρχιτεκτονικό σημάδι, σημάδι, ολοκληρωμένο ή κανένα σημάδι για τις κεφαλές βέλους. (μεταβλητή συστήματος DIMDLE)</translation>
+        <translation>Καθορίζει την απόσταση κατά την οποία η γραμμή διάστασης προεκτείνεται πέρα από τη βοηθητική γραμμή όταν ως βέλη χρησιμοποιούνται λοξή γραμμή, αρχιτεκτονικό σημάδι, σημάδι, σύμβολο ολοκληρώματος ή κανένα σύμβολο. (μεταβλητή συστήματος DIMDLE)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="162"/>
@@ -9124,62 +9124,62 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="191"/>
         <source>Suppresses display of first dimension line (DIMSD1 system variable)</source>
-        <translation>Καταστολή απεικόνισης γραμμής πρώτης διάστασης (μεταβλητή συστήματος DIMSD1)</translation>
+        <translation>Αποκρύπτει την πρώτη γραμμή διάστασης (μεταβλητή συστήματος DIMSD1)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="194"/>
         <source>Suppress Dim line 1 and arrow</source>
-        <translation>Καταστολή γραμμής 1 και βέλους</translation>
+        <translation>Απόκρυψη γραμμής διάστασης 1 και βέλους</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="175"/>
         <source>Suppresses display of second dimension line (DIMSD2 system variable)</source>
-        <translation>Καταστολή απεικόνισης δεύτερης γραμμής διάστασης (μεταβλητή συστήματος DIMSD2)</translation>
+        <translation>Αποκρύπτει τη δεύτερη γραμμή διάστασης (μεταβλητή συστήματος DIMSD2)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="178"/>
         <source>Suppress Dim line 2 and arrow</source>
-        <translation>Καταστολή γραμμή 2 και βέλος</translation>
+        <translation>Απόκρυψη γραμμής διάστασης 2 και βέλους</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="204"/>
         <source>Extension Lines</source>
-        <translation>Γραμμές επέκτασης</translation>
+        <translation>Βοηθητικές γραμμές</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="216"/>
         <source>Sets the color for the extension line (DIMCLRE system variable.)</source>
-        <translation>Ορίζει το χρώμα της γραμμής επέκτασης (μεταβλητή συστήματος DIMCLRE.)</translation>
+        <translation>Ορίζει το χρώμα της βοηθητικής γραμμής (μεταβλητή συστήματος DIMCLRE.)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="295"/>
         <source>Linetype ext line 1:</source>
-        <translation>Τύπος γραμμής για τη γραμμή επέκτασης 1:</translation>
+        <translation>Τύπος γραμμής βοηθητικής γραμμής 1:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="361"/>
         <source>Sets the linetype of the first extension line. (DIMLTEX1 system variable)</source>
-        <translation>Ορίζει τον τύπο γραμμής της πρώτης γραμμής επέκτασης. (μεταβλητή συστήματος DIMLTEX1)</translation>
+        <translation>Ορίζει τον τύπο γραμμής της πρώτης βοηθητικής γραμμής. (μεταβλητή συστήματος DIMLTEX1)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="338"/>
         <source>Linetype ext line 2:</source>
-        <translation>Τύπος γραμμής για τη γραμμή επέκτασης 2:</translation>
+        <translation>Τύπος γραμμής βοηθητικής γραμμής 2:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="308"/>
         <source>Sets the linetype of the second extension line. (DIMLTEX2 system variable)</source>
-        <translation>Ορίζει τον τύπο γραμμής της δεύτερης γραμμής επέκτασης. (μεταβλητή συστήματος DIMLTEX2)</translation>
+        <translation>Ορίζει τον τύπο γραμμής της δεύτερης βοηθητικής γραμμής. (μεταβλητή συστήματος DIMLTEX2)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="331"/>
         <source>Lineweight:</source>
-        <translation>Βάρος γραμμής:</translation>
+        <translation>Πάχος γραμμής:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="236"/>
         <source>Sets the lineweight of the extension line. (DIMLWE system variable)</source>
-        <translation>Ορίζει το βάρος γραμμής της γραμμής επέκτασης. (μεταβλητή συστήματος DIMLWE)</translation>
+        <translation>Ορίζει το πάχος της βοηθητικής γραμμής. (μεταβλητή συστήματος DIMLWE)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="368"/>
@@ -9189,7 +9189,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="285"/>
         <source>Specifies a distance to extend the extension lines above the dimension line. (DIMEXE system variable)</source>
-        <translation>Καθορίζει μια απόσταση για την επέκταση των γραμμών επέκτασης πάνω από τη γραμμή διάστασης. (μεταβλητή συστήματος DIMEXE)</translation>
+        <translation>Καθορίζει την απόσταση κατά την οποία οι βοηθητικές γραμμές προεκτείνονται πέρα από τη γραμμή διάστασης. (μεταβλητή συστήματος DIMEXE)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="375"/>
@@ -9199,7 +9199,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="404"/>
         <source>Sets the distance to offset the extension lines from the points on the drawing that define the dimension. (DIMEXO system variable)</source>
-        <translation>Ορίζει την απόσταση μετατόπισης των γραμμών επέκτασης από τα σημεία του σχεδίου που ορίζουν τη διάσταση. (μεταβλητή συστήματος DIMEXO)</translation>
+        <translation>Ορίζει την απόσταση μετατόπισης των βοηθητικών γραμμών από τα σημεία του σχεδίου που ορίζουν τη διάσταση. (μεταβλητή συστήματος DIMEXO)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="223"/>
@@ -9209,37 +9209,37 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="388"/>
         <source>Sets the total length of the extension lines starting from the dimension line toward the dimension origin. (DIMFXL system variable)</source>
-        <translation>Ορίζει το συνολικό μήκος των γραμμών επέκτασης ξεκινώντας από τη γραμμή διάστασης προς την αρχή της διάστασης. (μεταβλητή συστήματος DIMFXL)</translation>
+        <translation>Ορίζει το συνολικό μήκος των βοηθητικών γραμμών, από τη γραμμή διάστασης προς την αρχή της διάστασης. (μεταβλητή συστήματος DIMFXL)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="345"/>
         <source>Enables fixed length extension lines. (DIMFXLON system variable)</source>
-        <translation>Ενεργοποιεί σταθερές γραμμές επέκτασης μήκους. (μεταβλητή συστήματος DIMFXLON)</translation>
+        <translation>Ενεργοποιεί βοηθητικές γραμμές σταθερού μήκους. (μεταβλητή συστήματος DIMFXLON)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="348"/>
         <source>Fixed length extension lines</source>
-        <translation>Σταθερές γραμμές επέκτασης μήκους</translation>
+        <translation>Βοηθητικές γραμμές σταθερού μήκους</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="269"/>
         <source>Suppresses the display of first extension line (DIMSE1 system variable).</source>
-        <translation>Καταπιέζει την εμφάνιση της πρώτης γραμμής επέκτασης (DIMSE1 μεταβλητή συστήματος).</translation>
+        <translation>Αποκρύπτει την πρώτη βοηθητική γραμμή (μεταβλητή συστήματος DIMSE1).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="272"/>
         <source>Suppress Ext line 1</source>
-        <translation>Καταστολή γραμμής επέκτασης 1</translation>
+        <translation>Απόκρυψη βοηθητικής γραμμής 1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="321"/>
         <source>Suppresses the display of second extension line (DIMSE2 system variable).</source>
-        <translation>Καταπιέζει την εμφάνιση της δεύτερης γραμμής επέκτασης (μεταβλητή συστήματος DIMSE2).</translation>
+        <translation>Αποκρύπτει τη δεύτερη βοηθητική γραμμή (μεταβλητή συστήματος DIMSE2).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="324"/>
         <source>Suppress Ext line 2</source>
-        <translation>Καταστολή γραμμής επέκτασης 2</translation>
+        <translation>Απόκρυψη βοηθητικής γραμμής 2</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="429"/>
@@ -9360,7 +9360,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="630"/>
         <source>Suppresses the display of arc length symbols. (DIMARCSYM system variable)</source>
-        <translation>Καταπιέζει την οθόνη των συμβόλων μήκους τόξου. (Μεταβλητή συστήματος DIMARCSYM)</translation>
+        <translation>Αποκρύπτει τα σύμβολα μήκους τόξου. (μεταβλητή συστήματος DIMARCSYM)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="633"/>
@@ -9534,7 +9534,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="911"/>
         <source>Aligns text with the dimension line when text is inside the extension lines, but aligns it horizontally when text is outside the extension lines (DIMTIH and DIMTOH system variables).</source>
-        <translation>Ευθυγραμμίζει το κείμενο με τη γραμμή διάστασης όταν το κείμενο βρίσκεται μέσα στις γραμμές επέκτασης, αλλά το ευθυγραμμίζει οριζόντια όταν το κείμενο βρίσκεται έξω από τις γραμμές επέκτασης ( μεταβλητές συστήματος DIMTIH και DIMTOH).</translation>
+        <translation>Ευθυγραμμίζει το κείμενο με τη γραμμή διάστασης όταν το κείμενο βρίσκεται μέσα στις βοηθητικές γραμμές, αλλά το στοιχίζει οριζόντια όταν βρίσκεται έξω από αυτές (μεταβλητές συστήματος DIMTIH και DIMTOH).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="904"/>
@@ -9594,7 +9594,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="961"/>
         <source>Controls the horizontal placement of dimension text along the dimension line, in relation to the extension lines. (DIMJUST system variable)</source>
-        <translation>Ελέγχει την οριζόντια τοποθέτηση του κειμένου διάσταση κατά μήκος της γραμμής διάστασης, σε σχέση με τις γραμμές επέκτασης. (μεταβλητή συστήματος DIMJUST)</translation>
+        <translation>Ελέγχει την οριζόντια θέση του κειμένου διάστασης κατά μήκος της γραμμής διάστασης, σε σχέση με τις βοηθητικές γραμμές. (μεταβλητή συστήματος DIMJUST)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="965"/>
@@ -9605,22 +9605,22 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="970"/>
         <source>At Ext Line 1</source>
-        <translation>Στην εξωτερική γραμμή 1</translation>
+        <translation>Στη βοηθητική γραμμή 1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="975"/>
         <source>At Ext Line 2</source>
-        <translation>Στην εξωτερική γραμμή 2</translation>
+        <translation>Στη βοηθητική γραμμή 2</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="980"/>
         <source>Over Ext Line 1</source>
-        <translation>Πάνω από την εξωτερική γραμμή 1</translation>
+        <translation>Πάνω από τη βοηθητική γραμμή 1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="985"/>
         <source>Over Ext Line 2</source>
-        <translation>Πάνω από την εξωτερική γραμμή 2</translation>
+        <translation>Πάνω από τη βοηθητική γραμμή 2</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="993"/>
@@ -9700,7 +9700,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1111"/>
         <source>Draw dim line betwen ext lines</source>
-        <translation>Σχεδίαση γραμμής διάστασης μεταξύ των γραμμών επέκτασης</translation>
+        <translation>Σχεδίαση γραμμής διάστασης μεταξύ των βοηθητικών γραμμών</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1121"/>
@@ -9771,22 +9771,22 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1240"/>
         <source>If there isn&apos;t enough room to place both text and arrow inside extension lines, the first thing to move outside the extension lines is:</source>
-        <translation>Εάν δεν υπάρχει αρκετός χώρος για να τοποθετήσετε τόσο κείμενο όσο και βέλος μέσα σε γραμμές επέκτασης, το πρώτο πράγμα που κινείται έξω από τις γραμμές επέκτασης είναι:</translation>
+        <translation>Αν δεν υπάρχει αρκετός χώρος για να τοποθετηθούν και το κείμενο και το βέλος μέσα στις βοηθητικές γραμμές, πρώτο μετακινείται έξω από τις βοηθητικές γραμμές:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1250"/>
         <source>Suppresses arrowheads if not enough space is available inside the extension lines. (DIMSOXD system variable)</source>
-        <translation>Καταπιέζει τα βέλη αν δεν υπάρχει αρκετός χώρος μέσα στις γραμμές επέκτασης. (μεταβλητή συστήματος DIMSOXD)</translation>
+        <translation>Αποκρύπτει τα βέλη αν δεν υπάρχει αρκετός χώρος μέσα στις βοηθητικές γραμμές. (μεταβλητή συστήματος DIMSOXD)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1253"/>
         <source>Suppress arrows if they don&apos;t fit inside extension lines</source>
-        <translation>Καταστολή βέλη αν δεν ταιριάζουν μέσα σε γραμμές επέκτασης</translation>
+        <translation>Απόκρυψη βελών αν δεν χωρούν μέσα στις βοηθητικές γραμμές</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1260"/>
         <source>When not enough space is available for text and arrowheads, moves both outside the extension lines (DIMATFIT system variable).</source>
-        <translation>Όταν δεν υπάρχει αρκετός χώρος για κείμενο και αιχμές βέλους, μετακινείται και έξω από τις γραμμές επέκτασης (μεταβλητή συστήματος DIMATFIT).</translation>
+        <translation>Όταν δεν υπάρχει αρκετός χώρος για το κείμενο και τα βέλη, μετακινεί και τα δύο έξω από τις βοηθητικές γραμμές (μεταβλητή συστήματος DIMATFIT).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1263"/>
@@ -9796,7 +9796,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1270"/>
         <source>Moves either the text or the arrowheads outside the extension lines based on the best fit (DIMATFIT system variable).</source>
-        <translation>Κινείται είτε το κείμενο είτε τα βέλη έξω από τις γραμμές επέκτασης με βάση την καλύτερη εφαρμογή (μεταβλητή συστήματος DIMATFIT).</translation>
+        <translation>Μετακινεί είτε το κείμενο είτε τα βέλη έξω από τις βοηθητικές γραμμές, ανάλογα με το τι χωράει καλύτερα (μεταβλητή συστήματος DIMATFIT).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1273"/>
@@ -9806,7 +9806,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1280"/>
         <source>Moves arrowheads outside the extension lines first, then text (DIMATFIT system variable).</source>
-        <translation>Μετακινεί τις κεφαλές βέλους έξω από τις γραμμές επέκτασης πρώτα, μετά κείμενο (μεταβλητή συστήματος DIMATFIT).</translation>
+        <translation>Μετακινεί πρώτα τα βέλη έξω από τις βοηθητικές γραμμές και μετά το κείμενο (μεταβλητή συστήματος DIMATFIT).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1283"/>
@@ -9816,17 +9816,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1290"/>
         <source>Moves text outside the extension lines first, then arrowheads (DIMATFIT system variable).</source>
-        <translation>Μετακινεί το κείμενο έξω από τις γραμμές επέκτασης πρώτα, μετά βέλη (μεταβλητή συστήματος DIMATFIT).</translation>
+        <translation>Μετακινεί πρώτα το κείμενο έξω από τις βοηθητικές γραμμές και μετά τα βέλη (μεταβλητή συστήματος DIMATFIT).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1300"/>
         <source>Always places text between extension lines. (DIMTIX system variable)</source>
-        <translation>Πάντα τοποθετεί το κείμενο μεταξύ γραμμών επέκτασης. (μεταβλητή συστήματος DIMTIX)</translation>
+        <translation>Τοποθετεί πάντα το κείμενο ανάμεσα στις βοηθητικές γραμμές. (μεταβλητή συστήματος DIMTIX)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1303"/>
         <source>Always fit text between ext lines</source>
-        <translation>Πάντα τοποθέτηση του κειμένου μεταξύ των γραμμών επέκτασης</translation>
+        <translation>Τοποθέτηση του κειμένου πάντα μεταξύ των βοηθητικών γραμμών</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1327"/>
@@ -9854,7 +9854,7 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2010"/>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2234"/>
         <source>Zero suppression</source>
-        <translation>Μηδενική καταστολή</translation>
+        <translation>Καταστολή μηδενικών</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1352"/>
@@ -9873,7 +9873,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1362"/>
         <source>Controls the suppression of  trailing zeros. (DIMAZIN system variable)</source>
-        <translation>Ελέγχει την καταστολή των μηδενικών. (Μεταβλητή συστήματος DIMAZIN)</translation>
+        <translation>Ελέγχει την καταστολή των τελικών μηδενικών. (μεταβλητή συστήματος DIMAZIN)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1365"/>
@@ -10023,12 +10023,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1617"/>
         <source>Suppresses trailing zeros in all decimal dimensions. (DIMZIN system variable)</source>
-        <translation>Καταπιέζει τα μηδενικά σε όλες τις δεκαδικές διαστάσεις. (μεταβλητή συστήματος DIMZIN)</translation>
+        <translation>Καταστέλλει τα τελικά μηδενικά σε όλες τις δεκαδικές διαστάσεις. (μεταβλητή συστήματος DIMZIN)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1627"/>
         <source> Suppresses the inches portion of a feet-and-inches dimension when the distance is an integral number of feet (DIMZIN system variable)</source>
-        <translation>Καταπιέζει το τμήμα των ιντσών μιας διάστασης ποδιών-και-ενοχών όταν η απόσταση είναι ένας αναπόσπαστος αριθμός ποδιών (μεταβλητή συστήματος DIMZIN)</translation>
+        <translation> Καταστέλλει τις ίντσες σε διάσταση ποδιών και ιντσών όταν η απόσταση είναι ακέραιος αριθμός ποδιών (μεταβλητή συστήματος DIMZIN)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1630"/>
@@ -10041,7 +10041,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1637"/>
         <source>Suppresses the feet portion of a feet-and-inches dimension when the distance is less than one foot.  (DIMZIN system variable)</source>
-        <translation>Καταπιέζει το τμήμα των ποδιών μιας διάστασης των ποδιών και των εγκοπών όταν η απόσταση είναι μικρότερη από ένα πόδι. (μεταβλητή συστήματος DIMZIN)</translation>
+        <translation>Καταστέλλει τα πόδια σε διάσταση ποδιών και ιντσών όταν η απόσταση είναι μικρότερη από ένα πόδι. (μεταβλητή συστήματος DIMZIN)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1640"/>
@@ -10150,22 +10150,22 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1858"/>
         <source>Suppresses leading zeros in all decimal dimensions. For example, 0.5000 becomes .5000.</source>
-        <translation>Καταπιέζει τα μηδενικά σε όλες τις δεκαδικές διαστάσεις. Για παράδειγμα, το 0,5000 γίνεται 5000.</translation>
+        <translation>Καταστέλλει τα προπορευόμενα μηδενικά σε όλες τις δεκαδικές διαστάσεις. Για παράδειγμα, το 0,5000 γίνεται ,5000.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1888"/>
         <source>Suppresses trailing zeros in all decimal dimensions. For example, 12.5000 becomes 12.5, and 30.0000 becomes 30 (DIMALTZ system variable).</source>
-        <translation>Καταπιέζει τα μηδενικά σε όλες τις δεκαδικές διαστάσεις. Για παράδειγμα, το 12,5000 γίνεται 12,5, και το 30.0000 γίνεται 30 (μεταβλητή συστήματος DIMALTZ).</translation>
+        <translation>Καταστέλλει τα τελικά μηδενικά σε όλες τις δεκαδικές διαστάσεις. Για παράδειγμα, το 12,5000 γίνεται 12,5 και το 30,0000 γίνεται 30 (μεταβλητή συστήματος DIMALTZ).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1915"/>
         <source>Suppresses the feet portion of a feet-and-inches dimension when the distance is less than 1 foot. For example, 0&apos;-6 1/2&quot; becomes 6 1/2&quot; (DIMALTZ system variable)</source>
-        <translation>Καταπιέζει το τμήμα των ποδιών μιας διάστασης των ποδιών και των εγκοπών όταν η απόσταση είναι μικρότερη από 1 πόδι. Για παράδειγμα, 0&apos;-6 1/2&quot; γίνεται 6 1/2&quot; (μεταβλητή συστήματος DIMALTZ)</translation>
+        <translation>Καταστέλλει τα πόδια σε διάσταση ποδιών και ιντσών όταν η απόσταση είναι μικρότερη από 1 πόδι. Για παράδειγμα, το 0&apos;-6 1/2&quot; γίνεται 6 1/2&quot; (μεταβλητή συστήματος DIMALTZ)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1925"/>
         <source>Suppresses the inches portion of a feet-and-inches dimension when the distance is an integral number of feet. For example, 1&apos;-0&quot; becomes 1&apos;. (DIMALTZ system variable)</source>
-        <translation>Καταπιέζει το τμήμα των ιντσών της διάστασης των ποδιών-και-εντσών όταν η απόσταση είναι ένας αναπόσπαστος αριθμός των ποδιών. Για παράδειγμα, 1&apos;-0&quot; γίνεται 1&apos;. (μεταβλητή συστήματος DIMALTZ)</translation>
+        <translation>Καταστέλλει τις ίντσες σε διάσταση ποδιών και ιντσών όταν η απόσταση είναι ακέραιος αριθμός ποδιών. Για παράδειγμα, το 1&apos;-0&quot; γίνεται 1&apos;. (μεταβλητή συστήματος DIMALTZ)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1938"/>
@@ -10190,22 +10190,22 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2016"/>
         <source>Suppresses leading zeros in all decimal dimensions (DIMTZIN system variable).</source>
-        <translation>Καταπιέζει τα μηδενικά που οδηγούν σε όλες τις δεκαδικές διαστάσεις (μεταβλητή συστήματος DIMTZIN).</translation>
+        <translation>Καταστέλλει τα προπορευόμενα μηδενικά σε όλες τις δεκαδικές διαστάσεις (μεταβλητή συστήματος DIMTZIN).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2026"/>
         <source>Suppresses trailing zeros in all decimal dimensions (DIMTZIN system variable).</source>
-        <translation>Καταπιέζει τα μηδενικά σε όλες τις δεκαδικές διαστάσεις (μεταβλητή συστήματος DIMTZIN).</translation>
+        <translation>Καταστέλλει τα τελικά μηδενικά σε όλες τις δεκαδικές διαστάσεις (μεταβλητή συστήματος DIMTZIN).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2036"/>
         <source>Suppresses the feet portion of a feet-and-inches dimension when the distance is less than 1 foot (DIMTZIN system variable). </source>
-        <translation>Καταπιέζει το τμήμα των ποδιών μιας διάστασης ποδιών-και-ενοχών, όταν η απόσταση είναι λιγότερο από 1 πόδι (μεταβλητή σύστημα DIMTZIN).</translation>
+        <translation>Καταστέλλει τα πόδια σε διάσταση ποδιών και ιντσών όταν η απόσταση είναι μικρότερη από 1 πόδι (μεταβλητή συστήματος DIMTZIN). </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2046"/>
         <source>Suppresses the inches portion of a feet-and-inches dimension when the distance is an integral number of feet (DIMTZIN system variable). </source>
-        <translation>Καταπιέζει το τμήμα των ιντσών μιας διάστασης των ποδιών και των εγκοπών, όταν η απόσταση είναι ένας αναπόσπαστος αριθμός ποδιών (μεταβλητή συστήματος DIMTZIN).</translation>
+        <translation>Καταστέλλει τις ίντσες σε διάσταση ποδιών και ιντσών όταν η απόσταση είναι ακέραιος αριθμός ποδιών (μεταβλητή συστήματος DIMTZIN). </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2059"/>
@@ -10330,22 +10330,22 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2240"/>
         <source>Suppresses leading zeros in all decimal dimensions (DIMALTTZ system variable). </source>
-        <translation>Καταπιέζει τα μηδενικά που οδηγούν σε όλες τις δεκαδικές διαστάσεις (μεταβλητή συστήματος DIMALTTZ).</translation>
+        <translation>Καταστέλλει τα προπορευόμενα μηδενικά σε όλες τις δεκαδικές διαστάσεις (μεταβλητή συστήματος DIMALTTZ). </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2250"/>
         <source>Suppresses trailing zeros in all decimal dimensions (DIMALTTZ system variable).</source>
-        <translation>Καταπιέζει τα μηδενικά σε όλες τις δεκαδικές διαστάσεις (μεταβλητή συστήματος DIMALTTZ).</translation>
+        <translation>Καταστέλλει τα τελικά μηδενικά σε όλες τις δεκαδικές διαστάσεις (μεταβλητή συστήματος DIMALTTZ).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2260"/>
         <source>Suppresses the feet portion of a feet-and-inches dimension when the distance is less than 1 foot (DIMALTTZ system variable).</source>
-        <translation>Καταπιέζει το τμήμα των ποδιών της διάστασης των ποδιών-και-μέσες, όταν η απόσταση είναι λιγότερο από 1 πόδι (μεταβλητή σύστημα DIMALTZ).</translation>
+        <translation>Καταστέλλει τα πόδια σε διάσταση ποδιών και ιντσών όταν η απόσταση είναι μικρότερη από 1 πόδι (μεταβλητή συστήματος DIMALTTZ).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2270"/>
         <source>Suppresses the inches portion of a feet-and-inches dimension when the distance is an integral number of feet (DIMALTTZ system variable).</source>
-        <translation>Καταπιέζει το τμήμα των ιντσών μιας διάστασης ποδών και χιντσών όταν η απόσταση είναι ένας αναπόσπαστος αριθμός ποδιών (μεταβλητή συστήματος DIMALTTZ).</translation>
+        <translation>Καταστέλλει τις ίντσες σε διάσταση ποδιών και ιντσών όταν η απόσταση είναι ακέραιος αριθμός ποδιών (μεταβλητή συστήματος DIMALTTZ).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.cpp" line="354"/>
@@ -10528,7 +10528,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="66"/>
         <source>Ordinate</source>
-        <translation>Ορτανικό</translation>
+        <translation>Τεταγμένη</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="76"/>
@@ -10573,12 +10573,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="187"/>
         <source>Radial Dimension</source>
-        <translation>Ακτινιακή διάσταση</translation>
+        <translation>Ακτινική διάσταση</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="210"/>
         <source>Pen</source>
-        <translation>Στυλό</translation>
+        <translation>Πένα</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="411"/>
@@ -10704,7 +10704,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="148"/>
         <source>Pen</source>
-        <translation>Στυλό</translation>
+        <translation>Πένα</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="175"/>
@@ -11136,12 +11136,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="113"/>
         <source>Polyline</source>
-        <translation>Πολυλίνη</translation>
+        <translation>Πολυγραμμή</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="114"/>
         <source>Spline</source>
-        <translation>Σπλάιν</translation>
+        <translation>Spline</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="115"/>
@@ -11186,7 +11186,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="123"/>
         <source>Dimension Aligned</source>
-        <translation>Στοίχιση διαστάσεων</translation>
+        <translation>Ευθυγραμμισμένη διάσταση</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="124"/>
@@ -11196,7 +11196,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="125"/>
         <source>Dimension Radial</source>
-        <translation>Ακτινιακή διάσταση</translation>
+        <translation>Ακτινική διάσταση</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="126"/>
@@ -11226,7 +11226,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="237"/>
         <source>NOTE: Menu assignment will be ignored. It is reserved for &apos;Pan&apos;.</source>
-        <translation>ΣΗΜΕΙΩΣΗ: Η ανάθεση μενού θα αγνοηθεί. Είναι αποκλειστικά για το \&quot;Pan\&quot;.</translation>
+        <translation>ΣΗΜΕΙΩΣΗ: Η ανάθεση μενού θα αγνοηθεί. Είναι δεσμευμένη για τη &apos;Μετακίνηση προβολής&apos;.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="242"/>
@@ -11264,7 +11264,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="14"/>
         <source>Named Views Settings</source>
-        <translation>Settings προβολώνName</translation>
+        <translation>Ρυθμίσεις ονομασμένων προβολών</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="20"/>
@@ -11319,7 +11319,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="85"/>
         <source>If checked, type of grid for saved view will be shown.</source>
-        <translation>Εάν είναι επιλεγμένο, θα εμφανίζεται ο τύπος του πλέγματος για την αποθηκευμένη προβολή.</translation>
+        <translation>Εάν επιλεγεί, θα εμφανίζεται ο τύπος του καννάβου της αποθηκευμένης προβολής.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="55"/>
@@ -11817,7 +11817,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="128"/>
         <source>Grid</source>
-        <translation type="unfinished">Πλέγμα</translation>
+        <translation type="unfinished">Κάνναβος</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="135"/>
@@ -12175,7 +12175,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.cpp" line="76"/>
         <source>Pen</source>
-        <translation>Στυλό</translation>
+        <translation>Πένα</translation>
     </message>
 </context>
 <context>
@@ -12233,7 +12233,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="56"/>
         <source>If checked, the column with type of grid for UCS will be shown.</source>
-        <translation>Εάν είναι επιλεγμένο, η στήλη με τον τύπο του πλέγματος για το UCS θα εμφανίζεται.</translation>
+        <translation>Εάν επιλεγεί, θα εμφανίζεται η στήλη με τον τύπο του καννάβου για το UCS.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="98"/>
@@ -12810,7 +12810,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_filler.cpp" line="42"/>
         <source>Polyline</source>
-        <translation type="unfinished">Πολυλίνη</translation>
+        <translation type="unfinished">Πολυγραμμή</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_filler.cpp" line="42"/>
@@ -12863,7 +12863,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_widget.ui" line="69"/>
         <source>Polyline</source>
-        <translation type="unfinished">Πολυλίνη</translation>
+        <translation type="unfinished">Πολυγραμμή</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_widget.ui" line="76"/>
@@ -12878,7 +12878,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_widget.ui" line="93"/>
         <source>Pick offset from drawing</source>
-        <translation type="unfinished">Επιλογή όφσετ από σχέδιο</translation>
+        <translation type="unfinished">Επιλογή μετατόπισης από το σχέδιο</translation>
     </message>
 </context>
 <context>
@@ -12936,7 +12936,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_filler.cpp" line="65"/>
         <source>Pen to apply to created duplicate</source>
-        <translation type="unfinished">Στυλό για εφαρμογή σε δημιουργημένο αντίγραφο</translation>
+        <translation type="unfinished">Πένα που θα εφαρμοστεί στο αντίγραφο που δημιουργείται</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_filler.cpp" line="77"/>
@@ -12993,7 +12993,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="69"/>
         <source>Pen to apply to created duplicate</source>
-        <translation type="unfinished">Στυλό για εφαρμογή σε δημιουργημένο αντίγραφο</translation>
+        <translation type="unfinished">Πένα που θα εφαρμοστεί στο αντίγραφο που δημιουργείται</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="73"/>
@@ -13026,7 +13026,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="129"/>
         <source>Pick offset by X from drawing</source>
-        <translation type="unfinished">Διαλέξτε το X από το σχέδιο</translation>
+        <translation type="unfinished">Επιλογή μετατόπισης κατά X από το σχέδιο</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="150"/>
@@ -13391,7 +13391,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="82"/>
         <source>Polyline</source>
-        <translation type="unfinished">Πολυλίνη</translation>
+        <translation type="unfinished">Πολυγραμμή</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="83"/>
@@ -13406,7 +13406,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="85"/>
         <source>Spline</source>
-        <translation type="unfinished">Σπλάιν</translation>
+        <translation type="unfinished">Spline</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="86"/>
@@ -13436,7 +13436,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="91"/>
         <source>Dimension Aligned</source>
-        <translation type="unfinished">Στοίχιση διαστάσεων</translation>
+        <translation type="unfinished">Ευθυγραμμισμένη διάσταση</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="92"/>
@@ -13456,7 +13456,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="95"/>
         <source>Dimension Radial</source>
-        <translation type="unfinished">Ακτινιακή διάσταση</translation>
+        <translation type="unfinished">Ακτινική διάσταση</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="96"/>
@@ -13735,7 +13735,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="245"/>
         <source>Line Width</source>
-        <translation type="unfinished">Πλάτος γραμμής</translation>
+        <translation type="unfinished">Πάχος γραμμής</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="245"/>
@@ -14055,7 +14055,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_hyperbola.ui" line="95"/>
         <source>Vertex X:</source>
-        <translation>Βέρτεξ X:</translation>
+        <translation>Κορυφή X:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_hyperbola.ui" line="123"/>
@@ -14352,7 +14352,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/info/lc_info_dist_point_to_entity_options_filler.cpp" line="33"/>
         <source>Snap On Entity</source>
-        <translation type="unfinished">Snap On Οντότητα</translation>
+        <translation type="unfinished">Έλξη σε οντότητα</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/info/lc_info_dist_point_to_entity_options_filler.cpp" line="33"/>
@@ -14375,7 +14375,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/info/lc_info_dist_point_to_entity_options_widget.ui" line="35"/>
         <source>Snap On Entity</source>
-        <translation type="unfinished">Snap On Οντότητα</translation>
+        <translation type="unfinished">Έλξη σε οντότητα</translation>
     </message>
 </context>
 <context>
@@ -15412,7 +15412,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_widget.ui" line="81"/>
         <source>Snap Point:</source>
-        <translation type="unfinished">Σημείο snap:</translation>
+        <translation type="unfinished">Σημείο έλξης:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_widget.ui" line="113"/>
@@ -15593,7 +15593,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="102"/>
         <source>Offset of tick snap point from intersection point</source>
-        <translation type="unfinished">Μετατόπιση του σημείου snap από το σημείο τομής</translation>
+        <translation type="unfinished">Μετατόπιση του σημείου έλξης σημαδιού από το σημείο τομής</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="108"/>
@@ -15685,7 +15685,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="156"/>
         <source>Line Snap:</source>
-        <translation type="unfinished">Snap γραμμής:</translation>
+        <translation type="unfinished">Έλξη γραμμής:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="163"/>
@@ -15700,7 +15700,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="180"/>
         <source>Snap Distance:</source>
-        <translation type="unfinished">Απόσταση snap:</translation>
+        <translation type="unfinished">Απόσταση έλξης:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="205"/>
@@ -15710,7 +15710,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="212"/>
         <source>Pick snap distance from drawing</source>
-        <translation type="unfinished">Επιλογή απόστασης από το σχέδιο</translation>
+        <translation type="unfinished">Επιλογή απόστασης έλξης από το σχέδιο</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="226"/>
@@ -15725,7 +15725,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="265"/>
         <source>Offset of tick snap point from intersection point</source>
-        <translation type="unfinished">Μετατόπιση του σημείου snap από το σημείο τομής</translation>
+        <translation type="unfinished">Μετατόπιση του σημείου έλξης σημαδιού από το σημείο τομής</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="272"/>
@@ -15745,7 +15745,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="329"/>
         <source>Pick offset from drawing</source>
-        <translation type="unfinished">Επιλογή όφσετ από σχέδιο</translation>
+        <translation type="unfinished">Επιλογή μετατόπισης από το σχέδιο</translation>
     </message>
 </context>
 <context>
@@ -15889,7 +15889,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="88"/>
         <source>Snap point for created line</source>
-        <translation type="unfinished">Σημείο snap για τη δημιουργημένη γραμμή</translation>
+        <translation type="unfinished">Σημείο έλξης για τη δημιουργούμενη γραμμή</translation>
     </message>
 </context>
 <context>
@@ -15922,7 +15922,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="120"/>
         <source>Snap point for created line</source>
-        <translation type="unfinished">Σημείο snap για τη δημιουργημένη γραμμή</translation>
+        <translation type="unfinished">Σημείο έλξης για τη δημιουργούμενη γραμμή</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="124"/>
@@ -15972,7 +15972,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="273"/>
         <source>Pick offset from drawing</source>
-        <translation type="unfinished">Επιλογή όφσετ από σχέδιο</translation>
+        <translation type="unfinished">Επιλογή μετατόπισης από το σχέδιο</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="318"/>
@@ -16114,7 +16114,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="61"/>
         <source>Gap Snap:</source>
-        <translation type="unfinished">Snap Gap:</translation>
+        <translation type="unfinished">Έλξη κενού:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="68"/>
@@ -16148,7 +16148,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="95"/>
         <source>Line Snap:</source>
-        <translation type="unfinished">Snap γραμμής:</translation>
+        <translation type="unfinished">Έλξη γραμμής:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="134"/>
@@ -16178,12 +16178,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="184"/>
         <source>Snap Distance:</source>
-        <translation type="unfinished">Απόσταση snap:</translation>
+        <translation type="unfinished">Απόσταση έλξης:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="191"/>
         <source>Pick snap distance from drawing</source>
-        <translation type="unfinished">Επιλογή απόστασης από το σχέδιο</translation>
+        <translation type="unfinished">Επιλογή απόστασης έλξης από το σχέδιο</translation>
     </message>
 </context>
 <context>
@@ -16248,7 +16248,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="78"/>
         <source>Polyline</source>
-        <translation type="unfinished">Πολυλίνη</translation>
+        <translation type="unfinished">Πολυγραμμή</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="78"/>
@@ -17035,7 +17035,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="64"/>
         <source>Polyline</source>
-        <translation type="unfinished">Πολυλίνη</translation>
+        <translation type="unfinished">Πολυγραμμή</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="65"/>
@@ -17175,7 +17175,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="324"/>
         <source>Polyline</source>
-        <translation type="unfinished">Πολυλίνη</translation>
+        <translation type="unfinished">Πολυγραμμή</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="331"/>
@@ -17541,7 +17541,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_base.h" line="57"/>
         <source>Line Width</source>
-        <translation type="unfinished">Πλάτος γραμμής</translation>
+        <translation type="unfinished">Πάχος γραμμής</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_base.h" line="57"/>
@@ -17653,7 +17653,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimaligned.cpp" line="29"/>
         <source>Dimension Aligned</source>
-        <translation type="unfinished">Στοίχιση διαστάσεων</translation>
+        <translation type="unfinished">Ευθυγραμμισμένη διάσταση</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimaligned.cpp" line="35"/>
@@ -19152,7 +19152,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimlinear.cpp" line="72"/>
         <source>Oblique</source>
-        <translation type="unfinished">Ομπλίκ</translation>
+        <translation type="unfinished">Λοξή γραμμή</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimlinear.cpp" line="72"/>
@@ -19190,7 +19190,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimordinate.cpp" line="43"/>
         <source>Ordinate</source>
-        <translation type="unfinished">Ορτανικό</translation>
+        <translation type="unfinished">Τεταγμένη</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimordinate.cpp" line="43"/>
@@ -19283,7 +19283,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimradial.cpp" line="29"/>
         <source>Dimension Radial</source>
-        <translation type="unfinished">Ακτινιακή διάσταση</translation>
+        <translation type="unfinished">Ακτινική διάσταση</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimradial.cpp" line="34"/>
@@ -20375,7 +20375,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_polyline.cpp" line="29"/>
         <source>Polyline</source>
-        <translation type="unfinished">Πολυλίνη</translation>
+        <translation type="unfinished">Πολυγραμμή</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_polyline.cpp" line="33"/>
@@ -20483,7 +20483,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_spline.cpp" line="30"/>
         <source>Spline</source>
-        <translation type="unfinished">Σπλάιν</translation>
+        <translation type="unfinished">Spline</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_spline.cpp" line="35"/>
@@ -20749,7 +20749,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_text.cpp" line="70"/>
         <source>Aligned</source>
-        <translation type="unfinished">Στοίχιση</translation>
+        <translation type="unfinished">Ευθυγραμμισμένο</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_text.cpp" line="71"/>
@@ -20855,7 +20855,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="143"/>
         <source>Polyline</source>
-        <translation type="unfinished">Πολυλίνη</translation>
+        <translation type="unfinished">Πολυγραμμή</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="147"/>
@@ -21622,7 +21622,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="82"/>
         <source>If checked, mirrored entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Εάν ενεργοποιηθεί, οι καθρεπτισμένες οντότητες θα τοποθετηθούν στην τρέχουσα στρώση, διαφορετικά θα τοποθετηθούν στις αρχικές τους στρώσεις.</translation>
+        <translation type="unfinished">Εάν ενεργοποιηθεί, οι κατοπτρισμένες οντότητες θα τοποθετούνται στην τρέχουσα στρώση, αλλιώς στις αρχικές τους στρώσεις.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="85"/>
@@ -21917,7 +21917,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.ui" line="98"/>
         <source>Create view for current zoom and offset of drawing</source>
-        <translation>Δημιουργία προβολής για την τρέχουσα μεγέθυνση και όφσετ σχεδίασης</translation>
+        <translation>Δημιουργία προβολής για την τρέχουσα εστίαση και μετατόπιση του σχεδίου</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.ui" line="164"/>
@@ -21947,7 +21947,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.ui" line="55"/>
         <source>Settings</source>
-        <translation>Settings</translation>
+        <translation>Ρυθμίσεις</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="259"/>
@@ -22267,7 +22267,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="32"/>
         <source>Modify Offset Options</source>
-        <translation type="unfinished">Τροποποίηση επιλογών Offset</translation>
+        <translation type="unfinished">Επιλογές μετατόπισης</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="63"/>
@@ -22371,7 +22371,7 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_parabola.ui" line="56"/>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_parabola.ui" line="59"/>
         <source>Points on Spline</source>
-        <translation>Σημεία στο Spline</translation>
+        <translation>Σημεία στο spline</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_parabola.ui" line="88"/>
@@ -23062,7 +23062,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettemodel.cpp" line="230"/>
         <source>Line Width:</source>
-        <translation>Πλάτος γραμμής:</translation>
+        <translation>Πάχος γραμμής:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettemodel.cpp" line="233"/>
@@ -23076,7 +23076,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="20"/>
         <source>Pen Palette Settings</source>
-        <translation>Settings παλέτας Pen</translation>
+        <translation>Ρυθμίσεις παλέτας πενών</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="187"/>
@@ -23106,17 +23106,17 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="221"/>
         <source>Line Width Icon</source>
-        <translation>Εικονίδιο Πλάτος γραμμής</translation>
+        <translation>Εικονίδιο πάχους γραμμής</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="228"/>
         <source>Line Width Name</source>
-        <translation>Όνομα Πλάτος γραμμής</translation>
+        <translation>Όνομα πάχους γραμμής</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="66"/>
         <source>Background color for pen element currently edited in pen&apos;s table</source>
-        <translation>Χρώμα φόντου για το στοιχείο στυλό που έχει επεξεργαστεί στο τραπέζι του στυλό</translation>
+        <translation>Χρώμα φόντου για το στοιχείο πένας που επεξεργάζεται τη στιγμή αυτή στον πίνακα πενών</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="32"/>
@@ -23132,7 +23132,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="76"/>
         <source>If set, bold font is used for all elements of active pen item (otherwise, only for name)</source>
-        <translation>Αν οριστεί, χρησιμοποιείται έντονη γραμματοσειρά για όλα τα στοιχεία του ενεργού αντικειμένου στυλό (αλλιώς, μόνο για όνομα)</translation>
+        <translation>Αν οριστεί, χρησιμοποιείται έντονη γραμματοσειρά για όλα τα στοιχεία της ενεργής πένας (αλλιώς μόνο για το όνομα)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="79"/>
@@ -23237,7 +23237,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="162"/>
         <source>Defines how the program to react on double click on pen item in table</source>
-        <translation>Καθορίζει πώς το πρόγραμμα για να αντιδράσει σε διπλό κλικ στο αντικείμενο στυλό στον πίνακα</translation>
+        <translation>Καθορίζει πώς αντιδρά το πρόγραμμα σε διπλό κλικ σε μια πένα του πίνακα</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.cpp" line="52"/>
@@ -23247,12 +23247,12 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.cpp" line="53"/>
         <source>Select entities by attributes pen</source>
-        <translation>Επιλέξτε οντότητες με χαρακτηριστικά στυλό</translation>
+        <translation>Επιλογή οντοτήτων με την πένα χαρακτηριστικών</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.cpp" line="54"/>
         <source>Select entities by drawing pen</source>
-        <translation>Επιλέξτε οντότητες σχεδιάζοντας στυλό</translation>
+        <translation>Επιλογή οντοτήτων με την πένα σχεδίασης</translation>
     </message>
 </context>
 <context>
@@ -23270,17 +23270,17 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="66"/>
         <source>Fill Pen Editor by Entity Attributes</source>
-        <translation>Επεξεργαστής πλήρωσης στυλών από χαρακτηριστικά οντότητας</translation>
+        <translation>Συμπλήρωση του επεξεργαστή πένας με τα χαρακτηριστικά της οντότητας</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="83"/>
         <source>Select Entities By Drawing Pen</source>
-        <translation>Επιλογή Οντοτήτων Σχεδιάζοντας Στυλό</translation>
+        <translation>Επιλογή οντοτήτων με την πένα σχεδίασης</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="100"/>
         <source>Select Entities By Pen Attributes</source>
-        <translation>Επιλογή Οντοτήτων με χαρακτηριστικά στυλό</translation>
+        <translation>Επιλογή οντοτήτων με τα χαρακτηριστικά πένας</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="120"/>
@@ -23301,7 +23301,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="171"/>
         <source>Apply Editor Pen As Current Pen</source>
-        <translation>Εφαρμογή Pen επεξεργαστή ως τρέχουσα πένα</translation>
+        <translation>Εφαρμογή της πένας του επεξεργαστή ως τρέχουσας πένας</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="174"/>
@@ -23356,7 +23356,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="365"/>
         <source>Width:</source>
-        <translation>Πλάτος:</translation>
+        <translation>Πάχος:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="372"/>
@@ -23381,12 +23381,12 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="487"/>
         <source>Settings</source>
-        <translation>Settings</translation>
+        <translation>Ρυθμίσεις</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="518"/>
         <source>Filtering pens by name</source>
-        <translation>Φίλτρα με το όνομα</translation>
+        <translation>Φιλτράρισμα πενών κατά όνομα</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="521"/>
@@ -23396,7 +23396,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="550"/>
         <source>If checked, matched pens are highlighted, otherwise non-matching pens are hidden.</source>
-        <translation>Αν ενεργοποιηθεί, οι αντιστοιχισμένες πένες τονίζονται, διαφορετικά οι μη ταίριασμα στυλό είναι κρυμμένες.</translation>
+        <translation>Αν ενεργοποιηθεί, οι πένες που ταιριάζουν επισημαίνονται, αλλιώς οι πένες που δεν ταιριάζουν αποκρύπτονται.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="553"/>
@@ -23421,12 +23421,12 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="306"/>
         <source>&amp;Select Entities With Attributes Pen</source>
-        <translation>&amp; Επιλογή οντοτήτων με χαρακτηριστικά Pen</translation>
+        <translation>&amp;Επιλογή οντοτήτων με την πένα χαρακτηριστικών</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="308"/>
         <source>&amp;Select Entities With Drawing Pen</source>
-        <translation>&amp; Επιλογή Οντοτήτων με Στυλό Σχεδίασης</translation>
+        <translation>&amp;Επιλογή οντοτήτων με την πένα σχεδίασης</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="312"/>
@@ -23441,7 +23441,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="317"/>
         <source>&amp;Remove Pens</source>
-        <translation>&amp; Αφαίρεση στυλών</translation>
+        <translation>&amp;Αφαίρεση πενών</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="430"/>
@@ -23691,7 +23691,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_options_filler.cpp" line="37"/>
         <source>Polyline</source>
-        <translation type="unfinished">Πολυλίνη</translation>
+        <translation type="unfinished">Πολυγραμμή</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_options_filler.cpp" line="37"/>
@@ -23734,7 +23734,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_options_widget.ui" line="73"/>
         <source>Vertex to Vertex</source>
-        <translation type="unfinished">Vertex προς Vertex</translation>
+        <translation type="unfinished">Από κορυφή σε κορυφή</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_options_widget.ui" line="80"/>
@@ -23769,7 +23769,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_options_widget.ui" line="129"/>
         <source>Polyline</source>
-        <translation type="unfinished">Πολυλίνη</translation>
+        <translation type="unfinished">Πολυγραμμή</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_options_widget.ui" line="143"/>
@@ -23782,7 +23782,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_side_side_options_filler.cpp" line="34"/>
         <source>Vertex to Vertex</source>
-        <translation type="unfinished">Vertex προς Vertex</translation>
+        <translation type="unfinished">Από κορυφή σε κορυφή</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_side_side_options_filler.cpp" line="35"/>
@@ -24140,7 +24140,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="72"/>
         <source>Apply Print Scale to line width</source>
-        <translation type="unfinished">Εφαρμογή κλίμακας εκτύπωσης σε πλάτος γραμμής</translation>
+        <translation type="unfinished">Εφαρμογή κλίμακας εκτύπωσης στο πάχος γραμμής</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="78"/>
@@ -24278,12 +24278,12 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_widget.ui" line="78"/>
         <source>Drawing Settings</source>
-        <translation type="unfinished">Settings σχεδίασης</translation>
+        <translation type="unfinished">Ρυθμίσεις σχεδίου</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_widget.ui" line="105"/>
         <source>Apply Print Scale to line width</source>
-        <translation type="unfinished">Εφαρμογή κλίμακας εκτύπωσης σε πλάτος γραμμής</translation>
+        <translation type="unfinished">Εφαρμογή κλίμακας εκτύπωσης στο πάχος γραμμής</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_widget.ui" line="134"/>
@@ -24467,7 +24467,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_active_pen.cpp" line="80"/>
         <source>Line Width</source>
-        <translation type="unfinished">Πλάτος γραμμής</translation>
+        <translation type="unfinished">Πάχος γραμμής</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_active_pen.cpp" line="80"/>
@@ -24735,7 +24735,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="144"/>
         <source>Trim</source>
-        <translation type="unfinished">Κόψιμο</translation>
+        <translation type="unfinished">Περικοπή</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="144"/>
@@ -25139,7 +25139,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="79"/>
         <source>Trim</source>
-        <translation type="unfinished">Κόψιμο</translation>
+        <translation type="unfinished">Περικοπή</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="79"/>
@@ -27325,7 +27325,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_grid.cpp" line="39"/>
         <source>Grid</source>
-        <translation type="unfinished">Πλέγμα</translation>
+        <translation type="unfinished">Κάνναβος</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_grid.cpp" line="39"/>
@@ -27454,7 +27454,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="122"/>
         <source>Line Width</source>
-        <translation type="unfinished">Πλάτος γραμμής</translation>
+        <translation type="unfinished">Πάχος γραμμής</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="122"/>
@@ -27984,7 +27984,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_views.cpp" line="96"/>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_views.cpp" line="98"/>
         <source>Create view for current zoom and offset of drawing</source>
-        <translation type="unfinished">Δημιουργία προβολής για την τρέχουσα μεγέθυνση και όφσετ σχεδίασης</translation>
+        <translation type="unfinished">Δημιουργία προβολής για την τρέχουσα εστίαση και μετατόπιση του σχεδίου</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_views.cpp" line="115"/>
@@ -28606,7 +28606,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_leader.cpp" line="64"/>
         <source>Vertex</source>
-        <translation type="unfinished">Βέρτεξ</translation>
+        <translation type="unfinished">Κορυφή</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_leader.cpp" line="64"/>
@@ -28725,7 +28725,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="104"/>
         <source>Trim</source>
-        <translation type="unfinished">Κόψιμο</translation>
+        <translation type="unfinished">Περικοπή</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="104"/>
@@ -28735,7 +28735,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="105"/>
         <source>Trim Two</source>
-        <translation type="unfinished">Κόψιμο Δύο</translation>
+        <translation type="unfinished">Περικοπή δύο</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="105"/>
@@ -28946,7 +28946,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="170"/>
         <source>Bevel</source>
-        <translation type="unfinished">Μπέβελ</translation>
+        <translation type="unfinished">Λοξοτομή</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="170"/>
@@ -29302,7 +29302,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_parabola.cpp" line="39"/>
         <source>Vertex</source>
-        <translation type="unfinished">Βέρτεξ</translation>
+        <translation type="unfinished">Κορυφή</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_parabola.cpp" line="39"/>
@@ -29469,7 +29469,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_polyline.cpp" line="60"/>
         <source>Vertex</source>
-        <translation type="unfinished">Βέρτεξ</translation>
+        <translation type="unfinished">Κορυφή</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_polyline.cpp" line="60"/>
@@ -29665,7 +29665,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_polyline.cpp" line="126"/>
         <source>Spline</source>
-        <translation type="unfinished">Σπλάιν</translation>
+        <translation type="unfinished">Spline</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_polyline.cpp" line="126"/>
@@ -30142,7 +30142,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_text.cpp" line="56"/>
         <source>Aligned</source>
-        <translation type="unfinished">Στοίχιση</translation>
+        <translation type="unfinished">Ευθυγραμμισμένο</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_text.cpp" line="57"/>
@@ -30502,7 +30502,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/lc_propertysheetwidget.ui" line="214"/>
         <source>Settings</source>
-        <translation type="unfinished">Settings</translation>
+        <translation type="unfinished">Ρυθμίσεις</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/lc_propertysheetwidget.ui" line="228"/>
@@ -30673,7 +30673,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1053"/>
         <source>Aligned</source>
-        <translation>Στοίχιση</translation>
+        <translation>Ευθυγραμμισμένο</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="570"/>
@@ -30722,7 +30722,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="548"/>
         <source>Line Width</source>
-        <translation>Πλάτος γραμμής</translation>
+        <translation>Πάχος γραμμής</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="550"/>
@@ -30951,13 +30951,13 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="885"/>
         <source>Vertex - 0:</source>
-        <translation>Βέρτεξ - 0:</translation>
+        <translation>Κορυφή - 0:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="910"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="924"/>
         <source>Vertex - </source>
-        <translation>Βέρτεξ -</translation>
+        <translation>Κορυφή - </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="931"/>
@@ -31216,12 +31216,12 @@ Layer: </source>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1111"/>
         <source>Mirrored in X</source>
-        <translation>Καθρεφτισμένος σε X</translation>
+        <translation>Κατοπτρισμένο ως προς X</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1113"/>
         <source>Mirrored in Y</source>
-        <translation>Καθρεφτισμένος σε Y</translation>
+        <translation>Κατοπτρισμένο ως προς Y</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1120"/>
@@ -31400,7 +31400,7 @@ Layer: </source>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1331"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1347"/>
         <source>Vertex</source>
-        <translation>Βέρτεξ</translation>
+        <translation>Κορυφή</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1332"/>
@@ -31535,7 +31535,7 @@ Layer: </source>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1528"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1545"/>
         <source>Oblique</source>
-        <translation>Ομπλίκ</translation>
+        <translation>Λοξή γραμμή</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1549"/>
@@ -31547,7 +31547,7 @@ Layer: </source>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1552"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1567"/>
         <source>Ordinate</source>
-        <translation>Ορτανικό</translation>
+        <translation>Τεταγμένη</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1553"/>
@@ -31704,7 +31704,7 @@ Layer: </source>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.ui" line="220"/>
         <source>Settings</source>
-        <translation>Settings</translation>
+        <translation>Ρυθμίσεις</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.ui" line="244"/>
@@ -31713,11 +31713,11 @@ Layer: </source>
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:8pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML ΔΗΜΟΣΙΑ &quot;//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/stric.dtd&quot;&gt;
-Απόδοση Διαλόγων/Συγχρονισμός:
-p, li { white- space: pre- wrap;}
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font- size:8pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot;-qt-παράγραφος-τύπος:άδειο; περιθώριο-top:0px; περιθώριο-κάτω:0px; περιθώριο-αριστερά:0px; περιθώριο-δεξιά:0px; -qt-block-indent:0; κείμενο-indent:0px;&quot;&gt; &lt;br / body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:8pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="345"/>
@@ -31868,7 +31868,7 @@ p, li { white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.cpp" line="44"/>
         <source>Points highlight pen</source>
-        <translation>Στυλό επισήμανσης σημείων</translation>
+        <translation>Πένα επισήμανσης σημείων</translation>
     </message>
 </context>
 <context>
@@ -31981,7 +31981,7 @@ p, li { white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1_point_options_filler.cpp" line="83"/>
         <source>Polyline</source>
-        <translation type="unfinished">Πολυλίνη</translation>
+        <translation type="unfinished">Πολυγραμμή</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1_point_options_filler.cpp" line="83"/>
@@ -32009,7 +32009,7 @@ p, li { white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="49"/>
         <source>Polyline</source>
-        <translation type="unfinished">Πολυλίνη</translation>
+        <translation type="unfinished">Πολυγραμμή</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="56"/>
@@ -32074,7 +32074,7 @@ p, li { white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="146"/>
         <source>Length of bevel corner for X direction. </source>
-        <translation type="unfinished">Μήκος της γωνίας Bevel για την κατεύθυνση X.</translation>
+        <translation type="unfinished">Μήκος της λοξοτομής γωνίας στην κατεύθυνση X. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="160"/>
@@ -32114,7 +32114,7 @@ p, li { white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="229"/>
         <source>Length of bevel corner for Y direction. </source>
-        <translation type="unfinished">Μήκος της γωνίας Bevel για την κατεύθυνση Y.</translation>
+        <translation type="unfinished">Μήκος της λοξοτομής γωνίας στην κατεύθυνση Y. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="236"/>
@@ -32134,7 +32134,7 @@ p, li { white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="250"/>
         <source>Bevel</source>
-        <translation type="unfinished">Μπέβελ</translation>
+        <translation type="unfinished">Λοξοτομή</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="258"/>
@@ -32204,7 +32204,7 @@ p, li { white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="391"/>
         <source>Snap shift</source>
-        <translation type="unfinished">Μετατόπιση snap</translation>
+        <translation type="unfinished">Μετατόπιση έλξης</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="405"/>
@@ -32229,12 +32229,12 @@ p, li { white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="445"/>
         <source>Pick length of bevel corner for X direction from drawing.</source>
-        <translation type="unfinished">Διαλέξτε το μήκος της Bevel γωνίας για X κατεύθυνση από το σχέδιο.</translation>
+        <translation type="unfinished">Επιλέξτε από το σχέδιο το μήκος της λοξοτομής γωνίας στην κατεύθυνση X.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="459"/>
         <source>Pick length of bevel corner for Y direction from drawing.</source>
-        <translation type="unfinished">Διαλέξτε το μήκος της Bevel γωνίας για Y κατεύθυνση από το σχέδιο.</translation>
+        <translation type="unfinished">Επιλέξτε από το σχέδιο το μήκος της λοξοτομής γωνίας στην κατεύθυνση Y.</translation>
     </message>
 </context>
 <context>
@@ -32302,7 +32302,7 @@ p, li { white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_filler.cpp" line="68"/>
         <source>Polyline</source>
-        <translation type="unfinished">Πολυλίνη</translation>
+        <translation type="unfinished">Πολυγραμμή</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_filler.cpp" line="68"/>
@@ -32354,7 +32354,7 @@ p, li { white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="62"/>
         <source>Polyline</source>
-        <translation type="unfinished">Πολυλίνη</translation>
+        <translation type="unfinished">Πολυγραμμή</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="69"/>
@@ -32374,12 +32374,12 @@ p, li { white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="83"/>
         <source>Bevel</source>
-        <translation type="unfinished">Μπέβελ</translation>
+        <translation type="unfinished">Λοξοτομή</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="91"/>
         <source>Start Snap:</source>
-        <translation type="unfinished">Έναρξη snap:</translation>
+        <translation type="unfinished">Έλξη αρχής:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="105"/>
@@ -32444,7 +32444,7 @@ p, li { white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="280"/>
         <source>Pick length of bevel in X direction from drawing.</source>
-        <translation type="unfinished">Διαλέξτε το μήκος του bevel σε κατεύθυνση X από το σχέδιο.</translation>
+        <translation type="unfinished">Επιλέξτε από το σχέδιο το μήκος λοξοτομής στην κατεύθυνση X.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="294"/>
@@ -32469,22 +32469,22 @@ p, li { white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="318"/>
         <source>If checked, specifies that snap points should be shifted by radius of corners.</source>
-        <translation type="unfinished">Εάν ενεργοποιηθεί, ορίζεται ότι τα σημεία snap πρέπει να μετατοπίζονται με ακτίνα των γωνιών.</translation>
+        <translation type="unfinished">Εάν ενεργοποιηθεί, τα σημεία έλξης μετατοπίζονται κατά την ακτίνα των γωνιών.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="321"/>
         <source>Snap shift</source>
-        <translation type="unfinished">Μετατόπιση snap</translation>
+        <translation type="unfinished">Μετατόπιση έλξης</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="340"/>
         <source>Length of bevel in X direction.</source>
-        <translation type="unfinished">Μήκος του bevel προς την κατεύθυνση X.</translation>
+        <translation type="unfinished">Μήκος λοξοτομής στην κατεύθυνση X.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="347"/>
         <source>End Snap:</source>
-        <translation type="unfinished">Τέλος snap:</translation>
+        <translation type="unfinished">Έλξη τέλους:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="354"/>
@@ -32494,7 +32494,7 @@ p, li { white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="361"/>
         <source>Pick length of bevel in Y direction from drawing. </source>
-        <translation type="unfinished">Διαλέξτε το μήκος του bevel σε Y κατεύθυνση από το σχέδιο.</translation>
+        <translation type="unfinished">Επιλέξτε από το σχέδιο το μήκος λοξοτομής στην κατεύθυνση Y. </translation>
     </message>
 </context>
 <context>
@@ -32552,7 +32552,7 @@ p, li { white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3_points_options_filler.cpp" line="64"/>
         <source>Polyline</source>
-        <translation type="unfinished">Πολυλίνη</translation>
+        <translation type="unfinished">Πολυγραμμή</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3_points_options_filler.cpp" line="64"/>
@@ -32575,7 +32575,7 @@ p, li { white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="35"/>
         <source>Polyline</source>
-        <translation type="unfinished">Πολυλίνη</translation>
+        <translation type="unfinished">Πολυγραμμή</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="86"/>
@@ -32630,12 +32630,12 @@ p, li { white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="248"/>
         <source>If checked, specifies that snap points should be shifted by radius of corners.</source>
-        <translation type="unfinished">Εάν ενεργοποιηθεί, ορίζεται ότι τα σημεία snap πρέπει να μετατοπίζονται με ακτίνα των γωνιών.</translation>
+        <translation type="unfinished">Εάν ενεργοποιηθεί, τα σημεία έλξης μετατοπίζονται κατά την ακτίνα των γωνιών.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="251"/>
         <source>Snap shift</source>
-        <translation type="unfinished">Μετατόπιση snap</translation>
+        <translation type="unfinished">Μετατόπιση έλξης</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="258"/>
@@ -32650,7 +32650,7 @@ p, li { white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="290"/>
         <source>Length of bevel in X direction.</source>
-        <translation type="unfinished">Μήκος του bevel προς την κατεύθυνση X.</translation>
+        <translation type="unfinished">Μήκος λοξοτομής στην κατεύθυνση X.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="315"/>
@@ -32690,7 +32690,7 @@ p, li { white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="382"/>
         <source>Bevel</source>
-        <translation type="unfinished">Μπέβελ</translation>
+        <translation type="unfinished">Λοξοτομή</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="390"/>
@@ -32700,12 +32700,12 @@ p, li { white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="397"/>
         <source>Pick length of bevel in X direction from drawing.</source>
-        <translation type="unfinished">Διαλέξτε το μήκος του bevel σε κατεύθυνση X από το σχέδιο.</translation>
+        <translation type="unfinished">Επιλέξτε από το σχέδιο το μήκος λοξοτομής στην κατεύθυνση X.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="411"/>
         <source>Pick length of bevel in Y direction from drawing.</source>
-        <translation type="unfinished">Διαλέξτε το μήκος του bevel σε Y κατεύθυνση από το σχέδιο.</translation>
+        <translation type="unfinished">Επιλέξτε από το σχέδιο το μήκος λοξοτομής στην κατεύθυνση Y.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="428"/>
@@ -32773,7 +32773,7 @@ p, li { white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_abstract_options_filler.cpp" line="58"/>
         <source>Bevel</source>
-        <translation type="unfinished">Μπέβελ</translation>
+        <translation type="unfinished">Λοξοτομή</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_abstract_options_filler.cpp" line="62"/>
@@ -33150,7 +33150,7 @@ p, li { white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_filler.cpp" line="34"/>
         <source>Angles mirrored</source>
-        <translation type="unfinished">Γωνίες καθρεπτισμένες</translation>
+        <translation type="unfinished">Κατοπτρισμένες γωνίες</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_filler.cpp" line="35"/>
@@ -33243,7 +33243,7 @@ p, li { white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="53"/>
         <source>Angles mirrored</source>
-        <translation type="unfinished">Γωνίες καθρεπτισμένες</translation>
+        <translation type="unfinished">Κατοπτρισμένες γωνίες</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="60"/>
@@ -33608,7 +33608,7 @@ p, li { white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/modify/lc_round_options_filler.cpp" line="31"/>
         <source>Trim</source>
-        <translation type="unfinished">Κόψιμο</translation>
+        <translation type="unfinished">Περικοπή</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_round_options_filler.cpp" line="31"/>
@@ -33641,7 +33641,7 @@ p, li { white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/modify/lc_round_options_widget.ui" line="62"/>
         <source>Trim</source>
-        <translation type="unfinished">Κόψιμο</translation>
+        <translation type="unfinished">Περικοπή</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_round_options_widget.ui" line="85"/>
@@ -33875,7 +33875,7 @@ p, li { white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="53"/>
         <source>Spline</source>
-        <translation>Σπλάιν</translation>
+        <translation>Spline</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="60"/>
@@ -33890,7 +33890,7 @@ p, li { white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="74"/>
         <source>Polyline</source>
-        <translation>Πολυλίνη</translation>
+        <translation>Πολυγραμμή</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="81"/>
@@ -33943,18 +33943,18 @@ p, li { white- space: pre- wrap;}
     <message>
         <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="45"/>
         <source>Import settings</source>
-        <translation>Settings εισαγωγής</translation>
+        <translation>Εισαγωγή ρυθμίσεων</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="46"/>
         <source>Export Settings</source>
-        <translation>Settings εξαγωγής</translation>
+        <translation>Εξαγωγή ρυθμίσεων</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="110"/>
         <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="121"/>
         <source>Settings Export</source>
-        <translation>Settings εξαγωγής</translation>
+        <translation>Εξαγωγή ρυθμίσεων</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="121"/>
@@ -34379,7 +34379,7 @@ p, li { white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="284"/>
         <source>Offset of tick snap point to intersection point. </source>
-        <translation type="unfinished">Μετατόπιση του σημείου snap point στο σημείο τομής.</translation>
+        <translation type="unfinished">Μετατόπιση του σημείου έλξης σημαδιού ως προς το σημείο τομής. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="291"/>
@@ -34533,7 +34533,7 @@ p, li { white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="39"/>
         <source>If unchecked, original spline will be removed, otherwise it will survive.</source>
-        <translation type="unfinished">Αν δεν ελεγχθεί, το αρχικό spline θα αφαιρεθεί, αλλιώς θα επιβιώσει.</translation>
+        <translation type="unfinished">Αν δεν επιλεγεί, το αρχικό spline θα αφαιρεθεί, αλλιώς θα διατηρηθεί.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="42"/>
@@ -34709,7 +34709,7 @@ p, li { white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="105"/>
         <source>Vertexes are spline points</source>
-        <translation type="unfinished">Οι πλεξούδες είναι spline σημεία</translation>
+        <translation type="unfinished">Οι κορυφές είναι σημεία της spline</translation>
     </message>
 </context>
 <context>
@@ -34829,7 +34829,7 @@ p, li { white- space: pre- wrap;}
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_splinepoints.ui" line="93"/>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_splinepoints.ui" line="96"/>
         <source>Points on Spline</source>
-        <translation>Σημεία στο Spline</translation>
+        <translation>Σημεία στο spline</translation>
     </message>
 </context>
 <context>
@@ -34873,7 +34873,7 @@ p, li { white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="122"/>
         <source>Closed Spline CheckBox</source>
-        <translation>Κλειστό πλαίσιο ελέγχου Spline</translation>
+        <translation>Πλαίσιο ελέγχου κλειστού spline</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="125"/>
@@ -34929,7 +34929,7 @@ p, li { white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="255"/>
         <source>Knot values control the spline’s curve shape (non-decreasing sequence)</source>
-        <translation>Οι τιμές Knot ελέγχουν το σχήμα καμπύλης του spline (μη μειούμενη ακολουθία)</translation>
+        <translation>Οι τιμές των κόμβων ελέγχουν το σχήμα της καμπύλης spline (μη φθίνουσα ακολουθία)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="258"/>
@@ -35092,7 +35092,7 @@ p, li { white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/polygon/lc_star_options_widget.ui" line="85"/>
         <source>Polyline</source>
-        <translation type="unfinished">Πολυλίνη</translation>
+        <translation type="unfinished">Πολυγραμμή</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_star_options_widget.ui" line="92"/>
@@ -35392,7 +35392,7 @@ p, li { white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/dialogs/entity/lc_textpropertieseditingwidget.cpp" line="59"/>
         <source>Aligned</source>
-        <translation type="unfinished">Στοίχιση</translation>
+        <translation type="unfinished">Ευθυγραμμισμένο</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_textpropertieseditingwidget.cpp" line="60"/>
@@ -35405,7 +35405,7 @@ p, li { white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="53"/>
         <source>Pen</source>
-        <translation>Στυλό</translation>
+        <translation>Πένα</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="69"/>
@@ -35415,7 +35415,7 @@ p, li { white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="75"/>
         <source>Snap Selection</source>
-        <translation>Επιλογή snap</translation>
+        <translation>Επιλογή έλξης</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="86"/>
@@ -35502,7 +35502,7 @@ p, li { white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="332"/>
         <source>Spline</source>
-        <translation>Σπλάιν</translation>
+        <translation>Spline</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="333"/>
@@ -35512,7 +35512,7 @@ p, li { white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="334"/>
         <source>Polyline</source>
-        <translation>Πολυλίνη</translation>
+        <translation>Πολυγραμμή</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="335"/>
@@ -35575,7 +35575,7 @@ p, li { white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="364"/>
         <source>Splines</source>
-        <translation>Σπλάιν</translation>
+        <translation>Splines</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="366"/>
@@ -35623,7 +35623,7 @@ p, li { white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/modify/lc_trim_amount_options_filler.cpp" line="31"/>
         <source>The input length is used as total length after trimming, instead of length increase</source>
-        <translation type="unfinished">Το μήκος εισόδου χρησιμοποιείται ως συνολικό μήκος μετά το κόψιμο, αντί για αύξηση μήκους</translation>
+        <translation type="unfinished">Το μήκος που εισάγεται χρησιμοποιείται ως συνολικό μήκος μετά την περικοπή, αντί για αύξηση του μήκους</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_trim_amount_options_filler.cpp" line="37"/>
@@ -35638,7 +35638,7 @@ p, li { white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/modify/lc_trim_amount_options_filler.cpp" line="43"/>
         <source>Trim</source>
-        <translation type="unfinished">Κόψιμο</translation>
+        <translation type="unfinished">Περικοπή</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_trim_amount_options_filler.cpp" line="43"/>
@@ -35651,17 +35651,17 @@ p, li { white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/modify/lc_trim_amount_options_widget.ui" line="20"/>
         <source>Trim Amount Options</source>
-        <translation type="unfinished">Επιλογές ποσού κοπής</translation>
+        <translation type="unfinished">Επιλογές ποσού περικοπής</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_trim_amount_options_widget.ui" line="23"/>
         <source>Distance. Negative values for trimming, positive values for extending.</source>
-        <translation type="unfinished">Απόσταση. Αρνητικές τιμές για το κόψιμο, θετικές τιμές για την επέκταση.</translation>
+        <translation type="unfinished">Απόσταση. Αρνητικές τιμές για περικοπή, θετικές τιμές για επέκταση.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_trim_amount_options_widget.ui" line="50"/>
         <source>The input length is used as total length after trimming, instead of length increase</source>
-        <translation type="unfinished">Το μήκος εισόδου χρησιμοποιείται ως συνολικό μήκος μετά το κόψιμο, αντί για αύξηση μήκους</translation>
+        <translation type="unfinished">Το μήκος που εισάγεται χρησιμοποιείται ως συνολικό μήκος μετά την περικοπή, αντί για αύξηση του μήκους</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_trim_amount_options_widget.ui" line="53"/>
@@ -35676,7 +35676,7 @@ p, li { white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/modify/lc_trim_amount_options_widget.ui" line="97"/>
         <source>Distance. Negative values for trimming, positive values for extending. Negative sign is ignored when trimming to final total length.</source>
-        <translation type="unfinished">Απόσταση. Αρνητικές τιμές για το κόψιμο, θετικές τιμές για την επέκταση. Αρνητικό σημάδι αγνοείται κατά το κόψιμο στο τελικό συνολικό μήκος.</translation>
+        <translation type="unfinished">Απόσταση. Αρνητικές τιμές για περικοπή, θετικές τιμές για επέκταση. Το αρνητικό πρόσημο αγνοείται κατά την περικοπή σε τελικό συνολικό μήκος.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_trim_amount_options_widget.ui" line="110"/>
@@ -35801,7 +35801,7 @@ p, li { white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistmodel.cpp" line="332"/>
         <source>Grid: </source>
-        <translation>Πλέγμα:</translation>
+        <translation>Κάνναβος: </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistmodel.cpp" line="333"/>
@@ -35869,7 +35869,7 @@ p, li { white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.ui" line="162"/>
         <source>Settings</source>
-        <translation>Settings</translation>
+        <translation>Ρυθμίσεις</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="230"/>
@@ -36049,7 +36049,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="137"/>
         <source>Polyline</source>
-        <translation>Πολυλίνη</translation>
+        <translation>Πολυγραμμή</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="139"/>
@@ -36100,7 +36100,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="135"/>
         <source>Spline</source>
-        <translation>Σπλάιν</translation>
+        <translation>Spline</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="174"/>
@@ -36110,7 +36110,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="174"/>
         <source>Pens</source>
-        <translation>Στυλό</translation>
+        <translation>Πένες</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="188"/>
@@ -36233,7 +36233,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="547"/>
         <source>Current size of Grid/MetaGrid. Click to change grid size.</source>
-        <translation>Τρέχον μέγεθος του Grid/MetaGrid. Κάντε κλικ για να αλλάξετε το μέγεθος του πλέγματος.</translation>
+        <translation>Τρέχον μέγεθος καννάβου/μετα-καννάβου. Κάντε κλικ για να αλλάξετε το μέγεθος του καννάβου.</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="141"/>
@@ -37305,12 +37305,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.ui" line="80"/>
         <source>Apply attributes Block-deep</source>
-        <translation>Εφαρμογή ιδιοτήτων Block- deep</translation>
+        <translation>Εφαρμογή ιδιοτήτων σε βάθος μπλοκ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.cpp" line="61"/>
         <source>Pen</source>
-        <translation>Στυλό</translation>
+        <translation>Πένα</translation>
     </message>
 </context>
 <context>
@@ -38245,7 +38245,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="113"/>
         <source>Font Settings</source>
-        <translation>Settings γραμματοσειράς</translation>
+        <translation>Ρυθμίσεις γραμματοσειράς</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="267"/>
@@ -38270,7 +38270,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.cpp" line="250"/>
         <source>Pen</source>
-        <translation>Στυλό</translation>
+        <translation>Πένα</translation>
     </message>
 </context>
 <context>
@@ -38636,12 +38636,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2007"/>
         <source>&amp;Splines and Lines</source>
-        <translation>&amp;Σπλάιν και γραμμές</translation>
+        <translation>&amp;Splines και γραμμές</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2013"/>
         <source>Splines</source>
-        <translation>Σπλάιν</translation>
+        <translation>Splines</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2056"/>
@@ -38796,7 +38796,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="753"/>
         <source>Right isometric grid</source>
-        <translation>Δεξιό ισομετρικό πλέγμα</translation>
+        <translation>Δεξιός ισομετρικός κάνναβος</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="756"/>
@@ -38806,7 +38806,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="775"/>
         <source>Left isometric grid</source>
-        <translation>Αριστερό ισομετρικό πλέγμα</translation>
+        <translation>Αριστερός ισομετρικός κάνναβος</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="778"/>
@@ -38816,12 +38816,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="804"/>
         <source>If checked, grid will be shown for this drawing</source>
-        <translation>Αν ενεργοποιηθεί, θα εμφανιστεί το πλέγμα για αυτό το σχέδιο</translation>
+        <translation>Αν ενεργοποιηθεί, θα εμφανίζεται ο κάνναβος σε αυτό το σχέδιο</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="826"/>
         <source>Top isometric grid</source>
-        <translation>Πάνω ισομετρικό πλέγμα</translation>
+        <translation>Πάνω ισομετρικός κάνναβος</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="829"/>
@@ -38831,7 +38831,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="852"/>
         <source>Application Settings</source>
-        <translation>Settings εφαρμογής</translation>
+        <translation>Ρυθμίσεις εφαρμογής</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="858"/>
@@ -38860,7 +38860,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="886"/>
         <source>Draw Meta Grid:</source>
-        <translation>Σχεδίαση καννάβου Meta:</translation>
+        <translation>Σχεδίαση μετα-καννάβου:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="917"/>
@@ -38875,12 +38875,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="990"/>
         <source>Select or input grid spacing value by Y axis</source>
-        <translation>Επιλογή ή τιμή διαπόστασης καννάβου εισόδου κατά άξονα Y</translation>
+        <translation>Επιλέξτε ή εισαγάγετε τη διαπόσταση του καννάβου κατά τον άξονα Y</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1038"/>
         <source>Select or enter values for grid spacing (they will affect Grid drawing and Snap to Grid):</source>
-        <translation>Επιλέξτε ή εισάγετε τιμές για διαπόσταση καννάβου (θα επηρεάσουν το σχέδιο καννάβου και το Snap to Grid):</translation>
+        <translation>Επιλέξτε ή εισάγετε τιμές για τη διαπόσταση του καννάβου (επηρεάζουν τη σχεδίαση του καννάβου και την έλξη στον κάνναβο):</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1066"/>
@@ -38932,7 +38932,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1326"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Distance gap around text&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>Απόδοση Διαλόγων/Συγχρονισμός: Διάκενο απόστασης γύρω από το κείμενο &lt;/p&gt; &lt;/ body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Διάκενο γύρω από το κείμενο&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1399"/>
@@ -38988,12 +38988,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1619"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Text alignment &lt;a name=&quot;result_box&quot;/&gt;relative to the dimension line.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>Απόδοση Διαλόγων/Συγχρονισμός: Στοίχιση κειμένου &lt; a name=&quot;result box&quot;/&gt; σε σχέση με τη γραμμή διάστασης</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Στοίχιση κειμένου &lt;a name=&quot;result_box&quot;/&gt;σε σχέση με τη γραμμή διάστασης.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1629"/>
         <source>Aligned</source>
-        <translation>Στοίχιση</translation>
+        <translation>Ευθυγραμμισμένο</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1675"/>
@@ -39008,7 +39008,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1727"/>
         <source>Extension lines</source>
-        <translation>Γραμμές επέκτασης</translation>
+        <translation>Βοηθητικές γραμμές</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1734"/>
@@ -39353,7 +39353,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1771"/>
         <source>fixed extension line length</source>
-        <translation>σταθερό μήκος γραμμής επέκτασης</translation>
+        <translation>σταθερό μήκος βοηθητικής γραμμής</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2176"/>
@@ -39622,28 +39622,28 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5277"/>
         <source>Left  Isometric Grid</source>
-        <translation>Αριστερό ισομετρικό πλέγμα</translation>
+        <translation>Αριστερός ισομετρικός κάνναβος</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5267"/>
         <source>RIght Isometric Grid</source>
-        <translation>Ισομετρικό πλέγμα RIght</translation>
+        <translation>Δεξιός ισομετρικός κάνναβος</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5205"/>
         <source>Orthogonal Grid</source>
-        <translation>Ορθογώνιο πλέγμα</translation>
+        <translation>Ορθογώνιος κάνναβος</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5287"/>
         <source>Top Isometric Grid</source>
-        <translation>Πάνω ισομετρικό πλέγμα</translation>
+        <translation>Πάνω ισομετρικός κάνναβος</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1255"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1359"/>
         <source>Meta-grid</source>
-        <translation>Μετα-γκριντ</translation>
+        <translation>Μετα-κάνναβος</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="689"/>
@@ -39665,7 +39665,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="975"/>
         <source>Draw meta-grid</source>
-        <translation>Σχεδίαση μεταγριδίου</translation>
+        <translation>Σχεδίαση μετα-καννάβου</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="965"/>
@@ -39695,7 +39695,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3779"/>
         <source>Highlight with screen linewidth in &quot;Draft&quot; mode</source>
-        <translation>Τονισμός με το εύρος της οθόνης σε λειτουργία &quot;Draft&quot;</translation>
+        <translation>Επισήμανση με το πάχος γραμμής της οθόνης σε λειτουργία &quot;Προσχέδιο&quot;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3799"/>
@@ -39760,12 +39760,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5376"/>
         <source>If checked, new drawing will be created with grid disabled</source>
-        <translation>Αν ενεργοποιηθεί, το νέο σχέδιο θα δημιουργείται με απενεργοποιημένο το πλέγμα</translation>
+        <translation>Αν ενεργοποιηθεί, τα νέα σχέδια θα δημιουργούνται με απενεργοποιημένο τον κάνναβο</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5379"/>
         <source>Grid is Off </source>
-        <translation>Το πλέγμα είναι κλειστό</translation>
+        <translation>Ο κάνναβος είναι ανενεργός </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5841"/>
@@ -39954,7 +39954,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="217"/>
         <source>Auto-panning</source>
-        <translation>Αυτόματη panning</translation>
+        <translation>Αυτόματη μετακίνηση προβολής</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3689"/>
@@ -39989,12 +39989,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1606"/>
         <source>If checked, snap indicator will be shown</source>
-        <translation>Αν ενεργοποιηθεί, θα εμφανιστεί ο δείκτης snap</translation>
+        <translation>Αν ενεργοποιηθεί, θα εμφανίζεται ο δείκτης έλξης</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1766"/>
         <source>Type of snap lines indicator</source>
-        <translation>Τύπος δείκτη γραμμών snap</translation>
+        <translation>Τύπος δείκτη γραμμών έλξης</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1773"/>
@@ -40015,12 +40015,12 @@ This recursively modifies all entities of the Block itself.</source>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1609"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1619"/>
         <source>Snap Indicator lines</source>
-        <translation>Γραμμές δεικτών snap</translation>
+        <translation>Γραμμές δείκτη έλξης</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1583"/>
         <source>Color for snap lines indicator</source>
-        <translation>Χρώμα για τον δείκτη γραμμών snap</translation>
+        <translation>Χρώμα του δείκτη γραμμών έλξης</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="280"/>
@@ -40069,32 +40069,32 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1736"/>
         <source>Type of line to draw snap indicator</source>
-        <translation>Τύπος γραμμής για τη σχεδίαση του δείκτη snap</translation>
+        <translation>Τύπος γραμμής για τη σχεδίαση του δείκτη έλξης</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1743"/>
         <source>Line Width</source>
-        <translation>Πλάτος γραμμής</translation>
+        <translation>Πάχος γραμμής</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1750"/>
         <source>Width of line for snap indicator</source>
-        <translation>Πλάτος γραμμής για δείκτη snap</translation>
+        <translation>Πάχος γραμμής του δείκτη έλξης</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1726"/>
         <source>If checked, a shap for snap will be drawn</source>
-        <translation>Αν ενεργοποιηθεί, θα τραβηχτεί ένα shap για snap</translation>
+        <translation>Αν ενεργοποιηθεί, θα σχεδιάζεται ένα σχήμα για την έλξη</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1729"/>
         <source>Snap Indicator shape</source>
-        <translation>Σχήμα δείκτη snap</translation>
+        <translation>Σχήμα δείκτη έλξης</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1656"/>
         <source>Type of snap indicator shape</source>
-        <translation>Τύπος σχήματος δείκτη snap</translation>
+        <translation>Τύπος σχήματος δείκτη έλξης</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1663"/>
@@ -40119,22 +40119,22 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1626"/>
         <source>Snap Indicator Color:</source>
-        <translation>Χρώμα δείκτη snap:</translation>
+        <translation>Χρώμα δείκτη έλξης:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1633"/>
         <source>Color for snap indicator shape</source>
-        <translation>Χρώμα για το σχήμα ένδειξης snap</translation>
+        <translation>Χρώμα του σχήματος δείκτη έλξης</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1967"/>
         <source>Angle snap single step</source>
-        <translation>Γωνία μόνο βήμα</translation>
+        <translation>Βήμα έλξης γωνίας</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1974"/>
         <source>Angle between steps for Angle Snap (which is usually by corresponding actions if SHIFT is pressed)</source>
-        <translation>Γωνία μεταξύ των βημάτων για γωνία Snap (η οποία είναι συνήθως με αντίστοιχες ενέργειες αν SHIFT πιέζεται)</translation>
+        <translation>Γωνία μεταξύ των βημάτων της έλξης γωνίας (που εφαρμόζεται συνήθως από τις αντίστοιχες ενέργειες όταν πατηθεί το SHIFT)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1978"/>
@@ -40184,12 +40184,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1817"/>
         <source>If checked, snap options (middle, distance) will be shown in snap toolbar instead of tool properties toolbar</source>
-        <translation>Αν ενεργοποιηθεί, οι επιλογές snap (μεσαία, απόσταση) θα εμφανίζονται στη γραμμή εργαλείων snap αντί της γραμμής εργαλείων ιδιοτήτων</translation>
+        <translation>Αν ενεργοποιηθεί, οι επιλογές έλξης (μέσο, απόσταση) θα εμφανίζονται στη γραμμή εργαλείων έλξης αντί για τη γραμμή εργαλείων ιδιοτήτων</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1820"/>
         <source>Show snap options in Snap Selection Toolbar</source>
-        <translation>Εμφάνιση επιλογών snap στη γραμμή εργαλείων επιλογής snap</translation>
+        <translation>Εμφάνιση επιλογών έλξης στη γραμμή εργαλείων επιλογής έλξης</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="745"/>
@@ -40365,7 +40365,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="236"/>
         <source>Controls how quickly the scroll wheel will zoom in &amp; out. Higher values - faster zoom.</source>
-        <translation>Ελέγχει πόσο γρήγορα θα ζουμάρει ο τροχός. Υψηλότερες τιμές - ταχύτερη μεγέθυνση.</translation>
+        <translation>Ελέγχει πόσο γρήγορα μεγεθύνει και σμικρύνει ο τροχός κύλισης. Μεγαλύτερες τιμές - ταχύτερη εστίαση.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="147"/>
@@ -40375,24 +40375,24 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="150"/>
         <source>Pan on wheel zoom</source>
-        <translation>Παν σε ζουμ τροχού</translation>
+        <translation>Μετακίνηση προβολής κατά την εστίαση με τον τροχό</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="134"/>
         <source>First time only pan</source>
-        <translation>Πρώτη φορά μόνο pan</translation>
+        <translation>Μετακίνηση προβολής μόνο την πρώτη φορά</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="950"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1195"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1456"/>
         <source>Grid</source>
-        <translation>Πλέγμα</translation>
+        <translation>Κάνναβος</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1176"/>
         <source>Points Grid</source>
-        <translation>Πλέγμα σημείων</translation>
+        <translation>Κάνναβος σημείων</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1234"/>
@@ -40402,12 +40402,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1261"/>
         <source>Type of Meta Grid line if grid is drawn as points</source>
-        <translation>Τύπος γραμμής Meta Grid αν ο κάνναβος έχει σχεδιαστεί ως σημεία</translation>
+        <translation>Τύπος γραμμής του μετα-καννάβου όταν ο κάνναβος σχεδιάζεται με σημεία</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1268"/>
         <source>Width of Meta Grid line if grid is drawn by points</source>
-        <translation>Πλάτος της γραμμής Meta Grid αν το πλέγμα σύρεται από τα σημεία</translation>
+        <translation>Πάχος γραμμής του μετα-καννάβου όταν ο κάνναβος σχεδιάζεται με σημεία</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1284"/>
@@ -40420,23 +40420,23 @@ This recursively modifies all entities of the Block itself.</source>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1395"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1543"/>
         <source>Line Width:</source>
-        <translation>Πλάτος γραμμής:</translation>
+        <translation>Πάχος γραμμής:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1298"/>
         <source>Color for Meta Grid lines if grid drawn by points</source>
-        <translation>Χρώμα για τις γραμμές Meta Grid αν ο κάνναβος έχει σχεδιαστεί από σημεία</translation>
+        <translation>Χρώμα των γραμμών του μετα-καννάβου όταν ο κάνναβος σχεδιάζεται με σημεία</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1316"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1420"/>
         <source>&amp;Meta-grid Color:</source>
-        <translation>Χρώμα &amp; Meta-grid:</translation>
+        <translation>Χρώμα &amp;μετα-καννάβου:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1353"/>
         <source>Lines Grid</source>
-        <translation>Πλέγμα γραμμών</translation>
+        <translation>Κάνναβος γραμμών</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1462"/>
@@ -40456,17 +40456,17 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1365"/>
         <source>Type of Meta Grid lines if grid is drawn by lines</source>
-        <translation>Τύπος γραμμών Meta Grid αν το πλέγμα σχεδιάζεται από γραμμές</translation>
+        <translation>Τύπος γραμμών του μετα-καννάβου όταν ο κάνναβος σχεδιάζεται με γραμμές</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1372"/>
         <source>Width of Meta Grid lines if grid is drawn by lines</source>
-        <translation>Πλάτος των γραμμών Meta Grid αν το πλέγμα σχεδιάζεται από γραμμές</translation>
+        <translation>Πάχος γραμμών του μετα-καννάβου όταν ο κάνναβος σχεδιάζεται με γραμμές</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1402"/>
         <source>Color of Meta Grid if grid drawn by lines</source>
-        <translation>Χρώμα του καννάβου Meta αν ο κάνναβος σχεδιάζεται από γραμμές</translation>
+        <translation>Χρώμα του μετα-καννάβου όταν ο κάνναβος σχεδιάζεται με γραμμές</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3272"/>
@@ -40580,37 +40580,37 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="962"/>
         <source>If checked, grid wil be drawn</source>
-        <translation>Αν ενεργοποιηθεί, θα σχεδιαστεί πλέγμα</translation>
+        <translation>Αν ενεργοποιηθεί, θα σχεδιάζεται ο κάνναβος</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1054"/>
         <source>If checked, grid will not be adjusted to current units of drawing</source>
-        <translation>Αν ενεργοποιηθεί, το πλέγμα δεν θα ρυθμιστεί στις τρέχουσες μονάδες σχεδίασης</translation>
+        <translation>Αν ενεργοποιηθεί, ο κάνναβος δεν θα προσαρμόζεται στις τρέχουσες μονάδες του σχεδίου</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1057"/>
         <source>Unitless grid</source>
-        <translation>Πλέγμα χωρίς μονάδες</translation>
+        <translation>Κάνναβος χωρίς μονάδες</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1005"/>
         <source>If checked, grid will not be drawn within view pan by mouse operation</source>
-        <translation>Αν ενεργοποιηθεί, ο κάνναβος δεν θα σχεδιαστεί στο πλαίσιο προβολής με τη λειτουργία του ποντικιού</translation>
+        <translation>Αν ενεργοποιηθεί, ο κάνναβος δεν θα σχεδιάζεται κατά τη μετακίνηση της προβολής με το ποντίκι</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1008"/>
         <source>Don&apos;t draw grid on panning</source>
-        <translation>Να μη σχεδιάζεται το πλέγμα κατά τη μετακίνηση της προβολής</translation>
+        <translation>Να μη σχεδιάζεται ο κάνναβος κατά τη μετακίνηση της προβολής</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1044"/>
         <source>If checked, Meta Grid lines will be drawn on top of grid. Simple grid is faster yet is less visually lean.</source>
-        <translation>Αν ενεργοποιηθεί, οι γραμμές Meta Grid θα σχεδιαστούν πάνω από το πλέγμα. Το απλό πλέγμα είναι πιο γρήγορο αλλά είναι λιγότερο οπτικό άπαχο.</translation>
+        <translation>Αν ενεργοποιηθεί, οι γραμμές του μετα-καννάβου θα σχεδιάζονται πάνω από τον κάνναβο. Ο απλός κάνναβος είναι ταχύτερος, αλλά οπτικά λιγότερο καθαρός.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1096"/>
         <source>Minimal spacing between grid until grid rescale</source>
-        <translation>Ελάχιστες αποστάσεις μεταξύ του πλέγματος έως την αναδιάταξη του πλέγματος</translation>
+        <translation>Ελάχιστη απόσταση μεταξύ των γραμμών του καννάβου πριν από την αλλαγή της κλίμακάς του</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1031"/>
@@ -40625,17 +40625,17 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="982"/>
         <source>If checked, the grid will be scalled automatically</source>
-        <translation>Αν ενεργοποιηθεί, το πλέγμα θα ονομάζεται αυτόματα</translation>
+        <translation>Αν ενεργοποιηθεί, η κλίμακα του καννάβου θα προσαρμόζεται αυτόματα</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1077"/>
         <source>&amp;Grid type:</source>
-        <translation>Τύπος &amp; γρι:</translation>
+        <translation>Τύπος &amp;καννάβου:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="972"/>
         <source>If checked, metagrid will be drawn as part of grid drawing.</source>
-        <translation>Αν ενεργοποιηθεί, η μεταγλώττιση θα σχεδιαστεί ως μέρος του σχεδίου καννάβου.</translation>
+        <translation>Αν ενεργοποιηθεί, ο μετα-κάνναβος θα σχεδιάζεται μαζί με τον κάνναβο.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="995"/>
@@ -40645,7 +40645,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="998"/>
         <source>Draw vertical lines for &quot;Top&quot; isometric grid</source>
-        <translation>Σχεδίαση κατακόρυφων γραμμών για το ισομετρικό πλέγμα &quot;Top&quot;</translation>
+        <translation>Σχεδίαση κατακόρυφων γραμμών για τον &quot;πάνω&quot; ισομετρικό κάνναβο</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3700"/>
@@ -40724,7 +40724,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3776"/>
         <source>If selected, entity will be highlighted in &quot;Draft&quot; mode using entity&apos;s linewidth instead of 1px</source>
-        <translation>Εάν επιλεγεί, η οντότητα θα τονιστεί στη λειτουργία &quot;Draft&quot; χρησιμοποιώντας το εύρος γραμμής της οντότητας αντί του 1px</translation>
+        <translation>Εάν επιλεγεί, η οντότητα θα επισημαίνεται σε λειτουργία &quot;Προσχέδιο&quot; με το πάχος γραμμής της οντότητας αντί για 1px</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3881"/>
@@ -40764,7 +40764,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6422"/>
         <source>If height of text line on the screen is less than specified pixels, placholder will be drawn instead of text</source>
-        <translation>Αν το ύψος της γραμμής κειμένου στην οθόνη είναι μικρότερο από τα καθορισμένα εικονοστοιχεία, ο πλακάντερ θα σχεδιαστεί αντί του κειμένου</translation>
+        <translation>Αν το ύψος της γραμμής κειμένου στην οθόνη είναι μικρότερο από τα καθορισμένα εικονοστοιχεία, θα σχεδιάζεται ένα σύμβολο θέσης αντί για το κείμενο</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6362"/>
@@ -40910,12 +40910,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1827"/>
         <source>If checked, &quot;Snap To Grid&quot; is ignored if grid is not drawn.</source>
-        <translation>Εάν ενεργοποιηθεί, το &quot;Snap To Grid&quot; αγνοείται αν το πλέγμα δεν σχεδιαστεί.</translation>
+        <translation>Εάν ενεργοποιηθεί, η &quot;Έλξη στον κάνναβο&quot; αγνοείται αν ο κάνναβος δεν σχεδιάζεται.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1830"/>
         <source>Ignore &quot;Snap to Grid&quot; if grid is not drawn</source>
-        <translation>Παράβλεψη &quot;Snap σε Grid&quot; αν το πλέγμα δεν έχει σχεδιαστεί</translation>
+        <translation>Παράβλεψη της &quot;Έλξης στον κάνναβο&quot; αν ο κάνναβος δεν σχεδιάζεται</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3114"/>
@@ -40960,12 +40960,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2884"/>
         <source>Color for absolute snap coordinates.</source>
-        <translation>Χρώμα για τις ολοκληρωμένες συντεταγμένες.</translation>
+        <translation>Χρώμα για τις απόλυτες συντεταγμένες έλξης.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2794"/>
         <source>If checked, relative distance and angle from relative zero point to snap point will be shown.</source>
-        <translation>Αν ενεργοποιηθεί, θα εμφανιστεί σχετική απόσταση και γωνία από το σχετικό σημείο μηδέν έως το σημείο snap.</translation>
+        <translation>Αν ενεργοποιηθεί, θα εμφανίζεται η σχετική απόσταση και γωνία από το σχετικό μηδέν έως το σημείο έλξης.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2797"/>
@@ -40975,7 +40975,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2907"/>
         <source>Color for snap type/restriction</source>
-        <translation>Χρώμα τύπου/περιορισμού snap</translation>
+        <translation>Χρώμα τύπου/περιορισμού έλξης</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2844"/>
@@ -41000,12 +41000,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2854"/>
         <source>If checked, information about the type of snap and restrictions will be shown for snap point (if any)</source>
-        <translation>Αν ενεργοποιηθεί, θα εμφανίζονται πληροφορίες για τον τύπο του snap και τους περιορισμούς για το snap point (εάν υπάρχουν)</translation>
+        <translation>Αν ενεργοποιηθεί, θα εμφανίζονται πληροφορίες για τον τύπο έλξης και τους περιορισμούς του σημείου έλξης (αν υπάρχουν)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2857"/>
         <source>Show snap info /restriction</source>
-        <translation>Εμφάνιση πληροφοριών/περιορισμού snap</translation>
+        <translation>Εμφάνιση πληροφοριών/περιορισμού έλξης</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2973"/>
@@ -41020,7 +41020,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2784"/>
         <source>If checked, absolute position of snap point will be shown.</source>
-        <translation>Αν ενεργοποιηθεί, θα εμφανιστεί η απόλυτη θέση του σημείου snap.</translation>
+        <translation>Αν ενεργοποιηθεί, θα εμφανίζεται η απόλυτη θέση του σημείου έλξης.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2787"/>
@@ -41116,7 +41116,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5134"/>
         <source>Keyboard Settings</source>
-        <translation>Settings πληκτρολογίου</translation>
+        <translation>Ρυθμίσεις πληκτρολογίου</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5140"/>
@@ -41181,7 +41181,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="514"/>
         <source>Background and Selection</source>
-        <translation>Ιστορικό και επιλογή</translation>
+        <translation>Φόντο και επιλογή</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="641"/>
@@ -41212,7 +41212,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="682"/>
         <source>Font that should be used for draft mode marker</source>
-        <translation>Γραμματοσειρά που θα πρέπει να χρησιμοποιείται για το draft mode Marker</translation>
+        <translation>Γραμματοσειρά για τον δείκτη της λειτουργίας προσχεδίου</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="672"/>
@@ -41292,12 +41292,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1021"/>
         <source>Type of grid to be drawn</source>
-        <translation>Τύπος καννάβου προς ανάσυρση</translation>
+        <translation>Τύπος καννάβου που θα σχεδιάζεται</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1146"/>
         <source>Decimal meta-grid every:</source>
-        <translation>Δεκαδικό μετα-γκριντ κάθε:</translation>
+        <translation>Δεκαδικός μετα-κάνναβος κάθε:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1153"/>
@@ -41317,7 +41317,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1853"/>
         <source>Advanced Snap Fine-tuning settings</source>
-        <translation>Προχωρημένες ρυθμίσεις εξομάλυνσης ακριβείας</translation>
+        <translation>Προχωρημένες ρυθμίσεις έλξης</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1905"/>
@@ -41342,7 +41342,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1898"/>
         <source>Min grid cell snap factor:</source>
-        <translation>Ελάχιστος συντελεστής έλξης κελιού πλέγματος:</translation>
+        <translation>Ελάχιστος συντελεστής έλξης κελιού καννάβου:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1872"/>
@@ -41357,7 +41357,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1882"/>
         <source>Grid cell factor used for snap to grid.</source>
-        <translation>Συντελεστής κελιού πλέγματος που χρησιμοποιείται για την έλξη στο πλέγμα.</translation>
+        <translation>Συντελεστής κελιού καννάβου που χρησιμοποιείται για την έλξη στον κάνναβο.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3153"/>
@@ -42015,7 +42015,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6097"/>
         <source>Directory where various settings are located (shortcuts, workspaces, pens etc.)</source>
-        <translation>Κατάλογος όπου βρίσκονται διάφορες ρυθμίσεις (συντομεύσεις, χώροι εργασίας, στυλό κλπ.)</translation>
+        <translation>Κατάλογος όπου βρίσκονται διάφορες ρυθμίσεις (συντομεύσεις, χώροι εργασίας, πένες κ.λπ.)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6148"/>
@@ -42025,12 +42025,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6195"/>
         <source>If checked, archs are drawn using line segments interpolation.  This sliminates drawing artefacts near to endpoints, yet may result drawing of less smooth arcs.  No drawing errors near endpoints on large zooms.</source>
-        <translation>Αν ενεργοποιηθεί, οι αψίδες σχεδιάζονται χρησιμοποιώντας παρεμβολή τμημάτων γραμμής. Αυτό αδυνατίζει να τραβήξει αντικείμενα κοντά στα τελικά σημεία, αλλά μπορεί να οδηγήσει σε σχέδιο λιγότερο λεία τόξα. Κανένα σχεδιαστικό λάθος κοντά στα τελικά σημεία σε μεγάλα ζουμ.</translation>
+        <translation>Αν ενεργοποιηθεί, τα τόξα σχεδιάζονται με παρεμβολή ευθύγραμμων τμημάτων. Αυτό εξαλείφει τα σφάλματα σχεδίασης κοντά στα τελικά σημεία, αλλά τα τόξα μπορεί να είναι λιγότερο ομαλά. Δεν εμφανίζονται σφάλματα κοντά στα τελικά σημεία σε μεγάλες μεγεθύνσεις.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6205"/>
         <source>If this method is selected, arcs are drawn using method of QT library.  On large zooms, arcs may be rendered with errors near endpoints.</source>
-        <translation>Αν επιλεγεί αυτή η μέθοδος, τα τόξα σχεδιάζονται χρησιμοποιώντας τη μέθοδο της βιβλιοθήκης QT. Σε μεγάλα ζουμ, τα τόξα μπορούν να αποδοθούν με λάθη κοντά στα τελικά σημεία.</translation>
+        <translation>Αν επιλεγεί αυτή η μέθοδος, τα τόξα σχεδιάζονται με τη μέθοδο της βιβλιοθήκης Qt. Σε μεγάλες μεγεθύνσεις, τα τόξα μπορεί να αποδίδονται με σφάλματα κοντά στα τελικά σημεία.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6208"/>
@@ -42215,7 +42215,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5941"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;Part library folder. The symbol library dxf files must be located in the subdirectories of this folder. The subfolder names will be displayed in the Library Browser.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;( Menu: Widgets &amp;gt; Dock Widgets &amp;gt; Library Browser)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>Απόδοση Διαλόγων/Συγχρονισμός: Μέρος φακέλου βιβλιοθήκης. Τα αρχεία dxf της βιβλιοθήκης συμβόλων πρέπει να βρίσκονται στους υποκαταλόγους αυτού του φακέλου. Τα ονόματα υποφακέλων θα εμφανίζονται στον Browser της Βιβλιοθήκης. &lt;/sp&gt;&lt;p&gt; &lt; span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;ans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&gt;( Menu: Widgets &gt; Dock Widgets &gt; Library Browser)&lt;/sp&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;Φάκελος βιβλιοθήκης εξαρτημάτων. Τα αρχεία dxf της βιβλιοθήκης συμβόλων πρέπει να βρίσκονται στους υποφακέλους αυτού του φακέλου. Τα ονόματα των υποφακέλων θα εμφανίζονται στον Περιηγητή βιβλιοθήκης.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;( Μενού: Γραφικά συστατικά &amp;gt; Γραφικά συστατικά προσάρτησης &amp;gt; Περιηγητής βιβλιοθήκης)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5959"/>
@@ -42230,7 +42230,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5150"/>
         <source>Toggle free snap mode when SPACE BAR is pressed</source>
-        <translation>Εναλλαγή ελεύθερης λειτουργίας snap όταν πατηθεί το SPACE BAR</translation>
+        <translation>Εναλλαγή της ελεύθερης έλξης όταν πατηθεί το πλήκτρο διαστήματος</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5068"/>
@@ -42352,8 +42352,8 @@ the &lt;transform&gt; attribute or as &lt;path&gt; using elliptic arc segments.<
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.cpp" line="38"/>
         <source>Exported images can be useful in SVG editors (Inkscape, etc), 
 but avoided in some CAM&apos;s.</source>
-        <translation>Οι εξαγωγικές εικόνες μπορεί να είναι χρήσιμες στους επεξεργαστές SVG (Inkscape, κ.λπ.),
-Αλλά απέφυγε σε κάποια CAM.</translation>
+        <translation>Οι εξαγόμενες εικόνες μπορεί να είναι χρήσιμες σε επεξεργαστές SVG (Inkscape κ.λπ.), 
+αλλά καλό είναι να αποφεύγονται σε ορισμένα CAM.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.cpp" line="39"/>
@@ -42366,15 +42366,15 @@ which can be useful in lasercut of plywood or for papercraft. </source>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.cpp" line="42"/>
         <source>Default width of elements can affect some CAM&apos;s/SVG Editors, 
 but ignored by other</source>
-        <translation>Προκαθορισμένο πλάτος των στοιχείων μπορεί να επηρεάσει ορισμένες CAM του / SVG Επεξεργαστές,
-αλλά αγνοείται από άλλους</translation>
+        <translation>Το προεπιλεγμένο πλάτος των στοιχείων μπορεί να επηρεάσει ορισμένα CAM/επεξεργαστές SVG, 
+ενώ άλλα το αγνοούν</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.cpp" line="44"/>
         <source>Length of line pattern related to zoom, 
 so default step value required for baking</source>
-        <translation>Μήκος μοτίβου γραμμής που σχετίζεται με ζουμ,
-έτσι προεπιλεγμένη τιμή βήματος που απαιτείται για το ψήσιμο</translation>
+        <translation>Το μήκος του μοτίβου γραμμής εξαρτάται από την εστίαση, 
+γι’ αυτό απαιτείται προεπιλεγμένη τιμή βήματος για τη μετατροπή του μοτίβου σε τμήματα</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.cpp" line="45"/>
@@ -42607,7 +42607,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="499"/>
         <source>Aligned</source>
-        <translation>Στοίχιση</translation>
+        <translation>Ευθυγραμμισμένο</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="630"/>
@@ -43255,7 +43255,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.cpp" line="213"/>
         <source>Pen</source>
-        <translation>Στυλό</translation>
+        <translation>Πένα</translation>
     </message>
 </context>
 <context>
@@ -43863,7 +43863,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/components/toolbars/qg_pentoolbar.cpp" line="42"/>
         <source>Line width</source>
-        <translation>Πλάτος γραμμής</translation>
+        <translation>Πάχος γραμμής</translation>
     </message>
     <message>
         <location filename="../src/ui/components/toolbars/qg_pentoolbar.cpp" line="45"/>
@@ -43971,7 +43971,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/components/pen/qg_widgetpen.ui" line="81"/>
         <source>Width:</source>
-        <translation>Πλάτος:</translation>
+        <translation>Πάχος:</translation>
     </message>
     <message>
         <location filename="../src/ui/components/pen/qg_widgetpen.ui" line="65"/>
@@ -44249,7 +44249,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1430"/>
         <source>Pens for removal:</source>
-        <translation>Στυλογράφοι για αφαίρεση:</translation>
+        <translation>Πένες για αφαίρεση:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1451"/>
@@ -44283,22 +44283,22 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1466"/>
         <source>Set pen by entity</source>
-        <translation>Ορισμός στυλό ανά οντότητα</translation>
+        <translation>Ορισμός πένας από οντότητα</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1467"/>
         <source>Please select only one entity to pick pen setting.</source>
-        <translation>Παρακαλώ επιλέξτε μόνο μία οντότητα για να επιλέξετε τη ρύθμιση στυλό.</translation>
+        <translation>Επιλέξτε μόνο μία οντότητα για να ληφθεί η ρύθμιση πένας.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1477"/>
         <source>Saving Pens Data</source>
-        <translation>Αποθήκευση δεδομένων στυλών</translation>
+        <translation>Αποθήκευση δεδομένων πενών</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1478"/>
         <source>Unable to save pens data to specified pens file. Would you like to specify correct path to the file?</source>
-        <translation>Αδυναμία αποθήκευσης δεδομένων στυλό σε καθορισμένο αρχείο στυλών. Θα θέλατε να καθορίσετε τη σωστή διαδρομή του αρχείου?</translation>
+        <translation>Δεν ήταν δυνατή η αποθήκευση των δεδομένων πενών στο καθορισμένο αρχείο πενών. Θέλετε να καθορίσετε τη σωστή διαδρομή του αρχείου;</translation>
     </message>
 </context>
 <context>
@@ -47343,7 +47343,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="791"/>
         <source>trim</source>
         <comment>modify - trim (extend)</comment>
-        <translation type="unfinished">κόψιμο</translation>
+        <translation type="unfinished">περικοπή</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="761"/>
@@ -48371,7 +48371,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="39"/>
         <source>/CustomColor%1</source>
-        <translation>/CustomColor%1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="40"/>
@@ -48408,7 +48408,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/lib/actions/lc_modifiersinfo.h" line="31"/>
         <source>Use Mirrored Angle</source>
-        <translation>Χρήση καθρεπτιζόμενης γωνίας</translation>
+        <translation>Χρήση κατοπτρισμένης γωνίας</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/lc_modifiersinfo.h" line="32"/>
@@ -48708,12 +48708,12 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="484"/>
         <source>Polyline</source>
-        <translation>Πολυλίνη</translation>
+        <translation>Πολυγραμμή</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="488"/>
         <source>Spline</source>
-        <translation>Σπλάιν</translation>
+        <translation>Spline</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="492"/>
@@ -49307,7 +49307,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="185"/>
         <source>Hatch immediately after selection</source>
-        <translation>Hatch αμέσως μετά την επιλογή</translation>
+        <translation>Διαγράμμιση αμέσως μετά την επιλογή</translation>
     </message>
 </context>
 <context>
@@ -49810,17 +49810,17 @@ End: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="245"/>
         <source>Printout offset in paper coordinates</source>
-        <translation>Εκτύπωση σε συντεταγμένες χαρτιού</translation>
+        <translation>Μετατόπιση εκτύπωσης σε συντεταγμένες χαρτιού</translation>
     </message>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="278"/>
         <source>: select printout offset coordinates</source>
-        <translation>: επιλέξτε συντεταγμένες offset εκτύπωσης</translation>
+        <translation>: επιλέξτε τις συντεταγμένες μετατόπισης της εκτύπωσης</translation>
     </message>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="278"/>
         <source>type in offset from command line to offset printout</source>
-        <translation>τύπος όφσετ από τη γραμμή εντολών για την όφσετ εκτύπωσης</translation>
+        <translation>πληκτρολογήστε τη μετατόπιση στη γραμμή εντολών για να μετατοπίσετε την εκτύπωση</translation>
     </message>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="450"/>
@@ -49830,7 +49830,7 @@ End: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="516"/>
         <source>Drag with Left Button to Position Paper or with Middle Button to Pan</source>
-        <translation>Σύρετε με αριστερό κουμπί στο χαρτί θέσης ή με μεσαίο κουμπί στο πάν</translation>
+        <translation>Σύρετε με το αριστερό κουμπί για να τοποθετήσετε το χαρτί ή με το μεσαίο κουμπί για μετακίνηση της προβολής</translation>
     </message>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="517"/>
@@ -49905,12 +49905,12 @@ End: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/zoom/rs_actionzoompan.cpp" line="109"/>
         <source>Click and drag to pan zoom</source>
-        <translation>Κάντε κλικ και σύρετε για μετακίνηση εστίασης</translation>
+        <translation>Κάντε κλικ και σύρετε για μετακίνηση της προβολής</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/zoom/rs_actionzoompan.cpp" line="112"/>
         <source>Zoom panning</source>
-        <translation>Μετακίνηση εστίασης</translation>
+        <translation>Μετακίνηση προβολής</translation>
     </message>
 </context>
 <context>
@@ -49946,7 +49946,7 @@ End: (%8 , %9)</source>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1341"/>
         <source>Grid</source>
-        <translation>Πλέγμα</translation>
+        <translation>Κάνναβος</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1343"/>
@@ -50311,12 +50311,12 @@ End: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapdistoptions.ui" line="32"/>
         <source>Snap Distance Options</source>
-        <translation>Επιλογές απόστασης snap</translation>
+        <translation>Επιλογές απόστασης έλξης</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapdistoptions.ui" line="50"/>
         <source>Snap Distance:</source>
-        <translation>Απόσταση snap:</translation>
+        <translation>Απόσταση έλξης:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapdistoptions.ui" line="60"/>
@@ -50334,12 +50334,12 @@ End: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapmiddleoptions.ui" line="35"/>
         <source>Snap Distance Options</source>
-        <translation>Επιλογές απόστασης snap</translation>
+        <translation>Επιλογές απόστασης έλξης</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapmiddleoptions.ui" line="59"/>
         <source>Snap Middle Points:</source>
-        <translation>Snap Μεσαία σημεία:</translation>
+        <translation>Ενδιάμεσα σημεία έλξης:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapmiddleoptions.ui" line="81"/>

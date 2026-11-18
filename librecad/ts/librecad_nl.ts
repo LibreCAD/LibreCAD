@@ -61,7 +61,7 @@
     <message>
         <location filename="../src/actions/drawing/lc_abstractactionwithpreview.cpp" line="652"/>
         <source> is not divided as it is part of polyline. Expand polyline first.</source>
-        <translation>is niet verdeeld omdat het deel uitmaakt van polylijn. Breid eerst polylijn uit.</translation>
+        <translation> wordt niet verdeeld omdat het deel uitmaakt van een polylijn. Explodeer eerst de polylijn.</translation>
     </message>
 </context>
 <context>
@@ -222,12 +222,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="310"/>
         <source>Specify first extension line origin</source>
-        <translation>Specificeer de oorsprong van de eerste extensielijn</translation>
+        <translation>Specificeer de oorsprong van de eerste verlenglijn</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="300"/>
         <source>Specify second extension line origin</source>
-        <translation>Specificeer de oorsprong van de tweede extensielijn</translation>
+        <translation>Specificeer de oorsprong van de tweede verlenglijn</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="304"/>
@@ -260,7 +260,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimordinate.cpp" line="211"/>
         <source>Specify leader end point</source>
-        <translation>Eindpunt van de verwijslijn specificeren</translation>
+        <translation>Eindpunt van de aanhaallijn specificeren</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimordinate.cpp" line="211"/>
@@ -684,7 +684,7 @@ afstand tussen punten=%2 is groter dan diameter= %3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_center_radius.cpp" line="192"/>
         <source>Specify circle center</source>
-        <translation type="unfinished">Specificeer middenpunt cirkel</translation>
+        <translation type="unfinished">Specificeer middelpunt cirkel</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_center_radius.cpp" line="195"/>
@@ -730,7 +730,7 @@ afstand tussen punten=%2 is groter dan diameter= %3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_1entity_2points.cpp" line="458"/>
         <source>Select the center of the tangent circle</source>
-        <translation type="unfinished">Selecteer het midden van de raakcirkel</translation>
+        <translation type="unfinished">Selecteer het middelpunt van de raakcirkel</translation>
     </message>
 </context>
 <context>
@@ -753,7 +753,7 @@ afstand tussen punten=%2 is groter dan diameter= %3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_2entities_1point.cpp" line="347"/>
         <source>Select the center of the tangent circle</source>
-        <translation type="unfinished">Selecteer het midden van de raakcirkel</translation>
+        <translation type="unfinished">Selecteer het middelpunt van de raakcirkel</translation>
     </message>
 </context>
 <context>
@@ -776,7 +776,7 @@ afstand tussen punten=%2 is groter dan diameter= %3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_2entities_radius.cpp" line="298"/>
         <source>Select the center of the tangent circle</source>
-        <translation type="unfinished">Selecteer het midden van de raakcirkel</translation>
+        <translation type="unfinished">Selecteer het middelpunt van de raakcirkel</translation>
     </message>
 </context>
 <context>
@@ -804,7 +804,7 @@ afstand tussen punten=%2 is groter dan diameter= %3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_3entities.cpp" line="529"/>
         <source>Select the center of the tangent circle</source>
-        <translation type="unfinished">Selecteer het midden van de raakcirkel</translation>
+        <translation type="unfinished">Selecteer het middelpunt van de raakcirkel</translation>
     </message>
 </context>
 <context>
@@ -822,7 +822,7 @@ afstand tussen punten=%2 is groter dan diameter= %3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="419"/>
         <source>Specify second extension line origin</source>
-        <translation>Specificeer de oorsprong van de tweede extensielijn</translation>
+        <translation>Specificeer de oorsprong van de tweede verlenglijn</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="419"/>
@@ -850,7 +850,7 @@ afstand tussen punten=%2 is groter dan diameter= %3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="63"/>
         <source>Select Center</source>
-        <translation>Midden selecteren</translation>
+        <translation>Middelpunt selecteren</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="68"/>
@@ -1597,7 +1597,7 @@ afstand tussen punten=%2 is groter dan diameter= %3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabolaFD.cpp" line="293"/>
         <source>Select line that is parallel to directrix of parabola or set vertex point</source>
-        <translation>Selecteer lijn die parallel is aan directrix van parabool of stel vertexpunt in</translation>
+        <translation>Selecteer een lijn die evenwijdig is aan de richtlijn van de parabool of stel de top in</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabolaFD.cpp" line="297"/>
@@ -1800,7 +1800,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_action_draw_polygon_base.cpp" line="291"/>
         <source>Center:</source>
-        <translation type="unfinished">Midden:</translation>
+        <translation type="unfinished">Middelpunt:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_action_draw_polygon_base.cpp" line="292"/>
@@ -2028,7 +2028,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_abstract.cpp" line="195"/>
         <source>Center:</source>
-        <translation type="unfinished">Midden:</translation>
+        <translation type="unfinished">Middelpunt:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_abstract.cpp" line="224"/>
@@ -2195,7 +2195,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_action_draw_star.cpp" line="652"/>
         <source>Set center point</source>
-        <translation>Middenpunt instellen</translation>
+        <translation>Middelpunt instellen</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_action_draw_star.cpp" line="655"/>
@@ -2307,7 +2307,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="250"/>
         <source>Select Intersected Entities</source>
-        <translation>Selecteer geïnterconnecteerde entiteiten</translation>
+        <translation>Doorsneden entiteiten selecteren</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="251"/>
@@ -2322,7 +2322,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="235"/>
         <source>&amp;Points</source>
-        <translation>&amp;Points</translation>
+        <translation>&amp;Punten</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="206"/>
@@ -2332,7 +2332,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="207"/>
         <source>&amp;Angle</source>
-        <translation>&amp; Hoek</translation>
+        <translation>&amp;Hoek</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="208"/>
@@ -2348,12 +2348,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="210"/>
         <source>&amp;Freehand Line</source>
-        <translation>&amp; Vrije handlijn</translation>
+        <translation>Lijn uit de &amp;vrije hand</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="211"/>
         <source>&amp;Parallel</source>
-        <translation>&amp; Parallel</translation>
+        <translation>&amp;Parallel</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="212"/>
@@ -2473,7 +2473,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="261"/>
         <source>Center, &amp;Point</source>
-        <translation>Midden, &amp;Point</translation>
+        <translation>Middelpunt, &amp;punt</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="262"/>
@@ -2483,7 +2483,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="263"/>
         <source>Center, &amp;Radius</source>
-        <translation>Midden, &amp;Radius</translation>
+        <translation>Middelpunt, &amp;straal</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="264"/>
@@ -2514,7 +2514,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="272"/>
         <source>Tangential, 2 P&amp;oints</source>
-        <translation>Raaklijn, 2 &amp;punten</translation>
+        <translation>Rakend, 2 &amp;punten</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="278"/>
@@ -2549,7 +2549,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="301"/>
         <source>&amp;Insert spline points</source>
-        <translation>Splinepunten &amp; invoegen</translation>
+        <translation>Splinepunten &amp;invoegen</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="312"/>
@@ -2564,7 +2564,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="314"/>
         <source>Ellipse &amp;Foci Point</source>
-        <translation>Ellips &amp; Foci-punt</translation>
+        <translation>Ellips &amp;brandpunten</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="315"/>
@@ -2574,7 +2574,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="316"/>
         <source>Ellipse Center and &amp;3 Points</source>
-        <translation>Ellipscenter en &amp;3 punten</translation>
+        <translation>Ellipsmiddelpunt en &amp;3 punten</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="317"/>
@@ -2594,7 +2594,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="323"/>
         <source>&amp;Polyline</source>
-        <translation>&amp;Polyline</translation>
+        <translation>&amp;Polylijn</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="324"/>
@@ -2604,7 +2604,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="325"/>
         <source>A&amp;ppend node</source>
-        <translation>&amp; Gebeurtenisknooppunt</translation>
+        <translation>Knooppunt a&amp;anvoegen</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="326"/>
@@ -2619,7 +2619,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="328"/>
         <source>&amp;Trim segments</source>
-        <translation>&amp;Trim segmenten</translation>
+        <translation>Segmenten &amp;trimmen</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="329"/>
@@ -2629,7 +2629,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="339"/>
         <source>&amp;MText</source>
-        <translation>&amp; MText</translation>
+        <translation>&amp;MText</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="340"/>
@@ -2639,12 +2639,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="341"/>
         <source>&amp;Hatch</source>
-        <translation>&amp;Hatch</translation>
+        <translation>&amp;Arcering</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="342"/>
         <source>Insert &amp;Image</source>
-        <translation>&amp; Afbeelding invoegen</translation>
+        <translation>&amp;Afbeelding invoegen</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="349"/>
@@ -2654,7 +2654,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="350"/>
         <source>&amp;Linear</source>
-        <translation>&amp;Linear</translation>
+        <translation>&amp;Lineair</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="352"/>
@@ -2669,7 +2669,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="354"/>
         <source>&amp;Diametric</source>
-        <translation>&amp; Diametrisch</translation>
+        <translation>&amp;Diametrisch</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="355"/>
@@ -2679,12 +2679,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="357"/>
         <source>&amp;Leader</source>
-        <translation>&amp; Leader</translation>
+        <translation>&amp;Aanhaallijn</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="378"/>
         <source>&amp;Attributes</source>
-        <translation>&amp; Eigenschappen</translation>
+        <translation>&amp;Attributen</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="379"/>
@@ -2694,7 +2694,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="380"/>
         <source>&amp;Move / Copy</source>
-        <translation>&amp; Verplaatsen / kopiëren</translation>
+        <translation>&amp;Verplaatsen / kopiëren</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="381"/>
@@ -2889,7 +2889,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="384"/>
         <source>&amp;Mirror</source>
-        <translation>&amp; Spiegelen</translation>
+        <translation>&amp;Spiegelen</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="386"/>
@@ -2904,12 +2904,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="388"/>
         <source>&amp;Trim</source>
-        <translation>&amp;Trim</translation>
+        <translation>&amp;Trimmen</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="390"/>
         <source>&amp;Lengthen</source>
-        <translation>&amp;Lengthen</translation>
+        <translation>&amp;Verlengen</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="392"/>
@@ -2919,17 +2919,17 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="393"/>
         <source>&amp;Stretch</source>
-        <translation>&amp;Stretch</translation>
+        <translation>&amp;Uitrekken</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="394"/>
         <source>&amp;Bevel</source>
-        <translation>&amp; Afschuinen</translation>
+        <translation>&amp;Afschuinen</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="395"/>
         <source>&amp;Fillet</source>
-        <translation>&amp;Fillet</translation>
+        <translation>&amp;Afronden</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="396"/>
@@ -2939,7 +2939,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="583"/>
         <source>&amp;Distance Point to Point</source>
-        <translation>&amp;Afstand wijzen naar punt</translation>
+        <translation>&amp;Afstand punt tot punt</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="586"/>
@@ -2999,7 +2999,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="238"/>
         <source>Lattice of Points</source>
-        <translation>Hoogte van de punten</translation>
+        <translation>Puntenraster</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="239"/>
@@ -3039,7 +3039,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="295"/>
         <source>Parabola &amp;Focus Directrix</source>
-        <translation>Parabola &amp; Focus Directrix</translation>
+        <translation>Parabool &amp;brandpunt en richtlijn</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="300"/>
@@ -3054,7 +3054,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="303"/>
         <source>&amp;Spline from polyline</source>
-        <translation>&amp;Spline van polyline</translation>
+        <translation>&amp;Spline uit polylijn</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="304"/>
@@ -3074,12 +3074,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="330"/>
         <source>Polyline from Existing &amp;Segments</source>
-        <translation>Polylijn van bestaande &amp; segmenten</translation>
+        <translation>Polylijn van bestaande &amp;segmenten</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="332"/>
         <source>Polyline Change Segment Type</source>
-        <translation>Type polylijnverandering segment</translation>
+        <translation>Segmenttype van polylijn wijzigen</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="343"/>
@@ -3099,7 +3099,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="398"/>
         <source>Break/Divide</source>
-        <translation>Break/Divide</translation>
+        <translation>Breken/verdelen</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="399"/>
@@ -3144,7 +3144,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="417"/>
         <source>&amp;Pick Pen From Entity (Resolved)</source>
-        <translation>&amp;Pick Pen from Entity (opgelost)</translation>
+        <translation>&amp;Pen uit entiteit kiezen (afgeleid)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="418"/>
@@ -3305,7 +3305,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="69"/>
         <source>Polygon drawing commands</source>
-        <translation>Meerhoekige tekenopdrachten</translation>
+        <translation>Tekenopdrachten voor veelhoeken</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="70"/>
@@ -3346,12 +3346,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="74"/>
         <source>Polyline</source>
-        <translation>Polyline</translation>
+        <translation>Polylijn</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="74"/>
         <source>Polyline drawing commands</source>
-        <translation>Meerlijnige tekenopdrachten</translation>
+        <translation>Tekenopdrachten voor polylijnen</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="75"/>
@@ -3371,7 +3371,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="76"/>
         <source>Snap restrictions</source>
-        <translation>Beperkingen invoegen</translation>
+        <translation>Snapbeperkingen</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="77"/>
@@ -3522,7 +3522,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="225"/>
         <source>Centerline</source>
-        <translation>Middenlijn</translation>
+        <translation>Hartlijn</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="226"/>
@@ -3592,7 +3592,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="363"/>
         <source>Feature Control Frame</source>
-        <translation>Functiebeheerframe</translation>
+        <translation>Tolerantiekader</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="364"/>
@@ -3632,12 +3632,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="457"/>
         <source>Snap Center</source>
-        <translation>Midden</translation>
+        <translation>Snap middelpunt</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="458"/>
         <source>Snap Middle</source>
-        <translation>Midden</translation>
+        <translation>Snap midden</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="459"/>
@@ -3797,7 +3797,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="590"/>
         <source>Collect &amp;Coordinates</source>
-        <translation>Verzamelen &amp; coördinaten</translation>
+        <translation>&amp;Coördinaten verzamelen</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="591"/>
@@ -3882,7 +3882,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="638"/>
         <source>&amp;Remove Block</source>
-        <translation>Blok &amp; verwijderen</translation>
+        <translation>Blok &amp;verwijderen</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="639"/>
@@ -3902,17 +3902,17 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="642"/>
         <source>&amp;Insert Block</source>
-        <translation>Blok &amp; invoegen</translation>
+        <translation>Blok &amp;invoegen</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="643"/>
         <source>Toggle Block &amp;Visibility</source>
-        <translation>Block &amp; Visibility aan/uitschakelen</translation>
+        <translation>Blok&amp;zichtbaarheid aan/uit</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="644"/>
         <source>&amp;Create Block</source>
-        <translation>Blok &amp; aanmaken</translation>
+        <translation>Blok &amp;aanmaken</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="397"/>
@@ -3922,12 +3922,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="654"/>
         <source>&amp;Application Preferences</source>
-        <translation>&amp; Toepassingsvoorkeuren</translation>
+        <translation>&amp;Toepassingsvoorkeuren</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="650"/>
         <source>Current &amp;Drawing Preferences</source>
-        <translation>Huidige &amp; Tekenvoorkeuren</translation>
+        <translation>Huidige &amp;tekenvoorkeuren</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="743"/>
@@ -3937,7 +3937,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="744"/>
         <source>Deselect &amp;all</source>
-        <translation>&amp; Niet selecteren</translation>
+        <translation>&amp;Alles deselecteren</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="745"/>
@@ -3952,7 +3952,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="720"/>
         <source>Zoom &amp;In</source>
-        <translation>&amp; Zoomen In</translation>
+        <translation>&amp;Inzoomen</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="721"/>
@@ -3967,7 +3967,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="723"/>
         <source>Previous &amp;View</source>
-        <translation>Vorige &amp; weergave</translation>
+        <translation>Vorige &amp;weergave</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="724"/>
@@ -3982,7 +3982,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="679"/>
         <source>New From &amp;Template</source>
-        <translation>Nieuw van &amp; sjabloon</translation>
+        <translation>Nieuw van &amp;sjabloon</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="680"/>
@@ -4002,7 +4002,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="674"/>
         <source>&amp;Export as image</source>
-        <translation>Als afbeelding &amp; exporteren</translation>
+        <translation>Als afbeelding &amp;exporteren</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="670"/>
@@ -4037,7 +4037,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="601"/>
         <source>&amp;Fullscreen</source>
-        <translation>&amp; Volledig scherm</translation>
+        <translation>&amp;Volledig scherm</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="602"/>
@@ -4057,7 +4057,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="715"/>
         <source>Focus on &amp;Command Line</source>
-        <translation>Focus op &amp; Command Line</translation>
+        <translation>Focus op &amp;opdrachtregel</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="655"/>
@@ -4082,7 +4082,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="389"/>
         <source>Tr&amp;im Two</source>
-        <translation>Tr&amp;im Twee</translation>
+        <translation>Beide &amp;trimmen</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="391"/>
@@ -4187,7 +4187,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="636"/>
         <source>&amp;Hide all blocks</source>
-        <translation>Alle blokken &amp; verbergen</translation>
+        <translation>Alle blokken &amp;verbergen</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="656"/>
@@ -4285,7 +4285,7 @@ Complementaire hoek: %2
 Supplementaire hoek: %3
 Volledige omwenteling − hoek: %4
 Randpunt starten: (%5 , %6)
-Intersectiepunt:(%7, %8)
+Snijpunt:(%7, %8)
 Eindrandpunt: (%9 , %10)</translation>
     </message>
     <message>
@@ -4320,7 +4320,7 @@ Eindrandpunt: (%9 , %10)</translation>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="213"/>
         <source>Intersection:</source>
-        <translation>Intersectie:</translation>
+        <translation>Snijpunt:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="215"/>
@@ -4533,7 +4533,7 @@ Punt: (%8 , %9)</translation>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="164"/>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="323"/>
         <source>Intersection:</source>
-        <translation>Intersectie:</translation>
+        <translation>Snijpunt:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="165"/>
@@ -5012,12 +5012,12 @@ Punt: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_bevel.cpp" line="182"/>
         <source>Trim</source>
-        <translation type="unfinished">Trim</translation>
+        <translation type="unfinished">Trimmen</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_bevel.cpp" line="183"/>
         <source>Intersection:</source>
-        <translation type="unfinished">Intersectie:</translation>
+        <translation type="unfinished">Snijpunt:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_bevel.cpp" line="184"/>
@@ -5148,7 +5148,7 @@ Punt: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="520"/>
         <source>Proceed even if no intersections</source>
-        <translation>Ga verder zelfs als geen kruispunten</translation>
+        <translation>Doorgaan, ook als er geen snijpunten zijn</translation>
     </message>
 </context>
 <context>
@@ -5356,7 +5356,7 @@ Punt: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_join.cpp" line="135"/>
         <source>Intersection:</source>
-        <translation>Intersectie:</translation>
+        <translation>Snijpunt:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_join.cpp" line="188"/>
@@ -5702,7 +5702,7 @@ Punt: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="144"/>
         <source>Offset</source>
-        <translation type="unfinished">Verschuiving</translation>
+        <translation type="unfinished">Offset</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="145"/>
@@ -5738,7 +5738,7 @@ Punt: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="254"/>
         <source>Offset immediately after selection</source>
-        <translation type="unfinished">Verschuiving onmiddellijk na selectie</translation>
+        <translation type="unfinished">Offset onmiddellijk na selectie</translation>
     </message>
 </context>
 <context>
@@ -5786,7 +5786,7 @@ Punt: (%8 , %9)</translation>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate.cpp" line="204"/>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate.cpp" line="211"/>
         <source>Center Point:</source>
-        <translation type="unfinished">Middenpunt:</translation>
+        <translation type="unfinished">Middelpunt:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate.cpp" line="205"/>
@@ -5865,7 +5865,7 @@ Punt: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate_twice.cpp" line="146"/>
         <source>Center 1:</source>
-        <translation type="unfinished">Midden 1:</translation>
+        <translation type="unfinished">Middelpunt 1:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate_twice.cpp" line="147"/>
@@ -5875,7 +5875,7 @@ Punt: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate_twice.cpp" line="148"/>
         <source>Center 2:</source>
-        <translation type="unfinished">Midden 2:</translation>
+        <translation type="unfinished">Middelpunt 2:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate_twice.cpp" line="149"/>
@@ -5913,7 +5913,7 @@ Punt: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_round.cpp" line="225"/>
         <source>Round</source>
-        <translation type="unfinished">Rond</translation>
+        <translation type="unfinished">Afronden</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_round.cpp" line="226"/>
@@ -5957,7 +5957,7 @@ Punt: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_scale.cpp" line="224"/>
         <source>Center:</source>
-        <translation type="unfinished">Midden:</translation>
+        <translation type="unfinished">Middelpunt:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_scale.cpp" line="225"/>
@@ -6007,7 +6007,7 @@ Punt: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_scale.cpp" line="420"/>
         <source>Free snap</source>
-        <translation type="unfinished">Vrije aanpassing</translation>
+        <translation type="unfinished">Vrije snap</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_scale.cpp" line="429"/>
@@ -6086,22 +6086,22 @@ Punt: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim.cpp" line="130"/>
         <source>Trim Two</source>
-        <translation type="unfinished">Trim 2</translation>
+        <translation type="unfinished">Beide trimmen</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim.cpp" line="130"/>
         <source>Trim</source>
-        <translation type="unfinished">Trim</translation>
+        <translation type="unfinished">Trimmen</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim.cpp" line="131"/>
         <source>Intersection:</source>
-        <translation type="unfinished">Intersectie:</translation>
+        <translation type="unfinished">Snijpunt:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim.cpp" line="133"/>
         <source>Intersection 2:</source>
-        <translation type="unfinished">Intersectie 2:</translation>
+        <translation type="unfinished">Snijpunt 2:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim.cpp" line="217"/>
@@ -6134,7 +6134,7 @@ Punt: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim_amount.cpp" line="207"/>
         <source>The chosen Entity is not an atomic entity or cannot be trimmed.</source>
-        <translation type="unfinished">Het gekozen Element kan niet getrimd worden.</translation>
+        <translation type="unfinished">De gekozen entiteit is geen enkelvoudige entiteit of kan niet worden getrimd.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim_amount.cpp" line="232"/>
@@ -6291,7 +6291,7 @@ Punt: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_append.cpp" line="132"/>
         <source>Can not append nodes in a closed polyline.</source>
-        <translation type="unfinished">Kan geen nodes toevoegen in een gesloten polyline.</translation>
+        <translation type="unfinished">Kan geen knooppunten toevoegen aan een gesloten polylijn.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_append.cpp" line="171"/>
@@ -6407,12 +6407,12 @@ Punt: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node_between.cpp" line="174"/>
         <source>No polyline found.</source>
-        <translation type="unfinished">Geen polyline gevonden.</translation>
+        <translation type="unfinished">Geen polylijn gevonden.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node_between.cpp" line="195"/>
         <source>At least two segments of polyline should be between selected points.</source>
-        <translation type="unfinished">Ten minste twee segmenten van polyline moeten tussen geselecteerde punten liggen.</translation>
+        <translation type="unfinished">Er moeten ten minste twee segmenten van de polylijn tussen de geselecteerde punten liggen.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node_between.cpp" line="213"/>
@@ -6454,7 +6454,7 @@ Punt: (%8 , %9)</translation>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_from_segment.cpp" line="62"/>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_from_segment.cpp" line="82"/>
         <source>Polyline created</source>
-        <translation type="unfinished">Polyline aangemaakt</translation>
+        <translation type="unfinished">Polylijn aangemaakt</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_from_segment.cpp" line="326"/>
@@ -6487,7 +6487,7 @@ Punt: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_trim.cpp" line="143"/>
         <source>First segment should be on selected polyline.</source>
-        <translation type="unfinished">Eerste segment moet op geselecteerde polyline.</translation>
+        <translation type="unfinished">Het eerste segment moet op de geselecteerde polylijn liggen.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_trim.cpp" line="155"/>
@@ -6530,12 +6530,12 @@ Punt: (%8 , %9)</translation>
     <message>
         <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="222"/>
         <source>that intersect with box</source>
-        <translation>die snijdt met doos</translation>
+        <translation>die het selectiekader snijden</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="222"/>
         <source>that are within box</source>
-        <translation>die zich binnen de doos bevinden</translation>
+        <translation>die binnen het selectiekader liggen</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="246"/>
@@ -6550,7 +6550,7 @@ Punt: (%8 , %9)</translation>
     <message>
         <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="246"/>
         <source>Select Intersecting</source>
-        <translation>Selecteer kruising</translation>
+        <translation>Snijdende entiteiten selecteren</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="276"/>
@@ -6692,12 +6692,12 @@ Punt: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_window.cpp" line="137"/>
         <source>that intersect with box</source>
-        <translation type="unfinished">die snijdt met doos</translation>
+        <translation type="unfinished">die het selectiekader snijden</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_window.cpp" line="137"/>
         <source>that are within box</source>
-        <translation type="unfinished">die zich binnen de doos bevinden</translation>
+        <translation type="unfinished">die binnen het selectiekader liggen</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_window.cpp" line="180"/>
@@ -6722,12 +6722,12 @@ Punt: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_window.cpp" line="184"/>
         <source>Select Intersecting</source>
-        <translation type="unfinished">Selecteer kruising</translation>
+        <translation type="unfinished">Snijdende entiteiten selecteren</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_window.cpp" line="184"/>
         <source>De-select intersecting</source>
-        <translation type="unfinished">Intersecten verbreken</translation>
+        <translation type="unfinished">Snijdende entiteiten deselecteren</translation>
     </message>
 </context>
 <context>
@@ -6802,7 +6802,7 @@ Punt: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_action_spline_from_polyline.cpp" line="162"/>
         <source>Select polyline to create spline or spline points</source>
-        <translation>Selecteer polyline om spline- of splinepunten aan te maken</translation>
+        <translation>Selecteer een polylijn om een spline of splinepunten aan te maken</translation>
     </message>
 </context>
 <context>
@@ -7683,7 +7683,7 @@ Weet u zeker dat u wijzigingen gaat verwerpen?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="65"/>
         <source>Center (x):</source>
-        <translation>Midden (x):</translation>
+        <translation>Middelpunt (x):</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="87"/>
@@ -7693,12 +7693,12 @@ Weet u zeker dat u wijzigingen gaat verwerpen?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="112"/>
         <source>Pick center coordinate from the drawing</source>
-        <translation>Pick center coördinaat van de tekening</translation>
+        <translation>Coördinaat van het middelpunt uit de tekening kiezen</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="131"/>
         <source>Center (y):</source>
-        <translation>Midden (y):</translation>
+        <translation>Middelpunt (y):</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="153"/>
@@ -7915,12 +7915,12 @@ Weet u zeker dat u wijzigingen gaat verwerpen?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_filler.cpp" line="31"/>
         <source>Trim</source>
-        <translation type="unfinished">Trim</translation>
+        <translation type="unfinished">Trimmen</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_filler.cpp" line="31"/>
         <source>Check to trim both entities to the bevel</source>
-        <translation type="unfinished">Controleren om beide entiteiten aan de afschuining te trimmen</translation>
+        <translation type="unfinished">Aanvinken om beide entiteiten tot de afschuining te trimmen</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_filler.cpp" line="37"/>
@@ -7953,12 +7953,12 @@ Weet u zeker dat u wijzigingen gaat verwerpen?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_widget.ui" line="59"/>
         <source>Check to trim both entities to the bevel</source>
-        <translation type="unfinished">Controleren om beide entiteiten aan de afschuining te trimmen</translation>
+        <translation type="unfinished">Aanvinken om beide entiteiten tot de afschuining te trimmen</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_widget.ui" line="62"/>
         <source>Trim</source>
-        <translation type="unfinished">Trim</translation>
+        <translation type="unfinished">Trimmen</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_widget.ui" line="85"/>
@@ -8600,7 +8600,7 @@ Weet u zeker dat u wijzigingen gaat verwerpen?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_circle.ui" line="47"/>
         <source>Center (x):</source>
-        <translation>Midden (x):</translation>
+        <translation>Middelpunt (x):</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_circle.ui" line="63"/>
@@ -8610,12 +8610,12 @@ Weet u zeker dat u wijzigingen gaat verwerpen?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_circle.ui" line="88"/>
         <source>Pick center coordinate from drawing</source>
-        <translation>Pick center coördinaat van tekening</translation>
+        <translation>Coördinaat van het middelpunt uit de tekening kiezen</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_circle.ui" line="95"/>
         <source>Center (y):</source>
-        <translation>Midden (y):</translation>
+        <translation>Middelpunt (y):</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_circle.ui" line="111"/>
@@ -8859,7 +8859,7 @@ Weet u zeker dat u wijzigingen gaat verwerpen?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/lc_dimstyleitem.cpp" line="111"/>
         <source>Leader and Tolerance</source>
-        <translation>Verwijslijn en tolerantie</translation>
+        <translation>Aanhaallijn en tolerantie</translation>
     </message>
 </context>
 <context>
@@ -9104,12 +9104,12 @@ Weet u zeker dat u wijzigingen gaat verwerpen?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="88"/>
         <source>Linewidth:</source>
-        <translation>Lijnbreedte:</translation>
+        <translation>Lijndikte:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="137"/>
         <source>Sets the lineweight of the dimension line. (DIMLWD system variable)</source>
-        <translation>Stelt het lijngewicht in van de maatlijn. (DIMLWD systeemvariabele)</translation>
+        <translation>Stelt de lijndikte van de maatlijn in. (DIMLWD-systeemvariabele)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="111"/>
@@ -9119,7 +9119,7 @@ Weet u zeker dat u wijzigingen gaat verwerpen?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="101"/>
         <source>Specifies a distance to extend the dimension line past the extension line when you use oblique, architectural, tick, integral, and no marks for arrowheads. (DIMDLE system variable)</source>
-        <translation>Geeft een afstand aan om de maatlijn voorbij de extensielijn te verlengen wanneer u schuine streepjes, architectonische streepjes, streepjes, integraaltekens of geen markeringen als pijlpunten gebruikt. (DIMDLE systeemvariabele)</translation>
+        <translation>Geeft een afstand aan om de maatlijn voorbij de verlenglijn te verlengen wanneer u schuine streepjes, architectonische streepjes, streepjes, integraaltekens of geen markeringen als pijlpunten gebruikt. (DIMDLE systeemvariabele)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="162"/>
@@ -9149,12 +9149,12 @@ Weet u zeker dat u wijzigingen gaat verwerpen?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="204"/>
         <source>Extension Lines</source>
-        <translation>Extensielijnen</translation>
+        <translation>Verlenglijnen</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="216"/>
         <source>Sets the color for the extension line (DIMCLRE system variable.)</source>
-        <translation>Stelt de kleur in voor de extensielijn (DIMCLRE systeem variabele.)</translation>
+        <translation>Stelt de kleur in voor de verlenglijn (DIMCLRE systeem variabele.)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="295"/>
@@ -9164,7 +9164,7 @@ Weet u zeker dat u wijzigingen gaat verwerpen?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="361"/>
         <source>Sets the linetype of the first extension line. (DIMLTEX1 system variable)</source>
-        <translation>Stelt het lijntype van de eerste extensielijn in. (DIMLTEX1-systeemvariabele)</translation>
+        <translation>Stelt het lijntype van de eerste verlenglijn in. (DIMLTEX1-systeemvariabele)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="338"/>
@@ -9174,17 +9174,17 @@ Weet u zeker dat u wijzigingen gaat verwerpen?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="308"/>
         <source>Sets the linetype of the second extension line. (DIMLTEX2 system variable)</source>
-        <translation>Stelt het lijntype van de tweede extensielijn in. (DIMLTEX2-systeemvariabele)</translation>
+        <translation>Stelt het lijntype van de tweede verlenglijn in. (DIMLTEX2-systeemvariabele)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="331"/>
         <source>Lineweight:</source>
-        <translation>Lijngewicht:</translation>
+        <translation>Lijndikte:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="236"/>
         <source>Sets the lineweight of the extension line. (DIMLWE system variable)</source>
-        <translation>Stelt het lijngewicht van de verlenglijn in. (DIMLWE systeemvariabele)</translation>
+        <translation>Stelt de lijndikte van de verlenglijn in. (DIMLWE-systeemvariabele)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="368"/>
@@ -9194,7 +9194,7 @@ Weet u zeker dat u wijzigingen gaat verwerpen?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="285"/>
         <source>Specifies a distance to extend the extension lines above the dimension line. (DIMEXE system variable)</source>
-        <translation>Geeft een afstand aan om de extensielijnen boven de maatlijn te verlengen. (DIMEXE systeemvariabele)</translation>
+        <translation>Geeft een afstand aan om de verlenglijnen boven de maatlijn te verlengen. (DIMEXE systeemvariabele)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="375"/>
@@ -9204,7 +9204,7 @@ Weet u zeker dat u wijzigingen gaat verwerpen?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="404"/>
         <source>Sets the distance to offset the extension lines from the points on the drawing that define the dimension. (DIMEXO system variable)</source>
-        <translation>Stelt de afstand in waarmee de extensielijnen verschoven worden ten opzichte van de punten op de tekening die de maat bepalen. (DIMEXO systeemvariabele)</translation>
+        <translation>Stelt de afstand in waarmee de verlenglijnen verschoven worden ten opzichte van de punten op de tekening die de maat bepalen. (DIMEXO systeemvariabele)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="223"/>
@@ -9214,22 +9214,22 @@ Weet u zeker dat u wijzigingen gaat verwerpen?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="388"/>
         <source>Sets the total length of the extension lines starting from the dimension line toward the dimension origin. (DIMFXL system variable)</source>
-        <translation>Stelt de totale lengte van de extensielijnen in vanaf de maatlijn naar de oorsprong van de maat. (DIMFXL systeemvariabele)</translation>
+        <translation>Stelt de totale lengte van de verlenglijnen in vanaf de maatlijn naar de oorsprong van de maat. (DIMFXL systeemvariabele)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="345"/>
         <source>Enables fixed length extension lines. (DIMFXLON system variable)</source>
-        <translation>Schakel vaste lengteextensielijnen in. (DIMFXLON systeemvariabele)</translation>
+        <translation>Schakelt verlenglijnen met vaste lengte in. (DIMFXLON-systeemvariabele)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="348"/>
         <source>Fixed length extension lines</source>
-        <translation>Vaste lengteverlenglijnen</translation>
+        <translation>Verlenglijnen met vaste lengte</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="269"/>
         <source>Suppresses the display of first extension line (DIMSE1 system variable).</source>
-        <translation>Onderdrukt het display van de eerste extensielijn (DIMSE1-systeemvariabele).</translation>
+        <translation>Onderdrukt de weergave van de eerste verlenglijn (DIMSE1-systeemvariabele).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="272"/>
@@ -9239,7 +9239,7 @@ Weet u zeker dat u wijzigingen gaat verwerpen?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="321"/>
         <source>Suppresses the display of second extension line (DIMSE2 system variable).</source>
-        <translation>Onderdrukt het display van de tweede extensielijn (DIMSE2-systeemvariabele).</translation>
+        <translation>Onderdrukt de weergave van de tweede verlenglijn (DIMSE2-systeemvariabele).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="324"/>
@@ -9305,12 +9305,12 @@ Weet u zeker dat u wijzigingen gaat verwerpen?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="539"/>
         <source>Sets the arrowhead for the leader line. (DIMLDRBLK system variable)</source>
-        <translation>Stelt de pijlpunt in voor de verwijslijn. (DIMLDRBLK-systeemvariabele)</translation>
+        <translation>Stelt de pijlpunt in voor de aanhaallijn. (DIMLDRBLK-systeemvariabele)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="511"/>
         <source>Leader:</source>
-        <translation>Verwijslijn:</translation>
+        <translation>Aanhaallijn:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="518"/>
@@ -9402,7 +9402,7 @@ Weet u zeker dat u wijzigingen gaat verwerpen?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="669"/>
         <source>Creates no center mark or centerline. The value is stored as 0 in the DIMCEN system variable.</source>
-        <translation>Maakt geen middenteken of middenlijn aan. De waarde wordt opgeslagen als 0 in de DIMCEN systeem variabele.</translation>
+        <translation>Maakt geen middenmarkering of hartlijn aan. De waarde wordt als 0 opgeslagen in de DIMCEN-systeemvariabele.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="679"/>
@@ -9417,7 +9417,7 @@ Weet u zeker dat u wijzigingen gaat verwerpen?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="689"/>
         <source>Creates a centerline. The size of the centerline is stored as a negative value in the DIMCEN system variable.</source>
-        <translation>Maakt een middenlijn. De grootte van de centerline wordt opgeslagen als een negatieve waarde in de DIMCEN systeem variabele.</translation>
+        <translation>Maakt een hartlijn aan. De grootte van de hartlijn wordt als negatieve waarde opgeslagen in de DIMCEN-systeemvariabele.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="692"/>
@@ -9432,7 +9432,7 @@ Weet u zeker dat u wijzigingen gaat verwerpen?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="706"/>
         <source>Displays and sets the size of the center mark or centerline. (DIMCEN system variable)</source>
-        <translation>Toont en stelt de grootte van de middenmarkering of middenlijn. (DIMCEN-systeemvariabele)</translation>
+        <translation>Toont en stelt de grootte van de middenmarkering of hartlijn in. (DIMCEN-systeemvariabele)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="746"/>
@@ -9539,7 +9539,7 @@ Weet u zeker dat u wijzigingen gaat verwerpen?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="911"/>
         <source>Aligns text with the dimension line when text is inside the extension lines, but aligns it horizontally when text is outside the extension lines (DIMTIH and DIMTOH system variables).</source>
-        <translation>Lijnt de tekst uit met de maatlijn wanneer de tekst zich binnen de extensielijnen bevindt, maar richt deze horizontaal uit wanneer de tekst buiten de extensielijnen (DIMTIH en DIMTOH systeemvariabelen) ligt.</translation>
+        <translation>Lijnt de tekst uit met de maatlijn wanneer de tekst zich binnen de verlenglijnen bevindt, maar richt deze horizontaal uit wanneer de tekst buiten de verlenglijnen (DIMTIH en DIMTOH systeemvariabelen) ligt.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="904"/>
@@ -9601,7 +9601,7 @@ Weet u zeker dat u wijzigingen gaat verwerpen?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="961"/>
         <source>Controls the horizontal placement of dimension text along the dimension line, in relation to the extension lines. (DIMJUST system variable)</source>
-        <translation>Regelt de horizontale plaatsing van maattekst langs de maatlijn, ten opzichte van de extensielijnen. (DIMJUST-systeemvariabele)</translation>
+        <translation>Regelt de horizontale plaatsing van maattekst langs de maatlijn, ten opzichte van de verlenglijnen. (DIMJUST-systeemvariabele)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="965"/>
@@ -9748,12 +9748,12 @@ Weet u zeker dat u wijzigingen gaat verwerpen?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1185"/>
         <source>If selected, dimension lines are not moved when text is moved. If text is moved away from the dimension line, a leader line is created connecting the text to the dimension line. The leader line is omitted when text is too close to the dimension line. (DIMTMOVE system variable)</source>
-        <translation>Indien geselecteerd worden maatlijnen niet verplaatst wanneer tekst wordt verplaatst. Als tekst van de maatlijn af wordt verplaatst, wordt een verwijslijn aangemaakt die de tekst verbindt met de maatlijn. De verwijslijn wordt weggelaten wanneer de tekst te dicht bij de maatlijn staat. (DIMTMOVE-systeemvariabele)</translation>
+        <translation>Indien geselecteerd worden maatlijnen niet verplaatst wanneer tekst wordt verplaatst. Als tekst van de maatlijn af wordt verplaatst, wordt een aanhaallijn aangemaakt die de tekst verbindt met de maatlijn. De aanhaallijn wordt weggelaten wanneer de tekst te dicht bij de maatlijn staat. (DIMTMOVE-systeemvariabele)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1188"/>
         <source>Over dimension line, with leader</source>
-        <translation>Over maatlijn, met verwijslijn</translation>
+        <translation>Over maatlijn, met aanhaallijn</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1195"/>
@@ -9763,12 +9763,12 @@ Weet u zeker dat u wijzigingen gaat verwerpen?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1202"/>
         <source>If selected, dimension lines are not moved when text is moved. Text that is moved away from the dimension line is not connected to the dimension line with a leader. (DIMTMOVE system variable)</source>
-        <translation>Indien geselecteerd worden maatlijnen niet verplaatst wanneer tekst wordt verplaatst. Tekst die van de maatlijn af wordt verplaatst, wordt niet met een verwijslijn met de maatlijn verbonden. (DIMTMOVE-systeemvariabele)</translation>
+        <translation>Indien geselecteerd worden maatlijnen niet verplaatst wanneer tekst wordt verplaatst. Tekst die van de maatlijn af wordt verplaatst, wordt niet met een aanhaallijn met de maatlijn verbonden. (DIMTMOVE-systeemvariabele)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1205"/>
         <source>Over dimension line, without leader</source>
-        <translation>Over maatlijn, zonder verwijslijn</translation>
+        <translation>Over maatlijn, zonder aanhaallijn</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1234"/>
@@ -9778,22 +9778,22 @@ Weet u zeker dat u wijzigingen gaat verwerpen?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1240"/>
         <source>If there isn&apos;t enough room to place both text and arrow inside extension lines, the first thing to move outside the extension lines is:</source>
-        <translation>Als er niet genoeg ruimte is om zowel tekst als pijl te plaatsen binnen extensielijnen, is het eerste wat je buiten de extensielijnen beweegt:</translation>
+        <translation>Als er binnen de verlenglijnen niet genoeg ruimte is voor zowel tekst als pijl, wordt eerst buiten de verlenglijnen geplaatst:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1250"/>
         <source>Suppresses arrowheads if not enough space is available inside the extension lines. (DIMSOXD system variable)</source>
-        <translation>Onderdrukt pijlpunten als er niet genoeg ruimte beschikbaar is binnen de extensielijnen. (DIMSOXD systeemvariabele)</translation>
+        <translation>Onderdrukt pijlpunten als er niet genoeg ruimte beschikbaar is binnen de verlenglijnen. (DIMSOXD systeemvariabele)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1253"/>
         <source>Suppress arrows if they don&apos;t fit inside extension lines</source>
-        <translation>Onderdruk pijlen als ze niet passen binnen extensie lijnen</translation>
+        <translation>Pijlen onderdrukken als ze niet tussen de verlenglijnen passen</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1260"/>
         <source>When not enough space is available for text and arrowheads, moves both outside the extension lines (DIMATFIT system variable).</source>
-        <translation>Als er niet genoeg ruimte beschikbaar is voor tekst en pijlpunten, beweegt zowel buiten de extensielijnen (DIMATFIT systeem variabele).</translation>
+        <translation>Als er niet genoeg ruimte is voor tekst en pijlpunten, worden beide buiten de verlenglijnen geplaatst (DIMATFIT-systeemvariabele).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1263"/>
@@ -9803,7 +9803,7 @@ Weet u zeker dat u wijzigingen gaat verwerpen?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1270"/>
         <source>Moves either the text or the arrowheads outside the extension lines based on the best fit (DIMATFIT system variable).</source>
-        <translation>Verplaatst de tekst of de pijlpunten buiten de extensielijnen op basis van de beste pasvorm (DIMATFIT systeem variabele).</translation>
+        <translation>Verplaatst de tekst of de pijlpunten buiten de verlenglijnen op basis van de beste pasvorm (DIMATFIT systeem variabele).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1273"/>
@@ -9813,7 +9813,7 @@ Weet u zeker dat u wijzigingen gaat verwerpen?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1280"/>
         <source>Moves arrowheads outside the extension lines first, then text (DIMATFIT system variable).</source>
-        <translation>Verplaatst pijlpunten buiten de extensielijnen eerst, dan tekst (DIMATFIT systeem variabele).</translation>
+        <translation>Verplaatst eerst de pijlpunten buiten de verlenglijnen, daarna de tekst (DIMATFIT-systeemvariabele).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1283"/>
@@ -9823,12 +9823,12 @@ Weet u zeker dat u wijzigingen gaat verwerpen?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1290"/>
         <source>Moves text outside the extension lines first, then arrowheads (DIMATFIT system variable).</source>
-        <translation>Verplaatst tekst eerst buiten de extensielijnen, dan pijlpunten (DIMATFIT systeem variabele).</translation>
+        <translation>Verplaatst tekst eerst buiten de verlenglijnen, dan pijlpunten (DIMATFIT systeem variabele).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1300"/>
         <source>Always places text between extension lines. (DIMTIX system variable)</source>
-        <translation>Plaatst altijd tekst tussen extensielijnen. (DIMTIX-systeemvariabele)</translation>
+        <translation>Plaatst altijd tekst tussen verlenglijnen. (DIMTIX-systeemvariabele)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1303"/>
@@ -10152,7 +10152,7 @@ Weet u zeker dat u wijzigingen gaat verwerpen?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1845"/>
         <source>Round distances to:</source>
-        <translation>Ronde afstanden tot:</translation>
+        <translation>Afstanden afronden op:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1858"/>
@@ -10621,23 +10621,23 @@ Weet u zeker dat u wijzigingen gaat verwerpen?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="580"/>
         <source>&amp;Apply Style</source>
-        <translation>Stijl &amp; toepassen</translation>
+        <translation>Stijl &amp;toepassen</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="581"/>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="608"/>
         <source>&amp;Select Style</source>
-        <translation>Stijl &amp; selecteren</translation>
+        <translation>Stijl &amp;selecteren</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="586"/>
         <source>&amp;Set as Active</source>
-        <translation>Als actief &amp; instellen</translation>
+        <translation>Als actief &amp;instellen</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="590"/>
         <source>&amp;Create override</source>
-        <translation>Overschrijven &amp; aanmaken</translation>
+        <translation>Overschrijven &amp;aanmaken</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="594"/>
@@ -10647,7 +10647,7 @@ Weet u zeker dat u wijzigingen gaat verwerpen?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="597"/>
         <source>&amp;Edit override</source>
-        <translation>Overschrijven &amp; bewerken</translation>
+        <translation>Overschrijven &amp;bewerken</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="598"/>
@@ -10657,7 +10657,7 @@ Weet u zeker dat u wijzigingen gaat verwerpen?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="599"/>
         <source>&amp;Remove Override</source>
-        <translation>Overschrijven &amp; verwijderen</translation>
+        <translation>Overschrijven &amp;verwijderen</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="603"/>
@@ -10786,7 +10786,7 @@ Weet u zeker dat u wijzigingen gaat verwerpen?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="259"/>
         <source>Hatch Properties</source>
-        <translation>Arceringseigens chappen</translation>
+        <translation>Arceringseigenschappen</translation>
     </message>
 </context>
 <context>
@@ -11143,7 +11143,7 @@ Weet u zeker dat u wijzigingen gaat verwerpen?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="113"/>
         <source>Polyline</source>
-        <translation>Polyline</translation>
+        <translation>Polylijn</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="114"/>
@@ -11178,7 +11178,7 @@ Weet u zeker dat u wijzigingen gaat verwerpen?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="120"/>
         <source>Hatch</source>
-        <translation>Hatch</translation>
+        <translation>Arcering</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="121"/>
@@ -11218,7 +11218,7 @@ Weet u zeker dat u wijzigingen gaat verwerpen?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="128"/>
         <source>Leader</source>
-        <translation>Verwijslijn</translation>
+        <translation>Aanhaallijn</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="231"/>
@@ -11495,7 +11495,7 @@ Weet u zeker dat u wijzigingen gaat verwerpen?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="64"/>
         <source>Leader And Tolerances</source>
-        <translation>Verwijslijn en toleranties</translation>
+        <translation>Aanhaallijn en toleranties</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="95"/>
@@ -12126,7 +12126,7 @@ Weet u zeker dat u wijzigingen gaat verwerpen?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="14"/>
         <source>Feature Control Frame</source>
-        <translation>Functiebeheerframe</translation>
+        <translation>Tolerantiekader</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="26"/>
@@ -12817,7 +12817,7 @@ Weet u zeker dat u wijzigingen gaat verwerpen?</translation>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_filler.cpp" line="42"/>
         <source>Polyline</source>
-        <translation type="unfinished">Polyline</translation>
+        <translation type="unfinished">Polylijn</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_filler.cpp" line="42"/>
@@ -12870,7 +12870,7 @@ Weet u zeker dat u wijzigingen gaat verwerpen?</translation>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_widget.ui" line="69"/>
         <source>Polyline</source>
-        <translation type="unfinished">Polyline</translation>
+        <translation type="unfinished">Polylijn</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_widget.ui" line="76"/>
@@ -13253,7 +13253,7 @@ Weet u zeker dat u wijzigingen gaat verwerpen?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_ellipse.ui" line="59"/>
         <source>Center (x):</source>
-        <translation>Midden (x):</translation>
+        <translation>Middelpunt (x):</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_ellipse.ui" line="81"/>
@@ -13263,12 +13263,12 @@ Weet u zeker dat u wijzigingen gaat verwerpen?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_ellipse.ui" line="106"/>
         <source>Pick center coordinate from drawing</source>
-        <translation>Pick center coördinaat van tekening</translation>
+        <translation>Coördinaat van het middelpunt uit de tekening kiezen</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_ellipse.ui" line="119"/>
         <source>Center (y):</source>
-        <translation>Midden (y):</translation>
+        <translation>Middelpunt (y):</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_ellipse.ui" line="141"/>
@@ -13398,7 +13398,7 @@ Weet u zeker dat u wijzigingen gaat verwerpen?</translation>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="82"/>
         <source>Polyline</source>
-        <translation type="unfinished">Polyline</translation>
+        <translation type="unfinished">Polylijn</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="83"/>
@@ -13478,12 +13478,12 @@ Weet u zeker dat u wijzigingen gaat verwerpen?</translation>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="98"/>
         <source>Hatch</source>
-        <translation type="unfinished">Hatch</translation>
+        <translation type="unfinished">Arcering</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="99"/>
         <source>Leader</source>
-        <translation type="unfinished">Verwijslijn</translation>
+        <translation type="unfinished">Aanhaallijn</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="100"/>
@@ -13742,7 +13742,7 @@ Weet u zeker dat u wijzigingen gaat verwerpen?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="245"/>
         <source>Line Width</source>
-        <translation type="unfinished">Lijnbreedte</translation>
+        <translation type="unfinished">Lijndikte</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="245"/>
@@ -14028,7 +14028,7 @@ Weet u zeker dat u wijzigingen gaat verwerpen?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_hyperbola.ui" line="35"/>
         <source>Center X:</source>
-        <translation>Midden X:</translation>
+        <translation>Middelpunt X:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_hyperbola.ui" line="45"/>
@@ -15692,7 +15692,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="156"/>
         <source>Line Snap:</source>
-        <translation type="unfinished">Lijnsnap:</translation>
+        <translation type="unfinished">Snap op lijn:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="163"/>
@@ -15836,7 +15836,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="48"/>
         <source>To Intersection</source>
-        <translation type="unfinished">Naar intersectie</translation>
+        <translation type="unfinished">Naar snijpunt</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="49"/>
@@ -15851,7 +15851,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="56"/>
         <source>Defines whether created line should be created to intersection point or should have fixed length</source>
-        <translation type="unfinished">Bepaalt of de aangemaakte lijn tot kruispunt moet worden gemaakt of een vaste lengte moet hebben</translation>
+        <translation type="unfinished">Bepaalt of de aangemaakte lijn tot het snijpunt loopt of een vaste lengte heeft</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="66"/>
@@ -15984,12 +15984,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="318"/>
         <source>Defines whether created line should be created to intersection point or should have fixed length</source>
-        <translation type="unfinished">Bepaalt of de aangemaakte lijn tot kruispunt moet worden gemaakt of een vaste lengte moet hebben</translation>
+        <translation type="unfinished">Bepaalt of de aangemaakte lijn tot het snijpunt loopt of een vaste lengte heeft</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="322"/>
         <source>To Intersection</source>
-        <translation type="unfinished">Naar intersectie</translation>
+        <translation type="unfinished">Naar snijpunt</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="327"/>
@@ -16027,7 +16027,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="38"/>
         <source>Size of the gap, if not free</source>
-        <translation type="unfinished">Grootte van het gat, indien niet vrij</translation>
+        <translation type="unfinished">Grootte van de onderbreking, indien niet vrij</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="49"/>
@@ -16060,7 +16060,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="56"/>
         <source>Snap point for gap on the line</source>
-        <translation type="unfinished">Punt voor spleet op de lijn</translation>
+        <translation type="unfinished">Snappunt van de onderbreking op de lijn</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="63"/>
@@ -16116,17 +16116,17 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="54"/>
         <source>Gap Size:</source>
-        <translation type="unfinished">Gapgrootte:</translation>
+        <translation type="unfinished">Grootte onderbreking:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="61"/>
         <source>Gap Snap:</source>
-        <translation type="unfinished">Aansluiting op opening:</translation>
+        <translation type="unfinished">Snap onderbreking:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="68"/>
         <source>Snap point for gap on the line</source>
-        <translation type="unfinished">Punt voor spleet op de lijn</translation>
+        <translation type="unfinished">Snappunt van de onderbreking op de lijn</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="72"/>
@@ -16155,17 +16155,17 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="95"/>
         <source>Line Snap:</source>
-        <translation type="unfinished">Lijnsnap:</translation>
+        <translation type="unfinished">Snap op lijn:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="134"/>
         <source>Size of the gap, if not free</source>
-        <translation type="unfinished">Grootte van het gat, indien niet vrij</translation>
+        <translation type="unfinished">Grootte van de onderbreking, indien niet vrij</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="141"/>
         <source>PIck gap size from drawing</source>
-        <translation type="unfinished">Pick gap grootte van tekening</translation>
+        <translation type="unfinished">Grootte van de onderbreking uit de tekening kiezen</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="155"/>
@@ -16198,7 +16198,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="35"/>
         <source>Extend/Trim</source>
-        <translation type="unfinished">Extended/Trim</translation>
+        <translation type="unfinished">Verlengen/trimmen</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="36"/>
@@ -16255,7 +16255,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="78"/>
         <source>Polyline</source>
-        <translation type="unfinished">Polyline</translation>
+        <translation type="unfinished">Polylijn</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="78"/>
@@ -16288,7 +16288,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="41"/>
         <source>Create Polyline</source>
-        <translation type="unfinished">Polyline aanmaken</translation>
+        <translation type="unfinished">Polylijn aanmaken</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="66"/>
@@ -16299,7 +16299,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="70"/>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="124"/>
         <source>Extend/Trim</source>
-        <translation type="unfinished">Extended/Trim</translation>
+        <translation type="unfinished">Verlengen/trimmen</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="75"/>
@@ -17042,12 +17042,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="64"/>
         <source>Polyline</source>
-        <translation type="unfinished">Polyline</translation>
+        <translation type="unfinished">Polylijn</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="65"/>
         <source>Creates polyline from line segments</source>
-        <translation type="unfinished">Maakt polyline aan vanuit lijnsegmenten</translation>
+        <translation type="unfinished">Maakt een polylijn van lijnsegmenten</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="72"/>
@@ -17177,12 +17177,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="321"/>
         <source>Creates polyline from line segments</source>
-        <translation type="unfinished">Maakt polyline aan vanuit lijnsegmenten</translation>
+        <translation type="unfinished">Maakt een polylijn van lijnsegmenten</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="324"/>
         <source>Polyline</source>
-        <translation type="unfinished">Polyline</translation>
+        <translation type="unfinished">Polylijn</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="331"/>
@@ -17548,7 +17548,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_base.h" line="57"/>
         <source>Line Width</source>
-        <translation type="unfinished">Lijnbreedte</translation>
+        <translation type="unfinished">Lijndikte</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_base.h" line="57"/>
@@ -19483,7 +19483,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_hatch.cpp" line="29"/>
         <source>Hatch</source>
-        <translation type="unfinished">Hatch</translation>
+        <translation type="unfinished">Arcering</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_hatch.cpp" line="34"/>
@@ -19944,7 +19944,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_leader.cpp" line="29"/>
         <source>Leader</source>
-        <translation type="unfinished">Verwijslijn</translation>
+        <translation type="unfinished">Aanhaallijn</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_leader.cpp" line="33"/>
@@ -20382,7 +20382,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_polyline.cpp" line="29"/>
         <source>Polyline</source>
-        <translation type="unfinished">Polyline</translation>
+        <translation type="unfinished">Polylijn</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_polyline.cpp" line="33"/>
@@ -20862,7 +20862,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="143"/>
         <source>Polyline</source>
-        <translation type="unfinished">Polyline</translation>
+        <translation type="unfinished">Polylijn</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="147"/>
@@ -20887,7 +20887,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="162"/>
         <source>Polyline/Spline</source>
-        <translation type="unfinished">Polyline/Spline</translation>
+        <translation type="unfinished">Polylijn/Spline</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="173"/>
@@ -21110,7 +21110,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="128"/>
         <source>&amp;Commands</source>
-        <translation type="unfinished">&amp; Commando&apos;s</translation>
+        <translation type="unfinished">&amp;Commando&apos;s</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="129"/>
@@ -21182,7 +21182,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="214"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="248"/>
         <source>&amp;Circle</source>
-        <translation type="unfinished">&amp;Circle</translation>
+        <translation type="unfinished">&amp;Cirkel</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="186"/>
@@ -21215,12 +21215,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="221"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="258"/>
         <source>&amp;Polyline</source>
-        <translation type="unfinished">&amp;Polyline</translation>
+        <translation type="unfinished">&amp;Polylijn</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="206"/>
         <source>&amp;Other</source>
-        <translation type="unfinished">&amp; Andere</translation>
+        <translation type="unfinished">&amp;Andere</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="211"/>
@@ -21231,7 +21231,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="220"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="256"/>
         <source>&amp;Ellipse</source>
-        <translation type="unfinished">&amp;Ellipse</translation>
+        <translation type="unfinished">&amp;Ellips</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="223"/>
@@ -21249,7 +21249,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="230"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="270"/>
         <source>&amp;Order</source>
-        <translation type="unfinished">&amp; Order</translation>
+        <translation type="unfinished">&amp;Volgorde</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="234"/>
@@ -21265,7 +21265,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="244"/>
         <source>&amp;Tools</source>
-        <translation type="unfinished">&amp; Gereedschappen</translation>
+        <translation type="unfinished">&amp;Gereedschappen</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="263"/>
@@ -21310,7 +21310,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="386"/>
         <source>&amp;Views Restore</source>
-        <translation type="unfinished">Herstellen &amp; weergaven</translation>
+        <translation type="unfinished">&amp;Weergaven herstellen</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="399"/>
@@ -21400,7 +21400,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="632"/>
         <source>&amp;Arrange</source>
-        <translation type="unfinished">&amp; Arrangeren</translation>
+        <translation type="unfinished">&amp;Schikken</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="636"/>
@@ -21410,7 +21410,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="640"/>
         <source>&amp;Cascade</source>
-        <translation type="unfinished">&amp; Cascade</translation>
+        <translation type="unfinished">&amp;Cascade</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="641"/>
@@ -21425,7 +21425,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="643"/>
         <source>Tile &amp;Horizontally</source>
-        <translation type="unfinished">Tegel &amp; Horizontaal</translation>
+        <translation type="unfinished">&amp;Horizontaal naast elkaar</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="690"/>
@@ -22049,7 +22049,7 @@ Waarschuwing: deze actie kan NIET ongedaan worden gemaakt!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="482"/>
         <source>&amp;Restore View</source>
-        <translation>Beeld &amp; herstellen</translation>
+        <translation>Beeld &amp;herstellen</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="483"/>
@@ -22064,7 +22064,7 @@ Waarschuwing: deze actie kan NIET ongedaan worden gemaakt!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="485"/>
         <source>R&amp;emove View</source>
-        <translation>Beeld &amp; verplaatsen</translation>
+        <translation>Beeld &amp;verwijderen</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="487"/>
@@ -22216,7 +22216,7 @@ Waarschuwing: deze actie kan NIET ongedaan worden gemaakt!</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_filler.cpp" line="41"/>
         <source>Distance for offset from original entity</source>
-        <translation type="unfinished">Afstand voor offset van oorspronkelijke entiteit</translation>
+        <translation type="unfinished">Offsetafstand tot de oorspronkelijke entiteit</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_filler.cpp" line="49"/>
@@ -22274,7 +22274,7 @@ Waarschuwing: deze actie kan NIET ongedaan worden gemaakt!</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="32"/>
         <source>Modify Offset Options</source>
-        <translation type="unfinished">Verschuivingsopties wijzigen</translation>
+        <translation type="unfinished">Opties voor offset</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="63"/>
@@ -22334,7 +22334,7 @@ Waarschuwing: deze actie kan NIET ongedaan worden gemaakt!</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="158"/>
         <source>Distance for offset from original entity</source>
-        <translation type="unfinished">Afstand voor offset van oorspronkelijke entiteit</translation>
+        <translation type="unfinished">Offsetafstand tot de oorspronkelijke entiteit</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="172"/>
@@ -22416,7 +22416,7 @@ Waarschuwing: deze actie kan NIET ongedaan worden gemaakt!</translation>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_to_points_options_filler.cpp" line="46"/>
         <source>If selected, the point entity used as insertion point will be deleted after paste operation. Otherwise, it will survive.</source>
-        <translation type="unfinished">Indien geselecteerd, wordt de puntentiteit die als invoegpunt wordt gebruikt, verwijderd na de bewerking van de pasta. Anders zal het overleven.</translation>
+        <translation type="unfinished">Indien geselecteerd, wordt de puntentiteit die als invoegpunt dient na het plakken verwijderd. Anders blijft deze behouden.</translation>
     </message>
 </context>
 <context>
@@ -22439,7 +22439,7 @@ Waarschuwing: deze actie kan NIET ongedaan worden gemaakt!</translation>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_to_points_options_widget.ui" line="101"/>
         <source>If selected, the point entity used as insertion point will be deleted after paste operation. Otherwise, it will survive.</source>
-        <translation type="unfinished">Indien geselecteerd, wordt de puntentiteit die als invoegpunt wordt gebruikt, verwijderd na de bewerking van de pasta. Anders zal het overleven.</translation>
+        <translation type="unfinished">Indien geselecteerd, wordt de puntentiteit die als invoegpunt dient na het plakken verwijderd. Anders blijft deze behouden.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_to_points_options_widget.ui" line="104"/>
@@ -22640,7 +22640,7 @@ Waarschuwing: deze actie kan NIET ongedaan worden gemaakt!</translation>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_widget.ui" line="267"/>
         <source>If checked, the same rotation angle is used for each individual paste and whole array. Otherwise, different angles are used. </source>
-        <translation type="unfinished">Indien aangevinkt, wordt dezelfde rotatiehoek gebruikt voor elke afzonderlijke pasta en hele array. Anders worden verschillende hoeken gebruikt.</translation>
+        <translation type="unfinished">Indien aangevinkt, wordt dezelfde rotatiehoek gebruikt voor elke afzonderlijke plakbewerking en de hele reeks. Anders worden verschillende hoeken gebruikt. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_widget.ui" line="270"/>
@@ -22821,7 +22821,7 @@ Waarschuwing: deze actie kan NIET ongedaan worden gemaakt!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="303"/>
         <source>Dot (tiny)</source>
-        <translation>Punt (klein)</translation>
+        <translation>Punt (zeer klein)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="304"/>
@@ -22841,17 +22841,17 @@ Waarschuwing: deze actie kan NIET ongedaan worden gemaakt!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="307"/>
         <source>Dash (tiny)</source>
-        <translation>Dash (klein)</translation>
+        <translation>Streep (zeer klein)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="308"/>
         <source>Dash (small)</source>
-        <translation>Dash (klein)</translation>
+        <translation>Streep (klein)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="309"/>
         <source>Dash (large)</source>
-        <translation>Streeplijn (breed)</translation>
+        <translation>Streep (groot)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="310"/>
@@ -22881,17 +22881,17 @@ Waarschuwing: deze actie kan NIET ongedaan worden gemaakt!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="311"/>
         <source>Dash Dot (tiny)</source>
-        <translation>Dash Dot (klein)</translation>
+        <translation>Streep Punt (zeer klein)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="312"/>
         <source>Dash Dot (small)</source>
-        <translation>Dash Dot (klein)</translation>
+        <translation>Streep Punt (klein)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="313"/>
         <source>Dash Dot (large)</source>
-        <translation>Streeplijn-punt (breed)</translation>
+        <translation>Streep Punt (groot)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="314"/>
@@ -22901,37 +22901,37 @@ Waarschuwing: deze actie kan NIET ongedaan worden gemaakt!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="315"/>
         <source>Divide (tiny)</source>
-        <translation>Verdelen (klein)</translation>
+        <translation>Verdeel (zeer klein)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="316"/>
         <source>Divide (small)</source>
-        <translation>Verdelen (klein)</translation>
+        <translation>Verdeel (klein)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="317"/>
         <source>Divide (large)</source>
-        <translation>Verdelen (groot)</translation>
+        <translation>Verdeel (groot)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="318"/>
         <source>Center</source>
-        <translation>Midden</translation>
+        <translation>Hartlijn</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="319"/>
         <source>Center (tiny)</source>
-        <translation>Midden (klein)</translation>
+        <translation>Hartlijn (zeer klein)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="320"/>
         <source>Center (small)</source>
-        <translation>Midden (klein)</translation>
+        <translation>Hartlijn (klein)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="321"/>
         <source>Center (large)</source>
-        <translation>Midden (groot)</translation>
+        <translation>Hartlijn (groot)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="326"/>
@@ -22961,7 +22961,7 @@ Waarschuwing: deze actie kan NIET ongedaan worden gemaakt!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="323"/>
         <source>Border (tiny)</source>
-        <translation>Rand (klein)</translation>
+        <translation>Rand (zeer klein)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="324"/>
@@ -23069,7 +23069,7 @@ Waarschuwing: deze actie kan NIET ongedaan worden gemaakt!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettemodel.cpp" line="230"/>
         <source>Line Width:</source>
-        <translation>Lijnbreedte:</translation>
+        <translation>Lijndikte:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettemodel.cpp" line="233"/>
@@ -23113,12 +23113,12 @@ Waarschuwing: deze actie kan NIET ongedaan worden gemaakt!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="221"/>
         <source>Line Width Icon</source>
-        <translation>Lijnbreedte-pictogram</translation>
+        <translation>Lijndikte-pictogram</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="228"/>
         <source>Line Width Name</source>
-        <translation>Lijnbreedtenaam</translation>
+        <translation>Lijndiktenaam</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="66"/>
@@ -23413,7 +23413,7 @@ Waarschuwing: deze actie kan NIET ongedaan worden gemaakt!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="303"/>
         <source>&amp;Apply Pen To Selection</source>
-        <translation>Pen &amp; toepassen op selectie</translation>
+        <translation>Pen &amp;toepassen op selectie</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="304"/>
@@ -23700,7 +23700,7 @@ Let op: als u de pen opslaat via de editor zonder herstart, worden de huidige pe
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_options_filler.cpp" line="37"/>
         <source>Polyline</source>
-        <translation type="unfinished">Polyline</translation>
+        <translation type="unfinished">Polylijn</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_options_filler.cpp" line="37"/>
@@ -23743,7 +23743,7 @@ Let op: als u de pen opslaat via de editor zonder herstart, worden de huidige pe
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_options_widget.ui" line="73"/>
         <source>Vertex to Vertex</source>
-        <translation type="unfinished">Vertex naar Vertex</translation>
+        <translation type="unfinished">Hoekpunt naar hoekpunt</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_options_widget.ui" line="80"/>
@@ -23768,7 +23768,7 @@ Let op: als u de pen opslaat via de editor zonder herstart, worden de huidige pe
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_options_widget.ui" line="119"/>
         <source>Rounding radius for vertex bevel.</source>
-        <translation type="unfinished">Afrondingsradius voor vertex bevel.</translation>
+        <translation type="unfinished">Afrondingsstraal voor afschuining van hoekpunten.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_options_widget.ui" line="126"/>
@@ -23778,7 +23778,7 @@ Let op: als u de pen opslaat via de editor zonder herstart, worden de huidige pe
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_options_widget.ui" line="129"/>
         <source>Polyline</source>
-        <translation type="unfinished">Polyline</translation>
+        <translation type="unfinished">Polylijn</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_options_widget.ui" line="143"/>
@@ -23791,7 +23791,7 @@ Let op: als u de pen opslaat via de editor zonder herstart, worden de huidige pe
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_side_side_options_filler.cpp" line="34"/>
         <source>Vertex to Vertex</source>
-        <translation type="unfinished">Vertex naar Vertex</translation>
+        <translation type="unfinished">Hoekpunt naar hoekpunt</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_side_side_options_filler.cpp" line="35"/>
@@ -23940,7 +23940,7 @@ Let op: als u de pen opslaat via de editor zonder herstart, worden de huidige pe
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_filler.cpp" line="79"/>
         <source>Undo for previous vertex</source>
-        <translation type="unfinished">Ongedaan maken van vorige vertex</translation>
+        <translation type="unfinished">Vorig hoekpunt ongedaan maken</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_filler.cpp" line="86"/>
@@ -23968,7 +23968,7 @@ Let op: als u de pen opslaat via de editor zonder herstart, worden de huidige pe
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_widget.ui" line="63"/>
         <source>Undo for previous vertex</source>
-        <translation type="unfinished">Ongedaan maken van vorige vertex</translation>
+        <translation type="unfinished">Vorig hoekpunt ongedaan maken</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_widget.ui" line="66"/>
@@ -24149,7 +24149,7 @@ Let op: als u de pen opslaat via de editor zonder herstart, worden de huidige pe
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="72"/>
         <source>Apply Print Scale to line width</source>
-        <translation type="unfinished">Printschaal toepassen op lijnbreedte</translation>
+        <translation type="unfinished">Printschaal toepassen op lijndikte</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="78"/>
@@ -24292,7 +24292,7 @@ Let op: als u de pen opslaat via de editor zonder herstart, worden de huidige pe
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_widget.ui" line="105"/>
         <source>Apply Print Scale to line width</source>
-        <translation type="unfinished">Printschaal toepassen op lijnbreedte</translation>
+        <translation type="unfinished">Printschaal toepassen op lijndikte</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_widget.ui" line="134"/>
@@ -24476,7 +24476,7 @@ Let op: als u de pen opslaat via de editor zonder herstart, worden de huidige pe
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_active_pen.cpp" line="80"/>
         <source>Line Width</source>
-        <translation type="unfinished">Lijnbreedte</translation>
+        <translation type="unfinished">Lijndikte</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_active_pen.cpp" line="80"/>
@@ -24649,7 +24649,7 @@ Let op: als u de pen opslaat via de editor zonder herstart, worden de huidige pe
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="94"/>
         <source>Chord Length</source>
-        <translation type="unfinished">Chordlengte</translation>
+        <translation type="unfinished">Koordelengte</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="94"/>
@@ -24709,7 +24709,7 @@ Let op: als u de pen opslaat via de editor zonder herstart, worden de huidige pe
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="138"/>
         <source>Offset</source>
-        <translation type="unfinished">Verschuiving</translation>
+        <translation type="unfinished">Offset</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="138"/>
@@ -24744,7 +24744,7 @@ Let op: als u de pen opslaat via de editor zonder herstart, worden de huidige pe
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="144"/>
         <source>Trim</source>
-        <translation type="unfinished">Trim</translation>
+        <translation type="unfinished">Trimmen</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="144"/>
@@ -24931,7 +24931,7 @@ Let op: als u de pen opslaat via de editor zonder herstart, worden de huidige pe
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="174"/>
         <source>Break/Divide</source>
-        <translation type="unfinished">Break/Divide</translation>
+        <translation type="unfinished">Breken/verdelen</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="177"/>
@@ -25113,7 +25113,7 @@ Let op: als u de pen opslaat via de editor zonder herstart, worden de huidige pe
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="73"/>
         <source>Offset</source>
-        <translation type="unfinished">Verschuiving</translation>
+        <translation type="unfinished">Offset</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="73"/>
@@ -25148,7 +25148,7 @@ Let op: als u de pen opslaat via de editor zonder herstart, worden de huidige pe
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="79"/>
         <source>Trim</source>
-        <translation type="unfinished">Trim</translation>
+        <translation type="unfinished">Trimmen</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="79"/>
@@ -25295,7 +25295,7 @@ Let op: als u de pen opslaat via de editor zonder herstart, worden de huidige pe
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="104"/>
         <source>Break/Divide</source>
-        <translation type="unfinished">Break/Divide</translation>
+        <translation type="unfinished">Breken/verdelen</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="108"/>
@@ -25375,7 +25375,7 @@ Let op: als u de pen opslaat via de editor zonder herstart, worden de huidige pe
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="124"/>
         <source>Leader</source>
-        <translation type="unfinished">Verwijslijn</translation>
+        <translation type="unfinished">Aanhaallijn</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="124"/>
@@ -27463,7 +27463,7 @@ Let op: als u de pen opslaat via de editor zonder herstart, worden de huidige pe
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="122"/>
         <source>Line Width</source>
-        <translation type="unfinished">Lijnbreedte</translation>
+        <translation type="unfinished">Lijndikte</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="122"/>
@@ -28615,7 +28615,7 @@ Let op: als u de pen opslaat via de editor zonder herstart, worden de huidige pe
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_leader.cpp" line="64"/>
         <source>Vertex</source>
-        <translation type="unfinished">Vertex</translation>
+        <translation type="unfinished">Hoekpunt</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_leader.cpp" line="64"/>
@@ -28734,7 +28734,7 @@ Let op: als u de pen opslaat via de editor zonder herstart, worden de huidige pe
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="104"/>
         <source>Trim</source>
-        <translation type="unfinished">Trim</translation>
+        <translation type="unfinished">Trimmen</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="104"/>
@@ -28744,7 +28744,7 @@ Let op: als u de pen opslaat via de editor zonder herstart, worden de huidige pe
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="105"/>
         <source>Trim Two</source>
-        <translation type="unfinished">Trim 2</translation>
+        <translation type="unfinished">Beide trimmen</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="105"/>
@@ -28965,7 +28965,7 @@ Let op: als u de pen opslaat via de editor zonder herstart, worden de huidige pe
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="171"/>
         <source>Round</source>
-        <translation type="unfinished">Rond</translation>
+        <translation type="unfinished">Afronden</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="171"/>
@@ -28990,7 +28990,7 @@ Let op: als u de pen opslaat via de editor zonder herstart, worden de huidige pe
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="176"/>
         <source>Break/Divide</source>
-        <translation type="unfinished">Break/Divide</translation>
+        <translation type="unfinished">Breken/verdelen</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="178"/>
@@ -29000,7 +29000,7 @@ Let op: als u de pen opslaat via de editor zonder herstart, worden de huidige pe
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="179"/>
         <source>Centerline</source>
-        <translation type="unfinished">Middenlijn</translation>
+        <translation type="unfinished">Hartlijn</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="179"/>
@@ -29311,7 +29311,7 @@ Let op: als u de pen opslaat via de editor zonder herstart, worden de huidige pe
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_parabola.cpp" line="39"/>
         <source>Vertex</source>
-        <translation type="unfinished">Vertex</translation>
+        <translation type="unfinished">Top</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_parabola.cpp" line="39"/>
@@ -29478,7 +29478,7 @@ Let op: als u de pen opslaat via de editor zonder herstart, worden de huidige pe
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_polyline.cpp" line="60"/>
         <source>Vertex</source>
-        <translation type="unfinished">Vertex</translation>
+        <translation type="unfinished">Hoekpunt</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_polyline.cpp" line="60"/>
@@ -30731,7 +30731,7 @@ Let op: als u de pen opslaat via de editor zonder herstart, worden de huidige pe
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="548"/>
         <source>Line Width</source>
-        <translation>Lijnbreedte</translation>
+        <translation>Lijndikte</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="550"/>
@@ -30810,7 +30810,7 @@ Let op: als u de pen opslaat via de editor zonder herstart, worden de huidige pe
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1416"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1435"/>
         <source>Center</source>
-        <translation>Midden</translation>
+        <translation>Middelpunt</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="612"/>
@@ -30845,7 +30845,7 @@ Let op: als u de pen opslaat via de editor zonder herstart, worden de huidige pe
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="659"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="694"/>
         <source>Chord Length</source>
-        <translation>Chordlengte</translation>
+        <translation>Koordelengte</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="660"/>
@@ -31409,7 +31409,7 @@ Laag: </translation>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1331"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1347"/>
         <source>Vertex</source>
-        <translation>Vertex</translation>
+        <translation>Hoekpunt</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1332"/>
@@ -31525,7 +31525,7 @@ Laag: </translation>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1578"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1594"/>
         <source>Extension Point 1</source>
-        <translation>Extensiepunt 1</translation>
+        <translation>Punt verlenglijn 1</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1525"/>
@@ -31533,7 +31533,7 @@ Laag: </translation>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1579"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1595"/>
         <source>Extension Point 2</source>
-        <translation>Extensiepunt 2</translation>
+        <translation>Punt verlenglijn 2</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1557"/>
@@ -31574,7 +31574,7 @@ Laag: </translation>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1556"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1569"/>
         <source>Leader End Point</source>
-        <translation>Eindpunt van Leader</translation>
+        <translation>Eindpunt van aanhaallijn</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1526"/>
@@ -31731,7 +31731,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="345"/>
         <source>&amp;Copy All</source>
-        <translation>Alles &amp; kopiëren</translation>
+        <translation>Alles &amp;kopiëren</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="363"/>
@@ -31744,7 +31744,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="366"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="380"/>
         <source>&amp;Set Relative Zero</source>
-        <translation>Relatieve nul &amp; instellen</translation>
+        <translation>Relatieve nul &amp;instellen</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="369"/>
@@ -31754,7 +31754,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="372"/>
         <source>&amp;Insert Coordinates</source>
-        <translation>Coördinaten &amp; invoegen</translation>
+        <translation>Coördinaten &amp;invoegen</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="392"/>
@@ -31769,7 +31769,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="396"/>
         <source>&amp;Select in Drawing</source>
-        <translation>Tekenen &amp; selecteren</translation>
+        <translation>&amp;Selecteren in tekening</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="397"/>
@@ -31779,7 +31779,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="399"/>
         <source>&amp;Collect Coordinates</source>
-        <translation>Coördinaten &amp; verzamelen</translation>
+        <translation>Coördinaten &amp;verzamelen</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="701"/>
@@ -31837,7 +31837,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="84"/>
         <source>Include polyline child entities information to vertexes</source>
-        <translation>Inclusief polyline kind entiteiten informatie naar vertexen</translation>
+        <translation>Informatie over onderliggende entiteiten van polylijnen bij de hoekpunten opnemen</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="91"/>
@@ -31990,7 +31990,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1_point_options_filler.cpp" line="83"/>
         <source>Polyline</source>
-        <translation type="unfinished">Polyline</translation>
+        <translation type="unfinished">Polylijn</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1_point_options_filler.cpp" line="83"/>
@@ -32018,7 +32018,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="49"/>
         <source>Polyline</source>
-        <translation type="unfinished">Polyline</translation>
+        <translation type="unfinished">Polylijn</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="56"/>
@@ -32311,7 +32311,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_filler.cpp" line="68"/>
         <source>Polyline</source>
-        <translation type="unfinished">Polyline</translation>
+        <translation type="unfinished">Polylijn</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_filler.cpp" line="68"/>
@@ -32363,7 +32363,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="62"/>
         <source>Polyline</source>
-        <translation type="unfinished">Polyline</translation>
+        <translation type="unfinished">Polylijn</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="69"/>
@@ -32388,7 +32388,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="91"/>
         <source>Start Snap:</source>
-        <translation type="unfinished">Starten:</translation>
+        <translation type="unfinished">Snap begin:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="105"/>
@@ -32493,7 +32493,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="347"/>
         <source>End Snap:</source>
-        <translation type="unfinished">Einde snap:</translation>
+        <translation type="unfinished">Snap einde:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="354"/>
@@ -32561,7 +32561,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3_points_options_filler.cpp" line="64"/>
         <source>Polyline</source>
-        <translation type="unfinished">Polyline</translation>
+        <translation type="unfinished">Polylijn</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3_points_options_filler.cpp" line="64"/>
@@ -32584,7 +32584,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="35"/>
         <source>Polyline</source>
-        <translation type="unfinished">Polyline</translation>
+        <translation type="unfinished">Polylijn</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="86"/>
@@ -33617,12 +33617,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_round_options_filler.cpp" line="31"/>
         <source>Trim</source>
-        <translation type="unfinished">Trim</translation>
+        <translation type="unfinished">Trimmen</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_round_options_filler.cpp" line="31"/>
         <source>Check to trim both edges to the rounding</source>
-        <translation type="unfinished">Controleer om beide randen te trimmen tot de afronding</translation>
+        <translation type="unfinished">Aanvinken om beide randen tot de afronding te trimmen</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_round_options_filler.cpp" line="37"/>
@@ -33640,17 +33640,17 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_round_options_widget.ui" line="32"/>
         <source>Round Options</source>
-        <translation type="unfinished">Ronde opties</translation>
+        <translation type="unfinished">Opties voor afronden</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_round_options_widget.ui" line="59"/>
         <source>Check to trim both edges to the rounding</source>
-        <translation type="unfinished">Controleer om beide randen te trimmen tot de afronding</translation>
+        <translation type="unfinished">Aanvinken om beide randen tot de afronding te trimmen</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_round_options_widget.ui" line="62"/>
         <source>Trim</source>
-        <translation type="unfinished">Trim</translation>
+        <translation type="unfinished">Trimmen</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_round_options_widget.ui" line="85"/>
@@ -33899,7 +33899,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="74"/>
         <source>Polyline</source>
-        <translation>Polyline</translation>
+        <translation>Polylijn</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="81"/>
@@ -33924,7 +33924,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="109"/>
         <source>Hatch</source>
-        <translation>Hatch</translation>
+        <translation>Arcering</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="116"/>
@@ -34338,7 +34338,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="169"/>
         <source>Edge Tick:</source>
-        <translation type="unfinished">Rand-tick:</translation>
+        <translation type="unfinished">Randmarkering:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="179"/>
@@ -34494,7 +34494,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="50"/>
         <source>If checked, line segments will be part of polyline. Otherwise, they will be individual lines</source>
-        <translation type="unfinished">Indien aangevinkt zullen lijnsegmenten deel uitmaken van polyline. Anders zijn het individuele lijnen</translation>
+        <translation type="unfinished">Indien aangevinkt, worden de lijnsegmenten deel van een polylijn. Anders worden het afzonderlijke lijnen</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="57"/>
@@ -34582,12 +34582,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="93"/>
         <source>If checked, line segments will be part of polyline. Otherwise, they will be individual lines</source>
-        <translation type="unfinished">Indien aangevinkt zullen lijnsegmenten deel uitmaken van polyline. Anders zijn het individuele lijnen</translation>
+        <translation type="unfinished">Indien aangevinkt, worden de lijnsegmenten deel van een polylijn. Anders worden het afzonderlijke lijnen</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="96"/>
         <source>To Polyline</source>
-        <translation type="unfinished">Naar Polyline</translation>
+        <translation type="unfinished">Naar polylijn</translation>
     </message>
 </context>
 <context>
@@ -34620,7 +34620,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_filler.cpp" line="44"/>
         <source>Amount of middle points of polyline segment that will be added to spline. </source>
-        <translation type="unfinished">Bedrag van de middenpunten van polyline segment dat zal worden toegevoegd aan spline.</translation>
+        <translation type="unfinished">Aantal middenpunten per polylijnsegment dat aan de spline wordt toegevoegd. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_filler.cpp" line="51"/>
@@ -34673,7 +34673,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="42"/>
         <source>Amount of middle points of polyline segment that will be added to spline. </source>
-        <translation type="unfinished">Bedrag van de middenpunten van polyline segment dat zal worden toegevoegd aan spline.</translation>
+        <translation type="unfinished">Aantal middenpunten per polylijnsegment dat aan de spline wordt toegevoegd. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="55"/>
@@ -34683,7 +34683,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="68"/>
         <source>If unchecked, original polyline will be removed, otherwise it will survive.</source>
-        <translation type="unfinished">Als het niet gecontroleerd wordt, zal de originele polyline verwijderd worden, anders zal het overleven.</translation>
+        <translation type="unfinished">Indien niet aangevinkt, wordt de oorspronkelijke polylijn verwijderd; anders blijft deze behouden.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="71"/>
@@ -34774,7 +34774,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_options_widget.ui" line="72"/>
         <source>Spline&apos;s degree used for approximation between points</source>
-        <translation type="unfinished">Spline&apos;s graad gebruikt voor onderlinge aanpassing tussen punten</translation>
+        <translation type="unfinished">Graad van de spline die wordt gebruikt voor de benadering tussen punten</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_options_widget.ui" line="94"/>
@@ -35101,7 +35101,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/polygon/lc_star_options_widget.ui" line="85"/>
         <source>Polyline</source>
-        <translation type="unfinished">Polyline</translation>
+        <translation type="unfinished">Polylijn</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_star_options_widget.ui" line="92"/>
@@ -35521,7 +35521,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="334"/>
         <source>Polyline</source>
-        <translation>Polyline</translation>
+        <translation>Polylijn</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="335"/>
@@ -35579,7 +35579,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="363"/>
         <source>Arcs</source>
-        <translation>Arcs</translation>
+        <translation>Bogen</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="364"/>
@@ -35594,7 +35594,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="367"/>
         <source>PolyLines</source>
-        <translation>Polylines</translation>
+        <translation>Polylijnen</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="369"/>
@@ -35647,12 +35647,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_trim_amount_options_filler.cpp" line="43"/>
         <source>Trim</source>
-        <translation type="unfinished">Trim</translation>
+        <translation type="unfinished">Trimmen</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_trim_amount_options_filler.cpp" line="43"/>
         <source>If checked, trim/extension is performed for both sides of line.</source>
-        <translation type="unfinished">Indien aangevinkt, wordt trim/extensie uitgevoerd voor beide zijden van de lijn.</translation>
+        <translation type="unfinished">Indien aangevinkt, wordt aan beide zijden van de lijn getrimd/verlengd.</translation>
     </message>
 </context>
 <context>
@@ -35695,7 +35695,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_trim_amount_options_widget.ui" line="137"/>
         <source>If checked, trim/extension is performed for both sides of line.</source>
-        <translation type="unfinished">Indien aangevinkt, wordt trim/extensie uitgevoerd voor beide zijden van de lijn.</translation>
+        <translation type="unfinished">Indien aangevinkt, wordt aan beide zijden van de lijn getrimd/verlengd.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_trim_amount_options_widget.ui" line="140"/>
@@ -35964,7 +35964,7 @@ Waarschuwing: deze actie kan NIET ongedaan worden gemaakt!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="556"/>
         <source>&amp;Preview UCS</source>
-        <translation>UCS &amp; voorbeeld</translation>
+        <translation>UCS &amp;voorbeeld</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="559"/>
@@ -36074,7 +36074,7 @@ Waarschuwing: deze actie kan NIET ongedaan worden gemaakt!</translation>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="137"/>
         <source>Polyline</source>
-        <translation>Polyline</translation>
+        <translation>Polylijn</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="139"/>
@@ -37323,7 +37323,7 @@ Dit wijzigt recursief alle entiteiten van het Blok zelf.</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="14"/>
         <source>Choose Hatch Attributes</source>
-        <translation>Bepaal Arceer Attributen</translation>
+        <translation>Arceringsattributen kiezen</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="22"/>
@@ -37358,7 +37358,7 @@ Dit wijzigt recursief alle entiteiten van het Blok zelf.</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="65"/>
         <source>Solid Fill</source>
-        <translation>Inkleuring</translation>
+        <translation>Effen vulling</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="72"/>
@@ -37388,7 +37388,7 @@ Dit wijzigt recursief alle entiteiten van het Blok zelf.</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="124"/>
         <source>Hatched area</source>
-        <translation>Hatched gebied</translation>
+        <translation>Gearceerd gebied</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.cpp" line="213"/>
@@ -37439,7 +37439,7 @@ Dit wijzigt recursief alle entiteiten van het Blok zelf.</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="241"/>
         <source>&amp;Height:</source>
-        <translation>&amp; Hoogte:</translation>
+        <translation>&amp;Hoogte:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="147"/>
@@ -38244,7 +38244,7 @@ Dit wijzigt recursief alle entiteiten van het Blok zelf.</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="125"/>
         <source>&amp;Line spacing:</source>
-        <translation>&amp; Regelafstand:</translation>
+        <translation>&amp;Regelafstand:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="113"/>
@@ -38411,7 +38411,7 @@ Dit wijzigt recursief alle entiteiten van het Blok zelf.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="467"/>
         <source>&amp;Set as Active</source>
-        <translation>Als actief &amp; instellen</translation>
+        <translation>Als actief &amp;instellen</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="470"/>
@@ -38768,7 +38768,7 @@ Dit wijzigt recursief alle entiteiten van het Blok zelf.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="576"/>
         <source>Zero base angle relative to the current user coordinate system. Affects polar coordinates input, snap to angle. 0.0 is 3pm.</source>
-        <translation>Nul basishoek ten opzichte van het huidige gebruikerscoördinatensysteem. Affecteert de ingang van de polar coordinaten, klik op de hoek. 0,0 is 3 uur.</translation>
+        <translation>Nulrichting van hoeken ten opzichte van het huidige gebruikerscoördinatensysteem. Beïnvloedt de invoer van poolcoördinaten en het snappen naar hoeken. 0,0 is 3 uur.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="586"/>
@@ -39010,7 +39010,7 @@ Dit wijzigt recursief alle entiteiten van het Blok zelf.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1727"/>
         <source>Extension lines</source>
-        <translation>Extensielijnen</translation>
+        <translation>Verlenglijnen</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1734"/>
@@ -39314,12 +39314,12 @@ Dit wijzigt recursief alle entiteiten van het Blok zelf.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="74"/>
         <source>&amp;Height:</source>
-        <translation>&amp; Hoogte:</translation>
+        <translation>&amp;Hoogte:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="94"/>
         <source>&amp;Width:</source>
-        <translation>&amp; Breedte:</translation>
+        <translation>&amp;Breedte:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="114"/>
@@ -39355,12 +39355,12 @@ Dit wijzigt recursief alle entiteiten van het Blok zelf.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1771"/>
         <source>fixed extension line length</source>
-        <translation>vaste extensielijnlengte</translation>
+        <translation>vaste lengte van de verlenglijn</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2176"/>
         <source>&amp;Points</source>
-        <translation>&amp;Points</translation>
+        <translation>&amp;Punten</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2203"/>
@@ -39465,7 +39465,7 @@ Dit wijzigt recursief alle entiteiten van het Blok zelf.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5966"/>
         <source>Hatch Patterns:</source>
-        <translation>Arceer Patronen:</translation>
+        <translation>Arceerpatronen:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5990"/>
@@ -39691,12 +39691,12 @@ Dit wijzigt recursief alle entiteiten van het Blok zelf.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3725"/>
         <source>&amp;Highlighted entity Color:</source>
-        <translation>Kleur van &amp; gemarkeerde entiteit:</translation>
+        <translation>Kleur van &amp;gemarkeerde entiteit:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3779"/>
         <source>Highlight with screen linewidth in &quot;Draft&quot; mode</source>
-        <translation>Oplichten met schermlijnbreedte in &quot;Draft&quot; modus</translation>
+        <translation>Markeren met schermlijndikte in conceptmodus</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3799"/>
@@ -39920,7 +39920,7 @@ Dit wijzigt recursief alle entiteiten van het Blok zelf.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1329"/>
         <source>Select Hatch Patterns Folder</source>
-        <translation>Map Hatchpatronen selecteren</translation>
+        <translation>Map met arceerpatronen selecteren</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1336"/>
@@ -40075,7 +40075,7 @@ Dit wijzigt recursief alle entiteiten van het Blok zelf.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1743"/>
         <source>Line Width</source>
-        <translation>Lijnbreedte</translation>
+        <translation>Lijndikte</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1750"/>
@@ -40115,7 +40115,7 @@ Dit wijzigt recursief alle entiteiten van het Blok zelf.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1678"/>
         <source>Gap</source>
-        <translation>Gap</translation>
+        <translation>Onderbreking</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1626"/>
@@ -40185,7 +40185,7 @@ Dit wijzigt recursief alle entiteiten van het Blok zelf.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1817"/>
         <source>If checked, snap options (middle, distance) will be shown in snap toolbar instead of tool properties toolbar</source>
-        <translation>Indien aangevinkt, worden de opties (midden, afstand) getoond in de werkbalk in plaats van de werkbalk met de werkbalk met de eigenschappen van het gereedschap</translation>
+        <translation>Indien aangevinkt, worden de snapopties (midden, afstand) in de snapwerkbalk getoond in plaats van in de werkbalk met gereedschapseigenschappen</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1820"/>
@@ -40421,7 +40421,7 @@ Dit wijzigt recursief alle entiteiten van het Blok zelf.</translation>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1395"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1543"/>
         <source>Line Width:</source>
-        <translation>Lijnbreedte:</translation>
+        <translation>Lijndikte:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1298"/>
@@ -40631,7 +40631,7 @@ Dit wijzigt recursief alle entiteiten van het Blok zelf.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1077"/>
         <source>&amp;Grid type:</source>
-        <translation>&amp; Rastertype:</translation>
+        <translation>&amp;Rastertype:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="972"/>
@@ -40651,7 +40651,7 @@ Dit wijzigt recursief alle entiteiten van het Blok zelf.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3700"/>
         <source>&amp;Preview</source>
-        <translation>&amp; Voorbeeld</translation>
+        <translation>&amp;Voorbeeld</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3909"/>
@@ -40725,7 +40725,7 @@ Dit wijzigt recursief alle entiteiten van het Blok zelf.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3776"/>
         <source>If selected, entity will be highlighted in &quot;Draft&quot; mode using entity&apos;s linewidth instead of 1px</source>
-        <translation>Indien geselecteerd zal entiteit worden gemarkeerd in &quot;Draft&quot;-modus door gebruik te maken van de lijnbreedte van entiteit in plaats van 1px</translation>
+        <translation>Indien geselecteerd, wordt de entiteit in conceptmodus gemarkeerd met de lijndikte van de entiteit in plaats van 1 px</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3881"/>
@@ -41348,17 +41348,17 @@ Dit wijzigt recursief alle entiteiten van het Blok zelf.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1872"/>
         <source>Snap distance (in pixels) for catching entities.</source>
-        <translation>Snapafstand (in pixels) voor vangstentiteiten.</translation>
+        <translation>Snapafstand (in pixels) voor het vangen van entiteiten.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1875"/>
         <source>Catch entities Snap Distance:</source>
-        <translation>Afstand tussen vangst-entiteiten:</translation>
+        <translation>Snapafstand voor het vangen van entiteiten:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1882"/>
         <source>Grid cell factor used for snap to grid.</source>
-        <translation>Rastercelfactor gebruikt voor het raster.</translation>
+        <translation>Rastercelfactor die wordt gebruikt bij snappen naar het raster.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3153"/>
@@ -42161,7 +42161,7 @@ Dit wijzigt recursief alle entiteiten van het Blok zelf.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5221"/>
         <source>Zero base angle relative to the current user coordinate system. Affects polar coordinates input, snap to angle. 0.0 is 3pm.</source>
-        <translation>Nul basishoek ten opzichte van het huidige gebruikerscoördinatensysteem. Affecteert de ingang van de polar coordinaten, klik op de hoek. 0,0 is 3 uur.</translation>
+        <translation>Nulrichting van hoeken ten opzichte van het huidige gebruikerscoördinatensysteem. Beïnvloedt de invoer van poolcoördinaten en het snappen naar hoeken. 0,0 is 3 uur.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5260"/>
@@ -42448,7 +42448,7 @@ dus standaard stapwaarde vereist voor bakken</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="760"/>
         <source>Middle Center</source>
-        <translation>Midden Center</translation>
+        <translation>Midden</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="524"/>
@@ -42468,12 +42468,12 @@ dus standaard stapwaarde vereist voor bakken</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="476"/>
         <source>Bottom Center</source>
-        <translation>Onder Center</translation>
+        <translation>Onder midden</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="725"/>
         <source>Top Center</source>
-        <translation>Boven Center</translation>
+        <translation>Boven midden</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="922"/>
@@ -43660,12 +43660,12 @@ De inhoud van een constructielaag hoort niet in de afdruk te verschijnen.</trans
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="92"/>
         <source>Dot (small)</source>
-        <translation>Punt (smal)</translation>
+        <translation>Punt (klein)</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="93"/>
         <source>Dot (large)</source>
-        <translation>Punt (breed)</translation>
+        <translation>Punt (groot)</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="94"/>
@@ -43675,7 +43675,7 @@ De inhoud van een constructielaag hoort niet in de afdruk te verschijnen.</trans
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="96"/>
         <source>Dash (small)</source>
-        <translation>Streep (breed)</translation>
+        <translation>Streep (klein)</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="97"/>
@@ -43710,7 +43710,7 @@ De inhoud van een constructielaag hoort niet in de afdruk te verschijnen.</trans
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="100"/>
         <source>Dash Dot (small)</source>
-        <translation>Streep Punt (smal)</translation>
+        <translation>Streep Punt (klein)</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="101"/>
@@ -43725,7 +43725,7 @@ De inhoud van een constructielaag hoort niet in de afdruk te verschijnen.</trans
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="104"/>
         <source>Divide (small)</source>
-        <translation>Verdeel (smal)</translation>
+        <translation>Verdeel (klein)</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="105"/>
@@ -43735,17 +43735,17 @@ De inhoud van een constructielaag hoort niet in de afdruk te verschijnen.</trans
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="106"/>
         <source>Center</source>
-        <translation>Center</translation>
+        <translation>Hartlijn</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="108"/>
         <source>Center (small)</source>
-        <translation>Center (smal)</translation>
+        <translation>Hartlijn (klein)</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="109"/>
         <source>Center (large)</source>
-        <translation>Center (groot)</translation>
+        <translation>Hartlijn (groot)</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="114"/>
@@ -43775,7 +43775,7 @@ De inhoud van een constructielaag hoort niet in de afdruk te verschijnen.</trans
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="112"/>
         <source>Border (small)</source>
-        <translation>Rand (smal)</translation>
+        <translation>Rand (klein)</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="113"/>
@@ -43790,32 +43790,32 @@ De inhoud van een constructielaag hoort niet in de afdruk te verschijnen.</trans
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="91"/>
         <source>Dot (tiny)</source>
-        <translation>Punt (klein)</translation>
+        <translation>Punt (zeer klein)</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="95"/>
         <source>Dash (tiny)</source>
-        <translation>Dash (klein)</translation>
+        <translation>Streep (zeer klein)</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="99"/>
         <source>Dash Dot (tiny)</source>
-        <translation>Dash Dot (klein)</translation>
+        <translation>Streep Punt (zeer klein)</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="103"/>
         <source>Divide (tiny)</source>
-        <translation>Verdelen (klein)</translation>
+        <translation>Verdeel (zeer klein)</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="107"/>
         <source>Center (tiny)</source>
-        <translation>Midden (klein)</translation>
+        <translation>Hartlijn (zeer klein)</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="111"/>
         <source>Border (tiny)</source>
-        <translation>Rand (klein)</translation>
+        <translation>Rand (zeer klein)</translation>
     </message>
 </context>
 <context>
@@ -43864,7 +43864,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/components/toolbars/qg_pentoolbar.cpp" line="42"/>
         <source>Line width</source>
-        <translation>Lijnbreedte</translation>
+        <translation>Lijndikte</translation>
     </message>
     <message>
         <location filename="../src/ui/components/toolbars/qg_pentoolbar.cpp" line="45"/>
@@ -45536,7 +45536,7 @@ Wilt u het vervangen?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="949"/>
         <source>snapintersection</source>
         <comment>snap - intersection</comment>
-        <translation>snapintersectie</translation>
+        <translation>snapsnijpunt</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="950"/>
@@ -48010,7 +48010,7 @@ Wilt u het vervangen?</translation>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="109"/>
         <source>Auto center drawing on page.</source>
-        <translation>Auto center tekening op pagina.</translation>
+        <translation>Tekening automatisch centreren op de pagina.</translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="113"/>
@@ -48118,7 +48118,7 @@ Wilt u het vervangen?</translation>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="39"/>
         <source>/CustomColor%1</source>
-        <translation>/Aangepaste kleur%1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="40"/>
@@ -48187,12 +48187,12 @@ Wilt u het vervangen?</translation>
     <message>
         <location filename="../src/lib/engine/document/patterns/rs_patternlist.cpp" line="66"/>
         <source>Hatch:: no pattern found. Please set pattern path in application preferences</source>
-        <translation>Hatch:: geen patroon gevonden. Stel patroonpad in in toepassingsvoorkeuren</translation>
+        <translation>Arcering: geen patroon gevonden. Stel het patroonpad in bij de programmavoorkeuren</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/document/patterns/rs_patternlist.cpp" line="93"/>
         <source>Hatch:: loading pattern failed: %1</source>
-        <translation>Hatch:: laadpatroon mislukt: %1</translation>
+        <translation>Arcering: laden van patroon mislukt: %1</translation>
     </message>
     <message>
         <location filename="../src/ui/main/persistence/lc_documentsstorage.cpp" line="198"/>
@@ -48715,7 +48715,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="484"/>
         <source>Polyline</source>
-        <translation>Polyline</translation>
+        <translation>Polylijn</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="488"/>
@@ -48750,7 +48750,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="512"/>
         <source>Hatch</source>
-        <translation>Hatch</translation>
+        <translation>Arcering</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="516"/>
@@ -48790,7 +48790,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="544"/>
         <source>Leader</source>
-        <translation>Verwijslijn</translation>
+        <translation>Aanhaallijn</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="552"/>
@@ -48889,12 +48889,12 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="578"/>
         <source>that intersect with box</source>
-        <translation>die snijdt met doos</translation>
+        <translation>die het selectiekader snijden</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="578"/>
         <source>that are within box</source>
-        <translation>die zich binnen de doos bevinden</translation>
+        <translation>die binnen het selectiekader liggen</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="622"/>
@@ -48946,7 +48946,7 @@ Please check the filename and permissions.</source>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="635"/>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="646"/>
         <source>Center:</source>
-        <translation>Midden:</translation>
+        <translation>Middelpunt:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="636"/>
@@ -48956,7 +48956,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="637"/>
         <source>Chord Length:</source>
-        <translation>Chordlengte:</translation>
+        <translation>Koordelengte:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="638"/>
@@ -48991,7 +48991,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1005"/>
         <source>Lengthen Chord</source>
-        <translation>Chord verlengen</translation>
+        <translation>Koorde verlengen</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1008"/>
@@ -49031,7 +49031,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1023"/>
         <source>Select Intersecting</source>
-        <translation>Selecteer kruising</translation>
+        <translation>Snijdende entiteiten selecteren</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1023"/>
@@ -49177,7 +49177,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsecenter3points.cpp" line="248"/>
         <source>Specify the center of ellipse</source>
-        <translation>Het midden van de ellips opgeven</translation>
+        <translation>Het middelpunt van de ellips opgeven</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsecenter3points.cpp" line="251"/>
@@ -49279,27 +49279,27 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="134"/>
         <source>Hatch Error: Invalid contour found!</source>
-        <translation>Hatch Fout: Ongeldige contour gevonden!</translation>
+        <translation>Fout bij het arceren: ongeldige contour gevonden!</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="138"/>
         <source>Hatch Error: Pattern not found!</source>
-        <translation>Hatch Fout: Patroon niet gevonden!</translation>
+        <translation>Fout bij het arceren: patroon niet gevonden!</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="141"/>
         <source>Hatch Error: Contour or pattern too small!</source>
-        <translation>Hatch Fout: Contour of patroon te klein!</translation>
+        <translation>Fout bij het arceren: contour of patroon te klein!</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="144"/>
         <source>Hatch Error: Contour too big!</source>
-        <translation>Hatch Fout: Contour te groot!</translation>
+        <translation>Fout bij het arceren: contour te groot!</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="147"/>
         <source>Hatch Error: Undefined Error!</source>
-        <translation>Hatch Fout: ongedefinieerde fout!</translation>
+        <translation>Fout bij het arceren: onbekende fout!</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="152"/>
@@ -49314,7 +49314,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="185"/>
         <source>Hatch immediately after selection</source>
-        <translation>Hatch onmiddellijk na selectie</translation>
+        <translation>Arceren onmiddellijk na selectie</translation>
     </message>
 </context>
 <context>
@@ -49374,7 +49374,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_simple.cpp" line="107"/>
         <source>Center:</source>
-        <translation>Midden:</translation>
+        <translation>Middelpunt:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_simple.cpp" line="151"/>
@@ -49535,8 +49535,8 @@ Intersection :@(%7, %8)</source>
 Complementaire hoek: %2
 Supplementaire hoek: %3
 Volledige omwenteling − hoek: %4
-Intersectie: (%5 , %6)
-Intersectie:@(%7, %8)</translation>
+Snijpunt: (%5 , %6)
+Snijpunt:@(%7, %8)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="254"/>
@@ -49599,7 +49599,7 @@ Intersectie:@(%7, %8)</translation>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="292"/>
         <source>Intersection:</source>
-        <translation>Intersectie:</translation>
+        <translation>Snijpunt:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="292"/>
@@ -49968,7 +49968,7 @@ Einde: (%8 , %9)</translation>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1347"/>
         <source>Intersection</source>
-        <translation>Intersectie</translation>
+        <translation>Snijpunt</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1349"/>
@@ -49983,7 +49983,7 @@ Einde: (%8 , %9)</translation>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1353"/>
         <source>Center</source>
-        <translation>Midden</translation>
+        <translation>Middelpunt</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1355"/>
@@ -50318,7 +50318,7 @@ Einde: (%8 , %9)</translation>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapdistoptions.ui" line="32"/>
         <source>Snap Distance Options</source>
-        <translation>Afstandsopties</translation>
+        <translation>Opties snapafstand</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapdistoptions.ui" line="50"/>
@@ -50341,7 +50341,7 @@ Einde: (%8 , %9)</translation>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapmiddleoptions.ui" line="35"/>
         <source>Snap Distance Options</source>
-        <translation>Afstandsopties</translation>
+        <translation>Opties snapafstand</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapmiddleoptions.ui" line="59"/>

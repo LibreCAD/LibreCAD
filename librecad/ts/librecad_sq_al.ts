@@ -43,7 +43,7 @@
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_abstractactiondrawline.cpp" line="64"/>
         <source>Start point may set in distance or point state only</source>
-        <translation>Fillimi pikë në pikë</translation>
+        <translation>Pika e fillimit mund të caktohet vetëm në gjendjen e distancës ose të pikës</translation>
     </message>
 </context>
 <context>
@@ -51,7 +51,7 @@
     <message>
         <location filename="../src/actions/drawing/lc_abstractactionwithpreview.cpp" line="644"/>
         <source> is not divided as it is locked.</source>
-        <translation>nuk është e ndarë siç është e mbyllur.</translation>
+        <translation> nuk ndahet sepse është e kyçur.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/lc_abstractactionwithpreview.cpp" line="652"/>
@@ -61,7 +61,7 @@
     <message>
         <location filename="../src/actions/drawing/lc_abstractactionwithpreview.cpp" line="652"/>
         <source> is not divided as it is part of polyline. Expand polyline first.</source>
-        <translation>nuk është i ndarë siç është pjesë e polilines. Zgjero polilinen së pari.</translation>
+        <translation> nuk ndahet sepse është pjesë e polilinjës. Zgjero fillimisht polilinjën.</translation>
     </message>
 </context>
 <context>
@@ -75,7 +75,8 @@
         <location filename="../src/actions/dock_widgets/block/lc_action_block_insert.cpp" line="95"/>
         <source> has nested insert of current block in:
 </source>
-        <translation type="unfinished">nga blloku në:</translation>
+        <translation type="unfinished"> ka një futje të përfshirë të bllokut aktual në:
+</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/block/lc_action_block_insert.cpp" line="97"/>
@@ -121,7 +122,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/dock_widgets/block/lc_action_block_insert.cpp" line="388"/>
         <source>Enter column spacing:</source>
-        <translation type="unfinished">Shto</translation>
+        <translation type="unfinished">Fut hapësirën midis kolonave:</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/block/lc_action_block_insert.cpp" line="391"/>
@@ -134,7 +135,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/dock_widgets/library/lc_action_block_library_insert.cpp" line="93"/>
         <source>Cannot open file &apos;%1&apos;</source>
-        <translation type="unfinished">Hap</translation>
+        <translation type="unfinished">Skedari &apos;%1&apos; nuk mund të hapet</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/library/lc_action_block_library_insert.cpp" line="194"/>
@@ -168,7 +169,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_block_explode.cpp" line="63"/>
         <source>Select and explode</source>
-        <translation type="unfinished">Zgjidh dhe shpërthen</translation>
+        <translation type="unfinished">Zgjidh dhe zbërthe</translation>
     </message>
 </context>
 <context>
@@ -186,7 +187,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="215"/>
         <source>Select arc or circle entity</source>
-        <translation>Zgjidh për</translation>
+        <translation>Zgjidh një entitet harku ose rrethi</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="215"/>
@@ -196,12 +197,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="218"/>
         <source>Specify dimension line position or enter angle:</source>
-        <translation>Nga:</translation>
+        <translation>Specifiko pozicionin e vijës së kuotës ose fut këndin:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="221"/>
         <source>Enter dimension text:</source>
-        <translation>Shto tekst</translation>
+        <translation>Fut tekstin e kuotës:</translation>
     </message>
 </context>
 <context>
@@ -209,12 +210,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimarc.cpp" line="188"/>
         <source>Select arc entity</source>
-        <translation>Zgjidh</translation>
+        <translation>Zgjidh një entitet harku</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimarc.cpp" line="191"/>
         <source>Specify dimension arc location</source>
-        <translation>Pikë</translation>
+        <translation>Specifiko vendndodhjen e harkut të kuotës</translation>
     </message>
 </context>
 <context>
@@ -222,7 +223,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="310"/>
         <source>Specify first extension line origin</source>
-        <translation>Specifiko i pari</translation>
+        <translation>Specifiko origjinën e vijës së parë ndihmëse</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="300"/>
@@ -232,7 +233,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="304"/>
         <source>Specify dimension line location</source>
-        <translation>Pikë</translation>
+        <translation>Specifiko vendndodhjen e vijës së kuotës</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="304"/>
@@ -242,12 +243,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="319"/>
         <source>Enter dimension text:</source>
-        <translation>Shto tekst</translation>
+        <translation>Fut tekstin e kuotës:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="322"/>
         <source>Enter dimension line angle:</source>
-        <translation>Shto:</translation>
+        <translation>Fut këndin e vijës së kuotës:</translation>
     </message>
 </context>
 <context>
@@ -255,12 +256,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimordinate.cpp" line="207"/>
         <source>Specify first point</source>
-        <translation>Pikë</translation>
+        <translation>Specifiko pikën e parë</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimordinate.cpp" line="211"/>
         <source>Specify leader end point</source>
-        <translation>Pikë</translation>
+        <translation>Specifiko pikën fundore të vijës treguese</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimordinate.cpp" line="211"/>
@@ -281,17 +282,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimstyleapply.cpp" line="164"/>
         <source>Specify dimension to pick the style</source>
-        <translation>Përcakto dimensionin për zgjedhjen e stilit</translation>
+        <translation>Specifiko kuotën nga e cila merret stili</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimstyleapply.cpp" line="167"/>
         <source>Specify dimension to apply style</source>
-        <translation>Përcakto dimensionin për tu aplikuar</translation>
+        <translation>Specifiko kuotën ku do të zbatohet stili</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimstyleapply.cpp" line="167"/>
         <source>Do not apply style override</source>
-        <translation>Nuk</translation>
+        <translation>Mos zbato mbishkrimin e stilit</translation>
     </message>
 </context>
 <context>
@@ -299,7 +300,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_2points_angle.cpp" line="58"/>
         <source>Enter value of central angle</source>
-        <translation>Shto nga</translation>
+        <translation>Fut vlerën e këndit qendror</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_2points_angle.cpp" line="62"/>
@@ -327,17 +328,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_2points_base.cpp" line="202"/>
         <source>Specify first point of arc</source>
-        <translation>Pikë nga</translation>
+        <translation>Specifiko pikën e parë të harkut</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_2points_base.cpp" line="206"/>
         <source>Specify second point of arc</source>
-        <translation>Pikë nga</translation>
+        <translation>Specifiko pikën e dytë të harkut</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_2points_base.cpp" line="219"/>
         <source>Opposite Arc direction</source>
-        <translation>Drejtimi Arc i kundërt</translation>
+        <translation>Drejtim i kundërt i harkut</translation>
     </message>
 </context>
 <context>
@@ -345,7 +346,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_2points_height.cpp" line="55"/>
         <source>Enter height of arc</source>
-        <translation>Shto nga</translation>
+        <translation>Fut lartësinë e harkut</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_2points_height.cpp" line="59"/>
@@ -363,7 +364,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_2points_length.cpp" line="53"/>
         <source>Enter length of arc</source>
-        <translation>Shto nga</translation>
+        <translation>Fut gjatësinë e harkut</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_2points_length.cpp" line="57"/>
@@ -376,12 +377,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_2points_radius.cpp" line="55"/>
         <source>Enter radius of arc</source>
-        <translation>Shto nga</translation>
+        <translation>Fut rrezen e harkut</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_2points_radius.cpp" line="59"/>
         <source>Create outer arc</source>
-        <translation>Krijo</translation>
+        <translation>Krijo harkun e jashtëm</translation>
     </message>
 </context>
 <context>
@@ -389,22 +390,22 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_3points.cpp" line="75"/>
         <source>Invalid arc data.</source>
-        <translation type="unfinished">Të dhëna të pavlefshme.</translation>
+        <translation type="unfinished">Të dhëna të pavlefshme për harkun.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_3points.cpp" line="233"/>
         <source>Specify startpoint or [center]</source>
-        <translation type="unfinished">Pikë</translation>
+        <translation type="unfinished">Specifiko pikën e fillimit ose [qendrën]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_3points.cpp" line="236"/>
         <source>Specify second point</source>
-        <translation type="unfinished">Pikë</translation>
+        <translation type="unfinished">Specifiko pikën e dytë</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_3points.cpp" line="239"/>
         <source>Specify third point</source>
-        <translation type="unfinished">Pikë</translation>
+        <translation type="unfinished">Specifiko pikën e tretë</translation>
     </message>
 </context>
 <context>
@@ -441,7 +442,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_center_point_param.cpp" line="542"/>
         <source>Specify start point</source>
-        <translation type="unfinished">Pikë</translation>
+        <translation type="unfinished">Specifiko pikën e fillimit</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_center_point_param.cpp" line="546"/>
@@ -457,7 +458,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_center_point_param.cpp" line="549"/>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_center_point_param.cpp" line="552"/>
         <source>Alternative Arc</source>
-        <translation type="unfinished">Arc alternativ</translation>
+        <translation type="unfinished">Hark alternativ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_center_point_param.cpp" line="552"/>
@@ -467,12 +468,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_center_point_param.cpp" line="555"/>
         <source>Specify chord length (negative for alt point):</source>
-        <translation type="unfinished">Për:</translation>
+        <translation type="unfinished">Specifiko gjatësinë e kordës (negative për pikën alternative):</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_center_point_param.cpp" line="555"/>
         <source>Use alternative arc point</source>
-        <translation type="unfinished">Pikë</translation>
+        <translation type="unfinished">Përdor pikën alternative të harkut</translation>
     </message>
 </context>
 <context>
@@ -480,7 +481,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_tangential.cpp" line="292"/>
         <source>Specify base entity</source>
-        <translation type="unfinished">Specifiko njësinë bazë</translation>
+        <translation type="unfinished">Specifiko entitetin bazë</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_tangential.cpp" line="296"/>
@@ -495,7 +496,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_tangential.cpp" line="299"/>
         <source>Specify end point</source>
-        <translation type="unfinished">Pikë</translation>
+        <translation type="unfinished">Specifiko pikën fundore</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_tangential.cpp" line="299"/>
@@ -536,22 +537,22 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_center_line.cpp" line="295"/>
         <source>Select first entity</source>
-        <translation type="unfinished">Zgjidh i pari</translation>
+        <translation type="unfinished">Zgjidh entitetin e parë</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_center_line.cpp" line="299"/>
         <source>Select second entity</source>
-        <translation type="unfinished">Zgjidh i dyti</translation>
+        <translation type="unfinished">Zgjidh entitetin e dytë</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_center_line.cpp" line="299"/>
         <source>Alternate endpoints</source>
-        <translation type="unfinished">Fundi</translation>
+        <translation type="unfinished">Pikat fundore alternative</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_center_line.cpp" line="303"/>
         <source>Enter offset value</source>
-        <translation type="unfinished">Shto</translation>
+        <translation type="unfinished">Fut vlerën e zhvendosjes</translation>
     </message>
 </context>
 <context>
@@ -559,7 +560,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_center_mark.cpp" line="397"/>
         <source>Select circle, arc or ellipse</source>
-        <translation type="unfinished">Zgjidh</translation>
+        <translation type="unfinished">Zgjidh një rreth, hark ose elips</translation>
     </message>
 </context>
 <context>
@@ -572,12 +573,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_2points.cpp" line="157"/>
         <source>Specify first point</source>
-        <translation type="unfinished">Pikë</translation>
+        <translation type="unfinished">Specifiko pikën e parë</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_2points.cpp" line="160"/>
         <source>Specify second point</source>
-        <translation type="unfinished">Pikë</translation>
+        <translation type="unfinished">Specifiko pikën e dytë</translation>
     </message>
 </context>
 <context>
@@ -597,12 +598,12 @@ distanca midis pikave=%2 është më e madhe se diametri= %3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_2points_radius.cpp" line="213"/>
         <source>Specify first point</source>
-        <translation type="unfinished">Pikë</translation>
+        <translation type="unfinished">Specifiko pikën e parë</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_2points_radius.cpp" line="216"/>
         <source>Specify second point</source>
-        <translation type="unfinished">Pikë</translation>
+        <translation type="unfinished">Specifiko pikën e dytë</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_2points_radius.cpp" line="219"/>
@@ -620,17 +621,17 @@ distanca midis pikave=%2 është më e madhe se diametri= %3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_3points.cpp" line="176"/>
         <source>Specify first point</source>
-        <translation type="unfinished">Pikë</translation>
+        <translation type="unfinished">Specifiko pikën e parë</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_3points.cpp" line="179"/>
         <source>Specify second point</source>
-        <translation type="unfinished">Pikë</translation>
+        <translation type="unfinished">Specifiko pikën e dytë</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_3points.cpp" line="182"/>
         <source>Specify third point</source>
-        <translation type="unfinished">Pikë</translation>
+        <translation type="unfinished">Specifiko pikën e tretë</translation>
     </message>
 </context>
 <context>
@@ -638,7 +639,7 @@ distanca midis pikave=%2 është më e madhe se diametri= %3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_by_arc.cpp" line="246"/>
         <source>Select arc or ellipse arc</source>
-        <translation>Zgjidh</translation>
+        <translation>Zgjidh një hark ose hark eliptik</translation>
     </message>
 </context>
 <context>
@@ -656,7 +657,7 @@ distanca midis pikave=%2 është më e madhe se diametri= %3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_center_point.cpp" line="134"/>
         <source>Specify point on circle</source>
-        <translation type="unfinished">Pikë në</translation>
+        <translation type="unfinished">Specifiko një pikë në rreth</translation>
     </message>
 </context>
 <context>
@@ -674,12 +675,12 @@ distanca midis pikave=%2 është më e madhe se diametri= %3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_center_radius.cpp" line="164"/>
         <source>radius=%1 is invalid (negative)</source>
-        <translation type="unfinished">është nuk</translation>
+        <translation type="unfinished">rrezja=%1 është e pavlefshme (negative)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_center_radius.cpp" line="168"/>
         <source>radius=%1 is invalid (zero)</source>
-        <translation type="unfinished">është nuk</translation>
+        <translation type="unfinished">rrezja=%1 është e pavlefshme (zero)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_center_radius.cpp" line="192"/>
@@ -715,22 +716,22 @@ distanca midis pikave=%2 është më e madhe se diametri= %3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_1entity_2points.cpp" line="449"/>
         <source>Specify a line/arc/circle</source>
-        <translation type="unfinished">A</translation>
+        <translation type="unfinished">Specifiko një vijë/hark/rreth</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_1entity_2points.cpp" line="452"/>
         <source>Specify the first point on the tangent circle</source>
-        <translation type="unfinished">Pikë në</translation>
+        <translation type="unfinished">Specifiko pikën e parë në rrethin tangjent</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_1entity_2points.cpp" line="455"/>
         <source>Specify the second point on the tangent circle</source>
-        <translation type="unfinished">Pikë në</translation>
+        <translation type="unfinished">Specifiko pikën e dytë në rrethin tangjent</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_1entity_2points.cpp" line="458"/>
         <source>Select the center of the tangent circle</source>
-        <translation type="unfinished">Zgjidh qendrën e rrethit tangent</translation>
+        <translation type="unfinished">Zgjidh qendrën e rrethit tangjent</translation>
     </message>
 </context>
 <context>
@@ -738,22 +739,22 @@ distanca midis pikave=%2 është më e madhe se diametri= %3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_2entities_1point.cpp" line="338"/>
         <source>Specify a line/arc/circle</source>
-        <translation type="unfinished">A</translation>
+        <translation type="unfinished">Specifiko një vijë/hark/rreth</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_2entities_1point.cpp" line="341"/>
         <source>Specify the another line/arc/circle</source>
-        <translation type="unfinished">Specifiko një tjetër vijë/arc/circle</translation>
+        <translation type="unfinished">Specifiko një vijë/hark/rreth tjetër</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_2entities_1point.cpp" line="344"/>
         <source>Specify a point on the tangent circle</source>
-        <translation type="unfinished">A pikë në</translation>
+        <translation type="unfinished">Specifiko një pikë në rrethin tangjent</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_2entities_1point.cpp" line="347"/>
         <source>Select the center of the tangent circle</source>
-        <translation type="unfinished">Zgjidh qendrën e rrethit tangent</translation>
+        <translation type="unfinished">Zgjidh qendrën e rrethit tangjent</translation>
     </message>
 </context>
 <context>
@@ -761,7 +762,7 @@ distanca midis pikave=%2 është më e madhe se diametri= %3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_2entities_radius.cpp" line="262"/>
         <source>No common tangential circle for radius &apos;%1&apos;</source>
-        <translation type="unfinished">Jo për</translation>
+        <translation type="unfinished">Nuk ka rreth tangjent të përbashkët me rreze &apos;%1&apos;</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_2entities_radius.cpp" line="292"/>
@@ -776,7 +777,7 @@ distanca midis pikave=%2 është më e madhe se diametri= %3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_2entities_radius.cpp" line="298"/>
         <source>Select the center of the tangent circle</source>
-        <translation type="unfinished">Zgjidh qendrën e rrethit tangent</translation>
+        <translation type="unfinished">Zgjidh qendrën e rrethit tangjent</translation>
     </message>
 </context>
 <context>
@@ -784,7 +785,7 @@ distanca midis pikave=%2 është më e madhe se diametri= %3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_3entities.cpp" line="435"/>
         <source>No common tangential circle for selected entities</source>
-        <translation type="unfinished">Jo për</translation>
+        <translation type="unfinished">Nuk ka rreth tangjent të përbashkët për entitetet e zgjedhura</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_3entities.cpp" line="520"/>
@@ -804,7 +805,7 @@ distanca midis pikave=%2 është më e madhe se diametri= %3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_3entities.cpp" line="529"/>
         <source>Select the center of the tangent circle</source>
-        <translation type="unfinished">Zgjidh qendrën e rrethit tangent</translation>
+        <translation type="unfinished">Zgjidh qendrën e rrethit tangjent</translation>
     </message>
 </context>
 <context>
@@ -812,12 +813,12 @@ distanca midis pikave=%2 është më e madhe se diametri= %3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="416"/>
         <source>Select base linear/aligned dimension</source>
-        <translation>Zgjidh</translation>
+        <translation>Zgjidh kuotën bazë lineare/të rreshtuar</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="416"/>
         <source>Select distant extension point</source>
-        <translation>Zgjidh pikë</translation>
+        <translation>Zgjidh pikën e largët të zgjatimit</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="419"/>
@@ -827,12 +828,12 @@ distanca midis pikave=%2 është më e madhe se diametri= %3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="419"/>
         <source>Mirror offset direction</source>
-        <translation>Pasqyro</translation>
+        <translation>Pasqyro drejtimin e zhvendosjes</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="422"/>
         <source>Specify dimension line location</source>
-        <translation>Pikë</translation>
+        <translation>Specifiko vendndodhjen e vijës së kuotës</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="422"/>
@@ -842,7 +843,7 @@ distanca midis pikave=%2 është më e madhe se diametri= %3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="425"/>
         <source>Enter dimension text:</source>
-        <translation>Shto tekst</translation>
+        <translation>Fut tekstin e kuotës:</translation>
     </message>
 </context>
 <context>
@@ -870,7 +871,7 @@ distanca midis pikave=%2 është më e madhe se diametri= %3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="59"/>
         <source>Select to create dual (Enter to complete)</source>
-        <translation>Zgjidh nga</translation>
+        <translation>Zgjidh për të krijuar dualin (Enter për të përfunduar)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="59"/>
@@ -883,22 +884,22 @@ distanca midis pikave=%2 është më e madhe se diametri= %3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/lc_action_draw_ellipse_1point.cpp" line="332"/>
         <source>Specify ellipse center</source>
-        <translation>Pikë</translation>
+        <translation>Specifiko qendrën e elipsit</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/lc_action_draw_ellipse_1point.cpp" line="336"/>
         <source>Specify angle for major axis</source>
-        <translation>Për</translation>
+        <translation>Specifiko këndin e boshtit kryesor</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/lc_action_draw_ellipse_1point.cpp" line="340"/>
         <source>Set start angle of arc</source>
-        <translation>Fillo nga</translation>
+        <translation>Cakto këndin e fillimit të harkut</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/lc_action_draw_ellipse_1point.cpp" line="344"/>
         <source>Set end angle of arc</source>
-        <translation>Fund nga</translation>
+        <translation>Cakto këndin e fundit të harkut</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/lc_action_draw_ellipse_1point.cpp" line="382"/>
@@ -945,12 +946,12 @@ distanca midis pikave=%2 është më e madhe se diametri= %3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawhyperbolafp.cpp" line="282"/>
         <source>Specify start point on branch</source>
-        <translation>Pikë në</translation>
+        <translation>Specifiko pikën e fillimit në degë</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawhyperbolafp.cpp" line="285"/>
         <source>Specify end point on branch</source>
-        <translation>Në</translation>
+        <translation>Specifiko pikën fundore në degë</translation>
     </message>
 </context>
 <context>
@@ -988,7 +989,7 @@ distanca midis pikave=%2 është më e madhe se diametri= %3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line.cpp" line="269"/>
         <source>Specify first point</source>
-        <translation type="unfinished">Pikë</translation>
+        <translation type="unfinished">Specifiko pikën e parë</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line.cpp" line="291"/>
@@ -1100,7 +1101,7 @@ distanca midis pikave=%2 është më e madhe se diametri= %3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_angle.cpp" line="511"/>
         <source>Specify second point</source>
-        <translation type="unfinished">Pikë</translation>
+        <translation type="unfinished">Specifiko pikën e dytë</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_angle.cpp" line="515"/>
@@ -1113,7 +1114,7 @@ distanca midis pikave=%2 është më e madhe se diametri= %3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_angle_rel.cpp" line="494"/>
         <source>Select base line</source>
-        <translation>Zgjidh</translation>
+        <translation>Zgjidh vijën bazë</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_angle_rel.cpp" line="497"/>
@@ -1138,17 +1139,17 @@ distanca midis pikave=%2 është më e madhe se diametri= %3</translation>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_bisector.cpp" line="248"/>
         <source>Number sector lines not in range: </source>
         <comment>number of bisector to create must be in [1, 200]</comment>
-        <translation type="unfinished">Linjat e sektorit të numrit nuk janë në:</translation>
+        <translation type="unfinished">Numri i vijave të sektorëve nuk është brenda intervalit: </translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_bisector.cpp" line="282"/>
         <source>Select first line</source>
-        <translation type="unfinished">Zgjidh i pari</translation>
+        <translation type="unfinished">Zgjidh vijën e parë</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_bisector.cpp" line="285"/>
         <source>Select second line</source>
-        <translation type="unfinished">Zgjidh sekondë</translation>
+        <translation type="unfinished">Zgjidh vijën e dytë</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_bisector.cpp" line="288"/>
@@ -1158,7 +1159,7 @@ distanca midis pikave=%2 është më e madhe se diametri= %3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_bisector.cpp" line="291"/>
         <source>Enter number of bisectors:</source>
-        <translation type="unfinished">Shto nga:</translation>
+        <translation type="unfinished">Fut numrin e përgjysmoreve:</translation>
     </message>
 </context>
 <context>
@@ -1190,7 +1191,7 @@ distanca midis pikave=%2 është më e madhe se diametri= %3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinedirect.cpp" line="782"/>
         <source>Specify first point</source>
-        <translation type="unfinished">Pikë</translation>
+        <translation type="unfinished">Specifiko pikën e parë</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinedirect.cpp" line="789"/>
@@ -1238,7 +1239,7 @@ distanca midis pikave=%2 është më e madhe se diametri= %3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_action_draw_line_freehand.cpp" line="121"/>
         <source>Click and drag to draw a line</source>
-        <translation type="unfinished">Dhe</translation>
+        <translation type="unfinished">Kliko dhe tërhiq për të vizatuar një vijë</translation>
     </message>
 </context>
 <context>
@@ -1251,7 +1252,7 @@ distanca midis pikave=%2 është më e madhe se diametri= %3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_from_point_to_line.cpp" line="446"/>
         <source>Select Line</source>
-        <translation>Zgjidh Linja</translation>
+        <translation>Zgjidh vijën</translation>
     </message>
 </context>
 <context>
@@ -1264,7 +1265,7 @@ distanca midis pikave=%2 është më e madhe se diametri= %3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_parallel.cpp" line="156"/>
         <source>Specify Distance &lt;%1&gt; or select entity or [%2]</source>
-        <translation type="unfinished">Specifiko distancën &lt;%1&gt; ose zgjidh njësinë ose [%2]</translation>
+        <translation type="unfinished">Specifiko distancën &lt;%1&gt; ose zgjidh entitetin ose [%2]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_parallel.cpp" line="159"/>
@@ -1293,12 +1294,12 @@ distanca midis pikave=%2 është më e madhe se diametri= %3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_parallel_through.cpp" line="193"/>
         <source>Select entity</source>
-        <translation type="unfinished">Zgjidh</translation>
+        <translation type="unfinished">Zgjidh entitetin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_parallel_through.cpp" line="196"/>
         <source>Specify through point</source>
-        <translation type="unfinished">Specifiko</translation>
+        <translation type="unfinished">Specifiko pikën e kalimit</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_parallel_through.cpp" line="199"/>
@@ -1329,7 +1330,7 @@ distanca midis pikave=%2 është më e madhe se diametri= %3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_action_draw_polygon_center_tan.cpp" line="52"/>
         <source>Specify a tangent</source>
-        <translation type="unfinished">A</translation>
+        <translation type="unfinished">Specifiko një tangjente</translation>
     </message>
 </context>
 <context>
@@ -1337,7 +1338,7 @@ distanca midis pikave=%2 është më e madhe se diametri= %3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_action_draw_polygon_corner_corner.cpp" line="90"/>
         <source>Specify first corner</source>
-        <translation type="unfinished">Pikë</translation>
+        <translation type="unfinished">Specifiko kulmin e parë</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_action_draw_polygon_corner_corner.cpp" line="94"/>
@@ -1355,17 +1356,17 @@ distanca midis pikave=%2 është më e madhe se diametri= %3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_action_draw_polygon_side_side.cpp" line="51"/>
         <source>Specify second tangent</source>
-        <translation type="unfinished">Sekondë</translation>
+        <translation type="unfinished">Specifiko tangjenten e dytë</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_action_draw_polygon_side_side.cpp" line="56"/>
         <source>Specify first corner</source>
-        <translation type="unfinished">Pikë</translation>
+        <translation type="unfinished">Specifiko kulmin e parë</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_action_draw_polygon_side_side.cpp" line="58"/>
         <source>Specify first tangent</source>
-        <translation type="unfinished">Para së gjithash</translation>
+        <translation type="unfinished">Specifiko tangjenten e parë</translation>
     </message>
 </context>
 <context>
@@ -1418,12 +1419,12 @@ distanca midis pikave=%2 është më e madhe se diametri= %3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_line_radiant.cpp" line="384"/>
         <source>Specify start point</source>
-        <translation type="unfinished">Pikë</translation>
+        <translation type="unfinished">Specifiko pikën e fillimit</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_line_radiant.cpp" line="388"/>
         <source>Specify second point</source>
-        <translation type="unfinished">Pikë</translation>
+        <translation type="unfinished">Specifiko pikën e dytë</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_line_radiant.cpp" line="392"/>
@@ -1457,7 +1458,7 @@ distanca midis pikave=%2 është më e madhe se diametri= %3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_rel_angle.cpp" line="266"/>
         <source>Select base entity</source>
-        <translation type="unfinished">Zgjidh</translation>
+        <translation type="unfinished">Zgjidh entitetin bazë</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_rel_angle.cpp" line="269"/>
@@ -1480,7 +1481,7 @@ distanca midis pikave=%2 është më e madhe se diametri= %3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_snake.cpp" line="504"/>
         <source>Specify first point</source>
-        <translation>Pikë</translation>
+        <translation>Specifiko pikën e parë</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_snake.cpp" line="513"/>
@@ -1533,7 +1534,7 @@ distanca midis pikave=%2 është më e madhe se diametri= %3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_snake.cpp" line="565"/>
         <source>Specify point or [%1]</source>
-        <translation>Pikë</translation>
+        <translation>Specifiko pikën ose [%1]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_snake.cpp" line="621"/>
@@ -1551,7 +1552,7 @@ distanca midis pikave=%2 është më e madhe se diametri= %3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/text/lc_action_draw_mtext.cpp" line="194"/>
         <source>Specify insertion point</source>
-        <translation type="unfinished">Përcakto pikë</translation>
+        <translation type="unfinished">Specifiko pikën e futjes</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/text/lc_action_draw_mtext.cpp" line="198"/>
@@ -1597,7 +1598,7 @@ distanca midis pikave=%2 është më e madhe se diametri= %3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabolaFD.cpp" line="293"/>
         <source>Select line that is parallel to directrix of parabola or set vertex point</source>
-        <translation>Zgjidh nga</translation>
+        <translation>Zgjidh vijën që është paralele me drejtuesen e parabolës ose cakto pikën e kulmit</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabolaFD.cpp" line="297"/>
@@ -1631,27 +1632,27 @@ distanca midis pikave=%2 është më e madhe se diametri= %3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_lattice.cpp" line="280"/>
         <source>Specify first point</source>
-        <translation>Pikë</translation>
+        <translation>Specifiko pikën e parë</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_lattice.cpp" line="284"/>
         <source>Specify second point</source>
-        <translation>Pikë</translation>
+        <translation>Specifiko pikën e dytë</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_lattice.cpp" line="288"/>
         <source>Specify third point</source>
-        <translation>Pikë</translation>
+        <translation>Specifiko pikën e tretë</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_lattice.cpp" line="292"/>
         <source>Specify fourth point</source>
-        <translation>Pikë</translation>
+        <translation>Specifiko pikën e katërt</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_lattice.cpp" line="292"/>
         <source>Last point position is un-adjusted</source>
-        <translation>Pozicioni i fundit nuk është i justifikuar</translation>
+        <translation>Pozicioni i pikës së fundit nuk është rregulluar</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_lattice.cpp" line="293"/>
@@ -1661,12 +1662,12 @@ distanca midis pikave=%2 është më e madhe se diametri= %3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_lattice.cpp" line="297"/>
         <source>Enter number of points by X</source>
-        <translation>Shto nga</translation>
+        <translation>Fut numrin e pikave sipas X</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_lattice.cpp" line="301"/>
         <source>Enter number of points by Y</source>
-        <translation>Shto nga</translation>
+        <translation>Fut numrin e pikave sipas Y</translation>
     </message>
 </context>
 <context>
@@ -1780,7 +1781,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_action_draw_polygon_base.cpp" line="259"/>
         <source>Enter rounding radius:</source>
-        <translation type="unfinished">Shto</translation>
+        <translation type="unfinished">Fut rrezen e rrumbullakimit:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_action_draw_polygon_base.cpp" line="267"/>
@@ -1830,12 +1831,12 @@ or [%2]</source>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_draw_polyline.cpp" line="439"/>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_draw_polyline.cpp" line="606"/>
         <source>Enter number of polylines</source>
-        <translation type="unfinished">Shto nga</translation>
+        <translation type="unfinished">Fut numrin e polilinjave</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_draw_polyline.cpp" line="564"/>
         <source>Enter an equation, f(x)</source>
-        <translation type="unfinished">Shto</translation>
+        <translation type="unfinished">Fut një ekuacion, f(x)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_draw_polyline.cpp" line="577"/>
@@ -1845,7 +1846,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_draw_polyline.cpp" line="581"/>
         <source>Enter the start point x</source>
-        <translation type="unfinished">Shto pikë</translation>
+        <translation type="unfinished">Fut koordinatën x të pikës së fillimit</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_draw_polyline.cpp" line="586"/>
@@ -1865,12 +1866,12 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_draw_polyline.cpp" line="767"/>
         <source>Specify first point</source>
-        <translation type="unfinished">Pikë</translation>
+        <translation type="unfinished">Specifiko pikën e parë</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_draw_polyline.cpp" line="787"/>
         <source>Alternative Arc</source>
-        <translation type="unfinished">Arc alternativ</translation>
+        <translation type="unfinished">Hark alternativ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_draw_polyline.cpp" line="798"/>
@@ -1908,7 +1909,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_1point.cpp" line="396"/>
         <source>Specify size (width, height)</source>
-        <translation type="unfinished">Madhësia</translation>
+        <translation type="unfinished">Specifiko madhësinë (gjerësia, lartësia)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_1point.cpp" line="399"/>
@@ -1918,12 +1919,12 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_1point.cpp" line="402"/>
         <source>Specify point that defines base angle for rectangle</source>
-        <translation>Pikë për</translation>
+        <translation>Specifiko pikën që përcakton këndin bazë të drejtkëndëshit</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_1point.cpp" line="402"/>
         <source>Don&apos;t keep insertion point</source>
-        <translation>Mos mbaj pikë hyrje</translation>
+        <translation>Mos e mbaj pikën e futjes</translation>
     </message>
 </context>
 <context>
@@ -1931,7 +1932,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_2points.cpp" line="307"/>
         <source>Specify second point</source>
-        <translation>Pikë</translation>
+        <translation>Specifiko pikën e dytë</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_2points.cpp" line="307"/>
@@ -1951,7 +1952,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_2points.cpp" line="316"/>
         <source>Specify size (width, height)</source>
-        <translation>Madhësia</translation>
+        <translation>Specifiko madhësinë (gjerësia, lartësia)</translation>
     </message>
 </context>
 <context>
@@ -1960,12 +1961,12 @@ or [%2]</source>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_3points.cpp" line="578"/>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_3points.cpp" line="596"/>
         <source>Specify first point first</source>
-        <translation>Pikë i pari</translation>
+        <translation>Specifiko fillimisht pikën e parë</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_3points.cpp" line="587"/>
         <source>Specify width or second point first</source>
-        <translation>Pikë i pari</translation>
+        <translation>Specifiko fillimisht gjerësinë ose pikën e dytë</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_3points.cpp" line="616"/>
@@ -1980,17 +1981,17 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_3points.cpp" line="622"/>
         <source>Specify start point</source>
-        <translation type="unfinished">Pikë</translation>
+        <translation type="unfinished">Specifiko pikën e fillimit</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_3points.cpp" line="625"/>
         <source>Specify second point</source>
-        <translation>Pikë</translation>
+        <translation>Specifiko pikën e dytë</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_3points.cpp" line="628"/>
         <source>Specify third point</source>
-        <translation>Pikë</translation>
+        <translation>Specifiko pikën e tretë</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_3points.cpp" line="631"/>
@@ -2013,7 +2014,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_abstract.cpp" line="192"/>
         <source>Rectangle</source>
-        <translation type="unfinished">Reptangle</translation>
+        <translation type="unfinished">Drejtkëndësh</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_abstract.cpp" line="193"/>
@@ -2048,7 +2049,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_abstract.cpp" line="440"/>
         <source>Specify insertion point</source>
-        <translation type="unfinished">Përcakto pikë</translation>
+        <translation type="unfinished">Specifiko pikën e futjes</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_abstract.cpp" line="443"/>
@@ -2058,7 +2059,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_abstract.cpp" line="446"/>
         <source>Specify size (width, height)</source>
-        <translation type="unfinished">Madhësia</translation>
+        <translation type="unfinished">Specifiko madhësinë (gjerësia, lartësia)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_abstract.cpp" line="449"/>
@@ -2070,12 +2071,12 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_abstract.cpp" line="452"/>
         <source>Specify corner bevel length (x,y)</source>
-        <translation type="unfinished">Pikë</translation>
+        <translation type="unfinished">Specifiko gjatësinë e faskës së qoshes (x,y)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_abstract.cpp" line="455"/>
         <source>Specify corner radius</source>
-        <translation type="unfinished">Specifiko</translation>
+        <translation type="unfinished">Specifiko rrezen e qoshes</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_abstract.cpp" line="458"/>
@@ -2090,12 +2091,12 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_slice_divide.cpp" line="238"/>
         <source>Line</source>
-        <translation>Linja</translation>
+        <translation>Vijë</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_slice_divide.cpp" line="248"/>
         <source>Arc</source>
-        <translation>Arc</translation>
+        <translation>Hark</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_slice_divide.cpp" line="258"/>
@@ -2110,7 +2111,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_slice_divide.cpp" line="631"/>
         <source>Select circle or arc</source>
-        <translation>Zgjidh</translation>
+        <translation>Zgjidh një rreth ose hark</translation>
     </message>
 </context>
 <context>
@@ -2123,7 +2124,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_action_draw_spline.cpp" line="240"/>
         <source>Specify first control point</source>
-        <translation type="unfinished">Pikë</translation>
+        <translation type="unfinished">Specifiko pikën e parë të kontrollit</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_action_draw_spline.cpp" line="252"/>
@@ -2151,7 +2152,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_action_draw_spline_points.cpp" line="217"/>
         <source>Specify first control point</source>
-        <translation>Pikë</translation>
+        <translation>Specifiko pikën e parë të kontrollit</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_action_draw_spline_points.cpp" line="234"/>
@@ -2215,7 +2216,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_action_draw_star.cpp" line="664"/>
         <source>Set rays number</source>
-        <translation>A</translation>
+        <translation>Cakto numrin e rrezeve</translation>
     </message>
 </context>
 <context>
@@ -2228,12 +2229,12 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/text/lc_action_draw_text.cpp" line="246"/>
         <source>Specify insertion point</source>
-        <translation type="unfinished">Përcakto pikë</translation>
+        <translation type="unfinished">Specifiko pikën e futjes</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/text/lc_action_draw_text.cpp" line="249"/>
         <source>Specify second point</source>
-        <translation type="unfinished">Pikë</translation>
+        <translation type="unfinished">Specifiko pikën e dytë</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/text/lc_action_draw_text.cpp" line="253"/>
@@ -2251,7 +2252,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/edit/lc_action_edit_paste_transform.cpp" line="169"/>
         <source>Set paste reference point</source>
-        <translation>Pikë</translation>
+        <translation>Cakto pikën e referimit për ngjitjen</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/edit/lc_action_edit_paste_transform.cpp" line="169"/>
@@ -2282,7 +2283,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="338"/>
         <source>Zoom &amp;Panning</source>
-        <translation>Shkalla e zmadhimit</translation>
+        <translation>Zhvendosje e &amp;pamjes</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="246"/>
@@ -2307,12 +2308,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="250"/>
         <source>Select Intersected Entities</source>
-        <translation>Zgjidh entitetet e bashkuara</translation>
+        <translation>Zgjidh entitetet që kryqëzohen</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="251"/>
         <source>Deselect Intersected Entities</source>
-        <translation>Deseleksiono Entitetet e bashkuara</translation>
+        <translation>Çzgjidh entitetet që kryqëzohen</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="252"/>
@@ -2322,7 +2323,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="235"/>
         <source>&amp;Points</source>
-        <translation>&amp;Points</translation>
+        <translation>&amp;Pikat</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="206"/>
@@ -2348,7 +2349,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="210"/>
         <source>&amp;Freehand Line</source>
-        <translation>Linja</translation>
+        <translation>Vijë &amp;me dorë të lirë</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="211"/>
@@ -2358,12 +2359,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="212"/>
         <source>Parallel through point</source>
-        <translation>Paralel</translation>
+        <translation>Paralele përmes pike</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="192"/>
         <source>Rectangle</source>
-        <translation>Reptangle</translation>
+        <translation>Drejtkëndësh</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="213"/>
@@ -2373,17 +2374,17 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="214"/>
         <source>Tangent (P,C)</source>
-        <translation>Tangent (P,C)</translation>
+        <translation>Tangjente (P,C)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="215"/>
         <source>Tangent (C,C)</source>
-        <translation>Tangent (C,C)</translation>
+        <translation>Tangjente (C,C)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="216"/>
         <source>Tangent &amp;Orthogonal</source>
-        <translation>Tangent &amp; Ortoglonal</translation>
+        <translation>Tangjente &amp;ortogonale</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="217"/>
@@ -2398,12 +2399,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="193"/>
         <source>Pol&amp;ygon (Cen,Cor)</source>
-        <translation>Poligon (Qendër,Kulm)</translation>
+        <translation>Pol&amp;igon (Qendër, kulm)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="194"/>
         <source>Pol&amp;ygon (Cen,Tan)</source>
-        <translation>Poligon (Qendër,Tangent)</translation>
+        <translation>Pol&amp;igon (Qendër, tangjente)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="195"/>
@@ -2428,17 +2429,17 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="198"/>
         <source>Rectangle (1 Point)</source>
-        <translation>Reptangle (1 Point)</translation>
+        <translation>Drejtkëndësh (1 pikë)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="199"/>
         <source>Rectangle (2 Points)</source>
-        <translation>Reptangle (2 Pika)</translation>
+        <translation>Drejtkëndësh (2 pika)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="200"/>
         <source>Rectangle (3 Points)</source>
-        <translation>Rectangle (3 Pika)</translation>
+        <translation>Drejtkëndësh (3 pika)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="197"/>
@@ -2448,12 +2449,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="222"/>
         <source>Angle From Line</source>
-        <translation>Nga Linja</translation>
+        <translation>Kënd nga vija</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="223"/>
         <source>Orthogonal From Line</source>
-        <translation>Ortoglonal Nga Linja</translation>
+        <translation>Ortogonale nga vija</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="224"/>
@@ -2463,27 +2464,27 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="227"/>
         <source>Slice/Divide Line</source>
-        <translation>Linja</translation>
+        <translation>Prerje/Ndarje e vijës</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="228"/>
         <source>Slice/Divide Circle</source>
-        <translation>Rrethi Spice/Divide</translation>
+        <translation>Prerje/Ndarje e rrethit</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="236"/>
         <source>Line of Points</source>
-        <translation>Linja</translation>
+        <translation>Vijë me pika</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="261"/>
         <source>Center, &amp;Point</source>
-        <translation>Në qendër, &amp;Point</translation>
+        <translation>Qendër, &amp;pikë</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="262"/>
         <source>By Arc</source>
-        <translation>Nga Arc</translation>
+        <translation>Me hark</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="263"/>
@@ -2519,12 +2520,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="272"/>
         <source>Tangential, 2 P&amp;oints</source>
-        <translation>Tangancial, 2 P&amp;oints</translation>
+        <translation>Tangjent, 2 p&amp;ika</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="278"/>
         <source>&amp;Center, Point, Angles</source>
-        <translation>&amp;Qendër, Point, Angles</translation>
+        <translation>&amp;Qendër, pikë, kënde</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="281"/>
@@ -2534,7 +2535,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="284"/>
         <source>&amp;2 Points, Length</source>
-        <translation>Gjatësia:</translation>
+        <translation>&amp;2 pika, gjatësi</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="285"/>
@@ -2544,17 +2545,17 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="287"/>
         <source>Arc &amp;Tangential</source>
-        <translation>Arc &amp;Tangencial</translation>
+        <translation>Hark &amp;tangjent</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="299"/>
         <source>&amp;Append spline point</source>
-        <translation>&amp;Append pikë</translation>
+        <translation>&amp;Shto pikë në fund të spline-it</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="301"/>
         <source>&amp;Insert spline points</source>
-        <translation>Fut</translation>
+        <translation>&amp;Fut pika në spline</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="312"/>
@@ -2569,17 +2570,17 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="314"/>
         <source>Ellipse &amp;Foci Point</source>
-        <translation>Pikë</translation>
+        <translation>Elips me &amp;vatra dhe pikë</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="315"/>
         <source>Ellipse &amp;4 Point</source>
-        <translation>Pikë</translation>
+        <translation>Elips me &amp;4 pika</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="316"/>
         <source>Ellipse Center and &amp;3 Points</source>
-        <translation>Në qendër dhe në 3 pika</translation>
+        <translation>Elips me qendër dhe &amp;3 pika</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="317"/>
@@ -2599,7 +2600,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="323"/>
         <source>&amp;Polyline</source>
-        <translation>&amp;Polyline</translation>
+        <translation>&amp;Polilinjë</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="324"/>
@@ -2624,17 +2625,17 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="328"/>
         <source>&amp;Trim segments</source>
-        <translation>Segmentet e &amp;Terimit</translation>
+        <translation>&amp;Shkurto segmentet</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="329"/>
         <source>Create &amp;Equidistant Polylines</source>
-        <translation>Krijo</translation>
+        <translation>Krijo polilinja &amp;ekuidistante</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="331"/>
         <source>Polyline Arcs to Chords</source>
-        <translation>Harktarët e Polilines në Kords</translation>
+        <translation>Harqet e polilinjës në korda</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="339"/>
@@ -2649,7 +2650,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="341"/>
         <source>&amp;Hatch</source>
-        <translation>&amp;Hatch</translation>
+        <translation>&amp;Vijëzim</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="342"/>
@@ -2689,17 +2690,17 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="356"/>
         <source>&amp;Arc</source>
-        <translation>&amp; Arc</translation>
+        <translation>&amp;Hark</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="357"/>
         <source>&amp;Leader</source>
-        <translation>&amp;Leader</translation>
+        <translation>&amp;Vijë treguese</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="378"/>
         <source>&amp;Attributes</source>
-        <translation>&amp;Antribute</translation>
+        <translation>&amp;Atribute</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="379"/>
@@ -2824,7 +2825,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="573"/>
         <source>Lower After Entity</source>
-        <translation>Më poshtë</translation>
+        <translation>Ul pas entitetit</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="574"/>
@@ -2949,17 +2950,17 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="382"/>
         <source>&amp;Rotate</source>
-        <translation>&amp;Rotate</translation>
+        <translation>&amp;Rrotullo</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="383"/>
         <source>&amp;Scale</source>
-        <translation>&amp;Scale</translation>
+        <translation>&amp;Shkallëzo</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="384"/>
         <source>&amp;Mirror</source>
-        <translation>&amp;Myror</translation>
+        <translation>&amp;Pasqyro</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="386"/>
@@ -2974,7 +2975,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="388"/>
         <source>&amp;Trim</source>
-        <translation>&amp;Terim</translation>
+        <translation>&amp;Shkurto</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="390"/>
@@ -2984,27 +2985,27 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="392"/>
         <source>&amp;Divide</source>
-        <translation>&amp;Divide</translation>
+        <translation>&amp;Ndaj</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="393"/>
         <source>&amp;Stretch</source>
-        <translation>&amp;Stretch</translation>
+        <translation>&amp;Shtrij</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="394"/>
         <source>&amp;Bevel</source>
-        <translation>&amp;Bevel</translation>
+        <translation>&amp;Faskë</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="395"/>
         <source>&amp;Fillet</source>
-        <translation>&amp;Fillet</translation>
+        <translation>&amp;Rrumbullako</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="396"/>
         <source>&amp;Explode Text into Letters</source>
-        <translation>&amp;Explode Teksti në Letra</translation>
+        <translation>&amp;Zbërthe tekstin në shkronja</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="583"/>
@@ -3054,12 +3055,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="635"/>
         <source>&amp;Show all blocks</source>
-        <translation>Shfaq gjithçka</translation>
+        <translation>&amp;Shfaq të gjitha blloqet</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="636"/>
         <source>&amp;Hide all blocks</source>
-        <translation>Fshih gjithçka</translation>
+        <translation>&amp;Fshih të gjitha blloqet</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="656"/>
@@ -3069,7 +3070,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="688"/>
         <source>Export as CA&amp;M/plain SVG...</source>
-        <translation>Eksporto.</translation>
+        <translation>Eksporto si CA&amp;M/SVG i thjeshtë...</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="675"/>
@@ -3094,12 +3095,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="759"/>
         <source>Regenerate Dimensions</source>
-        <translation>Regjeneroni Dimensionet</translation>
+        <translation>Rigjenero kuotat</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="762"/>
         <source>&amp;Dimension Styles</source>
-        <translation>Stili i dimensionit</translation>
+        <translation>&amp;Stilet e kuotimit</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="772"/>
@@ -3189,17 +3190,17 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="240"/>
         <source>Paste to Points</source>
-        <translation>Ngjite</translation>
+        <translation>Ngjit në pika</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="279"/>
         <source>&amp;Center, Point, Chord</source>
-        <translation>&amp;Qendër, Point, Chord</translation>
+        <translation>&amp;Qendër, pikë, kordë</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="280"/>
         <source>&amp;Center, Point, Arc Angle</source>
-        <translation>&amp;Qendër, Point, Arc Angle</translation>
+        <translation>&amp;Qendër, pikë, kënd harku</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="282"/>
@@ -3209,7 +3210,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="283"/>
         <source>&amp;2 Points, Radius</source>
-        <translation>&amp;2 Points, Radikal</translation>
+        <translation>&amp;2 pika, rreze</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="294"/>
@@ -3224,27 +3225,27 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="300"/>
         <source>&amp;Remove spline points</source>
-        <translation>Hiq</translation>
+        <translation>&amp;Hiq pika nga spline-i</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="302"/>
         <source>&amp;Explode spline to lines</source>
-        <translation>&amp;Zbërthe kurbën spline në vija</translation>
+        <translation>&amp;Zbërthe spline-in në vija</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="303"/>
         <source>&amp;Spline from polyline</source>
-        <translation>&amp;Spline nga</translation>
+        <translation>&amp;Spline nga polilinja</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="304"/>
         <source>&amp;Remove between two points</source>
-        <translation>Hiq dy pikë</translation>
+        <translation>&amp;Hiq midis dy pikave</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="310"/>
         <source>&amp;Ellipse (1 Point)</source>
-        <translation>&amp;Elipse (1 Point)</translation>
+        <translation>&amp;Elips (1 pikë)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="311"/>
@@ -3254,12 +3255,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="330"/>
         <source>Polyline from Existing &amp;Segments</source>
-        <translation>Poliline nga Ekziston</translation>
+        <translation>Polilinjë nga &amp;segmentet ekzistuese</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="332"/>
         <source>Polyline Change Segment Type</source>
-        <translation>Lloji</translation>
+        <translation>Ndrysho llojin e segmentit të polilinjës</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="343"/>
@@ -3269,17 +3270,17 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="358"/>
         <source>&amp;Baseline</source>
-        <translation>&amp;Baseline</translation>
+        <translation>Kuotim nga &amp;baza</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="359"/>
         <source>&amp;Continue</source>
-        <translation>&amp; Vazhdo</translation>
+        <translation>Kuotim &amp;serik</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="398"/>
         <source>Break/Divide</source>
-        <translation>Break/Divide</translation>
+        <translation>Ndërprerje/Ndarje</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="399"/>
@@ -3289,7 +3290,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="400"/>
         <source>Line Join</source>
-        <translation>Linja</translation>
+        <translation>Bashkim vijash</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="401"/>
@@ -3309,7 +3310,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="404"/>
         <source>Align Reference Points</source>
-        <translation>Referime</translation>
+        <translation>Rreshto pikat e referimit</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="410"/>
@@ -3319,12 +3320,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="416"/>
         <source>&amp;Pick Pen From Entity</source>
-        <translation>&amp;Pik Pen From Entity</translation>
+        <translation>&amp;Merr stilolapsin nga entiteti</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="417"/>
         <source>&amp;Pick Pen From Entity (Resolved)</source>
-        <translation>&amp;Pick Pen Nga Entity (E zgjidhur)</translation>
+        <translation>&amp;Merr stilolapsin nga entiteti (i zgjidhur)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="418"/>
@@ -3334,12 +3335,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="419"/>
         <source>Copy Pen</source>
-        <translation>Kopjo</translation>
+        <translation>Kopjo stilolapsin</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="425"/>
         <source>Show Entity Description</source>
-        <translation>Shfaq përshkrimi</translation>
+        <translation>Shfaq përshkrimin e entitetit</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="428"/>
@@ -3355,7 +3356,7 @@ or [%2]</source>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="78"/>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="430"/>
         <source>Snap</source>
-        <translation>Bëshkë</translation>
+        <translation>Kapje</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="57"/>
@@ -3365,7 +3366,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="57"/>
         <source>Block related operations</source>
-        <translation>Blloku</translation>
+        <translation>Veprimet me blloqet</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="58"/>
@@ -3380,22 +3381,22 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="59"/>
         <source>Arc</source>
-        <translation>Arc</translation>
+        <translation>Hark</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="59"/>
         <source>Arc drawing commands</source>
-        <translation>Komandat e vizatimit Arc</translation>
+        <translation>Komandat e vizatimit të harqeve</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="60"/>
         <source>Spline</source>
-        <translation>Spin</translation>
+        <translation>Spline</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="60"/>
         <source>Spline drawing commands</source>
-        <translation>Komandat e vizatimit të kurbave spline</translation>
+        <translation>Komandat e vizatimit të spline-eve</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="61"/>
@@ -3415,7 +3416,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="62"/>
         <source>Ellipse drawing commands</source>
-        <translation>Komandat e vizatimit Ellipse</translation>
+        <translation>Komandat e vizatimit të elipseve</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="63"/>
@@ -3430,12 +3431,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="64"/>
         <source>Dimension</source>
-        <translation>Përmasa</translation>
+        <translation>Kuotimi</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="64"/>
         <source>Dimensions creation commands</source>
-        <translation>Komandat e krijimit të dimensioneve</translation>
+        <translation>Komandat e krijimit të kuotave</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="65"/>
@@ -3460,7 +3461,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="67"/>
         <source>Line</source>
-        <translation>Linja</translation>
+        <translation>Vijë</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="67"/>
@@ -3475,7 +3476,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="68"/>
         <source>Point drawing commands</source>
-        <translation>Pikë</translation>
+        <translation>Komandat e vizatimit të pikave</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="69"/>
@@ -3495,7 +3496,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="70"/>
         <source>Modification operations</source>
-        <translation>Opcionet e kompilimeve</translation>
+        <translation>Veprimet e modifikimit</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="71"/>
@@ -3515,7 +3516,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="72"/>
         <source>Other operations</source>
-        <translation>Opcione të tjera</translation>
+        <translation>Veprime të tjera</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="73"/>
@@ -3526,12 +3527,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="74"/>
         <source>Polyline</source>
-        <translation>Poliline</translation>
+        <translation>Polilinjë</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="74"/>
         <source>Polyline drawing commands</source>
-        <translation>Komandat e vizatimit Poliline</translation>
+        <translation>Komandat e vizatimit të polilinjave</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="75"/>
@@ -3541,7 +3542,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="75"/>
         <source>Pen related operations</source>
-        <translation>Pen</translation>
+        <translation>Veprimet me stilolapsin</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="76"/>
@@ -3561,7 +3562,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="77"/>
         <source>Entity selection operations</source>
-        <translation>Entitet</translation>
+        <translation>Veprimet e zgjedhjes së entiteteve</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="78"/>
@@ -3576,7 +3577,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="79"/>
         <source>Additional Snaps</source>
-        <translation>Shtesa shtesë</translation>
+        <translation>Kapje shtesë</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="80"/>
@@ -3592,7 +3593,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="81"/>
         <source>View related operations</source>
-        <translation>Shfaq</translation>
+        <translation>Veprimet e pamjes</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="82"/>
@@ -3612,7 +3613,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="83"/>
         <source>Workspaces operations</source>
-        <translation>Opcionet e punës</translation>
+        <translation>Veprimet e hapësirave të punës</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="84"/>
@@ -3647,12 +3648,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="87"/>
         <source>Entity Layer</source>
-        <translation>Shtresa e njësisë</translation>
+        <translation>Shtresa e entitetit</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="87"/>
         <source>Entity&apos;s Layer</source>
-        <translation>Shtresa e njësisë</translation>
+        <translation>Shtresa e entitetit</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="88"/>
@@ -3667,32 +3668,32 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="109"/>
         <source>Activate Entity&apos;s Layer</source>
-        <translation>Aktivizo shtresën e njësisë</translation>
+        <translation>Aktivizo shtresën e entitetit</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="110"/>
         <source>Hide Entity&apos;s Layer</source>
-        <translation>Fshih shtresën e njësisë</translation>
+        <translation>Fshih shtresën e entitetit</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="111"/>
         <source>Hide Other Layers than Entity&apos;s</source>
-        <translation>Fshih shtresat e tjera përveç asaj të njësisë</translation>
+        <translation>Fshih shtresat e tjera përveç asaj të entitetit</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="112"/>
         <source>Lock Entity&apos;s Layer</source>
-        <translation>Kyç shtresën e njësisë</translation>
+        <translation>Kyç shtresën e entitetit</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="113"/>
         <source>Toggle Entity&apos;s Layer Construction</source>
-        <translation>Aktivizo/çaktivizo shtresën e njësisë si shtresë ndërtimi</translation>
+        <translation>Aktivizo/çaktivizo shtresën e entitetit si shtresë ndërtimi</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="114"/>
         <source>Toggle Entity&apos;s Layer Printing</source>
-        <translation>Aktivizo/çaktivizo printimin e shtresës së njësisë</translation>
+        <translation>Aktivizo/çaktivizo printimin e shtresës së entitetit</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="222"/>
@@ -3742,7 +3743,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="271"/>
         <source>Tangential &amp;3 Entities</source>
-        <translation>Entitetet Tanganciale &amp;3</translation>
+        <translation>Tangjent me &amp;3 entitete</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="288"/>
@@ -3752,7 +3753,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="296"/>
         <source>&amp;Hyperbola &amp;Foci Point</source>
-        <translation>&amp;Hiperbola &amp;Foci Point</translation>
+        <translation>&amp;Hiperbolë me &amp;vatra dhe pikë</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="360"/>
@@ -3797,7 +3798,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="449"/>
         <source>Snap Middle Manual</source>
-        <translation>Zë</translation>
+        <translation>Kapje manuale në mes</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="455"/>
@@ -3812,7 +3813,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="457"/>
         <source>Snap Center</source>
-        <translation>Në qendër</translation>
+        <translation>Kapje në qendër</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="458"/>
@@ -3822,7 +3823,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="459"/>
         <source>Snap Distance</source>
-        <translation>Largësia</translation>
+        <translation>Distanca e kapjes</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="460"/>
@@ -3862,7 +3863,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="540"/>
         <source>Set UCS By Ordinate Dimension</source>
-        <translation>Vendos UCS Nga Ordinate Dimension</translation>
+        <translation>Cakto UCS sipas kuotës së ordinatës</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="546"/>
@@ -3882,22 +3883,22 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="554"/>
         <source>Set relative zero position</source>
-        <translation>Pozicioni</translation>
+        <translation>Cakto pozicionin e zeros relative</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="557"/>
         <source>Lock relative zero position</source>
-        <translation>Blloko 0</translation>
+        <translation>Kyç pozicionin e zeros relative</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="565"/>
         <source>Exclusive Snap Mode</source>
-        <translation>Modaliteti ekstrem</translation>
+        <translation>Modaliteti ekskluziv i kapjes</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="566"/>
         <source>Free Snap</source>
-        <translation>E lirë</translation>
+        <translation>Kapje e lirë</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="568"/>
@@ -3907,7 +3908,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="582"/>
         <source>&amp;Point Coordinates</source>
-        <translation>Koordinata</translation>
+        <translation>Koordinatat e &amp;pikës</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="584"/>
@@ -3917,12 +3918,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="585"/>
         <source>Distance &amp;Point to Entity</source>
-        <translation>Largësia &amp;Point to Entity</translation>
+        <translation>Distanca nga &amp;pika te entiteti</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="587"/>
         <source>Total &amp;length of selected entities</source>
-        <translation>Gjithsej</translation>
+        <translation>&amp;Gjatësia totale e entiteteve të zgjedhura</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="589"/>
@@ -3952,12 +3953,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="607"/>
         <source>&amp;Orthogonal Grid</source>
-        <translation>&amp;Ortoglonal Grid</translation>
+        <translation>Rrjetë &amp;ortogonale</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="608"/>
         <source>&amp;Isometric Left Grid</source>
-        <translation>dë majtas</translation>
+        <translation>Rrjetë &amp;izometrike majtas</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="609"/>
@@ -3967,7 +3968,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="610"/>
         <source>&amp;Isometric Right Grid</source>
-        <translation>dë e djathtë</translation>
+        <translation>Rrjetë izometrike &amp;djathtas</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="621"/>
@@ -4067,7 +4068,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="654"/>
         <source>&amp;Application Preferences</source>
-        <translation>Preferimet</translation>
+        <translation>&amp;Preferencat e aplikacionit</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="743"/>
@@ -4172,7 +4173,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="677"/>
         <source>&amp;Block</source>
-        <translation>&amp;Block</translation>
+        <translation>&amp;Bllok</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="601"/>
@@ -4182,7 +4183,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="602"/>
         <source>&amp;Grid</source>
-        <translation>&amp;Grid</translation>
+        <translation>&amp;Rrjetë</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="787"/>
@@ -4212,7 +4213,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="715"/>
         <source>Focus on &amp;Command Line</source>
-        <translation>Fokusohu në Linja</translation>
+        <translation>Fokuso &amp;rreshtin e komandës</translation>
     </message>
 </context>
 <context>
@@ -4240,7 +4241,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="147"/>
         <source>Select second (intersection) point of angle</source>
-        <translation>Zgjidh sekondë pikë nga</translation>
+        <translation>Zgjidh pikën e dytë (të prerjes) të këndit</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="151"/>
@@ -4297,7 +4298,7 @@ Pika fundore: (%9, %10)</translation>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="151"/>
         <source>Restart with first edge point selection</source>
-        <translation>Rinis me</translation>
+        <translation>Rifillo me zgjedhjen e pikës së brinjës së parë</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="191"/>
@@ -4353,10 +4354,10 @@ Polar: (%4 &lt; %5)
 Point On Entity: (%6 , %7)
 Point: (%8 , %9)</source>
         <translation type="unfinished">Largësia: %1
-Cartesian: (%2 , %3)
-Polar: (%4 &lt; %5)
-Pika Për Entity: (%6 , %7)
-Pikë</translation>
+Karteziane: (%2 , %3)
+Polare: (%4 &lt; %5)
+Pika në entitet: (%6 , %7)
+Pika: (%8 , %9)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_action_info_dist_point_to_entity.cpp" line="301"/>
@@ -4366,7 +4367,7 @@ Pikë</translation>
     <message>
         <location filename="../src/actions/drawing/info/lc_action_info_dist_point_to_entity.cpp" line="301"/>
         <source>Do not snap to child entities in container</source>
-        <translation type="unfinished">Mos n xirr</translation>
+        <translation type="unfinished">Mos kap entitetet bijë brenda kontejnerit</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_action_info_dist_point_to_entity.cpp" line="305"/>
@@ -4481,12 +4482,12 @@ Pikë</translation>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfoproperties.cpp" line="172"/>
         <source>Select entity</source>
-        <translation>Zgjidh</translation>
+        <translation>Zgjidh entitetin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfoproperties.cpp" line="172"/>
         <source>Select child entities</source>
-        <translation>Zgjidh</translation>
+        <translation>Zgjidh entitetet bijë</translation>
     </message>
 </context>
 <context>
@@ -4538,12 +4539,12 @@ Pikë</translation>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="165"/>
         <source>Line 1 Angle:</source>
-        <translation>Linja 1 Angle:</translation>
+        <translation>Këndi i vijës 1:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="166"/>
         <source>Line 2 Angle:</source>
-        <translation>Linja 2 Angle:</translation>
+        <translation>Këndi i vijës 2:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="288"/>
@@ -4553,7 +4554,7 @@ Pikë</translation>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="288"/>
         <source>Select first line/Pick Supplementary</source>
-        <translation>Zgjidh i pari</translation>
+        <translation>Zgjidh vijën e parë/Merr këndin shtues</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="288"/>
@@ -4563,7 +4564,7 @@ Pikë</translation>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="292"/>
         <source>Select second (intersection) point of angle</source>
-        <translation>Zgjidh sekondë pikë nga</translation>
+        <translation>Zgjidh pikën e dytë (të prerjes) të këndit</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="292"/>
@@ -4691,7 +4692,7 @@ Pikë</translation>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickdistance.cpp" line="292"/>
         <source>Specify first point of distance</source>
-        <translation>Pikë nga</translation>
+        <translation>Specifiko pikën e parë të distancës</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickdistance.cpp" line="292"/>
@@ -4706,7 +4707,7 @@ Pikë</translation>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickdistance.cpp" line="295"/>
         <source>Specify second point of distance</source>
-        <translation>Pikë nga</translation>
+        <translation>Specifiko pikën e dytë të distancës</translation>
     </message>
 </context>
 <context>
@@ -4749,7 +4750,7 @@ Pikë</translation>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickposition.cpp" line="153"/>
         <source>Pick relative zero coordinates</source>
-        <translation>Zgjidh</translation>
+        <translation>Merr koordinatat e zeros relative</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickposition.cpp" line="153"/>
@@ -4825,7 +4826,7 @@ Pikë</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="181"/>
         <source>Offset:</source>
-        <translation>Spostimi:</translation>
+        <translation>Zhvendosja:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="245"/>
@@ -4835,17 +4836,17 @@ Pikë</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="261"/>
         <source>Select base alignment entity</source>
-        <translation>Zgjidh</translation>
+        <translation>Zgjidh entitetin bazë të rreshtimit</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="261"/>
         <source>Select child entities of containers</source>
-        <translation>Zgjidh njësitë bir të konteinerit</translation>
+        <translation>Zgjidh entitetet bijë të kontejnerëve</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="264"/>
         <source>Specify base alignment point</source>
-        <translation>Pikë</translation>
+        <translation>Specifiko pikën bazë të rreshtimit</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="267"/>
@@ -4878,7 +4879,7 @@ Pikë</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_ref.cpp" line="118"/>
         <source>Offset:</source>
-        <translation>Spostimi:</translation>
+        <translation>Zhvendosja:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_ref.cpp" line="119"/>
@@ -4936,7 +4937,7 @@ Pikë</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_single.cpp" line="115"/>
         <source>Offset:</source>
-        <translation>Spostimi:</translation>
+        <translation>Zhvendosja:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_single.cpp" line="201"/>
@@ -4966,22 +4967,22 @@ Pikë</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_single.cpp" line="273"/>
         <source>Select base alignment entity</source>
-        <translation>Zgjidh</translation>
+        <translation>Zgjidh entitetin bazë të rreshtimit</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_single.cpp" line="276"/>
         <source>Specify base alignment point</source>
-        <translation>Pikë</translation>
+        <translation>Specifiko pikën bazë të rreshtimit</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_single.cpp" line="289"/>
         <source>Select entity to align</source>
-        <translation>Zgjidh</translation>
+        <translation>Zgjidh entitetin për rreshtim</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_single.cpp" line="289"/>
         <source>Finish alignment after selection</source>
-        <translation>Përfundo</translation>
+        <translation>Përfundo rreshtimin pas zgjedhjes</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_single.cpp" line="378"/>
@@ -5012,7 +5013,7 @@ Pikë</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_bevel.cpp" line="182"/>
         <source>Trim</source>
-        <translation type="unfinished">Trim</translation>
+        <translation type="unfinished">Shkurto</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_bevel.cpp" line="183"/>
@@ -5043,12 +5044,12 @@ Pikë</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_bevel.cpp" line="253"/>
         <source>Selected lines are parallel</source>
-        <translation type="unfinished">Linjat e zgjedhura janë paralele</translation>
+        <translation type="unfinished">Vijat e zgjedhura janë paralele</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_bevel.cpp" line="257"/>
         <source>Selected lines are not children of the same polyline</source>
-        <translation type="unfinished">Linjat e zgjedhura nuk janë fëmijë të të njëjtit poliline</translation>
+        <translation type="unfinished">Vijat e zgjedhura nuk i përkasin së njëjtës polilinjë</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_bevel.cpp" line="261"/>
@@ -5069,12 +5070,12 @@ Pikë</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_bevel.cpp" line="405"/>
         <source>Select first entity</source>
-        <translation type="unfinished">Zgjidh i pari</translation>
+        <translation type="unfinished">Zgjidh entitetin e parë</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_bevel.cpp" line="408"/>
         <source>Select second entity</source>
-        <translation type="unfinished">Zgjidh i dyti</translation>
+        <translation type="unfinished">Zgjidh entitetin e dytë</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_bevel.cpp" line="411"/>
@@ -5121,7 +5122,7 @@ Pikë</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="369"/>
         <source>Break/Divide Circle</source>
-        <translation>Pre</translation>
+        <translation>Ndërprit/Ndaj rrethin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="370"/>
@@ -5138,12 +5139,12 @@ Pikë</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="468"/>
         <source>Break/Divide Arc</source>
-        <translation>Ndaj/Pjesëto harkun</translation>
+        <translation>Ndërprit/Ndaj harkun</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="520"/>
         <source>Select line, arc or circle</source>
-        <translation>Zgjidh</translation>
+        <translation>Zgjidh vijën, harkun ose rrethin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="520"/>
@@ -5156,7 +5157,7 @@ Pikë</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_cut.cpp" line="105"/>
         <source>Divide</source>
-        <translation type="unfinished">Pjesëtim</translation>
+        <translation type="unfinished">Ndaj</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_cut.cpp" line="106"/>
@@ -5171,22 +5172,22 @@ Pikë</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_cut.cpp" line="125"/>
         <source>Entity must be a line, arc, circle, ellipse or interpolation spline.</source>
-        <translation type="unfinished">Entititeti duhet të jetë një linjë, hark, rreth, elipsë apo spontim interpolimi.</translation>
+        <translation type="unfinished">Entiteti duhet të jetë vijë, hark, rreth, elips ose spline interpolues.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_cut.cpp" line="134"/>
         <source>Cutting point may not be entity&apos;s endpoint.</source>
-        <translation type="unfinished">Pika e prerjes mund të mos jetë pika e fundit e njësisë.</translation>
+        <translation type="unfinished">Pika e prerjes nuk mund të jetë pikë fundore e entitetit.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_cut.cpp" line="153"/>
         <source>Specify entity to cut</source>
-        <translation type="unfinished">Specifiko njësinë që duhet prerë</translation>
+        <translation type="unfinished">Specifiko entitetin për t&apos;u prerë</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_cut.cpp" line="156"/>
         <source>Specify cutting point</source>
-        <translation type="unfinished">Pikë</translation>
+        <translation type="unfinished">Specifiko pikën e prerjes</translation>
     </message>
 </context>
 <context>
@@ -5204,7 +5205,7 @@ Pikë</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_delete.cpp" line="42"/>
         <source>Delete immediately after selection</source>
-        <translation type="unfinished">Elemino</translation>
+        <translation type="unfinished">Fshi menjëherë pas zgjedhjes</translation>
     </message>
 </context>
 <context>
@@ -5212,52 +5213,52 @@ Pikë</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_delete_free.cpp" line="79"/>
         <source>Entities not in the same polyline.</source>
-        <translation type="unfinished">Jo në të njëjtën linjë.</translation>
+        <translation type="unfinished">Entitetet nuk janë në të njëjtën polilinjë.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_delete_free.cpp" line="83"/>
         <source>Parent of second entity is not a polyline</source>
-        <translation type="unfinished">Prindi i njësisë së dytë nuk është një poliline</translation>
+        <translation type="unfinished">Prindi i entitetit të dytë nuk është polilinjë</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_delete_free.cpp" line="87"/>
         <source>Parent of second entity is nullptr</source>
-        <translation type="unfinished">Prindi i njësisë së dytë është i pavlefshëm</translation>
+        <translation type="unfinished">Prindi i entitetit të dytë është null</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_delete_free.cpp" line="91"/>
         <source>One of the chosen entities is nullptr</source>
-        <translation type="unfinished">Një nga njësitë e zgjedhura është e pavlefshme</translation>
+        <translation type="unfinished">Një nga entitetet e zgjedhura është null</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_delete_free.cpp" line="109"/>
         <source>Parent of first entity is not a polyline</source>
-        <translation type="unfinished">Prindi i njësisë së parë nuk është një poliline</translation>
+        <translation type="unfinished">Prindi i entitetit të parë nuk është polilinjë</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_delete_free.cpp" line="113"/>
         <source>Parent of first entity is nullptr</source>
-        <translation type="unfinished">Prindi i njësisë së parë është i pavlefshëm</translation>
+        <translation type="unfinished">Prindi i entitetit të parë është null</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_delete_free.cpp" line="117"/>
         <source>First entity is nullptr</source>
-        <translation type="unfinished">Njësia e parë është e pavlefshme</translation>
+        <translation type="unfinished">Entiteti i parë është null</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_delete_free.cpp" line="129"/>
         <source>Second entity is nullptr</source>
-        <translation type="unfinished">Njësia e dytë është e pavlefshme</translation>
+        <translation type="unfinished">Entiteti i dytë është null</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_delete_free.cpp" line="145"/>
         <source>Specify first break point on a polyline</source>
-        <translation type="unfinished">Në a</translation>
+        <translation type="unfinished">Specifiko pikën e parë të ndërprerjes në një polilinjë</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_delete_free.cpp" line="148"/>
         <source>Specify second break point on the same polyline</source>
-        <translation type="unfinished">Në</translation>
+        <translation type="unfinished">Specifiko pikën e dytë të ndërprerjes në të njëjtën polilinjë</translation>
     </message>
 </context>
 <context>
@@ -5266,22 +5267,22 @@ Pikë</translation>
         <location filename="../src/actions/drawing/modify/lc_action_modify_duplicate.cpp" line="226"/>
         <location filename="../src/actions/drawing/modify/lc_action_modify_duplicate.cpp" line="262"/>
         <source>Duplicate Offset</source>
-        <translation>Dyfisho</translation>
+        <translation>Zhvendosja e kopjes</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_duplicate.cpp" line="287"/>
         <source>Select entity to duplicate</source>
-        <translation>Zgjidh nga</translation>
+        <translation>Zgjidh entitetin për ta dyfishuar</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_duplicate.cpp" line="287"/>
         <source>Interactive Offset</source>
-        <translation>Spostimi interaktiv</translation>
+        <translation>Zhvendosje interaktive</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_duplicate.cpp" line="290"/>
         <source>Select direction of offset</source>
-        <translation>Zgjidh nga</translation>
+        <translation>Zgjidh drejtimin e zhvendosjes</translation>
     </message>
 </context>
 <context>
@@ -5289,7 +5290,7 @@ Pikë</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_entity.cpp" line="223"/>
         <source>Click on entity to modify</source>
-        <translation type="unfinished">Kliko mbi njësinë që duhet ndryshuar</translation>
+        <translation type="unfinished">Kliko mbi entitetin për ta ndryshuar</translation>
     </message>
 </context>
 <context>
@@ -5302,7 +5303,7 @@ Pikë</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_explode_text.cpp" line="54"/>
         <source>Explode immediately after selection</source>
-        <translation type="unfinished">Shpërf ill menjëherë mbas zgjedhje</translation>
+        <translation type="unfinished">Zbërthe menjëherë pas zgjedhjes</translation>
     </message>
 </context>
 <context>
@@ -5338,7 +5339,7 @@ Pikë</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_gap.cpp" line="463"/>
         <source>Select endpoint of gap</source>
-        <translation>Zgjidh nga</translation>
+        <translation>Zgjidh pikën fundore të boshllëkut</translation>
     </message>
 </context>
 <context>
@@ -5372,22 +5373,22 @@ Pikë</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_join.cpp" line="215"/>
         <source>Lines already intersects, can&apos;t merge</source>
-        <translation>Linja</translation>
+        <translation>Vijat tashmë priten, nuk mund të bashkohen</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_join.cpp" line="836"/>
         <source>Select first line</source>
-        <translation>Zgjidh i pari</translation>
+        <translation>Zgjidh vijën e parë</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_join.cpp" line="839"/>
         <source>Select second line</source>
-        <translation>Zgjidh sekondë</translation>
+        <translation>Zgjidh vijën e dytë</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_join.cpp" line="842"/>
         <source>Select part of first line that should remain after trim</source>
-        <translation>Zgjidh nga i pari mbas</translation>
+        <translation>Zgjidh pjesën e vijës së parë që duhet të mbetet pas shkurtimit</translation>
     </message>
 </context>
 <context>
@@ -5410,12 +5411,12 @@ Pikë</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_mirror.cpp" line="151"/>
         <source>Line From:</source>
-        <translation type="unfinished">Linja:</translation>
+        <translation type="unfinished">Vija nga:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_mirror.cpp" line="152"/>
         <source>Line To:</source>
-        <translation type="unfinished">Linja Për:</translation>
+        <translation type="unfinished">Vija deri te:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_mirror.cpp" line="251"/>
@@ -5445,12 +5446,12 @@ Pikë</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_mirror.cpp" line="261"/>
         <source>Specify first point of mirror line</source>
-        <translation type="unfinished">Pikë nga</translation>
+        <translation type="unfinished">Specifiko pikën e parë të vijës së pasqyrimit</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_mirror.cpp" line="266"/>
         <source>Specify second point of mirror line</source>
-        <translation type="unfinished">Pikë nga</translation>
+        <translation type="unfinished">Specifiko pikën e dytë të vijës së pasqyrimit</translation>
     </message>
 </context>
 <context>
@@ -5458,7 +5459,7 @@ Pikë</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_move.cpp" line="140"/>
         <source>Copy Offset</source>
-        <translation type="unfinished">Kopjo</translation>
+        <translation type="unfinished">Zhvendosja e kopjes</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_move.cpp" line="140"/>
@@ -5473,7 +5474,7 @@ Pikë</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_move.cpp" line="207"/>
         <source>Specify target point</source>
-        <translation type="unfinished">Pikë</translation>
+        <translation type="unfinished">Specifiko pikën e synuar</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_move.cpp" line="207"/>
@@ -5507,7 +5508,7 @@ Pikë</translation>
         <location filename="../src/actions/drawing/modify/lc_action_modify_move_rotate.cpp" line="124"/>
         <location filename="../src/actions/drawing/modify/lc_action_modify_move_rotate.cpp" line="153"/>
         <source>Moving with rotation</source>
-        <translation type="unfinished">Lëviz me rotacion</translation>
+        <translation type="unfinished">Zhvendosje me rrotullim</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_move_rotate.cpp" line="124"/>
@@ -5525,7 +5526,7 @@ Pikë</translation>
         <location filename="../src/actions/drawing/modify/lc_action_modify_move_rotate.cpp" line="125"/>
         <location filename="../src/actions/drawing/modify/lc_action_modify_move_rotate.cpp" line="154"/>
         <source>Offset:</source>
-        <translation type="unfinished">Spostimi:</translation>
+        <translation type="unfinished">Zhvendosja:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_move_rotate.cpp" line="155"/>
@@ -5545,12 +5546,12 @@ Pikë</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_move_rotate.cpp" line="358"/>
         <source>Specify target point</source>
-        <translation type="unfinished">Pikë</translation>
+        <translation type="unfinished">Specifiko pikën e synuar</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_move_rotate.cpp" line="361"/>
         <source>Enter rotation angle:</source>
-        <translation type="unfinished">Shto:</translation>
+        <translation type="unfinished">Fut këndin e rrotullimit:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_move_rotate.cpp" line="374"/>
@@ -5702,7 +5703,7 @@ Pikë</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="144"/>
         <source>Offset</source>
-        <translation type="unfinished">Spostimi</translation>
+        <translation type="unfinished">Zhvendosje paralele</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="145"/>
@@ -5756,7 +5757,7 @@ Pikë</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_revert_direction.cpp" line="62"/>
         <source>Revert immediately after selection</source>
-        <translation type="unfinished">Rikthe</translation>
+        <translation type="unfinished">Kthe drejtimin menjëherë pas zgjedhjes</translation>
     </message>
 </context>
 <context>
@@ -5767,7 +5768,7 @@ Pikë</translation>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate.cpp" line="288"/>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate.cpp" line="322"/>
         <source>Rotation</source>
-        <translation type="unfinished">Rotation</translation>
+        <translation type="unfinished">Rrotullim</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate.cpp" line="203"/>
@@ -5786,7 +5787,7 @@ Pikë</translation>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate.cpp" line="204"/>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate.cpp" line="211"/>
         <source>Center Point:</source>
-        <translation type="unfinished">Në qendër:</translation>
+        <translation type="unfinished">Pika e qendrës:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate.cpp" line="205"/>
@@ -5794,7 +5795,7 @@ Pikë</translation>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate.cpp" line="289"/>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate.cpp" line="323"/>
         <source>Offset:</source>
-        <translation type="unfinished">Spostimi:</translation>
+        <translation type="unfinished">Zhvendosja:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate.cpp" line="288"/>
@@ -5826,7 +5827,7 @@ Pikë</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate.cpp" line="702"/>
         <source>Rotate immediately after selection</source>
-        <translation type="unfinished">Rrotullo</translation>
+        <translation type="unfinished">Rrotullo menjëherë pas zgjedhjes</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate.cpp" line="708"/>
@@ -5837,7 +5838,7 @@ Pikë</translation>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate.cpp" line="708"/>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate.cpp" line="711"/>
         <source>Snap to center of selection</source>
-        <translation type="unfinished">Nga</translation>
+        <translation type="unfinished">Kap në qendër të zgjedhjes</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate.cpp" line="711"/>
@@ -5847,12 +5848,12 @@ Pikë</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate.cpp" line="714"/>
         <source>Specify target point to rotate to</source>
-        <translation type="unfinished">Pikë</translation>
+        <translation type="unfinished">Specifiko pikën e synuar të rrotullimit</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate.cpp" line="717"/>
         <source>Specify target point for rotation around reference point</source>
-        <translation type="unfinished">Pikë për</translation>
+        <translation type="unfinished">Specifiko pikën e synuar për rrotullimin rreth pikës referuese</translation>
     </message>
 </context>
 <context>
@@ -5860,7 +5861,7 @@ Pikë</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate_twice.cpp" line="145"/>
         <source>Rotating Twice</source>
-        <translation type="unfinished">Dy herë</translation>
+        <translation type="unfinished">Rrotullim i dyfishtë</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate_twice.cpp" line="146"/>
@@ -5900,12 +5901,12 @@ Pikë</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate_twice.cpp" line="221"/>
         <source>Specify absolute reference point</source>
-        <translation type="unfinished">Përcakto pikë</translation>
+        <translation type="unfinished">Specifiko pikën referuese absolute</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate_twice.cpp" line="224"/>
         <source>Specify relative reference point</source>
-        <translation type="unfinished">Specifiko pikë</translation>
+        <translation type="unfinished">Specifiko pikën referuese relative</translation>
     </message>
 </context>
 <context>
@@ -5934,12 +5935,12 @@ Pikë</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_round.cpp" line="408"/>
         <source>Specify first entity or enter radius &lt;%1&gt;</source>
-        <translation type="unfinished">I pari</translation>
+        <translation type="unfinished">Specifiko entitetin e parë ose fut rrezen &lt;%1&gt;</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_round.cpp" line="411"/>
         <source>Specify second entity</source>
-        <translation type="unfinished">Specifiko njësinë e dytë</translation>
+        <translation type="unfinished">Specifiko entitetin e dytë</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_round.cpp" line="414"/>
@@ -5972,7 +5973,7 @@ Pikë</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_scale.cpp" line="227"/>
         <source>Offset:</source>
-        <translation type="unfinished">Spostimi:</translation>
+        <translation type="unfinished">Zhvendosja:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_scale.cpp" line="230"/>
@@ -5987,12 +5988,12 @@ Pikë</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_scale.cpp" line="413"/>
         <source>Specify scale center</source>
-        <translation type="unfinished">Në</translation>
+        <translation type="unfinished">Specifiko qendrën e shkallëzimit</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_scale.cpp" line="413"/>
         <source>Snap to center of selection</source>
-        <translation type="unfinished">Nga</translation>
+        <translation type="unfinished">Kap në qendër të zgjedhjes</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_scale.cpp" line="417"/>
@@ -6002,12 +6003,12 @@ Pikë</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_scale.cpp" line="420"/>
         <source>Specify target point</source>
-        <translation type="unfinished">Pikë</translation>
+        <translation type="unfinished">Specifiko pikën e synuar</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_scale.cpp" line="420"/>
         <source>Free snap</source>
-        <translation type="unfinished">I lirë</translation>
+        <translation type="unfinished">Kapje e lirë</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_scale.cpp" line="429"/>
@@ -6022,7 +6023,7 @@ Pikë</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_scale.cpp" line="430"/>
         <source>Scale immediately after selection</source>
-        <translation type="unfinished">Shkalla</translation>
+        <translation type="unfinished">Shkallëzo menjëherë pas zgjedhjes</translation>
     </message>
 </context>
 <context>
@@ -6058,12 +6059,12 @@ Pikë</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_stretch.cpp" line="147"/>
         <source>Offset:</source>
-        <translation type="unfinished">Spostimi:</translation>
+        <translation type="unfinished">Zhvendosja:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_stretch.cpp" line="230"/>
         <source>Specify first corner</source>
-        <translation type="unfinished">Pikë</translation>
+        <translation type="unfinished">Specifiko kulmin e parë</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_stretch.cpp" line="233"/>
@@ -6078,7 +6079,7 @@ Pikë</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_stretch.cpp" line="239"/>
         <source>Specify target point</source>
-        <translation type="unfinished">Pikë</translation>
+        <translation type="unfinished">Specifiko pikën e synuar</translation>
     </message>
 </context>
 <context>
@@ -6086,12 +6087,12 @@ Pikë</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim.cpp" line="130"/>
         <source>Trim Two</source>
-        <translation type="unfinished">Trim Dy</translation>
+        <translation type="unfinished">Shkurto dy</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim.cpp" line="130"/>
         <source>Trim</source>
-        <translation type="unfinished">Trim</translation>
+        <translation type="unfinished">Shkurto</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim.cpp" line="131"/>
@@ -6106,22 +6107,22 @@ Pikë</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim.cpp" line="217"/>
         <source>Select first trim entity</source>
-        <translation type="unfinished">Zgjidh i pari</translation>
+        <translation type="unfinished">Zgjidh entitetin e parë për shkurtim</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim.cpp" line="220"/>
         <source>Select limiting entity</source>
-        <translation type="unfinished">Zgjidh</translation>
+        <translation type="unfinished">Zgjidh entitetin kufizues</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim.cpp" line="225"/>
         <source>Select second trim entity</source>
-        <translation type="unfinished">Zgjidh</translation>
+        <translation type="unfinished">Zgjidh entitetin e dytë për shkurtim</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim.cpp" line="228"/>
         <source>Select entity to trim</source>
-        <translation type="unfinished">Zgjidh për</translation>
+        <translation type="unfinished">Zgjidh entitetin për ta shkurtuar</translation>
     </message>
 </context>
 <context>
@@ -6144,7 +6145,7 @@ Pikë</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim_amount.cpp" line="267"/>
         <source>Select line/arc to trim OR enter length value:</source>
-        <translation type="unfinished">Zgjidh vijë/arc për të shkurtuar vlerën e gjatësisë së OSE:</translation>
+        <translation type="unfinished">Zgjidh vijën/harkun për ta shkurtuar OSE fut vlerën e gjatësisë:</translation>
     </message>
 </context>
 <context>
@@ -6152,7 +6153,7 @@ Pikë</translation>
     <message>
         <location filename="../src/ui/action_options/lc_action_options_properties_filler_base.cpp" line="294"/>
         <source>Snap Distance</source>
-        <translation type="unfinished">Largësia</translation>
+        <translation type="unfinished">Distanca e kapjes</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/lc_action_options_properties_filler_base.cpp" line="294"/>
@@ -6167,7 +6168,7 @@ Pikë</translation>
     <message>
         <location filename="../src/ui/action_options/lc_action_options_properties_filler_base.cpp" line="308"/>
         <source>Number of equidistant division points</source>
-        <translation type="unfinished">Numri nga</translation>
+        <translation type="unfinished">Numri i pikave të ndarjes në distanca të barabarta</translation>
     </message>
 </context>
 <context>
@@ -6190,12 +6191,12 @@ Pikë</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_order.cpp" line="133"/>
         <source>Order immediately after selection</source>
-        <translation type="unfinished">Rendit</translation>
+        <translation type="unfinished">Rendit menjëherë pas zgjedhjes</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_order.cpp" line="137"/>
         <source>Choose entity for order</source>
-        <translation type="unfinished">Zgjidh për</translation>
+        <translation type="unfinished">Zgjidh entitetin për renditje</translation>
     </message>
 </context>
 <context>
@@ -6221,7 +6222,7 @@ Pikë</translation>
     <message>
         <location filename="../src/actions/drawing/pen/lc_actionpenapply.cpp" line="183"/>
         <source>Specify entity to pick the pen</source>
-        <translation>Specifiko njësinë për të zgjedhur stilolapsin</translation>
+        <translation>Specifiko entitetin për të zgjedhur stilolapsin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pen/lc_actionpenapply.cpp" line="186"/>
@@ -6231,7 +6232,7 @@ Pikë</translation>
     <message>
         <location filename="../src/actions/drawing/pen/lc_actionpenapply.cpp" line="186"/>
         <source>Apply Resolved Pen</source>
-        <translation>Apliko</translation>
+        <translation>Apliko stilolapsin efektiv</translation>
     </message>
 </context>
 <context>
@@ -6239,7 +6240,7 @@ Pikë</translation>
     <message>
         <location filename="../src/actions/drawing/pen/lc_actionpenpick.cpp" line="87"/>
         <source>Specify entity to pick the pen</source>
-        <translation>Specifiko njësinë për të zgjedhur stilolapsin</translation>
+        <translation>Specifiko entitetin për të zgjedhur stilolapsin</translation>
     </message>
 </context>
 <context>
@@ -6268,12 +6269,12 @@ Pikë</translation>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_add.cpp" line="180"/>
         <source>Specify polyline to add nodes</source>
-        <translation type="unfinished">Shto nyje</translation>
+        <translation type="unfinished">Specifiko polilinjën për të shtuar nyje</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_add.cpp" line="183"/>
         <source>Specify adding node&apos;s point</source>
-        <translation type="unfinished">Pikë</translation>
+        <translation type="unfinished">Specifiko pikën e nyjes që do të shtohet</translation>
     </message>
 </context>
 <context>
@@ -6291,22 +6292,22 @@ Pikë</translation>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_append.cpp" line="132"/>
         <source>Can not append nodes in a closed polyline.</source>
-        <translation type="unfinished">Nuk a.</translation>
+        <translation type="unfinished">Nuk mund të shtohen nyje në një polilinjë të mbyllur.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_append.cpp" line="171"/>
         <source>Click somewhere near the beginning or end of existing polyline.</source>
-        <translation type="unfinished">Kliko diku afër fillimit ose fundit të polilines ekzistuese.</translation>
+        <translation type="unfinished">Kliko diku pranë fillimit ose fundit të polilinjës ekzistuese.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_append.cpp" line="294"/>
         <source>Enter number of polylines</source>
-        <translation type="unfinished">Shto nga</translation>
+        <translation type="unfinished">Fut numrin e polilinjave</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_append.cpp" line="309"/>
         <source>Specify the polyline somewhere near the beginning or end point</source>
-        <translation type="unfinished">Specifiko poliline diku afër fillimit apo fundit pikë</translation>
+        <translation type="unfinished">Specifiko polilinjën diku pranë pikës fillestare ose fundore</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_append.cpp" line="329"/>
@@ -6319,7 +6320,7 @@ Pikë</translation>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_arcs_to_lines.cpp" line="116"/>
         <source>Specify polyline with arc segments</source>
-        <translation>Specifiko poliline me segmente rc</translation>
+        <translation>Specifiko polilinjën me segmente harku</translation>
     </message>
 </context>
 <context>
@@ -6327,22 +6328,22 @@ Pikë</translation>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_change_segment_type.cpp" line="59"/>
         <source>Invalid arc point to create arc, select another one</source>
-        <translation>Pikë tjetër</translation>
+        <translation>Pikë harku e pavlefshme për krijimin e harkut, zgjidh një tjetër</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_change_segment_type.cpp" line="242"/>
         <source>Select polyline to modify</source>
-        <translation>Zgjidh</translation>
+        <translation>Zgjidh polilinjën për ta ndryshuar</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_change_segment_type.cpp" line="246"/>
         <source>Select segment of polyline to modify</source>
-        <translation>Zgjidh nga ndrysho</translation>
+        <translation>Zgjidh segmentin e polilinjës për ta ndryshuar</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_change_segment_type.cpp" line="250"/>
         <source>Specify position on arc to create</source>
-        <translation>Përcakto pozicionin në rc për t&apos;u krijuar</translation>
+        <translation>Specifiko pozicionin në harkun që do të krijohet</translation>
     </message>
 </context>
 <context>
@@ -6371,12 +6372,12 @@ Pikë</translation>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node.cpp" line="155"/>
         <source>Specify polyline to delete node</source>
-        <translation type="unfinished">Elemino nyje</translation>
+        <translation type="unfinished">Specifiko polilinjën për të fshirë nyjen</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node.cpp" line="158"/>
         <source>Specify deleting node&apos;s point</source>
-        <translation type="unfinished">Pikë</translation>
+        <translation type="unfinished">Specifiko pikën e nyjes që do të fshihet</translation>
     </message>
 </context>
 <context>
@@ -6407,17 +6408,17 @@ Pikë</translation>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node_between.cpp" line="174"/>
         <source>No polyline found.</source>
-        <translation type="unfinished">Nuk u gjet asnjë poliline.</translation>
+        <translation type="unfinished">Nuk u gjet asnjë polilinjë.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node_between.cpp" line="195"/>
         <source>At least two segments of polyline should be between selected points.</source>
-        <translation type="unfinished">Së paku dy segmente të polilines duhet të jenë midis pikave të zgjedhura.</translation>
+        <translation type="unfinished">Midis pikave të zgjedhura duhet të ketë të paktën dy segmente të polilinjës.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node_between.cpp" line="213"/>
         <source>Specify polyline to delete between two nodes</source>
-        <translation type="unfinished">Zgjidh polivijën për të fshirë mes dy nyjeve</translation>
+        <translation type="unfinished">Specifiko polilinjën për të fshirë midis dy nyjeve</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node_between.cpp" line="216"/>
@@ -6427,7 +6428,7 @@ Pikë</translation>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node_between.cpp" line="219"/>
         <source>Specify second node</source>
-        <translation type="unfinished">Pikë</translation>
+        <translation type="unfinished">Specifiko nyjen e dytë</translation>
     </message>
 </context>
 <context>
@@ -6445,7 +6446,7 @@ Pikë</translation>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_equidistant.cpp" line="403"/>
         <source>Choose the original polyline</source>
-        <translation type="unfinished">Zgjidh</translation>
+        <translation type="unfinished">Zgjidh polilinjën origjinale</translation>
     </message>
 </context>
 <context>
@@ -6454,7 +6455,7 @@ Pikë</translation>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_from_segment.cpp" line="62"/>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_from_segment.cpp" line="82"/>
         <source>Polyline created</source>
-        <translation type="unfinished">Krijohet Poliline</translation>
+        <translation type="unfinished">Polilinja u krijua</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_from_segment.cpp" line="326"/>
@@ -6464,12 +6465,12 @@ Pikë</translation>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_from_segment.cpp" line="329"/>
         <source>Entity can not be a closed polyline.</source>
-        <translation type="unfinished">Entitetet nuk mund të jenë një poliline e mbyllur.</translation>
+        <translation type="unfinished">Entiteti nuk mund të jetë polilinjë e mbyllur.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_from_segment.cpp" line="352"/>
         <source>Choose one of the segments on the original polyline</source>
-        <translation type="unfinished">Zgjidh një nga segmentet në polilinen origjinale</translation>
+        <translation type="unfinished">Zgjidh një nga segmentet e polilinjës origjinale</translation>
     </message>
 </context>
 <context>
@@ -6487,17 +6488,17 @@ Pikë</translation>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_trim.cpp" line="143"/>
         <source>First segment should be on selected polyline.</source>
-        <translation type="unfinished">Segmenti i parë duhet të jetë në poliline të zgjedhur.</translation>
+        <translation type="unfinished">Segmenti i parë duhet të jetë në polilinjën e zgjedhur.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_trim.cpp" line="155"/>
         <source>Second segment should be on selected polyline and not equal to first one.</source>
-        <translation type="unfinished">Segmenti i dytë duhet të jetë në poliline të zgjedhur dhe jo i barabartë me të parin.</translation>
+        <translation type="unfinished">Segmenti i dytë duhet të jetë në polilinjën e zgjedhur dhe i ndryshëm nga i pari.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_trim.cpp" line="188"/>
         <source>Specify polyline to trim</source>
-        <translation type="unfinished">Nga</translation>
+        <translation type="unfinished">Specifiko polilinjën për ta shkurtuar</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_trim.cpp" line="191"/>
@@ -6525,12 +6526,12 @@ Pikë</translation>
     <message>
         <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="221"/>
         <source> entities </source>
-        <translation>unit-format</translation>
+        <translation> entitete </translation>
     </message>
     <message>
         <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="222"/>
         <source>that intersect with box</source>
-        <translation>dhe ata që dallojnë</translation>
+        <translation>që priten me kutinë</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="222"/>
@@ -6545,17 +6546,17 @@ Pikë</translation>
     <message>
         <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="246"/>
         <source>Select/Deselect entities</source>
-        <translation>Zgjidh</translation>
+        <translation>Zgjidh/Çzgjidh entitetet</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="246"/>
         <source>Select Intersecting</source>
-        <translation>Zgjidh</translation>
+        <translation>Zgjidh entitetet që priten</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="276"/>
         <source>No valid entities selected, select them first</source>
-        <translation>Jo i pari</translation>
+        <translation>Nuk është zgjedhur asnjë entitet i vlefshëm, zgjidhi fillimisht</translation>
     </message>
 </context>
 <context>
@@ -6563,12 +6564,12 @@ Pikë</translation>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_action_spline_remove_points.cpp" line="197"/>
         <source>Select spline or spline points entity</source>
-        <translation>Zgjidh</translation>
+        <translation>Zgjidh spline-in ose entitetin spline nëpër pika</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_action_spline_remove_points.cpp" line="201"/>
         <source>Select control point of entity</source>
-        <translation>Zgjidh pikë nga</translation>
+        <translation>Zgjidh pikën e kontrollit të entitetit</translation>
     </message>
 </context>
 <context>
@@ -6576,12 +6577,12 @@ Pikë</translation>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_contour.cpp" line="66"/>
         <source>Entity must be an Atomic Entity.</source>
-        <translation type="unfinished">Entititeti duhet të jetë një Entitet Atomik.</translation>
+        <translation type="unfinished">Entiteti duhet të jetë një entitet atomik.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_contour.cpp" line="90"/>
         <source>Specify entity to select</source>
-        <translation type="unfinished">Specifiko njësinë që duhet zgjedhur</translation>
+        <translation type="unfinished">Specifiko entitetin për ta zgjedhur</translation>
     </message>
 </context>
 <context>
@@ -6589,7 +6590,7 @@ Pikë</translation>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actionselectdimordinatesameorigin.cpp" line="80"/>
         <source>Select reference ordinate dimension</source>
-        <translation>Zgjidh</translation>
+        <translation>Zgjidh kuotën ordinate referuese</translation>
     </message>
 </context>
 <context>
@@ -6597,7 +6598,7 @@ Pikë</translation>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_generic.cpp" line="30"/>
         <source>Select entities</source>
-        <translation type="unfinished">Zgjidh</translation>
+        <translation type="unfinished">Zgjidh entitetet</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_generic.cpp" line="31"/>
@@ -6620,17 +6621,17 @@ Pikë</translation>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_intersected.cpp" line="192"/>
         <source>Select intersecting entity</source>
-        <translation type="unfinished">Zgjidh</translation>
+        <translation type="unfinished">Zgjidh entitetin prerës</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_intersected.cpp" line="192"/>
         <source>Select child entities</source>
-        <translation type="unfinished">Zgjidh</translation>
+        <translation type="unfinished">Zgjidh entitetet bijë</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_intersected.cpp" line="195"/>
         <source>Choose second point of intersection line</source>
-        <translation type="unfinished">Pikë nga</translation>
+        <translation type="unfinished">Zgjidh pikën e dytë të vijës prerëse</translation>
     </message>
 </context>
 <context>
@@ -6664,7 +6665,7 @@ Pikë</translation>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_single.cpp" line="120"/>
         <source>Specify entity to select</source>
-        <translation type="unfinished">Specifiko njësinë që duhet zgjedhur</translation>
+        <translation type="unfinished">Specifiko entitetin për ta zgjedhur</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_single.cpp" line="120"/>
@@ -6687,12 +6688,12 @@ Pikë</translation>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_window.cpp" line="136"/>
         <source> entities </source>
-        <translation type="unfinished">unit-format</translation>
+        <translation type="unfinished"> entitete </translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_window.cpp" line="137"/>
         <source>that intersect with box</source>
-        <translation type="unfinished">dhe ata që dallojnë</translation>
+        <translation type="unfinished">që priten me kutinë</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_window.cpp" line="137"/>
@@ -6717,17 +6718,17 @@ Pikë</translation>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_window.cpp" line="183"/>
         <source>Select entities</source>
-        <translation type="unfinished">Zgjidh</translation>
+        <translation type="unfinished">Zgjidh entitetet</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_window.cpp" line="184"/>
         <source>Select Intersecting</source>
-        <translation type="unfinished">Zgjidh</translation>
+        <translation type="unfinished">Zgjidh entitetet që priten</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_window.cpp" line="184"/>
         <source>De-select intersecting</source>
-        <translation type="unfinished">De-seleksionimi</translation>
+        <translation type="unfinished">Çzgjidh entitetet që priten</translation>
     </message>
 </context>
 <context>
@@ -6735,17 +6736,17 @@ Pikë</translation>
     <message>
         <location filename="../src/actions/drawing/snap/lc_actionsnapmiddlemanual.cpp" line="234"/>
         <source>Specify percentage / start-point</source>
-        <translation>Për</translation>
+        <translation>Specifiko përqindjen / pikën e fillimit</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/snap/lc_actionsnapmiddlemanual.cpp" line="237"/>
         <source>Specify start point</source>
-        <translation>Pikë</translation>
+        <translation>Specifiko pikën e fillimit</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/snap/lc_actionsnapmiddlemanual.cpp" line="240"/>
         <source>Specify end point</source>
-        <translation>Pikë</translation>
+        <translation>Specifiko pikën fundore</translation>
     </message>
 </context>
 <context>
@@ -6753,22 +6754,22 @@ Pikë</translation>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_action_spline_add_point.cpp" line="206"/>
         <source>Select spline or spline points entity</source>
-        <translation>Zgjidh</translation>
+        <translation>Zgjidh spline-in ose entitetin spline nëpër pika</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_action_spline_add_point.cpp" line="210"/>
         <source>Select control point to insert before</source>
-        <translation>Zgjidh pikë përpara</translation>
+        <translation>Zgjidh pikën e kontrollit para së cilës do të futet</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_action_spline_add_point.cpp" line="214"/>
         <source>Specify control point</source>
-        <translation>Pikë</translation>
+        <translation>Specifiko pikën e kontrollit</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_action_spline_add_point.cpp" line="214"/>
         <source>Insert AFTER selected point</source>
-        <translation>Fut pikë</translation>
+        <translation>Fut PAS pikës së zgjedhur</translation>
     </message>
 </context>
 <context>
@@ -6776,17 +6777,17 @@ Pikë</translation>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_action_spline_append_point.cpp" line="258"/>
         <source>Select spline or spline points entity</source>
-        <translation>Zgjidh</translation>
+        <translation>Zgjidh spline-in ose entitetin spline nëpër pika</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_action_spline_append_point.cpp" line="262"/>
         <source>Specify first control point</source>
-        <translation>Pikë</translation>
+        <translation>Specifiko pikën e parë të kontrollit</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_action_spline_append_point.cpp" line="266"/>
         <source>Specify control point</source>
-        <translation>Pikë</translation>
+        <translation>Specifiko pikën e kontrollit</translation>
     </message>
 </context>
 <context>
@@ -6794,7 +6795,7 @@ Pikë</translation>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_action_spline_modify_explode.cpp" line="234"/>
         <source>Select spline or spline points entity</source>
-        <translation>Zgjidh</translation>
+        <translation>Zgjidh spline-in ose entitetin spline nëpër pika</translation>
     </message>
 </context>
 <context>
@@ -6802,7 +6803,7 @@ Pikë</translation>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_action_spline_from_polyline.cpp" line="162"/>
         <source>Select polyline to create spline or spline points</source>
-        <translation>Zgjidh</translation>
+        <translation>Zgjidh polilinjën për të krijuar spline ose spline nëpër pika</translation>
     </message>
 </context>
 <context>
@@ -6810,12 +6811,12 @@ Pikë</translation>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_action_spline_remove_between.cpp" line="42"/>
         <source>Not enough points remains for the spline</source>
-        <translation>Nuk mbeten mjaft pika për kurbën spline</translation>
+        <translation>Nuk mbeten mjaftueshëm pika për spline-in</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_action_spline_remove_between.cpp" line="228"/>
         <source>Select spline or spline points entity</source>
-        <translation>Zgjidh</translation>
+        <translation>Zgjidh spline-in ose entitetin spline nëpër pika</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_action_spline_remove_between.cpp" line="232"/>
@@ -6830,7 +6831,7 @@ Pikë</translation>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_action_spline_remove_between.cpp" line="236"/>
         <source>Delete from endpoints TO selected points</source>
-        <translation>Elemino</translation>
+        <translation>Fshi nga pikat fundore DERI te pikat e zgjedhura</translation>
     </message>
 </context>
 <context>
@@ -6936,7 +6937,7 @@ Pikë</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.ui" line="163"/>
         <source>Export shortcuts mappings to external file</source>
-        <translation>Eksporto</translation>
+        <translation>Eksporto caktimet e shkurtoreve në një skedar të jashtëm</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.ui" line="166"/>
@@ -6976,12 +6977,12 @@ Pikë</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.cpp" line="148"/>
         <source>Import shortcuts mapping</source>
-        <translation>Importo</translation>
+        <translation>Importo caktimet e shkurtoreve</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.cpp" line="149"/>
         <source>Export shortcuts mapping</source>
-        <translation>Eksporto</translation>
+        <translation>Eksporto caktimet e shkurtoreve</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.cpp" line="149"/>
@@ -6996,7 +6997,7 @@ Pikë</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.cpp" line="185"/>
         <source>Can&apos;t read provided file - please check that it is exists and it is allowed to read from it.</source>
-        <translation>J është dhe nga.</translation>
+        <translation>Skedari i dhënë nuk mund të lexohet - kontrollo që ai ekziston dhe që lejohet leximi prej tij.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.cpp" line="206"/>
@@ -7032,12 +7033,12 @@ Some error occurred during XML generation.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.cpp" line="268"/>
         <source>Import Shortcuts Mapping</source>
-        <translation>Importo</translation>
+        <translation>Importo caktimet e shkurtoreve</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.cpp" line="268"/>
         <source>Export Shortcuts Mapping</source>
-        <translation>Eksporto</translation>
+        <translation>Eksporto caktimet e shkurtoreve</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.cpp" line="343"/>
@@ -7162,7 +7163,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_filler.cpp" line="34"/>
         <source>If checked, entities will be scaled if necessary. Otherwise, they will be just positioned and rotated.</source>
-        <translation type="unfinished">Po të kontrollohen, njësitë do të shkallezohen po të jetë e nevojshme. Përndryshe, ata do të jenë të pozicionuar dhe të rrotulluar.</translation>
+        <translation type="unfinished">Nëse kontrollohet, entitetet do të shkallëzohen nëse është e nevojshme. Përndryshe, ato vetëm do të pozicionohen dhe do të rrotullohen.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_filler.cpp" line="42"/>
@@ -7215,7 +7216,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="56"/>
         <source>If unchecked, original entities will be removed, otherwise they will survive.</source>
-        <translation type="unfinished">Po të jenë të pakontrolluara, njësitë origjinale do të hiqen, përndryshe ato do të mbijetojnë.</translation>
+        <translation type="unfinished">Nëse nuk kontrollohet, entitetet origjinale do të hiqen, përndryshe ato do të mbeten.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="59"/>
@@ -7225,7 +7226,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="66"/>
         <source>If checked, mirrored entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Nëse kontrollohet, njësitë e pasqyruara do të vendosen në shtresën aktuale, përndryshe ato do të vendosen në shtresat origjinale.</translation>
+        <translation type="unfinished">Nëse kontrollohet, entitetet e pasqyruara do të vendosen në shtresën aktuale, përndryshe ato do të vendosen në shtresat origjinale.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="69"/>
@@ -7235,7 +7236,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="76"/>
         <source>If checked, entities will be scaled if necessary. Otherwise, they will be just positioned and rotated.</source>
-        <translation type="unfinished">Po të kontrollohen, njësitë do të shkallezohen po të jetë e nevojshme. Përndryshe, ata do të jenë të pozicionuar dhe të rrotulluar.</translation>
+        <translation type="unfinished">Nëse kontrollohet, entitetet do të shkallëzohen nëse është e nevojshme. Përndryshe, ato vetëm do të pozicionohen dhe do të rrotullohen.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="79"/>
@@ -7343,7 +7344,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_single_options_widget.ui" line="80"/>
         <source>Center entities vertically</source>
-        <translation type="unfinished">Vertikalisht</translation>
+        <translation type="unfinished">Qendërzo entitetet vertikalisht</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_single_options_widget.ui" line="100"/>
@@ -7353,7 +7354,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_single_options_widget.ui" line="120"/>
         <source>No vertical alignment</source>
-        <translation type="unfinished">Jo</translation>
+        <translation type="unfinished">Pa rreshtim vertikal</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_single_options_widget.ui" line="143"/>
@@ -7368,7 +7369,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_single_options_widget.ui" line="157"/>
         <source>Defines the way of selected entities alignment.</source>
-        <translation type="unfinished">Përcakton rrugën e bashkimit të njësive të zgjedhura.</translation>
+        <translation type="unfinished">Përcakton mënyrën e rreshtimit të entiteteve të zgjedhura.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_single_options_widget.ui" line="161"/>
@@ -7393,17 +7394,17 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_single_options_widget.ui" line="220"/>
         <source>Align left edges</source>
-        <translation type="unfinished">Rreshti i majtë</translation>
+        <translation type="unfinished">Rreshto skajet e majta</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_single_options_widget.ui" line="240"/>
         <source>Center entities horizontally</source>
-        <translation type="unfinished">Horizontal</translation>
+        <translation type="unfinished">Qendërzo entitetet horizontalisht</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_single_options_widget.ui" line="260"/>
         <source>Align right edges</source>
-        <translation type="unfinished">Rreshti i djathtë i ndarë</translation>
+        <translation type="unfinished">Rreshto skajet e djathta</translation>
     </message>
 </context>
 <context>
@@ -7486,7 +7487,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
         <location filename="../src/ui/main/support/lc_appwindowdialogsinvoker.cpp" line="149"/>
         <source>Save changes to the following item?
 %1</source>
-        <translation>Ruaj nga?
+        <translation>Të ruhen ndryshimet në artikullin në vijim?
 %1</translation>
     </message>
     <message>
@@ -7510,7 +7511,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_2points_options_widget.ui" line="61"/>
         <source>Height of the arc (the distanсe between chord and top arc point)</source>
-        <translation type="unfinished">Nga sipër pikë</translation>
+        <translation type="unfinished">Lartësia e harkut (distanca midis kordës dhe pikës së sipërme të harkut)</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_2points_options_widget.ui" line="64"/>
@@ -7555,17 +7556,17 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_2points_options_widget.ui" line="144"/>
         <source>Pick angle from the drawing</source>
-        <translation type="unfinished">Zgjidh</translation>
+        <translation type="unfinished">Merr këndin nga vizatimi</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_2points_options_widget.cpp" line="47"/>
         <source>Pick radius from drawing</source>
-        <translation type="unfinished">Zgjidh</translation>
+        <translation type="unfinished">Merr rrezen nga vizatimi</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_2points_options_widget.cpp" line="53"/>
         <source>Pick height from drawing</source>
-        <translation type="unfinished">Lartësia</translation>
+        <translation type="unfinished">Merr lartësinë nga vizatimi</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_2points_options_widget.cpp" line="59"/>
@@ -7575,7 +7576,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_2points_options_widget.cpp" line="65"/>
         <source>Pick angle from drawing</source>
-        <translation type="unfinished">Zgjidh</translation>
+        <translation type="unfinished">Merr këndin nga vizatimi</translation>
     </message>
 </context>
 <context>
@@ -7649,7 +7650,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_center_point_param_options_widget.ui" line="26"/>
         <source>Arc Options</source>
-        <translation type="unfinished">Mundësitë</translation>
+        <translation type="unfinished">Opsionet e harkut</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_center_point_param_options_widget.ui" line="56"/>
@@ -7712,7 +7713,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="201"/>
         <source>Pick radius value from the drawing</source>
-        <translation>Zgjidh</translation>
+        <translation>Merr vlerën e rrezes nga vizatimi</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="227"/>
@@ -7722,17 +7723,17 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="249"/>
         <source>Diameter of arc</source>
-        <translation>Diametri nga</translation>
+        <translation>Diametri i harkut</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="256"/>
         <source>Pick diameter value from the drawing</source>
-        <translation>Zgjidh</translation>
+        <translation>Merr vlerën e diametrit nga vizatimi</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="282"/>
         <source>Arc Length:</source>
-        <translation>Gjatësia Arc:</translation>
+        <translation>Gjatësia e harkut:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="304"/>
@@ -7742,7 +7743,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="311"/>
         <source>Pick arc length value from the drawing</source>
-        <translation>Zgjidh</translation>
+        <translation>Merr vlerën e gjatësisë së harkut nga vizatimi</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="337"/>
@@ -7757,7 +7758,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="366"/>
         <source>Pick sweep angle from the drawing</source>
-        <translation>Zgjidh</translation>
+        <translation>Merr këndin e harkut nga vizatimi</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="392"/>
@@ -7782,13 +7783,13 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="469"/>
         <source>Starting angle of arc</source>
-        <translation>Fillo nga</translation>
+        <translation>Këndi fillestar i harkut</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="476"/>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="531"/>
         <source>Pick angle value from the drawing</source>
-        <translation>Zgjidh</translation>
+        <translation>Merr vlerën e këndit nga vizatimi</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="502"/>
@@ -7798,12 +7799,12 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="524"/>
         <source>End angle of arc</source>
-        <translation>Fundi nga</translation>
+        <translation>Këndi përfundimtar i harkut</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="567"/>
         <source>Defines whether arc is reversed (clockwise)</source>
-        <translation>Përcakton nëse Arc është kthyer (në drejtim të orës)</translation>
+        <translation>Përcakton nëse harku është i kthyer (në drejtim të akrepave të orës)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="570"/>
@@ -7859,27 +7860,27 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_tangential_options_widget.ui" line="26"/>
         <source>Tangential Arc Options</source>
-        <translation type="unfinished">Mundësitë</translation>
+        <translation type="unfinished">Opsionet e harkut tangjencial</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_tangential_options_widget.ui" line="47"/>
         <source>Radius of the tangential arc</source>
-        <translation type="unfinished">Rrezatusi i harkut tangncial</translation>
+        <translation type="unfinished">Rrezja e harkut tangjencial</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_tangential_options_widget.ui" line="60"/>
         <source>Total subtending angle of the tangential arc</source>
-        <translation type="unfinished">Këndi i plotë në rritje i harkut tangncial</translation>
+        <translation type="unfinished">Këndi total i harkut tangjencial</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_tangential_options_widget.ui" line="67"/>
         <source>Pick radius form drawing</source>
-        <translation type="unfinished">Zgjidh</translation>
+        <translation type="unfinished">Merr rrezen nga vizatimi</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_tangential_options_widget.ui" line="87"/>
         <source>If selected, tangental arc with specified radius will be created</source>
-        <translation type="unfinished">Nëse zgjedhuri, ark tangental me rreze të caktuar do të krijohet</translation>
+        <translation type="unfinished">Nëse zgjidhet, do të krijohet një hark tangjencial me rrezen e specifikuar</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_tangential_options_widget.ui" line="90"/>
@@ -7890,7 +7891,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_tangential_options_widget.ui" line="112"/>
         <source>If selected, arc with specified angle will be created</source>
-        <translation type="unfinished">Nëse zgjedhur, rc me kënd të caktuar do të krijohet</translation>
+        <translation type="unfinished">Nëse zgjidhet, do të krijohet një hark me këndin e specifikuar</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_tangential_options_widget.ui" line="115"/>
@@ -7901,7 +7902,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_tangential_options_widget.ui" line="128"/>
         <source>Pick angle from drawing</source>
-        <translation type="unfinished">Zgjidh</translation>
+        <translation type="unfinished">Merr këndin nga vizatimi</translation>
     </message>
 </context>
 <context>
@@ -7909,12 +7910,12 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_filler.cpp" line="31"/>
         <source>Trim</source>
-        <translation type="unfinished">Trim</translation>
+        <translation type="unfinished">Shkurto</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_filler.cpp" line="31"/>
         <source>Check to trim both entities to the bevel</source>
-        <translation type="unfinished">Kontrolloni për të shkurtuar të dy njësitë në bevel</translation>
+        <translation type="unfinished">Kontrollo për të shkurtuar të dy entitetet deri te faska</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_filler.cpp" line="37"/>
@@ -7942,17 +7943,17 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_widget.ui" line="32"/>
         <source>Bevel Options</source>
-        <translation type="unfinished">Mundësitë</translation>
+        <translation type="unfinished">Opsionet e faskës</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_widget.ui" line="59"/>
         <source>Check to trim both entities to the bevel</source>
-        <translation type="unfinished">Kontrolloni për të shkurtuar të dy njësitë në bevel</translation>
+        <translation type="unfinished">Kontrollo për të shkurtuar të dy entitetet deri te faska</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_widget.ui" line="62"/>
         <source>Trim</source>
-        <translation type="unfinished">Trim</translation>
+        <translation type="unfinished">Shkurto</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_widget.ui" line="85"/>
@@ -7962,12 +7963,12 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_widget.ui" line="95"/>
         <source>Length of bevel in X direction.</source>
-        <translation type="unfinished">Gjatësia e bevel në drejtimin X.</translation>
+        <translation type="unfinished">Gjatësia e faskës në drejtimin X.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_widget.ui" line="102"/>
         <source>Pick first length form drawing</source>
-        <translation type="unfinished">Zgjidh i pari</translation>
+        <translation type="unfinished">Merr gjatësinë e parë nga vizatimi</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_widget.ui" line="116"/>
@@ -7977,7 +7978,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_widget.ui" line="126"/>
         <source>Length of bevel in Y direction. </source>
-        <translation type="unfinished">Gjatësia e bevelit në drejtimin Y.</translation>
+        <translation type="unfinished">Gjatësia e faskës në drejtimin Y. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_widget.ui" line="133"/>
@@ -7995,7 +7996,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/action_options/insert/lc_block_insert_options_filler.cpp" line="30"/>
         <source>Rotation Angle</source>
-        <translation type="unfinished">Angëllimi</translation>
+        <translation type="unfinished">Këndi i rrotullimit</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/insert/lc_block_insert_options_filler.cpp" line="36"/>
@@ -8058,7 +8059,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/action_options/insert/lc_block_insert_options_widget.ui" line="53"/>
         <source>Pick row spacing from drawing</source>
-        <translation type="unfinished">Zgjidh</translation>
+        <translation type="unfinished">Merr hapësirën midis rreshtave nga vizatimi</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/insert/lc_block_insert_options_widget.ui" line="79"/>
@@ -8068,7 +8069,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/action_options/insert/lc_block_insert_options_widget.ui" line="92"/>
         <source>Pick column spacing from drawing</source>
-        <translation type="unfinished">Zgjidh</translation>
+        <translation type="unfinished">Merr hapësirën midis kolonave nga vizatimi</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/insert/lc_block_insert_options_widget.ui" line="131"/>
@@ -8083,17 +8084,17 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/action_options/insert/lc_block_insert_options_widget.ui" line="167"/>
         <source>Pick angle from drawing</source>
-        <translation type="unfinished">Zgjidh</translation>
+        <translation type="unfinished">Merr këndin nga vizatimi</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/insert/lc_block_insert_options_widget.ui" line="193"/>
         <source>Array:</source>
-        <translation type="unfinished">Rreshtimi:</translation>
+        <translation type="unfinished">Matricë:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/insert/lc_block_insert_options_widget.ui" line="215"/>
         <source>Rotation Angle</source>
-        <translation type="unfinished">Angëllimi</translation>
+        <translation type="unfinished">Këndi i rrotullimit</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/insert/lc_block_insert_options_widget.ui" line="234"/>
@@ -8131,7 +8132,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/action_options/insert/lc_block_library_insert_options_filler.cpp" line="31"/>
         <source>Rotation Angle</source>
-        <translation type="unfinished">Angëllimi</translation>
+        <translation type="unfinished">Këndi i rrotullimit</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/insert/lc_block_library_insert_options_filler.cpp" line="37"/>
@@ -8169,12 +8170,12 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/action_options/insert/lc_block_library_insert_options_widget.ui" line="104"/>
         <source>Rotation Angle</source>
-        <translation type="unfinished">Angëllimi</translation>
+        <translation type="unfinished">Këndi i rrotullimit</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/insert/lc_block_library_insert_options_widget.ui" line="111"/>
         <source>Pick angle from drawing</source>
-        <translation type="unfinished">Zgjidh</translation>
+        <translation type="unfinished">Merr këndin nga vizatimi</translation>
     </message>
 </context>
 <context>
@@ -8233,7 +8234,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/action_options/misc/lc_center_line_options_filler.cpp" line="30"/>
         <source>Offset</source>
-        <translation type="unfinished">Spostimi</translation>
+        <translation type="unfinished">Zhvendosja</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/misc/lc_center_line_options_filler.cpp" line="30"/>
@@ -8251,7 +8252,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/action_options/misc/lc_center_line_options_widget.ui" line="32"/>
         <source>Offset:</source>
-        <translation type="unfinished">Spostimi:</translation>
+        <translation type="unfinished">Zhvendosja:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/misc/lc_center_line_options_widget.ui" line="39"/>
@@ -8261,7 +8262,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/action_options/misc/lc_center_line_options_widget.ui" line="46"/>
         <source>Pick offset from drawing</source>
-        <translation type="unfinished">Nga</translation>
+        <translation type="unfinished">Merr zhvendosjen nga vizatimi</translation>
     </message>
 </context>
 <context>
@@ -8299,7 +8300,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/action_options/misc/lc_center_mark_options_filler.cpp" line="51"/>
         <source>Horizontal dimension of cross</source>
-        <translation type="unfinished">Horizontal nga</translation>
+        <translation type="unfinished">Përmasa horizontale e kryqit</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/misc/lc_center_mark_options_filler.cpp" line="57"/>
@@ -8309,7 +8310,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/action_options/misc/lc_center_mark_options_filler.cpp" line="57"/>
         <source>Vertical dimension of the cross</source>
-        <translation type="unfinished">Dimensionet vertikale të kryqit</translation>
+        <translation type="unfinished">Përmasa vertikale e kryqit</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/misc/lc_center_mark_options_filler.cpp" line="63"/>
@@ -8319,7 +8320,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/action_options/misc/lc_center_mark_options_filler.cpp" line="63"/>
         <source>Rotation angle for cross around center</source>
-        <translation type="unfinished">Këndi rotation për kalimin rreth qendrës</translation>
+        <translation type="unfinished">Këndi i rrotullimit të kryqit rreth qendrës</translation>
     </message>
 </context>
 <context>
@@ -8337,7 +8338,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/action_options/misc/lc_center_mark_options_widget.ui" line="63"/>
         <source>Vertical dimension of the cross</source>
-        <translation type="unfinished">Dimensionet vertikale të kryqit</translation>
+        <translation type="unfinished">Përmasa vertikale e kryqit</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/misc/lc_center_mark_options_widget.ui" line="83"/>
@@ -8347,12 +8348,12 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/action_options/misc/lc_center_mark_options_widget.ui" line="108"/>
         <source>Rotation angle for cross around center</source>
-        <translation type="unfinished">Këndi rotation për kalimin rreth qendrës</translation>
+        <translation type="unfinished">Këndi i rrotullimit të kryqit rreth qendrës</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/misc/lc_center_mark_options_widget.ui" line="133"/>
         <source>Horizontal dimension of cross</source>
-        <translation type="unfinished">Horizontal nga</translation>
+        <translation type="unfinished">Përmasa horizontale e kryqit</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/misc/lc_center_mark_options_widget.ui" line="140"/>
@@ -8362,7 +8363,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/action_options/misc/lc_center_mark_options_widget.ui" line="154"/>
         <source>Pick X value from drawing</source>
-        <translation type="unfinished">Zgjidh nga</translation>
+        <translation type="unfinished">Merr vlerën X nga vizatimi</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/misc/lc_center_mark_options_widget.ui" line="168"/>
@@ -8372,7 +8373,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/action_options/misc/lc_center_mark_options_widget.ui" line="193"/>
         <source>Defines how to apply dimensions of cross</source>
-        <translation type="unfinished">Përcakton si të zbatohen dimensionet e kryqit</translation>
+        <translation type="unfinished">Përcakton si zbatohen përmasat e kryqit</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/misc/lc_center_mark_options_widget.ui" line="209"/>
@@ -8392,12 +8393,12 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/action_options/misc/lc_center_mark_options_widget.ui" line="227"/>
         <source>Pick Y value from drawing</source>
-        <translation type="unfinished">Zgjidh nga</translation>
+        <translation type="unfinished">Merr vlerën Y nga vizatimi</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/misc/lc_center_mark_options_widget.ui" line="241"/>
         <source>Pick angle from drawing</source>
-        <translation type="unfinished">Zgjidh</translation>
+        <translation type="unfinished">Merr këndin nga vizatimi</translation>
     </message>
 </context>
 <context>
@@ -8405,7 +8406,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="32"/>
         <source>Replace arc</source>
-        <translation type="unfinished">Zëvendëso</translation>
+        <translation type="unfinished">Zëvendëso harkun</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="32"/>
@@ -8470,7 +8471,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="32"/>
         <source>Pen:</source>
-        <translation type="unfinished">Pen:</translation>
+        <translation type="unfinished">Stilolapsi:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="39"/>
@@ -8502,7 +8503,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="102"/>
         <source>Pen to apply to created circle</source>
-        <translation type="unfinished">Pen për tu aplikuar për të krijuar rrethin</translation>
+        <translation type="unfinished">Stilolapsi që do të zbatohet për rrethin e krijuar</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="106"/>
@@ -8535,12 +8536,12 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="134"/>
         <source>Replace arc</source>
-        <translation type="unfinished">Zëvendëso</translation>
+        <translation type="unfinished">Zëvendëso harkun</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="141"/>
         <source>Pick offset value from drawing</source>
-        <translation type="unfinished">Nga</translation>
+        <translation type="unfinished">Merr vlerën e zhvendosjes nga vizatimi</translation>
     </message>
 </context>
 <context>
@@ -8576,7 +8577,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_center_radius_options_widget.ui" line="73"/>
         <source>Pick radius from drawing</source>
-        <translation type="unfinished">Zgjidh</translation>
+        <translation type="unfinished">Merr rrezen nga vizatimi</translation>
     </message>
 </context>
 <context>
@@ -8639,12 +8640,12 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_circle.ui" line="178"/>
         <source>Pick diameter value from drawing</source>
-        <translation>Zgjidh</translation>
+        <translation>Merr vlerën e diametrit nga vizatimi</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_circle.ui" line="141"/>
         <source>Pick radius value from drawing</source>
-        <translation>Zgjidh</translation>
+        <translation>Merr vlerën e rrezes nga vizatimi</translation>
     </message>
 </context>
 <context>
@@ -8657,7 +8658,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_tangental_2_entities_radius_options_filler.cpp" line="31"/>
         <source>Radius of tangential circle</source>
-        <translation type="unfinished">Rredaus i rrethit tangncial</translation>
+        <translation type="unfinished">Rrezja e rrethit tangjent</translation>
     </message>
 </context>
 <context>
@@ -8665,12 +8666,12 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_tangental_2_entities_radius_options_widget.ui" line="32"/>
         <source>Circle Tangential2 Options</source>
-        <translation type="unfinished">Mundësitë</translation>
+        <translation type="unfinished">Opsionet e rrethit tangjent 2</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_tangental_2_entities_radius_options_widget.ui" line="56"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Radius of the tangential circle to draw&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt; Rrezatus i rrethit tangncial për të vizatuar&lt;/p&gt;&lt;/person&gt;&lt;/htl&gt;</translation>
+        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Rrezja e rrethit tangjent që do të vizatohet&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_tangental_2_entities_radius_options_widget.ui" line="59"/>
@@ -8680,12 +8681,12 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_tangental_2_entities_radius_options_widget.ui" line="75"/>
         <source>Radius of tangential circle</source>
-        <translation type="unfinished">Rredaus i rrethit tangncial</translation>
+        <translation type="unfinished">Rrezja e rrethit tangjent</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_tangental_2_entities_radius_options_widget.ui" line="82"/>
         <source>Pick radius from drawing</source>
-        <translation type="unfinished">Zgjidh</translation>
+        <translation type="unfinished">Merr rrezen nga vizatimi</translation>
     </message>
 </context>
 <context>
@@ -8866,7 +8867,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/support/lc_dimstylepreviewpanel.ui" line="35"/>
         <source>Zoom Auto</source>
-        <translation>Auto</translation>
+        <translation>Zmadhim automatik</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/support/lc_dimstylepreviewpanel.ui" line="62"/>
@@ -8881,7 +8882,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/support/lc_dimstylepreviewpanel.ui" line="90"/>
         <source>Zoom Pan</source>
-        <translation>Shkalla e zmadhimit</translation>
+        <translation>Zhvendosje e pamjes</translation>
     </message>
 </context>
 <context>
@@ -8894,63 +8895,63 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="105"/>
         <source>Can&apos;t open provided file for writing - check that provided location is writable. Dimension styles were not exported.</source>
-        <translation>Hap për është. Stili i dimensionit nuk eksportohej.</translation>
+        <translation>Skedari i dhënë nuk mund të hapet për shkrim - kontrollo që vendndodhja e dhënë lejon shkrimin. Stilet e kuotimit nuk u eksportuan.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="114"/>
         <source>Dimension Styles Export</source>
-        <translation>Eksporto</translation>
+        <translation>Eksportimi i stileve të kuotimit</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="114"/>
         <source>Dimensions Styles were exported.</source>
-        <translation>U eksportuan stile dimensionesh.</translation>
+        <translation>Stilet e kuotimit u eksportuan.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="125"/>
         <source>Dimension Styles Import Error</source>
-        <translation>Gabim gjatë importimit të stilit të dimensionit</translation>
+        <translation>Gabim gjatë importimit të stileve të kuotimit</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="127"/>
         <source>Can&apos;t open provided file for reading. Dimension styles were not imported.</source>
-        <translation>Hap për. Stili i dimensionit nuk u importua.</translation>
+        <translation>Skedari i dhënë nuk mund të hapet për lexim. Stilet e kuotimit nuk u importuan.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="133"/>
         <source>Unexpected error during dimension styles parsing. Message:</source>
-        <translation>Gabim i papritur gjatë analizimit të stileve dimensionale. Mesazhi:</translation>
+        <translation>Gabim i papritur gjatë analizimit të stileve të kuotimit. Mesazhi:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="137"/>
         <source>Unexpected format of file, it does not contains LibreCAD dimension styles.</source>
-        <translation>Format i papritur i file, ai nuk përmban stile dimensionesh LibreCAD.</translation>
+        <translation>Format i papritur i skedarit; ai nuk përmban stile kuotimi të LibreCAD.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="143"/>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="175"/>
         <source>Dimension Styles Import</source>
-        <translation>Autentifikimi i stilit të dimensionit</translation>
+        <translation>Importimi i stileve të kuotimit</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="143"/>
         <source>No dimension styles to import.</source>
-        <translation>Asnjë stil dimenzioni për importin.</translation>
+        <translation>Nuk ka stile kuotimi për të importuar.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="175"/>
         <source>Dimension styles were imported.</source>
-        <translation>U importuan stile dimensioni.</translation>
+        <translation>Stilet e kuotimit u importuan.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="183"/>
         <source>Import Dimension Styles</source>
-        <translation>Importo</translation>
+        <translation>Importo stilet e kuotimit</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="183"/>
         <source>Export Dimension Styles</source>
-        <translation>Eksporto</translation>
+        <translation>Eksporto stilet e kuotimit</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="184"/>
@@ -9083,27 +9084,27 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="124"/>
         <source>Displays and sets the color for the dimension line (DIMCLRD system variable).</source>
-        <translation>Shfaq dhe për.</translation>
+        <translation>Shfaq dhe vendos ngjyrën e vijës së kuotës (ndryshorja e sistemit DIMCLRD).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="81"/>
         <source>Linetype:</source>
-        <translation>Linja</translation>
+        <translation>Lloji i vijës:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="67"/>
         <source>Sets the linetype of the dimension line. (DIMLTYPE system variable)</source>
-        <translation>Përcakton linjën e vijës së dimensionit. Sistemi</translation>
+        <translation>Vendos llojin e vijës së kuotës. (ndryshorja e sistemit DIMLTYPE)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="88"/>
         <source>Linewidth:</source>
-        <translation>Linja</translation>
+        <translation>Trashësia e vijës:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="137"/>
         <source>Sets the lineweight of the dimension line. (DIMLWD system variable)</source>
-        <translation>Vendos peshën e vijës të vijës së dimensionit. Sistemi</translation>
+        <translation>Vendos trashësinë e vijës së kuotës. (ndryshorja e sistemit DIMLWD)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="111"/>
@@ -9118,12 +9119,12 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="162"/>
         <source>Baseline spacing:</source>
-        <translation>Hapësirë bazë:</translation>
+        <translation>Hapësira e kuotimit nga baza:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="191"/>
         <source>Suppresses display of first dimension line (DIMSD1 system variable)</source>
-        <translation>Nga i pari</translation>
+        <translation>Nuk e shfaq vijën e parë të kuotës (ndryshorja e sistemit DIMSD1)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="194"/>
@@ -9133,7 +9134,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="175"/>
         <source>Suppresses display of second dimension line (DIMSD2 system variable)</source>
-        <translation>Nga i dytë</translation>
+        <translation>Nuk e shfaq vijën e dytë të kuotës (ndryshorja e sistemit DIMSD2)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="178"/>
@@ -9148,42 +9149,42 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="216"/>
         <source>Sets the color for the extension line (DIMCLRE system variable.)</source>
-        <translation>Për niveli sistemi</translation>
+        <translation>Vendos ngjyrën e vijës ndihmëse (ndryshorja e sistemit DIMCLRE.)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="295"/>
         <source>Linetype ext line 1:</source>
-        <translation>Linja</translation>
+        <translation>Lloji i vijës ndihmëse 1:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="361"/>
         <source>Sets the linetype of the first extension line. (DIMLTEX1 system variable)</source>
-        <translation>Nga i pari. Sistemi</translation>
+        <translation>Vendos llojin e vijës për vijën e parë ndihmëse. (ndryshorja e sistemit DIMLTEX1)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="338"/>
         <source>Linetype ext line 2:</source>
-        <translation>Linja</translation>
+        <translation>Lloji i vijës ndihmëse 2:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="308"/>
         <source>Sets the linetype of the second extension line. (DIMLTEX2 system variable)</source>
-        <translation>Nga sekondë. Sistemi</translation>
+        <translation>Vendos llojin e vijës për vijën e dytë ndihmëse. (ndryshorja e sistemit DIMLTEX2)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="331"/>
         <source>Lineweight:</source>
-        <translation>Linja:</translation>
+        <translation>Trashësia e vijës:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="236"/>
         <source>Sets the lineweight of the extension line. (DIMLWE system variable)</source>
-        <translation>Vendos peshën e vijës së vijës. Sistemi</translation>
+        <translation>Vendos trashësinë e vijës ndihmëse. (ndryshorja e sistemit DIMLWE)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="368"/>
         <source>Extend beyond dim lines:</source>
-        <translation>Zmadho</translation>
+        <translation>Zgjatja përtej vijave të kuotës:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="285"/>
@@ -9193,12 +9194,12 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="375"/>
         <source>Offset from origin:</source>
-        <translation>Nga:</translation>
+        <translation>Zhvendosja nga origjina:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="404"/>
         <source>Sets the distance to offset the extension lines from the points on the drawing that define the dimension. (DIMEXO system variable)</source>
-        <translation>Nga në. Sistemi</translation>
+        <translation>Përcakton distancën me të cilën vijat ndihmëse zhvendosen nga pikat e vizatimit që përcaktojnë kuotën. (ndryshorja e sistemit DIMEXO)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="223"/>
@@ -9218,12 +9219,12 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="348"/>
         <source>Fixed length extension lines</source>
-        <translation>Linja</translation>
+        <translation>Vija ndihmëse me gjatësi fikse</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="269"/>
         <source>Suppresses the display of first extension line (DIMSE1 system variable).</source>
-        <translation>Nga i pari.</translation>
+        <translation>Nuk shfaq vijën e parë ndihmëse (ndryshorja e sistemit DIMSE1).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="272"/>
@@ -9233,7 +9234,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="321"/>
         <source>Suppresses the display of second extension line (DIMSE2 system variable).</source>
-        <translation>Bllokon shfaqjen e vijës së dytë ndihmëse (ndryshorja e sistemit DIMSE2).</translation>
+        <translation>Nuk shfaq vijën e dytë ndihmëse (ndryshorja e sistemit DIMSE2).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="324"/>
@@ -9259,7 +9260,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="443"/>
         <source>Linear jog dimension</source>
-        <translation>Dimensioni linear</translation>
+        <translation>Kuotë lineare me thyerje</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="449"/>
@@ -9284,7 +9285,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="486"/>
         <source>Determines the angle of the transverse segment of the dimension line in a jogged radius dimension. (DIMJOGANG system variable)</source>
-        <translation>Përcakton këndin e segmentit transversiv të vijës së dimensionit në një dimension me rreze. Sistemi</translation>
+        <translation>Përcakton këndin e segmentit tërthor të vijës së kuotës në një kuotë rrezeje me thyerje. (ndryshorja e sistemit DIMJOGANG)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="505"/>
@@ -9294,7 +9295,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="553"/>
         <source>Displays and sets the size of arrowheads. (DIMASZ system variable)</source>
-        <translation>Shfaqet dhe përcakton madhësinë e kokave të shigjetave. (Të ndryshueshme nga sistemi</translation>
+        <translation>Shfaq dhe përcakton madhësinë e kokave të shigjetave. (ndryshorja e sistemit DIMASZ)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="539"/>
@@ -9309,17 +9310,17 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="518"/>
         <source>Sets the arrowhead for the first dimension line. When you change the first arrowhead type, the second arrowhead automatically changes to match it. (DIMBLK1 system variable)</source>
-        <translation>Vendos kokën e shigjetave për kufirin e parë dimenzional. Kur ndryshon llojin e parë të shigjetës, koka tjetër automatikisht ndryshon në përputhje me të. Sistemi</translation>
+        <translation>Përcakton kokën e shigjetës për vijën e parë të kuotës. Kur ndryshoni llojin e kokës së parë të shigjetës, koka e dytë ndryshon automatikisht që të përputhet me të. (ndryshorja e sistemit DIMBLK1)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="588"/>
         <source>Sets the arrowhead for the second dimension line. (DIMBLK2 system variable)</source>
-        <translation>Vendos kokën e shigjetës për vijën e dytë të dimensionit. Sistemi</translation>
+        <translation>Përcakton kokën e shigjetës për vijën e dytë të kuotës. (ndryshorja e sistemit DIMBLK2)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="570"/>
         <source>Use the same arrowhead for dimension line</source>
-        <translation>Përdor të njëjtën shigjetë për</translation>
+        <translation>Përdor të njëjtën kokë shigjete për vijën e kuotës</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="546"/>
@@ -9344,7 +9345,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="598"/>
         <source>Dimension break</source>
-        <translation>Ndërprerje dimensioni</translation>
+        <translation>Ndërprerje e kuotës</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="604"/>
@@ -9354,12 +9355,12 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="624"/>
         <source>Arc length symbol</source>
-        <translation>Simboli i gjatësisë Arc</translation>
+        <translation>Simboli i gjatësisë së harkut</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="630"/>
         <source>Suppresses the display of arc length symbols. (DIMARCSYM system variable)</source>
-        <translation>Bllokon shfaqjen e simboleve të gjatësisë së harkut. (Të ndryshueshme nga sistemi</translation>
+        <translation>Nuk shfaq simbolet e gjatësisë së harkut. (ndryshorja e sistemit DIMARCSYM)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="633"/>
@@ -9371,22 +9372,22 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="640"/>
         <source>Places arc length symbols before the dimension text. (DIMARCSYM system variable)</source>
-        <translation>Vendos tekst. (Të ndryshueshme nga sistemi</translation>
+        <translation>Vendos simbolet e gjatësisë së harkut përpara tekstit të kuotës. (ndryshorja e sistemit DIMARCSYM)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="643"/>
         <source>Preceding dimension text</source>
-        <translation>Tekst</translation>
+        <translation>Përpara tekstit të kuotës</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="650"/>
         <source>Places arc length symbols above the dimension text. (DIMARCSYM system variable)</source>
-        <translation>Vendos simbolet e gjatës ark mbi tekstin dimenzional. (Të ndryshueshme nga sistemi</translation>
+        <translation>Vendos simbolet e gjatësisë së harkut mbi tekstin e kuotës. (ndryshorja e sistemit DIMARCSYM)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="653"/>
         <source>Above dimension text</source>
-        <translation>Mbi tekst</translation>
+        <translation>Mbi tekstin e kuotës</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="663"/>
@@ -9396,12 +9397,12 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="669"/>
         <source>Creates no center mark or centerline. The value is stored as 0 in the DIMCEN system variable.</source>
-        <translation>Nuk krijon asnjë shenjë qendrore ose qendër. Vlera ruhet si 0 në sistemin e ndryshueshëm DIMCEN.</translation>
+        <translation>Nuk krijon as shenjë qendre, as vijë boshtore. Vlera ruhet si 0 në ndryshoren e sistemit DIMCEN.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="679"/>
         <source>Creates a center mark. The size of the center mark is stored as a positive value in the DIMCEN system variable.</source>
-        <translation>Krijon një shenjë qendrore. Madhësia e shenjës qendrore ruhet si një vlerë pozitive në sistemin e ndryshueshëm DIMCENI.</translation>
+        <translation>Krijon një shenjë qendre. Madhësia e shenjës së qendrës ruhet si vlerë pozitive në ndryshoren e sistemit DIMCEN.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="682"/>
@@ -9411,12 +9412,12 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="689"/>
         <source>Creates a centerline. The size of the centerline is stored as a negative value in the DIMCEN system variable.</source>
-        <translation>Krijon një qendër. Madhësia e qendrës ruhet si një vlerë negative në sistemin e ndryshueshëm DIMCENI.</translation>
+        <translation>Krijon një vijë boshtore. Madhësia e vijës boshtore ruhet si vlerë negative në ndryshoren e sistemit DIMCEN.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="692"/>
         <source>Line</source>
-        <translation>Linja</translation>
+        <translation>Vijë</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="699"/>
@@ -9426,7 +9427,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="706"/>
         <source>Displays and sets the size of the center mark or centerline. (DIMCEN system variable)</source>
-        <translation>Shfaqet dhe përcakton madhësinë e shenjës qendrore ose të qendrës. (Të ndryshueshme nga sistemi)</translation>
+        <translation>Shfaq dhe përcakton madhësinë e shenjës së qendrës ose të vijës boshtore. (ndryshorja e sistemit DIMCEN)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="746"/>
@@ -9457,7 +9458,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="788"/>
         <source>Sets the color for the text background in dimensions (DIMTFILLCLR system variable)</source>
-        <translation>Për tekst në</translation>
+        <translation>Përcakton ngjyrën e sfondit të tekstit në kuota (ndryshorja e sistemit DIMTFILLCLR)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="795"/>
@@ -9472,22 +9473,22 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="809"/>
         <source>Sets the scale of fractions relative to dimension text. (DIMTFAC system variable)</source>
-        <translation>Përcakton shkallën e fraksioneve në krahasim me tekstin dimenzional. (Të ndryshueshme nga sistemi</translation>
+        <translation>Përcakton shkallën e thyesave në raport me tekstin e kuotës. (ndryshorja e sistemit DIMTFAC)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="822"/>
         <source>Fraction height scale:</source>
-        <translation>Lartësia:</translation>
+        <translation>Shkalla e lartësisë së thyesave:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="829"/>
         <source>Sets the height of the current dimension text style. (DIMTXT system variable)</source>
-        <translation>Përcakton gjatësinë e stilit aktual të tekstit. Sistemi</translation>
+        <translation>Përcakton lartësinë e stilit aktual të tekstit të kuotës. (ndryshorja e sistemit DIMTXT)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="842"/>
         <source>Sets the color for the dimension text (DIMCLRT system variable)</source>
-        <translation>Për tekst</translation>
+        <translation>Përcakton ngjyrën e tekstit të kuotës (ndryshorja e sistemit DIMCLRT)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="849"/>
@@ -9497,12 +9498,12 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="852"/>
         <source>Fill text background by color</source>
-        <translation>Përshtat sfondin sipas ngjyrës</translation>
+        <translation>Mbush sfondin e tekstit me ngjyrë</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="859"/>
         <source>Displays a rectangular frame around the dimension text. This option changes the value stored in the DIMGAP system variable to a negative value.</source>
-        <translation>Shfaq një kornizë drejtkëndëshe rreth tekstit dimenzionar. Me këtë opcion ndryshohet vlera e ruajtur në të ndryshueshmen e sistemit DIMGAP në një vlerë negative.</translation>
+        <translation>Shfaq një kornizë drejtkëndëshe rreth tekstit të kuotës. Ky opsion e ndryshon vlerën e ruajtur në ndryshoren e sistemit DIMGAP në një vlerë negative.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="862"/>
@@ -9517,7 +9518,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="891"/>
         <source>Places text in a horizontal position (DIMTIH and DIMTOH system variables).</source>
-        <translation>Vendos tekst në a dhe sistemi.</translation>
+        <translation>Vendos tekstin në pozicion horizontal (ndryshoret e sistemit DIMTIH dhe DIMTOH).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="894"/>
@@ -9528,17 +9529,17 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="901"/>
         <source>Aligns text with the dimension line (DIMTIH and DIMTOH system variables).</source>
-        <translation>Teksti me dhe sistemi.</translation>
+        <translation>Rreshton tekstin me vijën e kuotës (ndryshoret e sistemit DIMTIH dhe DIMTOH).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="911"/>
         <source>Aligns text with the dimension line when text is inside the extension lines, but aligns it horizontally when text is outside the extension lines (DIMTIH and DIMTOH system variables).</source>
-        <translation>Teksti me tekst është në tjetër tekst është nga dhe sistemi.</translation>
+        <translation>Rreshton tekstin me vijën e kuotës kur teksti është brenda vijave ndihmëse, por e rreshton horizontalisht kur teksti është jashtë vijave ndihmëse (ndryshoret e sistemit DIMTIH dhe DIMTOH).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="904"/>
         <source>Aligned with dimension line</source>
-        <translation>Me linjë dimenzionale</translation>
+        <translation>I rreshtuar me vijën e kuotës</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="150"/>
@@ -9568,7 +9569,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="930"/>
         <source>Controls the dimension text viewing direction. (DIMTXTDIRECTION system variable)</source>
-        <translation>Kontrollon dimenzionin e shikimit të tekstit. Sistemi</translation>
+        <translation>Kontrollon drejtimin e leximit të tekstit të kuotës. (ndryshorja e sistemit DIMTXTDIRECTION)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="934"/>
@@ -9583,7 +9584,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="947"/>
         <source>Offset from dim line:</source>
-        <translation>Nga:</translation>
+        <translation>Zhvendosja nga vija e kuotës:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="954"/>
@@ -9604,12 +9605,12 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="970"/>
         <source>At Ext Line 1</source>
-        <translation>Në Ext Line 1</translation>
+        <translation>Te vija ndihmëse 1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="975"/>
         <source>At Ext Line 2</source>
-        <translation>Në Ext Line 2</translation>
+        <translation>Te vija ndihmëse 2</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="980"/>
@@ -9634,7 +9635,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1007"/>
         <source>Controls the vertical placement of dimension text in relation to the dimension line. (DIMTAD system variable)</source>
-        <translation>Kontrollon vendosjen vertikale të tekstit dimenzional në lidhje me vijën dimensionale. (Të ndryshueshme nga sistemi</translation>
+        <translation>Kontrollon vendosjen vertikale të tekstit të kuotës në lidhje me vijën e kuotës. (ndryshorja e sistemit DIMTAD)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1016"/>
@@ -9664,12 +9665,12 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1052"/>
         <source>Broken dim line text gap:</source>
-        <translation>E përbashkët tekst:</translation>
+        <translation>Hapësira e tekstit në vijën e ndërprerë të kuotës:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1059"/>
         <source>Sets the current text gap, which is the distance around the dimension text when the dimension line is broken to accommodate the dimension text (DIMGAP system variable).</source>
-        <translation>Përcakton të çarën aktuale në tekst, e cila është distanca rreth tekstit dimenzional kur linja dimensionale është thyer për të përshtatur tekstin e dimensionit (DIMGAP i ndryshueshëm nga sistemi).</translation>
+        <translation>Përcakton hapësirën aktuale të tekstit, d.m.th. distancën rreth tekstit të kuotës kur vija e kuotës ndërpritet për të vendosur tekstin e kuotës (ndryshorja e sistemit DIMGAP).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1086"/>
@@ -9684,7 +9685,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1098"/>
         <source>Ignores any horizontal justification settings and places the text at the position you specify at the Dimension Line Location prompt. (DIMUPT system variable)</source>
-        <translation>Shpërfill çdo rregullimet e justifikimit horizontal dhe e vendos tekstin në pozicionin që specifikoni tek Vendndodhja Dimension line. (Të ndryshueshme nga sistemi</translation>
+        <translation>Shpërfill çdo cilësim të justifikimit horizontal dhe e vendos tekstin në pozicionin që specifikoni te kërkesa për vendndodhjen e vijës së kuotës. (ndryshorja e sistemit DIMUPT)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1101"/>
@@ -9694,7 +9695,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1108"/>
         <source>Draws dimension lines between the measured points even when the arrowheads are placed outside the measured points. (DIMTOFL system variable)</source>
-        <translation>Vizaton një linjë dimenzionale midis pikave të matura edhe kur kokat e shigjetave vendosen jashtë pikave të matura. Sistemi</translation>
+        <translation>Vizaton vijat e kuotës midis pikave të matura edhe kur kokat e shigjetave vendosen jashtë pikave të matura. (ndryshorja e sistemit DIMTOFL)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1111"/>
@@ -9710,22 +9711,22 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1127"/>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1137"/>
         <source>Sets a scale for all dimension style settings that specify size, distance, or spacing, including text and arrowhead sizes. This scale does not change dimension measurement values. (DIMSCALE system variable)</source>
-        <translation>Për madhësia nga tekst dhe shigjetë. Kjo shkallë nuk ndryshon vlerat e matjes së dimensioneve. (Të ndryshueshme nga sistemi</translation>
+        <translation>Përcakton një shkallë për të gjitha cilësimet e stilit të kuotimit që specifikojnë madhësi, distancë ose hapësirë, përfshirë madhësitë e tekstit dhe të kokave të shigjetave. Kjo shkallë nuk ndryshon vlerat e matura të kuotave. (ndryshorja e sistemit DIMSCALE)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1130"/>
         <source>Use overall scale of:</source>
-        <translation>Nga</translation>
+        <translation>Përdor shkallën e përgjithshme:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1147"/>
         <source>Determines a scale factor based on the scaling between the current model space viewport and paper space. (DIMSCALE system variable)</source>
-        <translation>Përcakton një faktor shkallëzues bazuar në shkallën midis modelit të shikimit të hapësirës dhe hapësirës së letrës. (Të ndryshueshme nga sistemi</translation>
+        <translation>Përcakton një faktor shkalle bazuar në shkallëzimin midis pamjes aktuale të hapësirës së modelit dhe hapësirës së letrës. (ndryshorja e sistemit DIMSCALE)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1150"/>
         <source>Scale to layout</source>
-        <translation>Shkalla nga</translation>
+        <translation>Shkallëzo sipas faqosjes</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1175"/>
@@ -9735,7 +9736,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1178"/>
         <source>Beside the dimention line</source>
-        <translation>Përveç vijës së përmendjes</translation>
+        <translation>Pranë vijës së kuotës</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1185"/>
@@ -9820,7 +9821,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1300"/>
         <source>Always places text between extension lines. (DIMTIX system variable)</source>
-        <translation>Gjithmonë Sistemi</translation>
+        <translation>Vendos gjithmonë tekstin midis vijave ndihmëse. (ndryshorja e sistemit DIMTIX)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1303"/>
@@ -9835,7 +9836,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1333"/>
         <source>Angular Dimensions</source>
-        <translation>Dimensione anglare</translation>
+        <translation>Kuota këndore</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1339"/>
@@ -9858,7 +9859,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1352"/>
         <source>Controls the suppression of leading zeros (DIMAZIN system variable)</source>
-        <translation>Kontrolli nga sistemi</translation>
+        <translation>Kontrollon mosshfaqjen e zerove në fillim (ndryshorja e sistemit DIMAZIN)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1355"/>
@@ -9872,7 +9873,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1362"/>
         <source>Controls the suppression of  trailing zeros. (DIMAZIN system variable)</source>
-        <translation>Kontrollon shtypjen e zerove. Sistemi</translation>
+        <translation>Kontrollon mosshfaqjen e zerove në fund. (ndryshorja e sistemit DIMAZIN)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1365"/>
@@ -9898,18 +9899,18 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1389"/>
         <source>Sets the angular units format. (DIMAUNIT system variable)</source>
-        <translation>Vendos formatin e njësive angalare. (E ndryshueshmja e sistemitDIMAUNIT)</translation>
+        <translation>Përcakton formatin e njësive këndore. (ndryshorja e sistemit DIMAUNIT)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1418"/>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1994"/>
         <source>Linear Dimensions</source>
-        <translation>Përmasat lineare</translation>
+        <translation>Kuota lineare</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1431"/>
         <source>Measurement scale</source>
-        <translation>Madhësia e matjes</translation>
+        <translation>Shkalla e matjes</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1437"/>
@@ -9919,17 +9920,17 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1450"/>
         <source>Sets a scale factor for linear dimension measurements. It is recommended that you do not change this value from the default value of 1.00. (DIMLFAC system variable)</source>
-        <translation>Për. Është rekomanduar që ju të mos e ndryshoni këtë vlerë nga vlera e paracaktuar e 1.00. Sistemi</translation>
+        <translation>Përcakton një faktor shkalle për matjet e kuotave lineare. Rekomandohet të mos e ndryshoni këtë vlerë nga vlera e paracaktuar 1.00. (ndryshorja e sistemit DIMLFAC)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1460"/>
         <source>Applies the measurement scale factor only to dimensions created in layout viewports. </source>
-        <translation>Aplikon faktorin e matjes vetëm në dimensionet e krijuara në faqosje.</translation>
+        <translation>Zbaton faktorin e shkallës së matjes vetëm për kuotat e krijuara në pamjet e faqosjes. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1463"/>
         <source>Apply to layout dimensions only</source>
-        <translation>Apliko</translation>
+        <translation>Zbato vetëm për kuotat e faqosjes</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1473"/>
@@ -9939,7 +9940,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1480"/>
         <source>Round off:</source>
-        <translation>J</translation>
+        <translation>Rrumbullakimi:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1487"/>
@@ -9949,12 +9950,12 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1500"/>
         <source>Includes a suffix that you specify in the dimension text. (DIMPOST system variable)</source>
-        <translation>Përfshin një prapashtesë që specifikoni në tekstin dimenzional. (E ndryshueshme e sistemit</translation>
+        <translation>Përfshin një prapashtesë që specifikoni në tekstin e kuotës. (ndryshorja e sistemit DIMPOST)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1507"/>
         <source>Sets the current units format for all dimension types except Angular. (DIMLUNIT system variable)</source>
-        <translation>Vendos formatin e njësive aktuale për të gjitha llojet e dimensioneve me përjashtim të Anglar. Sistemi</translation>
+        <translation>Përcakton formatin e njësive aktuale për të gjitha llojet e kuotave, përveç atyre këndore. (ndryshorja e sistemit DIMLUNIT)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1514"/>
@@ -9965,7 +9966,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1521"/>
         <source>Sets the separator for decimal formats. (DIMDSEP system variable)</source>
-        <translation>Për. Sistemi</translation>
+        <translation>Përcakton ndarësin për formatet dhjetore. (ndryshorja e sistemit DIMDSEP)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1525"/>
@@ -9980,22 +9981,22 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1538"/>
         <source>Sets nearest rounding value for dimension measurements for all dimension types except Angular. (DIMRND system variable)</source>
-        <translation>Përmasat dimenzionale për të gjitha llojet e dimensioneve, përveç Angalar. (Të ndryshueshme nga sistemi</translation>
+        <translation>Përcakton vlerën e rrumbullakimit më të afërt për matjet e kuotave për të gjitha llojet e kuotave, përveç atyre këndore. (ndryshorja e sistemit DIMRND)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1548"/>
         <source>Displays and sets the number of decimal places in the dimension text. (DIMDEC system variable)</source>
-        <translation>Shfaqet dhe përcakton numrin e vendeve dhjetore në tekstin dimenzional. (Të ndryshueshme nga sistemiDIMDEC)</translation>
+        <translation>Shfaq dhe përcakton numrin e shifrave dhjetore në tekstin e kuotës. (ndryshorja e sistemit DIMDEC)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1561"/>
         <source>Includes a prefix that you specify in the dimension text. (DIMPOST system variable)</source>
-        <translation>Përfshin një prefiks që specifikoni në tekstin dimenzional. (E ndryshueshme e sistemit</translation>
+        <translation>Përfshin një parashtesë që specifikoni në tekstin e kuotës. (ndryshorja e sistemit DIMPOST)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1575"/>
         <source>Sets the format for fractions. (DIMFRAC system variable)</source>
-        <translation>Për. (Të ndryshueshme nga sistemi</translation>
+        <translation>Përcakton formatin e thyesave. (ndryshorja e sistemit DIMFRAC)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1584"/>
@@ -10022,12 +10023,12 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1617"/>
         <source>Suppresses trailing zeros in all decimal dimensions. (DIMZIN system variable)</source>
-        <translation>Shtyp zerot në të gjitha dimensionet dhjetore. Sistemi</translation>
+        <translation>Nuk shfaq zerot në fund në të gjitha kuotat dhjetore. (ndryshorja e sistemit DIMZIN)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1627"/>
         <source> Suppresses the inches portion of a feet-and-inches dimension when the distance is an integral number of feet (DIMZIN system variable)</source>
-        <translation>Shtyp pjesën e brendshme të një dimensioni këmbë-dhe-inches kur distanca është një numër integral këmbësh (DIMZIN sistemi i ndryshueshëm)</translation>
+        <translation> Nuk shfaq pjesën e inçeve të një kuote në këmbë dhe inç kur distanca është një numër i plotë këmbësh (ndryshorja e sistemit DIMZIN)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1630"/>
@@ -10040,7 +10041,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1637"/>
         <source>Suppresses the feet portion of a feet-and-inches dimension when the distance is less than one foot.  (DIMZIN system variable)</source>
-        <translation>Shtrëngon pjesën e këmbëve të një dimensioni këmbë-dhe-inche kur distanca është më pak se një këmbë. Sistemi</translation>
+        <translation>Nuk shfaq pjesën e këmbëve të një kuote në këmbë dhe inç kur distanca është më e vogël se një këmbë.  (ndryshorja e sistemit DIMZIN)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1640"/>
@@ -10053,7 +10054,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1647"/>
         <source>Suppresses leading zeros in all decimal dimensions (DIMZIN system variable)</source>
-        <translation>Në</translation>
+        <translation>Nuk shfaq zerot në fillim në të gjitha kuotat dhjetore (ndryshorja e sistemit DIMZIN)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1657"/>
@@ -10064,12 +10065,12 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1664"/>
         <source>Sets the number of sub units to a unit. It is used to calculate the dimension distance in a sub unit when the distance is less than one unit. </source>
-        <translation>Vendos numrin e nënnjësive në një njësi. Përdoret për të llogaritur distancën dimensionale në një nënnjësi kur distanca është më pak se një njësi.</translation>
+        <translation>Përcakton numrin e nënnjësive në një njësi. Përdoret për të llogaritur distancën e kuotës në nënnjësi kur distanca është më e vogël se një njësi. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1680"/>
         <source>Includes a suffix to the dimension value sub unit. You can enter text or use control codes to display special symbols.</source>
-        <translation>Përfshin një prapashtesë për nën njësinë e vlerës dimenzionale. Mund të kryeni tekstin ose të përdorni kodet e kontrollit për të shfaqur simbole të veçanta.</translation>
+        <translation>Përfshin një prapashtesë për nënnjësinë e vlerës së kuotës. Mund të futni tekst ose të përdorni kode kontrolli për të shfaqur simbole të veçanta.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1707"/>
@@ -10079,7 +10080,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1726"/>
         <source>Adds alternate measurement units to dimension text. Sets the DIMALT system variable to 1.</source>
-        <translation>Shton njësi alternative matjeje në tekst dimenzion. nga.</translation>
+        <translation>Shton njësi alternative matjeje në tekstin e kuotës. Vendos ndryshoren e sistemit DIMALT në 1.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1729"/>
@@ -10094,7 +10095,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1762"/>
         <source>Specifies the multiplier used as the conversion factor between primary and alternate units.For example, to convert inches to millimeters, enter 25.4. The value has no effect on angular dimensions, and it is not applied to the rounding value or the plus or minus tolerance values. (DIMALTF system variable)</source>
-        <translation>Specifikon shumëzuesin e përdorur si faktor konvertimi midis njësive parësore dhe alternative. Për shembull, për të konvertuar centimetra në milimetra, hyr 25.4. Vlera nuk ka efekt në dimensionet angulare dhe nuk aplikohet në vlerën e rrumbullakët, plus apo minus vlerat e tolerancës. Sistemi</translation>
+        <translation>Specifikon shumëzuesin që përdoret si faktor konvertimi midis njësive kryesore dhe atyre alternative. Për shembull, për të konvertuar inçet në milimetra, futni 25.4. Vlera nuk ka efekt në kuotat këndore dhe nuk zbatohet për vlerën e rrumbullakimit ose për vlerat plus ose minus të tolerancës. (ndryshorja e sistemit DIMALTF)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1772"/>
@@ -10104,12 +10105,12 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1779"/>
         <source>Sets rounding rules for alternate units for all dimension types except Angular. If you enter a value of 0.25, all alternate measurements are rounded to the nearest 0.25 unit. If you enter a value of 1.0, all dimension measurements are rounded to the nearest integer. The number of digits displayed after the decimal point depends on the Precision setting. (DIMALTRND system variable)</source>
-        <translation>Vendos rregulla të rrumbullakta për njësi alternative për të gjitha llojet e dimensioneve me përjashtim të Anglar. Nëse hyni në një vlerë prej 0.25, të gjitha matjet alternative janë grumbulluar në njësinë më të afërt 0.25. Nëse hyni në një vlerë prej 1.0, të gjitha matjet dimenzionale janë grumbulluar në pjesën më të afërt. Numri i shifrave të shfaqura pas pikës dhjetore varet nga vendosja e prerjes. Sistemi</translation>
+        <translation>Përcakton rregullat e rrumbullakimit për njësitë alternative për të gjitha llojet e kuotave, përveç atyre këndore. Nëse futni vlerën 0.25, të gjitha matjet alternative rrumbullakohen në 0.25 njësinë më të afërt. Nëse futni vlerën 1.0, të gjitha matjet e kuotave rrumbullakohen në numrin e plotë më të afërt. Numri i shifrave që shfaqen pas pikës dhjetore varet nga cilësimi i saktësisë. (ndryshorja e sistemit DIMALTRND)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1789"/>
         <source>Sets the unit format for alternate units. (DIMALTU system variable)</source>
-        <translation>Vendos formatin e njësisë për njësitë alternative. Sistemi</translation>
+        <translation>Përcakton formatin e njësive për njësitë alternative. (ndryshorja e sistemit DIMALTU)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1796"/>
@@ -10119,7 +10120,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1802"/>
         <source>Places alternate units after the primary units in dimension text.</source>
-        <translation>Vendos njësi alternative pas njësive kryesore në tekst dimenzion.</translation>
+        <translation>Vendos njësitë alternative pas njësive kryesore në tekstin e kuotës.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1805"/>
@@ -10129,7 +10130,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1812"/>
         <source>Places alternate units below the primary units in dimension text.</source>
-        <translation>Vendos njësi alternative nën njësitë kryesore në tekst dimenzion.</translation>
+        <translation>Vendos njësitë alternative poshtë njësive kryesore në tekstin e kuotës.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1815"/>
@@ -10139,42 +10140,42 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1831"/>
         <source>Includes a prefix in the alternate dimension text. You can enter text or use control codes to display special symbols. For example, entering the control code %%c displays the diameter symbol. (DIMAPOST system variable)</source>
-        <translation>Përfshin një prefiks në tekstin alternativ të dimensionit. Mund të kryeni tekstin ose të përdorni kodet e kontrollit për të shfaqur simbole të veçanta. Për shembull, hyrja në kodin e kontrollit %%c tregon simbolin e diametrit. (Të ndryshueshme nga sistemi</translation>
+        <translation>Përfshin një parashtesë në tekstin alternativ të kuotës. Mund të futni tekst ose të përdorni kode kontrolli për të shfaqur simbole të veçanta. Për shembull, futja e kodit të kontrollit %%c shfaq simbolin e diametrit. (ndryshorja e sistemit DIMAPOST)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1845"/>
         <source>Round distances to:</source>
-        <translation>Nga</translation>
+        <translation>Rrumbullako distancat në:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1858"/>
         <source>Suppresses leading zeros in all decimal dimensions. For example, 0.5000 becomes .5000.</source>
-        <translation>Shtresat kryesore në të gjitha dimensionet dhjetore. Për shembull, 0.5000 bëhen .5000.</translation>
+        <translation>Nuk shfaq zerot në fillim në të gjitha kuotat dhjetore. Për shembull, 0.5000 bëhet .5000.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1888"/>
         <source>Suppresses trailing zeros in all decimal dimensions. For example, 12.5000 becomes 12.5, and 30.0000 becomes 30 (DIMALTZ system variable).</source>
-        <translation>Shtyp zerot në të gjitha dimensionet dhjetore. Për shembull, 12.5000 bëhen 12.5 dhe 30.0000 bëhen 30 (të ndryshueshëm nga sistemi DIMALZ).</translation>
+        <translation>Nuk shfaq zerot në fund në të gjitha kuotat dhjetore. Për shembull, 12.5000 bëhet 12.5 dhe 30.0000 bëhet 30 (ndryshorja e sistemit DIMALTZ).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1915"/>
         <source>Suppresses the feet portion of a feet-and-inches dimension when the distance is less than 1 foot. For example, 0&apos;-6 1/2&quot; becomes 6 1/2&quot; (DIMALTZ system variable)</source>
-        <translation>Shtrëngon pjesën e këmbëve të një dimensioni këmbë-dhe-inche kur distanca është më pak se 1 këmbë. Për shembull, 0&apos;-6 1/2 &quot; bëhet 6 1/2&quot; (të ndryshueshmea e sistemit DIMALZ)</translation>
+        <translation>Nuk shfaq pjesën e këmbëve të një kuote në këmbë dhe inç kur distanca është më e vogël se 1 këmbë. Për shembull, 0&apos;-6 1/2&quot; bëhet 6 1/2&quot; (ndryshorja e sistemit DIMALTZ)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1925"/>
         <source>Suppresses the inches portion of a feet-and-inches dimension when the distance is an integral number of feet. For example, 1&apos;-0&quot; becomes 1&apos;. (DIMALTZ system variable)</source>
-        <translation>Shtyp pjesën e inçit të një dimensioni këmbë-dhe-inches kur distanca është një numër integral këmbësh. Për shembull, 1&apos;0&quot; bëhet 1</translation>
+        <translation>Nuk shfaq pjesën e inçeve të një kuote në këmbë dhe inç kur distanca është një numër i plotë këmbësh. Për shembull, 1&apos;-0&quot; bëhet 1&apos;. (ndryshorja e sistemit DIMALTZ)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1938"/>
         <source>Sets the number of decimal places for alternate units. (DIMALTD system variable)</source>
-        <translation>Vendos numrin e vendeve dhjetore për njësitë alternative. Sistemi</translation>
+        <translation>Përcakton numrin e shifrave dhjetore për njësitë alternative. (ndryshorja e sistemit DIMALTD)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1958"/>
         <source>Includes a suffix in the alternate dimension text. You can enter text or use control codes to display special symbols. For example, entering the text cm results in dimension text similar to that shown in the illustration. When you enter a suffix, it overrides any default suffixes. (DIMAPOST system variable)</source>
-        <translation>Përfshin një prapashtesë në tekstin alternativ të dimensionit. Mund të kryeni tekstin ose të përdorni kodet e kontrollit për të shfaqur simbole të veçanta. Për shembull, hyrja në tekst çon në një tekst dimenzionor të ngjashëm me atë që tregohet në ilustrim. Kur hyn në një prapashtesë, ai heq çdo prapashtesë të prezgjedhur. (Të ndryshueshme nga sistemi</translation>
+        <translation>Përfshin një prapashtesë në tekstin alternativ të kuotës. Mund të futni tekst ose të përdorni kode kontrolli për të shfaqur simbole të veçanta. Për shembull, futja e tekstit cm jep një tekst kuote të ngjashëm me atë që tregohet në ilustrim. Kur futni një prapashtesë, ajo zëvendëson çdo prapashtesë të paracaktuar. (ndryshorja e sistemit DIMAPOST)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1982"/>
@@ -10184,32 +10185,32 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2000"/>
         <source>Sets the minimum or lower tolerance value. (DIMTM system variable)</source>
-        <translation>Vendos vlerën minimale apo më të ulët të tolerancës. Sistemi</translation>
+        <translation>Përcakton vlerën minimale ose të poshtme të tolerancës. (ndryshorja e sistemit DIMTM)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2016"/>
         <source>Suppresses leading zeros in all decimal dimensions (DIMTZIN system variable).</source>
-        <translation>Bllokon zerot në të gjitha dimensionet dhjetore (DIMTZIN i sistemit të ndryshueshëm).</translation>
+        <translation>Nuk shfaq zerot në fillim në të gjitha kuotat dhjetore (ndryshorja e sistemit DIMTZIN).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2026"/>
         <source>Suppresses trailing zeros in all decimal dimensions (DIMTZIN system variable).</source>
-        <translation>Shtyp zero në të gjitha dimensionet dhjetore.</translation>
+        <translation>Nuk shfaq zerot në fund në të gjitha kuotat dhjetore (ndryshorja e sistemit DIMTZIN).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2036"/>
         <source>Suppresses the feet portion of a feet-and-inches dimension when the distance is less than 1 foot (DIMTZIN system variable). </source>
-        <translation>Shtrëngon pjesën e këmbëve të një dimensioni këmbë-dhe-inche kur distanca është më pak se 1 këmbë (DIMTZIN sistemi i ndryshueshëm).</translation>
+        <translation>Nuk shfaq pjesën e këmbëve të një kuote në këmbë dhe inç kur distanca është më e vogël se 1 këmbë (ndryshorja e sistemit DIMTZIN). </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2046"/>
         <source>Suppresses the inches portion of a feet-and-inches dimension when the distance is an integral number of feet (DIMTZIN system variable). </source>
-        <translation>Bllokon pjesën e brendshme të një dimensioni këmbë-dhe-inches kur distanca është një numër integral këmbësh (DIMTZIN sistemi i ndryshueshëm).</translation>
+        <translation>Nuk shfaq pjesën e inçeve të një kuote në këmbë dhe inç kur distanca është një numër i plotë këmbësh (ndryshorja e sistemit DIMTZIN). </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2059"/>
         <source>Sets the method for calculating the tolerance. (DIMTOL system variable)</source>
-        <translation>Përcakton metodën për llogaritjen e tolerancës. Sistemi</translation>
+        <translation>Përcakton metodën e llogaritjes së tolerancës. (ndryshorja e sistemit DIMTOL)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2068"/>
@@ -10234,7 +10235,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2091"/>
         <source>Controls text justification for symmetrical and deviation tolerances (DIMTOLJ system variable).</source>
-        <translation>Kontrollon justifikimin e tekstit për tolerancën simetrike dhe të shmangjes (DIMTOLJ).</translation>
+        <translation>Kontrollon justifikimin e tekstit për tolerancat simetrike dhe me shmangie (ndryshorja e sistemit DIMTOLJ).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2095"/>
@@ -10264,12 +10265,12 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2134"/>
         <source>Sets the number of decimal places. (DIMTDEC system variable)</source>
-        <translation>Përcakton numrin e vendeve dhjetore. Sistemi</translation>
+        <translation>Përcakton numrin e shifrave dhjetore. (ndryshorja e sistemit DIMTDEC)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2141"/>
         <source>Sets the maximum or upper tolerance value. When you select Symmetrical in Method, this value is used for the tolerance. (DIMTP system variable)</source>
-        <translation>Përcakton vlerën maksimumi apo të sipërme të tolerancës. Kur zgjidhni simetrikun në metodë, kjo vlerë përdoret për tolerancën. Sistemi</translation>
+        <translation>Përcakton vlerën maksimale ose të sipërme të tolerancës. Kur zgjidhni Simetrike te Metoda, kjo vlerë përdoret për tolerancën. (ndryshorja e sistemit DIMTP)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2151"/>
@@ -10284,12 +10285,12 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2165"/>
         <source>Sets the current height for the tolerance text. The ratio of the tolerance height to the main dimension text height is calculated and stored in the DIMTFAC system variable.</source>
-        <translation>Për tekst. Raporti i lartësisë së tolerancës në gjatësinë kryesore të tekstit llogaritet dhe ruhet në të ndryshueshëmin e sistemit DIMTFAC.</translation>
+        <translation>Përcakton lartësinë aktuale të tekstit të tolerancës. Raporti i lartësisë së tolerancës me lartësinë e tekstit kryesor të kuotës llogaritet dhe ruhet në ndryshoren e sistemit DIMTFAC.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2175"/>
         <source>Scaling for height:</source>
-        <translation>Për lartësia:</translation>
+        <translation>Shkallëzimi i lartësisë:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2182"/>
@@ -10314,7 +10315,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2201"/>
         <source>Align operational symbols</source>
-        <translation>Shto</translation>
+        <translation>Rreshto simbolet e veprimeve</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2214"/>
@@ -10324,27 +10325,27 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2227"/>
         <source>Displays and sets the number of decimal places. (DIMALTTD system variable)</source>
-        <translation>Shfaqet dhe përcakton numrin e vendeve dhjetore. Sistemi</translation>
+        <translation>Shfaq dhe përcakton numrin e shifrave dhjetore. (ndryshorja e sistemit DIMALTTD)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2240"/>
         <source>Suppresses leading zeros in all decimal dimensions (DIMALTTZ system variable). </source>
-        <translation>Bllokimi i zerove në të gjitha dimensionet dhjetore (të ndryshueshme nga sistemi DIMALTZ).</translation>
+        <translation>Nuk shfaq zerot në fillim në të gjitha kuotat dhjetore (ndryshorja e sistemit DIMALTTZ). </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2250"/>
         <source>Suppresses trailing zeros in all decimal dimensions (DIMALTTZ system variable).</source>
-        <translation>Shtyp zerot në të gjitha dimensionet dhjetore (të ndryshueshme nga sistemi DIMALTZ).</translation>
+        <translation>Nuk shfaq zerot në fund në të gjitha kuotat dhjetore (ndryshorja e sistemit DIMALTTZ).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2260"/>
         <source>Suppresses the feet portion of a feet-and-inches dimension when the distance is less than 1 foot (DIMALTTZ system variable).</source>
-        <translation>Shtrëngon pjesën e këmbëve të një dimensioni këmbë-dhe-inche kur distanca është më pak se 1 këmbë (DIMALTZ sistemi i ndryshueshëm).</translation>
+        <translation>Nuk shfaq pjesën e këmbëve të një kuote në këmbë dhe inç kur distanca është më e vogël se 1 këmbë (ndryshorja e sistemit DIMALTTZ).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2270"/>
         <source>Suppresses the inches portion of a feet-and-inches dimension when the distance is an integral number of feet (DIMALTTZ system variable).</source>
-        <translation>Bllokon pjesën e brendshme të një dimensioni këmbë-dhe-inches kur distanca është një numër integral këmbësh (DIMALTZ sistemi i ndryshueshëm).</translation>
+        <translation>Nuk shfaq pjesën e inçeve të një kuote në këmbë dhe inç kur distanca është një numër i plotë këmbësh (ndryshorja e sistemit DIMALTTZ).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.cpp" line="354"/>
@@ -10364,7 +10365,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="14"/>
         <source>Dimension</source>
-        <translation>Përmasa</translation>
+        <translation>Kuotë</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="175"/>
@@ -10394,12 +10395,12 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="260"/>
         <source>Apply style to dimension</source>
-        <translation>Apliko</translation>
+        <translation>Zbato stilin në kuotë</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="274"/>
         <source>Select dimension style</source>
-        <translation>Zgjidh</translation>
+        <translation>Zgjidh stilin e kuotimit</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="301"/>
@@ -10409,12 +10410,12 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="318"/>
         <source>Remove style override</source>
-        <translation>Hiq</translation>
+        <translation>Hiq mbishkrimin e stilit</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="332"/>
         <source>Edit style override</source>
-        <translation>Ndrysho</translation>
+        <translation>Ndrysho mbishkrimin e stilit</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="346"/>
@@ -10424,7 +10425,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="360"/>
         <source>Set style as active one. Active style is applied to newly created dimensions.</source>
-        <translation>Vendos stilin si aktiv. Stili aktiv zbatohet për dimensionet e sapokrijuara.</translation>
+        <translation>Cakto stilin si aktiv. Stili aktiv zbatohet për kuotat e sapokrijuara.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="374"/>
@@ -10456,7 +10457,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="432"/>
         <source>Active style that is applied when new dimension is created.</source>
-        <translation>Stili aktiv që zbatohet kur krijohet një dimension i ri.</translation>
+        <translation>Stili aktiv që zbatohet kur krijohet një kuotë e re.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="445"/>
@@ -10522,7 +10523,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="145"/>
         <source>Rotation angle of dimension</source>
-        <translation>Këndi rotation i dimensionit</translation>
+        <translation>Këndi i rrotullimit të kuotës</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="66"/>
@@ -10542,12 +10543,12 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="139"/>
         <source>Ordinate Dimension</source>
-        <translation>Dimensioni ordinat</translation>
+        <translation>Kuotë ordinate</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="152"/>
         <source>Linear Dimension</source>
-        <translation>Përmasat lineare</translation>
+        <translation>Kuotë lineare</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="163"/>
@@ -10557,27 +10558,27 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="169"/>
         <source>Angular Dimension</source>
-        <translation>Përmasa Angalare</translation>
+        <translation>Kuotë këndore</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="175"/>
         <source>Arc Dimension</source>
-        <translation>Dimensioni e hark</translation>
+        <translation>Kuotë harku</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="181"/>
         <source>Diametric Dimension</source>
-        <translation>Dimetnic Dimension</translation>
+        <translation>Kuotë diametri</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="187"/>
         <source>Radial Dimension</source>
-        <translation>Dimensioni radial</translation>
+        <translation>Kuotë rrezeje</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="210"/>
         <source>Pen</source>
-        <translation>Pen</translation>
+        <translation>Stilolapsi</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="411"/>
@@ -10598,17 +10599,17 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="465"/>
         <source>New Dimension Style Override - </source>
-        <translation>Mbishkruaj stil i ri dimensioni -</translation>
+        <translation>Mbishkrim i ri i stilit të kuotimit - </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="515"/>
         <source>Edit Dimension Style Override - </source>
-        <translation>Ndrysho stilin e dimensionit</translation>
+        <translation>Ndrysho mbishkrimin e stilit të kuotimit - </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="527"/>
         <source>View Dimension Style - </source>
-        <translation>Shfaq stilin e dimensionit -</translation>
+        <translation>Shiko stilin e kuotimit - </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="580"/>
@@ -10698,12 +10699,12 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.ui" line="98"/>
         <source>Layer of entity</source>
-        <translation>Shtresa e njësisë</translation>
+        <translation>Shtresa e entitetit</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="148"/>
         <source>Pen</source>
-        <translation>Pen</translation>
+        <translation>Stilolapsi</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="175"/>
@@ -10748,12 +10749,12 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="223"/>
         <source>Spline Properties</source>
-        <translation>Vetitë e kurbës spline</translation>
+        <translation>Vetitë e spline-it</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="229"/>
         <source>Spline Points Properties</source>
-        <translation>Pika Veçoritë</translation>
+        <translation>Vetitë e pikave të spline-it</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="235"/>
@@ -10882,7 +10883,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_dlgiconssetup.ui" line="1038"/>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_dlgiconssetup.ui" line="1147"/>
         <source>Accent color for specfic icon state</source>
-        <translation>Për ikonë</translation>
+        <translation>Ngjyra e theksimit për gjendje të caktuar të ikonës</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_dlgiconssetup.ui" line="135"/>
@@ -10985,7 +10986,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.ui" line="224"/>
         <source>CTRL+ALT+SHIFT+Middle Button Double-Click</source>
-        <translation>CTRL+AL+SHIFT+Mad Butoni dyfish-Click</translation>
+        <translation>CTRL+ALT+SHIFT+Klikim i dyfishtë me butonin e mesit</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.ui" line="26"/>
@@ -10995,12 +10996,12 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.ui" line="37"/>
         <source>This shortcut is already assigned to &quot;Dimensions My&quot; menu!</source>
-        <translation>Kjo rrugë e shkurtër është caktuar tashmë në menunë &quot;Dimensionet e mia&quot;!</translation>
+        <translation>Kjo shkurtore është caktuar tashmë te menuja &quot;Kuotat e mia&quot;!</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.ui" line="163"/>
         <source>Entity Context</source>
-        <translation>Konteksti i entit</translation>
+        <translation>Konteksti i entitetit</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.ui" line="169"/>
@@ -11010,12 +11011,12 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.ui" line="176"/>
         <source>Defines the context for menu and whether click on specific entity will trigger menu invocation. </source>
-        <translation>Përcakton kontekstin për menunë dhe nëse kliko tek njësia specifike do të shkaktojë lutje me menu.</translation>
+        <translation>Përcakton kontekstin e menusë dhe nëse klikimi mbi një entitet të caktuar do ta hapë menunë. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.ui" line="186"/>
         <source>Defines type of mouse click for invocation</source>
-        <translation>Përcakton llojin e klikimit të mouse për t&apos;u lutur</translation>
+        <translation>Përcakton llojin e klikimit të miut për hapjen</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.ui" line="189"/>
@@ -11025,7 +11026,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.ui" line="195"/>
         <source>Single Click (Release)</source>
-        <translation>Vetëm</translation>
+        <translation>Klikim i vetëm (lëshim)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.ui" line="202"/>
@@ -11065,7 +11066,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.ui" line="79"/>
         <source>Mouse Button</source>
-        <translation>Butoni i mouse</translation>
+        <translation>Butoni i miut</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.ui" line="85"/>
@@ -11100,12 +11101,12 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="103"/>
         <source>Menu Assignment - &quot;%1&quot; Menu</source>
-        <translation>Menu</translation>
+        <translation>Caktimi i menusë - menuja &quot;%1&quot;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="107"/>
         <source>Either Absent or Any Entity</source>
-        <translation>Ose mungesa ose ndonjë elegitet</translation>
+        <translation>Asnjë ose çdo entitet</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="108"/>
@@ -11120,7 +11121,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="110"/>
         <source>Line</source>
-        <translation>Linja</translation>
+        <translation>Vijë</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="111"/>
@@ -11130,17 +11131,17 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="112"/>
         <source>Arc</source>
-        <translation>Arc</translation>
+        <translation>Hark</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="113"/>
         <source>Polyline</source>
-        <translation>Poliline</translation>
+        <translation>Polilinjë</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="114"/>
         <source>Spline</source>
-        <translation>Spin</translation>
+        <translation>Spline</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="115"/>
@@ -11170,7 +11171,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="120"/>
         <source>Hatch</source>
-        <translation>Hatç</translation>
+        <translation>Vijëzim</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="121"/>
@@ -11180,32 +11181,32 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="122"/>
         <source>Dimension Linear</source>
-        <translation>Përmasa</translation>
+        <translation>Kuotë lineare</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="123"/>
         <source>Dimension Aligned</source>
-        <translation>Përmasa</translation>
+        <translation>Kuotë e rreshtuar</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="124"/>
         <source>Dimension Diametric</source>
-        <translation>Dimetriç</translation>
+        <translation>Kuotë diametri</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="125"/>
         <source>Dimension Radial</source>
-        <translation>Dimensioni</translation>
+        <translation>Kuotë rrezeje</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="126"/>
         <source>Dimension Ordinate</source>
-        <translation>Dimensioni Ordinate</translation>
+        <translation>Kuotë ordinate</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="127"/>
         <source>Dimension Arc</source>
-        <translation>Arc</translation>
+        <translation>Kuotë harku</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="128"/>
@@ -11215,12 +11216,12 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="231"/>
         <source>NOTE: Menu assignment will be ignored. It is reserved for &apos;Entity Properties&apos;.</source>
-        <translation>DY FJALË: Caktimi me menu do të shpërfillet. Është e rezervuar për &quot;Properties.&quot;.</translation>
+        <translation>SHËNIM: Caktimi i menusë do të shpërfillet. Ai është i rezervuar për &apos;Vetitë e entitetit&apos;.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="234"/>
         <source>NOTE: Menu assignment will be ignored. It is reserved for &apos;Entity Select&apos;.</source>
-        <translation>DY FJALË: Caktimi me menu do të shpërfillet. Është rezervuar për &apos;Përzgjedhjen e Përtëritshme&apos;.</translation>
+        <translation>SHËNIM: Caktimi i menusë do të shpërfillet. Ai është i rezervuar për &apos;Zgjedhjen e entitetit&apos;.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="237"/>
@@ -11303,7 +11304,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="88"/>
         <source>Grid Type icon column</source>
-        <translation>Lloji i ikonës</translation>
+        <translation>Kolona e ikonës së llojit të rrjetës</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="58"/>
@@ -11442,7 +11443,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.cpp" line="142"/>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.cpp" line="146"/>
         <source>New Dimension Style</source>
-        <translation>Stili i ri i dimensionit</translation>
+        <translation>Stil i ri kuotimi</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="20"/>
@@ -11452,37 +11453,37 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="30"/>
         <source>Defines which type of dimensions are controlled by this style.</source>
-        <translation>Përcakton se cilat dimensione kontrollohen nga ky stil.</translation>
+        <translation>Përcakton se cili lloj kuotash kontrollohet nga ky stil.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="34"/>
         <source>All Dimensions</source>
-        <translation>Gjithçka</translation>
+        <translation>Të gjitha kuotat</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="39"/>
         <source>Linear Dimensions</source>
-        <translation>Përmasat lineare</translation>
+        <translation>Kuota lineare</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="44"/>
         <source>Angular Dimensions</source>
-        <translation>Dimensione anglare</translation>
+        <translation>Kuota këndore</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="49"/>
         <source>Radius Dimensions</source>
-        <translation>Përmasat me rreze</translation>
+        <translation>Kuotat e rrezes</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="54"/>
         <source>Diameter Dimensions</source>
-        <translation>Diametri</translation>
+        <translation>Kuotat e diametrit</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="59"/>
         <source>Ordinate Dimensions</source>
-        <translation>Dimensionet ordinate</translation>
+        <translation>Kuotat ordinate</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="64"/>
@@ -11497,7 +11498,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="105"/>
         <source>Existing dimension style which new style is based on</source>
-        <translation>Stili ekzistues i dimensionit ku bazohet stili i ri</translation>
+        <translation>Stili ekzistues i kuotimit mbi të cilin bazohet stili i ri</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="112"/>
@@ -11507,7 +11508,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="128"/>
         <source>Name of new dimension style</source>
-        <translation>Emri nga i ri</translation>
+        <translation>Emri i stilit të ri të kuotimit</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.cpp" line="142"/>
@@ -11517,7 +11518,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.cpp" line="146"/>
         <source>Provided name of dimension style (%1) is not unique! Please enter another one.</source>
-        <translation>Është nuk! shkruaj një tjetër.</translation>
+        <translation>Emri i dhënë i stilit të kuotimit (%1) nuk është unik! Fut një emër tjetër.</translation>
     </message>
 </context>
 <context>
@@ -11604,12 +11605,12 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgnewversionavailable.ui" line="153"/>
         <source>Ignore pre-release updates</source>
-        <translation>Shpërfill</translation>
+        <translation>Shpërfill përditësimet e versioneve paraprake</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgnewversionavailable.ui" line="160"/>
         <source>Check to disable automatic version check on startup</source>
-        <translation>Kontrolli në</translation>
+        <translation>Shëno për të çaktivizuar kontrollin automatik të versionit gjatë nisjes</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgnewversionavailable.ui" line="163"/>
@@ -11826,7 +11827,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="138"/>
         <source>Active Pen</source>
-        <translation type="unfinished">Pen aktiv</translation>
+        <translation type="unfinished">Stilolapsi aktiv</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="145"/>
@@ -11964,7 +11965,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/actions/quick_selection/lc_dlgquickselection.ui" line="399"/>
         <source>Pick angle from drawing</source>
-        <translation type="unfinished">Zgjidh</translation>
+        <translation type="unfinished">Merr këndin nga vizatimi</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/quick_selection/lc_dlgquickselection.ui" line="425"/>
@@ -12123,12 +12124,12 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="26"/>
         <source>Layer of dimension</source>
-        <translation>Shtresa e dimensionit</translation>
+        <translation>Shtresa e kuotës</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="45"/>
         <source>Pen attributes</source>
-        <translation>Butet</translation>
+        <translation>Atributet e stilolapsit</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="58"/>
@@ -12138,7 +12139,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="91"/>
         <source>Geometric Characteristics</source>
-        <translation>Gjeometrike</translation>
+        <translation>Karakteristikat gjeometrike</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="117"/>
@@ -12174,7 +12175,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.cpp" line="76"/>
         <source>Pen</source>
-        <translation>Pen</translation>
+        <translation>Stilolapsi</translation>
     </message>
 </context>
 <context>
@@ -12207,7 +12208,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="59"/>
         <source>Grid Type column</source>
-        <translation>Lloji</translation>
+        <translation>Kolona e llojit të rrjetës</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="89"/>
@@ -12262,12 +12263,12 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="135"/>
         <source>Zoom Auto</source>
-        <translation>Auto</translation>
+        <translation>Zmadhim automatik</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="140"/>
         <source>Pan, UCS Origin in Center</source>
-        <translation>Në qendër</translation>
+        <translation>Zhvendos pamjen, origjina e UCS në qendër</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="145"/>
@@ -12415,7 +12416,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucsproperties.ui" line="88"/>
         <source>Grid Type:</source>
-        <translation>Lloji:</translation>
+        <translation>Lloji i rrjetës:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucsproperties.ui" line="141"/>
@@ -12479,7 +12480,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_widget_creator.ui" line="318"/>
         <source>Actions that are included. Use drag-n-drop to reorder, double-click for remove item from the list.</source>
-        <translation>Veprime që përfshihen. Përdorimi për lista.</translation>
+        <translation>Veprimet e përfshira. Përdor tërheqjen dhe lëshimin për t&apos;i renditur, klikim të dyfishtë për të hequr një element nga lista.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_widget_creator.ui" line="285"/>
@@ -12489,7 +12490,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_widget_creator.ui" line="35"/>
         <source>Save Used Actions List</source>
-        <translation>Ruaj</translation>
+        <translation>Ruaj listën e veprimeve të përdorura</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_widget_creator.ui" line="65"/>
@@ -12752,7 +12753,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_widget_creator.cpp" line="458"/>
         <source>Are you sure you&apos;d like to remove  %2&quot;%1&quot;?</source>
-        <translation>Nga hiq?</translation>
+        <translation>Je i sigurt që dëshiron të heqësh  %2&quot;%1&quot;?</translation>
     </message>
 </context>
 <context>
@@ -12789,7 +12790,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_filler.cpp" line="30"/>
         <source>Offset</source>
-        <translation type="unfinished">Spostimi</translation>
+        <translation type="unfinished">Zhvendosja</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_filler.cpp" line="30"/>
@@ -12809,12 +12810,12 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_filler.cpp" line="42"/>
         <source>Polyline</source>
-        <translation type="unfinished">Poliline</translation>
+        <translation type="unfinished">Polilinjë</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_filler.cpp" line="42"/>
         <source>If selected, bounding box is drawn as polyline</source>
-        <translation type="unfinished">Nëse zgjidhet, kutia e lidhjes është vizatuar si poliline</translation>
+        <translation type="unfinished">Nëse zgjidhet, kutia kufizuese vizatohet si polilinjë</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_filler.cpp" line="48"/>
@@ -12852,22 +12853,22 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_widget.ui" line="56"/>
         <source>Offset:</source>
-        <translation type="unfinished">Spostimi:</translation>
+        <translation type="unfinished">Zhvendosja:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_widget.ui" line="63"/>
         <source>If selected, bounding box is drawn as polyline</source>
-        <translation type="unfinished">Nëse zgjidhet, kutia e lidhjes është vizatuar si poliline</translation>
+        <translation type="unfinished">Nëse zgjidhet, kutia kufizuese vizatohet si polilinjë</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_widget.ui" line="69"/>
         <source>Polyline</source>
-        <translation type="unfinished">Poliline</translation>
+        <translation type="unfinished">Polilinjë</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_widget.ui" line="76"/>
         <source>If checked, bounding box for the entire selection will be created. Otherwise, it will be created for individual entities. </source>
-        <translation type="unfinished">Nëse kontrollohet, do të krijohet një kuti për të gjithë zgjedhjen. Përndryshe, ajo do të krijohet për njësitë individuale.</translation>
+        <translation type="unfinished">Nëse shënohet, do të krijohet kutia kufizuese për të gjithë zgjedhjen. Përndryshe, ajo do të krijohet për secilin entitet veç e veç. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_widget.ui" line="79"/>
@@ -12877,7 +12878,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_widget.ui" line="93"/>
         <source>Pick offset from drawing</source>
-        <translation type="unfinished">Nga</translation>
+        <translation type="unfinished">Merr zhvendosjen nga vizatimi</translation>
     </message>
 </context>
 <context>
@@ -12900,7 +12901,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_filler.cpp" line="40"/>
         <source>Horizontal offset of duplicate from original entity</source>
-        <translation type="unfinished">Nga</translation>
+        <translation type="unfinished">Zhvendosja horizontale e kopjes nga entiteti origjinal</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_filler.cpp" line="48"/>
@@ -12910,7 +12911,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_filler.cpp" line="48"/>
         <source>Vertical offset of duplicate from original entity</source>
-        <translation type="unfinished">Nga</translation>
+        <translation type="unfinished">Zhvendosja vertikale e kopjes nga entiteti origjinal</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_filler.cpp" line="59"/>
@@ -12935,7 +12936,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_filler.cpp" line="65"/>
         <source>Pen to apply to created duplicate</source>
-        <translation type="unfinished">Pen nga apliko nga</translation>
+        <translation type="unfinished">Stilolapsi që zbatohet për kopjen e krijuar</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_filler.cpp" line="77"/>
@@ -12987,12 +12988,12 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="62"/>
         <source>Offset X:</source>
-        <translation type="unfinished">X:</translation>
+        <translation type="unfinished">Zhvendosja X:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="69"/>
         <source>Pen to apply to created duplicate</source>
-        <translation type="unfinished">Pen nga apliko nga</translation>
+        <translation type="unfinished">Stilolapsi që zbatohet për kopjen e krijuar</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="73"/>
@@ -13015,27 +13016,27 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="103"/>
         <source>Horizontal offset of duplicate from original entity</source>
-        <translation type="unfinished">Nga</translation>
+        <translation type="unfinished">Zhvendosja horizontale e kopjes nga entiteti origjinal</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="122"/>
         <source>Vertical offset of duplicate from original entity</source>
-        <translation type="unfinished">Nga</translation>
+        <translation type="unfinished">Zhvendosja vertikale e kopjes nga entiteti origjinal</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="129"/>
         <source>Pick offset by X from drawing</source>
-        <translation type="unfinished">Nga</translation>
+        <translation type="unfinished">Merr nga vizatimi zhvendosjen sipas X</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="150"/>
         <source>Offset Y:</source>
-        <translation type="unfinished">Y:</translation>
+        <translation type="unfinished">Zhvendosja Y:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="157"/>
         <source>Pen:</source>
-        <translation type="unfinished">Pen:</translation>
+        <translation type="unfinished">Stilolapsi:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="164"/>
@@ -13055,7 +13056,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="181"/>
         <source>Pick offset by Y from drawing</source>
-        <translation type="unfinished">Nga</translation>
+        <translation type="unfinished">Merr nga vizatimi zhvendosjen sipas Y</translation>
     </message>
 </context>
 <context>
@@ -13136,7 +13137,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse_1point_options_widget.ui" line="71"/>
         <source>Length of minor radius of ellipse</source>
-        <translation type="unfinished">Gjatësia nga</translation>
+        <translation type="unfinished">Gjatësia e rrezes së vogël të elipsit</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse_1point_options_widget.ui" line="90"/>
@@ -13186,7 +13187,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse_1point_options_widget.ui" line="171"/>
         <source>Pick minor radius from drawing</source>
-        <translation type="unfinished">Zgjidh</translation>
+        <translation type="unfinished">Merr nga vizatimi rrezen e vogël</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse_1point_options_widget.ui" line="185"/>
@@ -13196,7 +13197,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse_1point_options_widget.ui" line="199"/>
         <source>Pick angle from drawing</source>
-        <translation type="unfinished">Zgjidh</translation>
+        <translation type="unfinished">Merr këndin nga vizatimi</translation>
     </message>
 </context>
 <context>
@@ -13217,7 +13218,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/action_options/curve/lc_ellipse_arc_options_widget.ui" line="26"/>
         <source>Arc Options</source>
-        <translation type="unfinished">Mundësitë</translation>
+        <translation type="unfinished">Opsionet e harkut</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_ellipse_arc_options_widget.ui" line="56"/>
@@ -13280,7 +13281,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_ellipse.ui" line="183"/>
         <source>Pick length of major axis radius from drawing</source>
-        <translation>Nga</translation>
+        <translation>Merr nga vizatimi gjatësinë e rrezes së boshtit të madh</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_ellipse.ui" line="203"/>
@@ -13295,7 +13296,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_ellipse.ui" line="232"/>
         <source>Pick length of minor axis radius from drawing</source>
-        <translation>Nga</translation>
+        <translation>Merr nga vizatimi gjatësinë e rrezes së boshtit të vogël</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_ellipse.ui" line="252"/>
@@ -13312,12 +13313,12 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_ellipse.ui" line="277"/>
         <source>Rotation angle for the major axis of ellipse, degrees</source>
-        <translation>Këndi rotation për boshtin kryesor të elipsës, gradë</translation>
+        <translation>Këndi i rrotullimit të boshtit të madh të elipsit, në gradë</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_ellipse.ui" line="284"/>
         <source>Pick rotation angle from drawing</source>
-        <translation>Zgjidh</translation>
+        <translation>Merr nga vizatimi këndin e rrotullimit</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_ellipse.ui" line="307"/>
@@ -13332,7 +13333,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_ellipse.ui" line="336"/>
         <source>Pick start angle from drawing</source>
-        <translation>Zgjidh nga</translation>
+        <translation>Merr nga vizatimi këndin e fillimit</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_ellipse.ui" line="359"/>
@@ -13347,7 +13348,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_ellipse.ui" line="388"/>
         <source>Pick end angle from drawing</source>
-        <translation>Zgjidh fund</translation>
+        <translation>Merr nga vizatimi këndin e fundit</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_ellipse.ui" line="408"/>
@@ -13375,7 +13376,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="79"/>
         <source>Line</source>
-        <translation type="unfinished">Linja</translation>
+        <translation type="unfinished">Vijë</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="80"/>
@@ -13385,12 +13386,12 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="81"/>
         <source>Arc</source>
-        <translation type="unfinished">Arc</translation>
+        <translation type="unfinished">Hark</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="82"/>
         <source>Polyline</source>
-        <translation type="unfinished">Poliline</translation>
+        <translation type="unfinished">Polilinjë</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="83"/>
@@ -13405,7 +13406,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="85"/>
         <source>Spline</source>
-        <translation type="unfinished">Spin</translation>
+        <translation type="unfinished">Spline</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="86"/>
@@ -13435,17 +13436,17 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="91"/>
         <source>Dimension Aligned</source>
-        <translation type="unfinished">Përmasa</translation>
+        <translation type="unfinished">Kuotë e rreshtuar</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="92"/>
         <source>Dimension Linear</source>
-        <translation type="unfinished">Përmasa</translation>
+        <translation type="unfinished">Kuotë lineare</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="93"/>
         <source>Dimension Ordinate</source>
-        <translation type="unfinished">Dimensioni Ordinate</translation>
+        <translation type="unfinished">Kuotë ordinate</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="94"/>
@@ -13455,22 +13456,22 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="95"/>
         <source>Dimension Radial</source>
-        <translation type="unfinished">Dimensioni</translation>
+        <translation type="unfinished">Kuotë rrezeje</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="96"/>
         <source>Dimension Diametric</source>
-        <translation type="unfinished">Dimetriç</translation>
+        <translation type="unfinished">Kuotë diametri</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="97"/>
         <source>Dimension Arc</source>
-        <translation type="unfinished">Arc</translation>
+        <translation type="unfinished">Kuotë harku</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="98"/>
         <source>Hatch</source>
-        <translation type="unfinished">Hatç</translation>
+        <translation type="unfinished">Vijëzim</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="99"/>
@@ -13684,7 +13685,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="168"/>
         <source>Layer of entity</source>
-        <translation type="unfinished">Shtresa e njësisë</translation>
+        <translation type="unfinished">Shtresa e entitetit</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="204"/>
@@ -13734,7 +13735,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="245"/>
         <source>Line Width</source>
-        <translation type="unfinished">Linja gjerësia</translation>
+        <translation type="unfinished">Gjerësia e vijës</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="245"/>
@@ -14079,7 +14080,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_hyperbola.ui" line="160"/>
         <source>Foci &amp; Point on Curve (Alternative Editing)</source>
-        <translation>Foci &amp; Point on Curve (Shkimi alternativ)</translation>
+        <translation>Vatrat &amp; pika në kurbë (redaktim alternativ)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_hyperbola.ui" line="166"/>
@@ -14155,12 +14156,12 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/action_options/image/lc_image_options_widget.ui" line="63"/>
         <source>Rotation Angle</source>
-        <translation type="unfinished">Angëllimi</translation>
+        <translation type="unfinished">Këndi i rrotullimit</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/image/lc_image_options_widget.ui" line="70"/>
         <source>Pick angle from drawing</source>
-        <translation type="unfinished">Zgjidh</translation>
+        <translation type="unfinished">Merr këndin nga vizatimi</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/image/lc_image_options_widget.ui" line="84"/>
@@ -14239,7 +14240,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="191"/>
         <source>X coordinate of insertion point</source>
-        <translation>X nga pikë</translation>
+        <translation>Koordinata X e pikës së futjes</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="212"/>
@@ -14259,7 +14260,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="298"/>
         <source>Pick insertion point coordinates from drawing</source>
-        <translation>Zgjidh nga</translation>
+        <translation>Merr nga vizatimi koordinatat e pikës së futjes</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="91"/>
@@ -14269,7 +14270,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="253"/>
         <source>Y coordinate of insertion point</source>
-        <translation>Koordinata Y nga pikë</translation>
+        <translation>Koordinata Y e pikës së futjes</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="50"/>
@@ -14279,7 +14280,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="138"/>
         <source>Pick width value from drawing</source>
-        <translation>Zgjidh</translation>
+        <translation>Merr nga vizatimi vlerën e gjerësisë</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="305"/>
@@ -14289,13 +14290,13 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="219"/>
         <source>Pick height value from the drawing</source>
-        <translation>Zgjidh</translation>
+        <translation>Merr nga vizatimi vlerën e lartësisë</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="77"/>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="233"/>
         <source>Pick scale from drawing</source>
-        <translation>Zgjidh nga</translation>
+        <translation>Merr nga vizatimi shkallën</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="152"/>
@@ -14305,7 +14306,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="198"/>
         <source>Pick angle from the drawing</source>
-        <translation>Zgjidh</translation>
+        <translation>Merr këndin nga vizatimi</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="312"/>
@@ -14356,7 +14357,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/action_options/info/lc_info_dist_point_to_entity_options_filler.cpp" line="33"/>
         <source>If checked, the point will be always inside selected entity</source>
-        <translation type="unfinished">Nëse kontrollohet, pika do të jetë gjithmonë brenda njësisë së zgjedhur</translation>
+        <translation type="unfinished">Nëse shënohet, pika do të jetë gjithmonë brenda entitetit të zgjedhur</translation>
     </message>
 </context>
 <context>
@@ -14369,7 +14370,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/action_options/info/lc_info_dist_point_to_entity_options_widget.ui" line="32"/>
         <source>If checked, the point will be always inside selected entity</source>
-        <translation type="unfinished">Nëse kontrollohet, pika do të jetë gjithmonë brenda njësisë së zgjedhur</translation>
+        <translation type="unfinished">Nëse shënohet, pika do të jetë gjithmonë brenda entitetit të zgjedhur</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/info/lc_info_dist_point_to_entity_options_widget.ui" line="35"/>
@@ -14405,27 +14406,27 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_insert.ui" line="41"/>
         <source>Insertion point (x):</source>
-        <translation>Fut</translation>
+        <translation>Pika e futjes (x):</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_insert.ui" line="60"/>
         <source>X coordinate of insertion point</source>
-        <translation>X nga pikë</translation>
+        <translation>Koordinata X e pikës së futjes</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_insert.ui" line="85"/>
         <source>Pick insertion point coordinates from drawing</source>
-        <translation>Zgjidh nga</translation>
+        <translation>Merr nga vizatimi koordinatat e pikës së futjes</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_insert.ui" line="92"/>
         <source>Insertion point (y):</source>
-        <translation>Pikë:</translation>
+        <translation>Pika e futjes (y):</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_insert.ui" line="111"/>
         <source>Y coordinate of insertion point</source>
-        <translation>Koordinata Y nga pikë</translation>
+        <translation>Koordinata Y e pikës së futjes</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_insert.ui" line="118"/>
@@ -14435,12 +14436,12 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_insert.ui" line="137"/>
         <source>Scaling factor by X axis</source>
-        <translation>Nga X ax</translation>
+        <translation>Faktori i shkallëzimit sipas boshtit X</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_insert.ui" line="144"/>
         <source>Pick scale by X value from drawing</source>
-        <translation>Zgjidh nga X</translation>
+        <translation>Merr nga vizatimi vlerën e shkallës sipas X</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_insert.ui" line="158"/>
@@ -14450,12 +14451,12 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_insert.ui" line="177"/>
         <source>Scaling factor by Y axis</source>
-        <translation>Nga Y</translation>
+        <translation>Faktori i shkallëzimit sipas boshtit Y</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_insert.ui" line="184"/>
         <source>Pick scale Y value from drawing</source>
-        <translation>Zgjidh</translation>
+        <translation>Merr nga vizatimi vlerën e shkallës sipas Y</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_insert.ui" line="198"/>
@@ -14470,7 +14471,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_insert.ui" line="224"/>
         <source>Pick Angle value from drawing</source>
-        <translation>Zgjidh</translation>
+        <translation>Merr nga vizatimi vlerën e këndit</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_insert.ui" line="238"/>
@@ -14505,7 +14506,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_insert.ui" line="316"/>
         <source>Pick row spacing value from drawing</source>
-        <translation>Zgjidh</translation>
+        <translation>Merr nga vizatimi vlerën e hapësirës midis rreshtave</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_insert.ui" line="330"/>
@@ -14520,7 +14521,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_insert.ui" line="356"/>
         <source>Pick column spacing from drawing</source>
-        <translation>Zgjidh</translation>
+        <translation>Merr hapësirën midis kolonave nga vizatimi</translation>
     </message>
 </context>
 <context>
@@ -14568,17 +14569,17 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="119"/>
         <source>Layer that holds dimensions</source>
-        <translation>Shtresë që mban dimensione</translation>
+        <translation>Shtresa që përmban kuotat</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="122"/>
         <source>Dimensions</source>
-        <translation>Dimensionet</translation>
+        <translation>Kuotat</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="132"/>
         <source>Layer with alternate position of entities located on normal layers</source>
-        <translation>Shtresë me pozicion alternativ të njësive që ndodhen në shtresa normale</translation>
+        <translation>Shtresë me pozicion alternativ të entiteteve që ndodhen në shtresa normale</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="135"/>
@@ -14675,12 +14676,12 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="83"/>
         <source>If checked, entities will be stored in original layer. Otherwise, they are placed to layer &quot;0&quot;.</source>
-        <translation>Nëse kontrollohet, njësitë do të ruhen në shtresën origjinale. Përndryshe, ato vendosen në shtresën &quot;0&quot;.</translation>
+        <translation>Nëse shënohet, entitetet do të ruhen në shtresën origjinale. Përndryshe, ato vendosen në shtresën &quot;0&quot;.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="89"/>
         <source>Retain original layer for entities</source>
-        <translation>Mbaj shtresën origjinale të njësive</translation>
+        <translation>Ruaj shtresën origjinale të entiteteve</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="96"/>
@@ -14724,12 +14725,12 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="188"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="799"/>
         <source>Dimensional</source>
-        <translation>Dimensionet</translation>
+        <translation>Për kuota</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="201"/>
         <source>Suffix of layer&apos;s name that defines that layer is dimensional</source>
-        <translation>Prapashtesa e emrit të shtresës që përcakton se shtresa është shtresë dimensionesh</translation>
+        <translation>Prapashtesa e emrit të shtresës që e përcakton shtresën si shtresë kuotash</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="211"/>
@@ -14978,7 +14979,7 @@ Jeni i sigurt që dëshironi të braktisni ndryshimet?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="69"/>
         <source>Dimensional Layer</source>
-        <translation>Shtresë dimensionesh</translation>
+        <translation>Shtresë kuotash</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="70"/>
@@ -15103,7 +15104,7 @@ Ju lutem specifikoni një vlerë tjetër.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="263"/>
         <source>Add dimensions Layer</source>
-        <translation>Shto shtresë dimensionesh</translation>
+        <translation>Shto shtresë kuotash</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="272"/>
@@ -15148,7 +15149,7 @@ Ju lutem specifikoni një vlerë tjetër.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="663"/>
         <source>&amp;Select Entities (Sub-Tree)</source>
-        <translation>&amp;Zgjidh njësitë (nënpemë)</translation>
+        <translation>&amp;Zgjidh entitetet (nënpemë)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="668"/>
@@ -15163,7 +15164,7 @@ Ju lutem specifikoni një vlerë tjetër.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="679"/>
         <source>&amp;Add Dimensions Sub-Layer</source>
-        <translation>Sh&amp;to nënshtresë dimensionesh</translation>
+        <translation>&amp;Shto nënshtresë kuotash</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="683"/>
@@ -15184,7 +15185,7 @@ Ju lutem specifikoni një vlerë tjetër.</translation>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="701"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="711"/>
         <source>Convert to Dimensional Layer</source>
-        <translation>Shndërro në shtresë dimensionesh</translation>
+        <translation>Shndërro në shtresë kuotash</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="702"/>
@@ -15206,7 +15207,7 @@ Ju lutem specifikoni një vlerë tjetër.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="723"/>
         <source>&amp;Select Layer&apos;s Entities</source>
-        <translation>Zgjidh njësitë e sht&amp;resës</translation>
+        <translation>&amp;Zgjidh entitetet e shtresës</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="774"/>
@@ -15241,12 +15242,12 @@ Ju lutem specifikoni një vlerë tjetër.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="741"/>
         <source>&amp;Freeze Others Layers</source>
-        <translation>Fshih &amp;shtresat e tjera</translation>
+        <translation>&amp;Ngri shtresat e tjera</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="742"/>
         <source>&amp;Defreeze All Layers</source>
-        <translation>Shfaq të &amp;gjitha shtresat</translation>
+        <translation>&amp;Shkri të gjitha shtresat</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="743"/>
@@ -15322,7 +15323,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
         <location filename="../src/ui/action_options/line/lc_line_angle_options_filler.cpp" line="44"/>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_filler.cpp" line="53"/>
         <source>Line</source>
-        <translation type="unfinished">Linja</translation>
+        <translation type="unfinished">Vijë</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_filler.cpp" line="45"/>
@@ -15383,7 +15384,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_filler.cpp" line="86"/>
         <source>Snap point for position of intersection point between created line and source entity (within original line)</source>
-        <translation type="unfinished">Pikë nga pikë</translation>
+        <translation type="unfinished">Pika e kapjes për pozicionin e pikës së prerjes midis vijës së krijuar dhe entitetit burim (brenda vijës origjinale)</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_filler.cpp" line="98"/>
@@ -15401,7 +15402,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_widget.ui" line="32"/>
         <source>Line Angle Options</source>
-        <translation type="unfinished">Linja Mundësitë</translation>
+        <translation type="unfinished">Opsionet e këndit të vijës</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_widget.ui" line="62"/>
@@ -15411,7 +15412,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_widget.ui" line="81"/>
         <source>Snap Point:</source>
-        <translation type="unfinished">Pikë:</translation>
+        <translation type="unfinished">Pika e kapjes:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_widget.ui" line="113"/>
@@ -15421,7 +15422,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_widget.ui" line="135"/>
         <source>Point on created line that will be placed into insertion point</source>
-        <translation type="unfinished">Pikë në pikë</translation>
+        <translation type="unfinished">Pika në vijën e krijuar që do të vendoset në pikën e futjes</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_widget.ui" line="139"/>
@@ -15461,7 +15462,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_widget.ui" line="205"/>
         <source>Pick line angle from drawing</source>
-        <translation type="unfinished">Zgjidh</translation>
+        <translation type="unfinished">Merr këndin e vijës nga vizatimi</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_widget.ui" line="219"/>
@@ -15476,7 +15477,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_widget.cpp" line="65"/>
         <source>Line</source>
-        <translation type="unfinished">Linja</translation>
+        <translation type="unfinished">Vijë</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_widget.cpp" line="67"/>
@@ -15534,7 +15535,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="52"/>
         <source>If checked, angle is relative to angle of selected entity</source>
-        <translation type="unfinished">Nëse kontrollohet, këndi është relativ me këndin e njësisë së zgjedhur</translation>
+        <translation type="unfinished">Nëse zgjidhet, këndi është relativ ndaj këndit të entitetit të zgjedhur</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="63"/>
@@ -15567,12 +15568,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="73"/>
         <source>Snap point for position of intersection point between created line and source entity (within original line)</source>
-        <translation type="unfinished">Pikë nga pikë</translation>
+        <translation type="unfinished">Pika e kapjes për pozicionin e pikës së prerjes midis vijës së krijuar dhe entitetit burim (brenda vijës origjinale)</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="80"/>
         <source>Snap Distance</source>
-        <translation type="unfinished">Largësia</translation>
+        <translation type="unfinished">Distanca e kapjes</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="95"/>
@@ -15587,22 +15588,22 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="102"/>
         <source>Offset</source>
-        <translation type="unfinished">Spostimi</translation>
+        <translation type="unfinished">Zhvendosja</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="102"/>
         <source>Offset of tick snap point from intersection point</source>
-        <translation type="unfinished">Nga pikë</translation>
+        <translation type="unfinished">Zhvendosja e pikës së kapjes së shenjës nga pika e prerjes</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="108"/>
         <source>Divide</source>
-        <translation type="unfinished">Pjesëtim</translation>
+        <translation type="unfinished">Ndaj</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="108"/>
         <source>If checked, original entity will be divided by intersection point.</source>
-        <translation type="unfinished">Nëse kontrollohet, njësia origjinale do të ndahet me pikë kryqëzimi.</translation>
+        <translation type="unfinished">Nëse zgjidhet, entiteti origjinal do të ndahet në pikën e prerjes.</translation>
     </message>
 </context>
 <context>
@@ -15615,12 +15616,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="50"/>
         <source>Distance of intersection point from specified line snap point</source>
-        <translation type="unfinished">Largësia nga pikë</translation>
+        <translation type="unfinished">Largësia e pikës së prerjes nga pika e caktuar e kapjes në vijë</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="57"/>
         <source>Snap point for position of intersection point between created line and source entity (within original line)</source>
-        <translation type="unfinished">Pikë nga pikë</translation>
+        <translation type="unfinished">Pika e kapjes për pozicionin e pikës së prerjes midis vijës së krijuar dhe entitetit burim (brenda vijës origjinale)</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="61"/>
@@ -15654,17 +15655,17 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="122"/>
         <source>If checked, original entity will be divided by intersection point.</source>
-        <translation type="unfinished">Nëse kontrollohet, njësia origjinale do të ndahet me pikë kryqëzimi.</translation>
+        <translation type="unfinished">Nëse zgjidhet, entiteti origjinal do të ndahet në pikën e prerjes.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="125"/>
         <source>Divide</source>
-        <translation type="unfinished">Pjesëtim</translation>
+        <translation type="unfinished">Ndaj</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="132"/>
         <source>Offset:</source>
-        <translation type="unfinished">Spostimi:</translation>
+        <translation type="unfinished">Zhvendosja:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="139"/>
@@ -15674,7 +15675,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="146"/>
         <source>If checked, angle is relative to angle of selected entity</source>
-        <translation type="unfinished">Nëse kontrollohet, këndi është relativ me këndin e njësisë së zgjedhur</translation>
+        <translation type="unfinished">Nëse zgjidhet, këndi është relativ ndaj këndit të entitetit të zgjedhur</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="149"/>
@@ -15684,7 +15685,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="156"/>
         <source>Line Snap:</source>
-        <translation type="unfinished">Linja</translation>
+        <translation type="unfinished">Kapja e vijës:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="163"/>
@@ -15699,7 +15700,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="180"/>
         <source>Snap Distance:</source>
-        <translation type="unfinished">Largësia:</translation>
+        <translation type="unfinished">Largësia e kapjes:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="205"/>
@@ -15709,7 +15710,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="212"/>
         <source>Pick snap distance from drawing</source>
-        <translation type="unfinished">Zgjidh nga</translation>
+        <translation type="unfinished">Merr largësinë e kapjes nga vizatimi</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="226"/>
@@ -15719,12 +15720,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="233"/>
         <source>Pick angle from drawing</source>
-        <translation type="unfinished">Zgjidh</translation>
+        <translation type="unfinished">Merr këndin nga vizatimi</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="265"/>
         <source>Offset of tick snap point from intersection point</source>
-        <translation type="unfinished">Nga pikë</translation>
+        <translation type="unfinished">Zhvendosja e pikës së kapjes së shenjës nga pika e prerjes</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="272"/>
@@ -15744,7 +15745,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="329"/>
         <source>Pick offset from drawing</source>
-        <translation type="unfinished">Nga</translation>
+        <translation type="unfinished">Merr zhvendosjen nga vizatimi</translation>
     </message>
 </context>
 <context>
@@ -15767,7 +15768,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_bisector_options_filler.cpp" line="38"/>
         <source>Number of bisectors to create</source>
-        <translation type="unfinished">Numri nga</translation>
+        <translation type="unfinished">Numri i përgjysmoreve që do të krijohen</translation>
     </message>
 </context>
 <context>
@@ -15775,7 +15776,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_bisector_options_widget.ui" line="32"/>
         <source>Line Bisector Options</source>
-        <translation type="unfinished">Mundësitë</translation>
+        <translation type="unfinished">Opsionet e përgjysmores së vijës</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_bisector_options_widget.ui" line="56"/>
@@ -15790,7 +15791,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_bisector_options_widget.ui" line="79"/>
         <source>Pick line length from drawing</source>
-        <translation type="unfinished">Zgjidh</translation>
+        <translation type="unfinished">Merr gjatësinë e vijës nga vizatimi</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_bisector_options_widget.ui" line="93"/>
@@ -15800,7 +15801,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_bisector_options_widget.ui" line="103"/>
         <source>Number of bisectors to create</source>
-        <translation type="unfinished">Numri nga</translation>
+        <translation type="unfinished">Numri i përgjysmoreve që do të krijohen</translation>
     </message>
 </context>
 <context>
@@ -15828,7 +15829,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="48"/>
         <source>To Intersection</source>
-        <translation type="unfinished">Për të intersectuar</translation>
+        <translation type="unfinished">Deri te prerja</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="49"/>
@@ -15853,7 +15854,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="66"/>
         <source>Offset for created line from intersection point</source>
-        <translation type="unfinished">Nga</translation>
+        <translation type="unfinished">Zhvendosja e vijës së krijuar nga pika e prerjes</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="73"/>
@@ -15863,7 +15864,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="73"/>
         <source>Fixed length of created line</source>
-        <translation type="unfinished">Nga</translation>
+        <translation type="unfinished">Gjatësia fikse e vijës së krijuar</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="82"/>
@@ -15883,12 +15884,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="88"/>
         <source>Snap</source>
-        <translation type="unfinished">Bëshkë</translation>
+        <translation type="unfinished">Kapje</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="88"/>
         <source>Snap point for created line</source>
-        <translation type="unfinished">Pikë për</translation>
+        <translation type="unfinished">Pika e kapjes për vijën e krijuar</translation>
     </message>
 </context>
 <context>
@@ -15906,7 +15907,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="51"/>
         <source>Pick angle from drawing</source>
-        <translation type="unfinished">Zgjidh</translation>
+        <translation type="unfinished">Merr këndin nga vizatimi</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="65"/>
@@ -15921,7 +15922,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="120"/>
         <source>Snap point for created line</source>
-        <translation type="unfinished">Pikë për</translation>
+        <translation type="unfinished">Pika e kapjes për vijën e krijuar</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="124"/>
@@ -15941,7 +15942,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="142"/>
         <source>Snap:</source>
-        <translation type="unfinished">Snake:</translation>
+        <translation type="unfinished">Kapja:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="171"/>
@@ -15951,7 +15952,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="196"/>
         <source>Fixed length of created line</source>
-        <translation type="unfinished">Nga</translation>
+        <translation type="unfinished">Gjatësia fikse e vijës së krijuar</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="203"/>
@@ -15961,17 +15962,17 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="259"/>
         <source>Offset for created line from intersection point</source>
-        <translation type="unfinished">Nga</translation>
+        <translation type="unfinished">Zhvendosja e vijës së krijuar nga pika e prerjes</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="266"/>
         <source>End offset:</source>
-        <translation type="unfinished">Mbarimi</translation>
+        <translation type="unfinished">Zhvendosja në fund:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="273"/>
         <source>Pick offset from drawing</source>
-        <translation type="unfinished">Nga</translation>
+        <translation type="unfinished">Merr zhvendosjen nga vizatimi</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="318"/>
@@ -15981,7 +15982,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="322"/>
         <source>To Intersection</source>
-        <translation type="unfinished">Për të intersectuar</translation>
+        <translation type="unfinished">Deri te prerja</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="327"/>
@@ -16052,7 +16053,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="56"/>
         <source>Snap point for gap on the line</source>
-        <translation type="unfinished">Pikë për në</translation>
+        <translation type="unfinished">Pika e kapjes për boshllëkun në vijë</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="63"/>
@@ -16072,7 +16073,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="80"/>
         <source>Snap point of gap to line snap point</source>
-        <translation type="unfinished">Pikë nga pikë</translation>
+        <translation type="unfinished">Pika e kapjes së boshllëkut ndaj pikës së kapjes në vijë</translation>
     </message>
 </context>
 <context>
@@ -16085,7 +16086,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="32"/>
         <source>Snap point of gap to line snap point</source>
-        <translation type="unfinished">Pikë nga pikë</translation>
+        <translation type="unfinished">Pika e kapjes së boshllëkut ndaj pikës së kapjes në vijë</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="36"/>
@@ -16113,12 +16114,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="61"/>
         <source>Gap Snap:</source>
-        <translation type="unfinished">Hendeku:</translation>
+        <translation type="unfinished">Kapja e boshllëkut:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="68"/>
         <source>Snap point for gap on the line</source>
-        <translation type="unfinished">Pikë për në</translation>
+        <translation type="unfinished">Pika e kapjes për boshllëkun në vijë</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="72"/>
@@ -16147,7 +16148,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="95"/>
         <source>Line Snap:</source>
-        <translation type="unfinished">Linja</translation>
+        <translation type="unfinished">Kapja e vijës:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="134"/>
@@ -16157,7 +16158,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="141"/>
         <source>PIck gap size from drawing</source>
-        <translation type="unfinished">Madhësia</translation>
+        <translation type="unfinished">Merr madhësinë e boshllëkut nga vizatimi</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="155"/>
@@ -16177,12 +16178,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="184"/>
         <source>Snap Distance:</source>
-        <translation type="unfinished">Largësia:</translation>
+        <translation type="unfinished">Largësia e kapjes:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="191"/>
         <source>Pick snap distance from drawing</source>
-        <translation type="unfinished">Zgjidh nga</translation>
+        <translation type="unfinished">Merr largësinë e kapjes nga vizatimi</translation>
     </message>
 </context>
 <context>
@@ -16206,7 +16207,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="41"/>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="59"/>
         <source>Line 1</source>
-        <translation type="unfinished">Linja 1</translation>
+        <translation type="unfinished">Vija 1</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="41"/>
@@ -16217,7 +16218,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="48"/>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="60"/>
         <source>Line 2</source>
-        <translation type="unfinished">Linja 2</translation>
+        <translation type="unfinished">Vija 2</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="48"/>
@@ -16227,7 +16228,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="58"/>
         <source>Active Pen</source>
-        <translation type="unfinished">Pen aktiv</translation>
+        <translation type="unfinished">Stilolapsi aktiv</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="61"/>
@@ -16242,17 +16243,17 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="65"/>
         <source>Defines how pen should be applied to created entities</source>
-        <translation type="unfinished">Përcakton se si duhet aplikuar lapsi për njësitë e krijuara</translation>
+        <translation type="unfinished">Përcakton si do të zbatohet stilolapsi për entitetet e krijuara</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="78"/>
         <source>Polyline</source>
-        <translation type="unfinished">Poliline</translation>
+        <translation type="unfinished">Polilinjë</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="78"/>
         <source>If checked, polyline will be created instead of individual lines</source>
-        <translation type="unfinished">Nëse kontrollohet, poliline do të krijohet në vend të vijave individuale</translation>
+        <translation type="unfinished">Nëse zgjidhet, do të krijohet një polilinjë në vend të vijave të veçanta</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="89"/>
@@ -16275,12 +16276,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="38"/>
         <source>If checked, polyline will be created instead of individual lines</source>
-        <translation type="unfinished">Nëse kontrollohet, poliline do të krijohet në vend të vijave individuale</translation>
+        <translation type="unfinished">Nëse zgjidhet, do të krijohet një polilinjë në vend të vijave të veçanta</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="41"/>
         <source>Create Polyline</source>
-        <translation type="unfinished">Krijo</translation>
+        <translation type="unfinished">Krijo polilinjë</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="66"/>
@@ -16308,12 +16309,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="88"/>
         <source>Line 1:</source>
-        <translation type="unfinished">Linja 1:</translation>
+        <translation type="unfinished">Vija 1:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="95"/>
         <source>Line 2:</source>
-        <translation type="unfinished">Linja 2:</translation>
+        <translation type="unfinished">Vija 2:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="120"/>
@@ -16323,22 +16324,22 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="160"/>
         <source>Defines how pen should be applied to created entities</source>
-        <translation type="unfinished">Përcakton se si duhet aplikuar lapsi për njësitë e krijuara</translation>
+        <translation type="unfinished">Përcakton si do të zbatohet stilolapsi për entitetet e krijuara</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="164"/>
         <source>Active Pen</source>
-        <translation type="unfinished">Pen aktiv</translation>
+        <translation type="unfinished">Stilolapsi aktiv</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="169"/>
         <source>Line 1</source>
-        <translation type="unfinished">Linja 1</translation>
+        <translation type="unfinished">Vija 1</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="174"/>
         <source>Line 2</source>
-        <translation type="unfinished">Linja 2</translation>
+        <translation type="unfinished">Vija 2</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="179"/>
@@ -16409,7 +16410,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_options_widget.ui" line="32"/>
         <source>Line Options</source>
-        <translation type="unfinished">Linja Mundësitë</translation>
+        <translation type="unfinished">Opsionet e vijës</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_options_widget.ui" line="53"/>
@@ -16452,7 +16453,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_parallel_options_filler.cpp" line="31"/>
         <source>Distance to original entity</source>
-        <translation type="unfinished">Largësia nga njësia origjinale</translation>
+        <translation type="unfinished">Largësia nga entiteti origjinal</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_parallel_options_filler.cpp" line="37"/>
@@ -16462,7 +16463,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_parallel_options_filler.cpp" line="37"/>
         <source>Number of parallels to create</source>
-        <translation type="unfinished">Numri nga</translation>
+        <translation type="unfinished">Numri i vijave paralele që do të krijohen</translation>
     </message>
 </context>
 <context>
@@ -16470,7 +16471,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_parallel_options_widget.ui" line="32"/>
         <source>Line Parallel Options</source>
-        <translation type="unfinished">Linja Mundësitë</translation>
+        <translation type="unfinished">Opsionet e vijës paralele</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_parallel_options_widget.ui" line="56"/>
@@ -16480,7 +16481,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_parallel_options_widget.ui" line="72"/>
         <source>Distance to original entity</source>
-        <translation type="unfinished">Largësia nga njësia origjinale</translation>
+        <translation type="unfinished">Largësia nga entiteti origjinal</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_parallel_options_widget.ui" line="79"/>
@@ -16495,7 +16496,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_parallel_options_widget.ui" line="109"/>
         <source>Number of parallels to create</source>
-        <translation type="unfinished">Numri nga</translation>
+        <translation type="unfinished">Numri i vijave paralele që do të krijohen</translation>
     </message>
 </context>
 <context>
@@ -16508,7 +16509,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_parallel_through_options_filler.cpp" line="31"/>
         <source>Number of parallels to create</source>
-        <translation type="unfinished">Numri nga</translation>
+        <translation type="unfinished">Numri i vijave paralele që do të krijohen</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_parallel_through_options_filler.cpp" line="39"/>
@@ -16528,7 +16529,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_parallel_through_options_filler.cpp" line="45"/>
         <source>If checked, parallels will be created on both sides of entity</source>
-        <translation type="unfinished">Nëse kontrollohen, paralelet do të krijohen në të dy anët e njësisë</translation>
+        <translation type="unfinished">Nëse zgjidhet, vijat paralele do të krijohen në të dy anët e entitetit</translation>
     </message>
 </context>
 <context>
@@ -16536,12 +16537,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_parallel_through_options_widget.ui" line="32"/>
         <source>Line Parallel Through Options</source>
-        <translation type="unfinished">Linja</translation>
+        <translation type="unfinished">Opsionet e vijës paralele nëpër pikë</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_parallel_through_options_widget.ui" line="50"/>
         <source>Number of parallels to create</source>
-        <translation type="unfinished">Numri nga</translation>
+        <translation type="unfinished">Numri i vijave paralele që do të krijohen</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_parallel_through_options_widget.ui" line="79"/>
@@ -16551,7 +16552,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_parallel_through_options_widget.ui" line="101"/>
         <source>If checked, parallels will be created on both sides of entity</source>
-        <translation type="unfinished">Nëse kontrollohen, paralelet do të krijohen në të dy anët e njësisë</translation>
+        <translation type="unfinished">Nëse zgjidhet, vijat paralele do të krijohen në të dy anët e entitetit</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_parallel_through_options_widget.ui" line="104"/>
@@ -16619,7 +16620,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/point/lc_points_line_options_widget.ui" line="118"/>
         <source>Fit Line</source>
-        <translation type="unfinished">Linja</translation>
+        <translation type="unfinished">Përshtat vijën</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/point/lc_points_line_options_widget.ui" line="143"/>
@@ -16644,12 +16645,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/point/lc_points_line_options_widget.ui" line="193"/>
         <source>Number of points to create</source>
-        <translation type="unfinished">Numri nga</translation>
+        <translation type="unfinished">Numri i pikave që do të krijohen</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/point/lc_points_line_options_widget.ui" line="212"/>
         <source>Number of points:</source>
-        <translation type="unfinished">Numri nga:</translation>
+        <translation type="unfinished">Numri i pikave:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/point/lc_points_line_options_widget.ui" line="250"/>
@@ -16664,7 +16665,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/point/lc_points_line_options_widget.ui" line="264"/>
         <source>Pick angle from drawing</source>
-        <translation type="unfinished">Zgjidh</translation>
+        <translation type="unfinished">Merr këndin nga vizatimi</translation>
     </message>
 </context>
 <context>
@@ -16682,7 +16683,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_line.ui" line="68"/>
         <source>Pick endpoint from the drawing</source>
-        <translation>Pikë</translation>
+        <translation>Merr pikën fundore nga vizatimi</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_line.ui" line="75"/>
@@ -16692,7 +16693,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_line.ui" line="107"/>
         <source>Starting point Y coordinate</source>
-        <translation>Fillo pikë Y</translation>
+        <translation>Koordinata Y e pikës fillestare</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_line.ui" line="114"/>
@@ -16702,7 +16703,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_line.ui" line="130"/>
         <source>Starting point X coordinate</source>
-        <translation>Fillo pikë X</translation>
+        <translation>Koordinata X e pikës fillestare</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_line.ui" line="137"/>
@@ -16712,12 +16713,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_line.ui" line="153"/>
         <source>Ending point Y coordinate</source>
-        <translation>Pikë Y</translation>
+        <translation>Koordinata Y e pikës përfundimtare</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_line.ui" line="166"/>
         <source>Ending point X coordinate</source>
-        <translation>Pika X</translation>
+        <translation>Koordinata X e pikës përfundimtare</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_line.ui" line="191"/>
@@ -16755,7 +16756,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_radiant_options_filler.cpp" line="47"/>
         <source>Line</source>
-        <translation type="unfinished">Linja</translation>
+        <translation type="unfinished">Vijë</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_radiant_options_filler.cpp" line="48"/>
@@ -16879,7 +16880,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_radiant_options_widget.ui" line="143"/>
         <source>Line</source>
-        <translation type="unfinished">Linja</translation>
+        <translation type="unfinished">Vijë</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_radiant_options_widget.ui" line="148"/>
@@ -16940,7 +16941,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_rel_angle_options_widget.ui" line="32"/>
         <source>Line Relative Angle Options</source>
-        <translation type="unfinished">Linja Mundësitë</translation>
+        <translation type="unfinished">Opsionet e këndit relativ të vijës</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_rel_angle_options_widget.ui" line="56"/>
@@ -16955,7 +16956,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_rel_angle_options_widget.ui" line="79"/>
         <source>Pick angle from drawing</source>
-        <translation type="unfinished">Zgjidh</translation>
+        <translation type="unfinished">Merr këndin nga vizatimi</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_rel_angle_options_widget.ui" line="99"/>
@@ -17034,7 +17035,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="64"/>
         <source>Polyline</source>
-        <translation type="unfinished">Poliline</translation>
+        <translation type="unfinished">Polilinjë</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="65"/>
@@ -17073,7 +17074,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="32"/>
         <source>Line Options</source>
-        <translation type="unfinished">Linja Mundësitë</translation>
+        <translation type="unfinished">Opsionet e vijës</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="62"/>
@@ -17083,7 +17084,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="124"/>
         <source>Horizontal line</source>
-        <translation type="unfinished">Horizontal</translation>
+        <translation type="unfinished">Vijë horizontale</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="127"/>
@@ -17093,7 +17094,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="168"/>
         <source>Line to arbitrary point</source>
-        <translation type="unfinished">Linja pikë</translation>
+        <translation type="unfinished">Vijë deri te një pikë e çfarëdoshme</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="171"/>
@@ -17103,7 +17104,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="190"/>
         <source>Vertical line</source>
-        <translation type="unfinished">Vertikal</translation>
+        <translation type="unfinished">Vijë vertikale</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="193"/>
@@ -17118,7 +17119,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="237"/>
         <source>Line by specified angle</source>
-        <translation type="unfinished">Linja nga</translation>
+        <translation type="unfinished">Vijë me kënd të caktuar</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="240"/>
@@ -17174,12 +17175,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="324"/>
         <source>Polyline</source>
-        <translation type="unfinished">Poliline</translation>
+        <translation type="unfinished">Polilinjë</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="331"/>
         <source>Pick angle from drawing</source>
-        <translation type="unfinished">Zgjidh</translation>
+        <translation type="unfinished">Merr këndin nga vizatimi</translation>
     </message>
 </context>
 <context>
@@ -17192,7 +17193,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/text/lc_m_text_options_filler.cpp" line="31"/>
         <source>Text to insert</source>
-        <translation type="unfinished">Teksti që duhet shtuar</translation>
+        <translation type="unfinished">Teksti që do të futet</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/text/lc_m_text_options_filler.cpp" line="37"/>
@@ -17220,7 +17221,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/text/lc_m_text_options_widget.ui" line="81"/>
         <source>Text to insert</source>
-        <translation type="unfinished">Teksti që duhet shtuar</translation>
+        <translation type="unfinished">Teksti që do të futet</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/text/lc_m_text_options_widget.ui" line="94"/>
@@ -17235,7 +17236,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/text/lc_m_text_options_widget.ui" line="117"/>
         <source>Pick angle from drawing</source>
-        <translation type="unfinished">Zgjidh</translation>
+        <translation type="unfinished">Merr këndin nga vizatimi</translation>
     </message>
 </context>
 <context>
@@ -17341,7 +17342,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_arc.cpp" line="29"/>
         <source>Arc</source>
-        <translation type="unfinished">Arc</translation>
+        <translation type="unfinished">Hark</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_arc.cpp" line="34"/>
@@ -17391,7 +17392,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_arc.cpp" line="50"/>
         <source>Diameter of arc</source>
-        <translation type="unfinished">Diametri nga</translation>
+        <translation type="unfinished">Diametri i harkut</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_arc.cpp" line="54"/>
@@ -17492,7 +17493,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_arc.cpp" line="90"/>
         <source>End angle of arc</source>
-        <translation type="unfinished">Fundi nga</translation>
+        <translation type="unfinished">Këndi përfundimtar i harkut</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_arc.cpp" line="94"/>
@@ -17540,7 +17541,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_base.h" line="57"/>
         <source>Line Width</source>
-        <translation type="unfinished">Linja gjerësia</translation>
+        <translation type="unfinished">Gjerësia e vijës</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_base.h" line="57"/>
@@ -17652,7 +17653,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimaligned.cpp" line="29"/>
         <source>Dimension Aligned</source>
-        <translation type="unfinished">Përmasa</translation>
+        <translation type="unfinished">Kuotë e rreshtuar</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimaligned.cpp" line="35"/>
@@ -17748,7 +17749,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimarc.cpp" line="29"/>
         <source>Dimension Arc</source>
-        <translation type="unfinished">Arc</translation>
+        <translation type="unfinished">Kuotë harku</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimarc.cpp" line="34"/>
@@ -17866,7 +17867,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="212"/>
         <source>Line</source>
-        <translation type="unfinished">Linja</translation>
+        <translation type="unfinished">Vijë</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="213"/>
@@ -18217,12 +18218,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="397"/>
         <source>Arc length symbol</source>
-        <translation type="unfinished">Simboli i gjatësisë Arc</translation>
+        <translation type="unfinished">Simboli i gjatësisë së harkut</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="399"/>
         <source>Above dimension text</source>
-        <translation type="unfinished">Mbi tekst</translation>
+        <translation type="unfinished">Mbi tekstin e kuotës</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="400"/>
@@ -18368,7 +18369,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="398"/>
         <source>Preceding dimension text</source>
-        <translation type="unfinished">Tekst</translation>
+        <translation type="unfinished">Përpara tekstit të kuotës</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="433"/>
@@ -19028,7 +19029,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimdiametric.cpp" line="29"/>
         <source>Dimension Diametric</source>
-        <translation type="unfinished">Dimetriç</translation>
+        <translation type="unfinished">Kuotë diametri</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimdiametric.cpp" line="34"/>
@@ -19056,7 +19057,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimlinear.cpp" line="30"/>
         <source>Dimension Linear</source>
-        <translation type="unfinished">Përmasa</translation>
+        <translation type="unfinished">Kuotë lineare</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimlinear.cpp" line="36"/>
@@ -19164,7 +19165,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimordinate.cpp" line="29"/>
         <source>Dimension Ordinate</source>
-        <translation type="unfinished">Dimensioni Ordinate</translation>
+        <translation type="unfinished">Kuotë ordinate</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimordinate.cpp" line="35"/>
@@ -19282,7 +19283,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimradial.cpp" line="29"/>
         <source>Dimension Radial</source>
-        <translation type="unfinished">Dimensioni</translation>
+        <translation type="unfinished">Kuotë rrezeje</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimradial.cpp" line="34"/>
@@ -19467,7 +19468,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_ellipse.cpp" line="93"/>
         <source>End angle of arc</source>
-        <translation type="unfinished">Fundi nga</translation>
+        <translation type="unfinished">Këndi përfundimtar i harkut</translation>
     </message>
 </context>
 <context>
@@ -19475,7 +19476,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_hatch.cpp" line="29"/>
         <source>Hatch</source>
-        <translation type="unfinished">Hatç</translation>
+        <translation type="unfinished">Vijëzim</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_hatch.cpp" line="34"/>
@@ -19954,7 +19955,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_line.cpp" line="29"/>
         <source>Line</source>
-        <translation type="unfinished">Linja</translation>
+        <translation type="unfinished">Vijë</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_line.cpp" line="33"/>
@@ -20374,7 +20375,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_polyline.cpp" line="29"/>
         <source>Polyline</source>
-        <translation type="unfinished">Poliline</translation>
+        <translation type="unfinished">Polilinjë</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_polyline.cpp" line="33"/>
@@ -20482,7 +20483,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_spline.cpp" line="30"/>
         <source>Spline</source>
-        <translation type="unfinished">Spin</translation>
+        <translation type="unfinished">Spline</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_spline.cpp" line="35"/>
@@ -20774,7 +20775,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_text.cpp" line="78"/>
         <source>Baseline</source>
-        <translation type="unfinished">Linja</translation>
+        <translation type="unfinished">Vija bazë</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_text.cpp" line="79"/>
@@ -20849,12 +20850,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="139"/>
         <source>Line</source>
-        <translation type="unfinished">Linja</translation>
+        <translation type="unfinished">Vijë</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="143"/>
         <source>Polyline</source>
-        <translation type="unfinished">Poliline</translation>
+        <translation type="unfinished">Polilinjë</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="147"/>
@@ -20869,7 +20870,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="155"/>
         <source>Arc</source>
-        <translation type="unfinished">Arc</translation>
+        <translation type="unfinished">Hark</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="159"/>
@@ -20879,7 +20880,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="162"/>
         <source>Polyline/Spline</source>
-        <translation type="unfinished">Poliline</translation>
+        <translation type="unfinished">Polilinjë/Spline</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="173"/>
@@ -20898,7 +20899,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="750"/>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="800"/>
         <source>Add Dimensions</source>
-        <translation type="unfinished">Shto përmasor</translation>
+        <translation type="unfinished">Shto kuota</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="213"/>
@@ -20996,7 +20997,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="583"/>
         <source>Modify Line</source>
-        <translation type="unfinished">Ndrysho Linja</translation>
+        <translation type="unfinished">Ndrysho vijën</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="603"/>
@@ -21005,14 +21006,14 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="782"/>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="886"/>
         <source>Draw Line</source>
-        <translation type="unfinished">Vizato Linja</translation>
+        <translation type="unfinished">Vizato vijë</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="620"/>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="667"/>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="722"/>
         <source>Draw Circle</source>
-        <translation type="unfinished">Vizato</translation>
+        <translation type="unfinished">Vizato rreth</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="629"/>
@@ -21032,22 +21033,22 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="705"/>
         <source>Modify Arc</source>
-        <translation type="unfinished">Ndrysho Arc</translation>
+        <translation type="unfinished">Ndrysho harkun</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="763"/>
         <source>Modify Polyline</source>
-        <translation type="unfinished">Ndrysho</translation>
+        <translation type="unfinished">Ndrysho polilinjën</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="815"/>
         <source>Modify Spline</source>
-        <translation type="unfinished">Ndrysho</translation>
+        <translation type="unfinished">Ndrysho spline-in</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="831"/>
         <source>Modify Spline Points</source>
-        <translation type="unfinished">Ndrysho</translation>
+        <translation type="unfinished">Ndrysho pikat e spline-it</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="854"/>
@@ -21057,7 +21058,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="867"/>
         <source>Modify MText</source>
-        <translation type="unfinished">Ndrysho Metech</translation>
+        <translation type="unfinished">Ndrysho MText-in</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="1025"/>
@@ -21087,7 +21088,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="125"/>
         <source>On&amp;line Docs</source>
-        <translation type="unfinished">Dokumentacioni online</translation>
+        <translation type="unfinished">Dokumentacioni në &amp;linjë</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="126"/>
@@ -21160,7 +21161,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="212"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="246"/>
         <source>&amp;Line</source>
-        <translation type="unfinished">&amp;Linja</translation>
+        <translation type="unfinished">&amp;Vijë</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="178"/>
@@ -21174,14 +21175,14 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="214"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="248"/>
         <source>&amp;Circle</source>
-        <translation type="unfinished">&amp;Circle</translation>
+        <translation type="unfinished">&amp;Rreth</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="186"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="215"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="250"/>
         <source>&amp;Arc</source>
-        <translation type="unfinished">&amp; Arc</translation>
+        <translation type="unfinished">&amp;Hark</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="190"/>
@@ -21207,7 +21208,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="221"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="258"/>
         <source>&amp;Polyline</source>
-        <translation type="unfinished">&amp;Polyline</translation>
+        <translation type="unfinished">&amp;Polilinjë</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="206"/>
@@ -21246,7 +21247,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="234"/>
         <source>&amp;Dimensions</source>
-        <translation type="unfinished">&amp;Dimensions</translation>
+        <translation type="unfinished">&amp;Kuotat</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="238"/>
@@ -21262,7 +21263,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="263"/>
         <source>Dime&amp;nsion</source>
-        <translation type="unfinished">Dime&amp;nsion</translation>
+        <translation type="unfinished">&amp;Kuotimi</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="276"/>
@@ -21357,7 +21358,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="598"/>
         <source>&amp;Layout</source>
-        <translation type="unfinished">C:</translation>
+        <translation type="unfinished">&amp;Paraqitja</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="602"/>
@@ -21503,17 +21504,17 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_options_widget.ui" line="73"/>
         <source>Align left edges</source>
-        <translation>Rreshti i majtë</translation>
+        <translation>Rreshto skajet e majta</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_options_widget.ui" line="93"/>
         <source>Center entities horizontally</source>
-        <translation>Horizontal</translation>
+        <translation>Qendërzo entitetet horizontalisht</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_options_widget.ui" line="113"/>
         <source>Align right edges</source>
-        <translation>Rreshti i djathtë i ndarë</translation>
+        <translation>Rreshto skajet e djathta</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_options_widget.ui" line="136"/>
@@ -21528,7 +21529,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_options_widget.ui" line="150"/>
         <source>Defines the way of selected entities alignment.</source>
-        <translation>Përcakton rrugën e bashkimit të njësive të zgjedhura.</translation>
+        <translation>Përcakton mënyrën e rreshtimit të entiteteve të zgjedhura.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_options_widget.ui" line="154"/>
@@ -21568,7 +21569,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_options_widget.ui" line="230"/>
         <source>Center entities vertically</source>
-        <translation>Vertikalisht</translation>
+        <translation>Qendërzo entitetet vertikalisht</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_options_widget.ui" line="250"/>
@@ -21578,7 +21579,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_options_widget.ui" line="270"/>
         <source>No vertical alignment</source>
-        <translation>Jo</translation>
+        <translation>Pa rreshtim vertikal</translation>
     </message>
 </context>
 <context>
@@ -21601,7 +21602,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="42"/>
         <source>If unchecked, original entities will be removed, otherwise they will survive.</source>
-        <translation type="unfinished">Po të jenë të pakontrolluara, njësitë origjinale do të hiqen, përndryshe ato do të mbijetojnë.</translation>
+        <translation type="unfinished">Nëse nuk kontrollohet, entitetet origjinale do të hiqen, përndryshe ato do të mbeten.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="45"/>
@@ -21621,7 +21622,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="82"/>
         <source>If checked, mirrored entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Nëse kontrollohet, njësitë e pasqyruara do të vendosen në shtresën aktuale, përndryshe ato do të vendosen në shtresat origjinale.</translation>
+        <translation type="unfinished">Nëse kontrollohet, entitetet e pasqyruara do të vendosen në shtresën aktuale, përndryshe ato do të vendosen në shtresat origjinale.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="85"/>
@@ -21659,7 +21660,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_filler.cpp" line="44"/>
         <source>Number of copies to create</source>
-        <translation type="unfinished">Numri nga</translation>
+        <translation type="unfinished">Numri i kopjeve që do të krijohen</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_filler.cpp" line="54"/>
@@ -21692,7 +21693,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_widget.ui" line="45"/>
         <source>If checked, created entities will be placed to current layer. Otherwise, they will be placed into original layers. </source>
-        <translation type="unfinished">Nëse kontrollohet, njësitë e krijuara do të vendosen në shtresën aktuale. Përndryshe, ato do të vendosen në shtresat origjinale. </translation>
+        <translation type="unfinished">Nëse zgjidhet, entitetet e krijuara do të vendosen në shtresën aktuale. Përndryshe, ato do të vendosen në shtresat origjinale. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_widget.ui" line="48"/>
@@ -21707,7 +21708,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_widget.ui" line="68"/>
         <source>If checked, current attributes will be applied to created entities, owtherwise original ones will be used. </source>
-        <translation type="unfinished">Po të kontrollohen, atributet aktuale do të aplikohen në njësitë e krijuara, do të përdoren ato origjinale më të përshtatshme.</translation>
+        <translation type="unfinished">Nëse zgjidhet, atributet aktuale do të zbatohen për entitetet e krijuara, përndryshe do të përdoren ato origjinale. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_widget.ui" line="71"/>
@@ -21717,7 +21718,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_widget.ui" line="78"/>
         <source>If checked, original entities will survive, otherwise they will be removed.</source>
-        <translation type="unfinished">Po të kontrollohen, njësitë origjinale do të mbijetojnë, përndryshe ato do të hiqen.</translation>
+        <translation type="unfinished">Nëse zgjidhet, entitetet origjinale do të ruhen, përndryshe ato do të hiqen.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_widget.ui" line="81"/>
@@ -21785,7 +21786,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_filler.cpp" line="61"/>
         <source>Number of copies to create</source>
-        <translation type="unfinished">Numri nga</translation>
+        <translation type="unfinished">Numri i kopjeve që do të krijohen</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_filler.cpp" line="71"/>
@@ -21823,12 +21824,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="32"/>
         <source>Move Rotate Options</source>
-        <translation type="unfinished">Lëvize Mundësitë</translation>
+        <translation type="unfinished">Opsionet e zhvendosjes me rrotullim</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="50"/>
         <source>If checked, current attributes will be applied to created entities, otherwise original ones will be used. </source>
-        <translation type="unfinished">Nëse kontrollohen, atributet aktuale do të zbatohen për njësitë e krijuara, përndryshe ato origjinale do të përdoren.</translation>
+        <translation type="unfinished">Nëse zgjidhet, atributet aktuale do të zbatohen për entitetet e krijuara, përndryshe do të përdoren ato origjinale. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="53"/>
@@ -21843,7 +21844,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="80"/>
         <source>If checked, original entities will survive, otherwise they will be removed. </source>
-        <translation type="unfinished">Po të kontrollohen, njësitë origjinale do të mbijetojnë, përndryshe ato do të hiqen.</translation>
+        <translation type="unfinished">Nëse zgjidhet, entitetet origjinale do të ruhen, përndryshe ato do të hiqen. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="83"/>
@@ -21858,7 +21859,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="93"/>
         <source>Same angle for copies</source>
-        <translation type="unfinished">Për</translation>
+        <translation type="unfinished">I njëjti kënd për kopjet</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="100"/>
@@ -21878,7 +21879,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="144"/>
         <source>If checked, created entities will be placed into current layer, otherwise the will be in original layers. </source>
-        <translation type="unfinished">Nëse kontrollohet, njësitë e krijuara do të vendosen në shtresën aktuale, përndryshe ato do të jenë në shtresat origjinale. </translation>
+        <translation type="unfinished">Nëse zgjidhet, entitetet e krijuara do të vendosen në shtresën aktuale, përndryshe ato do të mbeten në shtresat origjinale. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="147"/>
@@ -21888,7 +21889,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="166"/>
         <source>Rotation angle. </source>
-        <translation type="unfinished">Kënd i kalbur.</translation>
+        <translation type="unfinished">Këndi i rrotullimit. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="173"/>
@@ -21903,7 +21904,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="183"/>
         <source>Pick angle from drawing</source>
-        <translation type="unfinished">Zgjidh</translation>
+        <translation type="unfinished">Merr këndin nga vizatimi</translation>
     </message>
 </context>
 <context>
@@ -21916,7 +21917,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.ui" line="98"/>
         <source>Create view for current zoom and offset of drawing</source>
-        <translation>Krijo shfaq për dhe nga</translation>
+        <translation>Krijo pamje për zmadhimin dhe zhvendosjen aktuale të vizatimit</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.ui" line="164"/>
@@ -21926,7 +21927,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.ui" line="41"/>
         <source>Update selected view by current zoom/position</source>
-        <translation>Rifresko shfaq nga</translation>
+        <translation>Përditëso pamjen e zgjedhur sipas zmadhimit/pozicionit aktual</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.ui" line="121"/>
@@ -22208,7 +22209,7 @@ Kujdes: ky veprim nuk mund të anullohet!</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_filler.cpp" line="41"/>
         <source>Distance for offset from original entity</source>
-        <translation type="unfinished">Për</translation>
+        <translation type="unfinished">Largësia e zhvendosjes paralele nga entiteti origjinal</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_filler.cpp" line="49"/>
@@ -22238,7 +22239,7 @@ Kujdes: ky veprim nuk mund të anullohet!</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_filler.cpp" line="62"/>
         <source>Number of copies to create</source>
-        <translation type="unfinished">Numri nga</translation>
+        <translation type="unfinished">Numri i kopjeve që do të krijohen</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_filler.cpp" line="72"/>
@@ -22286,7 +22287,7 @@ Kujdes: ky veprim nuk mund të anullohet!</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="93"/>
         <source>If checked, created entities will be placed into current layer, otherwise they will be in original layers.</source>
-        <translation type="unfinished">Nëse kontrollohet, njësitë e krijuara do të vendosen në shtresën aktuale, përndryshe ato do të jenë në shtresat origjinale.</translation>
+        <translation type="unfinished">Nëse zgjidhet, entitetet e krijuara do të vendosen në shtresën aktuale, përndryshe ato do të mbeten në shtresat origjinale.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="96"/>
@@ -22306,7 +22307,7 @@ Kujdes: ky veprim nuk mund të anullohet!</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="119"/>
         <source>If checked, current attributes will be applied to created entities, otherwise original ones will be used. </source>
-        <translation type="unfinished">Nëse kontrollohen, atributet aktuale do të zbatohen për njësitë e krijuara, përndryshe ato origjinale do të përdoren.</translation>
+        <translation type="unfinished">Nëse zgjidhet, atributet aktuale do të zbatohen për entitetet e krijuara, përndryshe do të përdoren ato origjinale. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="122"/>
@@ -22316,7 +22317,7 @@ Kujdes: ky veprim nuk mund të anullohet!</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="136"/>
         <source>If checked, original entities will survive, otherwise they will be removed. </source>
-        <translation type="unfinished">Po të kontrollohen, njësitë origjinale do të mbijetojnë, përndryshe ato do të hiqen.</translation>
+        <translation type="unfinished">Nëse zgjidhet, entitetet origjinale do të ruhen, përndryshe ato do të hiqen. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="139"/>
@@ -22326,7 +22327,7 @@ Kujdes: ky veprim nuk mund të anullohet!</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="158"/>
         <source>Distance for offset from original entity</source>
-        <translation type="unfinished">Për</translation>
+        <translation type="unfinished">Largësia e zhvendosjes paralele nga entiteti origjinal</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="172"/>
@@ -22388,7 +22389,7 @@ Kujdes: ky veprim nuk mund të anullohet!</translation>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_to_points_options_filler.cpp" line="31"/>
         <source>Rotation angle for pasted entities</source>
-        <translation type="unfinished">Për</translation>
+        <translation type="unfinished">Këndi i rrotullimit për entitetet e ngjitura</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_to_points_options_filler.cpp" line="37"/>
@@ -22398,7 +22399,7 @@ Kujdes: ky veprim nuk mund të anullohet!</translation>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_to_points_options_filler.cpp" line="37"/>
         <source>Scale factor for pasted entities</source>
-        <translation type="unfinished">Për</translation>
+        <translation type="unfinished">Faktori i shkallës për entitetet e ngjitura</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_to_points_options_filler.cpp" line="45"/>
@@ -22408,7 +22409,7 @@ Kujdes: ky veprim nuk mund të anullohet!</translation>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_to_points_options_filler.cpp" line="46"/>
         <source>If selected, the point entity used as insertion point will be deleted after paste operation. Otherwise, it will survive.</source>
-        <translation type="unfinished">Nëse zgjedhur, njësia e përdorur si pikë hyrje do të eleminohet pas operacionit pas ngjitjes. Përndryshe, do të mbijetojë.</translation>
+        <translation type="unfinished">Nëse zgjidhet, entiteti pikë që përdoret si pikë futjeje do të fshihet pas ngjitjes. Përndryshe, do të ruhet.</translation>
     </message>
 </context>
 <context>
@@ -22421,7 +22422,7 @@ Kujdes: ky veprim nuk mund të anullohet!</translation>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_to_points_options_widget.ui" line="73"/>
         <source>Rotation angle for pasted entities</source>
-        <translation type="unfinished">Për</translation>
+        <translation type="unfinished">Këndi i rrotullimit për entitetet e ngjitura</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_to_points_options_widget.ui" line="87"/>
@@ -22431,7 +22432,7 @@ Kujdes: ky veprim nuk mund të anullohet!</translation>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_to_points_options_widget.ui" line="101"/>
         <source>If selected, the point entity used as insertion point will be deleted after paste operation. Otherwise, it will survive.</source>
-        <translation type="unfinished">Nëse zgjedhur, njësia e përdorur si pikë hyrje do të eleminohet pas operacionit pas ngjitjes. Përndryshe, do të mbijetojë.</translation>
+        <translation type="unfinished">Nëse zgjidhet, entiteti pikë që përdoret si pikë futjeje do të fshihet pas ngjitjes. Përndryshe, do të ruhet.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_to_points_options_widget.ui" line="104"/>
@@ -22446,12 +22447,12 @@ Kujdes: ky veprim nuk mund të anullohet!</translation>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_to_points_options_widget.ui" line="136"/>
         <source>Scale factor for pasted entities</source>
-        <translation type="unfinished">Për</translation>
+        <translation type="unfinished">Faktori i shkallës për entitetet e ngjitura</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_to_points_options_widget.ui" line="143"/>
         <source>Pick angle from drawing</source>
-        <translation type="unfinished">Zgjidh</translation>
+        <translation type="unfinished">Merr këndin nga vizatimi</translation>
     </message>
 </context>
 <context>
@@ -22464,7 +22465,7 @@ Kujdes: ky veprim nuk mund të anullohet!</translation>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_filler.cpp" line="32"/>
         <source>Rotation angle for pasted entities</source>
-        <translation type="unfinished">Për</translation>
+        <translation type="unfinished">Këndi i rrotullimit për entitetet e ngjitura</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_filler.cpp" line="36"/>
@@ -22474,7 +22475,7 @@ Kujdes: ky veprim nuk mund të anullohet!</translation>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_filler.cpp" line="36"/>
         <source>Scale factor for pasted entities</source>
-        <translation type="unfinished">Për</translation>
+        <translation type="unfinished">Faktori i shkallës për entitetet e ngjitura</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_filler.cpp" line="42"/>
@@ -22557,7 +22558,7 @@ Kujdes: ky veprim nuk mund të anullohet!</translation>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_widget.ui" line="50"/>
         <source>Rotation angle for pasted entities</source>
-        <translation type="unfinished">Për</translation>
+        <translation type="unfinished">Këndi i rrotullimit për entitetet e ngjitura</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_widget.ui" line="57"/>
@@ -22567,12 +22568,12 @@ Kujdes: ky veprim nuk mund të anullohet!</translation>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_widget.ui" line="60"/>
         <source>Array</source>
-        <translation type="unfinished">Rreshtimi</translation>
+        <translation type="unfinished">Matrica</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_widget.ui" line="85"/>
         <source>Spacing between entities insertion points in rows. </source>
-        <translation type="unfinished">Hapësira ndërmjet njësive në rreshta.</translation>
+        <translation type="unfinished">Hapësira midis pikave të futjes së entiteteve në rreshta. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_widget.ui" line="92"/>
@@ -22587,22 +22588,22 @@ Kujdes: ky veprim nuk mund të anullohet!</translation>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_widget.ui" line="124"/>
         <source>Rotation angle for array.</source>
-        <translation type="unfinished">Këndi rottion për grup.</translation>
+        <translation type="unfinished">Këndi i rrotullimit për matricën.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_widget.ui" line="131"/>
         <source>Pick array spacing by X from drawing</source>
-        <translation type="unfinished">Zgjidh nga</translation>
+        <translation type="unfinished">Merr hapësirën e matricës sipas X nga vizatimi</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_widget.ui" line="158"/>
         <source>Array rows number.</source>
-        <translation type="unfinished">Numri i rreshtave.</translation>
+        <translation type="unfinished">Numri i rreshtave të matricës.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_widget.ui" line="193"/>
         <source>Scale factor for pasted entities</source>
-        <translation type="unfinished">Për</translation>
+        <translation type="unfinished">Faktori i shkallës për entitetet e ngjitura</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_widget.ui" line="200"/>
@@ -22612,22 +22613,22 @@ Kujdes: ky veprim nuk mund të anullohet!</translation>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_widget.ui" line="207"/>
         <source>Pick array spacing by Y from drawing</source>
-        <translation type="unfinished">Zgjidh nga</translation>
+        <translation type="unfinished">Merr hapësirën e matricës sipas Y nga vizatimi</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_widget.ui" line="221"/>
         <source>Pick angle from drawing</source>
-        <translation type="unfinished">Zgjidh</translation>
+        <translation type="unfinished">Merr këndin nga vizatimi</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_widget.ui" line="235"/>
         <source>Array Angle:</source>
-        <translation type="unfinished">Rreshtimi:</translation>
+        <translation type="unfinished">Këndi i matricës:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_widget.ui" line="260"/>
         <source>Spacing between insertion points of entities in columns.</source>
-        <translation type="unfinished">Hapësira midis pikave të futjes së njësive në kollona.</translation>
+        <translation type="unfinished">Hapësira midis pikave të futjes së entiteteve në kolona.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_widget.ui" line="267"/>
@@ -22647,7 +22648,7 @@ Kujdes: ky veprim nuk mund të anullohet!</translation>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_widget.ui" line="294"/>
         <source>Pick array angle from drawing</source>
-        <translation type="unfinished">Zgjidh</translation>
+        <translation type="unfinished">Merr këndin e matricës nga vizatimi</translation>
     </message>
 </context>
 <context>
@@ -22888,22 +22889,22 @@ Kujdes: ky veprim nuk mund të anullohet!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="314"/>
         <source>Divide</source>
-        <translation>Pjesëtim</translation>
+        <translation>Vijë ndarëse</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="315"/>
         <source>Divide (tiny)</source>
-        <translation>Pjesëtim</translation>
+        <translation>Vijë ndarëse (shumë e vogël)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="316"/>
         <source>Divide (small)</source>
-        <translation>Pjesëtim</translation>
+        <translation>Vijë ndarëse (e vogël)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="317"/>
         <source>Divide (large)</source>
-        <translation>Pjesëtim (madh)</translation>
+        <translation>Vijë ndarëse (e madhe)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="318"/>
@@ -23061,7 +23062,7 @@ Kujdes: ky veprim nuk mund të anullohet!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettemodel.cpp" line="230"/>
         <source>Line Width:</source>
-        <translation>Linja gjerësia:</translation>
+        <translation>Gjerësia e vijës:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettemodel.cpp" line="233"/>
@@ -23075,7 +23076,7 @@ Kujdes: ky veprim nuk mund të anullohet!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="20"/>
         <source>Pen Palette Settings</source>
-        <translation>Rregullimi</translation>
+        <translation>Cilësimet e paletës së stilolapsave</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="187"/>
@@ -23110,7 +23111,7 @@ Kujdes: ky veprim nuk mund të anullohet!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="228"/>
         <source>Line Width Name</source>
-        <translation>Linja Emri</translation>
+        <translation>Emri i gjerësisë së vijës</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="66"/>
@@ -23126,7 +23127,7 @@ Kujdes: ky veprim nuk mund të anullohet!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="46"/>
         <source>Active Pen Background:</source>
-        <translation>Aktiv Pen Sfondi:</translation>
+        <translation>Sfondi i stilolapsit aktiv:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="76"/>
@@ -23141,12 +23142,12 @@ Kujdes: ky veprim nuk mund të anullohet!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="96"/>
         <source>Matched Item Color:</source>
-        <translation>Ngjyra</translation>
+        <translation>Ngjyra e elementit që përputhet:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="86"/>
         <source>Color of pen item that is matched by filter</source>
-        <translation>Ngjyra e elementit të shkrimit që përputhet me filtrin</translation>
+        <translation>Ngjyra e stilolapsit që përputhet me filtrin</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="155"/>
@@ -23166,7 +23167,7 @@ Kujdes: ky veprim nuk mund të anullohet!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="300"/>
         <source>Case-insensitive pens filtering</source>
-        <translation>Filtri</translation>
+        <translation>Filtrimi i stilolapsave pa dallim shkronjash të mëdha/të vogla</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="130"/>
@@ -23231,7 +23232,7 @@ Kujdes: ky veprim nuk mund të anullohet!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="280"/>
         <source>Show info message if no entities may be selected by pen</source>
-        <translation>Shfaq mesazh jo nga</translation>
+        <translation>Shfaq mesazh informativ nëse asnjë entitet nuk mund të zgjidhet me stilolaps</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="162"/>
@@ -23246,12 +23247,12 @@ Kujdes: ky veprim nuk mund të anullohet!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.cpp" line="53"/>
         <source>Select entities by attributes pen</source>
-        <translation>Zgjidh nga</translation>
+        <translation>Zgjidh entitetet sipas stilolapsit të atributeve</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.cpp" line="54"/>
         <source>Select entities by drawing pen</source>
-        <translation>Zgjidh</translation>
+        <translation>Zgjidh entitetet sipas stilolapsit të vizatimit</translation>
     </message>
 </context>
 <context>
@@ -23259,17 +23260,17 @@ Kujdes: ky veprim nuk mund të anullohet!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="20"/>
         <source>Pen Palette</source>
-        <translation>Pen</translation>
+        <translation>Paleta e stilolapsave</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="49"/>
         <source>Fill Pen Editor by Entity Drawing Pen</source>
-        <translation>Mbush editorin e Pen nga Entity Vizatim Pen</translation>
+        <translation>Mbush editorin e stilolapsit me stilolapsin e vizatimit të entitetit</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="66"/>
         <source>Fill Pen Editor by Entity Attributes</source>
-        <translation>Mbush editorin e Pen nga Veçoritë Entity</translation>
+        <translation>Mbush editorin e stilolapsit me atributet e entitetit</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="83"/>
@@ -23290,17 +23291,17 @@ Kujdes: ky veprim nuk mund të anullohet!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="137"/>
         <source>Apply Pen To Selection</source>
-        <translation>Apliko Pen Për Zgjedhja</translation>
+        <translation>Zbato stilolapsin në zgjedhje</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="154"/>
         <source>Fill Editor Pen by Current Pen</source>
-        <translation>Mbushe  Editorin Pen nga Peni Aktual</translation>
+        <translation>Mbush stilolapsin e editorit me stilolapsin aktual</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="171"/>
         <source>Apply Editor Pen As Current Pen</source>
-        <translation>Apliko Pen</translation>
+        <translation>Zbato stilolapsin e editorit si stilolaps aktual</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="174"/>
@@ -23340,7 +23341,7 @@ Kujdes: ky veprim nuk mund të anullohet!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="242"/>
         <source>Delete Pen</source>
-        <translation>Elemino</translation>
+        <translation>Fshi stilolapsin</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="339"/>
@@ -23405,12 +23406,12 @@ Kujdes: ky veprim nuk mund të anullohet!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="303"/>
         <source>&amp;Apply Pen To Selection</source>
-        <translation>&amp;Apliko Pen Për Zgjedhja</translation>
+        <translation>&amp;Zbato stilolapsin në zgjedhje</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="304"/>
         <source>&amp;Set As Current Pen</source>
-        <translation>&amp;Cakto si Peni aktuale</translation>
+        <translation>&amp;Cakto si stilolaps aktual</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="305"/>
@@ -23430,12 +23431,12 @@ Kujdes: ky veprim nuk mund të anullohet!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="312"/>
         <source>&amp;Edit Pen</source>
-        <translation>&amp;Ndrysho Pen</translation>
+        <translation>&amp;Ndrysho stilolapsin</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="313"/>
         <source>&amp;Remove Pen</source>
-        <translation>Hiq Pen</translation>
+        <translation>&amp;Hiq stilolapsin</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="317"/>
@@ -23445,7 +23446,7 @@ Kujdes: ky veprim nuk mund të anullohet!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="430"/>
         <source>Pen palette</source>
-        <translation>Pen Paletë</translation>
+        <translation>Paleta e stilolapsave</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="431"/>
@@ -23486,7 +23487,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_point.ui" line="63"/>
         <source>Position of point by Y coordinate</source>
-        <translation>Pozicioni i pikë nga Y</translation>
+        <translation>Pozicioni i pikës sipas koordinatës Y</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_point.ui" line="70"/>
@@ -23501,12 +23502,12 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_point.ui" line="96"/>
         <source>Position of point by X coordinate</source>
-        <translation>Pozicioni i pikë nga X</translation>
+        <translation>Pozicioni i pikës sipas koordinatës X</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_point.ui" line="103"/>
         <source>Pick position from the drawing</source>
-        <translation>Pozicioni nga</translation>
+        <translation>Merr pozicionin nga vizatimi</translation>
     </message>
 </context>
 <context>
@@ -23519,7 +23520,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/point/lc_points_lattice_options_filler.cpp" line="31"/>
         <source>Number of points by X lattice direction (count of lattice columns)</source>
-        <translation type="unfinished">Numri nga X nga</translation>
+        <translation type="unfinished">Numri i pikave në drejtimin X të rrjetës (numri i kolonave të rrjetës)</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/point/lc_points_lattice_options_filler.cpp" line="38"/>
@@ -23529,7 +23530,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/point/lc_points_lattice_options_filler.cpp" line="38"/>
         <source>Number of points by lattice Y direction (count of lattice rows)</source>
-        <translation type="unfinished">Numri nga Y nga rreshta</translation>
+        <translation type="unfinished">Numri i pikave në drejtimin Y të rrjetës (numri i rreshtave të rrjetës)</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/point/lc_points_lattice_options_filler.cpp" line="47"/>
@@ -23552,7 +23553,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/point/lc_points_lattice_options_widget.ui" line="32"/>
         <source>Number of points by lattice Y direction (count of lattice rows)</source>
-        <translation type="unfinished">Numri nga Y nga rreshta</translation>
+        <translation type="unfinished">Numri i pikave në drejtimin Y të rrjetës (numri i rreshtave të rrjetës)</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/point/lc_points_lattice_options_widget.ui" line="42"/>
@@ -23567,7 +23568,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/point/lc_points_lattice_options_widget.ui" line="56"/>
         <source>Number of points by X lattice direction (count of lattice columns)</source>
-        <translation type="unfinished">Numri nga X nga</translation>
+        <translation type="unfinished">Numri i pikave në drejtimin X të rrjetës (numri i kolonave të rrjetës)</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/point/lc_points_lattice_options_widget.ui" line="66"/>
@@ -23637,7 +23638,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="75"/>
         <source>Fit Line</source>
-        <translation type="unfinished">Linja</translation>
+        <translation type="unfinished">Përshtat vijën</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="76"/>
@@ -23690,7 +23691,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_options_filler.cpp" line="37"/>
         <source>Polyline</source>
-        <translation type="unfinished">Poliline</translation>
+        <translation type="unfinished">Polilinjë</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_options_filler.cpp" line="37"/>
@@ -23723,7 +23724,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_options_widget.ui" line="32"/>
         <source>Polygon Options</source>
-        <translation type="unfinished">Mundësitë</translation>
+        <translation type="unfinished">Opsionet e poligonit</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_options_widget.ui" line="70"/>
@@ -23758,7 +23759,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_options_widget.ui" line="119"/>
         <source>Rounding radius for vertex bevel.</source>
-        <translation type="unfinished">Rreze e rrumbullakët për vertex bevel.</translation>
+        <translation type="unfinished">Rrezja e rrumbullakimit të kulmeve.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_options_widget.ui" line="126"/>
@@ -23768,12 +23769,12 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_options_widget.ui" line="129"/>
         <source>Polyline</source>
-        <translation type="unfinished">Poliline</translation>
+        <translation type="unfinished">Polilinjë</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_options_widget.ui" line="143"/>
         <source>Pick radius from drawing</source>
-        <translation type="unfinished">Zgjidh</translation>
+        <translation type="unfinished">Merr rrezen nga vizatimi</translation>
     </message>
 </context>
 <context>
@@ -23799,7 +23800,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_equidistant_options_filler.cpp" line="31"/>
         <source>Distance from original polyline</source>
-        <translation type="unfinished">Largësia nga poliline origjinale</translation>
+        <translation type="unfinished">Largësia nga polilinja origjinale</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_equidistant_options_filler.cpp" line="37"/>
@@ -23809,7 +23810,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_equidistant_options_filler.cpp" line="37"/>
         <source>Number of copies to create</source>
-        <translation type="unfinished">Numri nga</translation>
+        <translation type="unfinished">Numri i kopjeve që do të krijohen</translation>
     </message>
 </context>
 <context>
@@ -23817,7 +23818,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_equidistant_options_widget.ui" line="32"/>
         <source>Line Relative Angle Options</source>
-        <translation type="unfinished">Linja Mundësitë</translation>
+        <translation type="unfinished">Opsionet e këndit relativ të vijës</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_equidistant_options_widget.ui" line="56"/>
@@ -23827,7 +23828,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_equidistant_options_widget.ui" line="81"/>
         <source>Distance from original polyline</source>
-        <translation type="unfinished">Largësia nga poliline origjinale</translation>
+        <translation type="unfinished">Largësia nga polilinja origjinale</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_equidistant_options_widget.ui" line="94"/>
@@ -23842,7 +23843,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_equidistant_options_widget.ui" line="127"/>
         <source>Pick spacing from drawing</source>
-        <translation type="unfinished">Zgjidh nga</translation>
+        <translation type="unfinished">Merr hapësirën nga vizatimi</translation>
     </message>
 </context>
 <context>
@@ -23850,7 +23851,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_filler.cpp" line="35"/>
         <source>Line</source>
-        <translation type="unfinished">Linja</translation>
+        <translation type="unfinished">Vijë</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_filler.cpp" line="36"/>
@@ -23870,7 +23871,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_filler.cpp" line="39"/>
         <source>Arc</source>
-        <translation type="unfinished">Arc</translation>
+        <translation type="unfinished">Hark</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_filler.cpp" line="43"/>
@@ -23900,7 +23901,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_filler.cpp" line="59"/>
         <source>Angle of arc</source>
-        <translation type="unfinished">Angle of rc</translation>
+        <translation type="unfinished">Këndi i harkut</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_filler.cpp" line="69"/>
@@ -23943,12 +23944,12 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_widget.ui" line="32"/>
         <source>Polyline Options</source>
-        <translation type="unfinished">Mundësitë</translation>
+        <translation type="unfinished">Opsionet e polilinjës</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_widget.ui" line="53"/>
         <source>Connects ends of the polyline so closed contour is created</source>
-        <translation type="unfinished">Nga është</translation>
+        <translation type="unfinished">Bashkon skajet e polilinjës që të krijohet një kontur i mbyllur</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_widget.ui" line="56"/>
@@ -23973,27 +23974,27 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_widget.ui" line="80"/>
         <source>Line</source>
-        <translation type="unfinished">Linja</translation>
+        <translation type="unfinished">Vijë</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_widget.ui" line="100"/>
         <source>Tangential arc</source>
-        <translation type="unfinished">Arc</translation>
+        <translation type="unfinished">Hark tangjent</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_widget.ui" line="120"/>
         <source>Tangental arc with fixed radius</source>
-        <translation type="unfinished">Harku tangental me rreze fikse</translation>
+        <translation type="unfinished">Hark tangjent me rreze fikse</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_widget.ui" line="140"/>
         <source>Tangental arc with fixed angle</source>
-        <translation type="unfinished">Harku tangental me kënd të caktuar</translation>
+        <translation type="unfinished">Hark tangjent me kënd fiks</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_widget.ui" line="160"/>
         <source>Arc with angle</source>
-        <translation type="unfinished">Arc me kënd</translation>
+        <translation type="unfinished">Hark me kënd</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_widget.ui" line="180"/>
@@ -24008,7 +24009,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_widget.ui" line="212"/>
         <source>Pick radius form drawing</source>
-        <translation type="unfinished">Zgjidh</translation>
+        <translation type="unfinished">Merr rrezen nga vizatimi</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_widget.ui" line="226"/>
@@ -24018,12 +24019,12 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_widget.ui" line="251"/>
         <source>Angle of arc</source>
-        <translation type="unfinished">Angle of rc</translation>
+        <translation type="unfinished">Këndi i harkut</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_widget.ui" line="258"/>
         <source>Pick angle from drawing</source>
-        <translation type="unfinished">Zgjidh</translation>
+        <translation type="unfinished">Merr këndin nga vizatimi</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_widget.ui" line="293"/>
@@ -24051,7 +24052,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_polyline.ui" line="69"/>
         <source>Defines whether polyline is closed contour</source>
-        <translation>Përcakton nëse poliline është e mbyllur</translation>
+        <translation>Përcakton nëse polilinja është kontur i mbyllur</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_polyline.ui" line="72"/>
@@ -24124,7 +24125,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="63"/>
         <source>Calculate number of pages needed to contain the drawing</source>
-        <translation type="unfinished">Nga faqe</translation>
+        <translation type="unfinished">Llogarit numrin e faqeve të nevojshme për të përfshirë vizatimin</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="70"/>
@@ -24139,7 +24140,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="72"/>
         <source>Apply Print Scale to line width</source>
-        <translation type="unfinished">Apliko Shkalla</translation>
+        <translation type="unfinished">Zbato shkallën e printimit në gjerësinë e vijës</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="78"/>
@@ -24149,7 +24150,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="78"/>
         <source>Toggle Black / White mode</source>
-        <translation type="unfinished">Kavo</translation>
+        <translation type="unfinished">Ndërro modalitetin bardhë/zi</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="84"/>
@@ -24262,7 +24263,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_widget.ui" line="23"/>
         <source>Landscape Orientation</source>
-        <translation type="unfinished">Orientimi</translation>
+        <translation type="unfinished">Orientim horizontal</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_widget.ui" line="44"/>
@@ -24282,12 +24283,12 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_widget.ui" line="105"/>
         <source>Apply Print Scale to line width</source>
-        <translation type="unfinished">Apliko Shkalla</translation>
+        <translation type="unfinished">Zbato shkallën e printimit në gjerësinë e vijës</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_widget.ui" line="134"/>
         <source>Toggle Black / White mode</source>
-        <translation type="unfinished">Kavo</translation>
+        <translation type="unfinished">Ndërro modalitetin bardhë/zi</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_widget.ui" line="164"/>
@@ -24377,7 +24378,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_widget.ui" line="428"/>
         <source>Calculate number of pages needed to contain the drawing</source>
-        <translation type="unfinished">Nga faqe</translation>
+        <translation type="unfinished">Llogarit numrin e faqeve të nevojshme për të përfshirë vizatimin</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_widget.cpp" line="221"/>
@@ -24392,12 +24393,12 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_widget.cpp" line="428"/>
         <source>Paper scale factor larger than max print ratio</source>
-        <translation type="unfinished">Letra</translation>
+        <translation type="unfinished">Faktori i shkallës së letrës është më i madh se raporti maksimal i printimit</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_widget.cpp" line="432"/>
         <source>Paper scale factor smaller than min print ratio</source>
-        <translation type="unfinished">Letra</translation>
+        <translation type="unfinished">Faktori i shkallës së letrës është më i vogël se raporti minimal i printimit</translation>
     </message>
 </context>
 <context>
@@ -24446,7 +24447,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_active_pen.cpp" line="44"/>
         <source>Active Pen</source>
-        <translation type="unfinished">Pen aktiv</translation>
+        <translation type="unfinished">Stilolapsi aktiv</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_active_pen.cpp" line="44"/>
@@ -24466,7 +24467,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_active_pen.cpp" line="80"/>
         <source>Line Width</source>
-        <translation type="unfinished">Linja gjerësia</translation>
+        <translation type="unfinished">Gjerësia e vijës</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_active_pen.cpp" line="80"/>
@@ -24564,7 +24565,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="46"/>
         <source>Diameter of arc</source>
-        <translation type="unfinished">Diametri nga</translation>
+        <translation type="unfinished">Diametri i harkut</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="52"/>
@@ -24594,7 +24595,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="65"/>
         <source>End angle of arc</source>
-        <translation type="unfinished">Fundi nga</translation>
+        <translation type="unfinished">Këndi përfundimtar i harkut</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="73"/>
@@ -24624,7 +24625,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="81"/>
         <source>Arc Length</source>
-        <translation type="unfinished">Gjatësia Arc</translation>
+        <translation type="unfinished">Gjatësia e harkut</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="81"/>
@@ -24699,7 +24700,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="138"/>
         <source>Offset</source>
-        <translation type="unfinished">Spostimi</translation>
+        <translation type="unfinished">Zhvendosje paralele</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="138"/>
@@ -24724,7 +24725,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="143"/>
         <source>Divide</source>
-        <translation type="unfinished">Pjesëtim</translation>
+        <translation type="unfinished">Ndaj</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="143"/>
@@ -24734,7 +24735,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="144"/>
         <source>Trim</source>
-        <translation type="unfinished">Trim</translation>
+        <translation type="unfinished">Shkurto</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="144"/>
@@ -24836,7 +24837,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="158"/>
         <source>Tangent (P,C)</source>
-        <translation type="unfinished">Tangent (P,C)</translation>
+        <translation type="unfinished">Tangjente (P,C)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="158"/>
@@ -24846,7 +24847,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="159"/>
         <source>Tangent (C,C)</source>
-        <translation type="unfinished">Tangent (C,C)</translation>
+        <translation type="unfinished">Tangjente (C,C)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="159"/>
@@ -24921,7 +24922,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="174"/>
         <source>Break/Divide</source>
-        <translation type="unfinished">Break/Divide</translation>
+        <translation type="unfinished">Ndërprerje/Ndarje</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="177"/>
@@ -25103,7 +25104,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="73"/>
         <source>Offset</source>
-        <translation type="unfinished">Spostimi</translation>
+        <translation type="unfinished">Zhvendosje paralele</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="73"/>
@@ -25128,7 +25129,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="78"/>
         <source>Divide</source>
-        <translation type="unfinished">Pjesëtim</translation>
+        <translation type="unfinished">Ndaj</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="78"/>
@@ -25138,7 +25139,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="79"/>
         <source>Trim</source>
-        <translation type="unfinished">Trim</translation>
+        <translation type="unfinished">Shkurto</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="79"/>
@@ -25225,7 +25226,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="93"/>
         <source>Tangent (P,C)</source>
-        <translation type="unfinished">Tangent (P,C)</translation>
+        <translation type="unfinished">Tangjente (P,C)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="93"/>
@@ -25235,7 +25236,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="94"/>
         <source>Tangent (C,C)</source>
-        <translation type="unfinished">Tangent (C,C)</translation>
+        <translation type="unfinished">Tangjente (C,C)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="94"/>
@@ -25285,7 +25286,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="104"/>
         <source>Break/Divide</source>
-        <translation type="unfinished">Break/Divide</translation>
+        <translation type="unfinished">Ndërprerje/Ndarje</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="108"/>
@@ -25438,7 +25439,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_aligned.cpp" line="56"/>
         <source>Baseline</source>
-        <translation type="unfinished">Linja</translation>
+        <translation type="unfinished">Kuotim nga baza</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_aligned.cpp" line="56"/>
@@ -25667,7 +25668,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="330"/>
         <source>Line</source>
-        <translation type="unfinished">Linja</translation>
+        <translation type="unfinished">Vijë</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="331"/>
@@ -26026,12 +26027,12 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="700"/>
         <source>Above dimension text</source>
-        <translation type="unfinished">Mbi tekst</translation>
+        <translation type="unfinished">Mbi tekstin e kuotës</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="707"/>
         <source>Arc length symbol</source>
-        <translation type="unfinished">Simboli i gjatësisë Arc</translation>
+        <translation type="unfinished">Simboli i gjatësisë së harkut</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="719"/>
@@ -26167,7 +26168,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="699"/>
         <source>Preceding dimension text</source>
-        <translation type="unfinished">Tekst</translation>
+        <translation type="unfinished">Përpara tekstit të kuotës</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="708"/>
@@ -26922,7 +26923,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_linear.cpp" line="69"/>
         <source>Baseline</source>
-        <translation type="unfinished">Linja</translation>
+        <translation type="unfinished">Kuotim nga baza</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_linear.cpp" line="69"/>
@@ -27246,7 +27247,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_ellipse.cpp" line="126"/>
         <source>Tangent (P,C)</source>
-        <translation type="unfinished">Tangent (P,C)</translation>
+        <translation type="unfinished">Tangjente (P,C)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_ellipse.cpp" line="126"/>
@@ -27256,7 +27257,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_ellipse.cpp" line="127"/>
         <source>Tangent (C,C)</source>
-        <translation type="unfinished">Tangent (C,C)</translation>
+        <translation type="unfinished">Tangjente (C,C)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_ellipse.cpp" line="131"/>
@@ -27286,7 +27287,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_ellipse.cpp" line="136"/>
         <source>Divide</source>
-        <translation type="unfinished">Pjesëtim</translation>
+        <translation type="unfinished">Ndaj</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_ellipse.cpp" line="136"/>
@@ -27479,7 +27480,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="171"/>
         <source>Dimensional</source>
-        <translation type="unfinished">Dimensionet</translation>
+        <translation type="unfinished">Për kuota</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="175"/>
@@ -27983,7 +27984,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_views.cpp" line="96"/>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_views.cpp" line="98"/>
         <source>Create view for current zoom and offset of drawing</source>
-        <translation type="unfinished">Krijo shfaq për dhe nga</translation>
+        <translation type="unfinished">Krijo pamje për zmadhimin dhe zhvendosjen aktuale të vizatimit</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_views.cpp" line="115"/>
@@ -28309,7 +28310,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_hyperbola.cpp" line="137"/>
         <source>Divide</source>
-        <translation type="unfinished">Pjesëtim</translation>
+        <translation type="unfinished">Ndaj</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_hyperbola.cpp" line="137"/>
@@ -28342,7 +28343,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_image.cpp" line="65"/>
         <source>Insertion Point</source>
-        <translation type="unfinished">Fut</translation>
+        <translation type="unfinished">Pika e futjes</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_image.cpp" line="65"/>
@@ -28467,7 +28468,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_insert.cpp" line="54"/>
         <source>Insertion Point</source>
-        <translation type="unfinished">Fut</translation>
+        <translation type="unfinished">Pika e futjes</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_insert.cpp" line="54"/>
@@ -28704,7 +28705,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="100"/>
         <source>Line Join</source>
-        <translation type="unfinished">Linja</translation>
+        <translation type="unfinished">Bashkim vijash</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="99"/>
@@ -28724,7 +28725,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="104"/>
         <source>Trim</source>
-        <translation type="unfinished">Trim</translation>
+        <translation type="unfinished">Shkurto</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="104"/>
@@ -28734,7 +28735,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="105"/>
         <source>Trim Two</source>
-        <translation type="unfinished">Trim Dy</translation>
+        <translation type="unfinished">Shkurto dy</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="105"/>
@@ -28749,7 +28750,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="109"/>
         <source>Divide</source>
-        <translation type="unfinished">Pjesëtim</translation>
+        <translation type="unfinished">Ndaj</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="109"/>
@@ -28945,7 +28946,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="170"/>
         <source>Bevel</source>
-        <translation type="unfinished">Bevel</translation>
+        <translation type="unfinished">Faskë</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="170"/>
@@ -28980,7 +28981,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="176"/>
         <source>Break/Divide</source>
-        <translation type="unfinished">Break/Divide</translation>
+        <translation type="unfinished">Ndërprerje/Ndarje</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="178"/>
@@ -29078,7 +29079,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_mtext.cpp" line="31"/>
         <source>Insertion Point</source>
-        <translation type="unfinished">Fut</translation>
+        <translation type="unfinished">Pika e futjes</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_mtext.cpp" line="31"/>
@@ -29336,7 +29337,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_parabola.cpp" line="66"/>
         <source>Divide</source>
-        <translation type="unfinished">Pjesëtim</translation>
+        <translation type="unfinished">Ndaj</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_parabola.cpp" line="66"/>
@@ -29664,7 +29665,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_polyline.cpp" line="126"/>
         <source>Spline</source>
-        <translation type="unfinished">Spin</translation>
+        <translation type="unfinished">Spline</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_polyline.cpp" line="126"/>
@@ -30033,7 +30034,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="110"/>
         <source>Divide</source>
-        <translation type="unfinished">Pjesëtim</translation>
+        <translation type="unfinished">Ndaj</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="110"/>
@@ -30058,7 +30059,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="115"/>
         <source>Tangent (P,C)</source>
-        <translation type="unfinished">Tangent (P,C)</translation>
+        <translation type="unfinished">Tangjente (P,C)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="115"/>
@@ -30096,7 +30097,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_text.cpp" line="32"/>
         <source>Insertion Point</source>
-        <translation type="unfinished">Fut</translation>
+        <translation type="unfinished">Pika e futjes</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_text.cpp" line="32"/>
@@ -30157,7 +30158,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_text.cpp" line="65"/>
         <source>Baseline</source>
-        <translation type="unfinished">Linja</translation>
+        <translation type="unfinished">Vija bazë</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_text.cpp" line="66"/>
@@ -30561,43 +30562,43 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="560"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="578"/>
         <source>LINE</source>
-        <translation>LINE</translation>
+        <translation>VIJË</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="604"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="619"/>
         <source>CIRCLE</source>
-        <translation>CIRCLE</translation>
+        <translation>RRETH</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="643"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="670"/>
         <source>ARC</source>
-        <translation>ARC</translation>
+        <translation>HARK</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="724"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="747"/>
         <source>ELLIPSE ARC</source>
-        <translation>ELIPSE ARC</translation>
+        <translation>HARK ELIPTIK</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="741"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="747"/>
         <source>ELLIPSE</source>
-        <translation>ELIPI</translation>
+        <translation>ELIPS</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="844"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="850"/>
         <source>POINT</source>
-        <translation>POINT</translation>
+        <translation>PIKË</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="856"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="869"/>
         <source>POLYLINE</source>
-        <translation>POLILINA</translation>
+        <translation>POLILINJË</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="666"/>
@@ -30643,13 +30644,13 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="935"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="956"/>
         <source>INSERT</source>
-        <translation>INSERT</translation>
+        <translation>FUTJE</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="971"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1000"/>
         <source>TEXT</source>
-        <translation>TEXT</translation>
+        <translation>TEKST</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1029"/>
@@ -30721,7 +30722,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="548"/>
         <source>Line Width</source>
-        <translation>Linja gjerësia</translation>
+        <translation>Gjerësia e vijës</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="550"/>
@@ -30979,7 +30980,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1220"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1244"/>
         <source>Insertion Point</source>
-        <translation>Fut</translation>
+        <translation>Pika e futjes</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="941"/>
@@ -31193,7 +31194,7 @@ Shtresa: </translation>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1071"/>
         <source>Baseline</source>
-        <translation>Linja</translation>
+        <translation>Vija bazë</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1073"/>
@@ -31252,13 +31253,13 @@ Shtresa: </translation>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1143"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1176"/>
         <source>Line Spacing Factor</source>
-        <translation>Shfaq</translation>
+        <translation>Faktori i hapësirës midis rreshtave</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1144"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1177"/>
         <source>Line Spacing</source>
-        <translation>Linja</translation>
+        <translation>Hapësira midis rreshtave</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1188"/>
@@ -31381,7 +31382,7 @@ Shtresa: </translation>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1321"/>
         <source>Spline Point </source>
-        <translation>Pikë</translation>
+        <translation>Pika e spline-it </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1328"/>
@@ -31416,7 +31417,7 @@ Shtresa: </translation>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1359"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1375"/>
         <source>HATCH</source>
-        <translation>HATCH</translation>
+        <translation>VIJËZIM</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1360"/>
@@ -31441,7 +31442,7 @@ Shtresa: </translation>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1294"/>
         <source>Spline Points</source>
-        <translation>Pika</translation>
+        <translation>Pikat e spline-it</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="817"/>
@@ -31453,7 +31454,7 @@ Shtresa: </translation>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1392"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1403"/>
         <source>DIMLEADER</source>
-        <translation>DIMLEPER</translation>
+        <translation>VIJË TREGUESE</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1394"/>
@@ -31465,25 +31466,25 @@ Shtresa: </translation>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1409"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1428"/>
         <source>DIMARC</source>
-        <translation>DIMARC</translation>
+        <translation>KUOTË HARKU</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1415"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1434"/>
         <source>Arc Length</source>
-        <translation>Gjatësia Arc</translation>
+        <translation>Gjatësia e harkut</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1446"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1459"/>
         <source>DIMANGULAR</source>
-        <translation>DIMANGANTI</translation>
+        <translation>KUOTË KËNDORE</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1467"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1475"/>
         <source>DIMDIAMETRIC</source>
-        <translation>DIMDIAMIK</translation>
+        <translation>KUOTË DIAMETRI</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1470"/>
@@ -31501,13 +31502,13 @@ Shtresa: </translation>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1483"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1495"/>
         <source>DIMRADIAL</source>
-        <translation>DREADIAL</translation>
+        <translation>KUOTË RREZEJE</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1520"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1537"/>
         <source>DIMLINEAR</source>
-        <translation>DIMLINAR</translation>
+        <translation>KUOTË LINEARE</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1524"/>
@@ -31528,7 +31529,7 @@ Shtresa: </translation>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1557"/>
         <source>Text Middle Point </source>
-        <translation>Teksti</translation>
+        <translation>Pika e mesit të tekstit </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1528"/>
@@ -31540,7 +31541,7 @@ Shtresa: </translation>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1549"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1562"/>
         <source>DIMORDINATE</source>
-        <translation>DIMARDINE</translation>
+        <translation>KUOTË ORDINATE</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1552"/>
@@ -31552,7 +31553,7 @@ Shtresa: </translation>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1553"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1565"/>
         <source>Origin Point</source>
-        <translation>Origjina</translation>
+        <translation>Pika e origjinës</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1554"/>
@@ -31564,7 +31565,7 @@ Shtresa: </translation>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1556"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1569"/>
         <source>Leader End Point</source>
-        <translation>Fundi i pikës</translation>
+        <translation>Pika fundore e vijës treguese</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1526"/>
@@ -31573,13 +31574,13 @@ Shtresa: </translation>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1580"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1596"/>
         <source>Text Middle Point</source>
-        <translation>Teksti</translation>
+        <translation>Pika e mesit të tekstit</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1574"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1589"/>
         <source>DIMALIGNED</source>
-        <translation>TË DREJTË</translation>
+        <translation>KUOTË E RRESHTUAR</translation>
     </message>
 </context>
 <context>
@@ -31614,12 +31615,12 @@ Shtresa: </translation>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfopointsdata.cpp" line="270"/>
         <source>Points Path Distance:</source>
-        <translation>Pozicioni:</translation>
+        <translation>Largësia e shtegut të pikave:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfopointsdata.cpp" line="274"/>
         <source>No data - select coordinates first...</source>
-        <translation>Jo i pari.</translation>
+        <translation>Nuk ka të dhëna - zgjidh fillimisht koordinatat...</translation>
     </message>
 </context>
 <context>
@@ -31648,7 +31649,7 @@ Shtresa: </translation>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.ui" line="75"/>
         <source>Select current entity in drawing</source>
-        <translation>Zgjidh në</translation>
+        <translation>Zgjidh entitetin aktual në vizatim</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.ui" line="89"/>
@@ -31779,7 +31780,7 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="786"/>
         <source>No data - select entity of coordinates first...</source>
-        <translation>Jo i pari për të zgjedhur të dhënat e koordinatave...</translation>
+        <translation>Nuk ka të dhëna - zgjidh fillimisht entitetin ose koordinatat...</translation>
     </message>
 </context>
 <context>
@@ -31802,7 +31803,7 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="39"/>
         <source>Display distance and angle to point in addition to coordinates</source>
-        <translation>Shfaq distancë dhe këndi pikë tjetër</translation>
+        <translation>Shfaq largësinë dhe këndin deri te pika, përveç koordinatave</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="46"/>
@@ -31812,12 +31813,12 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="49"/>
         <source>Draw points path on preview</source>
-        <translation>Vizato shtegu në</translation>
+        <translation>Vizato shtegun e pikave në pamjen paraprake</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="75"/>
         <source>Entity Info</source>
-        <translation>Info</translation>
+        <translation>Informacion për entitetin</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="81"/>
@@ -31827,27 +31828,27 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="84"/>
         <source>Include polyline child entities information to vertexes</source>
-        <translation>Përfshi instancat e fëmijëve poliline</translation>
+        <translation>Përfshi te kulmet informacionin e entiteteve bijë të polilinjës</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="91"/>
         <source>If selected, coordinates of boundary box area for the entity will be also shown</source>
-        <translation>Nëse zgjedhur, do të shfaqen gjithashtu koordinatat e zonës së kutive kufitare për njësinë</translation>
+        <translation>Nëse zgjidhet, do të shfaqen edhe koordinatat e kutisë kufizuese të entitetit</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="94"/>
         <source>Display entity boundaries (Min, Max) coordinates</source>
-        <translation>Shfaq kufijtë e njësive (Min, Max)</translation>
+        <translation>Shfaq koordinatat e kufijve të entitetit (Min, Max)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="104"/>
         <source>Entity Selection</source>
-        <translation>Zgjedhja</translation>
+        <translation>Zgjedhja e entitetit</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="116"/>
         <source>Entity under cursor will be examined only if CTRL is pressed and no active action</source>
-        <translation>Entititeti nën kursor do të shqyrtohet vetëm nëse shtypet CTRL dhe nuk ka veprim aktiv</translation>
+        <translation>Entiteti nën kursor do të shqyrtohet vetëm nëse shtypet CTRL dhe nuk ka veprim aktiv</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="119"/>
@@ -31857,7 +31858,7 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="126"/>
         <source>If selected, entities under mouse cursor will be examined for theif settings, if there is no active action</source>
-        <translation>Nëse zgjedhur, njësitë nën kursorin e mouse do të hetohen për rregullimet, nëse nuk ka veprim aktiv</translation>
+        <translation>Nëse zgjidhet, entitetet nën kursorin e miut do të shqyrtohen për cilësimet e tyre, nëse nuk ka veprim aktiv</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="129"/>
@@ -31867,7 +31868,7 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.cpp" line="44"/>
         <source>Points highlight pen</source>
-        <translation>Shënim</translation>
+        <translation>Stilolapsi i theksimit të pikave</translation>
     </message>
 </context>
 <context>
@@ -31940,7 +31941,7 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1_point_options_filler.cpp" line="59"/>
         <source>Snap</source>
-        <translation type="unfinished">Bëshkë</translation>
+        <translation type="unfinished">Kapje</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1_point_options_filler.cpp" line="59"/>
@@ -31980,7 +31981,7 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1_point_options_filler.cpp" line="83"/>
         <source>Polyline</source>
-        <translation type="unfinished">Poliline</translation>
+        <translation type="unfinished">Polilinjë</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1_point_options_filler.cpp" line="83"/>
@@ -32003,12 +32004,12 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="46"/>
         <source>If checked, rectangle will be created as polyline instead of individual segments.</source>
-        <translation type="unfinished">Nëse kontrollohet, drejtkëndëshi do të krijohet si poliline në vend të segmenteve individuale.</translation>
+        <translation type="unfinished">Nëse zgjidhet, drejtkëndëshi do të krijohet si polilinjë në vend të segmenteve të veçanta.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="49"/>
         <source>Polyline</source>
-        <translation type="unfinished">Poliline</translation>
+        <translation type="unfinished">Polilinjë</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="56"/>
@@ -32023,7 +32024,7 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="82"/>
         <source>Point of rectangle wich will be placed to insertion point.</source>
-        <translation type="unfinished">Pika drejtkëndore do të vendoset në pikën e futjes.</translation>
+        <translation type="unfinished">Pika e drejtkëndëshit që do të vendoset në pikën e futjes.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="86"/>
@@ -32073,12 +32074,12 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="146"/>
         <source>Length of bevel corner for X direction. </source>
-        <translation type="unfinished">Gjatësia e qoshes bevel për drejtimin X.</translation>
+        <translation type="unfinished">Gjatësia e faskës së këndit në drejtimin X. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="160"/>
         <source>Pick rotation angle from drawing</source>
-        <translation type="unfinished">Zgjidh</translation>
+        <translation type="unfinished">Merr nga vizatimi këndin e rrotullimit</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="174"/>
@@ -32113,7 +32114,7 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="229"/>
         <source>Length of bevel corner for Y direction. </source>
-        <translation type="unfinished">Gjatësia e qoshes bevel për drejtimin Y.</translation>
+        <translation type="unfinished">Gjatësia e faskës së këndit në drejtimin Y. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="236"/>
@@ -32133,7 +32134,7 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="250"/>
         <source>Bevel</source>
-        <translation type="unfinished">Bevel</translation>
+        <translation type="unfinished">Faskë</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="258"/>
@@ -32178,12 +32179,12 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="346"/>
         <source>Pick height of rectangle from drawing</source>
-        <translation type="unfinished">Zgjidh nga</translation>
+        <translation type="unfinished">Merr lartësinë e drejtkëndëshit nga vizatimi</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="360"/>
         <source>Pick width of rectangle from drawing</source>
-        <translation type="unfinished">Zgjidh gjerësia nga</translation>
+        <translation type="unfinished">Merr gjerësinë e drejtkëndëshit nga vizatimi</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="374"/>
@@ -32203,7 +32204,7 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="391"/>
         <source>Snap shift</source>
-        <translation type="unfinished">Shift</translation>
+        <translation type="unfinished">Zhvendosja e kapjes</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="405"/>
@@ -32218,7 +32219,7 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="419"/>
         <source>Snap:</source>
-        <translation type="unfinished">Snake:</translation>
+        <translation type="unfinished">Kapja:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="438"/>
@@ -32228,12 +32229,12 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="445"/>
         <source>Pick length of bevel corner for X direction from drawing.</source>
-        <translation type="unfinished">Zgjidh gjatësinë e qoshes bevel për drejtimin X nga vizatimi.</translation>
+        <translation type="unfinished">Merr nga vizatimi gjatësinë e faskës së këndit në drejtimin X.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="459"/>
         <source>Pick length of bevel corner for Y direction from drawing.</source>
-        <translation type="unfinished">Zgjidh gjatësinë e qoshes bevel për drejtimin Y nga vizatimi.</translation>
+        <translation type="unfinished">Merr nga vizatimi gjatësinë e faskës së këndit në drejtimin Y.</translation>
     </message>
 </context>
 <context>
@@ -32301,7 +32302,7 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_filler.cpp" line="68"/>
         <source>Polyline</source>
-        <translation type="unfinished">Poliline</translation>
+        <translation type="unfinished">Polilinjë</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_filler.cpp" line="68"/>
@@ -32353,7 +32354,7 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="62"/>
         <source>Polyline</source>
-        <translation type="unfinished">Poliline</translation>
+        <translation type="unfinished">Polilinjë</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="69"/>
@@ -32373,17 +32374,17 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="83"/>
         <source>Bevel</source>
-        <translation type="unfinished">Bevel</translation>
+        <translation type="unfinished">Faskë</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="91"/>
         <source>Start Snap:</source>
-        <translation type="unfinished">Fillimi:</translation>
+        <translation type="unfinished">Kapja e fillimit:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="105"/>
         <source>Pick rectangle rotation angle from drawing</source>
-        <translation type="unfinished">Zgjidh</translation>
+        <translation type="unfinished">Merr këndin e rrotullimit të drejtkëndëshit nga vizatimi</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="131"/>
@@ -32398,7 +32399,7 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="164"/>
         <source>Rectangle rotation angle.</source>
-        <translation type="unfinished">Këndi i rrotullimit.</translation>
+        <translation type="unfinished">Këndi i rrotullimit të drejtkëndëshit.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="171"/>
@@ -32408,7 +32409,7 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="190"/>
         <source>Length of bevel in Y direction. </source>
-        <translation type="unfinished">Gjatësia e bevelit në drejtimin Y.</translation>
+        <translation type="unfinished">Gjatësia e faskës në drejtimin Y. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="197"/>
@@ -32473,17 +32474,17 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="321"/>
         <source>Snap shift</source>
-        <translation type="unfinished">Shift</translation>
+        <translation type="unfinished">Zhvendosja e kapjes</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="340"/>
         <source>Length of bevel in X direction.</source>
-        <translation type="unfinished">Gjatësia e bevel në drejtimin X.</translation>
+        <translation type="unfinished">Gjatësia e faskës në drejtimin X.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="347"/>
         <source>End Snap:</source>
-        <translation type="unfinished">Fundi Paraqitja:</translation>
+        <translation type="unfinished">Kapja e fundit:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="354"/>
@@ -32493,7 +32494,7 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="361"/>
         <source>Pick length of bevel in Y direction from drawing. </source>
-        <translation type="unfinished">Zgjidh gjatësinë e bevelit në drejtimin Y nga vizatimi.</translation>
+        <translation type="unfinished">Merr nga vizatimi gjatësinë e faskës në drejtimin Y. </translation>
     </message>
 </context>
 <context>
@@ -32551,7 +32552,7 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3_points_options_filler.cpp" line="64"/>
         <source>Polyline</source>
-        <translation type="unfinished">Poliline</translation>
+        <translation type="unfinished">Polilinjë</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3_points_options_filler.cpp" line="64"/>
@@ -32569,12 +32570,12 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="32"/>
         <source>If checked, the shape will be created as polyline. </source>
-        <translation type="unfinished">Nëse kontrollohet, forma do të krijohet si poliline.</translation>
+        <translation type="unfinished">Nëse zgjidhet, forma do të krijohet si polilinjë. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="35"/>
         <source>Polyline</source>
-        <translation type="unfinished">Poliline</translation>
+        <translation type="unfinished">Polilinjë</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="86"/>
@@ -32634,7 +32635,7 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="251"/>
         <source>Snap shift</source>
-        <translation type="unfinished">Shift</translation>
+        <translation type="unfinished">Zhvendosja e kapjes</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="258"/>
@@ -32649,12 +32650,12 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="290"/>
         <source>Length of bevel in X direction.</source>
-        <translation type="unfinished">Gjatësia e bevel në drejtimin X.</translation>
+        <translation type="unfinished">Gjatësia e faskës në drejtimin X.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="315"/>
         <source>Length of bevel in Y direction. </source>
-        <translation type="unfinished">Gjatësia e bevelit në drejtimin Y.</translation>
+        <translation type="unfinished">Gjatësia e faskës në drejtimin Y. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="322"/>
@@ -32689,7 +32690,7 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="382"/>
         <source>Bevel</source>
-        <translation type="unfinished">Bevel</translation>
+        <translation type="unfinished">Faskë</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="390"/>
@@ -32704,7 +32705,7 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="411"/>
         <source>Pick length of bevel in Y direction from drawing.</source>
-        <translation type="unfinished">Zgjidh gjatësinë e bevelit në drejtimin Y nga vizatimi.</translation>
+        <translation type="unfinished">Merr nga vizatimi gjatësinë e faskës në drejtimin Y.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="428"/>
@@ -32729,7 +32730,7 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="450"/>
         <source>Pick base angle of rectangle from drawing</source>
-        <translation type="unfinished">Zgjidh nga</translation>
+        <translation type="unfinished">Merr këndin bazë të drejtkëndëshit nga vizatimi</translation>
     </message>
 </context>
 <context>
@@ -32772,7 +32773,7 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_abstract_options_filler.cpp" line="58"/>
         <source>Bevel</source>
-        <translation type="unfinished">Bevel</translation>
+        <translation type="unfinished">Faskë</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_abstract_options_filler.cpp" line="62"/>
@@ -32896,7 +32897,7 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="112"/>
         <source>Offset X:</source>
-        <translation type="unfinished">X:</translation>
+        <translation type="unfinished">Zhvendosja X:</translation>
     </message>
     <message>
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="119"/>
@@ -33000,7 +33001,7 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="501"/>
         <source>Pick angle from drawing</source>
-        <translation type="unfinished">Zgjidh</translation>
+        <translation type="unfinished">Merr këndin nga vizatimi</translation>
     </message>
     <message>
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="586"/>
@@ -33016,7 +33017,7 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="609"/>
         <source>Offset Y:</source>
-        <translation type="unfinished">Y:</translation>
+        <translation type="unfinished">Zhvendosja Y:</translation>
     </message>
     <message>
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="654"/>
@@ -33174,7 +33175,7 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_filler.cpp" line="52"/>
         <source>Angle to rotate over secondary reference point</source>
-        <translation type="unfinished">Shto</translation>
+        <translation type="unfinished">Këndi i rrotullimit rreth pikës dytësore të referimit</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_filler.cpp" line="61"/>
@@ -33204,7 +33205,7 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_filler.cpp" line="74"/>
         <source>Number of copies to create</source>
-        <translation type="unfinished">Numri nga</translation>
+        <translation type="unfinished">Numri i kopjeve që do të krijohen</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_filler.cpp" line="84"/>
@@ -33232,7 +33233,7 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="32"/>
         <source>Move Rotate Options</source>
-        <translation type="unfinished">Lëvize Mundësitë</translation>
+        <translation type="unfinished">Opsionet e zhvendosjes me rrotullim</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="50"/>
@@ -33252,7 +33253,7 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="63"/>
         <source>Same secondary angle for copies</source>
-        <translation type="unfinished">Për</translation>
+        <translation type="unfinished">I njëjti kënd dytësor për kopjet</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="87"/>
@@ -33262,7 +33263,7 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="94"/>
         <source>Number of copies to create</source>
-        <translation type="unfinished">Numri nga</translation>
+        <translation type="unfinished">Numri i kopjeve që do të krijohen</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="120"/>
@@ -33277,12 +33278,12 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="170"/>
         <source>Angle to rotate over secondary reference point</source>
-        <translation type="unfinished">Shto</translation>
+        <translation type="unfinished">Këndi i rrotullimit rreth pikës dytësore të referimit</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="177"/>
         <source>If checked, original entities will survive, otherwise they will be removed. </source>
-        <translation type="unfinished">Po të kontrollohen, njësitë origjinale do të mbijetojnë, përndryshe ato do të hiqen.</translation>
+        <translation type="unfinished">Nëse zgjidhet, entitetet origjinale do të ruhen, përndryshe ato do të hiqen. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="180"/>
@@ -33292,7 +33293,7 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="194"/>
         <source>Pick primary angle from drawing</source>
-        <translation type="unfinished">Zgjidh</translation>
+        <translation type="unfinished">Merr këndin parësor nga vizatimi</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="208"/>
@@ -33327,7 +33328,7 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="238"/>
         <source>Pick secondary angle from drawing</source>
-        <translation type="unfinished">Zgjidh sekondë</translation>
+        <translation type="unfinished">Merr këndin dytësor nga vizatimi</translation>
     </message>
 </context>
 <context>
@@ -33360,7 +33361,7 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_filler.cpp" line="49"/>
         <source>Angle to rotate entity around rotation center point</source>
-        <translation type="unfinished">Angëll për ta rrotulluar njësinë rreth pikës qendrore të rrotullimit</translation>
+        <translation type="unfinished">Këndi i rrotullimit të entitetit rreth pikës qendrore të rrotullimit</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_filler.cpp" line="60"/>
@@ -33410,7 +33411,7 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_filler.cpp" line="98"/>
         <source>If absolute, reference point will be rotated but entity will be rotated by second angle only, otherwise angles will summ up</source>
-        <translation type="unfinished">Nëse absolutisht, pika e referimit do të rrotullohet por njësia do të rrotullohet vetëm me kënd të dytë, përndryshe këndet do të përmblidhen</translation>
+        <translation type="unfinished">Nëse është absolut, pika e referimit do të rrotullohet, por entiteti do të rrotullohet vetëm me këndin e dytë; përndryshe këndet do të mblidhen</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_filler.cpp" line="107"/>
@@ -33440,7 +33441,7 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_filler.cpp" line="120"/>
         <source>Number of copies to create</source>
-        <translation type="unfinished">Numri nga</translation>
+        <translation type="unfinished">Numri i kopjeve që do të krijohen</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_filler.cpp" line="130"/>
@@ -33468,7 +33469,7 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="32"/>
         <source>Move Rotate Options</source>
-        <translation type="unfinished">Lëvize Mundësitë</translation>
+        <translation type="unfinished">Opsionet e zhvendosjes me rrotullim</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="63"/>
@@ -33478,7 +33479,7 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="89"/>
         <source>If checked, current attributes will be applied to created entities, othewise original ones will be used. </source>
-        <translation type="unfinished">Po të kontrollohen, atributet aktuale do të zbatohen për njësitë e krijuara, do të përdoren ato origjinale të mençura.</translation>
+        <translation type="unfinished">Nëse zgjidhet, atributet aktuale do të zbatohen për entitetet e krijuara, përndryshe do të përdoren ato origjinale. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="92"/>
@@ -33488,12 +33489,12 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="118"/>
         <source>Angle to rotate entity around rotation center point</source>
-        <translation type="unfinished">Angëll për ta rrotulluar njësinë rreth pikës qendrore të rrotullimit</translation>
+        <translation type="unfinished">Këndi i rrotullimit të entitetit rreth pikës qendrore të rrotullimit</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="141"/>
         <source>Pick rotation angle from drawing</source>
-        <translation type="unfinished">Zgjidh</translation>
+        <translation type="unfinished">Merr nga vizatimi këndin e rrotullimit</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="155"/>
@@ -33508,7 +33509,7 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="165"/>
         <source>If absolute, reference point will be rotated but entity will be rotated by second angle only, otherwise angles will summ up</source>
-        <translation type="unfinished">Nëse absolutisht, pika e referimit do të rrotullohet por njësia do të rrotullohet vetëm me kënd të dytë, përndryshe këndet do të përmblidhen</translation>
+        <translation type="unfinished">Nëse është absolut, pika e referimit do të rrotullohet, por entiteti do të rrotullohet vetëm me këndin e dytë; përndryshe këndet do të mblidhen</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="168"/>
@@ -33518,12 +33519,12 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="175"/>
         <source>Pick second rotation angle from drawing</source>
-        <translation type="unfinished">Zgjidh sekondë</translation>
+        <translation type="unfinished">Merr këndin e dytë të rrotullimit nga vizatimi</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="189"/>
         <source>If checked, original entities will be survive, otherwise they will be removed.</source>
-        <translation type="unfinished">Po të kontrollohen, njësitë origjinale do të mbijetojnë, përndryshe ato do të hiqen.</translation>
+        <translation type="unfinished">Nëse zgjidhet, entitetet origjinale do të ruhen, përndryshe ato do të hiqen.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="192"/>
@@ -33607,7 +33608,7 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/action_options/modify/lc_round_options_filler.cpp" line="31"/>
         <source>Trim</source>
-        <translation type="unfinished">Trim</translation>
+        <translation type="unfinished">Shkurto</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_round_options_filler.cpp" line="31"/>
@@ -33640,7 +33641,7 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/action_options/modify/lc_round_options_widget.ui" line="62"/>
         <source>Trim</source>
-        <translation type="unfinished">Trim</translation>
+        <translation type="unfinished">Shkurto</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_round_options_widget.ui" line="85"/>
@@ -33655,7 +33656,7 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/action_options/modify/lc_round_options_widget.ui" line="102"/>
         <source>Pick radius from drawing</source>
-        <translation type="unfinished">Zgjidh</translation>
+        <translation type="unfinished">Merr rrezen nga vizatimi</translation>
     </message>
 </context>
 <context>
@@ -33728,7 +33729,7 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_filler.cpp" line="77"/>
         <source>Number of copies to create</source>
-        <translation type="unfinished">Numri nga</translation>
+        <translation type="unfinished">Numri i kopjeve që do të krijohen</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_filler.cpp" line="87"/>
@@ -33756,7 +33757,7 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="32"/>
         <source>Move Rotate Options</source>
-        <translation type="unfinished">Lëvize Mundësitë</translation>
+        <translation type="unfinished">Opsionet e zhvendosjes me rrotullim</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="50"/>
@@ -33776,7 +33777,7 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="73"/>
         <source>If checked, original entities will survive, otherwise they will be removed.</source>
-        <translation type="unfinished">Po të kontrollohen, njësitë origjinale do të mbijetojnë, përndryshe ato do të hiqen.</translation>
+        <translation type="unfinished">Nëse zgjidhet, entitetet origjinale do të ruhen, përndryshe ato do të hiqen.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="76"/>
@@ -33786,7 +33787,7 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="83"/>
         <source>If checked, created entities will be placed to current layer. Otherwise, they will be placed to original layers. </source>
-        <translation type="unfinished">Nëse kontrollohet, njësitë e krijuara do të vendosen në shtresën aktuale. Përndryshe, ato do të vendosen në shtresat origjinale. </translation>
+        <translation type="unfinished">Nëse zgjidhet, entitetet e krijuara do të vendosen në shtresën aktuale. Përndryshe, ato do të vendosen në shtresat origjinale. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="86"/>
@@ -33831,7 +33832,7 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="199"/>
         <source>If checked, current attributes will be applied to created entities, otherwise original ones will be used. </source>
-        <translation type="unfinished">Nëse kontrollohen, atributet aktuale do të zbatohen për njësitë e krijuara, përndryshe ato origjinale do të përdoren.</translation>
+        <translation type="unfinished">Nëse zgjidhet, atributet aktuale do të zbatohen për entitetet e krijuara, përndryshe do të përdoren ato origjinale. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="202"/>
@@ -33864,7 +33865,7 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="39"/>
         <source>Dimension</source>
-        <translation>Përmasa</translation>
+        <translation>Kuotë</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="46"/>
@@ -33874,7 +33875,7 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="53"/>
         <source>Spline</source>
-        <translation>Spin</translation>
+        <translation>Spline</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="60"/>
@@ -33889,7 +33890,7 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="74"/>
         <source>Polyline</source>
-        <translation>Poliline</translation>
+        <translation>Polilinjë</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="81"/>
@@ -33904,7 +33905,7 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="95"/>
         <source>Entity type</source>
-        <translation>Lloji i entit</translation>
+        <translation>Lloji i entitetit</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="102"/>
@@ -33914,7 +33915,7 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="109"/>
         <source>Hatch</source>
-        <translation>Hatç</translation>
+        <translation>Vijëzim</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="116"/>
@@ -33924,12 +33925,12 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="123"/>
         <source>Arc</source>
-        <translation>Arc</translation>
+        <translation>Hark</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="130"/>
         <source>Line</source>
-        <translation>Linja</translation>
+        <translation>Vijë</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="137"/>
@@ -33963,7 +33964,7 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="111"/>
         <source>Can&apos;t open provided file for writing - check that provided location is writable. Preferences were not exported.</source>
-        <translation>Hap për është. Preferencat nuk eksportoheshin.</translation>
+        <translation>Skedari i dhënë nuk mund të hapet për shkrim - kontrollo që vendndodhja të lejojë shkrimin. Preferencat nuk u eksportuan.</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="46"/>
@@ -34228,7 +34229,7 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="107"/>
         <source>Offset</source>
-        <translation type="unfinished">Spostimi</translation>
+        <translation type="unfinished">Zhvendosja</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="107"/>
@@ -34268,7 +34269,7 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="138"/>
         <source>Divide</source>
-        <translation type="unfinished">Pjesëtim</translation>
+        <translation type="unfinished">Ndaj</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="138"/>
@@ -34333,17 +34334,17 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="179"/>
         <source>If checked, selected entity will be divided by tick intersection points. </source>
-        <translation type="unfinished">Po të kontrollohen, njësia e zgjedhur do të ndahet nga pikat e kryqëzimit.</translation>
+        <translation type="unfinished">Nëse zgjidhet, entiteti i zgjedhur do të ndahet në pikat e prerjes me shenjat. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="182"/>
         <source>Divide</source>
-        <translation type="unfinished">Pjesëtim</translation>
+        <translation type="unfinished">Ndaj</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="189"/>
         <source>Offset:</source>
-        <translation type="unfinished">Spostimi:</translation>
+        <translation type="unfinished">Zhvendosja:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="196"/>
@@ -34353,7 +34354,7 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="203"/>
         <source>Pick tick offset from drawing</source>
-        <translation type="unfinished">Nga</translation>
+        <translation type="unfinished">Merr zhvendosjen e shenjës nga vizatimi</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="229"/>
@@ -34363,7 +34364,7 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="236"/>
         <source>Pick tick angle from drawing</source>
-        <translation type="unfinished">Kalo</translation>
+        <translation type="unfinished">Merr këndin e shenjës nga vizatimi</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="250"/>
@@ -34403,7 +34404,7 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="322"/>
         <source>Pick tick length from drawing</source>
-        <translation type="unfinished">Nga</translation>
+        <translation type="unfinished">Merr gjatësinë e shenjës nga vizatimi</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="375"/>
@@ -34413,12 +34414,12 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="382"/>
         <source>Start Circle Angle:</source>
-        <translation type="unfinished">Fillimi</translation>
+        <translation type="unfinished">Këndi i fillimit të rrethit:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="389"/>
         <source>PIck start circle angle from drawing</source>
-        <translation type="unfinished">Fillo nga</translation>
+        <translation type="unfinished">Merr këndin e fillimit të rrethit nga vizatimi</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="413"/>
@@ -34484,7 +34485,7 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="50"/>
         <source>If checked, line segments will be part of polyline. Otherwise, they will be individual lines</source>
-        <translation type="unfinished">Nëse kontrollohen, segmentet e vijës do të jenë pjesë e polilines. Përndryshe, do të jenë vija individuale</translation>
+        <translation type="unfinished">Nëse zgjidhet, segmentet e vijës do të jenë pjesë e polilinjës. Përndryshe, do të jenë vija të veçanta</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="57"/>
@@ -34514,7 +34515,7 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="77"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Nëse kontrollohet, njësitë e krijuara do të vendosen në shtresën aktuale, përndryshe ato do të vendosen në shtresat origjinale.</translation>
+        <translation type="unfinished">Nëse zgjidhet, entitetet e krijuara do të vendosen në shtresën aktuale, përndryshe ato do të vendosen në shtresat origjinale.</translation>
     </message>
 </context>
 <context>
@@ -34532,7 +34533,7 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="39"/>
         <source>If unchecked, original spline will be removed, otherwise it will survive.</source>
-        <translation type="unfinished">Po të jetë e pakontrolluar, do të hiqet vija origjinale, përndryshe do të mbijetojë.</translation>
+        <translation type="unfinished">Nëse nuk zgjidhet, spline-i origjinal do të hiqet, përndryshe do të mbetet.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="42"/>
@@ -34542,7 +34543,7 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="56"/>
         <source>If checked, current attributes will be used for created entities, otherwise - original ones. </source>
-        <translation type="unfinished">Nëse kontrollohen, cilësitë e tanishme do të përdoren për njësitë e krijuara, përndryshe - ato origjinale.</translation>
+        <translation type="unfinished">Nëse zgjidhet, vetitë aktuale do të përdoren për entitetet e krijuara, përndryshe - ato origjinale. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="59"/>
@@ -34552,7 +34553,7 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="73"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Nëse kontrollohet, njësitë e krijuara do të vendosen në shtresën aktuale, përndryshe ato do të vendosen në shtresat origjinale.</translation>
+        <translation type="unfinished">Nëse zgjidhet, entitetet e krijuara do të vendosen në shtresën aktuale, përndryshe ato do të vendosen në shtresat origjinale.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="76"/>
@@ -34572,12 +34573,12 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="93"/>
         <source>If checked, line segments will be part of polyline. Otherwise, they will be individual lines</source>
-        <translation type="unfinished">Nëse kontrollohen, segmentet e vijës do të jenë pjesë e polilines. Përndryshe, do të jenë vija individuale</translation>
+        <translation type="unfinished">Nëse zgjidhet, segmentet e vijës do të jenë pjesë e polilinjës. Përndryshe, do të jenë vija të veçanta</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="96"/>
         <source>To Polyline</source>
-        <translation type="unfinished">Në Poliline</translation>
+        <translation type="unfinished">Në polilinjë</translation>
     </message>
 </context>
 <context>
@@ -34590,7 +34591,7 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_filler.cpp" line="31"/>
         <source>Defines degree of the spline</source>
-        <translation type="unfinished">Përcakton shkallën e kurbës spline</translation>
+        <translation type="unfinished">Përcakton shkallën e spline-it</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_filler.cpp" line="38"/>
@@ -34610,7 +34611,7 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_filler.cpp" line="44"/>
         <source>Amount of middle points of polyline segment that will be added to spline. </source>
-        <translation type="unfinished">Shumicën e pikave të mesit të segmentit poliline që do t&apos;i shtohet slines.</translation>
+        <translation type="unfinished">Numri i pikave të ndërmjetme të segmentit të polilinjës që do t&apos;i shtohen spline-it. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_filler.cpp" line="51"/>
@@ -34640,7 +34641,7 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_filler.cpp" line="71"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Nëse kontrollohet, njësitë e krijuara do të vendosen në shtresën aktuale, përndryshe ato do të vendosen në shtresat origjinale.</translation>
+        <translation type="unfinished">Nëse zgjidhet, entitetet e krijuara do të vendosen në shtresën aktuale, përndryshe ato do të vendosen në shtresat origjinale.</translation>
     </message>
 </context>
 <context>
@@ -34653,7 +34654,7 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="32"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">Nëse kontrollohet, njësitë e krijuara do të vendosen në shtresën aktuale, përndryshe ato do të vendosen në shtresat origjinale.</translation>
+        <translation type="unfinished">Nëse zgjidhet, entitetet e krijuara do të vendosen në shtresën aktuale, përndryshe ato do të vendosen në shtresat origjinale.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="35"/>
@@ -34663,17 +34664,17 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="42"/>
         <source>Amount of middle points of polyline segment that will be added to spline. </source>
-        <translation type="unfinished">Shumicën e pikave të mesit të segmentit poliline që do t&apos;i shtohet slines.</translation>
+        <translation type="unfinished">Numri i pikave të ndërmjetme të segmentit të polilinjës që do t&apos;i shtohen spline-it. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="55"/>
         <source>Defines degree of the spline</source>
-        <translation type="unfinished">Përcakton shkallën e kurbës spline</translation>
+        <translation type="unfinished">Përcakton shkallën e spline-it</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="68"/>
         <source>If unchecked, original polyline will be removed, otherwise it will survive.</source>
-        <translation type="unfinished">Nëse i pakontrolluar, poliline origjinale do të hiqet, përndryshe do të mbijetojë.</translation>
+        <translation type="unfinished">Nëse nuk zgjidhet, polilinja origjinale do të hiqet, përndryshe do të mbetet.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="71"/>
@@ -34688,7 +34689,7 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="85"/>
         <source>If checked, current attributes will be used for created entities, otherwise - original ones. </source>
-        <translation type="unfinished">Nëse kontrollohen, cilësitë e tanishme do të përdoren për njësitë e krijuara, përndryshe - ato origjinale.</translation>
+        <translation type="unfinished">Nëse zgjidhet, vetitë aktuale do të përdoren për entitetet e krijuara, përndryshe - ato origjinale. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="88"/>
@@ -34708,7 +34709,7 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="105"/>
         <source>Vertexes are spline points</source>
-        <translation type="unfinished">Verteksi është pikë</translation>
+        <translation type="unfinished">Kulmet janë pika të spline-it</translation>
     </message>
 </context>
 <context>
@@ -34721,7 +34722,7 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_options_filler.cpp" line="33"/>
         <source>Defines degree of the spline</source>
-        <translation type="unfinished">Përcakton shkallën e kurbës spline</translation>
+        <translation type="unfinished">Përcakton shkallën e spline-it</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_options_filler.cpp" line="40"/>
@@ -34731,7 +34732,7 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_options_filler.cpp" line="40"/>
         <source>If selected, closed spline is created</source>
-        <translation type="unfinished">Nëse është zgjedhur, është krijuar një linjë e mbyllur</translation>
+        <translation type="unfinished">Nëse zgjidhet, krijohet një spline i mbyllur</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_options_filler.cpp" line="46"/>
@@ -34754,7 +34755,7 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_options_widget.ui" line="32"/>
         <source>Spline Options</source>
-        <translation type="unfinished">Mundësitë</translation>
+        <translation type="unfinished">Opsionet e spline-it</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_options_widget.ui" line="56"/>
@@ -34764,12 +34765,12 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_options_widget.ui" line="72"/>
         <source>Spline&apos;s degree used for approximation between points</source>
-        <translation type="unfinished">Shkalla e Splain-it e përdorur për afrim midis pikave</translation>
+        <translation type="unfinished">Shkalla e spline-it që përdoret për përafrimin midis pikave</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_options_widget.ui" line="94"/>
         <source>If selected, closed spline is created</source>
-        <translation type="unfinished">Nëse është zgjedhur, është krijuar një linjë e mbyllur</translation>
+        <translation type="unfinished">Nëse zgjidhet, krijohet një spline i mbyllur</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_options_widget.ui" line="97"/>
@@ -34812,7 +34813,7 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_splinepoints.ui" line="65"/>
         <source>Spline Points</source>
-        <translation>Pika</translation>
+        <translation>Pikat e spline-it</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_splinepoints.ui" line="75"/>
@@ -34837,7 +34838,7 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="14"/>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="17"/>
         <source>Spline Properties Editor</source>
-        <translation>Editori i vetive të kurbës spline</translation>
+        <translation>Redaktori i vetive të spline-it</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="20"/>
@@ -34862,22 +34863,22 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="89"/>
         <source>Select the degree of the spline curve</source>
-        <translation>Zgjidh nga</translation>
+        <translation>Zgjidh shkallën e kurbës spline</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="119"/>
         <source>Defines whether spline defines closed contour</source>
-        <translation>Përcakton nëse vija përcakton kontourin e mbyllur</translation>
+        <translation>Përcakton nëse spline-i formon kontur të mbyllur</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="122"/>
         <source>Closed Spline CheckBox</source>
-        <translation>KontrolliBox i mbyllur</translation>
+        <translation>Kutia e zgjedhjes &quot;Spline i mbyllur&quot;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="125"/>
         <source>Toggle whether the spline forms a closed contour</source>
-        <translation>Kavo a</translation>
+        <translation>Ndërro nëse spline-i formon kontur të mbyllur</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="128"/>
@@ -34902,7 +34903,7 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="183"/>
         <source>Edit control points coordinates and weights for the spline</source>
-        <translation>Ndrysho koordinatat e pikave të kontrollit dhe peshat për spin</translation>
+        <translation>Ndrysho koordinatat dhe peshat e pikave të kontrollit të spline-it</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="196"/>
@@ -34928,7 +34929,7 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="255"/>
         <source>Knot values control the spline’s curve shape (non-decreasing sequence)</source>
-        <translation>Nuk</translation>
+        <translation>Vlerat e nyjeve kontrollojnë formën e kurbës së spline-it (varg jozbritës)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="258"/>
@@ -34938,7 +34939,7 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="261"/>
         <source>Edit knot values for the spline (must be non-decreasing)</source>
-        <translation>Ndrysho për</translation>
+        <translation>Ndrysho vlerat e nyjeve të spline-it (duhet të jenë jozbritëse)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="276"/>
@@ -34954,12 +34955,12 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="306"/>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="312"/>
         <source>Add a new control point to the spline</source>
-        <translation>Shto a i ri pikë</translation>
+        <translation>Shto një pikë të re kontrolli te spline-i</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="309"/>
         <source>Add Control Point Button</source>
-        <translation>Shto Butoni</translation>
+        <translation>Butoni &quot;Shto pikë kontrolli&quot;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="325"/>
@@ -34970,17 +34971,17 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="328"/>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="334"/>
         <source>Remove the selected control point from the spline</source>
-        <translation>Hiq pikë</translation>
+        <translation>Hiq pikën e zgjedhur të kontrollit nga spline-i</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="331"/>
         <source>Remove Control Point Button</source>
-        <translation>Hiq</translation>
+        <translation>Butoni &quot;Hiq pikën e kontrollit&quot;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="83"/>
         <source>Degree used to approximate spline</source>
-        <translation>Degrene</translation>
+        <translation>Shkalla që përdoret për përafrimin e spline-it</translation>
     </message>
 </context>
 <context>
@@ -35091,7 +35092,7 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/action_options/polygon/lc_star_options_widget.ui" line="85"/>
         <source>Polyline</source>
-        <translation type="unfinished">Poliline</translation>
+        <translation type="unfinished">Polilinjë</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_star_options_widget.ui" line="92"/>
@@ -35126,12 +35127,12 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/action_options/polygon/lc_star_options_widget.ui" line="157"/>
         <source>Pick outer radius from drawing</source>
-        <translation type="unfinished">Zgjidh nga</translation>
+        <translation type="unfinished">Merr rrezen e jashtme nga vizatimi</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_star_options_widget.ui" line="171"/>
         <source>Pick inner radius from drawing</source>
-        <translation type="unfinished">Zgjidh nga</translation>
+        <translation type="unfinished">Merr rrezen e brendshme nga vizatimi</translation>
     </message>
 </context>
 <context>
@@ -35157,7 +35158,7 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/action_options/modify/lc_stretch_options_widget.ui" line="32"/>
         <source>If checked, original entities will survive, otherwise they will be removed.</source>
-        <translation type="unfinished">Po të kontrollohen, njësitë origjinale do të mbijetojnë, përndryshe ato do të hiqen.</translation>
+        <translation type="unfinished">Nëse zgjidhet, entitetet origjinale do të ruhen, përndryshe ato do të hiqen.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_stretch_options_widget.ui" line="35"/>
@@ -35175,7 +35176,7 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/action_options/text/lc_text_options_filler.cpp" line="31"/>
         <source>Text to insert</source>
-        <translation type="unfinished">Teksti që duhet shtuar</translation>
+        <translation type="unfinished">Teksti që do të futet</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/text/lc_text_options_filler.cpp" line="37"/>
@@ -35213,7 +35214,7 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/action_options/text/lc_text_options_widget.ui" line="83"/>
         <source>Pick angle from drawing</source>
-        <translation type="unfinished">Zgjidh</translation>
+        <translation type="unfinished">Merr këndin nga vizatimi</translation>
     </message>
 </context>
 <context>
@@ -35341,7 +35342,7 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/dialogs/entity/lc_textpropertieseditingwidget.cpp" line="49"/>
         <source>Middle Left</source>
-        <translation type="unfinished">E Majta</translation>
+        <translation type="unfinished">Mes majtas</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_textpropertieseditingwidget.cpp" line="50"/>
@@ -35356,17 +35357,17 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/dialogs/entity/lc_textpropertieseditingwidget.cpp" line="52"/>
         <source>Baseline Left</source>
-        <translation type="unfinished">Majtas</translation>
+        <translation type="unfinished">Vija bazë majtas</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_textpropertieseditingwidget.cpp" line="53"/>
         <source>Baseline Center</source>
-        <translation type="unfinished">Qendra Bazë</translation>
+        <translation type="unfinished">Vija bazë në qendër</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_textpropertieseditingwidget.cpp" line="54"/>
         <source>Baseline Right</source>
-        <translation type="unfinished">Djathtas</translation>
+        <translation type="unfinished">Vija bazë djathtas</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_textpropertieseditingwidget.cpp" line="55"/>
@@ -35404,7 +35405,7 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="53"/>
         <source>Pen</source>
-        <translation>Pen</translation>
+        <translation>Stilolapsi</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="69"/>
@@ -35461,7 +35462,7 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="216"/>
         <source>Entity&apos;s Layer</source>
-        <translation>Shtresa e njësisë</translation>
+        <translation>Shtresa e entitetit</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="250"/>
@@ -35476,7 +35477,7 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="327"/>
         <source>Line</source>
-        <translation>Linja</translation>
+        <translation>Vijë</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="328"/>
@@ -35496,12 +35497,12 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="331"/>
         <source>Arc</source>
-        <translation>Arc</translation>
+        <translation>Hark</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="332"/>
         <source>Spline</source>
-        <translation>Spin</translation>
+        <translation>Spline</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="333"/>
@@ -35511,7 +35512,7 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="334"/>
         <source>Polyline</source>
-        <translation>Poliline</translation>
+        <translation>Polilinjë</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="335"/>
@@ -35522,7 +35523,7 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="336"/>
         <source>Dimension</source>
-        <translation>Përmasa</translation>
+        <translation>Kuotë</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="337"/>
@@ -35574,7 +35575,7 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="364"/>
         <source>Splines</source>
-        <translation>Kurba spline</translation>
+        <translation>Spline</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="366"/>
@@ -35584,12 +35585,12 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="367"/>
         <source>PolyLines</source>
-        <translation>PolyLines</translation>
+        <translation>Polilinjat</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="369"/>
         <source>Dimensions</source>
-        <translation>Përmasat</translation>
+        <translation>Kuotat</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="372"/>
@@ -35637,7 +35638,7 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/action_options/modify/lc_trim_amount_options_filler.cpp" line="43"/>
         <source>Trim</source>
-        <translation type="unfinished">Trim</translation>
+        <translation type="unfinished">Shkurto</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_trim_amount_options_filler.cpp" line="43"/>
@@ -35650,12 +35651,12 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/action_options/modify/lc_trim_amount_options_widget.ui" line="20"/>
         <source>Trim Amount Options</source>
-        <translation type="unfinished">Mundësitë</translation>
+        <translation type="unfinished">Opsionet e sasisë së shkurtimit</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_trim_amount_options_widget.ui" line="23"/>
         <source>Distance. Negative values for trimming, positive values for extending.</source>
-        <translation type="unfinished">Largësia. Vlerat negative për shkurtimin, vlerat pozitive për shtrirjen.</translation>
+        <translation type="unfinished">Distanca. Vlerat negative për shkurtim, vlerat pozitive për zgjatje.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_trim_amount_options_widget.ui" line="50"/>
@@ -35746,7 +35747,7 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/action_options/other/lc_ucs_create_options_widget.ui" line="68"/>
         <source>Pick angle from drawing</source>
-        <translation type="unfinished">Zgjidh</translation>
+        <translation type="unfinished">Merr këndin nga vizatimi</translation>
     </message>
 </context>
 <context>
@@ -35843,7 +35844,7 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.ui" line="121"/>
         <source>Saves currently used coordinate system (it is usefull if UCS comes from saved view)</source>
-        <translation>Ruaj sistemi është nga Ruaj</translation>
+        <translation>Ruan sistemin koordinativ që përdoret aktualisht (e dobishme nëse UCS vjen nga një pamje e ruajtur)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.ui" line="80"/>
@@ -35853,7 +35854,7 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.ui" line="66"/>
         <source>Edit selected user coordinates name. No-name UCS are temporary and are not saved.</source>
-        <translation>Ndrysho emri. Jo emri UCS janë të përkohshëm dhe nuk ruhen.</translation>
+        <translation>Ndrysho emrin e sistemit koordinativ të zgjedhur të përdoruesit. UCS pa emër janë të përkohshme dhe nuk ruhen.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.ui" line="148"/>
@@ -35983,12 +35984,12 @@ Kujdes: ky veprim nuk mund të anullohet!</translation>
     <message>
         <location filename="../src/ui/components/status_bar/lc_ucsstatewidget.ui" line="44"/>
         <source>Type of current coordinate system</source>
-        <translation>Lloji i sistemit aktual</translation>
+        <translation>Lloji i sistemit koordinativ aktual</translation>
     </message>
     <message>
         <location filename="../src/ui/components/status_bar/lc_ucsstatewidget.ui" line="96"/>
         <source>Name of selected coordinate system</source>
-        <translation>Emri i sistemit të zgjedhur</translation>
+        <translation>Emri i sistemit koordinativ të zgjedhur</translation>
     </message>
     <message>
         <location filename="../src/ui/components/status_bar/lc_ucsstatewidget.ui" line="105"/>
@@ -36044,7 +36045,7 @@ Kujdes: ky veprim nuk mund të anullohet!</translation>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="130"/>
         <source>Line</source>
-        <translation>Linja</translation>
+        <translation>Vijë</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="132"/>
@@ -36064,12 +36065,12 @@ Kujdes: ky veprim nuk mund të anullohet!</translation>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="137"/>
         <source>Polyline</source>
-        <translation>Poliline</translation>
+        <translation>Polilinjë</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="139"/>
         <source>Dimension</source>
-        <translation>Përmasa</translation>
+        <translation>Kuotë</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="140"/>
@@ -36090,12 +36091,12 @@ Kujdes: ky veprim nuk mund të anullohet!</translation>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="174"/>
         <source>Pens Palette</source>
-        <translation>Peni</translation>
+        <translation>Paleta e stilolapsave</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="174"/>
         <source>Pens</source>
-        <translation>Peni</translation>
+        <translation>Stilolapsat</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="188"/>
@@ -36151,7 +36152,7 @@ Kujdes: ky veprim nuk mund të anullohet!</translation>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="428"/>
         <source>Pen Wizard</source>
-        <translation>Magjistari Pen</translation>
+        <translation>Asistenti i stilolapsave</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="428"/>
@@ -36166,7 +36167,7 @@ Kujdes: ky veprim nuk mund të anullohet!</translation>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="249"/>
         <source>Entity Info</source>
-        <translation>Info</translation>
+        <translation>Informacion për entitetin</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="201"/>
@@ -36181,12 +36182,12 @@ Kujdes: ky veprim nuk mund të anullohet!</translation>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="134"/>
         <source>Arc</source>
-        <translation>Arc</translation>
+        <translation>Hark</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="135"/>
         <source>Spline</source>
-        <translation>Spin</translation>
+        <translation>Spline</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="493"/>
@@ -36232,7 +36233,7 @@ Kujdes: ky veprim nuk mund të anullohet!</translation>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="547"/>
         <source>Current size of Grid/MetaGrid. Click to change grid size.</source>
-        <translation>Madhësia aktuale e Grid/MetaGrid. Kliko për të ndryshuar madhësinë e rrjetit.</translation>
+        <translation>Madhësia aktuale e rrjetës/meta-rrjetës. Kliko për të ndryshuar madhësinë e rrjetës.</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="141"/>
@@ -36325,7 +36326,7 @@ Kujdes: ky veprim nuk mund të anullohet!</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="300"/>
         <source>Color for main elements (originally black)</source>
-        <translation>Ngjyra për</translation>
+        <translation>Ngjyra e elementeve kryesore (fillimisht e zezë)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="329"/>
@@ -36417,7 +36418,7 @@ Kujdes: ky veprim nuk mund të anullohet!</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="455"/>
         <source>Flat pick values buttons</source>
-        <translation>Kavo</translation>
+        <translation>Butona të sheshtë për marrjen e vlerave</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="586"/>
@@ -36674,7 +36675,7 @@ Të lutem kontrollo të drejtat.</translation>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1075"/>
         <source>Warning: File already opened : </source>
-        <translation>Kujdes: File</translation>
+        <translation>Kujdes: Skedari është tashmë i hapur : </translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1089"/>
@@ -36693,7 +36694,7 @@ Të lutem kontrollo ekzistencën e saj dhe të drejtat.</translation>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="289"/>
         <source>Cannot save the file </source>
-        <translation>Ruaj</translation>
+        <translation>Nuk mund të ruhet skedari </translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="271"/>
@@ -37175,12 +37176,12 @@ Auto-save të çaktivizuar.</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dimensionlabeleditor.ui" line="20"/>
         <source>Dimension Label Editor</source>
-        <translation>Modifikues i Etiketave të Dimensionit</translation>
+        <translation>Redaktori i etiketës së kuotës</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dimensionlabeleditor.ui" line="38"/>
         <source>Dimension Label:</source>
-        <translation>Etiketa:</translation>
+        <translation>Etiketa e kuotës:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dimensionlabeleditor.ui" line="165"/>
@@ -37190,7 +37191,7 @@ Auto-save të çaktivizuar.</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dimensionlabeleditor.ui" line="94"/>
         <source>Symbol before dimensional text</source>
-        <translation>Simboli përpara tekstit dimensional</translation>
+        <translation>Simboli përpara tekstit të kuotës</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dimensionlabeleditor.ui" line="62"/>
@@ -37215,12 +37216,12 @@ Auto-save të çaktivizuar.</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dimensionlabeleditor.ui" line="187"/>
         <source>Format of the dimension text, &lt;&gt; can be used as a placeholder for the dimension measurement value</source>
-        <translation>Format i tekstit dimenzional, &lt;&gt; mund të përdoret si vendshënues për vlerën e matjes së dimensionit</translation>
+        <translation>Formati i tekstit të kuotës; &lt;&gt; mund të përdoret si vendmbajtës për vlerën e matur të kuotës</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dimensionlabeleditor.ui" line="200"/>
         <source>Symbol to insert</source>
-        <translation>Simboli që duhet shtuar</translation>
+        <translation>Simboli që do të futet</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dimensionlabeleditor.ui" line="204"/>
@@ -37291,24 +37292,24 @@ Auto-save të çaktivizuar.</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.ui" line="69"/>
         <source>Pen attributes</source>
-        <translation>Butet</translation>
+        <translation>Atributet e stilolapsit</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.ui" line="76"/>
         <source>Apply attributes also to all sub-entities of selected INSERT.
 This recursively modifies all entities of the Block itself.</source>
-        <translation>Aplikoni gjithashtu atribute për të gjitha nën-entitetet e INSERT-it të zgjedhur.
-Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
+        <translation>Zbato atributet edhe te të gjitha nën-entitetet e INSERT-it të zgjedhur.
+Kjo modifikon në mënyrë rekursive të gjitha entitetet e vetë bllokut.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.ui" line="80"/>
         <source>Apply attributes Block-deep</source>
-        <translation>Apliko</translation>
+        <translation>Zbato atributet në thellësi të bllokut</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.cpp" line="61"/>
         <source>Pen</source>
-        <translation>Pen</translation>
+        <translation>Stilolapsi</translation>
     </message>
 </context>
 <context>
@@ -37316,7 +37317,7 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="14"/>
         <source>Choose Hatch Attributes</source>
-        <translation>Zgjidh Veçoritë</translation>
+        <translation>Zgjidh atributet e vijëzimit</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="22"/>
@@ -37326,7 +37327,7 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="28"/>
         <source>Scale factor for hatch pattern</source>
-        <translation>Shkalla për</translation>
+        <translation>Faktori i shkallës për motivin e vijëzimit</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="35"/>
@@ -37341,7 +37342,7 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="55"/>
         <source>Rotation angle for the hatch</source>
-        <translation>Për</translation>
+        <translation>Këndi i rrotullimit të vijëzimit</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="62"/>
@@ -37366,7 +37367,7 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="101"/>
         <source>If enabled, preview of hatch pattern will be shown below</source>
-        <translation>Nëse aktivizohet, pamja e pamjes së daljes do të shfaqet më poshtë</translation>
+        <translation>Nëse aktivizohet, pamja paraprake e motivit të vijëzimit do të shfaqet më poshtë</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="104"/>
@@ -37381,7 +37382,7 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="124"/>
         <source>Hatched area</source>
-        <translation>Zona e rrethuar</translation>
+        <translation>Sipërfaqja e vijëzuar</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.cpp" line="213"/>
@@ -37437,7 +37438,7 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="125"/>
         <source>&amp;Line spacing:</source>
-        <translation>&amp;Linja:</translation>
+        <translation>&amp;Hapësira midis rreshtave:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="113"/>
@@ -37477,7 +37478,7 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="532"/>
         <source>Middle Left</source>
-        <translation>E Majta</translation>
+        <translation>Mes majtas</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="500"/>
@@ -37527,7 +37528,7 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="260"/>
         <source>Specific line spacing factor is used</source>
-        <translation>Është</translation>
+        <translation>Përdoret një faktor i caktuar i hapësirës midis rreshtave</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="289"/>
@@ -37552,7 +37553,7 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="674"/>
         <source>Left to right text direction</source>
-        <translation>Nga e majta në të djathtë</translation>
+        <translation>Drejtimi i tekstit nga e majta në të djathtë</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="677"/>
@@ -37612,7 +37613,7 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="860"/>
         <source>Insert Symbol</source>
-        <translation>Simboli</translation>
+        <translation>Fut simbol</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="876"/>
@@ -37672,7 +37673,7 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="872"/>
         <source>Symbol to insert</source>
-        <translation>Simboli që duhet shtuar</translation>
+        <translation>Simboli që do të futet</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="935"/>
@@ -37712,7 +37713,7 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="999"/>
         <source>Codepage to use for characted selection</source>
-        <translation>Për</translation>
+        <translation>Faqja e kodit që përdoret për zgjedhjen e karaktereve</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1003"/>
@@ -37727,12 +37728,12 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1013"/>
         <source>[0100-017F] Latin Extended-A</source>
-        <translation>[0100-017F] Latinisht e zgjeruar... A</translation>
+        <translation>[0100-017F] Latinishtja e zgjeruar-A</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1018"/>
         <source>[0180-024F] Latin Extended-B</source>
-        <translation>[0180-024F] Latin</translation>
+        <translation>[0180-024F] Latinishtja e zgjeruar-B</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1023"/>
@@ -37927,12 +37928,12 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1213"/>
         <source>[1E00-1EFF] Latin Extended Additional</source>
-        <translation>[1E00-1EFF] Latinisht e zgjeruar</translation>
+        <translation>[1E00-1EFF] Latinishtja e zgjeruar shtesë</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1218"/>
         <source>[1F00-1FFF] Greek Extended</source>
-        <translation>[1F00-1FFF] Greqisht</translation>
+        <translation>[1F00-1FFF] Greqishtja e zgjeruar</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1223"/>
@@ -38007,7 +38008,7 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1293"/>
         <source>[25A0-25FF] Geometric Shapes</source>
-        <translation>[25A0-25FF]</translation>
+        <translation>[25A0-25FF] Forma gjeometrike</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1298"/>
@@ -38097,12 +38098,12 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1383"/>
         <source>[31A0-31BF] Bopomofo Extended</source>
-        <translation>[31A0-31BF] Bopomofo zgjeruar</translation>
+        <translation>[31A0-31BF] Bopomofo e zgjeruar</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1388"/>
         <source>[3200-32FF] Enclosed CJK Letters and Months</source>
-        <translation>[3200-32FF]</translation>
+        <translation>[3200-32FF] Shkronja dhe muaj CJK të rrethuar</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1393"/>
@@ -38257,17 +38258,17 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1558"/>
         <source>Selection of character to insert</source>
-        <translation>Zgjedhja e gërmave që duhen shtuar</translation>
+        <translation>Zgjedhja e karakterit që do të futet</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1583"/>
         <source>Selected character preview. Click to insert to text.</source>
-        <translation>Pamja e parë e gërmave të zgjedhura. Kliko për të shtuar tekstin.</translation>
+        <translation>Pamja paraprake e karakterit të zgjedhur. Kliko për ta futur në tekst.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.cpp" line="250"/>
         <source>Pen</source>
-        <translation>Pen</translation>
+        <translation>Stilolapsi</translation>
     </message>
 </context>
 <context>
@@ -38360,12 +38361,12 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="723"/>
         <source>&amp;Grid</source>
-        <translation>&amp;Grid</translation>
+        <translation>&amp;Rrjetë</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="735"/>
         <source>Grid Settings</source>
-        <translation>Rregullimet</translation>
+        <translation>Cilësimet e rrjetës</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="807"/>
@@ -38375,12 +38376,12 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1444"/>
         <source>Length to enlarge over dimension line</source>
-        <translation>Gjatësia nga</translation>
+        <translation>Gjatësia e zgjatjes përtej vijës së kuotës</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1469"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension arrow size. &lt;a name=&quot;result_box&quot;/&gt;without effect when tick size &lt;a name=&quot;result_box&quot;/&gt;is other than 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt; Madhësia e shigjetës së dimensionit. &lt;a emri=&quot;Result box&quot;/&gt; Pa efekt kur masa &lt;a name=&quot;rezult box&quot;/&gt; është tjetër përveç 0&lt;/p&gt;&lt;/fond&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Madhësia e shigjetës së kuotës. &lt;a name=&quot;result_box&quot;/&gt;Pa efekt kur madhësia e shenjës &lt;a name=&quot;result_box&quot;/&gt;është e ndryshme nga 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="170"/>
@@ -38449,7 +38450,7 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="791"/>
         <source>Use orthogonal grid</source>
-        <translation>Përdorimi</translation>
+        <translation>Përdor rrjetë ortogonale</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="794"/>
@@ -38559,7 +38560,7 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="753"/>
         <source>Right isometric grid</source>
-        <translation>Djathtas</translation>
+        <translation>Rrjetë izometrike djathtas</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="756"/>
@@ -38569,7 +38570,7 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="775"/>
         <source>Left isometric grid</source>
-        <translation>Majtas</translation>
+        <translation>Rrjetë izometrike majtas</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="778"/>
@@ -38584,7 +38585,7 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="826"/>
         <source>Top isometric grid</source>
-        <translation>Sipër</translation>
+        <translation>Rrjetë izometrike sipër</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="829"/>
@@ -38618,27 +38619,27 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="879"/>
         <source>Automatically Scale Grid:</source>
-        <translation>Shkalla</translation>
+        <translation>Shkallëzo rrjetën automatikisht:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="886"/>
         <source>Draw Meta Grid:</source>
-        <translation>Vizato Meta Grid:</translation>
+        <translation>Vizato meta-rrjetën:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="917"/>
         <source>Grid Spacing</source>
-        <translation>Hapësira e ndërmjetme</translation>
+        <translation>Hapësira e rrjetës</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="955"/>
         <source>Select or enter grid spacing value by X axis</source>
-        <translation>Zgjidh nga X</translation>
+        <translation>Zgjidh ose fut vlerën e hapësirës së rrjetës sipas boshtit X</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="990"/>
         <source>Select or input grid spacing value by Y axis</source>
-        <translation>Zgjidh nga</translation>
+        <translation>Zgjidh ose fut vlerën e hapësirës së rrjetës sipas boshtit Y</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1038"/>
@@ -38648,7 +38649,7 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1049"/>
         <source>&amp;Dimensions</source>
-        <translation>&amp;Dimensions</translation>
+        <translation>&amp;Kuotat</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1058"/>
@@ -38695,7 +38696,7 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1282"/>
         <source>Linear zeros:</source>
-        <translation>Linja zero:</translation>
+        <translation>Zerot lineare:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1319"/>
@@ -38710,12 +38711,12 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1399"/>
         <source>Text size &amp; position</source>
-        <translation>Gjerësia &amp; pozicioni</translation>
+        <translation>Madhësia dhe pozicioni i tekstit</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1406"/>
         <source>General Scale:</source>
-        <translation>Të përgjithshme:</translation>
+        <translation>Shkalla e përgjithshme:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1771"/>
@@ -38725,7 +38726,7 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1798"/>
         <source>Dimensions</source>
-        <translation>Përmasat</translation>
+        <translation>Kuotat</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1810"/>
@@ -38755,7 +38756,7 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1877"/>
         <source>Marks style as active one. Active style will be used during creation of dimensions.</source>
-        <translation>Shënon stilin si aktiv. Stili aktiv do të përdoret gjatë krijimit të dimensioneve.</translation>
+        <translation>E shënon stilin si aktiv. Stili aktiv do të përdoret gjatë krijimit të kuotave.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1904"/>
@@ -38822,12 +38823,12 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2109"/>
         <source>Line Join:</source>
-        <translation>Linja</translation>
+        <translation>Bashkimi i vijave:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2116"/>
         <source>Mode of lines joining in polylines or paths</source>
-        <translation>Në</translation>
+        <translation>Mënyra e bashkimit të vijave në polilinja ose shtigje</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2135"/>
@@ -38837,12 +38838,12 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2176"/>
         <source>&amp;Points</source>
-        <translation>&amp;Points</translation>
+        <translation>&amp;Pikat</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2203"/>
         <source>Point Style</source>
-        <translation>Stili i vënies</translation>
+        <translation>Stili i pikave</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1852"/>
@@ -38913,7 +38914,7 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="3245"/>
         <source>Enter value for points size</source>
-        <translation>Shto për</translation>
+        <translation>Fut vlerën e madhësisë së pikave</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="3259"/>
@@ -38993,7 +38994,7 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="3394"/>
         <source>Floating point variables</source>
-        <translation>Pikë</translation>
+        <translation>Ndryshore me presje lëvizëse</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="3400"/>
@@ -39090,7 +39091,7 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1142"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scale to multiply all dimension values.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt; Shkalla j&lt;/fond&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Shkalla me të cilën shumëzohen të gjitha vlerat e kuotave.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1272"/>
@@ -39142,7 +39143,7 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1587"/>
         <source>Offset:</source>
-        <translation>Spostimi:</translation>
+        <translation>Zhvendosja:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1600"/>
@@ -39162,7 +39163,7 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1675"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Offset from origin point.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt; Nga pika e origjinës.&lt;/p&gt;&lt;/fond&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Zhvendosja nga pika e origjinës.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1707"/>
@@ -39172,12 +39173,12 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1717"/>
         <source>Dimension line gap:</source>
-        <translation>Dimensioni:</translation>
+        <translation>Hapësira në vijën e kuotës:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1351"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scale to multiply all dimension geometries.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scale për të shumuar të gjitha gjeometries dimensionale.&lt;/p&gt;&lt;/trund&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Shkalla me të cilën shumëzohen të gjitha gjeometritë e kuotave.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1220"/>
@@ -39207,17 +39208,17 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2007"/>
         <source>&amp;Splines and Lines</source>
-        <translation>&amp;Spines and Lines</translation>
+        <translation>&amp;Spline dhe vija</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2013"/>
         <source>Splines</source>
-        <translation>Kurba spline</translation>
+        <translation>Spline</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2056"/>
         <source>Number of line segments per spline patch:</source>
-        <translation>Numri nga:</translation>
+        <translation>Numri i segmenteve të vijës për çdo pjesë spline:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="1943"/>
@@ -39347,17 +39348,17 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="627"/>
         <source>Dimension style editing - </source>
-        <translation>Dimensioni i stilit -</translation>
+        <translation>Redaktimi i stilit të kuotimit - </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="651"/>
         <source>Rename Dimension Style</source>
-        <translation>Riemërto stilin e dimensionit</translation>
+        <translation>Riemërto stilin e kuotimit</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="652"/>
         <source>Enter new unique name of dimension style (was &quot;%1&quot;):</source>
-        <translation>Shto i ri emri nga:</translation>
+        <translation>Fut emrin e ri unik të stilit të kuotimit (ishte &quot;%1&quot;):</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="671"/>
@@ -39365,27 +39366,27 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="692"/>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="699"/>
         <source>Removing Dimension Style</source>
-        <translation>Heqja e stilit të dimensionit</translation>
+        <translation>Heqja e stilit të kuotimit</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="672"/>
         <source>Can&apos;t delete last dimension style. At least one should be present! </source>
-        <translation>E pamundur fshirja e stilit të fundit të dimensionit. Të paktën një duhet të jetë i pranishëm!</translation>
+        <translation>Stili i fundit i kuotimit nuk mund të fshihet. Duhet të ekzistojë të paktën një! </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="685"/>
         <source>Can&apos;t delete dimension style as it&apos;s children is used in drawing. Only unused style may be deleted.</source>
-        <translation>Nuk mund të eleminohet stili dimenzional si fëmijët e saj është përdorur në vizatim. Mund të eleminohet vetëm stili i papërdorur.</translation>
+        <translation>Stili i kuotimit nuk mund të fshihet, sepse stilet e tij bijë përdoren në vizatim. Mund të fshihet vetëm një stil i papërdorur.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="693"/>
         <source>Are you sure you want to remove the dimension style &quot;%1&quot; together with child styles?</source>
-        <translation>Jeni i sigurt që dëshironi të hiqni stilin e dimensionit &quot;%1&quot; së bashku me stilet e fëmijëve?</translation>
+        <translation>Je i sigurt që dëshiron të heqësh stilin e kuotimit &quot;%1&quot; së bashku me stilet bijë?</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="700"/>
         <source>Are you sure you want to remove the dimension style &quot;%1&quot;?</source>
-        <translation>Nga hiq?</translation>
+        <translation>Je i sigurt që dëshiron të heqësh stilin e kuotimit &quot;%1&quot;?</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="936"/>
@@ -39484,12 +39485,12 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1810"/>
         <source>Hide cursor when snapping</source>
-        <translation>Fshih</translation>
+        <translation>Fshih kursorin gjatë kapjes</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="985"/>
         <source>A&amp;utomatically scale grid</source>
-        <translation>A</translation>
+        <translation>Shkallëzo &amp;automatikisht rrjetën</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="988"/>
@@ -39499,7 +39500,7 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="761"/>
         <source>St&amp;art Handle Color:</source>
-        <translation>Ngjyra</translation>
+        <translation>Ngjyra e dorezës &amp;fillestare:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="872"/>
@@ -39541,7 +39542,7 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5966"/>
         <source>Hatch Patterns:</source>
-        <translation>Motivi:</translation>
+        <translation>Motivet e vijëzimit:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5990"/>
@@ -39556,12 +39557,12 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4753"/>
         <source>N&amp;umber of preview entities:</source>
-        <translation>N&amp;mburer i njësive paraprake:</translation>
+        <translation>N&amp;umri i entiteteve në pamjen paraprake:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="217"/>
         <source>Auto-panning</source>
-        <translation>Auto</translation>
+        <translation>Zhvendosje automatike e pamjes</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3689"/>
@@ -39581,7 +39582,7 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5941"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;Part library folder. The symbol library dxf files must be located in the subdirectories of this folder. The subfolder names will be displayed in the Library Browser.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;( Menu: Widgets &amp;gt; Dock Widgets &amp;gt; Library Browser)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;Dosja e bibliotekës së pjesëve. Fajllat DXF të bibliotekës së simboleve duhet të gjenden në nëndirëzoret e kësaj dosje. Emrat e nëndirëzoreve do të shfaqen në Shfletuesin e Bibliotekës.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;(Menu: Widget-et &gt; Dritaret lëvizëse &gt; Shfletuesi i Bibliotekës)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;Dosja e bibliotekës së pjesëve. Skedarët DXF të bibliotekës së simboleve duhet të ndodhen në nëndosjet e kësaj dosjeje. Emrat e nëndosjeve do të shfaqen në Shfletuesin e bibliotekës.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;(Menuja: Widget-et &amp;gt; Widget-et e ankoruara &amp;gt; Shfletuesi i bibliotekës)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6080"/>
@@ -39601,7 +39602,7 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="121"/>
         <source>Invert horizontal scrolling direction</source>
-        <translation>Nga</translation>
+        <translation>Përmbys drejtimin e rrëshqitjes horizontale</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="163"/>
@@ -39616,7 +39617,7 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1571"/>
         <source>Snap</source>
-        <translation>Bëshkë</translation>
+        <translation>Kapje</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1606"/>
@@ -39647,12 +39648,12 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1609"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1619"/>
         <source>Snap Indicator lines</source>
-        <translation>Linja</translation>
+        <translation>Vijat e treguesit të kapjes</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1583"/>
         <source>Color for snap lines indicator</source>
-        <translation>Ngjyra për</translation>
+        <translation>Ngjyra e vijave të treguesit të kapjes</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="280"/>
@@ -39706,7 +39707,7 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1743"/>
         <source>Line Width</source>
-        <translation>Linja gjerësia</translation>
+        <translation>Gjerësia e vijës</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1750"/>
@@ -39721,12 +39722,12 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1729"/>
         <source>Snap Indicator shape</source>
-        <translation>Forma e treguesit spack</translation>
+        <translation>Forma e treguesit të kapjes</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1656"/>
         <source>Type of snap indicator shape</source>
-        <translation>Lloji nga</translation>
+        <translation>Lloji i formës së treguesit të kapjes</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1663"/>
@@ -39751,17 +39752,17 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1626"/>
         <source>Snap Indicator Color:</source>
-        <translation>Ngjyra e treguesit:</translation>
+        <translation>Ngjyra e treguesit të kapjes:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1633"/>
         <source>Color for snap indicator shape</source>
-        <translation>Ngjyra për</translation>
+        <translation>Ngjyra e formës së treguesit të kapjes</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1967"/>
         <source>Angle snap single step</source>
-        <translation>Hap i vetëm</translation>
+        <translation>Hapi i kapjes së këndit</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1974"/>
@@ -39831,17 +39832,17 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="888"/>
         <source>Size of square that is highlights entities reference points (endpoints etc.)</source>
-        <translation>Madhësia e katrorit që vë në dukje pikat referues të njësive (funde ...)</translation>
+        <translation>Madhësia e katrorit që thekson pikat e referimit të entiteteve (pikat fundore etj.)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="809"/>
         <source>Color of end handle for entity</source>
-        <translation>Ngjyra e trajtuesit fund për njësinë</translation>
+        <translation>Ngjyra e dorezës fundore të entitetit</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="771"/>
         <source>Color for start handle of entity</source>
-        <translation>Ngjyra për nisje nga</translation>
+        <translation>Ngjyra e dorezës fillestare të entitetit</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="854"/>
@@ -39856,12 +39857,12 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="933"/>
         <source>If enabled, entity handles are highlighted on hover (requires &quot;highlight entities on hover&quot; to be enabled)</source>
-        <translation>Nëse aktivizohet, dorezat e njësisë theksohen në pezull (rekuitetet &quot;Entitetet e larta të dritës&quot; që duhen aktivizuar)</translation>
+        <translation>Nëse aktivizohet, dorezat e entitetit theksohen kur kalon miu sipër (kërkon që të jetë aktivizuar &quot;thekso entitetet kur kalon miu sipër&quot;)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="939"/>
         <source>Show entity handles on mouse hover</source>
-        <translation>Shfaq në</translation>
+        <translation>Shfaq dorezat e entitetit kur kalon miu sipër</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="268"/>
@@ -39871,7 +39872,7 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="312"/>
         <source>Inverted Line Color:</source>
-        <translation>Linja Ngjyra</translation>
+        <translation>Ngjyra e përmbysur e vijës:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="294"/>
@@ -39902,12 +39903,12 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="441"/>
         <source>Line Color:</source>
-        <translation>Linja Ngjyra:</translation>
+        <translation>Ngjyra e vijës:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="390"/>
         <source>Color for line for overlay box</source>
-        <translation>Ngjyra për kutinë</translation>
+        <translation>Ngjyra e vijës së kutisë mbivendosëse</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="326"/>
@@ -39942,7 +39943,7 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="166"/>
         <source>Invert vertical scrolling direction</source>
-        <translation>Nga</translation>
+        <translation>Përmbys drejtimin e rrëshqitjes vertikale</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="605"/>
@@ -39952,7 +39953,7 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="198"/>
         <source>Inverts zoom direction when using mouse wheel.</source>
-        <translation>Zmadhon drejtimin kur përdoret rrota e mouse.</translation>
+        <translation>Përmbys drejtimin e zmadhimit kur përdoret rrota e miut.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="201"/>
@@ -39982,37 +39983,37 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="86"/>
         <source>Defines whether scrollbar should be shown in graphic view</source>
-        <translation>Përcakton nëse paneli i mouse duhet shfaqur në paraqitjen grafike</translation>
+        <translation>Përcakton nëse shiriti i rrëshqitjes duhet të shfaqet në pamjen grafike</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="574"/>
         <source>Color for selected entities</source>
-        <translation>Ngjyra për njësitë e zgjedhura</translation>
+        <translation>Ngjyra e entiteteve të zgjedhura</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="258"/>
         <source>Default zoom factor:</source>
-        <translation>E prezgjedhur</translation>
+        <translation>Faktori i parazgjedhur i zmadhimit:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="236"/>
         <source>Controls how quickly the scroll wheel will zoom in &amp; out. Higher values - faster zoom.</source>
-        <translation>Kontrollon se sa shpejt rrota e mouse do të zmadhohet brenda dhe jashtë. Vlera më të larta - zmadhimi më i shpejtë.</translation>
+        <translation>Kontrollon sa shpejt zmadhon dhe zvogëlon rrota e miut. Vlera më të larta - zmadhim më i shpejtë.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="147"/>
         <source>On mouse wheel zoom, pan to the middle of the window.</source>
-        <translation>Në zmadhimin e rrotës së miut, duhet të shkosh në mes të dritares.</translation>
+        <translation>Gjatë zmadhimit me rrotën e miut, zhvendos pamjen në mes të dritares.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="150"/>
         <source>Pan on wheel zoom</source>
-        <translation>Zmadho</translation>
+        <translation>Zhvendos pamjen gjatë zmadhimit me rrotë</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="134"/>
         <source>First time only pan</source>
-        <translation>Hera e parë vetëm</translation>
+        <translation>Zhvendos pamjen vetëm herën e parë</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="950"/>
@@ -40024,22 +40025,22 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1176"/>
         <source>Points Grid</source>
-        <translation>Pikat Grid</translation>
+        <translation>Rrjetë me pika</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1234"/>
         <source>Color for grid points</source>
-        <translation>Ngjyra për</translation>
+        <translation>Ngjyra e pikave të rrjetës</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1261"/>
         <source>Type of Meta Grid line if grid is drawn as points</source>
-        <translation>Lloji i vijës së Meta Grid nëse rrjeta vizatohet me pika</translation>
+        <translation>Lloji i vijës së meta-rrjetës nëse rrjeta vizatohet me pika</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1268"/>
         <source>Width of Meta Grid line if grid is drawn by points</source>
-        <translation>Gjerësia e vijës së Meta Grid nëse rrjeta vizatohet me pika</translation>
+        <translation>Gjerësia e vijës së meta-rrjetës nëse rrjeta vizatohet me pika</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1284"/>
@@ -40052,12 +40053,12 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1395"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1543"/>
         <source>Line Width:</source>
-        <translation>Linja gjerësia:</translation>
+        <translation>Gjerësia e vijës:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1298"/>
         <source>Color for Meta Grid lines if grid drawn by points</source>
-        <translation>Ngjyra për Linjat Meta Grid</translation>
+        <translation>Ngjyra e vijave të meta-rrjetës nëse rrjeta vizatohet me pika</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1353"/>
@@ -40082,17 +40083,17 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1365"/>
         <source>Type of Meta Grid lines if grid is drawn by lines</source>
-        <translation>Lloji i vijave të Meta Grid nëse rrjeta vizatohet me vija</translation>
+        <translation>Lloji i vijave të meta-rrjetës nëse rrjeta vizatohet me vija</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1372"/>
         <source>Width of Meta Grid lines if grid is drawn by lines</source>
-        <translation>Gjerësia e vijave të Meta Grid nëse rrjeta vizatohet me vija</translation>
+        <translation>Gjerësia e vijave të meta-rrjetës nëse rrjeta vizatohet me vija</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1402"/>
         <source>Color of Meta Grid if grid drawn by lines</source>
-        <translation>Ngjyra e Meta Grid nëse rrjeta vizatohet me vija</translation>
+        <translation>Ngjyra e meta-rrjetës nëse rrjeta vizatohet me vija</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3272"/>
@@ -40186,7 +40187,7 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3660"/>
         <source>Color of relative zero marker</source>
-        <translation>Ngjyra nga</translation>
+        <translation>Ngjyra e shënjuesit të zeros relative</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3683"/>
@@ -40196,7 +40197,7 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3614"/>
         <source>Radius of relative zero marker</source>
-        <translation>Nga</translation>
+        <translation>Rrezja e shënjuesit të zeros relative</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="956"/>
@@ -40216,7 +40217,7 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1057"/>
         <source>Unitless grid</source>
-        <translation>Njësitë</translation>
+        <translation>Rrjetë pa njësi</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1005"/>
@@ -40231,7 +40232,7 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1044"/>
         <source>If checked, Meta Grid lines will be drawn on top of grid. Simple grid is faster yet is less visually lean.</source>
-        <translation>Nëse kontrollohet, vijat e Meta Grid do të vizatohen mbi rrjetën. Rrjeta e thjeshtë është më e shpejtë, por vizualisht më pak e qartë.</translation>
+        <translation>Nëse zgjidhet, vijat e meta-rrjetës do të vizatohen mbi rrjetën. Rrjeta e thjeshtë është më e shpejtë, por vizualisht më pak e qartë.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1096"/>
@@ -40256,7 +40257,7 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1077"/>
         <source>&amp;Grid type:</source>
-        <translation>&amp;Grid lloji:</translation>
+        <translation>Lloji i &amp;rrjetës:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="972"/>
@@ -40335,7 +40336,7 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3786"/>
         <source>Visualize the entity under the mouse cursor</source>
-        <translation>Përfytyro njësinë nën kursorin e mouse</translation>
+        <translation>Thekso entitetin nën kursorin e miut</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3789"/>
@@ -40345,7 +40346,7 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3758"/>
         <source>Color for highlighted entities</source>
-        <translation>Ngjyra për njësitë e theksuara</translation>
+        <translation>Ngjyra e entiteteve të theksuara</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3776"/>
@@ -40366,13 +40367,13 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1255"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1359"/>
         <source>Meta-grid</source>
-        <translation>Meta-grid</translation>
+        <translation>Meta-rrjeta</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1316"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1420"/>
         <source>&amp;Meta-grid Color:</source>
-        <translation>Ngjyra</translation>
+        <translation>Ngjyra e &amp;meta-rrjetës:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="689"/>
@@ -40394,32 +40395,32 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="975"/>
         <source>Draw meta-grid</source>
-        <translation>Vizato meta-grid</translation>
+        <translation>Vizato meta-rrjetën</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="965"/>
         <source>Draw grid</source>
-        <translation>Vizato</translation>
+        <translation>Vizato rrjetën</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1047"/>
         <source>Simple grid rendering</source>
-        <translation>E thjeshtë</translation>
+        <translation>Vizatim i thjeshtë i rrjetës</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4829"/>
         <source>Active preview&apos;s explanatory entity&apos;s Color:</source>
-        <translation>Ngjyra e njësisë shpjeguese aktive:</translation>
+        <translation>Ngjyra e entitetit shpjegues në pamjen paraprake aktive:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4882"/>
         <source>Preview&apos;s explanatory entity&apos;s Color:</source>
-        <translation>Ngjyra e njësisë shpjeguese:</translation>
+        <translation>Ngjyra e entitetit shpjegues në pamjen paraprake:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3725"/>
         <source>&amp;Highlighted entity Color:</source>
-        <translation>Ngjyra</translation>
+        <translation>Ngjyra e entitetit të &amp;theksuar:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3779"/>
@@ -40449,7 +40450,7 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3891"/>
         <source>Explanatory Reference Point Style</source>
-        <translation>Stili i Riferimentimit Shpjetues</translation>
+        <translation>Stili i pikës shpjeguese të referimit</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6301"/>
@@ -40489,12 +40490,12 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6444"/>
         <source>Circle Radius:</source>
-        <translation>Qarku:</translation>
+        <translation>Rrezja e rrethit:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6401"/>
         <source>Arc Radius:</source>
-        <translation>Arc Radikalus:</translation>
+        <translation>Rrezja e harkut:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6346"/>
@@ -40504,17 +40505,17 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6408"/>
         <source>Ellipse Minor Axis:</source>
-        <translation>Ellipse Midle Axis:</translation>
+        <translation>Boshti i vogël i elipsit:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6314"/>
         <source>If screen size for major ellipse axis is less than value, ellipse is drawn as point</source>
-        <translation>Madhësia për është</translation>
+        <translation>Nëse madhësia në ekran e boshtit të madh të elipsit është më e vogël se kjo vlerë, elipsi vizatohet si pikë</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5077"/>
         <source>Modify layer of selected entities, at layer activation</source>
-        <translation>Ndrysho shtresën e njësive të zgjedhura kur aktivizohet një shtresë</translation>
+        <translation>Ndrysho shtresën e entiteteve të zgjedhura kur aktivizohet një shtresë</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5490"/>
@@ -40550,7 +40551,7 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4994"/>
         <source>Auto save backup each</source>
-        <translation>Auto ruaj</translation>
+        <translation>Ruaj automatikisht kopjen rezervë çdo</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5460"/>
@@ -40595,7 +40596,7 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5267"/>
         <source>RIght Isometric Grid</source>
-        <translation>Rlght Ioetrik Grid</translation>
+        <translation>Rrjetë izometrike djathtas</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5205"/>
@@ -40605,12 +40606,12 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5287"/>
         <source>Top Isometric Grid</source>
-        <translation>Sipër</translation>
+        <translation>Rrjetë izometrike sipër</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4726"/>
         <source>Show operation&apos;s preview explanatory entities </source>
-        <translation>Shfaq njësitë e para shpjeguese të operacionit</translation>
+        <translation>Shfaq entitetet shpjeguese në pamjen paraprake të veprimit </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5785"/>
@@ -40635,17 +40636,17 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5453"/>
         <source>Show current command icon in options toolbar</source>
-        <translation>Shfaq ikonë në</translation>
+        <translation>Shfaq ikonën e komandës aktuale në shiritin e opsioneve</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5407"/>
         <source>If enabled, internal ID of entity will be shown in properties dialog and Entity Info widget.</source>
-        <translation>Nëse aktivizohet, ID e brendshëm e njësisë do të shfaqet në dialog dhe Entitet Info.</translation>
+        <translation>Nëse aktivizohet, ID-ja e brendshme e entitetit do të shfaqet në dialogun e vetive dhe në widget-in &quot;Informacion për entitetin&quot;.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5410"/>
         <source>Show internal IDs of entities</source>
-        <translation>Shfaq ID të brendshme të njësive</translation>
+        <translation>Shfaq ID-të e brendshme të entiteteve</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5379"/>
@@ -40685,7 +40686,7 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5863"/>
         <source>Ignore pre-release versions</source>
-        <translation>Shpërfill</translation>
+        <translation>Shpërfill versionet paraprake</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5567"/>
@@ -40706,7 +40707,7 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5736"/>
         <source>Controls default mode for drawings</source>
-        <translation>Modaliteti për</translation>
+        <translation>Kontrollon mënyrën e parazgjedhur për vizatimet</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5756"/>
@@ -40751,7 +40752,7 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5592"/>
         <source>Enable CAD dockwidgets</source>
-        <translation>Aktivo</translation>
+        <translation>Aktivizo panelet e ankoruara CAD</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6163"/>
@@ -40862,7 +40863,7 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1830"/>
         <source>Ignore &quot;Snap to Grid&quot; if grid is not drawn</source>
-        <translation>Shpërfill &quot;Snap to Grid&quot; nëse rrjeti nuk është vizatuar</translation>
+        <translation>Shpërfill &quot;Kapje në rrjetë&quot; nëse rrjeta nuk vizatohet</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3114"/>
@@ -40872,7 +40873,7 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3133"/>
         <source>Cursor position offset:</source>
-        <translation>Nga:</translation>
+        <translation>Zhvendosja e pozicionit të kursorit:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3038"/>
@@ -40907,12 +40908,12 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2884"/>
         <source>Color for absolute snap coordinates.</source>
-        <translation>Ngjyra për koordinatat absolute.</translation>
+        <translation>Ngjyra e koordinatave absolute të kapjes.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2794"/>
         <source>If checked, relative distance and angle from relative zero point to snap point will be shown.</source>
-        <translation>Nëse kontrollohet, largësia relative dhe këndi nga 0 pikë në pikë do të shfaqen.</translation>
+        <translation>Nëse zgjidhet, do të shfaqen distanca relative dhe këndi nga pika e zeros relative te pika e kapjes.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2797"/>
@@ -40922,7 +40923,7 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2907"/>
         <source>Color for snap type/restriction</source>
-        <translation>Ngjyra për lloji</translation>
+        <translation>Ngjyra e llojit të kapjes/kufizimit</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2844"/>
@@ -40932,7 +40933,7 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2847"/>
         <source>Show active command prompt</source>
-        <translation>Shfaq</translation>
+        <translation>Shfaq kërkesën e komandës aktive</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2771"/>
@@ -40942,7 +40943,7 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2777"/>
         <source>Show relative coordinate</source>
-        <translation>Shfaq</translation>
+        <translation>Shfaq koordinatën relative</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2854"/>
@@ -40952,12 +40953,12 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2857"/>
         <source>Show snap info /restriction</source>
-        <translation>Shfaq informacione</translation>
+        <translation>Shfaq informacionin e kapjes/kufizimit</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2973"/>
         <source>Color for the command prompt</source>
-        <translation>Ngjyra për</translation>
+        <translation>Ngjyra e kërkesës së komandës</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2950"/>
@@ -40982,7 +40983,7 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3015"/>
         <source>Show active command name</source>
-        <translation>Shfaq emri</translation>
+        <translation>Shfaq emrin e komandës aktive</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3022"/>
@@ -41033,7 +41034,7 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="716"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3552"/>
         <source>Font size that should be used for drawing name of axis in coordinate system zero.</source>
-        <translation>Madhësia e gërmave që duhet përdorur për të vizatuar emrin e boshtit në koordinimin e sistemit zero.</translation>
+        <translation>Madhësia e shkronjave që përdoret për të vizatuar emrin e boshtit në zeron e sistemit koordinativ.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3588"/>
@@ -41043,12 +41044,12 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="675"/>
         <source>Show Draft mode marker</source>
-        <translation>Shfaq</translation>
+        <translation>Shfaq shënjuesin e mënyrës skicë</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="682"/>
         <source>Font that should be used for draft mode marker</source>
-        <translation>Gërmë për modaliteti</translation>
+        <translation>Shkronjat që përdoren për shënjuesin e mënyrës skicë</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="672"/>
@@ -41068,7 +41069,7 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3536"/>
         <source>Size of axis of coordinate system&apos;s zero marker</source>
-        <translation>Madhësia nga nga sistemi</translation>
+        <translation>Madhësia e boshteve të shënjuesit të zeros së sistemit koordinativ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3578"/>
@@ -41083,7 +41084,7 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3591"/>
         <source>Show UCS zero marker</source>
-        <translation>Shfaq</translation>
+        <translation>Shfaq shënjuesin e zeros së UCS</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3156"/>
@@ -41103,12 +41104,12 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3209"/>
         <source>Show angles basis marker</source>
-        <translation>Shfaq</translation>
+        <translation>Shfaq shënjuesin e bazës së këndeve</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3216"/>
         <source>Base Angle Ray Color:</source>
-        <translation>Ngjyra</translation>
+        <translation>Ngjyra e gjysmëdrejtëzës së këndit bazë:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3249"/>
@@ -41133,12 +41134,12 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1146"/>
         <source>Decimal meta-grid every:</source>
-        <translation>Çdo lloj meta-grid dhjetor:</translation>
+        <translation>Meta-rrjeta dhjetore çdo:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1153"/>
         <source>Controls the frequency of major grid lines compared to minor grid lines.</source>
-        <translation>Kontrollon frekuencën e linjave kryesore në krahasim me vijat e vogla të rrjetit.</translation>
+        <translation>Kontrollon dendësinë e vijave kryesore të rrjetës në krahasim me vijat dytësore të rrjetës.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1940"/>
@@ -41148,17 +41149,17 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1577"/>
         <source>Snap Marker</source>
-        <translation>Print Marker</translation>
+        <translation>Shënjuesi i kapjes</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1853"/>
         <source>Advanced Snap Fine-tuning settings</source>
-        <translation>Rregullimet e avancuara të përmirësimit</translation>
+        <translation>Cilësimet e avancuara për rregullimin e imët të kapjes</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1905"/>
         <source>Snap on Entity &quot;Free snap&quot; distance switch:</source>
-        <translation>Ngreje tek Entity &quot;Free mock&quot; e distancës:</translation>
+        <translation>Distanca e kalimit nga kapja në entitet te &quot;Kapje e lirë&quot;:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1912"/>
@@ -41173,7 +41174,7 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1859"/>
         <source>Distance in screen coordinates that is used for catching entities </source>
-        <translation>Largësia në koordinatat e ekranit që përdoret për kapjen e njësive</translation>
+        <translation>Distanca në koordinatat e ekranit që përdoret për kapjen e entiteteve </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1898"/>
@@ -41188,7 +41189,7 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1875"/>
         <source>Catch entities Snap Distance:</source>
-        <translation>Largësia:</translation>
+        <translation>Distanca e kapjes së entiteteve:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1882"/>
@@ -41224,7 +41225,7 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5104"/>
         <source>Allow angles input in decimal degrees only</source>
-        <translation>Lejo në</translation>
+        <translation>Lejo futjen e këndeve vetëm në gradë dhjetore</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5417"/>
@@ -41239,12 +41240,12 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5427"/>
         <source>If selected, separate menu will be created for each group of entity-related commands. Otherwise, these command will be under the same menu. </source>
-        <translation>Nëse zgjedhur, menuja e veçantë do të krijohet për çdo grup komandash lidhur me njësinë. Përndryshe, këto komanda do të jenë nën të njëjtën menu.</translation>
+        <translation>Nëse zgjidhet, do të krijohet një menu e veçantë për çdo grup komandash që lidhen me entitetet. Përndryshe, këto komanda do të jenë në të njëjtën menu. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5157"/>
         <source>If enabled, it is possible to do with keys - zooming via +/-, scrolling via arrow keys, moving selected entities position via arrow keys and SHIFT/CTRL modifiers.</source>
-        <translation>Nëse aktivizohet, është e mundur të bëhet me kyçet - Zmadhimi me anë të +/-, rrotullimi me anë të çelësave shigjetë, lëvizja e njësive të zgjedhura me anë të kyçeve shigjetë dhe moduluesve START/CRL.</translation>
+        <translation>Nëse aktivizohet, mund të përdoren tastet - zmadhimi me +/-, rrëshqitja me tastet e shigjetave, zhvendosja e entiteteve të zgjedhura me tastet e shigjetave dhe modifikuesit SHIFT/CTRL.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5160"/>
@@ -41264,7 +41265,7 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5433"/>
         <source>Separate menu per entity</source>
-        <translation>Menu për</translation>
+        <translation>Menu e veçantë për çdo entitet</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="102"/>
@@ -41646,7 +41647,7 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4984"/>
         <source>Auto-save file name prefix:</source>
-        <translation>Auto:</translation>
+        <translation>Parashtesa e emrit të skedarit të ruajtjes automatike:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5001"/>
@@ -41871,7 +41872,7 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6208"/>
         <source>Qt-native drawing method (unexact near endpoints)</source>
-        <translation>Me</translation>
+        <translation>Metoda e vizatimit e Qt (jo e saktë pranë pikave fundore)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6454"/>
@@ -41896,7 +41897,7 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6160"/>
         <source>If enabled, during pan operation TEXT and MTEXT objects will be drawn schematically</source>
-        <translation>Nëse aktivizohet, gjatë operacionit pan, objektet TEXT dhe MTEXT do të shfaqen në mënyrë skematike</translation>
+        <translation>Nëse aktivizohet, gjatë zhvendosjes së pamjes objektet TEXT dhe MTEXT do të vizatohen në mënyrë skematike</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6186"/>
@@ -41931,7 +41932,7 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6231"/>
         <source>If selected, the fixed angle of line interpolation segment will be used. Smaller angle deliver more smooth arc yet is slower.</source>
-        <translation>Nëse zgjedhur, do të përdoret këndi fiks i segmentit të interpolimit të vijës. Këndi më i vogël është akoma më i qetë.</translation>
+        <translation>Nëse zgjidhet, do të përdoret këndi fiks i segmentit të interpolimit me vijë. Këndi më i vogël jep hark më të lëmuar, por është më i ngadaltë.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6234"/>
@@ -41951,7 +41952,7 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6263"/>
         <source>Maximal distance betwen arc and segment interpolation line</source>
-        <translation>Linja e interpolimit e distancës Maksimale betwen arc dhe segmenti</translation>
+        <translation>Distanca maksimale midis harkut dhe vijës së segmentit të interpolimit</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6291"/>
@@ -41971,7 +41972,7 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3002"/>
         <source>Show world coordinates if in user coordinate system</source>
-        <translation>Shfaq në sistemi</translation>
+        <translation>Shfaq koordinatat botërore kur je në sistemin koordinativ të përdoruesit</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5480"/>
@@ -41986,12 +41987,12 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5091"/>
         <source>If selected, entities will stay selected after completion of Modify operations. Otherwise, they will be not selected. </source>
-        <translation>Nëse zgjedhur, njësitë do të mbeten të zgjedhura pas përfundimit të operacioneve të ndryshimit. Përndryshe, ata nuk do të zgjidhen.</translation>
+        <translation>Nëse zgjidhet, entitetet do të mbeten të zgjedhura pas përfundimit të veprimeve të modifikimit. Përndryshe, ato nuk do të jenë të zgjedhura. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5094"/>
         <source>Keep modified entities selected</source>
-        <translation>Ruaj të zgjedhura njësitë e modifikuara</translation>
+        <translation>Mbaji të zgjedhura entitetet e modifikuara</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5582"/>
@@ -42045,7 +42046,7 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5633"/>
         <source>Restores program geometry/layout to original state</source>
-        <translation>Rikthen programin gjeometria/leuout në gjendjen origjinale</translation>
+        <translation>Rikthen gjeometrinë/paraqitjen e programit në gjendjen fillestare</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5649"/>
@@ -42061,12 +42062,12 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5983"/>
         <source>Path to folder with hatch patterns</source>
-        <translation>Pozicioni tek kartela me</translation>
+        <translation>Shtegu i dosjes me motivet e vijëzimit</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5959"/>
         <source>Path to file with variables</source>
-        <translation>Pozicioni me</translation>
+        <translation>Shtegu i skedarit me ndryshoret</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6063"/>
@@ -42096,7 +42097,7 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4968"/>
         <source>Time between automatic saving of the document in minutes.</source>
-        <translation>Koha është nga në minuta.</translation>
+        <translation>Koha midis ruajtjeve automatike të dokumentit, në minuta.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5473"/>
@@ -42126,7 +42127,7 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5074"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, activating a layer would modify all selected entities to that new layer. To change layer of multiple entities: first select needed entities; activate a layer in the layer widget. This makes all selected entities modified to belong to the new layer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Kur është e aktivizuar, aktivizimi i një shtrese i kalon të gjitha njësitë e zgjedhura në atë shtresë të re. Për të ndryshuar shtresën e disa njësive: së pari zgjidhni njësitë e nevojshme; pastaj aktivizoni një shtresë në widget-in e shtresave. Kështu të gjitha njësitë e zgjedhura modifikohen që t&apos;i përkasin shtresës së re.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Kur është e aktivizuar, aktivizimi i një shtrese i kalon të gjitha entitetet e zgjedhura në atë shtresë të re. Për të ndryshuar shtresën e disa entiteteve: së pari zgjidhni entitetet e nevojshme; pastaj aktivizoni një shtresë në widget-in e shtresave. Kështu të gjitha entitetet e zgjedhura modifikohen që t&apos;i përkasin shtresës së re.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4991"/>
@@ -42163,7 +42164,7 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6307"/>
         <source>Line length:</source>
-        <translation>Linja</translation>
+        <translation>Gjatësia e vijës:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5739"/>
@@ -42229,7 +42230,7 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1329"/>
         <source>Select Hatch Patterns Folder</source>
-        <translation>Zgjidh Kartelë</translation>
+        <translation>Zgjidh dosjen e motiveve të vijëzimit</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1336"/>
@@ -42247,7 +42248,7 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.ui" line="20"/>
         <source>Export as CAM/plain SVG</source>
-        <translation>Eksporto</translation>
+        <translation>Eksporto si CAM/SVG të thjeshtë</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.ui" line="60"/>
@@ -42277,7 +42278,7 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.ui" line="155"/>
         <source>Raster Image export</source>
-        <translation>Eksporto</translation>
+        <translation>Eksportimi i imazheve raster</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.ui" line="167"/>
@@ -42312,7 +42313,7 @@ Kjo ndryshon të gjitha njësitë e Block-ut.</translation>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.ui" line="127"/>
         <source>Ellipses / Ellipse arcs</source>
-        <translation>Ellipses / Ellipse arks</translation>
+        <translation>Elipse / harqe eliptike</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.ui" line="135"/>
@@ -42338,9 +42339,9 @@ sepse nuk e merr parasysh pikën e referimit në &lt;use&gt;.</translation>
         <source>MakerCAM as of March 2015 cannot display ellipses and ellipse arcs correctly, 
 when they are created using the &lt;ellipse&gt; tag  with a rotation in 
 the &lt;transform&gt; attribute or as &lt;path&gt; using elliptic arc segments.</source>
-        <translation>&quot;MakerCAM&quot; që nga marsi 2015 nuk mund të shfaqë elipsë dhe askes të elipsës saktë,
-kur ata janë krijuar duke përdorur etiketën &lt;elipse&gt; me një rrotullim në
-karakteristika &lt;transform&gt; ose &lt;path&gt; duke përdorur segmente eliptike ark.</translation>
+        <translation>MakerCAM, në versionin e marsit 2015, nuk mund t&apos;i shfaqë saktë elipset dhe harqet eliptike, 
+kur ato krijohen me etiketën &lt;ellipse&gt; me një rrotullim në 
+atributin &lt;transform&gt; ose si &lt;path&gt; me segmente harku eliptik.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.cpp" line="38"/>
@@ -42373,7 +42374,7 @@ prandaj kërkohet një vlerë hapi e paracaktuar për shndërrimin</translation>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.cpp" line="45"/>
         <source>Whether to export points</source>
-        <translation>Eksporto</translation>
+        <translation>A të eksportohen pikat</translation>
     </message>
 </context>
 <context>
@@ -42406,7 +42407,7 @@ prandaj kërkohet një vlerë hapi e paracaktuar për shndërrimin</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="655"/>
         <source>Middle Left</source>
-        <translation>E Majta</translation>
+        <translation>Mes majtas</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="760"/>
@@ -42501,7 +42502,7 @@ prandaj kërkohet një vlerë hapi e paracaktuar për shndërrimin</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="830"/>
         <source>Baseline Left</source>
-        <translation>Majtas</translation>
+        <translation>Vija bazë majtas</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="575"/>
@@ -42513,12 +42514,12 @@ prandaj kërkohet një vlerë hapi e paracaktuar për shndërrimin</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="690"/>
         <source>Baseline Right</source>
-        <translation>Djathtas</translation>
+        <translation>Vija bazë djathtas</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="572"/>
         <source>Baseline Center</source>
-        <translation>Qendra Bazë</translation>
+        <translation>Vija bazë në qendër</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="547"/>
@@ -42534,12 +42535,12 @@ prandaj kërkohet një vlerë hapi e paracaktuar për shndërrimin</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="633"/>
         <source>&amp;Middle</source>
-        <translation>&amp;MYed</translation>
+        <translation>Në &amp;mes</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="922"/>
         <source>Insert Symbol</source>
-        <translation>Simboli</translation>
+        <translation>Fut simbol</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="938"/>
@@ -42619,7 +42620,7 @@ prandaj kërkohet një vlerë hapi e paracaktuar për shndërrimin</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1616"/>
         <source>Selected character preview. Click to insert to text.</source>
-        <translation>Pamja e parë e gërmave të zgjedhura. Kliko për të shtuar tekstin.</translation>
+        <translation>Pamja paraprake e karakterit të zgjedhur. Kliko për ta futur në tekst.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1626"/>
@@ -42634,7 +42635,7 @@ prandaj kërkohet një vlerë hapi e paracaktuar për shndërrimin</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="145"/>
         <source>Text to insert</source>
-        <translation>Teksti që duhet shtuar</translation>
+        <translation>Teksti që do të futet</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="151"/>
@@ -42689,7 +42690,7 @@ prandaj kërkohet një vlerë hapi e paracaktuar për shndërrimin</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="934"/>
         <source>Symbol to insert</source>
-        <translation>Simboli që duhet shtuar</translation>
+        <translation>Simboli që do të futet</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="997"/>
@@ -42704,7 +42705,7 @@ prandaj kërkohet një vlerë hapi e paracaktuar për shndërrimin</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1041"/>
         <source>Codepage selection for selecting character</source>
-        <translation>Për</translation>
+        <translation>Zgjedhja e faqes së kodit për zgjedhjen e karakterit</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1050"/>
@@ -42714,12 +42715,12 @@ prandaj kërkohet një vlerë hapi e paracaktuar për shndërrimin</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1055"/>
         <source>[0100-017F] Latin Extended-A</source>
-        <translation>[0100-017F] Latinisht e zgjeruar... A</translation>
+        <translation>[0100-017F] Latinishtja e zgjeruar-A</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1060"/>
         <source>[0180-024F] Latin Extended-B</source>
-        <translation>[0180-024F] Latin</translation>
+        <translation>[0180-024F] Latinishtja e zgjeruar-B</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1065"/>
@@ -42914,12 +42915,12 @@ prandaj kërkohet një vlerë hapi e paracaktuar për shndërrimin</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1255"/>
         <source>[1E00-1EFF] Latin Extended Additional</source>
-        <translation>[1E00-1EFF] Latinisht e zgjeruar</translation>
+        <translation>[1E00-1EFF] Latinishtja e zgjeruar shtesë</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1260"/>
         <source>[1F00-1FFF] Greek Extended</source>
-        <translation>[1F00-1FFF] Greqisht</translation>
+        <translation>[1F00-1FFF] Greqishtja e zgjeruar</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1265"/>
@@ -42994,7 +42995,7 @@ prandaj kërkohet një vlerë hapi e paracaktuar për shndërrimin</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1335"/>
         <source>[25A0-25FF] Geometric Shapes</source>
-        <translation>[25A0-25FF]</translation>
+        <translation>[25A0-25FF] Forma gjeometrike</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1340"/>
@@ -43084,12 +43085,12 @@ prandaj kërkohet një vlerë hapi e paracaktuar për shndërrimin</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1425"/>
         <source>[31A0-31BF] Bopomofo Extended</source>
-        <translation>[31A0-31BF] Bopomofo zgjeruar</translation>
+        <translation>[31A0-31BF] Bopomofo e zgjeruar</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1430"/>
         <source>[3200-32FF] Enclosed CJK Letters and Months</source>
-        <translation>[3200-32FF]</translation>
+        <translation>[3200-32FF] Shkronja dhe muaj CJK të rrethuar</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1435"/>
@@ -43244,12 +43245,12 @@ prandaj kërkohet një vlerë hapi e paracaktuar për shndërrimin</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1648"/>
         <source>Selection of character to insert</source>
-        <translation>Zgjedhja e gërmave që duhen shtuar</translation>
+        <translation>Zgjedhja e karakterit që do të futet</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.cpp" line="213"/>
         <source>Pen</source>
-        <translation>Pen</translation>
+        <translation>Stilolapsi</translation>
     </message>
 </context>
 <context>
@@ -43470,7 +43471,7 @@ prandaj kërkohet një vlerë hapi e paracaktuar për shndërrimin</translation>
     <message>
         <location filename="../src/ui/dialogs/file/export/image/qg_dlgimageoptions.ui" line="14"/>
         <source>Image Export Options</source>
-        <translation>Opcionet e eksportit të figurave</translation>
+        <translation>Opsionet e eksportit të imazheve</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/image/qg_dlgimageoptions.ui" line="23"/>
@@ -43733,22 +43734,22 @@ Përmbajtja e një shtrese ndërtimi nuk duhet të shfaqet në printim.</transla
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="102"/>
         <source>Divide</source>
-        <translation>Pjesëtim</translation>
+        <translation>Vijë ndarëse</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="103"/>
         <source>Divide (tiny)</source>
-        <translation>Pjesëtim</translation>
+        <translation>Vijë ndarëse (shumë e vogël)</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="104"/>
         <source>Divide (small)</source>
-        <translation>Pjesëtim</translation>
+        <translation>Vijë ndarëse (e vogël)</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="105"/>
         <source>Divide (large)</source>
-        <translation>Pjesëtim (madh)</translation>
+        <translation>Vijë ndarëse (e madhe)</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="106"/>
@@ -43852,12 +43853,12 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/components/toolbars/qg_pentoolbar.cpp" line="39"/>
         <source>Line color</source>
-        <translation>Linja</translation>
+        <translation>Ngjyra e vijës</translation>
     </message>
     <message>
         <location filename="../src/ui/components/toolbars/qg_pentoolbar.cpp" line="42"/>
         <source>Line width</source>
-        <translation>Linja gjerësia</translation>
+        <translation>Gjerësia e vijës</translation>
     </message>
     <message>
         <location filename="../src/ui/components/toolbars/qg_pentoolbar.cpp" line="45"/>
@@ -43893,12 +43894,12 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
     <message>
         <location filename="../src/ui/components/status_bar/qg_selectionwidget.ui" line="180"/>
         <source>Number of selected entities</source>
-        <translation>Numri nga</translation>
+        <translation>Numri i entiteteve të zgjedhura</translation>
     </message>
     <message>
         <location filename="../src/ui/components/status_bar/qg_selectionwidget.ui" line="115"/>
         <source>Total length of selected entities</source>
-        <translation>Gjatësia e plotë e njësive të zgjedhura</translation>
+        <translation>Gjatësia e përgjithshme e entiteteve të zgjedhura</translation>
     </message>
 </context>
 <context>
@@ -43940,7 +43941,7 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
         <location filename="../src/ui/components/pen/qg_widgetpen.ui" line="26"/>
         <location filename="../src/ui/components/pen/qg_widgetpen.ui" line="53"/>
         <source>Pen</source>
-        <translation>Pen</translation>
+        <translation>Stilolapsi</translation>
     </message>
     <message>
         <location filename="../src/ui/components/pen/qg_widgetpen.ui" line="97"/>
@@ -44016,8 +44017,8 @@ p, li { e bardhë-hapësirë: para-mbyllur; hah
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="173"/>
         <source>Layer &quot;%1&quot; and all entities on it will be removed.
 This action can NOT be undone.</source>
-        <translation>Shtresa &quot;%1&quot; dhe të gjitha njësitë në të do të hiqen.
-Ky veprim nuk mund të zhbëhet.</translation>
+        <translation>Shtresa &quot;%1&quot; dhe të gjitha entitetet në të do të hiqen.
+Ky veprim NUK mund të zhbëhet.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="183"/>
@@ -44043,7 +44044,7 @@ Ky veprim nuk mund të zhbëhet.</translation>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="251"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1788"/>
         <source>Listed layers and all entities on them will be removed.</source>
-        <translation>Shtresat e listuara dhe të gjitha njësitë në to do të hiqen.</translation>
+        <translation>Shtresat e listuara dhe të gjitha entitetet në to do të hiqen.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="253"/>
@@ -44075,20 +44076,20 @@ Ky veprim nuk mund të zhbëhet.</translation>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="407"/>
         <source>Block &quot;%1&quot; and all its entities will be removed.</source>
-        <translation>Blloku &quot;%1&quot; dhe të gjitha njësitë e tij do të hiqen.</translation>
+        <translation>Blloku &quot;%1&quot; dhe të gjitha entitetet e tij do të hiqen.</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="463"/>
         <source>Remove %n block(s)</source>
         <translation>
-            <numerusform>Hiq %n blok</numerusform>
+            <numerusform>Hiq %n bllok</numerusform>
             <numerusform>Hiq %n blloqe</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="465"/>
         <source>Listed blocks and all their entities will be removed.</source>
-        <translation>Blloqet e listuara dhe të gjitha njësitë e tyre do të hiqen.</translation>
+        <translation>Blloqet e listuara dhe të gjitha entitetet e tyre do të hiqen.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="467"/>
@@ -44174,7 +44175,7 @@ Ju lutem specifikoni një emër tjetër.</translation>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1170"/>
         <source>Dimensional layer may be added only for normal active layer.
 </source>
-        <translation>Shtresa e dimensioneve mund të shtohet vetëm për një shtresë normale aktive.
+        <translation>Shtresa e kuotave mund të shtohet vetëm për një shtresë normale aktive.
 </translation>
     </message>
     <message>
@@ -44217,7 +44218,7 @@ Ju lutem specifikoni një vlerë tjetër.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1404"/>
         <source>Pen will be removed from palette, drawing entities will not be affected.</source>
-        <translation>Peni do të hiqet nga paleta, njësitë e vizatimit nuk do të preken.</translation>
+        <translation>Stilolapsi do të hiqet nga paleta; entitetet e vizatimit nuk do të preken.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1406"/>
@@ -44228,7 +44229,7 @@ Ju lutem specifikoni një vlerë tjetër.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1408"/>
         <source>Pen for removal:</source>
-        <translation>Pen për heqjen:</translation>
+        <translation>Stilolapsi për t&apos;u hequr:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1424"/>
@@ -44277,7 +44278,7 @@ Ju lutem specifikoni një vlerë tjetër.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1466"/>
         <source>Set pen by entity</source>
-        <translation>Përcakto stilolapsin sipas njësie</translation>
+        <translation>Përcakto stilolapsin sipas entitetit</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1467"/>
@@ -44287,7 +44288,7 @@ Ju lutem specifikoni një vlerë tjetër.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1477"/>
         <source>Saving Pens Data</source>
-        <translation>Duke ruajtur të dhënat e penalëve</translation>
+        <translation>Duke ruajtur të dhënat e stilolapsave</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1478"/>
@@ -44300,7 +44301,7 @@ Ju lutem specifikoni një vlerë tjetër.</translation>
     <message>
         <location filename="../src/main/doc_plugin_interface.cpp" line="1318"/>
         <source>enter an integer number</source>
-        <translation>nga</translation>
+        <translation>shkruaj një numër të plotë</translation>
     </message>
     <message>
         <location filename="../src/main/doc_plugin_interface.cpp" line="1324"/>
@@ -44434,7 +44435,7 @@ Ju lutem specifikoni një vlerë tjetër.</translation>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="772"/>
         <source>Encapsulated PostScript</source>
-        <translation>PostScript</translation>
+        <translation>PostScript i kapsuluar</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="775"/>
@@ -44537,7 +44538,7 @@ Dëshiron ta zëvendësosh?</translation>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="69"/>
         <source>: duplicated command: %1 is already taken by %2</source>
-        <translation>është nga</translation>
+        <translation>: komandë e dyfishuar: %1 është zënë tashmë nga %2</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="903"/>
@@ -44573,7 +44574,7 @@ Dëshiron ta zëvendësosh?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="541"/>
         <source>polyline</source>
         <comment>draw polyline</comment>
-        <translation>poliline</translation>
+        <translation>polilinjë</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="542"/>
@@ -47479,7 +47480,7 @@ Dëshiron ta zëvendësosh?</translation>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="321"/>
         <source>reusing an existing alias: was %1=%2, changed to %1=%3</source>
-        <translation>a j</translation>
+        <translation>po ripërdoret një pseudonim ekzistues: ishte %1=%2, u ndryshua në %1=%3</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="409"/>
@@ -47531,7 +47532,7 @@ Dëshiron ta zëvendësosh?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandedit.cpp" line="215"/>
         <source>Calculator error for input: </source>
-        <translation>Gabim për:</translation>
+        <translation>Gabim i kalkulatorit për hyrjen: </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandedit.cpp" line="317"/>
@@ -47672,7 +47673,7 @@ Dëshiron ta zëvendësosh?</translation>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="133"/>
         <source>Paper margins in mm (integer or float).</source>
-        <translation>Letra në.</translation>
+        <translation>Margjinat e letrës në mm (numër i plotë ose dhjetor).</translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="137"/>
@@ -47694,7 +47695,7 @@ Dëshiron ta zëvendësosh?</translation>
         <location filename="../src/main/console_dxf2dwg.cpp" line="173"/>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="145"/>
         <source>Target output directory.</source>
-        <translation>Objektivi.</translation>
+        <translation>Dosja e daljes.</translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2dwg.cpp" line="230"/>
@@ -47724,7 +47725,7 @@ Dëshiron ta zëvendësosh?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="71"/>
         <source>Paste multiple commands</source>
-        <translation>Ngjite</translation>
+        <translation>Ngjit disa komanda</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_filedialogservice.cpp" line="195"/>
@@ -47740,7 +47741,7 @@ Dëshiron ta zëvendësosh?</translation>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="39"/>
         <source>/CustomColor%1</source>
-        <translation>/E personalizuarColor%1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="40"/>
@@ -47766,7 +47767,7 @@ Dëshiron ta zëvendësosh?</translation>
     <message>
         <location filename="../src/lib/actions/lc_modifiersinfo.h" line="30"/>
         <source>Free Snap</source>
-        <translation>E lirë</translation>
+        <translation>Kapje e lirë</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/lc_modifiersinfo.h" line="31"/>
@@ -47798,17 +47799,17 @@ Dëshiron ta zëvendësosh?</translation>
     <message>
         <location filename="../src/lib/engine/document/container/rs_entitycontainer.cpp" line="1499"/>
         <source>Hatch failed due to a gap=%1 between (%2, %3) and (%4, %5)</source>
-        <translation>Hatç dështoi për shkak të një dallimi=%1 midis (%2, %3) dhe (%4, %5)</translation>
+        <translation>Vijëzimi dështoi për shkak të një boshllëku=%1 midis (%2, %3) dhe (%4, %5)</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/document/patterns/rs_patternlist.cpp" line="66"/>
         <source>Hatch:: no pattern found. Please set pattern path in application preferences</source>
-        <translation>Nuk u gjet asnjë model. Ju lutem vendosni pozicionin e modelit në preferimet e aplikativit</translation>
+        <translation>Vijëzimi: nuk u gjet asnjë motiv. Vendos shtegun e motiveve te preferencat e aplikacionit</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/document/patterns/rs_patternlist.cpp" line="93"/>
         <source>Hatch:: loading pattern failed: %1</source>
-        <translation>Hatch: pogimi i modelit dështoi: %1</translation>
+        <translation>Vijëzimi: ngarkimi i motivit dështoi: %1</translation>
     </message>
     <message>
         <location filename="../src/ui/main/persistence/lc_documentsstorage.cpp" line="198"/>
@@ -48095,7 +48096,7 @@ Dëshiron ta zëvendësosh?</translation>
         <location filename="../src/lib/engine/rs_units.cpp" line="991"/>
         <source>tabloid</source>
         <comment>Paper format</comment>
-        <translation>lagje</translation>
+        <translation>tabloid</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="999"/>
@@ -48196,7 +48197,7 @@ Dëshiron ta zëvendësosh?</translation>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="1005"/>
         <source>error opening DXF/DWG file</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>gabim j</translation>
+        <translation>gabim gjatë hapjes së skedarit DXF/DWG</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="1009"/>
@@ -48214,7 +48215,7 @@ Dëshiron ta zëvendësosh?</translation>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="1018"/>
         <source>error reading DXF/DWG meta data</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>gabim j</translation>
+        <translation>gabim gjatë leximit të metadatave DXF/DWG</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="1020"/>
@@ -48226,49 +48227,49 @@ Dëshiron ta zëvendësosh?</translation>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="1024"/>
         <source>error reading DXF/DWG object map</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>gabim j</translation>
+        <translation>gabim gjatë leximit të hartës së objekteve DXF/DWG</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="1026"/>
         <source>error reading DXF/DWG classes</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>gabim j</translation>
+        <translation>gabim gjatë leximit të klasave DXF/DWG</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="1028"/>
         <source>error reading DXF/DWG tables</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>gabim j</translation>
+        <translation>gabim gjatë leximit të tabelave DXF/DWG</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="1030"/>
         <source>error reading DXF/DWG blocks</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>gabim j</translation>
+        <translation>gabim gjatë leximit të blloqeve DXF/DWG</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="1032"/>
         <source>error reading DXF/DWG entities</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>gabim j</translation>
+        <translation>gabim gjatë leximit të entiteteve DXF/DWG</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="1034"/>
         <source>error reading DXF/DWG objects</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>gabim j</translation>
+        <translation>gabim gjatë leximit të objekteve DXF/DWG</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="1036"/>
         <source>error reading DXF/DWG sections</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>gabim j</translation>
+        <translation>gabim gjatë leximit të seksioneve DXF/DWG</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="1038"/>
         <source>error reading DXF/DWG code</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>gabim j</translation>
+        <translation>gabim gjatë leximit të kodit DXF/DWG</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="1022"/>
@@ -48374,12 +48375,12 @@ Dëshiron ta zëvendësosh?</translation>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="12410"/>
         <source>unknown error opening dwg file</source>
-        <translation>gabim j</translation>
+        <translation>gabim i panjohur gjatë hapjes së skedarit dwg</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="12413"/>
         <source>can&apos;t open this dwg file</source>
-        <translation>hap j</translation>
+        <translation>ky skedar dwg nuk mund të hapet</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="12420"/>
@@ -48394,7 +48395,7 @@ Dëshiron ta zëvendësosh?</translation>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="12435"/>
         <source>error reading file metadata in dwg file</source>
-        <translation>gabim në j</translation>
+        <translation>gabim gjatë leximit të metadatave të skedarit në skedarin dwg</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="12438"/>
@@ -48404,37 +48405,37 @@ Dëshiron ta zëvendësosh?</translation>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="12441"/>
         <source>error reading header vars in dwg file</source>
-        <translation>gabim në j</translation>
+        <translation>gabim gjatë leximit të ndryshoreve të kokës në skedarin dwg</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="12444"/>
         <source>error reading classes in dwg file</source>
-        <translation>gabim në j</translation>
+        <translation>gabim gjatë leximit të klasave në skedarin dwg</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="12447"/>
         <source>error reading offsets in dwg file</source>
-        <translation>gabim në j</translation>
+        <translation>gabim gjatë leximit të zhvendosjeve në skedarin dwg</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="12450"/>
         <source>error reading tables in dwg file</source>
-        <translation>gabim në j</translation>
+        <translation>gabim gjatë leximit të tabelave në skedarin dwg</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="12453"/>
         <source>error reading blocks in dwg file</source>
-        <translation>gabim në</translation>
+        <translation>gabim gjatë leximit të blloqeve në skedarin dwg</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="12456"/>
         <source>error reading entities in dwg file</source>
-        <translation>gabim në j</translation>
+        <translation>gabim gjatë leximit të entiteteve në skedarin dwg</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="12459"/>
         <source>error reading objects in dwg file</source>
-        <translation>gabim në j</translation>
+        <translation>gabim gjatë leximit të objekteve në skedarin dwg</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="42"/>
@@ -48687,7 +48688,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="472"/>
         <source>Line</source>
-        <translation>Linja</translation>
+        <translation>Vijë</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="476"/>
@@ -48697,22 +48698,22 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="480"/>
         <source>Arc</source>
-        <translation>Arc</translation>
+        <translation>Hark</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="484"/>
         <source>Polyline</source>
-        <translation>Poliline</translation>
+        <translation>Polilinjë</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="488"/>
         <source>Spline</source>
-        <translation>Spin</translation>
+        <translation>Spline</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="492"/>
         <source>Spline by Points</source>
-        <translation>Vije nga Pika</translation>
+        <translation>Spline nëpër pika</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="496"/>
@@ -48737,7 +48738,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="512"/>
         <source>Hatch</source>
-        <translation>Hatç</translation>
+        <translation>Vijëzim</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="516"/>
@@ -48747,32 +48748,32 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="520"/>
         <source>Dim. Linear</source>
-        <translation>Dim. Rreshta</translation>
+        <translation>Kuotë lineare</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="524"/>
         <source>Dim. Aligned</source>
-        <translation>Dim. Rreshtuar</translation>
+        <translation>Kuotë e rreshtuar</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="528"/>
         <source>Dim. Diametric</source>
-        <translation>Dim. Diametrike</translation>
+        <translation>Kuotë diametri</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="532"/>
         <source>Dim. Radial</source>
-        <translation>Dim. Rradiale</translation>
+        <translation>Kuotë rrezeje</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="536"/>
         <source>Dim. Arc</source>
-        <translation>Dim. Hark</translation>
+        <translation>Kuotë harku</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="540"/>
         <source>Dim. Ordinate</source>
-        <translation>Dim. Ordinatë</translation>
+        <translation>Kuotë ordinate</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="544"/>
@@ -48871,12 +48872,12 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="577"/>
         <source> entities </source>
-        <translation>unit-format</translation>
+        <translation> entitete </translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="578"/>
         <source>that intersect with box</source>
-        <translation>dhe ata që dallojnë</translation>
+        <translation>që priten me kutinë</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="578"/>
@@ -48886,7 +48887,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="622"/>
         <source>Line</source>
-        <translation>Linja</translation>
+        <translation>Vijë</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="623"/>
@@ -48901,12 +48902,12 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="633"/>
         <source>Arc</source>
-        <translation>Arc</translation>
+        <translation>Hark</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="504"/>
         <source>Offset</source>
-        <translation>Spostimi</translation>
+        <translation>Zhvendosja</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="507"/>
@@ -48916,12 +48917,12 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="548"/>
         <source>Copy Offset</source>
-        <translation>Kopjo</translation>
+        <translation>Zhvendosja e kopjes</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="550"/>
         <source>Move Offset</source>
-        <translation>Lëvize</translation>
+        <translation>Zhvendosja e lëvizjes</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="634"/>
@@ -48968,12 +48969,12 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1002"/>
         <source>Lengthen Line</source>
-        <translation>Linja</translation>
+        <translation>Zgjat vijën</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1005"/>
         <source>Lengthen/Scale</source>
-        <translation>Gjatësiaen/Scale</translation>
+        <translation>Zgjat/Shkallëzo</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1005"/>
@@ -48983,7 +48984,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1008"/>
         <source>Move in Previous segment direction</source>
-        <translation>Në Paraardhëse</translation>
+        <translation>Lëviz në drejtimin e segmentit të mëparshëm</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1008"/>
@@ -48998,7 +48999,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1018"/>
         <source>Zoom, pan or select entity</source>
-        <translation>Shkalla e zmadhimit</translation>
+        <translation>Zmadho, zhvendos pamjen ose zgjidh entitetin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1018"/>
@@ -49013,12 +49014,12 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1023"/>
         <source>Select/Deselect entities</source>
-        <translation>Zgjidh</translation>
+        <translation>Zgjidh/Çzgjidh entitetet</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1023"/>
         <source>Select Intersecting</source>
-        <translation>Zgjidh</translation>
+        <translation>Zgjidh entitetet që priten</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1023"/>
@@ -49031,22 +49032,22 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimangular.cpp" line="216"/>
         <source>Select first line</source>
-        <translation>Zgjidh i pari</translation>
+        <translation>Zgjidh vijën e parë</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimangular.cpp" line="219"/>
         <source>Select second line</source>
-        <translation>Zgjidh sekondë</translation>
+        <translation>Zgjidh vijën e dytë</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimangular.cpp" line="222"/>
         <source>Specify dimension arc line location</source>
-        <translation>Pikë</translation>
+        <translation>Specifiko vendndodhjen e vijës së harkut të kuotës</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimangular.cpp" line="225"/>
         <source>Enter dimension text:</source>
-        <translation>Shto tekst</translation>
+        <translation>Fut tekstin e kuotës:</translation>
     </message>
 </context>
 <context>
@@ -49054,7 +49055,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimleader.cpp" line="170"/>
         <source>Specify target point</source>
-        <translation>Pikë</translation>
+        <translation>Specifiko pikën e synuar</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimleader.cpp" line="173"/>
@@ -49088,7 +49089,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimlinear.cpp" line="224"/>
         <source>Specify dimension line location</source>
-        <translation>Pikë</translation>
+        <translation>Specifiko vendndodhjen e vijës së kuotës</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimlinear.cpp" line="224"/>
@@ -49106,22 +49107,22 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipse4points.cpp" line="282"/>
         <source>Specify the first point on ellipse</source>
-        <translation>Pikë në</translation>
+        <translation>Specifiko pikën e parë në elips</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipse4points.cpp" line="285"/>
         <source>Specify the second point on ellipse</source>
-        <translation>Pikë në</translation>
+        <translation>Specifiko pikën e dytë në elips</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipse4points.cpp" line="288"/>
         <source>Specify the third point on ellipse</source>
-        <translation>Pikë në</translation>
+        <translation>Specifiko pikën e tretë në elips</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipse4points.cpp" line="291"/>
         <source>Specify the fourth point on ellipse</source>
-        <translation>Në</translation>
+        <translation>Specifiko pikën e katërt në elips</translation>
     </message>
 </context>
 <context>
@@ -49136,17 +49137,17 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/lc_action_draw_ellipse_axis.cpp" line="398"/>
         <source>Specify ellipse center</source>
-        <translation>Pikë</translation>
+        <translation>Specifiko qendrën e elipsit</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/lc_action_draw_ellipse_axis.cpp" line="401"/>
         <source>Specify endpoint of major axis</source>
-        <translation>Nga</translation>
+        <translation>Specifiko pikën fundore të boshtit të madh</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/lc_action_draw_ellipse_axis.cpp" line="404"/>
         <source>Specify endpoint or length of minor axis:</source>
-        <translation>Nga</translation>
+        <translation>Specifiko pikën fundore ose gjatësinë e boshtit të vogël:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/lc_action_draw_ellipse_axis.cpp" line="407"/>
@@ -49169,17 +49170,17 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsecenter3points.cpp" line="251"/>
         <source>Specify the first point on ellipse</source>
-        <translation>Pikë në</translation>
+        <translation>Specifiko pikën e parë në elips</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsecenter3points.cpp" line="254"/>
         <source>Specify the second point on ellipse</source>
-        <translation>Pikë në</translation>
+        <translation>Specifiko pikën e dytë në elips</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsecenter3points.cpp" line="257"/>
         <source>Specify the third point on ellipse</source>
-        <translation>Pikë në</translation>
+        <translation>Specifiko pikën e tretë në elips</translation>
     </message>
 </context>
 <context>
@@ -49187,7 +49188,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsefocipoint.cpp" line="180"/>
         <source>specify a point on ellipse, or total distance to foci</source>
-        <translation>pikë në</translation>
+        <translation>specifiko një pikë në elips ose distancën totale deri te vatrat</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsefocipoint.cpp" line="196"/>
@@ -49212,7 +49213,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsefocipoint.cpp" line="219"/>
         <source>Specify a point on ellipse or total distance to foci</source>
-        <translation>A pikë në</translation>
+        <translation>Specifiko një pikë në elips ose distancën totale deri te vatrat</translation>
     </message>
 </context>
 <context>
@@ -49248,7 +49249,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="131"/>
         <source>Hatch created successfully.</source>
-        <translation>Hatç krijoi me sukses.</translation>
+        <translation>Vijëzimi u krijua me sukses.</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="134"/>
@@ -49261,27 +49262,27 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="134"/>
         <source>Hatch Error: Invalid contour found!</source>
-        <translation>Gabim i pavlefshëm!</translation>
+        <translation>Gabim në vijëzim: u gjet një kontur i pavlefshëm!</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="138"/>
         <source>Hatch Error: Pattern not found!</source>
-        <translation>Gabim!</translation>
+        <translation>Gabim në vijëzim: motivi nuk u gjet!</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="141"/>
         <source>Hatch Error: Contour or pattern too small!</source>
-        <translation>Gabim Hatch: Kontur apo model shumë i vogël!</translation>
+        <translation>Gabim në vijëzim: konturi ose motivi është shumë i vogël!</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="144"/>
         <source>Hatch Error: Contour too big!</source>
-        <translation>Gabim i madh!</translation>
+        <translation>Gabim në vijëzim: konturi është shumë i madh!</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="147"/>
         <source>Hatch Error: Undefined Error!</source>
-        <translation>Gabim i papërcaktuar!</translation>
+        <translation>Gabim në vijëzim: gabim i papërcaktuar!</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="152"/>
@@ -49291,7 +49292,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="160"/>
         <source>Invalid hatch area. Please check that the entities chosen form one or more closed contours.</source>
-        <translation>Zona e zbrazët. Ju lutem kontrolloni që njësitë e zgjedhura formojnë një ose më shumë konture të mbyllura.</translation>
+        <translation>Zonë e pavlefshme vijëzimi. Kontrollo që entitetet e zgjedhura të formojnë një ose më shumë konture të mbyllura.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="185"/>
@@ -49301,7 +49302,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="185"/>
         <source>Hatch immediately after selection</source>
-        <translation>Hatch menjëherë mbas zgjedhje</translation>
+        <translation>Vijëzo menjëherë pas zgjedhjes</translation>
     </message>
 </context>
 <context>
@@ -49309,12 +49310,12 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinehorvert.cpp" line="116"/>
         <source>Specify first point</source>
-        <translation>Pikë</translation>
+        <translation>Specifiko pikën e parë</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinehorvert.cpp" line="119"/>
         <source>Specify second point</source>
-        <translation>Pikë</translation>
+        <translation>Specifiko pikën e dytë</translation>
     </message>
 </context>
 <context>
@@ -49333,7 +49334,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineorthtan.cpp" line="260"/>
         <source>Select circle, arc or ellipse</source>
-        <translation>Zgjidh</translation>
+        <translation>Zgjidh një rreth, hark ose elips</translation>
     </message>
 </context>
 <context>
@@ -49346,7 +49347,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_simple.cpp" line="105"/>
         <source>Rectangle</source>
-        <translation>Reptangle</translation>
+        <translation>Drejtkëndësh</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_simple.cpp" line="105"/>
@@ -49366,7 +49367,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_simple.cpp" line="151"/>
         <source>Specify first corner</source>
-        <translation>Pikë</translation>
+        <translation>Specifiko kulmin e parë</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_simple.cpp" line="154"/>
@@ -49390,7 +49391,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent1.cpp" line="206"/>
         <source>Select circle, arc or ellipse</source>
-        <translation>Zgjidh</translation>
+        <translation>Zgjidh një rreth, hark ose elips</translation>
     </message>
 </context>
 <context>
@@ -49398,17 +49399,17 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent2.cpp" line="220"/>
         <source>Select first circle/ellipse/parabola</source>
-        <translation>Zgjidh rrethin e parë</translation>
+        <translation>Zgjidh rrethin/elipsin/parabolën e parë</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent2.cpp" line="223"/>
         <source>Select second circle/ellipse/parabola</source>
-        <translation>Zgjidh sekondë</translation>
+        <translation>Zgjidh rrethin/elipsin/parabolën e dytë</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent2.cpp" line="226"/>
         <source>Select the tangent line closest to cursor</source>
-        <translation>Zgjidh nga</translation>
+        <translation>Zgjidh vijën tangjente më të afërt me kursorin</translation>
     </message>
 </context>
 <context>
@@ -49433,12 +49434,12 @@ Please check the filename and permissions.</source>
         <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="175"/>
         <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="185"/>
         <source>Set point after selection</source>
-        <translation>Pikë mbas</translation>
+        <translation>Cakto pikën pas zgjedhjes</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="180"/>
         <source>Cut right after selection</source>
-        <translation>Preje</translation>
+        <translation>Prit menjëherë pas zgjedhjes</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="174"/>
@@ -49455,7 +49456,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="190"/>
         <source>Copy right after selection</source>
-        <translation>Kopjo</translation>
+        <translation>Kopjo menjëherë pas zgjedhjes</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="204"/>
@@ -49470,7 +49471,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="208"/>
         <source>Set paste reference point</source>
-        <translation>Pikë</translation>
+        <translation>Cakto pikën e referimit për ngjitjen</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="208"/>
@@ -49533,7 +49534,7 @@ Pika e prerjes: @(%7, %8)</translation>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="254"/>
         <source>Restart with first line selection</source>
-        <translation>Rinis me</translation>
+        <translation>Rifillo me zgjedhjen e vijës së parë</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="273"/>
@@ -49571,22 +49572,22 @@ Pika e prerjes: @(%7, %8)</translation>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="275"/>
         <source>Line From:</source>
-        <translation>Linja:</translation>
+        <translation>Vija nga:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="275"/>
         <source>Line To:</source>
-        <translation>Linja Për:</translation>
+        <translation>Vija deri te:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="276"/>
         <source>Line Angle 1:</source>
-        <translation>Linja</translation>
+        <translation>Këndi i vijës 1:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="276"/>
         <source>Line Angle 2:</source>
-        <translation>Linja</translation>
+        <translation>Këndi i vijës 2:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="292"/>
@@ -49596,12 +49597,12 @@ Pika e prerjes: @(%7, %8)</translation>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="292"/>
         <source>Line 1 Angle:</source>
-        <translation>Linja 1 Angle:</translation>
+        <translation>Këndi i vijës 1:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="292"/>
         <source>Line 2 Angle:</source>
-        <translation>Linja 2 Angle:</translation>
+        <translation>Këndi i vijës 2:</translation>
     </message>
 </context>
 <context>
@@ -49631,17 +49632,17 @@ Pika e prerjes: @(%7, %8)</translation>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="188"/>
         <source>Specify point and complete</source>
-        <translation>Pikë dhe</translation>
+        <translation>Specifiko pikën dhe përfundo</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="184"/>
         <source>Specify first point of polygon</source>
-        <translation>Pikë nga</translation>
+        <translation>Specifiko pikën e parë të poligonit</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoarea.cpp" line="188"/>
         <source>Specify next point of polygon</source>
-        <translation>Në vazhdim pikë</translation>
+        <translation>Specifiko pikën tjetër të poligonit</translation>
     </message>
 </context>
 <context>
@@ -49687,7 +49688,7 @@ Fund: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="163"/>
         <source>Specify first point of distance</source>
-        <translation>Pikë nga</translation>
+        <translation>Specifiko pikën e parë të distancës</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="166"/>
@@ -49697,7 +49698,7 @@ Fund: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="166"/>
         <source>Specify second point of distance</source>
-        <translation>Pikë nga</translation>
+        <translation>Specifiko pikën e dytë të distancës</translation>
     </message>
 </context>
 <context>
@@ -49723,12 +49724,12 @@ Fund: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfototallength.cpp" line="52"/>
         <source>Total Length of selected entities: %1</source>
-        <translation>Gjatësia e përgjithshme e njësive të zgjedhura: %1</translation>
+        <translation>Gjatësia e përgjithshme e entiteteve të zgjedhura: %1</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfototallength.cpp" line="55"/>
         <source>At least one of the selected entities cannot be measured.</source>
-        <translation>Të paktën një nga njësitë e zgjedhura nuk mund të matet.</translation>
+        <translation>Të paktën një nga entitetet e zgjedhura nuk mund të matet.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfototallength.cpp" line="64"/>
@@ -49784,12 +49785,12 @@ Fund: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="210"/>
         <source>Printout offset in paper coordinates by (%1, %2)</source>
-        <translation>Në nga</translation>
+        <translation>Printimi u zhvendos me (%1, %2) në koordinatat e letrës</translation>
     </message>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="215"/>
         <source>Printout offset in graph coordinates by (%1, %2)</source>
-        <translation>Në nga</translation>
+        <translation>Printimi u zhvendos me (%1, %2) në koordinatat e grafikut</translation>
     </message>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="230"/>
@@ -49804,22 +49805,22 @@ Fund: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="240"/>
         <source>Printout offset in graph coordinates</source>
-        <translation>Në</translation>
+        <translation>Zhvendosja e printimit në koordinatat e grafikut</translation>
     </message>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="245"/>
         <source>Printout offset in paper coordinates</source>
-        <translation>Në</translation>
+        <translation>Zhvendosja e printimit në koordinatat e letrës</translation>
     </message>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="278"/>
         <source>: select printout offset coordinates</source>
-        <translation>zgjidh</translation>
+        <translation>: zgjidh koordinatat e zhvendosjes së printimit</translation>
     </message>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="278"/>
         <source>type in offset from command line to offset printout</source>
-        <translation>në</translation>
+        <translation>shkruaj zhvendosjen në rreshtin e komandës për të zhvendosur printimin</translation>
     </message>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="450"/>
@@ -49844,12 +49845,12 @@ Fund: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="253"/>
         <source>Printout offset ignores relative zero. Ignoring &apos;@&apos;</source>
-        <translation>Nga. Injoruar &apos;@&apos;</translation>
+        <translation>Zhvendosja e printimit nuk merr parasysh zeron relative. &apos;@&apos; po shpërfillet</translation>
     </message>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="333"/>
         <source>RS_ActionPrintPreview::fit(): Invalid paper size</source>
-        <translation>Shikoje:</translation>
+        <translation>RS_ActionPrintPreview::fit(): Madhësi e pavlefshme e letrës</translation>
     </message>
 </context>
 <context>
@@ -49873,12 +49874,12 @@ Fund: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/snap/rs_actionsnapintersectionmanual.cpp" line="131"/>
         <source>Select first entity</source>
-        <translation>Zgjidh i pari</translation>
+        <translation>Zgjidh entitetin e parë</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/snap/rs_actionsnapintersectionmanual.cpp" line="134"/>
         <source>Select second entity</source>
-        <translation>Zgjidh i dyti</translation>
+        <translation>Zgjidh entitetin e dytë</translation>
     </message>
 </context>
 <context>
@@ -49904,7 +49905,7 @@ Fund: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/zoom/rs_actionzoompan.cpp" line="112"/>
         <source>Zoom panning</source>
-        <translation>Shkalla</translation>
+        <translation>Zhvendosja e pamjes</translation>
     </message>
 </context>
 <context>
@@ -50169,7 +50170,7 @@ Fund: (%8 , %9)</translation>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="32"/>
         <source>Dimension Options</source>
-        <translation>Mundësitë</translation>
+        <translation>Opsionet e kuotimit</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="50"/>
@@ -50179,7 +50180,7 @@ Fund: (%8 , %9)</translation>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="57"/>
         <source>Dimension style</source>
-        <translation>Stili i dimensionit</translation>
+        <translation>Stili i kuotimit</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="76"/>
@@ -50194,7 +50195,7 @@ Fund: (%8 , %9)</translation>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="115"/>
         <source>User-specified dimension&apos;s label. Enter value or either &quot;&lt;&gt;&quot; or just leave empty for automatic measurement.</source>
-        <translation>Etiketa e dimensionit të caktuar nga përdoruesi. Shkruaj vlerën ose &quot;&lt;&gt;&quot; ose lëre bosh për matje automatike.</translation>
+        <translation>Etiketa e kuotës e caktuar nga përdoruesi. Shkruaj vlerën ose &quot;&lt;&gt;&quot;, ose lëre bosh për matje automatike.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="128"/>
@@ -50256,17 +50257,17 @@ Fund: (%8 , %9)</translation>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="265"/>
         <source>Dimension angle</source>
-        <translation>Përmasa</translation>
+        <translation>Këndi i kuotës</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="287"/>
         <source>Horizontal Dimension</source>
-        <translation>Horizontal</translation>
+        <translation>Kuotë horizontale</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="316"/>
         <source>Vertical Dimension</source>
-        <translation>Vertikal</translation>
+        <translation>Kuotë vertikale</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="333"/>
@@ -50276,12 +50277,12 @@ Fund: (%8 , %9)</translation>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="346"/>
         <source>Distance between dimensions in baseline</source>
-        <translation>Largësia midis dimensioneve në bazë</translation>
+        <translation>Largësia midis kuotave në kuotimin nga baza</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="353"/>
         <source>If checked, distance between dimenions is defined by mouse</source>
-        <translation>Nëse kontrollohet, distanca midis monedhave përcaktohet nga miu</translation>
+        <translation>Nëse është zgjedhur, largësia midis kuotave përcaktohet me miun</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="356"/>
@@ -50292,12 +50293,12 @@ Fund: (%8 , %9)</translation>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="376"/>
         <source>Angle for dimension</source>
-        <translation>Angëll për dimensionet</translation>
+        <translation>Këndi i kuotës</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="383"/>
         <source>If checked, angle for dimension is defined by mouse</source>
-        <translation>Nëse kontrollohet, këndi për dimension është përcaktuar nga miu</translation>
+        <translation>Nëse është zgjedhur, këndi i kuotës përcaktohet me miun</translation>
     </message>
 </context>
 <context>
@@ -50310,7 +50311,7 @@ Fund: (%8 , %9)</translation>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapdistoptions.ui" line="50"/>
         <source>Snap Distance:</source>
-        <translation>Largësia:</translation>
+        <translation>Largësia e kapjes:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapdistoptions.ui" line="60"/>
@@ -50333,12 +50334,12 @@ Fund: (%8 , %9)</translation>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapmiddleoptions.ui" line="59"/>
         <source>Snap Middle Points:</source>
-        <translation>Pikat e Mesit:</translation>
+        <translation>Pikat e mesit për kapjen:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapmiddleoptions.ui" line="81"/>
         <source>Number of equidistant division points</source>
-        <translation>Numri nga</translation>
+        <translation>Numri i pikave të ndarjes në distanca të barabarta</translation>
     </message>
 </context>
 </TS>

@@ -133,7 +133,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
         <location filename="../list/list.cpp" line="22"/>
         <location filename="../list/list.cpp" line="29"/>
         <source>List entities</source>
-        <translation>แสดงรายการ</translation>
+        <translation>แสดงรายการวัตถุ</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="30"/>
@@ -148,7 +148,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="58"/>
         <source>Empty Entity</source>
-        <translation>รายการว่างเปล่า</translation>
+        <translation>วัตถุว่างเปล่า</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="65"/>
@@ -163,7 +163,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="75"/>
         <source>Layer</source>
-        <translation>ชั้นงาน</translation>
+        <translation>เลเยอร์</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="77"/>
@@ -350,7 +350,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="212"/>
         <source>POLYLINE</source>
-        <translation>เส้นหลายขยัก</translation>
+        <translation>โพลีไลน์</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="213"/>
@@ -390,12 +390,12 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="238"/>
         <source>HATCH</source>
-        <translation>แฮทช์</translation>
+        <translation>ลายตัด</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="241"/>
         <source>DIMLEADER</source>
-        <translation>เส้นนำทางบอกขนาด</translation>
+        <translation>เส้นชี้</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="244"/>
@@ -444,12 +444,12 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../sameprop/sameprop.cpp" line="40"/>
         <source>select original entity:</source>
-        <translation>เลือกรายการต้นแบบ:</translation>
+        <translation>เลือกวัตถุต้นแบบ:</translation>
     </message>
     <message>
         <location filename="../sameprop/sameprop.cpp" line="42"/>
         <source>select entities to change</source>
-        <translation>เลือกรายการที่จะเปลี่ยน</translation>
+        <translation>เลือกวัตถุที่จะเปลี่ยน</translation>
     </message>
 </context>
 <context>
@@ -599,17 +599,17 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="304"/>
         <source>Point 2D layer is empty</source>
-        <translation>ไม่ได้ป้อนชั้นงานจุด 2 มิติ</translation>
+        <translation>ไม่ได้ป้อนเลเยอร์จุด 2 มิติ</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="307"/>
         <source>Point 3D layer is empty</source>
-        <translation>ไม่ได้ป้อนชั้นงานจุด 3 มิติ</translation>
+        <translation>ไม่ได้ป้อนเลเยอร์จุด 3 มิติ</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="310"/>
         <source>Point elevation layer is empty</source>
-        <translation>ไม่ได้ป้อนชั้นงานของป้ายระดับความสูงของจุด</translation>
+        <translation>ไม่ได้ป้อนเลเยอร์ของป้ายระดับความสูงของจุด</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="311"/>
@@ -624,7 +624,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="315"/>
         <source>Point number layer is empty</source>
-        <translation>ไม่ได้ป้อนชั้นงานของหมายเลขประจำจุด</translation>
+        <translation>ไม่ได้ป้อนเลเยอร์ของหมายเลขประจำจุด</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="316"/>
@@ -639,7 +639,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="320"/>
         <source>Point code layer is empty</source>
-        <translation>ไม่ได้ป้อนชั้นงานของชื่อจุด</translation>
+        <translation>ไม่ได้ป้อนเลเยอร์ของชื่อจุด</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="321"/>
@@ -693,7 +693,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../divide/divide.cpp" line="439"/>
         <source>Empty Entity</source>
-        <translation>ไม่มีรายการที่เลือก</translation>
+        <translation>ไม่มีวัตถุที่เลือก</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="447"/>
@@ -708,7 +708,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../divide/divide.cpp" line="455"/>
         <source>Layer</source>
-        <translation>ชั้นงาน</translation>
+        <translation>เลเยอร์</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="457"/>
@@ -807,7 +807,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../divide/divide.cpp" line="525"/>
         <source>POLYLINE</source>
-        <translation>เส้นหลายขยัก</translation>
+        <translation>โพลีไลน์</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="526"/>
@@ -850,7 +850,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../divide/dividedlg.cpp" line="68"/>
         <source>Layers</source>
-        <translation>ชั้นงาน</translation>
+        <translation>เลเยอร์</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="74"/>
@@ -909,7 +909,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../divide/dividedlg.cpp" line="245"/>
         <source>&lt;i&gt;&quot;New&quot;&lt;/i&gt;&lt;br&gt;Enter name&lt;br&gt;for a new layer&lt;br&gt;(if required?) to&lt;br&gt;draw ticks on.</source>
-        <translation>&lt;i&gt;&quot;ใหม่&quot;&lt;/i&gt;&lt;br&gt;ป้อนชื่อ&lt;br&gt;ของชั้นงานใหม่&lt;br&gt;(ถ้าต้องการ?)&lt;br&gt;เพื่อใช้วาดขีดขั้น</translation>
+        <translation>&lt;i&gt;&quot;ใหม่&quot;&lt;/i&gt;&lt;br&gt;ป้อนชื่อ&lt;br&gt;ของเลเยอร์ใหม่&lt;br&gt;(ถ้าต้องการ?)&lt;br&gt;เพื่อใช้วาดขีดขั้น</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="250"/>
@@ -1010,7 +1010,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../gear/gear.cpp" line="123"/>
         <source>Use layers?</source>
-        <translation>ใช้ชั้นงาน?</translation>
+        <translation>ใช้เลเยอร์?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="124"/>
@@ -1068,7 +1068,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../list/list.cpp" line="276"/>
         <source>List entities</source>
-        <translation>แสดงรายการ</translation>
+        <translation>แสดงรายการวัตถุ</translation>
     </message>
 </context>
 <context>
@@ -1277,7 +1277,7 @@ Use t or x in your equation as a variable/parameter.
         <location filename="../plotequation/plotdialog.cpp" line="60"/>
         <source>Polyline</source>
         <comment>Plot Equation to generate RS_Polyline</comment>
-        <translation>เส้นหลายขยัก</translation>
+        <translation>โพลีไลน์</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="61"/>
@@ -1291,7 +1291,7 @@ Use t or x in your equation as a variable/parameter.
     <message>
         <location filename="../asciifile/asciifile.cpp" line="176"/>
         <source>Layer:</source>
-        <translation>ชั้นงาน:</translation>
+        <translation>เลเยอร์:</translation>
     </message>
 </context>
 <context>

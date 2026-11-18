@@ -134,7 +134,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/dock_widgets/library/lc_action_block_library_insert.cpp" line="93"/>
         <source>Cannot open file &apos;%1&apos;</source>
-        <translation type="unfinished">Não pôde abrir o arquivo &apos;%1&apos;</translation>
+        <translation type="unfinished">Não foi possível abrir o ficheiro &apos;%1&apos;</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/library/lc_action_block_library_insert.cpp" line="194"/>
@@ -209,7 +209,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimarc.cpp" line="188"/>
         <source>Select arc entity</source>
-        <translation>Seleccionar a entidade arco</translation>
+        <translation>Selecionar a entidade arco</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimarc.cpp" line="191"/>
@@ -237,7 +237,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="304"/>
         <source>Snap to Adjacent Dim</source>
-        <translation>Ajustar ao Dim adjacente</translation>
+        <translation>Ajustar à cota adjacente</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="319"/>
@@ -247,7 +247,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="322"/>
         <source>Enter dimension line angle:</source>
-        <translation>Digite o ângulo da linha de cota:</translation>
+        <translation>Introduza o ângulo da linha de cota:</translation>
     </message>
 </context>
 <context>
@@ -260,7 +260,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimordinate.cpp" line="211"/>
         <source>Specify leader end point</source>
-        <translation>Especificar o ponto final da linha de chamada</translation>
+        <translation>Especificar o ponto final da linha de indicação</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimordinate.cpp" line="211"/>
@@ -299,7 +299,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_2points_angle.cpp" line="58"/>
         <source>Enter value of central angle</source>
-        <translation>Digite o valor do ângulo central</translation>
+        <translation>Introduza o valor do ângulo central</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_2points_angle.cpp" line="62"/>
@@ -345,7 +345,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_2points_height.cpp" line="55"/>
         <source>Enter height of arc</source>
-        <translation>Digite a altura do arco</translation>
+        <translation>Introduza a altura do arco</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_2points_height.cpp" line="59"/>
@@ -363,7 +363,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_2points_length.cpp" line="53"/>
         <source>Enter length of arc</source>
-        <translation>Digite o comprimento do arco</translation>
+        <translation>Introduza o comprimento do arco</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_2points_length.cpp" line="57"/>
@@ -376,7 +376,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_2points_radius.cpp" line="55"/>
         <source>Enter radius of arc</source>
-        <translation>Digite o raio do arco</translation>
+        <translation>Introduza o raio do arco</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_2points_radius.cpp" line="59"/>
@@ -551,7 +551,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_center_line.cpp" line="303"/>
         <source>Enter offset value</source>
-        <translation type="unfinished">Digite o valor do deslocamento</translation>
+        <translation type="unfinished">Introduza o valor do deslocamento</translation>
     </message>
 </context>
 <context>
@@ -586,8 +586,8 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_2points_radius.cpp" line="178"/>
         <source>radius=%1 is too small for points selected
 distance between points=%2 is larger than diameter=%3</source>
-        <translation type="unfinished">raio=%1 é demasiado pequeno para os pontos seleccionados
-distância entre pontos=%2 é maior que o diâmetro= %3</translation>
+        <translation type="unfinished">raio=%1 é demasiado pequeno para os pontos selecionados
+distância entre pontos=%2 é maior que o diâmetro=%3</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_2points_radius.cpp" line="191"/>
@@ -812,12 +812,12 @@ distância entre pontos=%2 é maior que o diâmetro= %3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="416"/>
         <source>Select base linear/aligned dimension</source>
-        <translation>Seleccione a cota linear/alinhada de base</translation>
+        <translation>Selecione a cota linear/alinhada de base</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="416"/>
         <source>Select distant extension point</source>
-        <translation>Seleccionar o ponto de extensão distante</translation>
+        <translation>Selecionar o ponto de extensão distante</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="419"/>
@@ -837,7 +837,7 @@ distância entre pontos=%2 é maior que o diâmetro= %3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="422"/>
         <source>Snap to Adjacent Dim</source>
-        <translation>Ajustar ao Dim adjacente</translation>
+        <translation>Ajustar à cota adjacente</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="425"/>
@@ -980,7 +980,7 @@ distância entre pontos=%2 é maior que o diâmetro= %3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/image/lc_action_draw_image.cpp" line="288"/>
         <source>Enter dpi:</source>
-        <translation type="unfinished">Digite dpi:</translation>
+        <translation type="unfinished">Introduza dpi:</translation>
     </message>
 </context>
 <context>
@@ -1518,7 +1518,7 @@ distância entre pontos=%2 é maior que o diâmetro= %3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_snake.cpp" line="171"/>
         <source>Direction:</source>
-        <translation>Direcção:</translation>
+        <translation>Direção:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_snake.cpp" line="538"/>
@@ -1597,7 +1597,7 @@ distância entre pontos=%2 é maior que o diâmetro= %3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabolaFD.cpp" line="293"/>
         <source>Select line that is parallel to directrix of parabola or set vertex point</source>
-        <translation>Seleccione uma linha paralela à directriz da parábola ou ao ponto de vértice definido</translation>
+        <translation>Selecione uma linha paralela à diretriz da parábola ou defina o ponto do vértice</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabolaFD.cpp" line="297"/>
@@ -1661,12 +1661,12 @@ distância entre pontos=%2 é maior que o diâmetro= %3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_lattice.cpp" line="297"/>
         <source>Enter number of points by X</source>
-        <translation>Digite o número de pontos por X</translation>
+        <translation>Introduza o número de pontos por X</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_lattice.cpp" line="301"/>
         <source>Enter number of points by Y</source>
-        <translation>Digite o número de pontos por Y</translation>
+        <translation>Introduza o número de pontos por Y</translation>
     </message>
 </context>
 <context>
@@ -1780,7 +1780,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_action_draw_polygon_base.cpp" line="259"/>
         <source>Enter rounding radius:</source>
-        <translation type="unfinished">Digite o raio de arredondamento:</translation>
+        <translation type="unfinished">Introduza o raio de arredondamento:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_action_draw_polygon_base.cpp" line="267"/>
@@ -1824,18 +1824,18 @@ or [%2]</source>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_draw_polyline.cpp" line="368"/>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_draw_polyline.cpp" line="597"/>
         <source>Enter the end point x</source>
-        <translation type="unfinished">Digite o ponto final x</translation>
+        <translation type="unfinished">Introduza o ponto final x</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_draw_polyline.cpp" line="439"/>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_draw_polyline.cpp" line="606"/>
         <source>Enter number of polylines</source>
-        <translation type="unfinished">Digite o número de polilinhas</translation>
+        <translation type="unfinished">Introduza o número de polilinhas</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_draw_polyline.cpp" line="564"/>
         <source>Enter an equation, f(x)</source>
-        <translation type="unfinished">Digite uma equação, f( x)</translation>
+        <translation type="unfinished">Introduza uma equação, f(x)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_draw_polyline.cpp" line="577"/>
@@ -1845,7 +1845,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_draw_polyline.cpp" line="581"/>
         <source>Enter the start point x</source>
-        <translation type="unfinished">Digite o ponto inicial x</translation>
+        <translation type="unfinished">Introduza o ponto inicial x</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_draw_polyline.cpp" line="586"/>
@@ -1941,12 +1941,12 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_2points.cpp" line="310"/>
         <source>Specify point 1 snap [corner|mid-vert|mid-hor|middle]</source>
-        <translation>Especifique o encaixe do ponto 1 [corner|mid-vert|mid-hor|middle]</translation>
+        <translation>Especifique o ajuste do ponto 1 [corner|mid-vert|mid-hor|middle]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_2points.cpp" line="313"/>
         <source>Specify point 2 snap [corner|mid-vert|mid-hor|middle]</source>
-        <translation>Especifique o encaixe do ponto 2 [corner|mid-vert|mid-hor|middle]</translation>
+        <translation>Especifique o ajuste do ponto 2 [corner|mid-vert|mid-hor|middle]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_2points.cpp" line="316"/>
@@ -2013,7 +2013,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_abstract.cpp" line="192"/>
         <source>Rectangle</source>
-        <translation type="unfinished">Rectângulo</translation>
+        <translation type="unfinished">Retângulo</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_abstract.cpp" line="193"/>
@@ -2156,7 +2156,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_action_draw_spline_points.cpp" line="234"/>
         <source>Specify next control point or [%1]</source>
-        <translation>Especificar o próximo ponto de controle ou [%1]</translation>
+        <translation>Especificar o próximo ponto de controlo ou [%1]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_action_draw_spline_points.cpp" line="234"/>
@@ -2166,7 +2166,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_action_draw_spline_points.cpp" line="237"/>
         <source>Specify next control point</source>
-        <translation>Especificar o próximo ponto de controle</translation>
+        <translation>Especificar o próximo ponto de controlo</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_action_draw_spline_points.cpp" line="269"/>
@@ -2282,7 +2282,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="338"/>
         <source>Zoom &amp;Panning</source>
-        <translation>Ampliação &amp; Panning</translation>
+        <translation>&amp;Deslocar a vista</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="246"/>
@@ -2302,12 +2302,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="249"/>
         <source>(De-)Select &amp;Contour</source>
-        <translation>(De-)Selecionar &amp; Contour</translation>
+        <translation>(Des)Selecionar &amp;contorno</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="250"/>
         <source>Select Intersected Entities</source>
-        <translation>Seleccionar Entidades Interseccionadas</translation>
+        <translation>Selecionar Entidades Interseccionadas</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="251"/>
@@ -2348,12 +2348,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="210"/>
         <source>&amp;Freehand Line</source>
-        <translation>Linha &amp; Livre</translation>
+        <translation>Linha à &amp;mão livre</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="211"/>
         <source>&amp;Parallel</source>
-        <translation>&amp; Paralelo</translation>
+        <translation>&amp;Paralela</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="212"/>
@@ -2363,7 +2363,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="192"/>
         <source>Rectangle</source>
-        <translation>Rectângulo</translation>
+        <translation>Retângulo</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="213"/>
@@ -2383,7 +2383,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="216"/>
         <source>Tangent &amp;Orthogonal</source>
-        <translation>Tangente &amp; ortogonal</translation>
+        <translation>Tangente &amp;ortogonal</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="217"/>
@@ -2473,7 +2473,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="261"/>
         <source>Center, &amp;Point</source>
-        <translation>Centro, &amp; Ponto</translation>
+        <translation>Centro, &amp;ponto</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="262"/>
@@ -2504,12 +2504,12 @@ or [%2]</source>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="267"/>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="286"/>
         <source>&amp;Concentric</source>
-        <translation>&amp; Concêntrico</translation>
+        <translation>&amp;Concêntrico</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="268"/>
         <source>Circle &amp;Inscribed</source>
-        <translation>Círculo &amp; Inscrito</translation>
+        <translation>Círculo &amp;inscrito</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="272"/>
@@ -2539,7 +2539,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="287"/>
         <source>Arc &amp;Tangential</source>
-        <translation>Arco &amp; Tangencial</translation>
+        <translation>Arco &amp;tangente</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="299"/>
@@ -2549,7 +2549,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="301"/>
         <source>&amp;Insert spline points</source>
-        <translation>&amp; Insert spline points</translation>
+        <translation>&amp;Inserir pontos de spline</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="312"/>
@@ -2559,27 +2559,27 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="313"/>
         <source>Ellipse &amp;Arc (Axis)</source>
-        <translation>Elipse &amp; Arc (Axis)</translation>
+        <translation>&amp;Arco de elipse (eixos)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="314"/>
         <source>Ellipse &amp;Foci Point</source>
-        <translation>Ponto &amp; Foci da Elipse</translation>
+        <translation>Elipse por &amp;focos e ponto</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="315"/>
         <source>Ellipse &amp;4 Point</source>
-        <translation>Ponto de Elipse &amp; 4</translation>
+        <translation>Elipse por &amp;4 pontos</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="316"/>
         <source>Ellipse Center and &amp;3 Points</source>
-        <translation>Centro de elipse e pontos &amp; 3</translation>
+        <translation>Elipse por centro e &amp;3 pontos</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="317"/>
         <source>Ellipse &amp;Inscribed</source>
-        <translation>Elipse &amp; Inscrita</translation>
+        <translation>Elipse &amp;inscrita</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="297"/>
@@ -2589,12 +2589,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="298"/>
         <source>&amp;Spline through points</source>
-        <translation>&amp;Espular os pontos</translation>
+        <translation>&amp;Spline por pontos</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="323"/>
         <source>&amp;Polyline</source>
-        <translation>&amp;Polyline</translation>
+        <translation>&amp;Polilinha</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="324"/>
@@ -2609,22 +2609,22 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="326"/>
         <source>&amp;Delete node</source>
-        <translation>&amp; Apagar o nó</translation>
+        <translation>&amp;Apagar o nó</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="327"/>
         <source>Delete &amp;between two nodes</source>
-        <translation>Apagar &amp; entre dois nós</translation>
+        <translation>Apagar &amp;entre dois nós</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="328"/>
         <source>&amp;Trim segments</source>
-        <translation>Segmentos de &amp; Trim</translation>
+        <translation>&amp;Aparar segmentos</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="329"/>
         <source>Create &amp;Equidistant Polylines</source>
-        <translation>Criar Polilinhas &amp; Equidistantes</translation>
+        <translation>Criar polilinhas &amp;equidistantes</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="331"/>
@@ -2644,12 +2644,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="341"/>
         <source>&amp;Hatch</source>
-        <translation>&amp;Hatch</translation>
+        <translation>&amp;Trama</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="342"/>
         <source>Insert &amp;Image</source>
-        <translation>Inserir &amp; Imagem</translation>
+        <translation>Inserir &amp;imagem</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="349"/>
@@ -2684,32 +2684,32 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="357"/>
         <source>&amp;Leader</source>
-        <translation>&amp;Leader</translation>
+        <translation>&amp;Linha de indicação</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="378"/>
         <source>&amp;Attributes</source>
-        <translation>&amp; Atributos</translation>
+        <translation>&amp;Atributos</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="379"/>
         <source>&amp;Delete</source>
-        <translation>&amp; Apagar</translation>
+        <translation>&amp;Apagar</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="380"/>
         <source>&amp;Move / Copy</source>
-        <translation>&amp; Mover / Copiar</translation>
+        <translation>&amp;Mover / Copiar</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="381"/>
         <source>Re&amp;vert direction</source>
-        <translation>Reverter a direcção</translation>
+        <translation>In&amp;verter a direção</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="382"/>
         <source>&amp;Rotate</source>
-        <translation>&amp;Rotar</translation>
+        <translation>&amp;Rodar</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="383"/>
@@ -2724,7 +2724,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="386"/>
         <source>Rotate T&amp;wo</source>
-        <translation>Rodar T&amp;wo</translation>
+        <translation>Rodar d&amp;ois</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="387"/>
@@ -2759,12 +2759,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="395"/>
         <source>&amp;Fillet</source>
-        <translation>&amp;Fillet</translation>
+        <translation>&amp;Arredondar</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="396"/>
         <source>&amp;Explode Text into Letters</source>
-        <translation>&amp; Explodir texto em letras</translation>
+        <translation>&amp;Explodir texto em letras</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="439"/>
@@ -2864,7 +2864,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="583"/>
         <source>&amp;Distance Point to Point</source>
-        <translation>Ponto de &amp; Distância para Ponto</translation>
+        <translation>&amp;Distância de ponto a ponto</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="586"/>
@@ -2934,7 +2934,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="751"/>
         <source>&amp;Undo</source>
-        <translation>&amp; Desfazer</translation>
+        <translation>&amp;Desfazer</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="752"/>
@@ -2959,7 +2959,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="784"/>
         <source>&amp;Copy</source>
-        <translation>&amp; Copiar</translation>
+        <translation>&amp;Copiar</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="786"/>
@@ -3004,7 +3004,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="282"/>
         <source>&amp;2 Points, Angle</source>
-        <translation>&amp; 2 pontos, ângulo</translation>
+        <translation>&amp;2 pontos, ângulo</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="283"/>
@@ -3019,7 +3019,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="295"/>
         <source>Parabola &amp;Focus Directrix</source>
-        <translation>Parabola &amp; Focus Directrix</translation>
+        <translation>Parábola por &amp;foco e diretriz</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="300"/>
@@ -3029,7 +3029,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="302"/>
         <source>&amp;Explode spline to lines</source>
-        <translation>&amp;Explode spline para linhas</translation>
+        <translation>&amp;Explodir a spline em linhas</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="303"/>
@@ -3054,17 +3054,17 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="330"/>
         <source>Polyline from Existing &amp;Segments</source>
-        <translation>Polilinha de &amp; Segmentos existentes</translation>
+        <translation>Polilinha a partir de &amp;segmentos existentes</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="332"/>
         <source>Polyline Change Segment Type</source>
-        <translation>Tipo de Segmento de Mudança de Polilinha</translation>
+        <translation>Polilinha: mudar o tipo de segmento</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="343"/>
         <source>Bounding &amp;Box</source>
-        <translation>Encaixe</translation>
+        <translation>Caixa &amp;delimitadora</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="358"/>
@@ -3089,7 +3089,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="400"/>
         <source>Line Join</source>
-        <translation>Ligar à Linha</translation>
+        <translation>Unir linhas</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="401"/>
@@ -3144,7 +3144,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="428"/>
         <source>Enable Info Cursor</source>
-        <translation>Activar o Cursor de Informação</translation>
+        <translation>Ativar o Cursor de Informação</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="429"/>
@@ -3155,7 +3155,7 @@ or [%2]</source>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="78"/>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="430"/>
         <source>Snap</source>
-        <translation>Snap</translation>
+        <translation>Ajuste</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="57"/>
@@ -3305,7 +3305,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="71"/>
         <source>Options management</source>
-        <translation>Gerenciamento de opções</translation>
+        <translation>Gestão de opções</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="72"/>
@@ -3326,7 +3326,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="74"/>
         <source>Polyline</source>
-        <translation>Polilina</translation>
+        <translation>Polilinha</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="74"/>
@@ -3351,7 +3351,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="76"/>
         <source>Snap restrictions</source>
-        <translation>Restrições de encaixe</translation>
+        <translation>Restrições de ajuste</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="77"/>
@@ -3361,22 +3361,22 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="77"/>
         <source>Entity selection operations</source>
-        <translation>Operações de selecção de entidades</translation>
+        <translation>Operações de seleção de entidades</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="78"/>
         <source>Snapping operations</source>
-        <translation>Operações de encaixe</translation>
+        <translation>Operações de ajuste</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="79"/>
         <source>Snap Extras</source>
-        <translation>Extras do Snap</translation>
+        <translation>Extras de ajuste</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="79"/>
         <source>Additional Snaps</source>
-        <translation>Snaps adicionais</translation>
+        <translation>Ajustes adicionais</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="80"/>
@@ -3402,7 +3402,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="82"/>
         <source>Persistent Views operations</source>
-        <translation>Operações de Visões Persistentes</translation>
+        <translation>Operações de Vistas Persistentes</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="83"/>
@@ -3457,12 +3457,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="88"/>
         <source>Interactive</source>
-        <translation>Interactiva</translation>
+        <translation>Interativa</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="88"/>
         <source>Interactive Pick</source>
-        <translation>Escolha Interactiva</translation>
+        <translation>Escolha Interativa</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="109"/>
@@ -3542,12 +3542,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="271"/>
         <source>Tangential &amp;3 Entities</source>
-        <translation>Entidades Tangenciais &amp; 3</translation>
+        <translation>Tangente a &amp;3 entidades</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="288"/>
         <source>&amp;Dual Curve</source>
-        <translation>Curva &amp; Dupla</translation>
+        <translation>Curva &amp;dupla</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="296"/>
@@ -3567,12 +3567,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="362"/>
         <source>Ordinates Re-base</source>
-        <translation>Redefinir as coordenadas</translation>
+        <translation>Alterar a base das cotas ordenadas</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="363"/>
         <source>Feature Control Frame</source>
-        <translation>Frame de controle de recursos</translation>
+        <translation>Quadro de tolerância</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="364"/>
@@ -3597,37 +3597,37 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="449"/>
         <source>Snap Middle Manual</source>
-        <translation>Ajustar o Manual do Meio</translation>
+        <translation>Ajustar ao meio (manual)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="455"/>
         <source>Snap on Endpoints</source>
-        <translation>Ajustar os Pontos de Finalização</translation>
+        <translation>Ajustar aos pontos finais</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="456"/>
         <source>Snap on Entity</source>
-        <translation>Encaixar na entidade</translation>
+        <translation>Ajustar à entidade</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="457"/>
         <source>Snap Center</source>
-        <translation>Encaixar no centro</translation>
+        <translation>Ajustar ao centro</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="458"/>
         <source>Snap Middle</source>
-        <translation>Ajustar meio</translation>
+        <translation>Ajustar ao ponto médio</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="459"/>
         <source>Snap Distance</source>
-        <translation>Distância de Snap</translation>
+        <translation>Ajustar à distância</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="460"/>
         <source>Snap Intersection</source>
-        <translation>Intersecção do Snap</translation>
+        <translation>Ajustar à intersecção</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="525"/>
@@ -3667,7 +3667,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="546"/>
         <source>Save Workspace</source>
-        <translation>Salvar espaço de trabalho</translation>
+        <translation>Guardar espaço de trabalho</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="547"/>
@@ -3692,7 +3692,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="565"/>
         <source>Exclusive Snap Mode</source>
-        <translation>Modo de encaixe exclusivo</translation>
+        <translation>Modo de ajuste exclusivo</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="566"/>
@@ -3707,7 +3707,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="582"/>
         <source>&amp;Point Coordinates</source>
-        <translation>Coordenadas do &amp; Ponto</translation>
+        <translation>&amp;Coordenadas do ponto</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="584"/>
@@ -3722,7 +3722,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="587"/>
         <source>Total &amp;length of selected entities</source>
-        <translation>Total das entidades seleccionadas</translation>
+        <translation>Comprimento &amp;total das entidades selecionadas</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="589"/>
@@ -3732,7 +3732,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="590"/>
         <source>Collect &amp;Coordinates</source>
-        <translation>Recolha &amp; Coordenadas</translation>
+        <translation>Recolher &amp;coordenadas</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="591"/>
@@ -3742,7 +3742,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="604"/>
         <source>&amp;Draft Lines</source>
-        <translation>Linhas &amp; Draft</translation>
+        <translation>Linhas de &amp;rascunho</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="605"/>
@@ -3752,22 +3752,22 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="607"/>
         <source>&amp;Orthogonal Grid</source>
-        <translation>Grelha &amp; ortogonal</translation>
+        <translation>Grelha &amp;ortogonal</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="608"/>
         <source>&amp;Isometric Left Grid</source>
-        <translation>Grelha &amp; Isométrica Esquerda</translation>
+        <translation>Grelha &amp;isométrica esquerda</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="609"/>
         <source>&amp;Isometric Top Grid</source>
-        <translation>Grelha superior &amp; isométrica</translation>
+        <translation>Grelha &amp;isométrica superior</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="610"/>
         <source>&amp;Isometric Right Grid</source>
-        <translation>Grelha &amp; Isométrica Direita</translation>
+        <translation>Grelha &amp;isométrica direita</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="621"/>
@@ -3817,7 +3817,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="639"/>
         <source>&amp;Rename Block</source>
-        <translation>&amp; Renomear bloco</translation>
+        <translation>&amp;Renomear bloco</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="640"/>
@@ -3827,7 +3827,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="641"/>
         <source>&amp;Save Block</source>
-        <translation>&amp;Salvar bloco</translation>
+        <translation>&amp;Guardar bloco</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="642"/>
@@ -3837,7 +3837,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="643"/>
         <source>Toggle Block &amp;Visibility</source>
-        <translation>Alternar &amp; visibilidade do bloco</translation>
+        <translation>Alternar a &amp;visibilidade do bloco</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="644"/>
@@ -3852,12 +3852,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="654"/>
         <source>&amp;Application Preferences</source>
-        <translation>Preferências de &amp; Aplicação</translation>
+        <translation>Preferências da &amp;aplicação</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="743"/>
         <source>Select &amp;All</source>
-        <translation>Selecionar &amp; Todos</translation>
+        <translation>Selecionar &amp;tudo</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="744"/>
@@ -3882,12 +3882,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="716"/>
         <source>Focus on &amp;Options Widget</source>
-        <translation>Foco no Widget de &amp; Opções</translation>
+        <translation>Foco no widget de &amp;opções</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="720"/>
         <source>Zoom &amp;In</source>
-        <translation>Ampliação &amp; In</translation>
+        <translation>&amp;Ampliar</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="721"/>
@@ -3897,12 +3897,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="722"/>
         <source>&amp;Auto Zoom</source>
-        <translation>&amp; Ampliação Automática</translation>
+        <translation>Zoom &amp;automático</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="723"/>
         <source>Previous &amp;View</source>
-        <translation>&amp; Visualização Anterior</translation>
+        <translation>&amp;Vista anterior</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="724"/>
@@ -3917,22 +3917,22 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="679"/>
         <source>New From &amp;Template</source>
-        <translation>Novo de &amp; Template</translation>
+        <translation>Novo a partir de &amp;modelo</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="680"/>
         <source>&amp;Open...</source>
-        <translation>&amp; Abrir...</translation>
+        <translation>&amp;Abrir...</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="681"/>
         <source>&amp;Save</source>
-        <translation>&amp;Salvar</translation>
+        <translation>&amp;Guardar</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="682"/>
         <source>Save &amp;as...</source>
-        <translation>Gravar &amp; as...</translation>
+        <translation>Guardar &amp;como...</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="674"/>
@@ -3957,12 +3957,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="664"/>
         <source>Print Pre&amp;view</source>
-        <translation>Imprimir Pré- visualização</translation>
+        <translation>Pré-&amp;visualizar impressão</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="685"/>
         <source>&amp;Quit</source>
-        <translation>&amp; Sair</translation>
+        <translation>&amp;Sair</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="677"/>
@@ -3977,22 +3977,22 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="602"/>
         <source>&amp;Grid</source>
-        <translation>&amp;Grid</translation>
+        <translation>&amp;Grelha</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="603"/>
         <source>&amp;Draft</source>
-        <translation>&amp;Draft</translation>
+        <translation>&amp;Rascunho</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="606"/>
         <source>&amp;Statusbar</source>
-        <translation>Barra de &amp; Estatísticas</translation>
+        <translation>Barra de &amp;estado</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="715"/>
         <source>Focus on &amp;Command Line</source>
-        <translation>Foco na Linha de &amp; Comando</translation>
+        <translation>Foco na linha de &amp;comandos</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="655"/>
@@ -4012,7 +4012,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="385"/>
         <source>Mo&amp;ve and Rotate</source>
-        <translation>Move e Rodar</translation>
+        <translation>Mo&amp;ver e rodar</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="389"/>
@@ -4052,37 +4052,37 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="730"/>
         <source>&amp;Save View</source>
-        <translation>&amp;Salvar visão</translation>
+        <translation>&amp;Guardar vista</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="732"/>
         <source>Restore Current View</source>
-        <translation>Restaurar visão atual</translation>
+        <translation>Restaurar vista atual</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="733"/>
         <source>Restore View 1</source>
-        <translation>Restaurar visão 1</translation>
+        <translation>Restaurar vista 1</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="734"/>
         <source>Restore View 2</source>
-        <translation>Restaurar visão 2</translation>
+        <translation>Restaurar vista 2</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="735"/>
         <source>Restore View 3</source>
-        <translation>Restaurar visão 3</translation>
+        <translation>Restaurar vista 3</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="736"/>
         <source>Restore View 4</source>
-        <translation>Restaurar visão 4</translation>
+        <translation>Restaurar vista 4</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="737"/>
         <source>Restore View 5</source>
-        <translation>Restaurar visão 5</translation>
+        <translation>Restaurar vista 5</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="759"/>
@@ -4117,22 +4117,22 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="785"/>
         <source>Copy &amp;Quick</source>
-        <translation>Copiar &amp; Rápido</translation>
+        <translation>Copiar &amp;rápido</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="787"/>
         <source>Paste &amp;Transform</source>
-        <translation>Colar &amp; Transform</translation>
+        <translation>Colar com &amp;transformação</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="753"/>
         <source>&amp;Delete Selected</source>
-        <translation>&amp; Apagar selecionado</translation>
+        <translation>&amp;Apagar selecionados</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="754"/>
         <source>&amp;Selection Pointer</source>
-        <translation>Apontador de &amp; Seleção</translation>
+        <translation>Ponteiro de &amp;seleção</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="194"/>
@@ -4142,7 +4142,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="356"/>
         <source>&amp;Arc</source>
-        <translation>&amp; Arco</translation>
+        <translation>&amp;Arco</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="617"/>
@@ -4182,7 +4182,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="636"/>
         <source>&amp;Hide all blocks</source>
-        <translation>&amp; Esconder todos os blocos</translation>
+        <translation>&amp;Esconder todos os blocos</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="650"/>
@@ -4207,12 +4207,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="707"/>
         <source>Re-dock Widgets</source>
-        <translation>Religar os Elementos</translation>
+        <translation>Reacoplar os elementos</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="683"/>
         <source>Save A&amp;ll...</source>
-        <translation>Salvar A&amp;ll...</translation>
+        <translation>Guardar &amp;tudo...</translation>
     </message>
 </context>
 <context>
@@ -4240,7 +4240,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="147"/>
         <source>Select second (intersection) point of angle</source>
-        <translation>Seleccione o segundo ponto de ângulo (intersecção)</translation>
+        <translation>Selecione o segundo ponto de ângulo (intersecção)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="151"/>
@@ -4366,7 +4366,7 @@ Ponto: (%8,%9)</translation>
     <message>
         <location filename="../src/actions/drawing/info/lc_action_info_dist_point_to_entity.cpp" line="301"/>
         <source>Do not snap to child entities in container</source>
-        <translation type="unfinished">Não encaixar nas entidades filhas do contentor</translation>
+        <translation type="unfinished">Não ajustar às entidades-filhas do contentor</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_action_info_dist_point_to_entity.cpp" line="305"/>
@@ -4473,7 +4473,7 @@ Ponto: (%8,%9)</translation>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfopoint.cpp" line="123"/>
         <source>Select position for coordinates</source>
-        <translation>Seleccionar a posição das coordenadas</translation>
+        <translation>Selecionar a posição das coordenadas</translation>
     </message>
 </context>
 <context>
@@ -4486,7 +4486,7 @@ Ponto: (%8,%9)</translation>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfoproperties.cpp" line="172"/>
         <source>Select child entities</source>
-        <translation>Seleccionar as entidades- filhos</translation>
+        <translation>Selecionar as entidades-filhas</translation>
     </message>
 </context>
 <context>
@@ -4563,7 +4563,7 @@ Ponto: (%8,%9)</translation>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="292"/>
         <source>Select second (intersection) point of angle</source>
-        <translation>Seleccione o segundo ponto de ângulo (intersecção)</translation>
+        <translation>Selecione o segundo ponto de ângulo (intersecção)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="292"/>
@@ -4795,7 +4795,7 @@ Ponto: (%8,%9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="53"/>
         <source>Align action at the moment supports only World Coordinates system, and may not be invoked if User Coordinate System is active.</source>
-        <translation>Alinhar a ação no momento suporta apenas o sistema de coordenadas mundiais, e não pode ser invocado se o sistema de coordenadas do usuário estiver ativo.</translation>
+        <translation>De momento, a ação Alinhar só suporta o sistema de coordenadas global e não pode ser invocada se o sistema de coordenadas do utilizador estiver ativo.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="147"/>
@@ -4830,7 +4830,7 @@ Ponto: (%8,%9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="245"/>
         <source>Coordinate is accepted only for Align to &quot;Position&quot;</source>
-        <translation>A coordenada só é aceita para &quot;Posição&quot;</translation>
+        <translation>A coordenada só é aceite para Alinhar a &quot;Posição&quot;</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="261"/>
@@ -4840,7 +4840,7 @@ Ponto: (%8,%9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="261"/>
         <source>Select child entities of containers</source>
-        <translation>Seleccionar as entidades-mãe dos contentores</translation>
+        <translation>Selecionar as entidades-filhas dos contentores</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="264"/>
@@ -4931,7 +4931,7 @@ Ponto: (%8,%9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_single.cpp" line="54"/>
         <source>Align action at the moment supports only World Coordinates system, and may not be invoked if User Coordinate System is active.</source>
-        <translation>Alinhar a ação no momento suporta apenas o sistema de coordenadas mundiais, e não pode ser invocado se o sistema de coordenadas do usuário estiver ativo.</translation>
+        <translation>De momento, a ação Alinhar só suporta o sistema de coordenadas global e não pode ser invocada se o sistema de coordenadas do utilizador estiver ativo.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_single.cpp" line="115"/>
@@ -4976,7 +4976,7 @@ Ponto: (%8,%9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_single.cpp" line="289"/>
         <source>Select entity to align</source>
-        <translation>Seleccionar a entidade a alinhar</translation>
+        <translation>Selecionar a entidade a alinhar</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_single.cpp" line="289"/>
@@ -4986,7 +4986,7 @@ Ponto: (%8,%9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_single.cpp" line="378"/>
         <source>Coordinate is accepted only for Align to &quot;Position&quot;</source>
-        <translation>A coordenada só é aceita para &quot;Posição&quot;</translation>
+        <translation>A coordenada só é aceite para Alinhar a &quot;Posição&quot;</translation>
     </message>
 </context>
 <context>
@@ -5004,7 +5004,7 @@ Ponto: (%8,%9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_attributes.cpp" line="72"/>
         <source>Modify attributes immediately after selecting</source>
-        <translation type="unfinished">Modificar os atributos imediatamente após a selecção</translation>
+        <translation type="unfinished">Modificar os atributos imediatamente após a seleção</translation>
     </message>
 </context>
 <context>
@@ -5032,13 +5032,13 @@ Ponto: (%8,%9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_bevel.cpp" line="233"/>
         <source>Invalid entity selected (non-trimmable).</source>
-        <translation type="unfinished">Entidade inválida selecionada (não-trimável).</translation>
+        <translation type="unfinished">Entidade inválida selecionada (não aparável).</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_bevel.cpp" line="236"/>
         <location filename="../src/actions/drawing/modify/lc_action_modify_bevel.cpp" line="272"/>
         <source>Invalid entity selected (non-atomic).</source>
-        <translation type="unfinished">Entidade inválida seleccionada (não atómica).</translation>
+        <translation type="unfinished">Entidade inválida selecionada (não atómica).</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_bevel.cpp" line="253"/>
@@ -5048,7 +5048,7 @@ Ponto: (%8,%9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_bevel.cpp" line="257"/>
         <source>Selected lines are not children of the same polyline</source>
-        <translation type="unfinished">As linhas seleccionadas não são filhas da mesma polilinha</translation>
+        <translation type="unfinished">As linhas selecionadas não são filhas da mesma polilinha</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_bevel.cpp" line="261"/>
@@ -5058,7 +5058,7 @@ Ponto: (%8,%9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_bevel.cpp" line="265"/>
         <source>Invalid entity selected (non-trimmable with first entity).</source>
-        <translation type="unfinished">Entidade inválida selecionada (não-trimável com primeira entidade).</translation>
+        <translation type="unfinished">Entidade inválida selecionada (não aparável com a primeira entidade).</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_bevel.cpp" line="338"/>
@@ -5204,7 +5204,7 @@ Ponto: (%8,%9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_delete.cpp" line="42"/>
         <source>Delete immediately after selection</source>
-        <translation type="unfinished">Apagar imediatamente após a selecção</translation>
+        <translation type="unfinished">Apagar imediatamente após a seleção</translation>
     </message>
 </context>
 <context>
@@ -5212,7 +5212,7 @@ Ponto: (%8,%9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_delete_free.cpp" line="79"/>
         <source>Entities not in the same polyline.</source>
-        <translation type="unfinished">Entidades não na mesma linha.</translation>
+        <translation type="unfinished">As entidades não estão na mesma polilinha.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_delete_free.cpp" line="83"/>
@@ -5338,7 +5338,7 @@ Ponto: (%8,%9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_gap.cpp" line="463"/>
         <source>Select endpoint of gap</source>
-        <translation>Seleccionar o ponto final do intervalo</translation>
+        <translation>Selecionar o ponto final do intervalo</translation>
     </message>
 </context>
 <context>
@@ -5346,7 +5346,7 @@ Ponto: (%8,%9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_join.cpp" line="130"/>
         <source>Lines Join</source>
-        <translation>Ligar as Linhas</translation>
+        <translation>Unir linhas</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_join.cpp" line="132"/>
@@ -5507,7 +5507,7 @@ Ponto: (%8,%9)</translation>
         <location filename="../src/actions/drawing/modify/lc_action_modify_move_rotate.cpp" line="124"/>
         <location filename="../src/actions/drawing/modify/lc_action_modify_move_rotate.cpp" line="153"/>
         <source>Moving with rotation</source>
-        <translation type="unfinished">Movendo com rotação</translation>
+        <translation type="unfinished">Mover com rotação</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_move_rotate.cpp" line="124"/>
@@ -5826,7 +5826,7 @@ Ponto: (%8,%9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate.cpp" line="702"/>
         <source>Rotate immediately after selection</source>
-        <translation type="unfinished">Rodar imediatamente após a selecção</translation>
+        <translation type="unfinished">Rodar imediatamente após a seleção</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate.cpp" line="708"/>
@@ -5837,7 +5837,7 @@ Ponto: (%8,%9)</translation>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate.cpp" line="708"/>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate.cpp" line="711"/>
         <source>Snap to center of selection</source>
-        <translation type="unfinished">Ajustar ao centro de seleção</translation>
+        <translation type="unfinished">Ajustar ao centro da seleção</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate.cpp" line="711"/>
@@ -5860,7 +5860,7 @@ Ponto: (%8,%9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate_twice.cpp" line="145"/>
         <source>Rotating Twice</source>
-        <translation type="unfinished">Rodando Duas Vezes</translation>
+        <translation type="unfinished">Rodar duas vezes</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate_twice.cpp" line="146"/>
@@ -5992,7 +5992,7 @@ Ponto: (%8,%9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_scale.cpp" line="413"/>
         <source>Snap to center of selection</source>
-        <translation type="unfinished">Ajustar ao centro de seleção</translation>
+        <translation type="unfinished">Ajustar ao centro da seleção</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_scale.cpp" line="417"/>
@@ -6144,7 +6144,7 @@ Ponto: (%8,%9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim_amount.cpp" line="267"/>
         <source>Select line/arc to trim OR enter length value:</source>
-        <translation type="unfinished">Selecione linha/arco para aparar OU digite o valor do comprimento:</translation>
+        <translation type="unfinished">Selecione linha/arco para aparar OU introduza o valor do comprimento:</translation>
     </message>
 </context>
 <context>
@@ -6152,12 +6152,12 @@ Ponto: (%8,%9)</translation>
     <message>
         <location filename="../src/ui/action_options/lc_action_options_properties_filler_base.cpp" line="294"/>
         <source>Snap Distance</source>
-        <translation type="unfinished">Distância de Snap</translation>
+        <translation type="unfinished">Ajustar à distância</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/lc_action_options_properties_filler_base.cpp" line="294"/>
         <source>Distance of snap point from initially resolved snap point</source>
-        <translation type="unfinished">Distância do ponto de snap do ponto de snap inicialmente resolvido</translation>
+        <translation type="unfinished">Distância do ponto de ajuste em relação ao ponto de ajuste inicialmente resolvido</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/lc_action_options_properties_filler_base.cpp" line="308"/>
@@ -6291,7 +6291,7 @@ Ponto: (%8,%9)</translation>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_append.cpp" line="132"/>
         <source>Can not append nodes in a closed polyline.</source>
-        <translation type="unfinished">Não é possível adicionar nós em uma polilinha fechada.</translation>
+        <translation type="unfinished">Não é possível acrescentar nós numa polilinha fechada.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_append.cpp" line="171"/>
@@ -6301,7 +6301,7 @@ Ponto: (%8,%9)</translation>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_append.cpp" line="294"/>
         <source>Enter number of polylines</source>
-        <translation type="unfinished">Digite o número de polilinhas</translation>
+        <translation type="unfinished">Introduza o número de polilinhas</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_append.cpp" line="309"/>
@@ -6361,12 +6361,12 @@ Ponto: (%8,%9)</translation>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node.cpp" line="132"/>
         <source>Deleting point is not on entity.</source>
-        <translation type="unfinished">O ponto de exclusão não está na entidade.</translation>
+        <translation type="unfinished">O ponto a eliminar não está na entidade.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node.cpp" line="141"/>
         <source>Deleting point is invalid.</source>
-        <translation type="unfinished">O ponto de exclusão é inválido.</translation>
+        <translation type="unfinished">O ponto a eliminar é inválido.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node.cpp" line="155"/>
@@ -6376,7 +6376,7 @@ Ponto: (%8,%9)</translation>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node.cpp" line="158"/>
         <source>Specify deleting node&apos;s point</source>
-        <translation type="unfinished">Especificar o ponto de exclusão do nó</translation>
+        <translation type="unfinished">Especificar o ponto do nó a eliminar</translation>
     </message>
 </context>
 <context>
@@ -6396,13 +6396,13 @@ Ponto: (%8,%9)</translation>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node_between.cpp" line="159"/>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node_between.cpp" line="184"/>
         <source>Deleting point is not on entity.</source>
-        <translation type="unfinished">O ponto de exclusão não está na entidade.</translation>
+        <translation type="unfinished">O ponto a eliminar não está na entidade.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node_between.cpp" line="167"/>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node_between.cpp" line="200"/>
         <source>Deleting point is invalid.</source>
-        <translation type="unfinished">O ponto de exclusão é inválido.</translation>
+        <translation type="unfinished">O ponto a eliminar é inválido.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node_between.cpp" line="174"/>
@@ -6520,7 +6520,7 @@ Ponto: (%8,%9)</translation>
     <message>
         <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="220"/>
         <source>De-Selecting</source>
-        <translation>Des- Seleccionar</translation>
+        <translation>A desselecionar</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="221"/>
@@ -6568,7 +6568,7 @@ Ponto: (%8,%9)</translation>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_action_spline_remove_points.cpp" line="201"/>
         <source>Select control point of entity</source>
-        <translation>Selecione o ponto de controle da entidade</translation>
+        <translation>Selecione o ponto de controlo da entidade</translation>
     </message>
 </context>
 <context>
@@ -6620,12 +6620,12 @@ Ponto: (%8,%9)</translation>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_intersected.cpp" line="192"/>
         <source>Select intersecting entity</source>
-        <translation type="unfinished">Seleccionar a entidade de intersecção</translation>
+        <translation type="unfinished">Selecionar a entidade de intersecção</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_intersected.cpp" line="192"/>
         <source>Select child entities</source>
-        <translation type="unfinished">Seleccionar as entidades- filhos</translation>
+        <translation type="unfinished">Selecionar as entidades-filhas</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_intersected.cpp" line="195"/>
@@ -6677,7 +6677,7 @@ Ponto: (%8,%9)</translation>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_window.cpp" line="135"/>
         <source>De-Selecting</source>
-        <translation type="unfinished">Des- Seleccionar</translation>
+        <translation type="unfinished">A desselecionar</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_window.cpp" line="135"/>
@@ -6758,7 +6758,7 @@ Ponto: (%8,%9)</translation>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_action_spline_add_point.cpp" line="210"/>
         <source>Select control point to insert before</source>
-        <translation>Selecione o ponto de controle para inserir antes</translation>
+        <translation>Selecione o ponto de controlo para inserir antes</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_action_spline_add_point.cpp" line="214"/>
@@ -6820,17 +6820,17 @@ Ponto: (%8,%9)</translation>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_action_spline_remove_between.cpp" line="232"/>
         <source>Select first point for deletion</source>
-        <translation>Selecione o primeiro ponto para a exclusão</translation>
+        <translation>Selecione o primeiro ponto para a eliminação</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_action_spline_remove_between.cpp" line="236"/>
         <source>Select second point for deletion</source>
-        <translation>Selecione o segundo ponto para a exclusão</translation>
+        <translation>Selecione o segundo ponto para a eliminação</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_action_spline_remove_between.cpp" line="236"/>
         <source>Delete from endpoints TO selected points</source>
-        <translation>Apagar dos endpoints PARA os pontos seleccionados</translation>
+        <translation>Apagar desde as extremidades ATÉ aos pontos selecionados</translation>
     </message>
 </context>
 <context>
@@ -6861,7 +6861,7 @@ Ponto: (%8,%9)</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.ui" line="37"/>
         <source>Reset shortcut for current action to it&apos;s default value</source>
-        <translation>Reiniciar o atalho da ação atual para o seu valor padrão</translation>
+        <translation>Repor o atalho da ação atual no valor predefinido</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.ui" line="40"/>
@@ -6926,7 +6926,7 @@ Ponto: (%8,%9)</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.ui" line="150"/>
         <source>Loads shortcuts mapping from external file.</source>
-        <translation>Carrega atalhos de mapeamento de arquivo externo.</translation>
+        <translation>Carrega atalhos de mapeamento de ficheiro externo.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.ui" line="153"/>
@@ -6936,7 +6936,7 @@ Ponto: (%8,%9)</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.ui" line="163"/>
         <source>Export shortcuts mappings to external file</source>
-        <translation>Exportar mapeamentos de atalhos para arquivo externo</translation>
+        <translation>Exportar mapeamentos de atalhos para ficheiro externo</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.ui" line="166"/>
@@ -6961,7 +6961,7 @@ Ponto: (%8,%9)</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.ui" line="213"/>
         <source>Filtering actions by name</source>
-        <translation>Filtrando ações pelo nome</translation>
+        <translation>Filtrar ações pelo nome</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.ui" line="220"/>
@@ -6996,17 +6996,17 @@ Ponto: (%8,%9)</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.cpp" line="185"/>
         <source>Can&apos;t read provided file - please check that it is exists and it is allowed to read from it.</source>
-        <translation>Não é possível ler o arquivo fornecido - verifique por favor se ele existe e é permitido ler a partir dele.</translation>
+        <translation>Não é possível ler o ficheiro fornecido - verifique se ele existe e se é permitido lê-lo.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.cpp" line="206"/>
         <source>Shortcuts mappings were saved successfully.</source>
-        <translation>Os mapeamentos de atalhos foram salvos com sucesso.</translation>
+        <translation>Os mapeamentos de atalhos foram guardados com sucesso.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.cpp" line="210"/>
         <source>Can&apos;t write to provided file - please check that it is allowed to write to it.</source>
-        <translation>Não é possível escrever para o arquivo fornecido - por favor verifique se ele está autorizado a escrever para ele.</translation>
+        <translation>Não é possível escrever no ficheiro fornecido - verifique se é permitido escrever nele.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.cpp" line="189"/>
@@ -7015,7 +7015,7 @@ Ponto: (%8,%9)</translation>
  Provided file does exists, however it does not contain LibreCAD shortcuts mapping.</source>
         <translation>Os mapeamentos de atalhos não foram importados.
 
-O arquivo fornecido existe, mas não contém mapeamentos de atalhos do LibreCAD.</translation>
+O ficheiro fornecido existe, mas não contém mapeamentos de atalhos do LibreCAD.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.cpp" line="195"/>
@@ -7024,7 +7024,7 @@ O arquivo fornecido existe, mas não contém mapeamentos de atalhos do LibreCAD.
 XML parsing error occurred during file processing.</source>
         <translation>Os mapeamentos de atalhos não foram importados. 
 
-Ocorreu um erro ao analisar o XML durante o processamento do arquivo.</translation>
+Ocorreu um erro ao analisar o XML durante o processamento do ficheiro.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.cpp" line="214"/>
@@ -7053,7 +7053,7 @@ Ocorreu um erro durante a geração do XML.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.cpp" line="352"/>
         <source>Resolve conflicts before saving.</source>
-        <translation>Resolver conflitos antes de salvar.</translation>
+        <translation>Resolver conflitos antes de guardar.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.cpp" line="356"/>
@@ -7349,7 +7349,7 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_single_options_widget.ui" line="80"/>
         <source>Center entities vertically</source>
-        <translation type="unfinished">Centralizar as entidades verticalmente</translation>
+        <translation type="unfinished">Centrar as entidades verticalmente</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_single_options_widget.ui" line="100"/>
@@ -7374,7 +7374,7 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_single_options_widget.ui" line="157"/>
         <source>Defines the way of selected entities alignment.</source>
-        <translation type="unfinished">Define a forma de alinhamento das entidades seleccionadas.</translation>
+        <translation type="unfinished">Define a forma de alinhamento das entidades selecionadas.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_single_options_widget.ui" line="161"/>
@@ -7404,7 +7404,7 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_single_options_widget.ui" line="240"/>
         <source>Center entities horizontally</source>
-        <translation type="unfinished">Centralizar as entidades horizontalmente</translation>
+        <translation type="unfinished">Centrar as entidades horizontalmente</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_single_options_widget.ui" line="260"/>
@@ -7432,7 +7432,7 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/components/status_bar/lc_anglesbasiswidget.ui" line="96"/>
         <source>Zero base angle relative to the current user coordinate system. 0.0 is 3pm.</source>
-        <translation>Ângulo de base zero em relação ao sistema de coordenadas do usuário atual. 0,0 é às 15h.</translation>
+        <translation>Ângulo de base zero em relação ao sistema de coordenadas do utilizador atual. 0,0 é às 15h.</translation>
     </message>
     <message>
         <location filename="../src/ui/components/status_bar/lc_anglesbasiswidget.ui" line="105"/>
@@ -7442,12 +7442,12 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/components/status_bar/lc_anglesbasiswidget.cpp" line="76"/>
         <source>Positive angles direction is counterclockwise.</source>
-        <translation>A direcção dos ângulos positivos é no sentido anti-horário.</translation>
+        <translation>A direção dos ângulos positivos é no sentido anti-horário.</translation>
     </message>
     <message>
         <location filename="../src/ui/components/status_bar/lc_anglesbasiswidget.cpp" line="80"/>
         <source>Positive angles direction is clockwise.</source>
-        <translation>A direcção dos ângulos positivos é no sentido horário.</translation>
+        <translation>A direção dos ângulos positivos é no sentido horário.</translation>
     </message>
 </context>
 <context>
@@ -7481,7 +7481,7 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/main/support/lc_appwindowdialogsinvoker.cpp" line="137"/>
         <source>Closing Drawing</source>
-        <translation>Fechando Desenho</translation>
+        <translation>A fechar o desenho</translation>
     </message>
     <message>
         <location filename="../src/ui/main/support/lc_appwindowdialogsinvoker.cpp" line="143"/>
@@ -7885,7 +7885,7 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_tangential_options_widget.ui" line="87"/>
         <source>If selected, tangental arc with specified radius will be created</source>
-        <translation type="unfinished">Se seleccionado, será criado um arco tangental com o raio indicado</translation>
+        <translation type="unfinished">Se selecionado, será criado um arco tangente com o raio indicado</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_tangential_options_widget.ui" line="90"/>
@@ -7968,7 +7968,7 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_widget.ui" line="95"/>
         <source>Length of bevel in X direction.</source>
-        <translation type="unfinished">Comprimento do bisel na direcção X.</translation>
+        <translation type="unfinished">Comprimento do bisel na direção X.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_widget.ui" line="102"/>
@@ -7983,7 +7983,7 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_widget.ui" line="126"/>
         <source>Length of bevel in Y direction. </source>
-        <translation type="unfinished">Comprimento do bisel na direcção Y.</translation>
+        <translation type="unfinished">Comprimento do bisel na direção Y. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_widget.ui" line="133"/>
@@ -8006,7 +8006,7 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/action_options/insert/lc_block_insert_options_filler.cpp" line="36"/>
         <source>Scale Factor</source>
-        <translation type="unfinished">Factor de Escala</translation>
+        <translation type="unfinished">Fator de Escala</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/insert/lc_block_insert_options_filler.cpp" line="36"/>
@@ -8079,7 +8079,7 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/action_options/insert/lc_block_insert_options_widget.ui" line="131"/>
         <source>Scale Factor</source>
-        <translation type="unfinished">Factor de Escala</translation>
+        <translation type="unfinished">Fator de Escala</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/insert/lc_block_insert_options_widget.ui" line="157"/>
@@ -8142,7 +8142,7 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/action_options/insert/lc_block_library_insert_options_filler.cpp" line="37"/>
         <source>Scale Factor</source>
-        <translation type="unfinished">Factor de Escala</translation>
+        <translation type="unfinished">Fator de Escala</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/insert/lc_block_library_insert_options_filler.cpp" line="37"/>
@@ -8165,7 +8165,7 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/action_options/insert/lc_block_library_insert_options_widget.ui" line="75"/>
         <source>Scale Factor</source>
-        <translation type="unfinished">Factor de Escala</translation>
+        <translation type="unfinished">Fator de Escala</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/insert/lc_block_library_insert_options_widget.ui" line="88"/>
@@ -8226,7 +8226,7 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_break_divide_options_widget.ui" line="55"/>
         <source>If checked, selected segment will be removed. Otherwise, selected segment will survive and remaining segments will be removed. </source>
-        <translation type="unfinished">Se seleccionado, o segmento seleccionado será removido. Caso contrário, o segmento selecionado sobreviverá e os restantes segmentos serão removidos.</translation>
+        <translation type="unfinished">Se selecionado, o segmento selecionado será removido. Caso contrário, o segmento selecionado será mantido e os restantes segmentos serão removidos. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_break_divide_options_widget.ui" line="58"/>
@@ -8416,7 +8416,7 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="32"/>
         <source>If checked, original arc will be removed</source>
-        <translation type="unfinished">Se seleccionado, o arco original será removido</translation>
+        <translation type="unfinished">Se selecionado, o arco original será removido</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="39"/>
@@ -8432,7 +8432,7 @@ Tem a certeza que vai descartar as alterações?</translation>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="46"/>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="62"/>
         <source>Active</source>
-        <translation type="unfinished">Activo</translation>
+        <translation type="unfinished">Ativo</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="47"/>
@@ -8497,7 +8497,7 @@ Tem a certeza que vai descartar as alterações?</translation>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="66"/>
         <source>Active</source>
         <comment>layer</comment>
-        <translation type="unfinished">Activo</translation>
+        <translation type="unfinished">Ativo</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="71"/>
@@ -8514,7 +8514,7 @@ Tem a certeza que vai descartar as alterações?</translation>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="106"/>
         <source>Active</source>
         <comment>pen</comment>
-        <translation type="unfinished">Activo</translation>
+        <translation type="unfinished">Ativo</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="111"/>
@@ -8536,7 +8536,7 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="131"/>
         <source>If checked, original arc will be removed</source>
-        <translation type="unfinished">Se seleccionado, o arco original será removido</translation>
+        <translation type="unfinished">Se selecionado, o arco original será removido</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="134"/>
@@ -8718,7 +8718,7 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_device/lc_deviceoptions.ui" line="26"/>
         <source>Selection of pointing device</source>
-        <translation>Selecção do dispositivo de apontar</translation>
+        <translation>Seleção do dispositivo de apontar</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_device/lc_deviceoptions.ui" line="56"/>
@@ -8826,7 +8826,7 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/lib/engine/document/dimstyles/lc_dimarrowregistry.cpp" line="219"/>
         <source>Architecture Tick</source>
-        <translation>Arquitectura Tick</translation>
+        <translation>Marca arquitetónica</translation>
     </message>
 </context>
 <context>
@@ -8859,7 +8859,7 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/lc_dimstyleitem.cpp" line="111"/>
         <source>Leader and Tolerance</source>
-        <translation>Linha de chamada e tolerância</translation>
+        <translation>Linha de indicação e tolerância</translation>
     </message>
 </context>
 <context>
@@ -9104,7 +9104,7 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="88"/>
         <source>Linewidth:</source>
-        <translation>Largura de linha:</translation>
+        <translation>Espessura de linha:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="137"/>
@@ -9219,7 +9219,7 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="345"/>
         <source>Enables fixed length extension lines. (DIMFXLON system variable)</source>
-        <translation>Activa linhas de extensão de comprimento fixas. (variável do sistema DIMFXLON)</translation>
+        <translation>Ativa linhas de extensão de comprimento fixas. (variável do sistema DIMFXLON)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="348"/>
@@ -9229,7 +9229,7 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="269"/>
         <source>Suppresses the display of first extension line (DIMSE1 system variable).</source>
-        <translation>Suprime a exibição da linha de primeira extensão (variável do sistema DIMSE1).</translation>
+        <translation>Suprime a apresentação da primeira linha de extensão (variável do sistema DIMSE1).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="272"/>
@@ -9239,7 +9239,7 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="321"/>
         <source>Suppresses the display of second extension line (DIMSE2 system variable).</source>
-        <translation>Suprime a exibição da segunda linha de extensão (variável do sistema DIMSE2).</translation>
+        <translation>Suprime a apresentação da segunda linha de extensão (variável do sistema DIMSE2).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="324"/>
@@ -9270,7 +9270,7 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="449"/>
         <source>Jog height factor:</source>
-        <translation>Factor de altura da dobra:</translation>
+        <translation>Fator de altura da dobra:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="463"/>
@@ -9305,17 +9305,17 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="539"/>
         <source>Sets the arrowhead for the leader line. (DIMLDRBLK system variable)</source>
-        <translation>Define a ponta da seta para a linha de chamada. (variável do sistema DIMLDRBLK)</translation>
+        <translation>Define a ponta de seta da linha de indicação. (variável do sistema DIMLDRBLK)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="511"/>
         <source>Leader:</source>
-        <translation>Linha de chamada:</translation>
+        <translation>Linha de indicação:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="518"/>
         <source>Sets the arrowhead for the first dimension line. When you change the first arrowhead type, the second arrowhead automatically changes to match it. (DIMBLK1 system variable)</source>
-        <translation>Define a ponta da seta para a primeira linha de cota. Quando você muda o tipo da primeira seta, a segunda seta muda automaticamente para combiná-la. (variável do sistema DIMBLK1)</translation>
+        <translation>Define a ponta de seta da primeira linha de cota. Ao alterar o tipo da primeira ponta de seta, a segunda muda automaticamente para corresponder. (variável do sistema DIMBLK1)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="588"/>
@@ -9365,7 +9365,7 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="630"/>
         <source>Suppresses the display of arc length symbols. (DIMARCSYM system variable)</source>
-        <translation>Suprime a exibição de símbolos de comprimento de arco. (variável do sistema DIMARCSYM)</translation>
+        <translation>Suprime a apresentação dos símbolos de comprimento de arco. (variável do sistema DIMARCSYM)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="633"/>
@@ -9432,7 +9432,7 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="706"/>
         <source>Displays and sets the size of the center mark or centerline. (DIMCEN system variable)</source>
-        <translation>Exibe e define o tamanho da marca central ou linha central. (variável do sistema DIMCEN)</translation>
+        <translation>Mostra e define o tamanho da marca de centro ou da linha de centro. (variável do sistema DIMCEN)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="746"/>
@@ -9488,7 +9488,7 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="829"/>
         <source>Sets the height of the current dimension text style. (DIMTXT system variable)</source>
-        <translation>Define a altura do estilo de texto de cota actual. (variável do sistema DIMTXT)</translation>
+        <translation>Define a altura do estilo de texto de cota atual. (variável do sistema DIMTXT)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="842"/>
@@ -9718,7 +9718,7 @@ Tem a certeza que vai descartar as alterações?</translation>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1127"/>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1137"/>
         <source>Sets a scale for all dimension style settings that specify size, distance, or spacing, including text and arrowhead sizes. This scale does not change dimension measurement values. (DIMSCALE system variable)</source>
-        <translation>Define uma escala para todas as configurações de estilo de cota que especificam tamanho, distância ou espaçamento, incluindo tamanhos de texto e setas. Esta escala não altera os valores de medição da cota. (variável do sistema DIMSCALE)</translation>
+        <translation>Define uma escala para todas as definições de estilo de cota que especificam tamanho, distância ou espaçamento, incluindo tamanhos de texto e setas. Esta escala não altera os valores de medição da cota. (variável do sistema DIMSCALE)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1130"/>
@@ -9748,27 +9748,27 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1185"/>
         <source>If selected, dimension lines are not moved when text is moved. If text is moved away from the dimension line, a leader line is created connecting the text to the dimension line. The leader line is omitted when text is too close to the dimension line. (DIMTMOVE system variable)</source>
-        <translation>Se seleccionado, as linhas de cota não são movidas quando o texto é movido. Se o texto é afastado da linha de cota, uma linha de chamada é criada ligando o texto à linha de cota. A linha de chamada é omitida quando o texto está muito perto da linha de cota. (variável do sistema DIMTMOVE)</translation>
+        <translation>Se selecionado, as linhas de cota não são movidas quando o texto é movido. Se o texto for afastado da linha de cota, é criada uma linha de indicação que liga o texto à linha de cota. A linha de indicação é omitida quando o texto está demasiado perto da linha de cota. (variável do sistema DIMTMOVE)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1188"/>
         <source>Over dimension line, with leader</source>
-        <translation>Sobre a linha de cota, com linha de chamada</translation>
+        <translation>Sobre a linha de cota, com linha de indicação</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1195"/>
         <source>When text is not in the default position, place it:</source>
-        <translation>Quando o texto não estiver na posição padrão, coloque-o:</translation>
+        <translation>Quando o texto não estiver na posição predefinida, coloque-o:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1202"/>
         <source>If selected, dimension lines are not moved when text is moved. Text that is moved away from the dimension line is not connected to the dimension line with a leader. (DIMTMOVE system variable)</source>
-        <translation>Se seleccionado, as linhas de cota não são movidas quando o texto é movido. O texto que é afastado da linha de cota não é ligado à linha de cota com uma linha de chamada. (variável do sistema DIMTMOVE)</translation>
+        <translation>Se selecionado, as linhas de cota não são movidas quando o texto é movido. O texto que é afastado da linha de cota não é ligado à linha de cota com uma linha de indicação. (variável do sistema DIMTMOVE)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1205"/>
         <source>Over dimension line, without leader</source>
-        <translation>Sobre a linha de cota, sem linha de chamada</translation>
+        <translation>Sobre a linha de cota, sem linha de indicação</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1234"/>
@@ -9788,7 +9788,7 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1253"/>
         <source>Suppress arrows if they don&apos;t fit inside extension lines</source>
-        <translation>Suprimir as setas se elas não se encaixam dentro das linhas de extensão</translation>
+        <translation>Suprimir as setas se não couberem entre as linhas de extensão</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1260"/>
@@ -9833,7 +9833,7 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1303"/>
         <source>Always fit text between ext lines</source>
-        <translation>Sempre caber texto entre linhas ext</translation>
+        <translation>Colocar sempre o texto entre as linhas de extensão</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1327"/>
@@ -9927,7 +9927,7 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1450"/>
         <source>Sets a scale factor for linear dimension measurements. It is recommended that you do not change this value from the default value of 1.00. (DIMLFAC system variable)</source>
-        <translation>Define um fator de escala para medições de cota linear. Recomenda-se que você não altere este valor do valor padrão de 1.00. (variável do sistema DIMLFAC)</translation>
+        <translation>Define um fator de escala para as medições das cotas lineares. Recomenda-se não alterar este valor em relação ao valor predefinido de 1.00. (variável do sistema DIMLFAC)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1460"/>
@@ -9957,7 +9957,7 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1500"/>
         <source>Includes a suffix that you specify in the dimension text. (DIMPOST system variable)</source>
-        <translation>Inclui um sufixo que você especifica no texto da cota. (variável do sistema DIMPOST)</translation>
+        <translation>Inclui um sufixo especificado no texto da cota. (variável do sistema DIMPOST)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1507"/>
@@ -9998,12 +9998,12 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1561"/>
         <source>Includes a prefix that you specify in the dimension text. (DIMPOST system variable)</source>
-        <translation>Inclui um prefixo que você especifica no texto da cota. (variável do sistema DIMPOST)</translation>
+        <translation>Inclui um prefixo especificado no texto da cota. (variável do sistema DIMPOST)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1575"/>
         <source>Sets the format for fractions. (DIMFRAC system variable)</source>
-        <translation>Define o formato das fracções. (variável do sistema DIMFRAC)</translation>
+        <translation>Define o formato das frações. (variável do sistema DIMFRAC)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1584"/>
@@ -10025,7 +10025,7 @@ Tem a certeza que vai descartar as alterações?</translation>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1610"/>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1868"/>
         <source>Sub-units factor:</source>
-        <translation>Factor de subunidades:</translation>
+        <translation>Fator de subunidades:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1617"/>
@@ -10077,7 +10077,7 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1680"/>
         <source>Includes a suffix to the dimension value sub unit. You can enter text or use control codes to display special symbols.</source>
-        <translation>Inclui um sufixo para a subunidade de valor de cota. Você pode inserir texto ou usar códigos de controle para exibir símbolos especiais.</translation>
+        <translation>Inclui um sufixo na subunidade do valor da cota. Pode introduzir texto ou usar códigos de controlo para mostrar símbolos especiais.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1707"/>
@@ -10102,7 +10102,7 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1762"/>
         <source>Specifies the multiplier used as the conversion factor between primary and alternate units.For example, to convert inches to millimeters, enter 25.4. The value has no effect on angular dimensions, and it is not applied to the rounding value or the plus or minus tolerance values. (DIMALTF system variable)</source>
-        <translation>Especifica o multiplicador utilizado como fator de conversão entre unidades primárias e alternativas. Por exemplo, para converter polegadas em milímetros, digite 25.4. O valor não tem efeito sobre as cotas angulares, e não é aplicado ao valor de arredondamento ou aos valores de tolerância mais ou menos. (variável do sistema DIMALTF)</translation>
+        <translation>Especifica o multiplicador utilizado como fator de conversão entre unidades primárias e alternativas. Por exemplo, para converter polegadas em milímetros, introduza 25.4. O valor não tem efeito sobre as cotas angulares, e não é aplicado ao valor de arredondamento ou aos valores de tolerância mais ou menos. (variável do sistema DIMALTF)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1772"/>
@@ -10112,7 +10112,7 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1779"/>
         <source>Sets rounding rules for alternate units for all dimension types except Angular. If you enter a value of 0.25, all alternate measurements are rounded to the nearest 0.25 unit. If you enter a value of 1.0, all dimension measurements are rounded to the nearest integer. The number of digits displayed after the decimal point depends on the Precision setting. (DIMALTRND system variable)</source>
-        <translation>Define regras de arredondamento para unidades alternativas para todos os tipos de cota, exceto Angular. Se introduzir um valor de 0,25, todas as medições alternativas são arredondadas para a unidade mais próxima de 0,25. Se você inserir um valor de 1.0, todas as medidas de cota são arredondadas para o inteiro mais próximo. O número de dígitos exibidos após o ponto decimal depende da configuração Precisão. (variável do sistema DIMALTRND)</translation>
+        <translation>Define regras de arredondamento das unidades alternativas para todos os tipos de cota, exceto a angular. Se introduzir o valor 0,25, todas as medições alternativas são arredondadas aos 0,25 mais próximos. Se introduzir o valor 1.0, todas as medições das cotas são arredondadas ao inteiro mais próximo. O número de algarismos mostrados após a vírgula decimal depende da definição Precisão. (variável do sistema DIMALTRND)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1789"/>
@@ -10147,7 +10147,7 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1831"/>
         <source>Includes a prefix in the alternate dimension text. You can enter text or use control codes to display special symbols. For example, entering the control code %%c displays the diameter symbol. (DIMAPOST system variable)</source>
-        <translation>Inclui um prefixo no texto de cota alternativa. Você pode inserir texto ou usar códigos de controle para exibir símbolos especiais. Por exemplo, inserir o código de controle %%c exibe o símbolo de diâmetro. (variável do sistema DIMAPOST)</translation>
+        <translation>Inclui um prefixo no texto da cota alternativa. Pode introduzir texto ou usar códigos de controlo para mostrar símbolos especiais. Por exemplo, introduzir o código de controlo %%c mostra o símbolo de diâmetro. (variável do sistema DIMAPOST)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1845"/>
@@ -10182,7 +10182,7 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1958"/>
         <source>Includes a suffix in the alternate dimension text. You can enter text or use control codes to display special symbols. For example, entering the text cm results in dimension text similar to that shown in the illustration. When you enter a suffix, it overrides any default suffixes. (DIMAPOST system variable)</source>
-        <translation>Inclui um sufixo no texto de cota alternativa. Você pode inserir texto ou usar códigos de controle para exibir símbolos especiais. Por exemplo, inserir o texto cm resulta em um texto de cota semelhante ao mostrado na ilustração. Quando você digita um sufixo, ele substitui qualquer sufixo padrão. (variável do sistema DIMAPOST)</translation>
+        <translation>Inclui um sufixo no texto da cota alternativa. Pode introduzir texto ou usar códigos de controlo para mostrar símbolos especiais. Por exemplo, introduzir o texto cm produz um texto de cota semelhante ao mostrado na ilustração. Um sufixo introduzido substitui quaisquer sufixos predefinidos. (variável do sistema DIMAPOST)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1982"/>
@@ -10277,7 +10277,7 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2141"/>
         <source>Sets the maximum or upper tolerance value. When you select Symmetrical in Method, this value is used for the tolerance. (DIMTP system variable)</source>
-        <translation>Define o valor máximo ou superior de tolerância. Quando você seleciona Symmetrical in Method, este valor é usado para a tolerância. (variável do sistema DIMTP)</translation>
+        <translation>Define o valor máximo ou superior da tolerância. Quando seleciona Simétrica em Método, este valor é usado para a tolerância. (variável do sistema DIMTP)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2151"/>
@@ -10364,7 +10364,7 @@ Tem a certeza que vai descartar as alterações?</translation>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.cpp" line="1139"/>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.cpp" line="1140"/>
         <source>User Block...</source>
-        <translation>Bloco do Usuário...</translation>
+        <translation>Bloco do Utilizador...</translation>
     </message>
 </context>
 <context>
@@ -10407,7 +10407,7 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="274"/>
         <source>Select dimension style</source>
-        <translation>Seleccionar o estilo de cota</translation>
+        <translation>Selecionar o estilo de cota</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="301"/>
@@ -10432,7 +10432,7 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="360"/>
         <source>Set style as active one. Active style is applied to newly created dimensions.</source>
-        <translation>Definir o estilo como activo. O estilo ativo é aplicado às cotas criadas recentemente.</translation>
+        <translation>Definir o estilo como ativo. O estilo ativo é aplicado às cotas criadas recentemente.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="374"/>
@@ -10459,7 +10459,7 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="425"/>
         <source>Active:</source>
-        <translation>Activo:</translation>
+        <translation>Ativo:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="432"/>
@@ -10642,7 +10642,7 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="594"/>
         <source>&amp;View Style</source>
-        <translation>Estilo &amp; Ver</translation>
+        <translation>Estilo de &amp;vista</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="597"/>
@@ -10652,12 +10652,12 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="598"/>
         <source>&amp;Save As Style</source>
-        <translation>&amp;Salvar Como Estilo</translation>
+        <translation>&amp;Guardar como estilo</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="599"/>
         <source>&amp;Remove Override</source>
-        <translation>&amp; Remover a Substituição</translation>
+        <translation>&amp;Remover a substituição</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="603"/>
@@ -10668,7 +10668,7 @@ Tem a certeza que vai descartar as alterações?</translation>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="604"/>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="611"/>
         <source>&amp;Import Styles</source>
-        <translation>Estilos de &amp; Importação</translation>
+        <translation>&amp;Importar estilos</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="664"/>
@@ -10761,7 +10761,7 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="229"/>
         <source>Spline Points Properties</source>
-        <translation>Propriedades do Spline Points</translation>
+        <translation>Propriedades da spline por pontos</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="235"/>
@@ -10786,7 +10786,7 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="259"/>
         <source>Hatch Properties</source>
-        <translation>Propriedades do hachureado</translation>
+        <translation>Propriedades da trama</translation>
     </message>
 </context>
 <context>
@@ -10799,7 +10799,7 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_dlgiconssetup.ui" line="20"/>
         <source>Disabled Icon</source>
-        <translation>Ícone Desactivado</translation>
+        <translation>Ícone Desativado</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_dlgiconssetup.ui" line="26"/>
@@ -10890,7 +10890,7 @@ Tem a certeza que vai descartar as alterações?</translation>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_dlgiconssetup.ui" line="1038"/>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_dlgiconssetup.ui" line="1147"/>
         <source>Accent color for specfic icon state</source>
-        <translation>Cor do sotaque para o estado específico do ícone</translation>
+        <translation>Cor de destaque para o estado específico do ícone</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_dlgiconssetup.ui" line="135"/>
@@ -10920,7 +10920,7 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_dlgiconssetup.ui" line="315"/>
         <source>Default Accent color for all states</source>
-        <translation>Cor predefinida do sotaque para todos os estados</translation>
+        <translation>Cor de destaque predefinida para todos os estados</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_dlgiconssetup.ui" line="333"/>
@@ -10930,27 +10930,27 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_dlgiconssetup.ui" line="360"/>
         <source>Default Main color all states</source>
-        <translation>Cor principal padrão todos os estados</translation>
+        <translation>Cor principal predefinida para todos os estados</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_dlgiconssetup.ui" line="398"/>
         <source>Default Background color for all states</source>
-        <translation>Cor de fundo padrão para todos os estados</translation>
+        <translation>Cor de fundo predefinida para todos os estados</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_dlgiconssetup.ui" line="419"/>
         <source>Active Icon</source>
-        <translation>Ícone Activo</translation>
+        <translation>Ícone Ativo</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_dlgiconssetup.ui" line="688"/>
         <source>Selected Icon</source>
-        <translation>Ícone Seleccionado</translation>
+        <translation>Ícone Selecionado</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_dlgiconssetup.ui" line="970"/>
         <source>Main Color    |  Accent Color   |  Back Color</source>
-        <translation>Cor principal Cor do acento</translation>
+        <translation>Cor principal    |  Cor de destaque   |  Cor de fundo</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_dlgiconssetup.ui" line="977"/>
@@ -11018,12 +11018,12 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.ui" line="176"/>
         <source>Defines the context for menu and whether click on specific entity will trigger menu invocation. </source>
-        <translation>Define o contexto para o menu e se clicar em uma entidade específica irá ativar a invocação do menu.</translation>
+        <translation>Define o contexto do menu e se um clique numa entidade específica invoca o menu. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.ui" line="186"/>
         <source>Defines type of mouse click for invocation</source>
-        <translation>Define o tipo de clique do mouse para invocação</translation>
+        <translation>Define o tipo de clique do rato para invocação</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.ui" line="189"/>
@@ -11043,7 +11043,7 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.ui" line="130"/>
         <source>Specify pressed key modifier(s)</source>
-        <translation>Especificar modificadores de teclas pressionados</translation>
+        <translation>Especificar modificadores de teclas premidos</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.ui" line="133"/>
@@ -11073,7 +11073,7 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.ui" line="79"/>
         <source>Mouse Button</source>
-        <translation>Botão do mouse</translation>
+        <translation>Botão do rato</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.ui" line="85"/>
@@ -11143,7 +11143,7 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="113"/>
         <source>Polyline</source>
-        <translation>Polilina</translation>
+        <translation>Polilinha</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="114"/>
@@ -11178,7 +11178,7 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="120"/>
         <source>Hatch</source>
-        <translation>Hatch</translation>
+        <translation>Trama</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="121"/>
@@ -11218,7 +11218,7 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="128"/>
         <source>Leader</source>
-        <translation>Linha de chamada</translation>
+        <translation>Linha de indicação</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="231"/>
@@ -11233,7 +11233,7 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="237"/>
         <source>NOTE: Menu assignment will be ignored. It is reserved for &apos;Pan&apos;.</source>
-        <translation>NOTA: A atribuição do menu será ignorada. Está reservada para &apos;Pan&apos;.</translation>
+        <translation>NOTA: a atribuição do menu será ignorada. Está reservada para &apos;Deslocar a vista&apos;.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="242"/>
@@ -11243,7 +11243,7 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="243"/>
         <source>NOTE: This combination is reserved for default context menu and may prevent invocation of it!</source>
-        <translation>NOTA: Esta combinação está reservada para o menu de contexto padrão e pode impedir a sua invocação!</translation>
+        <translation>NOTA: esta combinação está reservada para o menu de contexto predefinido e pode impedir a sua invocação!</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="248"/>
@@ -11263,7 +11263,7 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="260"/>
         <source>Note: make sure that selected button is supported by your mouse device.</source>
-        <translation>Nota: certifique-se de que o botão selecionado é suportado pelo dispositivo do mouse.</translation>
+        <translation>Nota: certifique-se de que o botão selecionado é suportado pelo dispositivo do rato.</translation>
     </message>
 </context>
 <context>
@@ -11271,7 +11271,7 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="14"/>
         <source>Named Views Settings</source>
-        <translation>Configuração das Visões com Nome</translation>
+        <translation>Definições das vistas com nome</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="20"/>
@@ -11281,12 +11281,12 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="26"/>
         <source>If selected, confirmation dialog will be shown on removal of the view. Otherwise, view will be removed silently.</source>
-        <translation>Se estiver selecionado, será exibida uma caixa de diálogo de confirmação ao remover a vista. Caso contrário, a vista será removida silenciosamente.</translation>
+        <translation>Se estiver selecionado, será mostrada uma caixa de diálogo de confirmação ao remover a vista. Caso contrário, a vista será removida silenciosamente.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="39"/>
         <source>Silently update existing view with same name by created one</source>
-        <translation>Atualizar silenciosamente a visão existente com o mesmo nome por uma criada</translation>
+        <translation>Atualizar silenciosamente a vista existente com o mesmo nome pela que foi criada</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="49"/>
@@ -11311,22 +11311,22 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="88"/>
         <source>Grid Type icon column</source>
-        <translation>Coluna do ícone do tipo grade</translation>
+        <translation>Coluna do ícone do tipo grelha</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="58"/>
         <source>Type icon column</source>
-        <translation>Digite a coluna de ícones</translation>
+        <translation>Coluna do ícone do tipo</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="75"/>
         <source>If checked, the column with details of view&apos;s coordinate system will be shown.</source>
-        <translation>Se marcado, a coluna com detalhes do sistema de coordenadas da vista será exibida.</translation>
+        <translation>Se marcado, a coluna com detalhes do sistema de coordenadas da vista será mostrada.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="85"/>
         <source>If checked, type of grid for saved view will be shown.</source>
-        <translation>Se estiver selecionado, o tipo de grelha para a vista guardada será exibido.</translation>
+        <translation>Se estiver selecionado, o tipo de grelha para a vista guardada será mostrado.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="55"/>
@@ -11346,17 +11346,17 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="115"/>
         <source>If checked, the column with icon for type of coordinate system for the view will be shown.</source>
-        <translation>Se seleccionado, será mostrada a coluna com o ícone do tipo de sistema de coordenadas para a visualização.</translation>
+        <translation>Se selecionado, será mostrada a coluna com o ícone do tipo de sistema de coordenadas da vista.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="118"/>
         <source>UCS Type icon column</source>
-        <translation>UCS Digite a coluna de ícones</translation>
+        <translation>Coluna do ícone do tipo de UCS</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="65"/>
         <source>If checked, the column with view details will be shown in the table.</source>
-        <translation>Se seleccionado, a coluna com os detalhes da vista será mostrada na tabela.</translation>
+        <translation>Se selecionado, a coluna com os detalhes da vista será mostrada na tabela.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="141"/>
@@ -11391,27 +11391,27 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="168"/>
         <source>Update View</source>
-        <translation>Atualizar visão</translation>
+        <translation>Atualizar vista</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="173"/>
         <source>Restore View</source>
-        <translation>Restaurar visão</translation>
+        <translation>Restaurar vista</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="194"/>
         <source>If enabled, click on the view table item will restore view. Otherwise, view should be restored explicitly.</source>
-        <translation>Se estiver activo, clique no item da tabela de visualização irá restaurar a visualização. Caso contrário, a visão deve ser restaurada explicitamente.</translation>
+        <translation>Se estiver ativo, clicar no item da tabela de vistas restaura a vista. Caso contrário, a vista tem de ser restaurada explicitamente.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="95"/>
         <source>If show, tooltip with additional information about view will be shown for table item.</source>
-        <translation>Se mostrar, a dica com informações adicionais sobre a visualização será mostrada para o item da tabela.</translation>
+        <translation>Se ativo, será mostrada no item da tabela uma descrição com informações adicionais sobre a vista.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="36"/>
         <source>If checked and during creation the view with entered name already exists, it will be updated by new position. Otherwise, unique name of new view will be required.</source>
-        <translation>Se a opção estiver assinalada e durante a criação já existir a vista com o nome indicado, será actualizada pela nova posição. Caso contrário, será necessário o nome único da nova vista.</translation>
+        <translation>Se a opção estiver assinalada e durante a criação já existir a vista com o nome indicado, será atualizada pela nova posição. Caso contrário, será necessário o nome único da nova vista.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="29"/>
@@ -11495,7 +11495,7 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="64"/>
         <source>Leader And Tolerances</source>
-        <translation>Linha de chamada e tolerâncias</translation>
+        <translation>Linha de indicação e tolerâncias</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="95"/>
@@ -11576,7 +11576,7 @@ Tem a certeza que vai descartar as alterações?</translation>
         <location filename="../src/ui/dialogs/main/lc_dlgnewversionavailable.ui" line="86"/>
         <location filename="../src/ui/dialogs/main/lc_dlgnewversionavailable.ui" line="262"/>
         <source>Check if you prefer not to be notified about this update on subsequent version checks</source>
-        <translation>Verifique se você prefere não ser notificado sobre esta atualização em verificações de versão subsequentes</translation>
+        <translation>Assinale se preferir não ser notificado sobre esta atualização nas verificações de versão seguintes</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgnewversionavailable.ui" line="89"/>
@@ -11592,17 +11592,17 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgnewversionavailable.ui" line="105"/>
         <source>There is no newer version, you are using the latest one.</source>
-        <translation>Não há versão mais recente, você está usando a mais recente.</translation>
+        <translation>Não há nenhuma versão mais recente; está a utilizar a mais recente.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgnewversionavailable.ui" line="115"/>
         <source>However, if you&apos;d like to check the most recent and fresh features included into pre-release builds, disable &quot;Ignore pre-release updates&quot; checkbox below.</source>
-        <translation>No entanto, se você quiser verificar os recursos mais recentes e recentes incluídos em builds pré-lançamento, desativa a caixa de seleção &quot;Ignore atualizações pré-lançamento&quot; abaixo.</translation>
+        <translation>No entanto, se quiser experimentar as funcionalidades mais recentes incluídas nas versões de pré-lançamento, desative a caixa de verificação &quot;Ignorar as atualizações de pré-lançamento&quot; abaixo.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgnewversionavailable.ui" line="141"/>
         <source>Updates Check Settings</source>
-        <translation>Atualizações Verificar Configurações</translation>
+        <translation>Definições da verificação de atualizações</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgnewversionavailable.ui" line="147"/>
@@ -11612,7 +11612,7 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgnewversionavailable.ui" line="153"/>
         <source>Ignore pre-release updates</source>
-        <translation>Ignorar as actualizações de pré- lançamento</translation>
+        <translation>Ignorar as atualizações de pré-lançamento</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgnewversionavailable.ui" line="160"/>
@@ -11706,7 +11706,7 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_new_widget.cpp" line="70"/>
         <source>Name is not unique. Please enter unique name.</source>
-        <translation>O nome não é único. Digite o nome único.</translation>
+        <translation>O nome não é único. Introduza o nome único.</translation>
     </message>
 </context>
 <context>
@@ -11834,7 +11834,7 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="138"/>
         <source>Active Pen</source>
-        <translation type="unfinished">Caneta Activa</translation>
+        <translation type="unfinished">Caneta Ativa</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="145"/>
@@ -11859,7 +11859,7 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="194"/>
         <source>Font size:</source>
-        <translation type="unfinished">Tamanho da fonte:</translation>
+        <translation type="unfinished">Tamanho do tipo de letra:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="201"/>
@@ -12126,7 +12126,7 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="14"/>
         <source>Feature Control Frame</source>
-        <translation>Frame de controle de recursos</translation>
+        <translation>Quadro de tolerância</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="26"/>
@@ -12200,12 +12200,12 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="26"/>
         <source>If сhecked, the tooltip with additional information about UCS will be shown for table item.</source>
-        <translation>Se сhecked, a dica com informações adicionais sobre UCS será mostrada para item de tabela.</translation>
+        <translation>Se selecionado, será mostrada no item da tabela uma descrição com informações adicionais sobre o UCS.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="39"/>
         <source>Type icon column</source>
-        <translation>Digite a coluna de ícones</translation>
+        <translation>Coluna do ícone do tipo</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="49"/>
@@ -12215,7 +12215,7 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="59"/>
         <source>Grid Type column</source>
-        <translation>Coluna do tipo da grade</translation>
+        <translation>Coluna do tipo da grelha</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="89"/>
@@ -12225,22 +12225,22 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="29"/>
         <source>Tooltip with UCS details for table items</source>
-        <translation>Dica de ferramenta com detalhes do UCS para os itens da tabela.</translation>
+        <translation>Descrição com os detalhes do UCS para os itens da tabela</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="36"/>
         <source>If checked, the column with icon for type of UCS will be shown in the table.</source>
-        <translation>Se estiver selecionado, a coluna com o ícone do tipo de UCS será exibida na tabela.</translation>
+        <translation>Se estiver selecionado, a coluna com o ícone do tipo de UCS será mostrada na tabela.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="46"/>
         <source>If checked, column with details of UCS origin and angle will be shown in the table.</source>
-        <translation>Se estiver selecionado, a coluna com os detalhes da origem e do ângulo do UCS será exibida na tabela.</translation>
+        <translation>Se estiver selecionado, a coluna com os detalhes da origem e do ângulo do UCS será mostrada na tabela.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="56"/>
         <source>If checked, the column with type of grid for UCS will be shown.</source>
-        <translation>Se estiver selecionado, a coluna com o tipo de grelha para o UCS será exibida.</translation>
+        <translation>Se estiver selecionado, a coluna com o tipo de grelha para o UCS será mostrada.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="98"/>
@@ -12250,7 +12250,7 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="105"/>
         <source>If checked and during creation the view with entered name already exists, it will be updated by new position. Otherwise, unique name of new view will be required.</source>
-        <translation>Se a opção estiver assinalada e durante a criação já existir a vista com o nome indicado, será actualizada pela nova posição. Caso contrário, será necessário o nome único da nova vista.</translation>
+        <translation>Se a opção estiver assinalada e durante a criação já existir a vista com o nome indicado, será atualizada pela nova posição. Caso contrário, será necessário o nome único da nova vista.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="108"/>
@@ -12275,17 +12275,17 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="140"/>
         <source>Pan, UCS Origin in Center</source>
-        <translation>Pan, UCS Origem no Centro</translation>
+        <translation>Deslocar a vista, origem do UCS no centro</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="145"/>
         <source>Pan, UCS Origin in Left-Bottom</source>
-        <translation>Pan, UCS Origem em Bottom Esquerda</translation>
+        <translation>Deslocar a vista, origem do UCS no canto inferior esquerdo</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="153"/>
         <source>If enabled, click on the table item will apply coordinates system. Otherwise, coordinates system should be applied explicitly.</source>
-        <translation>Se activado, clique no item da tabela irá aplicar o sistema de coordenadas. Caso contrário, o sistema de coordenadas deve ser aplicado explicitamente.</translation>
+        <translation>Se ativado, clicar no item da tabela aplica o sistema de coordenadas. Caso contrário, o sistema de coordenadas tem de ser aplicado explicitamente.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="156"/>
@@ -12423,7 +12423,7 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucsproperties.ui" line="88"/>
         <source>Grid Type:</source>
-        <translation>Tipo de grade:</translation>
+        <translation>Tipo de grelha:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucsproperties.ui" line="141"/>
@@ -12472,7 +12472,7 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_widget_creator.ui" line="360"/>
         <source>Available Actions:</source>
-        <translation>Acções Disponíveis:</translation>
+        <translation>Ações Disponíveis:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_widget_creator.ui" line="131"/>
@@ -12487,17 +12487,17 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_widget_creator.ui" line="318"/>
         <source>Actions that are included. Use drag-n-drop to reorder, double-click for remove item from the list.</source>
-        <translation>Acções incluídas. Use o arrastar- n- drop para reordenar, clique duas vezes para remover o item da lista.</translation>
+        <translation>Ações incluídas. Utilize arrastar e largar para reordenar e faça duplo clique para remover o item da lista.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_widget_creator.ui" line="285"/>
         <source>Define a custom menu by specifing the set of included actions. Menu will be shown as a popup in the drawing area as soon as menu invocation shortcut is invoked. </source>
-        <translation>Defina um menu personalizado especificando o conjunto de ações incluídas. O menu será mostrado como um popup na área de desenho assim que o atalho de invocação do menu for invocado.</translation>
+        <translation>Defina um menu personalizado, especificando o conjunto de ações incluídas. O menu será mostrado como menu de contexto na área de desenho assim que o atalho de invocação do menu for usado. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_widget_creator.ui" line="35"/>
         <source>Save Used Actions List</source>
-        <translation>Gravar a Lista de Acções Usadas</translation>
+        <translation>Gravar a Lista de Ações Usadas</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_widget_creator.ui" line="65"/>
@@ -12522,12 +12522,12 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_widget_creator.ui" line="268"/>
         <source>Used Actions:</source>
-        <translation>Acções Usadas:</translation>
+        <translation>Ações Usadas:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_widget_creator.ui" line="103"/>
         <source>Available actions. Double click on item to add it to the list of used actions.</source>
-        <translation>Acções disponíveis. Clique duas vezes no item para adicioná- lo à lista de ações usadas.</translation>
+        <translation>Ações disponíveis. Faça duplo clique no item para o adicionar à lista de ações usadas.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_widget_creator.ui" line="192"/>
@@ -12542,7 +12542,7 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_widget_creator.ui" line="205"/>
         <source>Removes menu assignment. Menu itself is not deleted.</source>
-        <translation>Remove a atribuição do menu. O próprio menu não é excluído.</translation>
+        <translation>Remove a atribuição do menu. O próprio menu não é eliminado.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_widget_creator.ui" line="208"/>
@@ -12572,7 +12572,7 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_widget_creator.ui" line="344"/>
         <source>Add selected item to the list of used actions</source>
-        <translation>Adicionar o item seleccionado à lista de acções usadas</translation>
+        <translation>Adicionar o item selecionado à lista de ações usadas</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_widget_creator.ui" line="347"/>
@@ -12582,7 +12582,7 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_widget_creator.ui" line="425"/>
         <source>Import settings from file</source>
-        <translation type="unfinished">Importar as configurações do arquivo</translation>
+        <translation type="unfinished">Importar as definições do ficheiro</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_widget_creator.ui" line="428"/>
@@ -12622,7 +12622,7 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_widget_creator.ui" line="380"/>
         <source>Specifies docking area that is used to initial placement of created toolbar. Make sure that this area is enabled.</source>
-        <translation>Especifica a área de acoplagem que é usada para a colocação inicial da barra de ferramentas criada. Certifique-se de que esta área está habilitada.</translation>
+        <translation>Especifica a área de acoplagem que é usada para a colocação inicial da barra de ferramentas criada. Certifique-se de que esta área está ativada.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_widget_creator.ui" line="384"/>
@@ -12657,7 +12657,7 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_widget_creator.cpp" line="64"/>
         <source>Define a custom menu by specifying the set of used actions. Menu will be shown as a popup in the drawing area as soon as menu invocation shortcut is invoked. </source>
-        <translation>Defina um menu personalizado especificando o conjunto de ações usadas. O menu será mostrado como um popup na área de desenho assim que o atalho de invocação do menu for invocado.</translation>
+        <translation>Defina um menu personalizado, especificando o conjunto de ações usadas. O menu será mostrado como menu de contexto na área de desenho assim que o atalho de invocação do menu for usado. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_widget_creator.cpp" line="59"/>
@@ -12712,7 +12712,7 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_widget_creator.cpp" line="78"/>
         <source>Define a custom toolbar by specifying the set of used actions. Once created, the custom toolbar will behave exactly as built-in ones.</source>
-        <translation>Define uma barra de ferramentas personalizada especificando o conjunto de ações usadas. Uma vez criada, a barra de ferramentas personalizada se comportará exatamente como incorporada.</translation>
+        <translation>Define uma barra de ferramentas personalizada, especificando o conjunto de ações usadas. Depois de criada, a barra de ferramentas personalizada comporta-se exatamente como as incorporadas.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_widget_creator.cpp" line="87"/>
@@ -12732,7 +12732,7 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_widget_creator.cpp" line="225"/>
         <source>Are you sure you&apos;d like to unassign &quot;%1&quot; menu? Note: Just an invocation shortcut will be removed and menu will not be deleted.</source>
-        <translation>Tem a certeza de que deseja desactivar o menu &quot;%1&quot;? Nota: Apenas um atalho de invocação será removido e o menu não será excluído.</translation>
+        <translation>Tem a certeza de que pretende remover a atribuição do menu &quot;%1&quot;? Nota: só será removido o atalho de invocação; o menu não será eliminado.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_widget_creator.cpp" line="238"/>
@@ -12760,7 +12760,7 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_widget_creator.cpp" line="458"/>
         <source>Are you sure you&apos;d like to remove  %2&quot;%1&quot;?</source>
-        <translation>Você tem certeza que gostaria de remover%2&quot;%1&quot;?</translation>
+        <translation>Tem a certeza de que pretende remover  %2&quot;%1&quot;?</translation>
     </message>
 </context>
 <context>
@@ -12817,12 +12817,12 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_filler.cpp" line="42"/>
         <source>Polyline</source>
-        <translation type="unfinished">Polilina</translation>
+        <translation type="unfinished">Polilinha</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_filler.cpp" line="42"/>
         <source>If selected, bounding box is drawn as polyline</source>
-        <translation type="unfinished">Se seleccionado, a caixa delimitadora é desenhada como polilinha</translation>
+        <translation type="unfinished">Se selecionado, a caixa delimitadora é desenhada como polilinha</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_filler.cpp" line="48"/>
@@ -12865,17 +12865,17 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_widget.ui" line="63"/>
         <source>If selected, bounding box is drawn as polyline</source>
-        <translation type="unfinished">Se seleccionado, a caixa delimitadora é desenhada como polilinha</translation>
+        <translation type="unfinished">Se selecionado, a caixa delimitadora é desenhada como polilinha</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_widget.ui" line="69"/>
         <source>Polyline</source>
-        <translation type="unfinished">Polilina</translation>
+        <translation type="unfinished">Polilinha</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_widget.ui" line="76"/>
         <source>If checked, bounding box for the entire selection will be created. Otherwise, it will be created for individual entities. </source>
-        <translation type="unfinished">Se estiver assinalada, será criada a caixa delimitadora para toda a selecção. Caso contrário, será criado para entidades individuais.</translation>
+        <translation type="unfinished">Se estiver assinalada, será criada a caixa delimitadora para toda a seleção. Caso contrário, será criada para cada entidade. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_widget.ui" line="79"/>
@@ -12923,7 +12923,7 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_filler.cpp" line="59"/>
         <source>Active</source>
-        <translation type="unfinished">Activo</translation>
+        <translation type="unfinished">Ativo</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_filler.cpp" line="60"/>
@@ -12949,7 +12949,7 @@ Tem a certeza que vai descartar as alterações?</translation>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_filler.cpp" line="77"/>
         <source>Active</source>
         <comment>layer</comment>
-        <translation type="unfinished">Activo</translation>
+        <translation type="unfinished">Ativo</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_filler.cpp" line="78"/>
@@ -12984,7 +12984,7 @@ Tem a certeza que vai descartar as alterações?</translation>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="49"/>
         <source>Active</source>
         <comment>layer</comment>
-        <translation type="unfinished">Activo</translation>
+        <translation type="unfinished">Ativo</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="54"/>
@@ -13006,7 +13006,7 @@ Tem a certeza que vai descartar as alterações?</translation>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="73"/>
         <source>Active</source>
         <comment>pen</comment>
-        <translation type="unfinished">Activo</translation>
+        <translation type="unfinished">Ativo</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="78"/>
@@ -13106,7 +13106,7 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse_1_point_options_filler.cpp" line="50"/>
         <source>If checked, major radius angle is specified by mouse</source>
-        <translation type="unfinished">Se seleccionado, o ângulo de raio principal é especificado pelo rato</translation>
+        <translation type="unfinished">Se selecionado, o ângulo de raio principal é especificado pelo rato</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse_1_point_options_filler.cpp" line="55"/>
@@ -13164,7 +13164,7 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse_1point_options_widget.ui" line="107"/>
         <source>If checked, major radius angle is specified by mouse</source>
-        <translation type="unfinished">Se seleccionado, o ângulo de raio principal é especificado pelo rato</translation>
+        <translation type="unfinished">Se selecionado, o ângulo de raio principal é especificado pelo rato</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse_1point_options_widget.ui" line="110"/>
@@ -13398,7 +13398,7 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="82"/>
         <source>Polyline</source>
-        <translation type="unfinished">Polilina</translation>
+        <translation type="unfinished">Polilinha</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="83"/>
@@ -13478,12 +13478,12 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="98"/>
         <source>Hatch</source>
-        <translation type="unfinished">Hatch</translation>
+        <translation type="unfinished">Trama</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="99"/>
         <source>Leader</source>
-        <translation type="unfinished">Linha de chamada</translation>
+        <translation type="unfinished">Linha de indicação</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="100"/>
@@ -13742,7 +13742,7 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="245"/>
         <source>Line Width</source>
-        <translation type="unfinished">Largura da Linha</translation>
+        <translation type="unfinished">Espessura da linha</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="245"/>
@@ -13831,7 +13831,7 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_hatchpropertieseditingwidget.ui" line="65"/>
         <source>Hatch pattern name</source>
-        <translation>Nome do padrão de hachurado</translation>
+        <translation>Nome do padrão de trama</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_hatchpropertieseditingwidget.ui" line="75"/>
@@ -13841,7 +13841,7 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_hatchpropertieseditingwidget.ui" line="88"/>
         <source>Hatch pattern scale factor</source>
-        <translation>Fator de escala do padrão de hachurado</translation>
+        <translation>Fator de escala do padrão de trama</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_hatchpropertieseditingwidget.ui" line="95"/>
@@ -13857,7 +13857,7 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_hatchpropertieseditingwidget.ui" line="111"/>
         <source>Hatch pattern rotation angle, degrees</source>
-        <translation>Ângulo de rotação do padrão de hachurado, graus</translation>
+        <translation>Ângulo de rotação do padrão de trama, em graus</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_hatchpropertieseditingwidget.ui" line="121"/>
@@ -13872,7 +13872,7 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_hatchpropertieseditingwidget.ui" line="134"/>
         <source>Total enclosed area of the hatch region</source>
-        <translation>Área total delimitada da região de hachurado</translation>
+        <translation>Área total delimitada da região da trama</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_hatchpropertieseditingwidget.ui" line="144"/>
@@ -14130,7 +14130,7 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/action_options/image/lc_image_options_filler.cpp" line="37"/>
         <source>Scale Factor</source>
-        <translation type="unfinished">Factor de Escala</translation>
+        <translation type="unfinished">Fator de Escala</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/image/lc_image_options_filler.cpp" line="37"/>
@@ -14173,12 +14173,12 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/action_options/image/lc_image_options_widget.ui" line="84"/>
         <source>Scale Factor:</source>
-        <translation type="unfinished">Factor de Escala:</translation>
+        <translation type="unfinished">Fator de Escala:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/image/lc_image_options_widget.ui" line="106"/>
         <source>Scale Factor</source>
-        <translation type="unfinished">Factor de Escala</translation>
+        <translation type="unfinished">Fator de Escala</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/image/lc_image_options_widget.ui" line="113"/>
@@ -14338,7 +14338,7 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="358"/>
         <source>Select an image file</source>
-        <translation>Selecione um arquivo de imagem</translation>
+        <translation>Selecione um ficheiro de imagem</translation>
     </message>
 </context>
 <context>
@@ -14359,12 +14359,12 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/action_options/info/lc_info_dist_point_to_entity_options_filler.cpp" line="33"/>
         <source>Snap On Entity</source>
-        <translation type="unfinished">Ajustar a Entidade</translation>
+        <translation type="unfinished">Ajustar à entidade</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/info/lc_info_dist_point_to_entity_options_filler.cpp" line="33"/>
         <source>If checked, the point will be always inside selected entity</source>
-        <translation type="unfinished">Se seleccionado, o ponto estará sempre dentro da entidade seleccionada</translation>
+        <translation type="unfinished">Se selecionado, o ponto estará sempre dentro da entidade selecionada</translation>
     </message>
 </context>
 <context>
@@ -14377,12 +14377,12 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/action_options/info/lc_info_dist_point_to_entity_options_widget.ui" line="32"/>
         <source>If checked, the point will be always inside selected entity</source>
-        <translation type="unfinished">Se seleccionado, o ponto estará sempre dentro da entidade seleccionada</translation>
+        <translation type="unfinished">Se selecionado, o ponto estará sempre dentro da entidade selecionada</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/info/lc_info_dist_point_to_entity_options_widget.ui" line="35"/>
         <source>Snap On Entity</source>
-        <translation type="unfinished">Ajustar a Entidade</translation>
+        <translation type="unfinished">Ajustar à entidade</translation>
     </message>
 </context>
 <context>
@@ -14443,7 +14443,7 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_insert.ui" line="137"/>
         <source>Scaling factor by X axis</source>
-        <translation>Factor de escala por eixo X</translation>
+        <translation>Fator de escala por eixo X</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_insert.ui" line="144"/>
@@ -14458,7 +14458,7 @@ Tem a certeza que vai descartar as alterações?</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_insert.ui" line="177"/>
         <source>Scaling factor by Y axis</source>
-        <translation>Factor de escala por eixo Y</translation>
+        <translation>Fator de escala por eixo Y</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_insert.ui" line="184"/>
@@ -14711,7 +14711,7 @@ O conteúdo de uma Camada de Construção não deve aparecer na impressão.</tra
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="46"/>
         <source>Settings for naming convention that is used to create layers hierarchy based on flat list of layers</source>
-        <translation>Configurações para a convenção de nomes que é usada para criar hierarquia de camadas com base na lista plana de camadas</translation>
+        <translation>Definições para a convenção de nomes que é usada para criar hierarquia de camadas com base na lista plana de camadas</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="49"/>
@@ -14808,7 +14808,7 @@ O conteúdo de uma Camada de Construção não deve aparecer na impressão.</tra
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="268"/>
         <source>Display and operations settings</source>
-        <translation>Configurações de visualização e operações</translation>
+        <translation>Definições de apresentação e operações</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="271"/>
@@ -14818,12 +14818,12 @@ O conteúdo de uma Camada de Construção não deve aparecer na impressão.</tra
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="329"/>
         <source>If checked, tooltip will include complete name of layer (with all upper layer levels)</source>
-        <translation>Se marcada, a dica irá incluir o nome completo da camada (com todos os níveis de camadas superiores)</translation>
+        <translation>Se selecionado, a descrição incluirá o nome completo da camada (com todos os níveis de camadas superiores)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="332"/>
         <source>Show full name as ToolTip</source>
-        <translation>Mostrar o nome completo como dica</translation>
+        <translation>Mostrar o nome completo na descrição</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="608"/>
@@ -14898,7 +14898,7 @@ O conteúdo de uma Camada de Construção não deve aparecer na impressão.</tra
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="376"/>
         <source>Various colors settings</source>
-        <translation>Várias configurações de cores</translation>
+        <translation>Várias definições de cores</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="470"/>
@@ -15056,7 +15056,7 @@ Por favor, indique um valor diferente.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="167"/>
         <source>Settings</source>
-        <translation>Configurações</translation>
+        <translation>Definições</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="186"/>
@@ -15391,7 +15391,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_filler.cpp" line="86"/>
         <source>Snap point for position of intersection point between created line and source entity (within original line)</source>
-        <translation type="unfinished">Ponto de ligação para a posição do ponto de intersecção entre a linha criada e a entidade de origem (dentro da linha original)</translation>
+        <translation type="unfinished">Ponto de ajuste para a posição do ponto de intersecção entre a linha criada e a entidade de origem (dentro da linha original)</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_filler.cpp" line="98"/>
@@ -15401,7 +15401,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_filler.cpp" line="99"/>
         <source>If selected, line will be orhotogonal to axis of angles basis. Otherwise - to screen axis</source>
-        <translation type="unfinished">Se selecionado, a linha será orotogonal para eixo de base de ângulos. Caso contrário - para o eixo da tela</translation>
+        <translation type="unfinished">Se selecionado, a linha será ortogonal ao eixo da base dos ângulos. Caso contrário, ao eixo do ecrã</translation>
     </message>
 </context>
 <context>
@@ -15419,7 +15419,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_widget.ui" line="81"/>
         <source>Snap Point:</source>
-        <translation type="unfinished">Ponto de encaixe:</translation>
+        <translation type="unfinished">Ponto de ajuste:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_widget.ui" line="113"/>
@@ -15454,7 +15454,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_widget.ui" line="176"/>
         <source>If selected, line will be orhotogonal to axis of angles basis. Otherwise - to screen axis</source>
-        <translation type="unfinished">Se selecionado, a linha será orotogonal para eixo de base de ângulos. Caso contrário - para o eixo da tela</translation>
+        <translation type="unfinished">Se selecionado, a linha será ortogonal ao eixo da base dos ângulos. Caso contrário, ao eixo do ecrã</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_widget.ui" line="179"/>
@@ -15512,7 +15512,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="32"/>
         <source>If checked, the length of line is defined by mouse position instead of setting</source>
-        <translation type="unfinished">Se seleccionado, o comprimento da linha é definido pela posição do rato em vez da configuração</translation>
+        <translation type="unfinished">Se selecionado, o comprimento da linha é definido pela posição do rato em vez da configuração</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="40"/>
@@ -15542,7 +15542,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="52"/>
         <source>If checked, angle is relative to angle of selected entity</source>
-        <translation type="unfinished">Se seleccionado, o ângulo é relativo ao ângulo da entidade seleccionada</translation>
+        <translation type="unfinished">Se selecionado, o ângulo é relativo ao ângulo da entidade selecionada</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="63"/>
@@ -15575,12 +15575,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="73"/>
         <source>Snap point for position of intersection point between created line and source entity (within original line)</source>
-        <translation type="unfinished">Ponto de ligação para a posição do ponto de intersecção entre a linha criada e a entidade de origem (dentro da linha original)</translation>
+        <translation type="unfinished">Ponto de ajuste para a posição do ponto de intersecção entre a linha criada e a entidade de origem (dentro da linha original)</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="80"/>
         <source>Snap Distance</source>
-        <translation type="unfinished">Distância de Snap</translation>
+        <translation type="unfinished">Ajustar à distância</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="95"/>
@@ -15590,7 +15590,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="95"/>
         <source>Defines which part of created line will be snapped to intersection point</source>
-        <translation type="unfinished">Define qual parte da linha criada será encaixada no ponto de intersecção</translation>
+        <translation type="unfinished">Define que parte da linha criada será ajustada ao ponto de intersecção</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="102"/>
@@ -15600,7 +15600,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="102"/>
         <source>Offset of tick snap point from intersection point</source>
-        <translation type="unfinished">Deslocamento do ponto de encaixe da marca em relação ao ponto de intersecção</translation>
+        <translation type="unfinished">Deslocamento do ponto de ajuste da marca em relação ao ponto de intersecção</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="108"/>
@@ -15610,7 +15610,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="108"/>
         <source>If checked, original entity will be divided by intersection point.</source>
-        <translation type="unfinished">Se seleccionado, a entidade original será dividida por ponto de intersecção.</translation>
+        <translation type="unfinished">Se selecionado, a entidade original será dividida por ponto de intersecção.</translation>
     </message>
 </context>
 <context>
@@ -15623,12 +15623,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="50"/>
         <source>Distance of intersection point from specified line snap point</source>
-        <translation type="unfinished">Distância do ponto de intersecção do ponto de snap de linha especificado</translation>
+        <translation type="unfinished">Distância do ponto de intersecção ao ponto de ajuste especificado da linha</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="57"/>
         <source>Snap point for position of intersection point between created line and source entity (within original line)</source>
-        <translation type="unfinished">Ponto de ligação para a posição do ponto de intersecção entre a linha criada e a entidade de origem (dentro da linha original)</translation>
+        <translation type="unfinished">Ponto de ajuste para a posição do ponto de intersecção entre a linha criada e a entidade de origem (dentro da linha original)</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="61"/>
@@ -15662,7 +15662,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="122"/>
         <source>If checked, original entity will be divided by intersection point.</source>
-        <translation type="unfinished">Se seleccionado, a entidade original será dividida por ponto de intersecção.</translation>
+        <translation type="unfinished">Se selecionado, a entidade original será dividida por ponto de intersecção.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="125"/>
@@ -15682,7 +15682,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="146"/>
         <source>If checked, angle is relative to angle of selected entity</source>
-        <translation type="unfinished">Se seleccionado, o ângulo é relativo ao ângulo da entidade seleccionada</translation>
+        <translation type="unfinished">Se selecionado, o ângulo é relativo ao ângulo da entidade selecionada</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="149"/>
@@ -15692,12 +15692,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="156"/>
         <source>Line Snap:</source>
-        <translation type="unfinished">Snap de Linha:</translation>
+        <translation type="unfinished">Ajuste da linha:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="163"/>
         <source>If checked, the length of line is defined by mouse position instead of setting</source>
-        <translation type="unfinished">Se seleccionado, o comprimento da linha é definido pela posição do rato em vez da configuração</translation>
+        <translation type="unfinished">Se selecionado, o comprimento da linha é definido pela posição do rato em vez da configuração</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="166"/>
@@ -15707,7 +15707,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="180"/>
         <source>Snap Distance:</source>
-        <translation type="unfinished">Distância de Snap:</translation>
+        <translation type="unfinished">Distância de ajuste:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="205"/>
@@ -15717,12 +15717,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="212"/>
         <source>Pick snap distance from drawing</source>
-        <translation type="unfinished">Escolha a distância de snap do desenho</translation>
+        <translation type="unfinished">Escolher a distância de ajuste no desenho</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="226"/>
         <source>Tick Snap:</source>
-        <translation type="unfinished">Encaixe da marca:</translation>
+        <translation type="unfinished">Ajuste da marca:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="233"/>
@@ -15732,12 +15732,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="265"/>
         <source>Offset of tick snap point from intersection point</source>
-        <translation type="unfinished">Deslocamento do ponto de encaixe da marca em relação ao ponto de intersecção</translation>
+        <translation type="unfinished">Deslocamento do ponto de ajuste da marca em relação ao ponto de intersecção</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="272"/>
         <source>Defines which part of created line will be snapped to intersection point</source>
-        <translation type="unfinished">Define qual parte da linha criada será encaixada no ponto de intersecção</translation>
+        <translation type="unfinished">Define que parte da linha criada será ajustada ao ponto de intersecção</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="294"/>
@@ -15821,7 +15821,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="34"/>
         <source>If checked, created line will be orthogonal to selected line</source>
-        <translation type="unfinished">Se seleccionado, a linha criada será ortogonal para a linha seleccionada</translation>
+        <translation type="unfinished">Se selecionado, a linha criada será ortogonal à linha selecionada</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="41"/>
@@ -15891,12 +15891,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="88"/>
         <source>Snap</source>
-        <translation type="unfinished">Snap</translation>
+        <translation type="unfinished">Ajuste</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="88"/>
         <source>Snap point for created line</source>
-        <translation type="unfinished">Ponto de encaixe para linha criada</translation>
+        <translation type="unfinished">Ponto de ajuste da linha criada</translation>
     </message>
 </context>
 <context>
@@ -15919,7 +15919,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="65"/>
         <source>If checked, created line will be orthogonal to selected line</source>
-        <translation type="unfinished">Se seleccionado, a linha criada será ortogonal para a linha seleccionada</translation>
+        <translation type="unfinished">Se selecionado, a linha criada será ortogonal à linha selecionada</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="68"/>
@@ -15929,7 +15929,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="120"/>
         <source>Snap point for created line</source>
-        <translation type="unfinished">Ponto de encaixe para linha criada</translation>
+        <translation type="unfinished">Ponto de ajuste da linha criada</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="124"/>
@@ -15949,7 +15949,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="142"/>
         <source>Snap:</source>
-        <translation type="unfinished">Snap:</translation>
+        <translation type="unfinished">Ajuste:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="171"/>
@@ -16060,7 +16060,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="56"/>
         <source>Snap point for gap on the line</source>
-        <translation type="unfinished">Ponto de encaixe para o espaço na linha</translation>
+        <translation type="unfinished">Ponto de ajuste do intervalo na linha</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="63"/>
@@ -16070,7 +16070,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="63"/>
         <source>Distance from snap point</source>
-        <translation type="unfinished">Distância do ponto de encaixe</translation>
+        <translation type="unfinished">Distância ao ponto de ajuste</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="80"/>
@@ -16080,7 +16080,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="80"/>
         <source>Snap point of gap to line snap point</source>
-        <translation type="unfinished">Ponto de encaixe do espaço para o ponto de encaixe da linha</translation>
+        <translation type="unfinished">Ponto de ajuste do intervalo em relação ao ponto de ajuste da linha</translation>
     </message>
 </context>
 <context>
@@ -16093,7 +16093,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="32"/>
         <source>Snap point of gap to line snap point</source>
-        <translation type="unfinished">Ponto de encaixe do espaço para o ponto de encaixe da linha</translation>
+        <translation type="unfinished">Ponto de ajuste do intervalo em relação ao ponto de ajuste da linha</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="36"/>
@@ -16121,12 +16121,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="61"/>
         <source>Gap Snap:</source>
-        <translation type="unfinished">Ajuste de intervalo:</translation>
+        <translation type="unfinished">Ajuste do intervalo:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="68"/>
         <source>Snap point for gap on the line</source>
-        <translation type="unfinished">Ponto de encaixe para o espaço na linha</translation>
+        <translation type="unfinished">Ponto de ajuste do intervalo na linha</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="72"/>
@@ -16155,7 +16155,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="95"/>
         <source>Line Snap:</source>
-        <translation type="unfinished">Snap de Linha:</translation>
+        <translation type="unfinished">Ajuste da linha:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="134"/>
@@ -16180,17 +16180,17 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="177"/>
         <source>Distance from snap point</source>
-        <translation type="unfinished">Distância do ponto de encaixe</translation>
+        <translation type="unfinished">Distância ao ponto de ajuste</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="184"/>
         <source>Snap Distance:</source>
-        <translation type="unfinished">Distância de Snap:</translation>
+        <translation type="unfinished">Distância de ajuste:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="191"/>
         <source>Pick snap distance from drawing</source>
-        <translation type="unfinished">Escolha a distância de snap do desenho</translation>
+        <translation type="unfinished">Escolher a distância de ajuste no desenho</translation>
     </message>
 </context>
 <context>
@@ -16198,7 +16198,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="35"/>
         <source>Extend/Trim</source>
-        <translation type="unfinished">Extend/Trim</translation>
+        <translation type="unfinished">Estender/Aparar</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="36"/>
@@ -16235,7 +16235,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="58"/>
         <source>Active Pen</source>
-        <translation type="unfinished">Caneta Activa</translation>
+        <translation type="unfinished">Caneta Ativa</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="61"/>
@@ -16255,7 +16255,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="78"/>
         <source>Polyline</source>
-        <translation type="unfinished">Polilina</translation>
+        <translation type="unfinished">Polilinha</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="78"/>
@@ -16270,7 +16270,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="89"/>
         <source>If checked, original lines will be removed</source>
-        <translation type="unfinished">Se seleccionado, as linhas originais serão removidas</translation>
+        <translation type="unfinished">Se selecionado, as linhas originais serão removidas</translation>
     </message>
 </context>
 <context>
@@ -16299,7 +16299,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="70"/>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="124"/>
         <source>Extend/Trim</source>
-        <translation type="unfinished">Extend/Trim</translation>
+        <translation type="unfinished">Estender/Aparar</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="75"/>
@@ -16336,7 +16336,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="164"/>
         <source>Active Pen</source>
-        <translation type="unfinished">Caneta Activa</translation>
+        <translation type="unfinished">Caneta Ativa</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="169"/>
@@ -16361,7 +16361,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="207"/>
         <source>If checked, original lines will be removed</source>
-        <translation type="unfinished">Se seleccionado, as linhas originais serão removidas</translation>
+        <translation type="unfinished">Se selecionado, as linhas originais serão removidas</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="210"/>
@@ -17007,7 +17007,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="42"/>
         <source>Direction</source>
-        <translation type="unfinished">Direcção</translation>
+        <translation type="unfinished">Direção</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="42"/>
@@ -17027,7 +17027,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="57"/>
         <source>If checked, angle is relative to previous segment</source>
-        <translation type="unfinished">Se seleccionado, o ângulo é relativo ao segmento anterior</translation>
+        <translation type="unfinished">Se selecionado, o ângulo é relativo ao segmento anterior</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="64"/>
@@ -17042,7 +17042,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="64"/>
         <source>Polyline</source>
-        <translation type="unfinished">Polilina</translation>
+        <translation type="unfinished">Polilinha</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="65"/>
@@ -17086,7 +17086,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="62"/>
         <source>Direction:</source>
-        <translation type="unfinished">Direcção:</translation>
+        <translation type="unfinished">Direção:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="124"/>
@@ -17167,7 +17167,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="311"/>
         <source>If checked, angle is relative to previous segment</source>
         <extracomment>Angle is relative to previous segment</extracomment>
-        <translation type="unfinished">Se seleccionado, o ângulo é relativo ao segmento anterior</translation>
+        <translation type="unfinished">Se selecionado, o ângulo é relativo ao segmento anterior</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="314"/>
@@ -17182,7 +17182,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="324"/>
         <source>Polyline</source>
-        <translation type="unfinished">Polilina</translation>
+        <translation type="unfinished">Polilinha</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="331"/>
@@ -17261,12 +17261,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/dialogs/entity/lc_mtextpropertieseditingwidget.ui" line="31"/>
         <source>MText content. Format codes (\F, \P, \S) are accepted as-is.</source>
-        <translation>Conteúdo do texto multilinha. Códigos de formatação (\F, \P, \S) são aceitos como estão.</translation>
+        <translation>Conteúdo do texto multilinha. Os códigos de formatação (\F, \P, \S) são aceites tal como estão.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_mtextpropertieseditingwidget.ui" line="44"/>
         <source>Direction</source>
-        <translation>Direcção</translation>
+        <translation>Direção</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_mtextpropertieseditingwidget.ui" line="50"/>
@@ -17341,7 +17341,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/dialogs/entity/lc_mtextpropertieseditingwidget.ui" line="88"/>
         <source>Text style / font name</source>
-        <translation>Estilo de texto / nome da fonte</translation>
+        <translation>Estilo de texto / nome do tipo de letra</translation>
     </message>
 </context>
 <context>
@@ -17548,7 +17548,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_base.h" line="57"/>
         <source>Line Width</source>
-        <translation type="unfinished">Largura da Linha</translation>
+        <translation type="unfinished">Espessura da linha</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_base.h" line="57"/>
@@ -19483,7 +19483,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_hatch.cpp" line="29"/>
         <source>Hatch</source>
-        <translation type="unfinished">Hatch</translation>
+        <translation type="unfinished">Trama</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_hatch.cpp" line="34"/>
@@ -19503,7 +19503,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_hatch.cpp" line="38"/>
         <source>Hatch pattern name</source>
-        <translation type="unfinished">Nome do padrão de hachurado</translation>
+        <translation type="unfinished">Nome do padrão de trama</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_hatch.cpp" line="42"/>
@@ -19944,7 +19944,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_leader.cpp" line="29"/>
         <source>Leader</source>
-        <translation type="unfinished">Linha de chamada</translation>
+        <translation type="unfinished">Linha de indicação</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_leader.cpp" line="33"/>
@@ -20215,7 +20215,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_mtext.cpp" line="79"/>
         <source>Direction</source>
-        <translation type="unfinished">Direcção</translation>
+        <translation type="unfinished">Direção</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_mtext.cpp" line="79"/>
@@ -20382,7 +20382,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_polyline.cpp" line="29"/>
         <source>Polyline</source>
-        <translation type="unfinished">Polilina</translation>
+        <translation type="unfinished">Polilinha</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_polyline.cpp" line="33"/>
@@ -20833,7 +20833,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_base.cpp" line="55"/>
         <source>&amp;Workspaces</source>
-        <translation type="unfinished">Espaços de &amp; Trabalho</translation>
+        <translation type="unfinished">Espaços de &amp;trabalho</translation>
     </message>
 </context>
 <context>
@@ -20862,7 +20862,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="143"/>
         <source>Polyline</source>
-        <translation type="unfinished">Polilina</translation>
+        <translation type="unfinished">Polilinha</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="147"/>
@@ -20887,7 +20887,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="162"/>
         <source>Polyline/Spline</source>
-        <translation type="unfinished">Poliline/Spline</translation>
+        <translation type="unfinished">Polilinha/Spline</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="173"/>
@@ -20917,7 +20917,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="220"/>
         <source>Draw Order</source>
-        <translation type="unfinished">Desenhar ordem</translation>
+        <translation type="unfinished">Ordem de desenho</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="228"/>
@@ -20954,7 +20954,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="412"/>
         <source>&amp;File</source>
-        <translation type="unfinished">&amp; Arquivo</translation>
+        <translation type="unfinished">&amp;Ficheiro</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="424"/>
@@ -20974,7 +20974,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="477"/>
         <source>&amp;Named Views</source>
-        <translation type="unfinished">Vistas &amp; Nomeadas</translation>
+        <translation type="unfinished">Vistas com &amp;nome</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="507"/>
@@ -21095,7 +21095,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="125"/>
         <source>On&amp;line Docs</source>
-        <translation type="unfinished">Documentos On &amp; Line</translation>
+        <translation type="unfinished">Documentação on&amp;line</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="126"/>
@@ -21105,7 +21105,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="127"/>
         <source>User&apos;s &amp;Manual</source>
-        <translation type="unfinished">&amp;Manual do usuário</translation>
+        <translation type="unfinished">&amp;Manual do utilizador</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="128"/>
@@ -21115,7 +21115,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="129"/>
         <source>&amp;Style Sheets</source>
-        <translation type="unfinished">Folhas de &amp; Estilo</translation>
+        <translation type="unfinished">Folhas de &amp;estilo</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="131"/>
@@ -21136,17 +21136,17 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="143"/>
         <source>Zulip &amp;Chat</source>
-        <translation type="unfinished">Zulip &amp; Chat</translation>
+        <translation type="unfinished">&amp;Chat Zulip</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="145"/>
         <source>&amp;Submit Error</source>
-        <translation type="unfinished">Erro de &amp; Enviar</translation>
+        <translation type="unfinished">&amp;Comunicar erro</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="146"/>
         <source>&amp;Request Feature</source>
-        <translation type="unfinished">Recurso de &amp; Pedido</translation>
+        <translation type="unfinished">&amp;Pedir funcionalidade</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="147"/>
@@ -21182,14 +21182,14 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="214"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="248"/>
         <source>&amp;Circle</source>
-        <translation type="unfinished">&amp; Circle</translation>
+        <translation type="unfinished">&amp;Círculo</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="186"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="215"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="250"/>
         <source>&amp;Arc</source>
-        <translation type="unfinished">&amp; Arco</translation>
+        <translation type="unfinished">&amp;Arco</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="190"/>
@@ -21215,7 +21215,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="221"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="258"/>
         <source>&amp;Polyline</source>
-        <translation type="unfinished">&amp;Polyline</translation>
+        <translation type="unfinished">&amp;Polilinha</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="206"/>
@@ -21275,7 +21275,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="276"/>
         <source>&amp;File</source>
-        <translation type="unfinished">&amp; Arquivo</translation>
+        <translation type="unfinished">&amp;Ficheiro</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="284"/>
@@ -21310,7 +21310,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="386"/>
         <source>&amp;Views Restore</source>
-        <translation type="unfinished">&amp; Vistas Restaurar</translation>
+        <translation type="unfinished">Restaurar &amp;vistas</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="399"/>
@@ -21320,7 +21320,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="405"/>
         <source>&amp;Workspace</source>
-        <translation type="unfinished">Espaço de &amp; Trabalho</translation>
+        <translation type="unfinished">Espaço de &amp;trabalho</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="415"/>
@@ -21360,7 +21360,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="593"/>
         <source>&amp;Window mode</source>
-        <translation type="unfinished">Modo &amp; Window</translation>
+        <translation type="unfinished">Modo de &amp;janela</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="598"/>
@@ -21420,12 +21420,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="642"/>
         <source>Tile &amp;Vertically</source>
-        <translation type="unfinished">Tile &amp; Verticamente</translation>
+        <translation type="unfinished">Mosaico &amp;vertical</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="643"/>
         <source>Tile &amp;Horizontally</source>
-        <translation type="unfinished">Tile &amp; Horizontalmente</translation>
+        <translation type="unfinished">Mosaico &amp;horizontal</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="690"/>
@@ -21516,7 +21516,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_options_widget.ui" line="93"/>
         <source>Center entities horizontally</source>
-        <translation>Centralizar as entidades horizontalmente</translation>
+        <translation>Centrar as entidades horizontalmente</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_options_widget.ui" line="113"/>
@@ -21536,7 +21536,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_options_widget.ui" line="150"/>
         <source>Defines the way of selected entities alignment.</source>
-        <translation>Define a forma de alinhamento das entidades seleccionadas.</translation>
+        <translation>Define a forma de alinhamento das entidades selecionadas.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_options_widget.ui" line="154"/>
@@ -21576,7 +21576,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_options_widget.ui" line="230"/>
         <source>Center entities vertically</source>
-        <translation>Centralizar as entidades verticalmente</translation>
+        <translation>Centrar as entidades verticalmente</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_options_widget.ui" line="250"/>
@@ -21599,7 +21599,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="32"/>
         <source>If checked, mirror will be performed by selected line entity.</source>
-        <translation type="unfinished">Se seleccionado, o espelho será executado pela entidade de linha seleccionada.</translation>
+        <translation type="unfinished">Se selecionado, o espelhamento será feito em relação à linha selecionada.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="35"/>
@@ -21831,7 +21831,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="32"/>
         <source>Move Rotate Options</source>
-        <translation type="unfinished">Mover as Opções de Rodação</translation>
+        <translation type="unfinished">Opções de mover e rodar</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="50"/>
@@ -21861,7 +21861,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="90"/>
         <source>If checked, all copies will be rotated by the same agle. Otherwise, angle will be proportional to number of each copy. </source>
-        <translation type="unfinished">Se marcada, todas as cópias serão giradas pela mesma agle. Caso contrário, o ângulo será proporcional ao número de cada cópia.</translation>
+        <translation type="unfinished">Se selecionado, todas as cópias serão rodadas pelo mesmo ângulo. Caso contrário, o ângulo será proporcional ao número de cada cópia. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="93"/>
@@ -21876,7 +21876,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="134"/>
         <source>If checked, rotation angle is defined by mouse. Otherwise, specified value is used.</source>
-        <translation type="unfinished">Se seleccionado, o ângulo de rotação é definido pelo rato. Caso contrário, é utilizado o valor especificado.</translation>
+        <translation type="unfinished">Se selecionado, o ângulo de rotação é definido pelo rato. Caso contrário, é utilizado o valor especificado.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="137"/>
@@ -21924,27 +21924,27 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.ui" line="98"/>
         <source>Create view for current zoom and offset of drawing</source>
-        <translation>Criar visão para o zoom e deslocamento atuais do desenho</translation>
+        <translation>Criar vista para o zoom e deslocamento atuais do desenho</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.ui" line="164"/>
         <source>Restores selected view</source>
-        <translation>Restaura a visão selecionada</translation>
+        <translation>Restaura a vista selecionada</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.ui" line="41"/>
         <source>Update selected view by current zoom/position</source>
-        <translation>Atualizar a visão selecionada pelo zoom/posição atual</translation>
+        <translation>Atualizar a vista selecionada pelo zoom/posição atual</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.ui" line="121"/>
         <source>Edit selected view name</source>
-        <translation>Editar o nome da vista seleccionada</translation>
+        <translation>Editar o nome da vista selecionada</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.ui" line="78"/>
         <source>Removes selected view</source>
-        <translation>Remove a visão selecionada</translation>
+        <translation>Remove a vista selecionada</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.ui" line="81"/>
@@ -21954,20 +21954,20 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.ui" line="55"/>
         <source>Settings</source>
-        <translation>Configurações</translation>
+        <translation>Definições</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="259"/>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="283"/>
         <source>Delete View</source>
-        <translation>Excluir visão</translation>
+        <translation>Eliminar vista</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="260"/>
         <source>Are you sure to delete ALL views?
  Warning: this action can NOT be undone!</source>
-        <translation>Você tem certeza de excluir TODAS as visualizações?
-Aviso: esta ação NÃO pode ser desfeita!</translation>
+        <translation>Tem a certeza de que pretende eliminar TODAS as vistas?
+ Aviso: esta ação NÃO pode ser anulada!</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="284"/>
@@ -22039,12 +22039,12 @@ Aviso: esta ação NÃO pode ser desfeita!</translation>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="479"/>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="493"/>
         <source>&amp;Add View</source>
-        <translation>&amp;Adicionar visão</translation>
+        <translation>&amp;Adicionar vista</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="475"/>
         <source>R&amp;emove Selected Views</source>
-        <translation>R&amp;emove Vistas Seleccionadas</translation>
+        <translation>&amp;Remover as vistas selecionadas</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="482"/>
@@ -22059,7 +22059,7 @@ Aviso: esta ação NÃO pode ser desfeita!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="484"/>
         <source>&amp;Update View</source>
-        <translation>&amp; Actualizar a Vista</translation>
+        <translation>&amp;Atualizar a vista</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="485"/>
@@ -22075,12 +22075,12 @@ Aviso: esta ação NÃO pode ser desfeita!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="611"/>
         <source>Restore View</source>
-        <translation>Restaurar visão</translation>
+        <translation>Restaurar vista</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="611"/>
         <source>Paper space view is not fully supported yet.</source>
-        <translation>A visão espacial do papel ainda não é totalmente suportada.</translation>
+        <translation>A vista do espaço de papel ainda não é totalmente suportada.</translation>
     </message>
 </context>
 <context>
@@ -22163,7 +22163,7 @@ Aviso: esta ação NÃO pode ser desfeita!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="399"/>
         <source>Grid View: </source>
-        <translation>Visão da grade:</translation>
+        <translation>Vista da grelha: </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="400"/>
@@ -22359,7 +22359,7 @@ Aviso: esta ação NÃO pode ser desfeita!</translation>
         <location filename="../src/ui/components/containers/lc_optionswidgetsholder.cpp" line="37"/>
         <location filename="../src/ui/components/containers/lc_optionswidgetsholder.cpp" line="110"/>
         <source>Default</source>
-        <translation>Padrão</translation>
+        <translation>Predefinição</translation>
     </message>
 </context>
 <context>
@@ -22383,7 +22383,7 @@ Aviso: esta ação NÃO pode ser desfeita!</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_parabola.ui" line="88"/>
         <source>Control Points</source>
-        <translation>Pontos de controle</translation>
+        <translation>Pontos de controlo</translation>
     </message>
 </context>
 <context>
@@ -22406,7 +22406,7 @@ Aviso: esta ação NÃO pode ser desfeita!</translation>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_to_points_options_filler.cpp" line="37"/>
         <source>Scale factor for pasted entities</source>
-        <translation type="unfinished">Factor de escala para entidades coladas</translation>
+        <translation type="unfinished">Fator de escala para entidades coladas</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_to_points_options_filler.cpp" line="45"/>
@@ -22416,7 +22416,7 @@ Aviso: esta ação NÃO pode ser desfeita!</translation>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_to_points_options_filler.cpp" line="46"/>
         <source>If selected, the point entity used as insertion point will be deleted after paste operation. Otherwise, it will survive.</source>
-        <translation type="unfinished">Se selecionado, a entidade de ponto usada como ponto de inserção será excluída após a operação pasta. Caso contrário, sobreviverá.</translation>
+        <translation type="unfinished">Se selecionado, a entidade de ponto usada como ponto de inserção será eliminada após a operação de colar. Caso contrário, será mantida.</translation>
     </message>
 </context>
 <context>
@@ -22434,12 +22434,12 @@ Aviso: esta ação NÃO pode ser desfeita!</translation>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_to_points_options_widget.ui" line="87"/>
         <source>Scale Factor</source>
-        <translation type="unfinished">Factor de Escala</translation>
+        <translation type="unfinished">Fator de Escala</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_to_points_options_widget.ui" line="101"/>
         <source>If selected, the point entity used as insertion point will be deleted after paste operation. Otherwise, it will survive.</source>
-        <translation type="unfinished">Se selecionado, a entidade de ponto usada como ponto de inserção será excluída após a operação pasta. Caso contrário, sobreviverá.</translation>
+        <translation type="unfinished">Se selecionado, a entidade de ponto usada como ponto de inserção será eliminada após a operação de colar. Caso contrário, será mantida.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_to_points_options_widget.ui" line="104"/>
@@ -22454,7 +22454,7 @@ Aviso: esta ação NÃO pode ser desfeita!</translation>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_to_points_options_widget.ui" line="136"/>
         <source>Scale factor for pasted entities</source>
-        <translation type="unfinished">Factor de escala para entidades coladas</translation>
+        <translation type="unfinished">Fator de escala para entidades coladas</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_to_points_options_widget.ui" line="143"/>
@@ -22482,7 +22482,7 @@ Aviso: esta ação NÃO pode ser desfeita!</translation>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_filler.cpp" line="36"/>
         <source>Scale factor for pasted entities</source>
-        <translation type="unfinished">Factor de escala para entidades coladas</translation>
+        <translation type="unfinished">Fator de escala para entidades coladas</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_filler.cpp" line="42"/>
@@ -22610,12 +22610,12 @@ Aviso: esta ação NÃO pode ser desfeita!</translation>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_widget.ui" line="193"/>
         <source>Scale factor for pasted entities</source>
-        <translation type="unfinished">Factor de escala para entidades coladas</translation>
+        <translation type="unfinished">Fator de escala para entidades coladas</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_widget.ui" line="200"/>
         <source>Scale Factor</source>
-        <translation type="unfinished">Factor de Escala</translation>
+        <translation type="unfinished">Fator de Escala</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_widget.ui" line="207"/>
@@ -22681,7 +22681,7 @@ Aviso: esta ação NÃO pode ser desfeita!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="266"/>
         <source>Default</source>
-        <translation>Padrão</translation>
+        <translation>Predefinição</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="267"/>
@@ -23041,17 +23041,17 @@ Aviso: esta ação NÃO pode ser desfeita!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="357"/>
         <source>Gray</source>
-        <translation>Cinza</translation>
+        <translation>Cinzento</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="358"/>
         <source>Dark Gray</source>
-        <translation>Cinza Escuro</translation>
+        <translation>Cinzento-escuro</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="359"/>
         <source>Light Gray</source>
-        <translation>Cinza claro</translation>
+        <translation>Cinzento-claro</translation>
     </message>
 </context>
 <context>
@@ -23069,7 +23069,7 @@ Aviso: esta ação NÃO pode ser desfeita!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettemodel.cpp" line="230"/>
         <source>Line Width:</source>
-        <translation>Largura da Linha:</translation>
+        <translation>Espessura da linha:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettemodel.cpp" line="233"/>
@@ -23113,12 +23113,12 @@ Aviso: esta ação NÃO pode ser desfeita!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="221"/>
         <source>Line Width Icon</source>
-        <translation>Ícone de Largura de Linha</translation>
+        <translation>Ícone da espessura da linha</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="228"/>
         <source>Line Width Name</source>
-        <translation>Nome da Largura da Linha</translation>
+        <translation>Nome da espessura da linha</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="66"/>
@@ -23134,7 +23134,7 @@ Aviso: esta ação NÃO pode ser desfeita!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="46"/>
         <source>Active Pen Background:</source>
-        <translation>Fundo da caneta activa:</translation>
+        <translation>Fundo da caneta ativa:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="76"/>
@@ -23144,7 +23144,7 @@ Aviso: esta ação NÃO pode ser desfeita!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="79"/>
         <source>Entire table row is bold for active pen</source>
-        <translation>Toda a linha da tabela é em negrito para caneta activa</translation>
+        <translation>Toda a linha da tabela é em negrito para caneta ativa</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="96"/>
@@ -23164,7 +23164,7 @@ Aviso: esta ação NÃO pode ser desfeita!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="277"/>
         <source>If selected, additional messages will be shown as part of pen related operations</source>
-        <translation>Se selecionado, mensagens adicionais serão exibidas como parte das operações relacionadas à caneta</translation>
+        <translation>Se selecionado, serão mostradas mensagens adicionais nas operações relacionadas com canetas</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="297"/>
@@ -23179,7 +23179,7 @@ Aviso: esta ação NÃO pode ser desfeita!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="130"/>
         <source>Controls whether tooltip will be shown for table item or not</source>
-        <translation>Controla se a dica será mostrada para o item da tabela ou não</translation>
+        <translation>Controla se é mostrada ou não uma descrição para o item da tabela</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="26"/>
@@ -23199,7 +23199,7 @@ Aviso: esta ação NÃO pode ser desfeita!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="133"/>
         <source>Show tooltip for table items</source>
-        <translation>Mostrar a dica para os itens da tabela</translation>
+        <translation>Mostrar a descrição dos itens da tabela</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="238"/>
@@ -23259,7 +23259,7 @@ Aviso: esta ação NÃO pode ser desfeita!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.cpp" line="54"/>
         <source>Select entities by drawing pen</source>
-        <translation>Selecione entidades desenhando caneta</translation>
+        <translation>Selecionar entidades pela caneta de desenho</translation>
     </message>
 </context>
 <context>
@@ -23282,7 +23282,7 @@ Aviso: esta ação NÃO pode ser desfeita!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="83"/>
         <source>Select Entities By Drawing Pen</source>
-        <translation>Selecione Entidades Desenhando Caneta</translation>
+        <translation>Selecionar entidades pela caneta de desenho</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="100"/>
@@ -23298,7 +23298,7 @@ Aviso: esta ação NÃO pode ser desfeita!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="137"/>
         <source>Apply Pen To Selection</source>
-        <translation>Aplicar a Caneta à Selecção</translation>
+        <translation>Aplicar a Caneta à Seleção</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="154"/>
@@ -23343,7 +23343,7 @@ Aviso: esta ação NÃO pode ser desfeita!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="239"/>
         <source>Remove Selected Pen</source>
-        <translation>Remover a Caneta Seleccionada</translation>
+        <translation>Remover a Caneta Selecionada</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="242"/>
@@ -23368,7 +23368,7 @@ Aviso: esta ação NÃO pode ser desfeita!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="372"/>
         <source>Width of line</source>
-        <translation>Largura da linha</translation>
+        <translation>Espessura da linha</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="402"/>
@@ -23388,7 +23388,7 @@ Aviso: esta ação NÃO pode ser desfeita!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="487"/>
         <source>Settings</source>
-        <translation>Configurações</translation>
+        <translation>Definições</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="518"/>
@@ -23413,7 +23413,7 @@ Aviso: esta ação NÃO pode ser desfeita!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="303"/>
         <source>&amp;Apply Pen To Selection</source>
-        <translation>&amp; Aplicar caneta para seleção</translation>
+        <translation>&amp;Aplicar a caneta à seleção</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="304"/>
@@ -23443,7 +23443,7 @@ Aviso: esta ação NÃO pode ser desfeita!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="313"/>
         <source>&amp;Remove Pen</source>
-        <translation>&amp; Remover a Caneta</translation>
+        <translation>&amp;Remover a caneta</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="317"/>
@@ -23460,9 +23460,9 @@ Aviso: esta ação NÃO pode ser desfeita!</translation>
         <source>Location of pens file is changed, please restart the application so new pens file will be used.
 
 Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
-        <translation>A localização do arquivo de canetas foi alterada. Reinicie o aplicativo para usar o novo arquivo.
+        <translation>A localização do ficheiro de canetas foi alterada. Reinicie a aplicação para usar o novo ficheiro.
 
-Observe que se você salvar a caneta pelo editor sem reiniciar, as canetas atuais da paleta serão salvas no novo arquivo, substituindo o conteúdo existente.</translation>
+Tenha em atenção que, se guardar uma caneta pelo editor sem reiniciar, as canetas atuais da paleta serão guardadas no novo ficheiro, substituindo o conteúdo existente.</translation>
     </message>
 </context>
 <context>
@@ -23549,7 +23549,7 @@ Observe que se você salvar a caneta pelo editor sem reiniciar, as canetas atuai
     <message>
         <location filename="../src/ui/action_options/point/lc_points_lattice_options_filler.cpp" line="48"/>
         <source>If selected, last point of lattice will be adjusted accoriding to position of first point, so lattice will be rect or quadrangle</source>
-        <translation type="unfinished">Se selecionado, o último ponto de treliça será ajustado em relação à posição do primeiro ponto, então a treliça será rect ou quadrângulo</translation>
+        <translation type="unfinished">Se selecionado, o último ponto da malha será ajustado de acordo com a posição do primeiro ponto, de modo que a malha seja um retângulo ou um quadrângulo</translation>
     </message>
 </context>
 <context>
@@ -23582,7 +23582,7 @@ Observe que se você salvar a caneta pelo editor sem reiniciar, as canetas atuai
     <message>
         <location filename="../src/ui/action_options/point/lc_points_lattice_options_widget.ui" line="66"/>
         <source>If selected, last point of lattice will be adjusted accoriding to position of first point, so lattice will be rect or quadrangle</source>
-        <translation type="unfinished">Se selecionado, o último ponto de treliça será ajustado em relação à posição do primeiro ponto, então a treliça será rect ou quadrângulo</translation>
+        <translation type="unfinished">Se selecionado, o último ponto da malha será ajustado de acordo com a posição do primeiro ponto, de modo que a malha seja um retângulo ou um quadrângulo</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/point/lc_points_lattice_options_widget.ui" line="69"/>
@@ -23700,7 +23700,7 @@ Observe que se você salvar a caneta pelo editor sem reiniciar, as canetas atuai
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_options_filler.cpp" line="37"/>
         <source>Polyline</source>
-        <translation type="unfinished">Polilina</translation>
+        <translation type="unfinished">Polilinha</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_options_filler.cpp" line="37"/>
@@ -23738,7 +23738,7 @@ Observe que se você salvar a caneta pelo editor sem reiniciar, as canetas atuai
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_options_widget.ui" line="70"/>
         <source>If selected, reference points are for vertexes of polygon. Otherwise, they are for middle point of edges. </source>
-        <translation type="unfinished">Se seleccionado, os pontos de referência são para vértices de polígono. Caso contrário, eles são para o ponto médio de bordas.</translation>
+        <translation type="unfinished">Se selecionado, os pontos de referência são os vértices do polígono. Caso contrário, são os pontos médios dos lados. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_options_widget.ui" line="73"/>
@@ -23748,7 +23748,7 @@ Observe que se você salvar a caneta pelo editor sem reiniciar, as canetas atuai
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_options_widget.ui" line="80"/>
         <source>If checked, vertexes of polygon will be rounded. </source>
-        <translation type="unfinished">Se seleccionado, os vértices do polígono serão arredondados.</translation>
+        <translation type="unfinished">Se selecionado, os vértices do polígono serão arredondados. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_options_widget.ui" line="83"/>
@@ -23773,12 +23773,12 @@ Observe que se você salvar a caneta pelo editor sem reiniciar, as canetas atuai
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_options_widget.ui" line="126"/>
         <source>If checked, the polygon will be drawn as polyline. Otherwise, individual entities will be created. </source>
-        <translation type="unfinished">Se seleccionado, o polígono será desenhado como polilinha. Caso contrário, serão criadas entidades individuais.</translation>
+        <translation type="unfinished">Se selecionado, o polígono será desenhado como polilinha. Caso contrário, serão criadas entidades individuais. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_options_widget.ui" line="129"/>
         <source>Polyline</source>
-        <translation type="unfinished">Polilina</translation>
+        <translation type="unfinished">Polilinha</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_options_widget.ui" line="143"/>
@@ -23796,7 +23796,7 @@ Observe que se você salvar a caneta pelo editor sem reiniciar, as canetas atuai
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_side_side_options_filler.cpp" line="35"/>
         <source>If selected, reference points are for vertexes of polygon. Otherwise, they are for middle point of edges. </source>
-        <translation type="unfinished">Se seleccionado, os pontos de referência são para vértices de polígono. Caso contrário, eles são para o ponto médio de bordas.</translation>
+        <translation type="unfinished">Se selecionado, os pontos de referência são os vértices do polígono. Caso contrário, são os pontos médios dos lados. </translation>
     </message>
 </context>
 <context>
@@ -23958,7 +23958,7 @@ Observe que se você salvar a caneta pelo editor sem reiniciar, as canetas atuai
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_widget.ui" line="53"/>
         <source>Connects ends of the polyline so closed contour is created</source>
-        <translation type="unfinished">Conecta as extremidades da polilinha para que o contorno fechado seja criado</translation>
+        <translation type="unfinished">Liga as extremidades da polilinha para criar um contorno fechado</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_widget.ui" line="56"/>
@@ -24149,7 +24149,7 @@ Observe que se você salvar a caneta pelo editor sem reiniciar, as canetas atuai
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="72"/>
         <source>Apply Print Scale to line width</source>
-        <translation type="unfinished">Aplicar a Escala de Impressão na largura da linha</translation>
+        <translation type="unfinished">Aplicar a escala de impressão à espessura da linha</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="78"/>
@@ -24292,7 +24292,7 @@ Observe que se você salvar a caneta pelo editor sem reiniciar, as canetas atuai
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_widget.ui" line="105"/>
         <source>Apply Print Scale to line width</source>
-        <translation type="unfinished">Aplicar a Escala de Impressão na largura da linha</translation>
+        <translation type="unfinished">Aplicar a escala de impressão à espessura da linha</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_widget.ui" line="134"/>
@@ -24357,7 +24357,7 @@ Observe que se você salvar a caneta pelo editor sem reiniciar, as canetas atuai
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_widget.ui" line="369"/>
         <source>If enabled, paper space will include specified amount of pages organized in columns and rows</source>
-        <translation type="unfinished">Se activado, o espaço de papel incluirá a quantidade especificada de páginas organizadas em colunas e linhas</translation>
+        <translation type="unfinished">Se ativado, o espaço de papel incluirá a quantidade especificada de páginas organizadas em colunas e linhas</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_widget.ui" line="372"/>
@@ -24402,7 +24402,7 @@ Observe que se você salvar a caneta pelo editor sem reiniciar, as canetas atuai
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_widget.cpp" line="428"/>
         <source>Paper scale factor larger than max print ratio</source>
-        <translation type="unfinished">Factor de escala de papel superior à relação de impressão máxima</translation>
+        <translation type="unfinished">Fator de escala de papel superior à relação de impressão máxima</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_widget.cpp" line="432"/>
@@ -24456,7 +24456,7 @@ Observe que se você salvar a caneta pelo editor sem reiniciar, as canetas atuai
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_active_pen.cpp" line="44"/>
         <source>Active Pen</source>
-        <translation type="unfinished">Caneta Activa</translation>
+        <translation type="unfinished">Caneta Ativa</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_active_pen.cpp" line="44"/>
@@ -24476,7 +24476,7 @@ Observe que se você salvar a caneta pelo editor sem reiniciar, as canetas atuai
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_active_pen.cpp" line="80"/>
         <source>Line Width</source>
-        <translation type="unfinished">Largura da Linha</translation>
+        <translation type="unfinished">Espessura da linha</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_active_pen.cpp" line="80"/>
@@ -25375,7 +25375,7 @@ Observe que se você salvar a caneta pelo editor sem reiniciar, as canetas atuai
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="124"/>
         <source>Leader</source>
-        <translation type="unfinished">Linha de chamada</translation>
+        <translation type="unfinished">Linha de indicação</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="124"/>
@@ -25632,7 +25632,7 @@ Observe que se você salvar a caneta pelo editor sem reiniciar, as canetas atuai
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="221"/>
         <source>User Block...</source>
-        <translation type="unfinished">Bloco do Usuário...</translation>
+        <translation type="unfinished">Bloco do Utilizador...</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="235"/>
@@ -27463,7 +27463,7 @@ Observe que se você salvar a caneta pelo editor sem reiniciar, as canetas atuai
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="122"/>
         <source>Line Width</source>
-        <translation type="unfinished">Largura da Linha</translation>
+        <translation type="unfinished">Espessura da linha</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="122"/>
@@ -27993,7 +27993,7 @@ Observe que se você salvar a caneta pelo editor sem reiniciar, as canetas atuai
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_views.cpp" line="96"/>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_views.cpp" line="98"/>
         <source>Create view for current zoom and offset of drawing</source>
-        <translation type="unfinished">Criar visão para o zoom e deslocamento atuais do desenho</translation>
+        <translation type="unfinished">Criar vista para o zoom e deslocamento atuais do desenho</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_views.cpp" line="115"/>
@@ -28072,7 +28072,7 @@ Observe que se você salvar a caneta pelo editor sem reiniciar, as canetas atuai
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_workspace.cpp" line="108"/>
         <source>Statusbar</source>
-        <translation type="unfinished">Barra de status</translation>
+        <translation type="unfinished">Barra de estado</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_workspace.cpp" line="108"/>
@@ -28115,7 +28115,7 @@ Observe que se você salvar a caneta pelo editor sem reiniciar, as canetas atuai
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_hatch.cpp" line="39"/>
         <source>Hatch pattern name</source>
-        <translation type="unfinished">Nome do padrão de hachurado</translation>
+        <translation type="unfinished">Nome do padrão de trama</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_hatch.cpp" line="53"/>
@@ -28714,7 +28714,7 @@ Observe que se você salvar a caneta pelo editor sem reiniciar, as canetas atuai
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="100"/>
         <source>Line Join</source>
-        <translation type="unfinished">Ligar à Linha</translation>
+        <translation type="unfinished">Unir linhas</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="99"/>
@@ -29218,7 +29218,7 @@ Observe que se você salvar a caneta pelo editor sem reiniciar, as canetas atuai
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_mtext.cpp" line="114"/>
         <source>Direction</source>
-        <translation type="unfinished">Direcção</translation>
+        <translation type="unfinished">Direção</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_mtext.cpp" line="114"/>
@@ -30511,7 +30511,7 @@ Observe que se você salvar a caneta pelo editor sem reiniciar, as canetas atuai
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/lc_propertysheetwidget.ui" line="214"/>
         <source>Settings</source>
-        <translation type="unfinished">Configurações</translation>
+        <translation type="unfinished">Definições</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/lc_propertysheetwidget.ui" line="228"/>
@@ -30607,7 +30607,7 @@ Observe que se você salvar a caneta pelo editor sem reiniciar, as canetas atuai
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="856"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="869"/>
         <source>POLYLINE</source>
-        <translation>POLÍLIA</translation>
+        <translation>POLILINHA</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="666"/>
@@ -30731,7 +30731,7 @@ Observe que se você salvar a caneta pelo editor sem reiniciar, as canetas atuai
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="548"/>
         <source>Line Width</source>
-        <translation>Largura da Linha</translation>
+        <translation>Espessura da linha</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="550"/>
@@ -31256,7 +31256,7 @@ Camada: </translation>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1142"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1175"/>
         <source>Direction</source>
-        <translation>Direcção</translation>
+        <translation>Direção</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1143"/>
@@ -31346,7 +31346,7 @@ Camada: </translation>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1259"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1291"/>
         <source>Control Points</source>
-        <translation>Pontos de controle</translation>
+        <translation>Pontos de controlo</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1287"/>
@@ -31358,7 +31358,7 @@ Camada: </translation>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1289"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1312"/>
         <source>Use Control Points</source>
-        <translation>Usar pontos de controle</translation>
+        <translation>Usar pontos de controlo</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1396"/>
@@ -31426,7 +31426,7 @@ Camada: </translation>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1359"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1375"/>
         <source>HATCH</source>
-        <translation>HATCH</translation>
+        <translation>TRAMA</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1360"/>
@@ -31574,7 +31574,7 @@ Camada: </translation>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1556"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1569"/>
         <source>Leader End Point</source>
-        <translation>Ponto Final da Linha de Chamada</translation>
+        <translation>Ponto final da linha de indicação</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1526"/>
@@ -31713,7 +31713,7 @@ Camada: </translation>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.ui" line="220"/>
         <source>Settings</source>
-        <translation>Configurações</translation>
+        <translation>Definições</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.ui" line="244"/>
@@ -31731,7 +31731,7 @@ p, li { espaço em branco: pre- wrap; }
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="345"/>
         <source>&amp;Copy All</source>
-        <translation>&amp; Copiar Tudo</translation>
+        <translation>&amp;Copiar tudo</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="363"/>
@@ -31759,7 +31759,7 @@ p, li { espaço em branco: pre- wrap; }
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="392"/>
         <source>&amp;Clear</source>
-        <translation>&amp; Limpar</translation>
+        <translation>&amp;Limpar</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="393"/>
@@ -31807,17 +31807,17 @@ p, li { espaço em branco: pre- wrap; }
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="36"/>
         <source>If selected, the distance and angle between adjacent points will be shown together with coordinates.</source>
-        <translation>Se seleccionado, a distância e o ângulo entre os pontos adjacentes serão mostrados juntamente com as coordenadas.</translation>
+        <translation>Se selecionado, a distância e o ângulo entre os pontos adjacentes serão mostrados juntamente com as coordenadas.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="39"/>
         <source>Display distance and angle to point in addition to coordinates</source>
-        <translation>Exibir distância e ângulo para apontar, além das coordenadas</translation>
+        <translation>Mostrar a distância e o ângulo até ao ponto, além das coordenadas</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="46"/>
         <source>If selected, all points collected will be connected by path that shows how they will be selected during point preview</source>
-        <translation>Se seleccionado, todos os pontos recolhidos serão ligados pelo caminho que mostra como serão seleccionados durante a antevisão do ponto</translation>
+        <translation>Se selecionado, todos os pontos recolhidos serão ligados pelo caminho que mostra como serão selecionados durante a antevisão do ponto</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="49"/>
@@ -31832,7 +31832,7 @@ p, li { espaço em branco: pre- wrap; }
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="81"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If selected, more detailed information about lines and arcs that are part of polyline will be shown in Entity Info widget.&lt;br/&gt;Otherwise, only information about vertexes/bulges will be displayed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Se selecionado, informações mais detalhadas sobre linhas e arcos que fazem parte da polilinha serão exibidas no widget de Informações da Entidade.&lt;br/&gt;Caso contrário, apenas informações sobre vértices/abaulamentos serão exibidas.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Se selecionado, serão mostradas no widget Informações da Entidade informações mais detalhadas sobre as linhas e os arcos que fazem parte da polilinha.&lt;br/&gt;Caso contrário, só serão mostradas informações sobre os vértices/abaulamentos.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="84"/>
@@ -31842,32 +31842,32 @@ p, li { espaço em branco: pre- wrap; }
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="91"/>
         <source>If selected, coordinates of boundary box area for the entity will be also shown</source>
-        <translation>Se seleccionado, serão também mostradas as coordenadas da área da caixa de contornos da entidade</translation>
+        <translation>Se selecionado, serão também mostradas as coordenadas da área da caixa de contornos da entidade</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="94"/>
         <source>Display entity boundaries (Min, Max) coordinates</source>
-        <translation>Exibir os limites de entidade (Mín, Max) coordenadas</translation>
+        <translation>Mostrar as coordenadas dos limites da entidade (mín., máx.)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="104"/>
         <source>Entity Selection</source>
-        <translation>Selecção da Entidade</translation>
+        <translation>Seleção da Entidade</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="116"/>
         <source>Entity under cursor will be examined only if CTRL is pressed and no active action</source>
-        <translation>A entidade sob o cursor só será examinada se o CTRL for pressionado e não houver ação ativa</translation>
+        <translation>A entidade sob o cursor só será examinada se o CTRL for premido e não houver ação ativa</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="119"/>
         <source>Select entity under cursor if not active action and CTRL is pressed</source>
-        <translation>Selecione a entidade sob o cursor se não estiver ativa e o CTRL é pressionado</translation>
+        <translation>Selecionar a entidade sob o cursor se não houver ação ativa e CTRL for premido</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="126"/>
         <source>If selected, entities under mouse cursor will be examined for theif settings, if there is no active action</source>
-        <translation>Se selecionado, as entidades sob o cursor do mouse serão examinadas para a configuração do se, se não houver nenhuma ação ativa</translation>
+        <translation>Se selecionado, as entidades sob o cursor do rato serão examinadas quanto às suas definições, se não houver nenhuma ação ativa</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="129"/>
@@ -31950,7 +31950,7 @@ p, li { espaço em branco: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1_point_options_filler.cpp" line="59"/>
         <source>Snap</source>
-        <translation type="unfinished">Snap</translation>
+        <translation type="unfinished">Ajuste</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1_point_options_filler.cpp" line="59"/>
@@ -31975,7 +31975,7 @@ p, li { espaço em branco: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1_point_options_filler.cpp" line="74"/>
         <source>If checked, angle will be specified by mouse position. Otherwise, specified value will be used.</source>
-        <translation type="unfinished">Se seleccionado, o ângulo será especificado pela posição do rato. Caso contrário, será utilizado o valor especificado.</translation>
+        <translation type="unfinished">Se selecionado, o ângulo será especificado pela posição do rato. Caso contrário, será utilizado o valor especificado.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1_point_options_filler.cpp" line="79"/>
@@ -31990,7 +31990,7 @@ p, li { espaço em branco: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1_point_options_filler.cpp" line="83"/>
         <source>Polyline</source>
-        <translation type="unfinished">Polilina</translation>
+        <translation type="unfinished">Polilinha</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1_point_options_filler.cpp" line="83"/>
@@ -32018,7 +32018,7 @@ p, li { espaço em branco: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="49"/>
         <source>Polyline</source>
-        <translation type="unfinished">Polilina</translation>
+        <translation type="unfinished">Polilinha</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="56"/>
@@ -32173,7 +32173,7 @@ p, li { espaço em branco: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="317"/>
         <source>If checked, angle will be specified by mouse position. Otherwise, specified value will be used.</source>
-        <translation type="unfinished">Se seleccionado, o ângulo será especificado pela posição do rato. Caso contrário, será utilizado o valor especificado.</translation>
+        <translation type="unfinished">Se selecionado, o ângulo será especificado pela posição do rato. Caso contrário, será utilizado o valor especificado.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="320"/>
@@ -32208,7 +32208,7 @@ p, li { espaço em branco: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="388"/>
         <source>If checked, specifies that snap point should be shifted by radius of corners.</source>
-        <translation type="unfinished">Se marcada, especifica que o ponto de encaixe deve ser deslocado pelo raio de cantos.</translation>
+        <translation type="unfinished">Se selecionado, especifica que o ponto de ajuste deve ser deslocado pelo raio dos cantos.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="391"/>
@@ -32228,7 +32228,7 @@ p, li { espaço em branco: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="419"/>
         <source>Snap:</source>
-        <translation type="unfinished">Snap:</translation>
+        <translation type="unfinished">Ajuste:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="438"/>
@@ -32296,7 +32296,7 @@ p, li { espaço em branco: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_filler.cpp" line="57"/>
         <source>If checked, allows to specify rotation angle for rectangle.</source>
-        <translation type="unfinished">Se seleccionado, permite especificar o ângulo de rotação do retângulo.</translation>
+        <translation type="unfinished">Se selecionado, permite especificar o ângulo de rotação do retângulo.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_filler.cpp" line="64"/>
@@ -32311,7 +32311,7 @@ p, li { espaço em branco: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_filler.cpp" line="68"/>
         <source>Polyline</source>
-        <translation type="unfinished">Polilina</translation>
+        <translation type="unfinished">Polilinha</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_filler.cpp" line="68"/>
@@ -32363,7 +32363,7 @@ p, li { espaço em branco: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="62"/>
         <source>Polyline</source>
-        <translation type="unfinished">Polilina</translation>
+        <translation type="unfinished">Polilinha</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="69"/>
@@ -32388,7 +32388,7 @@ p, li { espaço em branco: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="91"/>
         <source>Start Snap:</source>
-        <translation type="unfinished">Iniciar o Snap:</translation>
+        <translation type="unfinished">Ajuste inicial:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="105"/>
@@ -32418,7 +32418,7 @@ p, li { espaço em branco: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="190"/>
         <source>Length of bevel in Y direction. </source>
-        <translation type="unfinished">Comprimento do bisel na direcção Y.</translation>
+        <translation type="unfinished">Comprimento do bisel na direção Y. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="197"/>
@@ -32458,7 +32458,7 @@ p, li { espaço em branco: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="294"/>
         <source>If checked, allows to specify rotation angle for rectangle.</source>
-        <translation type="unfinished">Se seleccionado, permite especificar o ângulo de rotação do retângulo.</translation>
+        <translation type="unfinished">Se selecionado, permite especificar o ângulo de rotação do retângulo.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="297"/>
@@ -32478,7 +32478,7 @@ p, li { espaço em branco: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="318"/>
         <source>If checked, specifies that snap points should be shifted by radius of corners.</source>
-        <translation type="unfinished">Se seleccionado, indica que os pontos de snap devem ser deslocados pelo raio de cantos.</translation>
+        <translation type="unfinished">Se selecionado, indica que os pontos de ajuste devem ser deslocados pelo raio dos cantos.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="321"/>
@@ -32488,7 +32488,7 @@ p, li { espaço em branco: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="340"/>
         <source>Length of bevel in X direction.</source>
-        <translation type="unfinished">Comprimento do bisel na direcção X.</translation>
+        <translation type="unfinished">Comprimento do bisel na direção X.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="347"/>
@@ -32546,7 +32546,7 @@ p, li { espaço em branco: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3_points_options_filler.cpp" line="53"/>
         <source>If checked, allows to specify rotation angle for rectangle.</source>
-        <translation type="unfinished">Se seleccionado, permite especificar o ângulo de rotação do retângulo.</translation>
+        <translation type="unfinished">Se selecionado, permite especificar o ângulo de rotação do retângulo.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3_points_options_filler.cpp" line="60"/>
@@ -32561,7 +32561,7 @@ p, li { espaço em branco: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3_points_options_filler.cpp" line="64"/>
         <source>Polyline</source>
-        <translation type="unfinished">Polilina</translation>
+        <translation type="unfinished">Polilinha</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3_points_options_filler.cpp" line="64"/>
@@ -32584,12 +32584,12 @@ p, li { espaço em branco: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="35"/>
         <source>Polyline</source>
-        <translation type="unfinished">Polilina</translation>
+        <translation type="unfinished">Polilinha</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="86"/>
         <source>If checked, inner angle of quadrangle will be fixed to specified value.</source>
-        <translation type="unfinished">Se seleccionado, o ângulo interno do quadrângulo será fixado ao valor especificado.</translation>
+        <translation type="unfinished">Se selecionado, o ângulo interno do quadrângulo será fixado ao valor especificado.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="89"/>
@@ -32629,7 +32629,7 @@ p, li { espaço em branco: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="194"/>
         <source>If checked, quadrangle will be created instead of rectangle.</source>
-        <translation type="unfinished">Se seleccionado, o quadrângulo será criado em vez de retângulo.</translation>
+        <translation type="unfinished">Se selecionado, o quadrângulo será criado em vez de retângulo.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="197"/>
@@ -32639,7 +32639,7 @@ p, li { espaço em branco: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="248"/>
         <source>If checked, specifies that snap points should be shifted by radius of corners.</source>
-        <translation type="unfinished">Se seleccionado, indica que os pontos de snap devem ser deslocados pelo raio de cantos.</translation>
+        <translation type="unfinished">Se selecionado, indica que os pontos de ajuste devem ser deslocados pelo raio dos cantos.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="251"/>
@@ -32659,12 +32659,12 @@ p, li { espaço em branco: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="290"/>
         <source>Length of bevel in X direction.</source>
-        <translation type="unfinished">Comprimento do bisel na direcção X.</translation>
+        <translation type="unfinished">Comprimento do bisel na direção X.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="315"/>
         <source>Length of bevel in Y direction. </source>
-        <translation type="unfinished">Comprimento do bisel na direcção Y.</translation>
+        <translation type="unfinished">Comprimento do bisel na direção Y. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="322"/>
@@ -32812,7 +32812,7 @@ p, li { espaço em branco: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_abstract_options_filler.cpp" line="86"/>
         <source>If checked, specifies that snap point should be shifted by radius of corners.</source>
-        <translation type="unfinished">Se marcada, especifica que o ponto de encaixe deve ser deslocado pelo raio de cantos.</translation>
+        <translation type="unfinished">Se selecionado, especifica que o ponto de ajuste deve ser deslocado pelo raio dos cantos.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_abstract_options_filler.cpp" line="97"/>
@@ -33242,12 +33242,12 @@ p, li { espaço em branco: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="32"/>
         <source>Move Rotate Options</source>
-        <translation type="unfinished">Mover as Opções de Rodação</translation>
+        <translation type="unfinished">Opções de mover e rodar</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="50"/>
         <source>Adjust secondary angle so the sum of angles (relative rotation angle) is 0. With such setting entity will be moved but not rotated.</source>
-        <translation type="unfinished">Ajustar o ângulo secundário de modo que a soma dos ângulos (ângulo de rotação relativo) é 0. Com tal entidade de configuração será movido, mas não rodado.</translation>
+        <translation type="unfinished">Ajustar o ângulo secundário de modo que a soma dos ângulos (ângulo de rotação relativo) seja 0. Com esta definição, a entidade será movida, mas não rodada.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="53"/>
@@ -33390,7 +33390,7 @@ p, li { espaço em branco: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_filler.cpp" line="73"/>
         <source>If checked, second rotation is around reference point</source>
-        <translation type="unfinished">Se seleccionado, a segunda rotação é em torno do ponto de referência</translation>
+        <translation type="unfinished">Se selecionado, a segunda rotação é em torno do ponto de referência</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_filler.cpp" line="80"/>
@@ -33420,7 +33420,7 @@ p, li { espaço em branco: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_filler.cpp" line="98"/>
         <source>If absolute, reference point will be rotated but entity will be rotated by second angle only, otherwise angles will summ up</source>
-        <translation type="unfinished">Se absoluto, o ponto de referência será girado, mas a entidade será rotacionada apenas por segundo ângulo, caso contrário os ângulos serão somados</translation>
+        <translation type="unfinished">Se absoluto, o ponto de referência será rodado, mas a entidade será rodada apenas pelo segundo ângulo; caso contrário, os ângulos serão somados</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_filler.cpp" line="107"/>
@@ -33478,7 +33478,7 @@ p, li { espaço em branco: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="32"/>
         <source>Move Rotate Options</source>
-        <translation type="unfinished">Mover as Opções de Rodação</translation>
+        <translation type="unfinished">Opções de mover e rodar</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="63"/>
@@ -33518,7 +33518,7 @@ p, li { espaço em branco: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="165"/>
         <source>If absolute, reference point will be rotated but entity will be rotated by second angle only, otherwise angles will summ up</source>
-        <translation type="unfinished">Se absoluto, o ponto de referência será girado, mas a entidade será rotacionada apenas por segundo ângulo, caso contrário os ângulos serão somados</translation>
+        <translation type="unfinished">Se absoluto, o ponto de referência será rodado, mas a entidade será rodada apenas pelo segundo ângulo; caso contrário, os ângulos serão somados</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="168"/>
@@ -33543,7 +33543,7 @@ p, li { espaço em branco: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="199"/>
         <source>If checked, second rotation is around reference point</source>
-        <translation type="unfinished">Se seleccionado, a segunda rotação é em torno do ponto de referência</translation>
+        <translation type="unfinished">Se selecionado, a segunda rotação é em torno do ponto de referência</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="202"/>
@@ -33563,7 +33563,7 @@ p, li { espaço em branco: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="219"/>
         <source>Free selection of factor should be performed by mouse if checked.</source>
-        <translation type="unfinished">A seleção livre do fator deve ser realizada pelo mouse se marcada.</translation>
+        <translation type="unfinished">A seleção livre do fator deve ser realizada pelo rato se marcada.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="222"/>
@@ -33688,7 +33688,7 @@ p, li { espaço em branco: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_filler.cpp" line="41"/>
         <source>If checked, factor will be freely selected by mouse. Otherwise, specified values of factors will be used.</source>
-        <translation type="unfinished">Se seleccionado, o factor será seleccionado livremente pelo rato. Caso contrário, serão utilizados valores de fatores especificados.</translation>
+        <translation type="unfinished">Se selecionado, o fator será selecionado livremente pelo rato. Caso contrário, serão utilizados valores de fatores especificados.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_filler.cpp" line="48"/>
@@ -33698,7 +33698,7 @@ p, li { espaço em branco: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_filler.cpp" line="48"/>
         <source>Scale factor for X axis</source>
-        <translation type="unfinished">Factor de escala para o eixo X</translation>
+        <translation type="unfinished">Fator de escala para o eixo X</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_filler.cpp" line="56"/>
@@ -33708,7 +33708,7 @@ p, li { espaço em branco: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_filler.cpp" line="56"/>
         <source>Scale factor for Y axis</source>
-        <translation type="unfinished">Factor de escala para o eixo Y</translation>
+        <translation type="unfinished">Fator de escala para o eixo Y</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_filler.cpp" line="64"/>
@@ -33766,7 +33766,7 @@ p, li { espaço em branco: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="32"/>
         <source>Move Rotate Options</source>
-        <translation type="unfinished">Mover as Opções de Rodação</translation>
+        <translation type="unfinished">Opções de mover e rodar</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="50"/>
@@ -33811,12 +33811,12 @@ p, li { espaço em branco: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="120"/>
         <source>Scale factor for Y axis</source>
-        <translation type="unfinished">Factor de escala para o eixo Y</translation>
+        <translation type="unfinished">Fator de escala para o eixo Y</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="140"/>
         <source>Scale Factor:</source>
-        <translation type="unfinished">Factor de Escala:</translation>
+        <translation type="unfinished">Fator de Escala:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="147"/>
@@ -33831,7 +33831,7 @@ p, li { espaço em branco: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="169"/>
         <source>Scale factor for X axis</source>
-        <translation type="unfinished">Factor de escala para o eixo X</translation>
+        <translation type="unfinished">Fator de escala para o eixo X</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="176"/>
@@ -33851,7 +33851,7 @@ p, li { espaço em branco: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="209"/>
         <source>If checked, factor will be freely selected by mouse. Otherwise, specified values of factors will be used.</source>
-        <translation type="unfinished">Se seleccionado, o factor será seleccionado livremente pelo rato. Caso contrário, serão utilizados valores de fatores especificados.</translation>
+        <translation type="unfinished">Se selecionado, o fator será selecionado livremente pelo rato. Caso contrário, serão utilizados valores de fatores especificados.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="212"/>
@@ -33899,7 +33899,7 @@ p, li { espaço em branco: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="74"/>
         <source>Polyline</source>
-        <translation>Polilina</translation>
+        <translation>Polilinha</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="81"/>
@@ -33924,7 +33924,7 @@ p, li { espaço em branco: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="109"/>
         <source>Hatch</source>
-        <translation>Hatch</translation>
+        <translation>Trama</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="116"/>
@@ -33952,7 +33952,7 @@ p, li { espaço em branco: pre- wrap; }
     <message>
         <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="45"/>
         <source>Import settings</source>
-        <translation>Configurações de importação</translation>
+        <translation>Importar definições</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="46"/>
@@ -33963,7 +33963,7 @@ p, li { espaço em branco: pre- wrap; }
         <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="110"/>
         <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="121"/>
         <source>Settings Export</source>
-        <translation>Configurações Exportar</translation>
+        <translation>Exportação de definições</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="121"/>
@@ -33973,12 +33973,12 @@ p, li { espaço em branco: pre- wrap; }
     <message>
         <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="111"/>
         <source>Can&apos;t open provided file for writing - check that provided location is writable. Preferences were not exported.</source>
-        <translation>Não é possível abrir o arquivo fornecido para escrita - verifique se o local fornecido é gravável. As preferências não foram exportadas.</translation>
+        <translation>Não é possível abrir o ficheiro fornecido para escrita - verifique se o local fornecido é gravável. As preferências não foram exportadas.</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="46"/>
         <source>LibreCAD settings file (*.%1)</source>
-        <translation>Arquivo de configurações do LibreCAD (*.%1)</translation>
+        <translation>Ficheiro de definições do LibreCAD (*.%1)</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="52"/>
@@ -34015,7 +34015,7 @@ p, li { espaço em branco: pre- wrap; }
         <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="139"/>
         <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="144"/>
         <source>Settings Import Error</source>
-        <translation>Configurações Importar Erro</translation>
+        <translation>Erro na importação de definições</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="140"/>
@@ -34026,7 +34026,7 @@ p, li { espaço em branco: pre- wrap; }
         <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="150"/>
         <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="179"/>
         <source>Settings Import</source>
-        <translation>Configurações Importar</translation>
+        <translation>Importação de definições</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="179"/>
@@ -34101,12 +34101,12 @@ p, li { espaço em branco: pre- wrap; }
     <message>
         <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="150"/>
         <source>No settings groups to import.</source>
-        <translation>Não existem grupos de configurações para importar.</translation>
+        <translation>Não existem grupos de definições para importar.</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="145"/>
         <source>Unexpected format of file, it does not contains LibreCAD preferences.</source>
-        <translation>Formato inesperado do arquivo, ele não contém preferências LibreCAD.</translation>
+        <translation>Formato inesperado do ficheiro, ele não contém preferências LibreCAD.</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/settings/lc_settingsexporter.cpp" line="133"/>
@@ -34119,7 +34119,7 @@ p, li { espaço em branco: pre- wrap; }
     <message>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_shortcutbutton.cpp" line="35"/>
         <source>Click and type the new key sequence.</source>
-        <translation>Clique e digite a nova sequência de chaves.</translation>
+        <translation>Clique e introduza a nova sequência de teclas.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_shortcutbutton.cpp" line="37"/>
@@ -34343,7 +34343,7 @@ p, li { espaço em branco: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="179"/>
         <source>If checked, selected entity will be divided by tick intersection points. </source>
-        <translation type="unfinished">Se seleccionado, a entidade seleccionada será dividida por pontos de intersecção.</translation>
+        <translation type="unfinished">Se selecionado, a entidade selecionada será dividida por pontos de intersecção. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="182"/>
@@ -34378,7 +34378,7 @@ p, li { espaço em branco: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="250"/>
         <source>Defines which point of tick should be placed to intersection point with selected entity.</source>
-        <translation type="unfinished">Define que ponto de tick deve ser colocado no ponto de intersecção com a entidade seleccionada.</translation>
+        <translation type="unfinished">Define que ponto da marca deve ser colocado no ponto de intersecção com a entidade selecionada.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="259"/>
@@ -34388,12 +34388,12 @@ p, li { espaço em branco: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="284"/>
         <source>Offset of tick snap point to intersection point. </source>
-        <translation type="unfinished">Deslocamento do ponto de snap para o ponto de intersecção.</translation>
+        <translation type="unfinished">Deslocamento do ponto de ajuste da marca em relação ao ponto de intersecção. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="291"/>
         <source>Tick snap:</source>
-        <translation type="unfinished">Ajuste de marca:</translation>
+        <translation type="unfinished">Ajuste da marca:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="298"/>
@@ -34453,7 +34453,7 @@ p, li { espaço em branco: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="486"/>
         <source>Angle between tick and selected entity.</source>
-        <translation type="unfinished">Ângulo entre a marcação e a entidade seleccionada.</translation>
+        <translation type="unfinished">Ângulo entre a marcação e a entidade selecionada.</translation>
     </message>
 </context>
 <context>
@@ -34474,7 +34474,7 @@ p, li { espaço em branco: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="34"/>
         <source>If checked, it is possible to specify custom amount of line segments. Otherwise, the value from settings for current drawing will be used.</source>
-        <translation type="unfinished">Se marcada, é possível especificar a quantidade personalizada de segmentos de linha. Caso contrário, o valor das configurações para o desenho atual será usado.</translation>
+        <translation type="unfinished">Se selecionado, é possível especificar um número personalizado de segmentos de linha. Caso contrário, será usado o valor das definições do desenho atual.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="43"/>
@@ -34494,7 +34494,7 @@ p, li { espaço em branco: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="50"/>
         <source>If checked, line segments will be part of polyline. Otherwise, they will be individual lines</source>
-        <translation type="unfinished">Se seleccionado, os segmentos de linha farão parte da polilinha. Caso contrário, serão linhas individuais</translation>
+        <translation type="unfinished">Se selecionado, os segmentos de linha farão parte da polilinha. Caso contrário, serão linhas individuais</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="57"/>
@@ -34572,7 +34572,7 @@ p, li { espaço em branco: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="83"/>
         <source>If checked, it is possible to specify custom amount of line segments. Otherwise, the value from settings for current drawing will be used.</source>
-        <translation type="unfinished">Se marcada, é possível especificar a quantidade personalizada de segmentos de linha. Caso contrário, o valor das configurações para o desenho atual será usado.</translation>
+        <translation type="unfinished">Se selecionado, é possível especificar um número personalizado de segmentos de linha. Caso contrário, será usado o valor das definições do desenho atual.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="86"/>
@@ -34582,7 +34582,7 @@ p, li { espaço em branco: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="93"/>
         <source>If checked, line segments will be part of polyline. Otherwise, they will be individual lines</source>
-        <translation type="unfinished">Se seleccionado, os segmentos de linha farão parte da polilinha. Caso contrário, serão linhas individuais</translation>
+        <translation type="unfinished">Se selecionado, os segmentos de linha farão parte da polilinha. Caso contrário, serão linhas individuais</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="96"/>
@@ -34713,7 +34713,7 @@ p, li { espaço em branco: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="102"/>
         <source>If checked, polyline vertexes are considered as spline points and spline by points will be created. Otherwise, they are considered as control points and ordinary spline will be created.</source>
-        <translation type="unfinished">Se marcado, os vértices da polilinha são considerados pontos da spline e uma spline por pontos será criada. Caso contrário, são considerados pontos de controle e uma spline comum será criada.</translation>
+        <translation type="unfinished">Se marcado, os vértices da polilinha são considerados pontos da spline e uma spline por pontos será criada. Caso contrário, são considerados pontos de controlo e uma spline comum será criada.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="105"/>
@@ -34741,7 +34741,7 @@ p, li { espaço em branco: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_options_filler.cpp" line="40"/>
         <source>If selected, closed spline is created</source>
-        <translation type="unfinished">Se seleccionado, é criada uma spline fechada</translation>
+        <translation type="unfinished">Se selecionado, é criada uma spline fechada</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_options_filler.cpp" line="46"/>
@@ -34779,7 +34779,7 @@ p, li { espaço em branco: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_options_widget.ui" line="94"/>
         <source>If selected, closed spline is created</source>
-        <translation type="unfinished">Se seleccionado, é criada uma spline fechada</translation>
+        <translation type="unfinished">Se selecionado, é criada uma spline fechada</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_options_widget.ui" line="97"/>
@@ -34827,12 +34827,12 @@ p, li { espaço em branco: pre- wrap; }
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_splinepoints.ui" line="75"/>
         <source>If selected, control points are used</source>
-        <translation>Se seleccionado, são utilizados pontos de controlo</translation>
+        <translation>Se selecionado, são utilizados pontos de controlo</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_splinepoints.ui" line="78"/>
         <source>Control Points</source>
-        <translation>Pontos de controle</translation>
+        <translation>Pontos de controlo</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_splinepoints.ui" line="93"/>
@@ -34852,7 +34852,7 @@ p, li { espaço em branco: pre- wrap; }
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="20"/>
         <source>Edit properties of a spline entity, including degree, closed state, control points, and knot vector</source>
-        <translation>Editar propriedades de uma entidade spline, incluindo grau, estado fechado, pontos de controle e vetor de nós</translation>
+        <translation>Editar propriedades de uma entidade spline, incluindo grau, estado fechado, pontos de controlo e vetor de nós</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="47"/>
@@ -34867,7 +34867,7 @@ p, li { espaço em branco: pre- wrap; }
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="86"/>
         <source>Spline Degree ComboBox</source>
-        <translation>Caixa de seleção do grau da spline</translation>
+        <translation>Caixa de combinação do grau da spline</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="89"/>
@@ -34897,7 +34897,7 @@ p, li { espaço em branco: pre- wrap; }
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="141"/>
         <source>Control Points:</source>
-        <translation>Pontos de controle:</translation>
+        <translation>Pontos de controlo:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="177"/>
@@ -34907,12 +34907,12 @@ p, li { espaço em branco: pre- wrap; }
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="180"/>
         <source>Control Points Table</source>
-        <translation>Tabela de pontos de controle</translation>
+        <translation>Tabela de pontos de controlo</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="183"/>
         <source>Edit control points coordinates and weights for the spline</source>
-        <translation>Editar as coordenadas e os pesos dos pontos de controle para o spline</translation>
+        <translation>Editar as coordenadas e os pesos dos pontos de controlo da spline</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="196"/>
@@ -34964,12 +34964,12 @@ p, li { espaço em branco: pre- wrap; }
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="306"/>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="312"/>
         <source>Add a new control point to the spline</source>
-        <translation>Adicionar um novo ponto de controle ao spline</translation>
+        <translation>Adicionar um novo ponto de controlo à spline</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="309"/>
         <source>Add Control Point Button</source>
-        <translation>Adicionar botão de ponto de controle</translation>
+        <translation>Botão Adicionar ponto de controlo</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="325"/>
@@ -34980,7 +34980,7 @@ p, li { espaço em branco: pre- wrap; }
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="328"/>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="334"/>
         <source>Remove the selected control point from the spline</source>
-        <translation>Remover o ponto de controlo seleccionado da spline</translation>
+        <translation>Remover o ponto de controlo selecionado da spline</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="331"/>
@@ -35086,7 +35086,7 @@ p, li { espaço em branco: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/polygon/lc_star_options_widget.ui" line="42"/>
         <source>If checked, symmetric star will be created.</source>
-        <translation type="unfinished">Se seleccionado, a estrela simétrica será criada.</translation>
+        <translation type="unfinished">Se selecionado, a estrela simétrica será criada.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_star_options_widget.ui" line="45"/>
@@ -35096,12 +35096,12 @@ p, li { espaço em branco: pre- wrap; }
     <message>
         <location filename="../src/ui/action_options/polygon/lc_star_options_widget.ui" line="82"/>
         <source>If checked, the star will be drawn as polyline. </source>
-        <translation type="unfinished">Se seleccionado, a estrela será desenhada como polilinha.</translation>
+        <translation type="unfinished">Se selecionado, a estrela será desenhada como polilinha. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_star_options_widget.ui" line="85"/>
         <source>Polyline</source>
-        <translation type="unfinished">Polilina</translation>
+        <translation type="unfinished">Polilinha</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_star_options_widget.ui" line="92"/>
@@ -35246,12 +35246,12 @@ p, li { espaço em branco: pre- wrap; }
     <message>
         <location filename="../src/ui/dialogs/entity/lc_textpropertieseditingwidget.ui" line="41"/>
         <source>Direction</source>
-        <translation>Direcção</translation>
+        <translation>Direção</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_textpropertieseditingwidget.ui" line="47"/>
         <source>Detect base direction from first strong character (UAX#9 P-rules)</source>
-        <translation>Detectar direção base do primeiro caractere forte (UAX#9 P-regras)</translation>
+        <translation>Detetar a direção base a partir do primeiro carácter forte (regras P do UAX#9)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_textpropertieseditingwidget.ui" line="50"/>
@@ -35331,7 +35331,7 @@ p, li { espaço em branco: pre- wrap; }
     <message>
         <location filename="../src/ui/dialogs/entity/lc_textpropertieseditingwidget.ui" line="95"/>
         <source>Text style / font name</source>
-        <translation>Estilo de texto / nome da fonte</translation>
+        <translation>Estilo de texto / nome do tipo de letra</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_textpropertieseditingwidget.cpp" line="46"/>
@@ -35424,7 +35424,7 @@ p, li { espaço em branco: pre- wrap; }
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="75"/>
         <source>Snap Selection</source>
-        <translation>Snap Selecção</translation>
+        <translation>Seleção de ajuste</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="86"/>
@@ -35521,7 +35521,7 @@ p, li { espaço em branco: pre- wrap; }
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="334"/>
         <source>Polyline</source>
-        <translation>Polilina</translation>
+        <translation>Polilinha</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="335"/>
@@ -35843,7 +35843,7 @@ p, li { espaço em branco: pre- wrap; }
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.ui" line="52"/>
         <source>Restores selected user coordinates system.</source>
-        <translation>Restaura o sistema de coordenadas do usuário selecionado.</translation>
+        <translation>Restaura o sistema de coordenadas do utilizador selecionado.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.ui" line="107"/>
@@ -35853,7 +35853,7 @@ p, li { espaço em branco: pre- wrap; }
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.ui" line="121"/>
         <source>Saves currently used coordinate system (it is usefull if UCS comes from saved view)</source>
-        <translation>Salva o sistema de coordenadas atualmente usado (é útil se o UCS vier da visão salva)</translation>
+        <translation>Guarda o sistema de coordenadas atualmente usado (é útil se o UCS vier de uma vista guardada)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.ui" line="80"/>
@@ -35863,12 +35863,12 @@ p, li { espaço em branco: pre- wrap; }
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.ui" line="66"/>
         <source>Edit selected user coordinates name. No-name UCS are temporary and are not saved.</source>
-        <translation>Editar o nome das coordenadas de utilizador seleccionadas. Sem nome UCS são temporários e não são salvos.</translation>
+        <translation>Editar o nome do sistema de coordenadas do utilizador selecionado. Os UCS sem nome são temporários e não são guardados.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.ui" line="148"/>
         <source>Removes selected user coordinates system.</source>
-        <translation>Remove o sistema de coordenadas do utilizador seleccionado.</translation>
+        <translation>Remove o sistema de coordenadas do utilizador selecionado.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.ui" line="151"/>
@@ -35878,7 +35878,7 @@ p, li { espaço em branco: pre- wrap; }
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.ui" line="162"/>
         <source>Settings</source>
-        <translation>Configurações</translation>
+        <translation>Definições</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="230"/>
@@ -35894,8 +35894,8 @@ p, li { espaço em branco: pre- wrap; }
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="351"/>
         <source>Are you sure to delete ALL UCS?
  Warning: this action can NOT be undone!</source>
-        <translation>Você tem certeza de excluir TODOS os UCS?
-Aviso: esta ação NÃO pode ser desfeita!</translation>
+        <translation>Tem a certeza de que pretende eliminar TODOS os UCS?
+ Aviso: esta ação NÃO pode ser anulada!</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="367"/>
@@ -35944,7 +35944,7 @@ Aviso: esta ação NÃO pode ser desfeita!</translation>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="548"/>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="574"/>
         <source>&amp;Save UCS</source>
-        <translation>&amp;Salvar UCS</translation>
+        <translation>&amp;Guardar UCS</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="541"/>
@@ -35969,7 +35969,7 @@ Aviso: esta ação NÃO pode ser desfeita!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="559"/>
         <source>&amp;Rename UCS</source>
-        <translation>&amp; Renomear UCS</translation>
+        <translation>&amp;Renomear UCS</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="560"/>
@@ -35998,7 +35998,7 @@ Aviso: esta ação NÃO pode ser desfeita!</translation>
     <message>
         <location filename="../src/ui/components/status_bar/lc_ucsstatewidget.ui" line="96"/>
         <source>Name of selected coordinate system</source>
-        <translation>Nome do sistema de coordenadas seleccionado</translation>
+        <translation>Nome do sistema de coordenadas selecionado</translation>
     </message>
     <message>
         <location filename="../src/ui/components/status_bar/lc_ucsstatewidget.ui" line="105"/>
@@ -36074,7 +36074,7 @@ Aviso: esta ação NÃO pode ser desfeita!</translation>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="137"/>
         <source>Polyline</source>
-        <translation>Polilina</translation>
+        <translation>Polilinha</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="139"/>
@@ -36202,7 +36202,7 @@ Aviso: esta ação NÃO pode ser desfeita!</translation>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="493"/>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="541"/>
         <source>Grid Status</source>
-        <translation>Estado da grade</translation>
+        <translation>Estado da grelha</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="536"/>
@@ -36217,7 +36217,7 @@ Aviso: esta ação NÃO pode ser desfeita!</translation>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="538"/>
         <source>Mouse</source>
-        <translation>Mouse</translation>
+        <translation>Rato</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="539"/>
@@ -36242,7 +36242,7 @@ Aviso: esta ação NÃO pode ser desfeita!</translation>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="547"/>
         <source>Current size of Grid/MetaGrid. Click to change grid size.</source>
-        <translation>Tamanho atual da Grade/MetaGrid. Clique para mudar o tamanho da grade.</translation>
+        <translation>Tamanho atual da grelha/metagrelha. Clique para mudar o tamanho da grelha.</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="141"/>
@@ -36291,7 +36291,7 @@ Aviso: esta ação NÃO pode ser desfeita!</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="697"/>
         <source>For &quot;classic&quot; statusbar only. </source>
-        <translation>Apenas para a barra de status &quot;clássica&quot;.</translation>
+        <translation>Apenas para a barra de estado &quot;clássica&quot;. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="158"/>
@@ -36323,7 +36323,7 @@ Aviso: esta ação NÃO pode ser desfeita!</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="421"/>
         <source>Accent Color:</source>
-        <translation>Cor do sotaque:</translation>
+        <translation>Cor de destaque:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="367"/>
@@ -36363,12 +36363,12 @@ Aviso: esta ação NÃO pode ser desfeita!</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="384"/>
         <source>Saved Icons Style:</source>
-        <translation>Estilo de Ícones Salvos:</translation>
+        <translation>Estilo de ícones guardado:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="394"/>
         <source>Save Style</source>
-        <translation>Salvar estilo</translation>
+        <translation>Guardar estilo</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="401"/>
@@ -36388,7 +36388,7 @@ Aviso: esta ação NÃO pode ser desfeita!</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="678"/>
         <source>Statusbar</source>
-        <translation>Barra de status</translation>
+        <translation>Barra de estado</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="733"/>
@@ -36398,7 +36398,7 @@ Aviso: esta ação NÃO pode ser desfeita!</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="710"/>
         <source>Font Size</source>
-        <translation>Tamanho da Fonte</translation>
+        <translation>Tamanho do tipo de letra</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="694"/>
@@ -36408,7 +36408,7 @@ Aviso: esta ação NÃO pode ser desfeita!</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="155"/>
         <source>If enabled, specific style of UI may be applied</source>
-        <translation>Se habilitado, estilo específico de UI pode ser aplicado</translation>
+        <translation>Se ativado, estilo específico de UI pode ser aplicado</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="209"/>
@@ -36418,7 +36418,7 @@ Aviso: esta ação NÃO pode ser desfeita!</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="452"/>
         <source>If checked, buttons for picking values from drawing will be flat</source>
-        <translation>Se seleccionado, os botões para seleccionar os valores do desenho serão planos</translation>
+        <translation>Se selecionado, os botões para selecionar os valores do desenho serão planos</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="455"/>
@@ -36446,17 +36446,17 @@ Aviso: esta ação NÃO pode ser desfeita!</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="762"/>
         <source>If selected, title bar for docked dock widgets will be vertical. Otherwise, it will be horizontal.</source>
-        <translation>Se estiver seleccionado, a barra de título dos widgets acoplados será vertical. Caso contrário, será horizontal.</translation>
+        <translation>Se estiver selecionado, a barra de título dos widgets acoplados será vertical. Caso contrário, será horizontal.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="765"/>
         <source>Tile bar is vertical (except CAD widgets)</source>
-        <translation>A barra de peças é vertical (excepto os elementos CAD)</translation>
+        <translation>A barra de título é vertical (exceto nos widgets CAD)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="785"/>
         <source>If not checked, dock areas can only contain a single row (horizontal or vertical) of dock widgets. If checked, the area occupied by a dock widget can be split in either direction to contain more dock widgets.</source>
-        <translation>Se não estiver assinalada, as áreas de acoplagem só poderão conter uma única linha (horizontal ou vertical) de elementos de acoplagem. Se marcada, a área ocupada por um widget de dock pode ser dividida em qualquer direção para conter mais widgets de dock.</translation>
+        <translation>Se não estiver assinalada, as áreas de acoplagem só poderão conter uma única linha (horizontal ou vertical) de elementos de acoplagem. Se assinalada, a área ocupada por um elemento de acoplagem pode ser dividida em qualquer direção para conter mais elementos de acoplagem.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="788"/>
@@ -36466,7 +36466,7 @@ Aviso: esta ação NÃO pode ser desfeita!</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="772"/>
         <source>If checked, the two vertical dock areas on the sides of the main window show their tabs vertically. </source>
-        <translation>Se marcada, as duas áreas de acoplagem vertical nos lados da janela principal mostram suas abas verticalmente.</translation>
+        <translation>Se selecionado, as duas áreas de acoplagem verticais nos lados da janela principal mostram os respetivos separadores na vertical. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="778"/>
@@ -36487,12 +36487,12 @@ Aviso: esta ação NÃO pode ser desfeita!</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.cpp" line="228"/>
         <source>Save Icons Style</source>
-        <translation>Estilo Salvar Ícones</translation>
+        <translation>Guardar o estilo de ícones</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.cpp" line="228"/>
         <source>Enter name of icons style:</source>
-        <translation>Digite o nome do estilo dos ícones:</translation>
+        <translation>Introduza o nome do estilo dos ícones:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.cpp" line="239"/>
@@ -36502,7 +36502,7 @@ Aviso: esta ação NÃO pode ser desfeita!</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.cpp" line="239"/>
         <source>Select style to remove:</source>
-        <translation>Seleccione o estilo a remover:</translation>
+        <translation>Selecione o estilo a remover:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.cpp" line="248"/>
@@ -36545,7 +36545,7 @@ Aviso: esta ação NÃO pode ser desfeita!</translation>
     <message>
         <location filename="../src/ui/main/workspaces/lc_workspacesinvoker.cpp" line="70"/>
         <source>Select workspace to remove:</source>
-        <translation>Seleccione a área de trabalho a remover:</translation>
+        <translation>Selecione a área de trabalho a remover:</translation>
     </message>
 </context>
 <context>
@@ -36554,7 +36554,7 @@ Aviso: esta ação NÃO pode ser desfeita!</translation>
         <location filename="../src/ui/main/workspaces/lc_workspacesmanager.cpp" line="529"/>
         <location filename="../src/ui/main/workspaces/lc_workspacesmanager.cpp" line="537"/>
         <source>Saving Workspaces</source>
-        <translation>Salvando espaços de trabalho</translation>
+        <translation>A guardar os espaços de trabalho</translation>
     </message>
     <message>
         <location filename="../src/ui/main/workspaces/lc_workspacesmanager.cpp" line="530"/>
@@ -36695,12 +36695,12 @@ Gravação automática desligada.</translation>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="289"/>
         <source>Cannot save the file </source>
-        <translation>Não foi possível salvar o arquivo</translation>
+        <translation>Não foi possível guardar o ficheiro </translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="289"/>
         <source> , please check the filename and permissions.</source>
-        <translation>, verifique o nome do arquivo e permissões.</translation>
+        <translation> , verifique o nome do ficheiro e as permissões.</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="858"/>
@@ -36727,19 +36727,19 @@ Gravação automática desligada.</translation>
         <source>Cannot open the file
 %1
 Please check its existence and permissions.</source>
-        <translation>Não foi possível abrir o arquivo
+        <translation>Não foi possível abrir o ficheiro
 %1
 Por favor, verifique a sua existência e permissões.</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1067"/>
         <source>File &apos;%1&apos; does not exist. Opening aborted</source>
-        <translation>O arquivo &apos;%1&apos; não existe. Abertura interrompida</translation>
+        <translation>O ficheiro &apos;%1&apos; não existe. Abertura interrompida</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="271"/>
         <source>Save cancelled</source>
-        <translation>Salvar cancelado</translation>
+        <translation>Gravação cancelada</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="952"/>
@@ -36749,22 +36749,22 @@ Por favor, verifique a sua existência e permissões.</translation>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="406"/>
         <source>&amp;Save</source>
-        <translation>&amp;Salvar</translation>
+        <translation>&amp;Guardar</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="407"/>
         <source>Save &amp;as...</source>
-        <translation>Gravar &amp; as...</translation>
+        <translation>Guardar &amp;como...</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="411"/>
         <source>&amp;Save %1</source>
-        <translation>&amp;Salvar%1</translation>
+        <translation>&amp;Guardar %1</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="412"/>
         <source>Save %1 &amp;as...</source>
-        <translation>Gravar%1 &amp; as...</translation>
+        <translation>Guardar %1 &amp;como...</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1633"/>
@@ -36943,7 +36943,7 @@ The original opens in a separate document. Mixed encodings and raw metadata are 
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="131"/>
         <source>Gray</source>
-        <translation>Cinza</translation>
+        <translation>Cinzento</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="117"/>
@@ -36984,7 +36984,7 @@ The original opens in a separate document. Mixed encodings and raw metadata are 
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="131"/>
         <source>Light Gray</source>
-        <translation>Cinza Claro</translation>
+        <translation>Cinzento-claro</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="111"/>
@@ -37034,7 +37034,7 @@ The original opens in a separate document. Mixed encodings and raw metadata are 
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="131"/>
         <source>Dark Gray</source>
-        <translation>Cinza Escuro</translation>
+        <translation>Cinzento-escuro</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="105"/>
@@ -37061,12 +37061,12 @@ The original opens in a separate document. Mixed encodings and raw metadata are 
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandhistory.cpp" line="32"/>
         <source>&amp;Copy</source>
-        <translation>&amp; Copiar</translation>
+        <translation>&amp;Copiar</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandhistory.cpp" line="39"/>
         <source>Select &amp;All</source>
-        <translation>Selecionar &amp; Todos</translation>
+        <translation>Selecionar &amp;tudo</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandhistory.cpp" line="44"/>
@@ -37121,7 +37121,7 @@ The original opens in a separate document. Mixed encodings and raw metadata are 
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="177"/>
         <source>Enter Command:</source>
-        <translation>Digite comando:</translation>
+        <translation>Introduza o comando:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="250"/>
@@ -37190,7 +37190,7 @@ The original opens in a separate document. Mixed encodings and raw metadata are 
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dimensionlabeleditor.ui" line="38"/>
         <source>Dimension Label:</source>
-        <translation>Rótulo da Cota:</translation>
+        <translation>Etiqueta da cota:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dimensionlabeleditor.ui" line="165"/>
@@ -37346,22 +37346,22 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="14"/>
         <source>Choose Hatch Attributes</source>
-        <translation>Selecione Atributos de Hachura</translation>
+        <translation>Escolher os atributos da trama</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="28"/>
         <source>Scale factor for hatch pattern</source>
-        <translation>Factor de escala para o padrão de hachura</translation>
+        <translation>Fator de escala do padrão de trama</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="55"/>
         <source>Rotation angle for the hatch</source>
-        <translation>Ângulo de rotação da hachura</translation>
+        <translation>Ângulo de rotação da trama</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="62"/>
         <source>If checked, solid will will be used instead of pattern hatch</source>
-        <translation>Se marcada, o sólido será usado em vez do padrão de hachura</translation>
+        <translation>Se selecionado, será usado o preenchimento sólido em vez do padrão de trama</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="65"/>
@@ -37371,17 +37371,17 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="72"/>
         <source>Pattern of hatch</source>
-        <translation>Padrão de hachura</translation>
+        <translation>Padrão da trama</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="101"/>
         <source>If enabled, preview of hatch pattern will be shown below</source>
-        <translation>Se activado, a antevisão do padrão de hachura será mostrada abaixo</translation>
+        <translation>Se ativado, será mostrada abaixo a antevisão do padrão de trama</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="104"/>
         <source>Enable Preview</source>
-        <translation>Activar a Visualização</translation>
+        <translation>Ativar a pré-visualização</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="117"/>
@@ -37391,7 +37391,7 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="124"/>
         <source>Hatched area</source>
-        <translation>Área hachurada</translation>
+        <translation>Área com trama</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.cpp" line="213"/>
@@ -37414,7 +37414,7 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/main/qg_dlginitial.ui" line="231"/>
         <source>Default Unit:</source>
-        <translation>Unidade padrão:</translation>
+        <translation>Unidade predefinida:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/qg_dlginitial.ui" line="143"/>
@@ -37442,12 +37442,12 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="241"/>
         <source>&amp;Height:</source>
-        <translation>&amp; Altura:</translation>
+        <translation>&amp;Altura:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="147"/>
         <source>&amp;Default line spacing</source>
-        <translation>Espaço de linha &amp; padrão</translation>
+        <translation>Espaçamento entre linhas &amp;predefinido</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="150"/>
@@ -37512,7 +37512,7 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="144"/>
         <source>If checked, default line spacing will be used</source>
-        <translation>Se marcada, será usado o espaçamento de linha padrão</translation>
+        <translation>Se selecionado, será usado o espaçamento entre linhas predefinido</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="192"/>
@@ -37527,7 +37527,7 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="289"/>
         <source>Font to use</source>
-        <translation>Fonte a usar</translation>
+        <translation>Tipo de letra a usar</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="631"/>
@@ -37927,7 +37927,7 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1238"/>
         <source>[20D0-20FF] Combining Marks for Symbols</source>
-        <translation>[20D0-20FF] Combinando marcas para símbolos</translation>
+        <translation>[20D0-20FF] Marcas diacríticas combinatórias para símbolos</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1243"/>
@@ -37957,12 +37957,12 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1268"/>
         <source>[2400-243F] Control Pictures</source>
-        <translation>[2400-243F] Fotos de controle</translation>
+        <translation>[2400-243F] Imagens de controlo</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1273"/>
         <source>[2440-245F] Optical Character Recognition</source>
-        <translation>[2440-245F] Reconhecimento óptico de caracteres</translation>
+        <translation>[2440-245F] Reconhecimento ótico de caracteres</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1278"/>
@@ -38147,7 +38147,7 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1458"/>
         <source>[FE20-FE2F] Combining Half Marks</source>
-        <translation>[FE20-FE2F] Combinando meias marcas</translation>
+        <translation>[FE20-FE2F] Meias marcas combinatórias</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1463"/>
@@ -38232,7 +38232,7 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1558"/>
         <source>Selection of character to insert</source>
-        <translation>Selecção do carácter a inserir</translation>
+        <translation>Seleção do carácter a inserir</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1583"/>
@@ -38247,22 +38247,22 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="125"/>
         <source>&amp;Line spacing:</source>
-        <translation>Espaçamento de &amp; linhas:</translation>
+        <translation>Espaçamento entre &amp;linhas:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="113"/>
         <source>Font Settings</source>
-        <translation>Configuração da Fonte</translation>
+        <translation>Definições do tipo de letra</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="267"/>
         <source>Font:</source>
-        <translation>Fonte:</translation>
+        <translation>Tipo de letra:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="656"/>
         <source>Text Direction</source>
-        <translation>Direcção do Texto</translation>
+        <translation>Direção do Texto</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="677"/>
@@ -38300,7 +38300,7 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="723"/>
         <source>&amp;Grid</source>
-        <translation>&amp;Grade</translation>
+        <translation>&amp;Grelha</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1086"/>
@@ -38482,12 +38482,12 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="735"/>
         <source>Grid Settings</source>
-        <translation>Configuração da Grade</translation>
+        <translation>Configuração da Grelha</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="807"/>
         <source>Show Grid</source>
-        <translation>Mostrar grade</translation>
+        <translation>Mostrar grelha</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="929"/>
@@ -38525,7 +38525,7 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="791"/>
         <source>Use orthogonal grid</source>
-        <translation>Usar grade ortogonal</translation>
+        <translation>Usar grelha ortogonal</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="794"/>
@@ -38540,7 +38540,7 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1289"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension Tick size. Set it to 0 will disable the dimension tick. Dimension arrow won&apos;t be drawn when dimension tick is enabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Tamanho da marca de cota. Defini-lo como 0 desactiva a marca de cota. A seta da cota não será desenhada quando a marca de cota estiver activada.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Tamanho da marca de cota. Defini-lo como 0 desativa a marca de cota. A seta da cota não será desenhada quando a marca de cota estiver ativada.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1634"/>
@@ -38620,7 +38620,7 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="576"/>
         <source>Zero base angle relative to the current user coordinate system. Affects polar coordinates input, snap to angle. 0.0 is 3pm.</source>
-        <translation>Ângulo de base zero em relação ao sistema de coordenadas do usuário atual. Afecta a entrada das coordenadas polares, passa para o ângulo. 0,0 é às 15h.</translation>
+        <translation>Ângulo de base zero em relação ao sistema de coordenadas do utilizador atual. Afeta a introdução de coordenadas polares e o ajuste ao ângulo. 0,0 corresponde às 3 horas.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="586"/>
@@ -38635,7 +38635,7 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="600"/>
         <source>Positive direction:</source>
-        <translation>Direcção positiva:</translation>
+        <translation>Direção positiva:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="637"/>
@@ -38650,7 +38650,7 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="753"/>
         <source>Right isometric grid</source>
-        <translation>Grade isométrica direita</translation>
+        <translation>Grelha isométrica direita</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="756"/>
@@ -38670,12 +38670,12 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="804"/>
         <source>If checked, grid will be shown for this drawing</source>
-        <translation>Se seleccionado, a grelha será mostrada para este desenho</translation>
+        <translation>Se selecionado, a grelha será mostrada para este desenho</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="826"/>
         <source>Top isometric grid</source>
-        <translation>Grade isométrica superior</translation>
+        <translation>Grelha isométrica superior</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="829"/>
@@ -38685,17 +38685,17 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="852"/>
         <source>Application Settings</source>
-        <translation>Configurações do aplicativo</translation>
+        <translation>Definições da aplicação</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="858"/>
         <source>Draw Grid:</source>
-        <translation>Desenhar grade:</translation>
+        <translation>Desenhar grelha:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="865"/>
         <source>Unitless Grid:</source>
-        <translation>Grelha Unificada:</translation>
+        <translation>Grelha sem unidades:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="872"/>
@@ -38709,32 +38709,32 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="879"/>
         <source>Automatically Scale Grid:</source>
-        <translation>Escalar automaticamente a grade:</translation>
+        <translation>Escalar automaticamente a grelha:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="886"/>
         <source>Draw Meta Grid:</source>
-        <translation>Desenhar a Meta- Grade:</translation>
+        <translation>Desenhar a metagrelha:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="917"/>
         <source>Grid Spacing</source>
-        <translation>Espaço da Grade</translation>
+        <translation>Espaçamento da grelha</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="955"/>
         <source>Select or enter grid spacing value by X axis</source>
-        <translation>Selecione ou digite o valor do espaçamento da grade pelo eixo X</translation>
+        <translation>Selecione ou introduza o valor do espaçamento da grelha pelo eixo X</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="990"/>
         <source>Select or input grid spacing value by Y axis</source>
-        <translation>Seleccionar ou introduzir o valor do espaçamento da grelha pelo eixo Y</translation>
+        <translation>Selecionar ou introduzir o valor do espaçamento da grelha pelo eixo Y</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1038"/>
         <source>Select or enter values for grid spacing (they will affect Grid drawing and Snap to Grid):</source>
-        <translation>Selecione ou insira valores para o espaçamento da grade (eles afetarão o desenho da grade e Snap to Grid):</translation>
+        <translation>Selecione ou introduza os valores do espaçamento da grelha (afetarão o desenho da grelha e o ajuste à grelha):</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1066"/>
@@ -38766,7 +38766,7 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1132"/>
         <source>Length Factor:</source>
-        <translation>Factor de Comprimento:</translation>
+        <translation>Fator de Comprimento:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1259"/>
@@ -38917,7 +38917,7 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1963"/>
         <source>Active Style</source>
-        <translation>Estilo Activo</translation>
+        <translation>Estilo Ativo</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1969"/>
@@ -38927,12 +38927,12 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1986"/>
         <source>If checked, used non-default arrow blocks will be added during drawing&apos;s saving. Embedding arrow blocks is needed for drawings that are later opened in AutoCAD.  This check may be unset if all editing is performed in LibreCAD. </source>
-        <translation>Se estiver assinalada, os blocos de seta não- padrão usados serão adicionados durante a gravação do desenho. Blocos de setas incorporados são necessários para desenhos que são abertos mais tarde no AutoCAD. Esta verificação pode ser desativada se toda edição for realizada no LibreCAD.</translation>
+        <translation>Se estiver assinalada, os blocos de seta não predefinidos que forem usados serão adicionados ao guardar o desenho. A incorporação dos blocos de seta é necessária para desenhos que sejam depois abertos no AutoCAD.  Esta opção pode ser desativada se toda a edição for feita no LibreCAD. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1989"/>
         <source>Embed arrows blocks on save</source>
-        <translation>Incorpore os blocos de setas ao salvar</translation>
+        <translation>Incorporar os blocos de setas ao guardar</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="3245"/>
@@ -39087,7 +39087,7 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="3548"/>
         <source>&lt;b&gt;Note:&lt;/b&gt; changes of settings made during this invocation of the dialog may be not reflected.</source>
-        <translation>&lt;b&gt;Nota:&lt;/b&gt; mudanças de configurações feitas durante esta invocação do diálogo podem não ser refletidas.</translation>
+        <translation>&lt;b&gt;Nota:&lt;/b&gt; as alterações das definições feitas durante esta invocação da janela poderão não ser refletidas.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="3571"/>
@@ -39114,7 +39114,7 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="74"/>
         <source>&amp;Height:</source>
-        <translation>&amp; Altura:</translation>
+        <translation>&amp;Altura:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="94"/>
@@ -39202,7 +39202,7 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2109"/>
         <source>Line Join:</source>
-        <translation>Ligar à Linha:</translation>
+        <translation>Junção de linhas:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2116"/>
@@ -39268,7 +39268,7 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="3167"/>
         <source>If selected, size will be calculated as percentage of current screen size</source>
-        <translation>Se seleccionado, o tamanho será calculado como percentagem do tamanho actual da tela</translation>
+        <translation>Se selecionado, o tamanho será calculado como percentagem do tamanho atual do ecrã</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="3170"/>
@@ -39306,12 +39306,12 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="412"/>
         <source>Delete Custom Property</source>
-        <translation>Excluir propriedade personalizada</translation>
+        <translation>Eliminar propriedade personalizada</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="413"/>
         <source>Are you sure you&apos;d like to delete property [%1]?</source>
-        <translation>Tem certeza de que gostaria de excluir propriedade [%1]?</translation>
+        <translation>Tem a certeza de que pretende eliminar a propriedade [%1]?</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="432"/>
@@ -39321,7 +39321,7 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="433"/>
         <source>Settings were changed. Are you sure you&apos;d like to skip saving changes (so they will not be saved)?</source>
-        <translation>As configurações foram alteradas. Tem certeza de que gostaria de pular as alterações de gravação (para que elas não sejam salvas)?</translation>
+        <translation>As definições foram alteradas. Tem a certeza de que pretende ignorar as alterações (que não serão guardadas)?</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="467"/>
@@ -39347,7 +39347,7 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="478"/>
         <source>&amp;Delete Style</source>
-        <translation>&amp; Apagar o Estilo</translation>
+        <translation>&amp;Apagar o estilo</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="482"/>
@@ -39358,7 +39358,7 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="483"/>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="487"/>
         <source>&amp;Import Styles</source>
-        <translation>Estilos de &amp; Importação</translation>
+        <translation>&amp;Importar estilos</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="575"/>
@@ -39468,7 +39468,7 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="14"/>
         <source>Application Preferences</source>
-        <translation>Preferências do Aplicativo</translation>
+        <translation>Preferências da aplicação</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5668"/>
@@ -39478,12 +39478,12 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="985"/>
         <source>A&amp;utomatically scale grid</source>
-        <translation>Grade escalonada &amp;automaticamente</translation>
+        <translation>Escalar a grelha &amp;automaticamente</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4909"/>
         <source>&amp;Defaults</source>
-        <translation>&amp;Padrões</translation>
+        <translation>&amp;Predefinições</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1122"/>
@@ -39493,7 +39493,7 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1123"/>
         <source>Please restart the application to apply all changes.</source>
-        <translation>Por favor reinicie o aplicativo para aplicar as modificações.</translation>
+        <translation>Reinicie a aplicação para aplicar todas as alterações.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1144"/>
@@ -39504,12 +39504,12 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1293"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1299"/>
         <source>You must restart LibreCAD to see the changes.</source>
-        <translation>Você deve reiniciar o LibreCAD para ver as alterações.</translation>
+        <translation>Tem de reiniciar o LibreCAD para ver as alterações.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1315"/>
         <source>Select Fonts Folder</source>
-        <translation>Selecionar pasta de fontes</translation>
+        <translation>Selecionar a pasta dos tipos de letra</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1322"/>
@@ -39519,22 +39519,22 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1329"/>
         <source>Select Hatch Patterns Folder</source>
-        <translation>Seleccione a Pasta de Padrões de Hatch</translation>
+        <translation>Selecionar a pasta dos padrões de trama</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1336"/>
         <source>Select Other Settings Folder</source>
-        <translation>Selecionar outra pasta de configurações</translation>
+        <translation>Selecionar outra pasta de definições</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5681"/>
         <source>&amp;GUI Language:</source>
-        <translation>Língua &amp; GUI:</translation>
+        <translation>Língua da &amp;interface:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5701"/>
         <source>&amp;Command Language:</source>
-        <translation>Língua de &amp; Comando:</translation>
+        <translation>Língua dos &amp;comandos:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1201"/>
@@ -39560,12 +39560,12 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5966"/>
         <source>Hatch Patterns:</source>
-        <translation>Padrões de Hatch:</translation>
+        <translation>Padrões de trama:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5990"/>
         <source>Fonts:</source>
-        <translation>Fontes:</translation>
+        <translation>Tipos de letra:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6042"/>
@@ -39575,7 +39575,7 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5182"/>
         <source>Defaults for new drawings</source>
-        <translation>Padrões para novos desenhos</translation>
+        <translation>Predefinições para novos desenhos</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5401"/>
@@ -39600,17 +39600,17 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="761"/>
         <source>St&amp;art Handle Color:</source>
-        <translation>Cor da alça do St&amp;art:</translation>
+        <translation>Cor da alça in&amp;icial:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="872"/>
         <source>&amp;Handle Color:</source>
-        <translation>Cor das &amp;pegas:</translation>
+        <translation>Cor das &amp;alças:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="751"/>
         <source>&amp;End Handle Color:</source>
-        <translation>Cor do &amp; End Handle:</translation>
+        <translation>Cor da alça &amp;final:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="105"/>
@@ -39652,7 +39652,7 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5147"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Temporarily toggle free snapping when the spacebar is pressed and the command window is activated&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt; Alternar temporariamente o snapp livre quando a barra de espaço é pressionada e a janela de comando é ativada&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Alternar temporariamente o ajuste livre quando a barra de espaço é premida e a janela de comandos está ativa&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5277"/>
@@ -39662,7 +39662,7 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5267"/>
         <source>RIght Isometric Grid</source>
-        <translation>Grelha Isométrica RIGHt</translation>
+        <translation>Grelha isométrica direita</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5205"/>
@@ -39678,7 +39678,7 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1255"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1359"/>
         <source>Meta-grid</source>
-        <translation>Meta- grelha</translation>
+        <translation>Metagrelha</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="689"/>
@@ -39700,17 +39700,17 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="975"/>
         <source>Draw meta-grid</source>
-        <translation>Desenhar meta- grelha</translation>
+        <translation>Desenhar a metagrelha</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="965"/>
         <source>Draw grid</source>
-        <translation>Desenhar grade</translation>
+        <translation>Desenhar grelha</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1047"/>
         <source>Simple grid rendering</source>
-        <translation>Renderização de grade simples</translation>
+        <translation>Renderização de grelha simples</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4829"/>
@@ -39725,12 +39725,12 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3725"/>
         <source>&amp;Highlighted entity Color:</source>
-        <translation>Cor da entidade &amp; realçada:</translation>
+        <translation>Cor da entidade &amp;realçada:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3779"/>
         <source>Highlight with screen linewidth in &quot;Draft&quot; mode</source>
-        <translation>Destaque com largura de linha de tela no modo &quot;Draft&quot;</translation>
+        <translation>Realçar com a espessura de linha do ecrã no modo &quot;Rascunho&quot;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3799"/>
@@ -39750,22 +39750,22 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6288"/>
         <source>If selected, the same rendering settings will be applied also to circles.</source>
-        <translation>Se selecionado, as mesmas configurações de renderização também serão aplicadas aos círculos.</translation>
+        <translation>Se selecionado, as mesmas definições de renderização também serão aplicadas aos círculos.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5450"/>
         <source>If checked, the icon for current action will be shown in options toolbar before action&apos;s options</source>
-        <translation>Se seleccionado, o ícone da acção actual será mostrado na barra de opções antes das opções da acção</translation>
+        <translation>Se selecionado, o ícone da ação atual será mostrado na barra de opções antes das opções da ação</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5453"/>
         <source>Show current command icon in options toolbar</source>
-        <translation>Mostrar o ícone de comando actual na barra de opções</translation>
+        <translation>Mostrar o ícone de comando atual na barra de opções</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5407"/>
         <source>If enabled, internal ID of entity will be shown in properties dialog and Entity Info widget.</source>
-        <translation>Se estiver activo, o ID interno da entidade será mostrado na janela de propriedades e no elemento Informação da Entidade.</translation>
+        <translation>Se estiver ativo, o ID interno da entidade será mostrado na janela de propriedades e no elemento Informação da Entidade.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5410"/>
@@ -39780,27 +39780,27 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5094"/>
         <source>Keep modified entities selected</source>
-        <translation>Manter as entidades modificadas seleccionadas</translation>
+        <translation>Manter as entidades modificadas selecionadas</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5785"/>
         <source>If checked, prompt messages of actions will be also shown in bottom statusbar</source>
-        <translation>Se seleccionado, as mensagens de acção serão também mostradas na barra de estado inferior</translation>
+        <translation>Se selecionado, as mensagens de ação serão também mostradas na barra de estado inferior</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5791"/>
         <source>Duplicate prompt messages of actions in statusbar</source>
-        <translation>Duplicar as mensagens de ordem das acções na barra de estado</translation>
+        <translation>Duplicar as mensagens de pedido das ações na barra de estado</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5376"/>
         <source>If checked, new drawing will be created with grid disabled</source>
-        <translation>Se seleccionado, será criado um novo desenho com a grelha desactivada</translation>
+        <translation>Se selecionado, será criado um novo desenho com a grelha desativada</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5379"/>
         <source>Grid is Off </source>
-        <translation>A grade está desligada</translation>
+        <translation>A grelha está desligada </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5841"/>
@@ -39835,7 +39835,7 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5798"/>
         <source>If enabled, drop-down menus may become floating</source>
-        <translation>Se estiver activo, os menus suspensos poderão tornar- se flutuantes</translation>
+        <translation>Se estiver ativo, os menus pendentes poderão tornar-se flutuantes</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5801"/>
@@ -39855,7 +39855,7 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5615"/>
         <source>Clear Settings</source>
-        <translation>Limpar as Configurações</translation>
+        <translation>Limpar as definições</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5636"/>
@@ -39875,7 +39875,7 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1810"/>
         <source>Hide cursor when snapping</source>
-        <translation>Esconder o cursor durante o encaixe</translation>
+        <translation>Esconder o cursor durante o ajuste</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5739"/>
@@ -39891,7 +39891,7 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5769"/>
         <source>Display loading screen</source>
-        <translation>Exibir tela de carregamento</translation>
+        <translation>Mostrar o ecrã de carregamento</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5759"/>
@@ -39901,12 +39901,12 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5592"/>
         <source>Enable CAD dockwidgets</source>
-        <translation>Activar os &apos;dockwidgets&apos; do CAD</translation>
+        <translation>Ativar os painéis CAD</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5582"/>
         <source>Enable CAD toolbars</source>
-        <translation>Activar as barras de ferramentas CAD</translation>
+        <translation>Ativar as barras de ferramentas CAD</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1598"/>
@@ -39923,7 +39923,7 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1288"/>
         <source>Clear settings</source>
-        <translation>Limpar as configurações</translation>
+        <translation>Limpar as definições</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1289"/>
@@ -39943,7 +39943,7 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1064"/>
         <source>Minimal Grid Spacing (p&amp;x):</source>
-        <translation>Espaço mínimo da grade (p&amp;x):</translation>
+        <translation>Espaço mínimo da grelha (p&amp;x):</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4753"/>
@@ -39968,37 +39968,37 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="118"/>
         <source>Inverts scrolling direction when using mouse wheel with Shift key.</source>
-        <translation>Inverte a direção de rolagem ao usar a roda do mouse com a tecla Shift.</translation>
+        <translation>Inverte a direção de deslocamento ao usar a roda do rato com a tecla Shift.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="121"/>
         <source>Invert horizontal scrolling direction</source>
-        <translation>Inverter a direcção de rolagem horizontal</translation>
+        <translation>Inverter a direção do deslocamento horizontal</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="163"/>
         <source>Inverts scrolling direction when using mouse wheel with Ctrl key.</source>
-        <translation>Inverte a direção de rolagem ao usar a roda do mouse com a tecla Ctrl.</translation>
+        <translation>Inverte a direção de deslocamento ao usar a roda do rato com a tecla Ctrl.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="46"/>
         <source>&amp;Graphic View</source>
-        <translation>Vista &amp; Gráfica</translation>
+        <translation>Vista &amp;gráfica</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1571"/>
         <source>Snap</source>
-        <translation>Snap</translation>
+        <translation>Ajuste</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1606"/>
         <source>If checked, snap indicator will be shown</source>
-        <translation>Se marcada, será mostrado o indicador snap</translation>
+        <translation>Se selecionado, será mostrado o indicador de ajuste</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1766"/>
         <source>Type of snap lines indicator</source>
-        <translation>Tipo de indicador de linhas de encaixe</translation>
+        <translation>Tipo do indicador de linhas de ajuste</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1773"/>
@@ -40019,12 +40019,12 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1609"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1619"/>
         <source>Snap Indicator lines</source>
-        <translation>Linhas indicadoras de encaixe</translation>
+        <translation>Linhas do indicador de ajuste</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1583"/>
         <source>Color for snap lines indicator</source>
-        <translation>Cor para indicador de linhas de encaixe</translation>
+        <translation>Cor do indicador de linhas de ajuste</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="280"/>
@@ -40073,32 +40073,32 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1736"/>
         <source>Type of line to draw snap indicator</source>
-        <translation>Tipo de linha para desenhar indicador snap</translation>
+        <translation>Tipo de linha para desenhar o indicador de ajuste</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1743"/>
         <source>Line Width</source>
-        <translation>Largura da Linha</translation>
+        <translation>Espessura da linha</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1750"/>
         <source>Width of line for snap indicator</source>
-        <translation>Largura da linha para o indicador snap</translation>
+        <translation>Espessura da linha do indicador de ajuste</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1726"/>
         <source>If checked, a shap for snap will be drawn</source>
-        <translation>Se seleccionado, será desenhado um &apos;shap&apos; para o &apos;snap&apos;</translation>
+        <translation>Se selecionado, será desenhada uma forma para o ajuste</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1729"/>
         <source>Snap Indicator shape</source>
-        <translation>Forma do indicador de encaixe</translation>
+        <translation>Forma do indicador de ajuste</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1656"/>
         <source>Type of snap indicator shape</source>
-        <translation>Tipo de forma do indicador de encaixe</translation>
+        <translation>Tipo de forma do indicador de ajuste</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1663"/>
@@ -40123,22 +40123,22 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1626"/>
         <source>Snap Indicator Color:</source>
-        <translation>Cor do indicador de encaixe:</translation>
+        <translation>Cor do indicador de ajuste:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1633"/>
         <source>Color for snap indicator shape</source>
-        <translation>Cor para a forma do indicador snap</translation>
+        <translation>Cor da forma do indicador de ajuste</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1967"/>
         <source>Angle snap single step</source>
-        <translation>Ângulo snap único passo</translation>
+        <translation>Passo do ajuste angular</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1974"/>
         <source>Angle between steps for Angle Snap (which is usually by corresponding actions if SHIFT is pressed)</source>
-        <translation>Ângulo entre os passos para o Snap de ângulo (que normalmente é feito pelas ações correspondentes se o SHIFT for pressionado)</translation>
+        <translation>Ângulo entre passos do ajuste angular (normalmente usado pelas ações correspondentes quando SHIFT é premido)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1978"/>
@@ -40183,17 +40183,17 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1807"/>
         <source>If checked, cursor will be hidden during snapping</source>
-        <translation>Se seleccionado, o cursor ficará oculto durante o encaixe</translation>
+        <translation>Se selecionado, o cursor ficará oculto durante o ajuste</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1817"/>
         <source>If checked, snap options (middle, distance) will be shown in snap toolbar instead of tool properties toolbar</source>
-        <translation>Se seleccionado, as opções de snap (média, distância) serão mostradas na barra de ferramentas snap em vez da barra de ferramentas de propriedades da ferramenta</translation>
+        <translation>Se selecionado, as opções de ajuste (meio, distância) serão mostradas na barra de ferramentas de ajuste em vez da barra de propriedades da ferramenta</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1820"/>
         <source>Show snap options in Snap Selection Toolbar</source>
-        <translation>Mostrar as opções de &apos;snap&apos; na Barra de Seleção</translation>
+        <translation>Mostrar as opções de ajuste na barra de seleção de ajuste</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="745"/>
@@ -40208,12 +40208,12 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="809"/>
         <source>Color of end handle for entity</source>
-        <translation>Cor da pega final para a entidade</translation>
+        <translation>Cor da alça final da entidade</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="771"/>
         <source>Color for start handle of entity</source>
-        <translation>Cor da pega inicial da entidade</translation>
+        <translation>Cor da alça inicial da entidade</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="854"/>
@@ -40228,7 +40228,7 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="933"/>
         <source>If enabled, entity handles are highlighted on hover (requires &quot;highlight entities on hover&quot; to be enabled)</source>
-        <translation>Se activado, os manipuladores de entidade são realçados no hover (requer que as &quot;entidades de realce no hover&quot; sejam activadas)</translation>
+        <translation>Se ativado, as alças da entidade são realçadas ao passar o rato (requer que &quot;realçar entidades ao passar o rato&quot; esteja ativado)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="939"/>
@@ -40249,7 +40249,7 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="294"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="654"/>
         <source>Color of line for overlay selection box if box is inverted (from right to left)</source>
-        <translation>Cor da linha para sobreposição da caixa de seleção se a caixa estiver invertida (da direita para a esquerda)</translation>
+        <translation>Cor da linha da caixa de seleção sobreposta quando a caixa está invertida (da direita para a esquerda)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="319"/>
@@ -40259,7 +40259,7 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="486"/>
         <source>Color for filling inverted overlay selection box</source>
-        <translation>Cor para preencher a caixa de seleção de sobreposição invertida</translation>
+        <translation>Cor de preenchimento da caixa de seleção sobreposta invertida</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="427"/>
@@ -40269,7 +40269,7 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="448"/>
         <source>Fill color for overlay selection box</source>
-        <translation>Preencher a cor da caixa de seleção sobreposição</translation>
+        <translation>Cor de preenchimento da caixa de seleção sobreposta</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="441"/>
@@ -40294,7 +40294,7 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="414"/>
         <source>Transparency for overlay selection box. Smaller value - more transparent.</source>
-        <translation>Transparência para caixa de seleção sobreposição. Valor menor - mais transparente.</translation>
+        <translation>Transparência da caixa de seleção sobreposta. Valor menor - mais transparente.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="71"/>
@@ -40304,32 +40304,32 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="102"/>
         <source>If checked,  objects will be painted smoother due to anti-aliasing</source>
-        <translation>Se seleccionado, os objectos serão pintados mais suaves devido ao anti- aliasing</translation>
+        <translation>Se selecionado, os objetos serão desenhados de forma mais suave graças à suavização de serrilhado (anti-aliasing)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="214"/>
         <source>If selected, drawing will be panned automatically if mouse is near drawing view boundaries</source>
-        <translation>Se seleccionado, a vista do desenho será deslocada automaticamente se o rato estiver perto dos limites da vista de desenho</translation>
+        <translation>Se selecionado, a vista do desenho será deslocada automaticamente se o rato estiver perto dos limites da vista de desenho</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="166"/>
         <source>Invert vertical scrolling direction</source>
-        <translation>Inverter direção de rolagem vertical</translation>
+        <translation>Inverter a direção do deslocamento vertical</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="605"/>
         <source>Backgr&amp;ound Color:</source>
-        <translation>Cor do &amp; fundo:</translation>
+        <translation>Cor do &amp;fundo:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="198"/>
         <source>Inverts zoom direction when using mouse wheel.</source>
-        <translation>Inverte a direção do zoom ao usar a roda do mouse.</translation>
+        <translation>Inverte a direção do zoom ao usar a roda do rato.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="201"/>
         <source>Invert zoom direction</source>
-        <translation>Inverter a direcção do zoom</translation>
+        <translation>Inverter a direção do zoom</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="526"/>
@@ -40339,7 +40339,7 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="179"/>
         <source>If disabled, more sequental painting algorithm is used that may deliver better antialising results</source>
-        <translation>Se desabilitado, mais algoritmo de pintura sequental é usado que pode fornecer melhores resultados de antialisação</translation>
+        <translation>Se desativado, é usado um algoritmo de desenho mais sequencial, que pode dar melhores resultados de suavização de serrilhado</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="185"/>
@@ -40354,27 +40354,27 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="86"/>
         <source>Defines whether scrollbar should be shown in graphic view</source>
-        <translation>Define se a barra de rolagem deve ser mostrada na visão gráfica</translation>
+        <translation>Define se a barra de deslocamento deve ser mostrada na vista gráfica</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="574"/>
         <source>Color for selected entities</source>
-        <translation>Cor para as entidades seleccionadas</translation>
+        <translation>Cor para as entidades selecionadas</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="258"/>
         <source>Default zoom factor:</source>
-        <translation>Fator de zoom padrão:</translation>
+        <translation>Fator de zoom predefinido:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="236"/>
         <source>Controls how quickly the scroll wheel will zoom in &amp; out. Higher values - faster zoom.</source>
-        <translation>Controla a rapidez com que a roda de rolagem irá aumentar e diminuir. Valores mais elevados - zoom mais rápido.</translation>
+        <translation>Controla a rapidez do zoom com a roda do rato. Valores mais elevados - zoom mais rápido.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="147"/>
         <source>On mouse wheel zoom, pan to the middle of the window.</source>
-        <translation>No zoom do mouse roda, pan para o meio da janela.</translation>
+        <translation>No zoom com a roda do rato, deslocar a vista para o meio da janela.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="150"/>
@@ -40384,7 +40384,7 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="134"/>
         <source>First time only pan</source>
-        <translation>Primeira vez apenas pan</translation>
+        <translation>Só deslocar a vista na primeira vez</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="950"/>
@@ -40406,12 +40406,12 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1261"/>
         <source>Type of Meta Grid line if grid is drawn as points</source>
-        <translation>Tipo de linha Meta Grid se a grelha for desenhada como pontos</translation>
+        <translation>Tipo de linha da metagrelha, se a grelha for desenhada com pontos</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1268"/>
         <source>Width of Meta Grid line if grid is drawn by points</source>
-        <translation>Largura da linha Meta Grid se a grelha for desenhada por pontos</translation>
+        <translation>Espessura da linha da metagrelha, se a grelha for desenhada com pontos</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1284"/>
@@ -40424,18 +40424,18 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1395"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1543"/>
         <source>Line Width:</source>
-        <translation>Largura da Linha:</translation>
+        <translation>Espessura da linha:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1298"/>
         <source>Color for Meta Grid lines if grid drawn by points</source>
-        <translation>Cor para as linhas Meta Grid se a grelha for desenhada por pontos</translation>
+        <translation>Cor das linhas da metagrelha, se a grelha for desenhada com pontos</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1316"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1420"/>
         <source>&amp;Meta-grid Color:</source>
-        <translation>Cor da grelha &amp; Meta:</translation>
+        <translation>Cor da &amp;metagrelha:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1353"/>
@@ -40445,7 +40445,7 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1462"/>
         <source>Width of grid lines</source>
-        <translation>Largura das linhas da grelha</translation>
+        <translation>Espessura das linhas da grelha</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1478"/>
@@ -40460,17 +40460,17 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1365"/>
         <source>Type of Meta Grid lines if grid is drawn by lines</source>
-        <translation>Tipo de linhas Meta Grid se a grade for desenhada por linhas</translation>
+        <translation>Tipo de linhas da metagrelha, se a grelha for desenhada com linhas</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1372"/>
         <source>Width of Meta Grid lines if grid is drawn by lines</source>
-        <translation>Largura das linhas Meta Grid se a grelha for desenhada por linhas</translation>
+        <translation>Espessura das linhas da metagrelha, se a grelha for desenhada com linhas</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1402"/>
         <source>Color of Meta Grid if grid drawn by lines</source>
-        <translation>Cor da Meta Grelha se a grelha for desenhada por linhas</translation>
+        <translation>Cor da metagrelha, se a grelha for desenhada com linhas</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3272"/>
@@ -40569,7 +40569,7 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3683"/>
         <source>If checked, relative zero marker will not be drawn</source>
-        <translation>Se seleccionado, o marcador relativo zero não será desenhado</translation>
+        <translation>Se selecionado, o marcador do zero relativo não será desenhado</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3614"/>
@@ -40579,37 +40579,37 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="956"/>
         <source>Grid General</source>
-        <translation>Grade Geral</translation>
+        <translation>Grelha: geral</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="962"/>
         <source>If checked, grid wil be drawn</source>
-        <translation>Se seleccionado, a grelha será desenhada</translation>
+        <translation>Se selecionado, a grelha será desenhada</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1054"/>
         <source>If checked, grid will not be adjusted to current units of drawing</source>
-        <translation>Se marcada, a grade não será ajustada às unidades atuais de desenho</translation>
+        <translation>Se marcada, a grelha não será ajustada às unidades atuais de desenho</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1057"/>
         <source>Unitless grid</source>
-        <translation>Grade sem unidade</translation>
+        <translation>Grelha sem unidade</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1005"/>
         <source>If checked, grid will not be drawn within view pan by mouse operation</source>
-        <translation>Se seleccionado, a grelha não será desenhada dentro da área de visualização pela operação do rato</translation>
+        <translation>Se selecionado, a grelha não será desenhada durante o deslocamento da vista com o rato</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1008"/>
         <source>Don&apos;t draw grid on panning</source>
-        <translation>Não desenhe grades em panning</translation>
+        <translation>Não desenhar a grelha durante o deslocamento da vista</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1044"/>
         <source>If checked, Meta Grid lines will be drawn on top of grid. Simple grid is faster yet is less visually lean.</source>
-        <translation>Se marcada, as linhas da Meta Grid serão desenhadas no topo da grade. A grelha simples é mais rápida, mas é menos magra visualmente.</translation>
+        <translation>Se selecionado, as linhas da metagrelha serão desenhadas por cima da grelha. A grelha simples é mais rápida, mas visualmente menos leve.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1096"/>
@@ -40629,17 +40629,17 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="982"/>
         <source>If checked, the grid will be scalled automatically</source>
-        <translation>Se marcada, a grade será chamada automaticamente</translation>
+        <translation>Se selecionado, a grelha será escalada automaticamente</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1077"/>
         <source>&amp;Grid type:</source>
-        <translation>Tipo de &amp; grade:</translation>
+        <translation>Tipo de &amp;grelha:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="972"/>
         <source>If checked, metagrid will be drawn as part of grid drawing.</source>
-        <translation>Se marcada, a metagrid será desenhada como parte do desenho da grade.</translation>
+        <translation>Se selecionado, a metagrelha será desenhada como parte do desenho da grelha.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="995"/>
@@ -40649,7 +40649,7 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="998"/>
         <source>Draw vertical lines for &quot;Top&quot; isometric grid</source>
-        <translation>Desenhar linhas verticais para a grelha isométrica &quot;Top&quot;</translation>
+        <translation>Desenhar linhas verticais na grelha isométrica &quot;Superior&quot;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3700"/>
@@ -40688,7 +40688,7 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4723"/>
         <source>If checked, more informative and explaining preview will be drawn for operations</source>
-        <translation>Se seleccionado, será desenhada uma antevisão mais informativa e explicativa para as operações</translation>
+        <translation>Se selecionado, será desenhada uma antevisão mais informativa e explicativa para as operações</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4766"/>
@@ -40698,7 +40698,7 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4806"/>
         <source>Color for selected preview reference entiites</source>
-        <translation>Cor para os pontos de referência de antevisão seleccionados</translation>
+        <translation>Cor das entidades de referência selecionadas na antevisão</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4859"/>
@@ -40713,7 +40713,7 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3786"/>
         <source>Visualize the entity under the mouse cursor</source>
-        <translation>Visualizar a entidade sob o cursor do mouse</translation>
+        <translation>Visualizar a entidade sob o cursor do rato</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3789"/>
@@ -40728,7 +40728,7 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3776"/>
         <source>If selected, entity will be highlighted in &quot;Draft&quot; mode using entity&apos;s linewidth instead of 1px</source>
-        <translation>Se selecionado, a entidade será destacada no modo &quot;Draft&quot; usando a largura de linha da entidade em vez de 1px</translation>
+        <translation>Se selecionado, a entidade será realçada no modo &quot;Rascunho&quot; com a espessura de linha da entidade em vez de 1 px</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3881"/>
@@ -40768,7 +40768,7 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6422"/>
         <source>If height of text line on the screen is less than specified pixels, placholder will be drawn instead of text</source>
-        <translation>Se a altura da linha de texto na tela for inferior aos pixels especificados, o placholder será desenhado em vez do texto</translation>
+        <translation>Se a altura da linha de texto no ecrã for inferior aos píxeis especificados, será desenhado um marcador de posição em vez do texto</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6362"/>
@@ -40823,7 +40823,7 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6163"/>
         <source>If selected, text baselines will be drawn instead of the text letters (similar to draft mode) during panning. </source>
-        <translation>Se seleccionado, as linhas de base do texto serão desenhadas em vez das letras do texto (semelhante ao modo de rascunho) durante o deslocamento da vista. </translation>
+        <translation>Se selecionado, as linhas de base do texto serão desenhadas em vez das letras do texto (semelhante ao modo de rascunho) durante o deslocamento da vista. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6166"/>
@@ -40833,7 +40833,7 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6173"/>
         <source>If selected, text baselines will be drawn instead of the text letters (similar to draft mode) in preview. </source>
-        <translation>Se seleccionado, as linhas de base do texto serão desenhadas em vez das letras de texto (semelhantes ao modo de esboço) na antevisão.</translation>
+        <translation>Se selecionado, as linhas de base do texto serão desenhadas em vez das letras do texto (semelhante ao modo de rascunho) na antevisão. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6176"/>
@@ -40858,12 +40858,12 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3054"/>
         <source>Font that should be used for drawing elements of informational cursor.</source>
-        <translation>Fonte que deve ser usada para desenhar elementos do cursor informacional.</translation>
+        <translation>Tipo de letra a usar para desenhar os elementos do cursor informativo.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3061"/>
         <source>If checked, components of coordinate will be drawn in one line. Otherwise, each component will be on own line. </source>
-        <translation>Se seleccionado, os componentes da coordenada serão desenhados numa linha. Caso contrário, cada componente estará em linha própria.</translation>
+        <translation>Se selecionado, os componentes da coordenada serão desenhados numa linha. Caso contrário, cada componente estará em linha própria. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3064"/>
@@ -40877,22 +40877,22 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3071"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3571"/>
         <source>Font:</source>
-        <translation>Fonte:</translation>
+        <translation>Tipo de letra:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3078"/>
         <source>If checked, labels for coordinate components will be shown. Otherwise, standard form of coordinates will be displayed.</source>
-        <translation>Se marcada, serão mostradas etiquetas para componentes de coordenadas. Caso contrário, a forma padrão de coordenadas será exibida.</translation>
+        <translation>Se selecionado, serão mostradas etiquetas para os componentes das coordenadas. Caso contrário, as coordenadas serão mostradas na forma normal.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3081"/>
         <source>Show labels for coordinates</source>
-        <translation>Mostrar os rótulos das coordenadas</translation>
+        <translation>Mostrar as etiquetas das coordenadas</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3088"/>
         <source>Font size, in points</source>
-        <translation>Tamanho da fonte, em pontos</translation>
+        <translation>Tamanho do tipo de letra, em pontos</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="719"/>
@@ -40909,17 +40909,17 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3107"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3515"/>
         <source>Font size:</source>
-        <translation>Tamanho da fonte:</translation>
+        <translation>Tamanho do tipo de letra:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1827"/>
         <source>If checked, &quot;Snap To Grid&quot; is ignored if grid is not drawn.</source>
-        <translation>Se selecionado, &quot;Snap To Grid&quot; é ignorado se a grade não for desenhada.</translation>
+        <translation>Se selecionado, &quot;Ajustar à grelha&quot; é ignorado se a grelha não for desenhada.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1830"/>
         <source>Ignore &quot;Snap to Grid&quot; if grid is not drawn</source>
-        <translation>Ignorar &quot;Snap to Grid&quot; se a grade não for desenhada</translation>
+        <translation>Ignorar &quot;Ajustar à grelha&quot; se a grelha não for desenhada</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3114"/>
@@ -40934,12 +40934,12 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3038"/>
         <source>If checked, informational cursor will be enabled and shown where applicable.</source>
-        <translation>Se estiver assinalada, o cursor informacional será activado e mostrado, quando aplicável.</translation>
+        <translation>Se estiver assinalada, o cursor informacional será ativado e mostrado, quando aplicável.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3041"/>
         <source>Enable Informational Cursor</source>
-        <translation>Activar o Cursor de Informação</translation>
+        <translation>Ativar o Cursor de Informação</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2742"/>
@@ -40964,12 +40964,12 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2884"/>
         <source>Color for absolute snap coordinates.</source>
-        <translation>Cor para coordenadas absolutas.</translation>
+        <translation>Cor das coordenadas absolutas do ponto de ajuste.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2794"/>
         <source>If checked, relative distance and angle from relative zero point to snap point will be shown.</source>
-        <translation>Se marcada, será mostrada a distância relativa e o ângulo do ponto zero relativo ao ponto de encaixe.</translation>
+        <translation>Se selecionado, serão mostrados a distância e o ângulo relativos do ponto zero relativo ao ponto de ajuste.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2797"/>
@@ -40979,22 +40979,22 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2907"/>
         <source>Color for snap type/restriction</source>
-        <translation>Cor para tipo/restrição de encaixe</translation>
+        <translation>Cor do tipo/restrição de ajuste</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2844"/>
         <source>If checked, the prompt of the active command will be shown.</source>
-        <translation>Se estiver assinalada, será mostrada a prompt do comando activo.</translation>
+        <translation>Se estiver assinalada, será mostrada a mensagem de pedido do comando ativo.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2847"/>
         <source>Show active command prompt</source>
-        <translation>Mostrar o prompt de comando activo</translation>
+        <translation>Mostrar a mensagem de pedido do comando ativo</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2771"/>
         <source>If checked, show relative coordinate</source>
-        <translation>Se seleccionado, mostrar a coordenada relativa</translation>
+        <translation>Se selecionado, mostrar a coordenada relativa</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2777"/>
@@ -41004,12 +41004,12 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2854"/>
         <source>If checked, information about the type of snap and restrictions will be shown for snap point (if any)</source>
-        <translation>Se seleccionado, serão mostradas informações sobre o tipo de snap e restrições para o ponto de snap (se existir)</translation>
+        <translation>Se selecionado, serão mostradas informações sobre o tipo de ajuste e as restrições do ponto de ajuste (se existirem)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2857"/>
         <source>Show snap info /restriction</source>
-        <translation>Mostrar informações/restrições</translation>
+        <translation>Mostrar as informações/restrições de ajuste</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2973"/>
@@ -41024,7 +41024,7 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2784"/>
         <source>If checked, absolute position of snap point will be shown.</source>
-        <translation>Se marcada, será mostrada a posição absoluta do ponto de encaixe.</translation>
+        <translation>Se selecionado, será mostrada a posição absoluta do ponto de ajuste.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2787"/>
@@ -41039,12 +41039,12 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3015"/>
         <source>Show active command name</source>
-        <translation>Mostrar o nome do comando activo</translation>
+        <translation>Mostrar o nome do comando ativo</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3022"/>
         <source>If checked, short overview properties of the entity&apos;s that is catched for selection will be shown. </source>
-        <translation>Se marcada, serão mostradas as propriedades curtas de visão geral das entidades que são capturadas para seleção.</translation>
+        <translation>Se selecionado, será mostrado um resumo das propriedades da entidade capturada para seleção. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3028"/>
@@ -41059,7 +41059,7 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5490"/>
         <source>If checked, close cross button will be shown in tabs for drawings if drawings are in Tab mode</source>
-        <translation>Se seleccionado, o botão de fechar cruz será mostrado nas abas para desenhos, se os desenhos estiverem no modo de aba</translation>
+        <translation>Se selecionado, será mostrado o botão de fechar (cruz) nos separadores dos desenhos, se os desenhos estiverem no modo de separadores</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5493"/>
@@ -41075,17 +41075,17 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5516"/>
         <source>Active Tab</source>
-        <translation>Página Activa</translation>
+        <translation>Separador ativo</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5440"/>
         <source>If checked, keyboard shortcut will be shown in tooltip for action</source>
-        <translation>Se seleccionado, o atalho do teclado será mostrado na dica para a acção</translation>
+        <translation>Se selecionado, o atalho de teclado será mostrado na descrição da ação</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5443"/>
         <source>Show keyboard shortcuts in actions tooltips</source>
-        <translation>Mostrar atalhos de teclado nas dicas de ações</translation>
+        <translation>Mostrar os atalhos de teclado nas descrições das ações</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4994"/>
@@ -41095,7 +41095,7 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5460"/>
         <source>If checked, location of dialog will not be saved, but size will</source>
-        <translation>Se seleccionado, a localização da janela não será gravada, mas o tamanho irá</translation>
+        <translation>Se selecionado, a posição da janela não será guardada, mas o tamanho sim</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5466"/>
@@ -41110,7 +41110,7 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5524"/>
         <source>If checked, dialogs will be positioned and resized to position/size of last invocation.</source>
-        <translation>Se seleccionado, as janelas serão posicionadas e redimensionadas para a posição/tamanho da última invocação.</translation>
+        <translation>Se selecionado, as janelas serão posicionadas e redimensionadas para a posição/tamanho da última invocação.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5527"/>
@@ -41125,7 +41125,7 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5140"/>
         <source>Evaluate commands when SPACE BAR is pressed</source>
-        <translation>Avaliar comandos quando a barra de espaço é pressionada</translation>
+        <translation>Avaliar comandos quando a barra de espaço é premida</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5234"/>
@@ -41145,12 +41145,12 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5766"/>
         <source>Defines whether splash screen will be shown on startup</source>
-        <translation>Define se a tela inicial será exibida na inicialização</translation>
+        <translation>Define se o ecrã inicial será mostrado no arranque</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5736"/>
         <source>Controls default mode for drawings</source>
-        <translation>Controla o modo padrão dos desenhos</translation>
+        <translation>Controla o modo predefinido dos desenhos</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5756"/>
@@ -41160,7 +41160,7 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1934"/>
         <source>Angle Snap</source>
-        <translation>Ângulo Snap</translation>
+        <translation>Ajuste angular</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1993"/>
@@ -41195,18 +41195,18 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3529"/>
         <source>Font that should be used for drawing name of axis in coordinate system zero.</source>
-        <translation>Fonte que deve ser usada para desenhar o nome do eixo no sistema de coordenadas zero.</translation>
+        <translation>Tipo de letra a usar para desenhar o nome dos eixos no zero do sistema de coordenadas.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="716"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3552"/>
         <source>Font size that should be used for drawing name of axis in coordinate system zero.</source>
-        <translation>Tamanho da fonte que deve ser usado para desenhar o nome do eixo no sistema de coordenadas zero.</translation>
+        <translation>Tamanho do tipo de letra a usar para desenhar o nome dos eixos no zero do sistema de coordenadas.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3588"/>
         <source>If selected, marker for coodinate system will be shown in zero point of current user coordinates system. </source>
-        <translation>Se selecionado, o marcador para sistema de coodinato será mostrado no ponto zero do sistema de coordenadas do usuário atual.</translation>
+        <translation>Se selecionado, o marcador do sistema de coordenadas será mostrado no ponto zero do sistema de coordenadas do utilizador atual. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="675"/>
@@ -41216,12 +41216,12 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="682"/>
         <source>Font that should be used for draft mode marker</source>
-        <translation>Fonte que deve ser usada para o marcador de modo de rascunho</translation>
+        <translation>Tipo de letra a usar para o marcador do modo de rascunho</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="672"/>
         <source>If selected, in draft mode text label will be drawin in view corners</source>
-        <translation>Se seleccionado, no modo de rascunho a legenda de texto será desenhada nos cantos das janelas</translation>
+        <translation>Se selecionado, no modo de rascunho será desenhada uma legenda de texto nos cantos da vista</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3509"/>
@@ -41241,7 +41241,7 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3578"/>
         <source>If selected and view is in user coordinate system, the marker for coodinate system will be shown in zero point of world coordinates system. </source>
-        <translation>Se selecionado e vista estiver no sistema de coordenadas do usuário, o marcador para sistema de coodinato será mostrado no ponto zero do sistema de coordenadas do mundo.</translation>
+        <translation>Se selecionado e a vista estiver no sistema de coordenadas do utilizador, o marcador do sistema de coordenadas será mostrado no ponto zero do sistema de coordenadas global. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3581"/>
@@ -41266,7 +41266,7 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3171"/>
         <source>Only for non-defaults</source>
-        <translation>Apenas para não- padrões</translation>
+        <translation>Apenas para valores não predefinidos</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3209"/>
@@ -41301,37 +41301,37 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1146"/>
         <source>Decimal meta-grid every:</source>
-        <translation>Meta- grelha decimal a cada:</translation>
+        <translation>Metagrelha decimal a cada:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1153"/>
         <source>Controls the frequency of major grid lines compared to minor grid lines.</source>
-        <translation>Controla a frequência das principais linhas de grade em comparação com linhas de grade menores.</translation>
+        <translation>Controla a frequência das linhas principais da grelha em relação às linhas secundárias.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1940"/>
         <source>Radius of arc within angle snap mark.</source>
-        <translation>Raio de arco dentro ângulo snap marca.</translation>
+        <translation>Raio do arco na marca do ajuste angular.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1577"/>
         <source>Snap Marker</source>
-        <translation>Marcador de Ajuste</translation>
+        <translation>Marcador de ajuste</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1853"/>
         <source>Advanced Snap Fine-tuning settings</source>
-        <translation>Configurações avançadas de ajuste fino</translation>
+        <translation>Definições avançadas de afinação do ajuste</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1905"/>
         <source>Snap on Entity &quot;Free snap&quot; distance switch:</source>
-        <translation>Distância de comutação de Encaixar na entidade para &quot;Ajuste livre&quot;:</translation>
+        <translation>Distância de comutação de &quot;Ajustar à entidade&quot; para &quot;Ajuste livre&quot;:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1912"/>
         <source>Snap on entity will be invoked if it is enabled and the distance between mouse and snapped point is larger than specified value.</source>
-        <translation>O encaixe na entidade será invocado se estiver activo e a distância entre o rato e o ponto encaixado for maior do que o valor especificado.</translation>
+        <translation>&quot;Ajustar à entidade&quot; será invocado se estiver ativo e a distância entre o rato e o ponto ajustado for maior do que o valor especificado.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1915"/>
@@ -41346,22 +41346,22 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1898"/>
         <source>Min grid cell snap factor:</source>
-        <translation>Factor de snap da célula da grelha mínima:</translation>
+        <translation>Fator mínimo de ajuste da célula da grelha:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1872"/>
         <source>Snap distance (in pixels) for catching entities.</source>
-        <translation>Distância de encaixe (em pixels) para capturar entidades.</translation>
+        <translation>Distância de ajuste (em píxeis) para capturar entidades.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1875"/>
         <source>Catch entities Snap Distance:</source>
-        <translation>Entidades de captura Distância do Snap:</translation>
+        <translation>Distância de ajuste para capturar entidades:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1882"/>
         <source>Grid cell factor used for snap to grid.</source>
-        <translation>Fator de célula da grelha usado no encaixe à grelha.</translation>
+        <translation>Fator da célula da grelha usado no ajuste à grelha.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3153"/>
@@ -41377,7 +41377,7 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3206"/>
         <source>If enabled, angles basis marker will be shown in the orign of coordinates system</source>
-        <translation>Se activado, o marcador de base dos ângulos será mostrado no sistema de coordenadas</translation>
+        <translation>Se ativado, o marcador da base dos ângulos será mostrado na origem do sistema de coordenadas</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3256"/>
@@ -41407,27 +41407,27 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5427"/>
         <source>If selected, separate menu will be created for each group of entity-related commands. Otherwise, these command will be under the same menu. </source>
-        <translation>Se seleccionado, será criado um menu separado para cada grupo de comandos relacionados com a entidade. Caso contrário, estes comandos estarão sob o mesmo menu.</translation>
+        <translation>Se selecionado, será criado um menu separado para cada grupo de comandos relacionados com a entidade. Caso contrário, estes comandos estarão sob o mesmo menu. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5157"/>
         <source>If enabled, it is possible to do with keys - zooming via +/-, scrolling via arrow keys, moving selected entities position via arrow keys and SHIFT/CTRL modifiers.</source>
-        <translation>Se habilitado, é possível fazer com teclas - zoom via +/-, rolagem via setas, movendo a posição das entidades selecionadas através de teclas de seta e modificadores SHIFT/CTRL.</translation>
+        <translation>Se ativado, é possível usar as teclas para fazer zoom com +/-, deslocar a vista com as setas e mover as entidades selecionadas com as setas e os modificadores SHIFT/CTRL.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5160"/>
         <source>Enable scroll and position adjustment via keyboard</source>
-        <translation>Activar o ajuste de posição e rolagem através do teclado</translation>
+        <translation>Ativar o deslocamento e o ajuste de posição através do teclado</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5500"/>
         <source>If selected, controls for picking values from drawing are available in Tool Options toolbar, allowing to pick length and angle values from drawing. </source>
-        <translation>Se selecionado, controles para selecionar valores do desenho estão disponíveis na barra de ferramentas Opções, permitindo escolher valores de comprimento e ângulo do desenho.</translation>
+        <translation>Se selecionado, os controlos para escolher valores no desenho estão disponíveis na barra Opções da ferramenta, permitindo escolher valores de comprimento e de ângulo no desenho. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5503"/>
         <source>Tool options toolbar includes pick values controls</source>
-        <translation>A barra de ferramentas de opções inclui controles de valores de escolha</translation>
+        <translation>A barra de opções da ferramenta inclui controlos para escolher valores</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5433"/>
@@ -41944,7 +41944,7 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5579"/>
         <source>If checked, toolbars with commands will be enabled. </source>
-        <translation>Se seleccionado, as barras de ferramentas com comandos serão activadas.</translation>
+        <translation>Se selecionado, as barras de ferramentas com comandos serão ativadas. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5599"/>
@@ -41964,12 +41964,12 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5808"/>
         <source>If enabled, tooltips toolbar&apos;s name will be shown</source>
-        <translation>Se estiver activo, será mostrado o nome da barra de ferramentas</translation>
+        <translation>Se estiver ativo, as descrições mostram o nome da barra de ferramentas</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5811"/>
         <source>Show tooltips for toolbars</source>
-        <translation>Mostrar dicas para barras de ferramentas</translation>
+        <translation>Mostrar descrições para as barras de ferramentas</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5828"/>
@@ -41989,22 +41989,22 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5886"/>
         <source>Exports settings to the file.</source>
-        <translation>Exporta as configurações para o arquivo.</translation>
+        <translation>Exporta as definições para o ficheiro.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5889"/>
         <source>Export settings to file</source>
-        <translation>Exportar as configurações para o arquivo</translation>
+        <translation>Exportar as definições para o ficheiro</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5900"/>
         <source>Imports application&apos;s preferences from external file</source>
-        <translation>Importa as preferências do aplicativo do arquivo externo</translation>
+        <translation>Importa as preferências da aplicação a partir de um ficheiro externo</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5903"/>
         <source>Import settings from file</source>
-        <translation>Importar as configurações do arquivo</translation>
+        <translation>Importar as definições do ficheiro</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5917"/>
@@ -42019,7 +42019,7 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6097"/>
         <source>Directory where various settings are located (shortcuts, workspaces, pens etc.)</source>
-        <translation>Diretório onde várias configurações estão localizadas (atalhos, espaços de trabalho, canetas, etc.)</translation>
+        <translation>Diretório onde várias definições estão localizadas (atalhos, espaços de trabalho, canetas, etc.)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6148"/>
@@ -42029,12 +42029,12 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6195"/>
         <source>If checked, archs are drawn using line segments interpolation.  This sliminates drawing artefacts near to endpoints, yet may result drawing of less smooth arcs.  No drawing errors near endpoints on large zooms.</source>
-        <translation>Se marcada, os arcos são desenhados usando interpolação de segmentos de linha. Este slimina os artefactos de desenho perto dos endpoints, mas pode resultar no desenho de arcos menos lisos. Sem erros de desenho perto de endpoints em zooms grandes.</translation>
+        <translation>Se selecionado, os arcos são desenhados por interpolação com segmentos de linha.  Isto elimina artefactos de desenho perto das extremidades, mas pode resultar em arcos menos suaves.  Sem erros de desenho perto das extremidades com zoom elevado.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6205"/>
         <source>If this method is selected, arcs are drawn using method of QT library.  On large zooms, arcs may be rendered with errors near endpoints.</source>
-        <translation>Se este método for selecionado, os arcos são desenhados usando o método da biblioteca QT. Em grandes zooms, arcos podem ser renderizados com erros próximos aos endpoints.</translation>
+        <translation>Se este método for selecionado, os arcos são desenhados com o método da biblioteca QT.  Com zoom elevado, os arcos podem ser apresentados com erros perto das extremidades.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6208"/>
@@ -42044,7 +42044,7 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6454"/>
         <source>Fonts Files</source>
-        <translation>Ficheiros de Fontes</translation>
+        <translation>Ficheiros de tipos de letra</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6460"/>
@@ -42054,7 +42054,7 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6473"/>
         <source>Contains the number of columns in one row for rendering font letter blocks. If 0 - all letters in one row. </source>
-        <translation>Contém o número de colunas em uma linha para renderizar blocos de letras de fonte. Se 0 - todas as letras numa linha.</translation>
+        <translation>Contém o número de colunas numa linha para apresentar os blocos de letras do tipo de letra. Se 0 - todas as letras numa linha. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6154"/>
@@ -42064,7 +42064,7 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6160"/>
         <source>If enabled, during pan operation TEXT and MTEXT objects will be drawn schematically</source>
-        <translation>Se activado, durante a operação de pan TEXT e MTEXT os objectos serão desenhados esquematicamente</translation>
+        <translation>Se ativado, durante o deslocamento da vista os objetos TEXT e MTEXT serão desenhados esquematicamente</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6186"/>
@@ -42074,7 +42074,7 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5589"/>
         <source>If checked, dock widgets with commands for left sidebar will be enabled. Otherwise, they will be disabled. </source>
-        <translation>Se estiver assinalada, os widgets de acoplagem com comandos da barra lateral esquerda serão activados. Caso contrário, eles serão desativados.</translation>
+        <translation>Se estiver assinalada, os widgets de acoplagem com comandos da barra lateral esquerda serão ativados. Caso contrário, eles serão desativados. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6189"/>
@@ -42129,7 +42129,7 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2996"/>
         <source>If set and user coordinate system is active, absolute coodinate in world coordinate system will be also shown.</source>
-        <translation>Se set e sistema de coordenadas do usuário estiver ativo, o coodinate absoluto no sistema de coordenadas do mundo também será mostrado.</translation>
+        <translation>Se definido e o sistema de coordenadas do utilizador estiver ativo, será também mostrada a coordenada absoluta no sistema de coordenadas global.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3002"/>
@@ -42139,17 +42139,17 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5480"/>
         <source>If checked, any changes of zoom or pan for drawing will mark drawing as modified. Otherwise, changing view only will not affect modified status of the drawing. </source>
-        <translation>Se marcada, qualquer mudança de zoom ou pan para desenho marcará desenho como modificado. Caso contrário, mudar de view somente não afetará o status modificado do desenho.</translation>
+        <translation>Se selecionado, qualquer alteração do zoom ou do deslocamento da vista marcará o desenho como modificado. Caso contrário, alterar apenas a vista não afeta o estado de modificação do desenho. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5483"/>
         <source>Changing view only modifies drawing</source>
-        <translation>Mudar a visão só modifica o desenho</translation>
+        <translation>Mudar a vista só modifica o desenho</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5746"/>
         <source>If set, previously opened files during previous closing of the application will be re-opened.</source>
-        <translation>Se estiver definido, os arquivos previamente abertos durante o fechamento anterior do aplicativo serão reabertos.</translation>
+        <translation>Se definido, os ficheiros que estavam abertos no último encerramento da aplicação serão reabertos.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5188"/>
@@ -42164,7 +42164,7 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5221"/>
         <source>Zero base angle relative to the current user coordinate system. Affects polar coordinates input, snap to angle. 0.0 is 3pm.</source>
-        <translation>Ângulo de base zero em relação ao sistema de coordenadas do usuário atual. Afecta a entrada das coordenadas polares, passa para o ângulo. 0,0 é às 15h.</translation>
+        <translation>Ângulo de base zero em relação ao sistema de coordenadas do utilizador atual. Afeta a introdução de coordenadas polares e o ajuste ao ângulo. 0,0 corresponde às 3 horas.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5260"/>
@@ -42193,7 +42193,7 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5976"/>
         <source>Path to folder with fonts</source>
-        <translation>Localização da pasta com fontes</translation>
+        <translation>Localização da pasta com os tipos de letra</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5633"/>
@@ -42203,23 +42203,23 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5649"/>
         <source>Restores the program settings to its original state</source>
-        <translation>Restaura as configurações do programa em seu estado original</translation>
+        <translation>Repõe as definições do programa no estado original</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5923"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6104"/>
         <source>Click to select file</source>
-        <translation>Clique para selecionar o arquivo</translation>
+        <translation>Clique para selecionar o ficheiro</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5983"/>
         <source>Path to folder with hatch patterns</source>
-        <translation>Caminho para a pasta com padrões de hachura</translation>
+        <translation>Caminho para a pasta com os padrões de trama</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5941"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;Part library folder. The symbol library dxf files must be located in the subdirectories of this folder. The subfolder names will be displayed in the Library Browser.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;( Menu: Widgets &amp;gt; Dock Widgets &amp;gt; Library Browser)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffff;&quot;&gt; Parte a pasta da biblioteca. Os arquivos dxf da biblioteca de símbolos devem estar localizados nos subdiretórios desta pasta. Os nomes das subpastas serão mostrados no Navegador da Biblioteca.&lt;/span&gt;&lt;/p&gt;&lt;span style=&quot; font- family:&apos;- apple- system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans- serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font- size:14px; cor:#1f2328; fundo- cor:#ffff;&quot;&gt;( Menu: Widgets &gt; Dock Widgets &gt; Library Navigator)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;Pasta da biblioteca de peças. Os ficheiros dxf da biblioteca de símbolos têm de estar nos subdiretórios desta pasta. Os nomes das subpastas serão mostrados no Navegador de Bibliotecas.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Noto Sans&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;( Menu: Widgets &amp;gt; Elementos de Acoplagem &amp;gt; Navegador de Bibliotecas)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5959"/>
@@ -42229,12 +42229,12 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6063"/>
         <source>Path to folder with translation files</source>
-        <translation>Caminho para a pasta com arquivos de tradução</translation>
+        <translation>Caminho para a pasta com ficheiros de tradução</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5150"/>
         <source>Toggle free snap mode when SPACE BAR is pressed</source>
-        <translation>Alterna o modo de snap livre quando a barra de espaço é pressionada</translation>
+        <translation>Alterna o modo de ajuste livre quando a barra de espaço é premida</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5068"/>
@@ -42302,7 +42302,7 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.ui" line="60"/>
         <source>Default width of elements, mm</source>
-        <translation>Largura padrão dos elementos, mm</translation>
+        <translation>Largura predefinida dos elementos, mm</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.ui" line="147"/>
@@ -42333,8 +42333,8 @@ Isso modifica recursivamente todas as entidades do próprio Bloco.</translation>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.cpp" line="31"/>
         <source>MakerCAM as of November 2014 does not hide SVG content 
 that has been set invisibe (&quot;display: none&quot; or &quot;visibility: hidden&quot;).</source>
-        <translation>MakerCAM desde novembro de 2014 não esconde conteúdo SVG
-que foi definido invisibe (&quot;exibição: nenhuma&quot; ou &quot;visibilidade: oculta&quot;).</translation>
+        <translation>O MakerCAM, a partir de novembro de 2014, não esconde o conteúdo SVG 
+que foi definido como invisível (&quot;display: none&quot; ou &quot;visibility: hidden&quot;).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.cpp" line="33"/>
@@ -42348,9 +42348,9 @@ porque não leva em conta o ponto de referência no &lt;use&gt;.</translation>
         <source>MakerCAM as of March 2015 cannot display ellipses and ellipse arcs correctly, 
 when they are created using the &lt;ellipse&gt; tag  with a rotation in 
 the &lt;transform&gt; attribute or as &lt;path&gt; using elliptic arc segments.</source>
-        <translation>MakerCAM a partir de março 2015 não pode exibir elipses e arcos de elipse corretamente,
-quando eles são criados usando a tag &lt;ellipse&gt; com uma rotação em
-o atributo &lt;transform&gt; ou como &lt;path&gt; utilizando segmentos de arco elíptico.</translation>
+        <translation>O MakerCAM, a partir de março de 2015, não consegue mostrar corretamente elipses e arcos de elipse 
+quando são criados com a etiqueta &lt;ellipse&gt; com uma rotação no 
+atributo &lt;transform&gt; ou como &lt;path&gt; com segmentos de arco elíptico.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.cpp" line="38"/>
@@ -42370,15 +42370,15 @@ que pode ser útil no corte a laser de madeira compensada ou para a indústria d
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.cpp" line="42"/>
         <source>Default width of elements can affect some CAM&apos;s/SVG Editors, 
 but ignored by other</source>
-        <translation>A largura padrão dos elementos pode afetar alguns Editores CAM/SVG,
-mas ignorado por outros</translation>
+        <translation>A largura predefinida dos elementos pode afetar alguns editores CAM/SVG, 
+mas é ignorada por outros</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.cpp" line="44"/>
         <source>Length of line pattern related to zoom, 
 so default step value required for baking</source>
-        <translation>Comprimento do padrão de linha relacionado com zoom,
-então o valor padrão do passo necessário para cozimento</translation>
+        <translation>Comprimento do padrão de linha relativo ao zoom, 
+pelo que é necessário um valor de passo predefinido para o processamento</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.cpp" line="45"/>
@@ -42428,7 +42428,7 @@ então o valor padrão do passo necessário para cozimento</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1626"/>
         <source>Char:</source>
-        <translation>Caractere:</translation>
+        <translation>Carácter:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1588"/>
@@ -42448,7 +42448,7 @@ então o valor padrão do passo necessário para cozimento</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="87"/>
         <source>Save Text To File</source>
-        <translation>Salve Texto para Arquivo</translation>
+        <translation>Guardar texto num ficheiro</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="655"/>
@@ -42498,7 +42498,7 @@ então o valor padrão do passo necessário para cozimento</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="73"/>
         <source>Load Text From File</source>
-        <translation>Carregue Texto a Partir de Arquivo</translation>
+        <translation>Carregar texto a partir de ficheiro</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="795"/>
@@ -42533,7 +42533,7 @@ então o valor padrão do passo necessário para cozimento</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="151"/>
         <source>Text Direction</source>
-        <translation type="unfinished">Direcção do Texto</translation>
+        <translation type="unfinished">Direção do Texto</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="155"/>
@@ -42563,7 +42563,7 @@ então o valor padrão do passo necessário para cozimento</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="294"/>
         <source>Width factor</source>
-        <translation>Factor de Largura</translation>
+        <translation>Fator de Largura</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="330"/>
@@ -42648,7 +42648,7 @@ então o valor padrão do passo necessário para cozimento</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1041"/>
         <source>Codepage selection for selecting character</source>
-        <translation>Seleção de página de código para selecionar caractere</translation>
+        <translation>Seleção de página de código para selecionar carácter</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1045"/>
@@ -42888,7 +42888,7 @@ então o valor padrão do passo necessário para cozimento</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1280"/>
         <source>[20D0-20FF] Combining Marks for Symbols</source>
-        <translation>[20D0-20FF] Combinando marcas para símbolos</translation>
+        <translation>[20D0-20FF] Marcas diacríticas combinatórias para símbolos</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1285"/>
@@ -42918,12 +42918,12 @@ então o valor padrão do passo necessário para cozimento</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1310"/>
         <source>[2400-243F] Control Pictures</source>
-        <translation>[2400-243F] Fotos de controle</translation>
+        <translation>[2400-243F] Imagens de controlo</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1315"/>
         <source>[2440-245F] Optical Character Recognition</source>
-        <translation>[2440-245F] Reconhecimento óptico de caracteres</translation>
+        <translation>[2440-245F] Reconhecimento ótico de caracteres</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1320"/>
@@ -43108,7 +43108,7 @@ então o valor padrão do passo necessário para cozimento</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1500"/>
         <source>[FE20-FE2F] Combining Half Marks</source>
-        <translation>[FE20-FE2F] Combinando meias marcas</translation>
+        <translation>[FE20-FE2F] Meias marcas combinatórias</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1505"/>
@@ -43193,7 +43193,7 @@ então o valor padrão do passo necessário para cozimento</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1648"/>
         <source>Selection of character to insert</source>
-        <translation>Selecção do carácter a inserir</translation>
+        <translation>Seleção do carácter a inserir</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="178"/>
@@ -43203,7 +43203,7 @@ então o valor padrão do passo necessário para cozimento</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="240"/>
         <source>Font settings</source>
-        <translation>Configuração da fonte</translation>
+        <translation>Definições do tipo de letra</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="268"/>
@@ -43218,7 +43218,7 @@ então o valor padrão do passo necessário para cozimento</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="366"/>
         <source>Font:</source>
-        <translation>Fonte:</translation>
+        <translation>Tipo de letra:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="830"/>
@@ -43254,7 +43254,7 @@ então o valor padrão do passo necessário para cozimento</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="633"/>
         <source>&amp;Middle</source>
-        <translation>&amp;Middle</translation>
+        <translation>&amp;Meio</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.cpp" line="213"/>
@@ -43290,12 +43290,12 @@ então o valor padrão do passo necessário para cozimento</translation>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="140"/>
         <source>LFF Font %1</source>
-        <translation>Fonte do LFF%1</translation>
+        <translation>Tipo de letra LFF %1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="144"/>
         <source>QCad Font %1</source>
-        <translation>Fonte do QCad%1</translation>
+        <translation>Tipo de letra QCad %1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="145"/>
@@ -43310,7 +43310,7 @@ então o valor padrão do passo necessário para cozimento</translation>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="146"/>
         <source>QCad 1.x file %1</source>
-        <translation>Arquivo 1. x do QCad%1</translation>
+        <translation>Ficheiro QCad 1.x %1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="133"/>
@@ -43672,7 +43672,7 @@ O conteúdo de uma Camada de Construção não deve aparecer na impressão.</tra
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="87"/>
         <source>No Pen</source>
-        <translation>Sem Pena</translation>
+        <translation>Sem caneta</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="101"/>
@@ -43826,7 +43826,7 @@ O conteúdo de uma Camada de Construção não deve aparecer na impressão.</tra
     <message>
         <location filename="../src/ui/components/status_bar/qg_mousewidget.ui" line="32"/>
         <source>Mouse</source>
-        <translation>Mouse</translation>
+        <translation>Rato</translation>
     </message>
     <message>
         <location filename="../src/ui/components/status_bar/qg_mousewidget.ui" line="229"/>
@@ -43840,11 +43840,11 @@ O conteúdo de uma Camada de Construção não deve aparecer na impressão.</tra
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Helvetica&apos;; font-size:9pt;&quot;&gt;Hint about left/right mouse button actions&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLICAL &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { espaço em branco: pre- wrap; }
+p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt; p style=&quot; margem- superior: 0px; margem- inferior: 0px; margem- esquerda: 0px; margem- direita: 0px; - qt- block- indent:0; text- indent: 0px;&quot;&gt;&lt;span style=&quot; font- family: &apos;Helvetica&apos;; font- size:9pt;&quot;&gt; Dica sobre as ações do botão esquerdo/direita do mouse&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Helvetica&apos;; font-size:9pt;&quot;&gt;Sugestão sobre as ações dos botões esquerdo/direito do rato&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/components/status_bar/qg_mousewidget.ui" line="304"/>
@@ -43867,7 +43867,7 @@ p, li { espaço em branco: pre- wrap; }
     <message>
         <location filename="../src/ui/components/toolbars/qg_pentoolbar.cpp" line="42"/>
         <source>Line width</source>
-        <translation>Largura da linha</translation>
+        <translation>Espessura da linha</translation>
     </message>
     <message>
         <location filename="../src/ui/components/toolbars/qg_pentoolbar.cpp" line="45"/>
@@ -43893,7 +43893,7 @@ p, li { espaço em branco: pre- wrap; }
     <message>
         <location filename="../src/ui/components/status_bar/qg_selectionwidget.ui" line="77"/>
         <source>Selected</source>
-        <translation>Seleccionado</translation>
+        <translation>Selecionado</translation>
     </message>
     <message>
         <location filename="../src/ui/components/status_bar/qg_selectionwidget.ui" line="155"/>
@@ -43903,12 +43903,12 @@ p, li { espaço em branco: pre- wrap; }
     <message>
         <location filename="../src/ui/components/status_bar/qg_selectionwidget.ui" line="180"/>
         <source>Number of selected entities</source>
-        <translation>Número de entidades seleccionadas</translation>
+        <translation>Número de entidades selecionadas</translation>
     </message>
     <message>
         <location filename="../src/ui/components/status_bar/qg_selectionwidget.ui" line="115"/>
         <source>Total length of selected entities</source>
-        <translation>Duração total das entidades seleccionadas</translation>
+        <translation>Comprimento total das entidades selecionadas</translation>
     </message>
 </context>
 <context>
@@ -43936,7 +43936,7 @@ p, li { espaço em branco: pre- wrap; }
     <message>
         <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="227"/>
         <source>User</source>
-        <translation>Usuário</translation>
+        <translation>Utilizador</translation>
     </message>
     <message>
         <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="227"/>
@@ -43950,7 +43950,7 @@ p, li { espaço em branco: pre- wrap; }
         <location filename="../src/ui/components/pen/qg_widgetpen.ui" line="26"/>
         <location filename="../src/ui/components/pen/qg_widgetpen.ui" line="53"/>
         <source>Pen</source>
-        <translation>Pena</translation>
+        <translation>Caneta</translation>
     </message>
     <message>
         <location filename="../src/ui/components/pen/qg_widgetpen.ui" line="65"/>
@@ -43975,7 +43975,7 @@ p, li { espaço em branco: pre- wrap; }
     <message>
         <location filename="../src/ui/components/pen/qg_widgetpen.ui" line="130"/>
         <source>Width of line</source>
-        <translation>Largura da linha</translation>
+        <translation>Espessura da linha</translation>
     </message>
     <message>
         <location filename="../src/ui/components/pen/qg_widgetpen.ui" line="137"/>
@@ -44239,7 +44239,7 @@ Por favor, indique um valor diferente.</translation>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1406"/>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1428"/>
         <source>Are you sure you&apos;d like to proceed?</source>
-        <translation>Tens a certeza que queres continuar?</translation>
+        <translation>Tem a certeza de que pretende continuar?</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1408"/>
@@ -44254,7 +44254,7 @@ Por favor, indique um valor diferente.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1426"/>
         <source>Pens will be removed from palette, drawing entities will not be affected.</source>
-        <translation>As canetas serão removidas da paleta, as entidades de desenho não serão afectadas.</translation>
+        <translation>As canetas serão removidas da paleta, as entidades de desenho não serão afetadas.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1430"/>
@@ -44308,7 +44308,7 @@ Por favor, indique um valor diferente.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1478"/>
         <source>Unable to save pens data to specified pens file. Would you like to specify correct path to the file?</source>
-        <translation>Não foi possível salvar os dados das canetas no arquivo de canetas especificado. Você gostaria de especificar o caminho correto para o arquivo?</translation>
+        <translation>Não foi possível guardar os dados das canetas no ficheiro de canetas especificado. Pretende especificar o caminho correto para o ficheiro?</translation>
     </message>
 </context>
 <context>
@@ -44322,7 +44322,7 @@ Por favor, indique um valor diferente.</translation>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="349"/>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="410"/>
         <source>Save Drawing As</source>
-        <translation>Salve Desenho Como</translation>
+        <translation>Guardar desenho como</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="742"/>
@@ -44337,7 +44337,7 @@ Por favor, indique um valor diferente.</translation>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="515"/>
         <source>All Image Files (%1)</source>
-        <translation>Todos os Arquivos de Imagem (%1)</translation>
+        <translation>Todos os Ficheiros de Imagem (%1)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="736"/>
@@ -44357,7 +44357,7 @@ Por favor, indique um valor diferente.</translation>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="517"/>
         <source>All Files (*.*)</source>
-        <translation>Todos os Arquivos (*.*)</translation>
+        <translation>Todos os Ficheiros (*.*)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="760"/>
@@ -44377,7 +44377,7 @@ Por favor, indique um valor diferente.</translation>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="751"/>
         <source>Portable Grey Map</source>
-        <translation>Mapa Cinza Portátil - PGM</translation>
+        <translation>Mapa de cinzentos portátil (PGM)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="745"/>
@@ -44640,7 +44640,7 @@ Por favor, indique um valor diferente.</translation>
         <location filename="../src/lib/engine/rs_units.cpp" line="210"/>
         <location filename="../src/lib/engine/rs_units.cpp" line="270"/>
         <source>Kilometer</source>
-        <translation>Quilômetro</translation>
+        <translation>Quilómetro</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="493"/>
@@ -44663,7 +44663,7 @@ Por favor, indique um valor diferente.</translation>
         <location filename="../src/lib/engine/rs_units.cpp" line="220"/>
         <location filename="../src/lib/engine/rs_units.cpp" line="285"/>
         <source>Nanometer</source>
-        <translation>Nanômetro</translation>
+        <translation>Nanómetro</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="236"/>
@@ -44704,12 +44704,12 @@ Por favor, indique um valor diferente.</translation>
         <location filename="../src/lib/engine/rs_units.cpp" line="228"/>
         <location filename="../src/lib/engine/rs_units.cpp" line="297"/>
         <source>Hectometer</source>
-        <translation>Hectômetro</translation>
+        <translation>Hectómetro</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="475"/>
         <source>Font %1</source>
-        <translation>Fonte %1</translation>
+        <translation>Tipo de letra %1</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="230"/>
@@ -44726,7 +44726,7 @@ Por favor, indique um valor diferente.</translation>
     <message>
         <location filename="../src/ui/main/support/lc_lastopenfilesopener.cpp" line="86"/>
         <source>Loading File %1..</source>
-        <translation>Carregando o Arquivo %1..</translation>
+        <translation>A carregar o ficheiro %1..</translation>
     </message>
     <message>
         <location filename="../src/main/main.cpp" line="579"/>
@@ -44747,7 +44747,7 @@ Por favor, indique um valor diferente.</translation>
     <message>
         <location filename="../src/main/main.cpp" line="612"/>
         <source>Loading..</source>
-        <translation>Carregando..</translation>
+        <translation>A carregar..</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="522"/>
@@ -44758,13 +44758,13 @@ Por favor, indique um valor diferente.</translation>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="411"/>
         <source>%1 already exists.
 Do you want to replace it?</source>
-        <translation>O%1 já existe.
-Queres substituí-lo?</translation>
+        <translation>%1 já existe.
+Pretende substituí-lo?</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="473"/>
         <source>QCad 1.x file %1</source>
-        <translation>Arquivo 1. x do QCad%1</translation>
+        <translation>Ficheiro QCad 1.x %1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="496"/>
@@ -44774,12 +44774,12 @@ Queres substituí-lo?</translation>
     <message>
         <location filename="../src/main/main.cpp" line="503"/>
         <source>Loading...</source>
-        <translation>Carregando...</translation>
+        <translation>A carregar...</translation>
     </message>
     <message>
         <location filename="../src/main/doc_plugin_interface.cpp" line="1318"/>
         <source>enter an integer number</source>
-        <translation>digite um número inteiro</translation>
+        <translation>introduza um número inteiro</translation>
     </message>
     <message>
         <location filename="../src/main/doc_plugin_interface.cpp" line="1324"/>
@@ -44801,7 +44801,7 @@ Queres substituí-lo?</translation>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="474"/>
         <source>LFF Font %1</source>
-        <translation>Fonte do LFF%1</translation>
+        <translation>Tipo de letra LFF %1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="476"/>
@@ -44861,7 +44861,7 @@ Queres substituí-lo?</translation>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="796"/>
         <source>Targa Image File</source>
-        <translation>Arquivo de imagem Targa</translation>
+        <translation>Ficheiro de imagem Targa</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="799"/>
@@ -44895,7 +44895,7 @@ Queres substituí-lo?</translation>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="120"/>
         <source>If you open the file now, the drawing may be not complete or unusable.</source>
         <comment>dwgImport</comment>
-        <translation>Se você abrir o arquivo agora, o desenho pode não estar completo ou inutilizável.</translation>
+        <translation>Se abrir o ficheiro agora, o desenho pode ficar incompleto ou inutilizável.</translation>
     </message>
     <message>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="122"/>
@@ -45103,7 +45103,7 @@ Queres substituí-lo?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="897"/>
         <source>hatch</source>
         <comment>draw hatch</comment>
-        <translation>hachura</translation>
+        <translation>trama</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="898"/>
@@ -46027,7 +46027,7 @@ Queres substituí-lo?</translation>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="310"/>
         <source>requesting alias(%1) for unknown command(%2): ignored</source>
-        <translation>solicitando alias(%1) para o comando desconhecido(%2): ignorado</translation>
+        <translation>pedido de alias(%1) para o comando desconhecido(%2): ignorado</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="321"/>
@@ -46116,7 +46116,7 @@ Queres substituí-lo?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_wizard/colorwizard.cpp" line="55"/>
         <source>Apply to selected</source>
-        <translation>Aplicar ao seleccionado</translation>
+        <translation>Aplicar à seleção</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_wizard/colorwizard.cpp" line="59"/>
@@ -46131,7 +46131,7 @@ Queres substituí-lo?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandedit.cpp" line="142"/>
         <source>You must input a distance first.</source>
-        <translation>Você deve inserir uma distância primeiro.</translation>
+        <translation>Tem de introduzir primeiro uma distância.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandedit.cpp" line="317"/>
@@ -48008,7 +48008,7 @@ Queres substituí-lo?</translation>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="105"/>
         <source>Auto fit and center drawing to page.</source>
-        <translation>Auto ajuste e centro de desenho para página.</translation>
+        <translation>Ajustar e centrar automaticamente o desenho na página.</translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="109"/>
@@ -48018,7 +48018,7 @@ Queres substituí-lo?</translation>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="113"/>
         <source>Print grayscale.</source>
-        <translation>Imprima escala de cinza.</translation>
+        <translation>Imprimir em escala de cinzentos.</translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="117"/>
@@ -48064,7 +48064,7 @@ Queres substituí-lo?</translation>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="141"/>
         <source>Output PDF file.</source>
         <comment>file</comment>
-        <translation>Arquivo PDF de saída.</translation>
+        <translation>Ficheiro PDF de saída.</translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2dwg.cpp" line="169"/>
@@ -48075,7 +48075,7 @@ Queres substituí-lo?</translation>
         <location filename="../src/main/console_dxf2dwg.cpp" line="173"/>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="145"/>
         <source>Target output directory.</source>
-        <translation>Directório de saída do alvo.</translation>
+        <translation>Diretório de saída do alvo.</translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2dwg.cpp" line="230"/>
@@ -48100,7 +48100,7 @@ Queres substituí-lo?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="67"/>
         <source>Load command file</source>
-        <translation>Carregar arquivo de comando</translation>
+        <translation>Carregar ficheiro de comando</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="71"/>
@@ -48116,12 +48116,12 @@ Queres substituí-lo?</translation>
         <location filename="../src/ui/dialogs/file/export/layers/lc_exportlayersdialogservice.cpp" line="180"/>
         <location filename="../src/ui/dialogs/file/export/layers/lc_filedialogservice.cpp" line="233"/>
         <source>File &quot;%1&quot; already exists. Do you want to replace it?</source>
-        <translation>O arquivo &quot;%1&quot; já existe. Queres substituí-lo?</translation>
+        <translation>O ficheiro &quot;%1&quot; já existe. Pretende substituí-lo?</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="39"/>
         <source>/CustomColor%1</source>
-        <translation>/Cor personalizada%1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="40"/>
@@ -48131,7 +48131,7 @@ Queres substituí-lo?</translation>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="41"/>
         <source>User Color</source>
-        <translation>Cor do Usuário</translation>
+        <translation>Cor do Utilizador</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="105"/>
@@ -48148,7 +48148,7 @@ Queres substituí-lo?</translation>
     <message>
         <location filename="../src/lib/actions/lc_modifiersinfo.h" line="29"/>
         <source>Angle Snap</source>
-        <translation>Ângulo Snap</translation>
+        <translation>Ajuste angular</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/lc_modifiersinfo.h" line="30"/>
@@ -48163,7 +48163,7 @@ Queres substituí-lo?</translation>
     <message>
         <location filename="../src/lib/actions/lc_modifiersinfo.h" line="32"/>
         <source>Snap to Relative Zero</source>
-        <translation>Ajustar a Zero Relativo</translation>
+        <translation>Ajustar ao zero relativo</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="50"/>
@@ -48185,22 +48185,22 @@ Queres substituí-lo?</translation>
     <message>
         <location filename="../src/lib/engine/document/container/rs_entitycontainer.cpp" line="1499"/>
         <source>Hatch failed due to a gap=%1 between (%2, %3) and (%4, %5)</source>
-        <translation>O hatch falhou devido a um gap=%1 entre (%2,%3) e (%4,%5)</translation>
+        <translation>A trama falhou devido a um intervalo=%1 entre (%2, %3) e (%4, %5)</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/document/patterns/rs_patternlist.cpp" line="66"/>
         <source>Hatch:: no pattern found. Please set pattern path in application preferences</source>
-        <translation>Hatch:: nenhum padrão encontrado. Por favor, defina o caminho padrão nas preferências da aplicação</translation>
+        <translation>Trama:: nenhum padrão encontrado. Defina o caminho dos padrões nas preferências da aplicação</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/document/patterns/rs_patternlist.cpp" line="93"/>
         <source>Hatch:: loading pattern failed: %1</source>
-        <translation>Hatch:: o padrão de carregamento falhou:%1</translation>
+        <translation>Trama:: falha ao carregar o padrão: %1</translation>
     </message>
     <message>
         <location filename="../src/ui/main/persistence/lc_documentsstorage.cpp" line="198"/>
         <source>File on disk modified. Please save to another file to avoid data loss! File modified: %1</source>
-        <translation>Arquivo no disco modificado. Por favor, salve para outro arquivo para evitar a perda de dados! Arquivo modificado:%1</translation>
+        <translation>O ficheiro no disco foi modificado. Guarde-o noutro ficheiro para evitar a perda de dados! Ficheiro modificado: %1</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="1003"/>
@@ -48218,13 +48218,13 @@ Queres substituí-lo?</translation>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="1009"/>
         <source>Cannot open DWG: file is %1; LibreCAD supports %2 and newer. Convert with GNU LibreDWG (dwgread / dwg2dxf) or re-save from a recent CAD tool.</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>Não é possível abrir o DWG: o arquivo é %1; LibreCAD suporta %2 e versões mais recentes. Converta com GNU LibreDWG (dwgread / dwg2dxf) ou salve novamente de uma ferramenta CAD recente.</translation>
+        <translation>Não é possível abrir o DWG: o ficheiro é %1; o LibreCAD suporta %2 e versões mais recentes. Converta com o GNU LibreDWG (dwgread / dwg2dxf) ou guarde-o novamente numa ferramenta CAD recente.</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="1016"/>
         <source>unsupported DXF/DWG file version</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>versão de arquivo DXF/DWG não suportada</translation>
+        <translation>versão de ficheiro DXF/DWG não suportada</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="1018"/>
@@ -48295,7 +48295,7 @@ Queres substituí-lo?</translation>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="1119"/>
         <source>Opened DWG file version %1.</source>
-        <translation>Arquivo DWG versão %1 aberto.</translation>
+        <translation>Ficheiro DWG versão %1 aberto.</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="1123"/>
@@ -48362,7 +48362,7 @@ Queres substituí-lo?</translation>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="1625"/>
         <source>XREF not resolved for block &quot;%1&quot;: %2 (file not found in host directory). The block will render as empty.</source>
-        <translation>XREF não resolvido para o bloco &quot;%1&quot;: %2 (arquivo não encontrado no diretório host). O bloco será renderizado vazio.</translation>
+        <translation>XREF não resolvida para o bloco &quot;%1&quot;: %2 (ficheiro não encontrado no diretório do desenho). O bloco será apresentado vazio.</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="1654"/>
@@ -48390,17 +48390,17 @@ Queres substituí-lo?</translation>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="12410"/>
         <source>unknown error opening dwg file</source>
-        <translation>erro desconhecido ao abrir o arquivo dwg</translation>
+        <translation>erro desconhecido ao abrir o ficheiro dwg</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="12413"/>
         <source>can&apos;t open this dwg file</source>
-        <translation>não foi possível abrir este arquivo dwg</translation>
+        <translation>não foi possível abrir este ficheiro dwg</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="12420"/>
         <source>Cannot open DWG: file is %1; LibreCAD supports %2 and newer. Convert with GNU LibreDWG (dwgread / dwg2dxf) or re-save from a recent CAD tool.</source>
-        <translation>Não é possível abrir o DWG: o arquivo é %1; LibreCAD suporta %2 e versões mais recentes. Converta com GNU LibreDWG (dwgread / dwg2dxf) ou salve novamente de uma ferramenta CAD recente.</translation>
+        <translation>Não é possível abrir o DWG: o ficheiro é %1; o LibreCAD suporta %2 e versões mais recentes. Converta com o GNU LibreDWG (dwgread / dwg2dxf) ou guarde-o novamente numa ferramenta CAD recente.</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="12431"/>
@@ -48425,32 +48425,32 @@ Queres substituí-lo?</translation>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="12444"/>
         <source>error reading classes in dwg file</source>
-        <translation>classes de leitura de erros no arquivo dwg</translation>
+        <translation>erro ao ler as classes no ficheiro dwg</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="12447"/>
         <source>error reading offsets in dwg file</source>
-        <translation>leitura de erros no arquivo dwg</translation>
+        <translation>erro ao ler os deslocamentos (offsets) no ficheiro dwg</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="12450"/>
         <source>error reading tables in dwg file</source>
-        <translation>tabelas de leitura de erros no arquivo dwg</translation>
+        <translation>erro ao ler as tabelas no ficheiro dwg</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="12453"/>
         <source>error reading blocks in dwg file</source>
-        <translation>blocos de leitura de erros no arquivo dwg</translation>
+        <translation>erro ao ler os blocos no ficheiro dwg</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="12456"/>
         <source>error reading entities in dwg file</source>
-        <translation>entidades de leitura de erros no arquivo dwg</translation>
+        <translation>erro ao ler as entidades no ficheiro dwg</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="12459"/>
         <source>error reading objects in dwg file</source>
-        <translation>erro ao ler os objectos no ficheiro dwg</translation>
+        <translation>erro ao ler os objetos no ficheiro dwg</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="42"/>
@@ -48460,7 +48460,7 @@ Queres substituí-lo?</translation>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="61"/>
         <source>Default</source>
-        <translation>Padrão</translation>
+        <translation>Predefinição</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="64"/>
@@ -48620,7 +48620,7 @@ Queres substituí-lo?</translation>
     <message>
         <location filename="../src/lib/engine/document/rs_graphic.cpp" line="668"/>
         <source>Invalid printing scale %1. Cannot fit print preview to page</source>
-        <translation>Escala de impressão inválida%1. Não é possível ajustar a antevisão da impressão à página</translation>
+        <translation>Escala de impressão inválida %1. Não é possível ajustar a pré-visualização da impressão à página</translation>
     </message>
     <message>
         <location filename="../src/lib/printing/lc_printing.cpp" line="164"/>
@@ -48630,7 +48630,7 @@ Queres substituí-lo?</translation>
     <message>
         <location filename="../src/lib/printing/lc_printing.cpp" line="165"/>
         <source>PDF files (*.pdf);;All files (*.*)</source>
-        <translation>Arquivos PDF (*.pdf);;Todos os arquivos (*.*)</translation>
+        <translation>Ficheiros PDF (*.pdf);;Todos os ficheiros (*.*)</translation>
     </message>
     <message>
         <location filename="../src/lib/printing/lc_printing.cpp" line="375"/>
@@ -48718,7 +48718,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="484"/>
         <source>Polyline</source>
-        <translation>Polilina</translation>
+        <translation>Polilinha</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="488"/>
@@ -48753,7 +48753,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="512"/>
         <source>Hatch</source>
-        <translation>Hatch</translation>
+        <translation>Trama</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="516"/>
@@ -48793,7 +48793,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="544"/>
         <source>Leader</source>
-        <translation>Linha de chamada</translation>
+        <translation>Linha de indicação</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="552"/>
@@ -48869,7 +48869,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/dock_widgets/block/rs_actionblockssave.cpp" line="98"/>
         <source>No block activated to save</source>
-        <translation>Nenhum bloco ativado para salvar</translation>
+        <translation>Nenhum bloco ativado para guardar</translation>
     </message>
 </context>
 <context>
@@ -48882,7 +48882,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="576"/>
         <source>De-Selecting</source>
-        <translation>Des- Seleccionar</translation>
+        <translation>A desselecionar</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="577"/>
@@ -49004,7 +49004,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1008"/>
         <source>Move in Next segment direction</source>
-        <translation>Mover na direcção do segmento seguinte</translation>
+        <translation>Mover na direção do segmento seguinte</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1014"/>
@@ -49019,12 +49019,12 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1018"/>
         <source>Scroll Horizontally / Select Contour</source>
-        <translation>Rolar Horizontalmente / Selecionar Contorno</translation>
+        <translation>Deslocar na horizontal / Selecionar contorno</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1018"/>
         <source>Pan / Scroll Vertically / Select Child entities</source>
-        <translation>Pan / Rolar Verticalmente / Selecionar entidades Filho</translation>
+        <translation>Deslocar a vista / Deslocar na vertical / Selecionar entidades-filhas</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1023"/>
@@ -49099,7 +49099,7 @@ Please check the filename and permissions.</source>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimlinear.cpp" line="214"/>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimlinear.cpp" line="224"/>
         <source>Switch Direction</source>
-        <translation>Direcção da Mudança</translation>
+        <translation>Inverter a direção</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimlinear.cpp" line="224"/>
@@ -49109,7 +49109,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimlinear.cpp" line="224"/>
         <source>Snap to Adjacent Dim</source>
-        <translation>Ajustar ao Dim adjacente</translation>
+        <translation>Ajustar à cota adjacente</translation>
     </message>
 </context>
 <context>
@@ -49264,17 +49264,17 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="131"/>
         <source>Hatch created successfully.</source>
-        <translation>Hachura criada com sucesso.</translation>
+        <translation>Trama criada com sucesso.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="160"/>
         <source>Invalid hatch area. Please check that the entities chosen form one or more closed contours.</source>
-        <translation>Área de hachura inválida. Por favor verifique se as entidades selecionadas formam um ou mais contornos fechados.</translation>
+        <translation>Área de trama inválida. Verifique se as entidades escolhidas formam um ou mais contornos fechados.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="134"/>
         <source>Hatch Error: Invalid contour found!</source>
-        <translation>Erro de Hatch: Foi encontrado um contorno inválido!</translation>
+        <translation>Erro de trama: foi encontrado um contorno inválido!</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="134"/>
@@ -49287,27 +49287,27 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="138"/>
         <source>Hatch Error: Pattern not found!</source>
-        <translation>Erro de Hatch: Padrão não encontrado!</translation>
+        <translation>Erro de trama: padrão não encontrado!</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="141"/>
         <source>Hatch Error: Contour or pattern too small!</source>
-        <translation>Erro de Hatch: Contorno ou padrão muito pequeno!</translation>
+        <translation>Erro de trama: contorno ou padrão demasiado pequeno!</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="144"/>
         <source>Hatch Error: Contour too big!</source>
-        <translation>Erro de Hatch: Contorne muito grande!</translation>
+        <translation>Erro de trama: contorno demasiado grande!</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="147"/>
         <source>Hatch Error: Undefined Error!</source>
-        <translation>Erro de Hatch: Erro indefinido!</translation>
+        <translation>Erro de trama: erro indefinido!</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="152"/>
         <source>Total hatch area = %1</source>
-        <translation>Área total da hachura = %1</translation>
+        <translation>Área total da trama = %1</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="185"/>
@@ -49317,7 +49317,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="185"/>
         <source>Hatch immediately after selection</source>
-        <translation>Hatch imediatamente após a seleção</translation>
+        <translation>Criar trama imediatamente após a seleção</translation>
     </message>
 </context>
 <context>
@@ -49362,7 +49362,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_simple.cpp" line="105"/>
         <source>Rectangle</source>
-        <translation>Rectângulo</translation>
+        <translation>Retângulo</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_simple.cpp" line="105"/>
@@ -49454,7 +49454,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="180"/>
         <source>Cut right after selection</source>
-        <translation>Cortar logo após a selecção</translation>
+        <translation>Cortar logo após a seleção</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="174"/>
@@ -49749,7 +49749,7 @@ Fim: (%8,%9)</translation>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfototallength.cpp" line="64"/>
         <source>Selected:</source>
-        <translation>Seleccionado:</translation>
+        <translation>Selecionado:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfototallength.cpp" line="66"/>
@@ -49830,7 +49830,7 @@ Fim: (%8,%9)</translation>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="278"/>
         <source>type in offset from command line to offset printout</source>
-        <translation>digite offset da linha de comando para a impressão offset</translation>
+        <translation>introduza na linha de comandos o deslocamento da impressão</translation>
     </message>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="450"/>
@@ -49840,7 +49840,7 @@ Fim: (%8,%9)</translation>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="516"/>
         <source>Drag with Left Button to Position Paper or with Middle Button to Pan</source>
-        <translation>Arraste com botão esquerdo para posicionar papel ou com botão médio para pan</translation>
+        <translation>Arraste com o botão esquerdo para posicionar o papel ou com o botão do meio para deslocar a vista</translation>
     </message>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="517"/>
@@ -49855,7 +49855,7 @@ Fim: (%8,%9)</translation>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="253"/>
         <source>Printout offset ignores relative zero. Ignoring &apos;@&apos;</source>
-        <translation>O deslocamento da impressão ignora o zero relativo. Ignorando &apos;@&apos;</translation>
+        <translation>O deslocamento da impressão ignora o zero relativo. A ignorar &apos;@&apos;</translation>
     </message>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="230"/>
@@ -49915,12 +49915,12 @@ Fim: (%8,%9)</translation>
     <message>
         <location filename="../src/actions/drawing/zoom/rs_actionzoompan.cpp" line="109"/>
         <source>Click and drag to pan zoom</source>
-        <translation>Clique e arraste para ampliar a área</translation>
+        <translation>Clique e arraste para deslocar a vista</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/zoom/rs_actionzoompan.cpp" line="112"/>
         <source>Zoom panning</source>
-        <translation>Ampliação</translation>
+        <translation>Deslocamento da vista</translation>
     </message>
 </context>
 <context>
@@ -50210,7 +50210,7 @@ Fim: (%8,%9)</translation>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="115"/>
         <source>User-specified dimension&apos;s label. Enter value or either &quot;&lt;&gt;&quot; or just leave empty for automatic measurement.</source>
-        <translation>Rótulo da cota especificado pelo utilizador. Digite o valor ou &quot;&lt;&gt;&quot;, ou deixe em branco para medição automática.</translation>
+        <translation>Etiqueta da cota especificada pelo utilizador. Introduza um valor ou &quot;&lt;&gt;&quot;, ou deixe em branco para a medição automática.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="128"/>
@@ -50297,7 +50297,7 @@ Fim: (%8,%9)</translation>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="353"/>
         <source>If checked, distance between dimenions is defined by mouse</source>
-        <translation>Se seleccionado, a distância entre os tamanhos é definida pelo rato</translation>
+        <translation>Se selecionado, a distância entre as cotas é definida pelo rato</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="356"/>
@@ -50313,7 +50313,7 @@ Fim: (%8,%9)</translation>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="383"/>
         <source>If checked, angle for dimension is defined by mouse</source>
-        <translation>Se seleccionado, o ângulo da cota é definido pelo rato</translation>
+        <translation>Se selecionado, o ângulo da cota é definido pelo rato</translation>
     </message>
 </context>
 <context>
@@ -50321,17 +50321,17 @@ Fim: (%8,%9)</translation>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapdistoptions.ui" line="32"/>
         <source>Snap Distance Options</source>
-        <translation>Opções de distância de encaixe</translation>
+        <translation>Opções de distância de ajuste</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapdistoptions.ui" line="50"/>
         <source>Snap Distance:</source>
-        <translation>Distância de Snap:</translation>
+        <translation>Distância de ajuste:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapdistoptions.ui" line="60"/>
         <source>Distance of snap point from initially resolved snap point</source>
-        <translation>Distância do ponto de snap do ponto de snap inicialmente resolvido</translation>
+        <translation>Distância do ponto de ajuste em relação ao ponto de ajuste inicialmente resolvido</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapdistoptions.ui" line="67"/>
@@ -50344,12 +50344,12 @@ Fim: (%8,%9)</translation>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapmiddleoptions.ui" line="35"/>
         <source>Snap Distance Options</source>
-        <translation>Opções de distância de encaixe</translation>
+        <translation>Opções de distância de ajuste</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapmiddleoptions.ui" line="59"/>
         <source>Snap Middle Points:</source>
-        <translation>Snap pontos do meio:</translation>
+        <translation>Pontos do ajuste ao meio:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapmiddleoptions.ui" line="81"/>

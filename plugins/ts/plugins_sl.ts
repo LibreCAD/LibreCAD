@@ -190,7 +190,7 @@ Nato izpolnite polja in pritisnite gumb &apos;Sprejmi&apos;.</translation>
         <location filename="../list/list.cpp" line="178"/>
         <location filename="../list/list.cpp" line="220"/>
         <source>in point</source>
-        <translation>v točka</translation>
+        <translation>v točki</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="92"/>
@@ -255,7 +255,7 @@ Nato izpolnite polja in pritisnite gumb &apos;Sprejmi&apos;.</translation>
     <message>
         <location filename="../list/list.cpp" line="132"/>
         <source>CIRCLE</source>
-        <translation>KROŽNICA</translation>
+        <translation>KROG</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="138"/>
@@ -290,7 +290,7 @@ Nato izpolnite polja in pritisnite gumb &apos;Sprejmi&apos;.</translation>
     <message>
         <location filename="../list/list.cpp" line="170"/>
         <source>SOLID</source>
-        <translation>TELO</translation>
+        <translation>POLNILO</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="174"/>
@@ -300,7 +300,7 @@ Nato izpolnite polja in pritisnite gumb &apos;Sprejmi&apos;.</translation>
     <message>
         <location filename="../list/list.cpp" line="177"/>
         <source>TEXT</source>
-        <translation>TEKST</translation>
+        <translation>BESEDILO</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="181"/>
@@ -310,7 +310,7 @@ Nato izpolnite polja in pritisnite gumb &apos;Sprejmi&apos;.</translation>
     <message>
         <location filename="../list/list.cpp" line="184"/>
         <source>INSERT</source>
-        <translation>VSTAVI</translation>
+        <translation>VSTAVLJEN BLOK</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="187"/>
@@ -345,7 +345,7 @@ Nato izpolnite polja in pritisnite gumb &apos;Sprejmi&apos;.</translation>
     <message>
         <location filename="../list/list.cpp" line="212"/>
         <source>POLYLINE</source>
-        <translation>LOMLJENKA</translation>
+        <translation>POLILINIJA</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="213"/>
@@ -365,7 +365,7 @@ Nato izpolnite polja in pritisnite gumb &apos;Sprejmi&apos;.</translation>
     <message>
         <location filename="../list/list.cpp" line="215"/>
         <source>Vertices</source>
-        <translation>Točke</translation>
+        <translation>Oglišča</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="229"/>
@@ -375,12 +375,12 @@ Nato izpolnite polja in pritisnite gumb &apos;Sprejmi&apos;.</translation>
     <message>
         <location filename="../list/list.cpp" line="232"/>
         <source>SPLINE</source>
-        <translation>KRIVULJA</translation>
+        <translation>ZLEPEK</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="235"/>
         <source>SPLINEPOINTS</source>
-        <translation>TOČKE SPLINA</translation>
+        <translation>ZLEPEK SKOZI TOČKE</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="238"/>
@@ -390,32 +390,32 @@ Nato izpolnite polja in pritisnite gumb &apos;Sprejmi&apos;.</translation>
     <message>
         <location filename="../list/list.cpp" line="241"/>
         <source>DIMLEADER</source>
-        <translation>PREHOD</translation>
+        <translation>KAZALNA ČRTA</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="244"/>
         <source>DIMALIGNED</source>
-        <translation>Vodilo prehoda</translation>
+        <translation>PORAVNANA KOTA</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="247"/>
         <source>DIMLINEAR</source>
-        <translation>Linearni prehod</translation>
+        <translation>LINEARNA KOTA</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="250"/>
         <source>DIMRADIAL</source>
-        <translation>Radialni prehod</translation>
+        <translation>KOTA POLMERA</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="253"/>
         <source>DIMDIAMETRIC</source>
-        <translation>Prehod v smeri premera</translation>
+        <translation>KOTA PREMERA</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="256"/>
         <source>DIMANGULAR</source>
-        <translation>Kotni prehod</translation>
+        <translation>KOTNA KOTA</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="259"/>
@@ -703,7 +703,7 @@ Nato izpolnite polja in pritisnite gumb &apos;Sprejmi&apos;.</translation>
     <message>
         <location filename="../divide/divide.cpp" line="455"/>
         <source>Layer</source>
-        <translation>Sloj</translation>
+        <translation>Plast</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="457"/>
@@ -845,7 +845,7 @@ Nato izpolnite polja in pritisnite gumb &apos;Sprejmi&apos;.</translation>
     <message>
         <location filename="../divide/dividedlg.cpp" line="68"/>
         <source>Layers</source>
-        <translation>Sloji</translation>
+        <translation>Plasti</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="74"/>
@@ -1270,7 +1270,7 @@ Use t or x in your equation as a variable/parameter.
         <location filename="../plotequation/plotdialog.cpp" line="61"/>
         <source>SplinePoints</source>
         <comment>Plot Equation to generate 2nd spline by LC_SplinePoints</comment>
-        <translation>Točke krivulje</translation>
+        <translation>Zlepek skozi točke</translation>
     </message>
 </context>
 <context>

@@ -289,7 +289,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="170"/>
         <source>SOLID</source>
-        <translation>مجسّم</translation>
+        <translation>مصمت</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="174"/>
@@ -309,7 +309,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="184"/>
         <source>INSERT</source>
-        <translation>أدخل</translation>
+        <translation>إدراج</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="187"/>
@@ -344,7 +344,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="212"/>
         <source>POLYLINE</source>
-        <translation>متعدّد خطوط</translation>
+        <translation>خط متعدد</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="213"/>
@@ -374,27 +374,27 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="232"/>
         <source>SPLINE</source>
-        <translation>شريحة</translation>
+        <translation>منحنى شريحي</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="235"/>
         <source>SPLINEPOINTS</source>
-        <translation>نقاط المنحنى</translation>
+        <translation>منحنى شريحي بالنقاط</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="238"/>
         <source>HATCH</source>
-        <translation>تظليل</translation>
+        <translation>تهشير</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="241"/>
         <source>DIMLEADER</source>
-        <translation>قطر</translation>
+        <translation>خط إشارة</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="244"/>
         <source>DIMALIGNED</source>
-        <translation>محاذاة الأبعاد</translation>
+        <translation>بعد محاذى</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="247"/>
@@ -404,7 +404,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="250"/>
         <source>DIMRADIAL</source>
-        <translation>نصف قطر الأبعاد</translation>
+        <translation>بعد نصف قطري</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="253"/>
@@ -648,12 +648,12 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="358"/>
         <source>The file %1 not exist</source>
-        <translation>الملف 1٪ غير موجود</translation>
+        <translation>الملف %1 غير موجود</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="363"/>
         <source>Can&apos;t open the file %1</source>
-        <translation>لا يمكن فتح الملف 1٪ </translation>
+        <translation>لا يمكن فتح الملف %1</translation>
     </message>
 </context>
 <context>

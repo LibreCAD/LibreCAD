@@ -162,7 +162,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="75"/>
         <source>Layer</source>
-        <translation>Layer</translation>
+        <translation>Ebene</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="77"/>
@@ -294,7 +294,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="170"/>
         <source>SOLID</source>
-        <translation>KÖRPER</translation>
+        <translation>2D-VOLUMENKÖRPER</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="174"/>
@@ -334,7 +334,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="195"/>
         <source>Rotation</source>
-        <translation>Rotation</translation>
+        <translation>Drehung</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="201"/>
@@ -394,7 +394,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="241"/>
         <source>DIMLEADER</source>
-        <translation>BEMASSUNGSFÜHRUNG</translation>
+        <translation>FÜHRUNGSLINIE</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="244"/>
@@ -598,17 +598,17 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="304"/>
         <source>Point 2D layer is empty</source>
-        <translation>Layer 2D Punkt ist leer</translation>
+        <translation>Ebene für 2D-Punkte ist leer</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="307"/>
         <source>Point 3D layer is empty</source>
-        <translation>Layer 3D Punkt ist leer</translation>
+        <translation>Ebene für 3D-Punkte ist leer</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="310"/>
         <source>Point elevation layer is empty</source>
-        <translation>Layer Höhenpunkt ist leer</translation>
+        <translation>Ebene für Höhenpunkte ist leer</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="311"/>
@@ -623,7 +623,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="315"/>
         <source>Point number layer is empty</source>
-        <translation>Layer Punkt Nummer ist leer</translation>
+        <translation>Ebene für Punktnummern ist leer</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="316"/>
@@ -638,7 +638,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="320"/>
         <source>Point code layer is empty</source>
-        <translation>Layer Punkt Code ist leer</translation>
+        <translation>Ebene für Punktcodes ist leer</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="321"/>
@@ -879,7 +879,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../divide/dividedlg.cpp" line="125"/>
         <source>Ticks - Off</source>
-        <translation>Markierungen - Aus</translation>
+        <translation>Teilstriche - Aus</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="133"/>
@@ -904,12 +904,12 @@ anti-clockwise.</source>
     <message>
         <location filename="../divide/dividedlg.cpp" line="245"/>
         <source>&lt;i&gt;&quot;New&quot;&lt;/i&gt;&lt;br&gt;Enter name&lt;br&gt;for a new layer&lt;br&gt;(if required?) to&lt;br&gt;draw ticks on.</source>
-        <translation>&quot;Neu&quot;&lt;br&gt;Geben Sie einen Namen für eine neue Ebene ein (optional), auf der die Markierungen gezeichnet werden sollen.</translation>
+        <translation>&lt;i&gt;&quot;Neu&quot;&lt;/i&gt;&lt;br&gt;Namen&lt;br&gt;für eine neue Ebene&lt;br&gt;(falls nötig) zum&lt;br&gt;Zeichnen der Teilstriche eingeben.</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="250"/>
         <source>Ticks</source>
-        <translation>Markierungen</translation>
+        <translation>Teilstriche</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="256"/>
@@ -1286,7 +1286,7 @@ Als Variable/Parameter der Gleichung kann t oder x verwendet werden.
     <message>
         <location filename="../asciifile/asciifile.cpp" line="176"/>
         <source>Layer:</source>
-        <translation>Layer:</translation>
+        <translation>Ebene:</translation>
     </message>
 </context>
 <context>

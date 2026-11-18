@@ -311,7 +311,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="184"/>
         <source>INSERT</source>
-        <translation>INSEREIX</translation>
+        <translation>INSERCIÓ</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="187"/>
@@ -386,12 +386,12 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="238"/>
         <source>HATCH</source>
-        <translation>RATLLAT</translation>
+        <translation>OMBREJAT</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="241"/>
         <source>DIMLEADER</source>
-        <translation>Cota guia</translation>
+        <translation>Línia de referència</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="244"/>

@@ -598,12 +598,12 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="307"/>
         <source>Point 3D layer is empty</source>
-        <translation>3D-punktskiktet är tomt</translation>
+        <translation>3D-punktlagret är tomt</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="310"/>
         <source>Point elevation layer is empty</source>
-        <translation>Punkthöjdskiktet är tomt</translation>
+        <translation>Punkthöjdslagret är tomt</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="311"/>

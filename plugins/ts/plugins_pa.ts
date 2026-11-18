@@ -6,17 +6,17 @@
     <message>
         <location filename="../asciifile/asciifile.cpp" line="35"/>
         <source>Read ASCII points</source>
-        <translation>ASCII ਪੁਆਇੰਟ ਪੜ੍ਹੋ</translation>
+        <translation>ASCII ਬਿੰਦੂ ਪੜ੍ਹੋ</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="36"/>
         <source>Read ASCII test tip...</source>
-        <translation>ASCII ਪੁਆਇੰਟ ਪੜ੍ਹਨ ਲਈ ਸੁਝਾਅ...</translation>
+        <translation>ASCII ਬਿੰਦੂ ਪੜ੍ਹਨ ਲਈ ਸੁਝਾਅ...</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="42"/>
         <source>Read ascii points</source>
-        <translation>ASCII ਪੁਆਇੰਟ ਪੜ੍ਹੋ</translation>
+        <translation>ASCII ਬਿੰਦੂ ਪੜ੍ਹੋ</translation>
     </message>
 </context>
 <context>
@@ -24,7 +24,7 @@
     <message>
         <location filename="../pointstocsv/pointstocsv.cpp" line="34"/>
         <source>Export points to csv</source>
-        <translation>CSV ਵਿੱਚ ਪੁਆਇੰਟ ਐਕਸਪੋਰਟ ਕਰੋ</translation>
+        <translation>CSV ਵਿੱਚ ਬਿੰਦੂ ਐਕਸਪੋਰਟ ਕਰੋ</translation>
     </message>
     <message>
         <location filename="../pointstocsv/pointstocsv.cpp" line="41"/>
@@ -57,7 +57,7 @@
     <message>
         <location filename="../align/align.cpp" line="48"/>
         <source>Specify base points first</source>
-        <translation>ਪਹਿਲਾਂ ਬੇਸ ਪੁਆਇੰਟ ਦੱਸੋ</translation>
+        <translation>ਪਹਿਲਾਂ ਬੇਸ ਬਿੰਦੂ ਦੱਸੋ</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="52"/>
@@ -73,18 +73,18 @@ Ok to accept and start alignment.</source>
     <message>
         <location filename="../align/align.cpp" line="79"/>
         <source>first base point:</source>
-        <translation>ਪਹਿਲਾ ਬੇਸ ਪੁਆਇੰਟ:</translation>
+        <translation>ਪਹਿਲਾ ਬੇਸ ਬਿੰਦੂ:</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="84"/>
         <source>first target point:</source>
-        <translation>ਪਹਿਲਾ ਟਾਰਗੇਟ ਪੁਆਇੰਟ:</translation>
+        <translation>ਪਹਿਲਾ ਟਾਰਗੇਟ ਬਿੰਦੂ:</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="82"/>
         <location filename="../align/align.cpp" line="87"/>
         <source>second base point:</source>
-        <translation>ਦੂਜਾ ਬੇਸ ਪੁਆਇੰਟ:</translation>
+        <translation>ਦੂਜਾ ਬੇਸ ਬਿੰਦੂ:</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="58"/>
@@ -99,7 +99,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../align/align.cpp" line="89"/>
         <source>second target point:</source>
-        <translation>ਦੂਜਾ ਟਾਰਗੇਟ ਪੁਆਇੰਟ:</translation>
+        <translation>ਦੂਜਾ ਟਾਰਗੇਟ ਬਿੰਦੂ:</translation>
     </message>
 </context>
 <context>
@@ -118,7 +118,8 @@ first base, second base, first target, second target.</source>
         <location filename="../gear/gear.cpp" line="42"/>
         <source>Select point for center of gear and press left mouse button.
 Then fill in the fields and press &apos;Accept&apos; button.</source>
-        <translation>ਗੀਅਰ ਦੇ ਕੇਂਦਰ ਲਈ ਇੱਕ ਪੁਆਇੰਟ ਚੁਣੋ ਅਤੇ ਖੱਬੇ ਮਾਊਸ ਬਟਨ &apos;ਤੇ ਕਲਿੱਕ ਕਰੋ। ਫਿਰ ਖੇਤ ਭਰੋ ਅਤੇ &apos;ਸਵੀਕਾਰ ਕਰੋ&apos; ਬਟਨ ਦਬਾਓ।</translation>
+        <translation>ਗੀਅਰ ਦੇ ਕੇਂਦਰ ਲਈ ਇੱਕ ਬਿੰਦੂ ਚੁਣੋ ਅਤੇ ਖੱਬੇ ਮਾਊਸ ਬਟਨ &apos;ਤੇ ਕਲਿੱਕ ਕਰੋ।
+ਫਿਰ ਖੇਤ ਭਰੋ ਅਤੇ &apos;ਸਵੀਕਾਰ ਕਰੋ&apos; ਬਟਨ ਦਬਾਓ।</translation>
     </message>
 </context>
 <context>
@@ -127,7 +128,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
         <location filename="../list/list.cpp" line="22"/>
         <location filename="../list/list.cpp" line="29"/>
         <source>List entities</source>
-        <translation>ਸੂਚੀਬੱਧ ਇਕਾਈਆਂ</translation>
+        <translation>ਐਂਟੀਟੀਆਂ ਦੀ ਸੂਚੀ</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="30"/>
@@ -142,7 +143,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="58"/>
         <source>Empty Entity</source>
-        <translation>ਖਾਲੀ ਇਕਾਈ</translation>
+        <translation>ਖਾਲੀ ਐਂਟੀਟੀ</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="65"/>
@@ -182,14 +183,14 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="86"/>
         <source>POINT</source>
-        <translation>ਪੁਆਇੰਟ</translation>
+        <translation>ਬਿੰਦੂ</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="87"/>
         <location filename="../list/list.cpp" line="178"/>
         <location filename="../list/list.cpp" line="220"/>
         <source>in point</source>
-        <translation>ਪੁਆਇੰਟ ਵਿੱਚ</translation>
+        <translation>ਬਿੰਦੂ ਵਿੱਚ</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="92"/>
@@ -199,12 +200,12 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="97"/>
         <source>from point</source>
-        <translation>ਪੁਆਇੰਟ ਤੋਂ</translation>
+        <translation>ਬਿੰਦੂ ਤੋਂ</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="100"/>
         <source>to point</source>
-        <translation>ਪੁਆਇੰਟ ਤੱਕ</translation>
+        <translation>ਬਿੰਦੂ ਤੱਕ</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="105"/>
@@ -319,7 +320,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="189"/>
         <source>Insertion point</source>
-        <translation>ਇੰਸਰਸ਼ਨ ਪੁਆਇੰਟ</translation>
+        <translation>ਇੰਸਰਸ਼ਨ ਬਿੰਦੂ</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="192"/>
@@ -344,7 +345,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="212"/>
         <source>POLYLINE</source>
-        <translation>ਪੋਲੀਲਾਈਨ</translation>
+        <translation>ਪੌਲੀਲਾਈਨ</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="213"/>
@@ -379,7 +380,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="235"/>
         <source>SPLINEPOINTS</source>
-        <translation>ਸਪਲਾਈਨ ਪੁਆਇੰਟ</translation>
+        <translation>ਸਪਲਾਈਨ ਬਿੰਦੂ</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="238"/>
@@ -483,7 +484,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="220"/>
         <source>Read ascii points</source>
-        <translation>ਐਸਕੀ ਪੁਆਇੰਟਸ ਪੜ੍ਹੋ</translation>
+        <translation>ਐਸਕੀ ਬਿੰਦੂ ਪੜ੍ਹੋ</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="226"/>
@@ -523,27 +524,27 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="237"/>
         <source>Connect points</source>
-        <translation>ਪੁਆਇੰਟਸ ਨੂੰ ਜੋੜੋ</translation>
+        <translation>ਬਿੰਦੂਆਂ ਨੂੰ ਜੋੜੋ</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="245"/>
         <source>2D Point</source>
-        <translation>2D ਪੁਆਇੰਟ</translation>
+        <translation>2D ਬਿੰਦੂ</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="245"/>
         <source>Draw 2D Point</source>
-        <translation>2D ਪੁਆਇੰਟ ਬਣਾਓ</translation>
+        <translation>2D ਬਿੰਦੂ ਬਣਾਓ</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="246"/>
         <source>3D Point</source>
-        <translation>3D ਪੁਆਇੰਟ</translation>
+        <translation>3D ਬਿੰਦੂ</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="246"/>
         <source>Draw 3D Point</source>
-        <translation>3D ਪੁਆਇੰਟ ਬਣਾਓ</translation>
+        <translation>3D ਬਿੰਦੂ ਬਣਾਓ</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="247"/>
@@ -758,7 +759,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../divide/divide.cpp" line="494"/>
         <source>ARC</source>
-        <translation>ਏਆਰਸੀ</translation>
+        <translation>ਆਰਕ</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="495"/>
@@ -786,7 +787,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../divide/divide.cpp" line="513"/>
         <source>CIRCLE</source>
-        <translation>ਵਰਤੁਲ</translation>
+        <translation>ਚੱਕਰ</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="519"/>
@@ -801,7 +802,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../divide/divide.cpp" line="525"/>
         <source>POLYLINE</source>
-        <translation>ਪੋਲੀਲਾਈਨ</translation>
+        <translation>ਪੌਲੀਲਾਈਨ</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="526"/>
@@ -894,7 +895,12 @@ decimal degrees
 0° at 3 o&apos;clock
 goes
 anti-clockwise.</source>
-        <translation>ਸ਼ੁਰੂਆਤੀ ਕੋਣ ਦਰਜ ਕਰੋ, ਦਸ਼ਮਲਵ ਦਰਜਾ ਵਿੱਚ। 3 ਵਜੇ 0° ਤੋਂ ਸ਼ੁਰੂ ਹੋ ਕੇ ਘੜੀ ਦੀ ਉਲਟ ਦਿਸ਼ਾ ਵਿੱਚ ਜਾਂਦਾ ਹੈ।</translation>
+        <translation>ਸ਼ੁਰੂ ਵਾਲਾ ਕੋਣ
+ਦਰਜ ਕਰੋ,
+ਦਸ਼ਮਲਵ ਡਿਗਰੀਆਂ ਵਿੱਚ।
+3 ਵਜੇ 0° ਤੋਂ ਸ਼ੁਰੂ ਹੋ ਕੇ
+ਘੜੀ ਦੀ ਉਲਟ
+ਦਿਸ਼ਾ ਵਿੱਚ ਜਾਂਦਾ ਹੈ।</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="245"/>
@@ -1020,7 +1026,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../gear/gear.cpp" line="127"/>
         <source>Draw root circle?</source>
-        <translation>ਰੂਟ ਸਰਕਲ ਖਿੱਚੋ?</translation>
+        <translation>ਰੂਟ ਚੱਕਰ ਖਿੱਚੋ?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="128"/>
@@ -1058,7 +1064,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../list/list.cpp" line="276"/>
         <source>List entities</source>
-        <translation>ਇਕਾਈਆਂ ਦੀ ਸੂਚੀ</translation>
+        <translation>ਐਂਟੀਟੀਆਂ ਦੀ ਸੂਚੀ</translation>
     </message>
 </context>
 <context>
@@ -1269,7 +1275,7 @@ Use t or x in your equation as a variable/parameter.
         <location filename="../plotequation/plotdialog.cpp" line="61"/>
         <source>SplinePoints</source>
         <comment>Plot Equation to generate 2nd spline by LC_SplinePoints</comment>
-        <translation>ਸਪਲਾਈਨ ਪੁਆਇੰਟ</translation>
+        <translation>ਸਪਲਾਈਨ ਬਿੰਦੂ</translation>
     </message>
 </context>
 <context>

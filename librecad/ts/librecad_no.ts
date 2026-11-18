@@ -196,7 +196,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="218"/>
         <source>Specify dimension line position or enter angle:</source>
-        <translation>Angi posisjon for dimensjonslinje eller skriv inn vinkel:</translation>
+        <translation>Angi posisjon for mållinje eller skriv inn vinkel:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="221"/>
@@ -222,17 +222,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="310"/>
         <source>Specify first extension line origin</source>
-        <translation>Angi opprinnelse for første forlengelseslinje</translation>
+        <translation>Angi utgangspunkt for første målgrenselinje</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="300"/>
         <source>Specify second extension line origin</source>
-        <translation>Angi opprinnelse for andre forlengelseslinje</translation>
+        <translation>Angi utgangspunkt for andre målgrenselinje</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="304"/>
         <source>Specify dimension line location</source>
-        <translation>Angi plassering for dimensjonslinje</translation>
+        <translation>Angi plassering for mållinje</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="304"/>
@@ -247,7 +247,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="322"/>
         <source>Enter dimension line angle:</source>
-        <translation>Skriv inn vinkel for dimensjonslinje:</translation>
+        <translation>Skriv inn vinkel for mållinje:</translation>
     </message>
 </context>
 <context>
@@ -822,7 +822,7 @@ avstand mellom punkter=%2 er større enn diameter=%3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="419"/>
         <source>Specify second extension line origin</source>
-        <translation>Angi opprinnelse for andre forlengelseslinje</translation>
+        <translation>Angi utgangspunkt for andre målgrenselinje</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="419"/>
@@ -832,7 +832,7 @@ avstand mellom punkter=%2 er større enn diameter=%3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="422"/>
         <source>Specify dimension line location</source>
-        <translation>Angi plassering for dimensjonslinje</translation>
+        <translation>Angi plassering for mållinje</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="422"/>
@@ -2644,7 +2644,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="341"/>
         <source>&amp;Hatch</source>
-        <translation>&amp;Skraffer</translation>
+        <translation>&amp;Skravering</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="342"/>
@@ -3426,7 +3426,7 @@ or [%2]</source>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="73"/>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="73"/>
         <source>Relative Zero</source>
-        <translation>Relativ null</translation>
+        <translation>Relativt nullpunkt</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="74"/>
@@ -3702,7 +3702,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="449"/>
         <source>Snap Middle Manual</source>
-        <translation>Manuell midtfeste</translation>
+        <translation>Fest til midtpunkt manuelt</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="455"/>
@@ -3717,7 +3717,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="457"/>
         <source>Snap Center</source>
-        <translation>Fest til midtpunkt</translation>
+        <translation>Fest til senter</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="458"/>
@@ -3797,7 +3797,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="565"/>
         <source>Exclusive Snap Mode</source>
-        <translation>Eksklusiv snapping-modus</translation>
+        <translation>Eksklusiv snap-modus</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="566"/>
@@ -4468,7 +4468,7 @@ Punkt: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfopoint.cpp" line="75"/>
         <source>Relative Zero:</source>
-        <translation>Relativ nullpunkt:</translation>
+        <translation>Relativt nullpunkt:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfopoint.cpp" line="123"/>
@@ -4739,7 +4739,7 @@ Punkt: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickposition.cpp" line="80"/>
         <source>Relative Zero:</source>
-        <translation>Relativ nullpunkt:</translation>
+        <translation>Relativt nullpunkt:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickposition.cpp" line="152"/>
@@ -6550,7 +6550,7 @@ Punkt: (%8 , %9)</translation>
     <message>
         <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="246"/>
         <source>Select Intersecting</source>
-        <translation>Velg kryssende enheter</translation>
+        <translation>Velg kryssende objekter</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="276"/>
@@ -7914,7 +7914,7 @@ Er du sikker på at du vil forkaste endringene?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_filler.cpp" line="31"/>
         <source>Check to trim both entities to the bevel</source>
-        <translation type="unfinished">Merk av for å beskjære begge objektene til avfasning</translation>
+        <translation type="unfinished">Merk av for å beskjære begge objektene til avfasing</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_filler.cpp" line="37"/>
@@ -7947,7 +7947,7 @@ Er du sikker på at du vil forkaste endringene?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_widget.ui" line="59"/>
         <source>Check to trim both entities to the bevel</source>
-        <translation type="unfinished">Merk av for å beskjære begge objektene til avfasning</translation>
+        <translation type="unfinished">Merk av for å beskjære begge objektene til avfasing</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_widget.ui" line="62"/>
@@ -9072,7 +9072,7 @@ Er du sikker på at du vil forkaste endringene?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="55"/>
         <source>Dimension Lines</source>
-        <translation>Dimensjonslinjer</translation>
+        <translation>Mållinjer</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="74"/>
@@ -9083,7 +9083,7 @@ Er du sikker på at du vil forkaste endringene?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="124"/>
         <source>Displays and sets the color for the dimension line (DIMCLRD system variable).</source>
-        <translation>Viser og angir fargen for dimensjonslinjen (DIMCLRD-systemvariabelen).</translation>
+        <translation>Viser og angir fargen for mållinjen (DIMCLRD-systemvariabelen).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="81"/>
@@ -9093,7 +9093,7 @@ Er du sikker på at du vil forkaste endringene?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="67"/>
         <source>Sets the linetype of the dimension line. (DIMLTYPE system variable)</source>
-        <translation>Angir linjetypen for dimensjonslinjen. (DIMLTYPE-systemvariabelen)</translation>
+        <translation>Angir linjetypen for mållinjen. (DIMLTYPE-systemvariabelen)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="88"/>
@@ -9103,7 +9103,7 @@ Er du sikker på at du vil forkaste endringene?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="137"/>
         <source>Sets the lineweight of the dimension line. (DIMLWD system variable)</source>
-        <translation>Angir linjebredden for dimensjonslinjen. (DIMLWD-systemvariabelen)</translation>
+        <translation>Angir linjebredden for mållinjen. (DIMLWD-systemvariabelen)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="111"/>
@@ -9113,7 +9113,7 @@ Er du sikker på at du vil forkaste endringene?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="101"/>
         <source>Specifies a distance to extend the dimension line past the extension line when you use oblique, architectural, tick, integral, and no marks for arrowheads. (DIMDLE system variable)</source>
-        <translation>Angir en avstand for å forlenge dimensjonslinjen forbi forlengelseslinjen når du bruker skrå, arkitektonisk, merke, integral og ingen markeringer som pilspisser. (DIMDLE-systemvariabelen)</translation>
+        <translation>Angir en avstand for å forlenge mållinjen forbi målgrenselinjen når du bruker skrå, arkitektonisk, merke, integral og ingen markeringer som pilspisser. (DIMDLE-systemvariabelen)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="162"/>
@@ -9123,52 +9123,52 @@ Er du sikker på at du vil forkaste endringene?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="191"/>
         <source>Suppresses display of first dimension line (DIMSD1 system variable)</source>
-        <translation>Undertrykker visning av den første dimensjonslinjen (DIMSD1-systemvariabel)</translation>
+        <translation>Undertrykker visning av den første mållinjen (DIMSD1-systemvariabel)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="194"/>
         <source>Suppress Dim line 1 and arrow</source>
-        <translation>Undertrykk dimensjonslinje 1 og pil</translation>
+        <translation>Undertrykk mållinje 1 og pil</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="175"/>
         <source>Suppresses display of second dimension line (DIMSD2 system variable)</source>
-        <translation>Undertrykker visning av den andre dimensjonslinjen (DIMSD2-systemvariabel)</translation>
+        <translation>Undertrykker visning av den andre mållinjen (DIMSD2-systemvariabel)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="178"/>
         <source>Suppress Dim line 2 and arrow</source>
-        <translation>Undertrykk dimensjonslinje 2 og pil</translation>
+        <translation>Undertrykk mållinje 2 og pil</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="204"/>
         <source>Extension Lines</source>
-        <translation>Forlengelseslinjer</translation>
+        <translation>Målgrenselinjer</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="216"/>
         <source>Sets the color for the extension line (DIMCLRE system variable.)</source>
-        <translation>Angir fargen for forlengelseslinjen (DIMCLRE-systemvariabel)</translation>
+        <translation>Angir fargen for målgrenselinjen (DIMCLRE-systemvariabel)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="295"/>
         <source>Linetype ext line 1:</source>
-        <translation>Linjetype forlengelseslinje 1:</translation>
+        <translation>Linjetype målgrenselinje 1:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="361"/>
         <source>Sets the linetype of the first extension line. (DIMLTEX1 system variable)</source>
-        <translation>Angir linjetypen for den første forlengelseslinjen (DIMLTEX1-systemvariabel)</translation>
+        <translation>Angir linjetypen for den første målgrenselinjen (DIMLTEX1-systemvariabel)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="338"/>
         <source>Linetype ext line 2:</source>
-        <translation>Linjetype forlengelseslinje 2:</translation>
+        <translation>Linjetype målgrenselinje 2:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="308"/>
         <source>Sets the linetype of the second extension line. (DIMLTEX2 system variable)</source>
-        <translation>Angir linjetypen for den andre forlengelseslinjen (DIMLTEX2-systemvariabel)</translation>
+        <translation>Angir linjetypen for den andre målgrenselinjen (DIMLTEX2-systemvariabel)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="331"/>
@@ -9178,17 +9178,17 @@ Er du sikker på at du vil forkaste endringene?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="236"/>
         <source>Sets the lineweight of the extension line. (DIMLWE system variable)</source>
-        <translation>Angir linjetykkelsen for forlengelseslinjen. (DIMLWE-systemvariabel)</translation>
+        <translation>Angir linjetykkelsen for målgrenselinjen. (DIMLWE-systemvariabel)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="368"/>
         <source>Extend beyond dim lines:</source>
-        <translation>Forleng utover dimensjonslinjene:</translation>
+        <translation>Forleng utover mållinjene:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="285"/>
         <source>Specifies a distance to extend the extension lines above the dimension line. (DIMEXE system variable)</source>
-        <translation>Angir en avstand for å forlenge forlengelseslinjene over dimensjonslinjen. (DIMEXE-systemvariabel)</translation>
+        <translation>Angir en avstand for å forlenge målgrenselinjene over mållinjen. (DIMEXE-systemvariabel)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="375"/>
@@ -9198,7 +9198,7 @@ Er du sikker på at du vil forkaste endringene?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="404"/>
         <source>Sets the distance to offset the extension lines from the points on the drawing that define the dimension. (DIMEXO system variable)</source>
-        <translation>Angir avstanden for å forskyve forlengelseslinjene fra punktene på tegningen som definerer dimensjonen. (DIMEXO-systemvariabel)</translation>
+        <translation>Angir avstanden for å forskyve målgrenselinjene fra punktene på tegningen som definerer dimensjonen. (DIMEXO-systemvariabel)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="223"/>
@@ -9208,37 +9208,37 @@ Er du sikker på at du vil forkaste endringene?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="388"/>
         <source>Sets the total length of the extension lines starting from the dimension line toward the dimension origin. (DIMFXL system variable)</source>
-        <translation>Angir den totale lengden på forlengelseslinjene, fra dimensjonslinjen og ut mot dimensjonens origo. (DIMFXL-systemvariabel)</translation>
+        <translation>Angir den totale lengden på målgrenselinjene, fra mållinjen og ut mot dimensjonens origo. (DIMFXL-systemvariabel)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="345"/>
         <source>Enables fixed length extension lines. (DIMFXLON system variable)</source>
-        <translation>Aktiverer forlengelseslinjer med fast lengde. (DIMFXLON-systemvariabel)</translation>
+        <translation>Aktiverer målgrenselinjer med fast lengde. (DIMFXLON-systemvariabel)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="348"/>
         <source>Fixed length extension lines</source>
-        <translation>Forlengelseslinjer med fast lengde</translation>
+        <translation>Målgrenselinjer med fast lengde</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="269"/>
         <source>Suppresses the display of first extension line (DIMSE1 system variable).</source>
-        <translation>Undertrykker visningen av den første forlengelseslinjen (DIMSE1-systemvariabelen).</translation>
+        <translation>Undertrykker visningen av den første målgrenselinjen (DIMSE1-systemvariabelen).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="272"/>
         <source>Suppress Ext line 1</source>
-        <translation>Undertrykk forlengelseslinje 1</translation>
+        <translation>Undertrykk målgrenselinje 1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="321"/>
         <source>Suppresses the display of second extension line (DIMSE2 system variable).</source>
-        <translation>Undertrykker visningen av den andre forlengelseslinjen (DIMSE2-systemvariabelen).</translation>
+        <translation>Undertrykker visningen av den andre målgrenselinjen (DIMSE2-systemvariabelen).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="324"/>
         <source>Suppress Ext line 2</source>
-        <translation>Undertrykk forlengelseslinje 2</translation>
+        <translation>Undertrykk målgrenselinje 2</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="429"/>
@@ -9284,7 +9284,7 @@ Er du sikker på at du vil forkaste endringene?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="486"/>
         <source>Determines the angle of the transverse segment of the dimension line in a jogged radius dimension. (DIMJOGANG system variable)</source>
-        <translation>Bestemmer vinkelen på det tverrgående segmentet av dimensjonslinjen i en dimensjon med knekt radius. (DIMJOGANG-systemvariabel)</translation>
+        <translation>Bestemmer vinkelen på det tverrgående segmentet av mållinjen i en dimensjon med knekt radius. (DIMJOGANG-systemvariabel)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="505"/>
@@ -9309,17 +9309,17 @@ Er du sikker på at du vil forkaste endringene?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="518"/>
         <source>Sets the arrowhead for the first dimension line. When you change the first arrowhead type, the second arrowhead automatically changes to match it. (DIMBLK1 system variable)</source>
-        <translation>Angir pilspissen for den første dimensjonslinjen. Når du endrer typen på den første pilspissen, endres den andre pilspissen automatisk for å matche den. (DIMBLK1-systemvariabel)</translation>
+        <translation>Angir pilspissen for den første mållinjen. Når du endrer typen på den første pilspissen, endres den andre pilspissen automatisk for å matche den. (DIMBLK1-systemvariabel)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="588"/>
         <source>Sets the arrowhead for the second dimension line. (DIMBLK2 system variable)</source>
-        <translation>Angir pilspissen for den andre dimensjonslinjen. (DIMBLK2-systemvariabel)</translation>
+        <translation>Angir pilspissen for den andre mållinjen. (DIMBLK2-systemvariabel)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="570"/>
         <source>Use the same arrowhead for dimension line</source>
-        <translation>Bruk samme pilspiss for dimensjonslinjen</translation>
+        <translation>Bruk samme pilspiss for mållinjen</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="546"/>
@@ -9396,7 +9396,7 @@ Er du sikker på at du vil forkaste endringene?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="669"/>
         <source>Creates no center mark or centerline. The value is stored as 0 in the DIMCEN system variable.</source>
-        <translation>Oppretter ingen sentermerke eller midtlinje. Verdien lagres som 0 i DIMCEN-systemvariabelen.</translation>
+        <translation>Oppretter verken sentermerke eller senterlinje. Verdien lagres som 0 i DIMCEN-systemvariabelen.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="679"/>
@@ -9411,7 +9411,7 @@ Er du sikker på at du vil forkaste endringene?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="689"/>
         <source>Creates a centerline. The size of the centerline is stored as a negative value in the DIMCEN system variable.</source>
-        <translation>Oppretter en midtlinje. Størrelsen på midtlinjen lagres som en negativ verdi i DIMCEN-systemvariabelen.</translation>
+        <translation>Oppretter en senterlinje. Størrelsen på senterlinjen lagres som en negativ verdi i DIMCEN-systemvariabelen.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="692"/>
@@ -9426,7 +9426,7 @@ Er du sikker på at du vil forkaste endringene?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="706"/>
         <source>Displays and sets the size of the center mark or centerline. (DIMCEN system variable)</source>
-        <translation>Viser og angir størrelsen på sentermerket eller midtlinjen. (DIMCEN-systemvariabel)</translation>
+        <translation>Viser og angir størrelsen på sentermerket eller senterlinjen. (DIMCEN-systemvariabel)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="746"/>
@@ -9528,17 +9528,17 @@ Er du sikker på at du vil forkaste endringene?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="901"/>
         <source>Aligns text with the dimension line (DIMTIH and DIMTOH system variables).</source>
-        <translation>Justerer teksten med dimensjonslinjen (DIMTIH- og DIMTOH-systemvariablene).</translation>
+        <translation>Justerer teksten med mållinjen (DIMTIH- og DIMTOH-systemvariablene).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="911"/>
         <source>Aligns text with the dimension line when text is inside the extension lines, but aligns it horizontally when text is outside the extension lines (DIMTIH and DIMTOH system variables).</source>
-        <translation>Justerer teksten med dimensjonslinjen når teksten er inne i forlengelseslinjene, men justerer den horisontalt når teksten er utenfor forlengelseslinjene (DIMTIH- og DIMTOH-systemvariablene).</translation>
+        <translation>Justerer teksten med mållinjen når teksten er inne i målgrenselinjene, men justerer den horisontalt når teksten er utenfor målgrenselinjene (DIMTIH- og DIMTOH-systemvariablene).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="904"/>
         <source>Aligned with dimension line</source>
-        <translation>Justert med dimensjonslinjen</translation>
+        <translation>Justert med mållinjen</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="150"/>
@@ -9583,7 +9583,7 @@ Er du sikker på at du vil forkaste endringene?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="947"/>
         <source>Offset from dim line:</source>
-        <translation>Avstand fra dimensjonslinje:</translation>
+        <translation>Avstand fra mållinje:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="954"/>
@@ -9593,7 +9593,7 @@ Er du sikker på at du vil forkaste endringene?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="961"/>
         <source>Controls the horizontal placement of dimension text along the dimension line, in relation to the extension lines. (DIMJUST system variable)</source>
-        <translation>Kontrollerer den horisontale plasseringen av dimensjonstekst langs dimensjonslinjen, i forhold til forlengelseslinjene. (DIMJUST-systemvariabel)</translation>
+        <translation>Kontrollerer den horisontale plasseringen av dimensjonstekst langs mållinjen, i forhold til målgrenselinjene. (DIMJUST-systemvariabel)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="965"/>
@@ -9604,22 +9604,22 @@ Er du sikker på at du vil forkaste endringene?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="970"/>
         <source>At Ext Line 1</source>
-        <translation>Ved forlengelseslinje 1</translation>
+        <translation>Ved målgrenselinje 1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="975"/>
         <source>At Ext Line 2</source>
-        <translation>Ved forlengelseslinje 2</translation>
+        <translation>Ved målgrenselinje 2</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="980"/>
         <source>Over Ext Line 1</source>
-        <translation>Over forlengelseslinje 1</translation>
+        <translation>Over målgrenselinje 1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="985"/>
         <source>Over Ext Line 2</source>
-        <translation>Over forlengelseslinje 2</translation>
+        <translation>Over målgrenselinje 2</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="993"/>
@@ -9634,7 +9634,7 @@ Er du sikker på at du vil forkaste endringene?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1007"/>
         <source>Controls the vertical placement of dimension text in relation to the dimension line. (DIMTAD system variable)</source>
-        <translation>Kontrollerer den vertikale plasseringen av dimensjonstekst i forhold til dimensjonslinjen. (DIMTAD-systemvariabel)</translation>
+        <translation>Kontrollerer den vertikale plasseringen av dimensjonstekst i forhold til mållinjen. (DIMTAD-systemvariabel)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1016"/>
@@ -9659,17 +9659,17 @@ Er du sikker på at du vil forkaste endringene?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1039"/>
         <source>Vertical position of text above or below dimension line if vertical placement (DIMTAD) is not &quot;Centered&quot; (DIMTVP variable).</source>
-        <translation>Vertikal posisjon for tekst over eller under dimensjonslinjen hvis vertikal plassering (DIMTAD) ikke er &quot;Sentrert&quot; (DIMTVP-variabel).</translation>
+        <translation>Vertikal posisjon for tekst over eller under mållinjen hvis vertikal plassering (DIMTAD) ikke er &quot;Sentrert&quot; (DIMTVP-variabel).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1052"/>
         <source>Broken dim line text gap:</source>
-        <translation>Tekstavstand ved brutt dimensjonslinje:</translation>
+        <translation>Tekstavstand ved brutt mållinje:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1059"/>
         <source>Sets the current text gap, which is the distance around the dimension text when the dimension line is broken to accommodate the dimension text (DIMGAP system variable).</source>
-        <translation>Angir gjeldende tekstavstand, som er avstanden rundt dimensjonsteksten når dimensjonslinjen er brutt for å gi plass til dimensjonsteksten (DIMGAP-systemvariabel).</translation>
+        <translation>Angir gjeldende tekstavstand, som er avstanden rundt dimensjonsteksten når mållinjen er brutt for å gi plass til dimensjonsteksten (DIMGAP-systemvariabel).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1086"/>
@@ -9684,7 +9684,7 @@ Er du sikker på at du vil forkaste endringene?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1098"/>
         <source>Ignores any horizontal justification settings and places the text at the position you specify at the Dimension Line Location prompt. (DIMUPT system variable)</source>
-        <translation>Ignorerer alle horisontale justeringsinnstillinger og plasserer teksten på posisjonen du angir i Dimensjonslinjeposisjon-prompten. (DIMUPT-systemvariabel)</translation>
+        <translation>Ignorerer alle horisontale justeringsinnstillinger og plasserer teksten på posisjonen du angir i Mållinjeposisjon-prompten. (DIMUPT-systemvariabel)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1101"/>
@@ -9694,12 +9694,12 @@ Er du sikker på at du vil forkaste endringene?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1108"/>
         <source>Draws dimension lines between the measured points even when the arrowheads are placed outside the measured points. (DIMTOFL system variable)</source>
-        <translation>Tegner dimensjonslinjer mellom de målte punktene, selv når pilspissene er plassert utenfor de målte punktene. (DIMTOFL-systemvariabel)</translation>
+        <translation>Tegner mållinjer mellom de målte punktene, selv når pilspissene er plassert utenfor de målte punktene. (DIMTOFL-systemvariabel)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1111"/>
         <source>Draw dim line betwen ext lines</source>
-        <translation>Tegn dimensjonslinje mellom forlengelseslinjene</translation>
+        <translation>Tegn mållinje mellom målgrenselinjene</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1121"/>
@@ -9730,22 +9730,22 @@ Er du sikker på at du vil forkaste endringene?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1175"/>
         <source>If selected, moves the dimension line whenever dimension text is moved. (DIMTMOVE system variable)</source>
-        <translation>Hvis valgt, flyttes dimensjonslinjen når dimensjonsteksten flyttes. (DIMTMOVE-systemvariabel)</translation>
+        <translation>Hvis valgt, flyttes mållinjen når dimensjonsteksten flyttes. (DIMTMOVE-systemvariabel)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1178"/>
         <source>Beside the dimention line</source>
-        <translation>Ved siden av dimensjonslinjen</translation>
+        <translation>Ved siden av mållinjen</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1185"/>
         <source>If selected, dimension lines are not moved when text is moved. If text is moved away from the dimension line, a leader line is created connecting the text to the dimension line. The leader line is omitted when text is too close to the dimension line. (DIMTMOVE system variable)</source>
-        <translation>Hvis valgt, flyttes ikke dimensjonslinjene når teksten flyttes. Hvis teksten flyttes bort fra dimensjonslinjen, opprettes en henvisningslinje som kobler teksten til dimensjonslinjen. Henvisningslinjen utelates når teksten er for nær dimensjonslinjen. (DIMTMOVE-systemvariabel)</translation>
+        <translation>Hvis valgt, flyttes ikke mållinjene når teksten flyttes. Hvis teksten flyttes bort fra mållinjen, opprettes en henvisningslinje som kobler teksten til mållinjen. Henvisningslinjen utelates når teksten er for nær mållinjen. (DIMTMOVE-systemvariabel)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1188"/>
         <source>Over dimension line, with leader</source>
-        <translation>Over dimensjonslinje, med henvisningslinje</translation>
+        <translation>Over mållinje, med henvisningslinje</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1195"/>
@@ -9755,12 +9755,12 @@ Er du sikker på at du vil forkaste endringene?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1202"/>
         <source>If selected, dimension lines are not moved when text is moved. Text that is moved away from the dimension line is not connected to the dimension line with a leader. (DIMTMOVE system variable)</source>
-        <translation>Hvis valgt, vil ikke dimensjonslinjene flyttes når teksten flyttes. Tekst som flyttes bort fra dimensjonslinjen, vil ikke være koblet til dimensjonslinjen med en henvisningslinje. (DIMTMOVE-systemvariabel)</translation>
+        <translation>Hvis valgt, vil ikke mållinjene flyttes når teksten flyttes. Tekst som flyttes bort fra mållinjen, vil ikke være koblet til mållinjen med en henvisningslinje. (DIMTMOVE-systemvariabel)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1205"/>
         <source>Over dimension line, without leader</source>
-        <translation>Over dimensjonslinje, uten henvisningslinje</translation>
+        <translation>Over mållinje, uten henvisningslinje</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1234"/>
@@ -9770,22 +9770,22 @@ Er du sikker på at du vil forkaste endringene?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1240"/>
         <source>If there isn&apos;t enough room to place both text and arrow inside extension lines, the first thing to move outside the extension lines is:</source>
-        <translation>Hvis det ikke er nok plass til å plassere både tekst og pil inne i forlengelseslinjene, er det første som flyttes utenfor forlengelseslinjene:</translation>
+        <translation>Hvis det ikke er nok plass til å plassere både tekst og pil inne i målgrenselinjene, er det første som flyttes utenfor målgrenselinjene:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1250"/>
         <source>Suppresses arrowheads if not enough space is available inside the extension lines. (DIMSOXD system variable)</source>
-        <translation>Undertrykker pilspisser hvis det ikke er nok plass inne i forlengelseslinjene. (DIMSOXD-systemvariabel)</translation>
+        <translation>Undertrykker pilspisser hvis det ikke er nok plass inne i målgrenselinjene. (DIMSOXD-systemvariabel)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1253"/>
         <source>Suppress arrows if they don&apos;t fit inside extension lines</source>
-        <translation>Undertrykk piler hvis de ikke får plass inne i forlengelseslinjene</translation>
+        <translation>Undertrykk piler hvis de ikke får plass inne i målgrenselinjene</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1260"/>
         <source>When not enough space is available for text and arrowheads, moves both outside the extension lines (DIMATFIT system variable).</source>
-        <translation>Når det ikke er nok plass til tekst og pilspisser, flyttes begge utenfor forlengelseslinjene (DIMATFIT-systemvariabel).</translation>
+        <translation>Når det ikke er nok plass til tekst og pilspisser, flyttes begge utenfor målgrenselinjene (DIMATFIT-systemvariabel).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1263"/>
@@ -9795,7 +9795,7 @@ Er du sikker på at du vil forkaste endringene?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1270"/>
         <source>Moves either the text or the arrowheads outside the extension lines based on the best fit (DIMATFIT system variable).</source>
-        <translation>Flytter enten teksten eller pilspissene utenfor forlengelseslinjene basert på den beste tilpasningen (DIMATFIT-systemvariabelen).</translation>
+        <translation>Flytter enten teksten eller pilspissene utenfor målgrenselinjene basert på den beste tilpasningen (DIMATFIT-systemvariabelen).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1273"/>
@@ -9805,7 +9805,7 @@ Er du sikker på at du vil forkaste endringene?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1280"/>
         <source>Moves arrowheads outside the extension lines first, then text (DIMATFIT system variable).</source>
-        <translation>Flytter først pilspissene utenfor forlengelseslinjene, deretter teksten (DIMATFIT-systemvariabelen).</translation>
+        <translation>Flytter først pilspissene utenfor målgrenselinjene, deretter teksten (DIMATFIT-systemvariabelen).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1283"/>
@@ -9815,17 +9815,17 @@ Er du sikker på at du vil forkaste endringene?</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1290"/>
         <source>Moves text outside the extension lines first, then arrowheads (DIMATFIT system variable).</source>
-        <translation>Flytter først teksten utenfor forlengelseslinjene, deretter pilspissene (DIMATFIT-systemvariabelen).</translation>
+        <translation>Flytter først teksten utenfor målgrenselinjene, deretter pilspissene (DIMATFIT-systemvariabelen).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1300"/>
         <source>Always places text between extension lines. (DIMTIX system variable)</source>
-        <translation>Plasserer alltid teksten mellom forlengelseslinjene. (DIMTIX-systemvariabelen)</translation>
+        <translation>Plasserer alltid teksten mellom målgrenselinjene. (DIMTIX-systemvariabelen)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1303"/>
         <source>Always fit text between ext lines</source>
-        <translation>Tilpasser alltid teksten mellom forlengelseslinjene.</translation>
+        <translation>Tilpasser alltid teksten mellom målgrenselinjene.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1327"/>
@@ -13055,7 +13055,7 @@ Er du sikker på at du vil forkaste endringene?</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="181"/>
         <source>Pick offset by Y from drawing</source>
-        <translation type="unfinished">Offset basert på Y-aksen fra tegningen.</translation>
+        <translation type="unfinished">Velg forskyvning i Y-retning fra tegningen</translation>
     </message>
 </context>
 <context>
@@ -15592,7 +15592,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="102"/>
         <source>Offset of tick snap point from intersection point</source>
-        <translation type="unfinished">Avstand fra skjæringspunkt til snap-punkt på linjen</translation>
+        <translation type="unfinished">Avstand fra skjæringspunktet til festepunktet for merket</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="108"/>
@@ -15615,7 +15615,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="50"/>
         <source>Distance of intersection point from specified line snap point</source>
-        <translation type="unfinished">Avstand fra skjæringspunkt til angitt snap-punkt på linjen</translation>
+        <translation type="unfinished">Avstand fra skjæringspunkt til angitt festepunkt på linjen</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="57"/>
@@ -15714,7 +15714,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="226"/>
         <source>Tick Snap:</source>
-        <translation type="unfinished">Fest punkt for vinkel:</translation>
+        <translation type="unfinished">Merkesnap:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="233"/>
@@ -15724,7 +15724,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="265"/>
         <source>Offset of tick snap point from intersection point</source>
-        <translation type="unfinished">Avstand fra skjæringspunkt til snap-punkt på linjen</translation>
+        <translation type="unfinished">Avstand fra skjæringspunktet til festepunktet for merket</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="272"/>
@@ -15853,7 +15853,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="66"/>
         <source>Offset for created line from intersection point</source>
-        <translation type="unfinished">Offset for opprettet linje fra skjæringspunkt</translation>
+        <translation type="unfinished">Forskyvning for opprettet linje fra skjæringspunkt</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="73"/>
@@ -15888,7 +15888,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="88"/>
         <source>Snap point for created line</source>
-        <translation type="unfinished">Snappunkt for opprettet linje</translation>
+        <translation type="unfinished">Festepunkt for opprettet linje</translation>
     </message>
 </context>
 <context>
@@ -15921,7 +15921,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="120"/>
         <source>Snap point for created line</source>
-        <translation type="unfinished">Snappunkt for opprettet linje</translation>
+        <translation type="unfinished">Festepunkt for opprettet linje</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="124"/>
@@ -15961,7 +15961,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="259"/>
         <source>Offset for created line from intersection point</source>
-        <translation type="unfinished">Offset for opprettet linje fra skjæringspunkt</translation>
+        <translation type="unfinished">Forskyvning for opprettet linje fra skjæringspunkt</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="266"/>
@@ -16052,7 +16052,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="56"/>
         <source>Snap point for gap on the line</source>
-        <translation type="unfinished">Snappunkt for gapet på linjen</translation>
+        <translation type="unfinished">Festepunkt for åpningen på linjen</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="63"/>
@@ -16072,7 +16072,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="80"/>
         <source>Snap point of gap to line snap point</source>
-        <translation type="unfinished">Snapp gapets punkt til linjens snappunkt</translation>
+        <translation type="unfinished">Fest åpningens punkt til linjens festepunkt</translation>
     </message>
 </context>
 <context>
@@ -16085,7 +16085,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="32"/>
         <source>Snap point of gap to line snap point</source>
-        <translation type="unfinished">Snapp gapets punkt til linjens snappunkt</translation>
+        <translation type="unfinished">Fest åpningens punkt til linjens festepunkt</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="36"/>
@@ -16118,7 +16118,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="68"/>
         <source>Snap point for gap on the line</source>
-        <translation type="unfinished">Snappunkt for gapet på linjen</translation>
+        <translation type="unfinished">Festepunkt for åpningen på linjen</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="72"/>
@@ -21916,7 +21916,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.ui" line="98"/>
         <source>Create view for current zoom and offset of drawing</source>
-        <translation>Opprett et visningsobjekt for gjeldende zoom- og offset-innstillinger for tegningen.</translation>
+        <translation>Opprett en visning for gjeldende zoom og forskyvning av tegningen</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.ui" line="164"/>
@@ -23758,7 +23758,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_options_widget.ui" line="119"/>
         <source>Rounding radius for vertex bevel.</source>
-        <translation type="unfinished">Avrundingsradius for toppunktavfasning.</translation>
+        <translation type="unfinished">Avrundingsradius for toppunktavfasing.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_options_widget.ui" line="126"/>
@@ -27983,7 +27983,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_views.cpp" line="96"/>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_views.cpp" line="98"/>
         <source>Create view for current zoom and offset of drawing</source>
-        <translation type="unfinished">Opprett et visningsobjekt for gjeldende zoom- og offset-innstillinger for tegningen.</translation>
+        <translation type="unfinished">Opprett en visning for gjeldende zoom og forskyvning av tegningen</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_views.cpp" line="115"/>
@@ -30573,7 +30573,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="643"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="670"/>
         <source>ARC</source>
-        <translation>BUET</translation>
+        <translation>BUE</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="724"/>
@@ -30689,7 +30689,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="440"/>
         <source>Set Relative Zero</source>
-        <translation>Angi relativ nullpunkt</translation>
+        <translation>Angi relativt nullpunkt</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="450"/>
@@ -31416,7 +31416,7 @@ Lag: </translation>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1359"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1375"/>
         <source>HATCH</source>
-        <translation>HATCH</translation>
+        <translation>SKRAVERING</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1360"/>
@@ -31592,7 +31592,7 @@ Lag: </translation>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfopointsdata.cpp" line="226"/>
         <source>Relative Zero</source>
-        <translation>Relativ null</translation>
+        <translation>Relativt nullpunkt</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfopointsdata.cpp" line="231"/>
@@ -31603,7 +31603,7 @@ Lag: </translation>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfopointsdata.cpp" line="233"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfopointsdata.cpp" line="250"/>
         <source>Set Relative Zero</source>
-        <translation>Angi relativ null</translation>
+        <translation>Angi relativt nullpunkt</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfopointsdata.cpp" line="235"/>
@@ -31730,7 +31730,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="366"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="380"/>
         <source>&amp;Set Relative Zero</source>
-        <translation>Angi relativ nullpunkt</translation>
+        <translation>&amp;Angi relativt nullpunkt</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="369"/>
@@ -32374,7 +32374,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="91"/>
         <source>Start Snap:</source>
-        <translation type="unfinished">Startpunkt:</translation>
+        <translation type="unfinished">Start-snap:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="105"/>
@@ -32439,7 +32439,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="280"/>
         <source>Pick length of bevel in X direction from drawing.</source>
-        <translation type="unfinished">Velg lengden på avfasningen i X-retningen fra tegningen.</translation>
+        <translation type="unfinished">Velg lengden på avfasingen i X-retningen fra tegningen.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="294"/>
@@ -32479,7 +32479,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="347"/>
         <source>End Snap:</source>
-        <translation type="unfinished">Avslutt snap:</translation>
+        <translation type="unfinished">Slutt-snap:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="354"/>
@@ -32489,7 +32489,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="361"/>
         <source>Pick length of bevel in Y direction from drawing. </source>
-        <translation type="unfinished">Velg lengden på avfasningen i Y-retningen fra tegningen.</translation>
+        <translation type="unfinished">Velg lengden på avfasingen i Y-retningen fra tegningen. </translation>
     </message>
 </context>
 <context>
@@ -32695,12 +32695,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="397"/>
         <source>Pick length of bevel in X direction from drawing.</source>
-        <translation type="unfinished">Velg lengden på avfasningen i X-retningen fra tegningen.</translation>
+        <translation type="unfinished">Velg lengden på avfasingen i X-retningen fra tegningen.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="411"/>
         <source>Pick length of bevel in Y direction from drawing.</source>
-        <translation type="unfinished">Velg lengden på avfasningen i Y-retningen fra tegningen.</translation>
+        <translation type="unfinished">Velg lengden på avfasingen i Y-retningen fra tegningen.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="428"/>
@@ -32841,12 +32841,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/components/status_bar/lc_relzerocoordinateswidget.ui" line="35"/>
         <source>Relative Zero (Cartesian)</source>
-        <translation>Relativ nullpunkt (kartesisk)</translation>
+        <translation>Relativt nullpunkt (kartesisk)</translation>
     </message>
     <message>
         <location filename="../src/ui/components/status_bar/lc_relzerocoordinateswidget.ui" line="45"/>
         <source>Relative Zero (Polar)</source>
-        <translation>Relativ nullpunkt (polar)</translation>
+        <translation>Relativt nullpunkt (polar)</translation>
     </message>
 </context>
 <context>
@@ -35410,7 +35410,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="75"/>
         <source>Snap Selection</source>
-        <translation>Fest til utvalg</translation>
+        <translation>Snap-utvalg</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="86"/>
@@ -37376,7 +37376,7 @@ Dette endrer rekursivt alle elementene i selve blokken.</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="124"/>
         <source>Hatched area</source>
-        <translation>Mønstret areal</translation>
+        <translation>Skravert areal</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.cpp" line="213"/>
@@ -38533,7 +38533,7 @@ Dette endrer rekursivt alle elementene i selve blokken.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1717"/>
         <source>Dimension line gap:</source>
-        <translation>Åpning i dimensjonslinjen:</translation>
+        <translation>Åpning i mållinjen:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="14"/>
@@ -38756,7 +38756,7 @@ Dette endrer rekursivt alle elementene i selve blokken.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="576"/>
         <source>Zero base angle relative to the current user coordinate system. Affects polar coordinates input, snap to angle. 0.0 is 3pm.</source>
-        <translation>Nullbasert vinkel relativt til gjeldende brukerkoordinatsystem. Påvirker polarkoordinatinndata og vinkeljustering. 0,0 er kl. 15.00.</translation>
+        <translation>Vinkel for nullretning i forhold til gjeldende brukerkoordinatsystem. Påvirker inndata for polarkoordinater og vinkelsnap. 0,0 er kl. 15.00.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="586"/>
@@ -38932,7 +38932,7 @@ Dette endrer rekursivt alle elementene i selve blokken.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1444"/>
         <source>Length to enlarge over dimension line</source>
-        <translation>Lengde for å forlenge ut over dimensjonslinjen</translation>
+        <translation>Lengde for å forlenge ut over mållinjen</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1469"/>
@@ -38948,7 +38948,7 @@ Dette endrer rekursivt alle elementene i selve blokken.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1543"/>
         <source>Dimension lines, arrows &amp; ticks</source>
-        <translation>Dimensjonslinjer, piler og merker</translation>
+        <translation>Mållinjer, piler og merker</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1550"/>
@@ -38978,7 +38978,7 @@ Dette endrer rekursivt alle elementene i selve blokken.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1619"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Text alignment &lt;a name=&quot;result_box&quot;/&gt;relative to the dimension line.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Tekstjustering i forhold til dimensjonslinjen.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Tekstjustering i forhold til mållinjen.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1629"/>
@@ -38998,7 +38998,7 @@ Dette endrer rekursivt alle elementene i selve blokken.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1727"/>
         <source>Extension lines</source>
-        <translation>Forlengelseslinjer</translation>
+        <translation>Målgrenselinjer</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1734"/>
@@ -39343,7 +39343,7 @@ Dette endrer rekursivt alle elementene i selve blokken.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1771"/>
         <source>fixed extension line length</source>
-        <translation>fast lengde på forlengelseslinje</translation>
+        <translation>fast lengde på målgrenselinje</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2176"/>
@@ -39606,7 +39606,7 @@ Dette endrer rekursivt alle elementene i selve blokken.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5147"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Temporarily toggle free snapping when the spacebar is pressed and the command window is activated&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Slå midlertidig av automatisk justering når mellomromstasten trykkes og kommandovinduet er aktivt&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Slå fritt snap midlertidig av/på når mellomromstasten trykkes og kommandovinduet er aktivt&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5277"/>
@@ -39829,7 +39829,7 @@ Dette endrer rekursivt alle elementene i selve blokken.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1810"/>
         <source>Hide cursor when snapping</source>
-        <translation>Skjul markør når du fester</translation>
+        <translation>Skjul markøren under snap</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5739"/>
@@ -40168,17 +40168,17 @@ Dette endrer rekursivt alle elementene i selve blokken.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1807"/>
         <source>If checked, cursor will be hidden during snapping</source>
-        <translation>Hvis dette er valgt, vil markøren være skjult under snapping.</translation>
+        <translation>Hvis dette er valgt, vil markøren være skjult under snap.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1817"/>
         <source>If checked, snap options (middle, distance) will be shown in snap toolbar instead of tool properties toolbar</source>
-        <translation>Hvis dette er valgt, vil snapping-alternativene (midtpunkt, avstand) vises i snapping-verktøylinjen i stedet for i verktøyeiendommer-verktøylinjen.</translation>
+        <translation>Hvis dette er valgt, vil snap-alternativene (midtpunkt, avstand) vises i snap-verktøylinjen i stedet for i verktøylinjen for verktøyegenskaper.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1820"/>
         <source>Show snap options in Snap Selection Toolbar</source>
-        <translation>Vis snapping-alternativer i snapping-verktøylinjen.</translation>
+        <translation>Vis snap-alternativer i snap-verktøylinjen.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="745"/>
@@ -40559,7 +40559,7 @@ Dette endrer rekursivt alle elementene i selve blokken.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3614"/>
         <source>Radius of relative zero marker</source>
-        <translation>Radius for relativt nullpunkt</translation>
+        <translation>Radius for markøren for relativt nullpunkt</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="956"/>
@@ -40954,7 +40954,7 @@ Dette endrer rekursivt alle elementene i selve blokken.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2794"/>
         <source>If checked, relative distance and angle from relative zero point to snap point will be shown.</source>
-        <translation>Hvis dette er valgt, vil relativ avstand og vinkel fra det relative nullpunktet til snap-punktet vises</translation>
+        <translation>Hvis dette er valgt, vil relativ avstand og vinkel fra det relative nullpunktet til festepunktet vises.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2797"/>
@@ -40989,7 +40989,7 @@ Dette endrer rekursivt alle elementene i selve blokken.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2854"/>
         <source>If checked, information about the type of snap and restrictions will be shown for snap point (if any)</source>
-        <translation>Hvis dette er valgt, vil informasjon om typen snap og eventuelle begrensninger vises for snap-punktet (hvis det finnes).</translation>
+        <translation>Hvis dette er valgt, vil informasjon om typen snap og eventuelle begrensninger vises for festepunktet (hvis det finnes).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2857"/>
@@ -41009,7 +41009,7 @@ Dette endrer rekursivt alle elementene i selve blokken.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2784"/>
         <source>If checked, absolute position of snap point will be shown.</source>
-        <translation>Hvis dette er valgt, vil den absolutte posisjonen til snap-punktet vises.</translation>
+        <translation>Hvis dette er valgt, vil den absolutte posisjonen til festepunktet vises.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2787"/>
@@ -41276,7 +41276,7 @@ Dette endrer rekursivt alle elementene i selve blokken.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3601"/>
         <source>Relative Zero Marker</source>
-        <translation>Relativ nullpunktsmarkør</translation>
+        <translation>Markør for relativt nullpunkt</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1021"/>
@@ -41316,7 +41316,7 @@ Dette endrer rekursivt alle elementene i selve blokken.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1912"/>
         <source>Snap on entity will be invoked if it is enabled and the distance between mouse and snapped point is larger than specified value.</source>
-        <translation>Snap til objekt brukes hvis det er aktivert og avstanden mellom musen og snap-punktet er større enn den angitte verdien.</translation>
+        <translation>Snap til objekt brukes hvis det er aktivert og avstanden mellom musen og festepunktet er større enn den angitte verdien.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1915"/>
@@ -42149,7 +42149,7 @@ Dette endrer rekursivt alle elementene i selve blokken.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5221"/>
         <source>Zero base angle relative to the current user coordinate system. Affects polar coordinates input, snap to angle. 0.0 is 3pm.</source>
-        <translation>Nullstill basisvinkel relativt til gjeldende brukerkoordinatsystem. Påvirker inndata for polarkoordinater og vinkeljustering. 0,0 er kl. 15.00.</translation>
+        <translation>Vinkel for nullretning i forhold til gjeldende brukerkoordinatsystem. Påvirker inndata for polarkoordinater og vinkelsnap. 0,0 er kl. 15.00.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5260"/>
@@ -42219,7 +42219,7 @@ Dette endrer rekursivt alle elementene i selve blokken.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5150"/>
         <source>Toggle free snap mode when SPACE BAR is pressed</source>
-        <translation>Aktiver/deaktiver fritt snapp-modus når MELLOMROM-TASTEN trykkes</translation>
+        <translation>Aktiver/deaktiver fri snap-modus når MELLOMROMSTASTEN trykkes</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5068"/>
@@ -42628,12 +42628,12 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1055"/>
         <source>[0100-017F] Latin Extended-A</source>
-        <translation>[0100-017F] 1. [KONTEKST: QG_DlgText] [0100-017F] Utvidet latinsk alfabet A</translation>
+        <translation>[0100-017F] Utvidet latinsk alfabet A</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1060"/>
         <source>[0180-024F] Latin Extended-B</source>
-        <translation>[0180-024F] 2. [KONTEKST: QG_DlgText] [0180-024F] Utvidet latinsk alfabet B</translation>
+        <translation>[0180-024F] Utvidet latinsk alfabet B</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1065"/>
@@ -42723,32 +42723,32 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1150"/>
         <source>[0C00-0C7F] Telugu</source>
-        <translation>[0C00-0C7F] 3. [KONTEKST: QG_DlgText] [0C00-0C7F] Telugu</translation>
+        <translation>[0C00-0C7F] Telugu</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1155"/>
         <source>[0C80-0CFF] Kannada</source>
-        <translation>[0C80-0CFF] 4. [KONTEKST: QG_DlgText] [0C80-0CFF] Kannada</translation>
+        <translation>[0C80-0CFF] Kannada</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1160"/>
         <source>[0D00-0D7F] Malayalam</source>
-        <translation>[0D00-0D7F] 5. [KONTEKST: QG_DlgText] [0D00-0D7F] Malayalam</translation>
+        <translation>[0D00-0D7F] Malayalam</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1165"/>
         <source>[0D80-0DFF] Sinhala</source>
-        <translation>[0D80-0DFF] 6. [KONTEKST: QG_DlgText] [0D80-0DFF] Sinhala</translation>
+        <translation>[0D80-0DFF] Sinhala</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1170"/>
         <source>[0E00-0E7F] Thai</source>
-        <translation>[0E00-0E7F] 7. [KONTEKST: QG_DlgText] [0E00-0E7F] Thai</translation>
+        <translation>[0E00-0E7F] Thai</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1175"/>
         <source>[0E80-0EFF] Lao</source>
-        <translation>[0E80-0EFF] 8. [KONTEKST: QG_DlgText] [0E80-0EFF] Lao</translation>
+        <translation>[0E80-0EFF] Lao</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1180"/>
@@ -42758,7 +42758,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1185"/>
         <source>[1000-109F] Myanmar</source>
-        <translation>[1000-109F] 9. [KONTEKST: QG_DlgText] [1000-109F] Myanmar</translation>
+        <translation>[1000-109F] Myanmar</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1190"/>
@@ -42768,7 +42768,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1195"/>
         <source>[1100-11FF] Hangul Jamo</source>
-        <translation>[1100-11FF] 10. [KONTEKST: QG_DlgText] [1100-11FF] Hangul Jamo</translation>
+        <translation>[1100-11FF] Hangul Jamo</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1200"/>
@@ -42778,17 +42778,17 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1205"/>
         <source>[13A0-13FF] Cherokee</source>
-        <translation>[13A0-13FF] 1. [KONTEKST: QG_DlgText] [13A0-13FF] Cherokee</translation>
+        <translation>[13A0-13FF] Cherokee</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1210"/>
         <source>[1400-167F] Unified Canadian Aboriginal Syllabic</source>
-        <translation>[1400-167F] 2. [KONTEKST: QG_DlgText] [1400-167F] Forenet kanadisk urfolksstavelse</translation>
+        <translation>[1400-167F] Forenet kanadisk urfolksstavelse</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1215"/>
         <source>[1680-169F] Ogham</source>
-        <translation>[1680-169F] 3. [KONTEKST: QG_DlgText] [1680-169F] Ogham</translation>
+        <translation>[1680-169F] Ogham</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1220"/>
@@ -42798,27 +42798,27 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1225"/>
         <source>[1700-171F] Tagalog</source>
-        <translation>[1700-171F] 4. [KONTEKST: QG_DlgText] [1700-171F] Tagalog</translation>
+        <translation>[1700-171F] Tagalog</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1230"/>
         <source>[1720-173F] Hanunoo</source>
-        <translation>[1720-173F] 5. [KONTEKST: QG_DlgText] [1720-173F] Hanunoo</translation>
+        <translation>[1720-173F] Hanunoo</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1235"/>
         <source>[1740-175F] Buhid</source>
-        <translation>[1740-175F] 6. [KONTEKST: QG_DlgText] [1740-175F] Buhid</translation>
+        <translation>[1740-175F] Buhid</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1240"/>
         <source>[1760-177F] Tagbanwa</source>
-        <translation>[1760-177F] 7. [KONTEKST: QG_DlgText] [1760-177F] Tagbanwa</translation>
+        <translation>[1760-177F] Tagbanwa</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1245"/>
         <source>[1780-17FF] Khmer</source>
-        <translation>[1780-17FF] 8. [KONTEKST: QG_DlgText] [1780-17FF] Khmer</translation>
+        <translation>[1780-17FF] Khmer</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1250"/>
@@ -42973,12 +42973,12 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1400"/>
         <source>[3040-309F] Hiragana</source>
-        <translation>[3040-309F] 9. [KONTEKST: QG_DlgText] [3040-309F] Hiragana</translation>
+        <translation>[3040-309F] Hiragana</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1405"/>
         <source>[30A0-30FF] Katakana</source>
-        <translation>[30A0-30FF] 10. [KONTEKST: QG_DlgText] [30A0-30FF] Katakana</translation>
+        <translation>[30A0-30FF] Katakana</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1410"/>
@@ -47721,7 +47721,7 @@ Vil du erstatte den?</translation>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="39"/>
         <source>/CustomColor%1</source>
-        <translation>/Egendefinert farge%1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="40"/>
@@ -47763,7 +47763,7 @@ Vil du erstatte den?</translation>
     <message>
         <location filename="../src/lib/actions/lc_modifiersinfo.h" line="32"/>
         <source>Snap to Relative Zero</source>
-        <translation>Snap til relativ null</translation>
+        <translation>Fest til relativt nullpunkt</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="50"/>
@@ -47785,7 +47785,7 @@ Vil du erstatte den?</translation>
     <message>
         <location filename="../src/lib/engine/document/container/rs_entitycontainer.cpp" line="1499"/>
         <source>Hatch failed due to a gap=%1 between (%2, %3) and (%4, %5)</source>
-        <translation>Mønstertegning mislyktes på grunn av en åpning på %1 mellom (%2, %3) og (%4, %5)</translation>
+        <translation>Skraveringen mislyktes på grunn av en åpning på %1 mellom (%2, %3) og (%4, %5)</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/document/patterns/rs_patternlist.cpp" line="66"/>
@@ -47872,7 +47872,7 @@ Vil du erstatte den?</translation>
         <location filename="../src/lib/engine/rs_units.cpp" line="218"/>
         <location filename="../src/lib/engine/rs_units.cpp" line="282"/>
         <source>Angstrom</source>
-        <translation>Angström</translation>
+        <translation>Ångstrøm</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="220"/>
@@ -49005,7 +49005,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1023"/>
         <source>Select Intersecting</source>
-        <translation>Velg kryssende enheter</translation>
+        <translation>Velg kryssende objekter</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1023"/>
@@ -49064,7 +49064,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimlinear.cpp" line="214"/>
         <source>Specify second extension line origin</source>
-        <translation>Angi opprinnelsen til den andre forlengelseslinjen</translation>
+        <translation>Angi utgangspunkt for andre målgrenselinje</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimlinear.cpp" line="214"/>
@@ -49075,7 +49075,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimlinear.cpp" line="224"/>
         <source>Specify dimension line location</source>
-        <translation>Angi plasseringen til dimensjonslinjen</translation>
+        <translation>Angi plasseringen til mållinjen</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimlinear.cpp" line="224"/>
@@ -49253,7 +49253,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="134"/>
         <source>Hatch Error: Invalid contour found!</source>
-        <translation>Feil ved mønsterfylling: Ugyldig kontur funnet!</translation>
+        <translation>Feil ved skravering: Fant ugyldig kontur!</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="138"/>
@@ -49268,17 +49268,17 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="144"/>
         <source>Hatch Error: Contour too big!</source>
-        <translation>Feil ved mønsterfylling: Kontur for stor!</translation>
+        <translation>Feil ved skravering: Konturen er for stor!</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="147"/>
         <source>Hatch Error: Undefined Error!</source>
-        <translation>Feil ved mønsterfylling: Udefinert feil!</translation>
+        <translation>Feil ved skravering: Udefinert feil!</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="152"/>
         <source>Total hatch area = %1</source>
-        <translation>Total areal for mønsterfylling = %1</translation>
+        <translation>Totalt skravert areal = %1</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="185"/>
@@ -49288,7 +49288,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="185"/>
         <source>Hatch immediately after selection</source>
-        <translation>Utfør mønsterfylling umiddelbart etter valg</translation>
+        <translation>Skraver umiddelbart etter valg</translation>
     </message>
 </context>
 <context>
@@ -49826,7 +49826,7 @@ Slutt: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="253"/>
         <source>Printout offset ignores relative zero. Ignoring &apos;@&apos;</source>
-        <translation>Utskriftsforskyvning ignorerer relativ null. Ignorerer &apos;@&apos;</translation>
+        <translation>Utskriftsforskyvning ignorerer relativt nullpunkt. Ignorerer &apos;@&apos;</translation>
     </message>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="230"/>
@@ -49852,7 +49852,7 @@ Slutt: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/rel_zero/rs_actionsetrelativezero.cpp" line="72"/>
         <source>Set relative Zero</source>
-        <translation>Angi relativ null</translation>
+        <translation>Angi relativt nullpunkt</translation>
     </message>
 </context>
 <context>
@@ -50292,7 +50292,7 @@ Slutt: (%8 , %9)</translation>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapdistoptions.ui" line="32"/>
         <source>Snap Distance Options</source>
-        <translation>Festeavstandalternativer</translation>
+        <translation>Alternativer for festeavstand</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapdistoptions.ui" line="50"/>
@@ -50315,7 +50315,7 @@ Slutt: (%8 , %9)</translation>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapmiddleoptions.ui" line="35"/>
         <source>Snap Distance Options</source>
-        <translation>Festeavstandalternativer</translation>
+        <translation>Alternativer for festeavstand</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapmiddleoptions.ui" line="59"/>

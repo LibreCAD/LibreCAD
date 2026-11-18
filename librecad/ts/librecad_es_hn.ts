@@ -567,7 +567,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_2points.cpp" line="68"/>
         <source>Invalid Circle data.</source>
-        <translation type="unfinished">Dato de circunferencia invalidado.</translation>
+        <translation type="unfinished">Datos de círculo no válidos.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_2points.cpp" line="157"/>
@@ -615,7 +615,7 @@ distancia entre puntos=%2 es mayor que el diámetro= %3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_3points.cpp" line="65"/>
         <source>Invalid circle data.</source>
-        <translation type="unfinished">Dato de circunferencia invalidado.</translation>
+        <translation type="unfinished">Datos de círculo no válidos.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_3points.cpp" line="176"/>
@@ -684,12 +684,12 @@ distancia entre puntos=%2 es mayor que el diámetro= %3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_center_radius.cpp" line="192"/>
         <source>Specify circle center</source>
-        <translation type="unfinished">Especificar centro de la circunferencia</translation>
+        <translation type="unfinished">Especifique el centro del círculo</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_center_radius.cpp" line="195"/>
         <source>Specify circle radius</source>
-        <translation type="unfinished">Especificar radio de la circunferencia</translation>
+        <translation type="unfinished">Especifique el radio del círculo</translation>
     </message>
 </context>
 <context>
@@ -5279,7 +5279,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_explode_text.cpp" line="54"/>
         <source>Select to explode text</source>
-        <translation type="unfinished">Seleccione para explotar texto</translation>
+        <translation type="unfinished">Seleccione para descomponer el texto</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_explode_text.cpp" line="54"/>
@@ -11797,7 +11797,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="128"/>
         <source>Grid</source>
-        <translation type="unfinished">Grilla</translation>
+        <translation type="unfinished">Rejilla</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="135"/>
@@ -22240,7 +22240,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="32"/>
         <source>Modify Offset Options</source>
-        <translation type="unfinished">Modificar Opciones de Offset</translation>
+        <translation type="unfinished">Opciones de desfase</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="63"/>
@@ -27293,7 +27293,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_grid.cpp" line="39"/>
         <source>Grid</source>
-        <translation type="unfinished">Grilla</translation>
+        <translation type="unfinished">Rejilla</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_grid.cpp" line="39"/>
@@ -36649,7 +36649,7 @@ Please check the permissions.</source>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1962"/>
         <source>Auto-saved drawing</source>
-        <translation>Dibujo auto-salvado</translation>
+        <translation>Dibujo guardado automáticamente</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1970"/>
@@ -36657,10 +36657,10 @@ Please check the permissions.</source>
 %1
 Please check the permissions.
 Auto-save disabled.</source>
-        <translation>No se puede salvar el archivo
+        <translation>No se pudo guardar automáticamente el archivo
 %1
-Por favor, revise los permisos.
-Auto-salvado deshabilitado.</translation>
+Por favor compruebe los permisos.
+Guardado automático desactivado.</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1788"/>
@@ -38574,12 +38574,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="735"/>
         <source>Grid Settings</source>
-        <translation>Configuración de la Grilla</translation>
+        <translation>Configuración de la Rejilla</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="807"/>
         <source>Show Grid</source>
-        <translation>Mostrar Grilla</translation>
+        <translation>Mostrar Rejilla</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="929"/>
@@ -38713,7 +38713,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2056"/>
         <source>Number of line segments per spline patch:</source>
-        <translation>Números de segmentos en curva</translation>
+        <translation>Número de segmentos de línea por segmento Spline:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="170"/>
@@ -38736,7 +38736,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="791"/>
         <source>Use orthogonal grid</source>
-        <translation>Usar grilla ortogonal</translation>
+        <translation>Usar rejilla ortogonal</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="794"/>
@@ -39651,7 +39651,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1001"/>
         <source>A&amp;utomatically scale grid</source>
-        <translation>Escala la Grilla a&amp;utomáticamente</translation>
+        <translation>Escalar rejilla a&amp;utomáticamente</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2014"/>
@@ -40412,7 +40412,7 @@ This recursively modifies all entities of the Block itself.</source>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1211"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1472"/>
         <source>Grid</source>
-        <translation type="unfinished">Grilla</translation>
+        <translation type="unfinished">Rejilla</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="972"/>
@@ -45127,7 +45127,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="34641"/>
         <source>error reading offsets in dwg file</source>
-        <translation>errores de lectura offsets en el archivo dwg</translation>
+        <translation>Error leyendo los desplazamientos del archivo dwg</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="34646"/>
@@ -47179,7 +47179,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="765"/>
         <source>mirror</source>
         <comment>modify -  mirror</comment>
-        <translation>espejo</translation>
+        <translation>simetría</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="767"/>
@@ -47197,7 +47197,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="751"/>
         <source>rotate</source>
         <comment>modify - rotate</comment>
-        <translation>rotación</translation>
+        <translation>girar</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="753"/>
@@ -47263,7 +47263,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="870"/>
         <source>explode</source>
         <comment>explode block/polyline into entities</comment>
-        <translation>explosión</translation>
+        <translation>descomponer</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="872"/>
@@ -48790,7 +48790,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/dock_widgets/block/rs_actionblockssave.cpp" line="155"/>
         <source>No block activated to save</source>
-        <translation>No hay bloque activado para salvar</translation>
+        <translation>Ningún bloque activado para guardar</translation>
     </message>
 </context>
 <context>
@@ -49724,17 +49724,17 @@ End: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="233"/>
         <source>Printout offset in graph coordinates</source>
-        <translation>Impreso offset en coordenadas gráficas</translation>
+        <translation>Coordenadas de desplazamiento de la impresión en el gráfico</translation>
     </message>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="238"/>
         <source>Printout offset in paper coordinates</source>
-        <translation>Offset de impresión en coordenadas de papel</translation>
+        <translation>Coordenadas de desplazamiento de la impresión en el papel</translation>
     </message>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="271"/>
         <source>: select printout offset coordinates</source>
-        <translation>: seleccione coordenadas offset de impresión</translation>
+        <translation>: seleccionar coordenadas de desplazamiento de impresión</translation>
     </message>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="271"/>
@@ -49764,7 +49764,7 @@ End: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="246"/>
         <source>Printout offset ignores relative zero. Ignoring &apos;@&apos;</source>
-        <translation>La impresión offset ignora relativa cero. Ignorando &apos;@&apos;</translation>
+        <translation>El desplazamiento de impresión ignora el cero relativo. Se ignora &apos;@&apos;</translation>
     </message>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="223"/>
@@ -49865,7 +49865,7 @@ End: (%8 , %9)</source>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1343"/>
         <source>Grid</source>
-        <translation type="unfinished">Grilla</translation>
+        <translation type="unfinished">Rejilla</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1345"/>

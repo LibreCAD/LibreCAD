@@ -176,7 +176,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="115"/>
         <source>Not a circle or arc entity</source>
-        <translation>एक सर्कल या चाप इकाई नहीं</translation>
+        <translation>यह वृत्त या चाप एंटिटी नहीं है</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="192"/>
@@ -186,7 +186,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="215"/>
         <source>Select arc or circle entity</source>
-        <translation>आर्क या सर्कल इकाई का चयन करें</translation>
+        <translation>चाप या वृत्त एंटिटी का चयन करें</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="215"/>
@@ -196,7 +196,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="218"/>
         <source>Specify dimension line position or enter angle:</source>
-        <translation>आयाम लाइन स्थिति निर्दिष्ट करें या कोण दर्ज करें:</translation>
+        <translation>आयाम रेखा स्थिति निर्दिष्ट करें या कोण दर्ज करें:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="221"/>
@@ -209,12 +209,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimarc.cpp" line="188"/>
         <source>Select arc entity</source>
-        <translation>आर्क इकाई चुनें</translation>
+        <translation>चाप एंटिटी चुनें</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimarc.cpp" line="191"/>
         <source>Specify dimension arc location</source>
-        <translation>आयाम आर्क स्थान निर्दिष्ट करें</translation>
+        <translation>आयाम चाप स्थान निर्दिष्ट करें</translation>
     </message>
 </context>
 <context>
@@ -227,12 +227,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="300"/>
         <source>Specify second extension line origin</source>
-        <translation>दूसरी एक्सटेंशन लाइन मूल निर्दिष्ट करें</translation>
+        <translation>दूसरी विस्तार रेखा मूल निर्दिष्ट करें</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="304"/>
         <source>Specify dimension line location</source>
-        <translation>आयाम लाइन स्थान निर्दिष्ट करें</translation>
+        <translation>आयाम रेखा स्थान निर्दिष्ट करें</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="304"/>
@@ -247,7 +247,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="322"/>
         <source>Enter dimension line angle:</source>
-        <translation>आयाम लाइन कोण दर्ज करें:</translation>
+        <translation>आयाम रेखा कोण दर्ज करें:</translation>
     </message>
 </context>
 <context>
@@ -260,7 +260,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimordinate.cpp" line="211"/>
         <source>Specify leader end point</source>
-        <translation>लीडर एंड पॉइंट निर्दिष्ट करें</translation>
+        <translation>लीडर अंत बिंदु निर्दिष्ट करें</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimordinate.cpp" line="211"/>
@@ -327,17 +327,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_2points_base.cpp" line="202"/>
         <source>Specify first point of arc</source>
-        <translation>आर्क का पहला बिंदु निर्दिष्ट करें</translation>
+        <translation>चाप का पहला बिंदु निर्दिष्ट करें</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_2points_base.cpp" line="206"/>
         <source>Specify second point of arc</source>
-        <translation>आर्क के दूसरे बिंदु को निर्दिष्ट करें</translation>
+        <translation>चाप के दूसरे बिंदु को निर्दिष्ट करें</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_2points_base.cpp" line="219"/>
         <source>Opposite Arc direction</source>
-        <translation>आर्क दिशा</translation>
+        <translation>विपरीत चाप दिशा</translation>
     </message>
 </context>
 <context>
@@ -376,12 +376,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_2points_radius.cpp" line="55"/>
         <source>Enter radius of arc</source>
-        <translation>आर्क की त्रिज्या दर्ज करें</translation>
+        <translation>चाप की त्रिज्या दर्ज करें</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_2points_radius.cpp" line="59"/>
         <source>Create outer arc</source>
-        <translation>बाहरी आर्क बनाएं</translation>
+        <translation>बाहरी चाप बनाएं</translation>
     </message>
 </context>
 <context>
@@ -389,12 +389,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_3points.cpp" line="75"/>
         <source>Invalid arc data.</source>
-        <translation type="unfinished">अमान्य आर्क डेटा।.</translation>
+        <translation type="unfinished">अमान्य चाप डेटा।</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_3points.cpp" line="233"/>
         <source>Specify startpoint or [center]</source>
-        <translation type="unfinished">स्टार्टपॉइंट या [सेंटर] निर्दिष्ट करें</translation>
+        <translation type="unfinished">प्रारंभ बिंदु या [केंद्र] निर्दिष्ट करें</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_3points.cpp" line="236"/>
@@ -457,7 +457,7 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_center_point_param.cpp" line="549"/>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_center_point_param.cpp" line="552"/>
         <source>Alternative Arc</source>
-        <translation type="unfinished">वैकल्पिक आर्क</translation>
+        <translation type="unfinished">वैकल्पिक चाप</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_center_point_param.cpp" line="552"/>
@@ -472,7 +472,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_center_point_param.cpp" line="555"/>
         <source>Use alternative arc point</source>
-        <translation type="unfinished">वैकल्पिक आर्क बिंदु का उपयोग करें</translation>
+        <translation type="unfinished">वैकल्पिक चाप बिंदु का उपयोग करें</translation>
     </message>
 </context>
 <context>
@@ -480,7 +480,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_tangential.cpp" line="292"/>
         <source>Specify base entity</source>
-        <translation type="unfinished">आधार इकाई निर्दिष्ट करें</translation>
+        <translation type="unfinished">आधार एंटिटी निर्दिष्ट करें</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_tangential.cpp" line="296"/>
@@ -500,7 +500,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_tangential.cpp" line="299"/>
         <source>Alternate Arc</source>
-        <translation type="unfinished">वैकल्पिक आर्क</translation>
+        <translation type="unfinished">वैकल्पिक चाप</translation>
     </message>
 </context>
 <context>
@@ -536,12 +536,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_center_line.cpp" line="295"/>
         <source>Select first entity</source>
-        <translation type="unfinished">पहली इकाई चुनें</translation>
+        <translation type="unfinished">पहली एंटिटी चुनें</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_center_line.cpp" line="299"/>
         <source>Select second entity</source>
-        <translation type="unfinished">दूसरी इकाई चुनें</translation>
+        <translation type="unfinished">दूसरी एंटिटी चुनें</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_center_line.cpp" line="299"/>
@@ -559,7 +559,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_center_mark.cpp" line="397"/>
         <source>Select circle, arc or ellipse</source>
-        <translation type="unfinished">सर्कल, चाप या अंडाकार चुनें</translation>
+        <translation type="unfinished">वृत्त, चाप या दीर्घवृत्त चुनें</translation>
     </message>
 </context>
 <context>
@@ -567,7 +567,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_2points.cpp" line="68"/>
         <source>Invalid Circle data.</source>
-        <translation type="unfinished">अमान्य सर्कल डेटा।.</translation>
+        <translation type="unfinished">अमान्य वृत्त डेटा।</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_2points.cpp" line="157"/>
@@ -607,7 +607,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_2points_radius.cpp" line="219"/>
         <source>Select circle center</source>
-        <translation type="unfinished">सर्कल सेंटर चुनें</translation>
+        <translation type="unfinished">वृत्त केंद्र चुनें</translation>
     </message>
 </context>
 <context>
@@ -615,7 +615,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_3points.cpp" line="65"/>
         <source>Invalid circle data.</source>
-        <translation type="unfinished">अमान्य सर्कल डेटा।.</translation>
+        <translation type="unfinished">अमान्य वृत्त डेटा।</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_3points.cpp" line="176"/>
@@ -638,7 +638,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_by_arc.cpp" line="246"/>
         <source>Select arc or ellipse arc</source>
-        <translation>चाप या अंडाकार चाप चुनें</translation>
+        <translation>चाप या दीर्घवृत्त चाप चुनें</translation>
     </message>
 </context>
 <context>
@@ -656,7 +656,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_center_point.cpp" line="134"/>
         <source>Specify point on circle</source>
-        <translation type="unfinished">सर्कल पर बिंदु निर्दिष्ट करें</translation>
+        <translation type="unfinished">वृत्त पर बिंदु निर्दिष्ट करें</translation>
     </message>
 </context>
 <context>
@@ -684,12 +684,12 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_center_radius.cpp" line="192"/>
         <source>Specify circle center</source>
-        <translation type="unfinished">सर्कल सेंटर निर्दिष्ट करें</translation>
+        <translation type="unfinished">वृत्त केंद्र निर्दिष्ट करें</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_center_radius.cpp" line="195"/>
         <source>Specify circle radius</source>
-        <translation type="unfinished">सर्कल त्रिज्या निर्दिष्ट करें</translation>
+        <translation type="unfinished">वृत्त त्रिज्या निर्दिष्ट करें</translation>
     </message>
 </context>
 <context>
@@ -715,7 +715,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_1entity_2points.cpp" line="449"/>
         <source>Specify a line/arc/circle</source>
-        <translation type="unfinished">एक रेखा / चाप / सर्कल निर्दिष्ट करें</translation>
+        <translation type="unfinished">एक रेखा / चाप / वृत्त निर्दिष्ट करें</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_1entity_2points.cpp" line="452"/>
@@ -738,7 +738,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_2entities_1point.cpp" line="338"/>
         <source>Specify a line/arc/circle</source>
-        <translation type="unfinished">एक रेखा / चाप / सर्कल निर्दिष्ट करें</translation>
+        <translation type="unfinished">एक रेखा / चाप / वृत्त निर्दिष्ट करें</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_2entities_1point.cpp" line="341"/>
@@ -784,7 +784,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_3entities.cpp" line="435"/>
         <source>No common tangential circle for selected entities</source>
-        <translation type="unfinished">चयनित इकाइयों के लिए कोई उभयनिष्ठ स्पर्शी वृत्त नहीं</translation>
+        <translation type="unfinished">चयनित एंटिटीज़ के लिए कोई उभयनिष्ठ स्पर्शी वृत्त नहीं</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_3entities.cpp" line="520"/>
@@ -822,7 +822,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="419"/>
         <source>Specify second extension line origin</source>
-        <translation>दूसरी एक्सटेंशन लाइन मूल निर्दिष्ट करें</translation>
+        <translation>दूसरी विस्तार रेखा मूल निर्दिष्ट करें</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="419"/>
@@ -832,7 +832,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="422"/>
         <source>Specify dimension line location</source>
-        <translation>आयाम लाइन स्थान निर्दिष्ट करें</translation>
+        <translation>आयाम रेखा स्थान निर्दिष्ट करें</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="422"/>
@@ -855,17 +855,17 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="68"/>
         <source>No entities selected. Dual creation cancelled.</source>
-        <translation>कोई इकाई चयनित नहीं। दोहरा निर्माण रद्द कर दिया गया।</translation>
+        <translation>कोई एंटिटी चयनित नहीं। दोहरा निर्माण रद्द कर दिया गया।</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="122"/>
         <source>No supported entities could be dualized.</source>
-        <translation>किसी भी समर्थित इकाई का दोहरा नहीं बनाया जा सका।</translation>
+        <translation>कोई भी समर्थित एंटिटी दोहरी नहीं बनाई जा सकी।</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="126"/>
         <source>Dual created around center (%1 entities)</source>
-        <translation>दोहरी केंद्र के आसपास बनाया गया (%1 इकाइयों)</translation>
+        <translation>केंद्र के चारों ओर दोहरी बनाई गई (%1 एंटिटीज़)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="59"/>
@@ -883,7 +883,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/lc_action_draw_ellipse_1point.cpp" line="332"/>
         <source>Specify ellipse center</source>
-        <translation>अंडाकार केंद्र निर्दिष्ट करें</translation>
+        <translation>दीर्घवृत्त केंद्र निर्दिष्ट करें</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/lc_action_draw_ellipse_1point.cpp" line="336"/>
@@ -893,7 +893,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/lc_action_draw_ellipse_1point.cpp" line="340"/>
         <source>Set start angle of arc</source>
-        <translation>आर्क के प्रारंभ कोण सेट करें</translation>
+        <translation>चाप का प्रारंभ कोण सेट करें</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/lc_action_draw_ellipse_1point.cpp" line="344"/>
@@ -1003,7 +1003,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line.cpp" line="325"/>
         <source>Cannot close sequence of lines: Not enough entities defined yet, or already closed.</source>
-        <translation type="unfinished">रेखाओं का अनुक्रम बंद नहीं कर सकते: अभी तक पर्याप्त इकाइयाँ परिभाषित नहीं हैं, या अनुक्रम पहले से ही बंद है।</translation>
+        <translation type="unfinished">रेखाओं का अनुक्रम बंद नहीं कर सकते: अभी तक पर्याप्त एंटिटीज़ परिभाषित नहीं हैं, या अनुक्रम पहले से ही बंद है।</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line.cpp" line="387"/>
@@ -1126,7 +1126,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_bisector.cpp" line="149"/>
         <source> entities will be created</source>
-        <translation type="unfinished"> इकाइयाँ बनाई जाएंगी</translation>
+        <translation type="unfinished"> एंटिटीज़ बनाई जाएंगी</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_bisector.cpp" line="232"/>
@@ -1259,12 +1259,12 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_parallel.cpp" line="130"/>
         <source> entities will be created</source>
-        <translation type="unfinished"> इकाइयाँ बनाई जाएंगी</translation>
+        <translation type="unfinished"> एंटिटीज़ बनाई जाएंगी</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_parallel.cpp" line="156"/>
         <source>Specify Distance &lt;%1&gt; or select entity or [%2]</source>
-        <translation type="unfinished">निर्दिष्ट दूरी &lt;%1&gt; या चयन इकाई या [%2]</translation>
+        <translation type="unfinished">दूरी &lt;%1&gt; निर्दिष्ट करें या एंटिटी चुनें या [%2]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_parallel.cpp" line="159"/>
@@ -1288,12 +1288,12 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_parallel_through.cpp" line="128"/>
         <source> entities will be created</source>
-        <translation type="unfinished"> इकाइयाँ बनाई जाएंगी</translation>
+        <translation type="unfinished"> एंटिटीज़ बनाई जाएंगी</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_parallel_through.cpp" line="193"/>
         <source>Select entity</source>
-        <translation type="unfinished">इकाई चुनें</translation>
+        <translation type="unfinished">एंटिटी चुनें</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_parallel_through.cpp" line="196"/>
@@ -1457,7 +1457,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_rel_angle.cpp" line="266"/>
         <source>Select base entity</source>
-        <translation type="unfinished">आधार इकाई चुनें</translation>
+        <translation type="unfinished">आधार एंटिटी चुनें</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_rel_angle.cpp" line="269"/>
@@ -1597,7 +1597,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabolaFD.cpp" line="293"/>
         <source>Select line that is parallel to directrix of parabola or set vertex point</source>
-        <translation>उस रेखा का चयन करें जो पैराबोला के निर्देशन के समानांतर है या वर्टेक्स पॉइंट सेट करें</translation>
+        <translation>उस रेखा का चयन करें जो पैराबोला के निर्देशन के समानांतर है या वर्टेक्स बिंदु सेट करें</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabolaFD.cpp" line="297"/>
@@ -1870,7 +1870,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_draw_polyline.cpp" line="787"/>
         <source>Alternative Arc</source>
-        <translation type="unfinished">वैकल्पिक आर्क</translation>
+        <translation type="unfinished">वैकल्पिक चाप</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_draw_polyline.cpp" line="798"/>
@@ -1885,12 +1885,12 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_draw_polyline.cpp" line="821"/>
         <source>Cannot close sequence of lines: Not enough entities defined yet.</source>
-        <translation type="unfinished">रेखाओं का अनुक्रम बंद नहीं कर सकते: अभी तक पर्याप्त इकाइयाँ परिभाषित नहीं की गई हैं।</translation>
+        <translation type="unfinished">रेखाओं का अनुक्रम बंद नहीं कर सकते: अभी तक पर्याप्त एंटिटीज़ परिभाषित नहीं की गई हैं।</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_draw_polyline.cpp" line="844"/>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="unfinished">अभी तक परिभाषित नहीं है।.</translation>
+        <translation type="unfinished">पूर्ववत नहीं कर सकते: अभी पर्याप्त एंटिटीज़ परिभाषित नहीं हैं।</translation>
     </message>
 </context>
 <context>
@@ -2095,12 +2095,12 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_slice_divide.cpp" line="248"/>
         <source>Arc</source>
-        <translation>आर्क</translation>
+        <translation>चाप</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_slice_divide.cpp" line="258"/>
         <source>Circle</source>
-        <translation>सर्कल</translation>
+        <translation>वृत्त</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_slice_divide.cpp" line="628"/>
@@ -2110,7 +2110,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_slice_divide.cpp" line="631"/>
         <source>Select circle or arc</source>
-        <translation>सर्कल या चाप चुनें</translation>
+        <translation>वृत्त या चाप चुनें</translation>
     </message>
 </context>
 <context>
@@ -2143,7 +2143,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_action_draw_spline.cpp" line="309"/>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="unfinished">अभी तक परिभाषित नहीं है।.</translation>
+        <translation type="unfinished">पूर्ववत नहीं कर सकते: अभी पर्याप्त एंटिटीज़ परिभाषित नहीं हैं।</translation>
     </message>
 </context>
 <context>
@@ -2172,7 +2172,7 @@ or [%2]</source>
         <location filename="../src/actions/drawing/draw/spline/lc_action_draw_spline_points.cpp" line="269"/>
         <location filename="../src/actions/drawing/draw/spline/lc_action_draw_spline_points.cpp" line="291"/>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation>अभी तक परिभाषित नहीं है।.</translation>
+        <translation>पूर्ववत नहीं कर सकते: अभी पर्याप्त एंटिटीज़ परिभाषित नहीं हैं।</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_action_draw_spline_points.cpp" line="308"/>
@@ -2282,12 +2282,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="338"/>
         <source>Zoom &amp;Panning</source>
-        <translation>ज़ूम और पेनिंग</translation>
+        <translation>ज़ूम पैनिंग (&amp;P)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="246"/>
         <source>Select Entity</source>
-        <translation>इकाई</translation>
+        <translation>एंटिटी चुनें</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="247"/>
@@ -2302,17 +2302,17 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="249"/>
         <source>(De-)Select &amp;Contour</source>
-        <translation>(D-)चुनें और कंटूर</translation>
+        <translation>कंटूर चुनें/चयन हटाएँ (&amp;C)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="250"/>
         <source>Select Intersected Entities</source>
-        <translation>प्रतिच्छेदित इकाइयों का चयन करें</translation>
+        <translation>प्रतिच्छेदित एंटिटीज़ का चयन करें</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="251"/>
         <source>Deselect Intersected Entities</source>
-        <translation>प्रतिच्छेदित इकाइयों का चयन हटाएँ</translation>
+        <translation>प्रतिच्छेदित एंटिटीज़ का चयन हटाएँ</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="252"/>
@@ -2322,7 +2322,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="235"/>
         <source>&amp;Points</source>
-        <translation>औरपॉइंट</translation>
+        <translation>बिंदु (&amp;P)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="206"/>
@@ -2332,13 +2332,13 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="207"/>
         <source>&amp;Angle</source>
-        <translation>Angle</translation>
+        <translation>कोण (&amp;A)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="208"/>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="351"/>
         <source>&amp;Horizontal</source>
-        <translation>और क्षैतिज</translation>
+        <translation>क्षैतिज (&amp;H)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="209"/>
@@ -2353,7 +2353,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="211"/>
         <source>&amp;Parallel</source>
-        <translation>Parallel</translation>
+        <translation>समानांतर (&amp;P)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="212"/>
@@ -2373,17 +2373,17 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="214"/>
         <source>Tangent (P,C)</source>
-        <translation>टैंगेंट (P, C)</translation>
+        <translation>स्पर्शरेखा (P, C)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="215"/>
         <source>Tangent (C,C)</source>
-        <translation>टैंगेंट (C, C)</translation>
+        <translation>स्पर्शरेखा (C, C)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="216"/>
         <source>Tangent &amp;Orthogonal</source>
-        <translation>टेंगेंट और ऑर्थोगोनल</translation>
+        <translation>स्पर्शरेखा लंबवत (&amp;O)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="217"/>
@@ -2398,12 +2398,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="193"/>
         <source>Pol&amp;ygon (Cen,Cor)</source>
-        <translation>पोल&amp;ygon (Cen,Cor)</translation>
+        <translation>बहुभुज (केंद्र, कोना) (&amp;Y)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="194"/>
         <source>Pol&amp;ygon (Cen,Tan)</source>
-        <translation>पोल&amp;ygon (Cen,Tan)</translation>
+        <translation>बहुभुज (केंद्र, स्पर्शरेखा) (&amp;Y)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="195"/>
@@ -2458,7 +2458,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="224"/>
         <source>From Point To Line</source>
-        <translation>पॉइंट टू लाइन</translation>
+        <translation>बिंदु से रेखा तक</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="227"/>
@@ -2468,7 +2468,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="228"/>
         <source>Slice/Divide Circle</source>
-        <translation>स्लाइस / डिवाइड सर्कल</translation>
+        <translation>स्लाइस / डिवाइड वृत्त</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="236"/>
@@ -2478,17 +2478,17 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="261"/>
         <source>Center, &amp;Point</source>
-        <translation>केंद्र, और प्वाइंट</translation>
+        <translation>केंद्र, बिंदु (&amp;P)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="262"/>
         <source>By Arc</source>
-        <translation>आर्क द्वारा</translation>
+        <translation>चाप द्वारा</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="263"/>
         <source>Center, &amp;Radius</source>
-        <translation>केंद्र, और रेडियो</translation>
+        <translation>केंद्र, त्रिज्या (&amp;R)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="264"/>
@@ -2509,22 +2509,22 @@ or [%2]</source>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="267"/>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="286"/>
         <source>&amp;Concentric</source>
-        <translation>Concentric</translation>
+        <translation>संकेंद्रित (&amp;C)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="268"/>
         <source>Circle &amp;Inscribed</source>
-        <translation>सर्कल और अंकित</translation>
+        <translation>अंतर्लिखित वृत्त (&amp;I)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="272"/>
         <source>Tangential, 2 P&amp;oints</source>
-        <translation>टेंगेंशियल, 2 पीएंडओंट</translation>
+        <translation>स्पर्शी, 2 बिंदु (&amp;O)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="278"/>
         <source>&amp;Center, Point, Angles</source>
-        <translation>और सेंटर, प्वाइंट, एंगल</translation>
+        <translation>केंद्र, बिंदु, कोण (&amp;C)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="281"/>
@@ -2544,7 +2544,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="287"/>
         <source>Arc &amp;Tangential</source>
-        <translation>Arc &amp; Tangential</translation>
+        <translation>स्पर्शी चाप (&amp;T)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="299"/>
@@ -2589,7 +2589,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="297"/>
         <source>&amp;Spline</source>
-        <translation>स्पलीन</translation>
+        <translation>स्प्लाइन (&amp;S)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="298"/>
@@ -2599,7 +2599,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="323"/>
         <source>&amp;Polyline</source>
-        <translation>&amp;Polyline</translation>
+        <translation>पॉलीलाइन (&amp;P)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="324"/>
@@ -2624,12 +2624,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="328"/>
         <source>&amp;Trim segments</source>
-        <translation>और ट्रिम खंड</translation>
+        <translation>खंड ट्रिम करें (&amp;T)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="329"/>
         <source>Create &amp;Equidistant Polylines</source>
-        <translation>बनाना &amp; quidistant Polylines</translation>
+        <translation>समदूरस्थ पॉलीलाइनें बनाएँ (&amp;E)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="331"/>
@@ -2639,12 +2639,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="339"/>
         <source>&amp;MText</source>
-        <translation>Mtext</translation>
+        <translation>एमटेक्स्ट (&amp;M)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="340"/>
         <source>&amp;Text</source>
-        <translation>और टेक्स्ट</translation>
+        <translation>पाठ (&amp;T)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="341"/>
@@ -2654,12 +2654,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="342"/>
         <source>Insert &amp;Image</source>
-        <translation>सम्मिलित करें और छवि</translation>
+        <translation>छवि सम्मिलित करें (&amp;I)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="349"/>
         <source>&amp;Aligned</source>
-        <translation>और Aligned</translation>
+        <translation>संरेखित (&amp;A)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="350"/>
@@ -2669,7 +2669,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="352"/>
         <source>&amp;Vertical</source>
-        <translation>और ऊर्ध्वाधर</translation>
+        <translation>ऊर्ध्वाधर (&amp;V)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="353"/>
@@ -2679,37 +2679,37 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="354"/>
         <source>&amp;Diametric</source>
-        <translation>Diametric</translation>
+        <translation>व्यासीय (&amp;D)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="355"/>
         <source>&amp;Angular</source>
-        <translation>Angular</translation>
+        <translation>कोणीय (&amp;A)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="356"/>
         <source>&amp;Arc</source>
-        <translation>और आर्क</translation>
+        <translation>चाप (&amp;A)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="357"/>
         <source>&amp;Leader</source>
-        <translation>और लीडर</translation>
+        <translation>लीडर (&amp;L)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="378"/>
         <source>&amp;Attributes</source>
-        <translation>Attribute</translation>
+        <translation>विशेषताएँ (&amp;A)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="379"/>
         <source>&amp;Delete</source>
-        <translation>Delete</translation>
+        <translation>हटाएँ (&amp;D)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="380"/>
         <source>&amp;Move / Copy</source>
-        <translation>और मूव / कॉपी</translation>
+        <translation>ले जाएँ / कॉपी करें (&amp;M)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="381"/>
@@ -2719,7 +2719,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="433"/>
         <source>Caught Entity</source>
-        <translation>पकड़ा इकाई</translation>
+        <translation>पकड़ी गई एंटिटी</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="439"/>
@@ -2824,12 +2824,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="573"/>
         <source>Lower After Entity</source>
-        <translation>इकाई के बाद</translation>
+        <translation>एंटिटी के बाद नीचे करें</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="574"/>
         <source>Raise Over Entity</source>
-        <translation>इकाई के ऊपर लाएँ</translation>
+        <translation>एंटिटी के ऊपर लाएँ</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="575"/>
@@ -2844,12 +2844,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="650"/>
         <source>Current &amp;Drawing Preferences</source>
-        <translation>वर्तमान और आरेखण प्राथमिकताएं</translation>
+        <translation>वर्तमान ड्रॉइंग की प्राथमिकताएँ (&amp;D)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="664"/>
         <source>Print Pre&amp;view</source>
-        <translation>पूर्व और अवलोकन</translation>
+        <translation>प्रिंट पूर्वावलोकन (&amp;V)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="683"/>
@@ -2914,7 +2914,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="730"/>
         <source>&amp;Save View</source>
-        <translation>&amp; देखें</translation>
+        <translation>दृश्य सहेजें (&amp;S)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="732"/>
@@ -2954,12 +2954,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="383"/>
         <source>&amp;Scale</source>
-        <translation>और स्केल</translation>
+        <translation>स्केल (&amp;S)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="384"/>
         <source>&amp;Mirror</source>
-        <translation>&amp; Mirror</translation>
+        <translation>मिरर (&amp;M)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="617"/>
@@ -3034,32 +3034,32 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="388"/>
         <source>&amp;Trim</source>
-        <translation>और ट्रिम</translation>
+        <translation>ट्रिम (&amp;T)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="390"/>
         <source>&amp;Lengthen</source>
-        <translation>और लेन</translation>
+        <translation>लंबा करें (&amp;L)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="392"/>
         <source>&amp;Divide</source>
-        <translation>Divide</translation>
+        <translation>विभाजित करें (&amp;D)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="393"/>
         <source>&amp;Stretch</source>
-        <translation>Stretch</translation>
+        <translation>स्ट्रेच (&amp;S)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="394"/>
         <source>&amp;Bevel</source>
-        <translation>और बेवेल</translation>
+        <translation>बेवेल (&amp;B)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="395"/>
         <source>&amp;Fillet</source>
-        <translation>Fillet</translation>
+        <translation>फ़िलेट (&amp;F)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="396"/>
@@ -3079,17 +3079,17 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="588"/>
         <source>Polygonal &amp;Area</source>
-        <translation>Polygonal &amp; Area</translation>
+        <translation>बहुभुजीय क्षेत्रफल (&amp;A)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="751"/>
         <source>&amp;Undo</source>
-        <translation>Undo</translation>
+        <translation>पूर्ववत करें (&amp;U)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="752"/>
         <source>&amp;Redo</source>
-        <translation>Redo</translation>
+        <translation>फिर से करें (&amp;R)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="759"/>
@@ -3099,12 +3099,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="762"/>
         <source>&amp;Dimension Styles</source>
-        <translation>और आयाम शैलियाँ</translation>
+        <translation>आयाम शैलियाँ (&amp;D)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="772"/>
         <source>Pick Point</source>
-        <translation>पिक पॉइंट</translation>
+        <translation>बिंदु चुनें</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="773"/>
@@ -3139,17 +3139,17 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="784"/>
         <source>&amp;Copy</source>
-        <translation>Copy</translation>
+        <translation>कॉपी करें (&amp;C)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="785"/>
         <source>Copy &amp;Quick</source>
-        <translation>प्रतिलिपि &amp; Quick</translation>
+        <translation>त्वरित कॉपी (&amp;Q)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="786"/>
         <source>&amp;Paste</source>
-        <translation>और पेस्ट</translation>
+        <translation>पेस्ट करें (&amp;P)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="655"/>
@@ -3179,7 +3179,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="238"/>
         <source>Lattice of Points</source>
-        <translation>पॉइंट्स की जाली</translation>
+        <translation>बिंदु की जाली</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="239"/>
@@ -3189,17 +3189,17 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="240"/>
         <source>Paste to Points</source>
-        <translation>पॉइंट पर पेस्ट करें</translation>
+        <translation>बिंदु पर पेस्ट करें</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="279"/>
         <source>&amp;Center, Point, Chord</source>
-        <translation>और सेंटर, प्वाइंट, कॉर्ड</translation>
+        <translation>केंद्र, बिंदु, जीवा (&amp;C)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="280"/>
         <source>&amp;Center, Point, Arc Angle</source>
-        <translation>और सेंटर, प्वाइंट, आर्क एंगल</translation>
+        <translation>केंद्र, बिंदु, चाप कोण (&amp;C)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="282"/>
@@ -3234,12 +3234,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="303"/>
         <source>&amp;Spline from polyline</source>
-        <translation>पॉलीलाइन से स्पलीन</translation>
+        <translation>पॉलीलाइन से स्प्लाइन (&amp;S)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="304"/>
         <source>&amp;Remove between two points</source>
-        <translation>और दो बिंदुओं के बीच निकालें</translation>
+        <translation>दो बिंदुओं के बीच हटाएँ (&amp;R)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="310"/>
@@ -3254,7 +3254,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="330"/>
         <source>Polyline from Existing &amp;Segments</source>
-        <translation>मौजूदा और सेगमेंट से पॉलीलाइन</translation>
+        <translation>मौजूदा खंडों से पॉलीलाइन (&amp;S)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="332"/>
@@ -3264,7 +3264,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="343"/>
         <source>Bounding &amp;Box</source>
-        <translation>बाउंडिंग और बॉक्स</translation>
+        <translation>बाउंडिंग बॉक्स (&amp;B)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="358"/>
@@ -3274,7 +3274,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="359"/>
         <source>&amp;Continue</source>
-        <translation>और जारी</translation>
+        <translation>जारी रखें (&amp;C)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="398"/>
@@ -3319,17 +3319,17 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="416"/>
         <source>&amp;Pick Pen From Entity</source>
-        <translation>&amp;Pick Pen from Entity</translation>
+        <translation>एंटिटी से पेन लें (&amp;P)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="417"/>
         <source>&amp;Pick Pen From Entity (Resolved)</source>
-        <translation>&amp;Pick Pen from Entity (Resolved)</translation>
+        <translation>एंटिटी से पेन लें (हल किया गया) (&amp;P)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="418"/>
         <source>Apply Pen to Entity</source>
-        <translation>इकाई पर पेन लागू करें</translation>
+        <translation>एंटिटी पर पेन लागू करें</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="419"/>
@@ -3339,7 +3339,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="425"/>
         <source>Show Entity Description</source>
-        <translation>इकाई विवरण दिखाएं</translation>
+        <translation>एंटिटी विवरण दिखाएं</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="428"/>
@@ -3370,27 +3370,27 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="58"/>
         <source>Circle</source>
-        <translation>सर्कल</translation>
+        <translation>वृत्त</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="58"/>
         <source>Circle drawing commands</source>
-        <translation>सर्कल ड्राइंग कमांड</translation>
+        <translation>वृत्त ड्राइंग कमांड</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="59"/>
         <source>Arc</source>
-        <translation>आर्क</translation>
+        <translation>चाप</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="59"/>
         <source>Arc drawing commands</source>
-        <translation>आर्क ड्राइंग कमांड</translation>
+        <translation>चाप ड्राइंग कमांड</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="60"/>
         <source>Spline</source>
-        <translation>स्पलीन</translation>
+        <translation>स्प्लाइन</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="60"/>
@@ -3410,7 +3410,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="62"/>
         <source>Ellipse</source>
-        <translation>Ellipse</translation>
+        <translation>दीर्घवृत्त</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="62"/>
@@ -3475,7 +3475,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="68"/>
         <source>Point drawing commands</source>
-        <translation>पॉइंट ड्रॉइंग कमांड</translation>
+        <translation>बिंदु ड्रॉइंग कमांड</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="69"/>
@@ -3561,7 +3561,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="77"/>
         <source>Entity selection operations</source>
-        <translation>इकाई चयन संचालन</translation>
+        <translation>एंटिटी चयन संचालन</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="78"/>
@@ -3647,12 +3647,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="87"/>
         <source>Entity Layer</source>
-        <translation>इकाई की परत</translation>
+        <translation>एंटिटी की परत</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="87"/>
         <source>Entity&apos;s Layer</source>
-        <translation>इकाई की परत</translation>
+        <translation>एंटिटी की परत</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="88"/>
@@ -3667,32 +3667,32 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="109"/>
         <source>Activate Entity&apos;s Layer</source>
-        <translation>इकाई की परत को सक्रिय करें</translation>
+        <translation>एंटिटी की परत को सक्रिय करें</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="110"/>
         <source>Hide Entity&apos;s Layer</source>
-        <translation>इकाई की परत छुपाएं</translation>
+        <translation>एंटिटी की परत छुपाएं</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="111"/>
         <source>Hide Other Layers than Entity&apos;s</source>
-        <translation>इकाई की परत को छोड़कर अन्य परतें छुपाएं</translation>
+        <translation>एंटिटी की परत को छोड़कर अन्य परतें छुपाएं</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="112"/>
         <source>Lock Entity&apos;s Layer</source>
-        <translation>इकाई की परत लॉक करें</translation>
+        <translation>एंटिटी की परत लॉक करें</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="113"/>
         <source>Toggle Entity&apos;s Layer Construction</source>
-        <translation>इकाई की परत निर्माण को टॉगल करें</translation>
+        <translation>एंटिटी की परत निर्माण को टॉगल करें</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="114"/>
         <source>Toggle Entity&apos;s Layer Printing</source>
-        <translation>इकाई की परत प्रिंटिंग को टॉगल करें</translation>
+        <translation>एंटिटी की परत प्रिंटिंग को टॉगल करें</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="222"/>
@@ -3702,12 +3702,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="225"/>
         <source>Centerline</source>
-        <translation>सेंटरलाइन</translation>
+        <translation>केंद्र रेखा</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="226"/>
         <source>Center Mark</source>
-        <translation>सेंटर मार्क</translation>
+        <translation>केंद्र चिह्न</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="229"/>
@@ -3732,17 +3732,17 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="269"/>
         <source>Tangential 2 Entities, Radius</source>
-        <translation>टेंगेंशियल 2 इकाइयाँ, त्रिज्या</translation>
+        <translation>स्पर्शी, 2 एंटिटीज़, त्रिज्या</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="270"/>
         <source>Tangential 2 Entities, 1 Point</source>
-        <translation>टेंगेंशियल 2 इकाइयाँ, 1 बिंदु</translation>
+        <translation>स्पर्शी, 2 एंटिटीज़, 1 बिंदु</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="271"/>
         <source>Tangential &amp;3 Entities</source>
-        <translation>टेंगेंशियल &amp;3 इकाइयाँ</translation>
+        <translation>स्पर्शी, &amp;3 एंटिटीज़</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="288"/>
@@ -3757,7 +3757,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="360"/>
         <source>&amp;Ordinate</source>
-        <translation>औरOrdinate</translation>
+        <translation>कोटि (&amp;O)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="361"/>
@@ -3807,12 +3807,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="456"/>
         <source>Snap on Entity</source>
-        <translation>इकाई पर स्नैप</translation>
+        <translation>एंटिटी पर स्नैप</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="457"/>
         <source>Snap Center</source>
-        <translation>स्नैप सेंटर</translation>
+        <translation>स्नैप केंद्र</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="458"/>
@@ -3907,27 +3907,27 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="582"/>
         <source>&amp;Point Coordinates</source>
-        <translation>औरपॉइंट निर्देशांक</translation>
+        <translation>बिंदु निर्देशांक (&amp;P)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="584"/>
         <source>Distance &amp;Entity to Point</source>
-        <translation>बिन्दुओं की दूरी</translation>
+        <translation>एंटिटी से बिंदु तक दूरी (&amp;E)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="585"/>
         <source>Distance &amp;Point to Entity</source>
-        <translation>दूरी और इकाई के लिए प्वाइंट</translation>
+        <translation>बिंदु से एंटिटी तक दूरी (&amp;P)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="587"/>
         <source>Total &amp;length of selected entities</source>
-        <translation>चयनित इकाइयों की कुल लंबाई (&amp;L)</translation>
+        <translation>चयनित एंटिटीज़ की कुल लंबाई (&amp;L)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="589"/>
         <source>Entity Pro&amp;perties</source>
-        <translation>इकाई गुण</translation>
+        <translation>एंटिटी गुण (&amp;P)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="590"/>
@@ -3947,7 +3947,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="605"/>
         <source>&amp;Antialiasing</source>
-        <translation>Antialiasing</translation>
+        <translation>एंटीएलियासिंग (&amp;A)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="607"/>
@@ -4032,12 +4032,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="642"/>
         <source>&amp;Insert Block</source>
-        <translation>और सम्मिलित ब्लॉक</translation>
+        <translation>ब्लॉक सम्मिलित करें (&amp;I)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="643"/>
         <source>Toggle Block &amp;Visibility</source>
-        <translation>Toggle ब्लॉक &amp; दृश्यता</translation>
+        <translation>ब्लॉक दृश्यता टॉगल करें (&amp;V)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="644"/>
@@ -4047,7 +4047,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="397"/>
         <source>Ex&amp;plode</source>
-        <translation>पूर्व और plode</translation>
+        <translation>एक्सप्लोड (&amp;P)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="385"/>
@@ -4057,22 +4057,22 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="389"/>
         <source>Tr&amp;im Two</source>
-        <translation>Tr&amp;im दो</translation>
+        <translation>दो ट्रिम करें (&amp;I)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="391"/>
         <source>O&amp;ffset</source>
-        <translation>O&amp;ffset</translation>
+        <translation>ऑफसेट (&amp;F)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="654"/>
         <source>&amp;Application Preferences</source>
-        <translation>और आवेदन प्राथमिकता</translation>
+        <translation>ऐप्लिकेशन प्राथमिकताएँ (&amp;A)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="743"/>
         <source>Select &amp;All</source>
-        <translation>चुनें और चुनें</translation>
+        <translation>सभी चुनें (&amp;A)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="744"/>
@@ -4092,12 +4092,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="720"/>
         <source>Zoom &amp;In</source>
-        <translation>ज़ूम और में</translation>
+        <translation>ज़ूम इन (&amp;I)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="721"/>
         <source>Zoom &amp;Out</source>
-        <translation>ज़ूम और आउट</translation>
+        <translation>ज़ूम आउट (&amp;O)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="722"/>
@@ -4107,7 +4107,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="723"/>
         <source>Previous &amp;View</source>
-        <translation>पिछला &amp; view</translation>
+        <translation>पिछला दृश्य (&amp;V)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="724"/>
@@ -4122,7 +4122,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="679"/>
         <source>New From &amp;Template</source>
-        <translation>से नया और टेम्पलेट</translation>
+        <translation>टेम्पलेट से नया (&amp;T)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="680"/>
@@ -4132,7 +4132,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="681"/>
         <source>&amp;Save</source>
-        <translation>और सहेजें</translation>
+        <translation>सहेजें (&amp;S)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="682"/>
@@ -4147,12 +4147,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="670"/>
         <source>&amp;Close</source>
-        <translation>और क्लोज़</translation>
+        <translation>बंद करें (&amp;C)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="683"/>
         <source>Save A&amp;ll...</source>
-        <translation>A&amp;ll...</translation>
+        <translation>सभी सहेजें... (&amp;L)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="684"/>
@@ -4167,12 +4167,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="685"/>
         <source>&amp;Quit</source>
-        <translation>Quit</translation>
+        <translation>बाहर निकलें (&amp;Q)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="677"/>
         <source>&amp;Block</source>
-        <translation>ब्लाक</translation>
+        <translation>ब्लॉक (&amp;B)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="601"/>
@@ -4197,22 +4197,22 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="754"/>
         <source>&amp;Selection Pointer</source>
-        <translation>और चयन सूचक</translation>
+        <translation>चयन सूचक (&amp;S)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="603"/>
         <source>&amp;Draft</source>
-        <translation>Draft</translation>
+        <translation>ड्राफ़्ट (&amp;D)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="606"/>
         <source>&amp;Statusbar</source>
-        <translation>और स्टेटसबार</translation>
+        <translation>स्थिति पट्टी (&amp;S)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="715"/>
         <source>Focus on &amp;Command Line</source>
-        <translation>पर ध्यान केंद्रित करें &amp; कमांड लाइन</translation>
+        <translation>कमांड लाइन पर फ़ोकस करें (&amp;C)</translation>
     </message>
 </context>
 <context>
@@ -4290,9 +4290,9 @@ End Edge Point: (%9 , %10)</source>
 पूरक कोण: %2
 संपूरक कोण: %3
 पूर्ण घूर्णन − कोण: %4
-स्टार्ट एज प्वाइंट: (%5, %6)
-इंटरसेक्शन प्वाइंट:(%7,%8)
-एंड एज प्वाइंट: (%9,%10)</translation>
+प्रारंभ किनारा बिंदु: (%5, %6)
+प्रतिच्छेदन बिंदु: (%7, %8)
+अंत किनारा बिंदु: (%9, %10)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="151"/>
@@ -4355,18 +4355,18 @@ Point: (%8 , %9)</source>
         <translation type="unfinished">दूरी: %1
 कार्टेशियन: (%2 , %3)
 ध्रुवीय: (%4 &lt; %5)
-इकाई पर बिंदु: (%6 , %7)
+एंटिटी पर बिंदु: (%6 , %7)
 बिंदु: (%8 , %9)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_action_info_dist_point_to_entity.cpp" line="301"/>
         <source>Specify entity</source>
-        <translation type="unfinished">इकाई निर्दिष्ट करें</translation>
+        <translation type="unfinished">एंटिटी निर्दिष्ट करें</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_action_info_dist_point_to_entity.cpp" line="301"/>
         <source>Do not snap to child entities in container</source>
-        <translation type="unfinished">कंटेनर में चाइल्ड इकाइयों पर स्नैप न करें</translation>
+        <translation type="unfinished">कंटेनर में चाइल्ड एंटिटीज़ पर स्नैप न करें</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_action_info_dist_point_to_entity.cpp" line="305"/>
@@ -4377,7 +4377,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/info/lc_action_info_dist_point_to_entity.cpp" line="305"/>
         <source>Relative point is on entity</source>
-        <translation type="unfinished">सापेक्ष बिंदु इकाई पर है</translation>
+        <translation type="unfinished">सापेक्ष बिंदु एंटिटी पर है</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_action_info_dist_point_to_entity.cpp" line="333"/>
@@ -4481,12 +4481,12 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfoproperties.cpp" line="172"/>
         <source>Select entity</source>
-        <translation>इकाई चुनें</translation>
+        <translation>एंटिटी चुनें</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfoproperties.cpp" line="172"/>
         <source>Select child entities</source>
-        <translation>चाइल्ड इकाइयों का चयन करें</translation>
+        <translation>चाइल्ड एंटिटीज़ का चयन करें</translation>
     </message>
 </context>
 <context>
@@ -4696,7 +4696,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickdistance.cpp" line="292"/>
         <source>Entity geometry length</source>
-        <translation>इकाई ज्यामिति लंबाई</translation>
+        <translation>एंटिटी ज्यामिति लंबाई</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickdistance.cpp" line="292"/>
@@ -4805,7 +4805,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="150"/>
         <source>Entity</source>
-        <translation>इकाई</translation>
+        <translation>एंटिटी</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="154"/>
@@ -4835,12 +4835,12 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="261"/>
         <source>Select base alignment entity</source>
-        <translation>आधार संरेखण इकाई चुनें</translation>
+        <translation>आधार संरेखण एंटिटी चुनें</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="261"/>
         <source>Select child entities of containers</source>
-        <translation>कंटेनरों की चाइल्ड इकाइयों का चयन करें</translation>
+        <translation>कंटेनरों की चाइल्ड एंटिटीज़ का चयन करें</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="264"/>
@@ -4946,7 +4946,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_single.cpp" line="204"/>
         <source>Entity</source>
-        <translation>इकाई</translation>
+        <translation>एंटिटी</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_single.cpp" line="208"/>
@@ -4966,7 +4966,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_single.cpp" line="273"/>
         <source>Select base alignment entity</source>
-        <translation>आधार संरेखण इकाई चुनें</translation>
+        <translation>आधार संरेखण एंटिटी चुनें</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_single.cpp" line="276"/>
@@ -4976,7 +4976,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_single.cpp" line="289"/>
         <source>Select entity to align</source>
-        <translation>इकाई को संरेखित करने के लिए चुनें</translation>
+        <translation>एंटिटी को संरेखित करने के लिए चुनें</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_single.cpp" line="289"/>
@@ -5032,13 +5032,13 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_bevel.cpp" line="233"/>
         <source>Invalid entity selected (non-trimmable).</source>
-        <translation type="unfinished">अमान्य इकाई का चयन (गैर-ट्रिमेबल)।.</translation>
+        <translation type="unfinished">अमान्य एंटिटी का चयन (गैर-ट्रिमेबल)।</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_bevel.cpp" line="236"/>
         <location filename="../src/actions/drawing/modify/lc_action_modify_bevel.cpp" line="272"/>
         <source>Invalid entity selected (non-atomic).</source>
-        <translation type="unfinished">अमान्य इकाई का चयन (गैर परमाणु)।.</translation>
+        <translation type="unfinished">अमान्य एंटिटी का चयन (गैर परमाणु)।</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_bevel.cpp" line="253"/>
@@ -5058,7 +5058,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_bevel.cpp" line="265"/>
         <source>Invalid entity selected (non-trimmable with first entity).</source>
-        <translation type="unfinished">अमान्य इकाई का चयन किया गया (प्रथम इकाई के साथ गैर-trimmable)।.</translation>
+        <translation type="unfinished">अमान्य एंटिटी चयनित (पहली एंटिटी के साथ ट्रिम योग्य नहीं)।</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_bevel.cpp" line="338"/>
@@ -5069,12 +5069,12 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_bevel.cpp" line="405"/>
         <source>Select first entity</source>
-        <translation type="unfinished">पहली इकाई चुनें</translation>
+        <translation type="unfinished">पहली एंटिटी चुनें</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_bevel.cpp" line="408"/>
         <source>Select second entity</source>
-        <translation type="unfinished">दूसरी इकाई चुनें</translation>
+        <translation type="unfinished">दूसरी एंटिटी चुनें</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_bevel.cpp" line="411"/>
@@ -5097,7 +5097,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="151"/>
         <source>Invalid entity selected - no segments between intersections to break/divide.</source>
-        <translation>अमान्य इकाई का चयन किया गया - ब्रेक/विभाजन के लिए प्रतिच्छेदनों के बीच कोई खंड नहीं।</translation>
+        <translation>अमान्य एंटिटी का चयन किया गया - ब्रेक/विभाजन के लिए प्रतिच्छेदनों के बीच कोई खंड नहीं।</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="248"/>
@@ -5121,7 +5121,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="369"/>
         <source>Break/Divide Circle</source>
-        <translation>ब्रेक / डिवाइड सर्कल</translation>
+        <translation>ब्रेक / डिवाइड वृत्त</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="370"/>
@@ -5138,12 +5138,12 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="468"/>
         <source>Break/Divide Arc</source>
-        <translation>ब्रेक / डिवाइड आर्क</translation>
+        <translation>ब्रेक / डिवाइड चाप</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="520"/>
         <source>Select line, arc or circle</source>
-        <translation>लाइन, आर्क या सर्कल चुनें</translation>
+        <translation>लाइन, चाप या वृत्त चुनें</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="520"/>
@@ -5166,22 +5166,22 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_cut.cpp" line="121"/>
         <source>No Entity found.</source>
-        <translation type="unfinished">कोई इकाई नहीं मिली।.</translation>
+        <translation type="unfinished">कोई एंटिटी नहीं मिली।</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_cut.cpp" line="125"/>
         <source>Entity must be a line, arc, circle, ellipse or interpolation spline.</source>
-        <translation type="unfinished">इकाई एक रेखा, चाप, वृत्त, दीर्घवृत्त या इंटरपोलेशन स्प्लाइन होनी चाहिए।</translation>
+        <translation type="unfinished">एंटिटी एक रेखा, चाप, वृत्त, दीर्घवृत्त या इंटरपोलेशन स्प्लाइन होनी चाहिए।</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_cut.cpp" line="134"/>
         <source>Cutting point may not be entity&apos;s endpoint.</source>
-        <translation type="unfinished">काटना बिंदु इकाई का समापन बिंदु नहीं हो सकता है।.</translation>
+        <translation type="unfinished">काटने का बिंदु एंटिटी का अंत बिंदु नहीं हो सकता।</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_cut.cpp" line="153"/>
         <source>Specify entity to cut</source>
-        <translation type="unfinished">कटौती करने के लिए इकाई निर्दिष्ट करें</translation>
+        <translation type="unfinished">काटने के लिए एंटिटी निर्दिष्ट करें</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_cut.cpp" line="156"/>
@@ -5212,52 +5212,52 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_delete_free.cpp" line="79"/>
         <source>Entities not in the same polyline.</source>
-        <translation type="unfinished">इकाईयां समान पॉलीलाइन में नहीं।.</translation>
+        <translation type="unfinished">एंटिटीज़ समान पॉलीलाइन में नहीं।</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_delete_free.cpp" line="83"/>
         <source>Parent of second entity is not a polyline</source>
-        <translation type="unfinished">दूसरी इकाई के माता-पिता एक polyline नहीं है</translation>
+        <translation type="unfinished">दूसरी एंटिटी का पैरेंट पॉलीलाइन नहीं है</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_delete_free.cpp" line="87"/>
         <source>Parent of second entity is nullptr</source>
-        <translation type="unfinished">दूसरी इकाई के माता-पिता nullptr है</translation>
+        <translation type="unfinished">दूसरी एंटिटी का पैरेंट nullptr है</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_delete_free.cpp" line="91"/>
         <source>One of the chosen entities is nullptr</source>
-        <translation type="unfinished">चयनित इकाइयों में से एक nullptr है</translation>
+        <translation type="unfinished">चयनित एंटिटीज़ में से एक nullptr है</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_delete_free.cpp" line="109"/>
         <source>Parent of first entity is not a polyline</source>
-        <translation type="unfinished">पहली इकाई के माता-पिता एक polyline नहीं है</translation>
+        <translation type="unfinished">पहली एंटिटी का पैरेंट पॉलीलाइन नहीं है</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_delete_free.cpp" line="113"/>
         <source>Parent of first entity is nullptr</source>
-        <translation type="unfinished">पहली इकाई के माता-पिता nullptr है</translation>
+        <translation type="unfinished">पहली एंटिटी का पैरेंट nullptr है</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_delete_free.cpp" line="117"/>
         <source>First entity is nullptr</source>
-        <translation type="unfinished">पहली इकाई nullptr है</translation>
+        <translation type="unfinished">पहली एंटिटी nullptr है</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_delete_free.cpp" line="129"/>
         <source>Second entity is nullptr</source>
-        <translation type="unfinished">दूसरा इकाई nullptr है</translation>
+        <translation type="unfinished">दूसरी एंटिटी nullptr है</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_delete_free.cpp" line="145"/>
         <source>Specify first break point on a polyline</source>
-        <translation type="unfinished">एक polyline पर पहला ब्रेक पॉइंट निर्दिष्ट करें</translation>
+        <translation type="unfinished">एक polyline पर पहला ब्रेक बिंदु निर्दिष्ट करें</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_delete_free.cpp" line="148"/>
         <source>Specify second break point on the same polyline</source>
-        <translation type="unfinished">उसी पॉलीलाइन पर दूसरे ब्रेक पॉइंट को निर्दिष्ट करें</translation>
+        <translation type="unfinished">उसी पॉलीलाइन पर दूसरे ब्रेक बिंदु को निर्दिष्ट करें</translation>
     </message>
 </context>
 <context>
@@ -5271,7 +5271,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_duplicate.cpp" line="287"/>
         <source>Select entity to duplicate</source>
-        <translation>इकाई को डुप्लिकेट में चुनें</translation>
+        <translation>डुप्लिकेट करने के लिए एंटिटी चुनें</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_duplicate.cpp" line="287"/>
@@ -5289,7 +5289,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_entity.cpp" line="223"/>
         <source>Click on entity to modify</source>
-        <translation type="unfinished">संशोधित करने के लिए इकाई पर क्लिक करें</translation>
+        <translation type="unfinished">संशोधित करने के लिए एंटिटी पर क्लिक करें</translation>
     </message>
 </context>
 <context>
@@ -5333,7 +5333,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_gap.cpp" line="459"/>
         <source>Use Alternative Line Endpoint</source>
-        <translation>वैकल्पिक लाइन एंडपॉइंट का उपयोग करें</translation>
+        <translation>वैकल्पिक लाइन अंत बिंदु का उपयोग करें</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_gap.cpp" line="463"/>
@@ -5786,7 +5786,7 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate.cpp" line="204"/>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate.cpp" line="211"/>
         <source>Center Point:</source>
-        <translation type="unfinished">सेंटर प्वाइंट:</translation>
+        <translation type="unfinished">केंद्र बिंदु:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate.cpp" line="205"/>
@@ -5842,7 +5842,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate.cpp" line="711"/>
         <source>Specify rotation center</source>
-        <translation type="unfinished">रोटेशन सेंटर निर्दिष्ट करें</translation>
+        <translation type="unfinished">रोटेशन केंद्र निर्दिष्ट करें</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate.cpp" line="714"/>
@@ -5934,12 +5934,12 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_round.cpp" line="408"/>
         <source>Specify first entity or enter radius &lt;%1&gt;</source>
-        <translation type="unfinished">प्रथम इकाई निर्दिष्ट करें या त्रिज्या दर्ज करें &lt;%1&gt;</translation>
+        <translation type="unfinished">प्रथम एंटिटी निर्दिष्ट करें या त्रिज्या दर्ज करें &lt;%1&gt;</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_round.cpp" line="411"/>
         <source>Specify second entity</source>
-        <translation type="unfinished">दूसरी इकाई निर्दिष्ट करें</translation>
+        <translation type="unfinished">दूसरी एंटिटी निर्दिष्ट करें</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_round.cpp" line="414"/>
@@ -5987,7 +5987,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_scale.cpp" line="413"/>
         <source>Specify scale center</source>
-        <translation type="unfinished">स्केल सेंटर निर्दिष्ट करें</translation>
+        <translation type="unfinished">स्केल केंद्र निर्दिष्ट करें</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_scale.cpp" line="413"/>
@@ -6106,22 +6106,22 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim.cpp" line="217"/>
         <source>Select first trim entity</source>
-        <translation type="unfinished">पहली ट्रिम इकाई चुनें</translation>
+        <translation type="unfinished">पहली ट्रिम एंटिटी चुनें</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim.cpp" line="220"/>
         <source>Select limiting entity</source>
-        <translation type="unfinished">सीमित इकाई का चयन करें</translation>
+        <translation type="unfinished">सीमित एंटिटी का चयन करें</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim.cpp" line="225"/>
         <source>Select second trim entity</source>
-        <translation type="unfinished">दूसरी ट्रिम इकाई चुनें</translation>
+        <translation type="unfinished">दूसरी ट्रिम एंटिटी चुनें</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim.cpp" line="228"/>
         <source>Select entity to trim</source>
-        <translation type="unfinished">इकाई को ट्रिम करने के लिए चुनें</translation>
+        <translation type="unfinished">एंटिटी को ट्रिम करने के लिए चुनें</translation>
     </message>
 </context>
 <context>
@@ -6129,12 +6129,12 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim_amount.cpp" line="200"/>
         <source>No entity found.</source>
-        <translation type="unfinished">कोई इकाई नहीं मिली।.</translation>
+        <translation type="unfinished">कोई एंटिटी नहीं मिली।</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim_amount.cpp" line="207"/>
         <source>The chosen Entity is not an atomic entity or cannot be trimmed.</source>
-        <translation type="unfinished">चयनित इकाई एटॉमिक इकाई नहीं है या ट्रिम नहीं की जा सकती।</translation>
+        <translation type="unfinished">चयनित एंटिटी एटॉमिक एंटिटी नहीं है या ट्रिम नहीं की जा सकती।</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim_amount.cpp" line="232"/>
@@ -6144,7 +6144,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim_amount.cpp" line="267"/>
         <source>Select line/arc to trim OR enter length value:</source>
-        <translation type="unfinished">लाइन / आर्क को ट्रिम करने के लिए चुनें या लंबाई मान दर्ज करें:</translation>
+        <translation type="unfinished">लाइन / चाप को ट्रिम करने के लिए चुनें या लंबाई मान दर्ज करें:</translation>
     </message>
 </context>
 <context>
@@ -6157,7 +6157,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/lc_action_options_properties_filler_base.cpp" line="294"/>
         <source>Distance of snap point from initially resolved snap point</source>
-        <translation type="unfinished">शुरू में हल स्नैप प्वाइंट से स्नैप प्वाइंट की दूरी</translation>
+        <translation type="unfinished">शुरू में हल स्नैप बिंदु से स्नैप बिंदु की दूरी</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/lc_action_options_properties_filler_base.cpp" line="308"/>
@@ -6175,7 +6175,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_order.cpp" line="115"/>
         <source>No Entity found.</source>
-        <translation type="unfinished">कोई इकाई नहीं मिली।.</translation>
+        <translation type="unfinished">कोई एंटिटी नहीं मिली।</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_order.cpp" line="132"/>
@@ -6195,7 +6195,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_order.cpp" line="137"/>
         <source>Choose entity for order</source>
-        <translation type="unfinished">आदेश के लिए इकाई चुनें</translation>
+        <translation type="unfinished">क्रम के लिए एंटिटी चुनें</translation>
     </message>
 </context>
 <context>
@@ -6221,12 +6221,12 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/pen/lc_actionpenapply.cpp" line="183"/>
         <source>Specify entity to pick the pen</source>
-        <translation>इकाई को पेन लेने के लिए निर्दिष्ट करें</translation>
+        <translation>पेन लेने के लिए एंटिटी निर्दिष्ट करें</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pen/lc_actionpenapply.cpp" line="186"/>
         <source>Specify entity to apply pen</source>
-        <translation>पेन लगाने के लिए इकाई निर्दिष्ट करें</translation>
+        <translation>पेन लगाने के लिए एंटिटी निर्दिष्ट करें</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pen/lc_actionpenapply.cpp" line="186"/>
@@ -6239,7 +6239,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/pen/lc_actionpenpick.cpp" line="87"/>
         <source>Specify entity to pick the pen</source>
-        <translation>इकाई को पेन लेने के लिए निर्दिष्ट करें</translation>
+        <translation>पेन लेने के लिए एंटिटी निर्दिष्ट करें</translation>
     </message>
 </context>
 <context>
@@ -6248,12 +6248,12 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_add.cpp" line="111"/>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_add.cpp" line="135"/>
         <source>No Entity found.</source>
-        <translation type="unfinished">कोई इकाई नहीं मिली।.</translation>
+        <translation type="unfinished">कोई एंटिटी नहीं मिली।</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_add.cpp" line="113"/>
         <source>Entity must be a polyline.</source>
-        <translation type="unfinished">इकाई एक polyline होना चाहिए।.</translation>
+        <translation type="unfinished">एंटिटी पॉलीलाइन होनी चाहिए।</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_add.cpp" line="142"/>
@@ -6263,7 +6263,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_add.cpp" line="147"/>
         <source>Adding point is not on entity.</source>
-        <translation type="unfinished">जोड़ना बिंदु इकाई पर नहीं है।.</translation>
+        <translation type="unfinished">जोड़ा जाने वाला बिंदु एंटिटी पर नहीं है।</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_add.cpp" line="180"/>
@@ -6281,12 +6281,12 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_append.cpp" line="124"/>
         <source>No Entity found.</source>
-        <translation type="unfinished">कोई इकाई नहीं मिली।.</translation>
+        <translation type="unfinished">कोई एंटिटी नहीं मिली।</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_append.cpp" line="128"/>
         <source>Entity must be a polyline.</source>
-        <translation type="unfinished">इकाई एक polyline होना चाहिए।.</translation>
+        <translation type="unfinished">एंटिटी पॉलीलाइन होनी चाहिए।</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_append.cpp" line="132"/>
@@ -6311,7 +6311,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_append.cpp" line="329"/>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="unfinished">अभी तक परिभाषित नहीं है।.</translation>
+        <translation type="unfinished">पूर्ववत नहीं कर सकते: अभी पर्याप्त एंटिटीज़ परिभाषित नहीं हैं।</translation>
     </message>
 </context>
 <context>
@@ -6319,7 +6319,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_arcs_to_lines.cpp" line="116"/>
         <source>Specify polyline with arc segments</source>
-        <translation>आर्क सेगमेंट के साथ पॉलीलाइन निर्दिष्ट करें</translation>
+        <translation>चाप सेगमेंट के साथ पॉलीलाइन निर्दिष्ट करें</translation>
     </message>
 </context>
 <context>
@@ -6327,7 +6327,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_change_segment_type.cpp" line="59"/>
         <source>Invalid arc point to create arc, select another one</source>
-        <translation>आर्क बनाने के लिए अमान्य आर्क बिंदु, एक दूसरे का चयन करें</translation>
+        <translation>चाप बनाने के लिए अमान्य चाप बिंदु, दूसरा चुनें</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_change_segment_type.cpp" line="242"/>
@@ -6342,7 +6342,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_change_segment_type.cpp" line="250"/>
         <source>Specify position on arc to create</source>
-        <translation>बनाने के लिए आर्क पर स्थिति निर्दिष्ट करें</translation>
+        <translation>बनाने के लिए चाप पर स्थिति निर्दिष्ट करें</translation>
     </message>
 </context>
 <context>
@@ -6351,17 +6351,17 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node.cpp" line="105"/>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node.cpp" line="125"/>
         <source>No Entity found.</source>
-        <translation type="unfinished">कोई इकाई नहीं मिली।.</translation>
+        <translation type="unfinished">कोई एंटिटी नहीं मिली।</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node.cpp" line="107"/>
         <source>Entity must be a polyline.</source>
-        <translation type="unfinished">इकाई एक polyline होना चाहिए।.</translation>
+        <translation type="unfinished">एंटिटी पॉलीलाइन होनी चाहिए।</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node.cpp" line="132"/>
         <source>Deleting point is not on entity.</source>
-        <translation type="unfinished">हटाने का बिंदु इकाई पर नहीं है।.</translation>
+        <translation type="unfinished">हटाने का बिंदु एंटिटी पर नहीं है।</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node.cpp" line="141"/>
@@ -6385,18 +6385,18 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node_between.cpp" line="128"/>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node_between.cpp" line="150"/>
         <source>No Entity found.</source>
-        <translation type="unfinished">कोई इकाई नहीं मिली।.</translation>
+        <translation type="unfinished">कोई एंटिटी नहीं मिली।</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node_between.cpp" line="131"/>
         <source>Entity must be a polyline.</source>
-        <translation type="unfinished">इकाई एक polyline होना चाहिए।.</translation>
+        <translation type="unfinished">एंटिटी पॉलीलाइन होनी चाहिए।</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node_between.cpp" line="159"/>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node_between.cpp" line="184"/>
         <source>Deleting point is not on entity.</source>
-        <translation type="unfinished">हटाने का बिंदु इकाई पर नहीं है।.</translation>
+        <translation type="unfinished">हटाने का बिंदु एंटिटी पर नहीं है।</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node_between.cpp" line="167"/>
@@ -6435,12 +6435,12 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_equidistant.cpp" line="335"/>
         <source>No Entity found.</source>
-        <translation type="unfinished">कोई इकाई नहीं मिली।.</translation>
+        <translation type="unfinished">कोई एंटिटी नहीं मिली।</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_equidistant.cpp" line="338"/>
         <source>Entity must be a polyline.</source>
-        <translation type="unfinished">इकाई एक polyline होना चाहिए।.</translation>
+        <translation type="unfinished">एंटिटी पॉलीलाइन होनी चाहिए।</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_equidistant.cpp" line="403"/>
@@ -6459,12 +6459,12 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_from_segment.cpp" line="326"/>
         <source>No Entity found.</source>
-        <translation type="unfinished">कोई इकाई नहीं मिली।.</translation>
+        <translation type="unfinished">कोई एंटिटी नहीं मिली।</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_from_segment.cpp" line="329"/>
         <source>Entity can not be a closed polyline.</source>
-        <translation type="unfinished">इकाई एक बंद polyline नहीं हो सकता है।.</translation>
+        <translation type="unfinished">एंटिटी बंद पॉलीलाइन नहीं हो सकती।</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_from_segment.cpp" line="352"/>
@@ -6477,12 +6477,12 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_trim.cpp" line="116"/>
         <source>No Entity found.</source>
-        <translation type="unfinished">कोई इकाई नहीं मिली।.</translation>
+        <translation type="unfinished">कोई एंटिटी नहीं मिली।</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_trim.cpp" line="118"/>
         <source>Entity must be a polyline.</source>
-        <translation type="unfinished">इकाई एक polyline होना चाहिए।.</translation>
+        <translation type="unfinished">एंटिटी पॉलीलाइन होनी चाहिए।</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_trim.cpp" line="143"/>
@@ -6525,12 +6525,12 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="221"/>
         <source> entities </source>
-        <translation> इकाइयाँ </translation>
+        <translation> एंटिटीज़ </translation>
     </message>
     <message>
         <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="222"/>
         <source>that intersect with box</source>
-        <translation>कि बॉक्स के साथ अंतर</translation>
+        <translation>जो बॉक्स को प्रतिच्छेदित करती हैं</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="222"/>
@@ -6545,7 +6545,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="246"/>
         <source>Select/Deselect entities</source>
-        <translation>चुनें/चुनें</translation>
+        <translation>एंटिटीज़ चुनें/चयन हटाएँ</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="246"/>
@@ -6555,7 +6555,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="276"/>
         <source>No valid entities selected, select them first</source>
-        <translation>कोई मान्य इकाई चयनित नहीं है, पहले उन्हें चुनें</translation>
+        <translation>कोई मान्य एंटिटी चयनित नहीं है, पहले उन्हें चुनें</translation>
     </message>
 </context>
 <context>
@@ -6563,12 +6563,12 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_action_spline_remove_points.cpp" line="197"/>
         <source>Select spline or spline points entity</source>
-        <translation>स्प्लाइन या स्प्लाइन-बिंदु इकाई चुनें</translation>
+        <translation>स्प्लाइन या स्प्लाइन-बिंदु एंटिटी चुनें</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_action_spline_remove_points.cpp" line="201"/>
         <source>Select control point of entity</source>
-        <translation>इकाई का नियंत्रण बिंदु चुनें</translation>
+        <translation>एंटिटी का नियंत्रण बिंदु चुनें</translation>
     </message>
 </context>
 <context>
@@ -6576,12 +6576,12 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_contour.cpp" line="66"/>
         <source>Entity must be an Atomic Entity.</source>
-        <translation type="unfinished">इकाई एक परमाणु इकाई होना चाहिए।.</translation>
+        <translation type="unfinished">एंटिटी एक परमाणु एंटिटी होनी चाहिए।</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_contour.cpp" line="90"/>
         <source>Specify entity to select</source>
-        <translation type="unfinished">चयन करने के लिए इकाई निर्दिष्ट करें</translation>
+        <translation type="unfinished">चयन करने के लिए एंटिटी निर्दिष्ट करें</translation>
     </message>
 </context>
 <context>
@@ -6597,7 +6597,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_generic.cpp" line="30"/>
         <source>Select entities</source>
-        <translation type="unfinished">इकाइयों का चयन करें</translation>
+        <translation type="unfinished">एंटिटीज़ का चयन करें</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_generic.cpp" line="31"/>
@@ -6620,12 +6620,12 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_intersected.cpp" line="192"/>
         <source>Select intersecting entity</source>
-        <translation type="unfinished">प्रतिच्छेदन इकाई का चयन करें</translation>
+        <translation type="unfinished">प्रतिच्छेदन एंटिटी का चयन करें</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_intersected.cpp" line="192"/>
         <source>Select child entities</source>
-        <translation type="unfinished">चाइल्ड इकाइयों का चयन करें</translation>
+        <translation type="unfinished">चाइल्ड एंटिटीज़ का चयन करें</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_intersected.cpp" line="195"/>
@@ -6638,7 +6638,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_layer.cpp" line="75"/>
         <source>Specify entity with desired layer</source>
-        <translation type="unfinished">वांछित परत की इकाई निर्दिष्ट करें</translation>
+        <translation type="unfinished">वांछित परत की एंटिटी निर्दिष्ट करें</translation>
     </message>
 </context>
 <context>
@@ -6664,7 +6664,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_single.cpp" line="120"/>
         <source>Specify entity to select</source>
-        <translation type="unfinished">चयन करने के लिए इकाई निर्दिष्ट करें</translation>
+        <translation type="unfinished">चयन करने के लिए एंटिटी निर्दिष्ट करें</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_single.cpp" line="120"/>
@@ -6687,12 +6687,12 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_window.cpp" line="136"/>
         <source> entities </source>
-        <translation type="unfinished"> इकाइयाँ </translation>
+        <translation type="unfinished"> एंटिटीज़ </translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_window.cpp" line="137"/>
         <source>that intersect with box</source>
-        <translation type="unfinished">कि बॉक्स के साथ अंतर</translation>
+        <translation type="unfinished">जो बॉक्स को प्रतिच्छेदित करती हैं</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_window.cpp" line="137"/>
@@ -6712,12 +6712,12 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_window.cpp" line="183"/>
         <source>De-select entities</source>
-        <translation type="unfinished">इकाइयों का चयन हटाएँ</translation>
+        <translation type="unfinished">एंटिटीज़ का चयन हटाएँ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_window.cpp" line="183"/>
         <source>Select entities</source>
-        <translation type="unfinished">इकाइयों का चयन करें</translation>
+        <translation type="unfinished">एंटिटीज़ का चयन करें</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_window.cpp" line="184"/>
@@ -6735,7 +6735,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/snap/lc_actionsnapmiddlemanual.cpp" line="234"/>
         <source>Specify percentage / start-point</source>
-        <translation>प्रतिशत / स्टार्ट-पॉइंट निर्दिष्ट करें</translation>
+        <translation>प्रतिशत / प्रारंभ बिंदु निर्दिष्ट करें</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/snap/lc_actionsnapmiddlemanual.cpp" line="237"/>
@@ -6753,7 +6753,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_action_spline_add_point.cpp" line="206"/>
         <source>Select spline or spline points entity</source>
-        <translation>स्प्लाइन या स्प्लाइन-बिंदु इकाई चुनें</translation>
+        <translation>स्प्लाइन या स्प्लाइन-बिंदु एंटिटी चुनें</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_action_spline_add_point.cpp" line="210"/>
@@ -6776,7 +6776,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_action_spline_append_point.cpp" line="258"/>
         <source>Select spline or spline points entity</source>
-        <translation>स्प्लाइन या स्प्लाइन-बिंदु इकाई चुनें</translation>
+        <translation>स्प्लाइन या स्प्लाइन-बिंदु एंटिटी चुनें</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_action_spline_append_point.cpp" line="262"/>
@@ -6794,7 +6794,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_action_spline_modify_explode.cpp" line="234"/>
         <source>Select spline or spline points entity</source>
-        <translation>स्प्लाइन या स्प्लाइन-बिंदु इकाई चुनें</translation>
+        <translation>स्प्लाइन या स्प्लाइन-बिंदु एंटिटी चुनें</translation>
     </message>
 </context>
 <context>
@@ -6802,7 +6802,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_action_spline_from_polyline.cpp" line="162"/>
         <source>Select polyline to create spline or spline points</source>
-        <translation>स्पलाइन या स्पलाइन पॉइंट बनाने के लिए पॉलीलाइन का चयन करें</translation>
+        <translation>स्प्लाइन या स्प्लाइन बिंदु बनाने के लिए पॉलीलाइन का चयन करें</translation>
     </message>
 </context>
 <context>
@@ -6815,7 +6815,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_action_spline_remove_between.cpp" line="228"/>
         <source>Select spline or spline points entity</source>
-        <translation>स्प्लाइन या स्प्लाइन-बिंदु इकाई चुनें</translation>
+        <translation>स्प्लाइन या स्प्लाइन-बिंदु एंटिटी चुनें</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_action_spline_remove_between.cpp" line="232"/>
@@ -7067,7 +7067,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_options_filler.cpp" line="35"/>
         <source>Entity</source>
-        <translation type="unfinished">इकाई</translation>
+        <translation type="unfinished">एंटिटी</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_options_filler.cpp" line="36"/>
@@ -7149,7 +7149,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_options_filler.cpp" line="84"/>
         <source>If selected, relative positions of entities within selection will be unchanged. Otherwise, each entity will be positioned individually.</source>
-        <translation type="unfinished">यदि चयन किया जाता है, तो चयन के भीतर इकाइयों की सापेक्ष स्थिति अपरिवर्तित रहेगी। अन्यथा, प्रत्येक इकाई को अलग से स्थित किया जाएगा।</translation>
+        <translation type="unfinished">यदि चयन किया जाता है, तो चयन के भीतर एंटिटीज़ की सापेक्ष स्थिति अपरिवर्तित रहेगी। अन्यथा, प्रत्येक एंटिटी को अलग से स्थित किया जाएगा।</translation>
     </message>
 </context>
 <context>
@@ -7162,7 +7162,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_filler.cpp" line="34"/>
         <source>If checked, entities will be scaled if necessary. Otherwise, they will be just positioned and rotated.</source>
-        <translation type="unfinished">यदि जांच की जाती है, तो आवश्यक होने पर इकाइयों को स्केल किया जाएगा। अन्यथा, उन्हें केवल स्थित किया जाएगा और घुमाया जाएगा।</translation>
+        <translation type="unfinished">यदि चेक किया गया है, तो आवश्यक होने पर एंटिटीज़ को स्केल किया जाएगा। अन्यथा, उन्हें केवल स्थित किया जाएगा और घुमाया जाएगा।</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_filler.cpp" line="42"/>
@@ -7205,7 +7205,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="46"/>
         <source>If checked, current attributes will be used for mirrored entities, otherwise - original ones. </source>
-        <translation type="unfinished">यदि जांच की जाती है, तो प्रतिबिंबित इकाइयों के लिए वर्तमान विशेषताओं का उपयोग किया जाएगा, अन्यथा - मूल विशेषताओं का। </translation>
+        <translation type="unfinished">यदि चेक किया गया है, तो प्रतिबिंबित एंटिटीज़ के लिए वर्तमान विशेषताओं का उपयोग किया जाएगा, अन्यथा - मूल विशेषताओं का। </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="49"/>
@@ -7215,7 +7215,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="56"/>
         <source>If unchecked, original entities will be removed, otherwise they will survive.</source>
-        <translation type="unfinished">यदि अनचेक किया गया है तो मूल इकाइयों को हटा दिया जाएगा, अन्यथा वे बनी रहेंगी।</translation>
+        <translation type="unfinished">यदि अनचेक किया गया है तो मूल एंटिटीज़ को हटा दिया जाएगा, अन्यथा वे बनी रहेंगी।</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="59"/>
@@ -7225,7 +7225,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="66"/>
         <source>If checked, mirrored entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">यदि चेक किया गया है, तो मिरर की गई इकाइयां वर्तमान परत में रखी जाएंगी, अन्यथा उन्हें मूल परतों में रखा जाएगा।</translation>
+        <translation type="unfinished">यदि चेक किया गया है, तो मिरर की गई एंटिटीज़ वर्तमान परत में रखी जाएंगी, अन्यथा उन्हें मूल परतों में रखा जाएगा।</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="69"/>
@@ -7235,7 +7235,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="76"/>
         <source>If checked, entities will be scaled if necessary. Otherwise, they will be just positioned and rotated.</source>
-        <translation type="unfinished">यदि जांच की जाती है, तो आवश्यक होने पर इकाइयों को स्केल किया जाएगा। अन्यथा, उन्हें केवल स्थित किया जाएगा और घुमाया जाएगा।</translation>
+        <translation type="unfinished">यदि चेक किया गया है, तो आवश्यक होने पर एंटिटीज़ को स्केल किया जाएगा। अन्यथा, उन्हें केवल स्थित किया जाएगा और घुमाया जाएगा।</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="79"/>
@@ -7248,7 +7248,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_single_options_filler.cpp" line="35"/>
         <source>Entity</source>
-        <translation type="unfinished">इकाई</translation>
+        <translation type="unfinished">एंटिटी</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_single_options_filler.cpp" line="36"/>
@@ -7343,7 +7343,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_single_options_widget.ui" line="80"/>
         <source>Center entities vertically</source>
-        <translation type="unfinished">इकाइयों को ऊर्ध्वाधर रूप से केंद्रित करें</translation>
+        <translation type="unfinished">एंटिटीज़ को ऊर्ध्वाधर रूप से केंद्रित करें</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_single_options_widget.ui" line="100"/>
@@ -7368,12 +7368,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_single_options_widget.ui" line="157"/>
         <source>Defines the way of selected entities alignment.</source>
-        <translation type="unfinished">चयनित इकाइयों के संरेखण का तरीका परिभाषित करता है।</translation>
+        <translation type="unfinished">चयनित एंटिटीज़ के संरेखण का तरीका परिभाषित करता है।</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_single_options_widget.ui" line="161"/>
         <source>Entity</source>
-        <translation type="unfinished">इकाई</translation>
+        <translation type="unfinished">एंटिटी</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_single_options_widget.ui" line="166"/>
@@ -7540,7 +7540,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_2points_options_widget.ui" line="105"/>
         <source>Central angle of the arc</source>
-        <translation type="unfinished">आर्क के केंद्रीय कोण</translation>
+        <translation type="unfinished">चाप का केंद्रीय कोण</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_2points_options_widget.ui" line="108"/>
@@ -7649,7 +7649,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_center_point_param_options_widget.ui" line="26"/>
         <source>Arc Options</source>
-        <translation type="unfinished">आर्क विकल्प</translation>
+        <translation type="unfinished">चाप विकल्प</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_center_point_param_options_widget.ui" line="56"/>
@@ -7767,7 +7767,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="414"/>
         <source>Bulge (sagitta) of the arc</source>
-        <translation>आर्क का उभार (सैजिटा)</translation>
+        <translation>चाप का उभार (सैजिटा)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="421"/>
@@ -7782,7 +7782,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="469"/>
         <source>Starting angle of arc</source>
-        <translation>आर्क का कोण शुरू करना</translation>
+        <translation>चाप का प्रारंभ कोण</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="476"/>
@@ -7803,7 +7803,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="567"/>
         <source>Defines whether arc is reversed (clockwise)</source>
-        <translation>यह परिभाषित करता है कि आर्क को उलट दिया गया है (घंटावार)</translation>
+        <translation>यह परिभाषित करता है कि चाप उलटा (दक्षिणावर्त) है या नहीं</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="570"/>
@@ -7851,7 +7851,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_tangential_options_filler.cpp" line="50"/>
         <source>Central angle of the arc</source>
-        <translation type="unfinished">आर्क के केंद्रीय कोण</translation>
+        <translation type="unfinished">चाप का केंद्रीय कोण</translation>
     </message>
 </context>
 <context>
@@ -7859,12 +7859,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_tangential_options_widget.ui" line="26"/>
         <source>Tangential Arc Options</source>
-        <translation type="unfinished">टेंगेंशियल आर्क विकल्प</translation>
+        <translation type="unfinished">स्पर्शी चाप विकल्प</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_tangential_options_widget.ui" line="47"/>
         <source>Radius of the tangential arc</source>
-        <translation type="unfinished">टेंगेंशियल आर्क के त्रिज्या</translation>
+        <translation type="unfinished">स्पर्शी चाप की त्रिज्या</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_tangential_options_widget.ui" line="60"/>
@@ -7914,7 +7914,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_filler.cpp" line="31"/>
         <source>Check to trim both entities to the bevel</source>
-        <translation type="unfinished">दोनों इकाइयों को बेवल में ट्रिम करने के लिए जाँच करें</translation>
+        <translation type="unfinished">दोनों एंटिटीज़ को बेवल में ट्रिम करने के लिए जाँच करें</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_filler.cpp" line="37"/>
@@ -7947,7 +7947,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_widget.ui" line="59"/>
         <source>Check to trim both entities to the bevel</source>
-        <translation type="unfinished">दोनों इकाइयों को बेवल में ट्रिम करने के लिए जाँच करें</translation>
+        <translation type="unfinished">दोनों एंटिटीज़ को बेवल में ट्रिम करने के लिए जाँच करें</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_widget.ui" line="62"/>
@@ -8405,7 +8405,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="32"/>
         <source>Replace arc</source>
-        <translation type="unfinished">आर्क बदलें</translation>
+        <translation type="unfinished">चाप बदलें</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="32"/>
@@ -8420,7 +8420,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="39"/>
         <source>Delta of circle&apos;s radius to arc&apos;s radius</source>
-        <translation type="unfinished">सर्कल के त्रिज्या का डेल्टा आर्क के त्रिज्या के लिए</translation>
+        <translation type="unfinished">वृत्त की त्रिज्या और चाप की त्रिज्या का अंतर</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="46"/>
@@ -8475,7 +8475,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="39"/>
         <source>Delta of circle&apos;s radius to arc&apos;s radius</source>
-        <translation type="unfinished">सर्कल के त्रिज्या का डेल्टा आर्क के त्रिज्या के लिए</translation>
+        <translation type="unfinished">वृत्त की त्रिज्या और चाप की त्रिज्या का अंतर</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="42"/>
@@ -8485,7 +8485,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="62"/>
         <source>Layer to which created circle should be placed</source>
-        <translation type="unfinished">वह परत जिसमें बनाया गया सर्कल रखा जाना चाहिए</translation>
+        <translation type="unfinished">वह परत जिसमें बनाया गया वृत्त रखा जाना चाहिए</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="66"/>
@@ -8502,7 +8502,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="102"/>
         <source>Pen to apply to created circle</source>
-        <translation type="unfinished">पेन बनाया सर्कल पर लागू करने के लिए</translation>
+        <translation type="unfinished">बनाए गए वृत्त पर लागू होने वाला पेन</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="106"/>
@@ -8535,7 +8535,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="134"/>
         <source>Replace arc</source>
-        <translation type="unfinished">आर्क बदलें</translation>
+        <translation type="unfinished">चाप बदलें</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="141"/>
@@ -8634,7 +8634,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_circle.ui" line="171"/>
         <source>Diameter of circle</source>
-        <translation>सर्कल का व्यास</translation>
+        <translation>वृत्त का व्यास</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_circle.ui" line="178"/>
@@ -8657,7 +8657,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_tangental_2_entities_radius_options_filler.cpp" line="31"/>
         <source>Radius of tangential circle</source>
-        <translation type="unfinished">टेंगेंशियल सर्कल के त्रिज्या</translation>
+        <translation type="unfinished">स्पर्शी वृत्त की त्रिज्या</translation>
     </message>
 </context>
 <context>
@@ -8665,7 +8665,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_tangental_2_entities_radius_options_widget.ui" line="32"/>
         <source>Circle Tangential2 Options</source>
-        <translation type="unfinished">सर्कल टेंगेंशियल2 विकल्प</translation>
+        <translation type="unfinished">स्पर्शी वृत्त 2 विकल्प</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_tangental_2_entities_radius_options_widget.ui" line="56"/>
@@ -8680,7 +8680,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_tangental_2_entities_radius_options_widget.ui" line="75"/>
         <source>Radius of tangential circle</source>
-        <translation type="unfinished">टेंगेंशियल सर्कल के त्रिज्या</translation>
+        <translation type="unfinished">स्पर्शी वृत्त की त्रिज्या</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_tangental_2_entities_radius_options_widget.ui" line="82"/>
@@ -9072,7 +9072,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="55"/>
         <source>Dimension Lines</source>
-        <translation>आयाम लाइन</translation>
+        <translation>आयाम रेखाएँ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="74"/>
@@ -9113,7 +9113,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="101"/>
         <source>Specifies a distance to extend the dimension line past the extension line when you use oblique, architectural, tick, integral, and no marks for arrowheads. (DIMDLE system variable)</source>
-        <translation>जब आप oblique, वास्तुशिल्प, टिक, अभिन्न और तीरहेड्स के लिए कोई निशान का उपयोग करते हैं तो एक्सटेंशन लाइन के अतीत में आयाम रेखा का विस्तार करने की दूरी निर्दिष्ट करता है। (DIMDLE प्रणाली चर)</translation>
+        <translation>जब तीरहेड के रूप में तिरछा, आर्किटेक्चरल टिक, इंटीग्रल या &quot;कोई नहीं&quot; चिह्न का उपयोग किया जाता है, तो आयाम रेखा को विस्तार रेखा से आगे बढ़ाने की दूरी निर्दिष्ट करता है। (DIMDLE प्रणाली चर)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="162"/>
@@ -9123,7 +9123,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="191"/>
         <source>Suppresses display of first dimension line (DIMSD1 system variable)</source>
-        <translation>पहले आयाम लाइन (DIMSD1 प्रणाली चर) के प्रदर्शन को दबाने</translation>
+        <translation>पहली आयाम रेखा का प्रदर्शन दबाता है (DIMSD1 प्रणाली चर)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="194"/>
@@ -9143,12 +9143,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="204"/>
         <source>Extension Lines</source>
-        <translation>एक्सटेंशन लाइन</translation>
+        <translation>विस्तार रेखाएँ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="216"/>
         <source>Sets the color for the extension line (DIMCLRE system variable.)</source>
-        <translation>एक्सटेंशन लाइन (DIMCLRE प्रणाली चर) के लिए रंग सेट करता है।</translation>
+        <translation>विस्तार रेखा (DIMCLRE प्रणाली चर) के लिए रंग सेट करता है।</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="295"/>
@@ -9158,7 +9158,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="361"/>
         <source>Sets the linetype of the first extension line. (DIMLTEX1 system variable)</source>
-        <translation>पहली एक्सटेंशन लाइन की लाइनटाइप सेट करता है। (DIMLTEX1 प्रणाली चर)</translation>
+        <translation>पहली विस्तार रेखा की लाइनटाइप सेट करता है। (DIMLTEX1 प्रणाली चर)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="338"/>
@@ -9168,7 +9168,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="308"/>
         <source>Sets the linetype of the second extension line. (DIMLTEX2 system variable)</source>
-        <translation>दूसरी एक्सटेंशन लाइन की लाइनटाइप सेट करता है। (DIMLTEX2 प्रणाली चर)</translation>
+        <translation>दूसरी विस्तार रेखा की लाइनटाइप सेट करता है। (DIMLTEX2 प्रणाली चर)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="331"/>
@@ -9178,7 +9178,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="236"/>
         <source>Sets the lineweight of the extension line. (DIMLWE system variable)</source>
-        <translation>एक्सटेंशन लाइन के lineweight सेट करता है। (DIMLWE प्रणाली चर)</translation>
+        <translation>विस्तार रेखा की लाइन चौड़ाई सेट करता है। (DIMLWE प्रणाली चर)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="368"/>
@@ -9198,7 +9198,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="404"/>
         <source>Sets the distance to offset the extension lines from the points on the drawing that define the dimension. (DIMEXO system variable)</source>
-        <translation>ड्राइंग पर आयाम को परिभाषित करने वाले बिंदुओं से एक्सटेंशन लाइनों को ऑफसेट करने की दूरी निर्धारित करता है। (DIMEXO प्रणाली चर)</translation>
+        <translation>ड्राइंग पर आयाम को परिभाषित करने वाले बिंदुओं से विस्तार रेखाओं को ऑफसेट करने की दूरी निर्धारित करता है। (DIMEXO प्रणाली चर)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="223"/>
@@ -9223,7 +9223,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="269"/>
         <source>Suppresses the display of first extension line (DIMSE1 system variable).</source>
-        <translation>पहली एक्सटेंशन लाइन (DIMSE1 प्रणाली चर) के प्रदर्शन को दबाता है।.</translation>
+        <translation>पहली विस्तार रेखा (DIMSE1 प्रणाली चर) के प्रदर्शन को दबाता है।</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="272"/>
@@ -9233,7 +9233,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="321"/>
         <source>Suppresses the display of second extension line (DIMSE2 system variable).</source>
-        <translation>दूसरे एक्सटेंशन लाइन (DIMSE2 सिस्टम चर) के प्रदर्शन को दबा देता है।.</translation>
+        <translation>दूसरी विस्तार रेखा का प्रदर्शन दबाता है (DIMSE2 प्रणाली चर)।</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="324"/>
@@ -9284,7 +9284,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="486"/>
         <source>Determines the angle of the transverse segment of the dimension line in a jogged radius dimension. (DIMJOGANG system variable)</source>
-        <translation>एक जॉग त्रिज्या आयाम में आयाम लाइन के अनुप्रस्थ खंड के कोण को निर्धारित करता है। (DIMJOGANG प्रणाली चर)</translation>
+        <translation>एक जॉग त्रिज्या आयाम में आयाम रेखा के अनुप्रस्थ खंड के कोण को निर्धारित करता है। (DIMJOGANG प्रणाली चर)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="505"/>
@@ -9309,17 +9309,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="518"/>
         <source>Sets the arrowhead for the first dimension line. When you change the first arrowhead type, the second arrowhead automatically changes to match it. (DIMBLK1 system variable)</source>
-        <translation>पहले आयाम लाइन के लिए तीरहेड सेट करता है। जब आप पहला तीरहेड प्रकार बदलते हैं, तो दूसरा तीरहेड स्वचालित रूप से इसे मैच करने में बदल जाता है। (DIMBLK1 प्रणाली चर)</translation>
+        <translation>पहली आयाम रेखा के लिए तीरहेड सेट करता है। जब आप पहला तीरहेड प्रकार बदलते हैं, तो दूसरा तीरहेड स्वचालित रूप से उससे मेल खाने के लिए बदल जाता है। (DIMBLK1 प्रणाली चर)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="588"/>
         <source>Sets the arrowhead for the second dimension line. (DIMBLK2 system variable)</source>
-        <translation>दूसरे आयाम लाइन के लिए तीरहेड सेट करता है। (DIMBLK2 प्रणाली चर)</translation>
+        <translation>दूसरी आयाम रेखा के लिए तीरहेड सेट करता है। (DIMBLK2 प्रणाली चर)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="570"/>
         <source>Use the same arrowhead for dimension line</source>
-        <translation>आयाम लाइन के लिए एक ही तीरहेड का उपयोग करें</translation>
+        <translation>आयाम रेखा के लिए एक ही तीरहेड का उपयोग करें</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="546"/>
@@ -9354,12 +9354,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="624"/>
         <source>Arc length symbol</source>
-        <translation>आर्क लंबाई प्रतीक</translation>
+        <translation>चाप लंबाई प्रतीक</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="630"/>
         <source>Suppresses the display of arc length symbols. (DIMARCSYM system variable)</source>
-        <translation>आर्क लंबाई प्रतीकों के प्रदर्शन को दबाने। (DIMARCSYM प्रणाली चर)</translation>
+        <translation>चाप लंबाई प्रतीकों का प्रदर्शन दबाता है। (DIMARCSYM प्रणाली चर)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="633"/>
@@ -9391,7 +9391,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="663"/>
         <source>Centermarks</source>
-        <translation>सेंटरमार्क</translation>
+        <translation>केंद्र चिह्न</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="669"/>
@@ -9533,12 +9533,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="911"/>
         <source>Aligns text with the dimension line when text is inside the extension lines, but aligns it horizontally when text is outside the extension lines (DIMTIH and DIMTOH system variables).</source>
-        <translation>जब पाठ एक्सटेंशन लाइनों के अंदर होता है तो आयाम रेखा के साथ पाठ को संरेखित करता है, लेकिन इसे क्षैतिज रूप से संरेखित करता है जब पाठ विस्तार लाइनों (DIMTIH और DIMTOH प्रणाली चर) के बाहर होता है।.</translation>
+        <translation>जब पाठ विस्तार रेखाओं के अंदर होता है तो पाठ को आयाम रेखा के साथ संरेखित करता है, लेकिन जब पाठ विस्तार रेखाओं के बाहर होता है तो उसे क्षैतिज रूप से संरेखित करता है (DIMTIH और DIMTOH प्रणाली चर)।</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="904"/>
         <source>Aligned with dimension line</source>
-        <translation>आयाम लाइन के साथ संरेखित</translation>
+        <translation>आयाम रेखा के साथ संरेखित</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="150"/>
@@ -9593,7 +9593,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="961"/>
         <source>Controls the horizontal placement of dimension text along the dimension line, in relation to the extension lines. (DIMJUST system variable)</source>
-        <translation>एक्सटेंशन लाइनों के संबंध में आयाम रेखा के साथ आयाम पाठ के क्षैतिज प्लेसमेंट को नियंत्रित करता है। (DIMJUST)</translation>
+        <translation>विस्तार रेखाओं के संबंध में आयाम रेखा के साथ आयाम पाठ के क्षैतिज प्लेसमेंट को नियंत्रित करता है। (DIMJUST)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="965"/>
@@ -9740,7 +9740,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1185"/>
         <source>If selected, dimension lines are not moved when text is moved. If text is moved away from the dimension line, a leader line is created connecting the text to the dimension line. The leader line is omitted when text is too close to the dimension line. (DIMTMOVE system variable)</source>
-        <translation>यदि चयन किया जाता है, तो टेक्स्ट को स्थानांतरित होने पर आयाम रेखाएं नहीं की जाती हैं। यदि पाठ को आयाम रेखा से दूर ले जाया जाता है, तो एक लीडर लाइन पाठ को आयाम रेखा से जोड़ती है। जब पाठ आयाम लाइन के बहुत करीब है तो लीडर लाइन को छोड़ दिया जाता है। (DiMTMOVE)</translation>
+        <translation>यदि चयनित है, तो पाठ को स्थानांतरित करने पर आयाम रेखाएँ स्थानांतरित नहीं होतीं। यदि पाठ को आयाम रेखा से दूर ले जाया जाता है, तो पाठ को आयाम रेखा से जोड़ने वाली एक लीडर रेखा बनाई जाती है। जब पाठ आयाम रेखा के बहुत निकट होता है तो लीडर रेखा नहीं बनाई जाती। (DIMTMOVE प्रणाली चर)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1188"/>
@@ -9770,7 +9770,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1240"/>
         <source>If there isn&apos;t enough room to place both text and arrow inside extension lines, the first thing to move outside the extension lines is:</source>
-        <translation>यदि एक्सटेंशन लाइनों के अंदर पाठ और तीर दोनों को रखने के लिए पर्याप्त कमरा नहीं है, तो एक्सटेंशन लाइनों के बाहर जाने वाली पहली चीज है:</translation>
+        <translation>यदि विस्तार रेखाओं के अंदर पाठ और तीर दोनों रखने के लिए पर्याप्त स्थान नहीं है, तो विस्तार रेखाओं के बाहर सबसे पहले ले जाया जाएगा:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1250"/>
@@ -9780,12 +9780,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1253"/>
         <source>Suppress arrows if they don&apos;t fit inside extension lines</source>
-        <translation>यदि वे एक्सटेंशन लाइनों के अंदर फिट नहीं हैं तो दबाना तीर</translation>
+        <translation>यदि तीर विस्तार रेखाओं के अंदर फिट न हों तो उन्हें दबाएँ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1260"/>
         <source>When not enough space is available for text and arrowheads, moves both outside the extension lines (DIMATFIT system variable).</source>
-        <translation>जब पाठ और तीरहेड्स के लिए पर्याप्त स्थान उपलब्ध नहीं है, तो एक्सटेंशन लाइनों (DIMATFIT सिस्टम चर) के बाहर दोनों को स्थानांतरित करता है।.</translation>
+        <translation>जब पाठ और तीरहेड्स के लिए पर्याप्त स्थान उपलब्ध नहीं है, तो विस्तार रेखाओं (DIMATFIT सिस्टम चर) के बाहर दोनों को स्थानांतरित करता है।</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1263"/>
@@ -9795,7 +9795,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1270"/>
         <source>Moves either the text or the arrowheads outside the extension lines based on the best fit (DIMATFIT system variable).</source>
-        <translation>या तो सबसे अच्छा फिट (DIMATFIT प्रणाली चर) के आधार पर एक्सटेंशन लाइनों के बाहर पाठ या तीरहेड ले जाता है।.</translation>
+        <translation>या तो सबसे अच्छा फिट (DIMATFIT प्रणाली चर) के आधार पर विस्तार रेखाओं के बाहर पाठ या तीरहेड ले जाता है।</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1273"/>
@@ -9805,7 +9805,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1280"/>
         <source>Moves arrowheads outside the extension lines first, then text (DIMATFIT system variable).</source>
-        <translation>पहले एक्सटेंशन लाइनों के बाहर तीरहेड ले जाता है, फिर टेक्स्ट (DIMATFIT सिस्टम वेरिएबल)।.</translation>
+        <translation>पहले विस्तार रेखाओं के बाहर तीरहेड ले जाता है, फिर टेक्स्ट (DIMATFIT सिस्टम वेरिएबल)।</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1283"/>
@@ -9815,12 +9815,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1290"/>
         <source>Moves text outside the extension lines first, then arrowheads (DIMATFIT system variable).</source>
-        <translation>पहले एक्सटेंशन लाइनों के बाहर पाठ ले जाता है, फिर तीरहेड्स (DIMATFIT सिस्टम वेरिएबल)।.</translation>
+        <translation>पहले विस्तार रेखाओं के बाहर पाठ ले जाता है, फिर तीरहेड्स (DIMATFIT सिस्टम वेरिएबल)।</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1300"/>
         <source>Always places text between extension lines. (DIMTIX system variable)</source>
-        <translation>हमेशा एक्सटेंशन लाइनों के बीच पाठ को स्थान देता है। (DIMTIX) प्रणाली चर</translation>
+        <translation>हमेशा विस्तार रेखाओं के बीच पाठ को स्थान देता है। (DIMTIX) प्रणाली चर</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1303"/>
@@ -9975,7 +9975,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1530"/>
         <source>&apos;,&apos; (Comma)</source>
-        <translation>&apos;, (अल्पविराम)</translation>
+        <translation>&apos;,&apos; (अल्पविराम)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1538"/>
@@ -10404,7 +10404,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="301"/>
         <source>Override entity&apos;s style</source>
-        <translation>ओवरराइड इकाई की शैली</translation>
+        <translation>एंटिटी की शैली ओवरराइड करें</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="318"/>
@@ -10466,7 +10466,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="457"/>
         <source>Indicates whether style is overriden for specific entity (and so is unique for it).</source>
-        <translation>इंगित करता है कि विशिष्ट इकाई के लिए शैली अतिरंजित है (और इसलिए इसके लिए अद्वितीय है)।.</translation>
+        <translation>इंगित करता है कि विशिष्ट एंटिटी के लिए शैली ओवरराइड की गई है या नहीं (और इसलिए उसके लिए अद्वितीय है)।</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="499"/>
@@ -10496,7 +10496,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="415"/>
         <source>Name of style for this dimension entity</source>
-        <translation>इस आयाम इकाई के लिए शैली का नाम</translation>
+        <translation>इस आयाम एंटिटी के लिए शैली का नाम</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="470"/>
@@ -10562,7 +10562,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="175"/>
         <source>Arc Dimension</source>
-        <translation>आर्क आयाम</translation>
+        <translation>चाप आयाम</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="181"/>
@@ -10619,37 +10619,37 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="581"/>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="608"/>
         <source>&amp;Select Style</source>
-        <translation>और चयन शैली</translation>
+        <translation>शैली चुनें (&amp;S)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="586"/>
         <source>&amp;Set as Active</source>
-        <translation>और Active के रूप में सेट करें</translation>
+        <translation>सक्रिय के रूप में सेट करें (&amp;S)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="590"/>
         <source>&amp;Create override</source>
-        <translation>और बनाएँ ओवरराइड</translation>
+        <translation>ओवरराइड बनाएँ (&amp;C)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="594"/>
         <source>&amp;View Style</source>
-        <translation>और देखें</translation>
+        <translation>शैली देखें (&amp;V)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="597"/>
         <source>&amp;Edit override</source>
-        <translation>और एडिट ओवरराइड</translation>
+        <translation>ओवरराइड संपादित करें (&amp;E)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="598"/>
         <source>&amp;Save As Style</source>
-        <translation>और शैली के रूप में सहेजें</translation>
+        <translation>शैली के रूप में सहेजें (&amp;S)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="599"/>
         <source>&amp;Remove Override</source>
-        <translation>और निकालें ओवरराइड</translation>
+        <translation>ओवरराइड हटाएँ (&amp;R)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="603"/>
@@ -10660,7 +10660,7 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="604"/>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="611"/>
         <source>&amp;Import Styles</source>
-        <translation>और आयात शैलियाँ</translation>
+        <translation>शैलियाँ आयात करें (&amp;I)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="664"/>
@@ -10698,7 +10698,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.ui" line="98"/>
         <source>Layer of entity</source>
-        <translation>इकाई की परत</translation>
+        <translation>एंटिटी की परत</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="148"/>
@@ -10708,7 +10708,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="175"/>
         <source>Point Properties</source>
-        <translation>प्वाइंट गुण</translation>
+        <translation>बिंदु गुण</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="181"/>
@@ -10718,7 +10718,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="187"/>
         <source>Arc Properties</source>
-        <translation>आर्क गुण</translation>
+        <translation>चाप गुण</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="193"/>
@@ -10728,7 +10728,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="199"/>
         <source>Ellipse Properties</source>
-        <translation>गुण</translation>
+        <translation>दीर्घवृत्त गुण</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="205"/>
@@ -10748,7 +10748,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="223"/>
         <source>Spline Properties</source>
-        <translation>स्पलीन गुण</translation>
+        <translation>स्प्लाइन गुण</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="229"/>
@@ -11000,7 +11000,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.ui" line="163"/>
         <source>Entity Context</source>
-        <translation>इकाई संदर्भ</translation>
+        <translation>एंटिटी संदर्भ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.ui" line="169"/>
@@ -11010,7 +11010,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.ui" line="176"/>
         <source>Defines the context for menu and whether click on specific entity will trigger menu invocation. </source>
-        <translation>मेनू के लिए संदर्भ को परिभाषित करें और क्या विशिष्ट इकाई पर क्लिक करने से मेनू चालान शुरू हो जाएगा।.</translation>
+        <translation>मेनू का संदर्भ परिभाषित करता है और यह भी कि विशिष्ट एंटिटी पर क्लिक करने से मेनू खुलेगा या नहीं। </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.ui" line="186"/>
@@ -11105,17 +11105,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="107"/>
         <source>Either Absent or Any Entity</source>
-        <translation>किसी भी तरह की किसी भी इकाई</translation>
+        <translation>अनुपस्थित या कोई भी एंटिटी</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="108"/>
         <source>Absent Entity</source>
-        <translation>अनुपस्थित इकाई</translation>
+        <translation>अनुपस्थित एंटिटी</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="109"/>
         <source>Any Entity</source>
-        <translation>कोई इकाई</translation>
+        <translation>कोई एंटिटी</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="110"/>
@@ -11125,12 +11125,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="111"/>
         <source>Circle</source>
-        <translation>सर्कल</translation>
+        <translation>वृत्त</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="112"/>
         <source>Arc</source>
-        <translation>आर्क</translation>
+        <translation>चाप</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="113"/>
@@ -11140,7 +11140,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="114"/>
         <source>Spline</source>
-        <translation>स्पलीन</translation>
+        <translation>स्प्लाइन</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="115"/>
@@ -11150,7 +11150,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="116"/>
         <source>Ellipse</source>
-        <translation>Ellipse</translation>
+        <translation>दीर्घवृत्त</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="117"/>
@@ -11205,7 +11205,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="127"/>
         <source>Dimension Arc</source>
-        <translation>आयाम आर्क</translation>
+        <translation>आयाम चाप</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="128"/>
@@ -12509,7 +12509,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_widget_creator.ui" line="179"/>
         <source>&lt;</source>
-        <translation>प्रमाणन</translation>
+        <translation>&lt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_widget_creator.ui" line="268"/>
@@ -12867,7 +12867,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_widget.ui" line="76"/>
         <source>If checked, bounding box for the entire selection will be created. Otherwise, it will be created for individual entities. </source>
-        <translation type="unfinished">यदि जांच की जाती है, तो पूरे चयन के लिए बाउंडिंग बॉक्स बनाया जाएगा। अन्यथा, इसे अलग-अलग इकाइयों के लिए बनाया जाएगा। </translation>
+        <translation type="unfinished">यदि चेक किया गया है, तो पूरे चयन के लिए बाउंडिंग बॉक्स बनाया जाएगा। अन्यथा, इसे अलग-अलग एंटिटीज़ के लिए बनाया जाएगा। </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_widget.ui" line="79"/>
@@ -12900,7 +12900,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_filler.cpp" line="40"/>
         <source>Horizontal offset of duplicate from original entity</source>
-        <translation type="unfinished">मूल इकाई से डुप्लिकेट की क्षैतिज ऑफसेट</translation>
+        <translation type="unfinished">मूल एंटिटी से डुप्लिकेट की क्षैतिज ऑफसेट</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_filler.cpp" line="48"/>
@@ -12910,7 +12910,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_filler.cpp" line="48"/>
         <source>Vertical offset of duplicate from original entity</source>
-        <translation type="unfinished">मूल इकाई से डुप्लिकेट की ऊर्ध्वाधर ऑफसेट</translation>
+        <translation type="unfinished">मूल एंटिटी से डुप्लिकेट की ऊर्ध्वाधर ऑफसेट</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_filler.cpp" line="59"/>
@@ -13015,12 +13015,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="103"/>
         <source>Horizontal offset of duplicate from original entity</source>
-        <translation type="unfinished">मूल इकाई से डुप्लिकेट की क्षैतिज ऑफसेट</translation>
+        <translation type="unfinished">मूल एंटिटी से डुप्लिकेट की क्षैतिज ऑफसेट</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="122"/>
         <source>Vertical offset of duplicate from original entity</source>
-        <translation type="unfinished">मूल इकाई से डुप्लिकेट की ऊर्ध्वाधर ऑफसेट</translation>
+        <translation type="unfinished">मूल एंटिटी से डुप्लिकेट की ऊर्ध्वाधर ऑफसेट</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="129"/>
@@ -13136,12 +13136,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse_1point_options_widget.ui" line="71"/>
         <source>Length of minor radius of ellipse</source>
-        <translation type="unfinished">अंडाकार त्रिज्या की लंबाई</translation>
+        <translation type="unfinished">दीर्घवृत्त की लघु त्रिज्या की लंबाई</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse_1point_options_widget.ui" line="90"/>
         <source>Length of major radius of ellipse</source>
-        <translation type="unfinished">अंडाकार की प्रमुख त्रिज्या की लंबाई</translation>
+        <translation type="unfinished">दीर्घवृत्त की दीर्घ त्रिज्या की लंबाई</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse_1point_options_widget.ui" line="97"/>
@@ -13217,7 +13217,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/curve/lc_ellipse_arc_options_widget.ui" line="26"/>
         <source>Arc Options</source>
-        <translation type="unfinished">आर्क विकल्प</translation>
+        <translation type="unfinished">चाप विकल्प</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_ellipse_arc_options_widget.ui" line="56"/>
@@ -13275,7 +13275,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_ellipse.ui" line="176"/>
         <source>Radius of major axis of ellipse</source>
-        <translation>एलीप्स के प्रमुख अक्ष के त्रिज्या</translation>
+        <translation>दीर्घवृत्त के दीर्घ अक्ष की त्रिज्या</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_ellipse.ui" line="183"/>
@@ -13312,7 +13312,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_ellipse.ui" line="277"/>
         <source>Rotation angle for the major axis of ellipse, degrees</source>
-        <translation>अंडाकार, डिग्री के प्रमुख अक्ष के लिए रोटेशन कोण</translation>
+        <translation>दीर्घवृत्त के दीर्घ अक्ष का घूर्णन कोण, डिग्री</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_ellipse.ui" line="284"/>
@@ -13352,7 +13352,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_ellipse.ui" line="408"/>
         <source>Defines whether arc is reversed</source>
-        <translation>यह परिभाषित करता है कि आर्क उलट है या नहीं</translation>
+        <translation>यह परिभाषित करता है कि चाप उलट है या नहीं</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_ellipse.ui" line="411"/>
@@ -13380,12 +13380,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="80"/>
         <source>Circle</source>
-        <translation type="unfinished">सर्कल</translation>
+        <translation type="unfinished">वृत्त</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="81"/>
         <source>Arc</source>
-        <translation type="unfinished">आर्क</translation>
+        <translation type="unfinished">चाप</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="82"/>
@@ -13405,7 +13405,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="85"/>
         <source>Spline</source>
-        <translation type="unfinished">स्पलीन</translation>
+        <translation type="unfinished">स्प्लाइन</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="86"/>
@@ -13415,7 +13415,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="87"/>
         <source>Ellipse</source>
-        <translation type="unfinished">Ellipse</translation>
+        <translation type="unfinished">दीर्घवृत्त</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="88"/>
@@ -13465,7 +13465,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="97"/>
         <source>Dimension Arc</source>
-        <translation type="unfinished">आयाम आर्क</translation>
+        <translation type="unfinished">आयाम चाप</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="98"/>
@@ -13684,7 +13684,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="168"/>
         <source>Layer of entity</source>
-        <translation type="unfinished">इकाई की परत</translation>
+        <translation type="unfinished">एंटिटी की परत</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="204"/>
@@ -14079,7 +14079,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_hyperbola.ui" line="160"/>
         <source>Foci &amp; Point on Curve (Alternative Editing)</source>
-        <translation>फोसी एंड प्वाइंट ऑन कर्व (वैकल्पिक संपादन)</translation>
+        <translation>नाभियाँ और वक्र पर बिंदु (वैकल्पिक संपादन)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_hyperbola.ui" line="166"/>
@@ -14351,12 +14351,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/info/lc_info_dist_point_to_entity_options_filler.cpp" line="33"/>
         <source>Snap On Entity</source>
-        <translation type="unfinished">इकाई पर स्नैप</translation>
+        <translation type="unfinished">एंटिटी पर स्नैप</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/info/lc_info_dist_point_to_entity_options_filler.cpp" line="33"/>
         <source>If checked, the point will be always inside selected entity</source>
-        <translation type="unfinished">यदि जांच की जाती है, तो बिंदु हमेशा चयनित इकाई के अंदर होगा</translation>
+        <translation type="unfinished">यदि चेक किया गया है, तो बिंदु हमेशा चयनित एंटिटी के अंदर होगा</translation>
     </message>
 </context>
 <context>
@@ -14369,12 +14369,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/info/lc_info_dist_point_to_entity_options_widget.ui" line="32"/>
         <source>If checked, the point will be always inside selected entity</source>
-        <translation type="unfinished">यदि जांच की जाती है, तो बिंदु हमेशा चयनित इकाई के अंदर होगा</translation>
+        <translation type="unfinished">यदि चेक किया गया है, तो बिंदु हमेशा चयनित एंटिटी के अंदर होगा</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/info/lc_info_dist_point_to_entity_options_widget.ui" line="35"/>
         <source>Snap On Entity</source>
-        <translation type="unfinished">इकाई पर स्नैप</translation>
+        <translation type="unfinished">एंटिटी पर स्नैप</translation>
     </message>
 </context>
 <context>
@@ -14578,7 +14578,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="132"/>
         <source>Layer with alternate position of entities located on normal layers</source>
-        <translation>सामान्य परतों पर स्थित इकाइयों की वैकल्पिक स्थिति वाली परत</translation>
+        <translation>सामान्य परतों पर स्थित एंटिटीज़ की वैकल्पिक स्थिति वाली परत</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="135"/>
@@ -14589,7 +14589,7 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="148"/>
         <source>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
        The contents of a Construction Layer should not appear in printout.</source>
-        <translation>निर्माण परत में अनंत सीधी रेखाओं की इकाइयां होती हैं, जिनका उपयोग ज्यामितीय निर्माण के लिए किया जाता है।
+        <translation>निर्माण परत में अनंत सीधी रेखाओं की एंटिटीज़ होती हैं, जिनका उपयोग ज्यामितीय निर्माण के लिए किया जाता है।
 निर्माण परत की सामग्री प्रिंटआउट में दिखाई नहीं देनी चाहिए।</translation>
     </message>
     <message>
@@ -14675,12 +14675,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="83"/>
         <source>If checked, entities will be stored in original layer. Otherwise, they are placed to layer &quot;0&quot;.</source>
-        <translation>यदि चेक किया गया है, तो इकाइयां मूल परत में संग्रहीत की जाएंगी। अन्यथा, उन्हें परत &quot;0&quot; में रखा जाएगा।</translation>
+        <translation>यदि चेक किया गया है, तो एंटिटीज़ मूल परत में संग्रहीत की जाएंगी। अन्यथा, उन्हें परत &quot;0&quot; में रखा जाएगा।</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="89"/>
         <source>Retain original layer for entities</source>
-        <translation>इकाइयों के लिए मूल परत बनाए रखें</translation>
+        <translation>एंटिटीज़ के लिए मूल परत बनाए रखें</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/layers/lc_layerexportoptions.ui" line="96"/>
@@ -15148,7 +15148,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="663"/>
         <source>&amp;Select Entities (Sub-Tree)</source>
-        <translation>इकाइयां चुनें (उप-वृक्ष) (&amp;S)</translation>
+        <translation>एंटिटीज़ चुनें (उप-वृक्ष) (&amp;S)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="668"/>
@@ -15206,7 +15206,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="723"/>
         <source>&amp;Select Layer&apos;s Entities</source>
-        <translation>परत की इकाइयां चुनें (&amp;S)</translation>
+        <translation>परत की एंटिटीज़ चुनें (&amp;S)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="774"/>
@@ -15383,7 +15383,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_filler.cpp" line="86"/>
         <source>Snap point for position of intersection point between created line and source entity (within original line)</source>
-        <translation type="unfinished">बनाई गई लाइन और स्रोत इकाई के बीच प्रतिच्छेदन बिंदु की स्थिति के लिए स्नैप बिंदु (मूल लाइन के भीतर)</translation>
+        <translation type="unfinished">बनाई गई लाइन और स्रोत एंटिटी के बीच प्रतिच्छेदन बिंदु की स्थिति के लिए स्नैप बिंदु (मूल लाइन के भीतर)</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_filler.cpp" line="98"/>
@@ -15411,7 +15411,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_widget.ui" line="81"/>
         <source>Snap Point:</source>
-        <translation type="unfinished">स्नैप प्वाइंट:</translation>
+        <translation type="unfinished">स्नैप बिंदु:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_widget.ui" line="113"/>
@@ -15534,7 +15534,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="52"/>
         <source>If checked, angle is relative to angle of selected entity</source>
-        <translation type="unfinished">यदि जांच की जाती है, तो कोण चयनित इकाई के कोण के सापेक्ष होता है</translation>
+        <translation type="unfinished">यदि चेक किया गया है, तो कोण चयनित एंटिटी के कोण के सापेक्ष होता है</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="63"/>
@@ -15567,7 +15567,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="73"/>
         <source>Snap point for position of intersection point between created line and source entity (within original line)</source>
-        <translation type="unfinished">बनाई गई लाइन और स्रोत इकाई के बीच प्रतिच्छेदन बिंदु की स्थिति के लिए स्नैप बिंदु (मूल लाइन के भीतर)</translation>
+        <translation type="unfinished">बनाई गई लाइन और स्रोत एंटिटी के बीच प्रतिच्छेदन बिंदु की स्थिति के लिए स्नैप बिंदु (मूल लाइन के भीतर)</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="80"/>
@@ -15602,7 +15602,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="108"/>
         <source>If checked, original entity will be divided by intersection point.</source>
-        <translation type="unfinished">यदि जांच की जाती है, तो मूल इकाई को प्रतिच्छेदन बिंदु पर विभाजित किया जाएगा।</translation>
+        <translation type="unfinished">यदि चेक किया गया है, तो मूल एंटिटी को प्रतिच्छेदन बिंदु पर विभाजित किया जाएगा।</translation>
     </message>
 </context>
 <context>
@@ -15620,7 +15620,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="57"/>
         <source>Snap point for position of intersection point between created line and source entity (within original line)</source>
-        <translation type="unfinished">बनाई गई लाइन और स्रोत इकाई के बीच प्रतिच्छेदन बिंदु की स्थिति के लिए स्नैप बिंदु (मूल लाइन के भीतर)</translation>
+        <translation type="unfinished">बनाई गई लाइन और स्रोत एंटिटी के बीच प्रतिच्छेदन बिंदु की स्थिति के लिए स्नैप बिंदु (मूल लाइन के भीतर)</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="61"/>
@@ -15654,7 +15654,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="122"/>
         <source>If checked, original entity will be divided by intersection point.</source>
-        <translation type="unfinished">यदि जांच की जाती है, तो मूल इकाई को प्रतिच्छेदन बिंदु पर विभाजित किया जाएगा।</translation>
+        <translation type="unfinished">यदि चेक किया गया है, तो मूल एंटिटी को प्रतिच्छेदन बिंदु पर विभाजित किया जाएगा।</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="125"/>
@@ -15674,7 +15674,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="146"/>
         <source>If checked, angle is relative to angle of selected entity</source>
-        <translation type="unfinished">यदि जांच की जाती है, तो कोण चयनित इकाई के कोण के सापेक्ष होता है</translation>
+        <translation type="unfinished">यदि चेक किया गया है, तो कोण चयनित एंटिटी के कोण के सापेक्ष होता है</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="149"/>
@@ -15888,7 +15888,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="88"/>
         <source>Snap point for created line</source>
-        <translation type="unfinished">निर्मित लाइन के लिए स्नैप प्वाइंट</translation>
+        <translation type="unfinished">निर्मित लाइन के लिए स्नैप बिंदु</translation>
     </message>
 </context>
 <context>
@@ -15921,7 +15921,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="120"/>
         <source>Snap point for created line</source>
-        <translation type="unfinished">निर्मित लाइन के लिए स्नैप प्वाइंट</translation>
+        <translation type="unfinished">निर्मित लाइन के लिए स्नैप बिंदु</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="124"/>
@@ -16052,7 +16052,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="56"/>
         <source>Snap point for gap on the line</source>
-        <translation type="unfinished">लाइन पर अंतर के लिए स्नैप प्वाइंट</translation>
+        <translation type="unfinished">लाइन पर अंतर के लिए स्नैप बिंदु</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="63"/>
@@ -16062,7 +16062,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="63"/>
         <source>Distance from snap point</source>
-        <translation type="unfinished">स्नैप प्वाइंट से दूरी</translation>
+        <translation type="unfinished">स्नैप बिंदु से दूरी</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="80"/>
@@ -16072,7 +16072,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="80"/>
         <source>Snap point of gap to line snap point</source>
-        <translation type="unfinished">स्नैप प्वाइंट ऑफ गैप टू लाइन स्नैप पॉइंट</translation>
+        <translation type="unfinished">रेखा के स्नैप बिंदु के सापेक्ष अंतराल का स्नैप बिंदु</translation>
     </message>
 </context>
 <context>
@@ -16085,7 +16085,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="32"/>
         <source>Snap point of gap to line snap point</source>
-        <translation type="unfinished">स्नैप प्वाइंट ऑफ गैप टू लाइन स्नैप पॉइंट</translation>
+        <translation type="unfinished">रेखा के स्नैप बिंदु के सापेक्ष अंतराल का स्नैप बिंदु</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="36"/>
@@ -16118,7 +16118,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="68"/>
         <source>Snap point for gap on the line</source>
-        <translation type="unfinished">लाइन पर अंतर के लिए स्नैप प्वाइंट</translation>
+        <translation type="unfinished">लाइन पर अंतर के लिए स्नैप बिंदु</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="72"/>
@@ -16172,7 +16172,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="177"/>
         <source>Distance from snap point</source>
-        <translation type="unfinished">स्नैप प्वाइंट से दूरी</translation>
+        <translation type="unfinished">स्नैप बिंदु से दूरी</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="184"/>
@@ -16222,7 +16222,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="48"/>
         <source>Policy for the line was selected second</source>
-        <translation type="unfinished">लाइन के लिए नीति को दूसरी बार चुना गया था</translation>
+        <translation type="unfinished">दूसरी चुनी गई रेखा के लिए नीति</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="58"/>
@@ -16242,7 +16242,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="65"/>
         <source>Defines how pen should be applied to created entities</source>
-        <translation type="unfinished">यह परिभाषित करता है कि कैसे पेन को बनाया गया इकाइयों पर लागू किया जाना चाहिए</translation>
+        <translation type="unfinished">यह परिभाषित करता है कि बनाई गई एंटिटीज़ पर पेन कैसे लागू किया जाए</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="78"/>
@@ -16285,7 +16285,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="66"/>
         <source>Policy for the line was selected second</source>
-        <translation type="unfinished">लाइन के लिए नीति को दूसरी बार चुना गया था</translation>
+        <translation type="unfinished">दूसरी चुनी गई रेखा के लिए नीति</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="70"/>
@@ -16323,7 +16323,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="160"/>
         <source>Defines how pen should be applied to created entities</source>
-        <translation type="unfinished">यह परिभाषित करता है कि कैसे पेन को बनाया गया इकाइयों पर लागू किया जाना चाहिए</translation>
+        <translation type="unfinished">यह परिभाषित करता है कि बनाई गई एंटिटीज़ पर पेन कैसे लागू किया जाए</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="164"/>
@@ -16348,7 +16348,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="187"/>
         <source>Attributes:</source>
-        <translation type="unfinished">गुण:</translation>
+        <translation type="unfinished">विशेषताएँ:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="207"/>
@@ -16452,7 +16452,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_parallel_options_filler.cpp" line="31"/>
         <source>Distance to original entity</source>
-        <translation type="unfinished">मूल इकाई की दूरी</translation>
+        <translation type="unfinished">मूल एंटिटी की दूरी</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_parallel_options_filler.cpp" line="37"/>
@@ -16480,7 +16480,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_parallel_options_widget.ui" line="72"/>
         <source>Distance to original entity</source>
-        <translation type="unfinished">मूल इकाई की दूरी</translation>
+        <translation type="unfinished">मूल एंटिटी की दूरी</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_parallel_options_widget.ui" line="79"/>
@@ -16528,7 +16528,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_parallel_through_options_filler.cpp" line="45"/>
         <source>If checked, parallels will be created on both sides of entity</source>
-        <translation type="unfinished">यदि जांच की जाती है, तो समानांतर इकाई के दोनों किनारों पर बनाया जाएगा</translation>
+        <translation type="unfinished">यदि चेक किया गया है, तो एंटिटी के दोनों ओर समानांतर बनाए जाएँगे</translation>
     </message>
 </context>
 <context>
@@ -16551,7 +16551,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_parallel_through_options_widget.ui" line="101"/>
         <source>If checked, parallels will be created on both sides of entity</source>
-        <translation type="unfinished">यदि जांच की जाती है, तो समानांतर इकाई के दोनों किनारों पर बनाया जाएगा</translation>
+        <translation type="unfinished">यदि चेक किया गया है, तो एंटिटी के दोनों ओर समानांतर बनाए जाएँगे</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_parallel_through_options_widget.ui" line="104"/>
@@ -17341,7 +17341,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_arc.cpp" line="29"/>
         <source>Arc</source>
-        <translation type="unfinished">आर्क</translation>
+        <translation type="unfinished">चाप</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_arc.cpp" line="34"/>
@@ -17583,7 +17583,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_circle.cpp" line="29"/>
         <source>Circle</source>
-        <translation type="unfinished">सर्कल</translation>
+        <translation type="unfinished">वृत्त</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_circle.cpp" line="33"/>
@@ -17623,7 +17623,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_circle.cpp" line="45"/>
         <source>Diameter of circle</source>
-        <translation type="unfinished">सर्कल का व्यास</translation>
+        <translation type="unfinished">वृत्त का व्यास</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_circle.cpp" line="49"/>
@@ -17748,7 +17748,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimarc.cpp" line="29"/>
         <source>Dimension Arc</source>
-        <translation type="unfinished">आयाम आर्क</translation>
+        <translation type="unfinished">आयाम चाप</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimarc.cpp" line="34"/>
@@ -18217,7 +18217,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="397"/>
         <source>Arc length symbol</source>
-        <translation type="unfinished">आर्क लंबाई प्रतीक</translation>
+        <translation type="unfinished">चाप लंबाई प्रतीक</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="399"/>
@@ -19310,7 +19310,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_ellipse.cpp" line="29"/>
         <source>Ellipse</source>
-        <translation type="unfinished">Ellipse</translation>
+        <translation type="unfinished">दीर्घवृत्त</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_ellipse.cpp" line="33"/>
@@ -20482,7 +20482,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_spline.cpp" line="30"/>
         <source>Spline</source>
-        <translation type="unfinished">स्पलीन</translation>
+        <translation type="unfinished">स्प्लाइन</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_spline.cpp" line="35"/>
@@ -20864,12 +20864,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="151"/>
         <source>Circle</source>
-        <translation type="unfinished">सर्कल</translation>
+        <translation type="unfinished">वृत्त</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="155"/>
         <source>Arc</source>
-        <translation type="unfinished">आर्क</translation>
+        <translation type="unfinished">चाप</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="159"/>
@@ -20879,12 +20879,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="162"/>
         <source>Polyline/Spline</source>
-        <translation type="unfinished">पॉलीलाइन / स्पलीन</translation>
+        <translation type="unfinished">पॉलीलाइन / स्प्लाइन</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="173"/>
         <source>Ellipse</source>
-        <translation type="unfinished">Ellipse</translation>
+        <translation type="unfinished">दीर्घवृत्त</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="177"/>
@@ -20946,7 +20946,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="412"/>
         <source>&amp;File</source>
-        <translation type="unfinished">&amp;File</translation>
+        <translation type="unfinished">फ़ाइल (&amp;F)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="424"/>
@@ -20966,7 +20966,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="477"/>
         <source>&amp;Named Views</source>
-        <translation type="unfinished">औरनामित दृश्य</translation>
+        <translation type="unfinished">नामित दृश्य (&amp;N)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="507"/>
@@ -21012,7 +21012,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="667"/>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="722"/>
         <source>Draw Circle</source>
-        <translation type="unfinished">ड्रा सर्कल</translation>
+        <translation type="unfinished">वृत्त बनाएँ</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="629"/>
@@ -21032,7 +21032,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="705"/>
         <source>Modify Arc</source>
-        <translation type="unfinished">आर्क संशोधित करें</translation>
+        <translation type="unfinished">चाप संशोधित करें</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="763"/>
@@ -21092,17 +21092,17 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="126"/>
         <source>&amp;Wiki</source>
-        <translation type="unfinished">और विक्की</translation>
+        <translation type="unfinished">विकी (&amp;W)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="127"/>
         <source>User&apos;s &amp;Manual</source>
-        <translation type="unfinished">उपयोगकर्ता और मैनुअल</translation>
+        <translation type="unfinished">उपयोगकर्ता पुस्तिका (&amp;M)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="128"/>
         <source>&amp;Commands</source>
-        <translation type="unfinished">और कमांड</translation>
+        <translation type="unfinished">कमांड (&amp;C)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="129"/>
@@ -21113,7 +21113,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="131"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="430"/>
         <source>Wid&amp;gets</source>
-        <translation type="unfinished">Wid&amp;gets</translation>
+        <translation type="unfinished">विजेट (&amp;G)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="135"/>
@@ -21123,12 +21123,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="142"/>
         <source>&amp;Forum</source>
-        <translation type="unfinished">और फोरम</translation>
+        <translation type="unfinished">फ़ोरम (&amp;F)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="143"/>
         <source>Zulip &amp;Chat</source>
-        <translation type="unfinished">Zulip &amp; Chat</translation>
+        <translation type="unfinished">Zulip चैट (&amp;C)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="145"/>
@@ -21153,14 +21153,14 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="158"/>
         <source>&amp;Donate</source>
-        <translation type="unfinished">और Donate</translation>
+        <translation type="unfinished">दान करें (&amp;D)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="174"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="212"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="246"/>
         <source>&amp;Line</source>
-        <translation type="unfinished">और लाइन</translation>
+        <translation type="unfinished">रेखा (&amp;L)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="178"/>
@@ -21174,21 +21174,21 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="214"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="248"/>
         <source>&amp;Circle</source>
-        <translation type="unfinished">Circle</translation>
+        <translation type="unfinished">वृत्त (&amp;C)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="186"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="215"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="250"/>
         <source>&amp;Arc</source>
-        <translation type="unfinished">और आर्क</translation>
+        <translation type="unfinished">चाप (&amp;A)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="190"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="217"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="252"/>
         <source>Poly&amp;gon</source>
-        <translation type="unfinished">Poly&amp;gon</translation>
+        <translation type="unfinished">बहुभुज (&amp;G)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="194"/>
@@ -21200,14 +21200,14 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="198"/>
         <source>Ellip&amp;se</source>
-        <translation type="unfinished">Ellip</translation>
+        <translation type="unfinished">दीर्घवृत्त (&amp;S)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="202"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="221"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="258"/>
         <source>&amp;Polyline</source>
-        <translation type="unfinished">&amp;Polyline</translation>
+        <translation type="unfinished">पॉलीलाइन (&amp;P)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="206"/>
@@ -21229,7 +21229,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="223"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="265"/>
         <source>Ot&amp;her</source>
-        <translation type="unfinished">Ot&amp;her</translation>
+        <translation type="unfinished">अन्य (&amp;H)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="228"/>
@@ -21246,13 +21246,13 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="234"/>
         <source>&amp;Dimensions</source>
-        <translation type="unfinished">और आयाम</translation>
+        <translation type="unfinished">आयाम (&amp;D)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="238"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="269"/>
         <source>&amp;Info</source>
-        <translation type="unfinished">Info</translation>
+        <translation type="unfinished">जानकारी (&amp;I)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="244"/>
@@ -21262,12 +21262,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="263"/>
         <source>Dime&amp;nsion</source>
-        <translation type="unfinished">Dime&amp;nsion</translation>
+        <translation type="unfinished">आयाम (&amp;N)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="276"/>
         <source>&amp;File</source>
-        <translation type="unfinished">&amp;File</translation>
+        <translation type="unfinished">फ़ाइल (&amp;F)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="284"/>
@@ -21292,7 +21292,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="336"/>
         <source>&amp;Edit</source>
-        <translation type="unfinished">Edit</translation>
+        <translation type="unfinished">संपादन (&amp;E)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="357"/>
@@ -21302,12 +21302,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="386"/>
         <source>&amp;Views Restore</source>
-        <translation type="unfinished">&amp;Views पुनर्स्थापित</translation>
+        <translation type="unfinished">दृश्य पुनर्स्थापना (&amp;V)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="399"/>
         <source>Pl&amp;ugins</source>
-        <translation type="unfinished">Pl&amp;ugins</translation>
+        <translation type="unfinished">प्लगइन (&amp;U)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="405"/>
@@ -21327,17 +21327,17 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="458"/>
         <source>CAD Wid&amp;gets</source>
-        <translation type="unfinished">सीएडी Wid&amp;gets</translation>
+        <translation type="unfinished">CAD विजेट (&amp;G)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="483"/>
         <source>&amp;Toolbars</source>
-        <translation type="unfinished">और टूलबार</translation>
+        <translation type="unfinished">टूलबार (&amp;T)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="504"/>
         <source>&amp;CAD Toolbars</source>
-        <translation type="unfinished">और सीएडी टूलबार</translation>
+        <translation type="unfinished">CAD टूलबार (&amp;C)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="581"/>
@@ -21352,12 +21352,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="593"/>
         <source>&amp;Window mode</source>
-        <translation type="unfinished">&amp;Window</translation>
+        <translation type="unfinished">विंडो मोड (&amp;W)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="598"/>
         <source>&amp;Layout</source>
-        <translation type="unfinished">और लेआउट</translation>
+        <translation type="unfinished">लेआउट (&amp;L)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="602"/>
@@ -21392,7 +21392,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="632"/>
         <source>&amp;Arrange</source>
-        <translation type="unfinished">और व्यवस्था</translation>
+        <translation type="unfinished">व्यवस्थित करें (&amp;A)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="636"/>
@@ -21407,17 +21407,17 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="641"/>
         <source>&amp;Tile</source>
-        <translation type="unfinished">&amp; टाइल</translation>
+        <translation type="unfinished">टाइल करें (&amp;T)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="642"/>
         <source>Tile &amp;Vertically</source>
-        <translation type="unfinished">टाइल और लंबवत</translation>
+        <translation type="unfinished">लंबवत टाइल करें (&amp;V)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="643"/>
         <source>Tile &amp;Horizontally</source>
-        <translation type="unfinished">टाइल &amp; क्षैतिज</translation>
+        <translation type="unfinished">क्षैतिज टाइल करें (&amp;H)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="690"/>
@@ -21528,12 +21528,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_options_widget.ui" line="150"/>
         <source>Defines the way of selected entities alignment.</source>
-        <translation>चयनित इकाइयों के संरेखण का तरीका परिभाषित करता है।</translation>
+        <translation>चयनित एंटिटीज़ के संरेखण का तरीका परिभाषित करता है।</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_options_widget.ui" line="154"/>
         <source>Entity</source>
-        <translation>इकाई</translation>
+        <translation>एंटिटी</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_options_widget.ui" line="159"/>
@@ -21548,7 +21548,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_options_widget.ui" line="172"/>
         <source>If selected, relative positions of entities within selection will be unchanged. Otherwise, each entity will be positioned individually.</source>
-        <translation>यदि चयन किया जाता है, तो चयन के भीतर इकाइयों की सापेक्ष स्थिति अपरिवर्तित रहेगी। अन्यथा, प्रत्येक इकाई को अलग से स्थित किया जाएगा।</translation>
+        <translation>यदि चयन किया जाता है, तो चयन के भीतर एंटिटीज़ की सापेक्ष स्थिति अपरिवर्तित रहेगी। अन्यथा, प्रत्येक एंटिटी को अलग से स्थित किया जाएगा।</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_options_widget.ui" line="175"/>
@@ -21568,7 +21568,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_options_widget.ui" line="230"/>
         <source>Center entities vertically</source>
-        <translation>इकाइयों को ऊर्ध्वाधर रूप से केंद्रित करें</translation>
+        <translation>एंटिटीज़ को ऊर्ध्वाधर रूप से केंद्रित करें</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_options_widget.ui" line="250"/>
@@ -21591,7 +21591,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="32"/>
         <source>If checked, mirror will be performed by selected line entity.</source>
-        <translation type="unfinished">यदि जांच की जाती है, तो दर्पण को चयनित लाइन इकाई द्वारा किया जाएगा।.</translation>
+        <translation type="unfinished">यदि चेक किया गया है, तो चयनित रेखा एंटिटी के सापेक्ष मिरर किया जाएगा।</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="35"/>
@@ -21601,7 +21601,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="42"/>
         <source>If unchecked, original entities will be removed, otherwise they will survive.</source>
-        <translation type="unfinished">यदि अनचेक किया गया है तो मूल इकाइयों को हटा दिया जाएगा, अन्यथा वे बनी रहेंगी।</translation>
+        <translation type="unfinished">यदि अनचेक किया गया है तो मूल एंटिटीज़ को हटा दिया जाएगा, अन्यथा वे बनी रहेंगी।</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="45"/>
@@ -21611,7 +21611,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="59"/>
         <source>If checked, current attributes will be used for mirrored entities, otherwise - original ones. </source>
-        <translation type="unfinished">यदि जांच की जाती है, तो प्रतिबिंबित इकाइयों के लिए वर्तमान विशेषताओं का उपयोग किया जाएगा, अन्यथा - मूल विशेषताओं का। </translation>
+        <translation type="unfinished">यदि चेक किया गया है, तो प्रतिबिंबित एंटिटीज़ के लिए वर्तमान विशेषताओं का उपयोग किया जाएगा, अन्यथा - मूल विशेषताओं का। </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="62"/>
@@ -21621,7 +21621,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="82"/>
         <source>If checked, mirrored entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">यदि चेक किया गया है, तो मिरर की गई इकाइयां वर्तमान परत में रखी जाएंगी, अन्यथा उन्हें मूल परतों में रखा जाएगा।</translation>
+        <translation type="unfinished">यदि चेक किया गया है, तो मिरर की गई एंटिटीज़ वर्तमान परत में रखी जाएंगी, अन्यथा उन्हें मूल परतों में रखा जाएगा।</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="85"/>
@@ -21692,7 +21692,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_widget.ui" line="45"/>
         <source>If checked, created entities will be placed to current layer. Otherwise, they will be placed into original layers. </source>
-        <translation type="unfinished">यदि चेक किया गया है, तो बनाई गई इकाइयां वर्तमान परत में रखी जाएंगी। अन्यथा, उन्हें मूल परतों में रखा जाएगा। </translation>
+        <translation type="unfinished">यदि चेक किया गया है, तो बनाई गई एंटिटीज़ वर्तमान परत में रखी जाएंगी। अन्यथा, उन्हें मूल परतों में रखा जाएगा। </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_widget.ui" line="48"/>
@@ -21707,7 +21707,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_widget.ui" line="68"/>
         <source>If checked, current attributes will be applied to created entities, owtherwise original ones will be used. </source>
-        <translation type="unfinished">यदि जांच की जाती है, तो वर्तमान विशेषताएँ बनाई गई इकाइयों पर लागू की जाएंगी, अन्यथा मूल विशेषताओं का उपयोग किया जाएगा। </translation>
+        <translation type="unfinished">यदि चेक किया गया है, तो वर्तमान विशेषताएँ बनाई गई एंटिटीज़ पर लागू की जाएंगी, अन्यथा मूल विशेषताओं का उपयोग किया जाएगा। </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_widget.ui" line="71"/>
@@ -21717,7 +21717,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_widget.ui" line="78"/>
         <source>If checked, original entities will survive, otherwise they will be removed.</source>
-        <translation type="unfinished">यदि जांच की जाती है, तो मूल इकाई जीवित रह जाएगी, अन्यथा उन्हें हटाया जाएगा।.</translation>
+        <translation type="unfinished">यदि चेक किया गया है, तो मूल एंटिटीज़ बनी रहेंगी, अन्यथा उन्हें हटा दिया जाएगा।</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_widget.ui" line="81"/>
@@ -21828,7 +21828,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="50"/>
         <source>If checked, current attributes will be applied to created entities, otherwise original ones will be used. </source>
-        <translation type="unfinished">यदि जांच की जाती है, तो वर्तमान विशेषताएँ बनाई गई इकाइयों पर लागू की जाएंगी, अन्यथा मूल विशेषताओं का उपयोग किया जाएगा। </translation>
+        <translation type="unfinished">यदि चेक किया गया है, तो वर्तमान विशेषताएँ बनाई गई एंटिटीज़ पर लागू की जाएंगी, अन्यथा मूल विशेषताओं का उपयोग किया जाएगा। </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="53"/>
@@ -21843,7 +21843,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="80"/>
         <source>If checked, original entities will survive, otherwise they will be removed. </source>
-        <translation type="unfinished">यदि जांच की जाती है, तो मूल इकाई जीवित रह जाएगी, अन्यथा उन्हें हटाया जाएगा।.</translation>
+        <translation type="unfinished">यदि चेक किया गया है, तो मूल एंटिटीज़ बनी रहेंगी, अन्यथा उन्हें हटा दिया जाएगा। </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="83"/>
@@ -21878,7 +21878,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="144"/>
         <source>If checked, created entities will be placed into current layer, otherwise the will be in original layers. </source>
-        <translation type="unfinished">यदि चेक किया गया है, तो बनाई गई इकाइयां वर्तमान परत में रखी जाएंगी, अन्यथा वे मूल परतों में रहेंगी। </translation>
+        <translation type="unfinished">यदि चेक किया गया है, तो बनाई गई एंटिटीज़ वर्तमान परत में रखी जाएंगी, अन्यथा वे मूल परतों में रहेंगी। </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="147"/>
@@ -22031,7 +22031,7 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="479"/>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="493"/>
         <source>&amp;Add View</source>
-        <translation>और देखें</translation>
+        <translation>दृश्य जोड़ें (&amp;A)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="475"/>
@@ -22041,7 +22041,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="482"/>
         <source>&amp;Restore View</source>
-        <translation>और पुनर्स्थापित देखें</translation>
+        <translation>दृश्य पुनर्स्थापित करें (&amp;R)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="483"/>
@@ -22062,7 +22062,7 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="487"/>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="499"/>
         <source>Remove A&amp;ll Views</source>
-        <translation>A&amp;ll दृश्य निकालें</translation>
+        <translation>सभी दृश्य हटाएँ (&amp;L)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="611"/>
@@ -22129,7 +22129,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="384"/>
         <source>Center Y: </source>
-        <translation>सेंटर वाई:</translation>
+        <translation>केंद्र Y: </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="385"/>
@@ -22208,7 +22208,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_filler.cpp" line="41"/>
         <source>Distance for offset from original entity</source>
-        <translation type="unfinished">मूल इकाई से ऑफसेट के लिए दूरी</translation>
+        <translation type="unfinished">मूल एंटिटी से ऑफसेट के लिए दूरी</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_filler.cpp" line="49"/>
@@ -22286,7 +22286,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="93"/>
         <source>If checked, created entities will be placed into current layer, otherwise they will be in original layers.</source>
-        <translation type="unfinished">यदि चेक किया गया है, तो बनाई गई इकाइयां वर्तमान परत में रखी जाएंगी, अन्यथा वे मूल परतों में रहेंगी।</translation>
+        <translation type="unfinished">यदि चेक किया गया है, तो बनाई गई एंटिटीज़ वर्तमान परत में रखी जाएंगी, अन्यथा वे मूल परतों में रहेंगी।</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="96"/>
@@ -22306,7 +22306,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="119"/>
         <source>If checked, current attributes will be applied to created entities, otherwise original ones will be used. </source>
-        <translation type="unfinished">यदि जांच की जाती है, तो वर्तमान विशेषताएँ बनाई गई इकाइयों पर लागू की जाएंगी, अन्यथा मूल विशेषताओं का उपयोग किया जाएगा। </translation>
+        <translation type="unfinished">यदि चेक किया गया है, तो वर्तमान विशेषताएँ बनाई गई एंटिटीज़ पर लागू की जाएंगी, अन्यथा मूल विशेषताओं का उपयोग किया जाएगा। </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="122"/>
@@ -22316,7 +22316,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="136"/>
         <source>If checked, original entities will survive, otherwise they will be removed. </source>
-        <translation type="unfinished">यदि जांच की जाती है, तो मूल इकाई जीवित रह जाएगी, अन्यथा उन्हें हटाया जाएगा।.</translation>
+        <translation type="unfinished">यदि चेक किया गया है, तो मूल एंटिटीज़ बनी रहेंगी, अन्यथा उन्हें हटा दिया जाएगा। </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="139"/>
@@ -22326,7 +22326,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="158"/>
         <source>Distance for offset from original entity</source>
-        <translation type="unfinished">मूल इकाई से ऑफसेट के लिए दूरी</translation>
+        <translation type="unfinished">मूल एंटिटी से ऑफसेट के लिए दूरी</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="172"/>
@@ -22388,7 +22388,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_to_points_options_filler.cpp" line="31"/>
         <source>Rotation angle for pasted entities</source>
-        <translation type="unfinished">चिपकाई गई इकाइयों के लिए रोटेशन कोण</translation>
+        <translation type="unfinished">चिपकाई गई एंटिटीज़ के लिए रोटेशन कोण</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_to_points_options_filler.cpp" line="37"/>
@@ -22398,7 +22398,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_to_points_options_filler.cpp" line="37"/>
         <source>Scale factor for pasted entities</source>
-        <translation type="unfinished">चिपकाई गई इकाइयों के लिए स्केल फैक्टर</translation>
+        <translation type="unfinished">चिपकाई गई एंटिटीज़ के लिए स्केल फैक्टर</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_to_points_options_filler.cpp" line="45"/>
@@ -22408,7 +22408,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_to_points_options_filler.cpp" line="46"/>
         <source>If selected, the point entity used as insertion point will be deleted after paste operation. Otherwise, it will survive.</source>
-        <translation type="unfinished">यदि चुना जाता है, तो बिंदु इकाई को सम्मिलन बिंदु के रूप में इस्तेमाल किया जाता है, पेस्ट ऑपरेशन के बाद हटा दिया जाएगा। अन्यथा, यह जीवित रहेगा।.</translation>
+        <translation type="unfinished">यदि चयनित है, तो सम्मिलन बिंदु के रूप में प्रयुक्त बिंदु एंटिटी पेस्ट ऑपरेशन के बाद हटा दी जाएगी। अन्यथा, वह बनी रहेगी।</translation>
     </message>
 </context>
 <context>
@@ -22421,7 +22421,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_to_points_options_widget.ui" line="73"/>
         <source>Rotation angle for pasted entities</source>
-        <translation type="unfinished">चिपकाई गई इकाइयों के लिए रोटेशन कोण</translation>
+        <translation type="unfinished">चिपकाई गई एंटिटीज़ के लिए रोटेशन कोण</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_to_points_options_widget.ui" line="87"/>
@@ -22431,7 +22431,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_to_points_options_widget.ui" line="101"/>
         <source>If selected, the point entity used as insertion point will be deleted after paste operation. Otherwise, it will survive.</source>
-        <translation type="unfinished">यदि चुना जाता है, तो बिंदु इकाई को सम्मिलन बिंदु के रूप में इस्तेमाल किया जाता है, पेस्ट ऑपरेशन के बाद हटा दिया जाएगा। अन्यथा, यह जीवित रहेगा।.</translation>
+        <translation type="unfinished">यदि चयनित है, तो सम्मिलन बिंदु के रूप में प्रयुक्त बिंदु एंटिटी पेस्ट ऑपरेशन के बाद हटा दी जाएगी। अन्यथा, वह बनी रहेगी।</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_to_points_options_widget.ui" line="104"/>
@@ -22446,7 +22446,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_to_points_options_widget.ui" line="136"/>
         <source>Scale factor for pasted entities</source>
-        <translation type="unfinished">चिपकाई गई इकाइयों के लिए स्केल फैक्टर</translation>
+        <translation type="unfinished">चिपकाई गई एंटिटीज़ के लिए स्केल फैक्टर</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_to_points_options_widget.ui" line="143"/>
@@ -22464,7 +22464,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_filler.cpp" line="32"/>
         <source>Rotation angle for pasted entities</source>
-        <translation type="unfinished">चिपकाई गई इकाइयों के लिए रोटेशन कोण</translation>
+        <translation type="unfinished">चिपकाई गई एंटिटीज़ के लिए रोटेशन कोण</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_filler.cpp" line="36"/>
@@ -22474,7 +22474,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_filler.cpp" line="36"/>
         <source>Scale factor for pasted entities</source>
-        <translation type="unfinished">चिपकाई गई इकाइयों के लिए स्केल फैक्टर</translation>
+        <translation type="unfinished">चिपकाई गई एंटिटीज़ के लिए स्केल फैक्टर</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_filler.cpp" line="42"/>
@@ -22557,7 +22557,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_widget.ui" line="50"/>
         <source>Rotation angle for pasted entities</source>
-        <translation type="unfinished">चिपकाई गई इकाइयों के लिए रोटेशन कोण</translation>
+        <translation type="unfinished">चिपकाई गई एंटिटीज़ के लिए रोटेशन कोण</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_widget.ui" line="57"/>
@@ -22572,7 +22572,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_widget.ui" line="85"/>
         <source>Spacing between entities insertion points in rows. </source>
-        <translation type="unfinished">पंक्तियों में इकाइयों सम्मिलन बिंदुओं के बीच अंतर।.</translation>
+        <translation type="unfinished">पंक्तियों में एंटिटीज़ सम्मिलन बिंदुओं के बीच अंतर। </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_widget.ui" line="92"/>
@@ -22602,7 +22602,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_widget.ui" line="193"/>
         <source>Scale factor for pasted entities</source>
-        <translation type="unfinished">चिपकाई गई इकाइयों के लिए स्केल फैक्टर</translation>
+        <translation type="unfinished">चिपकाई गई एंटिटीज़ के लिए स्केल फैक्टर</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_widget.ui" line="200"/>
@@ -22627,7 +22627,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_widget.ui" line="260"/>
         <source>Spacing between insertion points of entities in columns.</source>
-        <translation type="unfinished">स्तंभों में इकाइयों के सम्मिलन बिंदुओं के बीच अंतर।</translation>
+        <translation type="unfinished">स्तंभों में एंटिटीज़ के सम्मिलन बिंदुओं के बीच अंतर।</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_widget.ui" line="267"/>
@@ -23231,7 +23231,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="280"/>
         <source>Show info message if no entities may be selected by pen</source>
-        <translation>यदि कोई इकाई पेन द्वारा चुना जा सकता है तो जानकारी संदेश दिखाएं</translation>
+        <translation>यदि पेन द्वारा कोई एंटिटी नहीं चुनी जा सकती तो सूचना संदेश दिखाएँ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="162"/>
@@ -23246,12 +23246,12 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.cpp" line="53"/>
         <source>Select entities by attributes pen</source>
-        <translation>विशेषता पेन द्वारा इकाइयों का चयन करें</translation>
+        <translation>विशेषता पेन द्वारा एंटिटीज़ का चयन करें</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.cpp" line="54"/>
         <source>Select entities by drawing pen</source>
-        <translation>ड्राइंग पेन द्वारा इकाइयों का चयन करें</translation>
+        <translation>ड्राइंग पेन द्वारा एंटिटीज़ का चयन करें</translation>
     </message>
 </context>
 <context>
@@ -23264,22 +23264,22 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="49"/>
         <source>Fill Pen Editor by Entity Drawing Pen</source>
-        <translation>इकाई ड्रॉइंग पेन द्वारा पेन संपादक भरें</translation>
+        <translation>एंटिटी ड्रॉइंग पेन द्वारा पेन संपादक भरें</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="66"/>
         <source>Fill Pen Editor by Entity Attributes</source>
-        <translation>इकाई के एट्रिब्यूट्स द्वारा पेन संपादक भरें</translation>
+        <translation>एंटिटी की विशेषताओं द्वारा पेन संपादक भरें</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="83"/>
         <source>Select Entities By Drawing Pen</source>
-        <translation>ड्राइंग पेन द्वारा इकाईयों का चयन करें</translation>
+        <translation>ड्राइंग पेन द्वारा एंटिटीज़ का चयन करें</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="100"/>
         <source>Select Entities By Pen Attributes</source>
-        <translation>इकाईयों का चयन करके पेन एट्रिब्यूट्स</translation>
+        <translation>पेन विशेषताओं द्वारा एंटिटीज़ का चयन करें</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="120"/>
@@ -23405,7 +23405,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="303"/>
         <source>&amp;Apply Pen To Selection</source>
-        <translation>&amp;Apply pen to choose</translation>
+        <translation>चयन पर पेन लागू करें (&amp;A)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="304"/>
@@ -23420,17 +23420,17 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="306"/>
         <source>&amp;Select Entities With Attributes Pen</source>
-        <translation>एट्रिब्यूट्स पेन वाली इकाइयाँ चुनें (&amp;S)</translation>
+        <translation>विशेषता पेन वाली एंटिटीज़ चुनें (&amp;S)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="308"/>
         <source>&amp;Select Entities With Drawing Pen</source>
-        <translation>ड्राइंग पेन वाली इकाइयाँ चुनें (&amp;S)</translation>
+        <translation>ड्राइंग पेन वाली एंटिटीज़ चुनें (&amp;S)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="312"/>
         <source>&amp;Edit Pen</source>
-        <translation>और एडिट पेन</translation>
+        <translation>पेन संपादित करें (&amp;E)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="313"/>
@@ -23763,7 +23763,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_options_widget.ui" line="126"/>
         <source>If checked, the polygon will be drawn as polyline. Otherwise, individual entities will be created. </source>
-        <translation type="unfinished">यदि जांच की जाती है, तो बहुभुज को पॉलीलाइन के रूप में बनाया जाएगा। अन्यथा, अलग-अलग इकाइयाँ बनाई जाएंगी। </translation>
+        <translation type="unfinished">यदि चेक किया गया है, तो बहुभुज को पॉलीलाइन के रूप में बनाया जाएगा। अन्यथा, अलग-अलग एंटिटीज़ बनाई जाएंगी। </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_options_widget.ui" line="129"/>
@@ -23870,7 +23870,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_filler.cpp" line="39"/>
         <source>Arc</source>
-        <translation type="unfinished">आर्क</translation>
+        <translation type="unfinished">चाप</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_filler.cpp" line="43"/>
@@ -23978,17 +23978,17 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_widget.ui" line="100"/>
         <source>Tangential arc</source>
-        <translation type="unfinished">टेंगेंशियल आर्क</translation>
+        <translation type="unfinished">स्पर्शी चाप</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_widget.ui" line="120"/>
         <source>Tangental arc with fixed radius</source>
-        <translation type="unfinished">निश्चित त्रिज्या के साथ टैंगेंटल आर्क</translation>
+        <translation type="unfinished">निश्चित त्रिज्या वाला स्पर्शी चाप</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_widget.ui" line="140"/>
         <source>Tangental arc with fixed angle</source>
-        <translation type="unfinished">निश्चित कोण के साथ टेंगेंटल आर्क</translation>
+        <translation type="unfinished">निश्चित कोण वाला स्पर्शी चाप</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_widget.ui" line="160"/>
@@ -24624,7 +24624,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="81"/>
         <source>Arc Length</source>
-        <translation type="unfinished">आर्क लंबाई</translation>
+        <translation type="unfinished">चाप लंबाई</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="81"/>
@@ -24836,7 +24836,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="158"/>
         <source>Tangent (P,C)</source>
-        <translation type="unfinished">टैंगेंट (P, C)</translation>
+        <translation type="unfinished">स्पर्शरेखा (P, C)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="158"/>
@@ -24846,7 +24846,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="159"/>
         <source>Tangent (C,C)</source>
-        <translation type="unfinished">टैंगेंट (C, C)</translation>
+        <translation type="unfinished">स्पर्शरेखा (C, C)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="159"/>
@@ -25072,7 +25072,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="43"/>
         <source>Diameter of circle</source>
-        <translation type="unfinished">सर्कल का व्यास</translation>
+        <translation type="unfinished">वृत्त का व्यास</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="49"/>
@@ -25225,7 +25225,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="93"/>
         <source>Tangent (P,C)</source>
-        <translation type="unfinished">टैंगेंट (P, C)</translation>
+        <translation type="unfinished">स्पर्शरेखा (P, C)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="93"/>
@@ -25235,7 +25235,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="94"/>
         <source>Tangent (C,C)</source>
-        <translation type="unfinished">टैंगेंट (C, C)</translation>
+        <translation type="unfinished">स्पर्शरेखा (C, C)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="94"/>
@@ -26031,7 +26031,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="707"/>
         <source>Arc length symbol</source>
-        <translation type="unfinished">आर्क लंबाई प्रतीक</translation>
+        <translation type="unfinished">चाप लंबाई प्रतीक</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="719"/>
@@ -27246,7 +27246,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_ellipse.cpp" line="126"/>
         <source>Tangent (P,C)</source>
-        <translation type="unfinished">टैंगेंट (P, C)</translation>
+        <translation type="unfinished">स्पर्शरेखा (P, C)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_ellipse.cpp" line="126"/>
@@ -27256,7 +27256,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_ellipse.cpp" line="127"/>
         <source>Tangent (C,C)</source>
-        <translation type="unfinished">टैंगेंट (C, C)</translation>
+        <translation type="unfinished">स्पर्शरेखा (C, C)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_ellipse.cpp" line="131"/>
@@ -28990,7 +28990,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="179"/>
         <source>Centerline</source>
-        <translation type="unfinished">सेंटरलाइन</translation>
+        <translation type="unfinished">केंद्र रेखा</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="179"/>
@@ -29664,7 +29664,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_polyline.cpp" line="126"/>
         <source>Spline</source>
-        <translation type="unfinished">स्पलीन</translation>
+        <translation type="unfinished">स्प्लाइन</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_polyline.cpp" line="126"/>
@@ -30058,7 +30058,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="115"/>
         <source>Tangent (P,C)</source>
-        <translation type="unfinished">टैंगेंट (P, C)</translation>
+        <translation type="unfinished">स्पर्शरेखा (P, C)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="115"/>
@@ -30597,7 +30597,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="856"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="869"/>
         <source>POLYLINE</source>
-        <translation>पोलीलाइन</translation>
+        <translation>पॉलीलाइन</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="666"/>
@@ -31324,7 +31324,7 @@ Layer: </source>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1256"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1272"/>
         <source>SPLINE</source>
-        <translation>स्पलीन</translation>
+        <translation>स्प्लाइन</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1258"/>
@@ -31370,7 +31370,7 @@ Layer: </source>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1555"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1568"/>
         <source>Feature Point</source>
-        <translation>फ़ीचर प्वाइंट</translation>
+        <translation>फ़ीचर बिंदु</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1281"/>
@@ -31381,7 +31381,7 @@ Layer: </source>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1321"/>
         <source>Spline Point </source>
-        <translation>स्प्लिन पॉइंट</translation>
+        <translation>स्प्लाइन बिंदु </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1328"/>
@@ -31471,7 +31471,7 @@ Layer: </source>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1415"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1434"/>
         <source>Arc Length</source>
-        <translation>आर्क लंबाई</translation>
+        <translation>चाप लंबाई</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1446"/>
@@ -31515,7 +31515,7 @@ Layer: </source>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1578"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1594"/>
         <source>Extension Point 1</source>
-        <translation>एक्सटेंशन प्वाइंट 1</translation>
+        <translation>एक्सटेंशन बिंदु 1</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1525"/>
@@ -31523,7 +31523,7 @@ Layer: </source>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1579"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1595"/>
         <source>Extension Point 2</source>
-        <translation>एक्सटेंशन प्वाइंट 2</translation>
+        <translation>एक्सटेंशन बिंदु 2</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1557"/>
@@ -31564,7 +31564,7 @@ Layer: </source>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1556"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1569"/>
         <source>Leader End Point</source>
-        <translation>लीडर एंड पॉइंट</translation>
+        <translation>लीडर अंत बिंदु</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1526"/>
@@ -31632,7 +31632,7 @@ Layer: </source>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.ui" line="61"/>
         <source>Select entity for properties</source>
-        <translation>गुणों के लिए इकाई चुनें</translation>
+        <translation>गुणों के लिए एंटिटी चुनें</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.ui" line="64"/>
@@ -31648,7 +31648,7 @@ Layer: </source>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.ui" line="75"/>
         <source>Select current entity in drawing</source>
-        <translation>ड्राइंग में वर्तमान इकाई का चयन करें</translation>
+        <translation>ड्राइंग में वर्तमान एंटिटी का चयन करें</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.ui" line="89"/>
@@ -31728,13 +31728,13 @@ P, li { white-space: pre-wrap; }
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="377"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="387"/>
         <source>&amp;To Cmd</source>
-        <translation>Cmd</translation>
+        <translation>कमांड में (&amp;T)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="366"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="380"/>
         <source>&amp;Set Relative Zero</source>
-        <translation>और सेट सापेक्ष शून्य</translation>
+        <translation>सापेक्ष शून्य सेट करें (&amp;S)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="369"/>
@@ -31749,12 +31749,12 @@ P, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="392"/>
         <source>&amp;Clear</source>
-        <translation>और साफ़</translation>
+        <translation>साफ़ करें (&amp;C)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="393"/>
         <source>&amp;Select Entity</source>
-        <translation>और चुनें इकाई</translation>
+        <translation>एंटिटी चुनें (&amp;S)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="396"/>
@@ -31764,7 +31764,7 @@ P, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="397"/>
         <source>&amp;Edit Properties</source>
-        <translation>&amp;Edit गुण</translation>
+        <translation>गुण संपादित करें (&amp;E)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="399"/>
@@ -31779,7 +31779,7 @@ P, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="786"/>
         <source>No data - select entity of coordinates first...</source>
-        <translation>कोई डेटा नहीं - पहले निर्देशांक की इकाई का चयन करें ...</translation>
+        <translation>कोई डेटा नहीं - पहले निर्देशांक की एंटिटी का चयन करें ...</translation>
     </message>
 </context>
 <context>
@@ -31817,7 +31817,7 @@ P, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="75"/>
         <source>Entity Info</source>
-        <translation>इकाई जानकारी</translation>
+        <translation>एंटिटी जानकारी</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="81"/>
@@ -31827,47 +31827,47 @@ P, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="84"/>
         <source>Include polyline child entities information to vertexes</source>
-        <translation>वर्टेक्स में पॉलीलाइन की चाइल्ड इकाइयों की जानकारी शामिल करें</translation>
+        <translation>वर्टेक्स में पॉलीलाइन की चाइल्ड एंटिटीज़ की जानकारी शामिल करें</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="91"/>
         <source>If selected, coordinates of boundary box area for the entity will be also shown</source>
-        <translation>यदि चुना गया है, तो इकाई के सीमा बॉक्स क्षेत्र के निर्देशांक भी दिखाए जाएंगे</translation>
+        <translation>यदि चुना गया है, तो एंटिटी के सीमा बॉक्स क्षेत्र के निर्देशांक भी दिखाए जाएंगे</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="94"/>
         <source>Display entity boundaries (Min, Max) coordinates</source>
-        <translation>प्रदर्शन इकाई सीमाओं (न्यूनतम, मैक्स) निर्देशांक</translation>
+        <translation>एंटिटी की सीमाओं के (न्यूनतम, अधिकतम) निर्देशांक दिखाएँ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="104"/>
         <source>Entity Selection</source>
-        <translation>इकाई चयन</translation>
+        <translation>एंटिटी चयन</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="116"/>
         <source>Entity under cursor will be examined only if CTRL is pressed and no active action</source>
-        <translation>कर्सर के तहत इकाई की जांच केवल तभी की जाएगी जब CTRL दबाया जाता है और कोई सक्रिय कार्रवाई नहीं होती है।</translation>
+        <translation>कर्सर के तहत एंटिटी की जांच केवल तभी की जाएगी जब CTRL दबाया जाता है और कोई सक्रिय कार्रवाई नहीं होती है।</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="119"/>
         <source>Select entity under cursor if not active action and CTRL is pressed</source>
-        <translation>कर्सर के तहत इकाई का चयन करें अगर सक्रिय कार्रवाई नहीं है और CTRL दबाया जाता है</translation>
+        <translation>कोई सक्रिय क्रिया न होने और CTRL दबाए जाने पर कर्सर के नीचे की एंटिटी चुनें</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="126"/>
         <source>If selected, entities under mouse cursor will be examined for theif settings, if there is no active action</source>
-        <translation>यदि चयनित है, तो कोई सक्रिय क्रिया न होने पर माउस कर्सर के नीचे की इकाइयों की सेटिंग्स की जांच की जाएगी</translation>
+        <translation>यदि चयनित है, तो कोई सक्रिय क्रिया न होने पर माउस कर्सर के नीचे की एंटिटीज़ की सेटिंग्स की जांच की जाएगी</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="129"/>
         <source>Always select entity under cursor if no active action</source>
-        <translation>हमेशा कर्सर के तहत इकाई का चयन करें अगर कोई सक्रिय कार्रवाई नहीं है</translation>
+        <translation>कोई सक्रिय क्रिया न होने पर हमेशा कर्सर के नीचे की एंटिटी चुनें</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.cpp" line="44"/>
         <source>Points highlight pen</source>
-        <translation>पॉइंट्स हाइलाइट पेन</translation>
+        <translation>बिंदु हाइलाइट पेन</translation>
     </message>
 </context>
 <context>
@@ -32138,7 +32138,7 @@ P, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="258"/>
         <source>If checked, specified height and width of rectangle defines distance between centers of arcs for rounding corners. Otherwise, these values defines outer size of the rectangle.</source>
-        <translation type="unfinished">यदि जांच, निर्दिष्ट ऊंचाई और आयत की चौड़ाई राउंडिंग कोनों के लिए आर्क के केंद्रों के बीच दूरी को परिभाषित करती है। अन्यथा, ये मान आयत के बाहरी आकार को परिभाषित करते हैं।.</translation>
+        <translation type="unfinished">यदि चेक किया गया है, तो आयत की निर्दिष्ट ऊँचाई और चौड़ाई कोनों को गोल करने वाले चापों के केंद्रों के बीच की दूरी परिभाषित करती है। अन्यथा, ये मान आयत का बाहरी आकार परिभाषित करते हैं।</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="261"/>
@@ -32198,7 +32198,7 @@ P, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="388"/>
         <source>If checked, specifies that snap point should be shifted by radius of corners.</source>
-        <translation type="unfinished">यदि जांच की जाती है, तो निर्दिष्ट करें कि स्नैप प्वाइंट को कोनों की त्रिज्या द्वारा स्थानांतरित किया जाना चाहिए।.</translation>
+        <translation type="unfinished">यदि चेक किया गया है, तो निर्दिष्ट करें कि स्नैप बिंदु को कोनों की त्रिज्या द्वारा स्थानांतरित किया जाना चाहिए।</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="391"/>
@@ -32468,7 +32468,7 @@ P, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="318"/>
         <source>If checked, specifies that snap points should be shifted by radius of corners.</source>
-        <translation type="unfinished">यदि जांच की जाती है, तो निर्दिष्ट करें कि स्नैप पॉइंट को कोनों की त्रिज्या द्वारा स्थानांतरित किया जाना चाहिए।.</translation>
+        <translation type="unfinished">यदि चेक किया गया है, तो निर्दिष्ट करें कि स्नैप बिंदु को कोनों की त्रिज्या द्वारा स्थानांतरित किया जाना चाहिए।</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="321"/>
@@ -32629,7 +32629,7 @@ P, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="248"/>
         <source>If checked, specifies that snap points should be shifted by radius of corners.</source>
-        <translation type="unfinished">यदि जांच की जाती है, तो निर्दिष्ट करें कि स्नैप पॉइंट को कोनों की त्रिज्या द्वारा स्थानांतरित किया जाना चाहिए।.</translation>
+        <translation type="unfinished">यदि चेक किया गया है, तो निर्दिष्ट करें कि स्नैप बिंदु को कोनों की त्रिज्या द्वारा स्थानांतरित किया जाना चाहिए।</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="251"/>
@@ -32802,7 +32802,7 @@ P, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_abstract_options_filler.cpp" line="86"/>
         <source>If checked, specifies that snap point should be shifted by radius of corners.</source>
-        <translation type="unfinished">यदि जांच की जाती है, तो निर्दिष्ट करें कि स्नैप प्वाइंट को कोनों की त्रिज्या द्वारा स्थानांतरित किया जाना चाहिए।.</translation>
+        <translation type="unfinished">यदि चेक किया गया है, तो निर्दिष्ट करें कि स्नैप बिंदु को कोनों की त्रिज्या द्वारा स्थानांतरित किया जाना चाहिए।</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_abstract_options_filler.cpp" line="97"/>
@@ -33237,7 +33237,7 @@ P, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="50"/>
         <source>Adjust secondary angle so the sum of angles (relative rotation angle) is 0. With such setting entity will be moved but not rotated.</source>
-        <translation type="unfinished">माध्यमिक कोण को समायोजित करें ताकि कोणों (relative रोटेशन कोण) का योग 0 है। इस तरह की सेटिंग इकाई को स्थानांतरित किया जाएगा लेकिन घुमाया नहीं जाएगा।.</translation>
+        <translation type="unfinished">द्वितीयक कोण को इस प्रकार समायोजित करें कि कोणों का योग (सापेक्ष घूर्णन कोण) 0 हो। इस सेटिंग से एंटिटी स्थानांतरित होगी लेकिन घूमेगी नहीं।</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="53"/>
@@ -33282,7 +33282,7 @@ P, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="177"/>
         <source>If checked, original entities will survive, otherwise they will be removed. </source>
-        <translation type="unfinished">यदि जांच की जाती है, तो मूल इकाई जीवित रह जाएगी, अन्यथा उन्हें हटाया जाएगा।.</translation>
+        <translation type="unfinished">यदि चेक किया गया है, तो मूल एंटिटीज़ बनी रहेंगी, अन्यथा उन्हें हटा दिया जाएगा। </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="180"/>
@@ -33360,7 +33360,7 @@ P, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_filler.cpp" line="49"/>
         <source>Angle to rotate entity around rotation center point</source>
-        <translation type="unfinished">रोटेशन सेंटर प्वाइंट के आसपास इकाई को घुमाने के लिए कोण</translation>
+        <translation type="unfinished">रोटेशन केंद्र बिंदु के आसपास एंटिटी को घुमाने के लिए कोण</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_filler.cpp" line="60"/>
@@ -33410,7 +33410,7 @@ P, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_filler.cpp" line="98"/>
         <source>If absolute, reference point will be rotated but entity will be rotated by second angle only, otherwise angles will summ up</source>
-        <translation type="unfinished">यदि पूर्ण, संदर्भ बिंदु को घुमाया जाएगा लेकिन इकाई को केवल दूसरे कोण से घुमाया जाएगा, अन्यथा कोणों को आगे बढ़ाया जाएगा।</translation>
+        <translation type="unfinished">यदि निरपेक्ष है, तो संदर्भ बिंदु घुमाया जाएगा लेकिन एंटिटी केवल दूसरे कोण से घुमाई जाएगी, अन्यथा कोण जुड़ जाएँगे</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_filler.cpp" line="107"/>
@@ -33478,7 +33478,7 @@ P, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="89"/>
         <source>If checked, current attributes will be applied to created entities, othewise original ones will be used. </source>
-        <translation type="unfinished">यदि जांच की जाती है, तो वर्तमान विशेषताएँ बनाई गई इकाइयों पर लागू की जाएंगी, अन्यथा मूल विशेषताओं का उपयोग किया जाएगा। </translation>
+        <translation type="unfinished">यदि चेक किया गया है, तो वर्तमान विशेषताएँ बनाई गई एंटिटीज़ पर लागू की जाएंगी, अन्यथा मूल विशेषताओं का उपयोग किया जाएगा। </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="92"/>
@@ -33488,7 +33488,7 @@ P, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="118"/>
         <source>Angle to rotate entity around rotation center point</source>
-        <translation type="unfinished">रोटेशन सेंटर प्वाइंट के आसपास इकाई को घुमाने के लिए कोण</translation>
+        <translation type="unfinished">रोटेशन केंद्र बिंदु के आसपास एंटिटी को घुमाने के लिए कोण</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="141"/>
@@ -33508,7 +33508,7 @@ P, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="165"/>
         <source>If absolute, reference point will be rotated but entity will be rotated by second angle only, otherwise angles will summ up</source>
-        <translation type="unfinished">यदि पूर्ण, संदर्भ बिंदु को घुमाया जाएगा लेकिन इकाई को केवल दूसरे कोण से घुमाया जाएगा, अन्यथा कोणों को आगे बढ़ाया जाएगा।</translation>
+        <translation type="unfinished">यदि निरपेक्ष है, तो संदर्भ बिंदु घुमाया जाएगा लेकिन एंटिटी केवल दूसरे कोण से घुमाई जाएगी, अन्यथा कोण जुड़ जाएँगे</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="168"/>
@@ -33523,7 +33523,7 @@ P, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="189"/>
         <source>If checked, original entities will be survive, otherwise they will be removed.</source>
-        <translation type="unfinished">यदि जांच की जाती है, तो मूल इकाई जीवित रहेगी, अन्यथा उन्हें हटाया जाएगा।.</translation>
+        <translation type="unfinished">यदि चेक किया गया है, तो मूल एंटिटीज़ बनी रहेंगी, अन्यथा उन्हें हटा दिया जाएगा।</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="192"/>
@@ -33543,7 +33543,7 @@ P, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="209"/>
         <source>If checked, new enties will be placed on current layer, otherwise they will be in original layers.</source>
-        <translation type="unfinished">यदि चेक किया गया है, तो नई इकाइयां वर्तमान परत में रखी जाएंगी, अन्यथा वे मूल परतों में रहेंगी।</translation>
+        <translation type="unfinished">यदि चेक किया गया है, तो नई एंटिटीज़ वर्तमान परत में रखी जाएंगी, अन्यथा वे मूल परतों में रहेंगी।</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="212"/>
@@ -33612,7 +33612,7 @@ P, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_round_options_filler.cpp" line="31"/>
         <source>Check to trim both edges to the rounding</source>
-        <translation type="unfinished">दोनों किनारों को गोल करने की जाँच करें</translation>
+        <translation type="unfinished">दोनों किनारों को गोलाई तक ट्रिम करने के लिए चेक करें</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_round_options_filler.cpp" line="37"/>
@@ -33635,7 +33635,7 @@ P, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_round_options_widget.ui" line="59"/>
         <source>Check to trim both edges to the rounding</source>
-        <translation type="unfinished">दोनों किनारों को गोल करने की जाँच करें</translation>
+        <translation type="unfinished">दोनों किनारों को गोलाई तक ट्रिम करने के लिए चेक करें</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_round_options_widget.ui" line="62"/>
@@ -33776,7 +33776,7 @@ P, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="73"/>
         <source>If checked, original entities will survive, otherwise they will be removed.</source>
-        <translation type="unfinished">यदि जांच की जाती है, तो मूल इकाई जीवित रह जाएगी, अन्यथा उन्हें हटाया जाएगा।.</translation>
+        <translation type="unfinished">यदि चेक किया गया है, तो मूल एंटिटीज़ बनी रहेंगी, अन्यथा उन्हें हटा दिया जाएगा।</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="76"/>
@@ -33786,7 +33786,7 @@ P, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="83"/>
         <source>If checked, created entities will be placed to current layer. Otherwise, they will be placed to original layers. </source>
-        <translation type="unfinished">यदि चेक किया गया है, तो बनाई गई इकाइयां वर्तमान परत में रखी जाएंगी। अन्यथा, उन्हें मूल परतों में रखा जाएगा। </translation>
+        <translation type="unfinished">यदि चेक किया गया है, तो बनाई गई एंटिटीज़ वर्तमान परत में रखी जाएंगी। अन्यथा, उन्हें मूल परतों में रखा जाएगा। </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="86"/>
@@ -33831,7 +33831,7 @@ P, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="199"/>
         <source>If checked, current attributes will be applied to created entities, otherwise original ones will be used. </source>
-        <translation type="unfinished">यदि जांच की जाती है, तो वर्तमान विशेषताएँ बनाई गई इकाइयों पर लागू की जाएंगी, अन्यथा मूल विशेषताओं का उपयोग किया जाएगा। </translation>
+        <translation type="unfinished">यदि चेक किया गया है, तो वर्तमान विशेषताएँ बनाई गई एंटिटीज़ पर लागू की जाएंगी, अन्यथा मूल विशेषताओं का उपयोग किया जाएगा। </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="202"/>
@@ -33859,7 +33859,7 @@ P, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="32"/>
         <source>Ellipse</source>
-        <translation>Ellipse</translation>
+        <translation>दीर्घवृत्त</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="39"/>
@@ -33874,7 +33874,7 @@ P, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="53"/>
         <source>Spline</source>
-        <translation>स्पलीन</translation>
+        <translation>स्प्लाइन</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="60"/>
@@ -33904,7 +33904,7 @@ P, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="95"/>
         <source>Entity type</source>
-        <translation>इकाई प्रकार</translation>
+        <translation>एंटिटी प्रकार</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="102"/>
@@ -33924,7 +33924,7 @@ P, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="123"/>
         <source>Arc</source>
-        <translation>आर्क</translation>
+        <translation>चाप</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="130"/>
@@ -33934,7 +33934,7 @@ P, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="137"/>
         <source>Circle</source>
-        <translation>सर्कल</translation>
+        <translation>वृत्त</translation>
     </message>
 </context>
 <context>
@@ -34127,7 +34127,7 @@ P, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/test/lc_simpletests.cpp" line="34"/>
         <source>De&amp;bugging</source>
-        <translation>Debugging</translation>
+        <translation>डिबगिंग (&amp;B)</translation>
     </message>
     <message>
         <location filename="../src/test/lc_simpletests.cpp" line="78"/>
@@ -34151,7 +34151,7 @@ P, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="44"/>
         <source>If checked, specified fixed distance between ticks will be used. Otherwise, distance will be calculated based on entity length and ticks count. </source>
-        <translation type="unfinished">यदि जांच की जाती है, तो टिक्स के बीच निर्धारित दूरी का उपयोग किया जाएगा। अन्यथा, दूरी की गणना इकाई की लंबाई और टिक गिनती के आधार पर की जाएगी।.</translation>
+        <translation type="unfinished">यदि चेक किया गया है, तो टिक्स के बीच निर्धारित दूरी का उपयोग किया जाएगा। अन्यथा, दूरी की गणना एंटिटी की लंबाई और टिक गिनती के आधार पर की जाएगी। </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="53"/>
@@ -34191,7 +34191,7 @@ P, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="83"/>
         <source>If checked, tick angle is related to selected entity, otherwise it is absolute angle.</source>
-        <translation type="unfinished">यदि जांच की जाती है, तो टिक कोण चयनित इकाई से संबंधित है, अन्यथा यह पूर्ण कोण है।.</translation>
+        <translation type="unfinished">यदि चेक किया गया है, तो टिक कोण चयनित एंटिटी के सापेक्ष है, अन्यथा यह निरपेक्ष कोण है।</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="93"/>
@@ -34333,7 +34333,7 @@ P, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="179"/>
         <source>If checked, selected entity will be divided by tick intersection points. </source>
-        <translation type="unfinished">यदि जांच की जाती है, तो चयनित इकाई को टिक प्रतिच्छेदन बिंदुओं पर विभाजित किया जाएगा। </translation>
+        <translation type="unfinished">यदि चेक किया गया है, तो चयनित एंटिटी को टिक प्रतिच्छेदन बिंदुओं पर विभाजित किया जाएगा। </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="182"/>
@@ -34368,7 +34368,7 @@ P, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="250"/>
         <source>Defines which point of tick should be placed to intersection point with selected entity.</source>
-        <translation type="unfinished">निर्धारित करता है कि टिक का कौन-सा बिंदु चयनित इकाई के साथ प्रतिच्छेदन बिंदु पर रखा जाना चाहिए।</translation>
+        <translation type="unfinished">निर्धारित करता है कि टिक का कौन-सा बिंदु चयनित एंटिटी के साथ प्रतिच्छेदन बिंदु पर रखा जाना चाहिए।</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="259"/>
@@ -34378,7 +34378,7 @@ P, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="284"/>
         <source>Offset of tick snap point to intersection point. </source>
-        <translation type="unfinished">प्रतिच्छेदन बिंदु के लिए टिक स्नैप प्वाइंट का ऑफसेट।.</translation>
+        <translation type="unfinished">प्रतिच्छेदन बिंदु के लिए टिक स्नैप बिंदु का ऑफसेट। </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="291"/>
@@ -34393,7 +34393,7 @@ P, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="312"/>
         <source>If checked, tick angle is related to selected entity, otherwise it is absolute angle.</source>
-        <translation type="unfinished">यदि जांच की जाती है, तो टिक कोण चयनित इकाई से संबंधित है, अन्यथा यह पूर्ण कोण है।.</translation>
+        <translation type="unfinished">यदि चेक किया गया है, तो टिक कोण चयनित एंटिटी के सापेक्ष है, अन्यथा यह निरपेक्ष कोण है।</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="315"/>
@@ -34408,22 +34408,22 @@ P, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="375"/>
         <source>Start angle for circle from which ticks will start. </source>
-        <translation type="unfinished">सर्कल के लिए प्रारंभ कोण जिसमें से टिक्स शुरू होंगे।.</translation>
+        <translation type="unfinished">वृत्त के लिए प्रारंभ कोण जिसमें से टिक्स शुरू होंगे। </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="382"/>
         <source>Start Circle Angle:</source>
-        <translation type="unfinished">प्रारंभ सर्कल कोण:</translation>
+        <translation type="unfinished">प्रारंभ वृत्त कोण:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="389"/>
         <source>PIck start circle angle from drawing</source>
-        <translation type="unfinished">ड्राइंग से पिक स्टार्ट सर्कल एंगल</translation>
+        <translation type="unfinished">ड्राइंग से प्रारंभ वृत्त कोण चुनें</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="413"/>
         <source>If checked, specified fixed distance between ticks will be used. Otherwise, distance will be calculated based on entity length and ticks count. </source>
-        <translation type="unfinished">यदि जांच की जाती है, तो टिक्स के बीच निर्धारित दूरी का उपयोग किया जाएगा। अन्यथा, दूरी की गणना इकाई की लंबाई और टिक गिनती के आधार पर की जाएगी।.</translation>
+        <translation type="unfinished">यदि चेक किया गया है, तो टिक्स के बीच निर्धारित दूरी का उपयोग किया जाएगा। अन्यथा, दूरी की गणना एंटिटी की लंबाई और टिक गिनती के आधार पर की जाएगी। </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="416"/>
@@ -34433,7 +34433,7 @@ P, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="454"/>
         <source>Count of ticks between edges of selected entity.</source>
-        <translation type="unfinished">चयनित इकाई के किनारों के बीच टिक की गणना।.</translation>
+        <translation type="unfinished">चयनित एंटिटी के किनारों के बीच टिक की गणना।</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="464"/>
@@ -34443,7 +34443,7 @@ P, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="486"/>
         <source>Angle between tick and selected entity.</source>
-        <translation type="unfinished">टिक और चयनित इकाई के बीच कोण।.</translation>
+        <translation type="unfinished">टिक और चयनित एंटिटी के बीच कोण।</translation>
     </message>
 </context>
 <context>
@@ -34514,7 +34514,7 @@ P, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="77"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">यदि चेक किया गया है, तो बनाई गई इकाइयां वर्तमान परत में रखी जाएंगी, अन्यथा उन्हें मूल परतों में रखा जाएगा।</translation>
+        <translation type="unfinished">यदि चेक किया गया है, तो बनाई गई एंटिटीज़ वर्तमान परत में रखी जाएंगी, अन्यथा उन्हें मूल परतों में रखा जाएगा।</translation>
     </message>
 </context>
 <context>
@@ -34532,7 +34532,7 @@ P, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="39"/>
         <source>If unchecked, original spline will be removed, otherwise it will survive.</source>
-        <translation type="unfinished">यदि अनचेक किया गया है, तो मूल स्पलीन को हटा दिया जाएगा, अन्यथा यह जीवित रहेगा।.</translation>
+        <translation type="unfinished">यदि अनचेक किया गया है, तो मूल स्प्लाइन हटा दी जाएगी, अन्यथा वह बनी रहेगी।</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="42"/>
@@ -34542,7 +34542,7 @@ P, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="56"/>
         <source>If checked, current attributes will be used for created entities, otherwise - original ones. </source>
-        <translation type="unfinished">यदि जांच की जाती है, तो बनाई गई इकाइयों के लिए वर्तमान विशेषताओं का उपयोग किया जाएगा, अन्यथा - मूल विशेषताओं का। </translation>
+        <translation type="unfinished">यदि चेक किया गया है, तो बनाई गई एंटिटीज़ के लिए वर्तमान विशेषताओं का उपयोग किया जाएगा, अन्यथा - मूल विशेषताओं का। </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="59"/>
@@ -34552,7 +34552,7 @@ P, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="73"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">यदि चेक किया गया है, तो बनाई गई इकाइयां वर्तमान परत में रखी जाएंगी, अन्यथा उन्हें मूल परतों में रखा जाएगा।</translation>
+        <translation type="unfinished">यदि चेक किया गया है, तो बनाई गई एंटिटीज़ वर्तमान परत में रखी जाएंगी, अन्यथा उन्हें मूल परतों में रखा जाएगा।</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="76"/>
@@ -34590,7 +34590,7 @@ P, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_filler.cpp" line="31"/>
         <source>Defines degree of the spline</source>
-        <translation type="unfinished">स्पलीन की डिग्री को परिभाषित करता है</translation>
+        <translation type="unfinished">स्प्लाइन की डिग्री को परिभाषित करता है</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_filler.cpp" line="38"/>
@@ -34640,7 +34640,7 @@ P, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_filler.cpp" line="71"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">यदि चेक किया गया है, तो बनाई गई इकाइयां वर्तमान परत में रखी जाएंगी, अन्यथा उन्हें मूल परतों में रखा जाएगा।</translation>
+        <translation type="unfinished">यदि चेक किया गया है, तो बनाई गई एंटिटीज़ वर्तमान परत में रखी जाएंगी, अन्यथा उन्हें मूल परतों में रखा जाएगा।</translation>
     </message>
 </context>
 <context>
@@ -34653,7 +34653,7 @@ P, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="32"/>
         <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="unfinished">यदि चेक किया गया है, तो बनाई गई इकाइयां वर्तमान परत में रखी जाएंगी, अन्यथा उन्हें मूल परतों में रखा जाएगा।</translation>
+        <translation type="unfinished">यदि चेक किया गया है, तो बनाई गई एंटिटीज़ वर्तमान परत में रखी जाएंगी, अन्यथा उन्हें मूल परतों में रखा जाएगा।</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="35"/>
@@ -34668,7 +34668,7 @@ P, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="55"/>
         <source>Defines degree of the spline</source>
-        <translation type="unfinished">स्पलीन की डिग्री को परिभाषित करता है</translation>
+        <translation type="unfinished">स्प्लाइन की डिग्री को परिभाषित करता है</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="68"/>
@@ -34688,7 +34688,7 @@ P, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="85"/>
         <source>If checked, current attributes will be used for created entities, otherwise - original ones. </source>
-        <translation type="unfinished">यदि जांच की जाती है, तो बनाई गई इकाइयों के लिए वर्तमान विशेषताओं का उपयोग किया जाएगा, अन्यथा - मूल विशेषताओं का। </translation>
+        <translation type="unfinished">यदि चेक किया गया है, तो बनाई गई एंटिटीज़ के लिए वर्तमान विशेषताओं का उपयोग किया जाएगा, अन्यथा - मूल विशेषताओं का। </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="88"/>
@@ -34708,7 +34708,7 @@ P, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="105"/>
         <source>Vertexes are spline points</source>
-        <translation type="unfinished">वर्टेक्स स्प्लिन पॉइंट हैं</translation>
+        <translation type="unfinished">वर्टेक्स स्प्लाइन बिंदु हैं</translation>
     </message>
 </context>
 <context>
@@ -34721,7 +34721,7 @@ P, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_options_filler.cpp" line="33"/>
         <source>Defines degree of the spline</source>
-        <translation type="unfinished">स्पलीन की डिग्री को परिभाषित करता है</translation>
+        <translation type="unfinished">स्प्लाइन की डिग्री को परिभाषित करता है</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_options_filler.cpp" line="40"/>
@@ -34731,7 +34731,7 @@ P, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_options_filler.cpp" line="40"/>
         <source>If selected, closed spline is created</source>
-        <translation type="unfinished">यदि चयनित किया जाता है, तो बंद स्पलाइन बनाई जाती है</translation>
+        <translation type="unfinished">यदि चयनित है, तो बंद स्प्लाइन बनाई जाती है</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_options_filler.cpp" line="46"/>
@@ -34754,7 +34754,7 @@ P, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_options_widget.ui" line="32"/>
         <source>Spline Options</source>
-        <translation type="unfinished">स्पलीन विकल्प</translation>
+        <translation type="unfinished">स्प्लाइन विकल्प</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_options_widget.ui" line="56"/>
@@ -34769,7 +34769,7 @@ P, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_options_widget.ui" line="94"/>
         <source>If selected, closed spline is created</source>
-        <translation type="unfinished">यदि चयनित किया जाता है, तो बंद स्पलाइन बनाई जाती है</translation>
+        <translation type="unfinished">यदि चयनित है, तो बंद स्प्लाइन बनाई जाती है</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_options_widget.ui" line="97"/>
@@ -34837,12 +34837,12 @@ P, li { white-space: pre-wrap; }
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="14"/>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="17"/>
         <source>Spline Properties Editor</source>
-        <translation>स्पलीन प्रॉपर्टी संपादक</translation>
+        <translation>स्प्लाइन प्रॉपर्टी संपादक</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="20"/>
         <source>Edit properties of a spline entity, including degree, closed state, control points, and knot vector</source>
-        <translation>डिग्री, बंद स्थिति, नियंत्रण बिंदु और नॉट वेक्टर सहित स्प्लाइन इकाई के गुण संपादित करें</translation>
+        <translation>डिग्री, बंद स्थिति, नियंत्रण बिंदु और नॉट वेक्टर सहित स्प्लाइन एंटिटी के गुण संपादित करें</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="47"/>
@@ -34857,7 +34857,7 @@ P, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="86"/>
         <source>Spline Degree ComboBox</source>
-        <translation>स्पलीन डिग्री कॉम्बोबॉक्स</translation>
+        <translation>स्प्लाइन डिग्री कॉम्बोबॉक्स</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="89"/>
@@ -34928,7 +34928,7 @@ P, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="255"/>
         <source>Knot values control the spline’s curve shape (non-decreasing sequence)</source>
-        <translation>नॉट वैल्यू स्पलीन के वक्र आकार को नियंत्रित करती है (गैर-क्षीण अनुक्रम)</translation>
+        <translation>नॉट वैल्यू स्प्लाइन के वक्र आकार को नियंत्रित करती है (गैर-क्षीण अनुक्रम)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="258"/>
@@ -34970,7 +34970,7 @@ P, li { white-space: pre-wrap; }
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="328"/>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="334"/>
         <source>Remove the selected control point from the spline</source>
-        <translation>स्पलीन से चयनित नियंत्रण बिंदु निकालें</translation>
+        <translation>स्प्लाइन से चयनित नियंत्रण बिंदु निकालें</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="331"/>
@@ -35157,7 +35157,7 @@ P, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_stretch_options_widget.ui" line="32"/>
         <source>If checked, original entities will survive, otherwise they will be removed.</source>
-        <translation type="unfinished">यदि जांच की जाती है, तो मूल इकाई जीवित रह जाएगी, अन्यथा उन्हें हटाया जाएगा।.</translation>
+        <translation type="unfinished">यदि चेक किया गया है, तो मूल एंटिटीज़ बनी रहेंगी, अन्यथा उन्हें हटा दिया जाएगा।</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_stretch_options_widget.ui" line="35"/>
@@ -35361,7 +35361,7 @@ P, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dialogs/entity/lc_textpropertieseditingwidget.cpp" line="53"/>
         <source>Baseline Center</source>
-        <translation type="unfinished">बेसलाइन सेंटर</translation>
+        <translation type="unfinished">बेसलाइन केंद्र</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_textpropertieseditingwidget.cpp" line="54"/>
@@ -35376,7 +35376,7 @@ P, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dialogs/entity/lc_textpropertieseditingwidget.cpp" line="56"/>
         <source>Bottom Center</source>
-        <translation type="unfinished">बॉटम सेंटर</translation>
+        <translation type="unfinished">नीचे केंद्र</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_textpropertieseditingwidget.cpp" line="57"/>
@@ -35461,7 +35461,7 @@ P, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="216"/>
         <source>Entity&apos;s Layer</source>
-        <translation>इकाई की परत</translation>
+        <translation>एंटिटी की परत</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="250"/>
@@ -35491,22 +35491,22 @@ P, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="330"/>
         <source>Circle</source>
-        <translation>सर्कल</translation>
+        <translation>वृत्त</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="331"/>
         <source>Arc</source>
-        <translation>आर्क</translation>
+        <translation>चाप</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="332"/>
         <source>Spline</source>
-        <translation>स्पलीन</translation>
+        <translation>स्प्लाइन</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="333"/>
         <source>Ellipse</source>
-        <translation>Ellipse</translation>
+        <translation>दीर्घवृत्त</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="334"/>
@@ -35569,22 +35569,22 @@ P, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="363"/>
         <source>Arcs</source>
-        <translation>आर्क</translation>
+        <translation>चाप</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="364"/>
         <source>Splines</source>
-        <translation>स्पलीन</translation>
+        <translation>स्प्लाइन</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="366"/>
         <source>Ellipses</source>
-        <translation>Ellipses</translation>
+        <translation>दीर्घवृत्त</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="367"/>
         <source>PolyLines</source>
-        <translation>पॉलीलेन</translation>
+        <translation>पॉलीलाइन</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="369"/>
@@ -35934,7 +35934,7 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="548"/>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="574"/>
         <source>&amp;Save UCS</source>
-        <translation>और सहेजें UCS</translation>
+        <translation>UCS सहेजें (&amp;S)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="541"/>
@@ -35944,7 +35944,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="542"/>
         <source>R&amp;emove Selected UCSs</source>
-        <translation>R&amp;emove Selected UCS</translation>
+        <translation>चयनित UCS हटाएँ (&amp;E)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="555"/>
@@ -35970,7 +35970,7 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="565"/>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="581"/>
         <source>Remove A&amp;ll UCSs</source>
-        <translation>A&amp;ll UCS निकालें</translation>
+        <translation>सभी UCS हटाएँ (&amp;L)</translation>
     </message>
 </context>
 <context>
@@ -36054,12 +36054,12 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="133"/>
         <source>Circle</source>
-        <translation>सर्कल</translation>
+        <translation>वृत्त</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="136"/>
         <source>Ellipse</source>
-        <translation>Ellipse</translation>
+        <translation>दीर्घवृत्त</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="137"/>
@@ -36161,7 +36161,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="249"/>
         <source>Entity Info</source>
-        <translation>इकाई जानकारी</translation>
+        <translation>एंटिटी जानकारी</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="201"/>
@@ -36176,12 +36176,12 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="134"/>
         <source>Arc</source>
-        <translation>आर्क</translation>
+        <translation>चाप</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="135"/>
         <source>Spline</source>
-        <translation>स्पलीन</translation>
+        <translation>स्प्लाइन</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="476"/>
@@ -36640,7 +36640,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="406"/>
         <source>&amp;Save</source>
-        <translation>और सहेजें</translation>
+        <translation>सहेजें (&amp;S)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="407"/>
@@ -37051,12 +37051,12 @@ Auto-save disabled.</source>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandhistory.cpp" line="32"/>
         <source>&amp;Copy</source>
-        <translation>Copy</translation>
+        <translation>कॉपी करें (&amp;C)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandhistory.cpp" line="39"/>
         <source>Select &amp;All</source>
-        <translation>चुनें और चुनें</translation>
+        <translation>सभी चुनें (&amp;A)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandhistory.cpp" line="44"/>
@@ -37276,7 +37276,7 @@ Auto-save disabled.</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.ui" line="26"/>
         <source>Attributes</source>
-        <translation>गुण</translation>
+        <translation>विशेषताएँ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.ui" line="44"/>
@@ -37297,8 +37297,8 @@ Auto-save disabled.</source>
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.ui" line="76"/>
         <source>Apply attributes also to all sub-entities of selected INSERT.
 This recursively modifies all entities of the Block itself.</source>
-        <translation>चयनित INSERT की सभी उप-इकाइयों पर भी विशेषताएँ लागू करें।
-यह ब्लॉक की सभी इकाइयों को पुनरावर्ती रूप से संशोधित करता है।</translation>
+        <translation>चयनित INSERT की सभी उप-एंटिटीज़ पर भी विशेषताएँ लागू करें।
+यह ब्लॉक की सभी एंटिटीज़ को पुनरावर्ती रूप से संशोधित करता है।</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.ui" line="80"/>
@@ -37316,7 +37316,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="14"/>
         <source>Choose Hatch Attributes</source>
-        <translation>हैच एट्रिब्यूट्स चुनें</translation>
+        <translation>हैच विशेषताएँ चुनें</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="22"/>
@@ -37432,12 +37432,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="241"/>
         <source>&amp;Height:</source>
-        <translation>और ऊंचाई:</translation>
+        <translation>ऊँचाई (&amp;H):</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="125"/>
         <source>&amp;Line spacing:</source>
-        <translation>और लाइन रिक्ति:</translation>
+        <translation>पंक्ति अंतराल (&amp;L):</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="113"/>
@@ -37447,7 +37447,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="147"/>
         <source>&amp;Default line spacing</source>
-        <translation>&amp; Default लाइन स्पेसिंग</translation>
+        <translation>डिफ़ॉल्ट पंक्ति अंतराल (&amp;D)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="150"/>
@@ -37502,7 +37502,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="468"/>
         <source>Bottom Center</source>
-        <translation>बॉटम सेंटर</translation>
+        <translation>नीचे केंद्र</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="436"/>
@@ -38280,22 +38280,22 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="34"/>
         <source>&amp;Paper</source>
-        <translation>Paper</translation>
+        <translation>कागज़ (&amp;P)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="123"/>
         <source>&amp;Landscape</source>
-        <translation>&amp; Landscape</translation>
+        <translation>लैंडस्केप (&amp;L)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="133"/>
         <source>P&amp;ortrait</source>
-        <translation>P&amp;ortrait</translation>
+        <translation>पोर्ट्रेट (&amp;O)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="353"/>
         <source>&amp;Units</source>
-        <translation>और यूनिट</translation>
+        <translation>इकाइयाँ (&amp;U)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="359"/>
@@ -38305,7 +38305,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="365"/>
         <source>&amp;Main drawing unit:</source>
-        <translation>और मुख्य ड्राइंग इकाई:</translation>
+        <translation>मुख्य ड्रॉइंग इकाई (&amp;M):</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="408"/>
@@ -38345,12 +38345,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="529"/>
         <source>F&amp;ormat:</source>
-        <translation>F&amp;ormat:</translation>
+        <translation>प्रारूप (&amp;O):</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="513"/>
         <source>Pre&amp;cision:</source>
-        <translation>पूर्व और चीरा:</translation>
+        <translation>परिशुद्धता (&amp;C):</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="551"/>
@@ -38408,12 +38408,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="74"/>
         <source>&amp;Height:</source>
-        <translation>और ऊंचाई:</translation>
+        <translation>ऊँचाई (&amp;H):</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="94"/>
         <source>&amp;Width:</source>
-        <translation>और चौड़ाई:</translation>
+        <translation>चौड़ाई (&amp;W):</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="114"/>
@@ -38469,12 +38469,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1049"/>
         <source>&amp;Dimensions</source>
-        <translation>और आयाम</translation>
+        <translation>आयाम (&amp;D)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1444"/>
         <source>Length to enlarge over dimension line</source>
-        <translation>आयाम लाइन पर विस्तार करने के लिए लंबाई</translation>
+        <translation>आयाम रेखा पर विस्तार करने के लिए लंबाई</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1469"/>
@@ -38535,12 +38535,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2176"/>
         <source>&amp;Points</source>
-        <translation>औरपॉइंट</translation>
+        <translation>बिंदु (&amp;P)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2203"/>
         <source>Point Style</source>
-        <translation>प्वाइंट स्टाइल</translation>
+        <translation>बिंदु स्टाइल</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1852"/>
@@ -38657,7 +38657,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1717"/>
         <source>Dimension line gap:</source>
-        <translation>आयाम लाइन अंतर:</translation>
+        <translation>आयाम रेखा अंतर:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1510"/>
@@ -38908,7 +38908,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1727"/>
         <source>Extension lines</source>
-        <translation>एक्सटेंशन लाइन</translation>
+        <translation>विस्तार रेखाएँ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1734"/>
@@ -38988,12 +38988,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2013"/>
         <source>Splines</source>
-        <translation>स्पलीन</translation>
+        <translation>स्प्लाइन</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2056"/>
         <source>Number of line segments per spline patch:</source>
-        <translation>प्रति स्पलीन पैच लाइन सेगमेंट की संख्या:</translation>
+        <translation>प्रति स्प्लाइन पैच लाइन सेगमेंट की संख्या:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2069"/>
@@ -39125,7 +39125,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="3394"/>
         <source>Floating point variables</source>
-        <translation>फ्लोटिंग पॉइंट वेरिएबल</translation>
+        <translation>फ़्लोटिंग पॉइंट वेरिएबल</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="3400"/>
@@ -39305,13 +39305,13 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="467"/>
         <source>&amp;Set as Active</source>
-        <translation>और Active के रूप में सेट करें</translation>
+        <translation>सक्रिय के रूप में सेट करें (&amp;S)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="470"/>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="486"/>
         <source>&amp;Create Style</source>
-        <translation>और बनाएँ शैली</translation>
+        <translation>शैली बनाएँ (&amp;C)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="472"/>
@@ -39321,7 +39321,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="476"/>
         <source>&amp;Rename Style</source>
-        <translation>और नाम शैली</translation>
+        <translation>शैली का नाम बदलें (&amp;R)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="478"/>
@@ -39337,7 +39337,7 @@ This recursively modifies all entities of the Block itself.</source>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="483"/>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="487"/>
         <source>&amp;Import Styles</source>
-        <translation>और आयात शैलियाँ</translation>
+        <translation>शैलियाँ आयात करें (&amp;I)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="575"/>
@@ -39483,7 +39483,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="985"/>
         <source>A&amp;utomatically scale grid</source>
-        <translation>A&amp;utomatically स्केल ग्रिड</translation>
+        <translation>ग्रिड को स्वचालित रूप से स्केल करें (&amp;U)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="988"/>
@@ -39499,12 +39499,12 @@ This recursively modifies all entities of the Block itself.</source>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1201"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1523"/>
         <source>G&amp;rid Color:</source>
-        <translation>G&amp;rid रंग:</translation>
+        <translation>ग्रिड रंग (&amp;R):</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="872"/>
         <source>&amp;Handle Color:</source>
-        <translation>और हैंडल रंग:</translation>
+        <translation>हैंडल रंग (&amp;H):</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="751"/>
@@ -39531,7 +39531,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5874"/>
         <source>&amp;Paths</source>
-        <translation>और पैथ</translation>
+        <translation>पथ (&amp;P)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6070"/>
@@ -39556,7 +39556,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4753"/>
         <source>N&amp;umber of preview entities:</source>
-        <translation>पूर्वावलोकन इकाइयों की संख्या (&amp;U):</translation>
+        <translation>पूर्वावलोकन एंटिटीज़ की संख्या (&amp;U):</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="217"/>
@@ -39591,7 +39591,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4909"/>
         <source>&amp;Defaults</source>
-        <translation>Defaults</translation>
+        <translation>डिफ़ॉल्ट (&amp;D)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="118"/>
@@ -39731,7 +39731,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1663"/>
         <source>Circle</source>
-        <translation>सर्कल</translation>
+        <translation>वृत्त</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1668"/>
@@ -39826,27 +39826,27 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="745"/>
         <source>Entity Handle</source>
-        <translation>इकाई हैंडल</translation>
+        <translation>एंटिटी हैंडल</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="888"/>
         <source>Size of square that is highlights entities reference points (endpoints etc.)</source>
-        <translation>वर्ग का आकार जो इकाइयों के संदर्भ बिंदु (एंडपॉइंट्स आदि) को हाइलाइट करता है।</translation>
+        <translation>वर्ग का आकार जो एंटिटीज़ के संदर्भ बिंदु (अंत बिंदु आदि) को हाइलाइट करता है।</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="809"/>
         <source>Color of end handle for entity</source>
-        <translation>इकाई के अंत हैंडल का रंग</translation>
+        <translation>एंटिटी के अंत हैंडल का रंग</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="771"/>
         <source>Color for start handle of entity</source>
-        <translation>इकाई के प्रारंभ हैंडल का रंग</translation>
+        <translation>एंटिटी के प्रारंभ हैंडल का रंग</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="854"/>
         <source>Color of non-endpoint handle of entity</source>
-        <translation>इकाई के गैर-एंडपॉइंट हैंडल का रंग</translation>
+        <translation>एंटिटी के गैर-अंत बिंदु हैंडल का रंग</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="847"/>
@@ -39856,12 +39856,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="933"/>
         <source>If enabled, entity handles are highlighted on hover (requires &quot;highlight entities on hover&quot; to be enabled)</source>
-        <translation>सक्षम होने पर, होवर पर इकाई हैंडल हाइलाइट होते हैं (&quot;होवर पर इकाइयाँ हाइलाइट करें&quot; सक्षम होना आवश्यक है)।</translation>
+        <translation>सक्षम होने पर, होवर पर एंटिटी हैंडल हाइलाइट होते हैं (&quot;होवर पर एंटिटीज़ हाइलाइट करें&quot; सक्षम होना आवश्यक है)।</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="939"/>
         <source>Show entity handles on mouse hover</source>
-        <translation>माउस होवर पर इकाई हैंडल दिखाएँ</translation>
+        <translation>माउस होवर पर एंटिटी हैंडल दिखाएँ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="268"/>
@@ -39977,7 +39977,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="592"/>
         <source>S&amp;elected Entity Color:</source>
-        <translation>चयनित इकाई रंग:</translation>
+        <translation>चयनित एंटिटी रंग (&amp;E):</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="86"/>
@@ -39987,7 +39987,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="574"/>
         <source>Color for selected entities</source>
-        <translation>चयनित इकाइयों के लिए रंग</translation>
+        <translation>चयनित एंटिटीज़ के लिए रंग</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="258"/>
@@ -40256,7 +40256,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1077"/>
         <source>&amp;Grid type:</source>
-        <translation>&amp; ग्रिड प्रकार:</translation>
+        <translation>ग्रिड प्रकार (&amp;G):</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="972"/>
@@ -40315,7 +40315,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4766"/>
         <source>If more entities in preview than specified, rect will be drawn instead of entities.</source>
-        <translation>यदि पूर्वावलोकन में निर्दिष्ट संख्या से अधिक इकाइयाँ हों, तो इकाइयों के बजाय आयत बनाया जाएगा।</translation>
+        <translation>यदि पूर्वावलोकन में निर्दिष्ट संख्या से अधिक एंटिटीज़ हों, तो एंटिटीज़ के बजाय आयत बनाया जाएगा।</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4806"/>
@@ -40325,7 +40325,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4859"/>
         <source>Color for preview reference entities</source>
-        <translation>पूर्वावलोकन संदर्भ इकाइयों के लिए रंग</translation>
+        <translation>पूर्वावलोकन संदर्भ एंटिटीज़ के लिए रंग</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3719"/>
@@ -40335,22 +40335,22 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3786"/>
         <source>Visualize the entity under the mouse cursor</source>
-        <translation>माउस कर्सर के तहत इकाई को दृश्यित करें</translation>
+        <translation>माउस कर्सर के तहत एंटिटी को दृश्यित करें</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3789"/>
         <source>Highlight entities on mouse hover</source>
-        <translation>माउस होवर पर हाइलाइट इकाइयां</translation>
+        <translation>माउस होवर पर एंटिटीज़ हाइलाइट करें</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3758"/>
         <source>Color for highlighted entities</source>
-        <translation>हाइलाइट की गई इकाइयों के लिए रंग</translation>
+        <translation>हाइलाइट की गई एंटिटीज़ के लिए रंग</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3776"/>
         <source>If selected, entity will be highlighted in &quot;Draft&quot; mode using entity&apos;s linewidth instead of 1px</source>
-        <translation>यदि चुना गया है, तो इकाई को 1px के बजाय इकाई की linewidth का उपयोग करके &quot;Draft&quot; मोड में हाइलाइट किया जाएगा।</translation>
+        <translation>यदि चयनित है, तो &quot;ड्राफ़्ट&quot; मोड में एंटिटी 1px के बजाय एंटिटी की लाइन चौड़ाई से हाइलाइट की जाएगी</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3881"/>
@@ -40372,7 +40372,7 @@ This recursively modifies all entities of the Block itself.</source>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1316"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1420"/>
         <source>&amp;Meta-grid Color:</source>
-        <translation>और मेटाग्रिड रंग:</translation>
+        <translation>मेटा-ग्रिड रंग (&amp;M):</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="689"/>
@@ -40409,17 +40409,17 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4829"/>
         <source>Active preview&apos;s explanatory entity&apos;s Color:</source>
-        <translation>सक्रिय पूर्वावलोकन की व्याख्यात्मक इकाई का रंग:</translation>
+        <translation>सक्रिय पूर्वावलोकन की व्याख्यात्मक एंटिटी का रंग:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4882"/>
         <source>Preview&apos;s explanatory entity&apos;s Color:</source>
-        <translation>पूर्वावलोकन की व्याख्यात्मक इकाई का रंग:</translation>
+        <translation>पूर्वावलोकन की व्याख्यात्मक एंटिटी का रंग:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3725"/>
         <source>&amp;Highlighted entity Color:</source>
-        <translation>और हाइलाइट इकाई रंग:</translation>
+        <translation>हाइलाइट की गई एंटिटी का रंग (&amp;H):</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3779"/>
@@ -40469,32 +40469,32 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6415"/>
         <source>Ellipse Major Axis:</source>
-        <translation>एलीप्स मेजर एक्सिस:</translation>
+        <translation>दीर्घवृत्त दीर्घ अक्ष:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6385"/>
         <source>If screen size of minor ellipse axis is less than value, ellipse is drawn as line</source>
-        <translation>यदि मामूली अंडाकार अक्ष का स्क्रीन आकार मूल्य से कम है, तो अंडाकार रेखा के रूप में तैयार किया जाता है</translation>
+        <translation>यदि दीर्घवृत्त के लघु अक्ष का स्क्रीन आकार मान से कम है, तो दीर्घवृत्त रेखा के रूप में बनाया जाता है</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6330"/>
         <source>If screen length of line is less than value, the line is drawn as point</source>
-        <translation>यदि स्क्रीन की लंबाई मूल्य से कम है, तो लाइन को पॉइंट के रूप में खींचा जाता है</translation>
+        <translation>यदि स्क्रीन की लंबाई मूल्य से कम है, तो लाइन को बिंदु के रूप में खींचा जाता है</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6369"/>
         <source>If screen radius of circle is less than value, circle is drawn as point</source>
-        <translation>यदि सर्कल की स्क्रीन त्रिज्या मूल्य से कम है, तो सर्कल को बिंदु के रूप में खींचा जाता है</translation>
+        <translation>यदि वृत्त की स्क्रीन त्रिज्या मूल्य से कम है, तो वृत्त को बिंदु के रूप में खींचा जाता है</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6444"/>
         <source>Circle Radius:</source>
-        <translation>सर्कल त्रिज्या:</translation>
+        <translation>वृत्त त्रिज्या:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6401"/>
         <source>Arc Radius:</source>
-        <translation>आर्क त्रिज्या:</translation>
+        <translation>चाप त्रिज्या:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6346"/>
@@ -40509,12 +40509,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6314"/>
         <source>If screen size for major ellipse axis is less than value, ellipse is drawn as point</source>
-        <translation>यदि प्रमुख अंडाकार अक्ष के लिए स्क्रीन का आकार मूल्य से कम है, तो अंडाकार बिंदु के रूप में खींचा जाता है</translation>
+        <translation>यदि दीर्घवृत्त के दीर्घ अक्ष का स्क्रीन आकार मान से कम है, तो दीर्घवृत्त बिंदु के रूप में बनाया जाता है</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5077"/>
         <source>Modify layer of selected entities, at layer activation</source>
-        <translation>परत सक्रिय करने पर चयनित इकाइयों की परत बदलें</translation>
+        <translation>परत सक्रिय करने पर चयनित एंटिटीज़ की परत बदलें</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5490"/>
@@ -40610,7 +40610,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4726"/>
         <source>Show operation&apos;s preview explanatory entities </source>
-        <translation>ऑपरेशन के पूर्वावलोकन की व्याख्यात्मक इकाइयाँ दिखाएं </translation>
+        <translation>ऑपरेशन के पूर्वावलोकन की व्याख्यात्मक एंटिटीज़ दिखाएं </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5785"/>
@@ -40640,12 +40640,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5407"/>
         <source>If enabled, internal ID of entity will be shown in properties dialog and Entity Info widget.</source>
-        <translation>यदि सक्षम हो, तो इकाई की आंतरिक आईडी को गुण संवाद और इकाई सूचना विजेट में दिखाया जाएगा।.</translation>
+        <translation>यदि सक्षम हो, तो एंटिटी की आंतरिक आईडी को गुण संवाद और एंटिटी सूचना विजेट में दिखाया जाएगा।</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5410"/>
         <source>Show internal IDs of entities</source>
-        <translation>इकाइयों की आंतरिक आईडी दिखाएँ</translation>
+        <translation>एंटिटीज़ की आंतरिक आईडी दिखाएँ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5379"/>
@@ -40776,7 +40776,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6221"/>
         <source>If selected, the angle of the line interpolation segment is calculated to ensure that resulting sagitta (height of arc segment) is less than specified.</source>
-        <translation>यदि चुना गया है, तो लाइन इंटरपोलेशन सेगमेंट के कोण की गणना यह सुनिश्चित करने के लिए की जाती है कि जिसके परिणामस्वरूप सागिटा (आर्क सेगमेंट की ऊंचाई) निर्दिष्ट से कम है।.</translation>
+        <translation>यदि चयनित है, तो रेखा इंटरपोलेशन खंड का कोण इस प्रकार गणना किया जाता है कि परिणामी सैजिटा (चाप खंड की ऊँचाई) निर्दिष्ट मान से कम रहे।</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6288"/>
@@ -40892,12 +40892,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2748"/>
         <source>Show properties for entity that will be created</source>
-        <translation>उस इकाई के लिए गुण दिखाएं जिसे बनाया जाएगा</translation>
+        <translation>बनाई जाने वाली एंटिटी के गुण दिखाएँ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2755"/>
         <source>Show properties for entity that is edited by handles</source>
-        <translation>इकाई के लिए गुण दिखाएं जो हैंडल द्वारा संपादित किया जाता है</translation>
+        <translation>हैंडल द्वारा संपादित की जा रही एंटिटी के गुण दिखाएँ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2765"/>
@@ -40912,7 +40912,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2794"/>
         <source>If checked, relative distance and angle from relative zero point to snap point will be shown.</source>
-        <translation>यदि जांच की जाती है, सापेक्ष दूरी और सापेक्ष शून्य बिंदु से स्नैप प्वाइंट तक कोण दिखाया जाएगा।.</translation>
+        <translation>यदि चेक किया गया है, सापेक्ष दूरी और सापेक्ष शून्य बिंदु से स्नैप बिंदु तक कोण दिखाया जाएगा।</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2797"/>
@@ -40947,7 +40947,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2854"/>
         <source>If checked, information about the type of snap and restrictions will be shown for snap point (if any)</source>
-        <translation>यदि जांच की जाती है, तो स्नैप प्वाइंट (यदि कोई हो) के लिए स्नैप और प्रतिबंध के प्रकार के बारे में जानकारी दिखाई दी जाएगी।</translation>
+        <translation>यदि चेक किया गया है, तो स्नैप बिंदु (यदि कोई हो) के लिए स्नैप और प्रतिबंध के प्रकार के बारे में जानकारी दिखाई दी जाएगी।</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2857"/>
@@ -40967,7 +40967,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2784"/>
         <source>If checked, absolute position of snap point will be shown.</source>
-        <translation>यदि जांच की जाती है, तो स्नैप प्वाइंट की पूर्ण स्थिति दिखाई देगी।.</translation>
+        <translation>यदि चेक किया गया है, तो स्नैप बिंदु की पूर्ण स्थिति दिखाई देगी।</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2787"/>
@@ -40987,7 +40987,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3022"/>
         <source>If checked, short overview properties of the entity&apos;s that is catched for selection will be shown. </source>
-        <translation>यदि जांच की जाती है, तो इकाई के लघु अवलोकन गुण जो चयन के लिए पकड़े जाते हैं, दिखाए जाएंगे।.</translation>
+        <translation>यदि चेक किया गया है, तो चयन के लिए पकड़ी गई एंटिटी के संक्षिप्त गुण दिखाए जाएँगे। </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1934"/>
@@ -41158,12 +41158,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1905"/>
         <source>Snap on Entity &quot;Free snap&quot; distance switch:</source>
-        <translation>&quot;इकाई पर स्नैप&quot; से &quot;फ्री स्नैप&quot; में बदलने की दूरी:</translation>
+        <translation>&quot;एंटिटी पर स्नैप&quot; से &quot;फ्री स्नैप&quot; में बदलने की दूरी:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1912"/>
         <source>Snap on entity will be invoked if it is enabled and the distance between mouse and snapped point is larger than specified value.</source>
-        <translation>यदि यह सक्षम है और माउस और स्नैप पॉइंट के बीच की दूरी निर्दिष्ट मूल्य से अधिक है तो इकाई पर स्नैप को आमंत्रित किया जाएगा।.</translation>
+        <translation>यदि एंटिटी पर स्नैप सक्षम है और माउस तथा स्नैप बिंदु के बीच की दूरी निर्दिष्ट मान से अधिक है, तो यह सक्रिय होगा।</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1915"/>
@@ -41173,7 +41173,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1859"/>
         <source>Distance in screen coordinates that is used for catching entities </source>
-        <translation>स्क्रीन निर्देशांक में दूरी जिसका उपयोग इकाइयों को पकड़ने के लिए किया जाता है</translation>
+        <translation>स्क्रीन निर्देशांक में दूरी जिसका उपयोग एंटिटीज़ को पकड़ने के लिए किया जाता है </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1898"/>
@@ -41183,12 +41183,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1872"/>
         <source>Snap distance (in pixels) for catching entities.</source>
-        <translation>इकाइयों को पकड़ने के लिए स्नैप दूरी (पिक्सेल में)।</translation>
+        <translation>एंटिटीज़ को पकड़ने के लिए स्नैप दूरी (पिक्सेल में)।</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1875"/>
         <source>Catch entities Snap Distance:</source>
-        <translation>इकाइयों को पकड़ने की स्नैप दूरी:</translation>
+        <translation>एंटिटीज़ को पकड़ने की स्नैप दूरी:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1882"/>
@@ -41239,12 +41239,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5427"/>
         <source>If selected, separate menu will be created for each group of entity-related commands. Otherwise, these command will be under the same menu. </source>
-        <translation>यदि चयनित किया जाता है, तो इकाई से संबंधित आदेशों के प्रत्येक समूह के लिए अलग मेनू बनाया जाएगा। अन्यथा, ये कमांड उसी मेनू के अंतर्गत होंगे।.</translation>
+        <translation>यदि चयनित है, तो एंटिटी से संबंधित कमांड के प्रत्येक समूह के लिए अलग मेनू बनाया जाएगा। अन्यथा, ये कमांड एक ही मेनू में होंगे। </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5157"/>
         <source>If enabled, it is possible to do with keys - zooming via +/-, scrolling via arrow keys, moving selected entities position via arrow keys and SHIFT/CTRL modifiers.</source>
-        <translation>यदि सक्षम हो, तो कुंजी के साथ करना संभव है - +/- के माध्यम से ज़ूम करना, तीर कुंजी के माध्यम से स्क्रॉल करना, तीर कुंजी और SHIFT/CTRL संशोधक के माध्यम से चयनित इकाइयों की स्थिति को स्थानांतरित करना।</translation>
+        <translation>यदि सक्षम हो, तो कुंजी के साथ करना संभव है - +/- के माध्यम से ज़ूम करना, तीर कुंजी के माध्यम से स्क्रॉल करना, तीर कुंजी और SHIFT/CTRL संशोधक के माध्यम से चयनित एंटिटीज़ की स्थिति को स्थानांतरित करना।</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5160"/>
@@ -41264,7 +41264,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5433"/>
         <source>Separate menu per entity</source>
-        <translation>प्रति इकाई अलग मेनू</translation>
+        <translation>प्रति एंटिटी अलग मेनू</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="102"/>
@@ -41861,12 +41861,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6195"/>
         <source>If checked, archs are drawn using line segments interpolation.  This sliminates drawing artefacts near to endpoints, yet may result drawing of less smooth arcs.  No drawing errors near endpoints on large zooms.</source>
-        <translation>यदि जांच की जाती है, तो आर्क लाइन सेगमेंट इंटरपोलेशन का उपयोग करके तैयार किए जाते हैं। यह छिछिद्रण अंत बिंदुओं के पास कलाकृतियों का चित्रण करता है, फिर भी कम चिकनी चापों का चित्रण हो सकता है। बड़े ज़ूम पर समापन बिंदुओं के पास कोई ड्राइंग त्रुटि नहीं है।.</translation>
+        <translation>यदि चेक किया गया है, तो चाप रेखा खंडों के इंटरपोलेशन से बनाए जाते हैं। इससे अंत बिंदुओं के पास ड्रॉइंग की विकृतियाँ समाप्त होती हैं, पर चाप कुछ कम चिकने दिख सकते हैं। बड़े ज़ूम पर अंत बिंदुओं के पास कोई ड्रॉइंग त्रुटि नहीं होती।</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6205"/>
         <source>If this method is selected, arcs are drawn using method of QT library.  On large zooms, arcs may be rendered with errors near endpoints.</source>
-        <translation>यदि इस विधि का चयन किया जाता है, तो QT पुस्तकालय की विधि का उपयोग करके आर्क तैयार किए जाते हैं। बड़े ज़ूम पर, आर्क को एंडपॉइंट्स के पास त्रुटियों के साथ प्रस्तुत किया जा सकता है।.</translation>
+        <translation>यदि यह विधि चुनी गई है, तो चाप Qt लाइब्रेरी की विधि से बनाए जाते हैं। बड़े ज़ूम पर, अंत बिंदुओं के पास चाप त्रुटियों के साथ रेंडर हो सकते हैं।</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6208"/>
@@ -41901,7 +41901,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6186"/>
         <source>Defines how arcs are rendered in UI. </source>
-        <translation>यह परिभाषित करता है कि कैसे आर्क यूआई में प्रस्तुत किए जाते हैं।.</translation>
+        <translation>यह परिभाषित करता है कि कैसे चाप यूआई में प्रस्तुत किए जाते हैं। </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5589"/>
@@ -41956,12 +41956,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6291"/>
         <source>Render circles in the same way as arcs.</source>
-        <translation>आर्क के समान तरीके से रेंडर सर्कल।.</translation>
+        <translation>वृत्तों को चापों की तरह ही रेंडर करें।</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3028"/>
         <source>Show properties of catched entity</source>
-        <translation>पकड़े गए इकाई के गुण दिखाएं</translation>
+        <translation>पकड़ी गई एंटिटी के गुण दिखाएँ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2996"/>
@@ -41986,12 +41986,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5091"/>
         <source>If selected, entities will stay selected after completion of Modify operations. Otherwise, they will be not selected. </source>
-        <translation>यदि चयन किया जाता है, तो इकाइयों को संशोधित संचालन के पूरा होने के बाद चुना जाएगा। अन्यथा, उन्हें चुना नहीं जाएगा।.</translation>
+        <translation>यदि चयनित है, तो संशोधन संचालन पूरा होने के बाद एंटिटीज़ चयनित रहेंगी। अन्यथा, उनका चयन हट जाएगा। </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5094"/>
         <source>Keep modified entities selected</source>
-        <translation>संशोधित इकाइयों को चयनित रखें</translation>
+        <translation>संशोधित एंटिटीज़ को चयनित रखें</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5582"/>
@@ -42126,7 +42126,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5074"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, activating a layer would modify all selected entities to that new layer. To change layer of multiple entities: first select needed entities; activate a layer in the layer widget. This makes all selected entities modified to belong to the new layer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;सक्षम होने पर, किसी परत को सक्रिय करने से सभी चयनित इकाइयां उस नई परत में स्थानांतरित हो जाएंगी। कई इकाइयों की परत बदलने के लिए: पहले आवश्यक इकाइयों का चयन करें; फिर परत विजेट में किसी परत को सक्रिय करें। इससे सभी चयनित इकाइयां नई परत से संबंधित हो जाती हैं।&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;सक्षम होने पर, किसी परत को सक्रिय करने से सभी चयनित एंटिटीज़ उस नई परत में स्थानांतरित हो जाएंगी। कई एंटिटीज़ की परत बदलने के लिए: पहले आवश्यक एंटिटीज़ का चयन करें; फिर परत विजेट में किसी परत को सक्रिय करें। इससे सभी चयनित एंटिटीज़ नई परत से संबंधित हो जाती हैं।&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4991"/>
@@ -42317,7 +42317,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.ui" line="135"/>
         <source>Approximate ellipses and ellipse arcs with cubic béziers</source>
-        <translation>क्यूबिक béziers के साथ लगभग ellipses और अंडाकार चाप</translation>
+        <translation>दीर्घवृत्तों और दीर्घवृत्त चापों का क्यूबिक बेज़ियर से सन्निकटन करें</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.cpp" line="31"/>
@@ -42338,9 +42338,9 @@ because it does not take into account the reference point in the &lt;use&gt;.</s
         <source>MakerCAM as of March 2015 cannot display ellipses and ellipse arcs correctly, 
 when they are created using the &lt;ellipse&gt; tag  with a rotation in 
 the &lt;transform&gt; attribute or as &lt;path&gt; using elliptic arc segments.</source>
-        <translation>मार्च 2015 तक मेकरसीएएम सही ढंग से अंडाकार और अंडाकार चाप प्रदर्शित नहीं कर सकता है,
+        <translation>मार्च 2015 तक मेकरसीएएम सही ढंग से दीर्घवृत्त और दीर्घवृत्त चाप प्रदर्शित नहीं कर सकता है,
 जब वे &lt;ellipse&gt; टैग का उपयोग करके बनाए जाते हैं तो एक घूर्णन के साथ
-&lt;transform&gt; विशेषता या &lt;path&gt; अंडाकार आर्क खंडों का उपयोग करके।.</translation>
+&lt;transform&gt; विशेषता या &lt;path&gt; दीर्घवृत्त चाप खंडों का उपयोग करके।</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.cpp" line="38"/>
@@ -42431,7 +42431,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="353"/>
         <source>&amp;Height:</source>
-        <translation>और ऊंचाई:</translation>
+        <translation>ऊँचाई (&amp;H):</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="268"/>
@@ -42456,7 +42456,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="476"/>
         <source>Bottom Center</source>
-        <translation>बॉटम सेंटर</translation>
+        <translation>नीचे केंद्र</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="795"/>
@@ -42503,7 +42503,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="572"/>
         <source>Baseline Center</source>
-        <translation>बेसलाइन सेंटर</translation>
+        <translation>बेसलाइन केंद्र</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="607"/>
@@ -42529,12 +42529,12 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="502"/>
         <source>A&amp;ligned</source>
-        <translation>A&amp;ligned</translation>
+        <translation>संरेखित (&amp;L)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="633"/>
         <source>&amp;Middle</source>
-        <translation>और मिडल</translation>
+        <translation>मध्य (&amp;M)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="922"/>
@@ -43510,7 +43510,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/dialogs/file/export/image/qg_dlgimageoptions.ui" line="219"/>
         <source>B&amp;lack</source>
-        <translation>B&amp;Lack</translation>
+        <translation>काला (&amp;L)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/image/qg_dlgimageoptions.ui" line="258"/>
@@ -43567,7 +43567,7 @@ so default step value required for baking</source>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.ui" line="29"/>
         <source>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
 The contents of a Construction Layer should not appear in printout.</source>
-        <translation>निर्माण परत में अनंत सीधी रेखाओं की इकाइयां होती हैं, जिनका उपयोग ज्यामितीय निर्माण के लिए किया जाता है।
+        <translation>निर्माण परत में अनंत सीधी रेखाओं की एंटिटीज़ होती हैं, जिनका उपयोग ज्यामितीय निर्माण के लिए किया जाता है।
 निर्माण परत की सामग्री प्रिंटआउट में दिखाई नहीं देनी चाहिए।</translation>
     </message>
     <message>
@@ -43893,12 +43893,12 @@ P, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/components/status_bar/qg_selectionwidget.ui" line="180"/>
         <source>Number of selected entities</source>
-        <translation>चयनित इकाइयों की संख्या</translation>
+        <translation>चयनित एंटिटीज़ की संख्या</translation>
     </message>
     <message>
         <location filename="../src/ui/components/status_bar/qg_selectionwidget.ui" line="115"/>
         <source>Total length of selected entities</source>
-        <translation>चयनित इकाइयों की कुल लंबाई</translation>
+        <translation>चयनित एंटिटीज़ की कुल लंबाई</translation>
     </message>
 </context>
 <context>
@@ -44016,7 +44016,7 @@ P, li { white-space: pre-wrap; }
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="173"/>
         <source>Layer &quot;%1&quot; and all entities on it will be removed.
 This action can NOT be undone.</source>
-        <translation>परत &quot;%1&quot; और उस पर मौजूद सभी इकाइयां हटा दी जाएंगी।
+        <translation>परत &quot;%1&quot; और उस पर मौजूद सभी एंटिटीज़ हटा दी जाएंगी।
 इस कार्रवाई को पूर्ववत नहीं किया जा सकता।</translation>
     </message>
     <message>
@@ -44043,7 +44043,7 @@ This action can NOT be undone.</source>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="251"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1788"/>
         <source>Listed layers and all entities on them will be removed.</source>
-        <translation>सूचीबद्ध परतें और उन पर मौजूद सभी इकाइयां हटा दी जाएंगी।</translation>
+        <translation>सूचीबद्ध परतें और उन पर मौजूद सभी एंटिटीज़ हटा दी जाएंगी।</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="253"/>
@@ -44075,7 +44075,7 @@ This action can NOT be undone.</source>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="407"/>
         <source>Block &quot;%1&quot; and all its entities will be removed.</source>
-        <translation>ब्लॉक &quot;%1&quot; और इसकी सभी इकाइयों को हटा दिया जाएगा।</translation>
+        <translation>ब्लॉक &quot;%1&quot; और इसकी सभी एंटिटीज़ को हटा दिया जाएगा।</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="463"/>
@@ -44088,7 +44088,7 @@ This action can NOT be undone.</source>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="465"/>
         <source>Listed blocks and all their entities will be removed.</source>
-        <translation>सूचीबद्ध ब्लॉक और उनकी सभी इकाइयों को हटा दिया जाएगा।</translation>
+        <translation>सूचीबद्ध ब्लॉक और उनकी सभी एंटिटीज़ को हटा दिया जाएगा।</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="467"/>
@@ -44143,7 +44143,7 @@ Clear filtering mask and repeat.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="973"/>
         <source>No layers without entities found, nothing to remove.</source>
-        <translation>बिना इकाइयों वाली कोई परत नहीं मिली, हटाने के लिए कुछ नहीं है।</translation>
+        <translation>बिना एंटिटीज़ वाली कोई परत नहीं मिली, हटाने के लिए कुछ नहीं है।</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1116"/>
@@ -44217,7 +44217,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1404"/>
         <source>Pen will be removed from palette, drawing entities will not be affected.</source>
-        <translation>पेन को पैलेट से हटा दिया जाएगा, ड्राइंग इकाइयों को प्रभावित नहीं किया जाएगा।.</translation>
+        <translation>पेन को पैलेट से हटा दिया जाएगा, ड्राइंग एंटिटीज़ को प्रभावित नहीं किया जाएगा।</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1406"/>
@@ -44238,7 +44238,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1426"/>
         <source>Pens will be removed from palette, drawing entities will not be affected.</source>
-        <translation>पैलेट से पेन हटा दिए जाएंगे, ड्राइंग इकाइयों को प्रभावित नहीं किया जाएगा।.</translation>
+        <translation>पैलेट से पेन हटा दिए जाएंगे, ड्राइंग एंटिटीज़ को प्रभावित नहीं किया जाएगा।</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1430"/>
@@ -44248,25 +44248,25 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1451"/>
         <source>Select Entities </source>
-        <translation>इकाई का चयन करें</translation>
+        <translation>एंटिटीज़ का चयन करें </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1453"/>
         <source>There are no entities that matches pen on visible layers.</source>
-        <translation>दृश्यमान परतों पर पेन से मेल खाने वाली कोई इकाई नहीं है।</translation>
+        <translation>दृश्यमान परतों पर पेन से मेल खाने वाली कोई एंटिटी नहीं है।</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1454"/>
         <source>Such entities exist on frozen layers.
 </source>
-        <translation>ऐसी इकाइयां फ़्रीज़ की गई परतों पर मौजूद हैं।
+        <translation>ऐसी एंटिटीज़ फ़्रीज़ की गई परतों पर मौजूद हैं।
 </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1455"/>
         <source>Such entities exist on locked layers.
 </source>
-        <translation>ऐसी इकाइयां लॉक की गई परतों पर मौजूद हैं।
+        <translation>ऐसी एंटिटीज़ लॉक की गई परतों पर मौजूद हैं।
 </translation>
     </message>
     <message>
@@ -44277,12 +44277,12 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1466"/>
         <source>Set pen by entity</source>
-        <translation>इकाई द्वारा पेन सेट करें</translation>
+        <translation>एंटिटी द्वारा पेन सेट करें</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1467"/>
         <source>Please select only one entity to pick pen setting.</source>
-        <translation>कृपया पेन सेटिंग लेने के लिए केवल एक इकाई का चयन करें।.</translation>
+        <translation>कृपया पेन सेटिंग लेने के लिए केवल एक एंटिटी का चयन करें।</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1477"/>
@@ -46701,7 +46701,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="961"/>
         <source>snaponentity</source>
         <comment>snap - on entity</comment>
-        <translation>स्नैपइकाई</translation>
+        <translation>स्नैपएंटिटी</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="962"/>
@@ -47627,12 +47627,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="105"/>
         <source>Auto fit and center drawing to page.</source>
-        <translation>पृष्ठ पर ऑटो फिट और सेंटर ड्राइंग।.</translation>
+        <translation>ड्राइंग को पृष्ठ पर स्वतः फ़िट और केंद्रित करें।</translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="109"/>
         <source>Auto center drawing on page.</source>
-        <translation>पृष्ठ पर ऑटो सेंटर ड्राइंग।.</translation>
+        <translation>ड्राइंग को पृष्ठ पर स्वतः केंद्रित करें।</translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="113"/>
@@ -47740,7 +47740,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="39"/>
         <source>/CustomColor%1</source>
-        <translation>कस्टम</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="40"/>
@@ -48017,31 +48017,31 @@ Do you want to replace it?</source>
         <location filename="../src/lib/engine/rs_units.cpp" line="941"/>
         <source>Arch A</source>
         <comment>Paper format</comment>
-        <translation>आर्क A</translation>
+        <translation>आर्च A</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="943"/>
         <source>Arch B</source>
         <comment>Paper format</comment>
-        <translation>आर्क बी</translation>
+        <translation>आर्च बी</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="945"/>
         <source>Arch C</source>
         <comment>Paper format</comment>
-        <translation>आर्क सी</translation>
+        <translation>आर्च सी</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="947"/>
         <source>Arch D</source>
         <comment>Paper format</comment>
-        <translation>आर्क डी</translation>
+        <translation>आर्च डी</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="949"/>
         <source>Arch E</source>
         <comment>Paper format</comment>
-        <translation>आर्क ई</translation>
+        <translation>आर्च ई</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="964"/>
@@ -48125,13 +48125,13 @@ Do you want to replace it?</source>
         <location filename="../src/lib/engine/rs_units.cpp" line="1012"/>
         <source>arch b</source>
         <comment>Paper format</comment>
-        <translation>आर्क बी</translation>
+        <translation>आर्च बी</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="1015"/>
         <source>arch c</source>
         <comment>Paper format</comment>
-        <translation>आर्क सी</translation>
+        <translation>आर्च सी</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="1018"/>
@@ -48143,7 +48143,7 @@ Do you want to replace it?</source>
         <location filename="../src/lib/engine/rs_units.cpp" line="1021"/>
         <source>arch e</source>
         <comment>Paper format</comment>
-        <translation>आर्क ई</translation>
+        <translation>आर्च ई</translation>
     </message>
     <message>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="104"/>
@@ -48161,7 +48161,7 @@ Do you want to replace it?</source>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="119"/>
         <source>Anyhow, there are some entities identified.</source>
         <comment>dwgImport</comment>
-        <translation>फिर भी, कुछ इकाइयों की पहचान की गई है।</translation>
+        <translation>फिर भी, कुछ एंटिटीज़ की पहचान की गई है।</translation>
     </message>
     <message>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="120"/>
@@ -48214,61 +48214,61 @@ Do you want to replace it?</source>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="1018"/>
         <source>error reading DXF/DWG meta data</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>त्रुटि पढ़ने DXF/DWG मेटा डेटा</translation>
+        <translation>DXF/DWG मेटा डेटा पढ़ने में त्रुटि</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="1020"/>
         <source>error reading DXF/DWG file header</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>त्रुटि पढ़ने DXF/DWG फ़ाइल हेडर</translation>
+        <translation>DXF/DWG फ़ाइल हेडर पढ़ने में त्रुटि</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="1024"/>
         <source>error reading DXF/DWG object map</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>त्रुटि पढ़ने DXF/DWG वस्तु का नक्शा</translation>
+        <translation>DXF/DWG ऑब्जेक्ट मैप पढ़ने में त्रुटि</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="1026"/>
         <source>error reading DXF/DWG classes</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>त्रुटि पढ़ने DXF/DWG कक्षा</translation>
+        <translation>DXF/DWG क्लास पढ़ने में त्रुटि</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="1028"/>
         <source>error reading DXF/DWG tables</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>त्रुटि पढ़ने DXF/DWG तालिका</translation>
+        <translation>DXF/DWG तालिकाएँ पढ़ने में त्रुटि</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="1030"/>
         <source>error reading DXF/DWG blocks</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>त्रुटि पढ़ने DXF/DWG ब्लॉक</translation>
+        <translation>DXF/DWG ब्लॉक पढ़ने में त्रुटि</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="1032"/>
         <source>error reading DXF/DWG entities</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>DXF/DWG इकाइयों को पढ़ने में त्रुटि</translation>
+        <translation>DXF/DWG एंटिटीज़ को पढ़ने में त्रुटि</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="1034"/>
         <source>error reading DXF/DWG objects</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>त्रुटि पढ़ने DXF/DWG ऑब्जेक्ट</translation>
+        <translation>DXF/DWG ऑब्जेक्ट पढ़ने में त्रुटि</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="1036"/>
         <source>error reading DXF/DWG sections</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>त्रुटि पढ़ने DXF/DWG अनुभाग</translation>
+        <translation>DXF/DWG अनुभाग पढ़ने में त्रुटि</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="1038"/>
         <source>error reading DXF/DWG code</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>त्रुटि पढ़ने DXF/DWG कोड</translation>
+        <translation>DXF/DWG कोड पढ़ने में त्रुटि</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="1022"/>
@@ -48394,47 +48394,47 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="12435"/>
         <source>error reading file metadata in dwg file</source>
-        <translation>dwg फ़ाइल में त्रुटि रीडिंग फ़ाइल मेटाडाटा</translation>
+        <translation>dwg फ़ाइल में फ़ाइल मेटाडेटा पढ़ने में त्रुटि</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="12438"/>
         <source>error reading file header in dwg file</source>
-        <translation>dwg फ़ाइल में त्रुटि रीडिंग फ़ाइल हेडर</translation>
+        <translation>dwg फ़ाइल में फ़ाइल हेडर पढ़ने में त्रुटि</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="12441"/>
         <source>error reading header vars in dwg file</source>
-        <translation>dwg फ़ाइल में त्रुटि रीडिंग हेडर vars</translation>
+        <translation>dwg फ़ाइल में हेडर वेरिएबल पढ़ने में त्रुटि</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="12444"/>
         <source>error reading classes in dwg file</source>
-        <translation>dwg फ़ाइल में त्रुटि रीडिंग क्लास</translation>
+        <translation>dwg फ़ाइल में क्लास पढ़ने में त्रुटि</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="12447"/>
         <source>error reading offsets in dwg file</source>
-        <translation>dwg फ़ाइल में त्रुटि रीडिंग ऑफसेट</translation>
+        <translation>dwg फ़ाइल में ऑफसेट पढ़ने में त्रुटि</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="12450"/>
         <source>error reading tables in dwg file</source>
-        <translation>dwg फ़ाइल में त्रुटि रीडिंग टेबल</translation>
+        <translation>dwg फ़ाइल में तालिकाएँ पढ़ने में त्रुटि</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="12453"/>
         <source>error reading blocks in dwg file</source>
-        <translation>dwg फ़ाइल में त्रुटि रीडिंग ब्लॉक</translation>
+        <translation>dwg फ़ाइल में ब्लॉक पढ़ने में त्रुटि</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="12456"/>
         <source>error reading entities in dwg file</source>
-        <translation>dwg फ़ाइल में इकाइयों को पढ़ने में त्रुटि</translation>
+        <translation>dwg फ़ाइल में एंटिटीज़ को पढ़ने में त्रुटि</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="12459"/>
         <source>error reading objects in dwg file</source>
-        <translation>dwg फ़ाइल में त्रुटि पठन ऑब्जेक्ट</translation>
+        <translation>dwg फ़ाइल में ऑब्जेक्ट पढ़ने में त्रुटि</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="42"/>
@@ -48692,12 +48692,12 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="476"/>
         <source>Circle</source>
-        <translation>सर्कल</translation>
+        <translation>वृत्त</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="480"/>
         <source>Arc</source>
-        <translation>आर्क</translation>
+        <translation>चाप</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="484"/>
@@ -48707,17 +48707,17 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="488"/>
         <source>Spline</source>
-        <translation>स्पलीन</translation>
+        <translation>स्प्लाइन</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="492"/>
         <source>Spline by Points</source>
-        <translation>प्वाइंट द्वारा स्पलीन</translation>
+        <translation>बिंदु द्वारा स्प्लाइन</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="496"/>
         <source>Ellipse</source>
-        <translation>Ellipse</translation>
+        <translation>दीर्घवृत्त</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="500"/>
@@ -48871,12 +48871,12 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="577"/>
         <source> entities </source>
-        <translation> इकाइयाँ </translation>
+        <translation> एंटिटीज़ </translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="578"/>
         <source>that intersect with box</source>
-        <translation>कि बॉक्स के साथ अंतर</translation>
+        <translation>जो बॉक्स को प्रतिच्छेदित करती हैं</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="578"/>
@@ -48901,7 +48901,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="633"/>
         <source>Arc</source>
-        <translation>आर्क</translation>
+        <translation>चाप</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="504"/>
@@ -48953,7 +48953,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="644"/>
         <source>Circle</source>
-        <translation>सर्कल</translation>
+        <translation>वृत्त</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="994"/>
@@ -48998,7 +48998,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1018"/>
         <source>Zoom, pan or select entity</source>
-        <translation>ज़ूम, पैन या चयन इकाई</translation>
+        <translation>ज़ूम, पैन या एंटिटी चुनें</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1018"/>
@@ -49013,7 +49013,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1023"/>
         <source>Select/Deselect entities</source>
-        <translation>चुनें/चुनें</translation>
+        <translation>एंटिटीज़ चुनें/चयन हटाएँ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1023"/>
@@ -49041,7 +49041,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimangular.cpp" line="222"/>
         <source>Specify dimension arc line location</source>
-        <translation>आयाम आर्क लाइन स्थान निर्दिष्ट करें</translation>
+        <translation>आयाम चाप लाइन स्थान निर्दिष्ट करें</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimangular.cpp" line="225"/>
@@ -49077,7 +49077,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimlinear.cpp" line="214"/>
         <source>Specify second extension line origin</source>
-        <translation>दूसरी एक्सटेंशन लाइन मूल निर्दिष्ट करें</translation>
+        <translation>दूसरी विस्तार रेखा मूल निर्दिष्ट करें</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimlinear.cpp" line="214"/>
@@ -49088,7 +49088,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimlinear.cpp" line="224"/>
         <source>Specify dimension line location</source>
-        <translation>आयाम लाइन स्थान निर्दिष्ट करें</translation>
+        <translation>आयाम रेखा स्थान निर्दिष्ट करें</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimlinear.cpp" line="224"/>
@@ -49101,27 +49101,27 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipse4points.cpp" line="170"/>
         <source>Can not determine uniquely an ellipse</source>
-        <translation>विशिष्ट रूप से एक अंडाकार निर्धारित नहीं कर सकते</translation>
+        <translation>दीर्घवृत्त अद्वितीय रूप से निर्धारित नहीं किया जा सकता</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipse4points.cpp" line="282"/>
         <source>Specify the first point on ellipse</source>
-        <translation>पहले बिंदु को अंडाकार पर निर्दिष्ट करें</translation>
+        <translation>दीर्घवृत्त पर पहला बिंदु निर्दिष्ट करें</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipse4points.cpp" line="285"/>
         <source>Specify the second point on ellipse</source>
-        <translation>दूसरे बिंदु को अंडाकार पर निर्दिष्ट करें</translation>
+        <translation>दीर्घवृत्त पर दूसरा बिंदु निर्दिष्ट करें</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipse4points.cpp" line="288"/>
         <source>Specify the third point on ellipse</source>
-        <translation>तीसरे बिंदु को अंडाकार पर निर्दिष्ट करें</translation>
+        <translation>दीर्घवृत्त पर तीसरा बिंदु निर्दिष्ट करें</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipse4points.cpp" line="291"/>
         <source>Specify the fourth point on ellipse</source>
-        <translation>चौथे बिंदु को अंडाकार पर निर्दिष्ट करें</translation>
+        <translation>दीर्घवृत्त पर चौथा बिंदु निर्दिष्ट करें</translation>
     </message>
 </context>
 <context>
@@ -49136,7 +49136,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/lc_action_draw_ellipse_axis.cpp" line="398"/>
         <source>Specify ellipse center</source>
-        <translation>अंडाकार केंद्र निर्दिष्ट करें</translation>
+        <translation>दीर्घवृत्त केंद्र निर्दिष्ट करें</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/lc_action_draw_ellipse_axis.cpp" line="401"/>
@@ -49169,17 +49169,17 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsecenter3points.cpp" line="251"/>
         <source>Specify the first point on ellipse</source>
-        <translation>पहले बिंदु को अंडाकार पर निर्दिष्ट करें</translation>
+        <translation>दीर्घवृत्त पर पहला बिंदु निर्दिष्ट करें</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsecenter3points.cpp" line="254"/>
         <source>Specify the second point on ellipse</source>
-        <translation>दूसरे बिंदु को अंडाकार पर निर्दिष्ट करें</translation>
+        <translation>दीर्घवृत्त पर दूसरा बिंदु निर्दिष्ट करें</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsecenter3points.cpp" line="257"/>
         <source>Specify the third point on ellipse</source>
-        <translation>तीसरे बिंदु को अंडाकार पर निर्दिष्ट करें</translation>
+        <translation>दीर्घवृत्त पर तीसरा बिंदु निर्दिष्ट करें</translation>
     </message>
 </context>
 <context>
@@ -49212,7 +49212,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsefocipoint.cpp" line="219"/>
         <source>Specify a point on ellipse or total distance to foci</source>
-        <translation>अंडाकार या कुल दूरी पर एक बिंदु निर्दिष्ट करें</translation>
+        <translation>दीर्घवृत्त पर एक बिंदु या नाभियों तक कुल दूरी निर्दिष्ट करें</translation>
     </message>
 </context>
 <context>
@@ -49220,7 +49220,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseinscribe.cpp" line="227"/>
         <source>Can not determine uniquely an ellipse</source>
-        <translation>विशिष्ट रूप से एक अंडाकार निर्धारित नहीं कर सकते</translation>
+        <translation>दीर्घवृत्त अद्वितीय रूप से निर्धारित नहीं किया जा सकता</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseinscribe.cpp" line="308"/>
@@ -49291,7 +49291,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="160"/>
         <source>Invalid hatch area. Please check that the entities chosen form one or more closed contours.</source>
-        <translation>अमान्य हैच क्षेत्र। कृपया जांच लें कि चुनी गई इकाइयाँ एक या अधिक बंद समोच्च बनाती हैं।</translation>
+        <translation>अमान्य हैच क्षेत्र। कृपया जांच लें कि चुनी गई एंटिटीज़ एक या अधिक बंद समोच्च बनाती हैं।</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="185"/>
@@ -49333,7 +49333,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineorthtan.cpp" line="260"/>
         <source>Select circle, arc or ellipse</source>
-        <translation>सर्कल, चाप या अंडाकार चुनें</translation>
+        <translation>वृत्त, चाप या दीर्घवृत्त चुनें</translation>
     </message>
 </context>
 <context>
@@ -49390,7 +49390,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent1.cpp" line="206"/>
         <source>Select circle, arc or ellipse</source>
-        <translation>सर्कल, चाप या अंडाकार चुनें</translation>
+        <translation>वृत्त, चाप या दीर्घवृत्त चुनें</translation>
     </message>
 </context>
 <context>
@@ -49705,12 +49705,12 @@ End: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoinside.cpp" line="57"/>
         <source>Point is inside selected contour.</source>
-        <translation>प्वाइंट अंदर चयनित समोच्च है।.</translation>
+        <translation>बिंदु चयनित कंटूर के अंदर है।</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoinside.cpp" line="59"/>
         <source>Point is outside selected contour.</source>
-        <translation>प्वाइंट बाहर चयनित समोच्च है।.</translation>
+        <translation>बिंदु चयनित कंटूर के बाहर है।</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoinside.cpp" line="85"/>
@@ -49723,12 +49723,12 @@ End: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfototallength.cpp" line="52"/>
         <source>Total Length of selected entities: %1</source>
-        <translation>चयनित इकाइयों की कुल लंबाई: %1</translation>
+        <translation>चयनित एंटिटीज़ की कुल लंबाई: %1</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfototallength.cpp" line="55"/>
         <source>At least one of the selected entities cannot be measured.</source>
-        <translation>चयनित इकाइयों में से कम से कम एक को मापा नहीं जा सकता।</translation>
+        <translation>चयनित एंटिटीज़ में से कम से कम एक को मापा नहीं जा सकता।</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfototallength.cpp" line="64"/>
@@ -49873,12 +49873,12 @@ End: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/snap/rs_actionsnapintersectionmanual.cpp" line="131"/>
         <source>Select first entity</source>
-        <translation>पहली इकाई चुनें</translation>
+        <translation>पहली एंटिटी चुनें</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/snap/rs_actionsnapintersectionmanual.cpp" line="134"/>
         <source>Select second entity</source>
-        <translation>दूसरी इकाई चुनें</translation>
+        <translation>दूसरी एंटिटी चुनें</translation>
     </message>
 </context>
 <context>
@@ -49886,12 +49886,12 @@ End: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiontoolregeneratedimensions.cpp" line="63"/>
         <source>Regenerated %1 dimension entities</source>
-        <translation>Regenerated %1 आयाम इकाई</translation>
+        <translation>%1 आयाम एंटिटीज़ पुनः बनाई गईं</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiontoolregeneratedimensions.cpp" line="66"/>
         <source>No dimension entities found</source>
-        <translation>कोई आयाम इकाई नहीं मिली</translation>
+        <translation>कोई आयाम एंटिटी नहीं मिली</translation>
     </message>
 </context>
 <context>
@@ -49945,7 +49945,7 @@ End: (%8 , %9)</source>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1343"/>
         <source>Entity</source>
-        <translation>इकाई</translation>
+        <translation>एंटिटी</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1345"/>
@@ -49985,7 +49985,7 @@ End: (%8 , %9)</source>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1359"/>
         <source>Angle (on Entity)</source>
-        <translation>कोण (इकाई पर)</translation>
+        <translation>कोण (एंटिटी पर)</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1361"/>
@@ -50091,7 +50091,7 @@ End: (%8 , %9)</source>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1441"/>
         <source>Entity</source>
         <comment>visual snap</comment>
-        <translation type="unfinished">इकाई</translation>
+        <translation type="unfinished">एंटिटी</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1444"/>
@@ -50315,7 +50315,7 @@ End: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapdistoptions.ui" line="60"/>
         <source>Distance of snap point from initially resolved snap point</source>
-        <translation>शुरू में हल स्नैप प्वाइंट से स्नैप प्वाइंट की दूरी</translation>
+        <translation>शुरू में हल स्नैप बिंदु से स्नैप बिंदु की दूरी</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapdistoptions.ui" line="67"/>

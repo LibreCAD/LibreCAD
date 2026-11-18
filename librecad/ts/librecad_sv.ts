@@ -51,7 +51,7 @@
     <message>
         <location filename="../src/actions/drawing/lc_abstractactionwithpreview.cpp" line="644"/>
         <source> is not divided as it is locked.</source>
-        <translation>är inte delat eftersom det är låst.</translation>
+        <translation> delas inte eftersom den är låst.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/lc_abstractactionwithpreview.cpp" line="652"/>
@@ -61,7 +61,7 @@
     <message>
         <location filename="../src/actions/drawing/lc_abstractactionwithpreview.cpp" line="652"/>
         <source> is not divided as it is part of polyline. Expand polyline first.</source>
-        <translation>är inte delat eftersom det är en del av polyline. Expandera polyline först.</translation>
+        <translation> delas inte eftersom den ingår i en polylinje. Explodera polylinjen först.</translation>
     </message>
 </context>
 <context>
@@ -224,7 +224,7 @@ Detta block kan inte infogas.</translation>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="300"/>
         <source>Specify second extension line origin</source>
-        <translation>Specificera andra förlängningslinjens ursprung</translation>
+        <translation>Ange utgångspunkt för den andra förlängningslinjen</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="304"/>
@@ -234,12 +234,12 @@ Detta block kan inte infogas.</translation>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="304"/>
         <source>Snap to Adjacent Dim</source>
-        <translation>Snap till Adjacent Dim</translation>
+        <translation>Snappa till intilliggande mått</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="310"/>
         <source>Specify first extension line origin</source>
-        <translation>Specificera första förlängningslinjen ursprung</translation>
+        <translation>Ange utgångspunkt för den första förlängningslinjen</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="319"/>
@@ -329,7 +329,7 @@ Detta block kan inte infogas.</translation>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_2points_base.cpp" line="202"/>
         <source>Specify first point of arc</source>
-        <translation>Ange första punkten i arc</translation>
+        <translation>Ange bågens första punkt</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_2points_base.cpp" line="206"/>
@@ -339,7 +339,7 @@ Detta block kan inte infogas.</translation>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_2points_base.cpp" line="219"/>
         <source>Opposite Arc direction</source>
-        <translation>Opposite Arc riktning</translation>
+        <translation>Motsatt bågriktning</translation>
     </message>
 </context>
 <context>
@@ -347,7 +347,7 @@ Detta block kan inte infogas.</translation>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_2points_height.cpp" line="55"/>
         <source>Enter height of arc</source>
-        <translation>Gå in i höjden av arc</translation>
+        <translation>Ange bågens höjd</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_2points_height.cpp" line="59"/>
@@ -365,7 +365,7 @@ Detta block kan inte infogas.</translation>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_2points_length.cpp" line="53"/>
         <source>Enter length of arc</source>
-        <translation>Enter längd av arc</translation>
+        <translation>Ange bågens längd</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_2points_length.cpp" line="57"/>
@@ -459,7 +459,7 @@ Detta block kan inte infogas.</translation>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_center_point_param.cpp" line="549"/>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_center_point_param.cpp" line="552"/>
         <source>Alternative Arc</source>
-        <translation type="unfinished">Alternativ Arc</translation>
+        <translation type="unfinished">Alternativ båge</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_center_point_param.cpp" line="552"/>
@@ -502,7 +502,7 @@ Detta block kan inte infogas.</translation>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_tangential.cpp" line="299"/>
         <source>Alternate Arc</source>
-        <translation type="unfinished">Alternativ Arc</translation>
+        <translation type="unfinished">Alternativ båge</translation>
     </message>
 </context>
 <context>
@@ -520,7 +520,7 @@ Detta block kan inte infogas.</translation>
     <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_bounding_box.cpp" line="163"/>
         <source>Select and draw</source>
-        <translation>Välj och dra</translation>
+        <translation>Välj och rita</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_bounding_box.cpp" line="98"/>
@@ -548,7 +548,7 @@ Detta block kan inte infogas.</translation>
     <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_center_line.cpp" line="299"/>
         <source>Alternate endpoints</source>
-        <translation type="unfinished">Alternativa endpoints</translation>
+        <translation type="unfinished">Alternativa ändpunkter</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_center_line.cpp" line="303"/>
@@ -745,7 +745,7 @@ avståndet mellan punkterna=%2 är större än diametern=%3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_2entities_1point.cpp" line="341"/>
         <source>Specify the another line/arc/circle</source>
-        <translation type="unfinished">Ange en annan linje/arc/cirkel</translation>
+        <translation type="unfinished">Ange den andra linjen/bågen/cirkeln</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_2entities_1point.cpp" line="344"/>
@@ -763,7 +763,7 @@ avståndet mellan punkterna=%2 är större än diametern=%3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_2entities_radius.cpp" line="262"/>
         <source>No common tangential circle for radius &apos;%1&apos;</source>
-        <translation type="unfinished">Ingen gemensam tangentiell cirkel för linjeien &apos;%1&apos;</translation>
+        <translation type="unfinished">Ingen gemensam tangentcirkel för radien &apos;%1&apos;</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_2entities_radius.cpp" line="292"/>
@@ -824,7 +824,7 @@ avståndet mellan punkterna=%2 är större än diametern=%3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="419"/>
         <source>Specify second extension line origin</source>
-        <translation>Specificera andra förlängningslinjens ursprung</translation>
+        <translation>Ange utgångspunkt för den andra förlängningslinjen</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="419"/>
@@ -839,7 +839,7 @@ avståndet mellan punkterna=%2 är större än diametern=%3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="422"/>
         <source>Snap to Adjacent Dim</source>
-        <translation>Snap till Adjacent Dim</translation>
+        <translation>Snappa till intilliggande mått</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="425"/>
@@ -852,7 +852,7 @@ avståndet mellan punkterna=%2 är större än diametern=%3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="63"/>
         <source>Select Center</source>
-        <translation>Välj Center</translation>
+        <translation>Välj centrum</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="68"/>
@@ -872,7 +872,7 @@ avståndet mellan punkterna=%2 är större än diametern=%3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="59"/>
         <source>Select to create dual (Enter to complete)</source>
-        <translation>Välj för att skapa dual (Enter to komplett)</translation>
+        <translation>Välj för att skapa dual (Enter för att slutföra)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="59"/>
@@ -895,12 +895,12 @@ avståndet mellan punkterna=%2 är större än diametern=%3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/lc_action_draw_ellipse_1point.cpp" line="340"/>
         <source>Set start angle of arc</source>
-        <translation>Ställ in startvinkeln av arc</translation>
+        <translation>Ange bågens startvinkel</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/lc_action_draw_ellipse_1point.cpp" line="344"/>
         <source>Set end angle of arc</source>
-        <translation>Ställ slutvinkeln av arc</translation>
+        <translation>Ange bågens slutvinkel</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/lc_action_draw_ellipse_1point.cpp" line="382"/>
@@ -1599,7 +1599,7 @@ avståndet mellan punkterna=%2 är större än diametern=%3</translation>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabolaFD.cpp" line="293"/>
         <source>Select line that is parallel to directrix of parabola or set vertex point</source>
-        <translation>Välj linje som är parallellt med regim av parabola eller ställ in vertex punkt</translation>
+        <translation>Välj en linje parallell med parabelns styrlinje eller ange vertexpunkten</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabolaFD.cpp" line="297"/>
@@ -1767,7 +1767,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_action_draw_polygon_base.cpp" line="214"/>
         <source>Invalid value of rounding radius</source>
-        <translation type="unfinished">Ogiltigt värde av rundande radie</translation>
+        <translation type="unfinished">Ogiltigt värde för avrundningsradie</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_action_draw_polygon_base.cpp" line="224"/>
@@ -1782,7 +1782,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_action_draw_polygon_base.cpp" line="259"/>
         <source>Enter rounding radius:</source>
-        <translation type="unfinished">Ange rundande radie:</translation>
+        <translation type="unfinished">Ange avrundningsradie:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_action_draw_polygon_base.cpp" line="267"/>
@@ -1802,7 +1802,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_action_draw_polygon_base.cpp" line="291"/>
         <source>Center:</source>
-        <translation type="unfinished">Center:</translation>
+        <translation type="unfinished">Centrum:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_action_draw_polygon_base.cpp" line="292"/>
@@ -1872,7 +1872,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_draw_polyline.cpp" line="787"/>
         <source>Alternative Arc</source>
-        <translation type="unfinished">Alternativ Arc</translation>
+        <translation type="unfinished">Alternativ båge</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_draw_polyline.cpp" line="798"/>
@@ -1943,12 +1943,12 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_2points.cpp" line="310"/>
         <source>Specify point 1 snap [corner|mid-vert|mid-hor|middle]</source>
-        <translation>Ange snäpp för punkt 1 [corner|mid-vert|mid-hor|middle]</translation>
+        <translation>Ange snapp för punkt 1 [corner|mid-vert|mid-hor|middle]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_2points.cpp" line="313"/>
         <source>Specify point 2 snap [corner|mid-vert|mid-hor|middle]</source>
-        <translation>Ange snäpp för punkt 2 [corner|mid-vert|mid-hor|middle]</translation>
+        <translation>Ange snapp för punkt 2 [corner|mid-vert|mid-hor|middle]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_2points.cpp" line="316"/>
@@ -2030,7 +2030,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_abstract.cpp" line="195"/>
         <source>Center:</source>
-        <translation type="unfinished">Center:</translation>
+        <translation type="unfinished">Centrum:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_abstract.cpp" line="224"/>
@@ -2097,7 +2097,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_slice_divide.cpp" line="248"/>
         <source>Arc</source>
-        <translation>Arc</translation>
+        <translation>Båge</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_slice_divide.cpp" line="258"/>
@@ -2309,12 +2309,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="250"/>
         <source>Select Intersected Entities</source>
-        <translation>Välj snittentiteter</translation>
+        <translation>Välj skärande entiteter</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="251"/>
         <source>Deselect Intersected Entities</source>
-        <translation>Avmarkera snittentiteter</translation>
+        <translation>Avmarkera skärande entiteter</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="252"/>
@@ -2446,7 +2446,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="272"/>
         <source>Tangential, 2 P&amp;oints</source>
-        <translation>Tangentiell, 2 P&amp;oints</translation>
+        <translation>Tangentiell, 2 p&amp;unkter</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="278"/>
@@ -2471,7 +2471,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="313"/>
         <source>Ellipse &amp;Arc (Axis)</source>
-        <translation>Ellips &amp;Arc (axel)</translation>
+        <translation>Ellips&amp;båge (axel)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="314"/>
@@ -2551,7 +2551,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="341"/>
         <source>&amp;Hatch</source>
-        <translation>&amp;Hatch</translation>
+        <translation>&amp;Skraffering</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="342"/>
@@ -2641,7 +2641,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="388"/>
         <source>&amp;Trim</source>
-        <translation>ochTrim</translation>
+        <translation>&amp;Trimma</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="390"/>
@@ -2656,7 +2656,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="393"/>
         <source>&amp;Stretch</source>
-        <translation>ochStretch</translation>
+        <translation>&amp;Sträck</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="394"/>
@@ -3061,12 +3061,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="753"/>
         <source>&amp;Delete Selected</source>
-        <translation>och Delete Selected</translation>
+        <translation>&amp;Ta bort markerade</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="754"/>
         <source>&amp;Selection Pointer</source>
-        <translation>och Selection Pointer</translation>
+        <translation>&amp;Markeringspekare</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="759"/>
@@ -3096,7 +3096,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="775"/>
         <source>Pick Distance</source>
-        <translation>Pick Avstånd</translation>
+        <translation>Hämta avstånd</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="776"/>
@@ -3191,12 +3191,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="59"/>
         <source>Arc</source>
-        <translation>Arc</translation>
+        <translation>Båge</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="59"/>
         <source>Arc drawing commands</source>
-        <translation>Arc ritning kommandon</translation>
+        <translation>Kommandon för att rita bågar</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="60"/>
@@ -3206,7 +3206,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="60"/>
         <source>Spline drawing commands</source>
-        <translation>Spline rita kommandon</translation>
+        <translation>Kommandon för att rita splines</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="61"/>
@@ -3226,7 +3226,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="62"/>
         <source>Ellipse drawing commands</source>
-        <translation>Ellipse rita kommandon</translation>
+        <translation>Kommandon för att rita ellipser</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="63"/>
@@ -3296,7 +3296,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="69"/>
         <source>Polygon drawing commands</source>
-        <translation>Polygon rita kommandon</translation>
+        <translation>Kommandon för att rita polygoner</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="70"/>
@@ -3332,17 +3332,17 @@ or [%2]</source>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="73"/>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="73"/>
         <source>Relative Zero</source>
-        <translation>Relativ noll</translation>
+        <translation>Relativ nollpunkt</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="74"/>
         <source>Polyline</source>
-        <translation>Polyline</translation>
+        <translation>Polylinje</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="74"/>
         <source>Polyline drawing commands</source>
-        <translation>Polyline ritning kommandon</translation>
+        <translation>Kommandon för att rita polylinjer</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="75"/>
@@ -3352,7 +3352,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="75"/>
         <source>Pen related operations</source>
-        <translation>Pen-relaterade operationer</translation>
+        <translation>Pennrelaterade funktioner</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="76"/>
@@ -3362,7 +3362,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="76"/>
         <source>Snap restrictions</source>
-        <translation>Snap restriktioner</translation>
+        <translation>Snappbegränsningar</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="77"/>
@@ -3372,28 +3372,28 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="77"/>
         <source>Entity selection operations</source>
-        <translation>Entity Select Operations</translation>
+        <translation>Funktioner för entitetsval</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="78"/>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="430"/>
         <source>Snap</source>
-        <translation>Snap</translation>
+        <translation>Snapp</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="78"/>
         <source>Snapping operations</source>
-        <translation>Snapping operationer</translation>
+        <translation>Snappfunktioner</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="79"/>
         <source>Snap Extras</source>
-        <translation>Ytterligare fästpunkter</translation>
+        <translation>Extra snappfunktioner</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="79"/>
         <source>Additional Snaps</source>
-        <translation>Ytterligare Snaps</translation>
+        <translation>Ytterligare snappar</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="80"/>
@@ -3479,7 +3479,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="88"/>
         <source>Interactive Pick</source>
-        <translation>Interaktiv Pick</translation>
+        <translation>Interaktiv hämtning</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="109"/>
@@ -3639,7 +3639,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="262"/>
         <source>By Arc</source>
-        <translation>Av Arc</translation>
+        <translation>Från båge</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="269"/>
@@ -3724,12 +3724,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="302"/>
         <source>&amp;Explode spline to lines</source>
-        <translation>&amp;Explode spline till linjer</translation>
+        <translation>&amp;Explodera spline till linjer</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="303"/>
         <source>&amp;Spline from polyline</source>
-        <translation>Spline från polyline</translation>
+        <translation>&amp;Spline från polylinje</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="304"/>
@@ -3749,17 +3749,17 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="330"/>
         <source>Polyline from Existing &amp;Segments</source>
-        <translation>Polyline från befintliga och segment</translation>
+        <translation>Polylinje från befintliga &amp;segment</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="331"/>
         <source>Polyline Arcs to Chords</source>
-        <translation>Polyline Arcs till Chords</translation>
+        <translation>Polylinje: bågar till kordor</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="332"/>
         <source>Polyline Change Segment Type</source>
-        <translation>Polyline Ändra segment typ</translation>
+        <translation>Polylinje: ändra segmenttyp</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="343"/>
@@ -3774,27 +3774,27 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="358"/>
         <source>&amp;Baseline</source>
-        <translation>och Baseline</translation>
+        <translation>&amp;Baslinje</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="359"/>
         <source>&amp;Continue</source>
-        <translation>och Continue</translation>
+        <translation>&amp;Kedjemått</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="360"/>
         <source>&amp;Ordinate</source>
-        <translation>ochOrdinate</translation>
+        <translation>&amp;Ordinata</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="361"/>
         <source>Select Ordinates by base</source>
-        <translation>Välj Ordinates efter bas</translation>
+        <translation>Välj ordinatmått efter bas</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="362"/>
         <source>Ordinates Re-base</source>
-        <translation>Re-basen</translation>
+        <translation>Byt bas för ordinatmått</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="363"/>
@@ -3854,17 +3854,17 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="416"/>
         <source>&amp;Pick Pen From Entity</source>
-        <translation>Pick Pen från Entity</translation>
+        <translation>&amp;Hämta penna från entitet</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="417"/>
         <source>&amp;Pick Pen From Entity (Resolved)</source>
-        <translation>Pick Pen från Entity (Resolved)</translation>
+        <translation>&amp;Hämta penna från entitet (upplöst)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="418"/>
         <source>Apply Pen to Entity</source>
-        <translation>Applicera Pen till Entity</translation>
+        <translation>Tillämpa penna på entitet</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="419"/>
@@ -3904,37 +3904,37 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="449"/>
         <source>Snap Middle Manual</source>
-        <translation>Fäst mittpunkt manuellt</translation>
+        <translation>Snappa till mittpunkt manuellt</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="455"/>
         <source>Snap on Endpoints</source>
-        <translation>Fäst vid slutpunkter</translation>
+        <translation>Snappa till ändpunkter</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="456"/>
         <source>Snap on Entity</source>
-        <translation>Fäst vid objekt</translation>
+        <translation>Snappa på objekt</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="457"/>
         <source>Snap Center</source>
-        <translation>Fäst mittpunkt</translation>
+        <translation>Snappa till centrum</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="458"/>
         <source>Snap Middle</source>
-        <translation>Fäst mittpunkt</translation>
+        <translation>Snappa till mittpunkt</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="459"/>
         <source>Snap Distance</source>
-        <translation>Snap distans</translation>
+        <translation>Snappa på avstånd</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="460"/>
         <source>Snap Intersection</source>
-        <translation>Fäst vid skärningspunkt</translation>
+        <translation>Snappa till skärningspunkt</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="466"/>
@@ -4034,22 +4034,22 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="554"/>
         <source>Set relative zero position</source>
-        <translation>Ställ in relativ noll position</translation>
+        <translation>Ange relativ nollpunkt</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="557"/>
         <source>Lock relative zero position</source>
-        <translation>Lås relativ noll position</translation>
+        <translation>Lås relativ nollpunkt</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="565"/>
         <source>Exclusive Snap Mode</source>
-        <translation>Exklusiv Snap-läge</translation>
+        <translation>Exklusivt snappläge</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="566"/>
         <source>Free Snap</source>
-        <translation>Fri snäppning</translation>
+        <translation>Fri snapp</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="568"/>
@@ -4079,7 +4079,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="582"/>
         <source>&amp;Point Coordinates</source>
-        <translation>ochPoint Coordinates</translation>
+        <translation>&amp;Punktkoordinater</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="584"/>
@@ -4099,7 +4099,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="589"/>
         <source>Entity Pro&amp;perties</source>
-        <translation>Entity Pro &amp; Perties</translation>
+        <translation>Entitets&amp;egenskaper</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="590"/>
@@ -4119,32 +4119,32 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="604"/>
         <source>&amp;Draft Lines</source>
-        <translation>och Draf Lines</translation>
+        <translation>&amp;Utkastlinjer</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="605"/>
         <source>&amp;Antialiasing</source>
-        <translation>&amp; Antialiasing</translation>
+        <translation>&amp;Kantutjämning</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="607"/>
         <source>&amp;Orthogonal Grid</source>
-        <translation>Orthogonal Grid</translation>
+        <translation>&amp;Ortogonalt rutnät</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="608"/>
         <source>&amp;Isometric Left Grid</source>
-        <translation>Isometric Left Grid</translation>
+        <translation>Vänster &amp;isometriskt rutnät</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="609"/>
         <source>&amp;Isometric Top Grid</source>
-        <translation>Isometric Top Grid</translation>
+        <translation>Övre isometriskt &amp;rutnät</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="610"/>
         <source>&amp;Isometric Right Grid</source>
-        <translation>Isometric Right Grid</translation>
+        <translation>Höger is&amp;ometriskt rutnät</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="617"/>
@@ -4260,7 +4260,7 @@ Slutkantens punkt: (%9, %10)</translation>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="147"/>
         <source>Select second (intersection) point of angle</source>
-        <translation>Välj andra (intersektion) vinkelpunkt</translation>
+        <translation>Välj vinkelns andra punkt (skärningspunkten)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="151"/>
@@ -4322,7 +4322,7 @@ Slutkantens punkt: (%9, %10)</translation>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="213"/>
         <source>Intersection:</source>
-        <translation>Intersektion:</translation>
+        <translation>Skärningspunkt:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="215"/>
@@ -4368,7 +4368,7 @@ Punkt: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/info/lc_action_info_dist_point_to_entity.cpp" line="301"/>
         <source>Do not snap to child entities in container</source>
-        <translation type="unfinished">Snäpp inte till underordnade entiteter i behållare</translation>
+        <translation type="unfinished">Snappa inte till underordnade entiteter i behållare</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_action_info_dist_point_to_entity.cpp" line="305"/>
@@ -4470,7 +4470,7 @@ Punkt: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfopoint.cpp" line="75"/>
         <source>Relative Zero:</source>
-        <translation>Relativ noll:</translation>
+        <translation>Relativ nollpunkt:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfopoint.cpp" line="123"/>
@@ -4535,7 +4535,7 @@ Punkt: (%8, %9)</translation>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="164"/>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="323"/>
         <source>Intersection:</source>
-        <translation>Intersektion:</translation>
+        <translation>Skärningspunkt:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="165"/>
@@ -4565,12 +4565,12 @@ Punkt: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="292"/>
         <source>Select second (intersection) point of angle</source>
-        <translation>Välj andra (intersektion) vinkelpunkt</translation>
+        <translation>Välj vinkelns andra punkt (skärningspunkten)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="292"/>
         <source>Pick angle</source>
-        <translation>Pick vinkel</translation>
+        <translation>Hämta vinkel</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="296"/>
@@ -4581,7 +4581,7 @@ Punkt: (%8, %9)</translation>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="296"/>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="300"/>
         <source>Pick Supplementary</source>
-        <translation>Pick tillägg</translation>
+        <translation>Hämta supplementvinkel</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="300"/>
@@ -4591,7 +4591,7 @@ Punkt: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="300"/>
         <source>Pick Complementary</source>
-        <translation>Pick kompletterande</translation>
+        <translation>Hämta komplementvinkel</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="317"/>
@@ -4643,7 +4643,7 @@ Punkt: (%8, %9)</translation>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickdistance.cpp" line="169"/>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickdistance.cpp" line="181"/>
         <source>Pick Distance</source>
-        <translation>Pick Avstånd</translation>
+        <translation>Hämta avstånd</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickdistance.cpp" line="170"/>
@@ -4698,7 +4698,7 @@ Punkt: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickdistance.cpp" line="292"/>
         <source>Entity geometry length</source>
-        <translation>Entity geometri längd</translation>
+        <translation>Entitetens geometriska längd</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickdistance.cpp" line="292"/>
@@ -4741,22 +4741,22 @@ Punkt: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickposition.cpp" line="80"/>
         <source>Relative Zero:</source>
-        <translation>Relativ noll:</translation>
+        <translation>Relativ nollpunkt:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickposition.cpp" line="152"/>
         <source>Pick coordinates from the drawing</source>
-        <translation>Pick koordinater från ritningen</translation>
+        <translation>Hämta koordinaterna från ritningen</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickposition.cpp" line="153"/>
         <source>Pick relative zero coordinates</source>
-        <translation>Plocka relativa noll koordinater</translation>
+        <translation>Hämta koordinaterna för relativ nollpunkt</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickposition.cpp" line="153"/>
         <source>Pick relative coordinates</source>
-        <translation>Pick relativa koordinater</translation>
+        <translation>Hämta relativa koordinater</translation>
     </message>
 </context>
 <context>
@@ -4807,7 +4807,7 @@ Punkt: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="150"/>
         <source>Entity</source>
-        <translation>Entity</translation>
+        <translation>Entitet</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="154"/>
@@ -4827,7 +4827,7 @@ Punkt: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="181"/>
         <source>Offset:</source>
-        <translation>Offset:</translation>
+        <translation>Förskjutning:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="245"/>
@@ -4880,7 +4880,7 @@ Punkt: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_ref.cpp" line="118"/>
         <source>Offset:</source>
-        <translation>Offset:</translation>
+        <translation>Förskjutning:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_ref.cpp" line="119"/>
@@ -4938,7 +4938,7 @@ Punkt: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_single.cpp" line="115"/>
         <source>Offset:</source>
-        <translation>Offset:</translation>
+        <translation>Förskjutning:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_single.cpp" line="201"/>
@@ -4948,7 +4948,7 @@ Punkt: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_single.cpp" line="204"/>
         <source>Entity</source>
-        <translation>Entity</translation>
+        <translation>Entitet</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_single.cpp" line="208"/>
@@ -5019,7 +5019,7 @@ Punkt: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_bevel.cpp" line="183"/>
         <source>Intersection:</source>
-        <translation type="unfinished">Intersektion:</translation>
+        <translation type="unfinished">Skärningspunkt:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_bevel.cpp" line="184"/>
@@ -5050,7 +5050,7 @@ Punkt: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_bevel.cpp" line="257"/>
         <source>Selected lines are not children of the same polyline</source>
-        <translation type="unfinished">Valda linjer är inte barn av samma polylin</translation>
+        <translation type="unfinished">De valda linjerna ingår inte i samma polylinje</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_bevel.cpp" line="261"/>
@@ -5340,7 +5340,7 @@ Punkt: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_gap.cpp" line="463"/>
         <source>Select endpoint of gap</source>
-        <translation>Välj endpoint av gap</translation>
+        <translation>Välj luckans ändpunkt</translation>
     </message>
 </context>
 <context>
@@ -5358,7 +5358,7 @@ Punkt: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_join.cpp" line="135"/>
         <source>Intersection:</source>
-        <translation>Intersektion:</translation>
+        <translation>Skärningspunkt:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_join.cpp" line="188"/>
@@ -5374,7 +5374,7 @@ Punkt: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_join.cpp" line="215"/>
         <source>Lines already intersects, can&apos;t merge</source>
-        <translation>Linjer redan skär, kan inte slå samman</translation>
+        <translation>Linjerna skär redan varandra, kan inte sammanfogas</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_join.cpp" line="836"/>
@@ -5397,7 +5397,7 @@ Punkt: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_mirror.cpp" line="148"/>
         <source>Mirror</source>
-        <translation type="unfinished">Mirror</translation>
+        <translation type="unfinished">Spegla</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_mirror.cpp" line="149"/>
@@ -5704,7 +5704,7 @@ Punkt: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="144"/>
         <source>Offset</source>
-        <translation type="unfinished">Offset</translation>
+        <translation type="unfinished">Förskjutning</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="145"/>
@@ -5839,7 +5839,7 @@ Punkt: (%8, %9)</translation>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate.cpp" line="708"/>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate.cpp" line="711"/>
         <source>Snap to center of selection</source>
-        <translation type="unfinished">Snap till centrum av urval</translation>
+        <translation type="unfinished">Snappa till markeringens centrum</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate.cpp" line="711"/>
@@ -5915,7 +5915,7 @@ Punkt: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_round.cpp" line="225"/>
         <source>Round</source>
-        <translation type="unfinished">Runda</translation>
+        <translation type="unfinished">Avrundning</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_round.cpp" line="226"/>
@@ -5959,7 +5959,7 @@ Punkt: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_scale.cpp" line="224"/>
         <source>Center:</source>
-        <translation type="unfinished">Center:</translation>
+        <translation type="unfinished">Centrum:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_scale.cpp" line="225"/>
@@ -5994,7 +5994,7 @@ Punkt: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_scale.cpp" line="413"/>
         <source>Snap to center of selection</source>
-        <translation type="unfinished">Snap till centrum av urval</translation>
+        <translation type="unfinished">Snappa till markeringens centrum</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_scale.cpp" line="417"/>
@@ -6009,7 +6009,7 @@ Punkt: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_scale.cpp" line="420"/>
         <source>Free snap</source>
-        <translation type="unfinished">Fri snäppning</translation>
+        <translation type="unfinished">Fri snapp</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_scale.cpp" line="429"/>
@@ -6034,7 +6034,7 @@ Punkt: (%8, %9)</translation>
         <location filename="../src/actions/drawing/modify/lc_action_modify_stretch.cpp" line="128"/>
         <location filename="../src/actions/drawing/modify/lc_action_modify_stretch.cpp" line="146"/>
         <source>Stretch</source>
-        <translation type="unfinished">Stretch</translation>
+        <translation type="unfinished">Sträck</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_stretch.cpp" line="118"/>
@@ -6088,7 +6088,7 @@ Punkt: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim.cpp" line="130"/>
         <source>Trim Two</source>
-        <translation type="unfinished">Trim två</translation>
+        <translation type="unfinished">Trimma två</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim.cpp" line="130"/>
@@ -6098,12 +6098,12 @@ Punkt: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim.cpp" line="131"/>
         <source>Intersection:</source>
-        <translation type="unfinished">Intersektion:</translation>
+        <translation type="unfinished">Skärningspunkt:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim.cpp" line="133"/>
         <source>Intersection 2:</source>
-        <translation type="unfinished">Intersektion 2:</translation>
+        <translation type="unfinished">Skärningspunkt 2:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim.cpp" line="217"/>
@@ -6159,7 +6159,7 @@ Punkt: (%8, %9)</translation>
     <message>
         <location filename="../src/ui/action_options/lc_action_options_properties_filler_base.cpp" line="294"/>
         <source>Distance of snap point from initially resolved snap point</source>
-        <translation type="unfinished">Avstånd för snäpp-punkten från den ursprungligen beräknade snäpp-punkten</translation>
+        <translation type="unfinished">Snappunktens avstånd från den ursprungligen beräknade snappunkten</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/lc_action_options_properties_filler_base.cpp" line="308"/>
@@ -6233,7 +6233,7 @@ Punkt: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/pen/lc_actionpenapply.cpp" line="186"/>
         <source>Apply Resolved Pen</source>
-        <translation>Applicera Resolved Pen</translation>
+        <translation>Tillämpa upplöst penna</translation>
     </message>
 </context>
 <context>
@@ -6321,7 +6321,7 @@ Punkt: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_arcs_to_lines.cpp" line="116"/>
         <source>Specify polyline with arc segments</source>
-        <translation>Ange polylin med bågsegment</translation>
+        <translation>Ange en polylinje med bågsegment</translation>
     </message>
 </context>
 <context>
@@ -6334,12 +6334,12 @@ Punkt: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_change_segment_type.cpp" line="242"/>
         <source>Select polyline to modify</source>
-        <translation>Välj polyline för att ändra</translation>
+        <translation>Välj polylinje att ändra</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_change_segment_type.cpp" line="246"/>
         <source>Select segment of polyline to modify</source>
-        <translation>Välj segment av polyline för att ändra</translation>
+        <translation>Välj polylinjesegment att ändra</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_change_segment_type.cpp" line="250"/>
@@ -6409,12 +6409,12 @@ Punkt: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node_between.cpp" line="174"/>
         <source>No polyline found.</source>
-        <translation type="unfinished">Ingen polylin hittades.</translation>
+        <translation type="unfinished">Ingen polylinje hittades.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node_between.cpp" line="195"/>
         <source>At least two segments of polyline should be between selected points.</source>
-        <translation type="unfinished">Minst två segment av polylin bör vara mellan valda punkter.</translation>
+        <translation type="unfinished">Minst två segment av polylinjen måste ligga mellan de valda punkterna.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node_between.cpp" line="213"/>
@@ -6489,12 +6489,12 @@ Punkt: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_trim.cpp" line="143"/>
         <source>First segment should be on selected polyline.</source>
-        <translation type="unfinished">Första segmentet ska vara på vald polylin.</translation>
+        <translation type="unfinished">Första segmentet måste ligga på den valda polylinjen.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_trim.cpp" line="155"/>
         <source>Second segment should be on selected polyline and not equal to first one.</source>
-        <translation type="unfinished">Det andra segmentet bör vara på vald polylin och inte lika med första.</translation>
+        <translation type="unfinished">Andra segmentet måste ligga på den valda polylinjen och får inte vara samma som det första.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_trim.cpp" line="188"/>
@@ -6527,12 +6527,12 @@ Punkt: (%8, %9)</translation>
     <message>
         <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="221"/>
         <source> entities </source>
-        <translation>entities</translation>
+        <translation> entiteter </translation>
     </message>
     <message>
         <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="222"/>
         <source>that intersect with box</source>
-        <translation>det korsar med box</translation>
+        <translation>som skär rutan</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="222"/>
@@ -6547,12 +6547,12 @@ Punkt: (%8, %9)</translation>
     <message>
         <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="246"/>
         <source>Select/Deselect entities</source>
-        <translation>Välj/Deselect Entities</translation>
+        <translation>Markera/avmarkera entiteter</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="246"/>
         <source>Select Intersecting</source>
-        <translation>Välj Intersecting</translation>
+        <translation>Välj skärande</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="276"/>
@@ -6617,12 +6617,12 @@ Punkt: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_intersected.cpp" line="191"/>
         <source>Choose first point of intersection line</source>
-        <translation type="unfinished">Välj snittlinjens första punkt</translation>
+        <translation type="unfinished">Välj första punkten på skärningslinjen</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_intersected.cpp" line="192"/>
         <source>Select intersecting entity</source>
-        <translation type="unfinished">Välj Intersecting Entity</translation>
+        <translation type="unfinished">Välj skärande entitet</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_intersected.cpp" line="192"/>
@@ -6632,7 +6632,7 @@ Punkt: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_intersected.cpp" line="195"/>
         <source>Choose second point of intersection line</source>
-        <translation type="unfinished">Välj snittlinjens andra punkt</translation>
+        <translation type="unfinished">Välj andra punkten på skärningslinjen</translation>
     </message>
 </context>
 <context>
@@ -6689,12 +6689,12 @@ Punkt: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_window.cpp" line="136"/>
         <source> entities </source>
-        <translation type="unfinished">entities</translation>
+        <translation type="unfinished"> entiteter </translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_window.cpp" line="137"/>
         <source>that intersect with box</source>
-        <translation type="unfinished">det korsar med box</translation>
+        <translation type="unfinished">som skär rutan</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_window.cpp" line="137"/>
@@ -6714,7 +6714,7 @@ Punkt: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_window.cpp" line="183"/>
         <source>De-select entities</source>
-        <translation type="unfinished">De-select Entities</translation>
+        <translation type="unfinished">Avmarkera entiteter</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_window.cpp" line="183"/>
@@ -6724,12 +6724,12 @@ Punkt: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_window.cpp" line="184"/>
         <source>Select Intersecting</source>
-        <translation type="unfinished">Välj Intersecting</translation>
+        <translation type="unfinished">Välj skärande</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_window.cpp" line="184"/>
         <source>De-select intersecting</source>
-        <translation type="unfinished">Avmarkera överlappande objekt</translation>
+        <translation type="unfinished">Avmarkera skärande</translation>
     </message>
 </context>
 <context>
@@ -6832,7 +6832,7 @@ Punkt: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_action_spline_remove_between.cpp" line="236"/>
         <source>Delete from endpoints TO selected points</source>
-        <translation>Ta bort från endpoints till utvalda punkter</translation>
+        <translation>Ta bort från ändpunkterna TILL de valda punkterna</translation>
     </message>
 </context>
 <context>
@@ -6968,7 +6968,7 @@ Punkt: (%8, %9)</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.ui" line="220"/>
         <source>If checked, matched actions will be highlighted onlye, otherwide - non-matched actions are hidden</source>
-        <translation>Om de kontrolleras kommer matchade åtgärder att framhävas endast, i annat fall - icke-matchade åtgärder är dolda</translation>
+        <translation>Om markerat framhävs endast matchande åtgärder, annars döljs åtgärder som inte matchar</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.ui" line="223"/>
@@ -7075,7 +7075,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_options_filler.cpp" line="35"/>
         <source>Entity</source>
-        <translation type="unfinished">Entity</translation>
+        <translation type="unfinished">Entitet</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_options_filler.cpp" line="36"/>
@@ -7256,7 +7256,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_single_options_filler.cpp" line="35"/>
         <source>Entity</source>
-        <translation type="unfinished">Entity</translation>
+        <translation type="unfinished">Entitet</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_single_options_filler.cpp" line="36"/>
@@ -7381,7 +7381,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_single_options_widget.ui" line="161"/>
         <source>Entity</source>
-        <translation type="unfinished">Entity</translation>
+        <translation type="unfinished">Entitet</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_single_options_widget.ui" line="166"/>
@@ -7538,7 +7538,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_2points_options_widget.ui" line="92"/>
         <source>Radius of arc</source>
-        <translation type="unfinished">Radius av arc</translation>
+        <translation type="unfinished">Bågens radie</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_2points_options_widget.ui" line="95"/>
@@ -7563,27 +7563,27 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_2points_options_widget.ui" line="144"/>
         <source>Pick angle from the drawing</source>
-        <translation type="unfinished">Pick vinkel från ritningen</translation>
+        <translation type="unfinished">Hämta vinkeln från ritningen</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_2points_options_widget.cpp" line="47"/>
         <source>Pick radius from drawing</source>
-        <translation type="unfinished">Pick radie från att rita</translation>
+        <translation type="unfinished">Hämta radien från ritningen</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_2points_options_widget.cpp" line="53"/>
         <source>Pick height from drawing</source>
-        <translation type="unfinished">Pick höjd från ritning</translation>
+        <translation type="unfinished">Hämta höjden från ritningen</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_2points_options_widget.cpp" line="59"/>
         <source>Pick length from drawing</source>
-        <translation type="unfinished">Pick längd från ritning</translation>
+        <translation type="unfinished">Hämta längden från ritningen</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_2points_options_widget.cpp" line="65"/>
         <source>Pick angle from drawing</source>
-        <translation type="unfinished">Pick vinkel från ritning</translation>
+        <translation type="unfinished">Hämta vinkeln från ritningen</translation>
     </message>
 </context>
 <context>
@@ -7705,7 +7705,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="153"/>
         <source>Y Coordinate of arc&apos;s center</source>
-        <translation>Y Coordinate of arcs center</translation>
+        <translation>Y-koordinat för bågens centrum</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="172"/>
@@ -7715,12 +7715,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="194"/>
         <source>Radius of arc</source>
-        <translation>Radius av arc</translation>
+        <translation>Bågens radie</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="201"/>
         <source>Pick radius value from the drawing</source>
-        <translation>Pick radie värde från ritningen</translation>
+        <translation>Hämta radien från ritningen</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="227"/>
@@ -7730,17 +7730,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="249"/>
         <source>Diameter of arc</source>
-        <translation>Diameter av arc</translation>
+        <translation>Bågens diameter</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="256"/>
         <source>Pick diameter value from the drawing</source>
-        <translation>Pick diameter värde från ritningen</translation>
+        <translation>Hämta diametern från ritningen</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="282"/>
         <source>Arc Length:</source>
-        <translation>Arc Längd:</translation>
+        <translation>Båglängd:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="304"/>
@@ -7750,7 +7750,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="311"/>
         <source>Pick arc length value from the drawing</source>
-        <translation>Pick arc längd värde från ritningen</translation>
+        <translation>Hämta båglängden från ritningen</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="337"/>
@@ -7760,12 +7760,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="359"/>
         <source>Sweep angle of the arc (degrees)</source>
-        <translation>Söt vinkel av bågen (grader)</translation>
+        <translation>Bågens svepvinkel (grader)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="366"/>
         <source>Pick sweep angle from the drawing</source>
-        <translation>Pick sweep vinkel från ritningen</translation>
+        <translation>Hämta svepvinkeln från ritningen</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="392"/>
@@ -7780,7 +7780,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="421"/>
         <source>Pick bulge value from the drawing</source>
-        <translation>Pick bulge värde från ritningen</translation>
+        <translation>Hämta bulgevärdet från ritningen</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="447"/>
@@ -7796,7 +7796,7 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="476"/>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="531"/>
         <source>Pick angle value from the drawing</source>
-        <translation>Pick vinkelvärde från ritningen</translation>
+        <translation>Hämta vinkelvärdet från ritningen</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="502"/>
@@ -7806,7 +7806,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="524"/>
         <source>End angle of arc</source>
-        <translation>End vinkel av arc</translation>
+        <translation>Bågens slutvinkel</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="567"/>
@@ -7849,7 +7849,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_tangential_options_filler.cpp" line="43"/>
         <source>Radius of arc</source>
-        <translation type="unfinished">Radius av arc</translation>
+        <translation type="unfinished">Bågens radie</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_tangential_options_filler.cpp" line="50"/>
@@ -7877,17 +7877,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_tangential_options_widget.ui" line="60"/>
         <source>Total subtending angle of the tangential arc</source>
-        <translation type="unfinished">Total subtraherande vinkel för tangentialbågen</translation>
+        <translation type="unfinished">Total vinkel för den tangentiella bågen</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_tangential_options_widget.ui" line="67"/>
         <source>Pick radius form drawing</source>
-        <translation type="unfinished">Pick radius form ritning</translation>
+        <translation type="unfinished">Hämta radien från ritningen</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_tangential_options_widget.ui" line="87"/>
         <source>If selected, tangental arc with specified radius will be created</source>
-        <translation type="unfinished">Om den väljs skapas tangental båge med specificerad radie</translation>
+        <translation type="unfinished">Om markerat skapas en tangentiell båge med angiven radie</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_tangential_options_widget.ui" line="90"/>
@@ -7909,7 +7909,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_tangential_options_widget.ui" line="128"/>
         <source>Pick angle from drawing</source>
-        <translation type="unfinished">Pick vinkel från ritning</translation>
+        <translation type="unfinished">Hämta vinkeln från ritningen</translation>
     </message>
 </context>
 <context>
@@ -7970,12 +7970,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_widget.ui" line="95"/>
         <source>Length of bevel in X direction.</source>
-        <translation type="unfinished">Längd av bevel i X riktning.</translation>
+        <translation type="unfinished">Fasningens längd i X-riktningen.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_widget.ui" line="102"/>
         <source>Pick first length form drawing</source>
-        <translation type="unfinished">Pick första längd form ritning</translation>
+        <translation type="unfinished">Hämta den första längden från ritningen</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_widget.ui" line="116"/>
@@ -7985,12 +7985,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_widget.ui" line="126"/>
         <source>Length of bevel in Y direction. </source>
-        <translation type="unfinished">Längd av bevel i Y riktning.</translation>
+        <translation type="unfinished">Fasningens längd i Y-riktningen. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_widget.ui" line="133"/>
         <source>Pick second length form drawing</source>
-        <translation type="unfinished">Pick second längd form ritning</translation>
+        <translation type="unfinished">Hämta den andra längden från ritningen</translation>
     </message>
 </context>
 <context>
@@ -8066,7 +8066,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/insert/lc_block_insert_options_widget.ui" line="53"/>
         <source>Pick row spacing from drawing</source>
-        <translation type="unfinished">Pick row avstånd från ritning</translation>
+        <translation type="unfinished">Hämta radavståndet från ritningen</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/insert/lc_block_insert_options_widget.ui" line="79"/>
@@ -8076,7 +8076,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/insert/lc_block_insert_options_widget.ui" line="92"/>
         <source>Pick column spacing from drawing</source>
-        <translation type="unfinished">Pick kolumn avstånd från ritning</translation>
+        <translation type="unfinished">Hämta kolumnavståndet från ritningen</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/insert/lc_block_insert_options_widget.ui" line="131"/>
@@ -8091,12 +8091,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/insert/lc_block_insert_options_widget.ui" line="167"/>
         <source>Pick angle from drawing</source>
-        <translation type="unfinished">Pick vinkel från ritning</translation>
+        <translation type="unfinished">Hämta vinkeln från ritningen</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/insert/lc_block_insert_options_widget.ui" line="193"/>
         <source>Array:</source>
-        <translation type="unfinished">Array:</translation>
+        <translation type="unfinished">Matris:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/insert/lc_block_insert_options_widget.ui" line="215"/>
@@ -8182,7 +8182,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/insert/lc_block_library_insert_options_widget.ui" line="111"/>
         <source>Pick angle from drawing</source>
-        <translation type="unfinished">Pick vinkel från ritning</translation>
+        <translation type="unfinished">Hämta vinkeln från ritningen</translation>
     </message>
 </context>
 <context>
@@ -8228,7 +8228,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_break_divide_options_widget.ui" line="55"/>
         <source>If checked, selected segment will be removed. Otherwise, selected segment will survive and remaining segments will be removed. </source>
-        <translation type="unfinished">Om det kontrolleras kommer det valda segmentet att tas bort. Annars kommer valda segment att överleva och återstående segment kommer att tas bort.</translation>
+        <translation type="unfinished">Om markerat tas det valda segmentet bort. Annars behålls det valda segmentet och övriga segment tas bort. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_break_divide_options_widget.ui" line="58"/>
@@ -8241,7 +8241,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/misc/lc_center_line_options_filler.cpp" line="30"/>
         <source>Offset</source>
-        <translation type="unfinished">Offset</translation>
+        <translation type="unfinished">Förskjutning</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/misc/lc_center_line_options_filler.cpp" line="30"/>
@@ -8307,7 +8307,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/misc/lc_center_mark_options_filler.cpp" line="51"/>
         <source>Horizontal dimension of cross</source>
-        <translation type="unfinished">Horisontell dimension av kors</translation>
+        <translation type="unfinished">Korsets horisontella storlek</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/misc/lc_center_mark_options_filler.cpp" line="57"/>
@@ -8317,7 +8317,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/misc/lc_center_mark_options_filler.cpp" line="57"/>
         <source>Vertical dimension of the cross</source>
-        <translation type="unfinished">Vertikal dimension av korset</translation>
+        <translation type="unfinished">Korsets vertikala storlek</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/misc/lc_center_mark_options_filler.cpp" line="63"/>
@@ -8345,7 +8345,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/misc/lc_center_mark_options_widget.ui" line="63"/>
         <source>Vertical dimension of the cross</source>
-        <translation type="unfinished">Vertikal dimension av korset</translation>
+        <translation type="unfinished">Korsets vertikala storlek</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/misc/lc_center_mark_options_widget.ui" line="83"/>
@@ -8360,7 +8360,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/misc/lc_center_mark_options_widget.ui" line="133"/>
         <source>Horizontal dimension of cross</source>
-        <translation type="unfinished">Horisontell dimension av kors</translation>
+        <translation type="unfinished">Korsets horisontella storlek</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/misc/lc_center_mark_options_widget.ui" line="140"/>
@@ -8370,7 +8370,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/misc/lc_center_mark_options_widget.ui" line="154"/>
         <source>Pick X value from drawing</source>
-        <translation type="unfinished">Pick X värde från ritning</translation>
+        <translation type="unfinished">Hämta X-värdet från ritningen</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/misc/lc_center_mark_options_widget.ui" line="168"/>
@@ -8380,7 +8380,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/misc/lc_center_mark_options_widget.ui" line="193"/>
         <source>Defines how to apply dimensions of cross</source>
-        <translation type="unfinished">Definierar hur man tillämpar dimensioner av kors</translation>
+        <translation type="unfinished">Anger hur korsets storlek tillämpas</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/misc/lc_center_mark_options_widget.ui" line="209"/>
@@ -8400,12 +8400,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/misc/lc_center_mark_options_widget.ui" line="227"/>
         <source>Pick Y value from drawing</source>
-        <translation type="unfinished">Pick Y värde från att rita</translation>
+        <translation type="unfinished">Hämta Y-värdet från ritningen</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/misc/lc_center_mark_options_widget.ui" line="241"/>
         <source>Pick angle from drawing</source>
-        <translation type="unfinished">Pick vinkel från ritning</translation>
+        <translation type="unfinished">Hämta vinkeln från ritningen</translation>
     </message>
 </context>
 <context>
@@ -8413,12 +8413,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="32"/>
         <source>Replace arc</source>
-        <translation type="unfinished">Ersätt arc</translation>
+        <translation type="unfinished">Ersätt båge</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="32"/>
         <source>If checked, original arc will be removed</source>
-        <translation type="unfinished">Om den kontrolleras kommer originalbågen att tas bort</translation>
+        <translation type="unfinished">Om markerat tas den ursprungliga bågen bort</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="39"/>
@@ -8478,7 +8478,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="32"/>
         <source>Pen:</source>
-        <translation type="unfinished">Pen:</translation>
+        <translation type="unfinished">Penna:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="39"/>
@@ -8510,7 +8510,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="102"/>
         <source>Pen to apply to created circle</source>
-        <translation type="unfinished">Pen gäller för skapad cirkel</translation>
+        <translation type="unfinished">Penna för den skapade cirkeln</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="106"/>
@@ -8538,12 +8538,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="131"/>
         <source>If checked, original arc will be removed</source>
-        <translation type="unfinished">Om den kontrolleras kommer originalbågen att tas bort</translation>
+        <translation type="unfinished">Om markerat tas den ursprungliga bågen bort</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="134"/>
         <source>Replace arc</source>
-        <translation type="unfinished">Ersätt arc</translation>
+        <translation type="unfinished">Ersätt båge</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_widget.ui" line="141"/>
@@ -8584,7 +8584,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_center_radius_options_widget.ui" line="73"/>
         <source>Pick radius from drawing</source>
-        <translation type="unfinished">Pick radie från att rita</translation>
+        <translation type="unfinished">Hämta radien från ritningen</translation>
     </message>
 </context>
 <context>
@@ -8622,7 +8622,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_circle.ui" line="111"/>
         <source>Y Coordinate of circle&apos;s center</source>
-        <translation>Y Coordinate av cirkelns centrum</translation>
+        <translation>Y-koordinat för cirkelns centrum</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_circle.ui" line="118"/>
@@ -8637,7 +8637,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_circle.ui" line="141"/>
         <source>Pick radius value from drawing</source>
-        <translation>Pick radie värde från ritning</translation>
+        <translation>Hämta radien från ritningen</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_circle.ui" line="155"/>
@@ -8652,7 +8652,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_circle.ui" line="178"/>
         <source>Pick diameter value from drawing</source>
-        <translation>Pick diameter värde från ritning</translation>
+        <translation>Hämta diametern från ritningen</translation>
     </message>
 </context>
 <context>
@@ -8693,7 +8693,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_tangental_2_entities_radius_options_widget.ui" line="82"/>
         <source>Pick radius from drawing</source>
-        <translation type="unfinished">Pick radie från att rita</translation>
+        <translation type="unfinished">Hämta radien från ritningen</translation>
     </message>
 </context>
 <context>
@@ -8753,12 +8753,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/lib/engine/document/dimstyles/lc_dimarrowregistry.cpp" line="204"/>
         <source>Origin Indicator</source>
-        <translation>Origin indikator</translation>
+        <translation>Origoindikator</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/document/dimstyles/lc_dimarrowregistry.cpp" line="205"/>
         <source>Origin Indicator 2</source>
-        <translation>Ursprungsindikator 2</translation>
+        <translation>Origoindikator 2</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/document/dimstyles/lc_dimarrowregistry.cpp" line="206"/>
@@ -8828,7 +8828,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/lib/engine/document/dimstyles/lc_dimarrowregistry.cpp" line="219"/>
         <source>Architecture Tick</source>
-        <translation>Arkitektur Tick</translation>
+        <translation>Arkitektonisk markering</translation>
     </message>
 </context>
 <context>
@@ -8856,7 +8856,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/lc_dimstyleitem.cpp" line="107"/>
         <source>Ordinate</source>
-        <translation>Ordinate</translation>
+        <translation>Ordinata</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/lc_dimstyleitem.cpp" line="111"/>
@@ -9106,7 +9106,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="101"/>
         <source>Specifies a distance to extend the dimension line past the extension line when you use oblique, architectural, tick, integral, and no marks for arrowheads. (DIMDLE system variable)</source>
-        <translation>Anger ett avstånd för att förlänga måttlinjen förbi förlängningslinjen när du använder oblique, arkitektonisk, markering, integral och inga märken för pilhuvuden. (DIMDLE-systemvariabel)</translation>
+        <translation>Anger hur långt måttlinjen ska förlängas förbi förlängningslinjen när snedstreck, arkitektoniska markeringar, integralmarkeringar eller inga markeringar används i stället för pilspetsar. (DIMDLE-systemvariabel)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="111"/>
@@ -9121,7 +9121,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="137"/>
         <source>Sets the lineweight of the dimension line. (DIMLWD system variable)</source>
-        <translation>Anger måttlinjens linjevikt. (DIMLWD-systemvariabel)</translation>
+        <translation>Anger måttlinjens linjebredd. (DIMLWD-systemvariabel)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="150"/>
@@ -9135,7 +9135,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="162"/>
         <source>Baseline spacing:</source>
-        <translation>Baseline avstånd:</translation>
+        <translation>Baslinjeavstånd:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="175"/>
@@ -9155,7 +9155,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="194"/>
         <source>Suppress Dim line 1 and arrow</source>
-        <translation>Suppress Dim linje 1 och pil</translation>
+        <translation>Undertryck måttlinje 1 och pil</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="204"/>
@@ -9175,7 +9175,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="236"/>
         <source>Sets the lineweight of the extension line. (DIMLWE system variable)</source>
-        <translation>Ställ in linjevikten på förlängningslinjen. (DIMLWE-systemvariabel)</translation>
+        <translation>Anger förlängningslinjens linjebredd. (DIMLWE-systemvariabel)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="269"/>
@@ -9215,7 +9215,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="331"/>
         <source>Lineweight:</source>
-        <translation>Lineweight:</translation>
+        <translation>Linjebredd:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="338"/>
@@ -9240,7 +9240,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="368"/>
         <source>Extend beyond dim lines:</source>
-        <translation>Förlänga bortom dim linjer:</translation>
+        <translation>Förlängning bortom måttlinjerna:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="375"/>
@@ -9250,7 +9250,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="388"/>
         <source>Sets the total length of the extension lines starting from the dimension line toward the dimension origin. (DIMFXL system variable)</source>
-        <translation>Anger den totala längden på förlängningslinjerna från måttlinjen mot måttets ursprung. (DIMFXL-systemvariabel)</translation>
+        <translation>Anger förlängningslinjernas totala längd från måttlinjen mot måttets utgångspunkt. (DIMFXL-systemvariabel)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="404"/>
@@ -9281,7 +9281,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="449"/>
         <source>Jog height factor:</source>
-        <translation>Jog höjdfaktor:</translation>
+        <translation>Höjdfaktor för knäck:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="463"/>
@@ -9296,7 +9296,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="479"/>
         <source>Jog angle:</source>
-        <translation>Jog vinkel:</translation>
+        <translation>Knäckvinkel:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="486"/>
@@ -9306,7 +9306,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="505"/>
         <source>Arrowheads</source>
-        <translation>Arrowheads</translation>
+        <translation>Pilspetsar</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="511"/>
@@ -9316,7 +9316,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="518"/>
         <source>Sets the arrowhead for the first dimension line. When you change the first arrowhead type, the second arrowhead automatically changes to match it. (DIMBLK1 system variable)</source>
-        <translation>Anger pilhuvudet för den första måttlinjen. När du ändrar typ för det första pilhuvudet ändras det andra pilhuvudet automatiskt så att det matchar. (DIMBLK1-systemvariabel)</translation>
+        <translation>Anger pilspetsen för den första måttlinjen. När du ändrar typ för den första pilspetsen ändras den andra pilspetsen automatiskt så att den matchar. (DIMBLK1-systemvariabel)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="525"/>
@@ -9331,7 +9331,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="539"/>
         <source>Sets the arrowhead for the leader line. (DIMLDRBLK system variable)</source>
-        <translation>Ställ in pilhuvudet för hänvisningslinjen. (DIMLDRBLK-systemvariabel)</translation>
+        <translation>Anger pilspetsen för hänvisningslinjen. (DIMLDRBLK-systemvariabel)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="546"/>
@@ -9341,7 +9341,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="553"/>
         <source>Displays and sets the size of arrowheads. (DIMASZ system variable)</source>
-        <translation>Visar och sätter storleken på arrowheads. (DIMASZ-systemvariabel)</translation>
+        <translation>Visar och anger pilspetsarnas storlek. (DIMASZ-systemvariabel)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="563"/>
@@ -9351,19 +9351,19 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="570"/>
         <source>Use the same arrowhead for dimension line</source>
-        <translation>Använd samma pilhuvud för måttlinjen</translation>
+        <translation>Använd samma pilspets för måttlinjen</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="577"/>
         <source>Specifies the size of oblique strokes drawn instead of arrowheads for linear, radius, and diameter dimensioning. If = 0 – draws arrowheads.
 &gt;0 – Draws oblique strokes instead of arrowheads (DIMTSZ variable). </source>
-        <translation>Anger storleken på de snedstreck som ritas i stället för pilhuvuden vid linjär-, radie- och diametermåttsättning. Om = 0 – ritar pilhuvuden.
-&gt;0 – Ritar snedstreck i stället för pilhuvuden (DIMTSZ-variabel). </translation>
+        <translation>Anger storleken på de snedstreck som ritas i stället för pilspetsar vid linjär-, radie- och diametermåttsättning. Om = 0 – ritar pilspetsar.
+&gt;0 – Ritar snedstreck i stället för pilspetsar (DIMTSZ-variabel). </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="588"/>
         <source>Sets the arrowhead for the second dimension line. (DIMBLK2 system variable)</source>
-        <translation>Anger pilhuvudet för den andra måttlinjen. (DIMBLK2-systemvariabel)</translation>
+        <translation>Anger pilspetsen för den andra måttlinjen. (DIMBLK2-systemvariabel)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="598"/>
@@ -9378,7 +9378,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="624"/>
         <source>Arc length symbol</source>
-        <translation>Arc längd symbol</translation>
+        <translation>Symbol för båglängd</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="630"/>
@@ -9461,7 +9461,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="758"/>
         <source>Text Appearance</source>
-        <translation>Text framträdande</translation>
+        <translation>Textens utseende</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="764"/>
@@ -9476,7 +9476,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="781"/>
         <source>Text Style:</source>
-        <translation>Text stil:</translation>
+        <translation>Textstil:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="788"/>
@@ -9704,7 +9704,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1108"/>
         <source>Draws dimension lines between the measured points even when the arrowheads are placed outside the measured points. (DIMTOFL system variable)</source>
-        <translation>Ritar måttlinjer mellan de uppmätta punkterna även när pilhuvudena placeras utanför de uppmätta punkterna. (DIMTOFL-systemvariabel)</translation>
+        <translation>Ritar måttlinjer mellan de uppmätta punkterna även när pilspetsarna placeras utanför de uppmätta punkterna. (DIMTOFL-systemvariabel)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1111"/>
@@ -9720,7 +9720,7 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1127"/>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1137"/>
         <source>Sets a scale for all dimension style settings that specify size, distance, or spacing, including text and arrowhead sizes. This scale does not change dimension measurement values. (DIMSCALE system variable)</source>
-        <translation>Anger en skala för alla måttstilsinställningar som anger storlek, avstånd eller mellanrum, inklusive text- och pilhuvudstorlekar. Denna skala ändrar inte måttvärdena. (DIMSCALE-systemvariabel)</translation>
+        <translation>Anger en skala för alla måttstilsinställningar som anger storlek, avstånd eller mellanrum, inklusive text- och pilspetsstorlekar. Denna skala ändrar inte måttvärdena. (DIMSCALE-systemvariabel)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1130"/>
@@ -9730,7 +9730,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1147"/>
         <source>Determines a scale factor based on the scaling between the current model space viewport and paper space. (DIMSCALE system variable)</source>
-        <translation>Bestämmer en skalfaktor baserad på skalning mellan nuvarande modellutsiktsport och pappersutrymme. (DIMSCALE-systemvariabel)</translation>
+        <translation>Bestämmer en skalfaktor utifrån skalningen mellan det aktuella visningsfönstret i modellrymden och pappersrymden. (DIMSCALE-systemvariabel)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1150"/>
@@ -9785,7 +9785,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1250"/>
         <source>Suppresses arrowheads if not enough space is available inside the extension lines. (DIMSOXD system variable)</source>
-        <translation>Suppresses arrowheads om inte tillräckligt med utrymme finns i förlängningslinjerna. (DIMSOXD-systemvariabel)</translation>
+        <translation>Undertrycker pilspetsarna om det inte finns tillräckligt med utrymme mellan förlängningslinjerna. (DIMSOXD-systemvariabel)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1253"/>
@@ -9795,7 +9795,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1260"/>
         <source>When not enough space is available for text and arrowheads, moves both outside the extension lines (DIMATFIT system variable).</source>
-        <translation>När det inte finns tillräckligt med utrymme för text och pilhuvuden, rör sig både utanför förlängningslinjerna (DIMATFIT-systemvariabel).</translation>
+        <translation>Flyttar både text och pilspetsar utanför förlängningslinjerna när det inte finns tillräckligt med utrymme för dem (DIMATFIT-systemvariabel).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1263"/>
@@ -9815,17 +9815,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1280"/>
         <source>Moves arrowheads outside the extension lines first, then text (DIMATFIT system variable).</source>
-        <translation>Flytta pilhuvuden utanför förlängningslinjerna först, sedan text (DIMATFIT-systemvariabel).</translation>
+        <translation>Flyttar först pilspetsarna utanför förlängningslinjerna, sedan texten (DIMATFIT-systemvariabel).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1283"/>
         <source>Arrows</source>
-        <translation>Arrows</translation>
+        <translation>Pilar</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1290"/>
         <source>Moves text outside the extension lines first, then arrowheads (DIMATFIT system variable).</source>
-        <translation>Flytta text utanför förlängningslinjerna först, sedan arrowheads (DIMATFIT-systemvariabel).</translation>
+        <translation>Flyttar först texten utanför förlängningslinjerna, sedan pilspetsarna (DIMATFIT-systemvariabel).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1300"/>
@@ -10385,7 +10385,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="66"/>
         <source>Ordinate</source>
-        <translation>Ordinate</translation>
+        <translation>Ordinata</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="76"/>
@@ -10445,7 +10445,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="301"/>
         <source>Override entity&apos;s style</source>
-        <translation>Override Entity stil</translation>
+        <translation>Åsidosätt entitetens stil</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="318"/>
@@ -10532,7 +10532,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="505"/>
         <source>If set, first arrow will be flipped</source>
-        <translation>Om set, första pil kommer att vändas</translation>
+        <translation>Om markerat vänds den första pilen</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="508"/>
@@ -10542,7 +10542,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="515"/>
         <source>If set, second arrow will be flipped</source>
-        <translation>Om set, andra pil kommer att vändas</translation>
+        <translation>Om markerat vänds den andra pilen</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="518"/>
@@ -10587,7 +10587,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="210"/>
         <source>Pen</source>
-        <translation>Penna Pen Pen Pen Penna</translation>
+        <translation>Penna</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="411"/>
@@ -10623,13 +10623,13 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="580"/>
         <source>&amp;Apply Style</source>
-        <translation>och Apply Style</translation>
+        <translation>&amp;Använd stil</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="581"/>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="608"/>
         <source>&amp;Select Style</source>
-        <translation>och välj stil</translation>
+        <translation>&amp;Välj stil</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="586"/>
@@ -10639,7 +10639,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="590"/>
         <source>&amp;Create override</source>
-        <translation>ochCreate override</translation>
+        <translation>&amp;Skapa åsidosättning</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="594"/>
@@ -10649,7 +10649,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="597"/>
         <source>&amp;Edit override</source>
-        <translation>och Edit Override</translation>
+        <translation>&amp;Redigera åsidosättning</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="598"/>
@@ -10670,7 +10670,7 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="604"/>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="611"/>
         <source>&amp;Import Styles</source>
-        <translation>och Import Styles</translation>
+        <translation>&amp;Importera stilar</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="664"/>
@@ -10713,7 +10713,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="148"/>
         <source>Pen</source>
-        <translation>Penna Pen Pen Pen Penna</translation>
+        <translation>Penna</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="175"/>
@@ -10728,7 +10728,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="187"/>
         <source>Arc Properties</source>
-        <translation>Arc Egenskaper</translation>
+        <translation>Bågegenskaper</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="193"/>
@@ -10738,7 +10738,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="199"/>
         <source>Ellipse Properties</source>
-        <translation>Ellipse egenskaper</translation>
+        <translation>Ellipsegenskaper</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="205"/>
@@ -10748,7 +10748,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="211"/>
         <source>Polyline Properties</source>
-        <translation>Polyline egenskaper</translation>
+        <translation>Polylinjeegenskaper</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="217"/>
@@ -10758,7 +10758,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="223"/>
         <source>Spline Properties</source>
-        <translation>Spline Egenskaper</translation>
+        <translation>Splineegenskaper</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="229"/>
@@ -10788,7 +10788,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="259"/>
         <source>Hatch Properties</source>
-        <translation>Skraffningsegenskaper</translation>
+        <translation>Skrafferingsegenskaper</translation>
     </message>
 </context>
 <context>
@@ -10985,7 +10985,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.ui" line="37"/>
         <source>This shortcut is already assigned to &quot;Dimensions My&quot; menu!</source>
-        <translation>Denna genväg tilldelas redan &quot;Dimensions My&quot; -menyn!</translation>
+        <translation>Kortkommandot är redan tilldelat menyn &quot;Dimensions My&quot;!</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.ui" line="76"/>
@@ -11120,7 +11120,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="108"/>
         <source>Absent Entity</source>
-        <translation>Frånvarande Entity</translation>
+        <translation>Saknad entitet</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="109"/>
@@ -11140,12 +11140,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="112"/>
         <source>Arc</source>
-        <translation>Arc</translation>
+        <translation>Båge</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="113"/>
         <source>Polyline</source>
-        <translation>Polyline</translation>
+        <translation>Polylinje</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="114"/>
@@ -11180,7 +11180,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="120"/>
         <source>Hatch</source>
-        <translation>Hatch</translation>
+        <translation>Skraffering</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="121"/>
@@ -11225,17 +11225,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="231"/>
         <source>NOTE: Menu assignment will be ignored. It is reserved for &apos;Entity Properties&apos;.</source>
-        <translation>Obs!: Menyuppdrag kommer att ignoreras. Den är reserverad för &quot;Entity Properties&quot;.</translation>
+        <translation>OBS! Menytilldelningen ignoreras. Den är reserverad för &quot;Entitetsegenskaper&quot;.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="234"/>
         <source>NOTE: Menu assignment will be ignored. It is reserved for &apos;Entity Select&apos;.</source>
-        <translation>Obs!: Menyuppdrag kommer att ignoreras. Den är reserverad för &quot;Entity Select&quot;.</translation>
+        <translation>OBS! Menytilldelningen ignoreras. Den är reserverad för &quot;Entitetsval&quot;.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="237"/>
         <source>NOTE: Menu assignment will be ignored. It is reserved for &apos;Pan&apos;.</source>
-        <translation>Obs!: Menyuppdrag kommer att ignoreras. Den är reserverad för &quot;Pan&quot;.</translation>
+        <translation>OBS! Menytilldelningen ignoreras. Den är reserverad för &quot;Panorera&quot;.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="242"/>
@@ -11255,7 +11255,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="251"/>
         <source>NOTE: This shortcut is already assigned to &quot;%1&quot; menu and that menu will be unassigned on save!</source>
-        <translation>Denna genväg tilldelas redan &quot;%1&quot; menyn och den menyn kommer att vara otilldelad på spara!</translation>
+        <translation>OBS! Kortkommandot är redan tilldelat menyn &quot;%1&quot;, och den menyns tilldelning tas bort när du sparar!</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="255"/>
@@ -11288,7 +11288,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="36"/>
         <source>If checked and during creation the view with entered name already exists, it will be updated by new position. Otherwise, unique name of new view will be required.</source>
-        <translation>Om den kontrolleras och under skapandet visas vyn med namn som redan finns, kommer den att uppdateras med ny position. Annars krävs ett unikt namn på ny vy.</translation>
+        <translation>Om markerat och en vy med det angivna namnet redan finns när vyn skapas, uppdateras den med den nya positionen. Annars krävs ett unikt namn för den nya vyn.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="39"/>
@@ -11338,12 +11338,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="88"/>
         <source>Grid Type icon column</source>
-        <translation>Grid Type ikon kolumn</translation>
+        <translation>Ikonkolumnen Rutnätstyp</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="55"/>
         <source>If checked, the column with view type icon will be shown.</source>
-        <translation>Om den kontrolleras visas kolumnen med vytypikon.</translation>
+        <translation>Om markerat visas kolumnen med ikon för vytyp.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="58"/>
@@ -11363,7 +11363,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="115"/>
         <source>If checked, the column with icon for type of coordinate system for the view will be shown.</source>
-        <translation>Om den kontrolleras visas kolumnen med ikon för typ av koordinatsystem för vyn.</translation>
+        <translation>Om markerat visas kolumnen med ikon för vyns typ av koordinatsystem.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="118"/>
@@ -11373,7 +11373,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="65"/>
         <source>If checked, the column with view details will be shown in the table.</source>
-        <translation>Om den kontrolleras visas kolumnen med vyinformation i tabellen.</translation>
+        <translation>Om markerat visas kolumnen med vyinformation i tabellen.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="141"/>
@@ -11609,7 +11609,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgnewversionavailable.ui" line="147"/>
         <source>If checked, notifications about pre-release updates will not be shown.</source>
-        <translation>Om de kontrolleras visas meddelanden om förhandsuppdateringar inte.</translation>
+        <translation>Om markerat visas inga meddelanden om förhandsversioner.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/lc_dlgnewversionavailable.ui" line="153"/>
@@ -11826,7 +11826,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="128"/>
         <source>Grid</source>
-        <translation type="unfinished">Grid</translation>
+        <translation type="unfinished">Rutnät</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/lc_dlg_propertysheet_widget_options.ui" line="135"/>
@@ -11974,12 +11974,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/actions/quick_selection/lc_dlgquickselection.ui" line="399"/>
         <source>Pick angle from drawing</source>
-        <translation type="unfinished">Pick vinkel från ritning</translation>
+        <translation type="unfinished">Hämta vinkeln från ritningen</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/quick_selection/lc_dlgquickselection.ui" line="425"/>
         <source>Pick distance from drawing</source>
-        <translation type="unfinished">Pick Avstånd Från Att Rita</translation>
+        <translation type="unfinished">Hämta avståndet från ritningen</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/quick_selection/lc_dlgquickselection.ui" line="451"/>
@@ -12138,7 +12138,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="45"/>
         <source>Pen attributes</source>
-        <translation>Pen attribut</translation>
+        <translation>Pennattribut</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="58"/>
@@ -12184,7 +12184,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.cpp" line="76"/>
         <source>Pen</source>
-        <translation>Penna Pen Pen Pen Penna</translation>
+        <translation>Penna</translation>
     </message>
 </context>
 <context>
@@ -12217,7 +12217,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="59"/>
         <source>Grid Type column</source>
-        <translation>Grid Type kolumn</translation>
+        <translation>Kolumnen Rutnätstyp</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="89"/>
@@ -12232,7 +12232,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="105"/>
         <source>If checked and during creation the view with entered name already exists, it will be updated by new position. Otherwise, unique name of new view will be required.</source>
-        <translation>Om den kontrolleras och under skapandet visas vyn med namn som redan finns, kommer den att uppdateras med ny position. Annars krävs ett unikt namn på ny vy.</translation>
+        <translation>Om markerat och en vy med det angivna namnet redan finns när vyn skapas, uppdateras den med den nya positionen. Annars krävs ett unikt namn för den nya vyn.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="108"/>
@@ -12257,7 +12257,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="46"/>
         <source>If checked, column with details of UCS origin and angle will be shown in the table.</source>
-        <translation>Om den här rutan är markerad visas kolumnen med information om UCS-ursprung och -vinkel i tabellen.</translation>
+        <translation>Om den här rutan är markerad visas kolumnen med information om UCS-origo och -vinkel i tabellen.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="56"/>
@@ -12277,12 +12277,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="140"/>
         <source>Pan, UCS Origin in Center</source>
-        <translation>Pan, UCS Origin i Center</translation>
+        <translation>Panorera, UCS-origo i mitten</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="145"/>
         <source>Pan, UCS Origin in Left-Bottom</source>
-        <translation>Pan, UCS Origin i vänsterbotten</translation>
+        <translation>Panorera, UCS-origo nere till vänster</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="153"/>
@@ -12420,12 +12420,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucsproperties.ui" line="69"/>
         <source>Origin:</source>
-        <translation>Ursprung:</translation>
+        <translation>Origo:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucsproperties.ui" line="88"/>
         <source>Grid Type:</source>
-        <translation>Grid Typ:</translation>
+        <translation>Rutnätstyp:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucsproperties.ui" line="141"/>
@@ -12799,7 +12799,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_filler.cpp" line="30"/>
         <source>Offset</source>
-        <translation type="unfinished">Offset</translation>
+        <translation type="unfinished">Förskjutning</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_filler.cpp" line="30"/>
@@ -12824,7 +12824,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_filler.cpp" line="42"/>
         <source>If selected, bounding box is drawn as polyline</source>
-        <translation type="unfinished">Om den väljs dras bundningsboxen som polylin</translation>
+        <translation type="unfinished">Om markerat ritas den omslutande rektangeln som en polylinje</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_filler.cpp" line="48"/>
@@ -12852,7 +12852,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_widget.ui" line="46"/>
         <source>If selected, only corner points will be drawn for bounding box. Otherwise, edge lines will be drawn.</source>
-        <translation type="unfinished">Om det väljs kommer endast hörnpunkter att dras för bundningsbox. Annars kommer kantlinjer att dras.</translation>
+        <translation type="unfinished">Om markerat ritas endast hörnpunkterna för den omslutande rektangeln. Annars ritas kantlinjerna.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_widget.ui" line="49"/>
@@ -12867,7 +12867,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_widget.ui" line="63"/>
         <source>If selected, bounding box is drawn as polyline</source>
-        <translation type="unfinished">Om den väljs dras bundningsboxen som polylin</translation>
+        <translation type="unfinished">Om markerat ritas den omslutande rektangeln som en polylinje</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_widget.ui" line="69"/>
@@ -12945,7 +12945,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_filler.cpp" line="65"/>
         <source>Pen to apply to created duplicate</source>
-        <translation type="unfinished">Pen gäller för skapad dubblett</translation>
+        <translation type="unfinished">Penna för den skapade dubbletten</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_filler.cpp" line="77"/>
@@ -13002,7 +13002,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="69"/>
         <source>Pen to apply to created duplicate</source>
-        <translation type="unfinished">Pen gäller för skapad dubblett</translation>
+        <translation type="unfinished">Penna för den skapade dubbletten</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="73"/>
@@ -13045,7 +13045,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="157"/>
         <source>Pen:</source>
-        <translation type="unfinished">Pen:</translation>
+        <translation type="unfinished">Penna:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="164"/>
@@ -13108,7 +13108,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse_1_point_options_filler.cpp" line="50"/>
         <source>If checked, major radius angle is specified by mouse</source>
-        <translation type="unfinished">Om den kontrolleras, är stor radievinkel specificerad av musen</translation>
+        <translation type="unfinished">Om markerat anges storaxelns vinkel med musen</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse_1_point_options_filler.cpp" line="55"/>
@@ -13156,7 +13156,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse_1point_options_widget.ui" line="97"/>
         <source>If checked, angle for major radius may be specified</source>
-        <translation type="unfinished">Om den kontrolleras kan vinkeln för större radie anges</translation>
+        <translation type="unfinished">Om markerat kan storaxelns vinkel anges</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse_1point_options_widget.ui" line="100"/>
@@ -13166,7 +13166,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse_1point_options_widget.ui" line="107"/>
         <source>If checked, major radius angle is specified by mouse</source>
-        <translation type="unfinished">Om den kontrolleras, är stor radievinkel specificerad av musen</translation>
+        <translation type="unfinished">Om markerat anges storaxelns vinkel med musen</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse_1point_options_widget.ui" line="110"/>
@@ -13186,7 +13186,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse_1point_options_widget.ui" line="150"/>
         <source>Pick major actions from drawing</source>
-        <translation type="unfinished">Välj stora åtgärder från att dra</translation>
+        <translation type="unfinished">Hämta huvudåtgärder från ritningen</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse_1point_options_widget.ui" line="164"/>
@@ -13206,7 +13206,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse_1point_options_widget.ui" line="199"/>
         <source>Pick angle from drawing</source>
-        <translation type="unfinished">Pick vinkel från ritning</translation>
+        <translation type="unfinished">Hämta vinkeln från ritningen</translation>
     </message>
 </context>
 <context>
@@ -13275,7 +13275,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_ellipse.ui" line="141"/>
         <source>Y Coordinate of arc&apos;s center</source>
-        <translation>Y Coordinate of arcs center</translation>
+        <translation>Y-koordinat för bågens centrum</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_ellipse.ui" line="154"/>
@@ -13290,7 +13290,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_ellipse.ui" line="183"/>
         <source>Pick length of major axis radius from drawing</source>
-        <translation>Pick längd av större axel radie från ritning</translation>
+        <translation>Hämta storaxelns radie från ritningen</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_ellipse.ui" line="203"/>
@@ -13305,7 +13305,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_ellipse.ui" line="232"/>
         <source>Pick length of minor axis radius from drawing</source>
-        <translation>Pick längd av mindre axel radie från ritning</translation>
+        <translation>Hämta lillaxelns radie från ritningen</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_ellipse.ui" line="252"/>
@@ -13327,7 +13327,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_ellipse.ui" line="284"/>
         <source>Pick rotation angle from drawing</source>
-        <translation>Pick rotationsvinkel från att rita</translation>
+        <translation>Hämta rotationsvinkeln från ritningen</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_ellipse.ui" line="307"/>
@@ -13342,7 +13342,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_ellipse.ui" line="336"/>
         <source>Pick start angle from drawing</source>
-        <translation>Pick start vinkel från att rita</translation>
+        <translation>Hämta startvinkeln från ritningen</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_ellipse.ui" line="359"/>
@@ -13357,7 +13357,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_ellipse.ui" line="388"/>
         <source>Pick end angle from drawing</source>
-        <translation>Pick end vinkel från att rita</translation>
+        <translation>Hämta slutvinkeln från ritningen</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_ellipse.ui" line="408"/>
@@ -13480,7 +13480,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="98"/>
         <source>Hatch</source>
-        <translation type="unfinished">Hatch</translation>
+        <translation type="unfinished">Skraffering</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="99"/>
@@ -13598,7 +13598,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="95"/>
         <source>Mirror</source>
-        <translation type="unfinished">Mirror</translation>
+        <translation type="unfinished">Spegla</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="95"/>
@@ -13623,7 +13623,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="100"/>
         <source>Stretch</source>
-        <translation type="unfinished">Stretch</translation>
+        <translation type="unfinished">Sträck</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="100"/>
@@ -13833,7 +13833,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_hatchpropertieseditingwidget.ui" line="65"/>
         <source>Hatch pattern name</source>
-        <translation>Skraffningsmönstrets namn</translation>
+        <translation>Skrafferingsmönstrets namn</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_hatchpropertieseditingwidget.ui" line="75"/>
@@ -13843,7 +13843,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_hatchpropertieseditingwidget.ui" line="88"/>
         <source>Hatch pattern scale factor</source>
-        <translation>Skalfaktor för skraffningsmönstret</translation>
+        <translation>Skalfaktor för skrafferingsmönstret</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_hatchpropertieseditingwidget.ui" line="95"/>
@@ -13859,7 +13859,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_hatchpropertieseditingwidget.ui" line="111"/>
         <source>Hatch pattern rotation angle, degrees</source>
-        <translation>Skraffningsmönstrets rotationsvinkel, grader</translation>
+        <translation>Skrafferingsmönstrets rotationsvinkel, grader</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_hatchpropertieseditingwidget.ui" line="121"/>
@@ -13874,7 +13874,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_hatchpropertieseditingwidget.ui" line="134"/>
         <source>Total enclosed area of the hatch region</source>
-        <translation>Total innesluten area för skraffningsregionen</translation>
+        <translation>Total innesluten area för skrafferingsområdet</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_hatchpropertieseditingwidget.ui" line="144"/>
@@ -14064,7 +14064,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_hyperbola.ui" line="95"/>
         <source>Vertex X:</source>
-        <translation>Vertex X:</translation>
+        <translation>Hörnpunkt X:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_hyperbola.ui" line="123"/>
@@ -14109,7 +14109,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_hyperbola.ui" line="229"/>
         <source>Derived Properties (Read-only)</source>
-        <translation>Derived Properties (Läs endast)</translation>
+        <translation>Härledda egenskaper (skrivskyddade)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_hyperbola.ui" line="235"/>
@@ -14170,7 +14170,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/image/lc_image_options_widget.ui" line="70"/>
         <source>Pick angle from drawing</source>
-        <translation type="unfinished">Pick vinkel från ritning</translation>
+        <translation type="unfinished">Hämta vinkeln från ritningen</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/image/lc_image_options_widget.ui" line="84"/>
@@ -14269,7 +14269,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="298"/>
         <source>Pick insertion point coordinates from drawing</source>
-        <translation>Pick insättningspunkt koordinater från ritning</translation>
+        <translation>Hämta insättningspunktens koordinater från ritningen</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="91"/>
@@ -14289,7 +14289,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="138"/>
         <source>Pick width value from drawing</source>
-        <translation>Pick width värde från ritning</translation>
+        <translation>Hämta breddvärdet från ritningen</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="305"/>
@@ -14299,7 +14299,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="219"/>
         <source>Pick height value from the drawing</source>
-        <translation>Pick höjd värde från ritningen</translation>
+        <translation>Hämta höjdvärdet från ritningen</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="152"/>
@@ -14309,7 +14309,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="198"/>
         <source>Pick angle from the drawing</source>
-        <translation>Pick vinkel från ritningen</translation>
+        <translation>Hämta vinkeln från ritningen</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="312"/>
@@ -14340,7 +14340,7 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="77"/>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="233"/>
         <source>Pick scale from drawing</source>
-        <translation>Pick skala från ritning</translation>
+        <translation>Hämta skalan från ritningen</translation>
     </message>
 </context>
 <context>
@@ -14361,7 +14361,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/info/lc_info_dist_point_to_entity_options_filler.cpp" line="33"/>
         <source>Snap On Entity</source>
-        <translation type="unfinished">Snap on Entity</translation>
+        <translation type="unfinished">Snappa på objekt</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/info/lc_info_dist_point_to_entity_options_filler.cpp" line="33"/>
@@ -14384,7 +14384,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/info/lc_info_dist_point_to_entity_options_widget.ui" line="35"/>
         <source>Snap On Entity</source>
-        <translation type="unfinished">Snap on Entity</translation>
+        <translation type="unfinished">Snappa på objekt</translation>
     </message>
 </context>
 <context>
@@ -14425,7 +14425,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_insert.ui" line="85"/>
         <source>Pick insertion point coordinates from drawing</source>
-        <translation>Pick insättningspunkt koordinater från ritning</translation>
+        <translation>Hämta insättningspunktens koordinater från ritningen</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_insert.ui" line="92"/>
@@ -14450,7 +14450,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_insert.ui" line="144"/>
         <source>Pick scale by X value from drawing</source>
-        <translation>Pick skala med X-värde från ritning</translation>
+        <translation>Hämta skalans X-värde från ritningen</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_insert.ui" line="158"/>
@@ -14465,7 +14465,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_insert.ui" line="184"/>
         <source>Pick scale Y value from drawing</source>
-        <translation>Pick skala Y värde från ritning</translation>
+        <translation>Hämta skalans Y-värde från ritningen</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_insert.ui" line="198"/>
@@ -14480,7 +14480,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_insert.ui" line="224"/>
         <source>Pick Angle value from drawing</source>
-        <translation>Pick Angle värde från ritning</translation>
+        <translation>Hämta vinkelvärdet från ritningen</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_insert.ui" line="238"/>
@@ -14515,7 +14515,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_insert.ui" line="316"/>
         <source>Pick row spacing value from drawing</source>
-        <translation>Pick row avstånd värde från ritning</translation>
+        <translation>Hämta radavståndet från ritningen</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_insert.ui" line="330"/>
@@ -14530,7 +14530,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_insert.ui" line="356"/>
         <source>Pick column spacing from drawing</source>
-        <translation>Pick kolumn avstånd från ritning</translation>
+        <translation>Hämta kolumnavståndet från ritningen</translation>
     </message>
 </context>
 <context>
@@ -15393,7 +15393,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_filler.cpp" line="86"/>
         <source>Snap point for position of intersection point between created line and source entity (within original line)</source>
-        <translation type="unfinished">Snäppläge för skärningspunktens position mellan den skapade linjen och källentiteten (inom originallinjen)</translation>
+        <translation type="unfinished">Snappunkt för skärningspunktens position mellan den skapade linjen och källentiteten (inom originallinjen)</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_filler.cpp" line="98"/>
@@ -15421,7 +15421,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_widget.ui" line="81"/>
         <source>Snap Point:</source>
-        <translation type="unfinished">Fästningspunkt:</translation>
+        <translation type="unfinished">Snappunkt:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_widget.ui" line="113"/>
@@ -15476,7 +15476,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_widget.ui" line="219"/>
         <source>PIck line length from drawing</source>
-        <translation type="unfinished">PIck linje längd från ritning</translation>
+        <translation type="unfinished">Hämta linjelängden från ritningen</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_widget.ui" line="246"/>
@@ -15514,7 +15514,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="32"/>
         <source>If checked, the length of line is defined by mouse position instead of setting</source>
-        <translation type="unfinished">Om den kontrolleras definieras längden på linjen med musposition istället för att ställa in</translation>
+        <translation type="unfinished">Om markerat bestäms linjens längd av musens position i stället för av inställningen</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="40"/>
@@ -15577,7 +15577,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="73"/>
         <source>Snap point for position of intersection point between created line and source entity (within original line)</source>
-        <translation type="unfinished">Snäppläge för skärningspunktens position mellan den skapade linjen och källentiteten (inom originallinjen)</translation>
+        <translation type="unfinished">Snappunkt för skärningspunktens position mellan den skapade linjen och källentiteten (inom originallinjen)</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="80"/>
@@ -15592,17 +15592,17 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="95"/>
         <source>Defines which part of created line will be snapped to intersection point</source>
-        <translation type="unfinished">Definierar vilken del av skapad linje som kommer att knäppas till skärningspunkt</translation>
+        <translation type="unfinished">Anger vilken del av den skapade linjen som snappas till skärningspunkten</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="102"/>
         <source>Offset</source>
-        <translation type="unfinished">Offset</translation>
+        <translation type="unfinished">Förskjutning</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="102"/>
         <source>Offset of tick snap point from intersection point</source>
-        <translation type="unfinished">Förskjutning av markeringens snäpp-punkt från skärningspunkten</translation>
+        <translation type="unfinished">Förskjutning av markeringens snappunkt från skärningspunkten</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="108"/>
@@ -15625,12 +15625,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="50"/>
         <source>Distance of intersection point from specified line snap point</source>
-        <translation type="unfinished">Avstånd från skärningspunkten till den angivna linjens snäpp-punkt</translation>
+        <translation type="unfinished">Avstånd från skärningspunkten till den angivna linjens snappunkt</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="57"/>
         <source>Snap point for position of intersection point between created line and source entity (within original line)</source>
-        <translation type="unfinished">Snäppläge för skärningspunktens position mellan den skapade linjen och källentiteten (inom originallinjen)</translation>
+        <translation type="unfinished">Snappunkt för skärningspunktens position mellan den skapade linjen och källentiteten (inom originallinjen)</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="61"/>
@@ -15699,7 +15699,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="163"/>
         <source>If checked, the length of line is defined by mouse position instead of setting</source>
-        <translation type="unfinished">Om den kontrolleras definieras längden på linjen med musposition istället för att ställa in</translation>
+        <translation type="unfinished">Om markerat bestäms linjens längd av musens position i stället för av inställningen</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="166"/>
@@ -15709,7 +15709,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="180"/>
         <source>Snap Distance:</source>
-        <translation type="unfinished">Snap distans:</translation>
+        <translation type="unfinished">Snappavstånd:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="205"/>
@@ -15719,27 +15719,27 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="212"/>
         <source>Pick snap distance from drawing</source>
-        <translation type="unfinished">Pick snap distans från ritning</translation>
+        <translation type="unfinished">Hämta snappavståndet från ritningen</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="226"/>
         <source>Tick Snap:</source>
-        <translation type="unfinished">Snäppläge för markering:</translation>
+        <translation type="unfinished">Snappläge för markering:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="233"/>
         <source>Pick angle from drawing</source>
-        <translation type="unfinished">Pick vinkel från ritning</translation>
+        <translation type="unfinished">Hämta vinkeln från ritningen</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="265"/>
         <source>Offset of tick snap point from intersection point</source>
-        <translation type="unfinished">Förskjutning av markeringens snäpp-punkt från skärningspunkten</translation>
+        <translation type="unfinished">Förskjutning av markeringens snappunkt från skärningspunkten</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="272"/>
         <source>Defines which part of created line will be snapped to intersection point</source>
-        <translation type="unfinished">Definierar vilken del av skapad linje som kommer att knäppas till skärningspunkt</translation>
+        <translation type="unfinished">Anger vilken del av den skapade linjen som snappas till skärningspunkten</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="294"/>
@@ -15749,7 +15749,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="301"/>
         <source>Pick length from drawing</source>
-        <translation type="unfinished">Pick längd från ritning</translation>
+        <translation type="unfinished">Hämta längden från ritningen</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="329"/>
@@ -15823,7 +15823,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="34"/>
         <source>If checked, created line will be orthogonal to selected line</source>
-        <translation type="unfinished">Om kontrollerad, skapad linje kommer att vara ortogonal till vald linje</translation>
+        <translation type="unfinished">Om markerat blir den skapade linjen ortogonal mot den valda linjen</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="41"/>
@@ -15898,7 +15898,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="88"/>
         <source>Snap point for created line</source>
-        <translation type="unfinished">Snäpp-punkt för den skapade linjen</translation>
+        <translation type="unfinished">Snappunkt för den skapade linjen</translation>
     </message>
 </context>
 <context>
@@ -15916,12 +15916,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="51"/>
         <source>Pick angle from drawing</source>
-        <translation type="unfinished">Pick vinkel från ritning</translation>
+        <translation type="unfinished">Hämta vinkeln från ritningen</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="65"/>
         <source>If checked, created line will be orthogonal to selected line</source>
-        <translation type="unfinished">Om kontrollerad, skapad linje kommer att vara ortogonal till vald linje</translation>
+        <translation type="unfinished">Om markerat blir den skapade linjen ortogonal mot den valda linjen</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="68"/>
@@ -15931,7 +15931,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="120"/>
         <source>Snap point for created line</source>
-        <translation type="unfinished">Snäpp-punkt för den skapade linjen</translation>
+        <translation type="unfinished">Snappunkt för den skapade linjen</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="124"/>
@@ -15951,7 +15951,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="142"/>
         <source>Snap:</source>
-        <translation type="unfinished">Snap:</translation>
+        <translation type="unfinished">Snapp:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="171"/>
@@ -15966,7 +15966,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="203"/>
         <source>Pick length from drawing</source>
-        <translation type="unfinished">Pick längd från ritning</translation>
+        <translation type="unfinished">Hämta längden från ritningen</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="259"/>
@@ -16062,7 +16062,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="56"/>
         <source>Snap point for gap on the line</source>
-        <translation type="unfinished">Snäpp-punkt för luckan på linjen</translation>
+        <translation type="unfinished">Snappunkt för luckan på linjen</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="63"/>
@@ -16072,7 +16072,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="63"/>
         <source>Distance from snap point</source>
-        <translation type="unfinished">Avstånd från snäpp-punkten</translation>
+        <translation type="unfinished">Avstånd från snappunkten</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="80"/>
@@ -16082,7 +16082,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="80"/>
         <source>Snap point of gap to line snap point</source>
-        <translation type="unfinished">Fäst gapets punkt till linjens fästpunkt</translation>
+        <translation type="unfinished">Snappa luckans punkt till linjens snappunkt</translation>
     </message>
 </context>
 <context>
@@ -16095,7 +16095,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="32"/>
         <source>Snap point of gap to line snap point</source>
-        <translation type="unfinished">Fäst gapets punkt till linjens fästpunkt</translation>
+        <translation type="unfinished">Snappa luckans punkt till linjens snappunkt</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="36"/>
@@ -16123,12 +16123,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="61"/>
         <source>Gap Snap:</source>
-        <translation type="unfinished">Gapfästning:</translation>
+        <translation type="unfinished">Snapp för luckan:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="68"/>
         <source>Snap point for gap on the line</source>
-        <translation type="unfinished">Snäpp-punkt för luckan på linjen</translation>
+        <translation type="unfinished">Snappunkt för luckan på linjen</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="72"/>
@@ -16167,7 +16167,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="141"/>
         <source>PIck gap size from drawing</source>
-        <translation type="unfinished">PIck gap storlek från ritning</translation>
+        <translation type="unfinished">Hämta luckans storlek från ritningen</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="155"/>
@@ -16182,17 +16182,17 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="177"/>
         <source>Distance from snap point</source>
-        <translation type="unfinished">Avstånd från snäpp-punkten</translation>
+        <translation type="unfinished">Avstånd från snappunkten</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="184"/>
         <source>Snap Distance:</source>
-        <translation type="unfinished">Snap distans:</translation>
+        <translation type="unfinished">Snappavstånd:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="191"/>
         <source>Pick snap distance from drawing</source>
-        <translation type="unfinished">Pick snap distans från ritning</translation>
+        <translation type="unfinished">Hämta snappavståndet från ritningen</translation>
     </message>
 </context>
 <context>
@@ -16200,7 +16200,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="35"/>
         <source>Extend/Trim</source>
-        <translation type="unfinished">Förlängning/Trim</translation>
+        <translation type="unfinished">Förläng/trimma</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="36"/>
@@ -16262,7 +16262,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="78"/>
         <source>If checked, polyline will be created instead of individual lines</source>
-        <translation type="unfinished">Om den kontrolleras, kommer polyline skapas istället för enskilda linjer</translation>
+        <translation type="unfinished">Om markerat skapas en polylinje i stället för enskilda linjer</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="89"/>
@@ -16272,7 +16272,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="89"/>
         <source>If checked, original lines will be removed</source>
-        <translation type="unfinished">Om de kontrolleras kommer originallinjerna att tas bort</translation>
+        <translation type="unfinished">Om markerat tas de ursprungliga linjerna bort</translation>
     </message>
 </context>
 <context>
@@ -16285,12 +16285,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="38"/>
         <source>If checked, polyline will be created instead of individual lines</source>
-        <translation type="unfinished">Om den kontrolleras, kommer polyline skapas istället för enskilda linjer</translation>
+        <translation type="unfinished">Om markerat skapas en polylinje i stället för enskilda linjer</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="41"/>
         <source>Create Polyline</source>
-        <translation type="unfinished">Skapa polyline</translation>
+        <translation type="unfinished">Skapa polylinje</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="66"/>
@@ -16301,7 +16301,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="70"/>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="124"/>
         <source>Extend/Trim</source>
-        <translation type="unfinished">Förlängning/Trim</translation>
+        <translation type="unfinished">Förläng/trimma</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="75"/>
@@ -16363,7 +16363,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="207"/>
         <source>If checked, original lines will be removed</source>
-        <translation type="unfinished">Om de kontrolleras kommer originallinjerna att tas bort</translation>
+        <translation type="unfinished">Om markerat tas de ursprungliga linjerna bort</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="210"/>
@@ -16495,7 +16495,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_parallel_options_widget.ui" line="79"/>
         <source>Pick distance from drawing</source>
-        <translation type="unfinished">Pick Avstånd Från Att Rita</translation>
+        <translation type="unfinished">Hämta avståndet från ritningen</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_parallel_options_widget.ui" line="99"/>
@@ -16538,7 +16538,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_parallel_through_options_filler.cpp" line="45"/>
         <source>If checked, parallels will be created on both sides of entity</source>
-        <translation type="unfinished">Om de kontrolleras kommer paralleller att skapas på båda sidor av entitet</translation>
+        <translation type="unfinished">Om markerat skapas paralleller på båda sidor av entiteten</translation>
     </message>
 </context>
 <context>
@@ -16561,7 +16561,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_parallel_through_options_widget.ui" line="101"/>
         <source>If checked, parallels will be created on both sides of entity</source>
-        <translation type="unfinished">Om de kontrolleras kommer paralleller att skapas på båda sidor av entitet</translation>
+        <translation type="unfinished">Om markerat skapas paralleller på båda sidor av entiteten</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_parallel_through_options_widget.ui" line="104"/>
@@ -16639,12 +16639,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/point/lc_points_line_options_widget.ui" line="153"/>
         <source>Pick distance from drawing</source>
-        <translation type="unfinished">Pick Avstånd Från Att Rita</translation>
+        <translation type="unfinished">Hämta avståndet från ritningen</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/point/lc_points_line_options_widget.ui" line="176"/>
         <source>If checked, fixed specified distance between points will be used. Otherwise, distance will be calculated.</source>
-        <translation type="unfinished">Om det kontrolleras används det fasta angivna avståndet mellan punkterna. Annars kommer avståndet beräknas.</translation>
+        <translation type="unfinished">Om markerat används det angivna fasta avståndet mellan punkterna. Annars beräknas avståndet.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/point/lc_points_line_options_widget.ui" line="179"/>
@@ -16674,7 +16674,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/point/lc_points_line_options_widget.ui" line="264"/>
         <source>Pick angle from drawing</source>
-        <translation type="unfinished">Pick vinkel från ritning</translation>
+        <translation type="unfinished">Hämta vinkeln från ritningen</translation>
     </message>
 </context>
 <context>
@@ -16692,7 +16692,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_line.ui" line="68"/>
         <source>Pick endpoint from the drawing</source>
-        <translation>Pick endpoint från ritningen</translation>
+        <translation>Hämta ändpunkten från ritningen</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_line.ui" line="75"/>
@@ -16732,7 +16732,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_line.ui" line="191"/>
         <source>Pick start point from the drawing</source>
-        <translation>Pick startpunkt från ritningen</translation>
+        <translation>Hämta startpunkten från ritningen</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_line.ui" line="214"/>
@@ -16914,7 +16914,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_radiant_options_widget.ui" line="171"/>
         <source>Pick length from drawing</source>
-        <translation type="unfinished">Pick längd från ritning</translation>
+        <translation type="unfinished">Hämta längden från ritningen</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_radiant_options_widget.ui" line="185"/>
@@ -16965,7 +16965,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_rel_angle_options_widget.ui" line="79"/>
         <source>Pick angle from drawing</source>
-        <translation type="unfinished">Pick vinkel från ritning</translation>
+        <translation type="unfinished">Hämta vinkeln från ritningen</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_rel_angle_options_widget.ui" line="99"/>
@@ -16980,7 +16980,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_rel_angle_options_widget.ui" line="122"/>
         <source>Pick length from drawing</source>
-        <translation type="unfinished">Pick längd från ritning</translation>
+        <translation type="unfinished">Hämta längden från ritningen</translation>
     </message>
 </context>
 <context>
@@ -17029,7 +17029,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="57"/>
         <source>If checked, angle is relative to previous segment</source>
-        <translation type="unfinished">Om den kontrolleras är vinkeln relativ till tidigare segment</translation>
+        <translation type="unfinished">Om markerat är vinkeln relativ till föregående segment</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="64"/>
@@ -17049,7 +17049,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="65"/>
         <source>Creates polyline from line segments</source>
-        <translation type="unfinished">Skapar polylin från linje segment</translation>
+        <translation type="unfinished">Skapar en polylinje av linjesegment</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="72"/>
@@ -17169,7 +17169,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="311"/>
         <source>If checked, angle is relative to previous segment</source>
         <extracomment>Angle is relative to previous segment</extracomment>
-        <translation type="unfinished">Om den kontrolleras är vinkeln relativ till tidigare segment</translation>
+        <translation type="unfinished">Om markerat är vinkeln relativ till föregående segment</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="314"/>
@@ -17179,7 +17179,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="321"/>
         <source>Creates polyline from line segments</source>
-        <translation type="unfinished">Skapar polylin från linje segment</translation>
+        <translation type="unfinished">Skapar en polylinje av linjesegment</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="324"/>
@@ -17189,7 +17189,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="331"/>
         <source>Pick angle from drawing</source>
-        <translation type="unfinished">Pick vinkel från ritning</translation>
+        <translation type="unfinished">Hämta vinkeln från ritningen</translation>
     </message>
 </context>
 <context>
@@ -17245,7 +17245,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/text/lc_m_text_options_widget.ui" line="117"/>
         <source>Pick angle from drawing</source>
-        <translation type="unfinished">Pick vinkel från ritning</translation>
+        <translation type="unfinished">Hämta vinkeln från ritningen</translation>
     </message>
 </context>
 <context>
@@ -17381,7 +17381,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_arc.cpp" line="42"/>
         <source>Radius of arc</source>
-        <translation type="unfinished">Radius av arc</translation>
+        <translation type="unfinished">Bågens radie</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_arc.cpp" line="46"/>
@@ -17401,7 +17401,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_arc.cpp" line="50"/>
         <source>Diameter of arc</source>
-        <translation type="unfinished">Diameter av arc</translation>
+        <translation type="unfinished">Bågens diameter</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_arc.cpp" line="54"/>
@@ -17502,7 +17502,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_arc.cpp" line="90"/>
         <source>End angle of arc</source>
-        <translation type="unfinished">End vinkel av arc</translation>
+        <translation type="unfinished">Bågens slutvinkel</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_arc.cpp" line="94"/>
@@ -18227,7 +18227,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="397"/>
         <source>Arc length symbol</source>
-        <translation type="unfinished">Arc längd symbol</translation>
+        <translation type="unfinished">Symbol för båglängd</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="399"/>
@@ -18323,7 +18323,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="498"/>
         <source>Arrows</source>
-        <translation type="unfinished">Arrows</translation>
+        <translation type="unfinished">Pilar</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="499"/>
@@ -19199,7 +19199,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimordinate.cpp" line="43"/>
         <source>Ordinate</source>
-        <translation type="unfinished">Ordinate</translation>
+        <translation type="unfinished">Ordinata</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimordinate.cpp" line="43"/>
@@ -19477,7 +19477,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_ellipse.cpp" line="93"/>
         <source>End angle of arc</source>
-        <translation type="unfinished">End vinkel av arc</translation>
+        <translation type="unfinished">Bågens slutvinkel</translation>
     </message>
 </context>
 <context>
@@ -19485,7 +19485,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_hatch.cpp" line="29"/>
         <source>Hatch</source>
-        <translation type="unfinished">Hatch</translation>
+        <translation type="unfinished">Skraffering</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_hatch.cpp" line="34"/>
@@ -19505,7 +19505,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_hatch.cpp" line="38"/>
         <source>Hatch pattern name</source>
-        <translation type="unfinished">Skraffningsmönstrets namn</translation>
+        <translation type="unfinished">Skrafferingsmönstrets namn</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_hatch.cpp" line="42"/>
@@ -20784,7 +20784,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_text.cpp" line="78"/>
         <source>Baseline</source>
-        <translation type="unfinished">Baseline</translation>
+        <translation type="unfinished">Baslinje</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_text.cpp" line="79"/>
@@ -20835,7 +20835,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_base.cpp" line="55"/>
         <source>&amp;Workspaces</source>
-        <translation type="unfinished">ochworkspaces</translation>
+        <translation type="unfinished">&amp;Arbetsytor</translation>
     </message>
 </context>
 <context>
@@ -20889,7 +20889,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="162"/>
         <source>Polyline/Spline</source>
-        <translation type="unfinished">Polyline/Spline</translation>
+        <translation type="unfinished">Polylinje/spline</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="173"/>
@@ -20976,7 +20976,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="477"/>
         <source>&amp;Named Views</source>
-        <translation type="unfinished">och namngivna vyer</translation>
+        <translation type="unfinished">&amp;Namngivna vyer</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="507"/>
@@ -21022,7 +21022,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="667"/>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="722"/>
         <source>Draw Circle</source>
-        <translation type="unfinished">Drag Circle</translation>
+        <translation type="unfinished">Rita cirkel</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="629"/>
@@ -21042,12 +21042,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="705"/>
         <source>Modify Arc</source>
-        <translation type="unfinished">Modifiera Arc</translation>
+        <translation type="unfinished">Ändra båge</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="763"/>
         <source>Modify Polyline</source>
-        <translation type="unfinished">Modifiera polyline</translation>
+        <translation type="unfinished">Ändra polylinje</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="815"/>
@@ -21097,7 +21097,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="125"/>
         <source>On&amp;line Docs</source>
-        <translation type="unfinished">On &amp;line Docs</translation>
+        <translation type="unfinished">Onli&amp;nedokumentation</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="126"/>
@@ -21148,7 +21148,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="146"/>
         <source>&amp;Request Feature</source>
-        <translation type="unfinished">och begäran om funktion</translation>
+        <translation type="unfinished">&amp;Föreslå en funktion</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="147"/>
@@ -21227,7 +21227,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="211"/>
         <source>&amp;Draw</source>
-        <translation type="unfinished">och Draw</translation>
+        <translation type="unfinished">&amp;Rita</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="220"/>
@@ -21312,7 +21312,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="386"/>
         <source>&amp;Views Restore</source>
-        <translation type="unfinished">&amp; Views återställ</translation>
+        <translation type="unfinished">&amp;Återställ vyer</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="399"/>
@@ -21322,7 +21322,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="405"/>
         <source>&amp;Workspace</source>
-        <translation type="unfinished">ochworkspace</translation>
+        <translation type="unfinished">&amp;Arbetsyta</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="415"/>
@@ -21347,7 +21347,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="504"/>
         <source>&amp;CAD Toolbars</source>
-        <translation type="unfinished">och CAD Toolbars</translation>
+        <translation type="unfinished">&amp;CAD-verktygsfält</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="581"/>
@@ -21543,7 +21543,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_options_widget.ui" line="154"/>
         <source>Entity</source>
-        <translation>Entity</translation>
+        <translation>Entitet</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_options_widget.ui" line="159"/>
@@ -21737,7 +21737,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_widget.ui" line="95"/>
         <source>If checked, multiple copies will be created. </source>
-        <translation type="unfinished">Om de kontrolleras kommer flera kopior att skapas.</translation>
+        <translation type="unfinished">Om markerat skapas flera kopior. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_widget.ui" line="98"/>
@@ -21863,7 +21863,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="90"/>
         <source>If checked, all copies will be rotated by the same agle. Otherwise, angle will be proportional to number of each copy. </source>
-        <translation type="unfinished">Om de kontrolleras kommer alla kopior att roteras av samma agle. Annars kommer vinkeln att vara proportionell mot antalet varje kopia.</translation>
+        <translation type="unfinished">Om markerat roteras alla kopior med samma vinkel. Annars är vinkeln proportionell mot kopians nummer. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="93"/>
@@ -21878,7 +21878,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="134"/>
         <source>If checked, rotation angle is defined by mouse. Otherwise, specified value is used.</source>
-        <translation type="unfinished">Om den kontrolleras definieras rotationsvinkeln av musen. Annars används specificerat värde.</translation>
+        <translation type="unfinished">Om markerat bestäms rotationsvinkeln med musen. Annars används det angivna värdet.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="137"/>
@@ -21903,7 +21903,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="173"/>
         <source>If checked, multiple copies will be created. </source>
-        <translation type="unfinished">Om de kontrolleras kommer flera kopior att skapas.</translation>
+        <translation type="unfinished">Om markerat skapas flera kopior. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="176"/>
@@ -21913,7 +21913,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="183"/>
         <source>Pick angle from drawing</source>
-        <translation type="unfinished">Pick vinkel från ritning</translation>
+        <translation type="unfinished">Hämta vinkeln från ritningen</translation>
     </message>
 </context>
 <context>
@@ -22041,7 +22041,7 @@ Varning: Den här åtgärden kan inte vara ogjort!</translation>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="479"/>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="493"/>
         <source>&amp;Add View</source>
-        <translation>och add view</translation>
+        <translation>&amp;Lägg till vy</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="475"/>
@@ -22051,7 +22051,7 @@ Varning: Den här åtgärden kan inte vara ogjort!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="482"/>
         <source>&amp;Restore View</source>
-        <translation>och Restor View</translation>
+        <translation>&amp;Återställ vy</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="483"/>
@@ -22061,7 +22061,7 @@ Varning: Den här åtgärden kan inte vara ogjort!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="484"/>
         <source>&amp;Update View</source>
-        <translation>ochUpdate View</translation>
+        <translation>&amp;Uppdatera vy</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="485"/>
@@ -22082,7 +22082,7 @@ Varning: Den här åtgärden kan inte vara ogjort!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="611"/>
         <source>Paper space view is not fully supported yet.</source>
-        <translation>Papper rymdvy stöds inte helt ännu.</translation>
+        <translation>Vyn för pappersrymden stöds ännu inte fullt ut.</translation>
     </message>
 </context>
 <context>
@@ -22170,12 +22170,12 @@ Varning: Den här åtgärden kan inte vara ogjort!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="400"/>
         <source>UCS Origin X: </source>
-        <translation>UCS-ursprung X:</translation>
+        <translation>UCS-origo X: </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="400"/>
         <source>UCS Origin Y: </source>
-        <translation>UCS-ursprung Y:</translation>
+        <translation>UCS-origo Y: </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="401"/>
@@ -22185,7 +22185,7 @@ Varning: Den här åtgärden kan inte vara ogjort!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="404"/>
         <source>In Paperspace: </source>
-        <translation>I Paperspace:</translation>
+        <translation>I pappersrymden: </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="404"/>
@@ -22286,7 +22286,7 @@ Varning: Den här åtgärden kan inte vara ogjort!</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="76"/>
         <source>If checked, multiple copies will be created. </source>
-        <translation type="unfinished">Om de kontrolleras kommer flera kopior att skapas.</translation>
+        <translation type="unfinished">Om markerat skapas flera kopior. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="79"/>
@@ -22341,7 +22341,7 @@ Varning: Den här åtgärden kan inte vara ogjort!</translation>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="172"/>
         <source>Pick distance from the drawing</source>
-        <translation type="unfinished">Pick distans från ritningen</translation>
+        <translation type="unfinished">Hämta avståndet från ritningen</translation>
     </message>
 </context>
 <context>
@@ -22461,7 +22461,7 @@ Varning: Den här åtgärden kan inte vara ogjort!</translation>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_to_points_options_widget.ui" line="143"/>
         <source>Pick angle from drawing</source>
-        <translation type="unfinished">Pick vinkel från ritning</translation>
+        <translation type="unfinished">Hämta vinkeln från ritningen</translation>
     </message>
 </context>
 <context>
@@ -22572,12 +22572,12 @@ Varning: Den här åtgärden kan inte vara ogjort!</translation>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_widget.ui" line="57"/>
         <source>If checked, arrays of copies will be created on paste.</source>
-        <translation type="unfinished">Om de kontrolleras kommer kopior av kopior att skapas på pasta.</translation>
+        <translation type="unfinished">Om markerat skapas matriser av kopior vid inklistring.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_widget.ui" line="60"/>
         <source>Array</source>
-        <translation type="unfinished">Array</translation>
+        <translation type="unfinished">Matris</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_widget.ui" line="85"/>
@@ -22597,17 +22597,17 @@ Varning: Den här åtgärden kan inte vara ogjort!</translation>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_widget.ui" line="124"/>
         <source>Rotation angle for array.</source>
-        <translation type="unfinished">Rotationsvinkel för array.</translation>
+        <translation type="unfinished">Rotationsvinkel för matrisen.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_widget.ui" line="131"/>
         <source>Pick array spacing by X from drawing</source>
-        <translation type="unfinished">Pick array avstånd från X från ritning</translation>
+        <translation type="unfinished">Hämta matrisens avstånd i X från ritningen</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_widget.ui" line="158"/>
         <source>Array rows number.</source>
-        <translation type="unfinished">Array rader nummer.</translation>
+        <translation type="unfinished">Antal rader i matrisen.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_widget.ui" line="193"/>
@@ -22622,17 +22622,17 @@ Varning: Den här åtgärden kan inte vara ogjort!</translation>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_widget.ui" line="207"/>
         <source>Pick array spacing by Y from drawing</source>
-        <translation type="unfinished">Pick array avstånd från Y från ritning</translation>
+        <translation type="unfinished">Hämta matrisens avstånd i Y från ritningen</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_widget.ui" line="221"/>
         <source>Pick angle from drawing</source>
-        <translation type="unfinished">Pick vinkel från ritning</translation>
+        <translation type="unfinished">Hämta vinkeln från ritningen</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_widget.ui" line="235"/>
         <source>Array Angle:</source>
-        <translation type="unfinished">Arrayvinkel:</translation>
+        <translation type="unfinished">Matrisvinkel:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_widget.ui" line="260"/>
@@ -22642,7 +22642,7 @@ Varning: Den här åtgärden kan inte vara ogjort!</translation>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_widget.ui" line="267"/>
         <source>If checked, the same rotation angle is used for each individual paste and whole array. Otherwise, different angles are used. </source>
-        <translation type="unfinished">Om den kontrolleras används samma rotationsvinkel för varje enskild pasta och hela array. Annars används olika vinklar.</translation>
+        <translation type="unfinished">Om markerat används samma rotationsvinkel för varje enskild inklistring och för hela matrisen. Annars används olika vinklar. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_widget.ui" line="270"/>
@@ -22652,12 +22652,12 @@ Varning: Den här åtgärden kan inte vara ogjort!</translation>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_widget.ui" line="277"/>
         <source>Array columns number.</source>
-        <translation type="unfinished">Array kolumner nummer.</translation>
+        <translation type="unfinished">Antal kolumner i matrisen.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/edit/lc_paste_transform_options_widget.ui" line="294"/>
         <source>Pick array angle from drawing</source>
-        <translation type="unfinished">Pick array vinkel från ritning</translation>
+        <translation type="unfinished">Hämta matrisens vinkel från ritningen</translation>
     </message>
 </context>
 <context>
@@ -22918,7 +22918,7 @@ Varning: Den här åtgärden kan inte vara ogjort!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="318"/>
         <source>Center</source>
-        <translation>Center</translation>
+        <translation>Centrum</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="319"/>
@@ -22928,12 +22928,12 @@ Varning: Den här åtgärden kan inte vara ogjort!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="320"/>
         <source>Center (small)</source>
-        <translation>Center (liten)</translation>
+        <translation>Centrum (liten)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="321"/>
         <source>Center (large)</source>
-        <translation>Center (stor)</translation>
+        <translation>Centrum (stor)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="326"/>
@@ -23085,7 +23085,7 @@ Varning: Den här åtgärden kan inte vara ogjort!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="20"/>
         <source>Pen Palette Settings</source>
-        <translation>Pen Palette Inställningar</translation>
+        <translation>Inställningar för pennpalett</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="66"/>
@@ -23106,7 +23106,7 @@ Varning: Den här åtgärden kan inte vara ogjort!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="76"/>
         <source>If set, bold font is used for all elements of active pen item (otherwise, only for name)</source>
-        <translation>Om set, djärv typsnitt används för alla delar av aktiv penna objekt (annars endast för namn)</translation>
+        <translation>Om markerat används fetstil för alla delar av den aktiva pennan (annars endast för namnet)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="79"/>
@@ -23241,7 +23241,7 @@ Varning: Den här åtgärden kan inte vara ogjort!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="297"/>
         <source>If set, filter will igore the case of pen&apos;s name</source>
-        <translation>Om set, filtret kommer att igora fallet med penns namn</translation>
+        <translation>Om markerat ignorerar filtret skiftläget i pennans namn</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="300"/>
@@ -23274,12 +23274,12 @@ Varning: Den här åtgärden kan inte vara ogjort!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="49"/>
         <source>Fill Pen Editor by Entity Drawing Pen</source>
-        <translation>Fyll Pen Editor från Entity Drawing Pen</translation>
+        <translation>Fyll pennredigeraren från entitetens ritpenna</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="66"/>
         <source>Fill Pen Editor by Entity Attributes</source>
-        <translation>Fyll Pen Editor från Entity Attributes</translation>
+        <translation>Fyll pennredigeraren från entitetens attribut</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="83"/>
@@ -23300,17 +23300,17 @@ Varning: Den här åtgärden kan inte vara ogjort!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="137"/>
         <source>Apply Pen To Selection</source>
-        <translation>Applicera Pen för att välja</translation>
+        <translation>Tillämpa penna på markeringen</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="154"/>
         <source>Fill Editor Pen by Current Pen</source>
-        <translation>Fill Editor Pen från Current Pen</translation>
+        <translation>Fyll redigerarens penna med aktuell penna</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="171"/>
         <source>Apply Editor Pen As Current Pen</source>
-        <translation>Applicera redaktör Pen som nuvarande penna</translation>
+        <translation>Använd redigerarens penna som aktuell penna</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="174"/>
@@ -23375,7 +23375,7 @@ Varning: Den här åtgärden kan inte vara ogjort!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="402"/>
         <source>Pen Name:</source>
-        <translation>Pen namn:</translation>
+        <translation>Pennans namn:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="436"/>
@@ -23405,7 +23405,7 @@ Varning: Den här åtgärden kan inte vara ogjort!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="550"/>
         <source>If checked, matched pens are highlighted, otherwise non-matching pens are hidden.</source>
-        <translation>Om de kontrolleras markeras matchade pennor, annars är icke-matchande pennor dolda.</translation>
+        <translation>Om markerat framhävs matchande pennor, annars döljs pennor som inte matchar.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="553"/>
@@ -23415,7 +23415,7 @@ Varning: Den här åtgärden kan inte vara ogjort!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="303"/>
         <source>&amp;Apply Pen To Selection</source>
-        <translation>Apply Pen för att välja</translation>
+        <translation>&amp;Tillämpa penna på markeringen</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="304"/>
@@ -23440,22 +23440,22 @@ Varning: Den här åtgärden kan inte vara ogjort!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="312"/>
         <source>&amp;Edit Pen</source>
-        <translation>Redigera Pen</translation>
+        <translation>&amp;Redigera penna</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="313"/>
         <source>&amp;Remove Pen</source>
-        <translation>Remove Pen</translation>
+        <translation>&amp;Ta bort penna</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="317"/>
         <source>&amp;Remove Pens</source>
-        <translation>Remove Pens</translation>
+        <translation>Ta &amp;bort pennor</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="430"/>
         <source>Pen palette</source>
-        <translation>Pen palett</translation>
+        <translation>Pennpalett</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="431"/>
@@ -23518,7 +23518,7 @@ Observera att om du sparar en penna via redigeraren utan att starta om, sparas a
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_point.ui" line="103"/>
         <source>Pick position from the drawing</source>
-        <translation>Pick position från ritningen</translation>
+        <translation>Hämta positionen från ritningen</translation>
     </message>
 </context>
 <context>
@@ -23634,7 +23634,7 @@ Observera att om du sparar en penna via redigeraren utan att starta om, sparas a
     <message>
         <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="62"/>
         <source>If checked, fixed specified distance between points will be used. Otherwise, distance will be calculated.</source>
-        <translation type="unfinished">Om det kontrolleras används det fasta angivna avståndet mellan punkterna. Annars kommer avståndet beräknas.</translation>
+        <translation type="unfinished">Om markerat används det angivna fasta avståndet mellan punkterna. Annars beräknas avståndet.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="70"/>
@@ -23740,17 +23740,17 @@ Observera att om du sparar en penna via redigeraren utan att starta om, sparas a
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_options_widget.ui" line="70"/>
         <source>If selected, reference points are for vertexes of polygon. Otherwise, they are for middle point of edges. </source>
-        <translation type="unfinished">Om de väljs, referenspunkter är för vertex av polygon. Annars är de för mittpunkten av kanter.</translation>
+        <translation type="unfinished">Om markerat gäller referenspunkterna polygonens hörn. Annars gäller de kanternas mittpunkter. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_options_widget.ui" line="73"/>
         <source>Vertex to Vertex</source>
-        <translation type="unfinished">Vertex till Vertex</translation>
+        <translation type="unfinished">Hörnpunkt till hörnpunkt</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_options_widget.ui" line="80"/>
         <source>If checked, vertexes of polygon will be rounded. </source>
-        <translation type="unfinished">Om de kontrolleras, vertex av polygon kommer att avrundas.</translation>
+        <translation type="unfinished">Om markerat avrundas polygonens hörn. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_options_widget.ui" line="83"/>
@@ -23770,7 +23770,7 @@ Observera att om du sparar en penna via redigeraren utan att starta om, sparas a
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_options_widget.ui" line="119"/>
         <source>Rounding radius for vertex bevel.</source>
-        <translation type="unfinished">Rundande radie för Vertex Bevel.</translation>
+        <translation type="unfinished">Avrundningsradie för hörnen.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_options_widget.ui" line="126"/>
@@ -23785,7 +23785,7 @@ Observera att om du sparar en penna via redigeraren utan att starta om, sparas a
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_options_widget.ui" line="143"/>
         <source>Pick radius from drawing</source>
-        <translation type="unfinished">Pick radie från att rita</translation>
+        <translation type="unfinished">Hämta radien från ritningen</translation>
     </message>
 </context>
 <context>
@@ -23793,12 +23793,12 @@ Observera att om du sparar en penna via redigeraren utan att starta om, sparas a
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_side_side_options_filler.cpp" line="34"/>
         <source>Vertex to Vertex</source>
-        <translation type="unfinished">Vertex till Vertex</translation>
+        <translation type="unfinished">Hörnpunkt till hörnpunkt</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_side_side_options_filler.cpp" line="35"/>
         <source>If selected, reference points are for vertexes of polygon. Otherwise, they are for middle point of edges. </source>
-        <translation type="unfinished">Om de väljs, referenspunkter är för vertex av polygon. Annars är de för mittpunkten av kanter.</translation>
+        <translation type="unfinished">Om markerat gäller referenspunkterna polygonens hörn. Annars gäller de kanternas mittpunkter. </translation>
     </message>
 </context>
 <context>
@@ -23854,7 +23854,7 @@ Observera att om du sparar en penna via redigeraren utan att starta om, sparas a
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_equidistant_options_widget.ui" line="127"/>
         <source>Pick spacing from drawing</source>
-        <translation type="unfinished">Pick avstånd från ritning</translation>
+        <translation type="unfinished">Hämta avståndet från ritningen</translation>
     </message>
 </context>
 <context>
@@ -23902,7 +23902,7 @@ Observera att om du sparar en penna via redigeraren utan att starta om, sparas a
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_filler.cpp" line="51"/>
         <source>Radius of arc</source>
-        <translation type="unfinished">Radius av arc</translation>
+        <translation type="unfinished">Bågens radie</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_filler.cpp" line="59"/>
@@ -23942,7 +23942,7 @@ Observera att om du sparar en penna via redigeraren utan att starta om, sparas a
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_filler.cpp" line="79"/>
         <source>Undo for previous vertex</source>
-        <translation type="unfinished">Undo för tidigare vertex</translation>
+        <translation type="unfinished">Ångra föregående hörnpunkt</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_filler.cpp" line="86"/>
@@ -23970,7 +23970,7 @@ Observera att om du sparar en penna via redigeraren utan att starta om, sparas a
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_widget.ui" line="63"/>
         <source>Undo for previous vertex</source>
-        <translation type="unfinished">Undo för tidigare vertex</translation>
+        <translation type="unfinished">Ångra föregående hörnpunkt</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_widget.ui" line="66"/>
@@ -23995,17 +23995,17 @@ Observera att om du sparar en penna via redigeraren utan att starta om, sparas a
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_widget.ui" line="120"/>
         <source>Tangental arc with fixed radius</source>
-        <translation type="unfinished">Tangental båge med fast radie</translation>
+        <translation type="unfinished">Tangentiell båge med fast radie</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_widget.ui" line="140"/>
         <source>Tangental arc with fixed angle</source>
-        <translation type="unfinished">Tangental arc med fast vinkel</translation>
+        <translation type="unfinished">Tangentiell båge med fast vinkel</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_widget.ui" line="160"/>
         <source>Arc with angle</source>
-        <translation type="unfinished">Arc med vinkel</translation>
+        <translation type="unfinished">Båge med vinkel</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_widget.ui" line="180"/>
@@ -24015,12 +24015,12 @@ Observera att om du sparar en penna via redigeraren utan att starta om, sparas a
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_widget.ui" line="205"/>
         <source>Radius of arc</source>
-        <translation type="unfinished">Radius av arc</translation>
+        <translation type="unfinished">Bågens radie</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_widget.ui" line="212"/>
         <source>Pick radius form drawing</source>
-        <translation type="unfinished">Pick radius form ritning</translation>
+        <translation type="unfinished">Hämta radien från ritningen</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_widget.ui" line="226"/>
@@ -24035,7 +24035,7 @@ Observera att om du sparar en penna via redigeraren utan att starta om, sparas a
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_widget.ui" line="258"/>
         <source>Pick angle from drawing</source>
-        <translation type="unfinished">Pick vinkel från ritning</translation>
+        <translation type="unfinished">Hämta vinkeln från ritningen</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_widget.ui" line="293"/>
@@ -24063,7 +24063,7 @@ Observera att om du sparar en penna via redigeraren utan att starta om, sparas a
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_polyline.ui" line="69"/>
         <source>Defines whether polyline is closed contour</source>
-        <translation>Definierar om polyline är stängd kontur</translation>
+        <translation>Anger om polylinjen är en sluten kontur</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_polyline.ui" line="72"/>
@@ -24359,7 +24359,7 @@ Observera att om du sparar en penna via redigeraren utan att starta om, sparas a
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_widget.ui" line="369"/>
         <source>If enabled, paper space will include specified amount of pages organized in columns and rows</source>
-        <translation type="unfinished">Om det är aktiverat kommer pappersutrymmet att innehålla specificerade mängder sidor som organiseras i kolumner och rader</translation>
+        <translation type="unfinished">Om aktiverat innehåller pappersrymden det angivna antalet sidor ordnade i kolumner och rader</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_widget.ui" line="372"/>
@@ -24566,7 +24566,7 @@ Observera att om du sparar en penna via redigeraren utan att starta om, sparas a
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="40"/>
         <source>Radius of arc</source>
-        <translation type="unfinished">Radius av arc</translation>
+        <translation type="unfinished">Bågens radie</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="46"/>
@@ -24576,7 +24576,7 @@ Observera att om du sparar en penna via redigeraren utan att starta om, sparas a
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="46"/>
         <source>Diameter of arc</source>
-        <translation type="unfinished">Diameter av arc</translation>
+        <translation type="unfinished">Bågens diameter</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="52"/>
@@ -24606,7 +24606,7 @@ Observera att om du sparar en penna via redigeraren utan att starta om, sparas a
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="65"/>
         <source>End angle of arc</source>
-        <translation type="unfinished">End vinkel av arc</translation>
+        <translation type="unfinished">Bågens slutvinkel</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="73"/>
@@ -24636,7 +24636,7 @@ Observera att om du sparar en penna via redigeraren utan att starta om, sparas a
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="81"/>
         <source>Arc Length</source>
-        <translation type="unfinished">Arc längd</translation>
+        <translation type="unfinished">Båglängd</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="81"/>
@@ -24711,7 +24711,7 @@ Observera att om du sparar en penna via redigeraren utan att starta om, sparas a
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="138"/>
         <source>Offset</source>
-        <translation type="unfinished">Offset</translation>
+        <translation type="unfinished">Förskjutning</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="138"/>
@@ -25115,7 +25115,7 @@ Observera att om du sparar en penna via redigeraren utan att starta om, sparas a
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="73"/>
         <source>Offset</source>
-        <translation type="unfinished">Offset</translation>
+        <translation type="unfinished">Förskjutning</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="73"/>
@@ -25450,7 +25450,7 @@ Observera att om du sparar en penna via redigeraren utan att starta om, sparas a
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_aligned.cpp" line="56"/>
         <source>Baseline</source>
-        <translation type="unfinished">Baseline</translation>
+        <translation type="unfinished">Baslinje</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_aligned.cpp" line="56"/>
@@ -26043,7 +26043,7 @@ Observera att om du sparar en penna via redigeraren utan att starta om, sparas a
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="707"/>
         <source>Arc length symbol</source>
-        <translation type="unfinished">Arc längd symbol</translation>
+        <translation type="unfinished">Symbol för båglängd</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="719"/>
@@ -26129,7 +26129,7 @@ Observera att om du sparar en penna via redigeraren utan att starta om, sparas a
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="811"/>
         <source>Arrows</source>
-        <translation type="unfinished">Arrows</translation>
+        <translation type="unfinished">Pilar</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="811"/>
@@ -26934,7 +26934,7 @@ Observera att om du sparar en penna via redigeraren utan att starta om, sparas a
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_linear.cpp" line="69"/>
         <source>Baseline</source>
-        <translation type="unfinished">Baseline</translation>
+        <translation type="unfinished">Baslinje</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_linear.cpp" line="69"/>
@@ -27336,7 +27336,7 @@ Observera att om du sparar en penna via redigeraren utan att starta om, sparas a
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_grid.cpp" line="39"/>
         <source>Grid</source>
-        <translation type="unfinished">Grid</translation>
+        <translation type="unfinished">Rutnät</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_grid.cpp" line="39"/>
@@ -28117,7 +28117,7 @@ Observera att om du sparar en penna via redigeraren utan att starta om, sparas a
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_hatch.cpp" line="39"/>
         <source>Hatch pattern name</source>
-        <translation type="unfinished">Skraffningsmönstrets namn</translation>
+        <translation type="unfinished">Skrafferingsmönstrets namn</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_hatch.cpp" line="53"/>
@@ -28617,7 +28617,7 @@ Observera att om du sparar en penna via redigeraren utan att starta om, sparas a
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_leader.cpp" line="64"/>
         <source>Vertex</source>
-        <translation type="unfinished">Vertex</translation>
+        <translation type="unfinished">Hörnpunkt</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_leader.cpp" line="64"/>
@@ -28746,7 +28746,7 @@ Observera att om du sparar en penna via redigeraren utan att starta om, sparas a
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="105"/>
         <source>Trim Two</source>
-        <translation type="unfinished">Trim två</translation>
+        <translation type="unfinished">Trimma två</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="105"/>
@@ -28957,7 +28957,7 @@ Observera att om du sparar en penna via redigeraren utan att starta om, sparas a
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="170"/>
         <source>Bevel</source>
-        <translation type="unfinished">Bevel</translation>
+        <translation type="unfinished">Fasning</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="170"/>
@@ -28967,7 +28967,7 @@ Observera att om du sparar en penna via redigeraren utan att starta om, sparas a
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="171"/>
         <source>Round</source>
-        <translation type="unfinished">Runda</translation>
+        <translation type="unfinished">Avrundning</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="171"/>
@@ -29313,7 +29313,7 @@ Observera att om du sparar en penna via redigeraren utan att starta om, sparas a
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_parabola.cpp" line="39"/>
         <source>Vertex</source>
-        <translation type="unfinished">Vertex</translation>
+        <translation type="unfinished">Hörnpunkt</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_parabola.cpp" line="39"/>
@@ -29480,7 +29480,7 @@ Observera att om du sparar en penna via redigeraren utan att starta om, sparas a
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_polyline.cpp" line="60"/>
         <source>Vertex</source>
-        <translation type="unfinished">Vertex</translation>
+        <translation type="unfinished">Hörnpunkt</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_polyline.cpp" line="60"/>
@@ -30169,7 +30169,7 @@ Observera att om du sparar en penna via redigeraren utan att starta om, sparas a
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_text.cpp" line="65"/>
         <source>Baseline</source>
-        <translation type="unfinished">Baseline</translation>
+        <translation type="unfinished">Baslinje</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_text.cpp" line="66"/>
@@ -30595,7 +30595,7 @@ Lager: </translation>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="440"/>
         <source>Set Relative Zero</source>
-        <translation>Ställ in relativ noll</translation>
+        <translation>Ange relativ nollpunkt</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="450"/>
@@ -30734,7 +30734,7 @@ Lager: </translation>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1416"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1435"/>
         <source>Center</source>
-        <translation>Center</translation>
+        <translation>Centrum</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="612"/>
@@ -31188,7 +31188,7 @@ Lager: </translation>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1071"/>
         <source>Baseline</source>
-        <translation>Baseline</translation>
+        <translation>Baslinje</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1073"/>
@@ -31385,7 +31385,7 @@ Lager: </translation>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1331"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1347"/>
         <source>Vertex</source>
-        <translation>Vertex</translation>
+        <translation>Hörnpunkt</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1332"/>
@@ -31466,7 +31466,7 @@ Lager: </translation>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1415"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1434"/>
         <source>Arc Length</source>
-        <translation>Arc längd</translation>
+        <translation>Båglängd</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1446"/>
@@ -31556,13 +31556,13 @@ Lager: </translation>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1552"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1567"/>
         <source>Ordinate</source>
-        <translation>Ordinate</translation>
+        <translation>Ordinata</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1553"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1565"/>
         <source>Origin Point</source>
-        <translation>Ursprungspunkt</translation>
+        <translation>Origo</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1554"/>
@@ -31604,7 +31604,7 @@ Lager: </translation>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfopointsdata.cpp" line="226"/>
         <source>Relative Zero</source>
-        <translation>Relativ noll</translation>
+        <translation>Relativ nollpunkt</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfopointsdata.cpp" line="231"/>
@@ -31615,7 +31615,7 @@ Lager: </translation>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfopointsdata.cpp" line="233"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfopointsdata.cpp" line="250"/>
         <source>Set Relative Zero</source>
-        <translation>Ställ in relativ noll</translation>
+        <translation>Ange relativ nollpunkt</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfopointsdata.cpp" line="235"/>
@@ -31740,13 +31740,13 @@ p, li { vitrymd: pre-wrap; }
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="377"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="387"/>
         <source>&amp;To Cmd</source>
-        <translation>och för Cmd</translation>
+        <translation>&amp;Till kommandoraden</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="366"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="380"/>
         <source>&amp;Set Relative Zero</source>
-        <translation>Relativ noll</translation>
+        <translation>Ange &amp;relativ nollpunkt</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="369"/>
@@ -31761,12 +31761,12 @@ p, li { vitrymd: pre-wrap; }
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="392"/>
         <source>&amp;Clear</source>
-        <translation>och klar</translation>
+        <translation>&amp;Rensa</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="393"/>
         <source>&amp;Select Entity</source>
-        <translation>och välj entitet</translation>
+        <translation>&amp;Välj entitet</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="396"/>
@@ -31977,7 +31977,7 @@ p, li { vitrymd: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1_point_options_filler.cpp" line="74"/>
         <source>If checked, angle will be specified by mouse position. Otherwise, specified value will be used.</source>
-        <translation type="unfinished">Om den kontrolleras kommer vinkeln att anges med musposition. Annars kommer specificerat värde att användas.</translation>
+        <translation type="unfinished">Om markerat anges vinkeln med musens position. Annars används det angivna värdet.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1_point_options_filler.cpp" line="79"/>
@@ -32015,7 +32015,7 @@ p, li { vitrymd: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="46"/>
         <source>If checked, rectangle will be created as polyline instead of individual segments.</source>
-        <translation type="unfinished">Om den kontrolleras kommer rektangeln att skapas som polylin istället för enskilda segment.</translation>
+        <translation type="unfinished">Om markerat skapas rektangeln som en polylinje i stället för enskilda segment.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="49"/>
@@ -32085,12 +32085,12 @@ p, li { vitrymd: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="146"/>
         <source>Length of bevel corner for X direction. </source>
-        <translation type="unfinished">Längd av bevel hörn för X riktning.</translation>
+        <translation type="unfinished">Hörnfasningens längd i X-riktningen. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="160"/>
         <source>Pick rotation angle from drawing</source>
-        <translation type="unfinished">Pick rotationsvinkel från att rita</translation>
+        <translation type="unfinished">Hämta rotationsvinkeln från ritningen</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="174"/>
@@ -32100,12 +32100,12 @@ p, li { vitrymd: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="181"/>
         <source>Pick radius of rounded corners from drawing.</source>
-        <translation type="unfinished">Välj radie av rundade hörn från ritning.</translation>
+        <translation type="unfinished">Hämta radien för de rundade hörnen från ritningen.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="195"/>
         <source>Defines which edges of rectangle should be drawn (so it is possible to create just two parallel lines instead of rectangle)</source>
-        <translation type="unfinished">Definiera vilka kanter av rektangel bör dras (så det är möjligt att skapa bara två parallella linjer istället för rektangel)</translation>
+        <translation type="unfinished">Anger vilka av rektangelns kanter som ska ritas (så att det går att skapa bara två parallella linjer i stället för en rektangel)</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="199"/>
@@ -32125,12 +32125,12 @@ p, li { vitrymd: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="229"/>
         <source>Length of bevel corner for Y direction. </source>
-        <translation type="unfinished">Längd av bevel hörn för Y riktning.</translation>
+        <translation type="unfinished">Hörnfasningens längd i Y-riktningen. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="236"/>
         <source>Controls how corners of rectangle should be drawn.</source>
-        <translation type="unfinished">Kontrollerar hur hörn av rektangel bör dras.</translation>
+        <translation type="unfinished">Styr hur rektangelns hörn ska ritas.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="240"/>
@@ -32140,17 +32140,17 @@ p, li { vitrymd: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="245"/>
         <source>Round</source>
-        <translation type="unfinished">Runda</translation>
+        <translation type="unfinished">Rund</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="250"/>
         <source>Bevel</source>
-        <translation type="unfinished">Bevel</translation>
+        <translation type="unfinished">Fasning</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="258"/>
         <source>If checked, specified height and width of rectangle defines distance between centers of arcs for rounding corners. Otherwise, these values defines outer size of the rectangle.</source>
-        <translation type="unfinished">Om kontrollerad, specificerad höjd och bredd av rektangel definierar avstånd mellan centra av bågar för rundande hörn. Annars definierar dessa värden yttre storlek av rektangeln.</translation>
+        <translation type="unfinished">Om markerat anger rektangelns angivna höjd och bredd avståndet mellan centrumpunkterna för hörnens avrundningsbågar. Annars anger värdena rektangelns yttre storlek.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="261"/>
@@ -32165,7 +32165,7 @@ p, li { vitrymd: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="307"/>
         <source>If checked, rectangle will be rotated on specified angle.</source>
-        <translation type="unfinished">Om den kontrolleras kommer rektangeln att roteras på angiven vinkel.</translation>
+        <translation type="unfinished">Om markerat roteras rektangeln med den angivna vinkeln.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="310"/>
@@ -32175,7 +32175,7 @@ p, li { vitrymd: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="317"/>
         <source>If checked, angle will be specified by mouse position. Otherwise, specified value will be used.</source>
-        <translation type="unfinished">Om den kontrolleras kommer vinkeln att anges med musposition. Annars kommer specificerat värde att användas.</translation>
+        <translation type="unfinished">Om markerat anges vinkeln med musens position. Annars används det angivna värdet.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="320"/>
@@ -32190,12 +32190,12 @@ p, li { vitrymd: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="346"/>
         <source>Pick height of rectangle from drawing</source>
-        <translation type="unfinished">Pick höjd av rektangel från ritning</translation>
+        <translation type="unfinished">Hämta rektangelns höjd från ritningen</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="360"/>
         <source>Pick width of rectangle from drawing</source>
-        <translation type="unfinished">Pick bredd av rektangel från ritning</translation>
+        <translation type="unfinished">Hämta rektangelns bredd från ritningen</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="374"/>
@@ -32210,12 +32210,12 @@ p, li { vitrymd: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="388"/>
         <source>If checked, specifies that snap point should be shifted by radius of corners.</source>
-        <translation type="unfinished">Om det kontrolleras anger du att snappunkten ska flyttas av radien av hörn.</translation>
+        <translation type="unfinished">Om markerat förskjuts snappunkten med hörnens radie.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="391"/>
         <source>Snap shift</source>
-        <translation type="unfinished">Snap skift</translation>
+        <translation type="unfinished">Snappförskjutning</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="405"/>
@@ -32230,12 +32230,12 @@ p, li { vitrymd: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="419"/>
         <source>Snap:</source>
-        <translation type="unfinished">Snap:</translation>
+        <translation type="unfinished">Snapp:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="438"/>
         <source>Radius of rounded corners.</source>
-        <translation type="unfinished">Radius av rundade hörn.</translation>
+        <translation type="unfinished">Radie för rundade hörn.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="445"/>
@@ -32298,7 +32298,7 @@ p, li { vitrymd: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_filler.cpp" line="57"/>
         <source>If checked, allows to specify rotation angle for rectangle.</source>
-        <translation type="unfinished">Om den kontrolleras kan du ange rotationsvinkel för rektangel.</translation>
+        <translation type="unfinished">Om markerat kan rektangelns rotationsvinkel anges.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_filler.cpp" line="64"/>
@@ -32360,7 +32360,7 @@ p, li { vitrymd: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="59"/>
         <source>If checked, the entire rectangle will be drawn as polyline.</source>
-        <translation type="unfinished">Om den kontrolleras kommer hela rektangeln att dras som polylin.</translation>
+        <translation type="unfinished">Om markerat ritas hela rektangeln som en polylinje.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="62"/>
@@ -32370,7 +32370,7 @@ p, li { vitrymd: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="69"/>
         <source>Defines how corners of rectangle should be drawn. </source>
-        <translation type="unfinished">Definierar hur hörn av rektangel bör dras.</translation>
+        <translation type="unfinished">Anger hur rektangelns hörn ska ritas. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="73"/>
@@ -32380,32 +32380,32 @@ p, li { vitrymd: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="78"/>
         <source>Round</source>
-        <translation type="unfinished">Runda</translation>
+        <translation type="unfinished">Rund</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="83"/>
         <source>Bevel</source>
-        <translation type="unfinished">Bevel</translation>
+        <translation type="unfinished">Fasning</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="91"/>
         <source>Start Snap:</source>
-        <translation type="unfinished">Startpunkt:</translation>
+        <translation type="unfinished">Startsnapp:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="105"/>
         <source>Pick rectangle rotation angle from drawing</source>
-        <translation type="unfinished">Pick rektangel rotationsvinkel från att rita</translation>
+        <translation type="unfinished">Hämta rektangelns rotationsvinkel från ritningen</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="131"/>
         <source>Radius of rounded corners. </source>
-        <translation type="unfinished">Radius av rundade hörn.</translation>
+        <translation type="unfinished">Radie för rundade hörn. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="138"/>
         <source>Pick radius of rounded corners from drawing. </source>
-        <translation type="unfinished">Välj radie av rundade hörn från ritning.</translation>
+        <translation type="unfinished">Hämta radien för de rundade hörnen från ritningen. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="164"/>
@@ -32420,7 +32420,7 @@ p, li { vitrymd: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="190"/>
         <source>Length of bevel in Y direction. </source>
-        <translation type="unfinished">Längd av bevel i Y riktning.</translation>
+        <translation type="unfinished">Fasningens längd i Y-riktningen. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="197"/>
@@ -32435,7 +32435,7 @@ p, li { vitrymd: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="251"/>
         <source>Defines which edges of rectangle should be drawn (so it is possible to create just two parallel lines instead of rectangle)</source>
-        <translation type="unfinished">Definiera vilka kanter av rektangel bör dras (så det är möjligt att skapa bara två parallella linjer istället för rektangel)</translation>
+        <translation type="unfinished">Anger vilka av rektangelns kanter som ska ritas (så att det går att skapa bara två parallella linjer i stället för en rektangel)</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="255"/>
@@ -32460,7 +32460,7 @@ p, li { vitrymd: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="294"/>
         <source>If checked, allows to specify rotation angle for rectangle.</source>
-        <translation type="unfinished">Om den kontrolleras kan du ange rotationsvinkel för rektangel.</translation>
+        <translation type="unfinished">Om markerat kan rektangelns rotationsvinkel anges.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="297"/>
@@ -32480,22 +32480,22 @@ p, li { vitrymd: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="318"/>
         <source>If checked, specifies that snap points should be shifted by radius of corners.</source>
-        <translation type="unfinished">Om den kontrolleras anger du att snappunkter ska flyttas med radie av hörn.</translation>
+        <translation type="unfinished">Om markerat förskjuts snappunkterna med hörnens radie.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="321"/>
         <source>Snap shift</source>
-        <translation type="unfinished">Snap skift</translation>
+        <translation type="unfinished">Snappförskjutning</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="340"/>
         <source>Length of bevel in X direction.</source>
-        <translation type="unfinished">Längd av bevel i X riktning.</translation>
+        <translation type="unfinished">Fasningens längd i X-riktningen.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="347"/>
         <source>End Snap:</source>
-        <translation type="unfinished">Slutpunkt:</translation>
+        <translation type="unfinished">Slutsnapp:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="354"/>
@@ -32548,7 +32548,7 @@ p, li { vitrymd: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3_points_options_filler.cpp" line="53"/>
         <source>If checked, allows to specify rotation angle for rectangle.</source>
-        <translation type="unfinished">Om den kontrolleras kan du ange rotationsvinkel för rektangel.</translation>
+        <translation type="unfinished">Om markerat kan rektangelns rotationsvinkel anges.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3_points_options_filler.cpp" line="60"/>
@@ -32581,7 +32581,7 @@ p, li { vitrymd: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="32"/>
         <source>If checked, the shape will be created as polyline. </source>
-        <translation type="unfinished">Om den kontrolleras kommer formen att skapas som polylin.</translation>
+        <translation type="unfinished">Om markerat skapas formen som en polylinje. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="35"/>
@@ -32591,7 +32591,7 @@ p, li { vitrymd: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="86"/>
         <source>If checked, inner angle of quadrangle will be fixed to specified value.</source>
-        <translation type="unfinished">Om den kontrolleras, kommer inre vinkel av quadrangle att fastställas till specificerat värde.</translation>
+        <translation type="unfinished">Om markerat låses fyrhörningens inre vinkel till det angivna värdet.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="89"/>
@@ -32616,7 +32616,7 @@ p, li { vitrymd: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="159"/>
         <source>If checked, rectangle will be rotated to specified base angle.  Otherwise, base angle will be defined by angle between first and second points of rectangle.</source>
-        <translation type="unfinished">Om den kontrolleras kommer rektangeln att roteras till specificerad basvinkel. Annars kommer basvinkeln att definieras av vinkel mellan första och andra punkter av rektangel.</translation>
+        <translation type="unfinished">Om markerat roteras rektangeln till den angivna basvinkeln. Annars bestäms basvinkeln av vinkeln mellan rektangelns första och andra punkt.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="162"/>
@@ -32631,7 +32631,7 @@ p, li { vitrymd: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="194"/>
         <source>If checked, quadrangle will be created instead of rectangle.</source>
-        <translation type="unfinished">Om den kontrolleras skapas quadrangle istället för rektangel.</translation>
+        <translation type="unfinished">Om markerat skapas en fyrhörning i stället för en rektangel.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="197"/>
@@ -32641,12 +32641,12 @@ p, li { vitrymd: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="248"/>
         <source>If checked, specifies that snap points should be shifted by radius of corners.</source>
-        <translation type="unfinished">Om den kontrolleras anger du att snappunkter ska flyttas med radie av hörn.</translation>
+        <translation type="unfinished">Om markerat förskjuts snappunkterna med hörnens radie.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="251"/>
         <source>Snap shift</source>
-        <translation type="unfinished">Snap skift</translation>
+        <translation type="unfinished">Snappförskjutning</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="258"/>
@@ -32661,12 +32661,12 @@ p, li { vitrymd: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="290"/>
         <source>Length of bevel in X direction.</source>
-        <translation type="unfinished">Längd av bevel i X riktning.</translation>
+        <translation type="unfinished">Fasningens längd i X-riktningen.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="315"/>
         <source>Length of bevel in Y direction. </source>
-        <translation type="unfinished">Längd av bevel i Y riktning.</translation>
+        <translation type="unfinished">Fasningens längd i Y-riktningen. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="322"/>
@@ -32676,17 +32676,17 @@ p, li { vitrymd: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="347"/>
         <source>Radius of rounded corners.</source>
-        <translation type="unfinished">Radius av rundade hörn.</translation>
+        <translation type="unfinished">Radie för rundade hörn.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="354"/>
         <source>Pick radius of rounded corners from drawing.</source>
-        <translation type="unfinished">Välj radie av rundade hörn från ritning.</translation>
+        <translation type="unfinished">Hämta radien för de rundade hörnen från ritningen.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="368"/>
         <source>Defines how corners should be drawn for rectangle. </source>
-        <translation type="unfinished">Definierar hur hörn ska dras för rektangel.</translation>
+        <translation type="unfinished">Anger hur hörnen ska ritas för rektangeln. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="372"/>
@@ -32696,12 +32696,12 @@ p, li { vitrymd: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="377"/>
         <source>Round</source>
-        <translation type="unfinished">Runda</translation>
+        <translation type="unfinished">Rund</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="382"/>
         <source>Bevel</source>
-        <translation type="unfinished">Bevel</translation>
+        <translation type="unfinished">Fasning</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="390"/>
@@ -32721,7 +32721,7 @@ p, li { vitrymd: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="428"/>
         <source>Defines which edges of rectangle should be drawn (so it is possible to create just two parallel lines instead of rectangle)</source>
-        <translation type="unfinished">Definiera vilka kanter av rektangel bör dras (så det är möjligt att skapa bara två parallella linjer istället för rektangel)</translation>
+        <translation type="unfinished">Anger vilka av rektangelns kanter som ska ritas (så att det går att skapa bara två parallella linjer i stället för en rektangel)</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="432"/>
@@ -32741,7 +32741,7 @@ p, li { vitrymd: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="450"/>
         <source>Pick base angle of rectangle from drawing</source>
-        <translation type="unfinished">Pick basvinkel av rektangel från ritning</translation>
+        <translation type="unfinished">Hämta rektangelns basvinkel från ritningen</translation>
     </message>
 </context>
 <context>
@@ -32769,7 +32769,7 @@ p, li { vitrymd: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_abstract_options_filler.cpp" line="42"/>
         <source>Defines which edges of rectangle should be drawn (so it is possible to create just two parallel lines instead of rectangle)</source>
-        <translation type="unfinished">Definiera vilka kanter av rektangel bör dras (så det är möjligt att skapa bara två parallella linjer istället för rektangel)</translation>
+        <translation type="unfinished">Anger vilka av rektangelns kanter som ska ritas (så att det går att skapa bara två parallella linjer i stället för en rektangel)</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_abstract_options_filler.cpp" line="56"/>
@@ -32779,12 +32779,12 @@ p, li { vitrymd: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_abstract_options_filler.cpp" line="57"/>
         <source>Round</source>
-        <translation type="unfinished">Runda</translation>
+        <translation type="unfinished">Rund</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_abstract_options_filler.cpp" line="58"/>
         <source>Bevel</source>
-        <translation type="unfinished">Bevel</translation>
+        <translation type="unfinished">Fasning</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_abstract_options_filler.cpp" line="62"/>
@@ -32814,7 +32814,7 @@ p, li { vitrymd: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_abstract_options_filler.cpp" line="86"/>
         <source>If checked, specifies that snap point should be shifted by radius of corners.</source>
-        <translation type="unfinished">Om det kontrolleras anger du att snappunkten ska flyttas av radien av hörn.</translation>
+        <translation type="unfinished">Om markerat förskjuts snappunkten med hörnens radie.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_abstract_options_filler.cpp" line="97"/>
@@ -32857,12 +32857,12 @@ p, li { vitrymd: pre-wrap; }
     <message>
         <location filename="../src/ui/components/status_bar/lc_relzerocoordinateswidget.ui" line="35"/>
         <source>Relative Zero (Cartesian)</source>
-        <translation>Relativ noll (kartesiska)</translation>
+        <translation>Relativ nollpunkt (kartesisk)</translation>
     </message>
     <message>
         <location filename="../src/ui/components/status_bar/lc_relzerocoordinateswidget.ui" line="45"/>
         <source>Relative Zero (Polar)</source>
-        <translation>Relativ noll (polär)</translation>
+        <translation>Relativ nollpunkt (polär)</translation>
     </message>
 </context>
 <context>
@@ -32991,7 +32991,7 @@ p, li { vitrymd: pre-wrap; }
     <message>
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="361"/>
         <source>Pick length from drawing</source>
-        <translation type="unfinished">Pick längd från ritning</translation>
+        <translation type="unfinished">Hämta längden från ritningen</translation>
     </message>
     <message>
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="446"/>
@@ -33012,7 +33012,7 @@ p, li { vitrymd: pre-wrap; }
     <message>
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="501"/>
         <source>Pick angle from drawing</source>
-        <translation type="unfinished">Pick vinkel från ritning</translation>
+        <translation type="unfinished">Hämta vinkeln från ritningen</translation>
     </message>
     <message>
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="586"/>
@@ -33259,7 +33259,7 @@ p, li { vitrymd: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="60"/>
         <source>If checked, the same angle will be used for all copies. Otherwise, it will be increased proportionally to copy number. </source>
-        <translation type="unfinished">Om den kontrolleras kommer samma vinkel att användas för alla kopior. Annars kommer det att ökas proportionellt till kopieringsnummer.</translation>
+        <translation type="unfinished">Om markerat används samma vinkel för alla kopior. Annars ökar den proportionellt mot kopians nummer. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="63"/>
@@ -33304,7 +33304,7 @@ p, li { vitrymd: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="194"/>
         <source>Pick primary angle from drawing</source>
-        <translation type="unfinished">Pick primärvinkel från att rita</translation>
+        <translation type="unfinished">Hämta primärvinkeln från ritningen</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="208"/>
@@ -33319,7 +33319,7 @@ p, li { vitrymd: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="218"/>
         <source>If checked, multiple copies will be created. </source>
-        <translation type="unfinished">Om de kontrolleras kommer flera kopior att skapas.</translation>
+        <translation type="unfinished">Om markerat skapas flera kopior. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="221"/>
@@ -33339,7 +33339,7 @@ p, li { vitrymd: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="238"/>
         <source>Pick secondary angle from drawing</source>
-        <translation type="unfinished">Pick sekundär vinkel från ritning</translation>
+        <translation type="unfinished">Hämta sekundärvinkeln från ritningen</translation>
     </message>
 </context>
 <context>
@@ -33392,7 +33392,7 @@ p, li { vitrymd: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_filler.cpp" line="73"/>
         <source>If checked, second rotation is around reference point</source>
-        <translation type="unfinished">Om den kontrolleras är andra rotationen runt referenspunkten</translation>
+        <translation type="unfinished">Om markerat sker den andra rotationen runt referenspunkten</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_filler.cpp" line="80"/>
@@ -33505,12 +33505,12 @@ p, li { vitrymd: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="141"/>
         <source>Pick rotation angle from drawing</source>
-        <translation type="unfinished">Pick rotationsvinkel från att rita</translation>
+        <translation type="unfinished">Hämta rotationsvinkeln från ritningen</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="155"/>
         <source>Multiple copies will be created if checked.</source>
-        <translation type="unfinished">Flera kopior kommer att skapas om de kontrolleras.</translation>
+        <translation type="unfinished">Om markerat skapas flera kopior.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="158"/>
@@ -33530,7 +33530,7 @@ p, li { vitrymd: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="175"/>
         <source>Pick second rotation angle from drawing</source>
-        <translation type="unfinished">Pick second rotation vinkel från ritning</translation>
+        <translation type="unfinished">Hämta den andra rotationsvinkeln från ritningen</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="189"/>
@@ -33545,7 +33545,7 @@ p, li { vitrymd: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="199"/>
         <source>If checked, second rotation is around reference point</source>
-        <translation type="unfinished">Om den kontrolleras är andra rotationen runt referenspunkten</translation>
+        <translation type="unfinished">Om markerat sker den andra rotationen runt referenspunkten</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="202"/>
@@ -33565,7 +33565,7 @@ p, li { vitrymd: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="219"/>
         <source>Free selection of factor should be performed by mouse if checked.</source>
-        <translation type="unfinished">Fritt urval av faktor bör utföras av musen om den kontrolleras.</translation>
+        <translation type="unfinished">Om markerat väljs faktorn fritt med musen.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="222"/>
@@ -33624,7 +33624,7 @@ p, li { vitrymd: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_round_options_filler.cpp" line="31"/>
         <source>Check to trim both edges to the rounding</source>
-        <translation type="unfinished">Kontrollera för att trimma båda kanterna till avrundningen</translation>
+        <translation type="unfinished">Markera för att trimma båda kanterna till avrundningen</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_round_options_filler.cpp" line="37"/>
@@ -33634,7 +33634,7 @@ p, li { vitrymd: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_round_options_filler.cpp" line="37"/>
         <source>Rounding radius</source>
-        <translation type="unfinished">Rundande radie</translation>
+        <translation type="unfinished">Avrundningsradie</translation>
     </message>
 </context>
 <context>
@@ -33647,7 +33647,7 @@ p, li { vitrymd: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_round_options_widget.ui" line="59"/>
         <source>Check to trim both edges to the rounding</source>
-        <translation type="unfinished">Kontrollera för att trimma båda kanterna till avrundningen</translation>
+        <translation type="unfinished">Markera för att trimma båda kanterna till avrundningen</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_round_options_widget.ui" line="62"/>
@@ -33662,12 +33662,12 @@ p, li { vitrymd: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_round_options_widget.ui" line="95"/>
         <source>Rounding radius</source>
-        <translation type="unfinished">Rundande radie</translation>
+        <translation type="unfinished">Avrundningsradie</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_round_options_widget.ui" line="102"/>
         <source>Pick radius from drawing</source>
-        <translation type="unfinished">Pick radie från att rita</translation>
+        <translation type="unfinished">Hämta radien från ritningen</translation>
     </message>
 </context>
 <context>
@@ -33680,7 +33680,7 @@ p, li { vitrymd: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_filler.cpp" line="31"/>
         <source>If checked, the same scaling factor for X and Y axis will be applied.</source>
-        <translation type="unfinished">Om den kontrolleras kommer samma skalfaktor för X och Y-axel att tillämpas.</translation>
+        <translation type="unfinished">Om markerat används samma skalfaktor för X- och Y-axeln.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_filler.cpp" line="40"/>
@@ -33690,7 +33690,7 @@ p, li { vitrymd: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_filler.cpp" line="41"/>
         <source>If checked, factor will be freely selected by mouse. Otherwise, specified values of factors will be used.</source>
-        <translation type="unfinished">Om den kontrolleras kommer faktorn att väljas fritt genom musen. Annars kommer specificerade värden av faktorer att användas.</translation>
+        <translation type="unfinished">Om markerat väljs faktorn fritt med musen. Annars används de angivna faktorvärdena.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_filler.cpp" line="48"/>
@@ -33778,7 +33778,7 @@ p, li { vitrymd: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="63"/>
         <source>If checked, multiple copies will be created.</source>
-        <translation type="unfinished">Om de kontrolleras kommer flera kopior att skapas.</translation>
+        <translation type="unfinished">Om markerat skapas flera kopior.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="66"/>
@@ -33823,7 +33823,7 @@ p, li { vitrymd: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="147"/>
         <source>If checked, the same scaling factor for X and Y axis will be applied.</source>
-        <translation type="unfinished">Om den kontrolleras kommer samma skalfaktor för X och Y-axel att tillämpas.</translation>
+        <translation type="unfinished">Om markerat används samma skalfaktor för X- och Y-axeln.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="150"/>
@@ -33853,7 +33853,7 @@ p, li { vitrymd: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="209"/>
         <source>If checked, factor will be freely selected by mouse. Otherwise, specified values of factors will be used.</source>
-        <translation type="unfinished">Om den kontrolleras kommer faktorn att väljas fritt genom musen. Annars kommer specificerade värden av faktorer att användas.</translation>
+        <translation type="unfinished">Om markerat väljs faktorn fritt med musen. Annars används de angivna faktorvärdena.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="212"/>
@@ -33901,7 +33901,7 @@ p, li { vitrymd: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="74"/>
         <source>Polyline</source>
-        <translation>Polyline</translation>
+        <translation>Polylinje</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="81"/>
@@ -33926,7 +33926,7 @@ p, li { vitrymd: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="109"/>
         <source>Hatch</source>
-        <translation>Hatch</translation>
+        <translation>Skraffering</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="116"/>
@@ -33936,7 +33936,7 @@ p, li { vitrymd: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="123"/>
         <source>Arc</source>
-        <translation>Arc</translation>
+        <translation>Båge</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="130"/>
@@ -34240,7 +34240,7 @@ p, li { vitrymd: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="107"/>
         <source>Offset</source>
-        <translation type="unfinished">Offset</translation>
+        <translation type="unfinished">Förskjutning</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="107"/>
@@ -34298,7 +34298,7 @@ p, li { vitrymd: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="66"/>
         <source>Pick distance from drawing</source>
-        <translation type="unfinished">Pick Avstånd Från Att Rita</translation>
+        <translation type="unfinished">Hämta avståndet från ritningen</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="86"/>
@@ -34370,12 +34370,12 @@ p, li { vitrymd: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="229"/>
         <source>Length of tick.</source>
-        <translation type="unfinished">Längd av tick.</translation>
+        <translation type="unfinished">Markeringens längd.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="236"/>
         <source>Pick tick angle from drawing</source>
-        <translation type="unfinished">Pick tick vinkel från ritning</translation>
+        <translation type="unfinished">Hämta markeringsvinkeln från ritningen</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="250"/>
@@ -34390,12 +34390,12 @@ p, li { vitrymd: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="284"/>
         <source>Offset of tick snap point to intersection point. </source>
-        <translation type="unfinished">Förskjutning av markeringens snäpp-punkt till skärningspunkten. </translation>
+        <translation type="unfinished">Förskjutning av markeringens snappunkt till skärningspunkten. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="291"/>
         <source>Tick snap:</source>
-        <translation type="unfinished">Markeringens steglängd:</translation>
+        <translation type="unfinished">Markeringssnapp:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="298"/>
@@ -34415,7 +34415,7 @@ p, li { vitrymd: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="322"/>
         <source>Pick tick length from drawing</source>
-        <translation type="unfinished">Pick tick längd från ritning</translation>
+        <translation type="unfinished">Hämta markeringslängden från ritningen</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="375"/>
@@ -34430,7 +34430,7 @@ p, li { vitrymd: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="389"/>
         <source>PIck start circle angle from drawing</source>
-        <translation type="unfinished">PIck start cirkelvinkel från att rita</translation>
+        <translation type="unfinished">Hämta cirkelns startvinkel från ritningen</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="413"/>
@@ -34476,7 +34476,7 @@ p, li { vitrymd: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="34"/>
         <source>If checked, it is possible to specify custom amount of line segments. Otherwise, the value from settings for current drawing will be used.</source>
-        <translation type="unfinished">Om det kontrolleras är det möjligt att ange anpassad mängd linjesegment. Annars kommer värdet från inställningar för aktuell ritning att användas.</translation>
+        <translation type="unfinished">Om markerat kan ett eget antal linjesegment anges. Annars används värdet från inställningarna för den aktuella ritningen.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="43"/>
@@ -34496,7 +34496,7 @@ p, li { vitrymd: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="50"/>
         <source>If checked, line segments will be part of polyline. Otherwise, they will be individual lines</source>
-        <translation type="unfinished">Om de kontrolleras kommer linjesegmenten att vara en del av polyline. Annars kommer de att vara enskilda linjer</translation>
+        <translation type="unfinished">Om markerat blir linjesegmenten en del av en polylinje. Annars blir de enskilda linjer</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="57"/>
@@ -34544,7 +34544,7 @@ p, li { vitrymd: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="39"/>
         <source>If unchecked, original spline will be removed, otherwise it will survive.</source>
-        <translation type="unfinished">Om okontrollerad kommer originalspline att tas bort, annars kommer den att överleva.</translation>
+        <translation type="unfinished">Om omarkerat tas den ursprungliga splinen bort, annars behålls den.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="42"/>
@@ -34574,7 +34574,7 @@ p, li { vitrymd: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="83"/>
         <source>If checked, it is possible to specify custom amount of line segments. Otherwise, the value from settings for current drawing will be used.</source>
-        <translation type="unfinished">Om det kontrolleras är det möjligt att ange anpassad mängd linjesegment. Annars kommer värdet från inställningar för aktuell ritning att användas.</translation>
+        <translation type="unfinished">Om markerat kan ett eget antal linjesegment anges. Annars används värdet från inställningarna för den aktuella ritningen.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="86"/>
@@ -34584,12 +34584,12 @@ p, li { vitrymd: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="93"/>
         <source>If checked, line segments will be part of polyline. Otherwise, they will be individual lines</source>
-        <translation type="unfinished">Om de kontrolleras kommer linjesegmenten att vara en del av polyline. Annars kommer de att vara enskilda linjer</translation>
+        <translation type="unfinished">Om markerat blir linjesegmenten en del av en polylinje. Annars blir de enskilda linjer</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="96"/>
         <source>To Polyline</source>
-        <translation type="unfinished">För Polyline</translation>
+        <translation type="unfinished">Till polylinje</translation>
     </message>
 </context>
 <context>
@@ -34685,7 +34685,7 @@ p, li { vitrymd: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="68"/>
         <source>If unchecked, original polyline will be removed, otherwise it will survive.</source>
-        <translation type="unfinished">Om okontrollerad kommer originalpolylin att tas bort, annars kommer den att överleva.</translation>
+        <translation type="unfinished">Om omarkerat tas den ursprungliga polylinjen bort, annars behålls den.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="71"/>
@@ -34945,7 +34945,7 @@ p, li { vitrymd: pre-wrap; }
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="255"/>
         <source>Knot values control the spline’s curve shape (non-decreasing sequence)</source>
-        <translation>Knot värden styr spline kurva form (icke-minskning sekvens)</translation>
+        <translation>Knutvärdena styr splinekurvans form (icke-avtagande följd)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="258"/>
@@ -35078,7 +35078,7 @@ p, li { vitrymd: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/polygon/lc_star_options_widget.ui" line="32"/>
         <source>If checked, outer edges will be rounded. </source>
-        <translation type="unfinished">Om de checkas kommer yttre kanter att rundas.</translation>
+        <translation type="unfinished">Om markerat avrundas de yttre kanterna. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_star_options_widget.ui" line="35"/>
@@ -35088,7 +35088,7 @@ p, li { vitrymd: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/polygon/lc_star_options_widget.ui" line="42"/>
         <source>If checked, symmetric star will be created.</source>
-        <translation type="unfinished">Om den kontrolleras kommer symmetrisk stjärna att skapas.</translation>
+        <translation type="unfinished">Om markerat skapas en symmetrisk stjärna.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_star_options_widget.ui" line="45"/>
@@ -35098,7 +35098,7 @@ p, li { vitrymd: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/polygon/lc_star_options_widget.ui" line="82"/>
         <source>If checked, the star will be drawn as polyline. </source>
-        <translation type="unfinished">Om den kontrolleras kommer stjärnan att dras som polylin.</translation>
+        <translation type="unfinished">Om markerat ritas stjärnan som en polylinje. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_star_options_widget.ui" line="85"/>
@@ -35118,7 +35118,7 @@ p, li { vitrymd: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/polygon/lc_star_options_widget.ui" line="121"/>
         <source>If checked, inner edges will be rounded. </source>
-        <translation type="unfinished">Om de kontrolleras kommer inre kanter att avrundas.</translation>
+        <translation type="unfinished">Om markerat avrundas de inre kanterna. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_star_options_widget.ui" line="124"/>
@@ -35225,7 +35225,7 @@ p, li { vitrymd: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/text/lc_text_options_widget.ui" line="83"/>
         <source>Pick angle from drawing</source>
-        <translation type="unfinished">Pick vinkel från ritning</translation>
+        <translation type="unfinished">Hämta vinkeln från ritningen</translation>
     </message>
 </context>
 <context>
@@ -35373,7 +35373,7 @@ p, li { vitrymd: pre-wrap; }
     <message>
         <location filename="../src/ui/dialogs/entity/lc_textpropertieseditingwidget.cpp" line="53"/>
         <source>Baseline Center</source>
-        <translation>Baslinje center</translation>
+        <translation>Baslinjecentrum</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_textpropertieseditingwidget.cpp" line="54"/>
@@ -35416,7 +35416,7 @@ p, li { vitrymd: pre-wrap; }
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="53"/>
         <source>Pen</source>
-        <translation>Penna Pen Pen Pen Penna</translation>
+        <translation>Penna</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="69"/>
@@ -35426,7 +35426,7 @@ p, li { vitrymd: pre-wrap; }
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="75"/>
         <source>Snap Selection</source>
-        <translation>Fäst markeringen</translation>
+        <translation>Snappval</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="86"/>
@@ -35508,7 +35508,7 @@ p, li { vitrymd: pre-wrap; }
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="331"/>
         <source>Arc</source>
-        <translation>Arc</translation>
+        <translation>Båge</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="332"/>
@@ -35523,7 +35523,7 @@ p, li { vitrymd: pre-wrap; }
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="334"/>
         <source>Polyline</source>
-        <translation>Polyline</translation>
+        <translation>Polylinje</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="335"/>
@@ -35596,7 +35596,7 @@ p, li { vitrymd: pre-wrap; }
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="367"/>
         <source>PolyLines</source>
-        <translation>Polyliner</translation>
+        <translation>Polylinjer</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="369"/>
@@ -35692,7 +35692,7 @@ p, li { vitrymd: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_trim_amount_options_widget.ui" line="110"/>
         <source>Pick length from drawing</source>
-        <translation type="unfinished">Pick längd från ritning</translation>
+        <translation type="unfinished">Hämta längden från ritningen</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_trim_amount_options_widget.ui" line="137"/>
@@ -35758,7 +35758,7 @@ p, li { vitrymd: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/other/lc_ucs_create_options_widget.ui" line="68"/>
         <source>Pick angle from drawing</source>
-        <translation type="unfinished">Pick vinkel från ritning</translation>
+        <translation type="unfinished">Hämta vinkeln från ritningen</translation>
     </message>
 </context>
 <context>
@@ -35797,12 +35797,12 @@ p, li { vitrymd: pre-wrap; }
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistmodel.cpp" line="329"/>
         <source>Origin X: </source>
-        <translation>Ursprung X:</translation>
+        <translation>Origo X: </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistmodel.cpp" line="330"/>
         <source>Origin Y: </source>
-        <translation>Ursprung Y:</translation>
+        <translation>Origo Y: </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistmodel.cpp" line="331"/>
@@ -35812,7 +35812,7 @@ p, li { vitrymd: pre-wrap; }
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistmodel.cpp" line="332"/>
         <source>Grid: </source>
-        <translation>Grid:</translation>
+        <translation>Rutnät: </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistmodel.cpp" line="333"/>
@@ -35850,7 +35850,7 @@ p, li { vitrymd: pre-wrap; }
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.ui" line="107"/>
         <source>Preview of coordinate system origin and angle.</source>
-        <translation>Förhandsgranska koordinatsystemets ursprung och vinkel.</translation>
+        <translation>Förhandsgranskning av koordinatsystemets origo och vinkel.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.ui" line="121"/>
@@ -35951,7 +35951,7 @@ Varning: Den här åtgärden kan inte vara ogjort!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="541"/>
         <source>&amp;Update UCS</source>
-        <translation>och uppdatera UCS</translation>
+        <translation>&amp;Uppdatera UCS</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="542"/>
@@ -35966,7 +35966,7 @@ Varning: Den här åtgärden kan inte vara ogjort!</translation>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="556"/>
         <source>&amp;Preview UCS</source>
-        <translation>och Preview UCS</translation>
+        <translation>&amp;Förhandsgranska UCS</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="559"/>
@@ -36011,7 +36011,7 @@ Varning: Den här åtgärden kan inte vara ogjort!</translation>
     <message>
         <location filename="../src/ui/components/status_bar/lc_ucsstatewidget.ui" line="115"/>
         <source>Position of origin and angle of current UCS&apos;s in world coordinates.</source>
-        <translation>Ursprung och vinkel av nuvarande UCS i världskoordinater.</translation>
+        <translation>Origo och vinkel för aktuellt UCS i världskoordinater.</translation>
     </message>
 </context>
 <context>
@@ -36049,7 +36049,7 @@ Varning: Den här åtgärden kan inte vara ogjort!</translation>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="134"/>
         <source>Arc</source>
-        <translation>Arc</translation>
+        <translation>Båge</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="135"/>
@@ -36064,7 +36064,7 @@ Varning: Den här åtgärden kan inte vara ogjort!</translation>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="137"/>
         <source>Polyline</source>
-        <translation>Polyline</translation>
+        <translation>Polylinje</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="139"/>
@@ -36095,7 +36095,7 @@ Varning: Den här åtgärden kan inte vara ogjort!</translation>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="174"/>
         <source>Pens</source>
-        <translation>Pens</translation>
+        <translation>Pennor</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="188"/>
@@ -36209,7 +36209,7 @@ Varning: Den här åtgärden kan inte vara ogjort!</translation>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="537"/>
         <source>Relative Zero</source>
-        <translation>Relativ noll</translation>
+        <translation>Relativ nollpunkt</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="538"/>
@@ -36239,7 +36239,7 @@ Varning: Den här åtgärden kan inte vara ogjort!</translation>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="547"/>
         <source>Current size of Grid/MetaGrid. Click to change grid size.</source>
-        <translation>Nuvarande storlek på Grid/MetaGrid. Klicka för att ändra rutnätsstorlek.</translation>
+        <translation>Aktuell storlek på rutnät/metarutnät. Klicka för att ändra rutnätets storlek.</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="138"/>
@@ -36277,12 +36277,12 @@ Varning: Den här åtgärden kan inte vara ogjort!</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="452"/>
         <source>If checked, buttons for picking values from drawing will be flat</source>
-        <translation>Om de kontrolleras kommer knapparna för att välja värden från ritningen att vara platt</translation>
+        <translation>Om markerat blir knapparna för att hämta värden från ritningen platta</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="455"/>
         <source>Flat pick values buttons</source>
-        <translation>Flat pick values knappar</translation>
+        <translation>Platta knappar för att hämta värden</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="78"/>
@@ -36410,7 +36410,7 @@ Varning: Den här åtgärden kan inte vara ogjort!</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="785"/>
         <source>If not checked, dock areas can only contain a single row (horizontal or vertical) of dock widgets. If checked, the area occupied by a dock widget can be split in either direction to contain more dock widgets.</source>
-        <translation>Om inte kontrolleras kan dockområden endast innehålla en enda rad (horisontell eller vertikal) av dock widgets. Om det kontrolleras kan området som ockuperas av en dock widget delas i någon riktning för att innehålla fler dock widgets.</translation>
+        <translation>Om omarkerat kan dockningsområden bara innehålla en rad (vågrät eller lodrät) med dockningsfönster. Om markerat kan området som ett dockningsfönster upptar delas i valfri riktning för att rymma fler dockningsfönster.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="788"/>
@@ -36420,7 +36420,7 @@ Varning: Den här åtgärden kan inte vara ogjort!</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="772"/>
         <source>If checked, the two vertical dock areas on the sides of the main window show their tabs vertically. </source>
-        <translation>Om de kontrolleras visar de två vertikala dockområdena på sidorna av huvudfönstret sina flikar vertikalt.</translation>
+        <translation>Om markerat visar de två lodräta dockningsområdena på huvudfönstrets sidor sina flikar lodrätt. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_widget/lc_widgetoptionsdialog.ui" line="778"/>
@@ -36643,8 +36643,8 @@ Varning: Den här åtgärden kan inte vara ogjort!</translation>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1134"/>
         <source>Loaded %1 — modelspace is empty; %n block(s) in the Blocks dock contain geometry.</source>
         <translation>
-            <numerusform>Laddade %1 — modelrymden är tom; %n block i Blockpanelen innehåller geometri.</numerusform>
-            <numerusform>Laddade %1 — modelrymden är tom; %n block i Blockpanelen innehåller geometri.</numerusform>
+            <numerusform>Läste in %1 — modellrymden är tom; %n block i Blockpanelen innehåller geometri.</numerusform>
+            <numerusform>Läste in %1 — modellrymden är tom; %n block i Blockpanelen innehåller geometri.</numerusform>
         </translation>
     </message>
     <message>
@@ -37303,7 +37303,7 @@ The original opens in a separate document. Mixed encodings and raw metadata are 
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.ui" line="69"/>
         <source>Pen attributes</source>
-        <translation>Pen attribut</translation>
+        <translation>Pennattribut</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.ui" line="76"/>
@@ -37320,7 +37320,7 @@ Detta modifierar rekursivt alla entiteter i själva blocket.</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.cpp" line="61"/>
         <source>Pen</source>
-        <translation>Penna Pen Pen Pen Penna</translation>
+        <translation>Penna</translation>
     </message>
 </context>
 <context>
@@ -37393,7 +37393,7 @@ Detta modifierar rekursivt alla entiteter i själva blocket.</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="124"/>
         <source>Hatched area</source>
-        <translation>Hatchad yta</translation>
+        <translation>Skrafferad yta</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.cpp" line="213"/>
@@ -37514,7 +37514,7 @@ Detta modifierar rekursivt alla entiteter i själva blocket.</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="144"/>
         <source>If checked, default line spacing will be used</source>
-        <translation>Om den kontrolleras, kommer standardlinjen att användas</translation>
+        <translation>Om markerat används standardradavstånd</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="192"/>
@@ -38279,7 +38279,7 @@ Detta modifierar rekursivt alla entiteter i själva blocket.</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.cpp" line="250"/>
         <source>Pen</source>
-        <translation>Penna Pen Pen Pen Penna</translation>
+        <translation>Penna</translation>
     </message>
 </context>
 <context>
@@ -38348,7 +38348,7 @@ Detta modifierar rekursivt alla entiteter i själva blocket.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="478"/>
         <source>&amp;Delete Style</source>
-        <translation>och Delete Style</translation>
+        <translation>&amp;Ta bort stil</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="482"/>
@@ -38359,7 +38359,7 @@ Detta modifierar rekursivt alla entiteter i själva blocket.</translation>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="483"/>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="487"/>
         <source>&amp;Import Styles</source>
-        <translation>och Import Styles</translation>
+        <translation>&amp;Importera stilar</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="575"/>
@@ -38678,7 +38678,7 @@ Detta modifierar rekursivt alla entiteter i själva blocket.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1220"/>
         <source>Tick size:</source>
-        <translation>Tickstorlek:</translation>
+        <translation>Markeringsstorlek:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1289"/>
@@ -38763,7 +38763,7 @@ Detta modifierar rekursivt alla entiteter i själva blocket.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="576"/>
         <source>Zero base angle relative to the current user coordinate system. Affects polar coordinates input, snap to angle. 0.0 is 3pm.</source>
-        <translation>Nollbasvinkel i förhållande till det aktuella användarkoordinatsystemet. Påverkar polära koordinater ingång, snap till vinkel. 0.0 är 3pm.</translation>
+        <translation>Nollriktning för vinklar relativt det aktuella användarkoordinatsystemet. Påverkar inmatning av polära koordinater och vinkelsnapp. 0.0 motsvarar klockan 3.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="586"/>
@@ -38803,7 +38803,7 @@ Detta modifierar rekursivt alla entiteter i själva blocket.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="775"/>
         <source>Left isometric grid</source>
-        <translation>Vänster isometric Grid</translation>
+        <translation>Vänster isometriskt rutnät</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="778"/>
@@ -38818,7 +38818,7 @@ Detta modifierar rekursivt alla entiteter i själva blocket.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="826"/>
         <source>Top isometric grid</source>
-        <translation>Top Isometric Grid</translation>
+        <translation>Övre isometriskt rutnät</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="829"/>
@@ -38877,7 +38877,7 @@ Detta modifierar rekursivt alla entiteter i själva blocket.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1038"/>
         <source>Select or enter values for grid spacing (they will affect Grid drawing and Snap to Grid):</source>
-        <translation>Välj eller ange värden för nätavstånd (de kommer att påverka Grid-ritning och Snap till Grid):</translation>
+        <translation>Välj eller ange värden för rutnätsavstånd (de påverkar ritningen av rutnätet och Snappa till rutnät):</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1066"/>
@@ -38995,7 +38995,7 @@ Detta modifierar rekursivt alla entiteter i själva blocket.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1675"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Offset from origin point.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Förskjutning från ursprungspunkten.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Förskjutning från origo.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1707"/>
@@ -39337,7 +39337,7 @@ Detta modifierar rekursivt alla entiteter i själva blocket.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1986"/>
         <source>If checked, used non-default arrow blocks will be added during drawing&apos;s saving. Embedding arrow blocks is needed for drawings that are later opened in AutoCAD.  This check may be unset if all editing is performed in LibreCAD. </source>
-        <translation>Om de kontrolleras kommer använda icke-standardpilblock att läggas till under ritningens sparande. Inbäddning av pilblock behövs för ritningar som senare öppnas i AutoCAD. Denna kontroll kan vara osett om all redigering utförs i LibreCAD.</translation>
+        <translation>Om markerat läggs använda pilblock som inte är standard till när ritningen sparas. Inbäddade pilblock behövs för ritningar som senare öppnas i AutoCAD. Rutan kan avmarkeras om all redigering görs i LibreCAD. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1989"/>
@@ -39379,7 +39379,7 @@ Detta modifierar rekursivt alla entiteter i själva blocket.</translation>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2091"/>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2125"/>
         <source>Round</source>
-        <translation>Runda</translation>
+        <translation>Rund</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2101"/>
@@ -39475,7 +39475,7 @@ Detta modifierar rekursivt alla entiteter i själva blocket.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="46"/>
         <source>&amp;Graphic View</source>
-        <translation>och graphic view</translation>
+        <translation>&amp;Grafisk vy</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="514"/>
@@ -39618,7 +39618,7 @@ Detta modifierar rekursivt alla entiteter i själva blocket.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="672"/>
         <source>If selected, in draft mode text label will be drawin in view corners</source>
-        <translation>Om det väljs kommer textetiketten i utkast till läge att dras in i vyn hörn</translation>
+        <translation>Om markerat ritas en textetikett i vyns hörn i utkastläge</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="675"/>
@@ -39673,22 +39673,22 @@ Detta modifierar rekursivt alla entiteter i själva blocket.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="102"/>
         <source>If checked,  objects will be painted smoother due to anti-aliasing</source>
-        <translation>Om de kontrolleras, objekt kommer att målas jämnare på grund av anti-aliasing</translation>
+        <translation>Om markerat ritas objekten jämnare tack vare kantutjämning</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="134"/>
         <source>First time only pan</source>
-        <translation>Första gången bara pan</translation>
+        <translation>Panorera endast första gången</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="147"/>
         <source>On mouse wheel zoom, pan to the middle of the window.</source>
-        <translation>På mushjul zoom, pan till mitten av fönstret.</translation>
+        <translation>Panorera till fönstrets mitt vid zoomning med mushjulet.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="150"/>
         <source>Pan on wheel zoom</source>
-        <translation>Pan på hjul zoom</translation>
+        <translation>Panorera vid zoomning med mushjulet</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="179"/>
@@ -39703,7 +39703,7 @@ Detta modifierar rekursivt alla entiteter i själva blocket.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="214"/>
         <source>If selected, drawing will be panned automatically if mouse is near drawing view boundaries</source>
-        <translation>Om den väljs kommer ritningen att paneras automatiskt om musen är nära att dra vyn gränser</translation>
+        <translation>Om markerat panoreras ritningen automatiskt när musen är nära ritvyns kanter</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="236"/>
@@ -39758,7 +39758,7 @@ Detta modifierar rekursivt alla entiteter i själva blocket.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="854"/>
         <source>Color of non-endpoint handle of entity</source>
-        <translation>Färg av icke-endpoint handtag av entitet</translation>
+        <translation>Färg för entitetens handtag som inte är ändpunkter</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="888"/>
@@ -39807,7 +39807,7 @@ Detta modifierar rekursivt alla entiteter i själva blocket.</translation>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1195"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1456"/>
         <source>Grid</source>
-        <translation>Grid</translation>
+        <translation>Rutnät</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="956"/>
@@ -39817,12 +39817,12 @@ Detta modifierar rekursivt alla entiteter i själva blocket.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="962"/>
         <source>If checked, grid wil be drawn</source>
-        <translation>Om den kontrolleras, skall rutnätet dras</translation>
+        <translation>Om markerat ritas rutnätet</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="965"/>
         <source>Draw grid</source>
-        <translation>Draw Grid</translation>
+        <translation>Rita rutnät</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="972"/>
@@ -39832,7 +39832,7 @@ Detta modifierar rekursivt alla entiteter i själva blocket.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="975"/>
         <source>Draw meta-grid</source>
-        <translation>Dra meta-Grid</translation>
+        <translation>Rita metarutnät</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="982"/>
@@ -39842,12 +39842,12 @@ Detta modifierar rekursivt alla entiteter i själva blocket.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="995"/>
         <source>If unchecked, vertical line will not be drawn for &quot;Top&quot; isometric view</source>
-        <translation>Om okontrollerad, kommer vertikal linje inte att dras för &quot;Top&quot; isometrisk vy</translation>
+        <translation>Om omarkerat ritas ingen lodrät linje för den övre isometriska vyn</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="998"/>
         <source>Draw vertical lines for &quot;Top&quot; isometric grid</source>
-        <translation>Rita vertikala linjer för &quot;Top&quot; isometrisk rutnät</translation>
+        <translation>Rita vertikala linjer för det övre isometriska rutnätet</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1005"/>
@@ -39862,7 +39862,7 @@ Detta modifierar rekursivt alla entiteter i själva blocket.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1021"/>
         <source>Type of grid to be drawn</source>
-        <translation>Typ av rutnät som ska dras</translation>
+        <translation>Typ av rutnät som ska ritas</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1031"/>
@@ -39877,7 +39877,7 @@ Detta modifierar rekursivt alla entiteter i själva blocket.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1044"/>
         <source>If checked, Meta Grid lines will be drawn on top of grid. Simple grid is faster yet is less visually lean.</source>
-        <translation>Om de kontrolleras kommer Meta Grid-linjerna att dras ovanpå nätet. Enkelt nät är snabbare men är mindre visuellt lutande.</translation>
+        <translation>Om markerat ritas metarutnätets linjer ovanpå rutnätet. Ett enkelt rutnät är snabbare men visuellt mindre stilrent.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1047"/>
@@ -39897,7 +39897,7 @@ Detta modifierar rekursivt alla entiteter i själva blocket.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1077"/>
         <source>&amp;Grid type:</source>
-        <translation>&amp;Grid typ:</translation>
+        <translation>&amp;Rutnätstyp:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1096"/>
@@ -39907,7 +39907,7 @@ Detta modifierar rekursivt alla entiteter i själva blocket.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1146"/>
         <source>Decimal meta-grid every:</source>
-        <translation>Decimal meta-grid varje:</translation>
+        <translation>Decimalt metarutnät var:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1153"/>
@@ -39928,7 +39928,7 @@ Detta modifierar rekursivt alla entiteter i själva blocket.</translation>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1255"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1359"/>
         <source>Meta-grid</source>
-        <translation>Meta-Grid</translation>
+        <translation>Metarutnät</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1261"/>
@@ -39938,7 +39938,7 @@ Detta modifierar rekursivt alla entiteter i själva blocket.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1268"/>
         <source>Width of Meta Grid line if grid is drawn by points</source>
-        <translation>Bredd av Meta Grid linje om nätet dras av punkter</translation>
+        <translation>Linjebredd för metarutnätet om rutnätet ritas med punkter</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1284"/>
@@ -39962,7 +39962,7 @@ Detta modifierar rekursivt alla entiteter i själva blocket.</translation>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1316"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1420"/>
         <source>&amp;Meta-grid Color:</source>
-        <translation>Meta-Grid färg:</translation>
+        <translation>&amp;Metarutnätets färg:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1353"/>
@@ -39972,17 +39972,17 @@ Detta modifierar rekursivt alla entiteter i själva blocket.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1365"/>
         <source>Type of Meta Grid lines if grid is drawn by lines</source>
-        <translation>Typ av Meta Grid-linjer om nätet dras av linjer</translation>
+        <translation>Typ av linjer för metarutnätet om rutnätet ritas med linjer</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1372"/>
         <source>Width of Meta Grid lines if grid is drawn by lines</source>
-        <translation>Bredd av Meta Grid-linjer om nätet dras av linjer</translation>
+        <translation>Linjebredd för metarutnätet om rutnätet ritas med linjer</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1402"/>
         <source>Color of Meta Grid if grid drawn by lines</source>
-        <translation>Färg av Meta Grid om rutnät dras av linjer</translation>
+        <translation>Färg för metarutnätet om rutnätet ritas med linjer</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1462"/>
@@ -40008,7 +40008,7 @@ Detta modifierar rekursivt alla entiteter i själva blocket.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1571"/>
         <source>Snap</source>
-        <translation>Snap</translation>
+        <translation>Snapp</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1801"/>
@@ -40018,7 +40018,7 @@ Detta modifierar rekursivt alla entiteter i själva blocket.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1934"/>
         <source>Angle Snap</source>
-        <translation>Vinkelsnäpp</translation>
+        <translation>Vinkelsnapp</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1953"/>
@@ -40028,7 +40028,7 @@ Detta modifierar rekursivt alla entiteter i själva blocket.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1974"/>
         <source>Angle between steps for Angle Snap (which is usually by corresponding actions if SHIFT is pressed)</source>
-        <translation>Vinkel mellan steg för vinkelsnäpp (som vanligtvis används av motsvarande åtgärder när SHIFT trycks ned)</translation>
+        <translation>Vinkel mellan stegen för vinkelsnapp (används vanligen av motsvarande åtgärder när SKIFT hålls ned)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1978"/>
@@ -40083,7 +40083,7 @@ Detta modifierar rekursivt alla entiteter i själva blocket.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1967"/>
         <source>Angle snap single step</source>
-        <translation>Vinkelsnäpp, stegstorlek</translation>
+        <translation>Vinkelsnapp, stegstorlek</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1960"/>
@@ -40093,53 +40093,53 @@ Detta modifierar rekursivt alla entiteter i själva blocket.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1940"/>
         <source>Radius of arc within angle snap mark.</source>
-        <translation>Radius av båge inom vinkel snap mark.</translation>
+        <translation>Radie för bågen i vinkelsnappens markering.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1807"/>
         <source>If checked, cursor will be hidden during snapping</source>
-        <translation>Om den kontrolleras kommer markören att döljas under snapping</translation>
+        <translation>Om markerat döljs markören vid snappning</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1817"/>
         <source>If checked, snap options (middle, distance) will be shown in snap toolbar instead of tool properties toolbar</source>
-        <translation>Om de kontrolleras visas snapalternativ (mitten, avståndet) i snap toolbar istället för verktygsfältet verktygsfält</translation>
+        <translation>Om markerat visas snappalternativen (mitt, avstånd) i snappverktygsfältet i stället för i verktygsfältet för verktygsegenskaper</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1820"/>
         <source>Show snap options in Snap Selection Toolbar</source>
-        <translation>Visa snap alternativ i Snap Selection Toolbar</translation>
+        <translation>Visa snappalternativ i verktygsfältet Snappval</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1827"/>
         <source>If checked, &quot;Snap To Grid&quot; is ignored if grid is not drawn.</source>
-        <translation>Om det kontrolleras, &quot;Snap To Grid&quot; ignoreras om nätet inte dras.</translation>
+        <translation>Om markerat ignoreras &quot;Snappa till rutnät&quot; när rutnätet inte ritas.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1830"/>
         <source>Ignore &quot;Snap to Grid&quot; if grid is not drawn</source>
-        <translation>Ignorera &quot;Snap to Grid&quot; om nätet inte dras</translation>
+        <translation>Ignorera &quot;Snappa till rutnät&quot; om rutnätet inte ritas</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1577"/>
         <source>Snap Marker</source>
-        <translation>Snäppmarkör</translation>
+        <translation>Snappmarkör</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1736"/>
         <source>Type of line to draw snap indicator</source>
-        <translation>Typ av linje för att dra snap indikator</translation>
+        <translation>Linjetyp för snappindikatorn</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1609"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1619"/>
         <source>Snap Indicator lines</source>
-        <translation>Snap Indicator linjer</translation>
+        <translation>Snappindikatorns linjer</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1656"/>
         <source>Type of snap indicator shape</source>
-        <translation>Typ av snap indikator form</translation>
+        <translation>Typ av form för snappindikatorn</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1663"/>
@@ -40159,32 +40159,32 @@ Detta modifierar rekursivt alla entiteter i själva blocket.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1678"/>
         <source>Gap</source>
-        <translation>Gap</translation>
+        <translation>Mellanrum</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1606"/>
         <source>If checked, snap indicator will be shown</source>
-        <translation>Om den kontrolleras visas snap indikatorn</translation>
+        <translation>Om markerat visas snappindikatorn</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1626"/>
         <source>Snap Indicator Color:</source>
-        <translation>Snap indikatorfärg:</translation>
+        <translation>Färg på snappindikatorn:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1726"/>
         <source>If checked, a shap for snap will be drawn</source>
-        <translation>Om du checkar, kommer en scap för snap att dras</translation>
+        <translation>Om markerat ritas en form för snappen</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1729"/>
         <source>Snap Indicator shape</source>
-        <translation>Snap indikator form</translation>
+        <translation>Snappindikatorns form</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1766"/>
         <source>Type of snap lines indicator</source>
-        <translation>Typ av snap lines indikator</translation>
+        <translation>Typ av linjer för snappindikatorn</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1773"/>
@@ -40204,12 +40204,12 @@ Detta modifierar rekursivt alla entiteter i själva blocket.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1633"/>
         <source>Color for snap indicator shape</source>
-        <translation>Färg för snap indikator form</translation>
+        <translation>Färg för snappindikatorns form</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1583"/>
         <source>Color for snap lines indicator</source>
-        <translation>Färg för snap lines indikator</translation>
+        <translation>Färg för snappindikatorns linjer</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1743"/>
@@ -40219,22 +40219,22 @@ Detta modifierar rekursivt alla entiteter i själva blocket.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1750"/>
         <source>Width of line for snap indicator</source>
-        <translation>Bredd linje för snap indikator</translation>
+        <translation>Linjebredd för snappindikatorn</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1853"/>
         <source>Advanced Snap Fine-tuning settings</source>
-        <translation>Avancerade Snap Fine-tuning inställningar</translation>
+        <translation>Avancerade inställningar för finjustering av snapp</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1905"/>
         <source>Snap on Entity &quot;Free snap&quot; distance switch:</source>
-        <translation>Avstånd för växling mellan &quot;Snäpp på entitet&quot; och &quot;Fri snäppning&quot;:</translation>
+        <translation>Avstånd för växling mellan &quot;Snappa på objekt&quot; och &quot;Fri snapp&quot;:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1912"/>
         <source>Snap on entity will be invoked if it is enabled and the distance between mouse and snapped point is larger than specified value.</source>
-        <translation>Snäppning på entitet används om den är aktiverad och avståndet mellan musen och den snäppta punkten är större än angivet värde.</translation>
+        <translation>Snapp på objekt används om den är aktiverad och avståndet mellan musen och den snappade punkten är större än det angivna värdet.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1915"/>
@@ -40249,12 +40249,12 @@ Detta modifierar rekursivt alla entiteter i själva blocket.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1898"/>
         <source>Min grid cell snap factor:</source>
-        <translation>Minsta snäppfaktor för rutnätscell:</translation>
+        <translation>Minsta snappfaktor för rutnätscell:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1872"/>
         <source>Snap distance (in pixels) for catching entities.</source>
-        <translation>Snäppavstånd (i pixlar) för att fånga entiteter.</translation>
+        <translation>Snappavstånd (i pixlar) för att fånga entiteter.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="102"/>
@@ -40269,12 +40269,12 @@ Detta modifierar rekursivt alla entiteter i själva blocket.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1875"/>
         <source>Catch entities Snap Distance:</source>
-        <translation>Snäppavstånd för att fånga entiteter:</translation>
+        <translation>Snappavstånd för att fånga entiteter:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1882"/>
         <source>Grid cell factor used for snap to grid.</source>
-        <translation>Nätcellsfaktor som används för snap till rutnät.</translation>
+        <translation>Rutnätscellfaktor som används för snapp till rutnätet.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2031"/>
@@ -40632,7 +40632,7 @@ Detta modifierar rekursivt alla entiteter i själva blocket.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3162"/>
         <source>Defines where to draw angle basis marker</source>
-        <translation>Definierar var att dra vinkelbasis markör</translation>
+        <translation>Anger var markören för vinkelbasen ska ritas</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3166"/>
@@ -40688,7 +40688,7 @@ Detta modifierar rekursivt alla entiteter i själva blocket.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3302"/>
         <source>Size of Axis Lines drawn in absolute zero point</source>
-        <translation>Storlek på Axis Lines dras i absolut nollpunkt</translation>
+        <translation>Storlek på axellinjerna som ritas i den absoluta nollpunkten</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3318"/>
@@ -40737,7 +40737,7 @@ Detta modifierar rekursivt alla entiteter i själva blocket.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3418"/>
         <source>If checked, axises will be inifinite lines</source>
-        <translation>Om de kontrolleras, kommer axlar att vara inifinita linjer</translation>
+        <translation>Om markerat blir axlarna oändliga linjer</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3421"/>
@@ -40807,7 +40807,7 @@ Detta modifierar rekursivt alla entiteter i själva blocket.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3601"/>
         <source>Relative Zero Marker</source>
-        <translation>Relativ noll markör</translation>
+        <translation>Markör för relativ nollpunkt</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3607"/>
@@ -40817,17 +40817,17 @@ Detta modifierar rekursivt alla entiteter i själva blocket.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3614"/>
         <source>Radius of relative zero marker</source>
-        <translation>Radius av relativ noll markör</translation>
+        <translation>Radie för markören för relativ nollpunkt</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3660"/>
         <source>Color of relative zero marker</source>
-        <translation>Färg av relativ noll markör</translation>
+        <translation>Färg för markören för relativ nollpunkt</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3683"/>
         <source>If checked, relative zero marker will not be drawn</source>
-        <translation>Om den kontrolleras kommer inte relativ nollmarkör att dras</translation>
+        <translation>Om markerat ritas inte markören för relativ nollpunkt</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3686"/>
@@ -40837,7 +40837,7 @@ Detta modifierar rekursivt alla entiteter i själva blocket.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3700"/>
         <source>&amp;Preview</source>
-        <translation>&amp; Preview</translation>
+        <translation>&amp;Förhandsgranskning</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3719"/>
@@ -40847,7 +40847,7 @@ Detta modifierar rekursivt alla entiteter i själva blocket.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3725"/>
         <source>&amp;Highlighted entity Color:</source>
-        <translation>och Highlighted Entity Color:</translation>
+        <translation>Färg för &amp;framhävd entitet:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3758"/>
@@ -40872,7 +40872,7 @@ Detta modifierar rekursivt alla entiteter i själva blocket.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3789"/>
         <source>Highlight entities on mouse hover</source>
-        <translation>Highlight Entities on mouse hover</translation>
+        <translation>Framhäv entiteter när musen hovrar över dem</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3799"/>
@@ -40941,7 +40941,7 @@ Detta modifierar rekursivt alla entiteter i själva blocket.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4723"/>
         <source>If checked, more informative and explaining preview will be drawn for operations</source>
-        <translation>Om kontrolleras, kommer mer informativ och förklarande förhandsgranskning att dras för verksamheten</translation>
+        <translation>Om markerat ritas en mer informativ och förklarande förhandsgranskning för åtgärderna</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4726"/>
@@ -40996,7 +40996,7 @@ Detta modifierar rekursivt alla entiteter i själva blocket.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3061"/>
         <source>If checked, components of coordinate will be drawn in one line. Otherwise, each component will be on own line. </source>
-        <translation>Om kontrolleras kommer koordinatkomponenter att dras i en linje. Annars kommer varje komponent att vara på egen linje.</translation>
+        <translation>Om markerat visas koordinatens komponenter på en rad. Annars visas varje komponent på en egen rad. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3064"/>
@@ -41006,7 +41006,7 @@ Detta modifierar rekursivt alla entiteter i själva blocket.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3078"/>
         <source>If checked, labels for coordinate components will be shown. Otherwise, standard form of coordinates will be displayed.</source>
-        <translation>Om de kontrolleras visas etiketter för koordinatkomponenter. Annars kommer standardformen för koordinater att visas.</translation>
+        <translation>Om markerat visas etiketter för koordinatens komponenter. Annars visas koordinaterna i standardform.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3081"/>
@@ -41031,7 +41031,7 @@ Detta modifierar rekursivt alla entiteter i själva blocket.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3038"/>
         <source>If checked, informational cursor will be enabled and shown where applicable.</source>
-        <translation>Om den kontrolleras kommer informationskursorn att aktiveras och visas i förekommande fall.</translation>
+        <translation>Om markerat aktiveras informationsmarkören och visas där det är tillämpligt.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3041"/>
@@ -41061,7 +41061,7 @@ Detta modifierar rekursivt alla entiteter i själva blocket.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2771"/>
         <source>If checked, show relative coordinate</source>
-        <translation>Om den kontrolleras, visa relativ koordinat</translation>
+        <translation>Om markerat visas den relativa koordinaten</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2777"/>
@@ -41071,7 +41071,7 @@ Detta modifierar rekursivt alla entiteter i själva blocket.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2784"/>
         <source>If checked, absolute position of snap point will be shown.</source>
-        <translation>Om markerat visas snäpp-punktens absoluta position.</translation>
+        <translation>Om markerat visas snappunktens absoluta position.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2787"/>
@@ -41081,7 +41081,7 @@ Detta modifierar rekursivt alla entiteter i själva blocket.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2794"/>
         <source>If checked, relative distance and angle from relative zero point to snap point will be shown.</source>
-        <translation>Om kontrollerat, relativt avstånd och vinkel från relativ nollpunkt till snappunkt visas.</translation>
+        <translation>Om markerat visas relativt avstånd och vinkel från den relativa nollpunkten till snappunkten.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2797"/>
@@ -41091,7 +41091,7 @@ Detta modifierar rekursivt alla entiteter i själva blocket.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2844"/>
         <source>If checked, the prompt of the active command will be shown.</source>
-        <translation>Om det kontrolleras visas prompten för det aktiva kommandot.</translation>
+        <translation>Om markerat visas uppmaningen för det aktiva kommandot.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2847"/>
@@ -41101,22 +41101,22 @@ Detta modifierar rekursivt alla entiteter i själva blocket.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2854"/>
         <source>If checked, information about the type of snap and restrictions will be shown for snap point (if any)</source>
-        <translation>Om den kontrolleras visas information om typen av snap och restriktioner för snap-punkt (om någon)</translation>
+        <translation>Om markerat visas information om snapptyp och begränsningar för snappunkten (om sådana finns)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2857"/>
         <source>Show snap info /restriction</source>
-        <translation>Visa snap info /restriction</translation>
+        <translation>Visa snappinformation/begränsning</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2884"/>
         <source>Color for absolute snap coordinates.</source>
-        <translation>Färg för absoluta snap koordinater.</translation>
+        <translation>Färg för absoluta snappkoordinater.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2907"/>
         <source>Color for snap type/restriction</source>
-        <translation>Färg för snap typ/restriktion</translation>
+        <translation>Färg för snapptyp/begränsning</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2950"/>
@@ -41131,7 +41131,7 @@ Detta modifierar rekursivt alla entiteter i själva blocket.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2996"/>
         <source>If set and user coordinate system is active, absolute coodinate in world coordinate system will be also shown.</source>
-        <translation>Om set och användarkoordinatsystem är aktivt visas även absolut koodinat i världskoordinatsystemet.</translation>
+        <translation>Om markerat och ett användarkoordinatsystem är aktivt visas även den absoluta koordinaten i världskoordinatsystemet.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3002"/>
@@ -41141,7 +41141,7 @@ Detta modifierar rekursivt alla entiteter i själva blocket.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3009"/>
         <source>If checked, name of active command will be shown before command prompt</source>
-        <translation>Om det kontrolleras visas namnet på aktivt kommando innan kommandotolken</translation>
+        <translation>Om markerat visas namnet på det aktiva kommandot före kommandouppmaningen</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3015"/>
@@ -41176,7 +41176,7 @@ Detta modifierar rekursivt alla entiteter i själva blocket.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5101"/>
         <source>If checked, it will be possible to enter value of angle in decimal degrees only. Otherwise, angles in surveyor, radiant, imperial degrees and bearing formats are allowed for input.  </source>
-        <translation>Om den kontrolleras, kommer det att vara möjligt att ange värdet av vinkel i decimal grader endast. Annars är vinklar i enkäter, strålande, imperial grader och lagerformat tillåtna för inmatning.</translation>
+        <translation>Om markerat kan vinklar endast anges i decimala grader. Annars kan vinklar även anges i lantmätar-, radian-, grad-/minut-/sekund- och bäringsformat.  </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5104"/>
@@ -41186,7 +41186,7 @@ Detta modifierar rekursivt alla entiteter i själva blocket.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5147"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Temporarily toggle free snapping when the spacebar is pressed and the command window is activated&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt; Växla tillfälligt fri snappning när rymdfältet trycks och kommandofönstret aktiveras&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Växla tillfälligt till fri snapp när mellanslagstangenten trycks ned och kommandofönstret är aktivt&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5157"/>
@@ -41231,7 +41231,7 @@ Detta modifierar rekursivt alla entiteter i själva blocket.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5440"/>
         <source>If checked, keyboard shortcut will be shown in tooltip for action</source>
-        <translation>Om det kontrolleras visas tangentbordsgenväg i verktygstips för åtgärd</translation>
+        <translation>Om markerat visas kortkommandot i åtgärdens verktygstips</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5443"/>
@@ -41251,7 +41251,7 @@ Detta modifierar rekursivt alla entiteter i själva blocket.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5490"/>
         <source>If checked, close cross button will be shown in tabs for drawings if drawings are in Tab mode</source>
-        <translation>Om den kontrolleras visas stängknappen i flikar för ritningar om ritningar är i flikläge</translation>
+        <translation>Om markerat visas en stängningsknapp på ritningsflikarna när ritningarna visas i flikläge</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5493"/>
@@ -41261,7 +41261,7 @@ Detta modifierar rekursivt alla entiteter i själva blocket.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5450"/>
         <source>If checked, the icon for current action will be shown in options toolbar before action&apos;s options</source>
-        <translation>Om den kontrolleras visas ikonen för aktuell åtgärd i alternativverktygsfältet innan åtgärdens alternativ</translation>
+        <translation>Om markerat visas ikonen för den aktuella åtgärden i alternativverktygsfältet före åtgärdens alternativ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5453"/>
@@ -41276,7 +41276,7 @@ Detta modifierar rekursivt alla entiteter i själva blocket.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5524"/>
         <source>If checked, dialogs will be positioned and resized to position/size of last invocation.</source>
-        <translation>Om de kontrolleras kommer dialoger att placeras och ändras till position/storlek för sista fakturering.</translation>
+        <translation>Om markerat öppnas dialogrutor med samma position och storlek som senast.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5527"/>
@@ -41286,7 +41286,7 @@ Detta modifierar rekursivt alla entiteter i själva blocket.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5480"/>
         <source>If checked, any changes of zoom or pan for drawing will mark drawing as modified. Otherwise, changing view only will not affect modified status of the drawing. </source>
-        <translation>Om de kontrolleras kommer eventuella ändringar av zoom eller pan för ritning att markera ritningen som modifierad. Annars påverkar ändrad vy endast inte modifierad status för ritningen.</translation>
+        <translation>Om markerat markeras ritningen som ändrad vid varje zoomning eller panorering. Annars påverkar enbart vyändringar inte ritningens ändringsstatus. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5483"/>
@@ -41296,7 +41296,7 @@ Detta modifierar rekursivt alla entiteter i själva blocket.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5460"/>
         <source>If checked, location of dialog will not be saved, but size will</source>
-        <translation>Om den kontrolleras sparas inte platsen för dialog, men storleken kommer att</translation>
+        <translation>Om markerat sparas inte dialogrutans position, men dess storlek sparas</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5466"/>
@@ -41321,7 +41321,7 @@ Detta modifierar rekursivt alla entiteter i själva blocket.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5221"/>
         <source>Zero base angle relative to the current user coordinate system. Affects polar coordinates input, snap to angle. 0.0 is 3pm.</source>
-        <translation>Nollbasvinkel i förhållande till det aktuella användarkoordinatsystemet. Påverkar polära koordinater ingång, snap till vinkel. 0.0 är 3pm.</translation>
+        <translation>Nollriktning för vinklar relativt det aktuella användarkoordinatsystemet. Påverkar inmatning av polära koordinater och vinkelsnapp. 0.0 motsvarar klockan 3.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5234"/>
@@ -41341,7 +41341,7 @@ Detta modifierar rekursivt alla entiteter i själva blocket.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5277"/>
         <source>Left  Isometric Grid</source>
-        <translation>Vänster Isometric Grid</translation>
+        <translation>Vänster isometriskt rutnät</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5287"/>
@@ -41361,12 +41361,12 @@ Detta modifierar rekursivt alla entiteter i själva blocket.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5376"/>
         <source>If checked, new drawing will be created with grid disabled</source>
-        <translation>Om den kontrolleras kommer ny ritning att skapas med rutnät funktionshindrade</translation>
+        <translation>Om markerat skapas nya ritningar med rutnätet avstängt</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5379"/>
         <source>Grid is Off </source>
-        <translation>Grid är av</translation>
+        <translation>Rutnätet är av </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4928"/>
@@ -41396,7 +41396,7 @@ Detta modifierar rekursivt alla entiteter i själva blocket.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5579"/>
         <source>If checked, toolbars with commands will be enabled. </source>
-        <translation>Om de kontrolleras aktiveras verktygsfält med kommandon.</translation>
+        <translation>Om markerat aktiveras verktygsfälten med kommandon. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5736"/>
@@ -41411,12 +41411,12 @@ Detta modifierar rekursivt alla entiteter i själva blocket.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5589"/>
         <source>If checked, dock widgets with commands for left sidebar will be enabled. Otherwise, they will be disabled. </source>
-        <translation>Om de kontrolleras kommer dock widgets med kommandon för vänster sidofält att aktiveras. Annars kommer de att inaktiveras.</translation>
+        <translation>Om markerat aktiveras dockningsfönstren med kommandon i vänster sidofält. Annars inaktiveras de. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5746"/>
         <source>If set, previously opened files during previous closing of the application will be re-opened.</source>
-        <translation>Om inställd, tidigare öppnade filer under tidigare stängning av programmet kommer att öppnas igen.</translation>
+        <translation>Om markerat öppnas de filer som var öppna när programmet senast stängdes igen.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5749"/>
@@ -41441,7 +41441,7 @@ Detta modifierar rekursivt alla entiteter i själva blocket.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5818"/>
         <source>If unchecked, individual widgets of statusbar are toolbars</source>
-        <translation>Om okontrollerad är enskilda widgets av statusbar verktygsfält</translation>
+        <translation>Om omarkerat är statusfältets enskilda element verktygsfält</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5821"/>
@@ -41451,7 +41451,7 @@ Detta modifierar rekursivt alla entiteter i själva blocket.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5785"/>
         <source>If checked, prompt messages of actions will be also shown in bottom statusbar</source>
-        <translation>Om de kontrolleras visas också snabba meddelanden om åtgärder i bottenstatusfältet</translation>
+        <translation>Om markerat visas åtgärdernas uppmaningar även i statusfältet längst ned</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5791"/>
@@ -41486,7 +41486,7 @@ Detta modifierar rekursivt alla entiteter i själva blocket.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5857"/>
         <source>If checked, pre-release versions will be ignored</source>
-        <translation>Om de kontrolleras kommer pre-release-versioner att ignoreras</translation>
+        <translation>Om markerat ignoreras förhandsversioner</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5863"/>
@@ -41761,12 +41761,12 @@ Detta modifierar rekursivt alla entiteter i själva blocket.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6160"/>
         <source>If enabled, during pan operation TEXT and MTEXT objects will be drawn schematically</source>
-        <translation>Om det är aktiverat kommer TEXT- och MTEXT-objekten att dras schematiskt</translation>
+        <translation>Om aktiverat ritas TEXT- och MTEXT-objekt schematiskt vid panorering</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6163"/>
         <source>If selected, text baselines will be drawn instead of the text letters (similar to draft mode) during panning. </source>
-        <translation>Om det väljs kommer textbaslinjer att dras i stället för textbrev (liknande för utkast) under panorering.</translation>
+        <translation>Om markerat ritas textens baslinjer i stället för bokstäverna (som i utkastläge) under panorering. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6166"/>
@@ -41776,7 +41776,7 @@ Detta modifierar rekursivt alla entiteter i själva blocket.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6173"/>
         <source>If selected, text baselines will be drawn instead of the text letters (similar to draft mode) in preview. </source>
-        <translation>Om de väljs kommer textbaslinjer att dras istället för textbrev (liknande för utkast) i förhandsgranskning.</translation>
+        <translation>Om markerat ritas textens baslinjer i stället för bokstäverna (som i utkastläge) i förhandsgranskningen. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6176"/>
@@ -41796,7 +41796,7 @@ Detta modifierar rekursivt alla entiteter i själva blocket.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6195"/>
         <source>If checked, archs are drawn using line segments interpolation.  This sliminates drawing artefacts near to endpoints, yet may result drawing of less smooth arcs.  No drawing errors near endpoints on large zooms.</source>
-        <translation>Om de kontrolleras dras bågar med hjälp av interpolering av linjesegment. Detta sliminerar ritning artefakter nära slutpunkter, men kan resultera ritning av mindre släta bågar. Inga ritningsfel nära endpoints på stora zoomar.</translation>
+        <translation>Om markerat ritas bågar med interpolering av linjesegment. Det tar bort ritfel nära ändpunkterna men kan ge mindre jämna bågar. Inga ritfel nära ändpunkterna vid stor inzoomning.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6198"/>
@@ -41806,7 +41806,7 @@ Detta modifierar rekursivt alla entiteter i själva blocket.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6205"/>
         <source>If this method is selected, arcs are drawn using method of QT library.  On large zooms, arcs may be rendered with errors near endpoints.</source>
-        <translation>Om denna metod väljs dras bågar med hjälp av metoden för QT-bibliotek. På stora zoomar kan bågar göras med fel nära slutpunkter.</translation>
+        <translation>Om den här metoden väljs ritas bågar med Qt-bibliotekets metod. Vid stor inzoomning kan bågar ritas med fel nära ändpunkterna.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6208"/>
@@ -41851,7 +41851,7 @@ Detta modifierar rekursivt alla entiteter i själva blocket.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6263"/>
         <source>Maximal distance betwen arc and segment interpolation line</source>
-        <translation>Maximal distans betwen arc och segment interpolation linje</translation>
+        <translation>Största avstånd mellan bågen och interpolationslinjens segment</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6288"/>
@@ -41876,17 +41876,17 @@ Detta modifierar rekursivt alla entiteter i själva blocket.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6314"/>
         <source>If screen size for major ellipse axis is less than value, ellipse is drawn as point</source>
-        <translation>Om skärmstorlek för större ellipsaxel är mindre än värde, dras ellips som punkt</translation>
+        <translation>Om storaxelns storlek på skärmen är mindre än värdet ritas ellipsen som en punkt</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6330"/>
         <source>If screen length of line is less than value, the line is drawn as point</source>
-        <translation>Om skärmlängden på linjen är mindre än värde, dras linjen som punkt</translation>
+        <translation>Om linjens längd på skärmen är mindre än värdet ritas linjen som en punkt</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6346"/>
         <source>If screen radius of arc is less than value, arc is drawn as point</source>
-        <translation>Om skärmen radie av båge är mindre än värde, båge dras som punkt</translation>
+        <translation>Om bågens radie på skärmen är mindre än värdet ritas bågen som en punkt</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6362"/>
@@ -41901,7 +41901,7 @@ Detta modifierar rekursivt alla entiteter i själva blocket.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6385"/>
         <source>If screen size of minor ellipse axis is less than value, ellipse is drawn as line</source>
-        <translation>Om skärmstorleken på mindre ellipsaxel är mindre än värde, dras ellips som linje</translation>
+        <translation>Om lillaxelns storlek på skärmen är mindre än värdet ritas ellipsen som en linje</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6401"/>
@@ -41921,7 +41921,7 @@ Detta modifierar rekursivt alla entiteter i själva blocket.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6422"/>
         <source>If height of text line on the screen is less than specified pixels, placholder will be drawn instead of text</source>
-        <translation>Om höjden av textrad på skärmen är mindre än specificerade pixlar, kommer placholder att dras i stället för text</translation>
+        <translation>Om textradens höjd på skärmen är mindre än det angivna antalet pixlar ritas en platshållare i stället för texten</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6444"/>
@@ -42072,7 +42072,7 @@ Detta modifierar rekursivt alla entiteter i själva blocket.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1810"/>
         <source>Hide cursor when snapping</source>
-        <translation>Dölj markören vid fästning</translation>
+        <translation>Dölj markören vid snappning</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5739"/>
@@ -42151,7 +42151,7 @@ Detta modifierar rekursivt alla entiteter i själva blocket.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1329"/>
         <source>Select Hatch Patterns Folder</source>
-        <translation>Välj Hatch Patterns Mappar</translation>
+        <translation>Välj mapp för skrafferingsmönster</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1336"/>
@@ -42236,7 +42236,7 @@ Detta modifierar rekursivt alla entiteter i själva blocket.</translation>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5150"/>
         <source>Toggle free snap mode when SPACE BAR is pressed</source>
-        <translation>Växla fritt snäppläge när du trycker på mellanslagstangenten</translation>
+        <translation>Växla till fritt snappläge när MELLANSLAG trycks ned</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5068"/>
@@ -43235,7 +43235,7 @@ så standardstegvärde krävs för bakning</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="572"/>
         <source>Baseline Center</source>
-        <translation>Baslinje center</translation>
+        <translation>Baslinjecentrum</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="547"/>
@@ -43261,7 +43261,7 @@ så standardstegvärde krävs för bakning</translation>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.cpp" line="213"/>
         <source>Pen</source>
-        <translation>Penna Pen Pen Pen Penna</translation>
+        <translation>Penna</translation>
     </message>
 </context>
 <context>
@@ -43918,7 +43918,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="222"/>
         <source>Relative zero position is %1</source>
-        <translation>Relativ nollposition är %1</translation>
+        <translation>Relativ nollpunkt är %1</translation>
     </message>
     <message>
         <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="222"/>
@@ -44246,7 +44246,7 @@ Ange ett annat värde.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1408"/>
         <source>Pen for removal:</source>
-        <translation>Pen för borttagning:</translation>
+        <translation>Penna att ta bort:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1424"/>
@@ -44305,12 +44305,12 @@ Ange ett annat värde.</translation>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1477"/>
         <source>Saving Pens Data</source>
-        <translation>Spara Pens Data</translation>
+        <translation>Sparar pennornas data</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1478"/>
         <source>Unable to save pens data to specified pens file. Would you like to specify correct path to the file?</source>
-        <translation>Kan inte spara pens data till specificerad pens fil. Vill du ange rätt väg till filen?</translation>
+        <translation>Det gick inte att spara pennornas data i den angivna pennfilen. Vill du ange rätt sökväg till filen?</translation>
     </message>
 </context>
 <context>
@@ -44732,7 +44732,7 @@ Vill du ersätta den?</translation>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="1269"/>
         <source>DWG/DXF load: %1 XREF block(s) (%2) loaded but not INSERTed into modelspace. Their externally-referenced geometry won&apos;t be visible — AutoCAD typically renders these through a paper-space layout viewport, which LibreCAD doesn&apos;t render.</source>
-        <translation>DWG/DXF-inläsning: %1 XREF-block (%2) laddades men INFOGAdes inte i modelrymden. Deras externt refererade geometri syns inte — AutoCAD renderar dessa vanligtvis genom ett pappersrymdens layoutfönster, vilket LibreCAD inte renderar.</translation>
+        <translation>DWG/DXF-inläsning: %1 XREF-block (%2) lästes in men infogades inte (INSERT) i modellrymden. Deras externt refererade geometri syns inte — AutoCAD visar dem vanligen genom ett layoutfönster i pappersrymden, vilket LibreCAD inte visar.</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="1625"/>
@@ -44825,7 +44825,7 @@ Vill du ersätta den?</translation>
     <message>
         <location filename="../src/lib/engine/document/container/rs_entitycontainer.cpp" line="1499"/>
         <source>Hatch failed due to a gap=%1 between (%2, %3) and (%4, %5)</source>
-        <translation>Hatch misslyckades på grund av ett gap=%1 bmellan (%2, %3) och (%4, %5)</translation>
+        <translation>Skrafferingen misslyckades på grund av en lucka på %1 mellan (%2, %3) och (%4, %5)</translation>
     </message>
     <message>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="125"/>
@@ -44881,7 +44881,7 @@ Vill du ersätta den?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="541"/>
         <source>polyline</source>
         <comment>draw polyline</comment>
-        <translation>polyline</translation>
+        <translation>polylinje</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="542"/>
@@ -45031,7 +45031,7 @@ Vill du ersätta den?</translation>
         <location filename="../src/cmd/lc_commandItems.h" line="897"/>
         <source>hatch</source>
         <comment>draw hatch</comment>
-        <translation>hatch</translation>
+        <translation>skraffering</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="898"/>
@@ -46083,7 +46083,7 @@ Vill du ersätta den?</translation>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="480"/>
         <source>Arc</source>
-        <translation>Arc</translation>
+        <translation>Båge</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="488"/>
@@ -46113,7 +46113,7 @@ Vill du ersätta den?</translation>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="512"/>
         <source>Hatch</source>
-        <translation>Hatch</translation>
+        <translation>Skraffering</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="516"/>
@@ -46123,32 +46123,32 @@ Vill du ersätta den?</translation>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="520"/>
         <source>Dim. Linear</source>
-        <translation>Dim. Linjär</translation>
+        <translation>Mått: Linjär</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="524"/>
         <source>Dim. Aligned</source>
-        <translation>Dim. Justerad</translation>
+        <translation>Mått: Justerad</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="528"/>
         <source>Dim. Diametric</source>
-        <translation>Dim. Diametrisk</translation>
+        <translation>Mått: Diametrisk</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="532"/>
         <source>Dim. Radial</source>
-        <translation>Dim. Radiell</translation>
+        <translation>Mått: Radiell</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="536"/>
         <source>Dim. Arc</source>
-        <translation>Dim. Båge</translation>
+        <translation>Mått: Båge</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="540"/>
         <source>Dim. Ordinate</source>
-        <translation>Dim. Ordinata</translation>
+        <translation>Mått: Ordinata</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="544"/>
@@ -48534,7 +48534,7 @@ Vill du ersätta den?</translation>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="39"/>
         <source>/CustomColor%1</source>
-        <translation>/CustomColor%1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="40"/>
@@ -48561,12 +48561,12 @@ Vill du ersätta den?</translation>
     <message>
         <location filename="../src/lib/actions/lc_modifiersinfo.h" line="29"/>
         <source>Angle Snap</source>
-        <translation>Vinkelsnäpp</translation>
+        <translation>Vinkelsnapp</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/lc_modifiersinfo.h" line="30"/>
         <source>Free Snap</source>
-        <translation>Fri snäppning</translation>
+        <translation>Fri snapp</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/lc_modifiersinfo.h" line="31"/>
@@ -48576,17 +48576,17 @@ Vill du ersätta den?</translation>
     <message>
         <location filename="../src/lib/actions/lc_modifiersinfo.h" line="32"/>
         <source>Snap to Relative Zero</source>
-        <translation>Snap till relativ noll</translation>
+        <translation>Snappa till relativ nollpunkt</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/document/patterns/rs_patternlist.cpp" line="66"/>
         <source>Hatch:: no pattern found. Please set pattern path in application preferences</source>
-        <translation>Hatch: Inget mönster hittades. Vänligen ange mönsterbana i applikationspreferenser</translation>
+        <translation>Skraffering: Inget mönster hittades. Ange sökvägen till mönstren i programmets inställningar.</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/document/patterns/rs_patternlist.cpp" line="93"/>
         <source>Hatch:: loading pattern failed: %1</source>
-        <translation>Skraffering: inläsning av mönster misslyckades: %1</translation>
+        <translation>Skraffering: inläsning av mönstret misslyckades: %1</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/document/rs_graphic.cpp" line="130"/>
@@ -48879,7 +48879,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="504"/>
         <source>Offset</source>
-        <translation>Offset</translation>
+        <translation>Förskjutning</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="507"/>
@@ -48909,12 +48909,12 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="577"/>
         <source> entities </source>
-        <translation>entities</translation>
+        <translation> entiteter </translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="578"/>
         <source>that intersect with box</source>
-        <translation>det korsar med box</translation>
+        <translation>som skär rutan</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="578"/>
@@ -48939,7 +48939,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="633"/>
         <source>Arc</source>
-        <translation>Arc</translation>
+        <translation>Båge</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="634"/>
@@ -48951,7 +48951,7 @@ Please check the filename and permissions.</source>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="635"/>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="646"/>
         <source>Center:</source>
-        <translation>Center:</translation>
+        <translation>Centrum:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="636"/>
@@ -48996,7 +48996,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1005"/>
         <source>Lengthen Chord</source>
-        <translation>Längd Chord</translation>
+        <translation>Förläng korda</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1008"/>
@@ -49016,7 +49016,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1018"/>
         <source>Zoom, pan or select entity</source>
-        <translation>Zoom, pan eller välj entitet</translation>
+        <translation>Zooma, panorera eller välj entitet</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1018"/>
@@ -49036,12 +49036,12 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1023"/>
         <source>Select/Deselect entities</source>
-        <translation>Välj/Deselect Entities</translation>
+        <translation>Markera/avmarkera entiteter</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1023"/>
         <source>Select Intersecting</source>
-        <translation>Välj Intersecting</translation>
+        <translation>Välj skärande</translation>
     </message>
 </context>
 <context>
@@ -49101,12 +49101,12 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimlinear.cpp" line="224"/>
         <source>Snap to Adjacent Dim</source>
-        <translation>Snap till Adjacent Dim</translation>
+        <translation>Snappa till intilliggande mått</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimlinear.cpp" line="214"/>
         <source>Specify second extension line origin</source>
-        <translation>Ange ursprung för andra förlängningslinjen</translation>
+        <translation>Ange utgångspunkt för den andra förlängningslinjen</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimlinear.cpp" line="224"/>
@@ -49271,7 +49271,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="131"/>
         <source>Hatch created successfully.</source>
-        <translation>Skraffering skapad framgångsrikt.</translation>
+        <translation>Skrafferingen skapades.</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="134"/>
@@ -49289,7 +49289,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="138"/>
         <source>Hatch Error: Pattern not found!</source>
-        <translation>Hatch Fel: Mönster hittades inte!</translation>
+        <translation>Skrafferingsfel: Mönstret hittades inte!</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="141"/>
@@ -49299,12 +49299,12 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="144"/>
         <source>Hatch Error: Contour too big!</source>
-        <translation>Hatch Error: Kontur för stor!</translation>
+        <translation>Skrafferingsfel: Konturen är för stor!</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="147"/>
         <source>Hatch Error: Undefined Error!</source>
-        <translation>Hatch Fel: Odefinierat fel!</translation>
+        <translation>Skrafferingsfel: Odefinierat fel!</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="152"/>
@@ -49379,7 +49379,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_simple.cpp" line="107"/>
         <source>Center:</source>
-        <translation>Center:</translation>
+        <translation>Centrum:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_simple.cpp" line="151"/>
@@ -49605,7 +49605,7 @@ Skärningspunkt: @(%7, %8)</translation>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="292"/>
         <source>Intersection:</source>
-        <translation>Intersektion:</translation>
+        <translation>Skärningspunkt:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="292"/>
@@ -49711,7 +49711,7 @@ Slut: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="166"/>
         <source>Don&apos;t move relative zero</source>
-        <translation>Flytta inte relativ noll</translation>
+        <translation>Flytta inte den relativa nollpunkten</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="166"/>
@@ -49843,7 +49843,7 @@ Slut: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="516"/>
         <source>Drag with Left Button to Position Paper or with Middle Button to Pan</source>
-        <translation>Dra med vänsterknapp till positionspapper eller med Middle Button till Pan</translation>
+        <translation>Dra med vänster musknapp för att placera papperet eller med mittenknappen för att panorera</translation>
     </message>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="517"/>
@@ -49858,7 +49858,7 @@ Slut: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="253"/>
         <source>Printout offset ignores relative zero. Ignoring &apos;@&apos;</source>
-        <translation>Utskriftens förskjutning ignorerar relativ noll. Ignorering av &apos;@&apos;</translation>
+        <translation>Utskriftsförskjutningen ignorerar relativ nollpunkt. Ignorerar &apos;@&apos;</translation>
     </message>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="230"/>
@@ -49884,7 +49884,7 @@ Slut: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/rel_zero/rs_actionsetrelativezero.cpp" line="72"/>
         <source>Set relative Zero</source>
-        <translation>Ställ in relativ nollpunkt</translation>
+        <translation>Ange relativ nollpunkt</translation>
     </message>
 </context>
 <context>
@@ -49959,22 +49959,22 @@ Slut: (%8, %9)</translation>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1341"/>
         <source>Grid</source>
-        <translation>Grid</translation>
+        <translation>Rutnät</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1343"/>
         <source>Entity</source>
-        <translation>Entity</translation>
+        <translation>Entitet</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1345"/>
         <source>Endpoint</source>
-        <translation>Endpoint</translation>
+        <translation>Ändpunkt</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1347"/>
         <source>Intersection</source>
-        <translation>Intersektion</translation>
+        <translation>Skärningspunkt</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1349"/>
@@ -49989,7 +49989,7 @@ Slut: (%8, %9)</translation>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1353"/>
         <source>Center</source>
-        <translation>Center</translation>
+        <translation>Centrum</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1355"/>
@@ -50110,7 +50110,7 @@ Slut: (%8, %9)</translation>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1441"/>
         <source>Entity</source>
         <comment>visual snap</comment>
-        <translation type="unfinished">Entity</translation>
+        <translation type="unfinished">Entitet</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1444"/>
@@ -50300,7 +50300,7 @@ Slut: (%8, %9)</translation>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="353"/>
         <source>If checked, distance between dimenions is defined by mouse</source>
-        <translation>Om det kontrolleras definieras avståndet mellan dimenioner av musen</translation>
+        <translation>Om markerat bestäms avståndet mellan måtten med musen</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="356"/>
@@ -50324,17 +50324,17 @@ Slut: (%8, %9)</translation>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapdistoptions.ui" line="32"/>
         <source>Snap Distance Options</source>
-        <translation>Alternativ för fästavstånd</translation>
+        <translation>Alternativ för avståndssnapp</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapdistoptions.ui" line="50"/>
         <source>Snap Distance:</source>
-        <translation>Snap distans:</translation>
+        <translation>Snappavstånd:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapdistoptions.ui" line="60"/>
         <source>Distance of snap point from initially resolved snap point</source>
-        <translation>Avstånd för snäpp-punkten från den ursprungligen beräknade snäpp-punkten</translation>
+        <translation>Snappunktens avstånd från den ursprungligen beräknade snappunkten</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapdistoptions.ui" line="67"/>
@@ -50347,12 +50347,12 @@ Slut: (%8, %9)</translation>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapmiddleoptions.ui" line="35"/>
         <source>Snap Distance Options</source>
-        <translation>Alternativ för fästavstånd</translation>
+        <translation>Alternativ för avståndssnapp</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapmiddleoptions.ui" line="59"/>
         <source>Snap Middle Points:</source>
-        <translation>Snäpp till mittpunkter:</translation>
+        <translation>Snappa till mittpunkter:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapmiddleoptions.ui" line="81"/>

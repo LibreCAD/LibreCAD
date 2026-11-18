@@ -51,7 +51,7 @@
     <message>
         <location filename="../src/actions/drawing/lc_abstractactionwithpreview.cpp" line="644"/>
         <source> is not divided as it is locked.</source>
-        <translation>ไม่ได้แบ่งแยกขณะที่มันถูกล็อค.</translation>
+        <translation> ไม่ได้ถูกแบ่งเนื่องจากถูกล็อก</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/lc_abstractactionwithpreview.cpp" line="652"/>
@@ -69,7 +69,7 @@
     <message>
         <location filename="../src/actions/dock_widgets/block/lc_action_block_insert.cpp" line="88"/>
         <source>Block cannot contain an insert of itself.</source>
-        <translation type="unfinished">บล็อคไม่สามารถบรรจุการแทรกของตัวมันเองได้.</translation>
+        <translation type="unfinished">บล็อกไม่สามารถบรรจุการแทรกของตัวมันเองได้.</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/block/lc_action_block_insert.cpp" line="95"/>
@@ -186,7 +186,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="215"/>
         <source>Select arc or circle entity</source>
-        <translation>เลือกรายการของส่วนโค้งหรือวงกลม</translation>
+        <translation>เลือกวัตถุส่วนโค้งหรือวงกลม</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="215"/>
@@ -201,7 +201,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="221"/>
         <source>Enter dimension text:</source>
-        <translation>ป้อนข้อความในมิติ:</translation>
+        <translation>ป้อนข้อความบอกขนาด:</translation>
     </message>
 </context>
 <context>
@@ -209,12 +209,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimarc.cpp" line="188"/>
         <source>Select arc entity</source>
-        <translation>เลือกรายการของส่วนโค้ง</translation>
+        <translation>เลือกวัตถุส่วนโค้ง</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimarc.cpp" line="191"/>
         <source>Specify dimension arc location</source>
-        <translation>กําหนดตําแหน่งส่วนโค้งมิติ</translation>
+        <translation>กำหนดตำแหน่งส่วนโค้งบอกขนาด</translation>
     </message>
 </context>
 <context>
@@ -232,22 +232,22 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="304"/>
         <source>Specify dimension line location</source>
-        <translation>กําหนดตําแหน่งของเส้นในมิติ</translation>
+        <translation>กำหนดตำแหน่งของเส้นบอกขนาด</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="304"/>
         <source>Snap to Adjacent Dim</source>
-        <translation>จับมิติที่อยู่ติดกัน</translation>
+        <translation>จับการบอกขนาดที่อยู่ติดกัน</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="319"/>
         <source>Enter dimension text:</source>
-        <translation>ป้อนข้อความในมิติ:</translation>
+        <translation>ป้อนข้อความบอกขนาด:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="322"/>
         <source>Enter dimension line angle:</source>
-        <translation>ป้อนมุมเส้นมิติ:</translation>
+        <translation>ป้อนมุมเส้นบอกขนาด:</translation>
     </message>
 </context>
 <context>
@@ -281,12 +281,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimstyleapply.cpp" line="164"/>
         <source>Specify dimension to pick the style</source>
-        <translation>กําหนดมิติที่จะใช้เลือกรูปแบบ</translation>
+        <translation>กำหนดการบอกขนาดที่จะใช้เลือกรูปแบบ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimstyleapply.cpp" line="167"/>
         <source>Specify dimension to apply style</source>
-        <translation>กําหนดมิติที่จะใช้รูปแบบ</translation>
+        <translation>กำหนดการบอกขนาดที่จะใช้รูปแบบ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimstyleapply.cpp" line="167"/>
@@ -536,12 +536,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_center_line.cpp" line="295"/>
         <source>Select first entity</source>
-        <translation type="unfinished">เลือกรายการแรก</translation>
+        <translation type="unfinished">เลือกวัตถุแรก</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_center_line.cpp" line="299"/>
         <source>Select second entity</source>
-        <translation type="unfinished">เลือกรายการที่สอง</translation>
+        <translation type="unfinished">เลือกวัตถุที่สอง</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_center_line.cpp" line="299"/>
@@ -812,7 +812,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="416"/>
         <source>Select base linear/aligned dimension</source>
-        <translation>เลือกมิติเชิงเส้น/แบบจัดแนวที่เป็นฐาน</translation>
+        <translation>เลือกการบอกขนาดเชิงเส้น/แบบจัดแนวที่เป็นฐาน</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="416"/>
@@ -832,17 +832,17 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="422"/>
         <source>Specify dimension line location</source>
-        <translation>กําหนดตําแหน่งของเส้นในมิติ</translation>
+        <translation>กำหนดตำแหน่งของเส้นบอกขนาด</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="422"/>
         <source>Snap to Adjacent Dim</source>
-        <translation>จับมิติที่อยู่ติดกัน</translation>
+        <translation>จับการบอกขนาดที่อยู่ติดกัน</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="425"/>
         <source>Enter dimension text:</source>
-        <translation>ป้อนข้อความในมิติ:</translation>
+        <translation>ป้อนข้อความบอกขนาด:</translation>
     </message>
 </context>
 <context>
@@ -1264,7 +1264,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_parallel.cpp" line="156"/>
         <source>Specify Distance &lt;%1&gt; or select entity or [%2]</source>
-        <translation type="unfinished">ระบุระยะห่าง &lt;%1 &gt; หรือเลือกรายการหรือ [%2]</translation>
+        <translation type="unfinished">ระบุระยะห่าง &lt;%1&gt; หรือเลือกวัตถุ หรือ [%2]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_parallel.cpp" line="159"/>
@@ -1293,7 +1293,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_parallel_through.cpp" line="193"/>
         <source>Select entity</source>
-        <translation type="unfinished">เลือกรายการ</translation>
+        <translation type="unfinished">เลือกวัตถุ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_parallel_through.cpp" line="196"/>
@@ -1457,7 +1457,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_rel_angle.cpp" line="266"/>
         <source>Select base entity</source>
-        <translation type="unfinished">เลือกรายการพื้นฐาน</translation>
+        <translation type="unfinished">เลือกวัตถุฐาน</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_rel_angle.cpp" line="269"/>
@@ -1597,7 +1597,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabolaFD.cpp" line="293"/>
         <source>Select line that is parallel to directrix of parabola or set vertex point</source>
-        <translation>เลือกเส้นตรงที่ขนานกับไดเรกทริกซ์ของพาราโบลา หรือตั้งจุดจุดยอด</translation>
+        <translation>เลือกเส้นตรงที่ขนานกับไดเรกทริกซ์ของพาราโบลา หรือกำหนดจุดยอด</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabolaFD.cpp" line="297"/>
@@ -1830,7 +1830,7 @@ or [%2]</source>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_draw_polyline.cpp" line="439"/>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_draw_polyline.cpp" line="606"/>
         <source>Enter number of polylines</source>
-        <translation type="unfinished">ป้อนจํานวนเส้นต่อเนื่อง</translation>
+        <translation type="unfinished">ป้อนจำนวนโพลีไลน์</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_draw_polyline.cpp" line="564"/>
@@ -2070,7 +2070,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_abstract.cpp" line="452"/>
         <source>Specify corner bevel length (x,y)</source>
-        <translation type="unfinished">กําหนดความยาวมุมเบเวล (x,y)</translation>
+        <translation type="unfinished">กำหนดความยาวการลบมุม (x,y)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_abstract.cpp" line="455"/>
@@ -2282,7 +2282,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="338"/>
         <source>Zoom &amp;Panning</source>
-        <translation>ย่อ/ ขยาย</translation>
+        <translation>แ&amp;พน</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="246"/>
@@ -2353,7 +2353,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="211"/>
         <source>&amp;Parallel</source>
-        <translation>&amp; พาราเรล</translation>
+        <translation>&amp;ขนาน</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="212"/>
@@ -2373,17 +2373,17 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="214"/>
         <source>Tangent (P,C)</source>
-        <translation>แทนเจนท์ (P, C)</translation>
+        <translation>สัมผัส (P,C)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="215"/>
         <source>Tangent (C,C)</source>
-        <translation>แทนเจนท์ (C, C)</translation>
+        <translation>สัมผัส (C,C)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="216"/>
         <source>Tangent &amp;Orthogonal</source>
-        <translation>แทนเจนท์ &amp; ออร์โธกอนัล</translation>
+        <translation>สัมผัส&amp;ตั้งฉาก</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="217"/>
@@ -2468,7 +2468,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="236"/>
         <source>Line of Points</source>
-        <translation>จุด</translation>
+        <translation>เส้นของจุด</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="261"/>
@@ -2509,12 +2509,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="268"/>
         <source>Circle &amp;Inscribed</source>
-        <translation>แสดงวงกลม</translation>
+        <translation>วงกลม&amp;แนบใน</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="272"/>
         <source>Tangential, 2 P&amp;oints</source>
-        <translation>แทนเจนท์ 2 P&amp;ints</translation>
+        <translation>สัมผัส, 2 &amp;จุด</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="278"/>
@@ -2554,22 +2554,22 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="312"/>
         <source>&amp;Ellipse (Axis)</source>
-        <translation>&amp; วงรี (เล็ก)</translation>
+        <translation>&amp;วงรี (แกน)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="313"/>
         <source>Ellipse &amp;Arc (Axis)</source>
-        <translation>แบบวงรี &amp; Arc (แบบย่อ)</translation>
+        <translation>ส่วนโค้ง&amp;วงรี (แกน)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="314"/>
         <source>Ellipse &amp;Foci Point</source>
-        <translation>วงรีและจุดโฟกัส</translation>
+        <translation>วงรี&amp;จุดโฟกัส</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="315"/>
         <source>Ellipse &amp;4 Point</source>
-        <translation>วงรี &amp; 4 จุด</translation>
+        <translation>วงรี &amp;4 จุด</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="316"/>
@@ -2624,7 +2624,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="329"/>
         <source>Create &amp;Equidistant Polylines</source>
-        <translation>สร้างเส้นต่อเนื่องระยะ&amp;เท่ากัน</translation>
+        <translation>สร้างโพลีไลน์ระยะ&amp;เท่ากัน</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="331"/>
@@ -2634,17 +2634,17 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="339"/>
         <source>&amp;MText</source>
-        <translation>ข้อความ &amp; M</translation>
+        <translation>&amp;ข้อความหลายบรรทัด</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="340"/>
         <source>&amp;Text</source>
-        <translation>ข้อความ</translation>
+        <translation>&amp;ข้อความ</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="341"/>
         <source>&amp;Hatch</source>
-        <translation>&amp;แฮทช์</translation>
+        <translation>&amp;ลายตัด</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="342"/>
@@ -2684,12 +2684,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="357"/>
         <source>&amp;Leader</source>
-        <translation>&amp; เลเดอร์</translation>
+        <translation>&amp;เส้นชี้</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="378"/>
         <source>&amp;Attributes</source>
-        <translation>แอททริบิวชัน</translation>
+        <translation>&amp;คุณลักษณะ</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="379"/>
@@ -2954,7 +2954,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="386"/>
         <source>Rotate T&amp;wo</source>
-        <translation>หมุน T+2</translation>
+        <translation>หมุน&amp;สองแกน</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="387"/>
@@ -2974,7 +2974,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="392"/>
         <source>&amp;Divide</source>
-        <translation>&amp; Divide</translation>
+        <translation>&amp;แบ่ง</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="393"/>
@@ -3024,12 +3024,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="759"/>
         <source>Regenerate Dimensions</source>
-        <translation>สร้างมิติใหม่</translation>
+        <translation>สร้างการบอกขนาดใหม่</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="762"/>
         <source>&amp;Dimension Styles</source>
-        <translation>รูปแบบ&amp;มิติ</translation>
+        <translation>รูปแบบการ&amp;บอกขนาด</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="772"/>
@@ -3149,7 +3149,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="310"/>
         <source>&amp;Ellipse (1 Point)</source>
-        <translation>&amp; วงรี (1 จุด)</translation>
+        <translation>&amp;วงรี (1 จุด)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="311"/>
@@ -3265,7 +3265,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="57"/>
         <source>Block</source>
-        <translation>บล็อค</translation>
+        <translation>บล็อก</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="57"/>
@@ -3335,12 +3335,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="64"/>
         <source>Dimension</source>
-        <translation>มิติ</translation>
+        <translation>การบอกขนาด</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="64"/>
         <source>Dimensions creation commands</source>
-        <translation>คําสั่งการสร้างมิติ</translation>
+        <translation>คำสั่งสร้างการบอกขนาด</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="65"/>
@@ -3431,7 +3431,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="74"/>
         <source>Polyline</source>
-        <translation>เส้นต่อเนื่อง</translation>
+        <translation>โพลีไลน์</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="74"/>
@@ -3456,7 +3456,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="76"/>
         <source>Snap restrictions</source>
-        <translation>ข้อจํากัดการเกาะ</translation>
+        <translation>ข้อจำกัดการจับ</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="77"/>
@@ -3587,7 +3587,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="112"/>
         <source>Lock Entity&apos;s Layer</source>
-        <translation>ล็อคเลเยอร์ของวัตถุ</translation>
+        <translation>ล็อกเลเยอร์ของวัตถุ</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="113"/>
@@ -3642,7 +3642,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="270"/>
         <source>Tangential 2 Entities, 1 Point</source>
-        <translation>แทนเจนต์ 2 จุด</translation>
+        <translation>สัมผัส 2 วัตถุ, 1 จุด</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="271"/>
@@ -3672,7 +3672,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="362"/>
         <source>Ordinates Re-base</source>
-        <translation>ตั้งฐานมิติพิกัดใหม่</translation>
+        <translation>ตั้งฐานการบอกขนาดแบบพิกัดใหม่</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="363"/>
@@ -3767,7 +3767,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="540"/>
         <source>Set UCS By Ordinate Dimension</source>
-        <translation>ตั้ง UCS ตามมิติพิกัด</translation>
+        <translation>ตั้ง UCS ตามการบอกขนาดแบบพิกัด</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="546"/>
@@ -3812,7 +3812,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="582"/>
         <source>&amp;Point Coordinates</source>
-        <translation>พิกัดพอยท์</translation>
+        <translation>&amp;พิกัดจุด</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="584"/>
@@ -3862,17 +3862,17 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="608"/>
         <source>&amp;Isometric Left Grid</source>
-        <translation>เส้นกริดด้านซ้าย</translation>
+        <translation>&amp;กริดไอโซเมตริกด้านซ้าย</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="609"/>
         <source>&amp;Isometric Top Grid</source>
-        <translation>เส้นกริดบน</translation>
+        <translation>&amp;กริดไอโซเมตริกด้านบน</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="610"/>
         <source>&amp;Isometric Right Grid</source>
-        <translation>เส้นกริดด้านขวา</translation>
+        <translation>&amp;กริดไอโซเมตริกด้านขวา</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="621"/>
@@ -3892,7 +3892,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="624"/>
         <source>Toggle Layer Loc&amp;k</source>
-        <translation>เปิด/ปิด&amp;การล็อคเลเยอร์</translation>
+        <translation>เปิด/ปิด&amp;การล็อกเลเยอร์</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="625"/>
@@ -3982,12 +3982,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="720"/>
         <source>Zoom &amp;In</source>
-        <translation>ย่อ/ ขยาย ใน</translation>
+        <translation>ซูม&amp;เข้า</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="721"/>
         <source>Zoom &amp;Out</source>
-        <translation>ย่อ/ ขยาย</translation>
+        <translation>ซูม&amp;ออก</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="722"/>
@@ -4162,7 +4162,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="619"/>
         <source>&amp;Unlock all</source>
-        <translation>&amp;ปลดล็อคทั้งหมด</translation>
+        <translation>&amp;ปลดล็อกทั้งหมด</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="620"/>
@@ -4207,7 +4207,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="707"/>
         <source>Re-dock Widgets</source>
-        <translation>วิดเจ็ตล็อคใหม่</translation>
+        <translation>เทียบท่าวิดเจ็ตใหม่</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="683"/>
@@ -4320,7 +4320,7 @@ End Edge Point: (%9 , %10)</source>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="213"/>
         <source>Intersection:</source>
-        <translation>อินเตอร์เซก:</translation>
+        <translation>จุดตัด:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="215"/>
@@ -4481,7 +4481,7 @@ Cartesian: (%2 , %3)
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfoproperties.cpp" line="172"/>
         <source>Select entity</source>
-        <translation>เลือกรายการ</translation>
+        <translation>เลือกวัตถุ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfoproperties.cpp" line="172"/>
@@ -4533,17 +4533,17 @@ Cartesian: (%2 , %3)
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="164"/>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="323"/>
         <source>Intersection:</source>
-        <translation>อินเตอร์เซก:</translation>
+        <translation>จุดตัด:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="165"/>
         <source>Line 1 Angle:</source>
-        <translation>มุมเส้น 1</translation>
+        <translation>มุมเส้น 1:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="166"/>
         <source>Line 2 Angle:</source>
-        <translation>ไลน์ 2 มุม:</translation>
+        <translation>มุมของเส้น 2:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="288"/>
@@ -4835,12 +4835,12 @@ Cartesian: (%2 , %3)
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="261"/>
         <source>Select base alignment entity</source>
-        <translation>เลือกรายการที่เรียงตามฐาน</translation>
+        <translation>เลือกวัตถุฐานสำหรับจัดแนว</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="261"/>
         <source>Select child entities of containers</source>
-        <translation>เลือกส่วนประกอบของคอนเทนเนอร์ลูก</translation>
+        <translation>เลือกวัตถุย่อยภายในคอนเทนเนอร์</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="264"/>
@@ -4966,7 +4966,7 @@ Cartesian: (%2 , %3)
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_single.cpp" line="273"/>
         <source>Select base alignment entity</source>
-        <translation>เลือกรายการที่เรียงตามฐาน</translation>
+        <translation>เลือกวัตถุฐานสำหรับจัดแนว</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_single.cpp" line="276"/>
@@ -4976,7 +4976,7 @@ Cartesian: (%2 , %3)
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_single.cpp" line="289"/>
         <source>Select entity to align</source>
-        <translation>เลือกรายการที่จะเรียงลําดับ</translation>
+        <translation>เลือกวัตถุที่จะจัดแนว</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_single.cpp" line="289"/>
@@ -5012,12 +5012,12 @@ Cartesian: (%2 , %3)
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_bevel.cpp" line="182"/>
         <source>Trim</source>
-        <translation type="unfinished">ทริม</translation>
+        <translation type="unfinished">ตัดแต่ง</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_bevel.cpp" line="183"/>
         <source>Intersection:</source>
-        <translation type="unfinished">อินเตอร์เซก:</translation>
+        <translation type="unfinished">จุดตัด:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_bevel.cpp" line="184"/>
@@ -5069,12 +5069,12 @@ Cartesian: (%2 , %3)
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_bevel.cpp" line="405"/>
         <source>Select first entity</source>
-        <translation type="unfinished">เลือกรายการแรก</translation>
+        <translation type="unfinished">เลือกวัตถุแรก</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_bevel.cpp" line="408"/>
         <source>Select second entity</source>
-        <translation type="unfinished">เลือกรายการที่สอง</translation>
+        <translation type="unfinished">เลือกวัตถุที่สอง</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_bevel.cpp" line="411"/>
@@ -5102,7 +5102,7 @@ Cartesian: (%2 , %3)
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="248"/>
         <source>Break/Divide Line</source>
-        <translation>เส้นแบ่ง/ เส้นDivide</translation>
+        <translation>ตัดแบ่ง/แบ่งเส้น</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="249"/>
@@ -5181,7 +5181,7 @@ Cartesian: (%2 , %3)
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_cut.cpp" line="153"/>
         <source>Specify entity to cut</source>
-        <translation type="unfinished">ระบุรายการที่จะตัด</translation>
+        <translation type="unfinished">ระบุวัตถุที่จะตัด</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_cut.cpp" line="156"/>
@@ -5271,7 +5271,7 @@ Cartesian: (%2 , %3)
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_duplicate.cpp" line="287"/>
         <source>Select entity to duplicate</source>
-        <translation>เลือกรายการที่จะคัดลอก</translation>
+        <translation>เลือกวัตถุที่จะทำสำเนา</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_duplicate.cpp" line="287"/>
@@ -5289,7 +5289,7 @@ Cartesian: (%2 , %3)
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_entity.cpp" line="223"/>
         <source>Click on entity to modify</source>
-        <translation type="unfinished">คลิกบนรายการเพื่อแก้ไข</translation>
+        <translation type="unfinished">คลิกที่วัตถุเพื่อแก้ไข</translation>
     </message>
 </context>
 <context>
@@ -5356,7 +5356,7 @@ Cartesian: (%2 , %3)
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_join.cpp" line="135"/>
         <source>Intersection:</source>
-        <translation>อินเตอร์เซก:</translation>
+        <translation>จุดตัด:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_join.cpp" line="188"/>
@@ -5395,7 +5395,7 @@ Cartesian: (%2 , %3)
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_mirror.cpp" line="148"/>
         <source>Mirror</source>
-        <translation type="unfinished">กระจก</translation>
+        <translation type="unfinished">สะท้อน</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_mirror.cpp" line="149"/>
@@ -5450,7 +5450,7 @@ Cartesian: (%2 , %3)
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_mirror.cpp" line="266"/>
         <source>Specify second point of mirror line</source>
-        <translation type="unfinished">ระบุจุดที่สองของเส้นกระจก</translation>
+        <translation type="unfinished">ระบุจุดที่สองของเส้นสะท้อน</translation>
     </message>
 </context>
 <context>
@@ -5702,7 +5702,7 @@ Cartesian: (%2 , %3)
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="144"/>
         <source>Offset</source>
-        <translation type="unfinished">ออฟเซต:</translation>
+        <translation type="unfinished">ออฟเซต</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="145"/>
@@ -5934,12 +5934,12 @@ Cartesian: (%2 , %3)
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_round.cpp" line="408"/>
         <source>Specify first entity or enter radius &lt;%1&gt;</source>
-        <translation type="unfinished">ระบุรายการแรกหรือป้อนรัศมี &lt;%1 &gt;</translation>
+        <translation type="unfinished">ระบุวัตถุแรกหรือป้อนรัศมี &lt;%1&gt;</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_round.cpp" line="411"/>
         <source>Specify second entity</source>
-        <translation type="unfinished">ระบุรายการที่สอง</translation>
+        <translation type="unfinished">ระบุวัตถุที่สอง</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_round.cpp" line="414"/>
@@ -6086,32 +6086,32 @@ Cartesian: (%2 , %3)
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim.cpp" line="130"/>
         <source>Trim Two</source>
-        <translation type="unfinished">ทริมที่ 2</translation>
+        <translation type="unfinished">ตัดแต่งสองวัตถุ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim.cpp" line="130"/>
         <source>Trim</source>
-        <translation type="unfinished">ทริม</translation>
+        <translation type="unfinished">ตัดแต่ง</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim.cpp" line="131"/>
         <source>Intersection:</source>
-        <translation type="unfinished">อินเตอร์เซก:</translation>
+        <translation type="unfinished">จุดตัด:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim.cpp" line="133"/>
         <source>Intersection 2:</source>
-        <translation type="unfinished">อินเตอร์เซก 2:</translation>
+        <translation type="unfinished">จุดตัด 2:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim.cpp" line="217"/>
         <source>Select first trim entity</source>
-        <translation type="unfinished">เลือกรายการ share</translation>
+        <translation type="unfinished">เลือกวัตถุแรกที่จะตัดแต่ง</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim.cpp" line="220"/>
         <source>Select limiting entity</source>
-        <translation type="unfinished">เลือกรายการจํากัด</translation>
+        <translation type="unfinished">เลือกวัตถุที่เป็นขอบเขต</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim.cpp" line="225"/>
@@ -6129,7 +6129,7 @@ Cartesian: (%2 , %3)
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim_amount.cpp" line="200"/>
         <source>No entity found.</source>
-        <translation type="unfinished">ไม่พบรายการใด ๆ.</translation>
+        <translation type="unfinished">ไม่พบวัตถุ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim_amount.cpp" line="207"/>
@@ -6195,7 +6195,7 @@ Cartesian: (%2 , %3)
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_order.cpp" line="137"/>
         <source>Choose entity for order</source>
-        <translation type="unfinished">เลือกรายการสําหรับลําดับ</translation>
+        <translation type="unfinished">เลือกวัตถุเพื่อจัดลำดับ</translation>
     </message>
 </context>
 <context>
@@ -6301,7 +6301,7 @@ Cartesian: (%2 , %3)
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_append.cpp" line="294"/>
         <source>Enter number of polylines</source>
-        <translation type="unfinished">ป้อนจํานวนเส้นต่อเนื่อง</translation>
+        <translation type="unfinished">ป้อนจำนวนโพลีไลน์</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_append.cpp" line="309"/>
@@ -6454,7 +6454,7 @@ Cartesian: (%2 , %3)
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_from_segment.cpp" line="62"/>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_from_segment.cpp" line="82"/>
         <source>Polyline created</source>
-        <translation type="unfinished">เส้นต่อเนื่องถูกสร้าง</translation>
+        <translation type="unfinished">สร้างโพลีไลน์แล้ว</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_from_segment.cpp" line="326"/>
@@ -6550,7 +6550,7 @@ Cartesian: (%2 , %3)
     <message>
         <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="246"/>
         <source>Select Intersecting</source>
-        <translation>เลือกอินเตอร์เซก</translation>
+        <translation>เลือกวัตถุที่ตัดผ่าน</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="276"/>
@@ -6581,7 +6581,7 @@ Cartesian: (%2 , %3)
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_contour.cpp" line="90"/>
         <source>Specify entity to select</source>
-        <translation type="unfinished">ระบุรายการที่จะเลือก</translation>
+        <translation type="unfinished">ระบุวัตถุที่จะเลือก</translation>
     </message>
 </context>
 <context>
@@ -6589,7 +6589,7 @@ Cartesian: (%2 , %3)
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actionselectdimordinatesameorigin.cpp" line="80"/>
         <source>Select reference ordinate dimension</source>
-        <translation>เลือกมิติพิกัดอ้างอิง</translation>
+        <translation>เลือกการบอกขนาดแบบพิกัดอ้างอิง</translation>
     </message>
 </context>
 <context>
@@ -6620,7 +6620,7 @@ Cartesian: (%2 , %3)
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_intersected.cpp" line="192"/>
         <source>Select intersecting entity</source>
-        <translation type="unfinished">เลือกรายการที่ตัดกัน</translation>
+        <translation type="unfinished">เลือกวัตถุที่ตัดกัน</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_intersected.cpp" line="192"/>
@@ -6664,7 +6664,7 @@ Cartesian: (%2 , %3)
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_single.cpp" line="120"/>
         <source>Specify entity to select</source>
-        <translation type="unfinished">ระบุรายการที่จะเลือก</translation>
+        <translation type="unfinished">ระบุวัตถุที่จะเลือก</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_single.cpp" line="120"/>
@@ -6722,7 +6722,7 @@ Cartesian: (%2 , %3)
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_window.cpp" line="184"/>
         <source>Select Intersecting</source>
-        <translation type="unfinished">เลือกอินเตอร์เซก</translation>
+        <translation type="unfinished">เลือกวัตถุที่ตัดผ่าน</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/selection/lc_action_select_window.cpp" line="184"/>
@@ -6838,7 +6838,7 @@ Cartesian: (%2 , %3)
     <message>
         <location filename="../src/actions/dock_widgets/ucs_list/lc_actionucsbydimordinate.cpp" line="62"/>
         <source>Select ordinate dimension to set UCS</source>
-        <translation>เลือกมิติพิกัดที่จะตั้งค่า UCS</translation>
+        <translation>เลือกการบอกขนาดแบบพิกัดที่จะตั้งค่า UCS</translation>
     </message>
 </context>
 <context>
@@ -7210,7 +7210,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="49"/>
         <source>Use Current Attributes</source>
-        <translation type="unfinished">ใช้แอททริบิวต์ปัจจุบัน</translation>
+        <translation type="unfinished">ใช้คุณลักษณะปัจจุบัน</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="56"/>
@@ -7879,7 +7879,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_tangential_options_widget.ui" line="87"/>
         <source>If selected, tangental arc with specified radius will be created</source>
-        <translation type="unfinished">หากเปิดใช้งาน จะมีการสร้างเส้นโค้งแบบ tangental ด้วยรัศมีที่ระบุ</translation>
+        <translation type="unfinished">หากเลือก จะสร้างส่วนโค้งสัมผัสตามรัศมีที่ระบุ</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/curve/lc_arc_tangential_options_widget.ui" line="90"/>
@@ -7909,7 +7909,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_filler.cpp" line="31"/>
         <source>Trim</source>
-        <translation type="unfinished">ทริม</translation>
+        <translation type="unfinished">ตัดแต่ง</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_filler.cpp" line="31"/>
@@ -7952,7 +7952,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_widget.ui" line="62"/>
         <source>Trim</source>
-        <translation type="unfinished">ทริม</translation>
+        <translation type="unfinished">ตัดแต่ง</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_widget.ui" line="85"/>
@@ -7962,7 +7962,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_widget.ui" line="95"/>
         <source>Length of bevel in X direction.</source>
-        <translation type="unfinished">ความยาวของเบเวลในทิศ x.</translation>
+        <translation type="unfinished">ความยาวการลบมุมในทิศ X</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_widget.ui" line="102"/>
@@ -8233,7 +8233,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/misc/lc_center_line_options_filler.cpp" line="30"/>
         <source>Offset</source>
-        <translation type="unfinished">ออฟเซต:</translation>
+        <translation type="unfinished">ออฟเซต</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/misc/lc_center_line_options_filler.cpp" line="30"/>
@@ -8309,7 +8309,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/misc/lc_center_mark_options_filler.cpp" line="57"/>
         <source>Vertical dimension of the cross</source>
-        <translation type="unfinished">มิติทางแนวตั้งของกางเขน</translation>
+        <translation type="unfinished">ขนาดแนวตั้งของกากบาท</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/misc/lc_center_mark_options_filler.cpp" line="63"/>
@@ -8337,7 +8337,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/misc/lc_center_mark_options_widget.ui" line="63"/>
         <source>Vertical dimension of the cross</source>
-        <translation type="unfinished">มิติทางแนวตั้งของกางเขน</translation>
+        <translation type="unfinished">ขนาดแนวตั้งของกากบาท</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/misc/lc_center_mark_options_widget.ui" line="83"/>
@@ -8372,7 +8372,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/misc/lc_center_mark_options_widget.ui" line="193"/>
         <source>Defines how to apply dimensions of cross</source>
-        <translation type="unfinished">กําหนดขนาดของการข้าม</translation>
+        <translation type="unfinished">กำหนดวิธีใช้ขนาดของกากบาท</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/misc/lc_center_mark_options_widget.ui" line="209"/>
@@ -8665,12 +8665,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_tangental_2_entities_radius_options_widget.ui" line="32"/>
         <source>Circle Tangential2 Options</source>
-        <translation type="unfinished">ตัวเลือกวงกลม</translation>
+        <translation type="unfinished">ตัวเลือกวงกลมสัมผัส 2</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_tangental_2_entities_radius_options_widget.ui" line="56"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Radius of the tangential circle to draw&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt; &lt; หัว/&gt; รัศมีของวงกลมสัมผัสที่จะวาด</translation>
+        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;รัศมีของวงกลมสัมผัสที่จะวาด&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_tangental_2_entities_radius_options_widget.ui" line="59"/>
@@ -8866,22 +8866,22 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/support/lc_dimstylepreviewpanel.ui" line="35"/>
         <source>Zoom Auto</source>
-        <translation>ย่อ/ ขยายอัตโนมัติ</translation>
+        <translation>ซูมอัตโนมัติ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/support/lc_dimstylepreviewpanel.ui" line="62"/>
         <source>Zoom In</source>
-        <translation>ขยายขนาด</translation>
+        <translation>ซูมเข้า</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/support/lc_dimstylepreviewpanel.ui" line="76"/>
         <source>Zoom Out</source>
-        <translation>ย่อ/ ขยาย</translation>
+        <translation>ซูมออก</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/support/lc_dimstylepreviewpanel.ui" line="90"/>
         <source>Zoom Pan</source>
-        <translation>ย่อ/ ขยาย</translation>
+        <translation>แพน</translation>
     </message>
 </context>
 <context>
@@ -8889,73 +8889,73 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="104"/>
         <source>Dimension Styles Export Error</source>
-        <translation>ผิดพลาดในการส่งออกรูปแบบมิติ</translation>
+        <translation>ผิดพลาดในการส่งออกรูปแบบการบอกขนาด</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="105"/>
         <source>Can&apos;t open provided file for writing - check that provided location is writable. Dimension styles were not exported.</source>
-        <translation>ไม่สามารถเปิดแฟ้มที่จัดให้ใช้ในการเขียนได้ - ตรวจดูว่าตําแหน่งดังกล่าวเขียนได้หรือไม่ ไม่ ได้ ส่ง ออก แบบ แบบ จําลอง.</translation>
+        <translation>ไม่สามารถเปิดแฟ้มที่ระบุเพื่อเขียนได้ - ตรวจสอบว่าตำแหน่งที่ระบุสามารถเขียนได้ ไม่ได้ส่งออกรูปแบบการบอกขนาด</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="114"/>
         <source>Dimension Styles Export</source>
-        <translation>ส่งออกรูปแบบมิติ</translation>
+        <translation>ส่งออกรูปแบบการบอกขนาด</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="114"/>
         <source>Dimensions Styles were exported.</source>
-        <translation>รูปแบบมิติได้รับการส่งออก.</translation>
+        <translation>ส่งออกรูปแบบการบอกขนาดแล้ว</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="125"/>
         <source>Dimension Styles Import Error</source>
-        <translation>ผิดพลาดในการนําเข้ารูปแบบมิติ</translation>
+        <translation>ผิดพลาดในการนำเข้ารูปแบบการบอกขนาด</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="127"/>
         <source>Can&apos;t open provided file for reading. Dimension styles were not imported.</source>
-        <translation>ไม่สามารถเปิดแฟ้มสําหรับอ่านได้ ไม่ได้นําเข้ารูปแบบมิติ.</translation>
+        <translation>ไม่สามารถเปิดแฟ้มสำหรับอ่านได้ ไม่ได้นำเข้ารูปแบบการบอกขนาด.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="133"/>
         <source>Unexpected error during dimension styles parsing. Message:</source>
-        <translation>เกิดข้อผิดพลาดที่ไม่คาดคิดระหว่างรูปแบบมิติ ข้อความ:</translation>
+        <translation>เกิดข้อผิดพลาดที่ไม่คาดคิดระหว่างรูปแบบการบอกขนาด ข้อความ:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="137"/>
         <source>Unexpected format of file, it does not contains LibreCAD dimension styles.</source>
-        <translation>ฟอร์แมตแฟ้มที่ไม่คาดคิด, มันไม่ได้บรรจุรูปแบบแบบ LibreCAD.</translation>
+        <translation>รูปแบบแฟ้มไม่ถูกต้อง แฟ้มนี้ไม่มีรูปแบบการบอกขนาดของ LibreCAD</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="143"/>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="175"/>
         <source>Dimension Styles Import</source>
-        <translation>นําเข้ารูปแบบมิติ</translation>
+        <translation>นำเข้ารูปแบบการบอกขนาด</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="143"/>
         <source>No dimension styles to import.</source>
-        <translation>ไม่มีรูปแบบมิติที่จะนําเข้า.</translation>
+        <translation>ไม่มีรูปแบบการบอกขนาดที่จะนำเข้า.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="175"/>
         <source>Dimension styles were imported.</source>
-        <translation>นำเข้ารูปแบบมิติแล้ว.</translation>
+        <translation>นำเข้ารูปแบบการบอกขนาดแล้ว.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="183"/>
         <source>Import Dimension Styles</source>
-        <translation>นําเข้ารูปแบบมิติ</translation>
+        <translation>นำเข้ารูปแบบการบอกขนาด</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="183"/>
         <source>Export Dimension Styles</source>
-        <translation>ส่งออกรูปแบบมิติ</translation>
+        <translation>ส่งออกรูปแบบการบอกขนาด</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="184"/>
         <source>LibreCAD dimension styles file (*.%1)</source>
-        <translation>แฟ้มรูปแบบ libreCAD (*.%1)</translation>
+        <translation>แฟ้มรูปแบบการบอกขนาดของ LibreCAD (*.%1)</translation>
     </message>
 </context>
 <context>
@@ -9072,7 +9072,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="55"/>
         <source>Dimension Lines</source>
-        <translation>เส้นมิติ</translation>
+        <translation>เส้นบอกขนาด</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="74"/>
@@ -9083,7 +9083,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="124"/>
         <source>Displays and sets the color for the dimension line (DIMCLRD system variable).</source>
-        <translation>แสดงและตั้งค่าสีสำหรับเส้นมิติ (ตัวแปรระบบ DIMCLRD).</translation>
+        <translation>แสดงและตั้งค่าสีสำหรับเส้นบอกขนาด (ตัวแปรระบบ DIMCLRD).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="81"/>
@@ -9093,17 +9093,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="67"/>
         <source>Sets the linetype of the dimension line. (DIMLTYPE system variable)</source>
-        <translation>ตั้งค่าชนิดเส้นของเส้นมิติ (ตัวแปรระบบ DIMLTYPE)</translation>
+        <translation>ตั้งค่าชนิดเส้นของเส้นบอกขนาด (ตัวแปรระบบ DIMLTYPE)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="88"/>
         <source>Linewidth:</source>
-        <translation>ความกว้างเส้น:</translation>
+        <translation>ความหนาเส้น:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="137"/>
         <source>Sets the lineweight of the dimension line. (DIMLWD system variable)</source>
-        <translation>ตั้งค่าน้ำหนักเส้นของเส้นมิติ (ตัวแปรระบบ DIMLWD)</translation>
+        <translation>ตั้งค่าความหนาเส้นของเส้นบอกขนาด (ตัวแปรระบบ DIMLWD)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="111"/>
@@ -9113,7 +9113,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="101"/>
         <source>Specifies a distance to extend the dimension line past the extension line when you use oblique, architectural, tick, integral, and no marks for arrowheads. (DIMDLE system variable)</source>
-        <translation>กำหนดระยะที่เส้นมิติยื่นเลยเส้นช่วยบอกขนาด เมื่อใช้หัวลูกศรแบบขีดเฉียง, สถาปัตยกรรม, ขีด, อินทิกรัล และไม่มีเครื่องหมาย (ตัวแปรระบบ DIMDLE)</translation>
+        <translation>กำหนดระยะที่เส้นบอกขนาดยื่นเลยเส้นช่วยบอกขนาด เมื่อใช้หัวลูกศรแบบขีดเฉียง, สถาปัตยกรรม, ขีด, อินทิกรัล และไม่มีเครื่องหมาย (ตัวแปรระบบ DIMDLE)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="162"/>
@@ -9123,22 +9123,22 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="191"/>
         <source>Suppresses display of first dimension line (DIMSD1 system variable)</source>
-        <translation>แสดงตัวแปรของระบบ DIPSD1</translation>
+        <translation>ซ่อนเส้นบอกขนาดเส้นแรก (ตัวแปรระบบ DIMSD1)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="194"/>
         <source>Suppress Dim line 1 and arrow</source>
-        <translation>ลูกศรและลูกศร</translation>
+        <translation>ซ่อนเส้นบอกขนาดเส้นที่ 1 และลูกศร</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="175"/>
         <source>Suppresses display of second dimension line (DIMSD2 system variable)</source>
-        <translation>แสดงตัวแปรของระบบ DIMSD2</translation>
+        <translation>ซ่อนเส้นบอกขนาดเส้นที่สอง (ตัวแปรระบบ DIMSD2)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="178"/>
         <source>Suppress Dim line 2 and arrow</source>
-        <translation>ลูกศรและลูกศร</translation>
+        <translation>ซ่อนเส้นบอกขนาดเส้นที่ 2 และลูกศร</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="204"/>
@@ -9173,22 +9173,22 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="331"/>
         <source>Lineweight:</source>
-        <translation>น้ําหนักเส้น:</translation>
+        <translation>ความหนาเส้น:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="236"/>
         <source>Sets the lineweight of the extension line. (DIMLWE system variable)</source>
-        <translation>ตั้งค่าน้ำหนักเส้นของเส้นช่วยบอกขนาด (ตัวแปรระบบ DIMLWE)</translation>
+        <translation>ตั้งค่าความหนาเส้นของเส้นช่วยบอกขนาด (ตัวแปรระบบ DIMLWE)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="368"/>
         <source>Extend beyond dim lines:</source>
-        <translation>ยื่นเกินเส้นมิติ:</translation>
+        <translation>ยื่นเกินเส้นบอกขนาด:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="285"/>
         <source>Specifies a distance to extend the extension lines above the dimension line. (DIMEXE system variable)</source>
-        <translation>กำหนดระยะที่เส้นช่วยบอกขนาดยื่นเลยเส้นมิติขึ้นไป (ตัวแปรระบบ DIMEXE)</translation>
+        <translation>กำหนดระยะที่เส้นช่วยบอกขนาดยื่นเลยเส้นบอกขนาดขึ้นไป (ตัวแปรระบบ DIMEXE)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="375"/>
@@ -9198,7 +9198,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="404"/>
         <source>Sets the distance to offset the extension lines from the points on the drawing that define the dimension. (DIMEXO system variable)</source>
-        <translation>ตั้งค่าระยะที่เส้นช่วยบอกขนาดเยื้องออกจากจุดบนภาพวาดที่กำหนดมิติ (ตัวแปรระบบ DIMEXO)</translation>
+        <translation>ตั้งค่าระยะที่เส้นช่วยบอกขนาดเยื้องออกจากจุดบนแบบที่ใช้กำหนดการบอกขนาด (ตัวแปรระบบ DIMEXO)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="223"/>
@@ -9208,17 +9208,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="388"/>
         <source>Sets the total length of the extension lines starting from the dimension line toward the dimension origin. (DIMFXL system variable)</source>
-        <translation>ตั้งค่าความยาวของเส้นขยายทั้งหมด โดยเริ่มจากเส้นมิติไปยังจุดกําเนิดของมิติ ตัวแปรของระบบ DMFXL</translation>
+        <translation>ตั้งค่าความยาวรวมของเส้นช่วยบอกขนาด โดยวัดจากเส้นบอกขนาดไปยังจุดกำเนิดของการบอกขนาด (ตัวแปรระบบ DIMFXL)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="345"/>
         <source>Enables fixed length extension lines. (DIMFXLON system variable)</source>
-        <translation>เปิดใช้การขยายความยาวคงที่ ตัวแปรของระบบ DMFXLON)</translation>
+        <translation>เปิดใช้เส้นช่วยบอกขนาดแบบความยาวคงที่ (ตัวแปรระบบ DIMFXLON)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="348"/>
         <source>Fixed length extension lines</source>
-        <translation>ส่วนขยายความกว้างคงที่</translation>
+        <translation>เส้นช่วยบอกขนาดความยาวคงที่</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="269"/>
@@ -9228,12 +9228,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="272"/>
         <source>Suppress Ext line 1</source>
-        <translation>แบบ Suppress Extline 1</translation>
+        <translation>ซ่อนเส้นช่วยบอกขนาดเส้นที่ 1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="321"/>
         <source>Suppresses the display of second extension line (DIMSE2 system variable).</source>
-        <translation>กดข้อความในส่วนขยายที่สอง (ตัวแปรของระบบ DMSE2).</translation>
+        <translation>ระงับการแสดงเส้นช่วยบอกขนาดเส้นที่สอง (ตัวแปรระบบ DIMSE2)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="324"/>
@@ -9259,7 +9259,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="443"/>
         <source>Linear jog dimension</source>
-        <translation>มิติเชิงเส้นแบบหัก</translation>
+        <translation>การบอกขนาดเชิงเส้นแบบหัก</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="449"/>
@@ -9274,7 +9274,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="473"/>
         <source>Radius jog dimension</source>
-        <translation>มิติรัศมีแบบหัก</translation>
+        <translation>การบอกขนาดรัศมีแบบหัก</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="479"/>
@@ -9284,7 +9284,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="486"/>
         <source>Determines the angle of the transverse segment of the dimension line in a jogged radius dimension. (DIMJOGANG system variable)</source>
-        <translation>กำหนดมุมของส่วนตามขวางของเส้นมิติในมิติรัศมีแบบหัก (ตัวแปรระบบ DIMJOGANG)</translation>
+        <translation>กำหนดมุมของส่วนตามขวางของเส้นบอกขนาดในการบอกขนาดรัศมีแบบหัก (ตัวแปรระบบ DIMJOGANG)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="505"/>
@@ -9294,7 +9294,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="553"/>
         <source>Displays and sets the size of arrowheads. (DIMASZ system variable)</source>
-        <translation>แสดงและตั้งค่าขนาดของหัวลูกศร ตัวแปรระบบ DIMSS)</translation>
+        <translation>แสดงและตั้งค่าขนาดของหัวลูกศร (ตัวแปรระบบ DIMASZ)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="539"/>
@@ -9309,17 +9309,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="518"/>
         <source>Sets the arrowhead for the first dimension line. When you change the first arrowhead type, the second arrowhead automatically changes to match it. (DIMBLK1 system variable)</source>
-        <translation>ตั้งค่าหัวลูกศรสำหรับเส้นมิติเส้นแรก เมื่อคุณเปลี่ยนชนิดหัวลูกศรตัวแรก หัวลูกศรตัวที่สองจะเปลี่ยนให้ตรงกันโดยอัตโนมัติ (ตัวแปรระบบ DIMBLK1)</translation>
+        <translation>ตั้งค่าหัวลูกศรสำหรับเส้นบอกขนาดเส้นแรก เมื่อคุณเปลี่ยนชนิดหัวลูกศรตัวแรก หัวลูกศรตัวที่สองจะเปลี่ยนให้ตรงกันโดยอัตโนมัติ (ตัวแปรระบบ DIMBLK1)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="588"/>
         <source>Sets the arrowhead for the second dimension line. (DIMBLK2 system variable)</source>
-        <translation>ตั้งค่าหัวลูกศรสำหรับเส้นมิติเส้นที่สอง (ตัวแปรระบบ DIMBLK2)</translation>
+        <translation>ตั้งค่าหัวลูกศรสำหรับเส้นบอกขนาดเส้นที่สอง (ตัวแปรระบบ DIMBLK2)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="570"/>
         <source>Use the same arrowhead for dimension line</source>
-        <translation>ใช้หัวลูกศรเดียวกันสําหรับเส้นมิติ</translation>
+        <translation>ใช้หัวลูกศรเดียวกันสำหรับเส้นบอกขนาด</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="546"/>
@@ -9344,7 +9344,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="598"/>
         <source>Dimension break</source>
-        <translation>การตัดเส้นมิติ</translation>
+        <translation>การตัดเส้นบอกขนาด</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="604"/>
@@ -9359,7 +9359,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="630"/>
         <source>Suppresses the display of arc length symbols. (DIMARCSYM system variable)</source>
-        <translation>แสดงสัญลักษณ์ของความยาวส่วนโค้ง ตัวแปรของระบบ DMARCSYM)</translation>
+        <translation>ระงับการแสดงสัญลักษณ์ความยาวส่วนโค้ง (ตัวแปรระบบ DIMARCSYM)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="633"/>
@@ -9371,22 +9371,22 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="640"/>
         <source>Places arc length symbols before the dimension text. (DIMARCSYM system variable)</source>
-        <translation>วางสัญลักษณ์ส่วนโค้งก่อนข้อความในมิติ ตัวแปรของระบบ DMARCSYM)</translation>
+        <translation>วางสัญลักษณ์ความยาวส่วนโค้งไว้หน้าข้อความบอกขนาด (ตัวแปรระบบ DIMARCSYM)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="643"/>
         <source>Preceding dimension text</source>
-        <translation>อยู่หน้าข้อความมิติ</translation>
+        <translation>อยู่หน้าข้อความบอกขนาด</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="650"/>
         <source>Places arc length symbols above the dimension text. (DIMARCSYM system variable)</source>
-        <translation>วางสัญลักษณ์ของความยาวส่วนโค้งไว้เหนือข้อความในมิติ ตัวแปรของระบบ DMARCSYM)</translation>
+        <translation>วางสัญลักษณ์ความยาวส่วนโค้งไว้เหนือข้อความบอกขนาด (ตัวแปรระบบ DIMARCSYM)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="653"/>
         <source>Above dimension text</source>
-        <translation>อยู่เหนือข้อความมิติ</translation>
+        <translation>อยู่เหนือข้อความบอกขนาด</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="663"/>
@@ -9426,7 +9426,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="706"/>
         <source>Displays and sets the size of the center mark or centerline. (DIMCEN system variable)</source>
-        <translation>แสดงและตั้งค่าขนาดของจุดกึ่งกลางหรือเส้นกลาง ตัวแปรระบบ DIMCN)</translation>
+        <translation>แสดงและตั้งค่าขนาดของเครื่องหมายจุดศูนย์กลางหรือเส้นศูนย์กลาง (ตัวแปรระบบ DIMCEN)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="746"/>
@@ -9457,7 +9457,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="788"/>
         <source>Sets the color for the text background in dimensions (DIMTFILLCLR system variable)</source>
-        <translation>ตั้งค่าสีสําหรับพื้นหลังข้อความในมิติ (ตัวแปรระบบ DMTFLLLR)</translation>
+        <translation>ตั้งค่าสีพื้นหลังของข้อความบอกขนาด (ตัวแปรระบบ DIMTFILLCLR)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="795"/>
@@ -9472,7 +9472,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="809"/>
         <source>Sets the scale of fractions relative to dimension text. (DIMTFAC system variable)</source>
-        <translation>ตั้งค่าสัดส่วนของเศษส่วนเทียบกับข้อความในมิติ ตัวแปรของระบบ DMTFAC</translation>
+        <translation>ตั้งค่ามาตราส่วนของเศษส่วนเทียบกับข้อความบอกขนาด (ตัวแปรระบบ DIMTFAC)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="822"/>
@@ -9482,12 +9482,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="829"/>
         <source>Sets the height of the current dimension text style. (DIMTXT system variable)</source>
-        <translation>ตั้งค่าความสูงของรูปแบบข้อความในมิติปัจจุบัน ตัวแปรของระบบ DMTXT</translation>
+        <translation>ตั้งค่าความสูงของรูปแบบข้อความบอกขนาดปัจจุบัน (ตัวแปรระบบ DIMTXT)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="842"/>
         <source>Sets the color for the dimension text (DIMCLRT system variable)</source>
-        <translation>ตั้งค่าสีสําหรับข้อความในมิติ (ตัวแปรระบบ DMLT)</translation>
+        <translation>ตั้งค่าสีของข้อความบอกขนาด (ตัวแปรระบบ DIMCLRT)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="849"/>
@@ -9502,7 +9502,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="859"/>
         <source>Displays a rectangular frame around the dimension text. This option changes the value stored in the DIMGAP system variable to a negative value.</source>
-        <translation>แสดงกรอบสี่เหลี่ยมรอบข้อความในมิติ ตัวเลือกนี้จะทําการเปลี่ยนค่าที่เก็บไว้ในตัวแปรระบบ DMGAP เป็นค่าลบ.</translation>
+        <translation>แสดงกรอบสี่เหลี่ยมรอบข้อความบอกขนาด ตัวเลือกนี้จะเปลี่ยนค่าที่เก็บในตัวแปรระบบ DIMGAP เป็นค่าลบ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="862"/>
@@ -9517,7 +9517,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="891"/>
         <source>Places text in a horizontal position (DIMTIH and DIMTOH system variables).</source>
-        <translation>วางข้อความในตําแหน่งแนวนอน (DMTH และ DIMTOH ตัวแปรระบบ).</translation>
+        <translation>วางข้อความในแนวนอน (ตัวแปรระบบ DIMTIH และ DIMTOH)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="894"/>
@@ -9528,17 +9528,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="901"/>
         <source>Aligns text with the dimension line (DIMTIH and DIMTOH system variables).</source>
-        <translation>จัดแนวข้อความตามเส้นมิติ (ตัวแปรระบบ DIMTIH และ DIMTOH).</translation>
+        <translation>จัดแนวข้อความตามเส้นบอกขนาด (ตัวแปรระบบ DIMTIH และ DIMTOH).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="911"/>
         <source>Aligns text with the dimension line when text is inside the extension lines, but aligns it horizontally when text is outside the extension lines (DIMTIH and DIMTOH system variables).</source>
-        <translation>จัดข้อความให้อยู่แนวเดียวกับเส้นมิติเมื่อข้อความอยู่ภายในเส้นช่วยบอกขนาด แต่จัดให้อยู่ในแนวนอนเมื่อข้อความอยู่นอกเส้นช่วยบอกขนาด (ตัวแปรระบบ DIMTIH และ DIMTOH).</translation>
+        <translation>จัดข้อความให้อยู่แนวเดียวกับเส้นบอกขนาดเมื่อข้อความอยู่ภายในเส้นช่วยบอกขนาด แต่จัดให้อยู่ในแนวนอนเมื่อข้อความอยู่นอกเส้นช่วยบอกขนาด (ตัวแปรระบบ DIMTIH และ DIMTOH).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="904"/>
         <source>Aligned with dimension line</source>
-        <translation>จัดเรียงด้วยเส้นมิติ</translation>
+        <translation>จัดแนวตามเส้นบอกขนาด</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="150"/>
@@ -9551,8 +9551,8 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="577"/>
         <source>Specifies the size of oblique strokes drawn instead of arrowheads for linear, radius, and diameter dimensioning. If = 0 – draws arrowheads.
 &gt;0 – Draws oblique strokes instead of arrowheads (DIMTSZ variable). </source>
-        <translation>กําหนดขนาดของสโตรกที่วาดแทนหัวลูกศรสําหรับ เชิงเส้น, รัศมี, และขนาดเส้นผ่าศูนย์กลาง ถ้า = 0 – วาดหัวลูกศร
-&gt; 0 – วาดจังหวะโอบลิกแทนหัวลูกศร (ตัวแปร DMTS).</translation>
+        <translation>กำหนดขนาดของขีดเฉียงที่วาดแทนหัวลูกศรในการบอกขนาดเชิงเส้น รัศมี และเส้นผ่านศูนย์กลาง ถ้า = 0 – วาดหัวลูกศร
+&gt;0 – วาดขีดเฉียงแทนหัวลูกศร (ตัวแปร DIMTSZ) </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="914"/>
@@ -9568,7 +9568,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="930"/>
         <source>Controls the dimension text viewing direction. (DIMTXTDIRECTION system variable)</source>
-        <translation>ควบคุมการดูข้อความในมิติ ตัวแปรระบบ DIMXTDIRE)</translation>
+        <translation>ควบคุมทิศทางการอ่านข้อความบอกขนาด (ตัวแปรระบบ DIMTXTDIRECTION)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="934"/>
@@ -9593,7 +9593,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="961"/>
         <source>Controls the horizontal placement of dimension text along the dimension line, in relation to the extension lines. (DIMJUST system variable)</source>
-        <translation>ควบคุมการจัดวางทางแนวนอนของข้อความตามเส้นมิติ โดยสัมพันธ์กับเส้นส่วนขยาย ตัวแปรของระบบ DMJUST)</translation>
+        <translation>ควบคุมตำแหน่งแนวนอนของข้อความบอกขนาดตามแนวเส้นบอกขนาด เทียบกับเส้นช่วยบอกขนาด (ตัวแปรระบบ DIMJUST)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="965"/>
@@ -9634,7 +9634,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1007"/>
         <source>Controls the vertical placement of dimension text in relation to the dimension line. (DIMTAD system variable)</source>
-        <translation>ควบคุมการจัดวางแนวตั้งของข้อความในมิติที่สัมพันธ์กับเส้นมิติ (ตัวแปรระบบ DMTLD)</translation>
+        <translation>ควบคุมตำแหน่งแนวตั้งของข้อความบอกขนาดเทียบกับเส้นบอกขนาด (ตัวแปรระบบ DIMTAD)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1016"/>
@@ -9659,17 +9659,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1039"/>
         <source>Vertical position of text above or below dimension line if vertical placement (DIMTAD) is not &quot;Centered&quot; (DIMTVP variable).</source>
-        <translation>ตําแหน่งทางแนวตั้งของข้อความด้านบนหรือใต้เส้นมิติ หากระบุตําแหน่งทางแนวตั้ง (DMTAD) ไม่ใช่ &quot;ป้อน&quot; (ตัวแปร DMTVP).</translation>
+        <translation>ตำแหน่งแนวตั้งของข้อความเหนือหรือใต้เส้นบอกขนาด เมื่อการจัดวางแนวตั้ง (DIMTAD) ไม่ใช่ &quot;กึ่งกลาง&quot; (ตัวแปร DIMTVP)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1052"/>
         <source>Broken dim line text gap:</source>
-        <translation>ช่องว่างข้อความของเส้นมิติแบบขาด:</translation>
+        <translation>ช่องว่างข้อความของเส้นบอกขนาดแบบขาด:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1059"/>
         <source>Sets the current text gap, which is the distance around the dimension text when the dimension line is broken to accommodate the dimension text (DIMGAP system variable).</source>
-        <translation>ตั้งค่าช่องว่างของข้อความปัจจุบัน ซึ่งเป็นระยะรอบข้อความมิติ เมื่อเส้นมิติถูกหัก เพื่อรองรับข้อความมิติ (ตัวแปรของระบบ DMGAP).</translation>
+        <translation>ตั้งค่าช่องว่างข้อความปัจจุบัน ซึ่งเป็นระยะรอบข้อความบอกขนาดเมื่อเส้นบอกขนาดถูกเว้นช่วงเพื่อวางข้อความบอกขนาด (ตัวแปรระบบ DIMGAP)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1086"/>
@@ -9684,7 +9684,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1098"/>
         <source>Ignores any horizontal justification settings and places the text at the position you specify at the Dimension Line Location prompt. (DIMUPT system variable)</source>
-        <translation>ไม่สนใจการตั้งค่าการจัดชิดแนวนอนใด ๆ และวางข้อความไว้ที่ตำแหน่งที่คุณระบุเมื่อโปรแกรมถามตำแหน่งเส้นมิติ (ตัวแปรระบบ DIMUPT)</translation>
+        <translation>ไม่สนใจการตั้งค่าการจัดชิดแนวนอนใด ๆ และวางข้อความไว้ที่ตำแหน่งที่คุณระบุเมื่อโปรแกรมถามตำแหน่งเส้นบอกขนาด (ตัวแปรระบบ DIMUPT)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1101"/>
@@ -9694,12 +9694,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1108"/>
         <source>Draws dimension lines between the measured points even when the arrowheads are placed outside the measured points. (DIMTOFL system variable)</source>
-        <translation>วาดเส้นมิติระหว่างจุดวัด แม้จะวางหัวลูกศรนอกจุดวัด ตัวแปรของระบบ DIMTOFL)</translation>
+        <translation>วาดเส้นบอกขนาดระหว่างจุดที่วัด แม้จะวางหัวลูกศรไว้นอกจุดที่วัด (ตัวแปรระบบ DIMTOFL)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1111"/>
         <source>Draw dim line betwen ext lines</source>
-        <translation>วาดเส้นสลับ</translation>
+        <translation>วาดเส้นบอกขนาดระหว่างเส้นช่วยบอกขนาด</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1121"/>
@@ -9710,7 +9710,7 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1127"/>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1137"/>
         <source>Sets a scale for all dimension style settings that specify size, distance, or spacing, including text and arrowhead sizes. This scale does not change dimension measurement values. (DIMSCALE system variable)</source>
-        <translation>ตั้งค่ามาตราส่วนสำหรับค่าในรูปแบบมิติทั้งหมดที่กำหนดขนาด ระยะ หรือช่องว่าง รวมถึงขนาดข้อความและหัวลูกศร มาตราส่วนนี้ไม่เปลี่ยนค่าการวัดของมิติ (ตัวแปรระบบ DIMSCALE)</translation>
+        <translation>ตั้งค่ามาตราส่วนสำหรับค่าในรูปแบบการบอกขนาดทั้งหมดที่กำหนดขนาด ระยะ หรือช่องว่าง รวมถึงขนาดข้อความและหัวลูกศร มาตราส่วนนี้ไม่เปลี่ยนค่าการวัดของการบอกขนาด (ตัวแปรระบบ DIMSCALE)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1130"/>
@@ -9730,7 +9730,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1175"/>
         <source>If selected, moves the dimension line whenever dimension text is moved. (DIMTMOVE system variable)</source>
-        <translation>หากเลือกไว้ จะย้ายเส้นมิติตามเมื่อย้ายข้อความมิติ (ตัวแปรระบบ DIMTMOVE)</translation>
+        <translation>หากเลือกไว้ จะย้ายเส้นบอกขนาดตามเมื่อย้ายข้อความบอกขนาด (ตัวแปรระบบ DIMTMOVE)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1178"/>
@@ -9740,12 +9740,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1185"/>
         <source>If selected, dimension lines are not moved when text is moved. If text is moved away from the dimension line, a leader line is created connecting the text to the dimension line. The leader line is omitted when text is too close to the dimension line. (DIMTMOVE system variable)</source>
-        <translation>หากเลือกไว้ เส้นมิติจะไม่ถูกย้ายเมื่อข้อความถูกย้าย ถ้าข้อความถูกย้ายออกห่างจากเส้นมิติ จะมีการสร้างเส้นชี้เชื่อมข้อความกับเส้นมิติ และจะไม่แสดงเส้นชี้เมื่อข้อความอยู่ใกล้เส้นมิติเกินไป (ตัวแปรระบบ DIMTMOVE)</translation>
+        <translation>หากเลือกไว้ เส้นบอกขนาดจะไม่ถูกย้ายเมื่อข้อความถูกย้าย ถ้าข้อความถูกย้ายออกห่างจากเส้นบอกขนาด จะมีการสร้างเส้นชี้เชื่อมข้อความกับเส้นบอกขนาด และจะไม่แสดงเส้นชี้เมื่อข้อความอยู่ใกล้เส้นบอกขนาดเกินไป (ตัวแปรระบบ DIMTMOVE)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1188"/>
         <source>Over dimension line, with leader</source>
-        <translation>เหนือเส้นมิติ พร้อมเส้นชี้</translation>
+        <translation>เหนือเส้นบอกขนาด พร้อมเส้นชี้</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1195"/>
@@ -9755,12 +9755,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1202"/>
         <source>If selected, dimension lines are not moved when text is moved. Text that is moved away from the dimension line is not connected to the dimension line with a leader. (DIMTMOVE system variable)</source>
-        <translation>หากเลือกไว้ เส้นมิติจะไม่ถูกย้ายเมื่อข้อความถูกย้าย ข้อความที่ถูกย้ายออกห่างจากเส้นมิติจะไม่เชื่อมกับเส้นมิติด้วยเส้นชี้ (ตัวแปรระบบ DIMTMOVE)</translation>
+        <translation>หากเลือกไว้ เส้นบอกขนาดจะไม่ถูกย้ายเมื่อข้อความถูกย้าย ข้อความที่ถูกย้ายออกห่างจากเส้นบอกขนาดจะไม่เชื่อมกับเส้นบอกขนาดด้วยเส้นชี้ (ตัวแปรระบบ DIMTMOVE)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1205"/>
         <source>Over dimension line, without leader</source>
-        <translation>เหนือเส้นมิติ ไม่มีเส้นชี้</translation>
+        <translation>เหนือเส้นบอกขนาด ไม่มีเส้นชี้</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1234"/>
@@ -9835,7 +9835,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1333"/>
         <source>Angular Dimensions</source>
-        <translation>มิติเชิงมุม</translation>
+        <translation>การบอกขนาดมุม</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1339"/>
@@ -9858,7 +9858,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1352"/>
         <source>Controls the suppression of leading zeros (DIMAZIN system variable)</source>
-        <translation>ควบคุมการลดจุดศูนย์นําหน้า (ตัวแปรระบบ DIMAZN)</translation>
+        <translation>ควบคุมการซ่อนศูนย์นำหน้า (ตัวแปรระบบ DIMAZIN)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1355"/>
@@ -9872,7 +9872,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1362"/>
         <source>Controls the suppression of  trailing zeros. (DIMAZIN system variable)</source>
-        <translation>ควบคุมการยับยั้งการติดตามศูนย์ (ตัวแปรระบบ DIMAZN)</translation>
+        <translation>ควบคุมการซ่อนศูนย์ต่อท้าย (ตัวแปรระบบ DIMAZIN)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1365"/>
@@ -9893,7 +9893,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1382"/>
         <source>Sets the number of decimal places for angular dimensions. DIMADEC system variable)</source>
-        <translation>ตั้งค่าจำนวนตำแหน่งทศนิยมของมิติเชิงมุม (ตัวแปรระบบ DIMADEC)</translation>
+        <translation>ตั้งค่าจำนวนตำแหน่งทศนิยมของการบอกขนาดมุม (ตัวแปรระบบ DIMADEC)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1389"/>
@@ -9904,7 +9904,7 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1418"/>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1994"/>
         <source>Linear Dimensions</source>
-        <translation>มิติเชิงเส้น</translation>
+        <translation>การบอกขนาดเชิงเส้น</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1431"/>
@@ -9919,17 +9919,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1450"/>
         <source>Sets a scale factor for linear dimension measurements. It is recommended that you do not change this value from the default value of 1.00. (DIMLFAC system variable)</source>
-        <translation>ตั้งค่าสัดส่วนสําหรับการวัดมิติเชิงเส้น ขอแนะนําให้คุณไม่เปลี่ยนค่านี้จากค่าปริยายของ 1.00 (ตัวแปรระบบ DMLFAC)</translation>
+        <translation>ตั้งค่าตัวคูณมาตราส่วนของค่าที่วัดได้ในการบอกขนาดเชิงเส้น ไม่แนะนำให้เปลี่ยนค่านี้จากค่าปริยาย 1.00 (ตัวแปรระบบ DIMLFAC)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1460"/>
         <source>Applies the measurement scale factor only to dimensions created in layout viewports. </source>
-        <translation>กําหนดค่ามาตราวัดเฉพาะมิติ ที่สร้างขึ้นในมุมมองผัง.</translation>
+        <translation>ใช้ตัวคูณมาตราส่วนการวัดเฉพาะกับการบอกขนาดที่สร้างในวิวพอร์ตของเลย์เอาต์ </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1463"/>
         <source>Apply to layout dimensions only</source>
-        <translation>ใช้กับมิติในเลย์เอาต์เท่านั้น</translation>
+        <translation>ใช้กับการบอกขนาดในเลย์เอาต์เท่านั้น</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1473"/>
@@ -9949,12 +9949,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1500"/>
         <source>Includes a suffix that you specify in the dimension text. (DIMPOST system variable)</source>
-        <translation>รวมส่วนต่อท้ายที่คุณระบุไว้ในข้อความในมิติด้วย (ตัวแปรระบบ DMPOST)</translation>
+        <translation>เพิ่มส่วนต่อท้ายที่คุณระบุในข้อความบอกขนาด (ตัวแปรระบบ DIMPOST)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1507"/>
         <source>Sets the current units format for all dimension types except Angular. (DIMLUNIT system variable)</source>
-        <translation>ตั้งค่ารูปแบบของหน่วยปัจจุบันสําหรับทุกชนิดในมิติยกเว้น Angular ตัวแปรระบบ DMLUNIT)</translation>
+        <translation>ตั้งค่ารูปแบบหน่วยปัจจุบันสำหรับการบอกขนาดทุกชนิด ยกเว้นการบอกขนาดมุม (ตัวแปรระบบ DIMLUNIT)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1514"/>
@@ -9980,17 +9980,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1538"/>
         <source>Sets nearest rounding value for dimension measurements for all dimension types except Angular. (DIMRND system variable)</source>
-        <translation>ตั้งค่าการปัดเศษที่ใกล้ที่สุดสำหรับค่าการวัดของมิติทุกชนิด ยกเว้นมิติเชิงมุม (ตัวแปรระบบ DIMRND)</translation>
+        <translation>ตั้งค่าการปัดเศษที่ใกล้ที่สุดสำหรับค่าการวัดของการบอกขนาดทุกชนิด ยกเว้นการบอกขนาดมุม (ตัวแปรระบบ DIMRND)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1548"/>
         <source>Displays and sets the number of decimal places in the dimension text. (DIMDEC system variable)</source>
-        <translation>แสดงและตั้งค่าจํานวนของทศนิยมในข้อความมิติ (ตัวแปรระบบ DMDEC)</translation>
+        <translation>แสดงและตั้งค่าจำนวนตำแหน่งทศนิยมในข้อความบอกขนาด (ตัวแปรระบบ DIMDEC)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1561"/>
         <source>Includes a prefix that you specify in the dimension text. (DIMPOST system variable)</source>
-        <translation>รวมคํานําหน้าที่คุณระบุไว้ในข้อความในมิติด้วย (ตัวแปรระบบ DMPOST)</translation>
+        <translation>เพิ่มคำนำหน้าที่คุณระบุในข้อความบอกขนาด (ตัวแปรระบบ DIMPOST)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1575"/>
@@ -10022,12 +10022,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1617"/>
         <source>Suppresses trailing zeros in all decimal dimensions. (DIMZIN system variable)</source>
-        <translation>Suppresss ต่อท้ายศูนย์ในทุกมิติทศนิยม ตัวแปรระบบ DMSIN)</translation>
+        <translation>ซ่อนศูนย์ต่อท้ายในการบอกขนาดแบบทศนิยมทั้งหมด (ตัวแปรระบบ DIMZIN)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1627"/>
         <source> Suppresses the inches portion of a feet-and-inches dimension when the distance is an integral number of feet (DIMZIN system variable)</source>
-        <translation>Suppressed ส่วนนิ้วของขนาดฟุตและนิ้วเมื่อระยะเป็นจํานวนอินทิกรัลของฟุต (ตัวแปรระบบ DMZN)</translation>
+        <translation> ซ่อนส่วนนิ้วของขนาดแบบฟุตและนิ้วเมื่อระยะเป็นจำนวนเต็มฟุต (ตัวแปรระบบ DIMZIN)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1630"/>
@@ -10040,7 +10040,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1637"/>
         <source>Suppresses the feet portion of a feet-and-inches dimension when the distance is less than one foot.  (DIMZIN system variable)</source>
-        <translation>กดส่วนฟุตของขนาดฟุตและนิ้วเมื่อระยะทางเป็นน้อยกว่าหนึ่งฟุต ตัวแปรระบบ DMSIN)</translation>
+        <translation>ซ่อนส่วนฟุตของขนาดแบบฟุตและนิ้วเมื่อระยะน้อยกว่าหนึ่งฟุต (ตัวแปรระบบ DIMZIN)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1640"/>
@@ -10053,7 +10053,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1647"/>
         <source>Suppresses leading zeros in all decimal dimensions (DIMZIN system variable)</source>
-        <translation>Suppresses นําศูนย์ในทุกมิติทศนิยม (ตัวแปรของระบบ DMZN)</translation>
+        <translation>ซ่อนศูนย์นำหน้าในการบอกขนาดแบบทศนิยมทั้งหมด (ตัวแปรระบบ DIMZIN)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1657"/>
@@ -10064,12 +10064,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1664"/>
         <source>Sets the number of sub units to a unit. It is used to calculate the dimension distance in a sub unit when the distance is less than one unit. </source>
-        <translation>ตั้งค่าจํานวนของหน่วยย่อยเป็นหน่วย มันใช้คํานวณระยะห่างมิติในหน่วยย่อย เมื่อระยะห่างน้อยกว่าหนึ่งหน่วย.</translation>
+        <translation>ตั้งค่าจำนวนหน่วยย่อยต่อหนึ่งหน่วย ใช้คำนวณระยะบอกขนาดเป็นหน่วยย่อยเมื่อระยะน้อยกว่าหนึ่งหน่วย </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1680"/>
         <source>Includes a suffix to the dimension value sub unit. You can enter text or use control codes to display special symbols.</source>
-        <translation>รวมการแทนที่เข้ากับหน่วยย่อยค่ามิติ คุณสามารถป้อนข้อความหรือใช้รหัสควบคุมเพื่อแสดงสัญลักษณ์พิเศษได้.</translation>
+        <translation>เพิ่มส่วนต่อท้ายให้หน่วยย่อยของค่าบอกขนาด คุณสามารถป้อนข้อความหรือใช้รหัสควบคุมเพื่อแสดงสัญลักษณ์พิเศษได้</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1707"/>
@@ -10079,7 +10079,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1726"/>
         <source>Adds alternate measurement units to dimension text. Sets the DIMALT system variable to 1.</source>
-        <translation>เพิ่มหน่วยวัดแบบอื่นไปยังข้อความ ตั้งค่าตัวแปรระบบ DMLT เป็น 1.</translation>
+        <translation>เพิ่มหน่วยวัดสำรองในข้อความบอกขนาด โดยตั้งค่าตัวแปรระบบ DIMALT เป็น 1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1729"/>
@@ -10094,7 +10094,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1762"/>
         <source>Specifies the multiplier used as the conversion factor between primary and alternate units.For example, to convert inches to millimeters, enter 25.4. The value has no effect on angular dimensions, and it is not applied to the rounding value or the plus or minus tolerance values. (DIMALTF system variable)</source>
-        <translation>กําหนดตัวคูณที่ใช้เป็นตัวคูณระหว่างหน่วยหลักกับหน่วยอื่น ยกตัวอย่างเช่น เปลี่ยนนิ้วเป็นมิลลิเมตร เข้าที่ 25.4 ค่านี้ไม่มีผลอะไรกับมิติมุมมุม และไม่ได้นําไปใช้กับค่าแบบปัดกลับ หรือค่าบวกลบ ตัวแปรของระบบ DMALTF)</translation>
+        <translation>กำหนดตัวคูณที่ใช้แปลงระหว่างหน่วยหลักกับหน่วยสำรอง เช่น หากต้องการแปลงนิ้วเป็นมิลลิเมตร ให้ป้อน 25.4 ค่านี้ไม่มีผลกับการบอกขนาดมุม และไม่นำไปใช้กับค่าการปัดเศษหรือค่าพิกัดความเผื่อบวกหรือลบ (ตัวแปรระบบ DIMALTF)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1772"/>
@@ -10104,7 +10104,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1779"/>
         <source>Sets rounding rules for alternate units for all dimension types except Angular. If you enter a value of 0.25, all alternate measurements are rounded to the nearest 0.25 unit. If you enter a value of 1.0, all dimension measurements are rounded to the nearest integer. The number of digits displayed after the decimal point depends on the Precision setting. (DIMALTRND system variable)</source>
-        <translation>ตั้งกฎการปัดเศษสำหรับหน่วยทางเลือกของมิติทุกชนิด ยกเว้นมิติเชิงมุม หากป้อนค่า 0.25 ค่าการวัดในหน่วยทางเลือกทั้งหมดจะถูกปัดเศษเป็นทวีคูณของ 0.25 ที่ใกล้ที่สุด หากป้อนค่า 1.0 ค่าการวัดมิติทั้งหมดจะถูกปัดเศษเป็นจำนวนเต็มที่ใกล้ที่สุด จำนวนหลักที่แสดงหลังจุดทศนิยมขึ้นอยู่กับการตั้งค่าความแม่นยำ (ตัวแปรระบบ DIMALTRND)</translation>
+        <translation>ตั้งกฎการปัดเศษสำหรับหน่วยทางเลือกของการบอกขนาดทุกชนิด ยกเว้นการบอกขนาดมุม หากป้อนค่า 0.25 ค่าการวัดในหน่วยทางเลือกทั้งหมดจะถูกปัดเศษเป็นทวีคูณของ 0.25 ที่ใกล้ที่สุด หากป้อนค่า 1.0 ค่าการวัดการบอกขนาดทั้งหมดจะถูกปัดเศษเป็นจำนวนเต็มที่ใกล้ที่สุด จำนวนหลักที่แสดงหลังจุดทศนิยมขึ้นอยู่กับการตั้งค่าความแม่นยำ (ตัวแปรระบบ DIMALTRND)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1789"/>
@@ -10119,7 +10119,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1802"/>
         <source>Places alternate units after the primary units in dimension text.</source>
-        <translation>วางหน่วยสลับที่ตามหน่วยหลัก ในข้อความมิติ.</translation>
+        <translation>วางหน่วยสำรองไว้หลังหน่วยหลักในข้อความบอกขนาด</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1805"/>
@@ -10129,7 +10129,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1812"/>
         <source>Places alternate units below the primary units in dimension text.</source>
-        <translation>วางสลับหน่วยใต้หน่วยหลัก ในข้อความมิติ.</translation>
+        <translation>วางหน่วยสำรองไว้ใต้หน่วยหลักในข้อความบอกขนาด</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1815"/>
@@ -10139,7 +10139,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1831"/>
         <source>Includes a prefix in the alternate dimension text. You can enter text or use control codes to display special symbols. For example, entering the control code %%c displays the diameter symbol. (DIMAPOST system variable)</source>
-        <translation>รวมคํานําหน้าในข้อความในมิติอื่น คุณสามารถป้อนข้อความหรือใช้รหัสควบคุมเพื่อแสดงสัญลักษณ์พิเศษได้ ตัวอย่างเช่น การป้อนรหัสควบคุม% c แสดงสัญลักษณ์เส้นผ่าศูนย์กลาง ตัวแปรของระบบ DIMAPOST)</translation>
+        <translation>เพิ่มคำนำหน้าในข้อความบอกขนาดหน่วยสำรอง คุณสามารถป้อนข้อความหรือใช้รหัสควบคุมเพื่อแสดงสัญลักษณ์พิเศษได้ เช่น การป้อนรหัสควบคุม %%c จะแสดงสัญลักษณ์เส้นผ่านศูนย์กลาง (ตัวแปรระบบ DIMAPOST)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1845"/>
@@ -10149,22 +10149,22 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1858"/>
         <source>Suppresses leading zeros in all decimal dimensions. For example, 0.5000 becomes .5000.</source>
-        <translation>ความชันนําศูนย์ในทุกมิติ. ตัวอย่างเช่น 0.5000 กลายเป็น 5000.</translation>
+        <translation>ซ่อนศูนย์นำหน้าในการบอกขนาดแบบทศนิยมทั้งหมด เช่น 0.5000 จะกลายเป็น .5000</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1888"/>
         <source>Suppresses trailing zeros in all decimal dimensions. For example, 12.5000 becomes 12.5, and 30.0000 becomes 30 (DIMALTZ system variable).</source>
-        <translation>Suppresss ต่อท้ายศูนย์ในทุกมิติทศนิยม ตัว อย่าง เช่น 12.5000 คน กลายเป็น 12.5 และ 3.00 น. กลายเป็น 30 (ตัวแปรระบบ DMALTZ).</translation>
+        <translation>ซ่อนศูนย์ต่อท้ายในการบอกขนาดแบบทศนิยมทั้งหมด เช่น 12.5000 จะกลายเป็น 12.5 และ 30.0000 จะกลายเป็น 30 (ตัวแปรระบบ DIMALTZ)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1915"/>
         <source>Suppresses the feet portion of a feet-and-inches dimension when the distance is less than 1 foot. For example, 0&apos;-6 1/2&quot; becomes 6 1/2&quot; (DIMALTZ system variable)</source>
-        <translation>กดส่วนฟุตของฟุตและนิ้วเมื่อระยะทางเป็น น้อยกว่า 1 ฟุต ตัวอย่างเช่น 0&apos;-6 1/2&quot; กลายเป็น 6 1/2&quot; (ตัวแปรระบบ DMALTZ)</translation>
+        <translation>ซ่อนส่วนฟุตของขนาดแบบฟุตและนิ้วเมื่อระยะน้อยกว่า 1 ฟุต เช่น 0&apos;-6 1/2&quot; จะกลายเป็น 6 1/2&quot; (ตัวแปรระบบ DIMALTZ)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1925"/>
         <source>Suppresses the inches portion of a feet-and-inches dimension when the distance is an integral number of feet. For example, 1&apos;-0&quot; becomes 1&apos;. (DIMALTZ system variable)</source>
-        <translation>Suppression ส่วนนิ้วของขนาดฟุตและนิ้ว เมื่อระยะเป็นจํานวน อินทิกรัลของฟุต ตัวอย่างเช่น 1&apos;0&quot; กลายเป็น 1&apos; (ตัวแปรระบบ DMALTZ)</translation>
+        <translation>ซ่อนส่วนนิ้วของขนาดแบบฟุตและนิ้วเมื่อระยะเป็นจำนวนเต็มฟุต เช่น 1&apos;-0&quot; จะกลายเป็น 1&apos; (ตัวแปรระบบ DIMALTZ)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1938"/>
@@ -10174,7 +10174,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1958"/>
         <source>Includes a suffix in the alternate dimension text. You can enter text or use control codes to display special symbols. For example, entering the text cm results in dimension text similar to that shown in the illustration. When you enter a suffix, it overrides any default suffixes. (DIMAPOST system variable)</source>
-        <translation>รวมส่วนต่อท้ายในข้อความในมิติอื่น คุณสามารถป้อนข้อความหรือใช้รหัสควบคุมเพื่อแสดงสัญลักษณ์พิเศษได้ ตัว อย่าง เช่น เมื่อ เข้า ไป ใน ช่อง กลาง ของ ข้อ ความ ใน แบบ ต่าง ๆ คล้าย กับ ที่ แสดง ไว้ ใน ตัว อย่าง เปรียบ เทียบ. เมื่อคุณเติมส่วนต่อท้าย มันจะทําการแทนที่ส่วนต่อท้ายปริยาย ตัวแปรของระบบ DIMAPOST)</translation>
+        <translation>เพิ่มส่วนต่อท้ายในข้อความบอกขนาดหน่วยสำรอง คุณสามารถป้อนข้อความหรือใช้รหัสควบคุมเพื่อแสดงสัญลักษณ์พิเศษได้ เช่น การป้อนข้อความ cm จะได้ข้อความบอกขนาดคล้ายกับที่แสดงในภาพประกอบ ส่วนต่อท้ายที่ป้อนจะแทนที่ส่วนต่อท้ายปริยายทั้งหมด (ตัวแปรระบบ DIMAPOST)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1982"/>
@@ -10189,22 +10189,22 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2016"/>
         <source>Suppresses leading zeros in all decimal dimensions (DIMTZIN system variable).</source>
-        <translation>Suppresses นําศูนย์ในทุกมิติทศนิยม (ตัวแปรของระบบ DMTZN).</translation>
+        <translation>ซ่อนศูนย์นำหน้าในการบอกขนาดแบบทศนิยมทั้งหมด (ตัวแปรระบบ DIMTZIN)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2026"/>
         <source>Suppresses trailing zeros in all decimal dimensions (DIMTZIN system variable).</source>
-        <translation>Suppresss ตามหลังศูนย์ในทุกมิติทศนิยม (ตัวแปรของระบบ DMTZN).</translation>
+        <translation>ซ่อนศูนย์ต่อท้ายในการบอกขนาดแบบทศนิยมทั้งหมด (ตัวแปรระบบ DIMTZIN)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2036"/>
         <source>Suppresses the feet portion of a feet-and-inches dimension when the distance is less than 1 foot (DIMTZIN system variable). </source>
-        <translation>กดส่วนฟุตของขนาดฟุตและนิ้ว เมื่อระยะห่างน้อยกว่า 1 ฟุต (ตัวแปรระบบ DMTZN).</translation>
+        <translation>ซ่อนส่วนฟุตของขนาดแบบฟุตและนิ้วเมื่อระยะน้อยกว่า 1 ฟุต (ตัวแปรระบบ DIMTZIN) </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2046"/>
         <source>Suppresses the inches portion of a feet-and-inches dimension when the distance is an integral number of feet (DIMTZIN system variable). </source>
-        <translation>Suppressed ส่วนนิ้วของขนาดฟุตและนิ้วเมื่อระยะเป็นจํานวนอินทิกรัลของฟุต (ตัวแปรระบบ DMTZN).</translation>
+        <translation>ซ่อนส่วนนิ้วของขนาดแบบฟุตและนิ้วเมื่อระยะเป็นจำนวนเต็มฟุต (ตัวแปรระบบ DIMTZIN) </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2059"/>
@@ -10284,7 +10284,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2165"/>
         <source>Sets the current height for the tolerance text. The ratio of the tolerance height to the main dimension text height is calculated and stored in the DIMTFAC system variable.</source>
-        <translation>ตั้งค่าความสูงปัจจุบันของข้อความพิกัดความเผื่อ อัตราส่วนความสูงพิกัดความเผื่อต่อความสูงข้อความมิติหลักจะถูกคำนวณและเก็บในตัวแปรระบบ DIMTFAC.</translation>
+        <translation>ตั้งค่าความสูงปัจจุบันของข้อความพิกัดความเผื่อ อัตราส่วนความสูงพิกัดความเผื่อต่อความสูงข้อความบอกขนาดหลักจะถูกคำนวณและเก็บในตัวแปรระบบ DIMTFAC.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2175"/>
@@ -10324,27 +10324,27 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2227"/>
         <source>Displays and sets the number of decimal places. (DIMALTTD system variable)</source>
-        <translation>แสดงและตั้งค่าจํานวนของทศนิยม ตัวแปรของระบบ DMALTTD</translation>
+        <translation>แสดงและตั้งค่าจำนวนตำแหน่งทศนิยม (ตัวแปรระบบ DIMALTTD)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2240"/>
         <source>Suppresses leading zeros in all decimal dimensions (DIMALTTZ system variable). </source>
-        <translation>Suppresses นําศูนย์ในทุกมิติทศนิยม (ตัวแปรของระบบ DMLTTZ).</translation>
+        <translation>ซ่อนศูนย์นำหน้าในการบอกขนาดแบบทศนิยมทั้งหมด (ตัวแปรระบบ DIMALTTZ) </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2250"/>
         <source>Suppresses trailing zeros in all decimal dimensions (DIMALTTZ system variable).</source>
-        <translation>Suppresss losting ศูนย์ในทุกมิติทศนิยม (ตัวแปรของระบบ DMLTTZ).</translation>
+        <translation>ซ่อนศูนย์ต่อท้ายในการบอกขนาดแบบทศนิยมทั้งหมด (ตัวแปรระบบ DIMALTTZ)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2260"/>
         <source>Suppresses the feet portion of a feet-and-inches dimension when the distance is less than 1 foot (DIMALTTZ system variable).</source>
-        <translation>กดส่วนฟุตของขนาดฟุตและนิ้ว เมื่อระยะห่างน้อยกว่า 1 ฟุต (ตัวแปรระบบ DMLTTZ).</translation>
+        <translation>ซ่อนส่วนฟุตของขนาดแบบฟุตและนิ้วเมื่อระยะน้อยกว่า 1 ฟุต (ตัวแปรระบบ DIMALTTZ)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2270"/>
         <source>Suppresses the inches portion of a feet-and-inches dimension when the distance is an integral number of feet (DIMALTTZ system variable).</source>
-        <translation>Suppressed ส่วนนิ้วของขนาดฟุตและนิ้วเมื่อระยะเป็นจํานวนอินทิกรัลของฟุต (ตัวแปรของระบบ DMLTTZ).</translation>
+        <translation>ซ่อนส่วนนิ้วของขนาดแบบฟุตและนิ้วเมื่อระยะเป็นจำนวนเต็มฟุต (ตัวแปรระบบ DIMALTTZ)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.cpp" line="354"/>
@@ -10356,7 +10356,7 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.cpp" line="1139"/>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.cpp" line="1140"/>
         <source>User Block...</source>
-        <translation>บล็อคของผู้ใช้...</translation>
+        <translation>บล็อกของผู้ใช้...</translation>
     </message>
 </context>
 <context>
@@ -10364,7 +10364,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="14"/>
         <source>Dimension</source>
-        <translation>มิติ</translation>
+        <translation>การบอกขนาด</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="175"/>
@@ -10394,12 +10394,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="260"/>
         <source>Apply style to dimension</source>
-        <translation>ปรับใช้รูปแบบกับมิติ</translation>
+        <translation>ปรับใช้รูปแบบกับการบอกขนาด</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="274"/>
         <source>Select dimension style</source>
-        <translation>เลือกรูปแบบมิติ</translation>
+        <translation>เลือกรูปแบบการบอกขนาด</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="301"/>
@@ -10424,7 +10424,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="360"/>
         <source>Set style as active one. Active style is applied to newly created dimensions.</source>
-        <translation>ตั้งรูปแบบเป็นรูปแบบที่ใช้งานอยู่ รูปแบบที่ทํางานอยู่ ถูกปรับใช้กับมิติที่สร้างใหม่.</translation>
+        <translation>ตั้งรูปแบบเป็นรูปแบบที่ใช้งานอยู่ รูปแบบที่ทำงานอยู่ ถูกปรับใช้กับการบอกขนาดที่สร้างใหม่.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="374"/>
@@ -10456,7 +10456,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="432"/>
         <source>Active style that is applied when new dimension is created.</source>
-        <translation>รูปแบบที่ใช้งานเมื่อสร้างมิติใหม่.</translation>
+        <translation>รูปแบบที่ใช้งานเมื่อสร้างการบอกขนาดใหม่.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="445"/>
@@ -10496,7 +10496,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="415"/>
         <source>Name of style for this dimension entity</source>
-        <translation>ชื่อของรูปแบบสําหรับรายการในมิตินี้</translation>
+        <translation>ชื่อรูปแบบของวัตถุบอกขนาดนี้</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="470"/>
@@ -10522,7 +10522,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="145"/>
         <source>Rotation angle of dimension</source>
-        <translation>มุมการหมุนของมิติ</translation>
+        <translation>มุมการหมุนของการบอกขนาด</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="66"/>
@@ -10542,37 +10542,37 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="139"/>
         <source>Ordinate Dimension</source>
-        <translation>มิติพิกัด</translation>
+        <translation>การบอกขนาดแบบพิกัด</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="152"/>
         <source>Linear Dimension</source>
-        <translation>มิติเชิงเส้น</translation>
+        <translation>การบอกขนาดเชิงเส้น</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="163"/>
         <source>Aligned Dimension</source>
-        <translation>มิติแบบจัดแนว</translation>
+        <translation>การบอกขนาดแบบจัดแนว</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="169"/>
         <source>Angular Dimension</source>
-        <translation>มุม:</translation>
+        <translation>การบอกขนาดมุม</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="175"/>
         <source>Arc Dimension</source>
-        <translation>มิติส่วนโค้ง</translation>
+        <translation>การบอกขนาดความยาวส่วนโค้ง</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="181"/>
         <source>Diametric Dimension</source>
-        <translation>มิติเส้นผ่านศูนย์กลาง</translation>
+        <translation>การบอกขนาดเส้นผ่านศูนย์กลาง</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="187"/>
         <source>Radial Dimension</source>
-        <translation>มิติรัศมี</translation>
+        <translation>การบอกขนาดรัศมี</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="210"/>
@@ -10598,17 +10598,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="465"/>
         <source>New Dimension Style Override - </source>
-        <translation>รูปแบบมิติใหม่</translation>
+        <translation>การแทนที่รูปแบบการบอกขนาดใหม่ - </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="515"/>
         <source>Edit Dimension Style Override - </source>
-        <translation>แก้ไขการแทนที่รูปแบบมิติ - </translation>
+        <translation>แก้ไขการแทนที่รูปแบบการบอกขนาด - </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="527"/>
         <source>View Dimension Style - </source>
-        <translation>แสดงรูปแบบมิติ - </translation>
+        <translation>แสดงรูปแบบการบอกขนาด - </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="580"/>
@@ -10995,7 +10995,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.ui" line="37"/>
         <source>This shortcut is already assigned to &quot;Dimensions My&quot; menu!</source>
-        <translation>ปุ่มพิมพ์ลัดนี้ถูกกําหนดให้อยู่ในเมนู &quot;Dimession My&quot; แล้ว!</translation>
+        <translation>ปุ่มลัดนี้ถูกกำหนดให้กับเมนู &quot;Dimensions My&quot; แล้ว!</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.ui" line="163"/>
@@ -11135,7 +11135,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="113"/>
         <source>Polyline</source>
-        <translation>เส้นต่อเนื่อง</translation>
+        <translation>โพลีไลน์</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="114"/>
@@ -11170,7 +11170,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="120"/>
         <source>Hatch</source>
-        <translation>แฮทเชอร์</translation>
+        <translation>ลายตัด</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="121"/>
@@ -11180,32 +11180,32 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="122"/>
         <source>Dimension Linear</source>
-        <translation>มิติเชิงเส้น</translation>
+        <translation>การบอกขนาดเชิงเส้น</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="123"/>
         <source>Dimension Aligned</source>
-        <translation>มิติแบบจัดแนว</translation>
+        <translation>การบอกขนาดแบบจัดแนว</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="124"/>
         <source>Dimension Diametric</source>
-        <translation>มิติเส้นผ่านศูนย์กลาง</translation>
+        <translation>การบอกขนาดเส้นผ่านศูนย์กลาง</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="125"/>
         <source>Dimension Radial</source>
-        <translation>มิติรัศมี</translation>
+        <translation>การบอกขนาดรัศมี</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="126"/>
         <source>Dimension Ordinate</source>
-        <translation>มิติพิกัด</translation>
+        <translation>การบอกขนาดแบบพิกัด</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="127"/>
         <source>Dimension Arc</source>
-        <translation>มิติส่วนโค้ง</translation>
+        <translation>การบอกขนาดความยาวส่วนโค้ง</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="128"/>
@@ -11442,7 +11442,7 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.cpp" line="142"/>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.cpp" line="146"/>
         <source>New Dimension Style</source>
-        <translation>รูปแบบมิติใหม่</translation>
+        <translation>รูปแบบการบอกขนาดใหม่</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="20"/>
@@ -11452,37 +11452,37 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="30"/>
         <source>Defines which type of dimensions are controlled by this style.</source>
-        <translation>กำหนดชนิดของมิติที่ควบคุมโดยรูปแบบนี้.</translation>
+        <translation>กำหนดชนิดของการบอกขนาดที่ควบคุมโดยรูปแบบนี้.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="34"/>
         <source>All Dimensions</source>
-        <translation>มิติทั้งหมด</translation>
+        <translation>การบอกขนาดทั้งหมด</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="39"/>
         <source>Linear Dimensions</source>
-        <translation>มิติเชิงเส้น</translation>
+        <translation>การบอกขนาดเชิงเส้น</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="44"/>
         <source>Angular Dimensions</source>
-        <translation>มิติเชิงมุม</translation>
+        <translation>การบอกขนาดมุม</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="49"/>
         <source>Radius Dimensions</source>
-        <translation>มิติของรัศมี</translation>
+        <translation>การบอกขนาดรัศมี</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="54"/>
         <source>Diameter Dimensions</source>
-        <translation>มิติเส้นผ่านศูนย์กลาง</translation>
+        <translation>การบอกขนาดเส้นผ่านศูนย์กลาง</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="59"/>
         <source>Ordinate Dimensions</source>
-        <translation>มิติของออร์ดิเนชัน</translation>
+        <translation>การบอกขนาดแบบพิกัด</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="64"/>
@@ -11497,7 +11497,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="105"/>
         <source>Existing dimension style which new style is based on</source>
-        <translation>รูปแบบมิติที่มีอยู่</translation>
+        <translation>รูปแบบการบอกขนาดที่มีอยู่</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="112"/>
@@ -11507,7 +11507,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="128"/>
         <source>Name of new dimension style</source>
-        <translation>ชื่อของรูปแบบมิติใหม่</translation>
+        <translation>ชื่อของรูปแบบการบอกขนาดใหม่</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.cpp" line="142"/>
@@ -11517,7 +11517,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.cpp" line="146"/>
         <source>Provided name of dimension style (%1) is not unique! Please enter another one.</source>
-        <translation>ชื่อของรูปแบบมิติ (%1) ไม่ซ้ํากัน! กรุณาใส่อีกอัน.</translation>
+        <translation>ชื่อรูปแบบการบอกขนาด (%1) ซ้ำกับที่มีอยู่แล้ว! กรุณาป้อนชื่ออื่น</translation>
     </message>
 </context>
 <context>
@@ -12123,7 +12123,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="26"/>
         <source>Layer of dimension</source>
-        <translation>เลเยอร์ของมิติ</translation>
+        <translation>เลเยอร์ของการบอกขนาด</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="45"/>
@@ -12262,7 +12262,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="135"/>
         <source>Zoom Auto</source>
-        <translation>ย่อ/ ขยายอัตโนมัติ</translation>
+        <translation>ซูมอัตโนมัติ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="140"/>
@@ -12789,7 +12789,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_filler.cpp" line="30"/>
         <source>Offset</source>
-        <translation type="unfinished">ออฟเซต:</translation>
+        <translation type="unfinished">ออฟเซต</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_filler.cpp" line="30"/>
@@ -12809,12 +12809,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_filler.cpp" line="42"/>
         <source>Polyline</source>
-        <translation type="unfinished">เส้นต่อเนื่อง</translation>
+        <translation type="unfinished">โพลีไลน์</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_filler.cpp" line="42"/>
         <source>If selected, bounding box is drawn as polyline</source>
-        <translation type="unfinished">หากเลือกใช้ตัวเลือกนี้ จะมีการวาดกล่องแบบเส้นต่อเนื่อง</translation>
+        <translation type="unfinished">หากเลือก จะวาดกล่องขอบเขตเป็นโพลีไลน์</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_filler.cpp" line="48"/>
@@ -12857,12 +12857,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_widget.ui" line="63"/>
         <source>If selected, bounding box is drawn as polyline</source>
-        <translation type="unfinished">หากเลือกใช้ตัวเลือกนี้ จะมีการวาดกล่องแบบเส้นต่อเนื่อง</translation>
+        <translation type="unfinished">หากเลือก จะวาดกล่องขอบเขตเป็นโพลีไลน์</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_widget.ui" line="69"/>
         <source>Polyline</source>
-        <translation type="unfinished">เส้นต่อเนื่อง</translation>
+        <translation type="unfinished">โพลีไลน์</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_widget.ui" line="76"/>
@@ -12987,7 +12987,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="62"/>
         <source>Offset X:</source>
-        <translation type="unfinished">ออฟเซต:</translation>
+        <translation type="unfinished">ออฟเซต X:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="69"/>
@@ -13030,7 +13030,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="150"/>
         <source>Offset Y:</source>
-        <translation type="unfinished">ออฟเซต:</translation>
+        <translation type="unfinished">ออฟเซต Y:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_duplicate_options_widget.ui" line="157"/>
@@ -13390,12 +13390,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="82"/>
         <source>Polyline</source>
-        <translation type="unfinished">เส้นต่อเนื่อง</translation>
+        <translation type="unfinished">โพลีไลน์</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="83"/>
         <source>Block</source>
-        <translation type="unfinished">บล็อค</translation>
+        <translation type="unfinished">บล็อก</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="84"/>
@@ -13430,22 +13430,22 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="90"/>
         <source>MText</source>
-        <translation type="unfinished">ข้อความ m</translation>
+        <translation type="unfinished">ข้อความหลายบรรทัด</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="91"/>
         <source>Dimension Aligned</source>
-        <translation type="unfinished">มิติแบบจัดแนว</translation>
+        <translation type="unfinished">การบอกขนาดแบบจัดแนว</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="92"/>
         <source>Dimension Linear</source>
-        <translation type="unfinished">มิติเชิงเส้น</translation>
+        <translation type="unfinished">การบอกขนาดเชิงเส้น</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="93"/>
         <source>Dimension Ordinate</source>
-        <translation type="unfinished">มิติพิกัด</translation>
+        <translation type="unfinished">การบอกขนาดแบบพิกัด</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="94"/>
@@ -13455,22 +13455,22 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="95"/>
         <source>Dimension Radial</source>
-        <translation type="unfinished">มิติรัศมี</translation>
+        <translation type="unfinished">การบอกขนาดรัศมี</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="96"/>
         <source>Dimension Diametric</source>
-        <translation type="unfinished">มิติเส้นผ่านศูนย์กลาง</translation>
+        <translation type="unfinished">การบอกขนาดเส้นผ่านศูนย์กลาง</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="97"/>
         <source>Dimension Arc</source>
-        <translation type="unfinished">มิติส่วนโค้ง</translation>
+        <translation type="unfinished">การบอกขนาดความยาวส่วนโค้ง</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="98"/>
         <source>Hatch</source>
-        <translation type="unfinished">แฮทเชอร์</translation>
+        <translation type="unfinished">ลายตัด</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="99"/>
@@ -13588,7 +13588,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="95"/>
         <source>Mirror</source>
-        <translation type="unfinished">กระจก</translation>
+        <translation type="unfinished">สะท้อน</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="95"/>
@@ -13734,7 +13734,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="245"/>
         <source>Line Width</source>
-        <translation type="unfinished">ไลน์ความกว้าง</translation>
+        <translation type="unfinished">ความหนาเส้น</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="245"/>
@@ -14354,7 +14354,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/info/lc_info_dist_point_to_entity_options_filler.cpp" line="33"/>
         <source>If checked, the point will be always inside selected entity</source>
-        <translation type="unfinished">หากกาเลือกไว้ จุดนี้จะอยู่ภายในรายการที่เลือกเสมอ</translation>
+        <translation type="unfinished">หากเลือก จุดนี้จะอยู่ภายในวัตถุที่เลือกเสมอ</translation>
     </message>
 </context>
 <context>
@@ -14367,7 +14367,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/info/lc_info_dist_point_to_entity_options_widget.ui" line="32"/>
         <source>If checked, the point will be always inside selected entity</source>
-        <translation type="unfinished">หากกาเลือกไว้ จุดนี้จะอยู่ภายในรายการที่เลือกเสมอ</translation>
+        <translation type="unfinished">หากเลือก จุดนี้จะอยู่ภายในวัตถุที่เลือกเสมอ</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/info/lc_info_dist_point_to_entity_options_widget.ui" line="35"/>
@@ -14566,12 +14566,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="119"/>
         <source>Layer that holds dimensions</source>
-        <translation>เลเยอร์ที่ใช้เก็บมิติ</translation>
+        <translation>เลเยอร์ที่ใช้เก็บการบอกขนาด</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="122"/>
         <source>Dimensions</source>
-        <translation>มิติ</translation>
+        <translation>การบอกขนาด</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="132"/>
@@ -14722,12 +14722,12 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="188"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="799"/>
         <source>Dimensional</source>
-        <translation>มิติ</translation>
+        <translation>บอกขนาด</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="201"/>
         <source>Suffix of layer&apos;s name that defines that layer is dimensional</source>
-        <translation>ส่วนต่อท้ายของชื่อเลเยอร์ที่ระบุว่าเลเยอร์นั้นเป็นเลเยอร์มิติ</translation>
+        <translation>ส่วนต่อท้ายของชื่อเลเยอร์ที่ระบุว่าเลเยอร์นั้นเป็นเลเยอร์บอกขนาด</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="211"/>
@@ -14976,7 +14976,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="69"/>
         <source>Dimensional Layer</source>
-        <translation>เลเยอร์มิติ</translation>
+        <translation>เลเยอร์บอกขนาด</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="70"/>
@@ -15086,12 +15086,12 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="242"/>
         <source>Unlock all layers</source>
-        <translation>ปลดล็อคเลเยอร์ทั้งหมด</translation>
+        <translation>ปลดล็อกเลเยอร์ทั้งหมด</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="249"/>
         <source>Lock all layers</source>
-        <translation>ล็อคเลเยอร์ทั้งหมด</translation>
+        <translation>ล็อกเลเยอร์ทั้งหมด</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="256"/>
@@ -15101,7 +15101,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="263"/>
         <source>Add dimensions Layer</source>
-        <translation>เพิ่มเลเยอร์มิติ</translation>
+        <translation>เพิ่มเลเยอร์บอกขนาด</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="272"/>
@@ -15161,7 +15161,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="679"/>
         <source>&amp;Add Dimensions Sub-Layer</source>
-        <translation>เพิ่&amp;มเลเยอร์ย่อยมิติ</translation>
+        <translation>เพิ่&amp;มเลเยอร์ย่อยบอกขนาด</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="683"/>
@@ -15182,7 +15182,7 @@ Please specify a different value.</source>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="701"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="711"/>
         <source>Convert to Dimensional Layer</source>
-        <translation>แปลงเป็นเลเยอร์มิติ</translation>
+        <translation>แปลงเป็นเลเยอร์บอกขนาด</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="702"/>
@@ -15254,7 +15254,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="744"/>
         <source>&amp;Unlock All Layers</source>
-        <translation>&amp;ปลดล็อคเลเยอร์ทั้งหมด</translation>
+        <translation>&amp;ปลดล็อกเลเยอร์ทั้งหมด</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="745"/>
@@ -15532,7 +15532,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="52"/>
         <source>If checked, angle is relative to angle of selected entity</source>
-        <translation type="unfinished">หากกาเลือกไว้ มุมจะสัมพันธ์กับมุมของรายการที่เลือก</translation>
+        <translation type="unfinished">หากเลือก มุมจะสัมพัทธ์กับมุมของวัตถุที่เลือก</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="63"/>
@@ -15580,12 +15580,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="95"/>
         <source>Defines which part of created line will be snapped to intersection point</source>
-        <translation type="unfinished">กําหนดส่วนใดของเส้นที่สร้างขึ้นจะถูก snapped ไปยังจุดตัด</translation>
+        <translation type="unfinished">กำหนดว่าส่วนใดของเส้นที่สร้างจะจับไปยังจุดตัด</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="102"/>
         <source>Offset</source>
-        <translation type="unfinished">ออฟเซต:</translation>
+        <translation type="unfinished">ออฟเซต</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="102"/>
@@ -15672,7 +15672,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="146"/>
         <source>If checked, angle is relative to angle of selected entity</source>
-        <translation type="unfinished">หากกาเลือกไว้ มุมจะสัมพันธ์กับมุมของรายการที่เลือก</translation>
+        <translation type="unfinished">หากเลือก มุมจะสัมพัทธ์กับมุมของวัตถุที่เลือก</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="149"/>
@@ -15697,7 +15697,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="180"/>
         <source>Snap Distance:</source>
-        <translation type="unfinished">ระยะห่างการเกาะ:</translation>
+        <translation type="unfinished">ระยะจับ:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="205"/>
@@ -15707,12 +15707,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="212"/>
         <source>Pick snap distance from drawing</source>
-        <translation type="unfinished">เลือกระยะห่างจากการวาด</translation>
+        <translation type="unfinished">เลือกระยะจับจากภาพวาด</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="226"/>
         <source>Tick Snap:</source>
-        <translation type="unfinished">สแน็ปของติ๊ก:</translation>
+        <translation type="unfinished">จับขีด:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="233"/>
@@ -15727,7 +15727,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="272"/>
         <source>Defines which part of created line will be snapped to intersection point</source>
-        <translation type="unfinished">กําหนดส่วนใดของเส้นที่สร้างขึ้นจะถูก snapped ไปยังจุดตัด</translation>
+        <translation type="unfinished">กำหนดว่าส่วนใดของเส้นที่สร้างจะจับไปยังจุดตัด</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="294"/>
@@ -15861,7 +15861,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="73"/>
         <source>Fixed length of created line</source>
-        <translation type="unfinished">ความยาวความกว้างคงที่ของเส้นที่สร้าง</translation>
+        <translation type="unfinished">ความยาวคงที่ของเส้นที่สร้าง</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="82"/>
@@ -15949,7 +15949,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="196"/>
         <source>Fixed length of created line</source>
-        <translation type="unfinished">ความยาวความกว้างคงที่ของเส้นที่สร้าง</translation>
+        <translation type="unfinished">ความยาวคงที่ของเส้นที่สร้าง</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="203"/>
@@ -16111,7 +16111,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="61"/>
         <source>Gap Snap:</source>
-        <translation type="unfinished">ช่องช่อง:</translation>
+        <translation type="unfinished">จับช่องว่าง:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="68"/>
@@ -16175,12 +16175,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="184"/>
         <source>Snap Distance:</source>
-        <translation type="unfinished">ระยะห่างการเกาะ:</translation>
+        <translation type="unfinished">ระยะจับ:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="191"/>
         <source>Pick snap distance from drawing</source>
-        <translation type="unfinished">เลือกระยะห่างจากการวาด</translation>
+        <translation type="unfinished">เลือกระยะจับจากภาพวาด</translation>
     </message>
 </context>
 <context>
@@ -16204,7 +16204,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="41"/>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="59"/>
         <source>Line 1</source>
-        <translation type="unfinished">ไลน์ 1</translation>
+        <translation type="unfinished">เส้น 1</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="41"/>
@@ -16215,7 +16215,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="48"/>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="60"/>
         <source>Line 2</source>
-        <translation type="unfinished">ไลน์ 2</translation>
+        <translation type="unfinished">เส้น 2</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="48"/>
@@ -16245,7 +16245,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="78"/>
         <source>Polyline</source>
-        <translation type="unfinished">เส้นต่อเนื่อง</translation>
+        <translation type="unfinished">โพลีไลน์</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="78"/>
@@ -16278,7 +16278,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="41"/>
         <source>Create Polyline</source>
-        <translation type="unfinished">สร้างเส้นต่อเนื่อง</translation>
+        <translation type="unfinished">สร้างโพลีไลน์</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="66"/>
@@ -16331,12 +16331,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="169"/>
         <source>Line 1</source>
-        <translation type="unfinished">ไลน์ 1</translation>
+        <translation type="unfinished">เส้น 1</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="174"/>
         <source>Line 2</source>
-        <translation type="unfinished">ไลน์ 2</translation>
+        <translation type="unfinished">เส้น 2</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="179"/>
@@ -16346,7 +16346,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="187"/>
         <source>Attributes:</source>
-        <translation type="unfinished">แอททริบิวต์:</translation>
+        <translation type="unfinished">คุณลักษณะ:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="207"/>
@@ -16450,7 +16450,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_parallel_options_filler.cpp" line="31"/>
         <source>Distance to original entity</source>
-        <translation type="unfinished">ระยะห่างไปยังรายการต้นฉบับ</translation>
+        <translation type="unfinished">ระยะห่างจากวัตถุต้นฉบับ</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_parallel_options_filler.cpp" line="37"/>
@@ -16478,7 +16478,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_parallel_options_widget.ui" line="72"/>
         <source>Distance to original entity</source>
-        <translation type="unfinished">ระยะห่างไปยังรายการต้นฉบับ</translation>
+        <translation type="unfinished">ระยะห่างจากวัตถุต้นฉบับ</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_parallel_options_widget.ui" line="79"/>
@@ -17032,7 +17032,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="64"/>
         <source>Polyline</source>
-        <translation type="unfinished">เส้นต่อเนื่อง</translation>
+        <translation type="unfinished">โพลีไลน์</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="65"/>
@@ -17172,7 +17172,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="324"/>
         <source>Polyline</source>
-        <translation type="unfinished">เส้นต่อเนื่อง</translation>
+        <translation type="unfinished">โพลีไลน์</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="331"/>
@@ -17538,7 +17538,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_base.h" line="57"/>
         <source>Line Width</source>
-        <translation type="unfinished">ไลน์ความกว้าง</translation>
+        <translation type="unfinished">ความหนาเส้น</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_base.h" line="57"/>
@@ -17650,7 +17650,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimaligned.cpp" line="29"/>
         <source>Dimension Aligned</source>
-        <translation type="unfinished">มิติแบบจัดแนว</translation>
+        <translation type="unfinished">การบอกขนาดแบบจัดแนว</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimaligned.cpp" line="35"/>
@@ -17746,7 +17746,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimarc.cpp" line="29"/>
         <source>Dimension Arc</source>
-        <translation type="unfinished">มิติส่วนโค้ง</translation>
+        <translation type="unfinished">การบอกขนาดความยาวส่วนโค้ง</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimarc.cpp" line="34"/>
@@ -18220,7 +18220,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="399"/>
         <source>Above dimension text</source>
-        <translation type="unfinished">อยู่เหนือข้อความมิติ</translation>
+        <translation type="unfinished">อยู่เหนือข้อความบอกขนาด</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="400"/>
@@ -18366,7 +18366,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="398"/>
         <source>Preceding dimension text</source>
-        <translation type="unfinished">อยู่หน้าข้อความมิติ</translation>
+        <translation type="unfinished">อยู่หน้าข้อความบอกขนาด</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="433"/>
@@ -19026,7 +19026,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimdiametric.cpp" line="29"/>
         <source>Dimension Diametric</source>
-        <translation type="unfinished">มิติเส้นผ่านศูนย์กลาง</translation>
+        <translation type="unfinished">การบอกขนาดเส้นผ่านศูนย์กลาง</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimdiametric.cpp" line="34"/>
@@ -19054,7 +19054,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimlinear.cpp" line="30"/>
         <source>Dimension Linear</source>
-        <translation type="unfinished">มิติเชิงเส้น</translation>
+        <translation type="unfinished">การบอกขนาดเชิงเส้น</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimlinear.cpp" line="36"/>
@@ -19162,7 +19162,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimordinate.cpp" line="29"/>
         <source>Dimension Ordinate</source>
-        <translation type="unfinished">มิติพิกัด</translation>
+        <translation type="unfinished">การบอกขนาดแบบพิกัด</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimordinate.cpp" line="35"/>
@@ -19280,7 +19280,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimradial.cpp" line="29"/>
         <source>Dimension Radial</source>
-        <translation type="unfinished">มิติรัศมี</translation>
+        <translation type="unfinished">การบอกขนาดรัศมี</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimradial.cpp" line="34"/>
@@ -19473,7 +19473,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_hatch.cpp" line="29"/>
         <source>Hatch</source>
-        <translation type="unfinished">แฮทเชอร์</translation>
+        <translation type="unfinished">ลายตัด</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_hatch.cpp" line="34"/>
@@ -20080,7 +20080,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_mtext.cpp" line="30"/>
         <source>MText</source>
-        <translation type="unfinished">ข้อความ m</translation>
+        <translation type="unfinished">ข้อความหลายบรรทัด</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_mtext.cpp" line="35"/>
@@ -20372,7 +20372,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_polyline.cpp" line="29"/>
         <source>Polyline</source>
-        <translation type="unfinished">เส้นต่อเนื่อง</translation>
+        <translation type="unfinished">โพลีไลน์</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_polyline.cpp" line="33"/>
@@ -20852,7 +20852,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="143"/>
         <source>Polyline</source>
-        <translation type="unfinished">เส้นต่อเนื่อง</translation>
+        <translation type="unfinished">โพลีไลน์</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="147"/>
@@ -20896,7 +20896,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="750"/>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="800"/>
         <source>Add Dimensions</source>
-        <translation type="unfinished">เพิ่มมิติ</translation>
+        <translation type="unfinished">เพิ่มการบอกขนาด</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="213"/>
@@ -21060,7 +21060,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="1025"/>
         <source>Edit Block</source>
-        <translation type="unfinished">แก้ไขบล็อค</translation>
+        <translation type="unfinished">แก้ไขบล็อก</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="1083"/>
@@ -21172,7 +21172,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="214"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="248"/>
         <source>&amp;Circle</source>
-        <translation type="unfinished">วงกลม</translation>
+        <translation type="unfinished">&amp;วงกลม</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="186"/>
@@ -21221,7 +21221,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="220"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="256"/>
         <source>&amp;Ellipse</source>
-        <translation type="unfinished">&amp; วงรี</translation>
+        <translation type="unfinished">&amp;วงรี</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="223"/>
@@ -21244,7 +21244,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="234"/>
         <source>&amp;Dimensions</source>
-        <translation type="unfinished">&amp;มิติ</translation>
+        <translation type="unfinished">&amp;บอกขนาด</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="238"/>
@@ -21365,7 +21365,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="608"/>
         <source>Triangular</source>
-        <translation type="unfinished">เส้นต่อเนื่อง</translation>
+        <translation type="unfinished">สามเหลี่ยม</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="615"/>
@@ -21614,7 +21614,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="62"/>
         <source>Use Current Attributes</source>
-        <translation type="unfinished">ใช้แอททริบิวต์ปัจจุบัน</translation>
+        <translation type="unfinished">ใช้คุณลักษณะปัจจุบัน</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="82"/>
@@ -21710,7 +21710,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_widget.ui" line="71"/>
         <source>Use Current Attributes</source>
-        <translation type="unfinished">ใช้แอททริบิวต์ปัจจุบัน</translation>
+        <translation type="unfinished">ใช้คุณลักษณะปัจจุบัน</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_widget.ui" line="78"/>
@@ -21831,7 +21831,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="53"/>
         <source>Use Current Attributes</source>
-        <translation type="unfinished">ใช้แอททริบิวต์ปัจจุบัน</translation>
+        <translation type="unfinished">ใช้คุณลักษณะปัจจุบัน</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="60"/>
@@ -22309,7 +22309,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="122"/>
         <source>Use Current Attributes</source>
-        <translation type="unfinished">ใช้แอททริบิวต์ปัจจุบัน</translation>
+        <translation type="unfinished">ใช้คุณลักษณะปัจจุบัน</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="136"/>
@@ -22666,7 +22666,7 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="264"/>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="299"/>
         <source>By Block</source>
-        <translation>ตามบล็อค</translation>
+        <translation>ตามบล็อก</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="266"/>
@@ -23059,7 +23059,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettemodel.cpp" line="230"/>
         <source>Line Width:</source>
-        <translation>ไลน์ความกว้าง:</translation>
+        <translation>ความหนาเส้น:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettemodel.cpp" line="233"/>
@@ -23083,7 +23083,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="193"/>
         <source>Line Type Name</source>
-        <translation>ชนิดเส้น</translation>
+        <translation>ชื่อชนิดเส้น</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="200"/>
@@ -23103,12 +23103,12 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="221"/>
         <source>Line Width Icon</source>
-        <translation>ไอคอนความกว้างเส้น</translation>
+        <translation>ไอคอนความหนาเส้น</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="228"/>
         <source>Line Width Name</source>
-        <translation>ชื่อความกว้างเส้น</translation>
+        <translation>ชื่อความหนาเส้น</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="66"/>
@@ -23244,12 +23244,12 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.cpp" line="53"/>
         <source>Select entities by attributes pen</source>
-        <translation>เลือกองค์ประกอบด้วยปากกาคุณลักษณะ</translation>
+        <translation>เลือกวัตถุด้วยปากกาคุณลักษณะ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.cpp" line="54"/>
         <source>Select entities by drawing pen</source>
-        <translation>เลือกส่วนประกอบโดยการวาดปากกา</translation>
+        <translation>เลือกวัตถุตามปากกาที่ใช้วาด</translation>
     </message>
 </context>
 <context>
@@ -23267,7 +23267,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="66"/>
         <source>Fill Pen Editor by Entity Attributes</source>
-        <translation>ส่วนเสริมเครื่องมือแก้ไขปากกา</translation>
+        <translation>เติมตัวแก้ไขปากกาด้วยคุณลักษณะของวัตถุ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="83"/>
@@ -23277,7 +23277,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="100"/>
         <source>Select Entities By Pen Attributes</source>
-        <translation>เลือกลักษณะเฉพาะ</translation>
+        <translation>เลือกวัตถุตามคุณลักษณะปากกา</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="120"/>
@@ -23358,7 +23358,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="372"/>
         <source>Width of line</source>
-        <translation>ความกว้างของเส้น</translation>
+        <translation>ความหนาของเส้น</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="402"/>
@@ -23688,7 +23688,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_options_filler.cpp" line="37"/>
         <source>Polyline</source>
-        <translation type="unfinished">เส้นต่อเนื่อง</translation>
+        <translation type="unfinished">โพลีไลน์</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_options_filler.cpp" line="37"/>
@@ -23731,7 +23731,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_options_widget.ui" line="73"/>
         <source>Vertex to Vertex</source>
-        <translation type="unfinished">เวอร์เท็กซ์ถึงเวอร์เท็กซ์</translation>
+        <translation type="unfinished">จุดยอดถึงจุดยอด</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_options_widget.ui" line="80"/>
@@ -23766,7 +23766,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_options_widget.ui" line="129"/>
         <source>Polyline</source>
-        <translation type="unfinished">เส้นต่อเนื่อง</translation>
+        <translation type="unfinished">โพลีไลน์</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_options_widget.ui" line="143"/>
@@ -23779,7 +23779,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_side_side_options_filler.cpp" line="34"/>
         <source>Vertex to Vertex</source>
-        <translation type="unfinished">เวอร์เท็กซ์ถึงเวอร์เท็กซ์</translation>
+        <translation type="unfinished">จุดยอดถึงจุดยอด</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_side_side_options_filler.cpp" line="35"/>
@@ -23976,17 +23976,17 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_widget.ui" line="100"/>
         <source>Tangential arc</source>
-        <translation type="unfinished">อาร์คแทนเจนต์</translation>
+        <translation type="unfinished">ส่วนโค้งสัมผัส</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_widget.ui" line="120"/>
         <source>Tangental arc with fixed radius</source>
-        <translation type="unfinished">ส่วนโค้งด้านเท่ามีรัศมีคงที่</translation>
+        <translation type="unfinished">ส่วนโค้งสัมผัสรัศมีคงที่</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_widget.ui" line="140"/>
         <source>Tangental arc with fixed angle</source>
-        <translation type="unfinished">ส่วนโค้งมุมคงที่</translation>
+        <translation type="unfinished">ส่วนโค้งสัมผัสมุมคงที่</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_widget.ui" line="160"/>
@@ -24137,7 +24137,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="72"/>
         <source>Apply Print Scale to line width</source>
-        <translation type="unfinished">ปรับใช้ขนาดการพิมพ์กับความกว้างเส้น</translation>
+        <translation type="unfinished">ใช้มาตราส่วนการพิมพ์กับความหนาเส้น</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="78"/>
@@ -24280,7 +24280,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_widget.ui" line="105"/>
         <source>Apply Print Scale to line width</source>
-        <translation type="unfinished">ปรับใช้ขนาดการพิมพ์กับความกว้างเส้น</translation>
+        <translation type="unfinished">ใช้มาตราส่วนการพิมพ์กับความหนาเส้น</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_widget.ui" line="134"/>
@@ -24464,7 +24464,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_active_pen.cpp" line="80"/>
         <source>Line Width</source>
-        <translation type="unfinished">ไลน์ความกว้าง</translation>
+        <translation type="unfinished">ความหนาเส้น</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_active_pen.cpp" line="80"/>
@@ -24697,7 +24697,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="138"/>
         <source>Offset</source>
-        <translation type="unfinished">ออฟเซต:</translation>
+        <translation type="unfinished">ออฟเซต</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="138"/>
@@ -24732,7 +24732,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="144"/>
         <source>Trim</source>
-        <translation type="unfinished">ทริม</translation>
+        <translation type="unfinished">ตัดแต่ง</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="144"/>
@@ -24834,7 +24834,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="158"/>
         <source>Tangent (P,C)</source>
-        <translation type="unfinished">แทนเจนท์ (P, C)</translation>
+        <translation type="unfinished">สัมผัส (P,C)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="158"/>
@@ -24844,7 +24844,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="159"/>
         <source>Tangent (C,C)</source>
-        <translation type="unfinished">แทนเจนท์ (C, C)</translation>
+        <translation type="unfinished">สัมผัส (C,C)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="159"/>
@@ -25012,7 +25012,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_block.cpp" line="34"/>
         <source>Block</source>
-        <translation type="unfinished">บล็อค</translation>
+        <translation type="unfinished">บล็อก</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_block.cpp" line="34"/>
@@ -25101,7 +25101,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="73"/>
         <source>Offset</source>
-        <translation type="unfinished">ออฟเซต:</translation>
+        <translation type="unfinished">ออฟเซต</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="73"/>
@@ -25136,7 +25136,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="79"/>
         <source>Trim</source>
-        <translation type="unfinished">ทริม</translation>
+        <translation type="unfinished">ตัดแต่ง</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="79"/>
@@ -25223,7 +25223,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="93"/>
         <source>Tangent (P,C)</source>
-        <translation type="unfinished">แทนเจนท์ (P, C)</translation>
+        <translation type="unfinished">สัมผัส (P,C)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="93"/>
@@ -25233,7 +25233,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="94"/>
         <source>Tangent (C,C)</source>
-        <translation type="unfinished">แทนเจนท์ (C, C)</translation>
+        <translation type="unfinished">สัมผัส (C,C)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="94"/>
@@ -25620,7 +25620,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="221"/>
         <source>User Block...</source>
-        <translation type="unfinished">บล็อคของผู้ใช้...</translation>
+        <translation type="unfinished">บล็อกของผู้ใช้...</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="235"/>
@@ -26024,7 +26024,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="700"/>
         <source>Above dimension text</source>
-        <translation type="unfinished">อยู่เหนือข้อความมิติ</translation>
+        <translation type="unfinished">อยู่เหนือข้อความบอกขนาด</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="707"/>
@@ -26165,7 +26165,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="699"/>
         <source>Preceding dimension text</source>
-        <translation type="unfinished">อยู่หน้าข้อความมิติ</translation>
+        <translation type="unfinished">อยู่หน้าข้อความบอกขนาด</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="708"/>
@@ -27244,7 +27244,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_ellipse.cpp" line="126"/>
         <source>Tangent (P,C)</source>
-        <translation type="unfinished">แทนเจนท์ (P, C)</translation>
+        <translation type="unfinished">สัมผัส (P,C)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_ellipse.cpp" line="126"/>
@@ -27254,7 +27254,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_ellipse.cpp" line="127"/>
         <source>Tangent (C,C)</source>
-        <translation type="unfinished">แทนเจนท์ (C, C)</translation>
+        <translation type="unfinished">สัมผัส (C,C)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_ellipse.cpp" line="131"/>
@@ -27357,7 +27357,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_grid.cpp" line="72"/>
         <source>Isometric Top</source>
-        <translation type="unfinished">ด้านบน</translation>
+        <translation type="unfinished">ไอโซเมตริกด้านบน</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_grid.cpp" line="112"/>
@@ -27451,7 +27451,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="122"/>
         <source>Line Width</source>
-        <translation type="unfinished">ความกว้างเส้น</translation>
+        <translation type="unfinished">ความหนาเส้น</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="122"/>
@@ -27477,7 +27477,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="171"/>
         <source>Dimensional</source>
-        <translation type="unfinished">มิติ</translation>
+        <translation type="unfinished">บอกขนาด</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="175"/>
@@ -27567,7 +27567,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="303"/>
         <source>Unlock all layers</source>
-        <translation type="unfinished">ปลดล็อคเลเยอร์ทั้งหมด</translation>
+        <translation type="unfinished">ปลดล็อกเลเยอร์ทั้งหมด</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="303"/>
@@ -27774,7 +27774,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_ucs.cpp" line="116"/>
         <source>Isometric Top</source>
-        <translation type="unfinished">ด้านบน</translation>
+        <translation type="unfinished">ไอโซเมตริกด้านบน</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_ucs.cpp" line="125"/>
@@ -28455,7 +28455,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_insert.cpp" line="35"/>
         <source>Block</source>
-        <translation type="unfinished">บล็อค</translation>
+        <translation type="unfinished">บล็อก</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_insert.cpp" line="35"/>
@@ -28603,7 +28603,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_leader.cpp" line="64"/>
         <source>Vertex</source>
-        <translation type="unfinished">เวอร์เท็กซ์</translation>
+        <translation type="unfinished">จุดยอด</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_leader.cpp" line="64"/>
@@ -28722,7 +28722,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="104"/>
         <source>Trim</source>
-        <translation type="unfinished">ทริม</translation>
+        <translation type="unfinished">ตัดแต่ง</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="104"/>
@@ -28732,7 +28732,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="105"/>
         <source>Trim Two</source>
-        <translation type="unfinished">ทริมที่ 2</translation>
+        <translation type="unfinished">ตัดแต่งสองวัตถุ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="105"/>
@@ -29299,7 +29299,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_parabola.cpp" line="39"/>
         <source>Vertex</source>
-        <translation type="unfinished">เวอร์เท็กซ์</translation>
+        <translation type="unfinished">จุดยอด</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_parabola.cpp" line="39"/>
@@ -29466,7 +29466,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_polyline.cpp" line="60"/>
         <source>Vertex</source>
-        <translation type="unfinished">เวอร์เท็กซ์</translation>
+        <translation type="unfinished">จุดยอด</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_polyline.cpp" line="60"/>
@@ -30056,7 +30056,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="115"/>
         <source>Tangent (P,C)</source>
-        <translation type="unfinished">แทนเจนท์ (P, C)</translation>
+        <translation type="unfinished">สัมผัส (P,C)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="115"/>
@@ -30571,13 +30571,13 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="643"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="670"/>
         <source>ARC</source>
-        <translation>อาร์ค</translation>
+        <translation>ส่วนโค้ง</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="724"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="747"/>
         <source>ELLIPSE ARC</source>
-        <translation>ศ</translation>
+        <translation>ส่วนโค้งวงรี</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="741"/>
@@ -30719,7 +30719,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="548"/>
         <source>Line Width</source>
-        <translation>ไลน์ความกว้าง</translation>
+        <translation>ความหนาเส้น</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="550"/>
@@ -30948,13 +30948,13 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="885"/>
         <source>Vertex - 0:</source>
-        <translation>เวอร์เท็กซ์ - 0:</translation>
+        <translation>จุดยอด - 0:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="910"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="924"/>
         <source>Vertex - </source>
-        <translation>เวอร์เท็กซ์ -</translation>
+        <translation>จุดยอด - </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="931"/>
@@ -31213,12 +31213,12 @@ Layer: </source>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1111"/>
         <source>Mirrored in X</source>
-        <translation>ทํากระจกเงาใน X</translation>
+        <translation>สะท้อนตามแกน X</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1113"/>
         <source>Mirrored in Y</source>
-        <translation>ทํากระจกเงาใน Y</translation>
+        <translation>สะท้อนตามแกน Y</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1120"/>
@@ -31397,7 +31397,7 @@ Layer: </source>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1331"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1347"/>
         <source>Vertex</source>
-        <translation>เวอร์เท็กซ์</translation>
+        <translation>จุดยอด</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1332"/>
@@ -31414,7 +31414,7 @@ Layer: </source>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1359"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1375"/>
         <source>HATCH</source>
-        <translation>HTCH</translation>
+        <translation>ลายตัด</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1360"/>
@@ -31463,7 +31463,7 @@ Layer: </source>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1409"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1428"/>
         <source>DIMARC</source>
-        <translation>มิติความยาวส่วนโค้ง</translation>
+        <translation>การบอกขนาดความยาวส่วนโค้ง</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1415"/>
@@ -31475,13 +31475,13 @@ Layer: </source>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1446"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1459"/>
         <source>DIMANGULAR</source>
-        <translation>มิติเชิงมุม</translation>
+        <translation>การบอกขนาดมุม</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1467"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1475"/>
         <source>DIMDIAMETRIC</source>
-        <translation>มิติเส้นผ่านศูนย์กลาง</translation>
+        <translation>การบอกขนาดเส้นผ่านศูนย์กลาง</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1470"/>
@@ -31499,13 +31499,13 @@ Layer: </source>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1483"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1495"/>
         <source>DIMRADIAL</source>
-        <translation>มิติรัศมี</translation>
+        <translation>การบอกขนาดรัศมี</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1520"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1537"/>
         <source>DIMLINEAR</source>
-        <translation>มิติเชิงเส้น</translation>
+        <translation>การบอกขนาดเชิงเส้น</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1524"/>
@@ -31538,7 +31538,7 @@ Layer: </source>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1549"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1562"/>
         <source>DIMORDINATE</source>
-        <translation>มิติพิกัด</translation>
+        <translation>การบอกขนาดแบบพิกัด</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1552"/>
@@ -31577,7 +31577,7 @@ Layer: </source>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1574"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1589"/>
         <source>DIMALIGNED</source>
-        <translation>มิติแบบจัดแนว</translation>
+        <translation>การบอกขนาดแบบจัดแนว</translation>
     </message>
 </context>
 <context>
@@ -31742,7 +31742,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="372"/>
         <source>&amp;Insert Coordinates</source>
-        <translation>พิกัดอินเซอร์ท</translation>
+        <translation>&amp;แทรกพิกัด</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="392"/>
@@ -31777,7 +31777,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="786"/>
         <source>No data - select entity of coordinates first...</source>
-        <translation>ไม่มีข้อมูล - เลือกรายการพิกัดก่อน...</translation>
+        <translation>ไม่มีข้อมูล - เลือกวัตถุพิกัดก่อน...</translation>
     </message>
 </context>
 <context>
@@ -31835,7 +31835,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="94"/>
         <source>Display entity boundaries (Min, Max) coordinates</source>
-        <translation>แสดงขอบเขตของรายการ (in, Max)</translation>
+        <translation>แสดงพิกัดขอบเขตของวัตถุ (Min, Max)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="104"/>
@@ -31850,7 +31850,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="119"/>
         <source>Select entity under cursor if not active action and CTRL is pressed</source>
-        <translation>เลือกรายการใต้เคอร์เซอร์ หากไม่มีการกดปุ่มพิมพ์ CTRL</translation>
+        <translation>เลือกวัตถุใต้เคอร์เซอร์เมื่อไม่มีคำสั่งที่ทำงานอยู่และกดปุ่ม CTRL</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="126"/>
@@ -31860,7 +31860,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="129"/>
         <source>Always select entity under cursor if no active action</source>
-        <translation>ให้เลือกรายการใต้เคอร์เซอร์เสมอหากไม่มีการกระทําที่ทํางานอยู่</translation>
+        <translation>เลือกวัตถุใต้เคอร์เซอร์เสมอเมื่อไม่มีคำสั่งที่ทำงานอยู่</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.cpp" line="44"/>
@@ -31978,7 +31978,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1_point_options_filler.cpp" line="83"/>
         <source>Polyline</source>
-        <translation type="unfinished">เส้นต่อเนื่อง</translation>
+        <translation type="unfinished">โพลีไลน์</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1_point_options_filler.cpp" line="83"/>
@@ -32006,7 +32006,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="49"/>
         <source>Polyline</source>
-        <translation type="unfinished">เส้นต่อเนื่อง</translation>
+        <translation type="unfinished">โพลีไลน์</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_1point_options_widget.ui" line="56"/>
@@ -32299,7 +32299,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_filler.cpp" line="68"/>
         <source>Polyline</source>
-        <translation type="unfinished">เส้นต่อเนื่อง</translation>
+        <translation type="unfinished">โพลีไลน์</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_filler.cpp" line="68"/>
@@ -32351,7 +32351,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="62"/>
         <source>Polyline</source>
-        <translation type="unfinished">เส้นต่อเนื่อง</translation>
+        <translation type="unfinished">โพลีไลน์</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="69"/>
@@ -32441,7 +32441,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="280"/>
         <source>Pick length of bevel in X direction from drawing.</source>
-        <translation type="unfinished">เลือกความยาวของเบเวลในทิศ x จากการวาด.</translation>
+        <translation type="unfinished">เลือกความยาวการลบมุมในทิศ X จากภาพวาด</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="294"/>
@@ -32476,12 +32476,12 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="340"/>
         <source>Length of bevel in X direction.</source>
-        <translation type="unfinished">ความยาวของเบเวลในทิศ x.</translation>
+        <translation type="unfinished">ความยาวการลบมุมในทิศ X</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="347"/>
         <source>End Snap:</source>
-        <translation type="unfinished">สแน็ปสิ้นสุด:</translation>
+        <translation type="unfinished">จับปลาย:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="354"/>
@@ -32549,7 +32549,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3_points_options_filler.cpp" line="64"/>
         <source>Polyline</source>
-        <translation type="unfinished">เส้นต่อเนื่อง</translation>
+        <translation type="unfinished">โพลีไลน์</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3_points_options_filler.cpp" line="64"/>
@@ -32572,7 +32572,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="35"/>
         <source>Polyline</source>
-        <translation type="unfinished">เส้นต่อเนื่อง</translation>
+        <translation type="unfinished">โพลีไลน์</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="86"/>
@@ -32647,7 +32647,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="290"/>
         <source>Length of bevel in X direction.</source>
-        <translation type="unfinished">ความยาวของเบเวลในทิศ x.</translation>
+        <translation type="unfinished">ความยาวการลบมุมในทิศ X</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="315"/>
@@ -32697,7 +32697,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="397"/>
         <source>Pick length of bevel in X direction from drawing.</source>
-        <translation type="unfinished">เลือกความยาวของเบเวลในทิศ x จากการวาด.</translation>
+        <translation type="unfinished">เลือกความยาวการลบมุมในทิศ X จากภาพวาด</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_3points_options_widget.ui" line="411"/>
@@ -32894,7 +32894,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="112"/>
         <source>Offset X:</source>
-        <translation type="unfinished">ออฟเซต:</translation>
+        <translation type="unfinished">ออฟเซต X:</translation>
     </message>
     <message>
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="119"/>
@@ -33014,7 +33014,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="609"/>
         <source>Offset Y:</source>
-        <translation type="unfinished">ออฟเซต:</translation>
+        <translation type="unfinished">ออฟเซต Y:</translation>
     </message>
     <message>
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="654"/>
@@ -33147,7 +33147,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_filler.cpp" line="34"/>
         <source>Angles mirrored</source>
-        <translation type="unfinished">มุมของภาพ</translation>
+        <translation type="unfinished">มุมที่สะท้อน</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_filler.cpp" line="35"/>
@@ -33240,7 +33240,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="53"/>
         <source>Angles mirrored</source>
-        <translation type="unfinished">มุมของภาพ</translation>
+        <translation type="unfinished">มุมที่สะท้อน</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="60"/>
@@ -33320,7 +33320,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="231"/>
         <source>Use Current Attributes</source>
-        <translation type="unfinished">ใช้แอททริบิวต์ปัจจุบัน</translation>
+        <translation type="unfinished">ใช้คุณลักษณะปัจจุบัน</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="238"/>
@@ -33481,7 +33481,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="92"/>
         <source>Use Current Attributes</source>
-        <translation type="unfinished">ใช้แอททริบิวต์ปัจจุบัน</translation>
+        <translation type="unfinished">ใช้คุณลักษณะปัจจุบัน</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="118"/>
@@ -33605,7 +33605,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/modify/lc_round_options_filler.cpp" line="31"/>
         <source>Trim</source>
-        <translation type="unfinished">ทริม</translation>
+        <translation type="unfinished">ตัดแต่ง</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_round_options_filler.cpp" line="31"/>
@@ -33638,7 +33638,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/modify/lc_round_options_widget.ui" line="62"/>
         <source>Trim</source>
-        <translation type="unfinished">ทริม</translation>
+        <translation type="unfinished">ตัดแต่ง</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_round_options_widget.ui" line="85"/>
@@ -33834,7 +33834,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="202"/>
         <source>Use Current Attributes</source>
-        <translation type="unfinished">ใช้แอททริบิวต์ปัจจุบัน</translation>
+        <translation type="unfinished">ใช้คุณลักษณะปัจจุบัน</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="209"/>
@@ -33862,7 +33862,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="39"/>
         <source>Dimension</source>
-        <translation>มิติ</translation>
+        <translation>การบอกขนาด</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="46"/>
@@ -33887,7 +33887,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="74"/>
         <source>Polyline</source>
-        <translation>เส้นต่อเนื่อง</translation>
+        <translation>โพลีไลน์</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="81"/>
@@ -33897,7 +33897,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="88"/>
         <source>MText</source>
-        <translation>ข้อความ m</translation>
+        <translation>ข้อความหลายบรรทัด</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="95"/>
@@ -33912,7 +33912,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="109"/>
         <source>Hatch</source>
-        <translation>แฮทเชอร์</translation>
+        <translation>ลายตัด</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="116"/>
@@ -34226,7 +34226,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="107"/>
         <source>Offset</source>
-        <translation type="unfinished">ออฟเซต:</translation>
+        <translation type="unfinished">ออฟเซต</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="107"/>
@@ -34545,7 +34545,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="59"/>
         <source>Use Current Attributes</source>
-        <translation type="unfinished">ใช้แอททริบิวต์ปัจจุบัน</translation>
+        <translation type="unfinished">ใช้คุณลักษณะปัจจุบัน</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="73"/>
@@ -34575,7 +34575,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="96"/>
         <source>To Polyline</source>
-        <translation type="unfinished">เส้นต่อเนื่อง</translation>
+        <translation type="unfinished">เป็นโพลีไลน์</translation>
     </message>
 </context>
 <context>
@@ -34691,7 +34691,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="88"/>
         <source>Use Current Attributes</source>
-        <translation type="unfinished">ใช้แอททริบิวต์ปัจจุบัน</translation>
+        <translation type="unfinished">ใช้คุณลักษณะปัจจุบัน</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="95"/>
@@ -35089,7 +35089,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/polygon/lc_star_options_widget.ui" line="85"/>
         <source>Polyline</source>
-        <translation type="unfinished">เส้นต่อเนื่อง</translation>
+        <translation type="unfinished">โพลีไลน์</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_star_options_widget.ui" line="92"/>
@@ -35509,7 +35509,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="334"/>
         <source>Polyline</source>
-        <translation>เส้นต่อเนื่อง</translation>
+        <translation>โพลีไลน์</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="335"/>
@@ -35520,7 +35520,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="336"/>
         <source>Dimension</source>
-        <translation>มิติ</translation>
+        <translation>การบอกขนาด</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="337"/>
@@ -35582,12 +35582,12 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="367"/>
         <source>PolyLines</source>
-        <translation>โพ ลี ลีน</translation>
+        <translation>โพลีไลน์</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="369"/>
         <source>Dimensions</source>
-        <translation>มิติ</translation>
+        <translation>การบอกขนาด</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="372"/>
@@ -35635,7 +35635,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/action_options/modify/lc_trim_amount_options_filler.cpp" line="43"/>
         <source>Trim</source>
-        <translation type="unfinished">ทริม</translation>
+        <translation type="unfinished">ตัดแต่ง</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_trim_amount_options_filler.cpp" line="43"/>
@@ -35846,7 +35846,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.ui" line="80"/>
         <source>Set UCS by ordinate dimension</source>
-        <translation>ตั้งค่า UCS โดยมิติพิกัด</translation>
+        <translation>ตั้งค่า UCS โดยการบอกขนาดแบบพิกัด</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.ui" line="66"/>
@@ -36046,12 +36046,12 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="137"/>
         <source>Polyline</source>
-        <translation>เส้นต่อเนื่อง</translation>
+        <translation>โพลีไลน์</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="139"/>
         <source>Dimension</source>
-        <translation>มิติ</translation>
+        <translation>การบอกขนาด</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="140"/>
@@ -36146,7 +36146,7 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="276"/>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="276"/>
         <source>Blocks</source>
-        <translation>บล็อค</translation>
+        <translation>บล็อก</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="291"/>
@@ -36648,7 +36648,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="771"/>
         <source>Block &apos;%1&apos;</source>
-        <translation>บล็อค &apos;%1&apos;</translation>
+        <translation>บล็อก &apos;%1&apos;</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="906"/>
@@ -36868,12 +36868,12 @@ The original opens in a separate document. Mixed encodings and raw metadata are 
     <message>
         <location filename="../src/ui/dialogs/entity/qg_blockdialog.ui" line="20"/>
         <source>Block Settings</source>
-        <translation>ตั้งค่าบล็อค</translation>
+        <translation>ตั้งค่าบล็อก</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_blockdialog.ui" line="43"/>
         <source>Block Name:</source>
-        <translation>ชื่อบล็อค:</translation>
+        <translation>ชื่อบล็อก:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_blockdialog.ui" line="69"/>
@@ -36906,7 +36906,7 @@ The original opens in a separate document. Mixed encodings and raw metadata are 
     <message>
         <location filename="../src/ui/dock_widgets/block_widget/qg_blockwidget.cpp" line="211"/>
         <source>Looking for matching block names</source>
-        <translation>ค้นหาชื่อที่เข้าคู่กับบล็อค</translation>
+        <translation>ค้นหาชื่อที่เข้าคู่กับบล็อก</translation>
     </message>
 </context>
 <context>
@@ -36920,7 +36920,7 @@ The original opens in a separate document. Mixed encodings and raw metadata are 
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="101"/>
         <source>By Block</source>
-        <translation>ตามบล็อค</translation>
+        <translation>ตามบล็อก</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="108"/>
@@ -37171,12 +37171,12 @@ The original opens in a separate document. Mixed encodings and raw metadata are 
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dimensionlabeleditor.ui" line="20"/>
         <source>Dimension Label Editor</source>
-        <translation>ตัวแก้ไขป้ายมิติ</translation>
+        <translation>ตัวแก้ไขป้ายบอกขนาด</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dimensionlabeleditor.ui" line="38"/>
         <source>Dimension Label:</source>
-        <translation>ป้ายมิติ:</translation>
+        <translation>ป้ายบอกขนาด:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dimensionlabeleditor.ui" line="165"/>
@@ -37186,7 +37186,7 @@ The original opens in a separate document. Mixed encodings and raw metadata are 
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dimensionlabeleditor.ui" line="94"/>
         <source>Symbol before dimensional text</source>
-        <translation>สัญลักษณ์ก่อนข้อความในมิติ</translation>
+        <translation>สัญลักษณ์ก่อนข้อความบอกขนาด</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dimensionlabeleditor.ui" line="62"/>
@@ -37211,7 +37211,7 @@ The original opens in a separate document. Mixed encodings and raw metadata are 
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dimensionlabeleditor.ui" line="187"/>
         <source>Format of the dimension text, &lt;&gt; can be used as a placeholder for the dimension measurement value</source>
-        <translation>รูปแบบของข้อความมิติ, &lt;&gt; สามารถใช้แทนตําแหน่งสําหรับค่าการวัดมิติได้</translation>
+        <translation>รูปแบบของข้อความบอกขนาด ใช้ &lt;&gt; แทนค่าที่วัดได้ของการบอกขนาด</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dimensionlabeleditor.ui" line="200"/>
@@ -37272,7 +37272,7 @@ The original opens in a separate document. Mixed encodings and raw metadata are 
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.ui" line="26"/>
         <source>Attributes</source>
-        <translation>แอททริบิวต์</translation>
+        <translation>คุณลักษณะ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.ui" line="44"/>
@@ -37299,7 +37299,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.ui" line="80"/>
         <source>Apply attributes Block-deep</source>
-        <translation>ปรับใช้คุณสมบัติแบบบล็อค- ลึก</translation>
+        <translation>ใช้คุณสมบัติกับบล็อกแบบเรียกซ้ำ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.cpp" line="61"/>
@@ -37312,7 +37312,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="14"/>
         <source>Choose Hatch Attributes</source>
-        <translation>เลือกแอททริบิวต์ของแฮต</translation>
+        <translation>เลือกคุณลักษณะของลายตัด</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="22"/>
@@ -37322,7 +37322,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="28"/>
         <source>Scale factor for hatch pattern</source>
-        <translation>ตัวคูณมาตราส่วนของลวดลายแฮทช์</translation>
+        <translation>ตัวคูณมาตราส่วนของรูปแบบลายตัด</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="35"/>
@@ -37337,12 +37337,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="55"/>
         <source>Rotation angle for the hatch</source>
-        <translation>มุมการหมุนของแฮทช์</translation>
+        <translation>มุมการหมุนของลายตัด</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="62"/>
         <source>If checked, solid will will be used instead of pattern hatch</source>
-        <translation>หากกาเลือก จะใช้การระบายทึบแทนแฮทช์แบบลวดลาย</translation>
+        <translation>หากเลือก จะระบายทึบแทนการใช้รูปแบบลายตัด</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="65"/>
@@ -37352,7 +37352,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="72"/>
         <source>Pattern of hatch</source>
-        <translation>ลวดลายของแฮทช์</translation>
+        <translation>รูปแบบของลายตัด</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="95"/>
@@ -37362,7 +37362,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="101"/>
         <source>If enabled, preview of hatch pattern will be shown below</source>
-        <translation>หากเปิดใช้ จะแสดงตัวอย่างลวดลายแฮทช์ด้านล่างนี้</translation>
+        <translation>หากเปิดใช้ จะแสดงตัวอย่างรูปแบบลายตัดด้านล่าง</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="104"/>
@@ -37377,7 +37377,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="124"/>
         <source>Hatched area</source>
-        <translation>พื้นที่แฮทช์</translation>
+        <translation>พื้นที่ลายตัด</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.cpp" line="213"/>
@@ -37418,7 +37418,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="20"/>
         <source>MText</source>
-        <translation>ข้อความ m</translation>
+        <translation>ข้อความหลายบรรทัด</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="51"/>
@@ -38341,7 +38341,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1272"/>
         <source>Text Height:</source>
-        <translation>สูง:</translation>
+        <translation>ความสูงของข้อความ:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1086"/>
@@ -38442,17 +38442,17 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="627"/>
         <source>Dimension style editing - </source>
-        <translation>แก้ไขรูปแบบมิติ - </translation>
+        <translation>แก้ไขรูปแบบการบอกขนาด - </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="651"/>
         <source>Rename Dimension Style</source>
-        <translation>เปลี่ยนชื่อรูปแบบมิติ</translation>
+        <translation>เปลี่ยนชื่อรูปแบบการบอกขนาด</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="652"/>
         <source>Enter new unique name of dimension style (was &quot;%1&quot;):</source>
-        <translation>ป้อนชื่อใหม่ของรูปแบบมิติ (เป็น &quot;%1&quot;):</translation>
+        <translation>ป้อนชื่อใหม่ของรูปแบบการบอกขนาด (เป็น &quot;%1&quot;):</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="671"/>
@@ -38460,27 +38460,27 @@ This recursively modifies all entities of the Block itself.</source>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="692"/>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="699"/>
         <source>Removing Dimension Style</source>
-        <translation>ลบรูปแบบมิติ</translation>
+        <translation>ลบรูปแบบการบอกขนาด</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="672"/>
         <source>Can&apos;t delete last dimension style. At least one should be present! </source>
-        <translation>ไม่สามารถลบรูปแบบมิติสุดท้ายได้ อย่าง น้อย ที่ สุด ควร มี คน หนึ่ง อยู่ ด้วย!</translation>
+        <translation>ไม่สามารถลบรูปแบบการบอกขนาดสุดท้ายได้ ต้องมีอย่างน้อยหนึ่งรูปแบบ! </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="685"/>
         <source>Can&apos;t delete dimension style as it&apos;s children is used in drawing. Only unused style may be deleted.</source>
-        <translation>ไม่สามารถลบรูปแบบมิติที่เด็กๆ ใช้วาดได้ อาจจะถูกลบรูปแบบที่ไม่ได้ใช้เท่านั้น.</translation>
+        <translation>ไม่สามารถลบรูปแบบการบอกขนาดได้ เนื่องจากรูปแบบย่อยของรูปแบบนี้ถูกใช้อยู่ในแบบ ลบได้เฉพาะรูปแบบที่ไม่ได้ใช้เท่านั้น</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="693"/>
         <source>Are you sure you want to remove the dimension style &quot;%1&quot; together with child styles?</source>
-        <translation>คุณแน่ใจหรือว่าต้องการจะลบรูปแบบมิติ &quot;%1&quot; ร่วมกับรูปแบบเด็ก?</translation>
+        <translation>คุณแน่ใจหรือไม่ว่าต้องการลบรูปแบบการบอกขนาด &quot;%1&quot; พร้อมกับรูปแบบย่อย?</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="700"/>
         <source>Are you sure you want to remove the dimension style &quot;%1&quot;?</source>
-        <translation>คุณแน่ใจหรือว่าต้องการจะลบรูปแบบมิติ &quot;%1&quot; นี้?</translation>
+        <translation>คุณแน่ใจหรือไม่ว่าต้องการลบรูปแบบการบอกขนาด &quot;%1&quot;?</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="936"/>
@@ -38508,7 +38508,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="1226"/>
         <source>STRING</source>
-        <translation>เส้นต่อเนื่อง</translation>
+        <translation>STRING</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="1230"/>
@@ -38534,7 +38534,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1717"/>
         <source>Dimension line gap:</source>
-        <translation>ช่องว่างของเส้นมิติ:</translation>
+        <translation>ช่องว่างของเส้นบอกขนาด:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="14"/>
@@ -38589,7 +38589,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1049"/>
         <source>&amp;Dimensions</source>
-        <translation>&amp;มิติ</translation>
+        <translation>&amp;บอกขนาด</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="735"/>
@@ -38677,7 +38677,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1289"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension Tick size. Set it to 0 will disable the dimension tick. Dimension arrow won&apos;t be drawn when dimension tick is enabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ขนาดขีดของมิติ ตั้งเป็น 0 เพื่อปิดขีดมิติ ลูกศรมิติจะไม่ถูกวาดเมื่อเปิดใช้ขีดมิติ.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ขนาดขีดบอกขนาด ตั้งเป็น 0 เพื่อปิดขีดบอกขนาด ลูกศรบอกขนาดจะไม่ถูกวาดเมื่อเปิดใช้ขีดบอกขนาด.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1634"/>
@@ -38692,12 +38692,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1142"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scale to multiply all dimension values.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt; &lt; หัว/&gt; ปรับขนาดให้คูณค่าในมิติทั้งหมด</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;มาตราส่วนที่ใช้คูณค่าบอกขนาดทั้งหมด&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1351"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scale to multiply all dimension geometries.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ปรับขนาดเพื่อคูณขนาดเรขาคณิตทั้งหมด&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;มาตราส่วนที่ใช้คูณเรขาคณิตของการบอกขนาดทั้งหมด&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1058"/>
@@ -38817,7 +38817,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="829"/>
         <source>Isometric Top</source>
-        <translation>ด้านบน</translation>
+        <translation>ไอโซเมตริกด้านบน</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="852"/>
@@ -38923,7 +38923,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1326"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Distance gap around text&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt; &lt; หัว/&gt; ช่องว่างรอบข้อความ</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ระยะช่องว่างรอบข้อความ&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1399"/>
@@ -38933,12 +38933,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1444"/>
         <source>Length to enlarge over dimension line</source>
-        <translation>ความยาวที่จะขยายเหนือเส้นมิติ</translation>
+        <translation>ความยาวที่จะขยายเหนือเส้นบอกขนาด</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1469"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension arrow size. &lt;a name=&quot;result_box&quot;/&gt;without effect when tick size &lt;a name=&quot;result_box&quot;/&gt;is other than 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ขนาดลูกศรมิติ. &lt;a name=&quot;result_box&quot;/&gt;ไม่มีผลเมื่อขนาดขีด &lt;a name=&quot;result_box&quot;/&gt;ไม่ใช่ 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ขนาดลูกศรบอกขนาด. &lt;a name=&quot;result_box&quot;/&gt;ไม่มีผลเมื่อขนาดขีด &lt;a name=&quot;result_box&quot;/&gt;ไม่ใช่ 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1523"/>
@@ -38949,7 +38949,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1543"/>
         <source>Dimension lines, arrows &amp; ticks</source>
-        <translation>เส้นมิติ, ลูกศร และขีด</translation>
+        <translation>เส้นบอกขนาด, ลูกศร และขีด</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1550"/>
@@ -38979,7 +38979,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1619"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Text alignment &lt;a name=&quot;result_box&quot;/&gt;relative to the dimension line.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;การจัดแนวข้อความ&lt;a name=&quot;result_box&quot;/&gt;สัมพันธ์กับเส้นมิติ&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;การจัดแนวข้อความ&lt;a name=&quot;result_box&quot;/&gt;สัมพันธ์กับเส้นบอกขนาด&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1629"/>
@@ -39004,12 +39004,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1734"/>
         <source>Fixed length:</source>
-        <translation>ความยาวความกว้างคงที่:</translation>
+        <translation>ความยาวคงที่:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1798"/>
         <source>Dimensions</source>
-        <translation>มิติ</translation>
+        <translation>การบอกขนาด</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1810"/>
@@ -39039,7 +39039,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1877"/>
         <source>Marks style as active one. Active style will be used during creation of dimensions.</source>
-        <translation>ทําเครื่องหมายรูปแบบว่าใช้งานอยู่ รูปแบบที่ทํางานอยู่จะถูกใช้ระหว่างการสร้างมิติ.</translation>
+        <translation>ทำเครื่องหมายรูปแบบว่าใช้งานอยู่ รูปแบบที่ทำงานอยู่จะถูกใช้ระหว่างการสร้างการบอกขนาด.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1904"/>
@@ -39344,7 +39344,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1771"/>
         <source>fixed extension line length</source>
-        <translation>ความกว้างเส้นส่วนขยายคงที่</translation>
+        <translation>ความยาวเส้นช่วยบอกขนาดคงที่</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2176"/>
@@ -39454,7 +39454,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5966"/>
         <source>Hatch Patterns:</source>
-        <translation>รูปแบบ แฮช:</translation>
+        <translation>รูปแบบลายตัด:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5990"/>
@@ -39830,7 +39830,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1810"/>
         <source>Hide cursor when snapping</source>
-        <translation>ซ่อนเคอร์เซอร์เมื่อเคลื่อนเมาส์สั่งงาน</translation>
+        <translation>ซ่อนเคอร์เซอร์เมื่อจับจุด</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5739"/>
@@ -39909,7 +39909,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1329"/>
         <source>Select Hatch Patterns Folder</source>
-        <translation>เลือกรูปแบบแฮต</translation>
+        <translation>เลือกโฟลเดอร์รูปแบบลายตัด</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1336"/>
@@ -39979,7 +39979,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1606"/>
         <source>If checked, snap indicator will be shown</source>
-        <translation>หากกาเลือก จะมีการแสดงตัวชี้ของ snap</translation>
+        <translation>หากเลือก จะแสดงตัวบ่งชี้การจับ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1766"/>
@@ -40064,7 +40064,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1743"/>
         <source>Line Width</source>
-        <translation>ไลน์ความกว้าง</translation>
+        <translation>ความหนาเส้น</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1750"/>
@@ -40074,7 +40074,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1726"/>
         <source>If checked, a shap for snap will be drawn</source>
-        <translation>หากกาเลือก จะมีการวาด shap สําหรับ snap</translation>
+        <translation>หากเลือก จะวาดรูปทรงของการจับ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1729"/>
@@ -40114,7 +40114,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1633"/>
         <source>Color for snap indicator shape</source>
-        <translation>สีของช่องสี</translation>
+        <translation>สีของรูปทรงตัวบ่งชี้การจับ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1967"/>
@@ -40124,7 +40124,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1974"/>
         <source>Angle between steps for Angle Snap (which is usually by corresponding actions if SHIFT is pressed)</source>
-        <translation>มุมระหว่างขั้นตอนสําหรับมุม snap (ซึ่งมักจะเกิดจากการกระทําที่สอดคล้องกันหากกด Shift)</translation>
+        <translation>มุมระหว่างขั้นสำหรับการจับมุม (ซึ่งมักใช้ในคำสั่งต่าง ๆ เมื่อกด SHIFT)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1978"/>
@@ -40204,7 +40204,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="854"/>
         <source>Color of non-endpoint handle of entity</source>
-        <translation>สีของส่วนจับที่ไม่แน่นอนของรายการ</translation>
+        <translation>สีของจุดจับที่ไม่ใช่จุดปลายของวัตถุ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="847"/>
@@ -40410,7 +40410,7 @@ This recursively modifies all entities of the Block itself.</source>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1395"/>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1543"/>
         <source>Line Width:</source>
-        <translation>ไลน์ความกว้าง:</translation>
+        <translation>ความหนาเส้น:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1298"/>
@@ -40764,7 +40764,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6415"/>
         <source>Ellipse Major Axis:</source>
-        <translation>เอลิลิปส์ เมเจอร์แอคซิส:</translation>
+        <translation>แกนเอกของวงรี:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6385"/>
@@ -40799,7 +40799,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6408"/>
         <source>Ellipse Minor Axis:</source>
-        <translation>เอลิลิปส์ เอกซ์ริส:</translation>
+        <translation>แกนโทของวงรี:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6314"/>
@@ -40900,7 +40900,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1827"/>
         <source>If checked, &quot;Snap To Grid&quot; is ignored if grid is not drawn.</source>
-        <translation>หากกาเลือกใช้ &quot;Snap to Raw&quot; จะไม่ถูกสนใจหากไม่มีการวาดกริด.</translation>
+        <translation>หากเลือก จะไม่ใช้การจับกริดเมื่อไม่ได้วาดกริด</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1830"/>
@@ -40950,7 +40950,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2884"/>
         <source>Color for absolute snap coordinates.</source>
-        <translation>สีสําหรับพิกัดสัมบูรณ์.</translation>
+        <translation>สีของพิกัดสัมบูรณ์ของการจับ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2794"/>
@@ -41030,7 +41030,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3022"/>
         <source>If checked, short overview properties of the entity&apos;s that is catched for selection will be shown. </source>
-        <translation>หากกาเลือกไว้ จะมีการแสดงคุณสมบัติแบบย่อของรายการที่เลือก.</translation>
+        <translation>หากเลือก จะแสดงคุณสมบัติโดยย่อของวัตถุที่ถูกจับเพื่อเลือก </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3028"/>
@@ -41146,7 +41146,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1934"/>
         <source>Angle Snap</source>
-        <translation>มุม</translation>
+        <translation>จับมุม</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1993"/>
@@ -41307,12 +41307,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1853"/>
         <source>Advanced Snap Fine-tuning settings</source>
-        <translation>ตั้งค่าการปรับตั้งให้พอดี</translation>
+        <translation>การตั้งค่าปรับละเอียดการจับขั้นสูง</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1905"/>
         <source>Snap on Entity &quot;Free snap&quot; distance switch:</source>
-        <translation>จับเมื่อเอนติตี้ snaping ระยะทาง:</translation>
+        <translation>ระยะสลับไป &quot;จับอิสระ&quot; ของการจับบนวัตถุ:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1912"/>
@@ -41418,7 +41418,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5433"/>
         <source>Separate menu per entity</source>
-        <translation>แยกเมนูต่อรายการ</translation>
+        <translation>แยกเมนูตามชนิดวัตถุ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="102"/>
@@ -42015,7 +42015,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6195"/>
         <source>If checked, archs are drawn using line segments interpolation.  This sliminates drawing artefacts near to endpoints, yet may result drawing of less smooth arcs.  No drawing errors near endpoints on large zooms.</source>
-        <translation>หากกาเลือกไว้ จะทําการวาดอาร์กโดยใช้เส้นต่อเนื่อง ความ ยืดหยุ่น ของ ความ ยืดหยุ่น ไม่มีการวาดข้อผิดพลาดใกล้จุดสิ้นสุดในซูมขนาดใหญ่.</translation>
+        <translation>หากเลือก จะวาดส่วนโค้งโดยประมาณด้วยส่วนของเส้นตรง วิธีนี้ช่วยขจัดความผิดเพี้ยนของการวาดใกล้จุดปลาย แต่ส่วนโค้งอาจดูเรียบน้อยลง และจะไม่มีข้อผิดพลาดในการวาดใกล้จุดปลายเมื่อซูมขยายมาก</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6205"/>
@@ -42200,7 +42200,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5983"/>
         <source>Path to folder with hatch patterns</source>
-        <translation>พาธของโฟลเดอร์ที่มีลวดลายแฮทช์</translation>
+        <translation>พาธของโฟลเดอร์ที่มีรูปแบบลายตัด</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5941"/>
@@ -42253,7 +42253,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.ui" line="104"/>
         <source>Blocks</source>
-        <translation>บล็อค</translation>
+        <translation>บล็อก</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.ui" line="112"/>
@@ -42303,7 +42303,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.ui" line="167"/>
         <source>Dash/Dot Lines</source>
-        <translation>แดช/ ดอตไลน์</translation>
+        <translation>เส้นประ/เส้นจุด</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.ui" line="177"/>
@@ -43337,7 +43337,7 @@ so default step value required for baking</source>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="149"/>
         <source>Block</source>
         <comment>block file</comment>
-        <translation>บล็อค</translation>
+        <translation>บล็อก</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="152"/>
@@ -43629,7 +43629,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="84"/>
         <source>By Block</source>
-        <translation>ตามบล็อค</translation>
+        <translation>ตามบล็อก</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="87"/>
@@ -43853,7 +43853,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/components/toolbars/qg_pentoolbar.cpp" line="42"/>
         <source>Line width</source>
-        <translation>ความกว้างเส้น</translation>
+        <translation>ความหนาเส้น</translation>
     </message>
     <message>
         <location filename="../src/ui/components/toolbars/qg_pentoolbar.cpp" line="45"/>
@@ -43907,12 +43907,12 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="222"/>
         <source>locked</source>
-        <translation>ล็อค</translation>
+        <translation>ล็อก</translation>
     </message>
     <message>
         <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="222"/>
         <source>unlocked</source>
-        <translation>ปลดล็อค</translation>
+        <translation>ปลดล็อก</translation>
     </message>
     <message>
         <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="227"/>
@@ -43951,7 +43951,7 @@ p, li {white- space: pre- wrap;}
     <message>
         <location filename="../src/ui/components/pen/qg_widgetpen.ui" line="130"/>
         <source>Width of line</source>
-        <translation>ความกว้างของเส้น</translation>
+        <translation>ความหนาของเส้น</translation>
     </message>
     <message>
         <location filename="../src/ui/components/pen/qg_widgetpen.ui" line="137"/>
@@ -44087,7 +44087,7 @@ This action can NOT be undone.</source>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="467"/>
         <source>Blocks for removal:</source>
-        <translation>บล็อคสําหรับลบ:</translation>
+        <translation>บล็อกสำหรับลบ:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.cpp" line="230"/>
@@ -44168,7 +44168,7 @@ Please specify a different name.</source>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1170"/>
         <source>Dimensional layer may be added only for normal active layer.
 </source>
-        <translation>สามารถเพิ่มเลเยอร์มิติได้เฉพาะเมื่อเลเยอร์ที่ทำงานอยู่เป็นเลเยอร์ปกติเท่านั้น.
+        <translation>สามารถเพิ่มเลเยอร์บอกขนาดได้เฉพาะเมื่อเลเยอร์ที่ทำงานอยู่เป็นเลเยอร์ปกติเท่านั้น.
 </translation>
     </message>
     <message>
@@ -44211,7 +44211,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1404"/>
         <source>Pen will be removed from palette, drawing entities will not be affected.</source>
-        <translation>ปากกาจะถูกถอดออกจากจานสี องค์ประกอบการวาดจะไม่ถูกกระทบ.</translation>
+        <translation>ปากกาจะถูกลบออกจากจานสี วัตถุในแบบจะไม่ได้รับผลกระทบ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1406"/>
@@ -44260,7 +44260,7 @@ Please specify a different value.</source>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1455"/>
         <source>Such entities exist on locked layers.
 </source>
-        <translation>มีวัตถุดังกล่าวอยู่ในเลเยอร์ที่ถูกล็อค.
+        <translation>มีวัตถุดังกล่าวอยู่ในเลเยอร์ที่ถูกล็อก.
 </translation>
     </message>
     <message>
@@ -44271,12 +44271,12 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1466"/>
         <source>Set pen by entity</source>
-        <translation>ตั้งปากกาตามรายการ</translation>
+        <translation>ตั้งปากกาตามวัตถุ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1467"/>
         <source>Please select only one entity to pick pen setting.</source>
-        <translation>โปรดเลือกรายการเพียงตัวเดียวเพื่อเลือกการตั้งค่าปากกา.</translation>
+        <translation>โปรดเลือกวัตถุเพียงชิ้นเดียวเพื่อดึงค่าปากกา</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1477"/>
@@ -44561,7 +44561,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="541"/>
         <source>polyline</source>
         <comment>draw polyline</comment>
-        <translation>เส้นต่อเนื่อง</translation>
+        <translation>โพลีไลน์</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="542"/>
@@ -44711,7 +44711,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="897"/>
         <source>hatch</source>
         <comment>draw hatch</comment>
-        <translation>แฮทช์</translation>
+        <translation>ลายตัด</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="898"/>
@@ -47728,7 +47728,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="39"/>
         <source>/CustomColor%1</source>
-        <translation>ตัวกรอง%1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="40"/>
@@ -47755,7 +47755,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/lib/actions/lc_modifiersinfo.h" line="29"/>
         <source>Angle Snap</source>
-        <translation>มุม</translation>
+        <translation>จับมุม</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/lc_modifiersinfo.h" line="30"/>
@@ -47765,7 +47765,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/lib/actions/lc_modifiersinfo.h" line="31"/>
         <source>Use Mirrored Angle</source>
-        <translation>ใช้มุมกระจก</translation>
+        <translation>ใช้มุมที่สะท้อน</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/lc_modifiersinfo.h" line="32"/>
@@ -47782,7 +47782,7 @@ Do you want to replace it?</source>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="56"/>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="209"/>
         <source>By Block</source>
-        <translation>ตามบล็อค</translation>
+        <translation>ตามบล็อก</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="212"/>
@@ -47792,17 +47792,17 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/lib/engine/document/container/rs_entitycontainer.cpp" line="1499"/>
         <source>Hatch failed due to a gap=%1 between (%2, %3) and (%4, %5)</source>
-        <translation>แฮทเชอร์ล้มเหลว เนื่องจากช่องว่าง =%1 ระหว่าง (%2,%3) และ (%4,%5)</translation>
+        <translation>สร้างลายตัดไม่สำเร็จ เนื่องจากมีช่องว่าง=%1 ระหว่าง (%2, %3) และ (%4, %5)</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/document/patterns/rs_patternlist.cpp" line="66"/>
         <source>Hatch:: no pattern found. Please set pattern path in application preferences</source>
-        <translation>แฮช: ไม่พบรูปแบบ โปรดตั้งค่าตําแหน่งรูปแบบในการปรับแต่งของโปรแกรม</translation>
+        <translation>ลายตัด: ไม่พบรูปแบบ โปรดตั้งค่าพาธของรูปแบบในการตั้งค่าโปรแกรม</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/document/patterns/rs_patternlist.cpp" line="93"/>
         <source>Hatch:: loading pattern failed: %1</source>
-        <translation>แฮทเชอร์: การโหลดรูปแบบ:%1 ล้มเหลว</translation>
+        <translation>ลายตัด: โหลดรูปแบบไม่สำเร็จ: %1</translation>
     </message>
     <message>
         <location filename="../src/ui/main/persistence/lc_documentsstorage.cpp" line="198"/>
@@ -48238,7 +48238,7 @@ Do you want to replace it?</source>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="1030"/>
         <source>error reading DXF/DWG blocks</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation>เกิดข้อผิดพลาดในการอ่านบล็อค DXF/DWG</translation>
+        <translation>เกิดข้อผิดพลาดในการอ่านบล็อก DXF/DWG</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="1032"/>
@@ -48692,7 +48692,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="484"/>
         <source>Polyline</source>
-        <translation>เส้นต่อเนื่อง</translation>
+        <translation>โพลีไลน์</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="488"/>
@@ -48727,7 +48727,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="512"/>
         <source>Hatch</source>
-        <translation>แฮทเชอร์</translation>
+        <translation>ลายตัด</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="516"/>
@@ -48737,27 +48737,27 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="520"/>
         <source>Dim. Linear</source>
-        <translation>มิติเชิงเส้น</translation>
+        <translation>การบอกขนาดเชิงเส้น</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="524"/>
         <source>Dim. Aligned</source>
-        <translation>มิติแบบจัดแนว</translation>
+        <translation>การบอกขนาดแบบจัดแนว</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="528"/>
         <source>Dim. Diametric</source>
-        <translation>มิติเส้นผ่านศูนย์กลาง</translation>
+        <translation>การบอกขนาดเส้นผ่านศูนย์กลาง</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="532"/>
         <source>Dim. Radial</source>
-        <translation>มิติรัศมี</translation>
+        <translation>การบอกขนาดรัศมี</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="536"/>
         <source>Dim. Arc</source>
-        <translation>มิติส่วนโค้ง</translation>
+        <translation>การบอกขนาดความยาวส่วนโค้ง</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="540"/>
@@ -48843,7 +48843,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/dock_widgets/block/rs_actionblockssave.cpp" line="98"/>
         <source>No block activated to save</source>
-        <translation>ยังไม่มีการเรียกบล็อคเพื่อบันทึก</translation>
+        <translation>ยังไม่มีการเรียกบล็อกเพื่อบันทึก</translation>
     </message>
 </context>
 <context>
@@ -48896,7 +48896,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="504"/>
         <source>Offset</source>
-        <translation>ออฟเซต:</translation>
+        <translation>ออฟเซต</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="507"/>
@@ -49008,7 +49008,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1023"/>
         <source>Select Intersecting</source>
-        <translation>เลือกอินเตอร์เซก</translation>
+        <translation>เลือกวัตถุที่ตัดผ่าน</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1023"/>
@@ -49031,12 +49031,12 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimangular.cpp" line="222"/>
         <source>Specify dimension arc line location</source>
-        <translation>กำหนดตำแหน่งของเส้นส่วนโค้งมิติ</translation>
+        <translation>กำหนดตำแหน่งเส้นบอกขนาดส่วนโค้ง</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimangular.cpp" line="225"/>
         <source>Enter dimension text:</source>
-        <translation>ป้อนข้อความในมิติ:</translation>
+        <translation>ป้อนข้อความบอกขนาด:</translation>
     </message>
 </context>
 <context>
@@ -49078,12 +49078,12 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimlinear.cpp" line="224"/>
         <source>Specify dimension line location</source>
-        <translation>กําหนดตําแหน่งของเส้นในมิติ</translation>
+        <translation>กำหนดตำแหน่งของเส้นบอกขนาด</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimlinear.cpp" line="224"/>
         <source>Snap to Adjacent Dim</source>
-        <translation>จับมิติที่อยู่ติดกัน</translation>
+        <translation>จับการบอกขนาดที่อยู่ติดกัน</translation>
     </message>
 </context>
 <context>
@@ -49238,12 +49238,12 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="160"/>
         <source>Invalid hatch area. Please check that the entities chosen form one or more closed contours.</source>
-        <translation>พื้นที่แฮทช์ไม่ถูกต้อง กรุณาตรวจสอบว่าวัตถุที่เลือกประกอบเป็นเส้นขอบปิดอย่างน้อยหนึ่งวง.</translation>
+        <translation>พื้นที่ลายตัดไม่ถูกต้อง กรุณาตรวจสอบว่าวัตถุที่เลือกประกอบเป็นเส้นขอบปิดอย่างน้อยหนึ่งวง</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="131"/>
         <source>Hatch created successfully.</source>
-        <translation>แฮทเชอร์สร้างได้สําเร็จ.</translation>
+        <translation>สร้างลายตัดสำเร็จแล้ว</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="134"/>
@@ -49255,32 +49255,32 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="134"/>
         <source>Hatch Error: Invalid contour found!</source>
-        <translation>แฮทช์ผิดพลาด: พบค่าเรขาคณิตไม่ถูกต้อง!</translation>
+        <translation>ข้อผิดพลาดของลายตัด: พบเส้นขอบไม่ถูกต้อง!</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="138"/>
         <source>Hatch Error: Pattern not found!</source>
-        <translation>แฮทเชอร์ผิดพลาด: ไม่พบรูปแบบ!</translation>
+        <translation>ข้อผิดพลาดของลายตัด: ไม่พบรูปแบบ!</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="141"/>
         <source>Hatch Error: Contour or pattern too small!</source>
-        <translation>แฮทเชอร์ผิดพลาด:!</translation>
+        <translation>ข้อผิดพลาดของลายตัด: เส้นขอบหรือรูปแบบเล็กเกินไป!</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="144"/>
         <source>Hatch Error: Contour too big!</source>
-        <translation>แฮทช์ผิดพลาด: ใหญ่เกินไป!</translation>
+        <translation>ข้อผิดพลาดของลายตัด: เส้นขอบใหญ่เกินไป!</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="147"/>
         <source>Hatch Error: Undefined Error!</source>
-        <translation>แฮทเชอร์ผิดพลาด:!</translation>
+        <translation>ข้อผิดพลาดของลายตัด: ข้อผิดพลาดที่ไม่ทราบสาเหตุ!</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="152"/>
         <source>Total hatch area = %1</source>
-        <translation>พื้นที่แฮทช์ทั้งหมด = %1</translation>
+        <translation>พื้นที่ลายตัดทั้งหมด = %1</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="185"/>
@@ -49290,7 +49290,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="185"/>
         <source>Hatch immediately after selection</source>
-        <translation>แฮ็ทช์ทันทีที่เลือก</translation>
+        <translation>สร้างลายตัดทันทีหลังจากเลือก</translation>
     </message>
 </context>
 <context>
@@ -49495,8 +49495,8 @@ Intersection :@(%7, %8)</source>
 มุมเติมเต็ม: %2
 มุมเสริม: %3
 หนึ่งรอบ − มุม: %4
-อินเตอร์เซก: (%5, %6)
-อินเตอร์เซก: @(%7, %8)</translation>
+จุดตัด: (%5, %6)
+จุดตัด: @(%7, %8)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="148"/>
@@ -49580,17 +49580,17 @@ Intersection :@(%7, %8)</source>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="292"/>
         <source>Intersection:</source>
-        <translation>อินเตอร์เซก:</translation>
+        <translation>จุดตัด:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="292"/>
         <source>Line 1 Angle:</source>
-        <translation>มุมเส้น 1</translation>
+        <translation>มุมเส้น 1:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="292"/>
         <source>Line 2 Angle:</source>
-        <translation>ไลน์ 2 มุม:</translation>
+        <translation>มุมของเส้น 2:</translation>
     </message>
 </context>
 <context>
@@ -49803,7 +49803,7 @@ Cartesian: (%2)%3
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="278"/>
         <source>type in offset from command line to offset printout</source>
-        <translation>พิมพ์ในออฟเซ็ตจากบรรทัดคําสั่งไปออฟเซ็ตการพิมพ์ออก</translation>
+        <translation>พิมพ์ในออฟเซตจากบรรทัดคำสั่งไปออฟเซตการพิมพ์ออก</translation>
     </message>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="450"/>
@@ -49862,12 +49862,12 @@ Cartesian: (%2)%3
     <message>
         <location filename="../src/actions/drawing/snap/rs_actionsnapintersectionmanual.cpp" line="131"/>
         <source>Select first entity</source>
-        <translation>เลือกรายการแรก</translation>
+        <translation>เลือกวัตถุแรก</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/snap/rs_actionsnapintersectionmanual.cpp" line="134"/>
         <source>Select second entity</source>
-        <translation>เลือกรายการที่สอง</translation>
+        <translation>เลือกวัตถุที่สอง</translation>
     </message>
 </context>
 <context>
@@ -49875,12 +49875,12 @@ Cartesian: (%2)%3
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiontoolregeneratedimensions.cpp" line="63"/>
         <source>Regenerated %1 dimension entities</source>
-        <translation>สร้างส่วน%1 ใหม่</translation>
+        <translation>สร้างวัตถุบอกขนาด %1 รายการใหม่แล้ว</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiontoolregeneratedimensions.cpp" line="66"/>
         <source>No dimension entities found</source>
-        <translation>ไม่พบวัตถุมิติ</translation>
+        <translation>ไม่พบวัตถุบอกขนาด</translation>
     </message>
 </context>
 <context>
@@ -49893,7 +49893,7 @@ Cartesian: (%2)%3
     <message>
         <location filename="../src/actions/drawing/zoom/rs_actionzoompan.cpp" line="112"/>
         <source>Zoom panning</source>
-        <translation>ย่อ/ ขยาย</translation>
+        <translation>แพน</translation>
     </message>
 </context>
 <context>
@@ -49944,7 +49944,7 @@ Cartesian: (%2)%3
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1347"/>
         <source>Intersection</source>
-        <translation>อินเตอร์เซก</translation>
+        <translation>จุดตัด</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1349"/>
@@ -50158,7 +50158,7 @@ Cartesian: (%2)%3
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="32"/>
         <source>Dimension Options</source>
-        <translation>ตัวเลือกมิติ</translation>
+        <translation>ตัวเลือกการบอกขนาด</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="50"/>
@@ -50168,7 +50168,7 @@ Cartesian: (%2)%3
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="57"/>
         <source>Dimension style</source>
-        <translation>รูปแบบมิติ</translation>
+        <translation>รูปแบบการบอกขนาด</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="76"/>
@@ -50183,7 +50183,7 @@ Cartesian: (%2)%3
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="115"/>
         <source>User-specified dimension&apos;s label. Enter value or either &quot;&lt;&gt;&quot; or just leave empty for automatic measurement.</source>
-        <translation>แถบกํากับมิติของผู้ใช้ ป้อนค่าหรือ &quot;&gt;&quot; หรือปล่อยว่างไว้สําหรับการวัดอัตโนมัติ.</translation>
+        <translation>ข้อความบอกขนาดที่ผู้ใช้กำหนด ป้อนค่า หรือ &quot;&lt;&gt;&quot; หรือเว้นว่างไว้เพื่อใช้ค่าที่วัดโดยอัตโนมัติ</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="128"/>
@@ -50245,17 +50245,17 @@ Cartesian: (%2)%3
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="265"/>
         <source>Dimension angle</source>
-        <translation>มุม</translation>
+        <translation>มุมของการบอกขนาด</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="287"/>
         <source>Horizontal Dimension</source>
-        <translation>มิติแนวนอน</translation>
+        <translation>การบอกขนาดแนวนอน</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="316"/>
         <source>Vertical Dimension</source>
-        <translation>มิติทางแนวตั้ง</translation>
+        <translation>การบอกขนาดแนวตั้ง</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="333"/>
@@ -50265,7 +50265,7 @@ Cartesian: (%2)%3
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="346"/>
         <source>Distance between dimensions in baseline</source>
-        <translation>ระยะห่างระหว่างมิติในเส้นฐาน</translation>
+        <translation>ระยะห่างระหว่างเส้นบอกขนาดในการบอกขนาดแบบเส้นฐาน</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="353"/>
@@ -50281,12 +50281,12 @@ Cartesian: (%2)%3
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="376"/>
         <source>Angle for dimension</source>
-        <translation>มุมของมิติ</translation>
+        <translation>มุมของการบอกขนาด</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="383"/>
         <source>If checked, angle for dimension is defined by mouse</source>
-        <translation>หากกาเลือก จะกําหนดมุมสําหรับมิติโดยเมาส์</translation>
+        <translation>หากกาเลือก จะกำหนดมุมสำหรับการบอกขนาดโดยเมาส์</translation>
     </message>
 </context>
 <context>
@@ -50294,12 +50294,12 @@ Cartesian: (%2)%3
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapdistoptions.ui" line="32"/>
         <source>Snap Distance Options</source>
-        <translation>ตัวเลือกการเกาะ</translation>
+        <translation>ตัวเลือกการจับตามระยะห่าง</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapdistoptions.ui" line="50"/>
         <source>Snap Distance:</source>
-        <translation>ระยะห่างการเกาะ:</translation>
+        <translation>ระยะจับ:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapdistoptions.ui" line="60"/>
@@ -50317,7 +50317,7 @@ Cartesian: (%2)%3
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapmiddleoptions.ui" line="35"/>
         <source>Snap Distance Options</source>
-        <translation>ตัวเลือกการเกาะ</translation>
+        <translation>ตัวเลือกการจับตามระยะห่าง</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapmiddleoptions.ui" line="59"/>

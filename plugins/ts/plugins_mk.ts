@@ -127,7 +127,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
         <location filename="../list/list.cpp" line="22"/>
         <location filename="../list/list.cpp" line="29"/>
         <source>List entities</source>
-        <translation>Листа на елементи</translation>
+        <translation>Листа на објекти</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="30"/>
@@ -142,7 +142,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="58"/>
         <source>Empty Entity</source>
-        <translation>Празен елемент</translation>
+        <translation>Празен објект</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="65"/>
@@ -374,12 +374,12 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="232"/>
         <source>SPLINE</source>
-        <translation>сплине</translation>
+        <translation>сплајн</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="235"/>
         <source>SPLINEPOINTS</source>
-        <translation>сплине точка</translation>
+        <translation>сплајн точка</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="238"/>
@@ -389,32 +389,32 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="241"/>
         <source>DIMLEADER</source>
-        <translation>врв на кота</translation>
+        <translation>показна линија</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="244"/>
         <source>DIMALIGNED</source>
-        <translation>кота под агол</translation>
+        <translation>порамнета кота</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="247"/>
         <source>DIMLINEAR</source>
-        <translation>права кота</translation>
+        <translation>линеарна кота</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="250"/>
         <source>DIMRADIAL</source>
-        <translation>радиална кота</translation>
+        <translation>радијална кота</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="253"/>
         <source>DIMDIAMETRIC</source>
-        <translation>кота на диаметар</translation>
+        <translation>дијаметарна кота</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="256"/>
         <source>DIMANGULAR</source>
-        <translation>кота на агол</translation>
+        <translation>аголна кота</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="259"/>
@@ -438,12 +438,12 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../sameprop/sameprop.cpp" line="40"/>
         <source>select original entity:</source>
-        <translation>селектрирај оригинален ентитет</translation>
+        <translation>селектирај оригинален објект:</translation>
     </message>
     <message>
         <location filename="../sameprop/sameprop.cpp" line="42"/>
         <source>select entities to change</source>
-        <translation>селектирај ентитет за промена</translation>
+        <translation>селектирај објект за промена</translation>
     </message>
 </context>
 <context>
@@ -821,7 +821,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../divide/divide.cpp" line="529"/>
         <source>Vertices</source>
-        <translation>Врвови</translation>
+        <translation>Темиња</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="534"/>
@@ -1058,7 +1058,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../list/list.cpp" line="276"/>
         <source>List entities</source>
-        <translation>листа на ентитети</translation>
+        <translation>листа на објекти</translation>
     </message>
 </context>
 <context>
@@ -1269,7 +1269,7 @@ Use t or x in your equation as a variable/parameter.
         <location filename="../plotequation/plotdialog.cpp" line="61"/>
         <source>SplinePoints</source>
         <comment>Plot Equation to generate 2nd spline by LC_SplinePoints</comment>
-        <translation>точки на сплине</translation>
+        <translation>точки на сплајн</translation>
     </message>
 </context>
 <context>

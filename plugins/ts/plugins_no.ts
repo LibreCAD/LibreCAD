@@ -225,7 +225,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="116"/>
         <source>ARC</source>
-        <translation>BUER</translation>
+        <translation>BUE</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="117"/>
@@ -384,7 +384,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="238"/>
         <source>HATCH</source>
-        <translation>HATCH</translation>
+        <translation>SKRAVERING</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="241"/>
@@ -518,7 +518,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="235"/>
         <source>*.odb for Psion 2</source>
-        <translation>1. [KONTEKST: dibPunto] *.odb for Psion 2</translation>
+        <translation>*.odb for Psion 2</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="237"/>
@@ -758,7 +758,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../divide/divide.cpp" line="494"/>
         <source>ARC</source>
-        <translation>ARC</translation>
+        <translation>BUE</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="495"/>
@@ -937,7 +937,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../pointstocsv/pointstocsv.cpp" line="120"/>
         <source>CSV (*.csv)</source>
-        <translation>2. [KONTEKST: lc_Exptocsvdlg] CSV (*.csv)</translation>
+        <translation>CSV (*.csv)</translation>
     </message>
     <message>
         <location filename="../pointstocsv/pointstocsv.cpp" line="128"/>

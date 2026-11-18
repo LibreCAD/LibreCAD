@@ -172,7 +172,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="78"/>
         <source>Line type</source>
-        <translation>Type de trait</translation>
+        <translation>Type de ligne</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="79"/>
@@ -349,7 +349,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="212"/>
         <source>POLYLINE</source>
-        <translation>LIGNE BRISÉE</translation>
+        <translation>POLYLIGNE</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="213"/>
@@ -384,7 +384,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="235"/>
         <source>SPLINEPOINTS</source>
-        <translation>POINTS DE CERCE</translation>
+        <translation>POINTS DE SPLINE</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="238"/>
@@ -394,7 +394,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="241"/>
         <source>DIMLEADER</source>
-        <translation>REPÈRE DE COTATION</translation>
+        <translation>COTE AVEC LIGNE DE REPÈRE</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="244"/>
@@ -806,7 +806,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../divide/divide.cpp" line="525"/>
         <source>POLYLINE</source>
-        <translation>POLYLINE</translation>
+        <translation>POLYLIGNE</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="526"/>
@@ -884,7 +884,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../divide/dividedlg.cpp" line="133"/>
         <source>Breaks - Off</source>
-        <translation>Intervalles - Désactivé</translation>
+        <translation>Coupures - Désactivées</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="178"/>
@@ -1271,13 +1271,13 @@ Utilisez les variables t ou x dans votre équation.</translation>
         <location filename="../plotequation/plotdialog.cpp" line="60"/>
         <source>Polyline</source>
         <comment>Plot Equation to generate RS_Polyline</comment>
-        <translation>Ligne brisée</translation>
+        <translation>Polyligne</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="61"/>
         <source>SplinePoints</source>
         <comment>Plot Equation to generate 2nd spline by LC_SplinePoints</comment>
-        <translation>Points de cerce</translation>
+        <translation>Points de spline</translation>
     </message>
 </context>
 <context>

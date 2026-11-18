@@ -127,7 +127,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
         <location filename="../list/list.cpp" line="22"/>
         <location filename="../list/list.cpp" line="29"/>
         <source>List entities</source>
-        <translation>Loetle üksused</translation>
+        <translation>Loetle elemendid</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="30"/>
@@ -142,7 +142,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="58"/>
         <source>Empty Entity</source>
-        <translation>Tühi üksus</translation>
+        <translation>Tühi element</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="65"/>
@@ -309,7 +309,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="184"/>
         <source>INSERT</source>
-        <translation>LISA</translation>
+        <translation>SISESTUS</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="187"/>
@@ -374,17 +374,17 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="232"/>
         <source>SPLINE</source>
-        <translation>SPLINE</translation>
+        <translation>SPLAIN</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="235"/>
         <source>SPLINEPOINTS</source>
-        <translation>SPLINEPUNKTID</translation>
+        <translation>SPLAINIPUNKTID</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="238"/>
         <source>HATCH</source>
-        <translation>HATCH</translation>
+        <translation>VIIRUTUS</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="241"/>
@@ -438,12 +438,12 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../sameprop/sameprop.cpp" line="40"/>
         <source>select original entity:</source>
-        <translation>Vali algne üksus:</translation>
+        <translation>vali algne element:</translation>
     </message>
     <message>
         <location filename="../sameprop/sameprop.cpp" line="42"/>
         <source>select entities to change</source>
-        <translation>Vali muudetavad üksused</translation>
+        <translation>vali muudetavad elemendid</translation>
     </message>
 </context>
 <context>
@@ -687,7 +687,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../divide/divide.cpp" line="439"/>
         <source>Empty Entity</source>
-        <translation>Tühi üksus</translation>
+        <translation>Tühi element</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="447"/>
@@ -874,7 +874,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../divide/dividedlg.cpp" line="125"/>
         <source>Ticks - Off</source>
-        <translation>Märked – välja</translation>
+        <translation>Märgid – väljas</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="133"/>
@@ -899,12 +899,12 @@ anti-clockwise.</source>
     <message>
         <location filename="../divide/dividedlg.cpp" line="245"/>
         <source>&lt;i&gt;&quot;New&quot;&lt;/i&gt;&lt;br&gt;Enter name&lt;br&gt;for a new layer&lt;br&gt;(if required?) to&lt;br&gt;draw ticks on.</source>
-        <translation>&lt;i&gt;&quot;Uus&quot;&lt;/i&gt;&lt;br&gt;Sisestage uue kihi nimi (vajadusel), millele märked joonistada.</translation>
+        <translation>&lt;i&gt;&quot;Uus&quot;&lt;/i&gt;&lt;br&gt;Sisesta uue&lt;br&gt;kihi nimi&lt;br&gt;(vajaduse korral), millele&lt;br&gt;märgid joonestada.</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="250"/>
         <source>Ticks</source>
-        <translation>Märked</translation>
+        <translation>Märgid</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="256"/>
@@ -1058,7 +1058,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../list/list.cpp" line="276"/>
         <source>List entities</source>
-        <translation>Loetle üksused</translation>
+        <translation>Loetle elemendid</translation>
     </message>
 </context>
 <context>
@@ -1272,7 +1272,7 @@ Kasutage oma võrrandis muutuja/parameetrina t või x.</translation>
         <location filename="../plotequation/plotdialog.cpp" line="61"/>
         <source>SplinePoints</source>
         <comment>Plot Equation to generate 2nd spline by LC_SplinePoints</comment>
-        <translation>Spliinipunktid</translation>
+        <translation>Splainipunktid</translation>
     </message>
 </context>
 <context>

@@ -61,7 +61,7 @@
     <message>
         <location filename="../src/actions/drawing/lc_abstractactionwithpreview.cpp" line="652"/>
         <source> is not divided as it is part of polyline. Expand polyline first.</source>
-        <translation>பலகோட்டின் பகுதியாக இருப்பதால் பிரிக்க முடியாது. முதலில் பலகோட்டை விரிவாக்கவும்.</translation>
+        <translation> பாலிலைனின் பகுதியாக இருப்பதால் பிரிக்க முடியாது. முதலில் பாலிலைனை விரிவாக்கவும்.</translation>
     </message>
 </context>
 <context>
@@ -168,7 +168,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_block_explode.cpp" line="63"/>
         <source>Select and explode</source>
-        <translation type="unfinished">தேர்ந்தெடுத்து வெடிக்கவும்</translation>
+        <translation type="unfinished">தேர்ந்தெடுத்து கூறுகளாகப் பிரிக்கவும்</translation>
     </message>
 </context>
 <context>
@@ -191,7 +191,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="215"/>
         <source>Free angle</source>
-        <translation>சுதந்திர கோணம்</translation>
+        <translation>கட்டற்ற கோணம்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="218"/>
@@ -389,7 +389,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_3points.cpp" line="75"/>
         <source>Invalid arc data.</source>
-        <translation type="unfinished">தவறான ஆர்க் தரவு.</translation>
+        <translation type="unfinished">தவறான வளைவு தரவு.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_3points.cpp" line="233"/>
@@ -472,7 +472,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_center_point_param.cpp" line="555"/>
         <source>Use alternative arc point</source>
-        <translation type="unfinished">மாற்று ஆர்க் புள்ளியைப் பயன்படுத்தவும்</translation>
+        <translation type="unfinished">மாற்று வளைவுப் புள்ளியைப் பயன்படுத்தவும்</translation>
     </message>
 </context>
 <context>
@@ -480,7 +480,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_tangential.cpp" line="292"/>
         <source>Specify base entity</source>
-        <translation type="unfinished">அடிப்படை உருப்படியை குறிப்பிடவும்</translation>
+        <translation type="unfinished">அடிப்படை பொருளை குறிப்பிடவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_tangential.cpp" line="296"/>
@@ -490,7 +490,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_tangential.cpp" line="296"/>
         <source>Alternate arc</source>
-        <translation type="unfinished">மாற்று வில்</translation>
+        <translation type="unfinished">மாற்று வளைவு</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_tangential.cpp" line="299"/>
@@ -500,7 +500,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_tangential.cpp" line="299"/>
         <source>Alternate Arc</source>
-        <translation type="unfinished">மாற்று வில்</translation>
+        <translation type="unfinished">மாற்று வளைவு</translation>
     </message>
 </context>
 <context>
@@ -743,7 +743,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_2entities_1point.cpp" line="341"/>
         <source>Specify the another line/arc/circle</source>
-        <translation type="unfinished">மற்றொரு கோடு/வில்/வட்டத்தைக் குறிப்பிடவும்</translation>
+        <translation type="unfinished">மற்றொரு கோடு/வளைவு/வட்டத்தைக் குறிப்பிடவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_2entities_1point.cpp" line="344"/>
@@ -1126,7 +1126,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_bisector.cpp" line="149"/>
         <source> entities will be created</source>
-        <translation type="unfinished">உருவாக்கப்படும் கூறுகள்</translation>
+        <translation type="unfinished"> உருவாக்கப்படும் பொருள்கள்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_bisector.cpp" line="232"/>
@@ -1153,12 +1153,12 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_bisector.cpp" line="288"/>
         <source>Enter bisector length:</source>
-        <translation type="unfinished">இருசமக் கோட்டின் நீளத்தை உள்ளிடவும்:</translation>
+        <translation type="unfinished">இருசமவெட்டியின் நீளத்தை உள்ளிடவும்:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_bisector.cpp" line="291"/>
         <source>Enter number of bisectors:</source>
-        <translation type="unfinished">இருசமக் கோடுகளின் எண்ணிக்கையை உள்ளிடவும்:</translation>
+        <translation type="unfinished">இருசமவெட்டிகளின் எண்ணிக்கையை உள்ளிடவும்:</translation>
     </message>
 </context>
 <context>
@@ -1259,7 +1259,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_parallel.cpp" line="130"/>
         <source> entities will be created</source>
-        <translation type="unfinished">உருவாக்கப்படும் கூறுகள்</translation>
+        <translation type="unfinished"> உருவாக்கப்படும் பொருள்கள்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_parallel.cpp" line="156"/>
@@ -1288,7 +1288,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_parallel_through.cpp" line="128"/>
         <source> entities will be created</source>
-        <translation type="unfinished">உருவாக்கப்படும் கூறுகள்</translation>
+        <translation type="unfinished"> உருவாக்கப்படும் பொருள்கள்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_parallel_through.cpp" line="193"/>
@@ -1885,7 +1885,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_draw_polyline.cpp" line="821"/>
         <source>Cannot close sequence of lines: Not enough entities defined yet.</source>
-        <translation type="unfinished">கோடுகளின் வரிசையை முடிக்க முடியவில்லை: போதுமான கூறுகள் இன்னும் வரையறுக்கப்படவில்லை.</translation>
+        <translation type="unfinished">கோடுகளின் வரிசையை முடிக்க முடியவில்லை: போதுமான பொருள்கள் இன்னும் வரையறுக்கப்படவில்லை.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_draw_polyline.cpp" line="844"/>
@@ -2282,7 +2282,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="338"/>
         <source>Zoom &amp;Panning</source>
-        <translation>பெரிதாக்கம் &amp;பன்னிங்</translation>
+        <translation>பார்வையை &amp;நகர்த்து</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="246"/>
@@ -2368,7 +2368,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="213"/>
         <source>Bisector</source>
-        <translation>இருபாகுப் பிரிப்பி</translation>
+        <translation>இருசமவெட்டி</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="214"/>
@@ -2594,7 +2594,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="323"/>
         <source>&amp;Polyline</source>
-        <translation>&amp;பலகோடு</translation>
+        <translation>&amp;பாலிலைன்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="324"/>
@@ -2624,12 +2624,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="329"/>
         <source>Create &amp;Equidistant Polylines</source>
-        <translation>&amp;சமதூர பலகோடுகளை உருவாக்கவும்</translation>
+        <translation>&amp;சமதூர பாலிலைன்களை உருவாக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="331"/>
         <source>Polyline Arcs to Chords</source>
-        <translation>பலகோடு வளைவுகளை நாண்களாக</translation>
+        <translation>பாலிலைன் வளைவுகளை நாண்களாக</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="339"/>
@@ -2689,7 +2689,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="378"/>
         <source>&amp;Attributes</source>
-        <translation>&amp;பண்புகள்</translation>
+        <translation>&amp;பண்புக்கூறுகள்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="379"/>
@@ -2994,7 +2994,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="396"/>
         <source>&amp;Explode Text into Letters</source>
-        <translation>&amp;உரையை எழுத்துக்களாக வெடிக்கச் செய்</translation>
+        <translation>&amp;உரையை எழுத்துக்களாகப் பிரி</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="583"/>
@@ -3159,12 +3159,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="330"/>
         <source>Polyline from Existing &amp;Segments</source>
-        <translation>இருக்கும் &amp;பகுதிகளிலிருந்து பலகோடு</translation>
+        <translation>இருக்கும் &amp;பகுதிகளிலிருந்து பாலிலைன்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="332"/>
         <source>Polyline Change Segment Type</source>
-        <translation>பலகோடு பகுதி வகையை மாற்று</translation>
+        <translation>பாலிலைன் பகுதி வகையை மாற்று</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="343"/>
@@ -3431,17 +3431,17 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="74"/>
         <source>Polyline</source>
-        <translation>பலகோடு</translation>
+        <translation>பாலிலைன்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="74"/>
         <source>Polyline drawing commands</source>
-        <translation>பலகோடு வரைதல் கட்டளைகள்</translation>
+        <translation>பாலிலைன் வரைதல் கட்டளைகள்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="75"/>
         <source>PenTB</source>
-        <translation>பேனாTB</translation>
+        <translation>பேனா கருவிப்பட்டை</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="75"/>
@@ -3712,27 +3712,27 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="456"/>
         <source>Snap on Entity</source>
-        <translation>உருவில் பொருத்து</translation>
+        <translation>பொருளில் ஸ்னாப்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="457"/>
         <source>Snap Center</source>
-        <translation>மையத்தில் பொருத்து</translation>
+        <translation>மையத்தில் ஸ்னாப்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="458"/>
         <source>Snap Middle</source>
-        <translation>நடுவில் பொருத்து</translation>
+        <translation>நடுவில் ஸ்னாப்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="459"/>
         <source>Snap Distance</source>
-        <translation>தூரத்தில் பொருத்து</translation>
+        <translation>தூரத்தில் ஸ்னாப்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="460"/>
         <source>Snap Intersection</source>
-        <translation>வெட்டும் புள்ளியில் பொருத்து</translation>
+        <translation>வெட்டுப்புள்ளியில் ஸ்னாப்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="525"/>
@@ -3982,12 +3982,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="720"/>
         <source>Zoom &amp;In</source>
-        <translation>அதிகப்படுத்து</translation>
+        <translation>&amp;பெரிதாக்கு</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="721"/>
         <source>Zoom &amp;Out</source>
-        <translation>குறைத்து</translation>
+        <translation>&amp;சிறிதாக்கு</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="722"/>
@@ -4355,13 +4355,13 @@ Point: (%8 , %9)</source>
         <translation type="unfinished">தூரம்: %1
 கார்ட்டீசியன்: (%2 , %3)
 துருவ: (%4 &lt; %5)
-உருவில் உள்ள புள்ளி: (%6 , %7)
+பொருளில் உள்ள புள்ளி: (%6 , %7)
 புள்ளி: (%8 , %9)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_action_info_dist_point_to_entity.cpp" line="301"/>
         <source>Specify entity</source>
-        <translation type="unfinished">உருவைக் குறிப்பிடவும்</translation>
+        <translation type="unfinished">பொருளைக் குறிப்பிடவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_action_info_dist_point_to_entity.cpp" line="301"/>
@@ -4377,7 +4377,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/info/lc_action_info_dist_point_to_entity.cpp" line="305"/>
         <source>Relative point is on entity</source>
-        <translation type="unfinished">தொடர்புடைய புள்ளி உருவில் உள்ளது</translation>
+        <translation type="unfinished">தொடர்புடைய புள்ளி பொருளில் உள்ளது</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_action_info_dist_point_to_entity.cpp" line="333"/>
@@ -4481,12 +4481,12 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfoproperties.cpp" line="172"/>
         <source>Select entity</source>
-        <translation>உருப்படி ஒன்றைத் தேர்ந்தெடுக்கவும்</translation>
+        <translation>ஒரு பொருளைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfoproperties.cpp" line="172"/>
         <source>Select child entities</source>
-        <translation>துணை உருப்படிகளைத் தேர்ந்தெடுக்கவும்</translation>
+        <translation>துணை பொருள்களைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
 </context>
 <context>
@@ -4696,7 +4696,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickdistance.cpp" line="292"/>
         <source>Entity geometry length</source>
-        <translation>உருவத்தின் நீளம்</translation>
+        <translation>பொருளின் நீளம்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickdistance.cpp" line="292"/>
@@ -4805,7 +4805,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="150"/>
         <source>Entity</source>
-        <translation>உரு</translation>
+        <translation>பொருள்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="154"/>
@@ -4825,7 +4825,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="181"/>
         <source>Offset:</source>
-        <translation>இடைவெளி:</translation>
+        <translation>விலகல்:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="245"/>
@@ -4878,7 +4878,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_ref.cpp" line="118"/>
         <source>Offset:</source>
-        <translation>இடைவெளி:</translation>
+        <translation>விலகல்:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_ref.cpp" line="119"/>
@@ -4936,7 +4936,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_single.cpp" line="115"/>
         <source>Offset:</source>
-        <translation>இடைவெளி:</translation>
+        <translation>விலகல்:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_single.cpp" line="201"/>
@@ -4946,7 +4946,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_single.cpp" line="204"/>
         <source>Entity</source>
-        <translation>உரு</translation>
+        <translation>பொருள்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_single.cpp" line="208"/>
@@ -5004,7 +5004,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_attributes.cpp" line="72"/>
         <source>Modify attributes immediately after selecting</source>
-        <translation type="unfinished">தேர்ந்தெடுத்த பிறகு உடனடியாக அம்சங்களை மாற்றியமைக்கவும்</translation>
+        <translation type="unfinished">தேர்ந்தெடுத்த பிறகு உடனடியாக பண்புக்கூறுகளை மாற்றியமைக்கவும்</translation>
     </message>
 </context>
 <context>
@@ -5171,7 +5171,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_cut.cpp" line="125"/>
         <source>Entity must be a line, arc, circle, ellipse or interpolation spline.</source>
-        <translation type="unfinished">பொருள் ஒரு கோடு, வில், வட்டம், நீள்வட்டம் அல்லது இடைச்செருகல் ஸ்ப்லைன் ஆக இருக்க வேண்டும்.</translation>
+        <translation type="unfinished">பொருள் ஒரு கோடு, வளைவு, வட்டம், நீள்வட்டம் அல்லது இடைச்செருகல் ஸ்ப்லைன் ஆக இருக்க வேண்டும்.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_cut.cpp" line="134"/>
@@ -5217,7 +5217,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_delete_free.cpp" line="83"/>
         <source>Parent of second entity is not a polyline</source>
-        <translation type="unfinished">இரண்டாவது பொருளின் பெற்றோர் ஒரு பலகோடு அல்ல</translation>
+        <translation type="unfinished">இரண்டாவது பொருளின் பெற்றோர் ஒரு பாலிலைன் அல்ல</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_delete_free.cpp" line="87"/>
@@ -5232,7 +5232,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_delete_free.cpp" line="109"/>
         <source>Parent of first entity is not a polyline</source>
-        <translation type="unfinished">முதல் பொருளின் பெற்றோர் ஒரு பலகோடு அல்ல</translation>
+        <translation type="unfinished">முதல் பொருளின் பெற்றோர் ஒரு பாலிலைன் அல்ல</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_delete_free.cpp" line="113"/>
@@ -6152,7 +6152,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/lc_action_options_properties_filler_base.cpp" line="294"/>
         <source>Snap Distance</source>
-        <translation type="unfinished">தூரத்தில் பொருத்து</translation>
+        <translation type="unfinished">தூரத்தில் ஸ்னாப்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/lc_action_options_properties_filler_base.cpp" line="294"/>
@@ -6221,12 +6221,12 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/pen/lc_actionpenapply.cpp" line="183"/>
         <source>Specify entity to pick the pen</source>
-        <translation>பென் பயன்படுத்த வேண்டிய பொருளைக் குறிப்பிடவும்.</translation>
+        <translation>பேனாவைத் தேர்ந்தெடுக்க வேண்டிய பொருளைக் குறிப்பிடவும்.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pen/lc_actionpenapply.cpp" line="186"/>
         <source>Specify entity to apply pen</source>
-        <translation>பென் பயன்படுத்த வேண்டிய பொருளைக் குறிப்பிடவும்.</translation>
+        <translation>பேனாவைப் பயன்படுத்த வேண்டிய பொருளைக் குறிப்பிடவும்.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pen/lc_actionpenapply.cpp" line="186"/>
@@ -6239,7 +6239,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/pen/lc_actionpenpick.cpp" line="87"/>
         <source>Specify entity to pick the pen</source>
-        <translation>பென்ஸைத் தேர்ந்தெடுக்க வேண்டிய பொருளைக் குறிப்பிடவும்</translation>
+        <translation>பேனாவைத் தேர்ந்தெடுக்க வேண்டிய பொருளைக் குறிப்பிடவும்</translation>
     </message>
 </context>
 <context>
@@ -6253,7 +6253,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_add.cpp" line="113"/>
         <source>Entity must be a polyline.</source>
-        <translation type="unfinished">பொருள் பலகோடாக இருக்க வேண்டும்.</translation>
+        <translation type="unfinished">பொருள் பாலிலைனாக இருக்க வேண்டும்.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_add.cpp" line="142"/>
@@ -6268,7 +6268,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_add.cpp" line="180"/>
         <source>Specify polyline to add nodes</source>
-        <translation type="unfinished">முனைகளைச் சேர்க்க பலகோட்டை குறிப்பிடவும்</translation>
+        <translation type="unfinished">முனைகளைச் சேர்க்க பாலிலைனை குறிப்பிடவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_add.cpp" line="183"/>
@@ -6286,17 +6286,17 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_append.cpp" line="128"/>
         <source>Entity must be a polyline.</source>
-        <translation type="unfinished">பொருள் பலகோடாக இருக்க வேண்டும்.</translation>
+        <translation type="unfinished">பொருள் பாலிலைனாக இருக்க வேண்டும்.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_append.cpp" line="132"/>
         <source>Can not append nodes in a closed polyline.</source>
-        <translation type="unfinished">மூடிய பலகோட்டில் முனைகளை இணைக்க முடியாது.</translation>
+        <translation type="unfinished">மூடிய பாலிலைனில் முனைகளை இணைக்க முடியாது.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_append.cpp" line="171"/>
         <source>Click somewhere near the beginning or end of existing polyline.</source>
-        <translation type="unfinished">இருக்கும் பலகோட்டின் தொடக்கம் அல்லது முடிவுக்கு அருகில் எங்காவது கிளிக் செய்யவும்.</translation>
+        <translation type="unfinished">இருக்கும் பாலிலைனின் தொடக்கம் அல்லது முடிவுக்கு அருகில் எங்காவது கிளிக் செய்யவும்.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_append.cpp" line="294"/>
@@ -6306,7 +6306,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_append.cpp" line="309"/>
         <source>Specify the polyline somewhere near the beginning or end point</source>
-        <translation type="unfinished">பலகோட்டை தொடக்கம் அல்லது முடிவுப் புள்ளிக்கு அருகில் குறிப்பிடவும்</translation>
+        <translation type="unfinished">பாலிலைனை தொடக்கம் அல்லது முடிவுப் புள்ளிக்கு அருகில் குறிப்பிடவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_append.cpp" line="329"/>
@@ -6319,7 +6319,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_arcs_to_lines.cpp" line="116"/>
         <source>Specify polyline with arc segments</source>
-        <translation>வில் பகுதிகளைக் கொண்ட பாலிலைனைக் குறிப்பிடவும்</translation>
+        <translation>வளைவுப் பகுதிகளைக் கொண்ட பாலிலைனைக் குறிப்பிடவும்</translation>
     </message>
 </context>
 <context>
@@ -6356,7 +6356,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node.cpp" line="107"/>
         <source>Entity must be a polyline.</source>
-        <translation type="unfinished">பொருள் பலகோடாக இருக்க வேண்டும்.</translation>
+        <translation type="unfinished">பொருள் பாலிலைனாக இருக்க வேண்டும்.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node.cpp" line="132"/>
@@ -6371,7 +6371,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node.cpp" line="155"/>
         <source>Specify polyline to delete node</source>
-        <translation type="unfinished">முனையை நீக்க பலகோட்டை குறிப்பிடவும்</translation>
+        <translation type="unfinished">முனையை நீக்க பாலிலைனை குறிப்பிடவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node.cpp" line="158"/>
@@ -6390,7 +6390,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node_between.cpp" line="131"/>
         <source>Entity must be a polyline.</source>
-        <translation type="unfinished">பொருள் பலகோடாக இருக்க வேண்டும்.</translation>
+        <translation type="unfinished">பொருள் பாலிலைனாக இருக்க வேண்டும்.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node_between.cpp" line="159"/>
@@ -6407,17 +6407,17 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node_between.cpp" line="174"/>
         <source>No polyline found.</source>
-        <translation type="unfinished">பலகோடு கிடைக்கவில்லை.</translation>
+        <translation type="unfinished">பாலிலைன் கிடைக்கவில்லை.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node_between.cpp" line="195"/>
         <source>At least two segments of polyline should be between selected points.</source>
-        <translation type="unfinished">தேர்ந்தெடுக்கப்பட்ட புள்ளிகளுக்கு இடையில் குறைந்தது இரண்டு பலகோடு பகுதிகள் இருக்க வேண்டும்.</translation>
+        <translation type="unfinished">தேர்ந்தெடுக்கப்பட்ட புள்ளிகளுக்கு இடையில் குறைந்தது இரண்டு பாலிலைன் பகுதிகள் இருக்க வேண்டும்.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node_between.cpp" line="213"/>
         <source>Specify polyline to delete between two nodes</source>
-        <translation type="unfinished">இரண்டு முனைகளுக்கு இடையில் நீக்க பலகோட்டை குறிப்பிடவும்</translation>
+        <translation type="unfinished">இரண்டு முனைகளுக்கு இடையில் நீக்க பாலிலைனை குறிப்பிடவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node_between.cpp" line="216"/>
@@ -6440,12 +6440,12 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_equidistant.cpp" line="338"/>
         <source>Entity must be a polyline.</source>
-        <translation type="unfinished">பொருள் பலகோடாக இருக்க வேண்டும்.</translation>
+        <translation type="unfinished">பொருள் பாலிலைனாக இருக்க வேண்டும்.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_equidistant.cpp" line="403"/>
         <source>Choose the original polyline</source>
-        <translation type="unfinished">அசல் பலகோட்டைத் தேர்ந்தெடுக்கவும்</translation>
+        <translation type="unfinished">அசல் பாலிலைனைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
 </context>
 <context>
@@ -6454,7 +6454,7 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_from_segment.cpp" line="62"/>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_from_segment.cpp" line="82"/>
         <source>Polyline created</source>
-        <translation type="unfinished">பலகோடு உருவாக்கப்பட்டது</translation>
+        <translation type="unfinished">பாலிலைன் உருவாக்கப்பட்டது</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_from_segment.cpp" line="326"/>
@@ -6464,12 +6464,12 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_from_segment.cpp" line="329"/>
         <source>Entity can not be a closed polyline.</source>
-        <translation type="unfinished">பொருள் மூடிய பலகோடாக இருக்க முடியாது.</translation>
+        <translation type="unfinished">பொருள் மூடிய பாலிலைனாக இருக்க முடியாது.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_from_segment.cpp" line="352"/>
         <source>Choose one of the segments on the original polyline</source>
-        <translation type="unfinished">அசல் பலகோட்டில் உள்ள பகுதிகளில் ஒன்றைத் தேர்ந்தெடுக்கவும்</translation>
+        <translation type="unfinished">அசல் பாலிலைனில் உள்ள பகுதிகளில் ஒன்றைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
 </context>
 <context>
@@ -6482,22 +6482,22 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_trim.cpp" line="118"/>
         <source>Entity must be a polyline.</source>
-        <translation type="unfinished">பொருள் பலகோடாக இருக்க வேண்டும்.</translation>
+        <translation type="unfinished">பொருள் பாலிலைனாக இருக்க வேண்டும்.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_trim.cpp" line="143"/>
         <source>First segment should be on selected polyline.</source>
-        <translation type="unfinished">முதல் பகுதி தேர்ந்தெடுக்கப்பட்ட பலகோட்டில் இருக்க வேண்டும்.</translation>
+        <translation type="unfinished">முதல் பகுதி தேர்ந்தெடுக்கப்பட்ட பாலிலைனில் இருக்க வேண்டும்.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_trim.cpp" line="155"/>
         <source>Second segment should be on selected polyline and not equal to first one.</source>
-        <translation type="unfinished">இரண்டாவது பகுதி தேர்ந்தெடுக்கப்பட்ட பலகோட்டில் இருக்க வேண்டும் மற்றும் முதல் ஒன்றுக்கு சமமாக இருக்கக் கூடாது.</translation>
+        <translation type="unfinished">இரண்டாவது பகுதி தேர்ந்தெடுக்கப்பட்ட பாலிலைனில் இருக்க வேண்டும் மற்றும் முதல் ஒன்றுக்கு சமமாக இருக்கக் கூடாது.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_trim.cpp" line="188"/>
         <source>Specify polyline to trim</source>
-        <translation type="unfinished">வெட்ட வேண்டிய பலகோட்டை குறிப்பிடவும்</translation>
+        <translation type="unfinished">வெட்ட வேண்டிய பாலிலைனை குறிப்பிடவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_trim.cpp" line="191"/>
@@ -6545,17 +6545,17 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="246"/>
         <source>Select/Deselect entities</source>
-        <translation>உருப்படிகளைத் தேர்ந்தெடுக்கவும் / தேர்ந்தெடுக்காமல் நீக்கவும்</translation>
+        <translation>பொருள்களைத் தேர்ந்தெடுக்கவும் / தேர்ந்தெடுக்காமல் நீக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="246"/>
         <source>Select Intersecting</source>
-        <translation>வெட்டும் உருப்படிகளைத் தேர்ந்தெடுக்கவும்</translation>
+        <translation>வெட்டும் பொருள்களைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/lc_actionpreselectionawarebase.cpp" line="276"/>
         <source>No valid entities selected, select them first</source>
-        <translation>எந்த சரியான உருப்படிகளும் தேர்ந்தெடுக்கப்படவில்லை, முதலில் அவற்றை தேர்ந்தெடுக்கவும்</translation>
+        <translation>எந்த சரியான பொருள்களும் தேர்ந்தெடுக்கப்படவில்லை, முதலில் அவற்றை தேர்ந்தெடுக்கவும்</translation>
     </message>
 </context>
 <context>
@@ -6563,12 +6563,12 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_action_spline_remove_points.cpp" line="197"/>
         <source>Select spline or spline points entity</source>
-        <translation>ஸ்ப்லைன் அல்லது ஸ்ப்லைன் புள்ளிகள் உருப்படியைத் தேர்ந்தெடுக்கவும்</translation>
+        <translation>ஸ்ப்லைன் அல்லது ஸ்ப்லைன் புள்ளிகள் பொருளைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_action_spline_remove_points.cpp" line="201"/>
         <source>Select control point of entity</source>
-        <translation>உருப்படியின் கட்டுப்பாட்டு புள்ளியைத் தேர்ந்தெடுக்கவும்</translation>
+        <translation>பொருளின் கட்டுப்பாட்டு புள்ளியைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
 </context>
 <context>
@@ -7162,7 +7162,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_filler.cpp" line="34"/>
         <source>If checked, entities will be scaled if necessary. Otherwise, they will be just positioned and rotated.</source>
-        <translation type="unfinished">இந்த பெட்டி தேர்வு செய்யப்பட்டால், தேவைப்பட்டால் கூறுகள் அளவிடப்படும். இல்லையெனில், அவை வெறுமனே நிலைநிறுத்தப்பட்டு சுழற்றப்படும்.</translation>
+        <translation type="unfinished">இந்த பெட்டி தேர்வு செய்யப்பட்டால், தேவைப்பட்டால் பொருள்கள் அளவிடப்படும். இல்லையெனில், அவை வெறுமனே நிலைநிறுத்தப்பட்டு சுழற்றப்படும்.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_filler.cpp" line="42"/>
@@ -7235,7 +7235,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="76"/>
         <source>If checked, entities will be scaled if necessary. Otherwise, they will be just positioned and rotated.</source>
-        <translation type="unfinished">இந்த பெட்டி தேர்வு செய்யப்பட்டால், தேவைப்பட்டால் கூறுகள் அளவிடப்படும். இல்லையெனில், அவை வெறுமனே நிலைநிறுத்தப்பட்டு சுழற்றப்படும்.</translation>
+        <translation type="unfinished">இந்த பெட்டி தேர்வு செய்யப்பட்டால், தேவைப்பட்டால் பொருள்கள் அளவிடப்படும். இல்லையெனில், அவை வெறுமனே நிலைநிறுத்தப்பட்டு சுழற்றப்படும்.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="79"/>
@@ -7368,7 +7368,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_single_options_widget.ui" line="157"/>
         <source>Defines the way of selected entities alignment.</source>
-        <translation type="unfinished">தேர்ந்தெடுக்கப்பட்ட உருவங்களின் சீரமைவு முறையை வரையறுக்கிறது.</translation>
+        <translation type="unfinished">தேர்ந்தெடுக்கப்பட்ட பொருள்களின் சீரமைவு முறையை வரையறுக்கிறது.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_single_options_widget.ui" line="161"/>
@@ -7398,7 +7398,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_single_options_widget.ui" line="240"/>
         <source>Center entities horizontally</source>
-        <translation type="unfinished">உருவங்களை கிடைமட்டமாக மையத்தில் வைக்கவும்</translation>
+        <translation type="unfinished">பொருள்களை கிடைமட்டமாக மையத்தில் வைக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_single_options_widget.ui" line="260"/>
@@ -7682,7 +7682,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="87"/>
         <source>X Coordinate of arc&apos;s center</source>
-        <translation>வில்லின் மையத்தின் X ஆயத்தொலைவு</translation>
+        <translation>வளைவின் மையத்தின் X ஆயத்தொலைவு</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="112"/>
@@ -7697,7 +7697,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="153"/>
         <source>Y Coordinate of arc&apos;s center</source>
-        <translation>வில்லின் மையத்தின் Y ஆயத்தொலைவு</translation>
+        <translation>வளைவின் மையத்தின் Y ஆயத்தொலைவு</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="172"/>
@@ -7707,7 +7707,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="194"/>
         <source>Radius of arc</source>
-        <translation>வில்லின் ஆரம்</translation>
+        <translation>வளைவின் ஆரம்</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="201"/>
@@ -7722,7 +7722,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="249"/>
         <source>Diameter of arc</source>
-        <translation>வில்லின் விட்டம்</translation>
+        <translation>வளைவின் விட்டம்</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="256"/>
@@ -7732,17 +7732,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="282"/>
         <source>Arc Length:</source>
-        <translation>வில்லின் நீளம்:</translation>
+        <translation>வளைவின் நீளம்:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="304"/>
         <source>Length of the arc</source>
-        <translation>வில்லின் நீளம்</translation>
+        <translation>வளைவின் நீளம்</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="311"/>
         <source>Pick arc length value from the drawing</source>
-        <translation>வரைபடத்திலிருந்து வில்லின் நீள மதிப்பைத் தேர்ந்தெடுக்கவும்</translation>
+        <translation>வரைபடத்திலிருந்து வளைவின் நீள மதிப்பைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="337"/>
@@ -7752,7 +7752,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="359"/>
         <source>Sweep angle of the arc (degrees)</source>
-        <translation>வில்லின் சுழற்சி கோணம் (டிகிரி)</translation>
+        <translation>வளைவின் சுழற்சி கோணம் (டிகிரி)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="366"/>
@@ -7762,17 +7762,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="392"/>
         <source>Bulge:</source>
-        <translation>வளைவு:</translation>
+        <translation>புடைப்பு:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="414"/>
         <source>Bulge (sagitta) of the arc</source>
-        <translation>வட்டத்தின் வளைவு (சகிட்டா)</translation>
+        <translation>வளைவின் புடைப்பு (சகிட்டா)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="421"/>
         <source>Pick bulge value from the drawing</source>
-        <translation>வரைபடத்திலிருந்து வளைவு மதிப்பைத் தேர்ந்தெடுக்கவும்</translation>
+        <translation>வரைபடத்திலிருந்து புடைப்பு மதிப்பைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="447"/>
@@ -7782,7 +7782,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="469"/>
         <source>Starting angle of arc</source>
-        <translation>வில்லின் தொடக்கக் கோணம்</translation>
+        <translation>வளைவின் தொடக்கக் கோணம்</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="476"/>
@@ -7798,12 +7798,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="524"/>
         <source>End angle of arc</source>
-        <translation>வில்லின் இறுதி கோணம்</translation>
+        <translation>வளைவின் இறுதி கோணம்</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="567"/>
         <source>Defines whether arc is reversed (clockwise)</source>
-        <translation>வில் தலைகீழாக (கடிகாரத் திசையில்) உள்ளதா என்பதை வரையறுக்கிறது</translation>
+        <translation>வளைவு தலைகீழாக (கடிகாரத் திசையில்) உள்ளதா என்பதை வரையறுக்கிறது</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="570"/>
@@ -8889,42 +8889,42 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="104"/>
         <source>Dimension Styles Export Error</source>
-        <translation>அளவீட்டு பாணி ஏற்றுமதி பிழை</translation>
+        <translation>பரிமாண பாணி ஏற்றுமதி பிழை</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="105"/>
         <source>Can&apos;t open provided file for writing - check that provided location is writable. Dimension styles were not exported.</source>
-        <translation>கொடுக்கப்பட்ட கோப்பை எழுத திறக்க முடியவில்லை - கொடுக்கப்பட்ட இடம் எழுதக்கூடியதாக உள்ளதா என்று சரிபார்க்கவும். அளவீட்டு பாணிகள் ஏற்றுமதி செய்யப்படவில்லை.</translation>
+        <translation>கொடுக்கப்பட்ட கோப்பை எழுத திறக்க முடியவில்லை - கொடுக்கப்பட்ட இடம் எழுதக்கூடியதாக உள்ளதா என்று சரிபார்க்கவும். பரிமாண பாணிகள் ஏற்றுமதி செய்யப்படவில்லை.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="114"/>
         <source>Dimension Styles Export</source>
-        <translation>அளவீட்டு பாணி ஏற்றுமதி</translation>
+        <translation>பரிமாண பாணி ஏற்றுமதி</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="114"/>
         <source>Dimensions Styles were exported.</source>
-        <translation>அளவீட்டு பாணிகள் ஏற்றுமதி செய்யப்பட்டன.</translation>
+        <translation>பரிமாண பாணிகள் ஏற்றுமதி செய்யப்பட்டன.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="125"/>
         <source>Dimension Styles Import Error</source>
-        <translation>அளவீட்டு பாணி இறக்குமதி பிழை</translation>
+        <translation>பரிமாண பாணி இறக்குமதி பிழை</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="127"/>
         <source>Can&apos;t open provided file for reading. Dimension styles were not imported.</source>
-        <translation>கொடுக்கப்பட்ட கோப்பை படிக்க திறக்க முடியவில்லை. அளவீட்டு பாணிகள் இறக்குமதி செய்யப்படவில்லை.</translation>
+        <translation>கொடுக்கப்பட்ட கோப்பை படிக்க திறக்க முடியவில்லை. பரிமாண பாணிகள் இறக்குமதி செய்யப்படவில்லை.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="133"/>
         <source>Unexpected error during dimension styles parsing. Message:</source>
-        <translation>அளவீட்டு பாணிகளைப் பகுப்பாய்வு செய்யும் போது எதிர்பாராத பிழை ஏற்பட்டது. செய்தி:</translation>
+        <translation>பரிமாண பாணிகளைப் பகுப்பாய்வு செய்யும் போது எதிர்பாராத பிழை ஏற்பட்டது. செய்தி:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="137"/>
         <source>Unexpected format of file, it does not contains LibreCAD dimension styles.</source>
-        <translation>கோப்பின் எதிர்பாராத வடிவம், இதில் LibreCAD அளவீட்டு பாணிகள் இல்லை.</translation>
+        <translation>கோப்பின் எதிர்பாராத வடிவம், இதில் LibreCAD பரிமாண பாணிகள் இல்லை.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="143"/>
@@ -9093,7 +9093,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="67"/>
         <source>Sets the linetype of the dimension line. (DIMLTYPE system variable)</source>
-        <translation>அளவீட்டு கோட்டின் கோட்டு வகையை அமைக்கிறது. (DIMLTYPE அமைப்பு மாறி)</translation>
+        <translation>பரிமாணக் கோட்டின் கோட்டு வகையை அமைக்கிறது. (DIMLTYPE அமைப்பு மாறி)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="88"/>
@@ -9103,7 +9103,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="137"/>
         <source>Sets the lineweight of the dimension line. (DIMLWD system variable)</source>
-        <translation>அளவீட்டு கோட்டின் கோட்டு தடிமனை அமைக்கிறது. (DIMLWD அமைப்பு மாறி)</translation>
+        <translation>பரிமாணக் கோட்டின் கோட்டு தடிமனை அமைக்கிறது. (DIMLWD அமைப்பு மாறி)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="111"/>
@@ -9113,7 +9113,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="101"/>
         <source>Specifies a distance to extend the dimension line past the extension line when you use oblique, architectural, tick, integral, and no marks for arrowheads. (DIMDLE system variable)</source>
-        <translation>சாய்வான, கட்டிடக்கலை, டிக், ஒருங்கிணைந்த மற்றும் அம்புக்குறிக்கு எந்த அடையாளமும் இல்லாத அளவீட்டு குறிகளாகப் பயன்படுத்தும்போது, நீட்டிப்புக் கோட்டிற்கு அப்பால் அளவீட்டு கோட்டை எவ்வளவு தூரம் நீட்டிக்க வேண்டும் என்பதைக் குறிப்பிடுகிறது. (DIMDLE அமைப்பு மாறி)</translation>
+        <translation>சாய்வான, கட்டிடக்கலை, டிக், ஒருங்கிணைந்த மற்றும் அம்புக்குறிக்கு எந்த அடையாளமும் இல்லாத அம்புக்குறிகளாகப் பயன்படுத்தும்போது, நீட்டிப்புக் கோட்டிற்கு அப்பால் பரிமாணக் கோட்டை எவ்வளவு தூரம் நீட்டிக்க வேண்டும் என்பதைக் குறிப்பிடுகிறது. (DIMDLE அமைப்பு மாறி)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="162"/>
@@ -9123,12 +9123,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="191"/>
         <source>Suppresses display of first dimension line (DIMSD1 system variable)</source>
-        <translation>முதல் அளவீட்டு கோட்டின் காட்சிப்படுத்தலைத் தடுக்கிறது (DIMSD1 அமைப்பு மாறி)</translation>
+        <translation>முதல் பரிமாணக் கோட்டின் காட்சிப்படுத்தலைத் தடுக்கிறது (DIMSD1 அமைப்பு மாறி)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="194"/>
         <source>Suppress Dim line 1 and arrow</source>
-        <translation>அளவீட்டு கோடு 1 மற்றும் அம்புக்குறியை மறை</translation>
+        <translation>பரிமாணக் கோடு 1 மற்றும் அம்புக்குறியை மறை</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="175"/>
@@ -9183,12 +9183,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="368"/>
         <source>Extend beyond dim lines:</source>
-        <translation>அளவீட்டு கோடுகளுக்கு அப்பால் நீட்டித்தல்:</translation>
+        <translation>பரிமாணக் கோடுகளுக்கு அப்பால் நீட்டித்தல்:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="285"/>
         <source>Specifies a distance to extend the extension lines above the dimension line. (DIMEXE system variable)</source>
-        <translation>நீட்டிப்புக் கோடுகளை அளவீட்டுக் கோட்டிற்கு மேலே எவ்வளவு தூரம் நீட்டிக்க வேண்டும் என்பதைக் குறிப்பிடுகிறது. (DIMEXE அமைப்பு மாறி)</translation>
+        <translation>நீட்டிப்புக் கோடுகளை பரிமாணக் கோட்டிற்கு மேலே எவ்வளவு தூரம் நீட்டிக்க வேண்டும் என்பதைக் குறிப்பிடுகிறது. (DIMEXE அமைப்பு மாறி)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="375"/>
@@ -9198,7 +9198,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="404"/>
         <source>Sets the distance to offset the extension lines from the points on the drawing that define the dimension. (DIMEXO system variable)</source>
-        <translation>அளவீட்டை வரையறுக்கும் வரைபடத்தின் புள்ளிகளிலிருந்து நீட்டிப்புக் கோடுகளை எவ்வளவு தூரம் விலக்க வேண்டும் என்பதைக் குறிப்பிடுகிறது. (DIMEXO அமைப்பு மாறி)</translation>
+        <translation>பரிமாணத்தை வரையறுக்கும் வரைபடத்தின் புள்ளிகளிலிருந்து நீட்டிப்புக் கோடுகளை எவ்வளவு தூரம் விலக்க வேண்டும் என்பதைக் குறிப்பிடுகிறது. (DIMEXO அமைப்பு மாறி)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="223"/>
@@ -9208,7 +9208,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="388"/>
         <source>Sets the total length of the extension lines starting from the dimension line toward the dimension origin. (DIMFXL system variable)</source>
-        <translation>அளவீட்டுக் கோட்டிலிருந்து தொடங்கி, அளவீட்டின் ஆரம்பம் வரை நீட்டிப்புக் கோடுகளின் மொத்த நீளத்தைக் குறிப்பிடுகிறது. (DIMFXL அமைப்பு மாறி)</translation>
+        <translation>பரிமாணக் கோட்டிலிருந்து தொடங்கி, பரிமாணத்தின் தொடக்கப் புள்ளி வரை நீட்டிப்புக் கோடுகளின் மொத்த நீளத்தைக் குறிப்பிடுகிறது. (DIMFXL அமைப்பு மாறி)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="345"/>
@@ -9457,7 +9457,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="788"/>
         <source>Sets the color for the text background in dimensions (DIMTFILLCLR system variable)</source>
-        <translation>அளவீடுகளில் உள்ள உரை பின்னணியின் நிறத்தை அமைக்கிறது (DIMTFILLCLR அமைப்பு மாறி).</translation>
+        <translation>பரிமாணங்களில் உள்ள உரை பின்னணியின் நிறத்தை அமைக்கிறது (DIMTFILLCLR அமைப்பு மாறி).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="795"/>
@@ -9472,7 +9472,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="809"/>
         <source>Sets the scale of fractions relative to dimension text. (DIMTFAC system variable)</source>
-        <translation>அளவீட்டு உரையுடன் ஒப்பிடும்போது பின்னங்களின் அளவை அமைக்கிறது. (DIMTFAC அமைப்பு மாறி).</translation>
+        <translation>பரிமாண உரையுடன் ஒப்பிடும்போது பின்னங்களின் அளவை அமைக்கிறது. (DIMTFAC அமைப்பு மாறி).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="822"/>
@@ -9482,12 +9482,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="829"/>
         <source>Sets the height of the current dimension text style. (DIMTXT system variable)</source>
-        <translation>தற்போதைய அளவீட்டு உரை பாணியின் உயரத்தை அமைக்கிறது. (DIMTXT அமைப்பு மாறி).</translation>
+        <translation>தற்போதைய பரிமாண உரை பாணியின் உயரத்தை அமைக்கிறது. (DIMTXT அமைப்பு மாறி).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="842"/>
         <source>Sets the color for the dimension text (DIMCLRT system variable)</source>
-        <translation>அளவீட்டு உரைக்கான நிறத்தை அமைக்கிறது (DIMCLRT அமைப்பு மாறி).</translation>
+        <translation>பரிமாண உரைக்கான நிறத்தை அமைக்கிறது (DIMCLRT அமைப்பு மாறி).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="849"/>
@@ -9634,7 +9634,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1007"/>
         <source>Controls the vertical placement of dimension text in relation to the dimension line. (DIMTAD system variable)</source>
-        <translation>அளவீட்டுக் கோட்டிற்கு ஏற்ப அளவீட்டு உரையின் செங்குத்து நிலையை இது கட்டுப்படுத்துகிறது. (DIMTAD மாறி)</translation>
+        <translation>பரிமாணக் கோட்டிற்கு ஏற்ப பரிமாண உரையின் செங்குத்து நிலையை இது கட்டுப்படுத்துகிறது. (DIMTAD மாறி)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1016"/>
@@ -9924,12 +9924,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1460"/>
         <source>Applies the measurement scale factor only to dimensions created in layout viewports. </source>
-        <translation>அமைப்பு காட்சிப் பலகங்களில் உருவாக்கப்பட்ட பரிமாணங்களுக்கு மட்டுமே அளவீட்டு அளவுகோல் காரணியைப் பயன்படுத்துகிறது.</translation>
+        <translation>தளவமைப்பு காட்சிப் பலகங்களில் உருவாக்கப்பட்ட பரிமாணங்களுக்கு மட்டுமே அளவீட்டு அளவுகோல் காரணியைப் பயன்படுத்துகிறது. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1463"/>
         <source>Apply to layout dimensions only</source>
-        <translation>அமைப்பு பரிமாணங்களுக்கு மட்டும் பயன்படுத்து</translation>
+        <translation>தளவமைப்பு பரிமாணங்களுக்கு மட்டும் பயன்படுத்து</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1473"/>
@@ -9939,7 +9939,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1480"/>
         <source>Round off:</source>
-        <translation>வட்டமாக்கு:</translation>
+        <translation>முழுமையாக்கல்:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1487"/>
@@ -10069,7 +10069,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1680"/>
         <source>Includes a suffix to the dimension value sub unit. You can enter text or use control codes to display special symbols.</source>
-        <translation>அளவீட்டு மதிப்பின் துணை அலகுக்கு ஒரு பின்னோட்டை சேர்க்கிறது. சிறப்பு சின்னங்களைக் காண்பிக்க நீங்கள் உரையை உள்ளிடலாம் அல்லது கட்டுப்பாட்டு குறியீடுகளைப் பயன்படுத்தலாம்.</translation>
+        <translation>பரிமாண மதிப்பின் துணை அலகுக்கு ஒரு பின்னோட்டை சேர்க்கிறது. சிறப்பு சின்னங்களைக் காண்பிக்க நீங்கள் உரையை உள்ளிடலாம் அல்லது கட்டுப்பாட்டு குறியீடுகளைப் பயன்படுத்தலாம்.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1707"/>
@@ -10079,7 +10079,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1726"/>
         <source>Adds alternate measurement units to dimension text. Sets the DIMALT system variable to 1.</source>
-        <translation>அளவீட்டு உரையில் மாற்று அளவீட்டு அலகுகளைச் சேர்க்கிறது. DIMALT அமைப்பு மாறியை 1 ஆக அமைக்கிறது.</translation>
+        <translation>பரிமாண உரையில் மாற்று அளவீட்டு அலகுகளைச் சேர்க்கிறது. DIMALT அமைப்பு மாறியை 1 ஆக அமைக்கிறது.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1729"/>
@@ -10174,7 +10174,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1958"/>
         <source>Includes a suffix in the alternate dimension text. You can enter text or use control codes to display special symbols. For example, entering the text cm results in dimension text similar to that shown in the illustration. When you enter a suffix, it overrides any default suffixes. (DIMAPOST system variable)</source>
-        <translation>மாற்று அளவீட்டு உரையில் ஒரு பின்னொட்டைச் சேர்க்கிறது. உரையை உள்ளிடலாம் அல்லது சிறப்பு சின்னங்களைக் காண்பிக்க கட்டுப்பாட்டு குறியீடுகளைப் பயன்படுத்தலாம். எடுத்துக்காட்டாக, &apos;செ.மீ&apos; என்று உள்ளிடுவது, படத்தில் காட்டப்பட்டுள்ளதைப் போன்ற அளவீட்டு உரையை உருவாக்கும். நீங்கள் ஒரு பின்னொட்டை உள்ளிடும்போது, அது எந்த இயல்புநிலை பின்னொட்டையும் மீறுகிறது. (DIMAPOST அமைப்பு மாறி)</translation>
+        <translation>மாற்று பரிமாண உரையில் ஒரு பின்னொட்டைச் சேர்க்கிறது. உரையை உள்ளிடலாம் அல்லது சிறப்பு சின்னங்களைக் காண்பிக்க கட்டுப்பாட்டு குறியீடுகளைப் பயன்படுத்தலாம். எடுத்துக்காட்டாக, &apos;செ.மீ&apos; என்று உள்ளிடுவது, படத்தில் காட்டப்பட்டுள்ளதைப் போன்ற பரிமாண உரையை உருவாக்கும். நீங்கள் ஒரு பின்னொட்டை உள்ளிடும்போது, அது எந்த இயல்புநிலை பின்னொட்டையும் மீறுகிறது. (DIMAPOST அமைப்பு மாறி)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1982"/>
@@ -10404,7 +10404,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="301"/>
         <source>Override entity&apos;s style</source>
-        <translation>உருவத்தின் பாணியை மாற்றவும்</translation>
+        <translation>பொருளின் பாணியை மாற்றவும்</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="318"/>
@@ -11135,7 +11135,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="113"/>
         <source>Polyline</source>
-        <translation>பல கோடுகள்</translation>
+        <translation>பாலிலைன்</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="114"/>
@@ -11170,7 +11170,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="120"/>
         <source>Hatch</source>
-        <translation>ஹாட்ச்</translation>
+        <translation>ஹேட்ச்</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="121"/>
@@ -11205,7 +11205,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="127"/>
         <source>Dimension Arc</source>
-        <translation>பரிமாண வளைவு</translation>
+        <translation>வளைவு பரிமாணம்</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="128"/>
@@ -11215,12 +11215,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="231"/>
         <source>NOTE: Menu assignment will be ignored. It is reserved for &apos;Entity Properties&apos;.</source>
-        <translation>குறிப்பு: மெனு ஒதுக்கீடு புறக்கணிக்கப்படும். இது &apos;உருப்படி பண்புகள்&apos; என்பதற்கு ஒதுக்கப்பட்டுள்ளது.</translation>
+        <translation>குறிப்பு: மெனு ஒதுக்கீடு புறக்கணிக்கப்படும். இது &apos;பொருள் பண்புகள்&apos; என்பதற்கு ஒதுக்கப்பட்டுள்ளது.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="234"/>
         <source>NOTE: Menu assignment will be ignored. It is reserved for &apos;Entity Select&apos;.</source>
-        <translation>குறிப்பு: மெனு ஒதுக்கீடு புறக்கணிக்கப்படும். இது &apos;உருப்படி தேர்வு&apos; என்பதற்கு ஒதுக்கப்பட்டுள்ளது.</translation>
+        <translation>குறிப்பு: மெனு ஒதுக்கீடு புறக்கணிக்கப்படும். இது &apos;பொருள் தேர்வு&apos; என்பதற்கு ஒதுக்கப்பட்டுள்ளது.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="237"/>
@@ -11477,7 +11477,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="54"/>
         <source>Diameter Dimensions</source>
-        <translation>வட்டத்தின் அளவுகள்</translation>
+        <translation>விட்டப் பரிமாணங்கள்</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="59"/>
@@ -12128,7 +12128,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="45"/>
         <source>Pen attributes</source>
-        <translation>பேனா பண்புகள்</translation>
+        <translation>பேனா பண்புக்கூறுகள்</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="58"/>
@@ -12814,7 +12814,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_filler.cpp" line="42"/>
         <source>If selected, bounding box is drawn as polyline</source>
-        <translation type="unfinished">தேர்ந்தெடுக்கப்பட்டால், எல்லை பெட்டி ஒரு பலகோட்டு கோடாக வரையப்படும்</translation>
+        <translation type="unfinished">தேர்ந்தெடுக்கப்பட்டால், எல்லை பெட்டி ஒரு பாலிலைனாக வரையப்படும்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_filler.cpp" line="48"/>
@@ -12857,7 +12857,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_widget.ui" line="63"/>
         <source>If selected, bounding box is drawn as polyline</source>
-        <translation type="unfinished">தேர்ந்தெடுக்கப்பட்டால், எல்லை பெட்டி ஒரு பலகோட்டு கோடாக வரையப்படும்</translation>
+        <translation type="unfinished">தேர்ந்தெடுக்கப்பட்டால், எல்லை பெட்டி ஒரு பாலிலைனாக வரையப்படும்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_widget.ui" line="69"/>
@@ -13265,7 +13265,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_ellipse.ui" line="141"/>
         <source>Y Coordinate of arc&apos;s center</source>
-        <translation>வில்லின் மையத்தின் Y ஆயத்தொலைவு</translation>
+        <translation>வளைவின் மையத்தின் Y ஆயத்தொலைவு</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_ellipse.ui" line="154"/>
@@ -13465,7 +13465,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="97"/>
         <source>Dimension Arc</source>
-        <translation type="unfinished">பரிமாண வளைவு</translation>
+        <translation type="unfinished">வளைவு பரிமாணம்</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="98"/>
@@ -15113,7 +15113,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="279"/>
         <source>Modify layer attributes / rename</source>
-        <translation>அடுக்கு பண்புகளை மாற்றியமை / மறுபெயரிடு</translation>
+        <translation>அடுக்கு பண்புக்கூறுகளை மாற்றியமை / மறுபெயரிடு</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="286"/>
@@ -15153,7 +15153,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="668"/>
         <source>&amp;Edit Layer &amp;Attributes</source>
-        <translation>அடுக்கின் &amp;பண்புகளைத் திருத்து</translation>
+        <translation>அடுக்கின் &amp;பண்புக்கூறுகளைத் திருத்து</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="670"/>
@@ -15572,7 +15572,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="80"/>
         <source>Snap Distance</source>
-        <translation type="unfinished">தூரத்தில் பொருத்து</translation>
+        <translation type="unfinished">தூரத்தில் ஸ்னாப்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="95"/>
@@ -15757,7 +15757,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_bisector_options_filler.cpp" line="32"/>
         <source>Length of bisector</source>
-        <translation type="unfinished">இருபாகுப் பிரிப்பியின் நீளம்</translation>
+        <translation type="unfinished">இருசமவெட்டியின் நீளம்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_bisector_options_filler.cpp" line="38"/>
@@ -15767,7 +15767,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_bisector_options_filler.cpp" line="38"/>
         <source>Number of bisectors to create</source>
-        <translation type="unfinished">உருவாக்க வேண்டிய இருபாகுப் பிரிப்பிகளின் எண்ணிக்கை</translation>
+        <translation type="unfinished">உருவாக்க வேண்டிய இருசமவெட்டிகளின் எண்ணிக்கை</translation>
     </message>
 </context>
 <context>
@@ -15775,7 +15775,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_bisector_options_widget.ui" line="32"/>
         <source>Line Bisector Options</source>
-        <translation type="unfinished">கோடு இருபாகுப் பிரிப்பி விருப்பங்கள்</translation>
+        <translation type="unfinished">கோட்டு இருசமவெட்டி விருப்பங்கள்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_bisector_options_widget.ui" line="56"/>
@@ -15785,7 +15785,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_bisector_options_widget.ui" line="72"/>
         <source>Length of bisector</source>
-        <translation type="unfinished">இருபாகுப் பிரிப்பியின் நீளம்</translation>
+        <translation type="unfinished">இருசமவெட்டியின் நீளம்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_bisector_options_widget.ui" line="79"/>
@@ -15800,7 +15800,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_bisector_options_widget.ui" line="103"/>
         <source>Number of bisectors to create</source>
-        <translation type="unfinished">உருவாக்க வேண்டிய இருபாகுப் பிரிப்பிகளின் எண்ணிக்கை</translation>
+        <translation type="unfinished">உருவாக்க வேண்டிய இருசமவெட்டிகளின் எண்ணிக்கை</translation>
     </message>
 </context>
 <context>
@@ -16252,7 +16252,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="78"/>
         <source>If checked, polyline will be created instead of individual lines</source>
-        <translation type="unfinished">இந்த பெட்டி சரிபார்க்கப்பட்டால், தனித்தனி கோடுகளுக்கு பதிலாக ஒரு பலகோடு உருவாக்கப்படும்</translation>
+        <translation type="unfinished">இந்த பெட்டி சரிபார்க்கப்பட்டால், தனித்தனி கோடுகளுக்கு பதிலாக ஒரு பாலிலைன் உருவாக்கப்படும்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="89"/>
@@ -16275,12 +16275,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="38"/>
         <source>If checked, polyline will be created instead of individual lines</source>
-        <translation type="unfinished">இந்த பெட்டி சரிபார்க்கப்பட்டால், தனித்தனி கோடுகளுக்கு பதிலாக ஒரு பலகோடு உருவாக்கப்படும்</translation>
+        <translation type="unfinished">இந்த பெட்டி சரிபார்க்கப்பட்டால், தனித்தனி கோடுகளுக்கு பதிலாக ஒரு பாலிலைன் உருவாக்கப்படும்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="41"/>
         <source>Create Polyline</source>
-        <translation type="unfinished">பலகோடு உருவாக்கு</translation>
+        <translation type="unfinished">பாலிலைன் உருவாக்கு</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="66"/>
@@ -16348,7 +16348,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="187"/>
         <source>Attributes:</source>
-        <translation type="unfinished">பண்புகள்:</translation>
+        <translation type="unfinished">பண்புக்கூறுகள்:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="207"/>
@@ -17039,7 +17039,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="65"/>
         <source>Creates polyline from line segments</source>
-        <translation type="unfinished">கோடு பகுதிகளிலிருந்து பலகோட்டை உருவாக்குகிறது</translation>
+        <translation type="unfinished">கோடு பகுதிகளிலிருந்து பாலிலைனை உருவாக்குகிறது</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="72"/>
@@ -17169,7 +17169,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="321"/>
         <source>Creates polyline from line segments</source>
-        <translation type="unfinished">கோடு பகுதிகளிலிருந்து பலகோட்டை உருவாக்குகிறது</translation>
+        <translation type="unfinished">கோடு பகுதிகளிலிருந்து பாலிலைனை உருவாக்குகிறது</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="324"/>
@@ -17391,7 +17391,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_arc.cpp" line="50"/>
         <source>Diameter of arc</source>
-        <translation type="unfinished">வில்லின் விட்டம்</translation>
+        <translation type="unfinished">வளைவின் விட்டம்</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_arc.cpp" line="54"/>
@@ -17492,12 +17492,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_arc.cpp" line="90"/>
         <source>End angle of arc</source>
-        <translation type="unfinished">வில்லின் இறுதி கோணம்</translation>
+        <translation type="unfinished">வளைவின் இறுதி கோணம்</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_arc.cpp" line="94"/>
         <source>Bulge</source>
-        <translation type="unfinished">வளைவு</translation>
+        <translation type="unfinished">புடைப்பு</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_arc.cpp" line="94"/>
@@ -17748,7 +17748,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimarc.cpp" line="29"/>
         <source>Dimension Arc</source>
-        <translation type="unfinished">பரிமாண வளைவு</translation>
+        <translation type="unfinished">வளைவு பரிமாணம்</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimarc.cpp" line="34"/>
@@ -19467,7 +19467,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_ellipse.cpp" line="93"/>
         <source>End angle of arc</source>
-        <translation type="unfinished">வில்லின் இறுதி கோணம்</translation>
+        <translation type="unfinished">வளைவின் இறுதி கோணம்</translation>
     </message>
 </context>
 <context>
@@ -21357,7 +21357,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="598"/>
         <source>&amp;Layout</source>
-        <translation type="unfinished">&amp;அமைப்பு</translation>
+        <translation type="unfinished">&amp;தளவமைப்பு</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="602"/>
@@ -21508,7 +21508,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_options_widget.ui" line="93"/>
         <source>Center entities horizontally</source>
-        <translation>உருவங்களை கிடைமட்டமாக மையத்தில் வைக்கவும்</translation>
+        <translation>பொருள்களை கிடைமட்டமாக மையத்தில் வைக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_options_widget.ui" line="113"/>
@@ -21528,12 +21528,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_options_widget.ui" line="150"/>
         <source>Defines the way of selected entities alignment.</source>
-        <translation>தேர்ந்தெடுக்கப்பட்ட உருவங்களின் சீரமைவு முறையை வரையறுக்கிறது.</translation>
+        <translation>தேர்ந்தெடுக்கப்பட்ட பொருள்களின் சீரமைவு முறையை வரையறுக்கிறது.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_options_widget.ui" line="154"/>
         <source>Entity</source>
-        <translation>உருவம்</translation>
+        <translation>பொருள்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_options_widget.ui" line="159"/>
@@ -21707,7 +21707,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_widget.ui" line="68"/>
         <source>If checked, current attributes will be applied to created entities, owtherwise original ones will be used. </source>
-        <translation type="unfinished">சரிபார்க்கப்பட்டால், தற்போதைய பண்புகள் உருவாக்கப்பட்ட கூறுகளுக்குப் பயன்படுத்தப்படும், இல்லையெனில் அசல் பண்புகள் பயன்படுத்தப்படும்.</translation>
+        <translation type="unfinished">சரிபார்க்கப்பட்டால், தற்போதைய பண்புக்கூறுகள் உருவாக்கப்பட்ட பொருள்களுக்குப் பயன்படுத்தப்படும், இல்லையெனில் அசல் பண்புக்கூறுகள் பயன்படுத்தப்படும். </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_widget.ui" line="71"/>
@@ -21717,7 +21717,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_widget.ui" line="78"/>
         <source>If checked, original entities will survive, otherwise they will be removed.</source>
-        <translation type="unfinished">சரிபார்க்கப்பட்டால், அசல் கூறுகள் அப்படியே இருக்கும், இல்லையெனில் அவை நீக்கப்படும்.</translation>
+        <translation type="unfinished">சரிபார்க்கப்பட்டால், அசல் பொருள்கள் அப்படியே இருக்கும், இல்லையெனில் அவை நீக்கப்படும்.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_widget.ui" line="81"/>
@@ -23114,7 +23114,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="66"/>
         <source>Background color for pen element currently edited in pen&apos;s table</source>
-        <translation>தற்போது பென் அட்டவணையில் திருத்தப்படும் பென் உறுப்புக்கான பின்னணி நிறம்</translation>
+        <translation>தற்போது பேனா அட்டவணையில் திருத்தப்படும் பேனா உறுப்புக்கான பின்னணி நிறம்</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="32"/>
@@ -23125,7 +23125,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="46"/>
         <source>Active Pen Background:</source>
-        <translation>செயலில் உள்ள பென் பின்னணி:</translation>
+        <translation>செயலில் உள்ள பேனா பின்னணி:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="76"/>
@@ -23245,7 +23245,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.cpp" line="53"/>
         <source>Select entities by attributes pen</source>
-        <translation>பண்புகளின் அடிப்படையில் பொருட்களைத் தேர்ந்தெடுக்கவும்</translation>
+        <translation>பண்புக்கூறு பேனாவின் அடிப்படையில் பொருள்களைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.cpp" line="54"/>
@@ -23268,7 +23268,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="66"/>
         <source>Fill Pen Editor by Entity Attributes</source>
-        <translation>பொருளின் பண்புகளைப் பயன்படுத்தி நிரப்பு பேனா எடிட்டரை நிரப்பவும்</translation>
+        <translation>பொருளின் பண்புக்கூறுகளைக் கொண்டு பேனா எடிட்டரை நிரப்பவும்</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="83"/>
@@ -23278,7 +23278,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="100"/>
         <source>Select Entities By Pen Attributes</source>
-        <translation>பேனா பண்புகளின் அடிப்படையில் பொருட்களைத் தேர்ந்தெடுக்கவும்</translation>
+        <translation>பேனா பண்புக்கூறுகளின் அடிப்படையில் பொருட்களைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="120"/>
@@ -23419,12 +23419,12 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="306"/>
         <source>&amp;Select Entities With Attributes Pen</source>
-        <translation>அтрибуட் பேனாவுடன் உள்ள உருப்படிகளைத் தேர்ந்தெடு</translation>
+        <translation>&amp;பண்புக்கூறு பேனாவுடன் உள்ள பொருள்களைத் தேர்ந்தெடு</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="308"/>
         <source>&amp;Select Entities With Drawing Pen</source>
-        <translation>வரைதல் பேனாவுடன் உள்ள உருப்படிகளைத் தேர்ந்தெடு</translation>
+        <translation>&amp;வரைதல் பேனாவுடன் உள்ள பொருள்களைத் தேர்ந்தெடு</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="312"/>
@@ -23444,7 +23444,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="430"/>
         <source>Pen palette</source>
-        <translation>பென் பாலிட்</translation>
+        <translation>பேனா பாலிட்</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="431"/>
@@ -23762,7 +23762,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_options_widget.ui" line="126"/>
         <source>If checked, the polygon will be drawn as polyline. Otherwise, individual entities will be created. </source>
-        <translation type="unfinished">சரிபார்க்கப்பட்டால், பலகோணம் பலகோடாக வரையப்படும். இல்லையெனில், தனிப்பட்ட பொருட்கள் உருவாக்கப்படும்.</translation>
+        <translation type="unfinished">சரிபார்க்கப்பட்டால், பலகோணம் பாலிலைனாக வரையப்படும். இல்லையெனில், தனிப்பட்ட பொருட்கள் உருவாக்கப்படும். </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_polygon_options_widget.ui" line="129"/>
@@ -23942,12 +23942,12 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_widget.ui" line="32"/>
         <source>Polyline Options</source>
-        <translation type="unfinished">பலகோடு விருப்பங்கள்</translation>
+        <translation type="unfinished">பாலிலைன் விருப்பங்கள்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_widget.ui" line="53"/>
         <source>Connects ends of the polyline so closed contour is created</source>
-        <translation type="unfinished">பலகோட்டின் முனைகளை இணைத்து மூடிய வெளிப்புறத்தை உருவாக்குகிறது</translation>
+        <translation type="unfinished">பாலிலைனின் முனைகளை இணைத்து மூடிய வெளிப்புறத்தை உருவாக்குகிறது</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_widget.ui" line="56"/>
@@ -24563,7 +24563,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="46"/>
         <source>Diameter of arc</source>
-        <translation type="unfinished">வில்லின் விட்டம்</translation>
+        <translation type="unfinished">வளைவின் விட்டம்</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="52"/>
@@ -24593,7 +24593,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="65"/>
         <source>End angle of arc</source>
-        <translation type="unfinished">வில்லின் இறுதி கோணம்</translation>
+        <translation type="unfinished">வளைவின் இறுதி கோணம்</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="73"/>
@@ -24623,7 +24623,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="81"/>
         <source>Arc Length</source>
-        <translation type="unfinished">ஆர்க் நீளம்</translation>
+        <translation type="unfinished">வளைவு நீளம்</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="81"/>
@@ -24658,7 +24658,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="106"/>
         <source>Bulge</source>
-        <translation type="unfinished">வளைவு</translation>
+        <translation type="unfinished">புடைப்பு</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="106"/>
@@ -28803,7 +28803,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="141"/>
         <source>Bisector</source>
-        <translation type="unfinished">இருபாகுப் பிரிப்பி</translation>
+        <translation type="unfinished">இருசமவெட்டி</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="141"/>
@@ -30572,13 +30572,13 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="643"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="670"/>
         <source>ARC</source>
-        <translation>வில்</translation>
+        <translation>வளைவு</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="724"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="747"/>
         <source>ELLIPSE ARC</source>
-        <translation>நீள்வட்ட வில்</translation>
+        <translation>நீள்வட்ட வளைவு</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="741"/>
@@ -30596,7 +30596,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="856"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="869"/>
         <source>POLYLINE</source>
-        <translation>பல கோடுகள்</translation>
+        <translation>பாலிலைன்</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="666"/>
@@ -30898,7 +30898,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="698"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="896"/>
         <source>Bulge</source>
-        <translation>வளைவு</translation>
+        <translation>புடைப்பு</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="717"/>
@@ -31415,7 +31415,7 @@ Layer: </source>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1359"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1375"/>
         <source>HATCH</source>
-        <translation>ஹாட்ச்</translation>
+        <translation>ஹேட்ச்</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1360"/>
@@ -31470,7 +31470,7 @@ Layer: </source>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1415"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1434"/>
         <source>Arc Length</source>
-        <translation>ஆர்க் நீளம்</translation>
+        <translation>வளைவு நீளம்</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1446"/>
@@ -31749,7 +31749,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="393"/>
         <source>&amp;Select Entity</source>
-        <translation>&amp;உருப்படி ஒன்றைத் தேர்ந்தெடுக்கவும்</translation>
+        <translation>&amp;ஒரு பொருளைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="396"/>
@@ -31812,7 +31812,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="75"/>
         <source>Entity Info</source>
-        <translation>உருப்படி தகவல்</translation>
+        <translation>பொருள் தகவல்</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="81"/>
@@ -31827,27 +31827,27 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="91"/>
         <source>If selected, coordinates of boundary box area for the entity will be also shown</source>
-        <translation>தேர்ந்தெடுக்கப்பட்டால், உருப்படிக்கான எல்லை பெட்டி பகுதியின் ஆயத்தொலைவுகளும் காட்டப்படும்</translation>
+        <translation>தேர்ந்தெடுக்கப்பட்டால், பொருளுக்கான எல்லை பெட்டி பகுதியின் ஆயத்தொலைவுகளும் காட்டப்படும்</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="94"/>
         <source>Display entity boundaries (Min, Max) coordinates</source>
-        <translation>உருப்படியின் எல்லைகள் (குறைந்தபட்சம், அதிகபட்சம்) ஆயத்தொலைவுகளைக் காண்பி</translation>
+        <translation>பொருளின் எல்லைகள் (குறைந்தபட்சம், அதிகபட்சம்) ஆயத்தொலைவுகளைக் காண்பி</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="104"/>
         <source>Entity Selection</source>
-        <translation>உருப்படி தேர்வு</translation>
+        <translation>பொருள் தேர்வு</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="116"/>
         <source>Entity under cursor will be examined only if CTRL is pressed and no active action</source>
-        <translation>CTRL அழுத்தி, எந்த செயலும் செயல்படுத்தப்படாமல் இருந்தால் மட்டுமே சுட்டியின் கீழ் உள்ள உருப்படி ஆராயப்படும்</translation>
+        <translation>CTRL அழுத்தி, எந்த செயலும் செயல்படுத்தப்படாமல் இருந்தால் மட்டுமே சுட்டியின் கீழ் உள்ள பொருள் ஆராயப்படும்</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="119"/>
         <source>Select entity under cursor if not active action and CTRL is pressed</source>
-        <translation>எந்த செயலும் செயல்படுத்தப்படாமல், CTRL அழுத்தி இருந்தால் சுட்டியின் கீழ் உள்ள உருப்படியைத் தேர்ந்தெடுக்கவும்</translation>
+        <translation>எந்த செயலும் செயல்படுத்தப்படாமல், CTRL அழுத்தி இருந்தால் சுட்டியின் கீழ் உள்ள பொருளைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="126"/>
@@ -33232,7 +33232,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="50"/>
         <source>Adjust secondary angle so the sum of angles (relative rotation angle) is 0. With such setting entity will be moved but not rotated.</source>
-        <translation type="unfinished">இரண்டாம் கோணத்தை சரிசெய்து, கோணங்களின் கூட்டுத்தொகை (ஒப்பீட்டு சுழற்சி கோணம்) 0 ஆக இருக்குமாறு செய்யுங்கள். இந்த அமைப்பில், உருப்படி நகர்த்தப்படும், ஆனால் சுழற்றப்படாது.</translation>
+        <translation type="unfinished">இரண்டாம் கோணத்தை சரிசெய்து, கோணங்களின் கூட்டுத்தொகை (ஒப்பீட்டு சுழற்சி கோணம்) 0 ஆக இருக்குமாறு செய்யுங்கள். இந்த அமைப்பில், பொருள் நகர்த்தப்படும், ஆனால் சுழற்றப்படாது.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="53"/>
@@ -33312,7 +33312,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="228"/>
         <source>Defines whether current or original drawing attributes will be applied</source>
-        <translation type="unfinished">தற்போதைய அல்லது அசல் வரைபட பண்புகளைப் பயன்படுத்த வேண்டுமா என்பதை இது வரையறுக்கிறது</translation>
+        <translation type="unfinished">தற்போதைய அல்லது அசல் வரைபட பண்புக்கூறுகளைப் பயன்படுத்த வேண்டுமா என்பதை இது வரையறுக்கிறது</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="231"/>
@@ -33355,7 +33355,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_filler.cpp" line="49"/>
         <source>Angle to rotate entity around rotation center point</source>
-        <translation type="unfinished">சுழற்சி மையப் புள்ளியைச் சுற்றி உருப்படியை சுழற்ற வேண்டிய கோணம்</translation>
+        <translation type="unfinished">சுழற்சி மையப் புள்ளியைச் சுற்றி பொருளை சுழற்ற வேண்டிய கோணம்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_filler.cpp" line="60"/>
@@ -33405,7 +33405,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_filler.cpp" line="98"/>
         <source>If absolute, reference point will be rotated but entity will be rotated by second angle only, otherwise angles will summ up</source>
-        <translation type="unfinished">சரிபார்க்கப்பட்டால், குறிப்பு புள்ளி சுழற்றப்படும், ஆனால் உருப்படி இரண்டாவது கோணத்தால் மட்டுமே சுழற்றப்படும், இல்லையெனில் கோணங்கள் கூட்டப்படும்.</translation>
+        <translation type="unfinished">சரிபார்க்கப்பட்டால், குறிப்பு புள்ளி சுழற்றப்படும், ஆனால் பொருள் இரண்டாவது கோணத்தால் மட்டுமே சுழற்றப்படும், இல்லையெனில் கோணங்கள் கூட்டப்படும்.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_filler.cpp" line="107"/>
@@ -33473,7 +33473,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="89"/>
         <source>If checked, current attributes will be applied to created entities, othewise original ones will be used. </source>
-        <translation type="unfinished">சரிபார்க்கப்பட்டால், தற்போதைய பண்புகள் உருவாக்கப்பட்ட உருப்படிகளுக்குப் பயன்படுத்தப்படும், இல்லையெனில் அசல் பண்புகள் பயன்படுத்தப்படும்.</translation>
+        <translation type="unfinished">சரிபார்க்கப்பட்டால், தற்போதைய பண்புக்கூறுகள் உருவாக்கப்பட்ட பொருள்களுக்குப் பயன்படுத்தப்படும், இல்லையெனில் அசல் பண்புக்கூறுகள் பயன்படுத்தப்படும். </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="92"/>
@@ -33483,7 +33483,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="118"/>
         <source>Angle to rotate entity around rotation center point</source>
-        <translation type="unfinished">சுழற்சி மையப் புள்ளியைச் சுற்றி உருப்படியை சுழற்ற வேண்டிய கோணம்</translation>
+        <translation type="unfinished">சுழற்சி மையப் புள்ளியைச் சுற்றி பொருளை சுழற்ற வேண்டிய கோணம்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="141"/>
@@ -33503,7 +33503,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="165"/>
         <source>If absolute, reference point will be rotated but entity will be rotated by second angle only, otherwise angles will summ up</source>
-        <translation type="unfinished">சரிபார்க்கப்பட்டால், குறிப்பு புள்ளி சுழற்றப்படும், ஆனால் உருப்படி இரண்டாவது கோணத்தால் மட்டுமே சுழற்றப்படும், இல்லையெனில் கோணங்கள் கூட்டப்படும்.</translation>
+        <translation type="unfinished">சரிபார்க்கப்பட்டால், குறிப்பு புள்ளி சுழற்றப்படும், ஆனால் பொருள் இரண்டாவது கோணத்தால் மட்டுமே சுழற்றப்படும், இல்லையெனில் கோணங்கள் கூட்டப்படும்.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="168"/>
@@ -33518,7 +33518,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="189"/>
         <source>If checked, original entities will be survive, otherwise they will be removed.</source>
-        <translation type="unfinished">சரிபார்க்கப்பட்டால், அசல் கூறுகள் அப்படியே இருக்கும், இல்லையெனில் அவை நீக்கப்படும்.</translation>
+        <translation type="unfinished">சரிபார்க்கப்பட்டால், அசல் பொருள்கள் அப்படியே இருக்கும், இல்லையெனில் அவை நீக்கப்படும்.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="192"/>
@@ -33771,7 +33771,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="73"/>
         <source>If checked, original entities will survive, otherwise they will be removed.</source>
-        <translation type="unfinished">சரிபார்க்கப்பட்டால், அசல் கூறுகள் அப்படியே இருக்கும், இல்லையெனில் அவை நீக்கப்படும்.</translation>
+        <translation type="unfinished">சரிபார்க்கப்பட்டால், அசல் பொருள்கள் அப்படியே இருக்கும், இல்லையெனில் அவை நீக்கப்படும்.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="76"/>
@@ -33899,7 +33899,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="95"/>
         <source>Entity type</source>
-        <translation>உருப்படி வகை</translation>
+        <translation>பொருள் வகை</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="102"/>
@@ -33909,7 +33909,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="109"/>
         <source>Hatch</source>
-        <translation>ஹாட்ச்</translation>
+        <translation>ஹேட்ச்</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="116"/>
@@ -34479,7 +34479,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="50"/>
         <source>If checked, line segments will be part of polyline. Otherwise, they will be individual lines</source>
-        <translation type="unfinished">சரிபார்க்கப்பட்டால், கோட்டுப் பிரிவுகள் பலகோணக் கோட்டின் ஒரு பகுதியாக இருக்கும். இல்லையெனில், அவை தனித்தனி கோடுகளாக இருக்கும்.</translation>
+        <translation type="unfinished">சரிபார்க்கப்பட்டால், கோட்டுப் பிரிவுகள் பாலிலைனின் ஒரு பகுதியாக இருக்கும். இல்லையெனில், அவை தனித்தனி கோடுகளாக இருக்கும்.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="57"/>
@@ -34567,12 +34567,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="93"/>
         <source>If checked, line segments will be part of polyline. Otherwise, they will be individual lines</source>
-        <translation type="unfinished">சரிபார்க்கப்பட்டால், கோட்டுப் பிரிவுகள் பலகோணக் கோட்டின் ஒரு பகுதியாக இருக்கும். இல்லையெனில், அவை தனித்தனி கோடுகளாக இருக்கும்.</translation>
+        <translation type="unfinished">சரிபார்க்கப்பட்டால், கோட்டுப் பிரிவுகள் பாலிலைனின் ஒரு பகுதியாக இருக்கும். இல்லையெனில், அவை தனித்தனி கோடுகளாக இருக்கும்.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="96"/>
         <source>To Polyline</source>
-        <translation type="unfinished">பலகோணக் கோடாக</translation>
+        <translation type="unfinished">பாலிலைனாக</translation>
     </message>
 </context>
 <context>
@@ -35081,7 +35081,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/polygon/lc_star_options_widget.ui" line="82"/>
         <source>If checked, the star will be drawn as polyline. </source>
-        <translation type="unfinished">இந்த பெட்டி சரிபார்க்கப்பட்டிருந்தால், நட்சத்திரம் ஒரு பலகோட்டு கோடாக வரையப்படும்.</translation>
+        <translation type="unfinished">இந்த பெட்டி சரிபார்க்கப்பட்டிருந்தால், நட்சத்திரம் ஒரு பாலிலைனாக வரையப்படும். </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polygon/lc_star_options_widget.ui" line="85"/>
@@ -35152,7 +35152,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_stretch_options_widget.ui" line="32"/>
         <source>If checked, original entities will survive, otherwise they will be removed.</source>
-        <translation type="unfinished">சரிபார்க்கப்பட்டால், அசல் கூறுகள் அப்படியே இருக்கும், இல்லையெனில் அவை நீக்கப்படும்.</translation>
+        <translation type="unfinished">சரிபார்க்கப்பட்டால், அசல் பொருள்கள் அப்படியே இருக்கும், இல்லையெனில் அவை நீக்கப்படும்.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_stretch_options_widget.ui" line="35"/>
@@ -35491,7 +35491,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="331"/>
         <source>Arc</source>
-        <translation>ஆர்க்</translation>
+        <translation>வளைவு</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="332"/>
@@ -35579,7 +35579,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="367"/>
         <source>PolyLines</source>
-        <translation>பாலி கோடுகள்</translation>
+        <translation>பாலிலைன்கள்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="369"/>
@@ -36058,7 +36058,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="137"/>
         <source>Polyline</source>
-        <translation>பல கோடுகள்</translation>
+        <translation>பாலிலைன்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="139"/>
@@ -36155,7 +36155,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="249"/>
         <source>Entity Info</source>
-        <translation>உருப்படி தகவல்</translation>
+        <translation>பொருள் தகவல்</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="201"/>
@@ -36170,7 +36170,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="134"/>
         <source>Arc</source>
-        <translation>வில்</translation>
+        <translation>வளைவு</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="135"/>
@@ -37270,7 +37270,7 @@ The original opens in a separate document. Mixed encodings and raw metadata are 
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.ui" line="26"/>
         <source>Attributes</source>
-        <translation>பண்புகள்</translation>
+        <translation>பண்புக்கூறுகள்</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.ui" line="44"/>
@@ -37285,19 +37285,19 @@ The original opens in a separate document. Mixed encodings and raw metadata are 
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.ui" line="69"/>
         <source>Pen attributes</source>
-        <translation>பேனா பண்புகள்</translation>
+        <translation>பேனா பண்புக்கூறுகள்</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.ui" line="76"/>
         <source>Apply attributes also to all sub-entities of selected INSERT.
 This recursively modifies all entities of the Block itself.</source>
-        <translation>தேர்ந்தெடுக்கப்பட்ட இன்செர்ட்டின் அனைத்து துணை கூறுகளுக்கும் பண்புகளைப் பயன்படுத்துங்கள்.
-இது பிளாக்கின் அனைத்து கூறுகளையும் மீண்டும் மீண்டும் மாற்றும்.</translation>
+        <translation>தேர்ந்தெடுக்கப்பட்ட இன்செர்ட்டின் அனைத்து துணை பொருள்களுக்கும் பண்புக்கூறுகளைப் பயன்படுத்துங்கள்.
+இது தொகுதியின் அனைத்து பொருள்களையும் மீண்டும் மீண்டும் மாற்றும்.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.ui" line="80"/>
         <source>Apply attributes Block-deep</source>
-        <translation>பிளாக் ஆழத்தில் பண்புகளைப் பயன்படுத்து</translation>
+        <translation>தொகுதி ஆழம் வரை பண்புக்கூறுகளைப் பயன்படுத்து</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.cpp" line="61"/>
@@ -37310,7 +37310,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="14"/>
         <source>Choose Hatch Attributes</source>
-        <translation>ஹேட்ச் பண்புகளைத் தேர்ந்தெடுக்கவும்</translation>
+        <translation>ஹேட்ச் பண்புக்கூறுகளைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="22"/>
@@ -37360,7 +37360,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="101"/>
         <source>If enabled, preview of hatch pattern will be shown below</source>
-        <translation>இது இயக்கப்பட்டிருந்தால், ஹாட்ச் வடிவத்தின் முன்னோட்டம் கீழே காட்டப்படும்</translation>
+        <translation>இது இயக்கப்பட்டிருந்தால், ஹேட்ச் வடிவத்தின் முன்னோட்டம் கீழே காட்டப்படும்</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="104"/>
@@ -37375,7 +37375,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="124"/>
         <source>Hatched area</source>
-        <translation>ஹாட்ச் செய்யப்பட்ட பகுதி</translation>
+        <translation>ஹேட்ச் செய்யப்பட்ட பகுதி</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.cpp" line="213"/>
@@ -37741,7 +37741,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1068"/>
         <source>[0700-074F] Syriac</source>
-        <translation>[0700-074F] சிரியா</translation>
+        <translation>[0700-074F] சிரியாக்</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1073"/>
@@ -37796,12 +37796,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1123"/>
         <source>[0D80-0DFF] Sinhala</source>
-        <translation>[0D80-0DFF] சிங்கலம்</translation>
+        <translation>[0D80-0DFF] சிங்களம்</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1128"/>
         <source>[0E00-0E7F] Thai</source>
-        <translation>[0E00-0E7F] தை</translation>
+        <translation>[0E00-0E7F] தாய்</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1133"/>
@@ -38036,7 +38036,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1363"/>
         <source>[30A0-30FF] Katakana</source>
-        <translation>[30A0-30FF] கatakனா</translation>
+        <translation>[30A0-30FF] கட்டகனா</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1368"/>
@@ -38675,7 +38675,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1289"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension Tick size. Set it to 0 will disable the dimension tick. Dimension arrow won&apos;t be drawn when dimension tick is enabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;அளவீட்டு அடையாளத்தின் அளவு. இதை 0 ஆக அமைத்தால், அளவீட்டு அடையாளம் முடக்கப்படும். அளவீட்டு அடையாளம் இயக்கப்பட்டிருந்தால், அளவீட்டு அம்பு வரையப்படாது.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;பரிமாண டிக் குறியின் அளவு. இதை 0 ஆக அமைத்தால், பரிமாண டிக் குறி முடக்கப்படும். பரிமாண டிக் குறி இயக்கப்பட்டிருந்தால், பரிமாண அம்பு வரையப்படாது.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1634"/>
@@ -38931,12 +38931,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1444"/>
         <source>Length to enlarge over dimension line</source>
-        <translation>அளவீட்டு கோட்டின் மேல் நீளத்தை பெரிதாக்கு</translation>
+        <translation>பரிமாணக் கோட்டின் மேல் நீளத்தை பெரிதாக்கு</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1469"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension arrow size. &lt;a name=&quot;result_box&quot;/&gt;without effect when tick size &lt;a name=&quot;result_box&quot;/&gt;is other than 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;அளவீட்டு அம்புக்குறியின் அளவு. &lt;a name=&quot;result_box&quot;/&gt; குறி அளவு &lt;a name=&quot;result_box&quot;/&gt; 0 ஆக இல்லாவிட்டால், இது எந்த விளைவையும் ஏற்படுத்தாது&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;பரிமாண அம்புக்குறியின் அளவு. &lt;a name=&quot;result_box&quot;/&gt; குறி அளவு &lt;a name=&quot;result_box&quot;/&gt; 0 ஆக இல்லாவிட்டால், இது எந்த விளைவையும் ஏற்படுத்தாது&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1523"/>
@@ -38947,7 +38947,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1543"/>
         <source>Dimension lines, arrows &amp; ticks</source>
-        <translation>அளவீட்டு கோடுகள், அம்புக்குறிகள் &amp; குறிகள்</translation>
+        <translation>பரிமாணக் கோடுகள், அம்புக்குறிகள் &amp; குறிகள்</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1550"/>
@@ -38967,7 +38967,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1587"/>
         <source>Offset:</source>
-        <translation>இடைவெளி:</translation>
+        <translation>விலகல்:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1600"/>
@@ -38977,7 +38977,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1619"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Text alignment &lt;a name=&quot;result_box&quot;/&gt;relative to the dimension line.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;அளவீட்டு கோட்டிற்கு ஏற்ப உரையின் சீரமைப்பு.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;பரிமாணக் கோட்டிற்கு ஏற்ப உரையின் சீரமைப்பு.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1629"/>
@@ -38987,7 +38987,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1675"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Offset from origin point.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ஆரம்ப புள்ளியிலிருந்து இடைவெளி.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;தொடக்கப் புள்ளியிலிருந்து விலகல்.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1707"/>
@@ -39037,7 +39037,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1877"/>
         <source>Marks style as active one. Active style will be used during creation of dimensions.</source>
-        <translation>இந்த பாணியை செயலில் உள்ளதாகக் குறிக்கிறது. அளவுகளை உருவாக்கும்போது செயலில் உள்ள பாணி பயன்படுத்தப்படும்.</translation>
+        <translation>இந்த பாணியை செயலில் உள்ளதாகக் குறிக்கிறது. பரிமாணங்களை உருவாக்கும்போது செயலில் உள்ள பாணி பயன்படுத்தப்படும்.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1904"/>
@@ -39094,7 +39094,7 @@ This recursively modifies all entities of the Block itself.</source>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2091"/>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2125"/>
         <source>Round</source>
-        <translation>வட்டம்</translation>
+        <translation>வட்டமான</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2101"/>
@@ -39109,7 +39109,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2116"/>
         <source>Mode of lines joining in polylines or paths</source>
-        <translation>பல கோடுகள் அல்லது பாதைகளில் கோடுகள் இணைக்கப்படும் முறை</translation>
+        <translation>பாலிலைன்கள் அல்லது பாதைகளில் கோடுகள் இணைக்கப்படும் முறை</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2135"/>
@@ -39452,7 +39452,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5966"/>
         <source>Hatch Patterns:</source>
-        <translation>ஹாட்ச் வடிவங்கள்:</translation>
+        <translation>ஹேட்ச் வடிவங்கள்:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5990"/>
@@ -39698,7 +39698,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6221"/>
         <source>If selected, the angle of the line interpolation segment is calculated to ensure that resulting sagitta (height of arc segment) is less than specified.</source>
-        <translation>தேர்ந்தெடுக்கப்பட்டால், கோடு இடைச்செருகல் பிரிவின் கோணம் கணக்கிடப்பட்டு, இதன் விளைவாக வரும் சாகிட்டா (வில் பிரிவின் உயரம்) குறிப்பிட்ட அளவை விட குறைவாக இருப்பதை உறுதி செய்கிறது.</translation>
+        <translation>தேர்ந்தெடுக்கப்பட்டால், கோடு இடைச்செருகல் பிரிவின் கோணம் கணக்கிடப்பட்டு, இதன் விளைவாக வரும் சாகிட்டா (வளைவுப் பிரிவின் உயரம்) குறிப்பிட்ட அளவை விட குறைவாக இருப்பதை உறுதி செய்கிறது.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6288"/>
@@ -39813,7 +39813,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5636"/>
         <source>Layout</source>
-        <translation>அமைப்பு</translation>
+        <translation>தளவமைப்பு</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5652"/>
@@ -39907,7 +39907,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1329"/>
         <source>Select Hatch Patterns Folder</source>
-        <translation>ஹாட்ச் பேட்டர்ன்கள் கோப்புறையைத் தேர்ந்தெடுக்கவும்</translation>
+        <translation>ஹேட்ச் பேட்டர்ன்கள் கோப்புறையைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1336"/>
@@ -39932,7 +39932,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4753"/>
         <source>N&amp;umber of preview entities:</source>
-        <translation>முன்னோட்டக் கூறுகளின் எண்ணிக்கை:</translation>
+        <translation>&amp;முன்னோட்டப் பொருள்களின் எண்ணிக்கை:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5473"/>
@@ -40182,27 +40182,27 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="745"/>
         <source>Entity Handle</source>
-        <translation>உருவக் கைப்பிடி</translation>
+        <translation>பொருள் கைப்பிடி</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="888"/>
         <source>Size of square that is highlights entities reference points (endpoints etc.)</source>
-        <translation>உருவின் குறிப்பு புள்ளிகளை (முனைகள் போன்றவை) எடுத்துக்காட்டும் சதுரத்தின் அளவு.</translation>
+        <translation>பொருளின் குறிப்பு புள்ளிகளை (முனைகள் போன்றவை) எடுத்துக்காட்டும் சதுரத்தின் அளவு.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="809"/>
         <source>Color of end handle for entity</source>
-        <translation>உருவின் முனை கைப்பிடியின் நிறம்.</translation>
+        <translation>பொருளின் முனை கைப்பிடியின் நிறம்.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="771"/>
         <source>Color for start handle of entity</source>
-        <translation>உருவத்தின் தொடக்க கைப்பிடிக்கான நிறம்</translation>
+        <translation>பொருளின் தொடக்க கைப்பிடிக்கான நிறம்</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="854"/>
         <source>Color of non-endpoint handle of entity</source>
-        <translation>உருவத்தின் முனை அல்லாத கைப்பிடிக்கான நிறம்</translation>
+        <translation>பொருளின் முனை அல்லாத கைப்பிடிக்கான நிறம்</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="847"/>
@@ -40212,12 +40212,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="933"/>
         <source>If enabled, entity handles are highlighted on hover (requires &quot;highlight entities on hover&quot; to be enabled)</source>
-        <translation>இது இயக்கப்பட்டிருந்தால், உருவத்தின் கைப்பிடிகள் சுட்டியில் வைக்கும்போது சிறப்பித்துக் காட்டப்படும் (&quot;சுட்டியில் வைக்கும்போது உருவங்களை சிறப்பித்துக் காட்டு&quot; விருப்பம் இயக்கப்பட்டிருக்க வேண்டும்)</translation>
+        <translation>இது இயக்கப்பட்டிருந்தால், பொருளின் கைப்பிடிகள் சுட்டியில் வைக்கும்போது சிறப்பித்துக் காட்டப்படும் (&quot;சுட்டியில் வைக்கும்போது பொருள்களை சிறப்பித்துக் காட்டு&quot; விருப்பம் இயக்கப்பட்டிருக்க வேண்டும்)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="939"/>
         <source>Show entity handles on mouse hover</source>
-        <translation>சுட்டியில் வைக்கும்போது உருவத்தின் கைப்பிடிகளைக் காட்டு</translation>
+        <translation>சுட்டியில் வைக்கும்போது பொருளின் கைப்பிடிகளைக் காட்டு</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="268"/>
@@ -40787,12 +40787,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6401"/>
         <source>Arc Radius:</source>
-        <translation>வில் ஆரம்:</translation>
+        <translation>வளைவு ஆரம்:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6346"/>
         <source>If screen radius of arc is less than value, arc is drawn as point</source>
-        <translation>வில்லை திரை ஆரம், இந்த மதிப்பை விட குறைவாக இருந்தால், வில் ஒரு புள்ளியாக வரையப்படும்.</translation>
+        <translation>வளைவின் திரை ஆரம் இந்த மதிப்பை விட குறைவாக இருந்தால், வளைவு ஒரு புள்ளியாக வரையப்படும்.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6408"/>
@@ -40898,12 +40898,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1827"/>
         <source>If checked, &quot;Snap To Grid&quot; is ignored if grid is not drawn.</source>
-        <translation>இந்த பெட்டி சரிபார்க்கப்பட்டால், கட்டம் வரையப்படாவிட்டால், &quot;கட்டத்திற்குப் பொருத்து&quot; அம்சம் புறக்கணிக்கப்படும்.</translation>
+        <translation>இந்த பெட்டி சரிபார்க்கப்பட்டால், கட்டம் வரையப்படாவிட்டால், &quot;கட்டத்திற்கு ஸ்னாப்&quot; அம்சம் புறக்கணிக்கப்படும்.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1830"/>
         <source>Ignore &quot;Snap to Grid&quot; if grid is not drawn</source>
-        <translation>கட்டம் வரையப்படாவிட்டால், &quot;கட்டத்திற்குப் பொருத்து&quot; அம்சத்தை புறக்கணிக்கவும்</translation>
+        <translation>கட்டம் வரையப்படாவிட்டால், &quot;கட்டத்திற்கு ஸ்னாப்&quot; அம்சத்தை புறக்கணிக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3114"/>
@@ -42103,7 +42103,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6263"/>
         <source>Maximal distance betwen arc and segment interpolation line</source>
-        <translation>வில் மற்றும் பிரிவு இடைச்செருகல் கோட்டிற்கு இடையே உள்ள அதிகபட்ச தூரம்</translation>
+        <translation>வளைவு மற்றும் பிரிவு இடைச்செருகல் கோட்டிற்கு இடையே உள்ள அதிகபட்ச தூரம்</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6291"/>
@@ -42182,7 +42182,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5633"/>
         <source>Restores program geometry/layout to original state</source>
-        <translation>நிரலின் வடிவியல்/அமைப்பு அதன் அசல் நிலைக்கு மீட்டமைக்கப்படுகிறது</translation>
+        <translation>நிரலின் வடிவியல்/தளவமைப்பு அதன் அசல் நிலைக்கு மீட்டமைக்கப்படுகிறது</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5649"/>
@@ -42682,7 +42682,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1110"/>
         <source>[0700-074F] Syriac</source>
-        <translation>[0700-074F] சிரியா</translation>
+        <translation>[0700-074F] சிரியாக்</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1115"/>
@@ -42737,12 +42737,12 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1165"/>
         <source>[0D80-0DFF] Sinhala</source>
-        <translation>[0D80-0DFF] சிங்கலம்</translation>
+        <translation>[0D80-0DFF] சிங்களம்</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1170"/>
         <source>[0E00-0E7F] Thai</source>
-        <translation>[0E00-0E7F] தை</translation>
+        <translation>[0E00-0E7F] தாய்</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1175"/>
@@ -42977,7 +42977,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1405"/>
         <source>[30A0-30FF] Katakana</source>
-        <translation>[30A0-30FF] கatakana</translation>
+        <translation>[30A0-30FF] கட்டகனா</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1410"/>
@@ -43999,7 +43999,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="407"/>
         <source>Block &quot;%1&quot; and all its entities will be removed.</source>
-        <translation>&quot;%1&quot; என்ற தொகுதி மற்றும் அதிலுள்ள அனைத்து கூறுகளும் நீக்கப்படும்.</translation>
+        <translation>&quot;%1&quot; என்ற தொகுதி மற்றும் அதிலுள்ள அனைத்து பொருள்களும் நீக்கப்படும்.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/qg_layerdialog.cpp" line="83"/>
@@ -44070,7 +44070,7 @@ This action can NOT be undone.</source>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="465"/>
         <source>Listed blocks and all their entities will be removed.</source>
-        <translation>பட்டியலிடப்பட்ட தொகுதிகள் மற்றும் அவற்றில் உள்ள அனைத்து கூறுகளும் நீக்கப்படும்.</translation>
+        <translation>பட்டியலிடப்பட்ட தொகுதிகள் மற்றும் அவற்றில் உள்ள அனைத்து பொருள்களும் நீக்கப்படும்.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="467"/>
@@ -44194,12 +44194,12 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1402"/>
         <source>Remove pen</source>
-        <translation>பென்னை நீக்கு</translation>
+        <translation>பேனாவை நீக்கு</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1404"/>
         <source>Pen will be removed from palette, drawing entities will not be affected.</source>
-        <translation>பென் வண்ணத் தட்டிலிருந்து நீக்கப்படும், வரைதல் கூறுகள் பாதிக்கப்படாது.</translation>
+        <translation>பேனா வண்ணத் தட்டிலிருந்து நீக்கப்படும், வரைதல் பொருள்கள் பாதிக்கப்படாது.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1406"/>
@@ -44210,17 +44210,17 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1408"/>
         <source>Pen for removal:</source>
-        <translation>நீக்க வேண்டிய பென்:</translation>
+        <translation>நீக்க வேண்டிய பேனா:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1424"/>
         <source>Remove pens</source>
-        <translation>பென்களை நீக்கு</translation>
+        <translation>பேனாக்களை நீக்கு</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1426"/>
         <source>Pens will be removed from palette, drawing entities will not be affected.</source>
-        <translation>பென்கள் வண்ணத் தட்டிலிருந்து நீக்கப்படும், வரைதல் கூறுகள் பாதிக்கப்படாது.</translation>
+        <translation>பேனாக்கள் வண்ணத் தட்டிலிருந்து நீக்கப்படும், வரைதல் பொருள்கள் பாதிக்கப்படாது.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1430"/>
@@ -44230,7 +44230,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1451"/>
         <source>Select Entities </source>
-        <translation>உருப்படிகளைத் தேர்ந்தெடுக்கவும்</translation>
+        <translation>பொருள்களைத் தேர்ந்தெடுக்கவும் </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1453"/>
@@ -44254,17 +44254,17 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1456"/>
         <source>Please use different pen attributes.</source>
-        <translation>தயவுசெய்து வேறு பேனா பண்புகளைப் பயன்படுத்தவும்.</translation>
+        <translation>தயவுசெய்து வேறு பேனா பண்புக்கூறுகளைப் பயன்படுத்தவும்.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1466"/>
         <source>Set pen by entity</source>
-        <translation>உருப்படி மூலம் பேனாவை அமைக்கவும்</translation>
+        <translation>பொருள் மூலம் பேனாவை அமைக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1467"/>
         <source>Please select only one entity to pick pen setting.</source>
-        <translation>பேனா அமைப்பைத் தேர்ந்தெடுக்க ஒரு உருப்படியை மட்டும் தேர்ந்தெடுக்கவும்.</translation>
+        <translation>பேனா அமைப்பைத் தேர்ந்தெடுக்க ஒரு பொருளை மட்டும் தேர்ந்தெடுக்கவும்.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1477"/>
@@ -44699,7 +44699,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="897"/>
         <source>hatch</source>
         <comment>draw hatch</comment>
-        <translation>ஹாட்ச்</translation>
+        <translation>ஹேட்ச்</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="898"/>
@@ -46370,7 +46370,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="413"/>
         <source>arc</source>
         <comment>arc point radius</comment>
-        <translation>வில்</translation>
+        <translation>வளைவு</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="414"/>
@@ -47716,7 +47716,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="39"/>
         <source>/CustomColor%1</source>
-        <translation>/தனிப்பயன் நிறம்%1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="40"/>
@@ -47753,7 +47753,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/lib/actions/lc_modifiersinfo.h" line="31"/>
         <source>Use Mirrored Angle</source>
-        <translation>மிரர் ஆங்கிளைப் பயன்படுத்து</translation>
+        <translation>பிரதிபலித்த கோணத்தைப் பயன்படுத்து</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/lc_modifiersinfo.h" line="32"/>
@@ -48143,7 +48143,7 @@ Do you want to replace it?</source>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="119"/>
         <source>Anyhow, there are some entities identified.</source>
         <comment>dwgImport</comment>
-        <translation>எப்படியிருந்தாலும், சில கூறுகள் அடையாளம் காணப்பட்டுள்ளன.</translation>
+        <translation>எப்படியிருந்தாலும், சில பொருள்கள் அடையாளம் காணப்பட்டுள்ளன.</translation>
     </message>
     <message>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="120"/>
@@ -48411,7 +48411,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="12456"/>
         <source>error reading entities in dwg file</source>
-        <translation>dwg கோப்பில் உள்ள கூறுகளை படிப்பதில் பிழை</translation>
+        <translation>dwg கோப்பில் உள்ள பொருள்களை படிப்பதில் பிழை</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="12459"/>
@@ -48679,12 +48679,12 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="480"/>
         <source>Arc</source>
-        <translation>வில்</translation>
+        <translation>வளைவு</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="484"/>
         <source>Polyline</source>
-        <translation>பல கோடுகள்</translation>
+        <translation>பாலிலைன்</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="488"/>
@@ -48719,7 +48719,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="512"/>
         <source>Hatch</source>
-        <translation>ஹாட்ச்</translation>
+        <translation>ஹேட்ச்</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="516"/>
@@ -48729,32 +48729,32 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="520"/>
         <source>Dim. Linear</source>
-        <translation>நேர்கோட்டு அளவு</translation>
+        <translation>நேர்கோட்டு பரிமாணம்</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="524"/>
         <source>Dim. Aligned</source>
-        <translation>சீரமைக்கப்பட்ட அளவு</translation>
+        <translation>சீரமைக்கப்பட்ட பரிமாணம்</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="528"/>
         <source>Dim. Diametric</source>
-        <translation>விட்டம் சார்ந்த அளவு</translation>
+        <translation>விட்டம் சார்ந்த பரிமாணம்</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="532"/>
         <source>Dim. Radial</source>
-        <translation>ஆரம் சார்ந்த அளவு</translation>
+        <translation>ஆரம் சார்ந்த பரிமாணம்</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="536"/>
         <source>Dim. Arc</source>
-        <translation>வளைவு அளவு</translation>
+        <translation>வளைவு பரிமாணம்</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="540"/>
         <source>Dim. Ordinate</source>
-        <translation>ஆர்டினேட் அளவு</translation>
+        <translation>ஆர்டினேட் பரிமாணம்</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="544"/>
@@ -48853,17 +48853,17 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="577"/>
         <source> entities </source>
-        <translation>உருப்படிகள்</translation>
+        <translation> பொருள்கள் </translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="578"/>
         <source>that intersect with box</source>
-        <translation>பெட்டியுடன் குறுக்கிடும் உருப்படிகள்</translation>
+        <translation>பெட்டியுடன் குறுக்கிடும் பொருள்கள்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="578"/>
         <source>that are within box</source>
-        <translation>பெட்டிக்குள் இருக்கும் உருப்படிகள்</translation>
+        <translation>பெட்டிக்குள் இருக்கும் பொருள்கள்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="622"/>
@@ -48995,12 +48995,12 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1023"/>
         <source>Select/Deselect entities</source>
-        <translation>உருப்படிகளைத் தேர்ந்தெடுக்கவும்/தேர்ந்தெடுக்காமல் இருக்கவும்</translation>
+        <translation>பொருள்களைத் தேர்ந்தெடுக்கவும்/தேர்ந்தெடுக்காமல் இருக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1023"/>
         <source>Select Intersecting</source>
-        <translation>வெட்டும் உருப்படிகளைத் தேர்ந்தெடுக்கவும்</translation>
+        <translation>வெட்டும் பொருள்களைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1023"/>
@@ -49070,12 +49070,12 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimlinear.cpp" line="224"/>
         <source>Specify dimension line location</source>
-        <translation>அளவீட்டு கோட்டின் இருப்பிடத்தை குறிப்பிடவும்</translation>
+        <translation>பரிமாணக் கோட்டின் இருப்பிடத்தை குறிப்பிடவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimlinear.cpp" line="224"/>
         <source>Snap to Adjacent Dim</source>
-        <translation>அருகிலுள்ள அளவுக்கு ஸ்னாப் செய்யவும்</translation>
+        <translation>அருகிலுள்ள பரிமாணத்திற்கு ஸ்னாப் செய்யவும்</translation>
     </message>
 </context>
 <context>
@@ -49230,7 +49230,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="160"/>
         <source>Invalid hatch area. Please check that the entities chosen form one or more closed contours.</source>
-        <translation>தவறான ஹேட்ச் பகுதி. தேர்ந்தெடுக்கப்பட்ட கூறுகள் ஒன்று அல்லது அதற்கு மேற்பட்ட மூடிய கோடுகளை உருவாக்குகின்றனவா என்பதைச் சரிபார்க்கவும்.</translation>
+        <translation>தவறான ஹேட்ச் பகுதி. தேர்ந்தெடுக்கப்பட்ட பொருள்கள் ஒன்று அல்லது அதற்கு மேற்பட்ட மூடிய கோடுகளை உருவாக்குகின்றனவா என்பதைச் சரிபார்க்கவும்.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="131"/>
@@ -49315,7 +49315,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineorthtan.cpp" line="260"/>
         <source>Select circle, arc or ellipse</source>
-        <translation>வட்டம், வில் அல்லது நீள்வட்டத்தைத் தேர்ந்தெடுக்கவும்</translation>
+        <translation>வட்டம், வளைவு அல்லது நீள்வட்டத்தைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
 </context>
 <context>
@@ -49372,7 +49372,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent1.cpp" line="206"/>
         <source>Select circle, arc or ellipse</source>
-        <translation>வட்டம், வில் அல்லது நீள்வட்டத்தைத் தேர்ந்தெடுக்கவும்</translation>
+        <translation>வட்டம், வளைவு அல்லது நீள்வட்டத்தைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
 </context>
 <context>
@@ -49409,7 +49409,7 @@ Please check the filename and permissions.</source>
         <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="185"/>
         <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="190"/>
         <source>Select contour</source>
-        <translation>வளைவைத் தேர்ந்தெடுக்கவும்</translation>
+        <translation>வெளிப்புறத்தைத் தேர்ந்தெடுக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="175"/>
@@ -49705,12 +49705,12 @@ End: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfototallength.cpp" line="52"/>
         <source>Total Length of selected entities: %1</source>
-        <translation>தேர்ந்தெடுக்கப்பட்ட உருப்படிகளின் மொத்த நீளம்: %1</translation>
+        <translation>தேர்ந்தெடுக்கப்பட்ட பொருள்களின் மொத்த நீளம்: %1</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfototallength.cpp" line="55"/>
         <source>At least one of the selected entities cannot be measured.</source>
-        <translation>தேர்ந்தெடுக்கப்பட்ட உருப்படிகளில் ஒன்று அல்லது அதற்கு மேற்பட்டவற்றின் நீளத்தை அளவிட முடியாது.</translation>
+        <translation>தேர்ந்தெடுக்கப்பட்ட பொருள்களில் ஒன்று அல்லது அதற்கு மேற்பட்டவற்றின் நீளத்தை அளவிட முடியாது.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfototallength.cpp" line="64"/>
@@ -49881,12 +49881,12 @@ End: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/zoom/rs_actionzoompan.cpp" line="109"/>
         <source>Click and drag to pan zoom</source>
-        <translation>பெரிதாக்க பன்னிங் செய்ய கிளிக் செய்து இழுக்கவும்</translation>
+        <translation>பார்வையை நகர்த்த கிளிக் செய்து இழுக்கவும்</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/zoom/rs_actionzoompan.cpp" line="112"/>
         <source>Zoom panning</source>
-        <translation>பெரிதாக்க பன்னிங்</translation>
+        <translation>பார்வையை நகர்த்துதல்</translation>
     </message>
 </context>
 <context>
@@ -50269,7 +50269,7 @@ End: (%8 , %9)</source>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="356"/>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="386"/>
         <source>Free</source>
-        <translation>சுதந்திரம்</translation>
+        <translation>கட்டற்ற</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="376"/>
