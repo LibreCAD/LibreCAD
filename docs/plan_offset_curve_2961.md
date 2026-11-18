@@ -58190,3 +58190,24 @@ defect from a mistaken orientation-invariance expectation. The `0.01` variant
 was not rebuilt and remains untested. The source fixture was restored. Next,
 compare the original and reversed captured source loci and document the signed
 offset convention for closed polylines before changing the kernel or oracle.
+
+## 1822. Classify the Two-arc Frame Sensitivity (2026-11-18)
+
+Rebuilt the `.1` second-arc profile with explicit rows for reversed identity,
+reversed rotation-only, reversed translation-only, and reversed combined
+rotation/translation. The source is classified as self-intersecting and uses
+`RegionBoundary` mode in the failing row, eliminating the earlier hypothesis
+that reversal switched the worker between Direct and RegionBoundary. Reversed
+identity passes; the baseline local-frame implementation fails the rotated
+reversed row with the same `0.02946` sampled pairing error against a `0.01387`
+bound. The later rows therefore did not establish baseline translation-only
+or combined-frame behavior in that run.
+
+Two production experiments were discarded after failing validation. Omitting
+local-frame rotation at ordinary coordinate scales exposed an `AmbiguousTopology`
+at a high-origin row. Replacing the first-segment frame with a whole-profile
+PCA frame retained the `0.02946` mismatch in the combined high-origin row. No
+production change is retained. Next isolate the rotated reverse case with a
+kernel-level oracle and inspect region fragment/noding diagnostics; keep
+large-origin frame normalization unchanged until a fix preserves its existing
+acceptance matrix.
