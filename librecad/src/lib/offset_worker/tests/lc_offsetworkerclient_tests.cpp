@@ -1623,61 +1623,149 @@ TEST_CASE("Worker client generates crossing mixed-bulge polyline regions",
     RS_Line attributes{&owner, RS_LineData{{0, 0}, {1, 0}}};
     attributes.setLayer(&layer);
 
-    RS_Polyline sourceEntity;
-    sourceEntity.addVertex({20, 10});
-    sourceEntity.addVertex({20, -10}, -0.5);
-    sourceEntity.addVertex({-20, 10});
-    sourceEntity.addVertex({-20, -10});
-    sourceEntity.setClosed(true);
-    sourceEntity.endPolyline();
-    const auto source = LC_OffsetSourceGeometry::captureForGeneration(sourceEntity);
-    REQUIRE(source);
-    CHECK_FALSE(source->isWellFormed());
-    REQUIRE(source->isWellFormedForGeneration());
-
-    for (const auto [requestId, signedDistance] :
-         {std::pair<qint64, double>{501, 0.5}, {502, -0.5}}) {
-        const LC_OffsetSourceDefinition definition{*source, signedDistance, 1e-4, false};
-        const Req::Request request{token(requestId), Req::GenerateSource{definition, {}}};
-        const auto encoded = Req::encode(request);
-        REQUIRE(encoded);
-        const auto decoded = Req::decode(*encoded);
-        REQUIRE(decoded);
-        CHECK(Req::admitted(*decoded));
-        Receipts receipts;
-        REQUIRE(owned.get().submit(request, Client::Mode::Commit, receipts.into(0)));
-        rt.until([&] { return receipts.calls[0] != 0; });
-
-        const auto& completion = completed(receipts.at(0), requestId, 7);
-        REQUIRE(std::holds_alternative<Reply::Native>(completion.reply().result));
-        const auto& result = std::get<Reply::Native>(completion.reply().result);
-        INFO("signedDistance=" << signedDistance << " status="
-                                 << (result.engineStatus ? static_cast<int>(*result.engineStatus) : -1));
-        REQUIRE(result.engineStatus == LC_CurveOffsetStatus::Ok);
-        REQUIRE(result.ordinaryStatus == Reply::OrdinaryStatus::Complete);
-        REQUIRE_FALSE(result.ordinary.empty());
-        CHECK(result.ordinary.size() == (signedDistance > 0.0 ? 2u : 1u));
-        CHECK_FALSE(result.curve);
-        CHECK_FALSE(completion.nativeSource(attributes));
-
-        auto ordinary = completion.ordinary(attributes);
-        REQUIRE(ordinary);
-        REQUIRE(ordinary->size() == result.ordinary.size());
-        for (const auto& entity : *ordinary) {
-            REQUIRE(entity);
-            REQUIRE(entity->rtti() == RS2::EntitySpline);
-            CHECK(entity->getParent() == &owner);
-            CHECK(entity->getLayer(false) == &layer);
-            const auto* spline = dynamic_cast<const RS_Spline*>(entity.get());
-            REQUIRE(spline);
-            CHECK(spline->validate());
+    constexpr double rotation = 0.37;
+    const RS_Vector translation{1e6, -2e6};
+    std::array<std::vector<RS_SplineData>, 2> originBranches;
+    qint64 requestId = 501;
+    for (std::size_t frame = 0; frame < 2; ++frame) {
+        RS_Polyline sourceEntity;
+        sourceEntity.addVertex({20, 10});
+        sourceEntity.addVertex({20, -10}, -0.5);
+        sourceEntity.addVertex({-20, 10});
+        sourceEntity.addVertex({-20, -10});
+        sourceEntity.setClosed(true);
+        sourceEntity.endPolyline();
+        if (frame == 1) {
+            sourceEntity.rotate({0, 0}, rotation);
+            sourceEntity.move(translation);
         }
-        CHECK(owner.count() == 0);
+        const auto source = LC_OffsetSourceGeometry::captureForGeneration(sourceEntity);
+        REQUIRE(source);
+        CHECK_FALSE(source->isWellFormed());
+        REQUIRE(source->isWellFormedForGeneration());
 
-        const auto& firstBranch = std::get<RS_SplineData>(result.ordinary.front());
-        const Req::Request validationRequest{
-            token(requestId + 10), Req::ValidateSourceCache{firstBranch, definition, {}}};
-        CHECK_FALSE(Req::encode(validationRequest));
+        for (std::size_t side = 0; side < 2; ++side, ++requestId) {
+            const double signedDistance = side == 0 ? 0.5 : -0.5;
+            const LC_OffsetSourceDefinition definition{*source, signedDistance, 1e-4, false};
+            auto liveSource = source->makeGenerationEntity();
+            REQUIRE(liveSource);
+            const auto directOptions = LC_OffsetWorkerTolerance::directOptions(definition, *liveSource);
+            REQUIRE(directOptions);
+            const double frameComparisonTolerance =
+                2.5 * directOptions->tolerance.requestedGeometry;
+            const Req::Request request{token(requestId), Req::GenerateSource{definition, {}}};
+            const auto encoded = Req::encode(request);
+            REQUIRE(encoded);
+            const auto decoded = Req::decode(*encoded);
+            REQUIRE(decoded);
+            CHECK(Req::admitted(*decoded));
+            Receipts receipts;
+            REQUIRE(owned.get().submit(request, Client::Mode::Commit, receipts.into(0)));
+            rt.until([&] { return receipts.calls[0] != 0; });
+
+            const auto& completion = completed(receipts.at(0), requestId, 7);
+            REQUIRE(std::holds_alternative<Reply::Native>(completion.reply().result));
+            const auto& result = std::get<Reply::Native>(completion.reply().result);
+            INFO("frame=" << frame << " signedDistance=" << signedDistance << " status="
+                           << (result.engineStatus ? static_cast<int>(*result.engineStatus) : -1));
+            REQUIRE(result.engineStatus == LC_CurveOffsetStatus::Ok);
+            REQUIRE(result.ordinaryStatus == Reply::OrdinaryStatus::Complete);
+            REQUIRE_FALSE(result.ordinary.empty());
+            CHECK(result.ordinary.size() == (signedDistance > 0.0 ? 2u : 1u));
+            CHECK_FALSE(result.curve);
+            CHECK_FALSE(completion.nativeSource(attributes));
+
+            auto ordinary = completion.ordinary(attributes);
+            REQUIRE(ordinary);
+            REQUIRE(ordinary->size() == result.ordinary.size());
+            std::vector<RS_SplineData> branches;
+            for (const auto& entity : *ordinary) {
+                REQUIRE(entity);
+                REQUIRE(entity->rtti() == RS2::EntitySpline);
+                CHECK(entity->getParent() == &owner);
+                CHECK(entity->getLayer(false) == &layer);
+                const auto* spline = dynamic_cast<const RS_Spline*>(entity.get());
+                REQUIRE(spline);
+                CHECK(spline->validate());
+                branches.push_back(spline->getData());
+            }
+            CHECK(owner.count() == 0);
+
+            if (frame == 0) {
+                originBranches[side] = branches;
+            } else {
+                REQUIRE(originBranches[side].size() == branches.size());
+                const auto maxSampleError = [&](const RS_SplineData& expected,
+                                                const RS_SplineData& actual) {
+                    RS_Spline expectedEntity{nullptr, expected};
+                    RS_Spline actualEntity{nullptr, actual};
+                    double expectedStart = 0.0;
+                    double expectedEnd = 0.0;
+                    double actualStart = 0.0;
+                    double actualEnd = 0.0;
+                    REQUIRE(expectedEntity.getParameterDomain(expectedStart, expectedEnd));
+                    REQUIRE(actualEntity.getParameterDomain(actualStart, actualEnd));
+                    constexpr int sampleIntervals = 4096;
+                    std::vector<RS_Vector> expectedPoints;
+                    std::vector<RS_Vector> actualPoints;
+                    expectedPoints.reserve(sampleIntervals + 1);
+                    actualPoints.reserve(sampleIntervals + 1);
+                    for (int sample = 0; sample <= sampleIntervals; ++sample) {
+                        const double fraction = static_cast<double>(sample) / sampleIntervals;
+                        expectedPoints.push_back(expectedEntity.getPointAt(
+                            expectedStart + (expectedEnd - expectedStart) * fraction));
+                        RS_Vector point = actualEntity.getPointAt(
+                            actualStart + (actualEnd - actualStart) * fraction);
+                        if (frame == 1)
+                            point = (point - translation).rotated(-rotation);
+                        actualPoints.push_back(point);
+                    }
+                    const auto pointSegmentDistance = [](const RS_Vector& point,
+                                                         const RS_Vector& start,
+                                                         const RS_Vector& end) {
+                        const RS_Vector segment = end - start;
+                        const double lengthSquared = segment.squared();
+                        if (lengthSquared == 0.0)
+                            return (point - start).magnitude();
+                        const double fraction = std::clamp(
+                            (point - start).dotP(segment) / lengthSquared, 0.0, 1.0);
+                        return (point - (start + segment * fraction)).magnitude();
+                    };
+                    const auto directedDistance = [&](const std::vector<RS_Vector>& points,
+                                                      const std::vector<RS_Vector>& polyline) {
+                        double maximum = 0.0;
+                        for (const RS_Vector& point : points) {
+                            double nearest = std::numeric_limits<double>::infinity();
+                            for (std::size_t segment = 1; segment < polyline.size(); ++segment)
+                                nearest = std::min(nearest, pointSegmentDistance(
+                                    point, polyline[segment - 1], polyline[segment]));
+                            maximum = std::max(maximum, nearest);
+                        }
+                        return maximum;
+                    };
+                    return std::max(directedDistance(expectedPoints, actualPoints),
+                                    directedDistance(actualPoints, expectedPoints));
+                };
+                double pairingError = std::numeric_limits<double>::infinity();
+                if (branches.size() == 1) {
+                    pairingError = maxSampleError(originBranches[side].front(), branches.front());
+                } else {
+                    const double sameOrder = std::max(
+                        maxSampleError(originBranches[side][0], branches[0]),
+                        maxSampleError(originBranches[side][1], branches[1]));
+                    const double swappedOrder = std::max(
+                        maxSampleError(originBranches[side][0], branches[1]),
+                        maxSampleError(originBranches[side][1], branches[0]));
+                    pairingError = std::min(sameOrder, swappedOrder);
+                }
+                CHECK(pairingError <= frameComparisonTolerance);
+            }
+
+            const auto& firstBranch = std::get<RS_SplineData>(result.ordinary.front());
+            const Req::Request validationRequest{
+                token(requestId + 10), Req::ValidateSourceCache{firstBranch, definition, {}}};
+            CHECK_FALSE(Req::encode(validationRequest));
+        }
     }
 }
 

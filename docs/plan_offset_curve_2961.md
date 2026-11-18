@@ -57985,3 +57985,18 @@ the GUI-run conversion is the valid ODA evidence. ODA structural conversion
 does not establish geometric equivalence, visual correctness, or AutoCAD
 semantic acceptance. Those gates remain open with the visible Properties
 workflow in section 1806.
+
+## 1810. Check a Rotated High-origin Crossing Mixed-bulge Worker Result (2026-11-18)
+
+Extended the crossing mixed-bulge polyline worker-client case to run its
+positive and negative offsets both at the origin and after a rigid rotation
+of `0.37` radians plus translation to `(1e6, -2e6)`. The transformed outputs
+retain the expected branch counts, validate as splines, and are compared
+against origin-frame output by symmetric sampled curve distance with a bound
+of 2.5 times the engine's requested geometry tolerance. Branch matching is
+one-to-one while allowing output order to differ. The focused CMake Release
+case passes 872 assertions / 1 case; `git diff --check` passes. As a
+self-crossing source, it remains ordinary output and is still explicitly not
+cache-representable; this evidence does not qualify high-origin persistence,
+other mixed-bulge crossings, or arbitrary polyline topologies. Visible GUI
+and AutoCAD semantic acceptance remain open.
