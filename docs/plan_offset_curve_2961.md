@@ -59046,6 +59046,27 @@ includes the tested large-origin variants for these fixtures, not general
 large-origin acceptance. The 0.001x open-boundary regression remains
 unresolved and outside this passing matrix.
 
+## 1867. Normalize Region-node Circle-cut Angles (2026-11-18)
+
+The region arrangement records exact circle-intersection parameters in
+`[0, 2π)`, but its fallback for candidate endpoints lying on a source node
+used raw `atan2` angles in `[-π, π]`. Sorting both representations together
+could make a circular sector exceed one full revolution (the failing 0.001x
+fixture produced an 8.02-radian join sector) and discard the required join.
+Fallback angles now use the same normalized domain and canonicalize values near
+`2π` to zero.
+
+The independent membership matrix now includes a `0.001x` rotated-frame slice
+for both bulges, both relative distances, and both dilation/erosion signs. That
+previously failed frame now passes. The other 0.001x frames remain ambiguous
+(touching or multiple cycles), so this fixes the mixed-angle join failure but
+does not establish the whole small-scale domain.
+
+Validation: topology passes 50,278 assertions across 104 combinations;
+`[mixed-bulge]` passes 51,164 assertions across five cases and
+`[region-boundary]` passes 53,164 across seven. Large-origin translated frames
+at scales 1x/10x/1000x remain included.
+
 ## 1866. Recheck Scale Normalization With Corrected Arc Distances (2026-11-18)
 
 The first normalization probe in section 1864 also passed a normalized

@@ -7267,7 +7267,10 @@ LC_CurveOffsetStatus regionBoundary(const OffsetSource& source, const SourceScal
                         std::abs(point.distanceTo(nodes[n]) - magnitude) > options.tolerance.nodeMerge) {
                         continue;
                     }
-                    const double angle = std::atan2(point.y - nodes[n].y, point.x - nodes[n].x);
+                    double angle = std::atan2(point.y - nodes[n].y, point.x - nodes[n].x);
+                    if (angle < 0.0) angle += 2.0 * M_PI;
+                    const double endpointSlack = 128.0 * std::numeric_limits<double>::epsilon() * 2.0 * M_PI;
+                    if (angle >= 2.0 * M_PI - endpointSlack) angle = 0.0;
                     auto& cuts = arcCuts[n];
                     auto nearest = cuts.end();
                     double nearestDistance = options.tolerance.nodeMerge;
