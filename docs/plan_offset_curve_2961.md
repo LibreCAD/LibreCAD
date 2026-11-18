@@ -58725,3 +58725,27 @@ pass or as a new supported profile. A second temporary `.35` retry with an
 asymmetric fit override failed at `0.00359`; it is diagnostic only because
 local-frame tolerance recomputation prevented it from testing a uniform fit
 budget.
+
+## 1850. Bound Region-boundary Fit Error Consistently Across Frames (2026-11-18)
+
+The symmetric follow-up established that the earlier failure was sensitive to
+adaptive cubic fit precision: applying the same fit cap to the world and
+normalized frames made the `.35/.5` matrix pass, while the default requested
+fit reproduced the `.0025126` `.35` gap. `regionBoundary()` now caps the fit
+budget at `requestedGeometry/8` without loosening the caller's fit, and carries
+that cap into its local-frame recursion. The mixed-bulge transform test now
+covers `.15`, `.25`, `.35`, and `.5` with no test-only tolerance override.
+
+Validation on the production path: the expanded transform matrix passes 104
+assertions; the six-case `[region-boundary]` selector passes 2,886 assertions;
+the CMake kernel test target rebuilds successfully; and `git diff --check`
+passes. Tighter `/16` and `/32` caps also passed the matrix during exploration;
+`/8` is the loosest tested cap that preserved the `<2.5e-4` transform bound.
+The kernel slice is commit `36efcf860`.
+
+This is transform-invariance evidence, not yet an independent exact-geometry
+certificate. `LC_CurveOffsetGeometryResult::maxObservedError` remains unset on
+this region-boundary return path, and the `/8` fraction is currently selected
+by the bounded transform oracle rather than a measured point-to-exact-boundary
+error. Keep the planned exact source-offset/corner-circle oracle and certified
+error reporting as a follow-up before claiming general `.35/.5` accuracy.
