@@ -11533,34 +11533,50 @@ TEST_CASE("mixed-bulge region offset is rotation invariant",
     };
     auto samples = [=](const LC_CurveOffsetGeometryResult& geometry, bool inverseRotate,
                        bool inverseTranslate) {
-        std::vector<RS_Vector> points;
+        std::vector<std::array<RS_Vector, 2>> segments;
+        const auto transform = [&](RS_Vector point) {
+            if (inverseTranslate) {
+                point.x -= 1e6;
+                point.y += 2e6;
+            }
+            if (inverseRotate) point.rotate({0, 0}, -angle);
+            return point;
+        };
         for (const auto& branch : geometry.branches) {
             for (const auto& piece : branch.cubicPieces) {
-                for (unsigned i = 0; i <= 64; ++i) {
-                    const double t = static_cast<double>(i) / 64.0;
+                auto evaluate = [&](double t) {
                     const double u = 1.0 - t;
-                    RS_Vector point = piece.bezier[0] * (u * u * u) +
+                    return transform(piece.bezier[0] * (u * u * u) +
                         piece.bezier[1] * (3.0 * u * u * t) +
                         piece.bezier[2] * (3.0 * u * t * t) +
-                        piece.bezier[3] * (t * t * t);
-                    if (inverseTranslate) {
-                        point.x -= 1e6;
-                        point.y += 2e6;
-                    }
-                    if (inverseRotate) point.rotate({0, 0}, -angle);
-                    points.push_back(point);
+                        piece.bezier[3] * (t * t * t));
+                };
+                RS_Vector previous = evaluate(0.0);
+                for (unsigned i = 1; i <= 64; ++i) {
+                    const RS_Vector current = evaluate(static_cast<double>(i) / 64.0);
+                    segments.push_back({previous, current});
+                    previous = current;
                 }
             }
         }
-        return points;
+        return segments;
     };
-    auto directedGap = [](const std::vector<RS_Vector>& from, const std::vector<RS_Vector>& to) {
+    auto directedGap = [](const std::vector<std::array<RS_Vector, 2>>& from,
+                          const std::vector<std::array<RS_Vector, 2>>& to) {
         double maximum = 0.0;
-        for (const RS_Vector& point : from) {
-            double nearest = std::numeric_limits<double>::infinity();
-            for (const RS_Vector& candidate : to)
-                nearest = std::min(nearest, point.distanceTo(candidate));
-            maximum = std::max(maximum, nearest);
+        for (const auto& segment : from) {
+            for (const RS_Vector& point : {segment[0], (segment[0] + segment[1]) * 0.5, segment[1]}) {
+                double nearest = std::numeric_limits<double>::infinity();
+                for (const auto& candidate : to) {
+                    const RS_Vector axis = candidate[1] - candidate[0];
+                    const double lengthSquared = axis.squared();
+                    const double t = lengthSquared > 0.0
+                        ? std::clamp((point - candidate[0]).dotP(axis) / lengthSquared, 0.0, 1.0)
+                        : 0.0;
+                    nearest = std::min(nearest, point.distanceTo(candidate[0] + axis * t));
+                }
+                maximum = std::max(maximum, nearest);
+            }
         }
         return maximum;
     };
@@ -11590,6 +11606,8 @@ TEST_CASE("mixed-bulge region offset is rotation invariant",
             const auto transformed = samples(geometry, inverseRotate, inverseTranslate);
             const double gap = std::max(directedGap(reference, transformed),
                                         directedGap(transformed, reference));
+            CAPTURE(inverseRotate);
+            CAPTURE(inverseTranslate);
             CAPTURE(gap);
             CHECK(gap < 2.5e-4);
         }

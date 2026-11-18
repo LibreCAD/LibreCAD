@@ -6671,7 +6671,7 @@ LC_CurveOffsetStatus regionBoundary(const OffsetSource& source, const SourceScal
             }
             const LC_CurveOffsetStatus status = regionBoundary(localSource, localScale, magnitude, dilate,
                                                                localOptions, budget, cycles, result, true,
-                                                               scale.numericFloor);
+                                                               8.0 * g_eps * scale.coordinate);
             for (LC_OffsetBranch& branch : cycles) {
                 for (LC_OffsetCubicPiece& piece : branch.cubicPieces) {
                     for (RS_Vector& point : piece.bezier) point = localSource.toWorldPoint(point);
