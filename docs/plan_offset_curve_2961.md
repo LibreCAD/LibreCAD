@@ -15097,19 +15097,6 @@ validation conversation, but were not saved as durable screenshot files; the
 Qt app-window DPR was not measured. The independent W171 viewport remains
 unqualified.
 
-## 1819. Rebuild the qmake6 Application after the Polyline Fix (2026-11-18)
-
-Ran the recursive qmake6 application/plugin build with `make -j4` in
-`/private/tmp/offset3193-qmake6-fresh`, whose generated makefiles point to the
-current LibreCAD worktree. It exited successfully and linked the application
-and plugins with the updated `RS_Polyline::revertDirection()` implementation.
-The build does not compile the CMake-only test targets; those focused tests
-are recorded in section 1817. The shell reported a missing optional
-`/private/tmp/libdxfrw-cargo/env` file and the compiler emitted existing
-warnings, but neither prevented the qmake6 build. This is local macOS arm64
-build evidence for the current source, not cross-platform CI or visible-app
-acceptance.
-
 ## 817. Qualify Seven-fit-point Tangent Spline-points (2026-11-10)
 
 Added a seven-fit-point open profile with consistent start/end tangent
@@ -23070,17 +23057,6 @@ including importer-level one-ended direction and natural-boundary checks; and
 `git diff --check` passes. Product commit `607d12f74` (`feat(spline): support
 one-ended fit tangents`). These are local results and do not qualify PR CI or
 external-CAD acceptance.
-
-## 1818. Combine Reflection and Reversal at a High Origin (2026-11-18)
-
-Extended section 1817's mixed-bulge crossing fixture with one combined
-reflection-plus-reversed-traversal frame at `(1e9,-2e9)`. Both signed
-offsets pass through worker generation and the independent source-distance
-oracle, and their ordinary spline branches survive R14 DXF, R2000 DXF/DWG,
-and R2018 DXF/DWG round-trip plus second-save/reopen. The focused case passes
-8,730 assertions / 1 case. This adds one combined high-origin transform
-profile; other reflected/reversed mixed-bulge layouts and origins remain
-unqualified.
 
 Remaining tangent work: define equivalent exact semantics or explicit refusal
 for constrained `LC_SplinePoints`; validate source/cache identity and schema-3
@@ -58157,3 +58133,27 @@ entered unrelated high-origin Trim Two file matrices; it is not a pass or a
 failure result. This closes endpoint bookkeeping for the tested reverse
 operation and geometries, not the remaining mixed-bulge topology matrix or
 external-CAD acceptance.
+
+## 1818. Combine Reflection and Reversal at a High Origin (2026-11-18)
+
+Extended section 1817's mixed-bulge crossing fixture with one combined
+reflection-plus-reversed-traversal frame at `(1e9,-2e9)`. Both signed
+offsets pass through worker generation and the independent source-distance
+oracle, and their ordinary spline branches survive R14 DXF, R2000 DXF/DWG,
+and R2018 DXF/DWG round-trip plus second-save/reopen. The focused case passes
+8,730 assertions / 1 case. This adds one combined high-origin transform
+profile; other reflected/reversed mixed-bulge layouts and origins remain
+unqualified.
+
+## 1819. Rebuild the qmake6 Application after the Polyline Fix (2026-11-18)
+
+Ran the recursive qmake6 application/plugin build with `make -j4` in
+`/private/tmp/offset3193-qmake6-fresh`, whose generated makefiles point to the
+current LibreCAD worktree. It exited successfully and linked the application
+and plugins with the updated `RS_Polyline::revertDirection()` implementation.
+The build does not compile the CMake-only test targets; those focused tests
+are recorded in section 1817. The shell reported a missing optional
+`/private/tmp/libdxfrw-cargo/env` file and the compiler emitted existing
+warnings, but neither prevented the qmake6 build. This is local macOS arm64
+build evidence for the current source, not cross-platform CI or visible-app
+acceptance.
