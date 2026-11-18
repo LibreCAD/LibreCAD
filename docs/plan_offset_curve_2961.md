@@ -57928,3 +57928,15 @@ converted all 176 DXFs to temporary R2000 DWGs and parsed every result with
 failures. This confirms ODA conversion and parser readability, not geometric
 equivalence or complete semantic preservation. Visible packaged-app source
 picker acceptance and AutoCAD semantic acceptance remain open.
+
+## 1806. Record Remaining External Acceptance Gates (2026-11-18)
+
+The packaged-app source-picker check was retried after the desktop was made
+available. Finder can see the test bundle at
+`/private/tmp/offset-2961-cmake-clean/LibreCAD.app`, but the CUA accessibility
+bridge times out when attaching to the LibreCAD app (`-10005: timeoutReached`);
+the picker workflow therefore was not observed or accepted. Do not treat the
+ODA conversion batch as a substitute: it establishes conversion and
+independent parser readability only. AutoCAD semantic acceptance also remains
+unverified. Re-run both gates when an accessible LibreCAD GUI and an AutoCAD
+semantic-validation environment are available.
