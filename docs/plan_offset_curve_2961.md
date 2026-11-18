@@ -59219,9 +59219,9 @@ and directions. It passes 254,624 assertions, and `[seam]` passes 4,045
 assertions across five cases. This is still sampled membership plus branch
 invariants, not a continuous cycle-equivalence proof.
 
-Additional transformed seam rows remain unresolved rather than being accepted
-as equivalent; their exact refusal is classified in section 1875. ODA/AutoCAD
-and visible GUI acceptance remain separate gates.
+The transformed seam availability discrepancy is classified in section 1875
+and fixed for the measured rows in section 1876. ODA/AutoCAD and visible GUI
+acceptance remain separate gates.
 
 ## 1875. Pin Transformed Mixed-bulge Candidate-split Refusals (2026-11-18)
 
@@ -59237,12 +59237,36 @@ succeed; the failed cases return no partial branches.
 
 Two tentative production frame-anchor changes were discarded because both
 regressed the previously passing `0.001x` rotated membership oracle. Production
-normalization is unchanged. The likely failing boundary is occurrence
-placement into candidate offset pieces, but the exact out-of-range parameter
-has not yet been captured; do not add endpoint snapping or widen a parameter
-range without that evidence.
+normalization remained unchanged. Section 1876 captures the exact candidate
+parameter miss and fixes it without changing the frame.
 
 Validation: the focused refusal-classification case passes 54 assertions / 1
 case; the prior seam sweep passes 4,045 assertions / 5 cases; the independent
 membership matrix passes 254,624 assertions / 1 case. The focused additions
-are not a claim of transformed seam invariance or a completed solver fix.
+were diagnostic coverage only and did not themselves resolve the discrepancy.
+
+## 1876. Clamp One-ULP Candidate Endpoint Drift (2026-11-18)
+
+Implementation commit: `dbba288e7`.
+
+The CandidateSplit trace measured a branch parameter of
+`447.21359549995805` against a segment endpoint of
+`447.21359549995799`, one representable step outside the strict range. The
+same failure occurred at a translated-frame endpoint (`447.8091552903029`
+versus `447.80915529030284`). `OffsetCurves::locate()` now admits only a
+16-epsilon parameter-scale allowance, capped at one quarter of the segment
+domain, and clamps accepted values to the exact segment endpoint before
+mapping to source/arc parameters. The source geometry, geometric node
+tolerance, and cycle topology rules are unchanged.
+
+The previously refusing rotated and reflected-rotated-translated scale-10
+profiles now succeed for all four seam origins in the measured dilation and
+erosion rows. Every output is closed, has no diagnostic failure, and retains
+the same component count across the seam sweep. This is bounded to those
+profiles and does not establish arbitrary transformed seam invariance.
+
+Validation on this commit: `[seam]` passes 4,129 assertions / 6 cases;
+independent `[topology]` passes 254,624 assertions / 1 case;
+`[self-noding]` passes 5 assertions / 1 case; the transformed-seam case passes
+84 assertions / 1 case; registered `offset_worker_kernel` CTest passes 1/1 in
+299.07 seconds. This closes the measured one-ULP CandidateSplit refusals only.
