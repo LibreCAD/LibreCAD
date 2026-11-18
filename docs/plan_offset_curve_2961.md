@@ -58032,3 +58032,25 @@ not be operated or observed. This attempt is a failure, not new ODA evidence;
 the successful GUI conversion and independent audits remain those recorded in
 sections 1805 and 1807. A fresh ODA batch is still pending until its GUI is
 accessible or its CLI can run with working macOS pasteboard/XPC services.
+
+## 1813. Persist Rotated High-origin Crossing Mixed-bulge Results (2026-11-18)
+
+Extended the crossing mixed-bulge worker-client case from in-memory frame
+comparison to product-writer save/reopen coverage. Both signed offsets at the
+origin and after rotation by `0.37` radians with translations `(1e6,-2e6)` and
+`(1e9,-2e9)` now round-trip their complete ordinary SPLINE branch sets through
+R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG. Each file is reopened, every spline
+is validated, branches are paired geometrically without assuming entity order,
+and each imported drawing is saved and reopened a second time. Matching uses
+256 normalized-parameter samples per branch with the same 2.5x requested
+geometry-tolerance bound used for frame comparison. The `1e12` frame remains
+an explicit pre-engine `InvalidInput` refusal and is not written or claimed as
+supported.
+
+Validation: the CMake Release `librecad_offset_worker_client_tests` target
+builds, and the focused `Worker client generates crossing mixed-bulge
+polyline regions` case passes 2,221 assertions / 1 case. This closes only the
+recorded crossing profile, two signs, three accepted frames, and five file
+lanes; it does not establish arbitrary mixed-bulge topology or semantic ODA /
+AutoCAD acceptance. DWG export still reports the existing fixed-handle raw
+OBJECTS replay diagnostic, separate from generated spline geometry.
