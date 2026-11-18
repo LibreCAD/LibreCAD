@@ -59146,3 +59146,21 @@ roadmap-inventory parser passes all five tests; `git diff --check` passes.
 This qualifies seam invariance only for the simple one-arc profile and tested
 offset. The prior complex profile's `AmbiguousTopology`, `FitFailed`, and
 `LimitExceeded` outcomes remain open and are not generalized by this control.
+
+## 1872. Classify the Small Crossing-profile Seam Refusal (2026-11-18)
+
+Added a focused probe for the small-scale crossing mixed-bulge profile using
+each of its four vertices as the parameter origin. All four arrangements
+consistently refuse as `AmbiguousTopology` at `RegionBoundary/CycleAssembly`,
+with `MultipleContinuations` and no partial branches. The earlier generic
+seam-sensitivity report therefore must not treat this exact profile/distance
+as a seam-dependent success/failure discrepancy; its topology is explicitly
+refused by the existing conservative cycle rule. This is diagnostic coverage,
+not a successful offset or proof that the cycles are geometrically touching.
+
+Validation: `[seam]` passes 108 assertions across three matching cases;
+`[mixed-bulge]` passes 203,793 assertions across seven cases;
+`[region-boundary]` passes 205,793 assertions across nine; `git diff --check`
+passes. The other observed seam-dependent `FitFailed`, `LimitExceeded`, and
+arrangement-ambiguity rows remain unclassified and require case-specific
+reproduction before changing fitting or topology decisions.

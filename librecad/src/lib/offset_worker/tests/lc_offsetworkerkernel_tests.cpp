@@ -12044,6 +12044,41 @@ TEST_CASE("simple closed mixed-bulge offsets are invariant to the polyline seam"
     }
 }
 
+TEST_CASE("small crossing mixed-bulge topology refuses consistently across the seam",
+          "[lc-offsetcurve][worker-kernel][polyline][mixed-bulge][region-boundary][seam]") {
+    constexpr double scale = 1e-3;
+    const std::array<RS_Vector, 4> vertices{{{20, 10}, {20, -10}, {-20, 10}, {-20, -10}}};
+    const std::array<double, 4> bulges{{0.0, -0.5, 0.15, 0.0}};
+    for (std::size_t seam = 0; seam < vertices.size(); ++seam) {
+        auto source = std::make_unique<RS_Polyline>();
+        for (std::size_t i = 0; i < vertices.size(); ++i) {
+            const std::size_t vertex = (seam + i) % vertices.size();
+            source->addVertex(vertices[vertex] * scale, bulges[vertex]);
+        }
+        source->setClosed(true);
+        source->endPolyline();
+        const auto sourceGeometry = LC_OffsetSourceGeometry::captureForGeneration(*source);
+        REQUIRE(sourceGeometry);
+        const double distance = 0.125 * scale;
+        const LC_OffsetSourceDefinition definition{*sourceGeometry, -distance, 1e-4 * scale, false};
+        const auto options = LC_OffsetWorkerTolerance::directOptions(definition, *source);
+        REQUIRE(options);
+        const auto result = LC_CurveOffset::buildDirectBranches(
+            *source, LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Right, distance),
+            *options, LC_CurveOffset::makeDirectSourceBudget());
+        const auto& diagnostics = result.intersectionDiagnostics;
+        CAPTURE(seam);
+        CHECK(result.status == LC_CurveOffsetStatus::AmbiguousTopology);
+        CHECK(result.branches.empty());
+        CHECK(diagnostics.stage ==
+              LC_CurveOffsetGeometryResult::IntersectionDiagnostics::Stage::RegionBoundary);
+        CHECK(diagnostics.failureSite ==
+              LC_CurveOffsetGeometryResult::IntersectionDiagnostics::FailureSite::CycleAssembly);
+        CHECK(diagnostics.cycleAssemblyFailure ==
+              LC_CurveOffsetGeometryResult::IntersectionDiagnostics::CycleAssemblyFailure::MultipleContinuations);
+    }
+}
+
 TEST_CASE("mixed-bulge region cycles match independent dilation and erosion membership",
           "[lc-offsetcurve][worker-kernel][polyline][mixed-bulge][region-boundary][topology]") {
     const double scale = GENERATE(1e-3, 1.0, 10.0, 1e3);
