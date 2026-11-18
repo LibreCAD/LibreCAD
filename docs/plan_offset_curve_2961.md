@@ -58274,3 +58274,12 @@ rotation/source-locus selection passes 37 assertions / 2 cases. The `.01`
 profile is not yet in the persistence matrix, so only kernel-level rotation
 invariance is qualified for that value. Other close-to-zero bulges and
 independent CAD review remain open.
+
+## 1827. Run the Registered Full Worker-kernel Suite (2026-11-18)
+
+Ran the complete registered `offset_worker_kernel` CTest from the rebuilt CMake
+Release tree after the circular partition and `.01` regression changes. The
+test passed 1/1 in 281.59 seconds, covering the complete kernel suite rather
+than only the focused ellipse and mixed-bulge selections. This is local macOS
+arm64 evidence; PR cross-platform checks and independent CAD acceptance remain
+open.
