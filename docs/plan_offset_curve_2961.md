@@ -59093,6 +59093,23 @@ Validation: topology passes 202,852 assertions across 416 combinations;
 evidence for one closed polyline layout, not a continuous proof or general
 offset-distance guarantee.
 
+## 1870. Record Closed-polyline Seam Sensitivity (2026-11-18)
+
+Probed the same mixed-bulge source with each of its four vertices as the first
+polyline vertex. This changes only the closed curve's parameter seam and
+segment order. The broad trial exposed differing outcomes for equivalent
+geometry: among them `AmbiguousTopology`/touching cycles at 0.001x, an
+intersection-arrangement ambiguity for another 0.001x seam, and `FitFailed`
+or `LimitExceeded` for selected 1x/10x seam-distance-profile combinations.
+The temporary test expansion was removed because these are not passing cases
+and need distinct diagnosis; no seam-rotation workaround was retained.
+
+Follow-up should isolate a simple, non-self-intersecting mixed-bulge boundary
+and classify seam-dependent failure stages before changing cycle assembly,
+intersection budgets, or fitting. The current passing membership matrix uses
+the original seam only; it does not claim seam-independent output or refusal
+behavior.
+
 ## 1866. Recheck Scale Normalization With Corrected Arc Distances (2026-11-18)
 
 The first normalization probe in section 1864 also passed a normalized
