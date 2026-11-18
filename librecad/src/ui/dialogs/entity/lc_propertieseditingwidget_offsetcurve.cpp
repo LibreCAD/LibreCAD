@@ -337,7 +337,21 @@ void LC_PropertiesEditingWidgetOffsetCurve::setBusy(bool busy) const {
     ui->tbSelectSource->setEnabled(!busy && m_sourceCanSelect);
     for (auto* picker : {ui->tbPickDistance, ui->tbPickMajor, ui->tbPickMinor, ui->tbPickRotation})
         picker->setEnabled(!busy);
+    if (!busy) {
+        const QPointer<QLineEdit> editor = m_editorFocusToRestore;
+        m_editorFocusToRestore.clear();
+        if (editor && editor->isEnabled() && editor->isModified()) {
+            editor->setFocus(Qt::OtherFocusReason);
+        }
+    }
     if (changed) emit preparationBusyChanged(busy); // No member access after user slots.
+}
+
+void LC_PropertiesEditingWidgetOffsetCurve::rememberDirtyEditorFocus() const {
+    if (m_busy) return;
+    auto* editor = qobject_cast<QLineEdit*>(QApplication::focusWidget());
+    m_editorFocusToRestore = editor && isAncestorOf(editor) && editor->isModified()
+        ? editor : nullptr;
 }
 
 void LC_PropertiesEditingWidgetOffsetCurve::cancelPreparation() const {
@@ -1304,6 +1318,7 @@ void LC_PropertiesEditingWidgetOffsetCurve::apply(const LC_EllipseOffsetDefiniti
             });
         if (!accepted) { failure(tr("The offset worker could not start the request; the value was not changed.")); return; }
         const bool wasBusy = m_busy;
+        rememberDirtyEditorFocus();
         m_busy = true;
         refresh(nullptr, false, false); ui->lRefusal->setText(tr("Calculating offset..."));
         if (!wasBusy) emit preparationBusyChanged(true);
@@ -1411,6 +1426,7 @@ void LC_PropertiesEditingWidgetOffsetCurve::applySourceDefinition(const LC_Offse
             return;
         }
         const bool wasBusy = m_busy;
+        rememberDirtyEditorFocus();
         m_busy = true;
         refresh(nullptr, false, false);
         ui->lRefusal->setText(tr("Calculating replacement source..."));

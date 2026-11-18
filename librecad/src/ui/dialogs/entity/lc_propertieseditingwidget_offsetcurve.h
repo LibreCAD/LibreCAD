@@ -13,6 +13,7 @@
 #include <optional>
 #include <vector>
 #include <QCborArray>
+#include <QPointer>
 #include "lc_entitypropertieseditorwidget.h"
 #include "lc_offsetcurve.h"
 
@@ -24,6 +25,7 @@ class RS_Ellipse;
 class RS_Entity;
 class RS_Document;
 class QHideEvent;
+class QLineEdit;
 class QShowEvent;
 class QTimer;
 
@@ -68,6 +70,7 @@ private:
                                std::optional<SourceWitness> source = std::nullopt) const;
     LC_EllipseOffsetDefinition proposedDefinition() const;
     void setBusy(bool busy) const;
+    void rememberDirtyEditorFocus() const;
     std::array<QLineEdit*, 8> definitionEditors() const;
     void restoreCommittedText() const;
     void refresh(QLineEdit* completed = nullptr, bool force = false,
@@ -101,6 +104,7 @@ private:
     void selectCurrentSource() const;
     Ui::LC_OffsetCurvePropertiesEditingWidget* ui;
     LC_OffsetCurve* m_entity = nullptr;
+    mutable QPointer<QLineEdit> m_editorFocusToRestore;
     mutable qulonglong m_preferredSourceId = 0;
     mutable std::shared_ptr<void> m_sourceHighlight;
     mutable std::weak_ptr<void> m_highlightLifetime;

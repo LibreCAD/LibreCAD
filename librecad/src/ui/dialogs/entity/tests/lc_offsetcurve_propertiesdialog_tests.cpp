@@ -3522,13 +3522,15 @@ TEST_CASE("Native dialog refresh preserves another unfinished field",
     Fixture f; f.show(); auto& widget = native(*f.dialog);
     auto& distance = edit(widget, "leDistance");
     type(distance, ".3");
+    REQUIRE(distance.hasFocus());
     // Toggling by a keyboard event does not need to steal the dirty editor's focus.
     auto* side = widget.findChild<QCheckBox*>("cbTowardCentre"); REQUIRE(side);
     key(*side, Qt::Key_Space);
     REQUIRE(widget.isPreparing());
     awaitPreparation(widget);
     CHECK(distance.isModified()); CHECK(distance.text() == ".3");
-    key(distance, Qt::Key_Tab);
+    CHECK(distance.hasFocus());
+    widget.finishPendingInput();
     awaitPreparation(widget);
     CHECK(f.curve->definition().distance == .3);
     CHECK(f.curve->definition().towardCentre); CHECK(widget.editAttemptCount() == 2);
