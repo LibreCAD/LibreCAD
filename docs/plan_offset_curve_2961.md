@@ -59039,9 +59039,28 @@ derives expected membership solely from source winding and exact line/arc
 boundary distance, with the source and output sampled in their actual world
 coordinates.
 
-Validation: topology case passes 46,110 assertions across 48 scale/profile/
+Validation: topology case passes 46,110 assertions across 96 scale/profile/
 distance/sign/frame combinations; `[mixed-bulge]` passes 46,996 assertions
 across five cases and `[region-boundary]` passes 48,996 across seven. This
 includes the tested large-origin variants for these fixtures, not general
 large-origin acceptance. The 0.001x open-boundary regression remains
 unresolved and outside this passing matrix.
+
+## 1866. Recheck Scale Normalization With Corrected Arc Distances (2026-11-18)
+
+The first normalization probe in section 1864 also passed a normalized
+signed-distance directly to the unscaled source's circular-offset primitive,
+then scaled its returned radius. Corrected the experiment to convert the
+distance back to source units before asking for the primitive, and reran the
+`0.001x` matrix in identity, rotated, translated, and reflected frames. The
+candidate-arrangement failure disappeared, confirming the adapter correction,
+but topology still refused during cycle assembly: the identity row reported
+touching cycles, the rotated row retained the `0.0003816` open gap between
+spans 3 and 4, and translated rows reported multiple continuations. The
+corrected prototype was removed; no normalization change is in the PR.
+
+Next inspect which candidate join arcs are kept or removed around the common
+source vertex and how cycle continuation is selected. Do not snap the observed
+large gap or turn ambiguous touching/multiple continuations into valid cycles
+without an independent topological certificate. The small-scale fix remains
+open.
