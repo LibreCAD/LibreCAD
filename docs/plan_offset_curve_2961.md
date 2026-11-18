@@ -58306,3 +58306,15 @@ Near-circular exact-cusp edge profiles remain covered by the broader ellipse
 suite only where already present. Rebuilt the recursive qmake6 application and
 plugins on this exact refinement; `make -j4` exits 0. The optional Cargo-env
 warning remains non-fatal. Independent CAD acceptance remains open.
+
+## 1830. Persist Both Small Two-arc Bulge Profiles (2026-11-18)
+
+Changed the crossing mixed-bulge worker-client test to use Catch2 `GENERATE`
+for second-arc bulges `0.01` and `0.1`, retaining isolated request IDs and the
+independent source-distance oracle for each generated profile. The focused
+case passes 17,504 assertions / 1 test case across both offset signs, the
+existing transformed, reflected, reversed, and high-origin rows, and all five
+R14/R2000/R2018 DXF/DWG save/reopen plus second-save lanes. This supersedes the
+kernel-only `.01` status in section 1826 for these bounded profile and lane
+combinations; other small bulges, geometries, and external CAD acceptance
+remain open.

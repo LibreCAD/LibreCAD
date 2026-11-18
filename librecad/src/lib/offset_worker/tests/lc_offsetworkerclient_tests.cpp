@@ -1621,6 +1621,8 @@ TEST_CASE("Worker client generates crossing mixed-bulge polyline regions",
     lc::test::OutputDirectory directory("offset-worker-crossing-mixed-bulge");
     auto& rt = runtime();
     OwnedClient owned{rt};
+    const double secondArcBulge = GENERATE(0.01, 0.1);
+    CAPTURE(secondArcBulge);
     RS_EntityContainer owner;
     RS_Layer layer{QStringLiteral("mixed-bulge source")};
     RS_Line attributes{&owner, RS_LineData{{0, 0}, {1, 0}}};
@@ -1628,7 +1630,7 @@ TEST_CASE("Worker client generates crossing mixed-bulge polyline regions",
     RS_Polyline oracleSource;
     oracleSource.addVertex({20, 10});
     oracleSource.addVertex({20, -10}, -0.5);
-    oracleSource.addVertex({-20, 10}, 0.1);
+    oracleSource.addVertex({-20, 10}, secondArcBulge);
     oracleSource.addVertex({-20, -10});
     oracleSource.setClosed(true);
     oracleSource.endPolyline();
@@ -1660,14 +1662,14 @@ TEST_CASE("Worker client generates crossing mixed-bulge polyline regions",
         {{1e9, -2e9}, true, true},
     }};
     std::array<std::vector<RS_SplineData>, 2> originBranches;
-    qint64 requestId = 501;
+    qint64 requestId = secondArcBulge < 0.05 ? 501 : 1501;
     for (std::size_t frame = 0; frame < frames.size(); ++frame) {
         const SourceFrame sourceFrame = frames[frame];
         const RS_Vector translation = sourceFrame.translation;
         RS_Polyline sourceEntity;
         sourceEntity.addVertex({20, 10});
         sourceEntity.addVertex({20, -10}, -0.5);
-        sourceEntity.addVertex({-20, 10}, 0.1);
+        sourceEntity.addVertex({-20, 10}, secondArcBulge);
         sourceEntity.addVertex({-20, -10});
         sourceEntity.setClosed(true);
         sourceEntity.endPolyline();
