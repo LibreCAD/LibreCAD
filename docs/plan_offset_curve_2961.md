@@ -58528,3 +58528,16 @@ inspect the app window but cannot currently operate the canvas reliably. This
 supersedes only the older claim that the app could not be attached; it does
 not close visible acceptance. Find or produce a fixture proven editable in
 this build and retry when canvas input is available.
+
+## 1842. Independently Parse the ODA-audited DWG Round-trip (2026-11-18)
+
+Using the 176 ACAD2018 ASCII DXFs from section 1840, LibreDWG `dxf2dwg`
+converted the entire batch to R2000 DWG. The down-converter warned that
+MATERIAL is unsupported and that TABLESTYLE and MLEADERSTYLE lose information;
+this is a structural parser check, not a lossless conversion claim. LibreDWG
+`dwgread -O minJSON` then read all 176 resulting DWGs successfully, with zero
+parser failures and zero empty files. This independently validates that the
+ODA-audited DXFs can be re-encoded and parsed as R2000 DWG, but not semantic
+offset preservation, geometry equivalence, or AutoCAD acceptance. The visible
+Properties-picker gate and the larger `.35/.5` transform discrepancy remain
+open.
