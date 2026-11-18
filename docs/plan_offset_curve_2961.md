@@ -58991,3 +58991,20 @@ seven. The sampled evidence now covers two arc-bulge values, two distances, and
 both signs, but remains limited to one closed polyline layout and a finite grid;
 continuous topology, wider scale/frame/profile matrices, and collapse or
 multi-component erosion cases remain open.
+
+## 1863. Scale Mixed-bulge Membership Checks (2026-11-18)
+
+Expanded the independent sampled dilation/erosion oracle to uniform profile and
+offset scales `1x`, `10x`, and `1000x`. Grid spacing, padding, boundary
+exclusion, and geometric tolerance scale with the geometry, while the bulge
+values and relative offset ratios stay fixed. The same two arc bulges, two
+relative distances, and both offset signs are checked at every scale.
+
+A `0.001x` experiment returns `InvalidSource` from the current kernel before
+membership can be tested. That size is intentionally not counted as supported
+coverage; clarify the minimum source-domain policy separately. The passing
+matrix does not prove continuous topology or scale invariance outside these
+three sizes and this one polyline layout.
+
+Validation: topology case passes 8,610 assertions; `[mixed-bulge]` passes 9,496
+assertions across five cases and `[region-boundary]` passes 11,496 across seven.

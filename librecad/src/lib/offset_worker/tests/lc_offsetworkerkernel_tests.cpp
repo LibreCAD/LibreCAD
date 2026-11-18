@@ -11981,21 +11981,23 @@ TEST_CASE("mixed-bulge region offset is rotation invariant",
 
 TEST_CASE("mixed-bulge region cycles match independent dilation and erosion membership",
           "[lc-offsetcurve][worker-kernel][polyline][mixed-bulge][region-boundary][topology]") {
+    const double scale = GENERATE(1.0, 10.0, 1e3);
+    const bool erosion = GENERATE(false, true);
     for (const double secondArcBulge : {0.15, 0.35}) {
-        for (const double distance : {0.25, 0.5}) {
-            const bool erosion = GENERATE(false, true);
-            CAPTURE(secondArcBulge, distance, erosion);
+        for (const double baseDistance : {0.25, 0.5}) {
+            const double distance = baseDistance * scale;
+            CAPTURE(scale, secondArcBulge, distance, erosion);
             auto source = std::make_unique<RS_Polyline>();
-            source->addVertex({20, 10});
-            source->addVertex({20, -10}, -0.5);
-            source->addVertex({-20, 10}, secondArcBulge);
-            source->addVertex({-20, -10});
+            source->addVertex({20 * scale, 10 * scale});
+            source->addVertex({20 * scale, -10 * scale}, -0.5);
+            source->addVertex({-20 * scale, 10 * scale}, secondArcBulge);
+            source->addVertex({-20 * scale, -10 * scale});
             source->setClosed(true);
             source->endPolyline();
 
             const auto sourceGeometry = LC_OffsetSourceGeometry::captureForGeneration(*source);
             REQUIRE(sourceGeometry);
-            const LC_OffsetSourceDefinition definition{*sourceGeometry, -distance, 1e-4, false};
+            const LC_OffsetSourceDefinition definition{*sourceGeometry, -distance, 1e-4 * scale, false};
             const auto options = LC_OffsetWorkerTolerance::directOptions(definition, *source);
             REQUIRE(options);
             REQUIRE(options->mode == LC_CurveOffsetMode::RegionBoundary);
@@ -12116,13 +12118,13 @@ TEST_CASE("mixed-bulge region cycles match independent dilation and erosion memb
             std::size_t checked = 0;
             std::size_t insideCount = 0;
             std::size_t outsideCount = 0;
-            const double padding = distance + 4.0;
-            for (double y = minY - padding; y <= maxY + padding; y += 2.0) {
-                for (double x = minX - padding; x <= maxX + padding; x += 2.0) {
+            const double padding = scale * (baseDistance + 4.0);
+            for (double y = minY - padding; y <= maxY + padding; y += 2.0 * scale) {
+                for (double x = minX - padding; x <= maxX + padding; x += 2.0 * scale) {
                     const RS_Vector point{x, y};
                     const bool sourceInside = winding(sourceSegments, point) != 0;
                     const double boundaryDistance = sourceBoundaryDistance(point);
-                    if (std::abs(boundaryDistance - distance) < 0.75)
+                    if (std::abs(boundaryDistance - distance) < 0.75 * scale)
                         continue;
                     const bool expectedInside = erosion
                         ? sourceInside && boundaryDistance > distance
