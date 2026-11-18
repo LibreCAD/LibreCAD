@@ -58043,14 +58043,18 @@ R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG. Each file is reopened, every spline
 is validated, branches are paired geometrically without assuming entity order,
 and each imported drawing is saved and reopened a second time. Matching uses
 256 normalized-parameter samples per branch with the same 2.5x requested
-geometry-tolerance bound used for frame comparison. The `1e12` frame remains
-an explicit pre-engine `InvalidInput` refusal and is not written or claimed as
-supported.
+geometry-tolerance bound used for frame comparison. An additional 257-point
+per-branch oracle maps transformed samples back to the source frame and checks
+their distance to at least one analytic source line/arc segment against the
+requested offset magnitude; this avoids letting a nearer crossing segment
+misclassify a valid offset point. The `1e12` frame remains an explicit
+pre-engine `InvalidInput` refusal and is not written or claimed as supported.
 
 Validation: the CMake Release `librecad_offset_worker_client_tests` target
 builds, and the focused `Worker client generates crossing mixed-bulge
-polyline regions` case passes 2,221 assertions / 1 case. This closes only the
+polyline regions` case passes 4,549 assertions / 1 case. This closes only the
 recorded crossing profile, two signs, three accepted frames, and five file
 lanes; it does not establish arbitrary mixed-bulge topology or semantic ODA /
 AutoCAD acceptance. DWG export still reports the existing fixed-handle raw
-OBJECTS replay diagnostic, separate from generated spline geometry.
+OBJECTS replay diagnostic, separate from generated spline geometry. Code
+commits: `274db8cac` (persistence) and `4ece04b47` (source-distance oracle).
