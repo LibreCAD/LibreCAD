@@ -58822,3 +58822,18 @@ a continuous Hausdorff bound are not claimed.
 Validation: the focused mixed-bulge test passes 164 assertions and all six
 `[region-boundary]` cases pass 2,886 assertions. Roadmap inventory parser passes
 5/5 and `git diff --check` passes. Test slice is `1bb5d5d1e`.
+
+## 1855. Constrain Mixed-bulge Join Arc Sectors (2026-11-18)
+
+The locus test now also compares each corner-join cubic against the exact arc
+sector declared by that piece's center, radius, and source-angle interval,
+rather than accepting any point on its full support circle. Source arc offsets
+remain checked against both exact signed sectors. This independently checks
+the cubic's sampled distance to its declared analytic sector, but it does not
+independently derive whether region topology selected the correct join sector;
+the center and sector endpoints come from the generated piece provenance.
+
+Validation is unchanged numerically: the focused mixed-bulge case passes 164
+assertions and `[region-boundary]` passes 2,886 assertions across six cases.
+The test slice is `3680ec90f`. A continuous error bound and independently
+derived retained-sector/topology oracle remain open.
