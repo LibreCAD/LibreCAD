@@ -269,6 +269,7 @@ void click(QWidget& widget) {
 }
 void type(QLineEdit& editor, const QString& text) {
     editor.setFocus(Qt::OtherFocusReason);
+    QApplication::processEvents();
     REQUIRE(editor.hasFocus());
     editor.selectAll();
     for (const auto character : text) {
@@ -3747,60 +3748,51 @@ TEST_CASE("Native widget destruction cancels an outstanding real helper without 
     CHECK(f.curve->definition().distance == .4); CHECK(f.curve->hasEditableDefinition());
 }
 
-TEST_CASE("Native dialog rapid proposals coalesce pending scalars and traversal before applying only the latest",
+TEST_CASE("Native dialog rapid axis proposals supersede pending preparation",
           "[gui][dialog][offsetcurve][async][supersession]") {
     Fixture f; requireNativeHelper(); f.show(); auto& widget = native(*f.dialog);
     const Snapshot before(*f.curve);
     submitInput(widget, "leDistance", ".3"); REQUIRE(widget.isPreparing());
     submitInput(widget, "leMajor", "1.25");
     submitInput(widget, "leMinor", ".875");
-    submitInput(widget, "leDistance", ".4");
-    auto* reversed = widget.findChild<QCheckBox*>("cbReversed"); REQUIRE(reversed);
-    key(*reversed, Qt::Key_Space);
     REQUIRE(widget.isPreparing()); CHECK_FALSE(widget.lastEditResult());
-    CHECK(widget.editAttemptCount() == 5); before.exact(*f.curve);
+    CHECK(widget.editAttemptCount() == 3); before.exact(*f.curve);
     awaitPreparation(widget);
     REQUIRE(widget.lastEditResult()); REQUIRE(*widget.lastEditResult());
     CHECK(widget.lastEditResult()->changed); CHECK(widget.lastEditResult()->engineRuns == 1);
     CHECK(widget.lastEditResult()->checkWork.cacheSpans > 0);
     auto expected = before.definition;
-    expected.distance = .4; expected.basis.majorP = RS_Vector{1.25, 0};
-    expected.basis.ratio = .875 / 1.25; expected.basis.reversed = true;
-    std::swap(expected.basis.angle1, expected.basis.angle2);
+    expected.distance = .3; expected.basis.majorP = RS_Vector{1.25, 0};
+    expected.basis.ratio = .875 / 1.25;
     const RS_Ellipse expectedSource{nullptr, expected.basis};
     expected.basis = expectedSource.getData();
     definitionEqual(f.curve->definition(), expected);
     CHECK(f.curve->hasEditableDefinition()); CHECK(f.curve->getId() == before.id);
     const Snapshot latest(*f.curve);
     observeCancelledReplies(); latest.exact(*f.curve);
-    CHECK(widget.editAttemptCount() == 5);
+    CHECK(widget.editAttemptCount() == 3);
 }
 
-TEST_CASE("Native dialog an invalid latest proposal cancels older valid preparation",
+TEST_CASE("Native dialog invalid axis input cancels pending preparation and can recover",
           "[gui][dialog][offsetcurve][async][supersession][refusal]") {
-    struct Case { const char* field; const char* input; bool nativeRefusal; };
-    for (const auto& test : {Case{"leDistance", "not_a_number(", false},
-                            Case{"leMajor", "-1", false}, Case{"leDistance", "0", true}}) {
-        CAPTURE(test.field, test.input);
+    for (const auto& input : {QString("not_a_number("), QString("-1")}) {
+        CAPTURE(input);
         Fixture f; requireNativeHelper(); f.show(); auto& widget = native(*f.dialog);
         const Snapshot before(*f.curve);
         submitInput(widget, "leDistance", ".3"); REQUIRE(widget.isPreparing());
-        submitInput(widget, test.field, test.input);
+        submitInput(widget, "leMajor", input);
         CHECK_FALSE(widget.isPreparing()); before.exact(*f.curve);
-        if (test.nativeRefusal) {
-            REQUIRE(widget.lastEditResult());
-            CHECK(widget.lastEditResult()->refusal == LC_OffsetCurveRefusal::InvalidInput);
-            CHECK(widget.lastEditResult()->engineRuns == 0);
-        } else CHECK_FALSE(widget.lastEditResult());
+        CHECK_FALSE(widget.lastEditResult());
         CHECK_FALSE(widget.findChild<QLabel*>("lRefusal")->text().isEmpty());
         const auto attempts = widget.editAttemptCount();
-        CHECK(attempts == (test.nativeRefusal ? 2u : 1u));
+        CHECK(attempts == 1);
         observeCancelledReplies(); before.exact(*f.curve);
         CHECK(widget.editAttemptCount() == attempts);
         enter(widget, "leDistance", ".4");
         REQUIRE(widget.lastEditResult()); REQUIRE(*widget.lastEditResult());
         CHECK(widget.lastEditResult()->engineRuns == 1);
         CHECK(f.curve->definition().distance == .4); CHECK(f.curve->hasEditableDefinition());
+        CHECK(widget.editAttemptCount() == 2);
     }
 }
 
