@@ -58211,3 +58211,22 @@ production change is retained. Next isolate the rotated reverse case with a
 kernel-level oracle and inspect region fragment/noding diagnostics; keep
 large-origin frame normalization unchanged until a fix preserves its existing
 acceptance matrix.
+
+## 1823. Isolate Rotation from Reversal and Translation (2026-11-18)
+
+Built a focused direct-kernel probe for the same closed, self-intersecting
+polyline with bulges `-0.5` and `0.1`, offset as a dilated `RegionBoundary`.
+The original, reversed-only, rotated-only, and translated-only variants all
+returned `Ok`, one source intersection, one output branch, and 33 cubic pieces.
+The original and rotated runs both used exact primitive noding with no interval
+fallback. After inverse-transforming sampled output, reversal-only differed by
+about `1e-13`, translation-only by `2.79e-8`, while rotation-only differed by
+`0.34267165670690336` (the combined rotated/reversed case differed by
+`0.34267165670690214`). This disproves reversal as the cause and narrows the
+defect to rotational sensitivity in region-boundary construction or its exact
+primitive angle handling. The temporary diagnostic test was removed; no
+production or test code change is retained. Next compare captured source
+primitive loci before/after rotation, then trace the exact arrangement's
+candidate endpoints and circular-offset angles to find the first divergence.
+Keep the existing high-origin normalization and acceptance checks intact while
+fixing this ordinary-scale rotation case.
