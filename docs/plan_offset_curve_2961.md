@@ -58607,3 +58607,31 @@ ellipse definition and generalized definitions (including parabola). A GUI
 test that cannot access the specialized editor is a fixture/accessibility
 failure, not evidence that the workflow passed. Do not duplicate already
 implemented controls unless these checks reveal a concrete behavioral gap.
+
+## 1846. Reject Generic Intersection Formula and Broad Localization Changes (2026-11-18)
+
+Probed the unresolved larger-bulge transform discrepancy with the existing
+mixed-bulge rotation/translation/reflection kernel test. Replacing the
+circle-circle chord-height computation with a factored Heron-style formula
+did not change the `.35` failure: the translated and reflected-translated
+sampled-locus gaps remain approximately `2.5126e-3` against the `2.5e-4`
+threshold. Replacing the analogous line-circle height calculation also did
+not solve it. These arithmetic changes were reverted.
+
+A separate trial that localized every closed high-origin polyline before
+generation, including crossing profiles, regressed the qualified `.15`
+combined rotation/translation case to `AmbiguousTopology`; preserving the
+original caller tolerances did not avoid that regression. The broader
+localization change was reverted, as was the temporary `.35` test expansion.
+The existing `.15/.25` regression remains intact, the CMake kernel target
+rebuilt during the probes, and `git diff --check` plus `git status` confirm no
+exploratory source/test edits remain.
+
+These results do not qualify `.35/.5` and do not identify a generic
+intersection-height issue. Keep the simple-polyline localization guard. The
+next investigation should compare source-event parameter reconstruction and
+topology decisions for the same candidate primitive pairs in origin and
+transformed frames, specifically tracing which changed cut signature causes
+the `.35` locus gap. Any correction must retain the `.15/.25` matrix and add
+the new larger-bulge row only after its independent bidirectional locus oracle
+passes.
