@@ -57916,3 +57916,15 @@ the bounded focused case is the valid result. `git diff --check` passes.
 
 This revalidates one recorded fit-point layout and origin only. ODA conversion,
 visible packaged-app interaction, and AutoCAD semantic acceptance remain open.
+
+## 1805. Convert and Independently Parse the Staged DWG Batch (2026-11-18)
+
+ODA File Converter 27.1.0 converted all 176 staged R2000/R2018 Trim Two DWGs
+to ACAD2018 ASCII DXF with Audit enabled. The output folder contains exactly
+176 DXFs with a one-to-one basename match to the staged DWGs. The converter
+log records a complete 176-file run. An independent LibreDWG pass then
+converted all 176 DXFs to temporary R2000 DWGs and parsed every result with
+`dwgread -O minJSON`; conversion and read counts are both 176 with zero
+failures. This confirms ODA conversion and parser readability, not geometric
+equivalence or complete semantic preservation. Visible packaged-app source
+picker acceptance and AutoCAD semantic acceptance remain open.
