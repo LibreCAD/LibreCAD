@@ -58973,3 +58973,21 @@ Validation: the topology case passes 1,529 assertions; `[mixed-bulge]` passes
 2,415 assertions across five cases and `[region-boundary]` passes 4,415 across
 seven. Code commit: `4d388f828`. Continuous expected topology and broader
 profile/scale/distance matrices remain open.
+
+## 1862. Check Mixed-bulge Erosion Membership Independently (2026-11-18)
+
+Extended the independent sampled topology oracle to run each of the four
+mixed-bulge profiles in both dilation and erosion directions. Erosion's
+expected set is independently computed as `inside(source) &&
+distanceToBoundary > offset`; dilation remains
+`inside(source) || distanceToBoundary < offset`. Grid points within `0.75` of
+the exact offset boundary are excluded for both directions to avoid ambiguous
+samples. This tests inward region membership without using generated piece
+provenance.
+
+Validation: the topology case passes 2,870 assertions; `[mixed-bulge]` passes
+3,756 assertions across five cases and `[region-boundary]` passes 5,756 across
+seven. The sampled evidence now covers two arc-bulge values, two distances, and
+both signs, but remains limited to one closed polyline layout and a finite grid;
+continuous topology, wider scale/frame/profile matrices, and collapse or
+multi-component erosion cases remain open.

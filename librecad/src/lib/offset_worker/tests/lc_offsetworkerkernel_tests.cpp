@@ -11,6 +11,7 @@
 #include "rs_line.h"
 #include "rs_spline.h"
 #include "lc_hyperbola.h"
+#include <catch2/generators/catch_generators.hpp>
 #include <catch2/catch_test_macros.hpp>
 #include <algorithm>
 #include <array>
@@ -11978,11 +11979,12 @@ TEST_CASE("mixed-bulge region offset is rotation invariant",
     }
 }
 
-TEST_CASE("mixed-bulge region cycles match independent dilation membership",
+TEST_CASE("mixed-bulge region cycles match independent dilation and erosion membership",
           "[lc-offsetcurve][worker-kernel][polyline][mixed-bulge][region-boundary][topology]") {
     for (const double secondArcBulge : {0.15, 0.35}) {
         for (const double distance : {0.25, 0.5}) {
-            CAPTURE(secondArcBulge, distance);
+            const bool erosion = GENERATE(false, true);
+            CAPTURE(secondArcBulge, distance, erosion);
             auto source = std::make_unique<RS_Polyline>();
             source->addVertex({20, 10});
             source->addVertex({20, -10}, -0.5);
@@ -11998,7 +12000,7 @@ TEST_CASE("mixed-bulge region cycles match independent dilation membership",
             REQUIRE(options);
             REQUIRE(options->mode == LC_CurveOffsetMode::RegionBoundary);
             const auto result =
-                LC_CurveOffset::buildDirectBranches(*source, LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Right, distance), *options,
+                LC_CurveOffset::buildDirectBranches(*source, LC_CurveOffset::makeSideRequest(erosion ? LC_CurveOffsetSide::Left : LC_CurveOffsetSide::Right, distance), *options,
                                                     LC_CurveOffset::makeDirectSourceBudget());
             REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
             REQUIRE_FALSE(result.branches.empty());
@@ -12120,9 +12122,11 @@ TEST_CASE("mixed-bulge region cycles match independent dilation membership",
                     const RS_Vector point{x, y};
                     const bool sourceInside = winding(sourceSegments, point) != 0;
                     const double boundaryDistance = sourceBoundaryDistance(point);
-                    if (!sourceInside && std::abs(boundaryDistance - distance) < 0.75)
+                    if (std::abs(boundaryDistance - distance) < 0.75)
                         continue;
-                    const bool expectedInside = sourceInside || boundaryDistance < distance;
+                    const bool expectedInside = erosion
+                        ? sourceInside && boundaryDistance > distance
+                        : sourceInside || boundaryDistance < distance;
                     const bool actualInside = winding(outputSegments, point) != 0;
                     CHECK(actualInside == expectedInside);
                     expectedInside ? ++insideCount : ++outsideCount;
