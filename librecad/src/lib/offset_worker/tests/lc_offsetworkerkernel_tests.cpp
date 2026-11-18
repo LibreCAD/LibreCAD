@@ -11978,6 +11978,164 @@ TEST_CASE("mixed-bulge region offset is rotation invariant",
     }
 }
 
+TEST_CASE("mixed-bulge region cycles match independent dilation membership",
+          "[lc-offsetcurve][worker-kernel][polyline][mixed-bulge][region-boundary][topology]") {
+    for (const double secondArcBulge : {0.15, 0.35}) {
+        for (const double distance : {0.25, 0.5}) {
+            CAPTURE(secondArcBulge, distance);
+            auto source = std::make_unique<RS_Polyline>();
+            source->addVertex({20, 10});
+            source->addVertex({20, -10}, -0.5);
+            source->addVertex({-20, 10}, secondArcBulge);
+            source->addVertex({-20, -10});
+            source->setClosed(true);
+            source->endPolyline();
+
+            const auto sourceGeometry = LC_OffsetSourceGeometry::captureForGeneration(*source);
+            REQUIRE(sourceGeometry);
+            const LC_OffsetSourceDefinition definition{*sourceGeometry, -distance, 1e-4, false};
+            const auto options = LC_OffsetWorkerTolerance::directOptions(definition, *source);
+            REQUIRE(options);
+            REQUIRE(options->mode == LC_CurveOffsetMode::RegionBoundary);
+            const auto result =
+                LC_CurveOffset::buildDirectBranches(*source, LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Right, distance), *options,
+                                                    LC_CurveOffset::makeDirectSourceBudget());
+            REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+            REQUIRE_FALSE(result.branches.empty());
+
+            using Segment = std::array<RS_Vector, 2>;
+            std::vector<Segment> sourceSegments;
+            std::vector<Segment> outputSegments;
+            double minX = std::numeric_limits<double>::infinity();
+            double minY = minX;
+            double maxX = -minX;
+            double maxY = -minX;
+            const auto addSourceSegment = [&](const RS_Vector& a, const RS_Vector& b) {
+                sourceSegments.push_back({a, b});
+                minX = std::min({minX, a.x, b.x});
+                minY = std::min({minY, a.y, b.y});
+                maxX = std::max({maxX, a.x, b.x});
+                maxY = std::max({maxY, a.y, b.y});
+            };
+            const double pi = std::acos(-1.0);
+            for (const RS_Entity* entity : *source) {
+                if (const auto* line = dynamic_cast<const RS_Line*>(entity)) {
+                    addSourceSegment(line->getStartpoint(), line->getEndpoint());
+                }
+                else if (const auto* arc = dynamic_cast<const RS_Arc*>(entity)) {
+                    const RS_Vector center = arc->getCenter();
+                    const RS_Vector start = arc->getStartpoint();
+                    const double startAngle = (start - center).angle();
+                    const double direction = arc->isReversed() ? -1.0 : 1.0;
+                    const double sweep = arc->getAngleLength();
+                    const std::size_t steps = static_cast<std::size_t>(std::ceil(sweep / (pi / 128.0)));
+                    RS_Vector previous = start;
+                    for (std::size_t i = 1; i <= steps; ++i) {
+                        const double angle = startAngle + direction * sweep * static_cast<double>(i) / static_cast<double>(steps);
+                        const RS_Vector point =
+                            i == steps ? arc->getEndpoint() : center + RS_Vector{std::cos(angle), std::sin(angle)} * arc->getRadius();
+                        addSourceSegment(previous, point);
+                        previous = point;
+                    }
+                }
+            }
+
+            const auto cubicAt = [](const std::array<RS_Vector, 4>& controls, const double t) {
+                const double u = 1.0 - t;
+                return controls[0] * (u * u * u) + controls[1] * (3.0 * u * u * t) + controls[2] * (3.0 * u * t * t) +
+                    controls[3] * (t * t * t);
+            };
+            for (const auto& branch : result.branches) {
+                REQUIRE(branch.closed);
+                bool haveStart = false;
+                RS_Vector first;
+                RS_Vector last;
+                for (const auto& piece : branch.cubicPieces) {
+                    RS_Vector previous = cubicAt(piece.bezier, 0.0);
+                    if (!haveStart) {
+                        first = previous;
+                        haveStart = true;
+                    }
+                    for (unsigned i = 1; i <= 48; ++i) {
+                        const RS_Vector point = cubicAt(piece.bezier, static_cast<double>(i) / 48.0);
+                        outputSegments.push_back({previous, point});
+                        previous = point;
+                    }
+                    last = previous;
+                }
+                REQUIRE(haveStart);
+                if (last.distanceTo(first) > 1e-10)
+                    outputSegments.push_back({last, first});
+            }
+
+            const auto winding = [](const std::vector<Segment>& segments, const RS_Vector& point) {
+                int value = 0;
+                for (const Segment& segment : segments) {
+                    const RS_Vector& a = segment[0];
+                    const RS_Vector& b = segment[1];
+                    const double side = (b.x - a.x) * (point.y - a.y) - (point.x - a.x) * (b.y - a.y);
+                    if (a.y <= point.y && b.y > point.y && side > 0.0)
+                        ++value;
+                    else if (a.y > point.y && b.y <= point.y && side < 0.0)
+                        --value;
+                }
+                return value;
+            };
+            const auto distanceToSegment = [](const RS_Vector& point, const RS_Vector& a, const RS_Vector& b) {
+                const RS_Vector axis = b - a;
+                const double lengthSquared = axis.squared();
+                const double t = lengthSquared > 0.0 ? std::clamp((point - a).dotP(axis) / lengthSquared, 0.0, 1.0) : 0.0;
+                return point.distanceTo(a + axis * t);
+            };
+            const auto sourceBoundaryDistance = [&](const RS_Vector& point) {
+                double minimum = std::numeric_limits<double>::infinity();
+                for (const RS_Entity* entity : *source) {
+                    if (const auto* line = dynamic_cast<const RS_Line*>(entity)) {
+                        minimum = std::min(minimum, distanceToSegment(point, line->getStartpoint(), line->getEndpoint()));
+                    }
+                    else if (const auto* arc = dynamic_cast<const RS_Arc*>(entity)) {
+                        const RS_Vector center = arc->getCenter();
+                        const RS_Vector radial = point - center;
+                        const double startAngle = (arc->getStartpoint() - center).angle();
+                        const double direction = arc->isReversed() ? -1.0 : 1.0;
+                        double along = std::fmod(direction * (std::atan2(radial.y, radial.x) - startAngle), 2.0 * pi);
+                        if (along < 0.0)
+                            along += 2.0 * pi;
+                        const double radialError = std::abs(radial.magnitude() - arc->getRadius());
+                        const double arcDistance = along <= arc->getAngleLength()
+                            ? radialError
+                            : std::min(point.distanceTo(arc->getStartpoint()), point.distanceTo(arc->getEndpoint()));
+                        minimum = std::min(minimum, arcDistance);
+                    }
+                }
+                return minimum;
+            };
+
+            std::size_t checked = 0;
+            std::size_t insideCount = 0;
+            std::size_t outsideCount = 0;
+            const double padding = distance + 4.0;
+            for (double y = minY - padding; y <= maxY + padding; y += 2.0) {
+                for (double x = minX - padding; x <= maxX + padding; x += 2.0) {
+                    const RS_Vector point{x, y};
+                    const bool sourceInside = winding(sourceSegments, point) != 0;
+                    const double boundaryDistance = sourceBoundaryDistance(point);
+                    if (!sourceInside && std::abs(boundaryDistance - distance) < 0.75)
+                        continue;
+                    const bool expectedInside = sourceInside || boundaryDistance < distance;
+                    const bool actualInside = winding(outputSegments, point) != 0;
+                    CHECK(actualInside == expectedInside);
+                    expectedInside ? ++insideCount : ++outsideCount;
+                    ++checked;
+                }
+            }
+            CHECK(checked > 300);
+            CHECK(insideCount > 0);
+            CHECK(outsideCount > 0);
+        }
+    }
+}
+
 TEST_CASE("polyline source validation rejects degenerate and inconsistent chains",
           "[lc-offsetcurve][worker-kernel][source-cache][polyline]") {
     const std::array<LC_OffsetPolylineData, 4> invalidVariants{
