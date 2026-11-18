@@ -59011,3 +59011,19 @@ or scale invariance outside these three sizes and this one polyline layout.
 
 Validation: topology case passes 8,610 assertions; `[mixed-bulge]` passes 9,496
 assertions across five cases and `[region-boundary]` passes 11,496 across seven.
+
+## 1864. Reject Incomplete Small-scale Normalization Attempt (2026-11-18)
+
+Prototyped a uniform-scale transform in `LocalFrameOffsetSource` to run
+out-of-range region arrangements near a feature size of 32, then map geometry,
+provenance distances, errors, and diagnostics back. The `0.001x` fixture did
+not pass: the original failure was `CycleAssembly/OpenBoundary` with a
+`0.0003816` endpoint gap between source spans 3 and 4; the prototype changed
+the failure to `CandidateArrangement/AmbiguousTopology`. The prototype was
+removed and is not part of the PR.
+
+This result rules out wrapping the entire current arrangement in a simple
+uniform-scale frame as a sufficient fix. Next inspect the exact candidate
+arrangement failure domain/work diagnostics and determine which intersection
+predicate or tolerance is not scale-relative; preserve source-parameter and
+diagnostic semantics when adding any new normalized path.
