@@ -58541,3 +58541,18 @@ ODA-audited DXFs can be re-encoded and parsed as R2000 DWG, but not semantic
 offset preservation, geometry equivalence, or AutoCAD acceptance. The visible
 Properties-picker gate and the larger `.35/.5` transform discrepancy remain
 open.
+
+## 1843. Reach the Selected Offset in the Visible Build (2026-11-18)
+
+On the now-awake desktop, the test build opened
+`offset-R2018-degree1.dxf`; the canvas screenshot showed its vertical curve.
+Canvas-coordinate input still returned `noWindowsAvailable`, but entering the
+document command `selectall` selected one entity, and the selection header
+identified it as `Offset Curve (1)`. Switching the active document view to
+Model retained that selection. The visible Properties pane still showed
+generic drawing/entity fields rather than the offset definition or
+`Update from Source` action, so editable-definition availability and the
+source-family picker workflow were not established. No drawing content was
+saved or changed. This narrows section 1841's selection blocker but leaves
+visible source highlighting, candidate-family switching, replacement,
+cancellation, and refusal acceptance open.
