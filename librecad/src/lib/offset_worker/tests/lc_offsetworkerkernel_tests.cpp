@@ -11979,6 +11979,71 @@ TEST_CASE("mixed-bulge region offset is rotation invariant",
     }
 }
 
+TEST_CASE("simple closed mixed-bulge offsets are invariant to the polyline seam",
+          "[lc-offsetcurve][worker-kernel][polyline][mixed-bulge][region-boundary][seam]") {
+    const std::array<RS_Vector, 4> vertices{{{0, 0}, {10, 0}, {10, 10}, {0, 10}}};
+    const std::array<double, 4> bulges{{0.2, 0.0, 0.0, 0.0}};
+    const auto cubicAt = [](const std::array<RS_Vector, 4>& controls, const double t) {
+        const double u = 1.0 - t;
+        return controls[0] * (u * u * u) + controls[1] * (3.0 * u * u * t) +
+               controls[2] * (3.0 * u * t * t) + controls[3] * (t * t * t);
+    };
+    const auto samples = [&](const LC_CurveOffsetGeometryResult& result) {
+        std::vector<RS_Vector> points;
+        for (const LC_OffsetBranch& branch : result.branches) {
+            REQUIRE(branch.closed);
+            for (const LC_OffsetCubicPiece& piece : branch.cubicPieces) {
+                for (unsigned step = 0; step < 32; ++step)
+                    points.push_back(cubicAt(piece.bezier, static_cast<double>(step) / 32.0));
+            }
+        }
+        return points;
+    };
+    const auto directedGap = [](const std::vector<RS_Vector>& from,
+                                const std::vector<RS_Vector>& to) {
+        double maximum = 0.0;
+        for (const RS_Vector& point : from) {
+            double nearest = std::numeric_limits<double>::infinity();
+            for (const RS_Vector& candidate : to)
+                nearest = std::min(nearest, point.distanceTo(candidate));
+            maximum = std::max(maximum, nearest);
+        }
+        return maximum;
+    };
+
+    std::vector<RS_Vector> reference;
+    for (std::size_t seam = 0; seam < vertices.size(); ++seam) {
+        auto source = std::make_unique<RS_Polyline>();
+        for (std::size_t i = 0; i < vertices.size(); ++i) {
+            const std::size_t vertex = (seam + i) % vertices.size();
+            source->addVertex(vertices[vertex], bulges[vertex]);
+        }
+        source->setClosed(true);
+        source->endPolyline();
+
+        const auto sourceGeometry = LC_OffsetSourceGeometry::captureForGeneration(*source);
+        REQUIRE(sourceGeometry);
+        const LC_OffsetSourceDefinition definition{*sourceGeometry, 0.5, 1e-5, false};
+        const auto options = LC_OffsetWorkerTolerance::directOptions(definition, *source);
+        REQUIRE(options);
+        const auto result = LC_CurveOffset::buildDirectBranches(
+            *source, LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Left, 0.5), *options,
+            LC_CurveOffset::makeDirectSourceBudget());
+        CAPTURE(seam);
+        REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+        REQUIRE_FALSE(result.branches.empty());
+        const auto current = samples(result);
+        REQUIRE_FALSE(current.empty());
+        if (seam == 0) {
+            reference = current;
+            continue;
+        }
+        const double gap = std::max(directedGap(reference, current),
+                                    directedGap(current, reference));
+        CHECK(gap < 0.01);
+    }
+}
+
 TEST_CASE("mixed-bulge region cycles match independent dilation and erosion membership",
           "[lc-offsetcurve][worker-kernel][polyline][mixed-bulge][region-boundary][topology]") {
     const double scale = GENERATE(1e-3, 1.0, 10.0, 1e3);

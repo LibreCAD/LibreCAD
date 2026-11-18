@@ -59128,3 +59128,21 @@ source vertex and how cycle continuation is selected. Do not snap the observed
 large gap or turn ambiguous touching/multiple continuations into valid cycles
 without an independent topological certificate. The small-scale fix remains
 open.
+
+## 1871. Add a Simple Mixed-bulge Seam Control (2026-11-18)
+
+Added a bounded positive-control regression using a simple closed four-edge
+profile with one bulged arc. It rotates the first-vertex seam through all four
+vertices, builds the same RegionBoundary offset, samples the output cubic
+branches, and compares both directed geometric gaps against the original seam.
+All four seam placements succeed and remain within the `0.01` sample-gap
+threshold. The source geometry and offset distance are unchanged; only the
+parameter origin and segment ordering vary.
+
+Validation: `[seam]` passes 80 assertions across two matching cases;
+`[mixed-bulge]` passes 203,765 assertions across six cases;
+`[region-boundary]` passes 205,765 assertions across eight cases; the
+roadmap-inventory parser passes all five tests; `git diff --check` passes.
+This qualifies seam invariance only for the simple one-arc profile and tested
+offset. The prior complex profile's `AmbiguousTopology`, `FitFailed`, and
+`LimitExceeded` outcomes remain open and are not generalized by this control.
