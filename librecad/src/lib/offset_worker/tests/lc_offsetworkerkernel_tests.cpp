@@ -11511,7 +11511,8 @@ TEST_CASE("captured mixed-bulge polyline preserves its locus under rotation",
 TEST_CASE("mixed-bulge region offset is rotation invariant",
           "[lc-offsetcurve][worker-kernel][polyline][mixed-bulge][rotation]") {
     constexpr double angle = 0.37;
-    const auto makeSourceProfile = [](double secondArcBulge) {
+    const auto makeSourceProfile = [=](double secondArcBulge, bool rotateSource = false,
+                                       bool translateSource = false, bool reflectSource = false) {
         auto polyline = std::make_unique<RS_Polyline>();
         polyline->addVertex({20, 10});
         polyline->addVertex({20, -10}, -0.5);
@@ -11519,19 +11520,15 @@ TEST_CASE("mixed-bulge region offset is rotation invariant",
         polyline->addVertex({-20, -10});
         polyline->setClosed(true);
         polyline->endPolyline();
+        if (reflectSource) polyline->mirror({0, 0}, {1, 0});
+        if (rotateSource) polyline->rotate({0, 0}, angle);
+        if (translateSource) polyline->move({1e6, -2e6});
         return polyline;
     };
     auto build = [=](double secondArcBulge, bool rotateSource, bool translateSource, bool reflectSource = false) {
-        RS_Polyline polyline;
-        polyline.addVertex({20, 10});
-        polyline.addVertex({20, -10}, -0.5);
-        polyline.addVertex({-20, 10}, secondArcBulge);
-        polyline.addVertex({-20, -10});
-        polyline.setClosed(true);
-        polyline.endPolyline();
-        if (reflectSource) polyline.mirror({0, 0}, {1, 0});
-        if (rotateSource) polyline.rotate({0, 0}, angle);
-        if (translateSource) polyline.move({1e6, -2e6});
+        const auto sourceProfile = makeSourceProfile(secondArcBulge, rotateSource,
+                                                     translateSource, reflectSource);
+        RS_Polyline& polyline = *sourceProfile;
         const auto source = LC_OffsetSourceGeometry::captureForGeneration(polyline);
         REQUIRE(source);
         const LC_OffsetSourceDefinition definition{*source, -0.5, 1e-4, false};
@@ -11808,24 +11805,38 @@ TEST_CASE("mixed-bulge region offset is rotation invariant",
     for (const double secondArcBulge : {0.15, 0.25, 0.35, 0.5}) {
         CAPTURE(secondArcBulge);
         const auto original = build(secondArcBulge, false, false);
-        const auto sourceProfile = makeSourceProfile(secondArcBulge);
         const auto rotated = build(secondArcBulge, true, false);
         const auto translated = build(secondArcBulge, false, true);
         const auto rotatedTranslated = build(secondArcBulge, true, true);
         const auto reflected = build(secondArcBulge, false, false, true);
         const auto reflectedRotatedTranslated = build(secondArcBulge, true, true, true);
+        const auto rotatedSource = makeSourceProfile(secondArcBulge, true, false);
+        const auto translatedSource = makeSourceProfile(secondArcBulge, false, true);
+        const auto rotatedTranslatedSource = makeSourceProfile(secondArcBulge, true, true);
+        const auto reflectedSource = makeSourceProfile(secondArcBulge, false, false, true);
+        const auto reflectedRotatedTranslatedSource = makeSourceProfile(secondArcBulge, true, true, true);
         REQUIRE(original.status == LC_CurveOffsetStatus::Ok);
         REQUIRE(rotated.status == LC_CurveOffsetStatus::Ok);
         REQUIRE(translated.status == LC_CurveOffsetStatus::Ok);
         REQUIRE(rotatedTranslated.status == LC_CurveOffsetStatus::Ok);
         REQUIRE(reflected.status == LC_CurveOffsetStatus::Ok);
         REQUIRE(reflectedRotatedTranslated.status == LC_CurveOffsetStatus::Ok);
-        const double requestedGeometry = requestedGeometryTolerance(*sourceProfile);
-        const double locusErrorBound = certifiedLocusErrorBound(
-            original, *sourceProfile, requestedGeometry / 8.0);
-        CAPTURE(locusErrorBound);
-        CAPTURE(requestedGeometry);
-        CHECK(locusErrorBound <= requestedGeometry / 8.0);
+        const auto checkCertifiedLocus = [&](const LC_CurveOffsetGeometryResult& geometry,
+                                             const RS_Polyline& profile) {
+            const double requestedGeometry = requestedGeometryTolerance(profile);
+            const double locusErrorBound = certifiedLocusErrorBound(
+                geometry, profile, requestedGeometry / 8.0);
+            CAPTURE(locusErrorBound);
+            CAPTURE(requestedGeometry);
+            CHECK(locusErrorBound <= requestedGeometry / 8.0);
+        };
+        const auto sourceProfile = makeSourceProfile(secondArcBulge);
+        checkCertifiedLocus(original, *sourceProfile);
+        checkCertifiedLocus(rotated, *rotatedSource);
+        checkCertifiedLocus(translated, *translatedSource);
+        checkCertifiedLocus(rotatedTranslated, *rotatedTranslatedSource);
+        checkCertifiedLocus(reflected, *reflectedSource);
+        checkCertifiedLocus(reflectedRotatedTranslated, *reflectedRotatedTranslatedSource);
         CHECK_FALSE(original.intersectionDiagnostics.regionArrangementWork.intervalFallback);
         CHECK(translated.intersectionDiagnostics.regionArrangementWork.exactPrimitiveNoding);
         CHECK(rotatedTranslated.intersectionDiagnostics.regionArrangementWork.exactPrimitiveNoding);
