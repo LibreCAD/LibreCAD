@@ -59200,3 +59200,29 @@ environment-file warning); the roadmap inventory parser passes all five
 tests; `git diff --check` passes. This closes
 the reproduced seam-3 depth-limit defect for the tested analytic polyline
 domain, not every small-scale or near-contact topology.
+
+## 1874. Classify Ordinary-scale Mixed-bulge Seam Outcomes (2026-11-18)
+
+Commit `52196c40c` adds an identity-frame seam sweep at scales 1 and 10 for all
+four second-arc bulges (`.15/.25/.35/.5`), relative distances
+(`.125/.25/.5/.75`), both offset directions, and all four cyclic vertex
+origins. Across 256 rows, success/refusal class and failure diagnostics are
+seam-invariant; successful outputs retain component count and agree within
+bounded branch-wise area, length, and bounds checks. An initial fixed-points-
+per-cubic Hausdorff probe reported large gaps on differently partitioned but
+otherwise matching branches; that metric was rejected and is not used as
+evidence.
+
+The independent sampled dilation/erosion membership oracle now also rotates
+all seams for the scale-10 identity frame across the same bulges, distances,
+and directions. It passes 254,624 assertions, and `[seam]` passes 4,045
+assertions across five cases. This is still sampled membership plus branch
+invariants, not a continuous cycle-equivalence proof.
+
+Additional transformed seam rows remain unresolved rather than being accepted
+as equivalent: at scale 10, a rotated seam-3 `.15`-bulge / `.125`-distance
+profile and a reflected-rotated-translated seam-2 `.15`-bulge / `.5`-distance
+profile return `AmbiguousTopology` where seam 0 succeeds. Keep these as
+fail-closed availability discrepancies until independently classified; do not
+weaken the exact-frame oracle or infer that conservative refusal is valid
+topology. ODA/AutoCAD and visible GUI acceptance remain separate gates.
