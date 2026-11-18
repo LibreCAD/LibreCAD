@@ -57940,3 +57940,13 @@ ODA conversion batch as a substitute: it establishes conversion and
 independent parser readability only. AutoCAD semantic acceptance also remains
 unverified. Re-run both gates when an accessible LibreCAD GUI and an AutoCAD
 semantic-validation environment are available.
+
+## 1807. Audit the ODA-converted DXFs with ezdxf (2026-11-18)
+
+Ran `scripts/ezdxf_audit.py` against all 176 ACAD2018 ASCII DXFs produced in
+section 1805, using an isolated offline `uv` environment with ezdxf 1.4.4.
+All 176 files read successfully; the audit reported zero files with errors,
+zero audit errors, and zero repairs. This is independent DXF structural/audit
+evidence. It does not establish geometric equivalence, visual correctness,
+editable-source metadata semantics, or AutoCAD acceptance; those gates remain
+open as recorded in section 1806.
