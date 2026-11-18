@@ -59000,12 +59000,14 @@ exclusion, and geometric tolerance scale with the geometry, while the bulge
 values and relative offset ratios stay fixed. The same two arc bulges, two
 relative distances, and both offset signs are checked at every scale.
 
-A `0.001x` experiment returns `AmbiguousTopology` from the current kernel
-before membership can be tested. That size is intentionally not counted as
-supported coverage; determine whether this is a valid numerical refusal or a
-scale-sensitive topology-classification defect. The passing matrix does not
-prove continuous topology or scale invariance outside these three sizes and
-this one polyline layout.
+A `0.001x` experiment returns `AmbiguousTopology` during cycle assembly before
+membership can be tested. For the first dilation row, diagnostics report an
+open-boundary endpoint gap of about `0.0003816`, far above the scaled requested
+geometry tolerance. This is retained as an unresolved scale-sensitive
+topology issue, not accepted as a supported-domain refusal. Determine why a
+candidate boundary is left open and add a focused regression before expanding
+the passing scale claim. The passing matrix does not prove continuous topology
+or scale invariance outside these three sizes and this one polyline layout.
 
 Validation: topology case passes 8,610 assertions; `[mixed-bulge]` passes 9,496
 assertions across five cases and `[region-boundary]` passes 11,496 across seven.
