@@ -58571,3 +58571,39 @@ test probes were reverted; no implementation or passing claim results. Keep
 the simple-polyline guard until a bounded, event-specific normalization or
 certification path preserves the qualified `.15/.25` matrix and improves the
 larger profiles. `.35/.5` remain unqualified.
+
+## 1845. Make the Properties Source-family Picker an Explicit Acceptance Gate (2026-11-18)
+
+Clarified the requested workflow against the current implementation. The
+offset Properties editor already has a `Source type` selector and a
+`Source curve` selector. The type list is populated from
+`LC_OffsetSourceGeometry::SupportedKinds`, which currently contains ellipse,
+spline, spline points, parabola, bounded hyperbola, line, arc, circle, and
+polyline, plus an all-supported-types filter. Choosing a source candidate
+validates it against the active filter, synchronizes the displayed family to
+the candidate's actual kind, and applies its captured geometry as the new
+embedded source definition. Automated Properties tests cover nine-family
+filtering/replacement, but the visible packaged-app attempt did not expose the
+offset-specific editor and therefore did not verify this interaction.
+
+Keep the product requirement explicit: users must be able to change the
+source-curve family in the Properties widget, browse/pick a new source curve
+from that family (or from all supported families), see the selected/resolved
+source highlighted when one exists, and replace the embedded source without
+creating a live dependency. This must work for every family in
+`SupportedKinds`, including parabola, and must preserve the existing
+cancel/refusal atomicity. Selecting a candidate of a different family from an
+all-types view must update the family selector to that candidate's actual
+type. When a family filter is active, incompatible candidates must not be
+selectable.
+
+Implementation readiness: first obtain a fixture that restores as an editable
+`LC_OffsetCurve` in the current packaged build and make the offset Properties
+editor reachable in the visible workflow. Then exercise family changes,
+candidate replacement, type synchronization, resolved-source highlight,
+cancel, and refusal for all nine families; use data-driven offscreen tests for
+the complete family matrix and visible smoke cases that cover both a native
+ellipse definition and generalized definitions (including parabola). A GUI
+test that cannot access the specialized editor is a fixture/accessibility
+failure, not evidence that the workflow passed. Do not duplicate already
+implemented controls unless these checks reveal a concrete behavioral gap.
