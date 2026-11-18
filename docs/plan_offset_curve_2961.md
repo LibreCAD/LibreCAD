@@ -58157,3 +58157,21 @@ are recorded in section 1817. The shell reported a missing optional
 warnings, but neither prevented the qmake6 build. This is local macOS arm64
 build evidence for the current source, not cross-platform CI or visible-app
 acceptance.
+
+## 1820. Recheck ODA Access and Probe a Second Crossing Arc (2026-11-18)
+
+After the user confirmed ODAFileConverter was open, the desktop inventory still
+listed it as running, but CUA could not bind its window (`cgWindowNotFound`).
+No ODA conversion was performed; independent DWG validation remains open.
+
+An exploratory edit added a second, opposite-side bulged segment to the
+passing mixed-bulge crossing fixture, but the existing test executable was run
+without rebuilding it after either source change. Those invocations are stale
+binary evidence and establish nothing about the `0.1` or `0.01` profiles. The
+fixture was restored to the previously qualified one-arc profile, rebuilt
+with `cmake --build /private/tmp/offset-2961-cmake-clean --target
+librecad_offset_worker_client_tests -j 4`, and rerun successfully: 9,108
+assertions / 1 case. Any follow-up must rebuild for each geometry variant,
+isolate direct-kernel and worker outcomes, and determine whether a conservative
+refusal or a translation-sensitivity defect is present before adding the
+profile to the persistence matrix.
