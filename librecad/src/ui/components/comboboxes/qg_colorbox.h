@@ -62,9 +62,10 @@ private
 protected:
     std::unique_ptr<RS_Color> m_currentColor;
     int findColor(const RS_Color& color) const;
+    // adds a color picked with the color dialog and saves the picked colors to the settings
+    int addCustomColor(const RS_Color& color);
 
 private:
-    int addCustomColor(const RS_Color& color);
     // add custom color items from rs_settings
     void readCustomColorSettings();
     void writeCustomColorSettings() const;
