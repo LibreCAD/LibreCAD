@@ -58949,3 +58949,27 @@ commits: `0fc0e8a99` (parameter mapping), `6f8fc9654` (normalized
 candidate-span certificate), and `8e897dd99` (junction endpoint bound).
 Larger-scale certification, expected cycle/topology independence, and other
 profile/distance combinations remain open.
+
+## 1861. Check Mixed-bulge Region Membership Independently (2026-11-18)
+
+Added a second topology check that does not use generated piece provenance to
+derive expected region membership. For the closed mixed-bulge source, the test
+approximates each exact source line/arc path for nonzero winding, computes
+point-to-source-boundary distance analytically on finite segments and arc
+sweeps, and compares a grid against the dilation identity
+`sourceInside || distanceToBoundary < offset`. The generated closed cubic
+cycles are independently flattened and classified by winding. Points outside
+the source within `0.75` of the offset boundary are excluded to avoid making a
+grid sample an ambiguous near-boundary assertion.
+
+The matrix covers second-arc bulges `.15` and `.35` at distances `.25` and
+`.5`, with more than 300 checked grid points per row. Source-arc winding uses
+angular tessellation at no more than `pi/128` per segment; output cubics use 48
+chords each. This is independent sampled membership evidence for these four
+rows, not a continuous topology proof, exhaustive arrangement validation, or
+coverage of erosion, other profiles, scales, or frames.
+
+Validation: the topology case passes 1,529 assertions; `[mixed-bulge]` passes
+2,415 assertions across five cases and `[region-boundary]` passes 4,415 across
+seven. Code commit: `4d388f828`. Continuous expected topology and broader
+profile/scale/distance matrices remain open.
