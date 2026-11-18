@@ -59000,11 +59000,12 @@ exclusion, and geometric tolerance scale with the geometry, while the bulge
 values and relative offset ratios stay fixed. The same two arc bulges, two
 relative distances, and both offset signs are checked at every scale.
 
-A `0.001x` experiment returns `InvalidSource` from the current kernel before
-membership can be tested. That size is intentionally not counted as supported
-coverage; clarify the minimum source-domain policy separately. The passing
-matrix does not prove continuous topology or scale invariance outside these
-three sizes and this one polyline layout.
+A `0.001x` experiment returns `AmbiguousTopology` from the current kernel
+before membership can be tested. That size is intentionally not counted as
+supported coverage; determine whether this is a valid numerical refusal or a
+scale-sensitive topology-classification defect. The passing matrix does not
+prove continuous topology or scale invariance outside these three sizes and
+this one polyline layout.
 
 Validation: topology case passes 8,610 assertions; `[mixed-bulge]` passes 9,496
 assertions across five cases and `[region-boundary]` passes 11,496 across seven.
