@@ -59434,10 +59434,12 @@ refresh, then verifies the preserved value is applied on submission.
 Validation: the focused regression passes 25 assertions / 1 case with
 `QT_QPA_PLATFORM=offscreen`; the full Properties dialog suite completes with
 97/99 cases and 46,746/46,748 assertions passing. The two failures are
-`hasFocus()` checks in the rapid-proposal and invalid-latest-proposal tests;
-they fail in the offscreen platform's focus simulation before exercising the
-asserted edit outcomes. This is not full GUI acceptance. `git diff --check`
-passes.
+`hasFocus()` checks in rapid-proposal and invalid-latest-proposal tests. Both
+attempt to type additional proposals while async preparation is active, when
+the current widget intentionally disables its editors. Thus they do not
+currently model possible user input; reconcile the supersession-test contract
+with the busy-state interaction before treating those cases as qualified.
+This is not full GUI acceptance. `git diff --check` passes.
 
 ## 1885. Retry ODA CLI after User Opens GUI Application (2026-11-18)
 
@@ -59451,8 +59453,8 @@ successful ODA evidence: 176/176 output DXFs parsed with zero read errors,
 audit errors, or repairs. This does not establish geometry equivalence,
 editable offset semantics, or AutoCAD acceptance.
 
-The remaining gates are visible Properties workflow acceptance, the two
-offscreen focus-helper failures, broader mixed-bulge topology/scale evidence,
-and external CAD semantic acceptance. Continue with code-backed validation
-and only close the visible or external acceptance gates when directly
-observed.
+The remaining gates are visible Properties workflow acceptance, reconciliation
+of the two supersession tests with disabled busy-state editors, broader
+mixed-bulge topology/scale evidence, and external CAD semantic acceptance.
+Continue with code-backed validation and only close the visible or external
+acceptance gates when directly observed.
