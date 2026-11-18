@@ -58513,3 +58513,18 @@ audit, and convert the staged DWGs in its desktop environment. It does not
 establish geometric equivalence, offset semantics, or AutoCAD acceptance; no
 new ezdxf audit was run on this output directory in this slice. The larger
 `.35/.5` mixed-bulge transform discrepancy remains separately unqualified.
+
+## 1841. Retry Visible Properties Acceptance with the Desktop App (2026-11-18)
+
+The CUA bridge attached to the current LibreCAD test build and opened two
+candidate DXFs. Opening `typed-source-31-r2018.dxf` reported that its one marked
+offset could not be restored as editable and was retained as ordinary
+geometry, so it is not a valid Properties-picker fixture. The separate
+`offset-R2018-degree1.dxf` opened without a new fallback warning and displayed
+its drawing, but drawing-area clicks then failed with CUA
+`noWindowsAvailable`; selection, source highlighting, type switching,
+replacement, cancellation, and refusal were not observed. The bridge can
+inspect the app window but cannot currently operate the canvas reliably. This
+supersedes only the older claim that the app could not be attached; it does
+not close visible acceptance. Find or produce a fixture proven editable in
+this build and retry when canvas input is available.
