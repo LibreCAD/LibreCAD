@@ -59270,3 +59270,21 @@ independent `[topology]` passes 254,624 assertions / 1 case;
 `[self-noding]` passes 5 assertions / 1 case; the transformed-seam case passes
 84 assertions / 1 case; registered `offset_worker_kernel` CTest passes 1/1 in
 299.07 seconds. This closes the measured one-ULP CandidateSplit refusals only.
+
+## 1877. Extend Mixed-bulge Membership Across Transformed Seams (2026-11-18)
+
+Test commit: `102e1b558`.
+
+Expanded the independent dilation/erosion membership oracle so every scale-10
+row rotates through all four polyline seams in all four frames: identity,
+rotation, translation, and reflection plus rotation/translation. It covers all
+four second-arc bulges, four relative offset distances, and both offset signs.
+This specifically carries the formerly refusing rotated and translated seam
+rows from section 1875 through the independent source-distance/winding oracle
+after the bounded `OffsetCurves::locate()` endpoint correction in section
+1876.
+
+Validation: `[topology]` passes 405,704 assertions / 1 case. This is sampled
+membership over the recorded frame/profile matrix, not a continuous topology
+proof or general seam-invariance guarantee. Smaller-scale and other
+transformed-seam combinations remain separate coverage.
