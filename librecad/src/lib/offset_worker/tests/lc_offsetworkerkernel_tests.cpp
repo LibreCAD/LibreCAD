@@ -11511,6 +11511,16 @@ TEST_CASE("captured mixed-bulge polyline preserves its locus under rotation",
 TEST_CASE("mixed-bulge region offset is rotation invariant",
           "[lc-offsetcurve][worker-kernel][polyline][mixed-bulge][rotation]") {
     constexpr double angle = 0.37;
+    const auto makeSourceProfile = [](double secondArcBulge) {
+        auto polyline = std::make_unique<RS_Polyline>();
+        polyline->addVertex({20, 10});
+        polyline->addVertex({20, -10}, -0.5);
+        polyline->addVertex({-20, 10}, secondArcBulge);
+        polyline->addVertex({-20, -10});
+        polyline->setClosed(true);
+        polyline->endPolyline();
+        return polyline;
+    };
     auto build = [=](double secondArcBulge, bool rotateSource, bool translateSource, bool reflectSource = false) {
         RS_Polyline polyline;
         polyline.addVertex({20, 10});
@@ -11535,6 +11545,107 @@ TEST_CASE("mixed-bulge region offset is rotation invariant",
             CHECK(geometry.maxObservedError <= options->tolerance.requestedGeometry / 8.0);
         }
         return geometry;
+    };
+    const auto requestedGeometryTolerance = [](const RS_Polyline& source) {
+        const auto sourceGeometry = LC_OffsetSourceGeometry::captureForGeneration(source);
+        REQUIRE(sourceGeometry);
+        const LC_OffsetSourceDefinition definition{*sourceGeometry, -0.5, 1e-4, false};
+        const auto options = LC_OffsetWorkerTolerance::directOptions(definition, source);
+        REQUIRE(options);
+        return options->tolerance.requestedGeometry;
+    };
+    const auto exactLocusDeviation = [](const LC_CurveOffsetGeometryResult& geometry,
+                                        const RS_Polyline& source) {
+        struct ExactPrimitive {
+            enum class Kind { Segment, Circle } kind;
+            RS_Vector start;
+            RS_Vector end;
+            RS_Vector centre;
+            double radius{0.0};
+        };
+        double signedDistance = 0.0;
+        bool haveDistance = false;
+        for (const auto& branch : geometry.branches) {
+            for (const auto& piece : branch.cubicPieces) {
+                if (!piece.provenance.arcCentre.valid) {
+                    signedDistance = piece.provenance.signedDistance;
+                    haveDistance = true;
+                    break;
+                }
+            }
+            if (haveDistance) break;
+        }
+        if (!haveDistance) return std::numeric_limits<double>::infinity();
+
+        // Fragment orientation can reverse, so test radial support on both offset sides.
+        // Angular-domain and retained-topology checks are intentionally separate.
+        std::vector<ExactPrimitive> primitives;
+        const auto addJoinCircle = [&](const RS_Vector& centre) {
+            primitives.push_back({ExactPrimitive::Kind::Circle, {}, {}, centre,
+                                  std::abs(signedDistance)});
+        };
+        for (const RS_Entity* entity : source) {
+            if (const auto* line = dynamic_cast<const RS_Line*>(entity)) {
+                const RS_Vector start = line->getStartpoint();
+                const RS_Vector delta = line->getEndpoint() - start;
+                const double length = delta.magnitude();
+                if (!(length > 0.0)) continue;
+                const RS_Vector tangent = delta / length;
+                const RS_Vector normal{-tangent.y, tangent.x};
+                for (const double offsetDistance : {signedDistance, -signedDistance}) {
+                    const RS_Vector offset = normal * offsetDistance;
+                    primitives.push_back({ExactPrimitive::Kind::Segment,
+                        start + offset, line->getEndpoint() + offset});
+                }
+                addJoinCircle(start);
+                addJoinCircle(line->getEndpoint());
+            } else if (const auto* arc = dynamic_cast<const RS_Arc*>(entity)) {
+                const double direction = arc->isReversed() ? -1.0 : 1.0;
+                for (const double offsetDistance : {signedDistance, -signedDistance}) {
+                    const double signedRadius = arc->getRadius() - direction * offsetDistance;
+                    const double radius = std::abs(signedRadius);
+                    primitives.push_back({ExactPrimitive::Kind::Circle, {}, {}, arc->getCenter(), radius});
+                }
+                addJoinCircle(arc->getStartpoint());
+                addJoinCircle(arc->getEndpoint());
+            }
+        }
+        const auto distanceToSegment = [](const RS_Vector& point, const RS_Vector& start,
+                                          const RS_Vector& end) {
+            const RS_Vector axis = end - start;
+            const double lengthSquared = axis.squared();
+            const double parameter = lengthSquared > 0.0
+                ? std::clamp((point - start).dotP(axis) / lengthSquared, 0.0, 1.0) : 0.0;
+            return point.distanceTo(start + axis * parameter);
+        };
+        const auto distanceToPrimitive = [&](const RS_Vector& point, const ExactPrimitive& primitive) {
+            if (primitive.kind == ExactPrimitive::Kind::Segment) {
+                return distanceToSegment(point, primitive.start, primitive.end);
+            }
+            const RS_Vector radial = point - primitive.centre;
+            return std::abs(radial.magnitude() - primitive.radius);
+        };
+        double maximum = 0.0;
+        for (const auto& branch : geometry.branches) {
+            for (const auto& piece : branch.cubicPieces) {
+                for (const double parameter : {0.125, 0.25, 0.5, 0.75, 0.875}) {
+                    const double inverse = 1.0 - parameter;
+                    const RS_Vector point = piece.bezier[0] * (inverse * inverse * inverse) +
+                        piece.bezier[1] * (3.0 * inverse * inverse * parameter) +
+                        piece.bezier[2] * (3.0 * inverse * parameter * parameter) +
+                        piece.bezier[3] * (parameter * parameter * parameter);
+                    double nearest = std::numeric_limits<double>::infinity();
+                    for (const ExactPrimitive& primitive : primitives) {
+                        const double distance = distanceToPrimitive(point, primitive);
+                        if (distance < nearest) {
+                            nearest = distance;
+                        }
+                    }
+                    maximum = std::max(maximum, nearest);
+                }
+            }
+        }
+        return maximum;
     };
     auto samples = [=](const LC_CurveOffsetGeometryResult& geometry, bool inverseRotate,
                        bool inverseTranslate) {
@@ -11588,6 +11699,7 @@ TEST_CASE("mixed-bulge region offset is rotation invariant",
     for (const double secondArcBulge : {0.15, 0.25, 0.35, 0.5}) {
         CAPTURE(secondArcBulge);
         const auto original = build(secondArcBulge, false, false);
+        const auto sourceProfile = makeSourceProfile(secondArcBulge);
         const auto rotated = build(secondArcBulge, true, false);
         const auto translated = build(secondArcBulge, false, true);
         const auto rotatedTranslated = build(secondArcBulge, true, true);
@@ -11599,6 +11711,11 @@ TEST_CASE("mixed-bulge region offset is rotation invariant",
         REQUIRE(rotatedTranslated.status == LC_CurveOffsetStatus::Ok);
         REQUIRE(reflected.status == LC_CurveOffsetStatus::Ok);
         REQUIRE(reflectedRotatedTranslated.status == LC_CurveOffsetStatus::Ok);
+        const double exactDeviation = exactLocusDeviation(original, *sourceProfile);
+        const double requestedGeometry = requestedGeometryTolerance(*sourceProfile);
+        CAPTURE(exactDeviation);
+        CAPTURE(requestedGeometry);
+        CHECK(exactDeviation <= requestedGeometry / 8.0);
         CHECK_FALSE(original.intersectionDiagnostics.regionArrangementWork.intervalFallback);
         CHECK(translated.intersectionDiagnostics.regionArrangementWork.exactPrimitiveNoding);
         CHECK(rotatedTranslated.intersectionDiagnostics.regionArrangementWork.exactPrimitiveNoding);
