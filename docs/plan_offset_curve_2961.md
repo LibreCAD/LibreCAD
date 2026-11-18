@@ -59220,9 +59220,29 @@ assertions across five cases. This is still sampled membership plus branch
 invariants, not a continuous cycle-equivalence proof.
 
 Additional transformed seam rows remain unresolved rather than being accepted
-as equivalent: at scale 10, a rotated seam-3 `.15`-bulge / `.125`-distance
-profile and a reflected-rotated-translated seam-2 `.15`-bulge / `.5`-distance
-profile return `AmbiguousTopology` where seam 0 succeeds. Keep these as
-fail-closed availability discrepancies until independently classified; do not
-weaken the exact-frame oracle or infer that conservative refusal is valid
-topology. ODA/AutoCAD and visible GUI acceptance remain separate gates.
+as equivalent; their exact refusal is classified in section 1875. ODA/AutoCAD
+and visible GUI acceptance remain separate gates.
+
+## 1875. Pin Transformed Mixed-bulge Candidate-split Refusals (2026-11-18)
+
+Implementation commit: `1748f576e`.
+
+The transformed seam discrepancies from section 1874 are reproducible and
+atomic, but their status was misreported there: they return `FitFailed` at
+`RegionBoundary/CandidateSplit`, not `AmbiguousTopology`. The regression pins
+the rotated scale-10 `.15`-bulge / `.125`-distance row for both offset signs
+(seam 3), and the reflected-rotated-translated scale-10 `.15`-bulge / `.5`
+dilation row (seam 2). Corresponding seam-0 and other tested seam results
+succeed; the failed cases return no partial branches.
+
+Two tentative production frame-anchor changes were discarded because both
+regressed the previously passing `0.001x` rotated membership oracle. Production
+normalization is unchanged. The likely failing boundary is occurrence
+placement into candidate offset pieces, but the exact out-of-range parameter
+has not yet been captured; do not add endpoint snapping or widen a parameter
+range without that evidence.
+
+Validation: the focused refusal-classification case passes 54 assertions / 1
+case; the prior seam sweep passes 4,045 assertions / 5 cases; the independent
+membership matrix passes 254,624 assertions / 1 case. The focused additions
+are not a claim of transformed seam invariance or a completed solver fix.
