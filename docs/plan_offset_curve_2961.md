@@ -59417,3 +59417,42 @@ polyline regions` persistence case also passes 35,098 assertions / 1 case over
 R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG save/reopen lanes, including the
 second-save checks. This is bounded fixture coverage, not general external
 CAD acceptance.
+
+## 1884. Preserve Dirty Editor Focus Across Async Refresh (2026-11-18)
+
+Implementation commit: `8dcfd1bc6`.
+
+An accepted asynchronous edit disables and refreshes controls while another
+numeric field may contain unfinished user input. The widget now remembers the
+focused dirty line edit before starting either an offset preparation or source
+replacement, then restores focus after preparation if that same editor still
+exists, is enabled, and remains modified. It does not submit or alter the text;
+the user can continue editing or submit it through the existing pending-input
+path. A regression verifies dirty text and focus survive a side-toggle
+refresh, then verifies the preserved value is applied on submission.
+
+Validation: the focused regression passes 25 assertions / 1 case with
+`QT_QPA_PLATFORM=offscreen`; the full Properties dialog suite completes with
+97/99 cases and 46,746/46,748 assertions passing. The two failures are
+`hasFocus()` checks in the rapid-proposal and invalid-latest-proposal tests;
+they fail in the offscreen platform's focus simulation before exercising the
+asserted edit outcomes. This is not full GUI acceptance. `git diff --check`
+passes.
+
+## 1885. Retry ODA CLI after User Opens GUI Application (2026-11-18)
+
+The user confirmed ODAFileConverter was open. CUA lists the app as running but
+cannot attach to its window (`cgWindowNotFound`). Retrying the command-line
+converter on the existing 176-DWG fixture batch still aborts before
+processing, exit 134, with pasteboard creation errors and an invalid
+`hiservices-xpcservice` connection. No output was produced by this retry. The
+previous GUI conversion and ezdxf audit in section 1848 remain the latest
+successful ODA evidence: 176/176 output DXFs parsed with zero read errors,
+audit errors, or repairs. This does not establish geometry equivalence,
+editable offset semantics, or AutoCAD acceptance.
+
+The remaining gates are visible Properties workflow acceptance, the two
+offscreen focus-helper failures, broader mixed-bulge topology/scale evidence,
+and external CAD semantic acceptance. Continue with code-backed validation
+and only close the visible or external acceptance gates when directly
+observed.
