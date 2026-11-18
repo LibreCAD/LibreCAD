@@ -1621,7 +1621,7 @@ TEST_CASE("Worker client generates crossing mixed-bulge polyline regions",
     lc::test::OutputDirectory directory("offset-worker-crossing-mixed-bulge");
     auto& rt = runtime();
     OwnedClient owned{rt};
-    const double secondArcBulge = GENERATE(0.01, 0.1);
+    const double secondArcBulge = GENERATE(0.01, 0.1, 0.15);
     CAPTURE(secondArcBulge);
     RS_EntityContainer owner;
     RS_Layer layer{QStringLiteral("mixed-bulge source")};
@@ -1662,7 +1662,9 @@ TEST_CASE("Worker client generates crossing mixed-bulge polyline regions",
         {{1e9, -2e9}, true, true},
     }};
     std::array<std::vector<RS_SplineData>, 2> originBranches;
-    qint64 requestId = secondArcBulge < 0.05 ? 501 : 1501;
+    qint64 requestId = secondArcBulge < 0.05 ? 501
+                       : secondArcBulge < 0.125 ? 1501
+                                                : 2501;
     for (std::size_t frame = 0; frame < frames.size(); ++frame) {
         const SourceFrame sourceFrame = frames[frame];
         const RS_Vector translation = sourceFrame.translation;

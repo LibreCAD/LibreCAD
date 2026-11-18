@@ -11511,7 +11511,7 @@ TEST_CASE("captured mixed-bulge polyline preserves its locus under rotation",
 TEST_CASE("mixed-bulge region offset is rotation invariant",
           "[lc-offsetcurve][worker-kernel][polyline][mixed-bulge][rotation]") {
     constexpr double angle = 0.37;
-    auto build = [=](double secondArcBulge, bool rotateSource) {
+    auto build = [=](double secondArcBulge, bool rotateSource, bool translateSource) {
         RS_Polyline polyline;
         polyline.addVertex({20, 10});
         polyline.addVertex({20, -10}, -0.5);
@@ -11520,6 +11520,7 @@ TEST_CASE("mixed-bulge region offset is rotation invariant",
         polyline.setClosed(true);
         polyline.endPolyline();
         if (rotateSource) polyline.rotate({0, 0}, angle);
+        if (translateSource) polyline.move({1e6, -2e6});
         const auto source = LC_OffsetSourceGeometry::captureForGeneration(polyline);
         REQUIRE(source);
         const LC_OffsetSourceDefinition definition{*source, -0.5, 1e-4, false};
@@ -11529,7 +11530,8 @@ TEST_CASE("mixed-bulge region offset is rotation invariant",
             polyline, LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Right, 0.5),
             *options, LC_CurveOffset::makeDirectSourceBudget());
     };
-    auto samples = [=](const LC_CurveOffsetGeometryResult& geometry, bool inverseRotate) {
+    auto samples = [=](const LC_CurveOffsetGeometryResult& geometry, bool inverseRotate,
+                       bool inverseTranslate) {
         std::vector<RS_Vector> points;
         for (const auto& branch : geometry.branches) {
             for (const auto& piece : branch.cubicPieces) {
@@ -11540,6 +11542,10 @@ TEST_CASE("mixed-bulge region offset is rotation invariant",
                         piece.bezier[1] * (3.0 * u * u * t) +
                         piece.bezier[2] * (3.0 * u * t * t) +
                         piece.bezier[3] * (t * t * t);
+                    if (inverseTranslate) {
+                        point.x -= 1e6;
+                        point.y += 2e6;
+                    }
                     if (inverseRotate) point.rotate({0, 0}, -angle);
                     points.push_back(point);
                 }
@@ -11557,17 +11563,30 @@ TEST_CASE("mixed-bulge region offset is rotation invariant",
         }
         return maximum;
     };
-    for (const double secondArcBulge : {0.01, 0.1}) {
+    for (const double secondArcBulge : {0.15}) {
         CAPTURE(secondArcBulge);
-        const auto original = build(secondArcBulge, false);
-        const auto rotated = build(secondArcBulge, true);
+        const auto original = build(secondArcBulge, false, false);
+        const auto rotated = build(secondArcBulge, true, false);
+        const auto translated = build(secondArcBulge, false, true);
+        const auto rotatedTranslated = build(secondArcBulge, true, true);
         REQUIRE(original.status == LC_CurveOffsetStatus::Ok);
         REQUIRE(rotated.status == LC_CurveOffsetStatus::Ok);
-        const auto first = samples(original, false);
-        const auto second = samples(rotated, true);
-        const double gap = std::max(directedGap(first, second), directedGap(second, first));
-        CAPTURE(gap);
-        CHECK(gap < 2.5e-4);
+        REQUIRE(translated.status == LC_CurveOffsetStatus::Ok);
+        REQUIRE(rotatedTranslated.status == LC_CurveOffsetStatus::Ok);
+        CHECK_FALSE(original.intersectionDiagnostics.regionArrangementWork.intervalFallback);
+        CHECK(translated.intersectionDiagnostics.regionArrangementWork.intervalFallback);
+        CHECK(rotatedTranslated.intersectionDiagnostics.regionArrangementWork.intervalFallback);
+        const auto reference = samples(original, false, false);
+        for (const auto& [geometry, inverseRotate, inverseTranslate] : {
+                 std::tuple{rotated, true, false},
+                 std::tuple{translated, false, true},
+                 std::tuple{rotatedTranslated, true, true}}) {
+            const auto transformed = samples(geometry, inverseRotate, inverseTranslate);
+            const double gap = std::max(directedGap(reference, transformed),
+                                        directedGap(transformed, reference));
+            CAPTURE(gap);
+            CHECK(gap < 2.5e-4);
+        }
     }
 }
 

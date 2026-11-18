@@ -6927,6 +6927,7 @@ LC_CurveOffsetStatus regionBoundary(const OffsetSource& source, const SourceScal
     // 5. node all candidates together, and split them there
     LC_IntersectionResult found;
     bool usedExactArrangement = false;
+    bool nearUnresolvedPrimitivePair = false;
     if (dynamic_cast<const PolylineOffsetSource*>(&source) != nullptr) {
         struct Primitive {
             LC_OffsetSegment segment;
@@ -7088,6 +7089,10 @@ LC_CurveOffsetStatus regionBoundary(const OffsetSource& source, const SourceScal
                     const LC_OffsetSegment& first = primitives[i].segment;
                     const LC_OffsetSegment& second = primitives[j].segment;
                     const auto roots = segmentIntersections(first, second, 0.0);
+                    if (roots.empty() &&
+                        segmentDistance(first, second) <= options.tolerance.nodeMerge) {
+                        nearUnresolvedPrimitivePair = true;
+                    }
                     if (roots.size() > 1 && !first.arc && !second.arc) {
                         found.status = LC_IntersectionStatus::AmbiguousTopology;
                         found.hasFailureDomain = true;
@@ -7156,14 +7161,14 @@ LC_CurveOffsetStatus regionBoundary(const OffsetSource& source, const SourceScal
             usedExactArrangement = true;
         }
     }
-    // A rigid-frame transform can perturb exact arc tangencies by a few ulps.
-    // If exact primitive noding cannot classify that arrangement, let the
-    // interval solver either certify it independently or refuse atomically.
+    // Exact primitive noding can miss a near-contact after a rigid-frame
+    // transform. Let the bounded interval solver certify it or refuse.
     if (usedExactArrangement) {
         result.intersectionDiagnostics.regionArrangementWork.exactPrimitiveNoding = true;
         result.intersectionDiagnostics.regionArrangementWork.exact = found.work;
     }
-    if (!usedExactArrangement || found.status == LC_IntersectionStatus::AmbiguousTopology) {
+    if (!usedExactArrangement || found.status == LC_IntersectionStatus::AmbiguousTopology ||
+        nearUnresolvedPrimitivePair) {
         const LC_IntersectionWorkStats exactWork = found.work;
         LC_IntersectionOptions remaining = query;
         if (usedExactArrangement) {
