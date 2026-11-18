@@ -58749,3 +58749,21 @@ this region-boundary return path, and the `/8` fraction is currently selected
 by the bounded transform oracle rather than a measured point-to-exact-boundary
 error. Keep the planned exact source-offset/corner-circle oracle and certified
 error reporting as a follow-up before claiming general `.35/.5` accuracy.
+
+## 1851. Surface Region-boundary Candidate Fit Error (2026-11-18)
+
+The region-boundary builder now aggregates the successful candidate offset
+fitters' maximum observed positional errors into
+`LC_CurveOffsetGeometryResult::maxObservedError`; exact corner-circle joins
+add no fitting error. The expanded mixed-bulge matrix requires this value to
+be finite and no greater than `requestedGeometry/8` for each successful
+origin/rotated/translated/reflected build. The field remains explicitly
+observed error from the fitter's validation samples, not an interval-certified
+bound or a distance-to-exact-final-boundary proof.
+
+Validation: focused mixed-bulge test passes 152 assertions; all six
+`[region-boundary]` cases pass 2,886 assertions; the CMake kernel test target
+rebuilt; and `git diff --check` passes. The code/test slice is commit
+`f74420a9b`. Keep exact source-offset/corner-circle distance validation and
+certified error reporting open before claiming general high-bulge geometry
+accuracy.
