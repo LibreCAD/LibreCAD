@@ -6880,6 +6880,7 @@ LC_CurveOffsetStatus regionBoundary(const OffsetSource& source, const SourceScal
         std::vector<LC_OffsetBranch> branches;
     };
     std::vector<Candidate> candidates;
+    double maxObservedFitError = 0.0;
     for (size_t f = 0; f < fragments.size(); ++f) {
         const SourceFragment& fragment = fragments[f];
         if (!fragment.boundary) {
@@ -6916,6 +6917,7 @@ LC_CurveOffsetStatus regionBoundary(const OffsetSource& source, const SourceScal
                 result.intersectionDiagnostics.failureSite = FailureSite::CandidateOffsetGeneration;
                 return status;
             }
+            maxObservedFitError = std::max(maxObservedFitError, ignoredError);
             candidates.push_back(std::move(candidate));
         }
     }
@@ -7520,6 +7522,7 @@ LC_CurveOffsetStatus regionBoundary(const OffsetSource& source, const SourceScal
     result.intersections.clear();
     result.offsetIntersections = found.intersections.size();
     result.removedIntervals = removed;
+    result.maxObservedError = maxObservedFitError;
     return LC_CurveOffsetStatus::Ok;
 }
 

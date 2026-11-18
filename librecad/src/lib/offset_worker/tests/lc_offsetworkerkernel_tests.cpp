@@ -11527,9 +11527,14 @@ TEST_CASE("mixed-bulge region offset is rotation invariant",
         const LC_OffsetSourceDefinition definition{*source, -0.5, 1e-4, false};
         const auto options = LC_OffsetWorkerTolerance::directOptions(definition, polyline);
         REQUIRE(options);
-        return LC_CurveOffset::buildDirectBranches(
+        const auto geometry = LC_CurveOffset::buildDirectBranches(
             polyline, LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Right, 0.5),
             *options, LC_CurveOffset::makeDirectSourceBudget());
+        if (geometry.status == LC_CurveOffsetStatus::Ok) {
+            REQUIRE(std::isfinite(geometry.maxObservedError));
+            CHECK(geometry.maxObservedError <= options->tolerance.requestedGeometry / 8.0);
+        }
+        return geometry;
     };
     auto samples = [=](const LC_CurveOffsetGeometryResult& geometry, bool inverseRotate,
                        bool inverseTranslate) {
