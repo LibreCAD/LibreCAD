@@ -11557,11 +11557,14 @@ TEST_CASE("mixed-bulge region offset is rotation invariant",
     const auto exactLocusDeviation = [](const LC_CurveOffsetGeometryResult& geometry,
                                         const RS_Polyline& source) {
         struct ExactPrimitive {
-            enum class Kind { Segment, Circle } kind;
+            enum class Kind { Segment, Arc, Circle } kind;
             RS_Vector start;
             RS_Vector end;
             RS_Vector centre;
             double radius{0.0};
+            double startAngle{0.0};
+            double direction{1.0};
+            double sweep{0.0};
         };
         double signedDistance = 0.0;
         bool haveDistance = false;
@@ -11577,8 +11580,8 @@ TEST_CASE("mixed-bulge region offset is rotation invariant",
         }
         if (!haveDistance) return std::numeric_limits<double>::infinity();
 
-        // Fragment orientation can reverse, so test radial support on both offset sides.
-        // Angular-domain and retained-topology checks are intentionally separate.
+        // Fragment orientation can reverse, so source offsets use both signed sides.
+        // Arc sweeps are bounded; join circles stay full supports, with topology separate.
         std::vector<ExactPrimitive> primitives;
         const auto addJoinCircle = [&](const RS_Vector& centre) {
             primitives.push_back({ExactPrimitive::Kind::Circle, {}, {}, centre,
@@ -11603,8 +11606,10 @@ TEST_CASE("mixed-bulge region offset is rotation invariant",
                 const double direction = arc->isReversed() ? -1.0 : 1.0;
                 for (const double offsetDistance : {signedDistance, -signedDistance}) {
                     const double signedRadius = arc->getRadius() - direction * offsetDistance;
+                    const double startAngle = arc->getAngle1() + (signedRadius < 0.0 ? M_PI : 0.0);
                     const double radius = std::abs(signedRadius);
-                    primitives.push_back({ExactPrimitive::Kind::Circle, {}, {}, arc->getCenter(), radius});
+                    primitives.push_back({ExactPrimitive::Kind::Arc, {}, {}, arc->getCenter(), radius,
+                                          startAngle, direction, arc->getAngleLength()});
                 }
                 addJoinCircle(arc->getStartpoint());
                 addJoinCircle(arc->getEndpoint());
@@ -11623,7 +11628,23 @@ TEST_CASE("mixed-bulge region offset is rotation invariant",
                 return distanceToSegment(point, primitive.start, primitive.end);
             }
             const RS_Vector radial = point - primitive.centre;
-            return std::abs(radial.magnitude() - primitive.radius);
+            const double radialError = std::abs(radial.magnitude() - primitive.radius);
+            if (primitive.kind == ExactPrimitive::Kind::Circle || primitive.radius == 0.0) {
+                return radialError;
+            }
+            double along = std::fmod(primitive.direction *
+                (std::atan2(radial.y, radial.x) - primitive.startAngle), 2.0 * M_PI);
+            if (along < 0.0) along += 2.0 * M_PI;
+            if (along <= primitive.sweep + 64.0 * std::numeric_limits<double>::epsilon()) {
+                return radialError;
+            }
+            const auto endpoint = [&](const double parameter) {
+                const double angle = primitive.startAngle + primitive.direction * parameter;
+                return primitive.centre +
+                    RS_Vector{std::cos(angle), std::sin(angle)} * primitive.radius;
+            };
+            return std::min(point.distanceTo(endpoint(0.0)),
+                            point.distanceTo(endpoint(primitive.sweep)));
         };
         double maximum = 0.0;
         for (const auto& branch : geometry.branches) {
