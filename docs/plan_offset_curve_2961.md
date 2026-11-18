@@ -58872,3 +58872,17 @@ candidate spans, not that the correct side/cycle was retained. Join sectors are
 still taken from output provenance; independent expected topology, broader
 source variants/transforms, and a production-level certified error contract
 remain open.
+
+## 1858. Certify Mixed-bulge Loci at Two Offset Magnitudes (2026-11-18)
+
+Expanded the continuous locus certificate from the single `0.5` offset to both
+`0.25` and `0.5`, retaining four second-arc bulges (`0.15`, `0.25`, `0.35`,
+`0.5`) and the six-frame rotation/translation/reflection matrix. Each profile
+computes its own tolerance budget from the matching source definition and
+distance. This doubles the tested bulge/distance combinations without widening
+the claim to untested distances or source layouts.
+
+Validation: focused mixed-bulge test passes 448 assertions; the full
+`[region-boundary]` selector passes 2,886 assertions across six cases. Test
+slice is `c5eff1d63`. Independent topology/retained-side checks and broader
+distances, scales, and source variants remain open.
