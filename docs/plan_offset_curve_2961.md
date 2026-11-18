@@ -59313,3 +59313,24 @@ offset distances, and both offset directions. No production change was made.
 Validation: `[topology]` passes 777,836 assertions / 1 case across scales 1,
 10, and 1000. This remains sampled membership for the recorded profiles and
 frame grid, not a continuous proof or general scale-invariance guarantee.
+
+## 1880. Densify Small-scale Mixed-bulge Membership Checks (2026-11-18)
+
+Test slice in progress; not committed yet.
+
+The independent sampled dilation/erosion oracle now samples the `0.001x`
+rotated profile at half-scale spacing instead of `2x`, and excludes only a
+narrow band around the expected offset boundary (`0.05 * distance`). This
+keeps source-winding and source-boundary distance as the independent expected
+result while making the small-offset rows more discriminating. The other scale
+profiles retain their previous grid and exclusion policy.
+
+The small-scale seam sweep checks starts 0, 2, and 3 in the membership oracle.
+Start 1 is still deliberately excluded because its separate diagnostic test
+reproduces `AmbiguousTopology/RegionBoundary/CycleAssembly/MultipleContinuations`
+with no branches. The other three starts return only closed branches. This is
+an unresolved seam-origin discrepancy, not evidence of general seam
+invariance; no production topology rule is relaxed to force acceptance.
+
+Validation before commit: rebuilt `librecad_offset_worker_kernel_tests` and
+`[topology]` passes 1,622,065 assertions / 2 cases; `git diff --check` passes.

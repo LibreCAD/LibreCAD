@@ -12351,12 +12351,59 @@ TEST_CASE("transformed mixed-bulge offsets resolve seam endpoint roundoff",
     }
 }
 
+TEST_CASE("small rotated mixed-bulge seam refusal is classified as multiple continuations",
+          "[lc-offsetcurve][worker-kernel][polyline][mixed-bulge][region-boundary][seam][topology]") {
+    constexpr double scale = 1e-3;
+    constexpr double distance = 0.125 * scale;
+    const std::array<RS_Vector, 4> vertices{{{20, 10}, {20, -10}, {-20, 10}, {-20, -10}}};
+    const std::array<double, 4> bulges{{0.0, -0.5, 0.15, 0.0}};
+    for (std::size_t seam = 0; seam < vertices.size(); ++seam) {
+        RS_Polyline source;
+        for (std::size_t i = 0; i < vertices.size(); ++i) {
+            const std::size_t vertex = (seam + i) % vertices.size();
+            RS_Vector point = vertices[vertex] * scale;
+            point.rotate(0.37);
+            source.addVertex(point, bulges[vertex]);
+        }
+        source.setClosed(true);
+        source.endPolyline();
+        const auto sourceGeometry = LC_OffsetSourceGeometry::captureForGeneration(source);
+        REQUIRE(sourceGeometry);
+        const LC_OffsetSourceDefinition definition{
+            *sourceGeometry, -distance, 1e-4 * scale, false};
+        const auto options = LC_OffsetWorkerTolerance::directOptions(definition, source);
+        REQUIRE(options);
+        const auto result = LC_CurveOffset::buildDirectBranches(
+            source, LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Right, distance),
+            *options, LC_CurveOffset::makeDirectSourceBudget());
+        CAPTURE(seam, static_cast<int>(result.status),
+                static_cast<int>(result.intersectionDiagnostics.stage),
+                static_cast<int>(result.intersectionDiagnostics.failureSite),
+                static_cast<int>(result.intersectionDiagnostics.cycleAssemblyFailure));
+        if (seam == 1u) {
+            CHECK(result.status == LC_CurveOffsetStatus::AmbiguousTopology);
+            CHECK(result.branches.empty());
+            CHECK(result.intersectionDiagnostics.stage ==
+                  LC_CurveOffsetGeometryResult::IntersectionDiagnostics::Stage::RegionBoundary);
+            CHECK(result.intersectionDiagnostics.failureSite ==
+                  LC_CurveOffsetGeometryResult::IntersectionDiagnostics::FailureSite::CycleAssembly);
+            CHECK(result.intersectionDiagnostics.cycleAssemblyFailure ==
+                  LC_CurveOffsetGeometryResult::IntersectionDiagnostics::CycleAssemblyFailure::MultipleContinuations);
+        } else {
+            CHECK(result.status == LC_CurveOffsetStatus::Ok);
+            CHECK(std::all_of(result.branches.begin(), result.branches.end(),
+                              [](const LC_OffsetBranch& branch) { return branch.closed; }));
+        }
+    }
+}
+
 TEST_CASE("mixed-bulge region cycles match independent dilation and erosion membership",
           "[lc-offsetcurve][worker-kernel][polyline][mixed-bulge][region-boundary][topology]") {
     const double scale = GENERATE(1e-3, 1.0, 10.0, 1e3);
     const unsigned frame = scale < 0.01 ? 1u : GENERATE(0u, 1u, 2u, 3u);
     const std::size_t seamStart = scale < 0.01
-                                      ? GENERATE(std::size_t{0}, std::size_t{3})
+                                      ? GENERATE(std::size_t{0}, std::size_t{2},
+                                                 std::size_t{3})
                                   : (scale == 1.0 || scale == 10.0 || scale == 1e3)
                                       ? GENERATE(std::size_t{0}, std::size_t{1},
                                                  std::size_t{2}, std::size_t{3})
@@ -12395,6 +12442,12 @@ TEST_CASE("mixed-bulge region cycles match independent dilation and erosion memb
             const auto result =
                 LC_CurveOffset::buildDirectBranches(*source, LC_CurveOffset::makeSideRequest(erosion ? LC_CurveOffsetSide::Left : LC_CurveOffsetSide::Right, distance), *options,
                                                     LC_CurveOffset::makeDirectSourceBudget());
+            CAPTURE(static_cast<int>(result.status),
+                    static_cast<int>(result.intersectionDiagnostics.stage),
+                    static_cast<int>(result.intersectionDiagnostics.failureSite),
+                    static_cast<int>(result.intersectionDiagnostics.cycleAssemblyFailure),
+                    result.intersectionDiagnostics.failureDepth,
+                    result.intersectionDiagnostics.cycleAssemblyEndpointGap);
             REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
             REQUIRE_FALSE(result.branches.empty());
 
@@ -12510,12 +12563,14 @@ TEST_CASE("mixed-bulge region cycles match independent dilation and erosion memb
             std::size_t insideCount = 0;
             std::size_t outsideCount = 0;
             const double padding = scale * (baseDistance + 4.0);
-            for (double y = minY - padding; y <= maxY + padding; y += 2.0 * scale) {
-                for (double x = minX - padding; x <= maxX + padding; x += 2.0 * scale) {
+            const double sampleStep = scale < 0.01 ? 0.5 * scale : 2.0 * scale;
+            const double boundaryExclusion = scale < 0.01 ? 0.05 * distance : 0.75 * scale;
+            for (double y = minY - padding; y <= maxY + padding; y += sampleStep) {
+                for (double x = minX - padding; x <= maxX + padding; x += sampleStep) {
                     const RS_Vector point{x, y};
                     const bool sourceInside = winding(sourceSegments, point) != 0;
                     const double boundaryDistance = sourceBoundaryDistance(point);
-                    if (std::abs(boundaryDistance - distance) < 0.75 * scale)
+                    if (std::abs(boundaryDistance - distance) < boundaryExclusion)
                         continue;
                     const bool expectedInside = erosion
                         ? sourceInside && boundaryDistance > distance
