@@ -58910,3 +58910,33 @@ Validation: no source/test changes remain from the scale probe; DWG audit
 attempt produced no outputs. Independent CAD acceptance, source-scale domain
 coverage, GUI Properties acceptance, and larger-bulge topology validation
 remain open.
+
+## 1860. Bound Mixed-polyline Child-parameter Roundoff (2026-11-18)
+
+`PolylineSource::localParameter()` maps a concatenated parameter back into a
+child source. Its previous slack used only the small child-domain values even
+when subtracting a much larger cumulative offset, so representational roundoff
+could reject valid mixed line/arc spans as `InvalidSource`. The bound now
+includes the global parameter and child offset magnitudes, but is capped at a
+quarter of the child-domain width; it can absorb subtraction error without
+making an ambiguous child mapping acceptable.
+
+The mixed-bulge exact-span certificate now translates to the source origin and
+normalizes lengths before interval bounding, carrying an explicit allowance for
+roundoff from the original coordinates. This lets the same continuous
+candidate-span claim be tested at multiple uniform scales without using a
+scale-dependent absolute slack. The qualified `.15` bulge / `.25` distance
+profile passes at scales `1e-3` and `10` in addition to the existing origin,
+rotation, translation, and reflection matrix.
+
+A `1000x` probe returns `Ok`, with kernel-reported `maxObservedError`
+`0.4209068` below `requestedGeometry/8 = 0.5927942`, but the independent
+continuous candidate-span certificate cannot prove the output. It is therefore
+not included as a passing scale claim; determine whether this is an oracle
+limitation or a geometric mismatch before admitting the scale. This bounded
+profile does not establish general scale invariance or retained-side topology.
+
+Validation: the focused mixed-bulge selector passes 880 assertions across four
+cases; `[region-boundary]` passes 2,886 assertions across six cases. Code
+commit: `0fc0e8a99`. Larger-scale certification, expected cycle/topology
+independence, and other profile/distance combinations remain open.
