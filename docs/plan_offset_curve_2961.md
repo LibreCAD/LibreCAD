@@ -58499,3 +58499,17 @@ cubic pieces. These larger profiles are not qualified by the current `.15/.25`
 tests; investigate their actual cubic geometry/candidate classification before
 adding them to persistence coverage. This is exploratory evidence, not a
 production assertion or external-CAD result.
+
+## 1840. Complete the ODA GUI Audit Conversion Retry (2026-11-18)
+
+The user confirmed the desktop session was available, and the running ODA
+File Converter GUI completed the staged batch with its Audit checkbox enabled
+and output set to ACAD2018 ASCII DXF. The progress field reached `Done`; all
+176 input DWG basenames have matching DXF outputs, with no zero-byte outputs
+(sizes range from 92,972 to 94,826 bytes). The GUI exposed no per-file error
+summary in the observed completion state. This closes the retry/conversion
+availability gate from section 1831 and demonstrates that ODA could parse,
+audit, and convert the staged DWGs in its desktop environment. It does not
+establish geometric equivalence, offset semantics, or AutoCAD acceptance; no
+new ezdxf audit was run on this output directory in this slice. The larger
+`.35/.5` mixed-bulge transform discrepancy remains separately unqualified.
