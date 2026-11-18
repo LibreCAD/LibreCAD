@@ -11511,7 +11511,7 @@ TEST_CASE("captured mixed-bulge polyline preserves its locus under rotation",
 TEST_CASE("mixed-bulge region offset is rotation invariant",
           "[lc-offsetcurve][worker-kernel][polyline][mixed-bulge][rotation]") {
     constexpr double angle = 0.37;
-    auto build = [=](double secondArcBulge, bool rotateSource, bool translateSource) {
+    auto build = [=](double secondArcBulge, bool rotateSource, bool translateSource, bool reflectSource = false) {
         RS_Polyline polyline;
         polyline.addVertex({20, 10});
         polyline.addVertex({20, -10}, -0.5);
@@ -11519,6 +11519,7 @@ TEST_CASE("mixed-bulge region offset is rotation invariant",
         polyline.addVertex({-20, -10});
         polyline.setClosed(true);
         polyline.endPolyline();
+        if (reflectSource) polyline.mirror({0, 0}, {1, 0});
         if (rotateSource) polyline.rotate({0, 0}, angle);
         if (translateSource) polyline.move({1e6, -2e6});
         const auto source = LC_OffsetSourceGeometry::captureForGeneration(polyline);
@@ -11569,13 +11570,18 @@ TEST_CASE("mixed-bulge region offset is rotation invariant",
         const auto rotated = build(secondArcBulge, true, false);
         const auto translated = build(secondArcBulge, false, true);
         const auto rotatedTranslated = build(secondArcBulge, true, true);
+        const auto reflected = build(secondArcBulge, false, false, true);
+        const auto reflectedRotatedTranslated = build(secondArcBulge, true, true, true);
         REQUIRE(original.status == LC_CurveOffsetStatus::Ok);
         REQUIRE(rotated.status == LC_CurveOffsetStatus::Ok);
         REQUIRE(translated.status == LC_CurveOffsetStatus::Ok);
         REQUIRE(rotatedTranslated.status == LC_CurveOffsetStatus::Ok);
+        REQUIRE(reflected.status == LC_CurveOffsetStatus::Ok);
+        REQUIRE(reflectedRotatedTranslated.status == LC_CurveOffsetStatus::Ok);
         CHECK_FALSE(original.intersectionDiagnostics.regionArrangementWork.intervalFallback);
-        CHECK(translated.intersectionDiagnostics.regionArrangementWork.intervalFallback);
-        CHECK(rotatedTranslated.intersectionDiagnostics.regionArrangementWork.intervalFallback);
+        CHECK(translated.intersectionDiagnostics.regionArrangementWork.exactPrimitiveNoding);
+        CHECK(rotatedTranslated.intersectionDiagnostics.regionArrangementWork.exactPrimitiveNoding);
+        CHECK(reflectedRotatedTranslated.intersectionDiagnostics.regionArrangementWork.exactPrimitiveNoding);
         const auto reference = samples(original, false, false);
         for (const auto& [geometry, inverseRotate, inverseTranslate] : {
                  std::tuple{rotated, true, false},
@@ -11587,6 +11593,12 @@ TEST_CASE("mixed-bulge region offset is rotation invariant",
             CAPTURE(gap);
             CHECK(gap < 2.5e-4);
         }
+        const auto reflectedReference = samples(reflected, false, false);
+        const auto reflectedTransformed = samples(reflectedRotatedTranslated, true, true);
+        const double reflectedGap = std::max(directedGap(reflectedReference, reflectedTransformed),
+                                             directedGap(reflectedTransformed, reflectedReference));
+        CAPTURE(reflectedGap);
+        CHECK(reflectedGap < 2.5e-4);
     }
 }
 

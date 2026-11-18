@@ -6610,10 +6610,12 @@ bool included(const int winding, const LC_CurveFillRule rule) {
  * outside the source region (dilate) or inside it, and provably no nearer to
  * the region's boundary than |d|; what is kept is chained into cycles.
  */
+// frameError bounds coordinate uncertainty before a large-origin local-frame transform.
 LC_CurveOffsetStatus regionBoundary(const OffsetSource& source, const SourceScale& scale, const double magnitude,
                                     const bool dilate, const LC_CurveOffsetOptions& options,
                                     const LC_OffsetSourceBudget& budget, std::vector<LC_OffsetBranch>& cycles,
-                                    LC_CurveOffsetGeometryResult& result, const bool normalized = false) {
+                                    LC_CurveOffsetGeometryResult& result, const bool normalized = false,
+                                    const double frameError = 0.0) {
     using FailureSite = LC_CurveOffsetGeometryResult::IntersectionDiagnostics::FailureSite;
     if (!source.closed()) {
         return LC_CurveOffsetStatus::InvalidSource; // a region needs a closed boundary
@@ -6668,7 +6670,8 @@ LC_CurveOffsetStatus regionBoundary(const OffsetSource& source, const SourceScal
                 tolerance.rootResidual = tolerance.evaluation;
             }
             const LC_CurveOffsetStatus status = regionBoundary(localSource, localScale, magnitude, dilate,
-                                                               localOptions, budget, cycles, result, true);
+                                                               localOptions, budget, cycles, result, true,
+                                                               scale.numericFloor);
             for (LC_OffsetBranch& branch : cycles) {
                 for (LC_OffsetCubicPiece& piece : branch.cubicPieces) {
                     for (RS_Vector& point : piece.bezier) point = localSource.toWorldPoint(point);
@@ -6937,7 +6940,7 @@ LC_CurveOffsetStatus regionBoundary(const OffsetSource& source, const SourceScal
             bool circle;
         };
         std::vector<Primitive> primitives;
-        bool eligible = true;
+        bool eligible = !normalized || frameError <= options.tolerance.nodeMerge;
         const auto* polyline = dynamic_cast<const PolylineOffsetSource*>(&source);
         const std::vector<double>& sourceBreaks = source.breaks();
         for (std::size_t c = 0; c < candidates.size() && eligible; ++c) {
@@ -6992,7 +6995,7 @@ LC_CurveOffsetStatus regionBoundary(const OffsetSource& source, const SourceScal
             const double straightSlack = std::max(
                 64.0 * std::numeric_limits<double>::epsilon() *
                     std::max({1.0, length, std::abs(a.x), std::abs(a.y), std::abs(b.x), std::abs(b.y)}),
-                knownStraightSourceSpan ? options.tolerance.evaluation : 0.0);
+                knownStraightSourceSpan ? options.tolerance.evaluation : frameError);
             for (const LC_OffsetCubicPiece& piece : branch.cubicPieces) {
                 for (const RS_Vector& control : piece.bezier) {
                     if (std::abs(cross(axis, control - a)) > straightSlack * length) {
@@ -7088,10 +7091,18 @@ LC_CurveOffsetStatus regionBoundary(const OffsetSource& source, const SourceScal
                     ++found.work.candidateBoxPairs;
                     const LC_OffsetSegment& first = primitives[i].segment;
                     const LC_OffsetSegment& second = primitives[j].segment;
-                    const auto roots = segmentIntersections(first, second, 0.0);
-                    if (roots.empty() &&
-                        segmentDistance(first, second) <= options.tolerance.nodeMerge) {
-                        nearUnresolvedPrimitivePair = true;
+                    auto roots = segmentIntersections(first, second, 0.0);
+                    if (roots.empty()) {
+                        const double separation = segmentDistance(first, second);
+                        if (separation <= options.tolerance.nodeMerge) {
+                            if (normalized && frameError > 0.0 &&
+                                separation <= std::min({frameError, options.tolerance.nodeMerge,
+                                                        options.tolerance.evaluation})) {
+                                roots = segmentIntersections(first, second,
+                                    std::min(options.tolerance.evaluation, options.tolerance.nodeMerge));
+                            }
+                            nearUnresolvedPrimitivePair = nearUnresolvedPrimitivePair || roots.empty();
+                        }
                     }
                     if (roots.size() > 1 && !first.arc && !second.arc) {
                         found.status = LC_IntersectionStatus::AmbiguousTopology;
