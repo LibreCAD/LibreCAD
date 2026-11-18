@@ -58318,3 +58318,17 @@ R14/R2000/R2018 DXF/DWG save/reopen plus second-save lanes. This supersedes the
 kernel-only `.01` status in section 1826 for these bounded profile and lane
 combinations; other small bulges, geometries, and external CAD acceptance
 remain open.
+
+## 1831. Retry the Full ODA Batch after Desktop Unlock (2026-11-18)
+
+After the user confirmed the desktop was awake and ODAFileConverter was open,
+retried the exact 176-file staged DWG set at
+`/private/tmp/offset-2961-typed-trim-oda-fixtures` with Audit enabled and
+ACAD2018 DXF output. The app-bundle executable aborted before conversion with
+exit 134, reporting pasteboard creation errors for `clipboard` and `find` and
+an invalid `com.apple.hiservices-xpcservice` connection. No DXF output was
+produced. CUA still cannot bind the ODA window (`cgWindowNotFound`), so this
+does not change the prior successful 176-file audit in section 1805 and does
+not establish a new result. Retry when the desktop automation bridge can
+attach to the already-running GUI or when ODA can be launched from an
+interactive GUI terminal; do not report this attempt as an ODA pass.
