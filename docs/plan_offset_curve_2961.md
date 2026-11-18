@@ -59366,3 +59366,22 @@ assertions / 1 case; registered `offset_worker_kernel` CTest passes 1/1 in
 315.50 seconds; `git diff --check` passes. This is qualified against these
 fixtures and tolerances; it does not establish general coincident-fragment
 or tangency resolution.
+
+## 1882. Recheck Visible Source-family Properties Acceptance (2026-11-18)
+
+The visible source-family Properties gate from section 1845 remains unverified.
+The current CMake GUI target was rebuilt from this checkout, but `open -n`
+fails with macOS Launch Services `kLSNoExecutableErr`; invoking the bundle's
+Mach-O directly from SSH aborts during pasteboard/XPC setup before a window is
+created, and CUA reports `cgWindowNotFound`. This is an environment/session
+limitation, not a passing GUI result. Keep the visible gate open until the app
+can be operated in the interactive desktop session.
+
+The code-backed workflow was rechecked using the freshly rebuilt Qt
+Properties test executable with `QT_QPA_PLATFORM=offscreen` and the real
+`LibreCADOffsetWorker` beside the executable: nine-family filtering and
+replacement passes 411 assertions; all ordered family-pair replacements pass
+1,101 assertions; resolved-source indication/highlighting passes 22
+assertions. These checks cover parabola among all nine supported kinds,
+cross-family type synchronization, replacement, and highlight state, but do
+not substitute for the requested visible acceptance.
