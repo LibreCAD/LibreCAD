@@ -11563,7 +11563,7 @@ TEST_CASE("mixed-bulge region offset is rotation invariant",
         }
         return maximum;
     };
-    for (const double secondArcBulge : {0.15}) {
+    for (const double secondArcBulge : {0.15, 0.25}) {
         CAPTURE(secondArcBulge);
         const auto original = build(secondArcBulge, false, false);
         const auto rotated = build(secondArcBulge, true, false);
