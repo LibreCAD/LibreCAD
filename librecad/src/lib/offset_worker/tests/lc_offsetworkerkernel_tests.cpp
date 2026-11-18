@@ -12060,7 +12060,7 @@ TEST_CASE("small crossing mixed-bulge topology resolves consistently across the 
         const auto sourceGeometry = LC_OffsetSourceGeometry::captureForGeneration(*source);
         REQUIRE(sourceGeometry);
         const double distance = 0.125 * scale;
-        const LC_OffsetSourceDefinition definition{*sourceGeometry, -distance, 1e-4 * scale, false};
+        const LC_OffsetSourceDefinition definition{*sourceGeometry, -distance, 1e-4, false};
         const auto options = LC_OffsetWorkerTolerance::directOptions(definition, *source);
         REQUIRE(options);
         const auto result = LC_CurveOffset::buildDirectBranches(
@@ -12088,7 +12088,7 @@ TEST_CASE("small mixed-bulge RegionBoundary survives seam endpoint roundoff",
     const auto sourceGeometry = LC_OffsetSourceGeometry::captureForGeneration(source);
     REQUIRE(sourceGeometry);
     const double distance = 0.125 * scale;
-    const LC_OffsetSourceDefinition definition{*sourceGeometry, -distance, 1e-4 * scale, false};
+    const LC_OffsetSourceDefinition definition{*sourceGeometry, -distance, 1e-4, false};
     const auto options = LC_OffsetWorkerTolerance::directOptions(definition, source);
     REQUIRE(options);
     const auto result = LC_CurveOffset::buildDirectBranches(
@@ -12122,7 +12122,7 @@ TEST_CASE("small mixed-bulge seam matrix resolves the former multiple-continuati
                 const auto sourceGeometry = LC_OffsetSourceGeometry::captureForGeneration(source);
                 REQUIRE(sourceGeometry);
                 const double distance = ratio * scale;
-                const LC_OffsetSourceDefinition definition{*sourceGeometry, -distance, 1e-4 * scale, false};
+                const LC_OffsetSourceDefinition definition{*sourceGeometry, -distance, 1e-4, false};
                 const auto options = LC_OffsetWorkerTolerance::directOptions(definition, source);
                 REQUIRE(options);
                 const auto result = LC_CurveOffset::buildDirectBranches(
@@ -12381,7 +12381,7 @@ TEST_CASE("small rotated mixed-bulge duplicate boundary pieces are seam invarian
 TEST_CASE("mixed-bulge region cycles match independent dilation and erosion membership",
           "[lc-offsetcurve][worker-kernel][polyline][mixed-bulge][region-boundary][topology]") {
     const double scale = GENERATE(1e-3, 1.0, 10.0, 1e3);
-    const unsigned frame = scale < 0.01 ? GENERATE(0u, 1u) : GENERATE(0u, 1u, 2u, 3u);
+    const unsigned frame = GENERATE(0u, 1u, 2u, 3u);
     const std::size_t seamStart = scale < 0.01
                                       ? GENERATE(std::size_t{0}, std::size_t{1},
                                                  std::size_t{2}, std::size_t{3})
@@ -12416,7 +12416,7 @@ TEST_CASE("mixed-bulge region cycles match independent dilation and erosion memb
 
             const auto sourceGeometry = LC_OffsetSourceGeometry::captureForGeneration(*source);
             REQUIRE(sourceGeometry);
-            const LC_OffsetSourceDefinition definition{*sourceGeometry, -distance, 1e-4 * scale, false};
+            const LC_OffsetSourceDefinition definition{*sourceGeometry, -distance, 1e-4, false};
             const auto options = LC_OffsetWorkerTolerance::directOptions(definition, *source);
             REQUIRE(options);
             REQUIRE(options->mode == LC_CurveOffsetMode::RegionBoundary);
