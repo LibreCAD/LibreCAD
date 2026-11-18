@@ -58681,3 +58681,37 @@ remains unusable in this macOS process context; use the GUI route for future
 ODA batches unless Cocoa pasteboard/XPC access from SSH is repaired. The
 visible Properties source-picker gate and the larger `.35/.5` transform
 discrepancy remain open.
+
+## 1849. Separate Mixed-bulge Fit Variation from Event-topology Drift (2026-11-18)
+
+Extended the temporary `.35` trace from section 1847 to compare exact primitive
+roots, candidate endpoint fractions, retained branch/piece counts, and the
+worst bidirectional locus samples. The origin, translated, rotated, and
+reflected cases each retain one closed branch with 31 cubic pieces. Several
+candidate/corner-circle roots that are exact endpoints at the origin become
+interior cuts by roughly `1e-7` to `1e-6` after the high-origin transform, but
+the full locus discrepancy does not by itself prove those events change the
+retained cycle. The largest gap (`0.0025126`) occurs around cubic pieces 23/24
+on a long curved run whose adaptive source-parameter partition differs between
+frames (for example, a boundary near `22.0229` in the origin fit versus
+`22.3596` in the translated fit). All temporary tracing and the `.35` test
+expansion were removed.
+
+The corresponding per-run fit tolerances are about `0.00418` to `0.00477`, so
+the observed pairwise gap is below the sum of those requested approximation
+bounds. `maxObservedError` is NaN on this region-boundary return path, however,
+and there is no independent exact-curve oracle in this probe; therefore this
+does not certify either output's geometry or justify weakening the stricter
+`2.5e-4` transform assertion. Keep `.35/.5` unqualified and do not snap the
+near-endpoint roots based on this evidence. The next implementation-ready step
+is to measure each retained cubic against the exact source-offset/corner-circle
+boundary with an independent distance oracle, record the requested and
+certified error, then decide whether the kernel's fit budget needs a tighter
+region-boundary policy. Preserve the existing qualified `.15/.25` matrix.
+
+Validation after cleanup: `librecad_offset_worker_kernel_tests` rebuilt in
+`/private/tmp/offset-2961-cmake-clean`; the focused `mixed-bulge region offset
+is rotation invariant` test passed all 52 assertions for `.15/.25`; and
+`git diff --check` passed. The temporary `.35` probe had failed its exploratory
+`2.5e-4` assertion at `0.0025126` and is not counted as a product regression
+pass or as a new supported profile.
