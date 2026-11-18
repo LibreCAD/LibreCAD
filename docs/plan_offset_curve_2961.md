@@ -58446,3 +58446,31 @@ transformed candidate's exact intersection roots and segment distances,
 including roots lost while converting primitive-local fractions to branch
 parameters. Debug tracing and the reflected test probe were removed; there is
 no new code or pass result in this section.
+
+## 1838. Recover Frame-bounded Roots in the Reflected `.25` Profile (2026-11-18)
+
+The reflected combined-frame candidate set was missing an arc/circle contact:
+the source-scale numeric floor bounded the separation, but exact zero-tolerance
+primitive intersection returned no root. The exact primitive path also
+rejected a nearly straight candidate whose deviation was below that same
+frame-error bound. The normalized region path now carries that bound into
+exact-primitive eligibility and uses it only to permit line classification
+within the node-merge budget. When exact noding misses a pair within the
+bounded frame-error, it retries that pair using an intersection tolerance
+capped by both evaluation and node-merge tolerance. Contacts outside the frame
+error remain on the existing interval fallback/refusal path; there is no
+unbounded coordinate snap.
+
+The kernel regression compares origin, rotation-only, translation-only,
+combined rotation/translation, reflection-only, and reflected combined-frame
+geometry for second bulges `.15` and `.25`, using symmetric sampled-locus
+distance under `2.5e-4`. The worker-client persistence matrix extends `.25`
+across positive/negative sides, reflected/reversed/high-origin source rows,
+and R14/R2000/R2018 DXF/DWG save/reopen/second-save lanes; frame 3 remains its
+existing fail-closed numeric-floor refusal. Focused kernel validation passes
+52 assertions; the client matrix passes 35,376 assertions. Full CMake
+`offset_worker_kernel` passes 1/1 in 280.05 seconds, and the recursive
+macOS qmake6 application/plugin build exits 0 (with only the missing optional
+Cargo environment warning). Implementation commit: `60163dd24`; this roadmap
+entry is a separate documentation commit. Cross-platform PR checks and
+independent CAD/ODA acceptance remain open.
