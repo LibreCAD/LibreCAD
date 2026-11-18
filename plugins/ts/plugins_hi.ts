@@ -127,7 +127,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
         <location filename="../list/list.cpp" line="22"/>
         <location filename="../list/list.cpp" line="29"/>
         <source>List entities</source>
-        <translation>इकाइयों की सूची</translation>
+        <translation>एंटिटीज़ की सूची</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="30"/>
@@ -142,7 +142,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="58"/>
         <source>Empty Entity</source>
-        <translation>खाली इकाई</translation>
+        <translation>खाली एंटिटी</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="65"/>
@@ -157,7 +157,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="75"/>
         <source>Layer</source>
-        <translation>लेयर</translation>
+        <translation>परत</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="77"/>
@@ -438,12 +438,12 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../sameprop/sameprop.cpp" line="40"/>
         <source>select original entity:</source>
-        <translation>मूल इकाई का चयन करें:</translation>
+        <translation>मूल एंटिटी का चयन करें:</translation>
     </message>
     <message>
         <location filename="../sameprop/sameprop.cpp" line="42"/>
         <source>select entities to change</source>
-        <translation>बदलने के लिए इकाइयों का चयन करें</translation>
+        <translation>बदलने के लिए एंटिटीज़ का चयन करें</translation>
     </message>
 </context>
 <context>
@@ -598,12 +598,12 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="307"/>
         <source>Point 3D layer is empty</source>
-        <translation>3D लेयर में कोई बिंदु नहीं है</translation>
+        <translation>3D परत में कोई बिंदु नहीं है</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="310"/>
         <source>Point elevation layer is empty</source>
-        <translation>बिंदु ऊंचाई लेयर खाली है</translation>
+        <translation>बिंदु ऊंचाई परत खाली है</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="311"/>
@@ -618,7 +618,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="315"/>
         <source>Point number layer is empty</source>
-        <translation>बिंदु संख्या लेयर खाली है</translation>
+        <translation>बिंदु संख्या परत खाली है</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="316"/>
@@ -633,7 +633,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="320"/>
         <source>Point code layer is empty</source>
-        <translation>बिंदु कोड लेयर खाली है</translation>
+        <translation>बिंदु कोड परत खाली है</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="321"/>
@@ -687,7 +687,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../divide/divide.cpp" line="439"/>
         <source>Empty Entity</source>
-        <translation>खाली इकाई</translation>
+        <translation>खाली एंटिटी</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="447"/>
@@ -702,7 +702,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../divide/divide.cpp" line="455"/>
         <source>Layer</source>
-        <translation>लेयर</translation>
+        <translation>परत</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="457"/>
@@ -899,7 +899,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../divide/dividedlg.cpp" line="245"/>
         <source>&lt;i&gt;&quot;New&quot;&lt;/i&gt;&lt;br&gt;Enter name&lt;br&gt;for a new layer&lt;br&gt;(if required?) to&lt;br&gt;draw ticks on.</source>
-        <translation>&lt;i&gt;&quot;नया&quot;&lt;/i&gt;&lt;br&gt;एक नए लेयर के लिए नाम दर्ज करें (यदि आवश्यक हो) जिस पर टिक खींचे जाएंगे।</translation>
+        <translation>&lt;i&gt;&quot;नया&quot;&lt;/i&gt;&lt;br&gt;एक नई परत के लिए नाम दर्ज करें (यदि आवश्यक हो) जिस पर टिक खींचे जाएंगे।</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="250"/>
@@ -1020,7 +1020,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../gear/gear.cpp" line="127"/>
         <source>Draw root circle?</source>
-        <translation>रूट सर्कल बनाएं?</translation>
+        <translation>रूट वृत्त बनाएं?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="128"/>
@@ -1058,7 +1058,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../list/list.cpp" line="276"/>
         <source>List entities</source>
-        <translation>इकाइयों की सूची</translation>
+        <translation>एंटिटीज़ की सूची</translation>
     </message>
 </context>
 <context>
@@ -1263,7 +1263,7 @@ Use t or x in your equation as a variable/parameter.
         <location filename="../plotequation/plotdialog.cpp" line="60"/>
         <source>Polyline</source>
         <comment>Plot Equation to generate RS_Polyline</comment>
-        <translation>बहुभुज रेखा</translation>
+        <translation>पॉलीलाइन</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="61"/>

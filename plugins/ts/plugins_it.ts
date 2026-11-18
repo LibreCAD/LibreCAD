@@ -394,22 +394,22 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="241"/>
         <source>DIMLEADER</source>
-        <translation>LINEA DI DIMENSIONE</translation>
+        <translation>DIRETTRICE</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="244"/>
         <source>DIMALIGNED</source>
-        <translation>DIMENSIONE ALLINEATA</translation>
+        <translation>QUOTA ALLINEATA</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="247"/>
         <source>DIMLINEAR</source>
-        <translation>DIMENSIONE LINEARE</translation>
+        <translation>QUOTA LINEARE</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="250"/>
         <source>DIMRADIAL</source>
-        <translation>DIMENSIONE RADIALE</translation>
+        <translation>QUOTA RADIALE</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="253"/>
@@ -889,7 +889,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../divide/dividedlg.cpp" line="178"/>
         <source>&lt;i&gt;New&lt;/i&gt;</source>
-        <translation>translation 1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="209"/>
@@ -904,12 +904,12 @@ anti-clockwise.</source>
     <message>
         <location filename="../divide/dividedlg.cpp" line="245"/>
         <source>&lt;i&gt;&quot;New&quot;&lt;/i&gt;&lt;br&gt;Enter name&lt;br&gt;for a new layer&lt;br&gt;(if required?) to&lt;br&gt;draw ticks on.</source>
-        <translation>translation 3</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="250"/>
         <source>Ticks</source>
-        <translation>Marcature</translation>
+        <translation>Tacche</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="256"/>
@@ -1010,7 +1010,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../gear/gear.cpp" line="124"/>
         <source>Draw addendum circle?</source>
-        <translation>Disegnare il cerchio aggiuntivo?</translation>
+        <translation>Disegnare il cerchio di testa?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="125"/>
@@ -1025,7 +1025,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../gear/gear.cpp" line="127"/>
         <source>Draw root circle?</source>
-        <translation>Disegnare il cerchio di radice?</translation>
+        <translation>Disegnare il cerchio di piede?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="128"/>

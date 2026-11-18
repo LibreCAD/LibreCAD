@@ -379,7 +379,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="235"/>
         <source>SPLINEPOINTS</source>
-        <translation>PUNCTE SPLINE</translation>
+        <translation>SPLINEPOINTS</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="238"/>
@@ -623,7 +623,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="316"/>
         <source>Point number height is empty</source>
-        <translation>Înălțimea numărului punctelor este goală</translation>
+        <translation>Înălțimea textului numărului punctului nu este completată</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="317"/>
@@ -1179,13 +1179,13 @@ anti-clockwise.</source>
     <message>
         <location filename="../picfile/picfile.cpp" line="177"/>
         <source>picPunto drawLine: next point is empty %1</source>
-        <translation>CONTEXT: picPunto] picPunto drawLine: următorul punct este gol %1</translation>
+        <translation>picPunto drawLine: următorul punct este gol %1</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="260"/>
         <location filename="../picfile/picfile.cpp" line="269"/>
         <source>format error in %1</source>
-        <translation>CONTEXT: picPunto] eroare de format în %1</translation>
+        <translation>eroare de format în %1</translation>
     </message>
 </context>
 <context>
@@ -1194,12 +1194,12 @@ anti-clockwise.</source>
         <location filename="../plotequation/plot.cpp" line="30"/>
         <location filename="../plotequation/plot.cpp" line="37"/>
         <source>Plot plugin</source>
-        <translation>CONTEXT: plot] Modul grafic</translation>
+        <translation>Modul pentru grafice de funcții</translation>
     </message>
     <message>
         <location filename="../plotequation/plot.cpp" line="38"/>
         <source>Plot test tip...</source>
-        <translation>CONTEXT: plot] Testează modul grafic...</translation>
+        <translation>Grafic de funcție...</translation>
     </message>
 </context>
 <context>
@@ -1207,7 +1207,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="15"/>
         <source>Plot equation</source>
-        <translation>CONTEXT: plotDialog] Ecuația graficului</translation>
+        <translation>Graficul ecuației</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="18"/>
@@ -1216,30 +1216,31 @@ If you don&apos;t want to use the parametric form, just leave out &quot;Equation
 You can use pi when you need the value of pi (i.e. (3*pi)).
 Use t or x in your equation as a variable/parameter.
 </source>
-        <translation>CONTEXT: plotDialog] Acest modul vă permite să creați grafice cu ecuații matematice.
-Dacă nu doriți să utilizați forma parametrică, pur și simplu omiteți „Ecuația 2”.
-Puteți utiliza „pi” atunci când aveți nevoie de valoarea lui pi (de exemplu, (3*pi)).
-Utilizați „t” sau „x” în ecuația dvs. ca variabilă/parametru.</translation>
+        <translation>Acest modul vă permite să trasați graficele unor ecuații matematice.
+Dacă nu doriți să folosiți forma parametrică, omiteți „Ecuația 2”.
+Puteți folosi pi când aveți nevoie de valoarea lui pi (de exemplu, (3*pi)).
+Folosiți t sau x în ecuație ca variabilă/parametru.
+</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="22"/>
         <source>Equation 1:</source>
-        <translation>CONTEXT: plotDialog] Ecuația 1:</translation>
+        <translation>Ecuația 1:</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="23"/>
         <source>Equation 2:</source>
-        <translation>CONTEXT: plotDialog] Ecuația 2:</translation>
+        <translation>Ecuația 2:</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="26"/>
         <source>start value:</source>
-        <translation>CONTEXT: plotDialog] valoarea de început:</translation>
+        <translation>valoarea de început:</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="27"/>
         <source>end value:</source>
-        <translation>CONTEXT: plotDialog] valoarea de sfârșit:</translation>
+        <translation>valoarea de sfârșit:</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="28"/>

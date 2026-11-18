@@ -284,12 +284,12 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="164"/>
         <source>CONSTRUCTIONLINE</source>
-        <translation>İNŞAAT ÇİZGİSİ</translation>
+        <translation>SONSUZ ÇİZGİ</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="167"/>
         <source>OVERLAYBOX</source>
-        <translation>KATMAN KUTUSU</translation>
+        <translation>OVERLAYBOX</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="170"/>
@@ -349,7 +349,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="212"/>
         <source>POLYLINE</source>
-        <translation>ÇİZGİ</translation>
+        <translation>ÇOKLU ÇİZGİ</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="213"/>
@@ -389,42 +389,42 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="238"/>
         <source>HATCH</source>
-        <translation>translation 1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="241"/>
         <source>DIMLEADER</source>
-        <translation>translation 2</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="244"/>
         <source>DIMALIGNED</source>
-        <translation>translation 3</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="247"/>
         <source>DIMLINEAR</source>
-        <translation>translation 4</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="250"/>
         <source>DIMRADIAL</source>
-        <translation>translation 5</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="253"/>
         <source>DIMDIAMETRIC</source>
-        <translation>translation 6</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="256"/>
         <source>DIMANGULAR</source>
-        <translation>translation 7</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="259"/>
         <source>UNKNOWN</source>
-        <translation>translation 8</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -758,7 +758,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../divide/divide.cpp" line="489"/>
         <source>Inc.</source>
-        <translation>Şirket</translation>
+        <translation>Artış</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="494"/>
@@ -806,7 +806,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../divide/divide.cpp" line="525"/>
         <source>POLYLINE</source>
-        <translation>ÇİZGİ</translation>
+        <translation>ÇOKLU ÇİZGİ</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="526"/>
@@ -1271,7 +1271,7 @@ Denklemde değişken/parametre olarak t veya x kullanın.</translation>
         <location filename="../plotequation/plotdialog.cpp" line="60"/>
         <source>Polyline</source>
         <comment>Plot Equation to generate RS_Polyline</comment>
-        <translation>Çokgen Çizgi</translation>
+        <translation>Çoklu Çizgi</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="61"/>

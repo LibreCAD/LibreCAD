@@ -107,12 +107,12 @@ Ok to accept and start alignment.</source>
     <message>
         <location filename="../gear/gear.cpp" line="33"/>
         <source>Gear creation plugin</source>
-        <translation>Rīku izveides spraudnis</translation>
+        <translation>Zobratu izveides spraudnis</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="41"/>
         <source>Gear plugin</source>
-        <translation>Rīku spraudnis</translation>
+        <translation>Zobratu spraudnis</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="42"/>
@@ -320,7 +320,7 @@ Tad aizpildiet laukus un nospiediet pogu &apos;Akceptēt&apos;.</translation>
     <message>
         <location filename="../list/list.cpp" line="212"/>
         <source>POLYLINE</source>
-        <translation>LAUZTALĪNIJA</translation>
+        <translation>POLILĪNIJA</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="213"/>
@@ -395,7 +395,7 @@ Tad aizpildiet laukus un nospiediet pogu &apos;Akceptēt&apos;.</translation>
     <message>
         <location filename="../list/list.cpp" line="235"/>
         <source>SPLINEPOINTS</source>
-        <translation>SPLINEPUNKTI</translation>
+        <translation>SPLAINA PUNKTI</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="192"/>
@@ -673,7 +673,7 @@ Tad aizpildiet laukus un nospiediet pogu &apos;Akceptēt&apos;.</translation>
     <message>
         <location filename="../divide/divide.cpp" line="53"/>
         <source>Select a line, circle or arc and press return</source>
-        <translation>Atlasiet līniju, apli vai arku un nospiediet taustiņu Enter</translation>
+        <translation>Atlasiet līniju, apli vai loku un nospiediet taustiņu Enter</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="64"/>
@@ -688,7 +688,7 @@ Tad aizpildiet laukus un nospiediet pogu &apos;Akceptēt&apos;.</translation>
     <message>
         <location filename="../divide/divide.cpp" line="439"/>
         <source>Empty Entity</source>
-        <translation>Tukša entitāte</translation>
+        <translation>Tukšs objekts</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="447"/>
@@ -822,7 +822,7 @@ Tad aizpildiet laukus un nospiediet pogu &apos;Akceptēt&apos;.</translation>
     <message>
         <location filename="../divide/divide.cpp" line="529"/>
         <source>Vertices</source>
-        <translation>Virsoļi</translation>
+        <translation>Virsotnes</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="534"/>

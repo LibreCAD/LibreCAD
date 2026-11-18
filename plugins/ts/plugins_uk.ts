@@ -127,7 +127,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
         <location filename="../list/list.cpp" line="22"/>
         <location filename="../list/list.cpp" line="29"/>
         <source>List entities</source>
-        <translation>Перелік елементів</translation>
+        <translation>Список об&apos;єктів</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="30"/>
@@ -225,7 +225,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="116"/>
         <source>ARC</source>
-        <translation>ARC</translation>
+        <translation>ДУГА</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="117"/>
@@ -274,7 +274,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="146"/>
         <source>major axis</source>
-        <translation>головні осі</translation>
+        <translation>велика вісь</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="164"/>
@@ -289,7 +289,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="170"/>
         <source>SOLID</source>
-        <translation>СУЦІЛЬНИЙ</translation>
+        <translation>СУЦІЛЬНА ЗАЛИВКА</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="174"/>
@@ -309,7 +309,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="184"/>
         <source>INSERT</source>
-        <translation>ВСТАВИТИ</translation>
+        <translation>ВСТАВКА</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="187"/>
@@ -384,17 +384,17 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="238"/>
         <source>HATCH</source>
-        <translation>Штрихування</translation>
+        <translation>ШТРИХУВАННЯ</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="241"/>
         <source>DIMLEADER</source>
-        <translation>Лінія позначення розміру</translation>
+        <translation>Виноска</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="244"/>
         <source>DIMALIGNED</source>
-        <translation>Розмір, вирівняний</translation>
+        <translation>Вирівняний розмір</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="247"/>
@@ -608,12 +608,12 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="311"/>
         <source>Point elevation height is empty</source>
-        <translation>Висота точок порожня</translation>
+        <translation>Висота позначки висоти точки порожня</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="312"/>
         <source>Point elevation separation is empty</source>
-        <translation>Відстань між точками порожня</translation>
+        <translation>Відстань між позначками висот порожня</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="315"/>
@@ -687,7 +687,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../divide/divide.cpp" line="439"/>
         <source>Empty Entity</source>
-        <translation>Порожня сутність</translation>
+        <translation>Порожній об&apos;єкт</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="447"/>
@@ -758,7 +758,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../divide/divide.cpp" line="494"/>
         <source>ARC</source>
-        <translation>ARC</translation>
+        <translation>ДУГА</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="495"/>
@@ -904,7 +904,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../divide/dividedlg.cpp" line="250"/>
         <source>Ticks</source>
-        <translation>Мітки</translation>
+        <translation>Засічки</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="256"/>
@@ -955,7 +955,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../gear/gear.cpp" line="115"/>
         <source>Pressure angle (deg)</source>
-        <translation>Кут нахилу (градуси)</translation>
+        <translation>Кут зачеплення (град.)</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="112"/>
@@ -970,22 +970,22 @@ anti-clockwise.</source>
     <message>
         <location filename="../gear/gear.cpp" line="116"/>
         <source>Addendum (rel. to modulus)</source>
-        <translation>Додаток (відносно модуля)</translation>
+        <translation>Висота головки (відносно модуля)</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="117"/>
         <source>Dedendum (rel. to modulus)</source>
-        <translation>Віддаль (відносно модуля)</translation>
+        <translation>Висота ніжки (відносно модуля)</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="118"/>
         <source>Number of segments to draw (dedendum)</source>
-        <translation>Кількість сегментів для відображення (віддаль)</translation>
+        <translation>Кількість сегментів для малювання (ніжка зуба)</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="119"/>
         <source>Number of segments to draw (addendum)</source>
-        <translation>Кількість сегментів для відображення (додаток)</translation>
+        <translation>Кількість сегментів для малювання (головка зуба)</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="120"/>
@@ -995,7 +995,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../gear/gear.cpp" line="121"/>
         <source>Draw symmetric face?</source>
-        <translation>Малювати симетричну грань?</translation>
+        <translation>Малювати симетричний профіль?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="123"/>
@@ -1005,42 +1005,42 @@ anti-clockwise.</source>
     <message>
         <location filename="../gear/gear.cpp" line="124"/>
         <source>Draw addendum circle?</source>
-        <translation>Малювати коло додатка?</translation>
+        <translation>Малювати коло вершин?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="125"/>
         <source>Draw pitch circle?</source>
-        <translation>Малювати коло основи?</translation>
+        <translation>Малювати ділильне коло?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="126"/>
         <source>Draw base circle?</source>
-        <translation>Малювати базове коло?</translation>
+        <translation>Малювати основне коло?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="127"/>
         <source>Draw root circle?</source>
-        <translation>Малювати основне коло?</translation>
+        <translation>Малювати коло западин?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="128"/>
         <source>Draw pressure line?</source>
-        <translation>Малювати лінію тиску?</translation>
+        <translation>Малювати лінію зачеплення?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="129"/>
         <source>Draw pressure limits?</source>
-        <translation>Малювати межі тиску?</translation>
+        <translation>Малювати межі зачеплення?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="131"/>
         <source>Calculate interference?</source>
-        <translation>Обчислити перешкоди?</translation>
+        <translation>Обчислити інтерференцію?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="132"/>
         <source>Number of segments to draw (interference)</source>
-        <translation>Кількість сегментів для малювання (перешкоди)</translation>
+        <translation>Кількість сегментів для малювання (інтерференція)</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="134"/>
@@ -1058,7 +1058,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../list/list.cpp" line="276"/>
         <source>List entities</source>
-        <translation>Перелік елементів</translation>
+        <translation>Список об&apos;єктів</translation>
     </message>
 </context>
 <context>
@@ -1207,7 +1207,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="15"/>
         <source>Plot equation</source>
-        <translation>Рівняння графіка</translation>
+        <translation>Побудувати графік рівняння</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="18"/>

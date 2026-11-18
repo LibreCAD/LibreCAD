@@ -127,7 +127,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
         <location filename="../list/list.cpp" line="22"/>
         <location filename="../list/list.cpp" line="29"/>
         <source>List entities</source>
-        <translation>Zobraziť entity</translation>
+        <translation>Zobraziť objekty</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="30"/>
@@ -142,7 +142,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="58"/>
         <source>Empty Entity</source>
-        <translation>Prázdna entita</translation>
+        <translation>Prázdny objekt</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="65"/>
@@ -157,7 +157,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="75"/>
         <source>Layer</source>
-        <translation>Vrstva</translation>
+        <translation>Hladina</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="77"/>
@@ -254,7 +254,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="132"/>
         <source>CIRCLE</source>
-        <translation>KRUH</translation>
+        <translation>KRUŽNICA</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="138"/>
@@ -379,7 +379,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="235"/>
         <source>SPLINEPOINTS</source>
-        <translation>BODKY SPLINE</translation>
+        <translation>SPLINE CEZ BODY</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="238"/>
@@ -438,12 +438,12 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../sameprop/sameprop.cpp" line="40"/>
         <source>select original entity:</source>
-        <translation>Vyberte pôvodnú entitu:</translation>
+        <translation>Vyberte pôvodný objekt:</translation>
     </message>
     <message>
         <location filename="../sameprop/sameprop.cpp" line="42"/>
         <source>select entities to change</source>
-        <translation>Vyberte entity, ktoré chcete zmeniť</translation>
+        <translation>Vyberte objekty, ktoré chcete zmeniť</translation>
     </message>
 </context>
 <context>
@@ -593,17 +593,17 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="304"/>
         <source>Point 2D layer is empty</source>
-        <translation>Vrstva 2D bodov je prázdna</translation>
+        <translation>Hladina 2D bodov je prázdna</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="307"/>
         <source>Point 3D layer is empty</source>
-        <translation>Vrstva 3D bodov je prázdna</translation>
+        <translation>Hladina 3D bodov je prázdna</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="310"/>
         <source>Point elevation layer is empty</source>
-        <translation>Vrstva nadmorskej výšky bodov je prázdna</translation>
+        <translation>Hladina výšok bodov je prázdna</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="311"/>
@@ -618,7 +618,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="315"/>
         <source>Point number layer is empty</source>
-        <translation>Vrstva čísel bodov je prázdna</translation>
+        <translation>Hladina čísel bodov je prázdna</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="316"/>
@@ -633,7 +633,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="320"/>
         <source>Point code layer is empty</source>
-        <translation>Vrstva kódu bodu je prázdna</translation>
+        <translation>Hladina kódov bodov je prázdna</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="321"/>
@@ -672,7 +672,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../divide/divide.cpp" line="53"/>
         <source>Select a line, circle or arc and press return</source>
-        <translation>Vyberte riadok, kruh alebo oblúk a stlačte kláves Enter</translation>
+        <translation>Vyberte čiaru, kružnicu alebo oblúk a stlačte kláves Enter</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="64"/>
@@ -687,7 +687,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../divide/divide.cpp" line="439"/>
         <source>Empty Entity</source>
-        <translation>Prázdna entita</translation>
+        <translation>Prázdny objekt</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="447"/>
@@ -702,7 +702,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../divide/divide.cpp" line="455"/>
         <source>Layer</source>
-        <translation>Vrstva</translation>
+        <translation>Hladina</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="457"/>
@@ -753,12 +753,12 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../divide/divide.cpp" line="489"/>
         <source>Inc.</source>
-        <translation>translation 1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="494"/>
         <source>ARC</source>
-        <translation>translation 2</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="495"/>
@@ -786,7 +786,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../divide/divide.cpp" line="513"/>
         <source>CIRCLE</source>
-        <translation>KRUH</translation>
+        <translation>KRUŽNICA</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="519"/>
@@ -831,7 +831,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../divide/divide.cpp" line="550"/>
         <source>MUST be a line, circle or arc</source>
-        <translation>MUSÍ to byť čiara, kruh alebo oblúk</translation>
+        <translation>MUSÍ to byť čiara, kružnica alebo oblúk</translation>
     </message>
 </context>
 <context>
@@ -844,7 +844,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../divide/dividedlg.cpp" line="68"/>
         <source>Layers</source>
-        <translation>Vrstvy</translation>
+        <translation>Hladiny</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="74"/>
@@ -879,7 +879,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../divide/dividedlg.cpp" line="133"/>
         <source>Breaks - Off</source>
-        <translation>Lomky - Vypnuté</translation>
+        <translation>Prerušenia - Vypnuté</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="178"/>
@@ -899,7 +899,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../divide/dividedlg.cpp" line="245"/>
         <source>&lt;i&gt;&quot;New&quot;&lt;/i&gt;&lt;br&gt;Enter name&lt;br&gt;for a new layer&lt;br&gt;(if required?) to&lt;br&gt;draw ticks on.</source>
-        <translation>&lt;i&gt;Nový&lt;/i&gt;&lt;br&gt;Zadajte názov pre novú vrstvu (ak je to potrebné), na ktorú sa budú kresliť čiary.</translation>
+        <translation>&lt;i&gt;Nový&lt;/i&gt;&lt;br&gt;Zadajte názov pre novú hladinu (ak je to potrebné), na ktorú sa budú kresliť čiary.</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="250"/>
@@ -980,12 +980,12 @@ anti-clockwise.</source>
     <message>
         <location filename="../gear/gear.cpp" line="118"/>
         <source>Number of segments to draw (dedendum)</source>
-        <translation>Počet segmentov na vykreslenie (odčítok)</translation>
+        <translation>Počet segmentov na vykreslenie (päta zuba)</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="119"/>
         <source>Number of segments to draw (addendum)</source>
-        <translation>Počet segmentov na vykreslenie (dodatok)</translation>
+        <translation>Počet segmentov na vykreslenie (hlava zuba)</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="120"/>
@@ -1000,27 +1000,27 @@ anti-clockwise.</source>
     <message>
         <location filename="../gear/gear.cpp" line="123"/>
         <source>Use layers?</source>
-        <translation>Použiť vrstvy?</translation>
+        <translation>Použiť hladiny?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="124"/>
         <source>Draw addendum circle?</source>
-        <translation>Vykresliť kruh pre dodatok?</translation>
+        <translation>Vykresliť hlavovú kružnicu?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="125"/>
         <source>Draw pitch circle?</source>
-        <translation>Vykresliť kruh pre rozteč?</translation>
+        <translation>Vykresliť roztečovú kružnicu?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="126"/>
         <source>Draw base circle?</source>
-        <translation>Vykresliť základný kruh?</translation>
+        <translation>Vykresliť základnú kružnicu?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="127"/>
         <source>Draw root circle?</source>
-        <translation>Nakresliť hlavný kruh?</translation>
+        <translation>Vykresliť pätnú kružnicu?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="128"/>
@@ -1058,7 +1058,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../list/list.cpp" line="276"/>
         <source>List entities</source>
-        <translation>Zobraziť entity</translation>
+        <translation>Zobraziť objekty</translation>
     </message>
 </context>
 <context>
@@ -1194,7 +1194,7 @@ anti-clockwise.</source>
         <location filename="../plotequation/plot.cpp" line="30"/>
         <location filename="../plotequation/plot.cpp" line="37"/>
         <source>Plot plugin</source>
-        <translation>Zástrčka pre grafy</translation>
+        <translation>Zásuvný modul na vykresľovanie grafov</translation>
     </message>
     <message>
         <location filename="../plotequation/plot.cpp" line="38"/>
@@ -1216,10 +1216,11 @@ If you don&apos;t want to use the parametric form, just leave out &quot;Equation
 You can use pi when you need the value of pi (i.e. (3*pi)).
 Use t or x in your equation as a variable/parameter.
 </source>
-        <translation>Táto zástrčka umožňuje vykresľovať matematické rovnice.
-Ak nechcete používať parametrický tvar, jednoducho vynechajte &quot;Rovnicu2&quot;.
-Môžete použiť pi, keď potrebujete hodnotu pi (napr. (3*pi)).
-Použite t alebo x vo svojej rovnici ako premennú/parameter.</translation>
+        <translation>Tento zásuvný modul umožňuje vykresľovať matematické rovnice.
+Ak nechcete používať parametrický tvar, jednoducho vynechajte „Rovnica2“.
+Ak potrebujete hodnotu pí, môžete použiť pi (napr. (3*pi)).
+Ako premennú/parameter v rovnici použite t alebo x.
+</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="22"/>
@@ -1272,7 +1273,7 @@ Použite t alebo x vo svojej rovnici ako premennú/parameter.</translation>
         <location filename="../plotequation/plotdialog.cpp" line="61"/>
         <source>SplinePoints</source>
         <comment>Plot Equation to generate 2nd spline by LC_SplinePoints</comment>
-        <translation>Splínové body</translation>
+        <translation>Spline cez body</translation>
     </message>
 </context>
 <context>
@@ -1280,7 +1281,7 @@ Použite t alebo x vo svojej rovnici ako premennú/parameter.</translation>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="176"/>
         <source>Layer:</source>
-        <translation>Vrstva:</translation>
+        <translation>Hladina:</translation>
     </message>
 </context>
 <context>

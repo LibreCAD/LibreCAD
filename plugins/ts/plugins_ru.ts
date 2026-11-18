@@ -399,7 +399,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="244"/>
         <source>DIMALIGNED</source>
-        <translation>ВЫРАВНЕННЫЙРАЗМЕР</translation>
+        <translation>ПАРАЛЛЕЛЬНЫЙРАЗМЕР</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="247"/>
@@ -806,7 +806,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../divide/divide.cpp" line="525"/>
         <source>POLYLINE</source>
-        <translation>ПОЛИЛИНИЯ</translation>
+        <translation>ЛОМАНАЯ</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="526"/>

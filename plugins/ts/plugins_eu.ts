@@ -232,7 +232,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
         <location filename="../list/list.cpp" line="133"/>
         <location filename="../list/list.cpp" line="143"/>
         <source>center point</source>
-        <translation>erdiguneko puntua</translation>
+        <translation>zentro-puntua</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="123"/>
@@ -279,7 +279,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="164"/>
         <source>CONSTRUCTIONLINE</source>
-        <translation>Eraikin marra</translation>
+        <translation>ERAIKUNTZA-LERROA</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="167"/>
@@ -309,7 +309,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="184"/>
         <source>INSERT</source>
-        <translation>SARTU</translation>
+        <translation>TXERTAKETA</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="187"/>
@@ -384,7 +384,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="238"/>
         <source>HATCH</source>
-        <translation>GERIZA</translation>
+        <translation>MARRADURA</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="241"/>
@@ -662,7 +662,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
         <location filename="../divide/divide.cpp" line="34"/>
         <location filename="../divide/divide.cpp" line="41"/>
         <source>Divide</source>
-        <translation>Banatu</translation>
+        <translation>Zatitu</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="42"/>
@@ -801,7 +801,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../divide/divide.cpp" line="525"/>
         <source>POLYLINE</source>
-        <translation>POLILINIA</translation>
+        <translation>POLILINEA</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="526"/>
@@ -831,7 +831,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../divide/divide.cpp" line="550"/>
         <source>MUST be a line, circle or arc</source>
-        <translation>LERRO, ZIRKULU edo ARKO bat IZATEAZ</translation>
+        <translation>LERRO, ZIRKULU edo ARKU bat IZAN BEHAR DU</translation>
     </message>
 </context>
 <context>
@@ -879,7 +879,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../divide/dividedlg.cpp" line="133"/>
         <source>Breaks - Off</source>
-        <translation>Atsedenaldiak - Desaktibatuta</translation>
+        <translation>Etenak - Desaktibatuta</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="178"/>
@@ -937,7 +937,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../pointstocsv/pointstocsv.cpp" line="120"/>
         <source>CSV (*.csv)</source>
-        <translation>&quot;Lehenik oinarrizko puntuak zehaztu&quot; aukera markatuta badago, Lerrokatzeak lerrokatzeko puntuak eskatuko ditu hurren honako ordenan: lehen oinarrizko puntua, bigarren oinarrizko puntua, lehen helburuko puntua, bigarren helburuko puntua.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../pointstocsv/pointstocsv.cpp" line="128"/>

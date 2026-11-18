@@ -319,7 +319,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="189"/>
         <source>Insertion point</source>
-        <translation>Lisäyskohta</translation>
+        <translation>Lisäyspiste</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="192"/>
@@ -344,7 +344,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="212"/>
         <source>POLYLINE</source>
-        <translation>VIIVAPIIRROS</translation>
+        <translation>MURTOVIIVA</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="213"/>
@@ -598,7 +598,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="307"/>
         <source>Point 3D layer is empty</source>
-        <translation>Piste 3D-kerros on tyhjä</translation>
+        <translation>Pisteen 3D-taso on tyhjä</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="310"/>
@@ -801,7 +801,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../divide/divide.cpp" line="525"/>
         <source>POLYLINE</source>
-        <translation>MONIVIVA</translation>
+        <translation>MURTOVIIVA</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="526"/>
@@ -899,12 +899,12 @@ anti-clockwise.</source>
     <message>
         <location filename="../divide/dividedlg.cpp" line="245"/>
         <source>&lt;i&gt;&quot;New&quot;&lt;/i&gt;&lt;br&gt;Enter name&lt;br&gt;for a new layer&lt;br&gt;(if required?) to&lt;br&gt;draw ticks on.</source>
-        <translation>&lt;i&gt;Uusi&lt;/i&gt;&lt;br&gt;Syötä uuden kerroksen nimi (jos tarpeen), johon piirretään viivat.</translation>
+        <translation>&lt;i&gt;&quot;Uusi&quot;&lt;/i&gt;&lt;br&gt;Anna nimi&lt;br&gt;uudelle tasolle&lt;br&gt;(tarvittaessa), jolle&lt;br&gt;merkit piirretään.</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="250"/>
         <source>Ticks</source>
-        <translation>Viivat</translation>
+        <translation>Merkit</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="256"/>
@@ -1000,7 +1000,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../gear/gear.cpp" line="123"/>
         <source>Use layers?</source>
-        <translation>Käytä kerroksia?</translation>
+        <translation>Käytä tasoja?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="124"/>
@@ -1267,7 +1267,7 @@ Käytä yhtälössä kirjaimia t tai x ilmaisemaan muuttujaa/parametria.
         <location filename="../plotequation/plotdialog.cpp" line="60"/>
         <source>Polyline</source>
         <comment>Plot Equation to generate RS_Polyline</comment>
-        <translation>Polylinja</translation>
+        <translation>Murtoviiva</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="61"/>

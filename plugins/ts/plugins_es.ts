@@ -384,7 +384,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="235"/>
         <source>SPLINEPOINTS</source>
-        <translation>PUNTOS DE CURVA</translation>
+        <translation>SPLINE POR PUNTOS</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="238"/>
@@ -975,22 +975,22 @@ anti-clockwise.</source>
     <message>
         <location filename="../gear/gear.cpp" line="116"/>
         <source>Addendum (rel. to modulus)</source>
-        <translation>Adición (relativo al módulo)</translation>
+        <translation>Adendo (relativo al módulo)</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="117"/>
         <source>Dedendum (rel. to modulus)</source>
-        <translation>Deducción (relativo al módulo)</translation>
+        <translation>Dedendo (relativo al módulo)</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="118"/>
         <source>Number of segments to draw (dedendum)</source>
-        <translation>Número de segmentos a dibujar (deducción)</translation>
+        <translation>Número de segmentos a dibujar (dedendo)</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="119"/>
         <source>Number of segments to draw (addendum)</source>
-        <translation>Número de segmentos a dibujar (adición)</translation>
+        <translation>Número de segmentos a dibujar (adendo)</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="120"/>
@@ -1010,7 +1010,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../gear/gear.cpp" line="124"/>
         <source>Draw addendum circle?</source>
-        <translation>¿Dibujar el círculo del apéndice?</translation>
+        <translation>¿Dibujar el círculo de adendo?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="125"/>
@@ -1278,7 +1278,7 @@ Use t o x en su ecuación como una variable/parámetro.
         <location filename="../plotequation/plotdialog.cpp" line="61"/>
         <source>SplinePoints</source>
         <comment>Plot Equation to generate 2nd spline by LC_SplinePoints</comment>
-        <translation>Puntos de la curva de Bézier</translation>
+        <translation>Spline por puntos</translation>
     </message>
 </context>
 <context>

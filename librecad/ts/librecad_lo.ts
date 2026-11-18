@@ -191,17 +191,17 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="216"></location>
         <source>Free angle</source>
-        <translation>ມູມອິດສະຫຼະ</translation>
+        <translation>ມຸມອິດສະຫຼະ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="219"></location>
         <source>Specify dimension line position or enter angle:</source>
-        <translation>ລະບຸຕໍາແໜ່ງເສັ້ນມິຕິ ຫຼື ປ້ອນມູມ:</translation>
+        <translation>ລະບຸຕຳແໜ່ງເສັ້ນບອກຂະໜາດ ຫຼື ປ້ອນມຸມ:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actioncircledimbase.cpp" line="222"></location>
         <source>Enter dimension text:</source>
-        <translation>ປ້ອນຂໍ້ຄວາມມິຕິ:</translation>
+        <translation>ປ້ອນຂໍ້ຄວາມບອກຂະໜາດ:</translation>
     </message>
 </context>
 <context>
@@ -214,7 +214,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimarc.cpp" line="192"></location>
         <source>Specify dimension arc location</source>
-        <translation>ລະບຸຕໍາແໜ່ງເສັ້ນໂຄ້ງມິຕິ</translation>
+        <translation>ລະບຸຕຳແໜ່ງເສັ້ນໂຄ້ງບອກຂະໜາດ</translation>
     </message>
 </context>
 <context>
@@ -222,32 +222,32 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="312"></location>
         <source>Specify first extension line origin</source>
-        <translation>ລະບຸຈຸດກໍາເນີດເສັ້ນຂະຫຍາຍທໍາອິດ</translation>
+        <translation>ລະບຸຈຸດກຳເນີດຂອງເສັ້ນຊ່ວຍບອກຂະໜາດທຳອິດ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="302"></location>
         <source>Specify second extension line origin</source>
-        <translation>ລະບຸຈຸດກໍາເນີດເສັ້ນຂະຫຍາຍທີສອງ</translation>
+        <translation>ລະບຸຈຸດກຳເນີດຂອງເສັ້ນຊ່ວຍບອກຂະໜາດທີສອງ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="306"></location>
         <source>Specify dimension line location</source>
-        <translation>ລະບຸຕໍາແໜ່ງເສັ້ນມິຕິ</translation>
+        <translation>ລະບຸຕຳແໜ່ງເສັ້ນບອກຂະໜາດ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="306"></location>
         <source>Snap to Adjacent Dim</source>
-        <translation>ເກາະຈັບໃສ່ມິຕິຂ້າງຄຽງ</translation>
+        <translation>ເກາະຈັບໃສ່ການບອກຂະໜາດຂ້າງຄຽງ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="321"></location>
         <source>Enter dimension text:</source>
-        <translation>ປ້ອນຂໍ້ຄວາມມິຕິ:</translation>
+        <translation>ປ້ອນຂໍ້ຄວາມບອກຂະໜາດ:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="324"></location>
         <source>Enter dimension line angle:</source>
-        <translation>ປ້ອນມູມເສັ້ນມິຕິ:</translation>
+        <translation>ປ້ອນມຸມເສັ້ນບອກຂະໜາດ:</translation>
     </message>
 </context>
 <context>
@@ -255,7 +255,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimordinate.cpp" line="212"></location>
         <source>Specify first point</source>
-        <translation>ລະບຸຈຸດທໍາອິດ</translation>
+        <translation>ລະບຸຈຸດທຳອິດ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimordinate.cpp" line="216"></location>
@@ -281,12 +281,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimstyleapply.cpp" line="159"></location>
         <source>Specify dimension to pick the style</source>
-        <translation>ລະບຸມິຕິເພື່ອເລືອກຮູບແບບ</translation>
+        <translation>ລະບຸການບອກຂະໜາດເພື່ອເລືອກຮູບແບບ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimstyleapply.cpp" line="162"></location>
         <source>Specify dimension to apply style</source>
-        <translation>ລະບຸມິຕິເພື່ອໃຊ້ຮູບແບບ</translation>
+        <translation>ລະບຸການບອກຂະໜາດເພື່ອໃຊ້ຮູບແບບ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimstyleapply.cpp" line="162"></location>
@@ -299,12 +299,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsangle.cpp" line="94"></location>
         <source>Enter value of central angle</source>
-        <translation>ປ້ອນຄ່າມູມໃຈກາງ</translation>
+        <translation>ປ້ອນຄ່າມຸມໃຈກາງ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsangle.cpp" line="98"></location>
         <source>Alternate angle to outer arc</source>
-        <translation>ມູມສະລັບສໍາລັບເສັ້ນໂຄ້ງນອກ</translation>
+        <translation>ມຸມສະລັບສຳລັບເສັ້ນໂຄ້ງນອກ</translation>
     </message>
 </context>
 <context>
@@ -327,7 +327,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsbase.cpp" line="186"></location>
         <source>Specify first point of arc</source>
-        <translation>ລະບຸຈຸດທໍາອິດຂອງເສັ້ນໂຄ້ງ</translation>
+        <translation>ລະບຸຈຸດທຳອິດຂອງເສັ້ນໂຄ້ງ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawarc2pointsbase.cpp" line="190"></location>
@@ -451,7 +451,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_center_point_param.cpp" line="549"/>
         <source>Specify end angle or [angle/chordlen]</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">ກຳນົດມຸມສິ້ນສຸດ ຫຼື [ມຸມ/chordlen]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_center_point_param.cpp" line="549"/>
@@ -523,7 +523,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_actiondrawboundingbox.cpp" line="93"></location>
         <source>Note: Bounding box was created for world coordinate system.</source>
-        <translation>ໝາຍເຫດ: ກອບຂອບເຂດຖືກສ້າງຂຶ້ນສໍາລັບລະບົບພິກັດໂລກ.</translation>
+        <translation>ໝາຍເຫດ: ກອບຂອບເຂດຖືກສ້າງຂຶ້ນສຳລັບລະບົບພິກັດໂລກ.</translation>
     </message>
 </context>
 <context>
@@ -536,7 +536,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_center_line.cpp" line="295"/>
         <source>Select first entity</source>
-        <translation type="unfinished">ເລືອກອົງປະກອບທໍາອິດ</translation>
+        <translation type="unfinished">ເລືອກອົງປະກອບທຳອິດ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_center_line.cpp" line="299"/>
@@ -559,7 +559,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_center_mark.cpp" line="397"/>
         <source>Select circle, arc or ellipse</source>
-        <translation type="unfinished">ເລືອກວົງມົນ, ເສັ້ນໂຄ້ງ ຫຼື ວົງລີ</translation>
+        <translation type="unfinished">ເລືອກວົງມົນ, ເສັ້ນໂຄ້ງ ຫຼື ວົງຮີ</translation>
     </message>
 </context>
 <context>
@@ -811,7 +811,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="418"></location>
         <source>Select base linear/aligned dimension</source>
-        <translation>ເລືອກມິຕິເສັ້ນຊື່/ຂະໜານທີ່ເປັນຖານ</translation>
+        <translation>ເລືອກການບອກຂະໜາດເສັ້ນຊື່/ຂະໜານທີ່ເປັນຖານ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="418"></location>
@@ -821,7 +821,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="421"></location>
         <source>Specify second extension line origin</source>
-        <translation>ລະບຸຈຸດກໍາເນີດເສັ້ນຂະຫຍາຍທີສອງ</translation>
+        <translation>ລະບຸຈຸດກຳເນີດຂອງເສັ້ນຊ່ວຍບອກຂະໜາດທີສອງ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="421"></location>
@@ -831,17 +831,17 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="424"></location>
         <source>Specify dimension line location</source>
-        <translation>ລະບຸຕໍາແໜ່ງເສັ້ນມິຕິ</translation>
+        <translation>ລະບຸຕຳແໜ່ງເສັ້ນບອກຂະໜາດ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="424"></location>
         <source>Snap to Adjacent Dim</source>
-        <translation>ເກາະຈັບໃສ່ມິຕິຂ້າງຄຽງ</translation>
+        <translation>ເກາະຈັບໃສ່ການບອກຂະໜາດຂ້າງຄຽງ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="427"></location>
         <source>Enter dimension text:</source>
-        <translation>ປ້ອນຂໍ້ຄວາມມິຕິ:</translation>
+        <translation>ປ້ອນຂໍ້ຄວາມບອກຂະໜາດ:</translation>
     </message>
 </context>
 <context>
@@ -869,7 +869,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="159"></location>
         <source>Select to create dual (Enter to complete)</source>
-        <translation>ເລືອກເພື່ອສ້າງຄູ່ (ກົດ Enter ເພື່ອສໍາເລັດ)</translation>
+        <translation>ເລືອກເພື່ອສ້າງຄູ່ (ກົດ Enter ເພື່ອສຳເລັດ)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="159"></location>
@@ -887,17 +887,17 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/lc_actiondrawellipse1point.cpp" line="273"></location>
         <source>Specify angle for major axis</source>
-        <translation>ລະບຸມູມສໍາລັບແກນເອກ</translation>
+        <translation>ລະບຸມຸມສຳລັບແກນເອກ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/lc_actiondrawellipse1point.cpp" line="277"></location>
         <source>Set start angle of arc</source>
-        <translation>ກຳນົດມູມເລີ່ມຕົ້ນຂອງເສັ້ນໂຄ້ງ</translation>
+        <translation>ກຳນົດມຸມເລີ່ມຕົ້ນຂອງເສັ້ນໂຄ້ງ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/lc_actiondrawellipse1point.cpp" line="281"></location>
         <source>Set end angle of arc</source>
-        <translation>ກຳນົດມູມສິ້ນສຸດຂອງເສັ້ນໂຄ້ງ</translation>
+        <translation>ກຳນົດມຸມສິ້ນສຸດຂອງເສັ້ນໂຄ້ງ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/lc_actiondrawellipse1point.cpp" line="317"></location>
@@ -913,7 +913,7 @@ distance between points=%2 is larger than diameter=%3</source>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawhyperbolafp.cpp" line="100"></location>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawhyperbolafp.cpp" line="211"></location>
         <source>Foci cannot be coincident</source>
-        <translation>ຈຸດໂຟກັດບໍ່ສາມາດຢູ່ຕໍາແໜ່ງດຽວກັນໄດ້</translation>
+        <translation>ຈຸດໂຟກັດບໍ່ສາມາດຢູ່ຕຳແໜ່ງດຽວກັນໄດ້</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawhyperbolafp.cpp" line="106"></location>
@@ -934,7 +934,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawhyperbolafp.cpp" line="241"></location>
         <source>Specify first focus</source>
-        <translation>ລະບຸໂຟກັດທໍາອິດ</translation>
+        <translation>ລະບຸໂຟກັດທຳອິດ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawhyperbolafp.cpp" line="244"></location>
@@ -1062,7 +1062,7 @@ distance between points=%2 is larger than diameter=%3</source>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_angle.cpp" line="411"/>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_angle.cpp" line="505"/>
         <source>y</source>
-        <translation type="unfinished">ຄ່າ</translation>
+        <translation type="unfinished">y</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_angle.cpp" line="416"/>
@@ -1390,7 +1390,7 @@ distance between points=%2 is larger than diameter=%3</source>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_line_radiant.cpp" line="188"/>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_line_radiant.cpp" line="400"/>
         <source>y</source>
-        <translation type="unfinished">ຄ່າ</translation>
+        <translation type="unfinished">y</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_line_radiant.cpp" line="192"/>
@@ -1466,7 +1466,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_rel_angle.cpp" line="271"/>
         <source>Specify angle</source>
-        <translation type="unfinished">ລະບຸມູມ</translation>
+        <translation type="unfinished">ລະບຸມຸມ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_rel_angle.cpp" line="274"/>
@@ -1479,7 +1479,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="468"></location>
         <source>Specify first point</source>
-        <translation>ລະບຸຈຸດທໍາອິດ</translation>
+        <translation>ລະບຸຈຸດທຳອິດ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="477"></location>
@@ -1527,7 +1527,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="516"></location>
         <source>Specify angle or [%1]</source>
-        <translation>ລະບຸມູມ ຫຼື [%1]</translation>
+        <translation>ລະບຸມຸມ ຫຼື [%1]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinesnake.cpp" line="528"></location>
@@ -1563,7 +1563,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabola4points.cpp" line="181"></location>
         <source>Specify the first point on parabola</source>
-        <translation>ລະບຸຈຸດທໍາອິດເທິງພາຣາໂບລາ</translation>
+        <translation>ລະບຸຈຸດທຳອິດເທິງພາຣາໂບລາ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabola4points.cpp" line="184"></location>
@@ -1614,7 +1614,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="172"></location>
         <source>Second point is too close to the first one</source>
-        <translation>ຈຸດທີສອງຢູ່ໃກ້ຈຸດທໍາອິດເກີນໄປ</translation>
+        <translation>ຈຸດທີສອງຢູ່ໃກ້ຈຸດທຳອິດເກີນໄປ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="183"></location>
@@ -1630,7 +1630,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="258"></location>
         <source>Specify first point</source>
-        <translation>ລະບຸຈຸດທໍາອິດ</translation>
+        <translation>ລະບຸຈຸດທຳອິດ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="262"></location>
@@ -1650,22 +1650,22 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="270"></location>
         <source>Last point position is un-adjusted</source>
-        <translation>ຕໍາແໜ່ງຈຸດສຸດທ້າຍບໍ່ໄດ້ຖືກປັບ</translation>
+        <translation>ຕຳແໜ່ງຈຸດສຸດທ້າຍບໍ່ໄດ້ຖືກປັບ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="271"></location>
         <source>Last point position is adjusted to first</source>
-        <translation>ຕໍາແໜ່ງຈຸດສຸດທ້າຍຖືກປັບໃຫ້ເຂົ້າກັບຈຸດທໍາອິດ</translation>
+        <translation>ຕຳແໜ່ງຈຸດສຸດທ້າຍຖືກປັບໃຫ້ເຂົ້າກັບຈຸດທຳອິດ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="275"></location>
         <source>Enter number of points by X</source>
-        <translation>ປ້ອນຈໍານວນຈຸດຕາມແກນ X</translation>
+        <translation>ປ້ອນຈຳນວນຈຸດຕາມແກນ X</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_actiondrawpointslattice.cpp" line="279"></location>
         <source>Enter number of points by Y</source>
-        <translation>ປ້ອນຈໍານວນຈຸດຕາມແກນ Y</translation>
+        <translation>ປ້ອນຈຳນວນຈຸດຕາມແກນ Y</translation>
     </message>
 </context>
 <context>
@@ -1679,7 +1679,8 @@ distance between points=%2 is larger than diameter=%3</source>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="583"/>
         <source>Specify Second Point
 or [number|x|y|angle|p|edges|distance]</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">ລະບຸຈຸດທີສອງ
+ຫຼື [number|x|y|ມຸມ|p|edges|distance]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="586"/>
@@ -1691,19 +1692,22 @@ or [number]</source>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="590"/>
         <source>Specify line direction
 [x|y|angle|p|distance]</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">ລະບຸທິດທາງຂອງເສັ້ນ
+[x|y|ມຸມ|p|distance]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="593"/>
         <source>Specify line direction angle
 or [x|y|p|number|edges|distance]</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">ລະບຸມຸມທິດທາງຂອງເສັ້ນ
+ຫຼື [x|y|p|number|edges|distance]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="596"/>
         <source>Specify edge points mode
 [none|start|end|both|distance]</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">ລະບຸໂໝດຈຸດຂອບ
+[none|start|end|both|distance]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="599"/>
@@ -1910,7 +1914,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle1point.cpp" line="380"></location>
         <source>Specify point that defines base angle for rectangle</source>
-        <translation>ລະບຸຈຸດທີ່ກຳນົດມູມຖານສໍາລັບຮູບສີ່ແຈສາກ</translation>
+        <translation>ລະບຸຈຸດທີ່ກຳນົດມຸມຖານສຳລັບຮູບສີ່ແຈສາກ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle1point.cpp" line="380"></location>
@@ -1952,7 +1956,7 @@ or [%2]</source>
         <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle3points.cpp" line="551"></location>
         <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle3points.cpp" line="569"></location>
         <source>Specify first point first</source>
-        <translation>ລະບຸຈຸດທໍາອິດກ່ອນ</translation>
+        <translation>ລະບຸຈຸດທຳອິດກ່ອນ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle3points.cpp" line="560"></location>
@@ -1987,12 +1991,12 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle3points.cpp" line="604"></location>
         <source>Specify angle</source>
-        <translation>ລະບຸມູມ</translation>
+        <translation>ລະບຸມຸມ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_actiondrawrectangle3points.cpp" line="607"></location>
         <source>Specify inner angle</source>
-        <translation>ລະບຸມູມພາຍໃນ</translation>
+        <translation>ລະບຸມຸມພາຍໃນ</translation>
     </message>
 </context>
 <context>
@@ -2045,7 +2049,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_abstract.cpp" line="443"/>
         <source>Specify angle</source>
-        <translation type="unfinished">ລະບຸມູມ</translation>
+        <translation type="unfinished">ລະບຸມຸມ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_abstract.cpp" line="446"/>
@@ -2141,7 +2145,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="214"></location>
         <source>Specify first control point</source>
-        <translation>ລະບຸຈຸດຄວບຄຸມທໍາອິດ</translation>
+        <translation>ລະບຸຈຸດຄວບຄຸມທຳອິດ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_actiondrawsplinepoints.cpp" line="231"></location>
@@ -2175,7 +2179,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawstar.cpp" line="182"></location>
         <source>Invalid rays number, should be in range [3..99]</source>
-        <translation>ຈໍານວນແສງບໍ່ຖືກຕ້ອງ, ຄວນຢູ່ໃນຊ່ວງ [3..99]</translation>
+        <translation>ຈຳນວນແຂນດາວ (ລັງສີ) ບໍ່ຖືກຕ້ອງ, ຄວນຢູ່ໃນຊ່ວງ [3..99]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawstar.cpp" line="190"></location>
@@ -2200,12 +2204,12 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawstar.cpp" line="625"></location>
         <source>Set rounding radiuses (outer, inner)</source>
-        <translation>ກຳນົດລັດສະໝີມູມມົນ (ນອກ, ໃນ)</translation>
+        <translation>ກຳນົດລັດສະໝີມຸມມົນ (ນອກ, ໃນ)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_actiondrawstar.cpp" line="628"></location>
         <source>Set rays number</source>
-        <translation>ກຳນົດຈໍານວນແສງ</translation>
+        <translation>ກຳນົດຈຳນວນແຂນດາວ (ລັງສີ)</translation>
     </message>
 </context>
 <context>
@@ -2358,22 +2362,22 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="207"></location>
         <source>Bisector</source>
-        <translation>ເສັ້ນແບ່ງເຄິ່ງມູມ</translation>
+        <translation>ເສັ້ນແບ່ງເຄິ່ງມຸມ</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="208"></location>
         <source>Tangent (P,C)</source>
-        <translation>ເສັ້ນສໍາຜັດ (ຈຸດ, ວົງມົນ)</translation>
+        <translation>ເສັ້ນສຳຜັດ (ຈຸດ, ວົງມົນ)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="209"></location>
         <source>Tangent (C,C)</source>
-        <translation>ເສັ້ນສໍາຜັດ (ວົງມົນ, ວົງມົນ)</translation>
+        <translation>ເສັ້ນສຳຜັດ (ວົງມົນ, ວົງມົນ)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="210"></location>
         <source>Tangent &amp;Orthogonal</source>
-        <translation>ສໍາຜັດ ແລະ ຕັ້ງສາກ (&amp;O)</translation>
+        <translation>ສຳຜັດ ແລະ ຕັ້ງສາກ (&amp;O)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="211"></location>
@@ -2388,12 +2392,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="187"></location>
         <source>Pol&amp;ygon (Cen,Cor)</source>
-        <translation>ຮູບຫຼາຍແຈ (ສູນກາງ, ມູມ) (&amp;y)</translation>
+        <translation>ຮູບຫຼາຍແຈ (ສູນກາງ, ມຸມ) (&amp;y)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="189"></location>
         <source>Polygo&amp;n (Cor,Cor)</source>
-        <translation>ຮູບຫຼາຍແຈ (ມູມ, ມູມ) (&amp;n)</translation>
+        <translation>ຮູບຫຼາຍແຈ (ມຸມ, ມຸມ) (&amp;n)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="213"></location>
@@ -2433,7 +2437,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="216"></location>
         <source>Angle From Line</source>
-        <translation>ມູມຈາກເສັ້ນ</translation>
+        <translation>ມຸມຈາກເສັ້ນ</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="217"></location>
@@ -2504,12 +2508,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="262"></location>
         <source>Tangential, 2 P&amp;oints</source>
-        <translation>ສໍາຜັດ, 2 ຈຸດ (&amp;o)</translation>
+        <translation>ສຳຜັດ, 2 ຈຸດ (&amp;o)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="268"></location>
         <source>&amp;Center, Point, Angles</source>
-        <translation>ສູນກາງ, ຈຸດ, ມູມ (&amp;C)</translation>
+        <translation>ສູນກາງ, ຈຸດ, ມຸມ (&amp;C)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="271"></location>
@@ -2529,7 +2533,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="277"></location>
         <source>Arc &amp;Tangential</source>
-        <translation>ເສັ້ນໂຄ້ງສໍາຜັດ (&amp;T)</translation>
+        <translation>ເສັ້ນໂຄ້ງສຳຜັດ (&amp;T)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="289"></location>
@@ -2669,7 +2673,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="345"></location>
         <source>&amp;Angular</source>
-        <translation>ມູມ (&amp;A)</translation>
+        <translation>ມຸມ (&amp;A)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="347"></location>
@@ -2794,42 +2798,42 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="641"></location>
         <source>&amp;Save View</source>
-        <translation>ບັນທຶກມູມມອງ (&amp;S)</translation>
+        <translation>ບັນທຶກມຸມມອງ (&amp;S)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="643"></location>
         <source>Restore Current View</source>
-        <translation>ຄືນຄ່າມູມມອງປັດຈຸບັນ</translation>
+        <translation>ຄືນຄ່າມຸມມອງປັດຈຸບັນ</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="644"></location>
         <source>Restore View 1</source>
-        <translation>ຄືນຄ່າມູມມອງ 1</translation>
+        <translation>ຄືນຄ່າມຸມມອງ 1</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="645"></location>
         <source>Restore View 2</source>
-        <translation>ຄືນຄ່າມູມມອງ 2</translation>
+        <translation>ຄືນຄ່າມຸມມອງ 2</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="646"></location>
         <source>Restore View 3</source>
-        <translation>ຄືນຄ່າມູມມອງ 3</translation>
+        <translation>ຄືນຄ່າມຸມມອງ 3</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="647"></location>
         <source>Restore View 4</source>
-        <translation>ຄືນຄ່າມູມມອງ 4</translation>
+        <translation>ຄືນຄ່າມຸມມອງ 4</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="648"></location>
         <source>Restore View 5</source>
-        <translation>ຄືນຄ່າມູມມອງ 5</translation>
+        <translation>ຄືນຄ່າມຸມມອງ 5</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="372"></location>
         <source>&amp;Rotate</source>
-        <translation>&amp;ໝຸນ</translation>
+        <translation>&amp;ໝູນ</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="373"></location>
@@ -2844,7 +2848,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="376"></location>
         <source>Rotate T&amp;wo</source>
-        <translation>ໝຸນສອງອັນ (&amp;w)</translation>
+        <translation>ໝູນສອງອັນ (&amp;w)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="377"></location>
@@ -2914,12 +2918,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="670"></location>
         <source>Regenerate Dimensions</source>
-        <translation>ສ້າງມິຕິໃໝ່ຄືນ</translation>
+        <translation>ສ້າງການບອກຂະໜາດຄືນໃໝ່</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="673"></location>
         <source>&amp;Dimension Styles</source>
-        <translation>&amp;ຮູບແບບມິຕິ</translation>
+        <translation>&amp;ຮູບແບບການບອກຂະໜາດ</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="683"></location>
@@ -3039,12 +3043,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="300"></location>
         <source>&amp;Ellipse (1 Point)</source>
-        <translation>&amp;ຮູບວົງລີ (1 ຈຸດ)</translation>
+        <translation>&amp;ວົງຮີ (1 ຈຸດ)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="301"></location>
         <source>&amp;Ellipse Arc (1 Point)</source>
-        <translation>&amp;ເສັ້ນໂຄ້ງວົງລີ (1 ຈຸດ)</translation>
+        <translation>&amp;ເສັ້ນໂຄ້ງວົງຮີ (1 ຈຸດ)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="320"></location>
@@ -3205,12 +3209,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="58"></location>
         <source>Ellipse</source>
-        <translation>ວົງລີ</translation>
+        <translation>ວົງຮີ</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="58"></location>
         <source>Ellipse drawing commands</source>
-        <translation>ຄຳສັ່ງແຕ້ມວົງລີ</translation>
+        <translation>ຄຳສັ່ງແຕ້ມວົງຮີ</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="59"></location>
@@ -3225,12 +3229,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="60"></location>
         <source>Dimension</source>
-        <translation>ມິຕິ</translation>
+        <translation>ການບອກຂະໜາດ</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="60"></location>
         <source>Dimensions creation commands</source>
-        <translation>ຄຳສັ່ງສ້າງມິຕິ</translation>
+        <translation>ຄຳສັ່ງສ້າງການບອກຂະໜາດ</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="61"></location>
@@ -3752,7 +3756,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="457"></location>
         <source>Set UCS By Ordinate Dimension</source>
-        <translation>ຕັ້ງ UCS ຕາມມິຕິພິກັດແກນຕັ້ງ</translation>
+        <translation>ຕັ້ງ UCS ຕາມການບອກຂະໜາດພິກັດແກນຕັ້ງ</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="463"></location>
@@ -3817,7 +3821,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="506"></location>
         <source>Entity Pro&amp;perties</source>
-        <translation>ຄຸນ&amp;ລັກສະນະອົງປະກອບ</translation>
+        <translation>ຄຸນ&amp;ສົມບັດອົງປະກອບ</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="507"></location>
@@ -3847,22 +3851,22 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="523"></location>
         <source>&amp;Orthogonal Grid</source>
-        <translation>ຕາໜ່າງ&amp;ແນວຕັ້ງສາກ</translation>
+        <translation>ຕາຕະລາງ&amp;ແນວຕັ້ງສາກ</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="524"></location>
         <source>&amp;Isometric Left Grid</source>
-        <translation>ຕາໜ່າງ&amp;ໄອໂຊເມທຣິກເບື້ອງຊ້າຍ</translation>
+        <translation>ຕາຕະລາງ&amp;ໄອໂຊເມທຣິກເບື້ອງຊ້າຍ</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="525"></location>
         <source>&amp;Isometric Top Grid</source>
-        <translation>ຕາໜ່າງ&amp;ໄອໂຊເມທຣິກເບື້ອງເທິງ</translation>
+        <translation>ຕາຕະລາງ&amp;ໄອໂຊເມທຣິກເບື້ອງເທິງ</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="526"></location>
         <source>&amp;Isometric Right Grid</source>
-        <translation>ຕາໜ່າງ&amp;ໄອໂຊເມທຣິກເບື້ອງຂວາ</translation>
+        <translation>ຕາຕະລາງ&amp;ໄອໂຊເມທຣິກເບື້ອງຂວາ</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="536"></location>
@@ -3972,12 +3976,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="631"></location>
         <source>Zoom &amp;In</source>
-        <translation>ຂະຫຍາຍ&amp;ເຂົ້າ</translation>
+        <translation>ຊູມ&amp;ເຂົ້າ</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="632"></location>
         <source>Zoom &amp;Out</source>
-        <translation>ຂະຫຍາຍ&amp;ອອກ</translation>
+        <translation>ຊູມ&amp;ອອກ</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="633"></location>
@@ -5056,7 +5060,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_bevel.cpp" line="409"/>
         <source>Select first entity</source>
-        <translation type="unfinished">ເລືອກອົງປະກອບທໍາອິດ</translation>
+        <translation type="unfinished">ເລືອກອົງປະກອບທຳອິດ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_bevel.cpp" line="412"/>
@@ -6146,7 +6150,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/lc_action_options_properties_filler_base.cpp" line="294"/>
         <source>Distance of snap point from initially resolved snap point</source>
-        <translation type="unfinished">ໄລຍະຫ່າງຂອງຈຸດຈັບຈາກຈຸດທີ່ກຳນົດໄວ້ຕອນທໍາອິດ</translation>
+        <translation type="unfinished">ໄລຍະຫ່າງຂອງຈຸດຈັບຈາກຈຸດທີ່ກຳນົດໄວ້ຕອນທຳອິດ</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/lc_action_options_properties_filler_base.cpp" line="308"/>
@@ -6552,7 +6556,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_actionremovesplinepoints.cpp" line="201"></location>
         <source>Select spline or spline points entity</source>
-        <translation>ເລືອກເສັ້ນໂຄ້ງ ຫຼື ອົງປະກອບຈຸດເສັ້ນໂຄ້ງ</translation>
+        <translation>ເລືອກເສັ້ນໂຄ້ງສະປຼາຍ ຫຼື ອົງປະກອບຈຸດສະປຼາຍ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_actionremovesplinepoints.cpp" line="205"></location>
@@ -6578,7 +6582,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actionselectdimordinatesameorigin.cpp" line="77"></location>
         <source>Select reference ordinate dimension</source>
-        <translation>ເລືອກມິຕິອໍດິເນດອ້າງອີງ</translation>
+        <translation>ເລືອກການບອກຂະໜາດອໍດິເນດອ້າງອີງ</translation>
     </message>
 </context>
 <context>
@@ -6742,7 +6746,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_actionsplineaddpoint.cpp" line="205"></location>
         <source>Select spline or spline points entity</source>
-        <translation>ເລືອກເສັ້ນໂຄ້ງ ຫຼື ອົງປະກອບຈຸດເສັ້ນໂຄ້ງ</translation>
+        <translation>ເລືອກເສັ້ນໂຄ້ງສະປຼາຍ ຫຼື ອົງປະກອບຈຸດສະປຼາຍ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_actionsplineaddpoint.cpp" line="209"></location>
@@ -6765,7 +6769,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_actionsplineappendpoint.cpp" line="251"></location>
         <source>Select spline or spline points entity</source>
-        <translation>ເລືອກເສັ້ນໂຄ້ງ ຫຼື ອົງປະກອບຈຸດເສັ້ນໂຄ້ງ</translation>
+        <translation>ເລືອກເສັ້ນໂຄ້ງສະປຼາຍ ຫຼື ອົງປະກອບຈຸດສະປຼາຍ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_actionsplineappendpoint.cpp" line="255"></location>
@@ -6783,7 +6787,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_actionsplineexplode.cpp" line="203"></location>
         <source>Select spline or spline points entity</source>
-        <translation>ເລືອກເສັ້ນໂຄ້ງ ຫຼື ອົງປະກອບຈຸດເສັ້ນໂຄ້ງ</translation>
+        <translation>ເລືອກເສັ້ນໂຄ້ງສະປຼາຍ ຫຼື ອົງປະກອບຈຸດສະປຼາຍ</translation>
     </message>
 </context>
 <context>
@@ -6791,7 +6795,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_actionsplinefrompolyline.cpp" line="137"></location>
         <source>Select polyline to create spline or spline points</source>
-        <translation>ເລືອກເສັ້ນຕໍ່ເນື່ອງເພື່ອສ້າງເສັ້ນໂຄ້ງ ຫຼື ຈຸດເສັ້ນໂຄ້ງ</translation>
+        <translation>ເລືອກເສັ້ນຕໍ່ເນື່ອງເພື່ອສ້າງເສັ້ນໂຄ້ງສະປຼາຍ ຫຼື ຈຸດສະປຼາຍ</translation>
     </message>
 </context>
 <context>
@@ -6799,12 +6803,12 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_actionsplineremovebetween.cpp" line="42"></location>
         <source>Not enough points remains for the spline</source>
-        <translation>ຈຸດທີ່ເຫຼືອບໍ່ພໍສຳລັບເສັ້ນໂຄ້ງ</translation>
+        <translation>ຈຸດທີ່ເຫຼືອບໍ່ພໍສຳລັບເສັ້ນໂຄ້ງສະປຼາຍ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_actionsplineremovebetween.cpp" line="228"></location>
         <source>Select spline or spline points entity</source>
-        <translation>ເລືອກເສັ້ນໂຄ້ງ ຫຼື ອົງປະກອບຈຸດເສັ້ນໂຄ້ງ</translation>
+        <translation>ເລືອກເສັ້ນໂຄ້ງສະປຼາຍ ຫຼື ອົງປະກອບຈຸດສະປຼາຍ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_actionsplineremovebetween.cpp" line="232"></location>
@@ -6827,7 +6831,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/dock_widgets/ucs_list/lc_actionucsbydimordinate.cpp" line="62"></location>
         <source>Select ordinate dimension to set UCS</source>
-        <translation>ເລືອກມິຕິອໍດິເນດເພື່ອຕັ້ງຄ່າ UCS</translation>
+        <translation>ເລືອກການບອກຂະໜາດອໍດິເນດເພື່ອຕັ້ງຄ່າ UCS</translation>
     </message>
 </context>
 <context>
@@ -8877,7 +8881,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/support/lc_dimstylepreviewpanel.ui" line="90"></location>
         <source>Zoom Pan</source>
-        <translation>ຊູມແພນ (Pan)</translation>
+        <translation>ເລື່ອນມຸມມອງ</translation>
     </message>
 </context>
 <context>
@@ -8885,73 +8889,73 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="107"></location>
         <source>Dimension Styles Export Error</source>
-        <translation>ຂໍ້ຜິດພາດໃນການສົ່ງອອກຮູບແບບມິຕິ</translation>
+        <translation>ຂໍ້ຜິດພາດໃນການສົ່ງອອກຮູບແບບການບອກຂະໜາດ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="108"></location>
         <source>Can't open provided file for writing - check that provided location is writable. Dimension styles were not exported.</source>
-        <translation>ບໍ່ສາມາດເປີດໄຟລ໌ເພື່ອຂຽນໄດ້ - ກະລຸນາກວດສອບວ່າຕຳແໜ່ງທີ່ລະບຸສາມາດຂຽນລົງໄດ້ຫຼືບໍ່. ບໍ່ໄດ້ສົ່ງອອກຮູບແບບມິຕິ.</translation>
+        <translation>ບໍ່ສາມາດເປີດໄຟລ໌ເພື່ອຂຽນໄດ້ - ກະລຸນາກວດສອບວ່າຕຳແໜ່ງທີ່ລະບຸສາມາດຂຽນລົງໄດ້ຫຼືບໍ່. ບໍ່ໄດ້ສົ່ງອອກຮູບແບບການບອກຂະໜາດ.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="117"></location>
         <source>Dimension Styles Export</source>
-        <translation>ສົ່ງອອກຮູບແບບມິຕິ</translation>
+        <translation>ສົ່ງອອກຮູບແບບການບອກຂະໜາດ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="117"></location>
         <source>Dimensions Styles were exported.</source>
-        <translation>ສົ່ງອອກຮູບແບບມິຕິສຳເລັດແລ້ວ.</translation>
+        <translation>ສົ່ງອອກຮູບແບບການບອກຂະໜາດສຳເລັດແລ້ວ.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="127"></location>
         <source>Dimension Styles Import Error</source>
-        <translation>ຂໍ້ຜິດພາດໃນການນຳເຂົ້າຮູບແບບມິຕິ</translation>
+        <translation>ຂໍ້ຜິດພາດໃນການນຳເຂົ້າຮູບແບບການບອກຂະໜາດ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="129"></location>
         <source>Can't open provided file for reading. Dimension styles were not imported.</source>
-        <translation>ບໍ່ສາມາດເປີດໄຟລ໌ເພື່ອອ່ານໄດ້. ບໍ່ໄດ້ນຳເຂົ້າຮູບແບບມິຕິ.</translation>
+        <translation>ບໍ່ສາມາດເປີດໄຟລ໌ເພື່ອອ່ານໄດ້. ບໍ່ໄດ້ນຳເຂົ້າຮູບແບບການບອກຂະໜາດ.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="135"></location>
         <source>Unexpected error during dimension styles parsing. Message:</source>
-        <translation>ເກີດຂໍ້ຜິດພາດທີ່ບໍ່ຄາດຄິດລະຫວ່າງການແຍກຮູບແບບມິຕິ. ຂໍ້ຄວາມ:</translation>
+        <translation>ເກີດຂໍ້ຜິດພາດທີ່ບໍ່ຄາດຄິດລະຫວ່າງການແຍກຮູບແບບການບອກຂະໜາດ. ຂໍ້ຄວາມ:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="139"></location>
         <source>Unexpected format of file, it does not contains LibreCAD dimension styles.</source>
-        <translation>ຮູບແບບໄຟລ໌ບໍ່ຖືກຕ້ອງ, ມັນບໍ່ມີຮູບແບບມິຕິຂອງ LibreCAD.</translation>
+        <translation>ຮູບແບບໄຟລ໌ບໍ່ຖືກຕ້ອງ, ມັນບໍ່ມີຮູບແບບການບອກຂະໜາດຂອງ LibreCAD.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="145"></location>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="177"></location>
         <source>Dimension Styles Import</source>
-        <translation>ນຳເຂົ້າຮູບແບບມິຕິ</translation>
+        <translation>ນຳເຂົ້າຮູບແບບການບອກຂະໜາດ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="145"></location>
         <source>No dimension styles to import.</source>
-        <translation>ບໍ່ມີຮູບແບບມິຕິທີ່ຈະນຳເຂົ້າ.</translation>
+        <translation>ບໍ່ມີຮູບແບບການບອກຂະໜາດທີ່ຈະນຳເຂົ້າ.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="177"></location>
         <source>Dimension styles were imported.</source>
-        <translation>ນຳເຂົ້າຮູບແບບມິຕິສຳເລັດແລ້ວ.</translation>
+        <translation>ນຳເຂົ້າຮູບແບບການບອກຂະໜາດສຳເລັດແລ້ວ.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="185"></location>
         <source>Import Dimension Styles</source>
-        <translation>ນຳເຂົ້າຮູບແບບມິຕິ</translation>
+        <translation>ນຳເຂົ້າຮູບແບບການບອກຂະໜາດ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="185"></location>
         <source>Export Dimension Styles</source>
-        <translation>ສົ່ງອອກຮູບແບບມິຕິ</translation>
+        <translation>ສົ່ງອອກຮູບແບບການບອກຂະໜາດ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="186"></location>
         <source>LibreCAD dimension styles file (*.%1)</source>
-        <translation>ໄຟລ໌ຮູບແບບມິຕິ LibreCAD (*.%1)</translation>
+        <translation>ໄຟລ໌ຮູບແບບການບອກຂະໜາດ LibreCAD (*.%1)</translation>
     </message>
 </context>
 <context>
@@ -9068,7 +9072,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="55"></location>
         <source>Dimension Lines</source>
-        <translation>ເສັ້ນມິຕິ</translation>
+        <translation>ເສັ້ນບອກຂະໜາດ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="74"></location>
@@ -9079,7 +9083,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="124"></location>
         <source>Displays and sets the color for the dimension line (DIMCLRD system variable).</source>
-        <translation>ສະແດງ ແລະ ຕັ້ງຄ່າສີສຳລັບເສັ້ນມິຕິ (ຕົວປ່ຽນລະບົບ DIMCLRD).</translation>
+        <translation>ສະແດງ ແລະ ຕັ້ງຄ່າສີສຳລັບເສັ້ນບອກຂະໜາດ (ຕົວປ່ຽນລະບົບ DIMCLRD).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="81"></location>
@@ -9089,17 +9093,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="67"></location>
         <source>Sets the linetype of the dimension line. (DIMLTYPE system variable)</source>
-        <translation>ຕັ້ງຄ່າປະເພດເສັ້ນຂອງເສັ້ນມິຕິ (ຕົວປ່ຽນລະບົບ DIMLTYPE)</translation>
+        <translation>ຕັ້ງຄ່າປະເພດເສັ້ນຂອງເສັ້ນບອກຂະໜາດ (ຕົວປ່ຽນລະບົບ DIMLTYPE)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="88"></location>
         <source>Linewidth:</source>
-        <translation>ຄວາມໜາເສັ້ນ:</translation>
+        <translation>ຄວາມກວ້າງເສັ້ນ:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="137"></location>
         <source>Sets the lineweight of the dimension line. (DIMLWD system variable)</source>
-        <translation>ຕັ້ງຄ່າຄວາມໜາເສັ້ນຂອງເສັ້ນມິຕິ (ຕົວປ່ຽນລະບົບ DIMLWD)</translation>
+        <translation>ຕັ້ງຄ່າຄວາມກວ້າງເສັ້ນຂອງເສັ້ນບອກຂະໜາດ (ຕົວປ່ຽນລະບົບ DIMLWD)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="111"></location>
@@ -9109,7 +9113,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="101"></location>
         <source>Specifies a distance to extend the dimension line past the extension line when you use oblique, architectural, tick, integral, and no marks for arrowheads. (DIMDLE system variable)</source>
-        <translation>ລະບຸໄລຍະຫ່າງເພື່ອຂະຫຍາຍເສັ້ນມິຕິໃຫ້ກາຍເສັ້ນຊ່ວຍມິຕິ ເມື່ອໃຊ້ຮູບແບບອຽງ, ສະຖາປັດ, ຂີດ, ອິນທິເກຣລ ຫຼື ບໍ່ມີຫົວລູກສອນ (ຕົວປ່ຽນລະບົບ DIMDLE)</translation>
+        <translation>ລະບຸໄລຍະຫ່າງເພື່ອຂະຫຍາຍເສັ້ນບອກຂະໜາດໃຫ້ກາຍເສັ້ນຊ່ວຍບອກຂະໜາດ ເມື່ອໃຊ້ຮູບແບບອຽງ, ສະຖາປັດ, ຂີດ, ອິນທິເກຣລ ຫຼື ບໍ່ມີຫົວລູກສອນ (ຕົວປ່ຽນລະບົບ DIMDLE)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="162"></location>
@@ -9119,32 +9123,32 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="191"></location>
         <source>Suppresses display of first dimension line (DIMSD1 system variable)</source>
-        <translation>ລະງັບການສະແດງເສັ້ນມິຕິທຳອິດ (ຕົວປ່ຽນລະບົບ DIMSD1)</translation>
+        <translation>ລະງັບການສະແດງເສັ້ນບອກຂະໜາດທຳອິດ (ຕົວປ່ຽນລະບົບ DIMSD1)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="194"></location>
         <source>Suppress Dim line 1 and arrow</source>
-        <translation>ລະງັບເສັ້ນມິຕິ 1 ແລະ ຫົວລູກສອນ</translation>
+        <translation>ລະງັບເສັ້ນບອກຂະໜາດ 1 ແລະ ຫົວລູກສອນ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="175"></location>
         <source>Suppresses display of second dimension line (DIMSD2 system variable)</source>
-        <translation>ລະງັບການສະແດງເສັ້ນມິຕິທີສອງ (ຕົວປ່ຽນລະບົບ DIMSD2)</translation>
+        <translation>ລະງັບການສະແດງເສັ້ນບອກຂະໜາດທີສອງ (ຕົວປ່ຽນລະບົບ DIMSD2)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="178"></location>
         <source>Suppress Dim line 2 and arrow</source>
-        <translation>ລະງັບເສັ້ນມິຕິ 2 ແລະ ຫົວລູກສອນ</translation>
+        <translation>ລະງັບເສັ້ນບອກຂະໜາດ 2 ແລະ ຫົວລູກສອນ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="204"></location>
         <source>Extension Lines</source>
-        <translation>ເສັ້ນຊ່ວຍຂະໜາດ</translation>
+        <translation>ເສັ້ນຊ່ວຍບອກຂະໜາດ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="216"></location>
         <source>Sets the color for the extension line (DIMCLRE system variable.)</source>
-        <translation>ຕັ້ງຄ່າສີສຳລັບເສັ້ນຊ່ວຍມິຕິ (ຕົວປ່ຽນລະບົບ DIMCLRE)</translation>
+        <translation>ຕັ້ງຄ່າສີສຳລັບເສັ້ນຊ່ວຍບອກຂະໜາດ (ຕົວປ່ຽນລະບົບ DIMCLRE)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="295"></location>
@@ -9154,7 +9158,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="361"></location>
         <source>Sets the linetype of the first extension line. (DIMLTEX1 system variable)</source>
-        <translation>ຕັ້ງຄ່າປະເພດເສັ້ນຂອງເສັ້ນຊ່ວຍມິຕິທຳອິດ (ຕົວປ່ຽນລະບົບ DIMLTEX1)</translation>
+        <translation>ຕັ້ງຄ່າປະເພດເສັ້ນຂອງເສັ້ນຊ່ວຍບອກຂະໜາດທຳອິດ (ຕົວປ່ຽນລະບົບ DIMLTEX1)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="338"></location>
@@ -9164,27 +9168,27 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="308"></location>
         <source>Sets the linetype of the second extension line. (DIMLTEX2 system variable)</source>
-        <translation>ຕັ້ງຄ່າປະເພດເສັ້ນຂອງເສັ້ນຊ່ວຍມິຕິທີສອງ (ຕົວປ່ຽນລະບົບ DIMLTEX2)</translation>
+        <translation>ຕັ້ງຄ່າປະເພດເສັ້ນຂອງເສັ້ນຊ່ວຍບອກຂະໜາດທີສອງ (ຕົວປ່ຽນລະບົບ DIMLTEX2)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="331"></location>
         <source>Lineweight:</source>
-        <translation>ນ້ຳໜັກເສັ້ນ:</translation>
+        <translation>ຄວາມກວ້າງເສັ້ນ:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="236"></location>
         <source>Sets the lineweight of the extension line. (DIMLWE system variable)</source>
-        <translation>ຕັ້ງຄ່ານ້ຳໜັກເສັ້ນຂອງເສັ້ນຊ່ວຍມິຕິ (ຕົວປ່ຽນລະບົບ DIMLWE)</translation>
+        <translation>ຕັ້ງຄ່າຄວາມກວ້າງເສັ້ນຂອງເສັ້ນຊ່ວຍບອກຂະໜາດ (ຕົວປ່ຽນລະບົບ DIMLWE)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="368"></location>
         <source>Extend beyond dim lines:</source>
-        <translation>ຂະຫຍາຍອອກໄປເກີນເສັ້ນມິຕິ:</translation>
+        <translation>ຂະຫຍາຍອອກໄປເກີນເສັ້ນບອກຂະໜາດ:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="285"></location>
         <source>Specifies a distance to extend the extension lines above the dimension line. (DIMEXE system variable)</source>
-        <translation>ລະບຸໄລຍະຫ່າງເພື່ອຂະຫຍາຍເສັ້ນຊ່ວຍມິຕິໃຫ້ກາຍເສັ້ນມິຕິອອກໄປ (ຕົວປ່ຽນລະບົບ DIMEXE)</translation>
+        <translation>ລະບຸໄລຍະຫ່າງເພື່ອຂະຫຍາຍເສັ້ນຊ່ວຍບອກຂະໜາດໃຫ້ກາຍເສັ້ນບອກຂະໜາດອອກໄປ (ຕົວປ່ຽນລະບົບ DIMEXE)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="375"></location>
@@ -9194,7 +9198,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="404"></location>
         <source>Sets the distance to offset the extension lines from the points on the drawing that define the dimension. (DIMEXO system variable)</source>
-        <translation>ຕັ້ງຄ່າໄລຍະຫ່າງເພື່ອແຍກເສັ້ນຊ່ວຍມິຕິອອກຈາກຈຸດເທິງແບບແຕ້ມທີ່ກຳນົດມິຕິ (ຕົວປ່ຽນລະບົບ DIMEXO)</translation>
+        <translation>ຕັ້ງຄ່າໄລຍະຫ່າງເພື່ອແຍກເສັ້ນຊ່ວຍບອກຂະໜາດອອກຈາກຈຸດເທິງແບບແຕ້ມທີ່ກຳນົດການບອກຂະໜາດ (ຕົວປ່ຽນລະບົບ DIMEXO)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="223"></location>
@@ -9204,22 +9208,22 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="388"></location>
         <source>Sets the total length of the extension lines starting from the dimension line toward the dimension origin. (DIMFXL system variable)</source>
-        <translation>ຕັ້ງຄ່າຄວາມຍາວທັງໝົດຂອງເສັ້ນຊ່ວຍມິຕິ ໂດຍເລີ່ມຈາກເສັ້ນມິຕິໄປຫາຈຸດເລີ່ມຕົ້ນຂອງມິຕິ (ຕົວປ່ຽນລະບົບ DIMFXL)</translation>
+        <translation>ຕັ້ງຄ່າຄວາມຍາວທັງໝົດຂອງເສັ້ນຊ່ວຍບອກຂະໜາດ ໂດຍເລີ່ມຈາກເສັ້ນບອກຂະໜາດໄປຫາຈຸດເລີ່ມຕົ້ນຂອງການບອກຂະໜາດ (ຕົວປ່ຽນລະບົບ DIMFXL)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="345"></location>
         <source>Enables fixed length extension lines. (DIMFXLON system variable)</source>
-        <translation>ເປີດໃຊ້ງານເສັ້ນຊ່ວຍມິຕິແບບຄົງທີ່ (ຕົວປ່ຽນລະບົບ DIMFXLON)</translation>
+        <translation>ເປີດໃຊ້ງານເສັ້ນຊ່ວຍບອກຂະໜາດແບບຄົງທີ່ (ຕົວປ່ຽນລະບົບ DIMFXLON)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="348"></location>
         <source>Fixed length extension lines</source>
-        <translation>ເສັ້ນຊ່ວຍຂະໜາດແບບຄົງທີ່</translation>
+        <translation>ເສັ້ນຊ່ວຍບອກຂະໜາດແບບຄວາມຍາວຄົງທີ່</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="269"></location>
         <source>Suppresses the display of first extension line (DIMSE1 system variable).</source>
-        <translation>ລະງັບການສະແດງເສັ້ນຊ່ວຍມິຕິທຳອິດ (ຕົວປ່ຽນລະບົບ DIMSE1).</translation>
+        <translation>ລະງັບການສະແດງເສັ້ນຊ່ວຍບອກຂະໜາດທຳອິດ (ຕົວປ່ຽນລະບົບ DIMSE1).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="272"></location>
@@ -9229,7 +9233,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="321"></location>
         <source>Suppresses the display of second extension line (DIMSE2 system variable).</source>
-        <translation>ລະງັບການສະແດງເສັ້ນຊ່ວຍມິຕິທີສອງ (ຕົວປ່ຽນລະບົບ DIMSE2).</translation>
+        <translation>ລະງັບການສະແດງເສັ້ນຊ່ວຍບອກຂະໜາດທີສອງ (ຕົວປ່ຽນລະບົບ DIMSE2).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="324"></location>
@@ -9255,7 +9259,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="443"></location>
         <source>Linear jog dimension</source>
-        <translation>ມິຕິແບບຫັກ (Jog)</translation>
+        <translation>ການບອກຂະໜາດແບບຫັກ (Jog)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="449"></location>
@@ -9270,7 +9274,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="473"></location>
         <source>Radius jog dimension</source>
-        <translation>ມິຕິລັດສະໝີແບບຫັກ (Radius jog)</translation>
+        <translation>ການບອກຂະໜາດລັດສະໝີແບບຫັກ (Radius jog)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="479"></location>
@@ -9280,7 +9284,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="486"></location>
         <source>Determines the angle of the transverse segment of the dimension line in a jogged radius dimension. (DIMJOGANG system variable)</source>
-        <translation>ກຳນົດມຸມຂອງສ່ວນຫັກຂອງເສັ້ນມິຕິໃນການວັດແທກລັດສະໝີແບບຫັກ (ຕົວປ່ຽນລະບົບ DIMJOGANG)</translation>
+        <translation>ກຳນົດມຸມຂອງສ່ວນຫັກຂອງເສັ້ນບອກຂະໜາດໃນການວັດແທກລັດສະໝີແບບຫັກ (ຕົວປ່ຽນລະບົບ DIMJOGANG)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="505"></location>
@@ -9305,17 +9309,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="518"></location>
         <source>Sets the arrowhead for the first dimension line. When you change the first arrowhead type, the second arrowhead automatically changes to match it. (DIMBLK1 system variable)</source>
-        <translation>ຕັ້ງຄ່າຫົວລູກສອນສຳລັບເສັ້ນມິຕິທຳອິດ. ເມື່ອທ່ານປ່ຽນປະເພດຫົວລູກສອນທຳອິດ, ຫົວລູກສອນທີສອງຈະປ່ຽນຕາມໂດຍອັດຕະໂນມັດ (ຕົວປ່ຽນລະບົບ DIMBLK1)</translation>
+        <translation>ຕັ້ງຄ່າຫົວລູກສອນສຳລັບເສັ້ນບອກຂະໜາດທຳອິດ. ເມື່ອທ່ານປ່ຽນປະເພດຫົວລູກສອນທຳອິດ, ຫົວລູກສອນທີສອງຈະປ່ຽນຕາມໂດຍອັດຕະໂນມັດ (ຕົວປ່ຽນລະບົບ DIMBLK1)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="588"></location>
         <source>Sets the arrowhead for the second dimension line. (DIMBLK2 system variable)</source>
-        <translation>ຕັ້ງຄ່າຫົວລູກສອນສຳລັບເສັ້ນມິຕິທີສອງ (ຕົວປ່ຽນລະບົບ DIMBLK2)</translation>
+        <translation>ຕັ້ງຄ່າຫົວລູກສອນສຳລັບເສັ້ນບອກຂະໜາດທີສອງ (ຕົວປ່ຽນລະບົບ DIMBLK2)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="570"></location>
         <source>Use the same arrowhead for dimension line</source>
-        <translation>ໃຊ້ຫົວລູກສອນແບບດຽວກັນສຳລັບເສັ້ນມິຕິ</translation>
+        <translation>ໃຊ້ຫົວລູກສອນແບບດຽວກັນສຳລັບເສັ້ນບອກຂະໜາດ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="546"></location>
@@ -9340,7 +9344,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="598"></location>
         <source>Dimension break</source>
-        <translation>ຈຸດຕັດເສັ້ນມິຕິ (Break)</translation>
+        <translation>ຈຸດຕັດເສັ້ນບອກຂະໜາດ (Break)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="604"></location>
@@ -9367,22 +9371,22 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="640"></location>
         <source>Places arc length symbols before the dimension text. (DIMARCSYM system variable)</source>
-        <translation>ວາງສັນຍາລັກຄວາມຍາວສ່ວນໂຄ້ງໄວ້ກ່ອນຂໍ້ຄວາມມິຕິ (ຕົວປ່ຽນລະບົບ DIMARCSYM)</translation>
+        <translation>ວາງສັນຍາລັກຄວາມຍາວສ່ວນໂຄ້ງໄວ້ກ່ອນຂໍ້ຄວາມບອກຂະໜາດ (ຕົວປ່ຽນລະບົບ DIMARCSYM)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="643"></location>
         <source>Preceding dimension text</source>
-        <translation>ໄວ້ກ່ອນຂໍ້ຄວາມມິຕິ</translation>
+        <translation>ໄວ້ກ່ອນຂໍ້ຄວາມບອກຂະໜາດ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="650"></location>
         <source>Places arc length symbols above the dimension text. (DIMARCSYM system variable)</source>
-        <translation>ວາງສັນຍາລັກຄວາມຍາວສ່ວນໂຄ້ງໄວ້ເໜືອຂໍ້ຄວາມມິຕິ (ຕົວປ່ຽນລະບົບ DIMARCSYM)</translation>
+        <translation>ວາງສັນຍາລັກຄວາມຍາວສ່ວນໂຄ້ງໄວ້ເໜືອຂໍ້ຄວາມບອກຂະໜາດ (ຕົວປ່ຽນລະບົບ DIMARCSYM)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="653"></location>
         <source>Above dimension text</source>
-        <translation>ໄວ້ເໜືອຂໍ້ຄວາມມິຕິ</translation>
+        <translation>ໄວ້ເໜືອຂໍ້ຄວາມບອກຂະໜາດ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="663"></location>
@@ -9453,7 +9457,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="788"></location>
         <source>Sets the color for the text background in dimensions (DIMTFILLCLR system variable)</source>
-        <translation>ຕັ້ງຄ່າສີສຳລັບພື້ນຫຼັງຂໍ້ຄວາມໃນມິຕິ (ຕົວປ່ຽນລະບົບ DIMTFILLCLR)</translation>
+        <translation>ຕັ້ງຄ່າສີສຳລັບພື້ນຫຼັງຂໍ້ຄວາມໃນການບອກຂະໜາດ (ຕົວປ່ຽນລະບົບ DIMTFILLCLR)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="795"></location>
@@ -9468,22 +9472,22 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="809"></location>
         <source>Sets the scale of fractions relative to dimension text. (DIMTFAC system variable)</source>
-        <translation>ຕັ້ງຄ່າຂະໜາດຂອງເສດສ່ວນທຽບກັບຂໍ້ຄວາມມິຕິ (ຕົວປ່ຽນລະບົບ DIMTFAC)</translation>
+        <translation>ຕັ້ງຄ່າມາດຕາສ່ວນຂອງເສດສ່ວນທຽບກັບຂໍ້ຄວາມບອກຂະໜາດ (ຕົວປ່ຽນລະບົບ DIMTFAC)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="822"></location>
         <source>Fraction height scale:</source>
-        <translation>ຂະໜາດຄວາມສູງຂອງເສດສ່ວນ:</translation>
+        <translation>ມາດຕາສ່ວນຄວາມສູງຂອງເສດສ່ວນ:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="829"></location>
         <source>Sets the height of the current dimension text style. (DIMTXT system variable)</source>
-        <translation>ຕັ້ງຄ່າຄວາມສູງຂອງຮູບແບບຂໍ້ຄວາມມິຕິປັດຈຸບັນ (ຕົວປ່ຽນລະບົບ DIMTXT)</translation>
+        <translation>ຕັ້ງຄ່າຄວາມສູງຂອງຮູບແບບຂໍ້ຄວາມບອກຂະໜາດປັດຈຸບັນ (ຕົວປ່ຽນລະບົບ DIMTXT)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="842"></location>
         <source>Sets the color for the dimension text (DIMCLRT system variable)</source>
-        <translation>ຕັ້ງຄ່າສີສຳລັບຂໍ້ຄວາມມິຕິ (ຕົວປ່ຽນລະບົບ DIMCLRT)</translation>
+        <translation>ຕັ້ງຄ່າສີສຳລັບຂໍ້ຄວາມບອກຂະໜາດ (ຕົວປ່ຽນລະບົບ DIMCLRT)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="849"></location>
@@ -9498,7 +9502,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="859"></location>
         <source>Displays a rectangular frame around the dimension text. This option changes the value stored in the DIMGAP system variable to a negative value.</source>
-        <translation>ສະແດງກອບສີ່ແຈອ້ອມຂໍ້ຄວາມມິຕິ. ຕົວເລືອກນີ້ຈະປ່ຽນຄ່າໃນຕົວປ່ຽນລະບົບ DIMGAP ໃຫ້ເປັນຄ່າລົບ.</translation>
+        <translation>ສະແດງກອບສີ່ແຈອ້ອມຂໍ້ຄວາມບອກຂະໜາດ. ຕົວເລືອກນີ້ຈະປ່ຽນຄ່າໃນຕົວປ່ຽນລະບົບ DIMGAP ໃຫ້ເປັນຄ່າລົບ.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="862"></location>
@@ -9524,31 +9528,33 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="901"></location>
         <source>Aligns text with the dimension line (DIMTIH and DIMTOH system variables).</source>
-        <translation>ຈັດຂໍ້ຄວາມໃຫ້ລຽງຕາມເສັ້ນມິຕິ (ຕົວປ່ຽນລະບົບ DIMTIH ແລະ DIMTOH).</translation>
+        <translation>ຈັດຂໍ້ຄວາມໃຫ້ລຽງຕາມເສັ້ນບອກຂະໜາດ (ຕົວປ່ຽນລະບົບ DIMTIH ແລະ DIMTOH).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="911"></location>
         <source>Aligns text with the dimension line when text is inside the extension lines, but aligns it horizontally when text is outside the extension lines (DIMTIH and DIMTOH system variables).</source>
-        <translation>ຈັດຂໍ້ຄວາມລຽງຕາມເສັ້ນມິຕິເມື່ອຂໍ້ຄວາມຢູ່ພາຍໃນເສັ້ນຊ່ວຍ, ແຕ່ຈະຈັດເປັນແນວນອນເມື່ອຂໍ້ຄວາມຢູ່ນອກເສັ້ນຊ່ວຍ (ຕົວປ່ຽນລະບົບ DIMTIH ແລະ DIMTOH).</translation>
+        <translation>ຈັດຂໍ້ຄວາມລຽງຕາມເສັ້ນບອກຂະໜາດເມື່ອຂໍ້ຄວາມຢູ່ພາຍໃນເສັ້ນຊ່ວຍ, ແຕ່ຈະຈັດເປັນແນວນອນເມື່ອຂໍ້ຄວາມຢູ່ນອກເສັ້ນຊ່ວຍ (ຕົວປ່ຽນລະບົບ DIMTIH ແລະ DIMTOH).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="904"></location>
         <source>Aligned with dimension line</source>
-        <translation>ຈັດລຽງຕາມເສັ້ນມິຕິ</translation>
+        <translation>ຈັດລຽງຕາມເສັ້ນບອກຂະໜາດ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="150"></location>
         <source>Sets the spacing between the dimension lines of a baseline dimension. Enter a distance. For information about baseline dimensions, see DIMBASELINE. (DIMDLI system variable)
 
 </source>
-        <translation>ກຳນົດໄລຍະຫ່າງລະຫວ່າງເສັ້ນມິຕິຂອງການມິຕິແບບອ້າງອີງເສັ້ນຫຼັກ. ປ້ອນໄລຍະຫ່າງ. ສຳລັບຂໍ້ມູນກ່ຽວກັບການມິຕິແບບອ້າງອີງເສັ້ນຫຼັກ, ໃຫ້ເບິ່ງ DIMBASELINE. (ຕົວປ່ຽນລະບົບ DIMDLI)
+        <translation>ກຳນົດໄລຍະຫ່າງລະຫວ່າງເສັ້ນບອກຂະໜາດຂອງການບອກຂະໜາດແບບອ້າງອີງເສັ້ນຫຼັກ. ປ້ອນໄລຍະຫ່າງ. ສຳລັບຂໍ້ມູນກ່ຽວກັບການບອກຂະໜາດແບບອ້າງອີງເສັ້ນຫຼັກ, ໃຫ້ເບິ່ງ DIMBASELINE. (ຕົວປ່ຽນລະບົບ DIMDLI)
+
 </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="577"></location>
         <source>Specifies the size of oblique strokes drawn instead of arrowheads for linear, radius, and diameter dimensioning. If = 0 – draws arrowheads.
 &gt;0 – Draws oblique strokes instead of arrowheads (DIMTSZ variable). </source>
-        <translation>ກຳນົດມິຕິຂອງເສັ້ນຂີດເນີງທີ່ແຕ້ມແທນຫົວລູກສອນ ສຳລັບການມິຕິແບບເສັ້ນຊື່, ລັດສະໝີ, ແລະ ເສັ້ນຜ່ານສູນກາງ. ຖ້າ = 0 – ຈະແຕ້ມຫົວລູກສອນ. &gt;0 – ຈະແຕ້ມເສັ້ນຂີດເນີງແທນຫົວລູກສອນ (ຕົວປ່ຽນ DIMTSZ). </translation>
+        <translation>ກຳນົດຂະໜາດຂອງເສັ້ນຂີດອຽງທີ່ແຕ້ມແທນຫົວລູກສອນ ສຳລັບການບອກຂະໜາດແບບເສັ້ນຊື່, ລັດສະໝີ, ແລະ ເສັ້ນຜ່ານສູນກາງ. ຖ້າ = 0 – ຈະແຕ້ມຫົວລູກສອນ.
+&gt;0 – ຈະແຕ້ມເສັ້ນຂີດອຽງແທນຫົວລູກສອນ (ຕົວປ່ຽນ DIMTSZ). </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="914"></location>
@@ -9564,7 +9570,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="930"></location>
         <source>Controls the dimension text viewing direction. (DIMTXTDIRECTION system variable)</source>
-        <translation>ຄວບຄຸມທິດທາງການເບິ່ງຂໍ້ຄວາມມິຕິ. (ຕົວແປລະບົບ DIMTXTDIRECTION)</translation>
+        <translation>ຄວບຄຸມທິດທາງການເບິ່ງຂໍ້ຄວາມບອກຂະໜາດ. (ຕົວແປລະບົບ DIMTXTDIRECTION)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="934"></location>
@@ -9579,7 +9585,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="947"></location>
         <source>Offset from dim line:</source>
-        <translation>ໄລຍະຫ່າງຈາກເສັ້ນມິຕິ:</translation>
+        <translation>ໄລຍະຫ່າງຈາກເສັ້ນບອກຂະໜາດ:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="954"></location>
@@ -9589,7 +9595,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="961"></location>
         <source>Controls the horizontal placement of dimension text along the dimension line, in relation to the extension lines. (DIMJUST system variable)</source>
-        <translation>ຄວບຄຸມການວາງຕຳແໜ່ງຂໍ້ຄວາມມິຕິໃນແນວນອນຕາມເສັ້ນມິຕິ, ໂດຍສຳພັນກັບເສັ້ນຊ່ວຍມິຕິ. (ຕົວແປລະບົບ DIMJUST)</translation>
+        <translation>ຄວບຄຸມການວາງຕຳແໜ່ງຂໍ້ຄວາມບອກຂະໜາດໃນແນວນອນຕາມເສັ້ນບອກຂະໜາດ, ໂດຍສຳພັນກັບເສັ້ນຊ່ວຍບອກຂະໜາດ. (ຕົວແປລະບົບ DIMJUST)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="965"></location>
@@ -9630,7 +9636,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1007"></location>
         <source>Controls the vertical placement of dimension text in relation to the dimension line. (DIMTAD system variable)</source>
-        <translation>ຄວບຄຸມການວາງຕຳແໜ່ງຂໍ້ຄວາມມິຕິໃນແນວຕັ້ງ ໂດຍສຳພັນກັບເສັ້ນມິຕິ. (ຕົວແປລະບົບ DIMTAD)</translation>
+        <translation>ຄວບຄຸມການວາງຕຳແໜ່ງຂໍ້ຄວາມບອກຂະໜາດໃນແນວຕັ້ງ ໂດຍສຳພັນກັບເສັ້ນບອກຂະໜາດ. (ຕົວແປລະບົບ DIMTAD)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1016"></location>
@@ -9655,17 +9661,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1039"></location>
         <source>Vertical position of text above or below dimension line if vertical placement (DIMTAD) is not "Centered" (DIMTVP variable).</source>
-        <translation>ຕຳແໜ່ງຂໍ້ຄວາມໃນແນວຕັ້ງ ເທິງ ຫຼື ລຸ່ມເສັ້ນມິຕິ ຫາກການວາງແນວຕັ້ງ (DIMTAD) ບໍ່ແມ່ນ "ຢູ່ກາງ" (ຕົວແປ DIMTVP).</translation>
+        <translation>ຕຳແໜ່ງຂໍ້ຄວາມໃນແນວຕັ້ງ ເທິງ ຫຼື ລຸ່ມເສັ້ນບອກຂະໜາດ ຫາກການວາງແນວຕັ້ງ (DIMTAD) ບໍ່ແມ່ນ &quot;ຢູ່ກາງ&quot; (ຕົວແປ DIMTVP).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1052"></location>
         <source>Broken dim line text gap:</source>
-        <translation>ໄລຍະຫ່າງຂໍ້ຄວາມເມື່ອເສັ້ນມິຕິຂາດ:</translation>
+        <translation>ໄລຍະຫ່າງຂໍ້ຄວາມເມື່ອເສັ້ນບອກຂະໜາດຂາດ:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1059"></location>
         <source>Sets the current text gap, which is the distance around the dimension text when the dimension line is broken to accommodate the dimension text (DIMGAP system variable).</source>
-        <translation>ກຳນົດໄລຍະຫ່າງຂໍ້ຄວາມ, ເຊິ່ງແມ່ນໄລຍະອ້ອມຮອບຂໍ້ຄວາມມິຕິ ເມື່ອເສັ້ນມິຕິຖືກຕັດອອກເພື່ອວາງຂໍ້ຄວາມ (ຕົວແປລະບົບ DIMGAP).</translation>
+        <translation>ກຳນົດໄລຍະຫ່າງຂໍ້ຄວາມ, ເຊິ່ງແມ່ນໄລຍະອ້ອມຮອບຂໍ້ຄວາມບອກຂະໜາດ ເມື່ອເສັ້ນບອກຂະໜາດຖືກຕັດອອກເພື່ອວາງຂໍ້ຄວາມ (ຕົວແປລະບົບ DIMGAP).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1086"></location>
@@ -9680,7 +9686,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1098"></location>
         <source>Ignores any horizontal justification settings and places the text at the position you specify at the Dimension Line Location prompt. (DIMUPT system variable)</source>
-        <translation>ລະເວັ້ນການຕັ້ງຄ່າການຈັດວາງແນວນອນ ແລະ ວາງຂໍ້ຄວາມໃນຕຳແໜ່ງທີ່ທ່ານລະບຸຕອນກຳນົດເສັ້ນມິຕິ. (ຕົວແປລະບົບ DIMUPT)</translation>
+        <translation>ລະເວັ້ນການຕັ້ງຄ່າການຈັດວາງແນວນອນ ແລະ ວາງຂໍ້ຄວາມໃນຕຳແໜ່ງທີ່ທ່ານລະບຸຕອນກຳນົດເສັ້ນບອກຂະໜາດ. (ຕົວແປລະບົບ DIMUPT)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1101"></location>
@@ -9690,12 +9696,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1108"></location>
         <source>Draws dimension lines between the measured points even when the arrowheads are placed outside the measured points. (DIMTOFL system variable)</source>
-        <translation>ແຕ້ມເສັ້ນມິຕິລະຫວ່າງຈຸດທີ່ແທກ ເຖິງວ່າຫົວລູກສອນຈະຖືກວາງຢູ່ນອກຈຸດແທກກໍຕາມ. (ຕົວແປລະບົບ DIMTOFL)</translation>
+        <translation>ແຕ້ມເສັ້ນບອກຂະໜາດລະຫວ່າງຈຸດທີ່ແທກ ເຖິງວ່າຫົວລູກສອນຈະຖືກວາງຢູ່ນອກຈຸດແທກກໍຕາມ. (ຕົວແປລະບົບ DIMTOFL)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1111"></location>
         <source>Draw dim line betwen ext lines</source>
-        <translation>ແຕ້ມເສັ້ນມິຕິລະຫວ່າງເສັ້ນຊ່ວຍ</translation>
+        <translation>ແຕ້ມເສັ້ນບອກຂະໜາດລະຫວ່າງເສັ້ນຊ່ວຍ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1121"></location>
@@ -9706,7 +9712,7 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1127"></location>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1137"></location>
         <source>Sets a scale for all dimension style settings that specify size, distance, or spacing, including text and arrowhead sizes. This scale does not change dimension measurement values. (DIMSCALE system variable)</source>
-        <translation>ກຳນົດມາດຕາສ່ວນໃຫ້ກັບການຕັ້ງຄ່າມິຕິທັງໝົດທີ່ກ່ຽວກັບມິຕິ, ໄລຍະຫ່າງ, ລວມທັງຂະໜາດຂໍ້ຄວາມ ແລະ ຫົວລູກສອນ. ມາດຕາສ່ວນນີ້ຈະບໍ່ປ່ຽນຄ່າການແທກຕົວຈິງ. (ຕົວແປລະບົບ DIMSCALE)</translation>
+        <translation>ກຳນົດມາດຕາສ່ວນໃຫ້ກັບການຕັ້ງຄ່າຮູບແບບການບອກຂະໜາດທັງໝົດທີ່ກ່ຽວກັບຂະໜາດ, ໄລຍະຫ່າງ, ລວມທັງຂະໜາດຂໍ້ຄວາມ ແລະ ຫົວລູກສອນ. ມາດຕາສ່ວນນີ້ຈະບໍ່ປ່ຽນຄ່າການແທກຕົວຈິງ. (ຕົວແປລະບົບ DIMSCALE)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1130"></location>
@@ -9726,22 +9732,22 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1175"></location>
         <source>If selected, moves the dimension line whenever dimension text is moved. (DIMTMOVE system variable)</source>
-        <translation>ຫາກເລືອກ, ເສັ້ນມິຕິຈະຍ້າຍຕາມທຸກຄັ້ງທີ່ຍ້າຍຂໍ້ຄວາມມິຕິ. (ຕົວແປລະບົບ DIMTMOVE)</translation>
+        <translation>ຫາກເລືອກ, ເສັ້ນບອກຂະໜາດຈະຍ້າຍຕາມທຸກຄັ້ງທີ່ຍ້າຍຂໍ້ຄວາມບອກຂະໜາດ. (ຕົວແປລະບົບ DIMTMOVE)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1178"></location>
         <source>Beside the dimention line</source>
-        <translation>ຂ້າງເສັ້ນມິຕິ</translation>
+        <translation>ຂ້າງເສັ້ນບອກຂະໜາດ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1185"></location>
         <source>If selected, dimension lines are not moved when text is moved. If text is moved away from the dimension line, a leader line is created connecting the text to the dimension line. The leader line is omitted when text is too close to the dimension line. (DIMTMOVE system variable)</source>
-        <translation>ຫາກເລືອກ, ເສັ້ນມິຕິຈະບໍ່ຍ້າຍຕາມເມື່ອຍ້າຍຂໍ້ຄວາມ. ຫາກຂໍ້ຄວາມຖືກຍ້າຍຫ່າງອອກຈາກເສັ້ນມິຕິ, ຈະມີເສັ້ນຊີ້ (Leader) ເຊື່ອມຕໍ່ຂໍ້ຄວາມຫາເສັ້ນມິຕິ. (ຕົວແປລະບົບ DIMTMOVE)</translation>
+        <translation>ຫາກເລືອກ, ເສັ້ນບອກຂະໜາດຈະບໍ່ຍ້າຍຕາມເມື່ອຍ້າຍຂໍ້ຄວາມ. ຫາກຂໍ້ຄວາມຖືກຍ້າຍຫ່າງອອກຈາກເສັ້ນບອກຂະໜາດ, ຈະມີເສັ້ນຊີ້ (Leader) ເຊື່ອມຕໍ່ຂໍ້ຄວາມຫາເສັ້ນບອກຂະໜາດ. (ຕົວແປລະບົບ DIMTMOVE)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1188"></location>
         <source>Over dimension line, with leader</source>
-        <translation>ເທິງເສັ້ນມິຕິ, ພ້ອມເສັ້ນຊີ້</translation>
+        <translation>ເທິງເສັ້ນບອກຂະໜາດ, ພ້ອມເສັ້ນຊີ້</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1195"></location>
@@ -9751,12 +9757,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1202"></location>
         <source>If selected, dimension lines are not moved when text is moved. Text that is moved away from the dimension line is not connected to the dimension line with a leader. (DIMTMOVE system variable)</source>
-        <translation>ຫາກເລືອກ, ເສັ້ນມິຕິຈະບໍ່ຍ້າຍຕາມເມື່ອຍ້າຍຂໍ້ຄວາມ. ຂໍ້ຄວາມທີ່ຍ້າຍຫ່າງອອກໄປຈະບໍ່ມີເສັ້ນຊີ້ເຊື່ອມຕໍ່ຫາເສັ້ນມິຕິ. (ຕົວແປລະບົບ DIMTMOVE)</translation>
+        <translation>ຫາກເລືອກ, ເສັ້ນບອກຂະໜາດຈະບໍ່ຍ້າຍຕາມເມື່ອຍ້າຍຂໍ້ຄວາມ. ຂໍ້ຄວາມທີ່ຍ້າຍຫ່າງອອກໄປຈະບໍ່ມີເສັ້ນຊີ້ເຊື່ອມຕໍ່ຫາເສັ້ນບອກຂະໜາດ. (ຕົວແປລະບົບ DIMTMOVE)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1205"></location>
         <source>Over dimension line, without leader</source>
-        <translation>ເທິງເສັ້ນມິຕິ, ບໍ່ມີເສັ້ນຊີ້</translation>
+        <translation>ເທິງເສັ້ນບອກຂະໜາດ, ບໍ່ມີເສັ້ນຊີ້</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1234"></location>
@@ -9831,7 +9837,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1333"></location>
         <source>Angular Dimensions</source>
-        <translation>ມິຕິເຊີງມຸມ</translation>
+        <translation>ການບອກຂະໜາດເຊີງມຸມ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1339"></location>
@@ -9889,7 +9895,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1382"></location>
         <source>Sets the number of decimal places for angular dimensions. DIMADEC system variable)</source>
-        <translation>ກຳນົດຈຳນວນຕຳແໜ່ງທົດສະນິຍົມສຳລັບມິຕິເຊີງມຸມ. (ຕົວແປລະບົບ DIMADEC)</translation>
+        <translation>ກຳນົດຈຳນວນຕຳແໜ່ງທົດສະນິຍົມສຳລັບການບອກຂະໜາດເຊີງມຸມ. (ຕົວແປລະບົບ DIMADEC)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1389"></location>
@@ -9900,7 +9906,7 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1418"></location>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1994"></location>
         <source>Linear Dimensions</source>
-        <translation>ມິຕິແນວຊື່</translation>
+        <translation>ການບອກຂະໜາດແນວຊື່</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1431"></location>
@@ -9915,17 +9921,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1450"></location>
         <source>Sets a scale factor for linear dimension measurements. It is recommended that you do not change this value from the default value of 1.00. (DIMLFAC system variable)</source>
-        <translation>ກຳນົດຕົວຄູນມາດຕາສ່ວນສຳລັບການແທກມິຕິແນວຊື່. ແນະນຳໃຫ້ບໍ່ປ່ຽນຄ່ານີ້ຈາກຄ່າເລີ່ມຕົ້ນ 1.00. (ຕົວແປລະບົບ DIMLFAC)</translation>
+        <translation>ກຳນົດຕົວຄູນມາດຕາສ່ວນສຳລັບຄ່າແທກຂອງການບອກຂະໜາດແນວຊື່. ແນະນຳໃຫ້ບໍ່ປ່ຽນຄ່ານີ້ຈາກຄ່າເລີ່ມຕົ້ນ 1.00. (ຕົວແປລະບົບ DIMLFAC)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1460"></location>
         <source>Applies the measurement scale factor only to dimensions created in layout viewports. </source>
-        <translation>ນຳໃຊ້ຕົວຄູນມາດຕາສ່ວນການວັດແທກ ສະເພາະກັບມິຕິທີ່ສ້າງຂຶ້ນໃນວິວພອດຂອງໜ້າຈັດວາງ (layout viewports) ເທົ່ານັ້ນ. </translation>
+        <translation>ນຳໃຊ້ຕົວຄູນມາດຕາສ່ວນການວັດແທກ ສະເພາະກັບການບອກຂະໜາດທີ່ສ້າງຂຶ້ນໃນວິວພອດຂອງໜ້າຈັດວາງ (layout viewports) ເທົ່ານັ້ນ. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1463"></location>
         <source>Apply to layout dimensions only</source>
-        <translation>ນຳໃຊ້ກັບມິຕິໃນ Layout ເທົ່ານັ້ນ</translation>
+        <translation>ນຳໃຊ້ກັບການບອກຂະໜາດໃນ Layout ເທົ່ານັ້ນ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1473"></location>
@@ -9945,12 +9951,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1500"></location>
         <source>Includes a suffix that you specify in the dimension text. (DIMPOST system variable)</source>
-        <translation>ລວມຄຳຕໍ່ທ້າຍທີ່ທ່ານລະບຸໄວ້ໃນຂໍ້ຄວາມມິຕິ. (ຕົວແປລະບົບ DIMPOST)</translation>
+        <translation>ລວມຄຳຕໍ່ທ້າຍທີ່ທ່ານລະບຸໄວ້ໃນຂໍ້ຄວາມບອກຂະໜາດ. (ຕົວແປລະບົບ DIMPOST)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1507"></location>
         <source>Sets the current units format for all dimension types except Angular. (DIMLUNIT system variable)</source>
-        <translation>ກຳນົດຮູບແບບຫົວໜ່ວຍສຳລັບມິຕິທຸກປະເພດ ຍົກເວັ້ນມິຕິເຊີງມຸມ. (ຕົວແປລະບົບ DIMLUNIT)</translation>
+        <translation>ກຳນົດຮູບແບບຫົວໜ່ວຍສຳລັບການບອກຂະໜາດທຸກປະເພດ ຍົກເວັ້ນການບອກຂະໜາດເຊີງມຸມ. (ຕົວແປລະບົບ DIMLUNIT)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1514"></location>
@@ -9976,17 +9982,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1538"></location>
         <source>Sets nearest rounding value for dimension measurements for all dimension types except Angular. (DIMRND system variable)</source>
-        <translation>ກຳນົດຄ່າການປັດເສດທີ່ໃກ້ຄຽງທີ່ສຸດສຳລັບມິຕິທຸກປະເພດ ຍົກເວັ້ນມິຕິເຊີງມຸມ. (ຕົວແປລະບົບ DIMRND)</translation>
+        <translation>ກຳນົດຄ່າການປັດເສດທີ່ໃກ້ຄຽງທີ່ສຸດສຳລັບການບອກຂະໜາດທຸກປະເພດ ຍົກເວັ້ນການບອກຂະໜາດເຊີງມຸມ. (ຕົວແປລະບົບ DIMRND)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1548"></location>
         <source>Displays and sets the number of decimal places in the dimension text. (DIMDEC system variable)</source>
-        <translation>ສະແດງ ແລະ ກຳນົດຈຳນວນຕຳແໜ່ງທົດສະນິຍົມໃນຂໍ້ຄວາມມິຕິ. (ຕົວແປລະບົບ DIMDEC)</translation>
+        <translation>ສະແດງ ແລະ ກຳນົດຈຳນວນຕຳແໜ່ງທົດສະນິຍົມໃນຂໍ້ຄວາມບອກຂະໜາດ. (ຕົວແປລະບົບ DIMDEC)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1561"></location>
         <source>Includes a prefix that you specify in the dimension text. (DIMPOST system variable)</source>
-        <translation>ລວມຄຳນຳໜ້າທີ່ທ່ານລະບຸໄວ້ໃນຂໍ້ຄວາມມິຕິ. (ຕົວແປລະບົບ DIMPOST)</translation>
+        <translation>ລວມຄຳນຳໜ້າທີ່ທ່ານລະບຸໄວ້ໃນຂໍ້ຄວາມບອກຂະໜາດ. (ຕົວແປລະບົບ DIMPOST)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1575"></location>
@@ -10018,12 +10024,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1617"></location>
         <source>Suppresses trailing zeros in all decimal dimensions. (DIMZIN system variable)</source>
-        <translation>ຕັດເລກສູນທາງຫຼັງໃນມິຕິທົດສະນິຍົມທັງໝົດ. (ຕົວແປລະບົບ DIMZIN)</translation>
+        <translation>ຕັດເລກສູນທາງຫຼັງໃນການບອກຂະໜາດທົດສະນິຍົມທັງໝົດ. (ຕົວແປລະບົບ DIMZIN)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1627"></location>
         <source> Suppresses the inches portion of a feet-and-inches dimension when the distance is an integral number of feet (DIMZIN system variable)</source>
-        <translation> ບໍ່ສະແດງສ່ວນຂອງນິ້ວ ໃນການມິຕິແບບຟຸດ-ນິ້ວ ເມື່ອໄລຍະຫ່າງເປັນຈຳນວນຖ້ວນຂອງຟຸດ (ຕົວປ່ຽນລະບົບ DIMZIN).</translation>
+        <translation> ບໍ່ສະແດງສ່ວນຂອງນິ້ວ ໃນການບອກຂະໜາດແບບຟຸດ-ນິ້ວ ເມື່ອໄລຍະຫ່າງເປັນຈຳນວນຖ້ວນຂອງຟຸດ (ຕົວປ່ຽນລະບົບ DIMZIN).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1630"></location>
@@ -10036,7 +10042,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1637"></location>
         <source>Suppresses the feet portion of a feet-and-inches dimension when the distance is less than one foot.  (DIMZIN system variable)</source>
-        <translation>ຕັດສ່ວນຟຸດອອກໃນມິຕິແບບ ຟຸດ-ນິ້ວ ເມື່ອໄລຍະຫ່າງນ້ອຍກວ່າໜຶ່ງຟຸດ. (ຕົວແປລະບົບ DIMZIN)</translation>
+        <translation>ຕັດສ່ວນຟຸດອອກໃນການບອກຂະໜາດແບບ ຟຸດ-ນິ້ວ ເມື່ອໄລຍະຫ່າງນ້ອຍກວ່າໜຶ່ງຟຸດ. (ຕົວແປລະບົບ DIMZIN)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1640"></location>
@@ -10049,7 +10055,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1647"></location>
         <source>Suppresses leading zeros in all decimal dimensions (DIMZIN system variable)</source>
-        <translation>ຕັດເລກສູນທາງໜ້າໃນມິຕິທົດສະນິຍົມທັງໝົດ. (ຕົວແປລະບົບ DIMZIN)</translation>
+        <translation>ຕັດເລກສູນທາງໜ້າໃນການບອກຂະໜາດທົດສະນິຍົມທັງໝົດ. (ຕົວແປລະບົບ DIMZIN)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1657"></location>
@@ -10060,12 +10066,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1664"></location>
         <source>Sets the number of sub units to a unit. It is used to calculate the dimension distance in a sub unit when the distance is less than one unit. </source>
-        <translation>ກຳນົດຈຳນວນຫົວໜ່ວຍຍ່ອຍຕໍ່ໜຶ່ງຫົວໜ່ວຍ. ໃຊ້ເພື່ອຄຳນວນໄລຍະມິຕິໃນຫົວໜ່ວຍຍ່ອຍ ເມື່ອໄລຍະຫ່າງນ້ອຍກວ່າໜຶ່ງຫົວໜ່ວຍ. </translation>
+        <translation>ກຳນົດຈຳນວນຫົວໜ່ວຍຍ່ອຍຕໍ່ໜຶ່ງຫົວໜ່ວຍ. ໃຊ້ເພື່ອຄຳນວນຄ່າໄລຍະຂອງການບອກຂະໜາດໃນຫົວໜ່ວຍຍ່ອຍ ເມື່ອໄລຍະຫ່າງນ້ອຍກວ່າໜຶ່ງຫົວໜ່ວຍ. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1680"></location>
         <source>Includes a suffix to the dimension value sub unit. You can enter text or use control codes to display special symbols.</source>
-        <translation>ລວມຄຳຕໍ່ທ້າຍໃຫ້ກັບຄ່າຫົວໜ່ວຍຍ່ອຍຂອງມິຕິ. ທ່ານສາມາດປ້ອນຂໍ້ຄວາມ ຫຼື ລະຫັດຄວບຄຸມເພື່ອສະແດງສັນຍະລັກພິເສດ.</translation>
+        <translation>ລວມຄຳຕໍ່ທ້າຍໃຫ້ກັບຄ່າຫົວໜ່ວຍຍ່ອຍຂອງການບອກຂະໜາດ. ທ່ານສາມາດປ້ອນຂໍ້ຄວາມ ຫຼື ລະຫັດຄວບຄຸມເພື່ອສະແດງສັນຍະລັກພິເສດ.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1707"></location>
@@ -10075,7 +10081,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1726"></location>
         <source>Adds alternate measurement units to dimension text. Sets the DIMALT system variable to 1.</source>
-        <translation>ເພີ່ມຫົວໜ່ວຍການແທກສຳຮອງໃຫ້ກັບຂໍ້ຄວາມມິຕິ. (ກຳນົດຕົວແປລະບົບ DIMALT ເປັນ 1)</translation>
+        <translation>ເພີ່ມຫົວໜ່ວຍການແທກສຳຮອງໃຫ້ກັບຂໍ້ຄວາມບອກຂະໜາດ. (ກຳນົດຕົວແປລະບົບ DIMALT ເປັນ 1)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1729"></location>
@@ -10100,7 +10106,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1779"></location>
         <source>Sets rounding rules for alternate units for all dimension types except Angular. If you enter a value of 0.25, all alternate measurements are rounded to the nearest 0.25 unit. If you enter a value of 1.0, all dimension measurements are rounded to the nearest integer. The number of digits displayed after the decimal point depends on the Precision setting. (DIMALTRND system variable)</source>
-        <translation>ກຳນົດກົດການປັດເສດສຳລັບຫົວໜ່ວຍສຳຮອງຂອງມິຕິທຸກປະເພດ ຍົກເວັ້ນມິຕິເຊີງມຸມ. (ຕົວແປລະບົບ DIMALTRND)</translation>
+        <translation>ກຳນົດກົດການປັດເສດສຳລັບຫົວໜ່ວຍສຳຮອງຂອງການບອກຂະໜາດທຸກປະເພດ ຍົກເວັ້ນການບອກຂະໜາດເຊີງມຸມ. (ຕົວແປລະບົບ DIMALTRND)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1789"></location>
@@ -10115,7 +10121,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1802"></location>
         <source>Places alternate units after the primary units in dimension text.</source>
-        <translation>ວາງຫົວໜ່ວຍສຳຮອງຕໍ່ທ້າຍຫົວໜ່ວຍຫຼັກໃນຂໍ້ຄວາມມິຕິ.</translation>
+        <translation>ວາງຫົວໜ່ວຍສຳຮອງຕໍ່ທ້າຍຫົວໜ່ວຍຫຼັກໃນຂໍ້ຄວາມບອກຂະໜາດ.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1805"></location>
@@ -10125,7 +10131,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1812"></location>
         <source>Places alternate units below the primary units in dimension text.</source>
-        <translation>ວາງຫົວໜ່ວຍສຳຮອງໄວ້ລຸ່ມຫົວໜ່ວຍຫຼັກໃນຂໍ້ຄວາມມິຕິ.</translation>
+        <translation>ວາງຫົວໜ່ວຍສຳຮອງໄວ້ລຸ່ມຫົວໜ່ວຍຫຼັກໃນຂໍ້ຄວາມບອກຂະໜາດ.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1815"></location>
@@ -10135,7 +10141,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1831"></location>
         <source>Includes a prefix in the alternate dimension text. You can enter text or use control codes to display special symbols. For example, entering the control code %%c displays the diameter symbol. (DIMAPOST system variable)</source>
-        <translation>ລວມຄຳນຳໜ້າໃນຂໍ້ຄວາມມິຕິສຳຮອງ. ທ່ານສາມາດປ້ອນຂໍ້ຄວາມ ຫຼື ລະຫັດຄວບຄຸມເພື່ອສະແດງສັນຍະລັກພິເສດ. (ຕົວແປລະບົບ DIMAPOST)</translation>
+        <translation>ລວມຄຳນຳໜ້າໃນຂໍ້ຄວາມບອກຂະໜາດສຳຮອງ. ທ່ານສາມາດປ້ອນຂໍ້ຄວາມ ຫຼື ລະຫັດຄວບຄຸມເພື່ອສະແດງສັນຍະລັກພິເສດ. (ຕົວແປລະບົບ DIMAPOST)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1845"></location>
@@ -10145,22 +10151,22 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1858"></location>
         <source>Suppresses leading zeros in all decimal dimensions. For example, 0.5000 becomes .5000.</source>
-        <translation>ຕັດເລກສູນທາງໜ້າໃນມິຕິທົດສະນິຍົມທັງໝົດ. ຕົວຢ່າງ: 0.5000 ຈະກາຍເປັນ .5000.</translation>
+        <translation>ຕັດເລກສູນທາງໜ້າໃນການບອກຂະໜາດທົດສະນິຍົມທັງໝົດ. ຕົວຢ່າງ: 0.5000 ຈະກາຍເປັນ .5000.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1888"></location>
         <source>Suppresses trailing zeros in all decimal dimensions. For example, 12.5000 becomes 12.5, and 30.0000 becomes 30 (DIMALTZ system variable).</source>
-        <translation>ຕັດເລກສູນທາງຫຼັງໃນມິຕິທົດສະນິຍົມທັງໝົດ. ຕົວຢ່າງ: 12.5000 ຈະກາຍເປັນ 12.5. (ຕົວແປລະບົບ DIMALTZ)</translation>
+        <translation>ຕັດເລກສູນທາງຫຼັງໃນການບອກຂະໜາດທົດສະນິຍົມທັງໝົດ. ຕົວຢ່າງ: 12.5000 ຈະກາຍເປັນ 12.5. (ຕົວແປລະບົບ DIMALTZ)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1915"></location>
         <source>Suppresses the feet portion of a feet-and-inches dimension when the distance is less than 1 foot. For example, 0'-6 1/2" becomes 6 1/2" (DIMALTZ system variable)</source>
-        <translation>ຕັດສ່ວນຟຸດອອກໃນມິຕິແບບ ຟຸດ-ນິ້ວ ເມື່ອໄລຍະຫ່າງນ້ອຍກວ່າ 1 ຟຸດ. (ຕົວແປລະບົບ DIMALTZ)</translation>
+        <translation>ຕັດສ່ວນຟຸດອອກໃນການບອກຂະໜາດແບບ ຟຸດ-ນິ້ວ ເມື່ອໄລຍະຫ່າງນ້ອຍກວ່າ 1 ຟຸດ. (ຕົວແປລະບົບ DIMALTZ)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1925"></location>
         <source>Suppresses the inches portion of a feet-and-inches dimension when the distance is an integral number of feet. For example, 1'-0" becomes 1'. (DIMALTZ system variable)</source>
-        <translation>ຕັດສ່ວນນິ້ວອອກໃນມິຕິແບບ ຟຸດ-ນິ້ວ ເມື່ອໄລຍະຫ່າງເປັນເລກຖ້ວນຂອງຟຸດ. (ຕົວແປລະບົບ DIMALTZ)</translation>
+        <translation>ຕັດສ່ວນນິ້ວອອກໃນການບອກຂະໜາດແບບ ຟຸດ-ນິ້ວ ເມື່ອໄລຍະຫ່າງເປັນເລກຖ້ວນຂອງຟຸດ. (ຕົວແປລະບົບ DIMALTZ)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1938"></location>
@@ -10170,7 +10176,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1958"></location>
         <source>Includes a suffix in the alternate dimension text. You can enter text or use control codes to display special symbols. For example, entering the text cm results in dimension text similar to that shown in the illustration. When you enter a suffix, it overrides any default suffixes. (DIMAPOST system variable)</source>
-        <translation>ລວມຄຳຕໍ່ທ້າຍໃນຂໍ້ຄວາມມິຕິສຳຮອງ. ທ່ານສາມາດປ້ອນຂໍ້ຄວາມ ຫຼື ລະຫັດຄວບຄຸມເພື່ອສະແດງສັນຍະລັກພິເສດ. (ຕົວແປລະບົບ DIMAPOST)</translation>
+        <translation>ລວມຄຳຕໍ່ທ້າຍໃນຂໍ້ຄວາມບອກຂະໜາດສຳຮອງ. ທ່ານສາມາດປ້ອນຂໍ້ຄວາມ ຫຼື ລະຫັດຄວບຄຸມເພື່ອສະແດງສັນຍະລັກພິເສດ. (ຕົວແປລະບົບ DIMAPOST)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="1982"></location>
@@ -10185,22 +10191,22 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2016"></location>
         <source>Suppresses leading zeros in all decimal dimensions (DIMTZIN system variable).</source>
-        <translation>ຕັດເລກສູນທາງໜ້າໃນມິຕິທົດສະນິຍົມທັງໝົດ. (ຕົວແປລະບົບ DIMTZIN)</translation>
+        <translation>ຕັດເລກສູນທາງໜ້າໃນການບອກຂະໜາດທົດສະນິຍົມທັງໝົດ. (ຕົວແປລະບົບ DIMTZIN)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2026"></location>
         <source>Suppresses trailing zeros in all decimal dimensions (DIMTZIN system variable).</source>
-        <translation>ຕັດເລກສູນທາງຫຼັງໃນມິຕິທົດສະນິຍົມທັງໝົດ. (ຕົວແປລະບົບ DIMTZIN)</translation>
+        <translation>ຕັດເລກສູນທາງຫຼັງໃນການບອກຂະໜາດທົດສະນິຍົມທັງໝົດ. (ຕົວແປລະບົບ DIMTZIN)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2036"></location>
         <source>Suppresses the feet portion of a feet-and-inches dimension when the distance is less than 1 foot (DIMTZIN system variable). </source>
-        <translation>ບໍ່ສະແດງສ່ວນຂອງຟຸດ ໃນການມິຕິແບບຟຸດ-ນິ້ວ ເມື່ອໄລຍະຫ່າງນ້ອຍກວ່າ 1 ຟຸດ (ຕົວປ່ຽນລະບົບ DIMTZIN). </translation>
+        <translation>ບໍ່ສະແດງສ່ວນຂອງຟຸດ ໃນການບອກຂະໜາດແບບຟຸດ-ນິ້ວ ເມື່ອໄລຍະຫ່າງນ້ອຍກວ່າ 1 ຟຸດ (ຕົວປ່ຽນລະບົບ DIMTZIN). </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2046"></location>
         <source>Suppresses the inches portion of a feet-and-inches dimension when the distance is an integral number of feet (DIMTZIN system variable). </source>
-        <translation>ບໍ່ສະແດງສ່ວນຂອງນິ້ວ ໃນການມິຕິແບບຟຸດ-ນິ້ວ ເມື່ອໄລຍະຫ່າງເປັນຈຳນວນຖ້ວນຂອງຟຸດ (ຕົວປ່ຽນລະບົບ DIMTZIN). </translation>
+        <translation>ບໍ່ສະແດງສ່ວນຂອງນິ້ວ ໃນການບອກຂະໜາດແບບຟຸດ-ນິ້ວ ເມື່ອໄລຍະຫ່າງເປັນຈຳນວນຖ້ວນຂອງຟຸດ (ຕົວປ່ຽນລະບົບ DIMTZIN). </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2059"></location>
@@ -10325,22 +10331,22 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2240"></location>
         <source>Suppresses leading zeros in all decimal dimensions (DIMALTTZ system variable). </source>
-        <translation>ບໍ່ສະແດງເລກສູນທາງໜ້າ ໃນທຸກໆມິຕິແບບທົດສະນິຍົມ (ຕົວປ່ຽນລະບົບ DIMALTTZ). </translation>
+        <translation>ບໍ່ສະແດງເລກສູນທາງໜ້າ ໃນທຸກໆການບອກຂະໜາດແບບທົດສະນິຍົມ (ຕົວປ່ຽນລະບົບ DIMALTTZ). </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2250"></location>
         <source>Suppresses trailing zeros in all decimal dimensions (DIMALTTZ system variable).</source>
-        <translation>ຕັດເລກສູນທາງຫຼັງໃນມິຕິທົດສະນິຍົມທັງໝົດ. (ຕົວແປລະບົບ DIMALTTZ)</translation>
+        <translation>ຕັດເລກສູນທາງຫຼັງໃນການບອກຂະໜາດທົດສະນິຍົມທັງໝົດ. (ຕົວແປລະບົບ DIMALTTZ)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2260"></location>
         <source>Suppresses the feet portion of a feet-and-inches dimension when the distance is less than 1 foot (DIMALTTZ system variable).</source>
-        <translation>ຕັດສ່ວນຟຸດອອກໃນມິຕິແບບ ຟຸດ-ນິ້ວ ເມື່ອໄລຍະຫ່າງນ້ອຍກວ່າ 1 ຟຸດ. (ຕົວແປລະບົບ DIMALTTZ)</translation>
+        <translation>ຕັດສ່ວນຟຸດອອກໃນການບອກຂະໜາດແບບ ຟຸດ-ນິ້ວ ເມື່ອໄລຍະຫ່າງນ້ອຍກວ່າ 1 ຟຸດ. (ຕົວແປລະບົບ DIMALTTZ)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="2270"></location>
         <source>Suppresses the inches portion of a feet-and-inches dimension when the distance is an integral number of feet (DIMALTTZ system variable).</source>
-        <translation>ຕັດສ່ວນນິ້ວອອກໃນມິຕິແບບ ຟຸດ-ນິ້ວ ເມື່ອໄລຍະຫ່າງເປັນເລກຖ້ວນຂອງຟຸດ. (ຕົວແປລະບົບ DIMALTTZ)</translation>
+        <translation>ຕັດສ່ວນນິ້ວອອກໃນການບອກຂະໜາດແບບ ຟຸດ-ນິ້ວ ເມື່ອໄລຍະຫ່າງເປັນເລກຖ້ວນຂອງຟຸດ. (ຕົວແປລະບົບ DIMALTTZ)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.cpp" line="398"></location>
@@ -10360,7 +10366,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlgdimension.ui" line="14"></location>
         <source>Dimension</source>
-        <translation>ມິຕິ</translation>
+        <translation>ການບອກຂະໜາດ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="175"/>
@@ -10390,12 +10396,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlgdimension.ui" line="260"></location>
         <source>Apply style to dimension</source>
-        <translation>ນຳໃຊ້ຮູບແບບກັບມິຕິ</translation>
+        <translation>ນຳໃຊ້ຮູບແບບກັບການບອກຂະໜາດ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlgdimension.ui" line="274"></location>
         <source>Select dimension style</source>
-        <translation>ເລືອກຮູບແບບມິຕິ</translation>
+        <translation>ເລືອກຮູບແບບການບອກຂະໜາດ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlgdimension.ui" line="301"></location>
@@ -10420,7 +10426,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlgdimension.ui" line="360"></location>
         <source>Set style as active one. Active style is applied to newly created dimensions.</source>
-        <translation>ກຳນົດຮູບແບບໃຫ້ເປັນອັນທີ່ໃຊ້ງານຢູ່. ຮູບແບບທີ່ໃຊ້ງານຢູ່ຈະຖືກນຳໃຊ້ກັບມິຕິທີ່ສ້າງໃໝ່.</translation>
+        <translation>ກຳນົດຮູບແບບໃຫ້ເປັນອັນທີ່ໃຊ້ງານຢູ່. ຮູບແບບທີ່ໃຊ້ງານຢູ່ຈະຖືກນຳໃຊ້ກັບການບອກຂະໜາດທີ່ສ້າງໃໝ່.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlgdimension.ui" line="374"></location>
@@ -10452,7 +10458,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlgdimension.ui" line="432"></location>
         <source>Active style that is applied when new dimension is created.</source>
-        <translation>ຮູບແບບທີ່ໃຊ້ງານຢູ່ ເຊິ່ງຈະຖືກນຳໃຊ້ເມື່ອສ້າງມິຕິໃໝ່.</translation>
+        <translation>ຮູບແບບທີ່ໃຊ້ງານຢູ່ ເຊິ່ງຈະຖືກນຳໃຊ້ເມື່ອສ້າງການບອກຂະໜາດໃໝ່.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlgdimension.ui" line="445"></location>
@@ -10492,7 +10498,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlgdimension.ui" line="415"></location>
         <source>Name of style for this dimension entity</source>
-        <translation>ຊື່ຂອງຮູບແບບສຳລັບອົງປະກອບມິຕິນີ້</translation>
+        <translation>ຊື່ຂອງຮູບແບບສຳລັບອົງປະກອບການບອກຂະໜາດນີ້</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlgdimension.ui" line="470"></location>
@@ -10518,7 +10524,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlgdimension.ui" line="145"></location>
         <source>Rotation angle of dimension</source>
-        <translation>ມຸມການໝູນຂອງມິຕິ</translation>
+        <translation>ມຸມການໝູນຂອງການບອກຂະໜາດ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlgdimension.ui" line="66"></location>
@@ -10538,37 +10544,37 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlgdimension.cpp" line="133"></location>
         <source>Ordinate Dimension</source>
-        <translation>ມິຕິອໍດິເນດ (Ordinate Dimension)</translation>
+        <translation>ການບອກຂະໜາດອໍດິເນດ (Ordinate Dimension)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlgdimension.cpp" line="146"></location>
         <source>Linear Dimension</source>
-        <translation>ມິຕິແນວຊື່</translation>
+        <translation>ການບອກຂະໜາດແນວຊື່</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlgdimension.cpp" line="157"></location>
         <source>Aligned Dimension</source>
-        <translation>ມິຕິແນວຂະໜານ</translation>
+        <translation>ການບອກຂະໜາດແນວຂະໜານ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlgdimension.cpp" line="163"></location>
         <source>Angular Dimension</source>
-        <translation>ມິຕິເຊີງມຸມ</translation>
+        <translation>ການບອກຂະໜາດເຊີງມຸມ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlgdimension.cpp" line="169"></location>
         <source>Arc Dimension</source>
-        <translation>ມິຕິສ່ວນໂຄ້ງ</translation>
+        <translation>ການບອກຂະໜາດສ່ວນໂຄ້ງ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlgdimension.cpp" line="175"></location>
         <source>Diametric Dimension</source>
-        <translation>ມິຕິເສັ້ນຜ່ານສູນກາງ</translation>
+        <translation>ການບອກຂະໜາດເສັ້ນຜ່ານສູນກາງ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlgdimension.cpp" line="181"></location>
         <source>Radial Dimension</source>
-        <translation>ມິຕິລັດສະໝີ</translation>
+        <translation>ການບອກຂະໜາດລັດສະໝີ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlgdimension.cpp" line="204"></location>
@@ -10594,17 +10600,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlgdimension.cpp" line="458"></location>
         <source>New Dimension Style Override - </source>
-        <translation>ການຂຽນທັບຮູບແບບມິຕິໃໝ່ - </translation>
+        <translation>ການຂຽນທັບຮູບແບບການບອກຂະໜາດໃໝ່ - </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlgdimension.cpp" line="508"></location>
         <source>Edit Dimension Style Override - </source>
-        <translation>ແກ້ໄຂການຂຽນທັບຮູບແບບມິຕິ - </translation>
+        <translation>ແກ້ໄຂການຂຽນທັບຮູບແບບການບອກຂະໜາດ - </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlgdimension.cpp" line="520"></location>
         <source>View Dimension Style - </source>
-        <translation>ເບິ່ງຮູບແບບມິຕິ - </translation>
+        <translation>ເບິ່ງຮູບແບບການບອກຂະໜາດ - </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlgdimension.cpp" line="573"></location>
@@ -11146,7 +11152,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="115"></location>
         <source>Ellipse</source>
-        <translation>ວົງລີ</translation>
+        <translation>ວົງຮີ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="116"></location>
@@ -11176,32 +11182,32 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="121"></location>
         <source>Dimension Linear</source>
-        <translation>ມິຕິແນວຊື່</translation>
+        <translation>ການບອກຂະໜາດແນວຊື່</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="122"></location>
         <source>Dimension Aligned</source>
-        <translation>ມິຕິແນວຂະໜານ</translation>
+        <translation>ການບອກຂະໜາດແນວຂະໜານ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="123"></location>
         <source>Dimension Diametric</source>
-        <translation>ມິຕິເສັ້ນຜ່ານສູນກາງ</translation>
+        <translation>ການບອກຂະໜາດເສັ້ນຜ່ານສູນກາງ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="124"></location>
         <source>Dimension Radial</source>
-        <translation>ມິຕິລັດສະໝີ</translation>
+        <translation>ການບອກຂະໜາດລັດສະໝີ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="125"></location>
         <source>Dimension Ordinate</source>
-        <translation>ມິຕິອໍດິເນດ</translation>
+        <translation>ການບອກຂະໜາດອໍດິເນດ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="126"></location>
         <source>Dimension Arc</source>
-        <translation>ມິຕິສ່ວນໂຄ້ງ</translation>
+        <translation>ການບອກຂະໜາດສ່ວນໂຄ້ງ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlgmenuassigner.cpp" line="127"></location>
@@ -11294,7 +11300,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="78"></location>
         <source>Grid Type icon column</source>
-        <translation>ຄໍລຳໄອຄອນປະເພດ Grid</translation>
+        <translation>ຄໍລຳໄອຄອນປະເພດຕາຕະລາງ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="88"></location>
@@ -11309,7 +11315,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="75"></location>
         <source>If checked, type of grid for saved view will be shown.</source>
-        <translation>ຫາກໝາຍເລືອກ, ຈະສະແດງປະເພດຂອງ Grid ສຳລັບມຸມມອງທີ່ບັນທຶກໄວ້.</translation>
+        <translation>ຫາກໝາຍເລືອກ, ຈະສະແດງປະເພດຂອງຕາຕະລາງສຳລັບມຸມມອງທີ່ບັນທຶກໄວ້.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="85"></location>
@@ -11438,7 +11444,7 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.cpp" line="141"></location>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.cpp" line="145"></location>
         <source>New Dimension Style</source>
-        <translation>ຮູບແບບມິຕິໃໝ່</translation>
+        <translation>ຮູບແບບການບອກຂະໜາດໃໝ່</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="20"></location>
@@ -11448,37 +11454,37 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="30"></location>
         <source>Defines which type of dimensions are controlled by this style.</source>
-        <translation>ກຳນົດວ່າປະເພດມິຕິໃດທີ່ຈະຖືກຄວບຄຸມໂດຍຮູບແບບນີ້.</translation>
+        <translation>ກຳນົດວ່າປະເພດການບອກຂະໜາດໃດທີ່ຈະຖືກຄວບຄຸມໂດຍຮູບແບບນີ້.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="34"></location>
         <source>All Dimensions</source>
-        <translation>ມິຕິທັງໝົດ</translation>
+        <translation>ການບອກຂະໜາດທັງໝົດ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="39"></location>
         <source>Linear Dimensions</source>
-        <translation>ມິຕິແນວຊື່</translation>
+        <translation>ການບອກຂະໜາດແນວຊື່</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="44"></location>
         <source>Angular Dimensions</source>
-        <translation>ມິຕິເຊີງມຸມ</translation>
+        <translation>ການບອກຂະໜາດເຊີງມຸມ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="49"></location>
         <source>Radius Dimensions</source>
-        <translation>ມິຕິລັດສະໝີ</translation>
+        <translation>ການບອກຂະໜາດລັດສະໝີ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="54"></location>
         <source>Diameter Dimensions</source>
-        <translation>ມິຕິເສັ້ນຜ່ານສູນກາງ</translation>
+        <translation>ການບອກຂະໜາດເສັ້ນຜ່ານສູນກາງ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="59"></location>
         <source>Ordinate Dimensions</source>
-        <translation>ມິຕິອໍດິເນດ</translation>
+        <translation>ການບອກຂະໜາດອໍດິເນດ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="64"></location>
@@ -11493,7 +11499,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="105"></location>
         <source>Existing dimension style which new style is based on</source>
-        <translation>ຮູບແບບມິຕິທີ່ມີຢູ່ແລ້ວທີ່ຮູບແບບໃໝ່ຈະອີງຕາມ</translation>
+        <translation>ຮູບແບບການບອກຂະໜາດທີ່ມີຢູ່ແລ້ວທີ່ຮູບແບບໃໝ່ຈະອີງຕາມ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="112"></location>
@@ -11503,7 +11509,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="128"></location>
         <source>Name of new dimension style</source>
-        <translation>ຊື່ຂອງຮູບແບບມິຕິໃໝ່</translation>
+        <translation>ຊື່ຂອງຮູບແບບການບອກຂະໜາດໃໝ່</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.cpp" line="141"></location>
@@ -11513,7 +11519,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.cpp" line="145"></location>
         <source>Provided name of dimension style (%1) is not unique! Please enter another one.</source>
-        <translation>ຊື່ຮູບແບບມິຕິ (%1) ທີ່ລະບຸຊ້ຳກັບອັນອື່ນ! ກະລຸນາປ້ອນຊື່ໃໝ່.</translation>
+        <translation>ຊື່ຮູບແບບການບອກຂະໜາດ (%1) ທີ່ລະບຸຊ້ຳກັບອັນອື່ນ! ກະລຸນາປ້ອນຊື່ໃໝ່.</translation>
     </message>
 </context>
 <context>
@@ -12119,7 +12125,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlgtolerance.ui" line="26"></location>
         <source>Layer of dimension</source>
-        <translation>ເລເຢີຂອງມິຕິ</translation>
+        <translation>ເລເຢີຂອງການບອກຂະໜາດ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlgtolerance.ui" line="45"></location>
@@ -13246,7 +13252,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_ellipsepropertieseditingwidget.ui" line="81"></location>
         <source>X Coordinate of ellipse's center</source>
-        <translation>ພິກັດ X ຂອງຈຸດໃຈກາງຮູບວົງມົນຮີ</translation>
+        <translation>ພິກັດ X ຂອງຈຸດໃຈກາງວົງຮີ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_ellipsepropertieseditingwidget.ui" line="106"></location>
@@ -13271,7 +13277,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_ellipsepropertieseditingwidget.ui" line="176"></location>
         <source>Radius of major axis of ellipse</source>
-        <translation>ລັດສະໝີຂອງແກນຫຼັກຂອງຮູບວົງມົນຮີ</translation>
+        <translation>ລັດສະໝີຂອງແກນຫຼັກຂອງວົງຮີ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_ellipsepropertieseditingwidget.ui" line="183"></location>
@@ -13286,7 +13292,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_ellipsepropertieseditingwidget.ui" line="225"></location>
         <source>Radius of minor axis of the ellipse</source>
-        <translation>ລັດສະໝີຂອງແກນຮອງຂອງຮູບວົງມົນຮີ</translation>
+        <translation>ລັດສະໝີຂອງແກນຮອງຂອງວົງຮີ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_ellipsepropertieseditingwidget.ui" line="232"></location>
@@ -13308,7 +13314,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_ellipsepropertieseditingwidget.ui" line="277"></location>
         <source>Rotation angle for the major axis of ellipse, degrees</source>
-        <translation>ມຸມໝູນສຳລັບແກນຫຼັກຂອງຮູບວົງມົນຮີ, ເປັນອົງສາ</translation>
+        <translation>ມຸມໝູນສຳລັບແກນຫຼັກຂອງວົງຮີ, ເປັນອົງສາ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_ellipsepropertieseditingwidget.ui" line="284"></location>
@@ -13411,7 +13417,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="87"/>
         <source>Ellipse</source>
-        <translation type="unfinished">ວົງລີ</translation>
+        <translation type="unfinished">ວົງຮີ</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="88"/>
@@ -13431,17 +13437,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="91"/>
         <source>Dimension Aligned</source>
-        <translation type="unfinished">ມິຕິແນວຂະໜານ</translation>
+        <translation type="unfinished">ການບອກຂະໜາດແນວຂະໜານ</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="92"/>
         <source>Dimension Linear</source>
-        <translation type="unfinished">ມິຕິແນວຊື່</translation>
+        <translation type="unfinished">ການບອກຂະໜາດແນວຊື່</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="93"/>
         <source>Dimension Ordinate</source>
-        <translation type="unfinished">ມິຕິອໍດິເນດ</translation>
+        <translation type="unfinished">ການບອກຂະໜາດອໍດິເນດ</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="94"/>
@@ -13451,17 +13457,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="95"/>
         <source>Dimension Radial</source>
-        <translation type="unfinished">ມິຕິລັດສະໝີ</translation>
+        <translation type="unfinished">ການບອກຂະໜາດລັດສະໝີ</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="96"/>
         <source>Dimension Diametric</source>
-        <translation type="unfinished">ມິຕິເສັ້ນຜ່ານສູນກາງ</translation>
+        <translation type="unfinished">ການບອກຂະໜາດເສັ້ນຜ່ານສູນກາງ</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="97"/>
         <source>Dimension Arc</source>
-        <translation type="unfinished">ມິຕິສ່ວນໂຄ້ງ</translation>
+        <translation type="unfinished">ການບອກຂະໜາດສ່ວນໂຄ້ງ</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="98"/>
@@ -13819,17 +13825,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_hatchpropertieseditingwidget.ui" line="65"></location>
         <source>Hatch pattern name</source>
-        <translation>ຊື່ລວດລາຍການແຮັດ (Hatch)</translation>
+        <translation>ຊື່ຮູບແບບລວດລາຍ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_hatchpropertieseditingwidget.ui" line="75"></location>
         <source>Scale:</source>
-        <translation>ຂະໜາດ:</translation>
+        <translation>ມາດຕາສ່ວນ:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_hatchpropertieseditingwidget.ui" line="88"></location>
         <source>Hatch pattern scale factor</source>
-        <translation>ຕົວຄູນຂະໜາດລວດລາຍການແຮັດ</translation>
+        <translation>ຕົວຄູນມາດຕາສ່ວນຂອງຮູບແບບລວດລາຍ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_hatchpropertieseditingwidget.ui" line="95"></location>
@@ -13845,7 +13851,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_hatchpropertieseditingwidget.ui" line="111"></location>
         <source>Hatch pattern rotation angle, degrees</source>
-        <translation>ມຸມໝູນລວດລາຍການແຮັດ, ເປັນອົງສາ</translation>
+        <translation>ມຸມໝູນຂອງຮູບແບບລວດລາຍ, ເປັນອົງສາ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_hatchpropertieseditingwidget.ui" line="121"></location>
@@ -13860,7 +13866,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_hatchpropertieseditingwidget.ui" line="134"></location>
         <source>Total enclosed area of the hatch region</source>
-        <translation>ເນື້ອທີ່ທັງໝົດພາຍໃນຂອບເຂດການແຮັດ</translation>
+        <translation>ເນື້ອທີ່ທັງໝົດພາຍໃນຂອບເຂດລວດລາຍ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_hatchpropertieseditingwidget.ui" line="144"></location>
@@ -14239,7 +14245,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="57"/>
         <source>Scale X:</source>
-        <translation type="unfinished">ຂະໜາດ X:</translation>
+        <translation type="unfinished">ມາດຕາສ່ວນ X:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="70"/>
@@ -14249,7 +14255,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_imagepropertieseditingwidget.ui" line="333"></location>
         <source>Pick scale from drawing</source>
-        <translation>ເລືອກຂະໜາດຈາກຮູບແຕ້ມ</translation>
+        <translation>ເລືອກມາດຕາສ່ວນຈາກຮູບແຕ້ມ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="121"/>
@@ -14300,7 +14306,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="273"/>
         <source>Scale Y:</source>
-        <translation type="unfinished">ຂະໜາດ Y:</translation>
+        <translation type="unfinished">ມາດຕາສ່ວນ Y:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="312"/>
@@ -14425,7 +14431,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_insertpropertieseditingwidget.ui" line="118"></location>
         <source>Scale X:</source>
-        <translation>ຂະໜາດ X:</translation>
+        <translation>ມາດຕາສ່ວນ X:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_insertpropertieseditingwidget.ui" line="137"></location>
@@ -14435,12 +14441,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_insertpropertieseditingwidget.ui" line="144"></location>
         <source>Pick scale by X value from drawing</source>
-        <translation>ເລືອກຂະໜາດແກນ X ຈາກຮູບແຕ້ມ</translation>
+        <translation>ເລືອກມາດຕາສ່ວນແກນ X ຈາກຮູບແຕ້ມ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_insertpropertieseditingwidget.ui" line="158"></location>
         <source>Scale Y:</source>
-        <translation>ຂະໜາດ Y:</translation>
+        <translation>ມາດຕາສ່ວນ Y:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_insertpropertieseditingwidget.ui" line="177"></location>
@@ -14450,7 +14456,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_insertpropertieseditingwidget.ui" line="184"></location>
         <source>Pick scale Y value from drawing</source>
-        <translation>ເລືອກຂະໜາດແກນ Y ຈາກຮູບແຕ້ມ</translation>
+        <translation>ເລືອກມາດຕາສ່ວນແກນ Y ຈາກຮູບແຕ້ມ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_insertpropertieseditingwidget.ui" line="198"></location>
@@ -14563,12 +14569,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="119"></location>
         <source>Layer that holds dimensions</source>
-        <translation>ເລເຢີທີ່ໃຊ້ເກັບມິຕິ</translation>
+        <translation>ເລເຢີທີ່ໃຊ້ເກັບການບອກຂະໜາດ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="122"></location>
         <source>Dimensions</source>
-        <translation>ມິຕິ</translation>
+        <translation>ການບອກຂະໜາດ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layerdialog_ex.ui" line="132"></location>
@@ -14738,12 +14744,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="103"></location>
         <source>Dimensional</source>
-        <translation>ມິຕິ</translation>
+        <translation>ການບອກຂະໜາດ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="116"></location>
         <source>Suffix of layer's name that defines that layer is dimensional</source>
-        <translation>ຄຳລົງທ້າຍຂອງຊື່ເລເຢີທີ່ກຳນົດວ່າເລເຢີນັ້ນແມ່ນກ່ຽວກັບມິຕິ</translation>
+        <translation>ຄຳລົງທ້າຍຂອງຊື່ເລເຢີທີ່ກຳນົດວ່າເລເຢີນັ້ນແມ່ນກ່ຽວກັບການບອກຂະໜາດ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="126"></location>
@@ -14972,7 +14978,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="71"></location>
         <source>Dimensional Layer</source>
-        <translation>ເລເຢີມິຕິ</translation>
+        <translation>ເລເຢີບອກຂະໜາດ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="72"></location>
@@ -15097,7 +15103,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="259"></location>
         <source>Add dimensions Layer</source>
-        <translation>ເພີ່ມເລເຢີມິຕິ</translation>
+        <translation>ເພີ່ມເລເຢີບອກຂະໜາດ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="268"></location>
@@ -15157,7 +15163,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="674"></location>
         <source>&amp;Add Dimensions Sub-Layer</source>
-        <translation>ເພີ່&amp;ມເລເຢີຍ່ອຍມິຕິ</translation>
+        <translation>ເພີ່&amp;ມເລເຢີຍ່ອຍບອກຂະໜາດ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="678"></location>
@@ -15178,7 +15184,7 @@ Please specify a different value.</source>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="696"></location>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="706"></location>
         <source>Convert to Dimensional Layer</source>
-        <translation>ປ່ຽນເປັນເລເຢີມິຕິ</translation>
+        <translation>ປ່ຽນເປັນເລເຢີບອກຂະໜາດ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="697"></location>
@@ -17307,7 +17313,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/dialogs/entity/lc_mtextpropertieseditingwidget.ui" line="84"></location>
         <source>Rotation angle in degrees (UCS)</source>
-        <translation>ມຸມໝຸນເປັນອົງສາ (UCS)</translation>
+        <translation>ມຸມໝູນເປັນອົງສາ (UCS)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_mtextpropertieseditingwidget.ui" line="85"></location>
@@ -17646,7 +17652,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimaligned.cpp" line="29"/>
         <source>Dimension Aligned</source>
-        <translation type="unfinished">ມິຕິແນວຂະໜານ</translation>
+        <translation type="unfinished">ການບອກຂະໜາດແນວຂະໜານ</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimaligned.cpp" line="35"/>
@@ -17742,7 +17748,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimarc.cpp" line="29"/>
         <source>Dimension Arc</source>
-        <translation type="unfinished">ມິຕິສ່ວນໂຄ້ງ</translation>
+        <translation type="unfinished">ການບອກຂະໜາດສ່ວນໂຄ້ງ</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimarc.cpp" line="34"/>
@@ -18241,12 +18247,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="398"/>
         <source>Preceding dimension text</source>
-        <translation type="unfinished">ໄວ້ກ່ອນຂໍ້ຄວາມມິຕິ</translation>
+        <translation type="unfinished">ໄວ້ກ່ອນຂໍ້ຄວາມບອກຂະໜາດ</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="399"/>
         <source>Above dimension text</source>
-        <translation type="unfinished">ໄວ້ເໜືອຂໍ້ຄວາມມິຕິ</translation>
+        <translation type="unfinished">ໄວ້ເໜືອຂໍ້ຄວາມບອກຂະໜາດ</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="400"/>
@@ -19022,7 +19028,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimdiametric.cpp" line="29"/>
         <source>Dimension Diametric</source>
-        <translation type="unfinished">ມິຕິເສັ້ນຜ່ານສູນກາງ</translation>
+        <translation type="unfinished">ການບອກຂະໜາດເສັ້ນຜ່ານສູນກາງ</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimdiametric.cpp" line="34"/>
@@ -19050,7 +19056,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimlinear.cpp" line="30"/>
         <source>Dimension Linear</source>
-        <translation type="unfinished">ມິຕິແນວຊື່</translation>
+        <translation type="unfinished">ການບອກຂະໜາດແນວຊື່</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimlinear.cpp" line="36"/>
@@ -19158,7 +19164,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimordinate.cpp" line="29"/>
         <source>Dimension Ordinate</source>
-        <translation type="unfinished">ມິຕິອໍດິເນດ</translation>
+        <translation type="unfinished">ການບອກຂະໜາດອໍດິເນດ</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimordinate.cpp" line="35"/>
@@ -19276,7 +19282,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimradial.cpp" line="29"/>
         <source>Dimension Radial</source>
-        <translation type="unfinished">ມິຕິລັດສະໝີ</translation>
+        <translation type="unfinished">ການບອກຂະໜາດລັດສະໝີ</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimradial.cpp" line="34"/>
@@ -19304,7 +19310,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_ellipse.cpp" line="29"/>
         <source>Ellipse</source>
-        <translation type="unfinished">ວົງລີ</translation>
+        <translation type="unfinished">ວົງຮີ</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_ellipse.cpp" line="33"/>
@@ -19489,7 +19495,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_hatch.cpp" line="38"/>
         <source>Hatch pattern name</source>
-        <translation type="unfinished">ຊື່ລວດລາຍການແຮັດ (Hatch)</translation>
+        <translation type="unfinished">ຊື່ຮູບແບບລວດລາຍ</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_hatch.cpp" line="42"/>
@@ -20480,7 +20486,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_spline.cpp" line="35"/>
         <source>Degree</source>
-        <translation type="unfinished">ອົງສາ (Degree)</translation>
+        <translation type="unfinished">ລະດັບ (Degree)</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_spline.cpp" line="35"/>
@@ -20877,7 +20883,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="176"/>
         <source>Ellipse</source>
-        <translation type="unfinished">ວົງລີ</translation>
+        <translation type="unfinished">ວົງຮີ</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="180"/>
@@ -21239,7 +21245,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="239"/>
         <source>&amp;Dimensions</source>
-        <translation type="unfinished">&amp;ມິຕິ</translation>
+        <translation type="unfinished">&amp;ການບອກຂະໜາດ</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="243"/>
@@ -24635,7 +24641,7 @@ Please note that if you'll save pen via editor without restart, current pens fro
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="98"/>
         <source>Chord Length</source>
-        <translation type="unfinished">ຄວາມຍາວເສັ້ນຂອດ</translation>
+        <translation type="unfinished">ຄວາມຍາວຄອດ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="98"/>
@@ -24795,7 +24801,7 @@ Please note that if you'll save pen via editor without restart, current pens fro
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="162"/>
         <source>Tangent (P,C)</source>
-        <translation type="unfinished">ເສັ້ນສໍາຜັດ (ຈຸດ, ວົງມົນ)</translation>
+        <translation type="unfinished">ເສັ້ນສຳຜັດ (ຈຸດ, ວົງມົນ)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="162"/>
@@ -24805,7 +24811,7 @@ Please note that if you'll save pen via editor without restart, current pens fro
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="163"/>
         <source>Tangent (C,C)</source>
-        <translation type="unfinished">ເສັ້ນສໍາຜັດ (ວົງມົນ, ວົງມົນ)</translation>
+        <translation type="unfinished">ເສັ້ນສຳຜັດ (ວົງມົນ, ວົງມົນ)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="163"/>
@@ -25197,7 +25203,7 @@ Please note that if you'll save pen via editor without restart, current pens fro
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="93"/>
         <source>Tangent (P,C)</source>
-        <translation type="unfinished">ເສັ້ນສໍາຜັດ (ຈຸດ, ວົງມົນ)</translation>
+        <translation type="unfinished">ເສັ້ນສຳຜັດ (ຈຸດ, ວົງມົນ)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="93"/>
@@ -25207,7 +25213,7 @@ Please note that if you'll save pen via editor without restart, current pens fro
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="94"/>
         <source>Tangent (C,C)</source>
-        <translation type="unfinished">ເສັ້ນສໍາຜັດ (ວົງມົນ, ວົງມົນ)</translation>
+        <translation type="unfinished">ເສັ້ນສຳຜັດ (ວົງມົນ, ວົງມົນ)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="94"/>
@@ -26048,12 +26054,12 @@ Please note that if you'll save pen via editor without restart, current pens fro
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="699"/>
         <source>Preceding dimension text</source>
-        <translation type="unfinished">ໄວ້ກ່ອນຂໍ້ຄວາມມິຕິ</translation>
+        <translation type="unfinished">ໄວ້ກ່ອນຂໍ້ຄວາມບອກຂະໜາດ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="700"/>
         <source>Above dimension text</source>
-        <translation type="unfinished">ໄວ້ເໜືອຂໍ້ຄວາມມິຕິ</translation>
+        <translation type="unfinished">ໄວ້ເໜືອຂໍ້ຄວາມບອກຂະໜາດ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="707"/>
@@ -27227,7 +27233,7 @@ Please note that if you'll save pen via editor without restart, current pens fro
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_ellipse.cpp" line="126"/>
         <source>Tangent (P,C)</source>
-        <translation type="unfinished">ເສັ້ນສໍາຜັດ (ຈຸດ, ວົງມົນ)</translation>
+        <translation type="unfinished">ເສັ້ນສຳຜັດ (ຈຸດ, ວົງມົນ)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_ellipse.cpp" line="126"/>
@@ -27237,7 +27243,7 @@ Please note that if you'll save pen via editor without restart, current pens fro
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_ellipse.cpp" line="127"/>
         <source>Tangent (C,C)</source>
-        <translation type="unfinished">ເສັ້ນສໍາຜັດ (ວົງມົນ, ວົງມົນ)</translation>
+        <translation type="unfinished">ເສັ້ນສຳຜັດ (ວົງມົນ, ວົງມົນ)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_ellipse.cpp" line="127"/>
@@ -27470,7 +27476,7 @@ Please note that if you'll save pen via editor without restart, current pens fro
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="173"/>
         <source>Dimensional</source>
-        <translation type="unfinished">ມິຕິ</translation>
+        <translation type="unfinished">ການບອກຂະໜາດ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="177"/>
@@ -28095,7 +28101,7 @@ Please note that if you'll save pen via editor without restart, current pens fro
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_hatch.cpp" line="41"/>
         <source>Hatch pattern name</source>
-        <translation type="unfinished">ຊື່ລວດລາຍການແຮັດ (Hatch)</translation>
+        <translation type="unfinished">ຊື່ຮູບແບບລວດລາຍ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_hatch.cpp" line="55"/>
@@ -28793,7 +28799,7 @@ Please note that if you'll save pen via editor without restart, current pens fro
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="141"/>
         <source>Bisector</source>
-        <translation type="unfinished">ເສັ້ນແບ່ງເຄິ່ງມູມ</translation>
+        <translation type="unfinished">ເສັ້ນແບ່ງເຄິ່ງມຸມ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="141"/>
@@ -29718,7 +29724,7 @@ Please note that if you'll save pen via editor without restart, current pens fro
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_spline.cpp" line="38"/>
         <source>Degree</source>
-        <translation type="unfinished">ອົງສາ (Degree)</translation>
+        <translation type="unfinished">ລະດັບ (Degree)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_spline.cpp" line="38"/>
@@ -30046,7 +30052,7 @@ Please note that if you'll save pen via editor without restart, current pens fro
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="115"/>
         <source>Tangent (P,C)</source>
-        <translation type="unfinished">ເສັ້ນສໍາຜັດ (ຈຸດ, ວົງມົນ)</translation>
+        <translation type="unfinished">ເສັ້ນສຳຜັດ (ຈຸດ, ວົງມົນ)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="115"/>
@@ -30573,7 +30579,7 @@ Please note that if you'll save pen via editor without restart, current pens fro
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="709"></location>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="715"></location>
         <source>ELLIPSE</source>
-        <translation>ວົງລີ</translation>
+        <translation>ວົງຮີ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="761"></location>
@@ -30812,7 +30818,7 @@ Please note that if you'll save pen via editor without restart, current pens fro
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="629"></location>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="663"></location>
         <source>Chord Length</source>
-        <translation>ຄວາມຍາວເສັ້ນຂອດ</translation>
+        <translation>ຄວາມຍາວຄອດ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="630"></location>
@@ -31291,7 +31297,7 @@ Layer: </source>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1167"></location>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1184"></location>
         <source>Degree</source>
-        <translation>ອົງສາ (Degree)</translation>
+        <translation>ລະດັບ (Degree)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1168"></location>
@@ -33819,12 +33825,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="32"></location>
         <source>Ellipse</source>
-        <translation>ວົງລີ</translation>
+        <translation>ວົງຮີ</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="39"></location>
         <source>Dimension</source>
-        <translation>ມິຕິ</translation>
+        <translation>ການບອກຂະໜາດ</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="46"></location>
@@ -35465,7 +35471,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="274"></location>
         <source>Ellipse</source>
-        <translation>ວົງລີ</translation>
+        <translation>ວົງຮີ</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="275"></location>
@@ -35481,7 +35487,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="277"></location>
         <source>Dimension</source>
-        <translation>ມິຕິ</translation>
+        <translation>ການບອກຂະໜາດ</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="278"></location>
@@ -35533,12 +35539,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="305"></location>
         <source>Splines</source>
-        <translation>ເສັ້ນໂຄ້ງ (Splines)</translation>
+        <translation>ເສັ້ນໂຄ້ງສະປຼາຍ</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="307"></location>
         <source>Ellipses</source>
-        <translation>ວົງລີ</translation>
+        <translation>ວົງຮີ</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="308"></location>
@@ -35548,7 +35554,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="310"></location>
         <source>Dimensions</source>
-        <translation>ມິຕິ</translation>
+        <translation>ການບອກຂະໜາດ</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="313"></location>
@@ -35744,12 +35750,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistmodel.cpp" line="333"></location>
         <source>Origin X: </source>
-        <translation>ຈຸດເລີ່ມຕົ້ນ X: </translation>
+        <translation>ຈຸດກຳເນີດ X: </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistmodel.cpp" line="334"></location>
         <source>Origin Y: </source>
-        <translation>ຈຸດເລີ່ມຕົ້ນ Y: </translation>
+        <translation>ຈຸດກຳເນີດ Y: </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistmodel.cpp" line="335"></location>
@@ -35797,7 +35803,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.ui" line="68"></location>
         <source>Preview of coordinate system origin and angle.</source>
-        <translation>ເບິ່ງຕົວຢ່າງຈຸດເລີ່ມຕົ້ນ ແລະ ມຸມຂອງລະບົບພິກັດ.</translation>
+        <translation>ເບິ່ງຕົວຢ່າງຈຸດກຳເນີດ ແລະ ມຸມຂອງລະບົບພິກັດ.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.ui" line="82"></location>
@@ -35807,7 +35813,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.ui" line="96"></location>
         <source>Set UCS by ordinate dimension</source>
-        <translation>ຕັ້ງຄ່າ UCS ຕາມມິຕິພິກັດ</translation>
+        <translation>ຕັ້ງຄ່າ UCS ຕາມການບອກຂະໜາດພິກັດ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.ui" line="110"></location>
@@ -35959,7 +35965,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/components/status_bar/lc_ucsstatewidget.ui" line="115"></location>
         <source>Position of origin and angle of current UCS's in world coordinates.</source>
-        <translation>ຕຳແໜ່ງຈຸດເລີ່ມຕົ້ນ ແລະ ມຸມຂອງ UCS ປັດຈຸບັນໃນພິກັດໂລກ.</translation>
+        <translation>ຕຳແໜ່ງຈຸດກຳເນີດ ແລະ ມຸມຂອງ UCS ປັດຈຸບັນໃນພິກັດໂລກ.</translation>
     </message>
 </context>
 <context>
@@ -36003,7 +36009,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="100"></location>
         <source>Ellipse</source>
-        <translation>ວົງລີ</translation>
+        <translation>ວົງຮີ</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="101"></location>
@@ -36013,7 +36019,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="103"></location>
         <source>Dimension</source>
-        <translation>ມິຕິ</translation>
+        <translation>ການບອກຂະໜາດ</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="104"></location>
@@ -37129,12 +37135,12 @@ The original opens in a separate document. Mixed encodings and raw metadata are 
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dimensionlabeleditor.ui" line="20"></location>
         <source>Dimension Label Editor</source>
-        <translation>ເຄື່ອງມືແກ້ໄຂປ້າຍບອກມິຕິ</translation>
+        <translation>ເຄື່ອງມືແກ້ໄຂປ້າຍບອກຂະໜາດ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dimensionlabeleditor.ui" line="38"></location>
         <source>Dimension Label:</source>
-        <translation>ປ້າຍບອກມິຕິ:</translation>
+        <translation>ປ້າຍບອກຂະໜາດ:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dimensionlabeleditor.ui" line="165"></location>
@@ -37144,7 +37150,7 @@ The original opens in a separate document. Mixed encodings and raw metadata are 
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dimensionlabeleditor.ui" line="94"></location>
         <source>Symbol before dimensional text</source>
-        <translation>ສັນຍະລັກກ່ອນຂໍ້ຄວາມມິຕິ</translation>
+        <translation>ສັນຍະລັກກ່ອນຂໍ້ຄວາມບອກຂະໜາດ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dimensionlabeleditor.ui" line="62"></location>
@@ -37169,7 +37175,7 @@ The original opens in a separate document. Mixed encodings and raw metadata are 
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dimensionlabeleditor.ui" line="187"></location>
         <source>Format of the dimension text, &lt;&gt; can be used as a placeholder for the dimension measurement value</source>
-        <translation>ຮູບແບບຂໍ້ຄວາມມິຕິ, ສາມາດໃຊ້ &lt;&gt; ເພື່ອແທນຄ່າທີ່ວັດແທກໄດ້</translation>
+        <translation>ຮູບແບບຂໍ້ຄວາມບອກຂະໜາດ, ສາມາດໃຊ້ &lt;&gt; ເພື່ອແທນຄ່າທີ່ວັດແທກໄດ້</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dimensionlabeleditor.ui" line="200"></location>
@@ -37280,7 +37286,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlghatch.ui" line="28"></location>
         <source>Scale factor for hatch pattern</source>
-        <translation>ຕົວຄູນຂະໜາດສຳລັບລວດລາຍ</translation>
+        <translation>ຕົວຄູນມາດຕາສ່ວນສຳລັບຮູບແບບລວດລາຍ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlghatch.ui" line="35"></location>
@@ -37290,12 +37296,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlghatch.ui" line="45"></location>
         <source>Scale:</source>
-        <translation>ຂະໜາດ:</translation>
+        <translation>ມາດຕາສ່ວນ:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlghatch.ui" line="55"></location>
         <source>Rotation angle for the hatch</source>
-        <translation>ມຸມໝຸນສຳລັບການລະບາຍລວດລາຍ</translation>
+        <translation>ມຸມໝູນສຳລັບການລະບາຍລວດລາຍ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlghatch.ui" line="62"></location>
@@ -37391,7 +37397,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="147"></location>
         <source>&amp;Default line spacing</source>
-        <translation>&amp;ໄລຍະຫ່າງບັນທຶກເລີ່ມຕົ້ນ</translation>
+        <translation>&amp;ໄລຍະຫ່າງບັນທັດເລີ່ມຕົ້ນ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="150"></location>
@@ -37481,7 +37487,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="643"></location>
         <source>Rotation angle</source>
-        <translation>ມຸມໝຸນ</translation>
+        <translation>ມຸມໝູນ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="674"></location>
@@ -38101,7 +38107,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1468"></location>
         <source>[FE50-FE6F] Small Form Variants</source>
-        <translation>[FE50-FE6F] ຮູບແບບມິຕິນ້ອຍ</translation>
+        <translation>[FE50-FE6F] ຮູບແບບຂະໜາດນ້ອຍ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgmtext.ui" line="1473"></location>
@@ -38400,17 +38406,17 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="617"></location>
         <source>Dimension style editing - </source>
-        <translation>ແກ້ໄຂຮູບແບບການບອກມິຕິ - </translation>
+        <translation>ແກ້ໄຂຮູບແບບການບອກຂະໜາດ - </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="641"></location>
         <source>Rename Dimension Style</source>
-        <translation>ປ່ຽນຊື່ຮູບແບບການບອກມິຕິ</translation>
+        <translation>ປ່ຽນຊື່ຮູບແບບການບອກຂະໜາດ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="642"></location>
         <source>Enter new unique name of dimension style (was "%1"):</source>
-        <translation>ປ້ອນຊື່ໃໝ່ຂອງຮູບແບບການບອກມິຕິ (ຊື່ເກົ່າແມ່ນ "%1"):</translation>
+        <translation>ປ້ອນຊື່ໃໝ່ຂອງຮູບແບບການບອກຂະໜາດ (ຊື່ເກົ່າແມ່ນ &quot;%1&quot;):</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="662"></location>
@@ -38418,27 +38424,27 @@ This recursively modifies all entities of the Block itself.</source>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="683"></location>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="691"></location>
         <source>Removing Dimension Style</source>
-        <translation>ກຳລັງລຶບຮູບແບບການບອກມິຕິ</translation>
+        <translation>ກຳລັງລຶບຮູບແບບການບອກຂະໜາດ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="663"></location>
         <source>Can't delete last dimension style. At least one should be present! </source>
-        <translation>ບໍ່ສາມາດລຶບຮູບແບບການບອກມິຕິອັນສຸດທ້າຍໄດ້. ຕ້ອງມີຢ່າງໜ້ອຍໜຶ່ງຮູບແບບ! </translation>
+        <translation>ບໍ່ສາມາດລຶບຮູບແບບການບອກຂະໜາດອັນສຸດທ້າຍໄດ້. ຕ້ອງມີຢ່າງໜ້ອຍໜຶ່ງຮູບແບບ! </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="677"></location>
         <source>Can't delete dimension style as it's children is used in drawing. Only unused style may be deleted.</source>
-        <translation>ບໍ່ສາມາດລຶບຮູບແບບມິຕິໄດ້ ເພາະມີຮູບແບບລູກຖືກໃຊ້ງານຢູ່ໃນການແຕ້ມ. ສາມາດລຶບໄດ້ສະເພາະຮູບແບບທີ່ບໍ່ໄດ້ໃຊ້ເທົ່ານັ້ນ.</translation>
+        <translation>ບໍ່ສາມາດລຶບຮູບແບບການບອກຂະໜາດໄດ້ ເພາະມີຮູບແບບລູກຖືກໃຊ້ງານຢູ່ໃນການແຕ້ມ. ສາມາດລຶບໄດ້ສະເພາະຮູບແບບທີ່ບໍ່ໄດ້ໃຊ້ເທົ່ານັ້ນ.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="684"></location>
         <source>Are you sure you want to remove the dimension style "%1" together with child styles?</source>
-        <translation>ທ່ານແນ່ໃຈບໍ່ວ່າຕ້ອງການລຶບຮູບແບບມິຕິ "%1" ພ້ອມກັບຮູບແບບລູກ?</translation>
+        <translation>ທ່ານແນ່ໃຈບໍ່ວ່າຕ້ອງການລຶບຮູບແບບການບອກຂະໜາດ &quot;%1&quot; ພ້ອມກັບຮູບແບບລູກ?</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="692"></location>
         <source>Are you sure you want to remove the dimension style "%1"?</source>
-        <translation>ທ່ານແນ່ໃຈບໍ່ວ່າຕ້ອງການລຶບຮູບແບບການບອກມິຕິ "%1"?</translation>
+        <translation>ທ່ານແນ່ໃຈບໍ່ວ່າຕ້ອງການລຶບຮູບແບບການບອກຂະໜາດ &quot;%1&quot;?</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="929"></location>
@@ -38492,7 +38498,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1717"></location>
         <source>Dimension line gap:</source>
-        <translation>ໄລຍະຫ່າງເສັ້ນມິຕິ:</translation>
+        <translation>ໄລຍະຫ່າງເສັ້ນບອກຂະໜາດ:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="14"></location>
@@ -38547,7 +38553,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1049"></location>
         <source>&amp;Dimensions</source>
-        <translation>&amp;ມິຕິ</translation>
+        <translation>&amp;ການບອກຂະໜາດ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="735"></location>
@@ -38587,7 +38593,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2007"></location>
         <source>&amp;Splines and Lines</source>
-        <translation>ເສັ້ນ&amp;ໂຄ້ງ ແລະ ເສັ້ນຊື່</translation>
+        <translation>ເສັ້ນໂຄ້ງ&amp;ສະປຼາຍ ແລະ ເສັ້ນຊື່</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2013"></location>
@@ -38635,7 +38641,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1289"></location>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension Tick size. Set it to 0 will disable the dimension tick. Dimension arrow won't be drawn when dimension tick is enabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ຂະໜາດຂີດໝາຍມິຕິ. ຖ້າຕັ້ງເປັນ 0 ຈະປິດການໃຊ້ງານຂີດໝາຍ. ລູກສອນມິຕິຈະບໍ່ຖືກແຕ້ມເມື່ອເປີດໃຊ້ຂີດໝາຍ.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ຂະໜາດຂີດໝາຍບອກຂະໜາດ. ຖ້າຕັ້ງເປັນ 0 ຈະປິດການໃຊ້ງານຂີດໝາຍ. ລູກສອນບອກຂະໜາດຈະບໍ່ຖືກແຕ້ມເມື່ອເປີດໃຊ້ຂີດໝາຍ.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1634"></location>
@@ -38650,12 +38656,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1142"></location>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scale to multiply all dimension values.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ອັດຕາສ່ວນເພື່ອຄູນຄ່າການບອກມິຕິທັງໝົດ.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ອັດຕາສ່ວນເພື່ອຄູນຄ່າການບອກຂະໜາດທັງໝົດ.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1351"></location>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scale to multiply all dimension geometries.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ອັດຕາສ່ວນເພື່ອຄູນເລຂາຄະນິດການມິຕິທັງໝົດ.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ອັດຕາສ່ວນເພື່ອຄູນເລຂາຄະນິດການບອກຂະໜາດທັງໝົດ.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1058"></location>
@@ -38891,12 +38897,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1444"></location>
         <source>Length to enlarge over dimension line</source>
-        <translation>ຄວາມຍາວທີ່ຍື່ນອອກຈາກເສັ້ນມິຕິ</translation>
+        <translation>ຄວາມຍາວທີ່ຍື່ນອອກຈາກເສັ້ນບອກຂະໜາດ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1469"></location>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension arrow size. &lt;a name="result_box"/&gt;without effect when tick size &lt;a name="result_box"/&gt;is other than 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ຂະໜາດລູກສອນມິຕິ. ຈະບໍ່ມີຜົນເມື່ອຂະໜາດຂີດໝາຍ (tick size) ມີຄ່າອື່ນທີ່ບໍ່ແມ່ນ 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ຂະໜາດລູກສອນບອກຂະໜາດ. ຈະບໍ່ມີຜົນເມື່ອຂະໜາດຂີດໝາຍ (tick size) ມີຄ່າອື່ນທີ່ບໍ່ແມ່ນ 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1523"></location>
@@ -38907,7 +38913,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1543"></location>
         <source>Dimension lines, arrows &amp; ticks</source>
-        <translation>ເສັ້ນມິຕິ, ລູກສອນ ແລະ ຂີດໝາຍ</translation>
+        <translation>ເສັ້ນບອກຂະໜາດ, ລູກສອນ ແລະ ຂີດໝາຍ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1550"></location>
@@ -38937,7 +38943,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1619"></location>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Text alignment &lt;a name="result_box"/&gt;relative to the dimension line.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ການຈັດວາງຂໍ້ຄວາມທຽບກັບເສັ້ນມິຕິ.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ການຈັດວາງຂໍ້ຄວາມທຽບກັບເສັ້ນບອກຂະໜາດ.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1629"></location>
@@ -38967,7 +38973,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1798"></location>
         <source>Dimensions</source>
-        <translation>ມິຕິ</translation>
+        <translation>ການບອກຂະໜາດ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1810"></location>
@@ -38997,7 +39003,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1877"></location>
         <source>Marks style as active one. Active style will be used during creation of dimensions.</source>
-        <translation>ໝາຍຮູບແບບໃຫ້ເປັນອັນທີ່ໃຊ້ງານຢູ່. ຮູບແບບທີ່ເປີດໃຊ້ຈະຖືກນຳໃຊ້ໃນການສ້າງມິຕິ.</translation>
+        <translation>ໝາຍຮູບແບບໃຫ້ເປັນອັນທີ່ໃຊ້ງານຢູ່. ຮູບແບບທີ່ເປີດໃຊ້ຈະຖືກນຳໃຊ້ໃນການສ້າງການບອກຂະໜາດ.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1904"></location>
@@ -39412,7 +39418,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5197"></location>
         <source>Hatch Patterns:</source>
-        <translation>ຮູບແບບການແຮັດເງົາ (Hatch):</translation>
+        <translation>ຮູບແບບລວດລາຍ:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5221"></location>
@@ -39860,7 +39866,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1126"></location>
         <source>Select Hatch Patterns Folder</source>
-        <translation>ເລືອກໂຟນເດີຮູບແບບການແຮັດເງົາ (Hatch Patterns)</translation>
+        <translation>ເລືອກໂຟນເດີຮູບແບບລວດລາຍ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1133"></location>
@@ -40510,42 +40516,42 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="928"></location>
         <source>Grid General</source>
-        <translation>ຕາຂ່າຍທົ່ວໄປ</translation>
+        <translation>ຕາຕະລາງທົ່ວໄປ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="934"></location>
         <source>If checked, grid wil be drawn</source>
-        <translation>ຖ້າໝາຍເລືອກ, ຕາຂ່າຍຈະຖືກແຕ້ມ</translation>
+        <translation>ຖ້າໝາຍເລືອກ, ຕາຕະລາງຈະຖືກແຕ້ມ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1026"></location>
         <source>If checked, grid will not be adjusted to current units of drawing</source>
-        <translation>ຖ້າໝາຍເລືອກ, ຕາຂ່າຍຈະບໍ່ຖືກປັບໃຫ້ເຂົ້າກັບຫົວໜ່ວຍທີ່ໃຊ້ແຕ້ມໃນປັດຈຸບັນ</translation>
+        <translation>ຖ້າໝາຍເລືອກ, ຕາຕະລາງຈະບໍ່ຖືກປັບໃຫ້ເຂົ້າກັບຫົວໜ່ວຍທີ່ໃຊ້ແຕ້ມໃນປັດຈຸບັນ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1029"></location>
         <source>Unitless grid</source>
-        <translation>ຕາຂ່າຍບໍ່ມີຫົວໜ່ວຍ</translation>
+        <translation>ຕາຕະລາງບໍ່ມີຫົວໜ່ວຍ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="977"></location>
         <source>If checked, grid will not be drawn within view pan by mouse operation</source>
-        <translation>ຖ້າໝາຍເລືອກ, ຕາຂ່າຍຈະບໍ່ຖືກແຕ້ມໃນຂະນະທີ່ເລື່ອນມຸມເບິ່ງ (pan) ດ້ວຍເມົາສ໌</translation>
+        <translation>ຖ້າໝາຍເລືອກ, ຕາຕະລາງຈະບໍ່ຖືກແຕ້ມໃນຂະນະທີ່ເລື່ອນມຸມເບິ່ງ (pan) ດ້ວຍເມົາສ໌</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="980"></location>
         <source>Don't draw grid on panning</source>
-        <translation>ບໍ່ແຕ້ມຕາຂ່າຍໃນຂະນະເລື່ອນມຸມເບິ່ງ</translation>
+        <translation>ບໍ່ແຕ້ມຕາຕະລາງໃນຂະນະເລື່ອນມຸມເບິ່ງ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1016"></location>
         <source>If checked, Meta Grid lines will be drawn on top of grid. Simple grid is faster yet is less visually lean.</source>
-        <translation>ຖ້າໝາຍເລືອກ, ເສັ້ນເມຕາຕາຂ່າຍ (Meta Grid) ຈະຖືກແຕ້ມທັບເທິງຕາຂ່າຍ. ຕາຂ່າຍແບບທຳມະດາຈະໄວກວ່າ ແຕ່ການເບິ່ງເຫັນອາດຈະບໍ່ຊັດເຈນປານໃດ.</translation>
+        <translation>ຖ້າໝາຍເລືອກ, ເສັ້ນ Meta Grid ຈະຖືກແຕ້ມທັບເທິງຕາຕະລາງ. ຕາຕະລາງແບບທຳມະດາຈະໄວກວ່າ ແຕ່ການເບິ່ງເຫັນອາດຈະບໍ່ຊັດເຈນປານໃດ.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1068"></location>
         <source>Minimal spacing between grid until grid rescale</source>
-        <translation>ໄລຍະຫ່າງຕ່ຳສຸດລະຫວ່າງຕາຂ່າຍ ກ່ອນທີ່ຈະມີການປັບຂະໜາດຕາຂ່າຍໃໝ່</translation>
+        <translation>ໄລຍະຫ່າງຕ່ຳສຸດລະຫວ່າງຕາຕະລາງ ກ່ອນທີ່ຈະມີການປັບຂະໜາດຕາຕະລາງໃໝ່</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1003"></location>
@@ -40560,17 +40566,17 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="954"></location>
         <source>If checked, the grid will be scalled automatically</source>
-        <translation>ຖ້າໝາຍເລືອກ, ຕາຂ່າຍຈະຖືກປັບຂະໜາດໂດຍອັດຕະໂນມັດ</translation>
+        <translation>ຖ້າໝາຍເລືອກ, ຕາຕະລາງຈະຖືກປັບຂະໜາດໂດຍອັດຕະໂນມັດ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1049"></location>
         <source>&amp;Grid type:</source>
-        <translation>&amp;ຊະນິດຕາຂ່າຍ:</translation>
+        <translation>&amp;ຊະນິດຕາຕະລາງ:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="944"></location>
         <source>If checked, metagrid will be drawn as part of grid drawing.</source>
-        <translation>ຖ້າໝາຍເລືອກ, ເມຕາຕາຂ່າຍຈະຖືກແຕ້ມເປັນສ່ວນໜຶ່ງຂອງການແຕ້ມຕາຂ່າຍ.</translation>
+        <translation>ຖ້າໝາຍເລືອກ, Meta Grid ຈະຖືກແຕ້ມເປັນສ່ວນໜຶ່ງຂອງການແຕ້ມຕາຕະລາງ.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="967"></location>
@@ -40580,7 +40586,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="970"></location>
         <source>Draw vertical lines for "Top" isometric grid</source>
-        <translation>ແຕ້ມເສັ້ນຕັ້ງສຳລັບຕາຂ່າຍໄອໂຊເມຕຣິກ "ເທິງ"</translation>
+        <translation>ແຕ້ມເສັ້ນຕັ້ງສຳລັບຕາຕະລາງໄອໂຊເມຕຣິກ &quot;ເທິງ&quot;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2586"></location>
@@ -40709,12 +40715,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5646"></location>
         <source>Ellipse Major Axis:</source>
-        <translation>ແກນເອກຂອງຮູບວົງມົນຮີ:</translation>
+        <translation>ແກນເອກຂອງວົງຮີ:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5616"></location>
         <source>If screen size of minor ellipse axis is less than value, ellipse is drawn as line</source>
-        <translation>ຖ້າຂະໜາດໜ້າຈໍຂອງແກນໂທຮູບວົງມົນຮີໜ້ອຍກວ່າຄ່ານີ້, ຮູບວົງມົນຮີຈະຖືກແຕ້ມເປັນເສັ້ນ</translation>
+        <translation>ຖ້າຂະໜາດໜ້າຈໍຂອງແກນໂທວົງຮີໜ້ອຍກວ່າຄ່ານີ້, ວົງຮີຈະຖືກແຕ້ມເປັນເສັ້ນ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5561"></location>
@@ -40744,12 +40750,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5639"></location>
         <source>Ellipse Minor Axis:</source>
-        <translation>ແກນໂທຂອງຮູບວົງມົນຮີ:</translation>
+        <translation>ແກນໂທຂອງວົງຮີ:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5545"></location>
         <source>If screen size for major ellipse axis is less than value, ellipse is drawn as point</source>
-        <translation>ຖ້າຂະໜາດໜ້າຈໍສຳລັບແກນເອກຮູບວົງມົນຮີໜ້ອຍກວ່າຄ່ານີ້, ຮູບວົງມົນຮີຈະຖືກແຕ້ມເປັນຈຸດ</translation>
+        <translation>ຖ້າຂະໜາດໜ້າຈໍສຳລັບແກນເອກວົງຮີໜ້ອຍກວ່າຄ່ານີ້, ວົງຮີຈະຖືກແຕ້ມເປັນຈຸດ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5394"></location>
@@ -40840,12 +40846,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1688"></location>
         <source>If checked, "Snap To Grid" is ignored if grid is not drawn.</source>
-        <translation>ຖ້າໝາຍເລືອກ, "Snap To Grid" (ເກາະຈັບຕາຂ່າຍ) ຈະຖືກລະເລີຍ ຖ້າຕາຂ່າຍບໍ່ໄດ້ຖືກແຕ້ມ.</translation>
+        <translation>ຖ້າໝາຍເລືອກ, &quot;Snap To Grid&quot; (ເກາະຈັບຕາຕະລາງ) ຈະຖືກລະເລີຍ ຖ້າຕາຕະລາງບໍ່ໄດ້ຖືກແຕ້ມ.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1691"></location>
         <source>Ignore "Snap to Grid" if grid is not drawn</source>
-        <translation>ລະເລີຍ "Snap to Grid" ຖ້າບໍ່ໄດ້ແຕ້ມຕາຂ່າຍ</translation>
+        <translation>ລະເລີຍ &quot;Snap to Grid&quot; ຖ້າບໍ່ໄດ້ແຕ້ມຕາຕະລາງ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="3873"></location>
@@ -41202,7 +41208,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2102"></location>
         <source>Base Angle Ray Color:</source>
-        <translation>ສີລັດສະໝີມຸມພື້ນຖານ:</translation>
+        <translation>ສີຂອງລັງສີມຸມພື້ນຖານ:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2135"></location>
@@ -41222,17 +41228,17 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="993"></location>
         <source>Type of grid to be drawn</source>
-        <translation>ຊະນິດຕາຂ່າຍທີ່ຈະຖືກແຕ້ມ</translation>
+        <translation>ຊະນິດຕາຕະລາງທີ່ຈະຖືກແຕ້ມ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1118"></location>
         <source>Decimal meta-grid every:</source>
-        <translation>ເມຕາຕາຂ່າຍທົດສະນິຍົມທຸກໆ:</translation>
+        <translation>Meta Grid ທົດສະນິຍົມທຸກໆ:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1125"></location>
         <source>Controls the frequency of major grid lines compared to minor grid lines.</source>
-        <translation>ຄວບຄຸມຄວາມຖີ່ຂອງເສັ້ນຕາຂ່າຍຫຼັກ ເມື່ອທຽບກັບເສັ້ນຕາຂ່າຍຍ່ອຍ.</translation>
+        <translation>ຄວບຄຸມຄວາມຖີ່ຂອງເສັ້ນຕາຕະລາງຫຼັກ ເມື່ອທຽບກັບເສັ້ນຕາຕະລາງຍ່ອຍ.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1633"></location>
@@ -41272,7 +41278,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1996"></location>
         <source>Min grid cell snap factor:</source>
-        <translation>ປັດໄຈເກາະຈັບຫ້ອງຕາຂ່າຍຕ່ຳສຸດ:</translation>
+        <translation>ປັດໄຈເກາະຈັບຫ້ອງຕາຕະລາງຕ່ຳສຸດ:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2003"></location>
@@ -41287,7 +41293,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2013"></location>
         <source>Grid cell factor used for snap to grid.</source>
-        <translation>ປັດໄຈຫ້ອງຕາຂ່າຍທີ່ໃຊ້ສຳລັບເກາະຈັບຕາຂ່າຍ.</translation>
+        <translation>ປັດໄຈຫ້ອງຕາຕະລາງທີ່ໃຊ້ສຳລັບເກາະຈັບຕາຕະລາງ.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2039"></location>
@@ -41308,12 +41314,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2142"></location>
         <source>Color of the ray that displays zero angle position</source>
-        <translation>ສີຂອງລັດສະໝີທີ່ສະແດງຕຳແໜ່ງມຸມສູນ</translation>
+        <translation>ສີຂອງລັງສີທີ່ສະແດງຕຳແໜ່ງມຸມສູນ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4264"></location>
         <source>If checked, it will be possible to enter value of angle in decimal degrees only. Otherwise, angles in surveyor, radiant, imperial degrees and bearing formats are allowed for input.  </source>
-        <translation>ຖ້າເລືອກ, ຈະສາມາດປ້ອນຄ່າມູມເປັນອົງສາທົດສະນິຍົມໄດ້ເທົ່ານັ້ນ. ຖ້າບໍ່ດັ່ງນັ້ນ, ຈະສາມາດປ້ອນມູມໃນຮູບແບບ ເຊີເວເຢີ (surveyor), ເຣເດຍ (radiant), ອິມພີຣຽວ (imperial) ແລະ ແບບບີຣິງ (bearing) ໄດ້. </translation>
+        <translation>ຖ້າເລືອກ, ຈະສາມາດປ້ອນຄ່າມຸມເປັນອົງສາທົດສະນິຍົມໄດ້ເທົ່ານັ້ນ. ຖ້າບໍ່ດັ່ງນັ້ນ, ຈະສາມາດປ້ອນມຸມໃນຮູບແບບ ເຊີເວເຢີ (surveyor), ເຣເດຍ (radiant), ອິມພີຣຽວ (imperial) ແລະ ແບບບີຣິງ (bearing) ໄດ້. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4267"></location>
@@ -41348,7 +41354,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4344"></location>
         <source>If selected, controls for picking values from drawing are available in Tool Options toolbar, allowing to pick length and angle values from drawing. </source>
-        <translation>ຖ້າເລືອກ, ຈະມີປຸ່ມຄວບຄຸມສຳລັບການເລືອກຄ່າຈາກແບບແຕ້ມໃນແຖບເຄື່ອງມື Tool Options, ເຊິ່ງຊ່ວຍໃຫ້ສາມາດເລືອກຄ່າຄວາມຍາວ ແລະ ມູມຈາກແບບແຕ້ມໄດ້. </translation>
+        <translation>ຖ້າເລືອກ, ຈະມີປຸ່ມຄວບຄຸມສຳລັບການເລືອກຄ່າຈາກແບບແຕ້ມໃນແຖບເຄື່ອງມື Tool Options, ເຊິ່ງຊ່ວຍໃຫ້ສາມາດເລືອກຄ່າຄວາມຍາວ ແລະ ມຸມຈາກແບບແຕ້ມໄດ້. </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4347"></location>
@@ -42140,7 +42146,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5214"></location>
         <source>Path to folder with hatch patterns</source>
-        <translation>ເສັ້ນທາງໄປຫາໂຟນເດີທີ່ເກັບລວດລາຍການແຕ້ມແຖບ (hatch patterns)</translation>
+        <translation>ເສັ້ນທາງໄປຫາໂຟນເດີທີ່ເກັບຮູບແບບລວດລາຍ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5172"></location>
@@ -42203,12 +42209,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.ui" line="127"></location>
         <source>Ellipses / Ellipse arcs</source>
-        <translation>ຮູບວົງມົນຮີ / ເສັ້ນໂຄ້ງວົງມົນຮີ</translation>
+        <translation>ວົງຮີ / ເສັ້ນໂຄ້ງວົງຮີ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.ui" line="135"></location>
         <source>Approximate ellipses and ellipse arcs with cubic béziers</source>
-        <translation>ປະມານຄ່າຮູບວົງມົນຮີ ແລະ ເສັ້ນໂຄ້ງວົງມົນຮີດ້ວຍເສັ້ນໂຄ້ງເບຊິເອ (cubic béziers)</translation>
+        <translation>ປະມານຄ່າວົງຮີ ແລະ ເສັ້ນໂຄ້ງວົງຮີດ້ວຍເສັ້ນໂຄ້ງເບຊິເອ (cubic béziers)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.ui" line="211"></location>
@@ -42274,9 +42280,9 @@ because it does not take into account the reference point in the &lt;use&gt;.</s
         <source>MakerCAM as of March 2015 cannot display ellipses and ellipse arcs correctly, 
 when they are created using the &lt;ellipse&gt; tag  with a rotation in 
 the &lt;transform&gt; attribute or as &lt;path&gt; using elliptic arc segments.</source>
-        <translation>MakerCAM ເວີຊັນເດືອນມີນາ 2015 ບໍ່ສາມາດສະແດງຮູບວົງມົນຮີ ແລະ ເສັ້ນໂຄ້ງວົງມົນຮີໄດ້ຢ່າງຖືກຕ້ອງ,
-ເມື່ອພວກມັນຖືກສ້າງຂຶ້ນໂດຍໃຊ້ແທັກ &lt;ellipse&gt; ພ້ອມກັບການໝຸນໃນ
-ແອດທຣິບິວ &lt;transform&gt; ຫຼື ເປັນ &lt;path&gt; ທີ່ໃຊ້ສ່ວນຂອງເສັ້ນໂຄ້ງວົງມົນຮີ.</translation>
+        <translation>MakerCAM ເວີຊັນເດືອນມີນາ 2015 ບໍ່ສາມາດສະແດງວົງຮີ ແລະ ເສັ້ນໂຄ້ງວົງຮີໄດ້ຢ່າງຖືກຕ້ອງ,
+ເມື່ອພວກມັນຖືກສ້າງຂຶ້ນໂດຍໃຊ້ແທັກ &lt;ellipse&gt; ພ້ອມກັບການໝູນໃນ
+ແອດທຣິບິວ &lt;transform&gt; ຫຼື ເປັນ &lt;path&gt; ທີ່ໃຊ້ສ່ວນຂອງເສັ້ນໂຄ້ງວົງຮີ.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/export/makercam/qg_dlgoptionsmakercam.cpp" line="34"></location>
@@ -42527,7 +42533,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="261"></location>
         <source>Rotation angle</source>
-        <translation>ມຸມການໝຸນ</translation>
+        <translation>ມຸມການໝູນ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="294"></location>
@@ -43032,7 +43038,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1510"></location>
         <source>[FE50-FE6F] Small Form Variants</source>
-        <translation>[FE50-FE6F] ຮູບແບບມິຕິນ້ອຍ</translation>
+        <translation>[FE50-FE6F] ຮູບແບບຂະໜາດນ້ອຍ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlgtext.ui" line="1515"></location>
@@ -44110,7 +44116,7 @@ Please specify a different name.</source>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1165"></location>
         <source>Dimensional layer may be added only for normal active layer.
 </source>
-        <translation>ເລເຢີມິຕິສາມາດເພີ່ມໄດ້ສະເພາະກັບເລເຢີປົກກະຕິທີ່ກຳລັງໃຊ້ງານຢູ່ເທົ່ານັ້ນ.
+        <translation>ເລເຢີບອກຂະໜາດສາມາດເພີ່ມໄດ້ສະເພາະກັບເລເຢີປົກກະຕິທີ່ກຳລັງໃຊ້ງານຢູ່ເທົ່ານັ້ນ.
 </translation>
     </message>
     <message>
@@ -45281,7 +45287,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1080"></location>
         <source>length</source>
-        <translation>ຄວາມຍາວ</translation>
+        <translation>length</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1083"></location>
@@ -45313,7 +45319,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1088"></location>
         <source>trim</source>
-        <translation>ຕັດຂອບ</translation>
+        <translation>trim</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1168"></location>
@@ -46340,7 +46346,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="407"></location>
         <source>a</source>
         <comment>arc point radius</comment>
-        <translation>ແມ່ນ</translation>
+        <translation>a</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="412"></location>
@@ -47172,7 +47178,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1092"></location>
         <source>y</source>
-        <translation>ຄ່າ</translation>
+        <translation>y</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1093"></location>
@@ -47192,7 +47198,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1098"></location>
         <source>offset</source>
-        <translation>ອອບເຊັດ</translation>
+        <translation>offset</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1099"></location>
@@ -47283,7 +47289,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1119"></location>
         <source>middle</source>
-        <translation>ຈຸດກາງ</translation>
+        <translation>middle</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1120"></location>
@@ -47348,12 +47354,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1134"></location>
         <source>mid-vert</source>
-        <translation>ຂະໜາດປານກາງ</translation>
+        <translation>mid-vert</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1135"></location>
         <source>mid-hor</source>
-        <translation>ກາງ</translation>
+        <translation>mid-hor</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1137"></location>
@@ -47378,22 +47384,22 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1143"></location>
         <source>edge-none</source>
-        <translation>ບໍ່ມີຂອບ</translation>
+        <translation>edge-none</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1144"></location>
         <source>edge-both</source>
-        <translation>ຂອບທັງ:</translation>
+        <translation>edge-both</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1145"></location>
         <source>edge-start</source>
-        <translation>ເລີ່ມຂອບ</translation>
+        <translation>edge-start</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1146"></location>
         <source>edge-end</source>
-        <translation>ຂອບ</translation>
+        <translation>edge-end</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1147"></location>
@@ -47433,7 +47439,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1154"></location>
         <source>distance</source>
-        <translation>ໄລຍະຫ່າງ</translation>
+        <translation>distance</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1209"/>
@@ -47673,7 +47679,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="38"></location>
         <source>/CustomColor%1</source>
-        <translation>ຕົວຕອງ %1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="39"></location>
@@ -47710,7 +47716,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/lib/actions/lc_modifiersinfo.h" line="31"></location>
         <source>Use Mirrored Angle</source>
-        <translation>ໃຊ້ສາຍແວ່ນມຸມ</translation>
+        <translation>ໃຊ້ມຸມທີ່ສະທ້ອນ</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/lc_modifiersinfo.h" line="32"></location>
@@ -48649,12 +48655,12 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="496"></location>
         <source>Spline by Points</source>
-        <translation>ເສັ້ນສະປລາຍຕາມຈຸດ</translation>
+        <translation>ເສັ້ນໂຄ້ງສະປຼາຍຕາມຈຸດ</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="500"></location>
         <source>Ellipse</source>
-        <translation>ວົງລີ</translation>
+        <translation>ວົງຮີ</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="504"></location>
@@ -48684,32 +48690,32 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="524"></location>
         <source>Dim. Linear</source>
-        <translation>ເສັ້ນມິຕິແບບເສັ້ນຊື່</translation>
+        <translation>ເສັ້ນບອກຂະໜາດແບບເສັ້ນຊື່</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="528"></location>
         <source>Dim. Aligned</source>
-        <translation>ເສັ້ນມິຕິແບບຂະໜານອົງປະກອບ</translation>
+        <translation>ເສັ້ນບອກຂະໜາດແບບຂະໜານອົງປະກອບ</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="532"></location>
         <source>Dim. Diametric</source>
-        <translation>ເສັ້ນມິຕິເສັ້ນຜ່ານສູນກາງ</translation>
+        <translation>ເສັ້ນບອກຂະໜາດເສັ້ນຜ່ານສູນກາງ</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="536"></location>
         <source>Dim. Radial</source>
-        <translation>ເສັ້ນມິຕິລັດສະໝີ</translation>
+        <translation>ເສັ້ນບອກຂະໜາດລັດສະໝີ</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="540"></location>
         <source>Dim. Arc</source>
-        <translation>ເສັ້ນມິຕິເສັ້ນໂຄ້ງ</translation>
+        <translation>ເສັ້ນບອກຂະໜາດເສັ້ນໂຄ້ງ</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="544"></location>
         <source>Dim. Ordinate</source>
-        <translation>ເສັ້ນມິຕິແບບພິກັດ</translation>
+        <translation>ເສັ້ນບອກຂະໜາດແບບພິກັດ</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="548"></location>
@@ -48978,12 +48984,12 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimangular.cpp" line="222"></location>
         <source>Specify dimension arc line location</source>
-        <translation>ກຳນົດຕຳແໜ່ງເສັ້ນໂຄ້ງບອກມິຕິ</translation>
+        <translation>ກຳນົດຕຳແໜ່ງເສັ້ນໂຄ້ງບອກຂະໜາດ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimangular.cpp" line="225"></location>
         <source>Enter dimension text:</source>
-        <translation>ປ້ອນຂໍ້ຄວາມບອກມິຕິ:</translation>
+        <translation>ປ້ອນຂໍ້ຄວາມບອກຂະໜາດ:</translation>
     </message>
 </context>
 <context>
@@ -49014,7 +49020,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimlinear.cpp" line="211"></location>
         <source>Specify second extension line origin</source>
-        <translation>ກຳນົດຈຸດເລີ່ມຕົ້ນຂອງເສັ້ນຊ່ວຍບອກຂະໜາດທີສອງ</translation>
+        <translation>ລະບຸຈຸດກຳເນີດຂອງເສັ້ນຊ່ວຍບອກຂະໜາດທີສອງ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimlinear.cpp" line="211"></location>
@@ -49025,12 +49031,12 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimlinear.cpp" line="221"></location>
         <source>Specify dimension line location</source>
-        <translation>ກຳນົດຕຳແໜ່ງເສັ້ນມິຕິ</translation>
+        <translation>ກຳນົດຕຳແໜ່ງເສັ້ນບອກຂະໜາດ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimlinear.cpp" line="221"></location>
         <source>Snap to Adjacent Dim</source>
-        <translation>ເກາະຈັບໃສ່ມິຕິຂ້າງຄຽງ</translation>
+        <translation>ເກາະຈັບໃສ່ການບອກຂະໜາດຂ້າງຄຽງ</translation>
     </message>
 </context>
 <context>
@@ -49038,27 +49044,27 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipse4points.cpp" line="273"></location>
         <source>Specify the first point on ellipse</source>
-        <translation>ກຳນົດຈຸດທຳອິດເທິງວົງລີ</translation>
+        <translation>ກຳນົດຈຸດທຳອິດເທິງວົງຮີ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipse4points.cpp" line="276"></location>
         <source>Specify the second point on ellipse</source>
-        <translation>ກຳນົດຈຸດທີສອງເທິງວົງລີ</translation>
+        <translation>ກຳນົດຈຸດທີສອງເທິງວົງຮີ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipse4points.cpp" line="279"></location>
         <source>Specify the third point on ellipse</source>
-        <translation>ກຳນົດຈຸດທີສາມເທິງວົງລີ</translation>
+        <translation>ກຳນົດຈຸດທີສາມເທິງວົງຮີ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipse4points.cpp" line="282"></location>
         <source>Specify the fourth point on ellipse</source>
-        <translation>ກຳນົດຈຸດທີສີ່ເທິງວົງລີ</translation>
+        <translation>ກຳນົດຈຸດທີສີ່ເທິງວົງຮີ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipse4points.cpp" line="165"></location>
         <source>Can not determine uniquely an ellipse</source>
-        <translation>ບໍ່ສາມາດກຳນົດວົງລີໄດ້</translation>
+        <translation>ບໍ່ສາມາດກຳນົດວົງຮີໄດ້</translation>
     </message>
 </context>
 <context>
@@ -49073,7 +49079,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseaxis.cpp" line="336"></location>
         <source>Specify ellipse center</source>
-        <translation>ກຳນົດສູນກາງວົງລີ</translation>
+        <translation>ກຳນົດສູນກາງວົງຮີ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseaxis.cpp" line="339"></location>
@@ -49101,22 +49107,22 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsecenter3points.cpp" line="243"></location>
         <source>Specify the center of ellipse</source>
-        <translation>ກຳນົດສູນກາງວົງລີ</translation>
+        <translation>ກຳນົດສູນກາງວົງຮີ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsecenter3points.cpp" line="246"></location>
         <source>Specify the first point on ellipse</source>
-        <translation>ກຳນົດຈຸດທຳອິດເທິງວົງລີ</translation>
+        <translation>ກຳນົດຈຸດທຳອິດເທິງວົງຮີ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsecenter3points.cpp" line="249"></location>
         <source>Specify the second point on ellipse</source>
-        <translation>ກຳນົດຈຸດທີສອງເທິງວົງລີ</translation>
+        <translation>ກຳນົດຈຸດທີສອງເທິງວົງຮີ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsecenter3points.cpp" line="252"></location>
         <source>Specify the third point on ellipse</source>
-        <translation>ກຳນົດຈຸດທີສາມເທິງວົງລີ</translation>
+        <translation>ກຳນົດຈຸດທີສາມເທິງວົງຮີ</translation>
     </message>
 </context>
 <context>
@@ -49129,22 +49135,22 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsefocipoint.cpp" line="192"></location>
         <source>Specify first focus of ellipse</source>
-        <translation>ກຳນົດຈຸດໂຟກັດທຳອິດຂອງວົງລີ</translation>
+        <translation>ກຳນົດຈຸດໂຟກັດທຳອິດຂອງວົງຮີ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsefocipoint.cpp" line="195"></location>
         <source>Specify second focus of ellipse</source>
-        <translation>ກຳນົດຈຸດໂຟກັດທີສອງຂອງວົງລີ</translation>
+        <translation>ກຳນົດຈຸດໂຟກັດທີສອງຂອງວົງຮີ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsefocipoint.cpp" line="198"></location>
         <source>Specify a point on ellipse or total distance to foci</source>
-        <translation>ກຳນົດຈຸດເທິງວົງລີ ຫຼື ໄລຍະລວມໄປຫາຈຸດໂຟກັດ</translation>
+        <translation>ກຳນົດຈຸດເທິງວົງຮີ ຫຼື ໄລຍະລວມໄປຫາຈຸດໂຟກັດ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsefocipoint.cpp" line="163"></location>
         <source>specify a point on ellipse, or total distance to foci</source>
-        <translation>ກຳນົດຈຸດເທິງວົງລີ, ຫຼື ໄລຍະລວມໄປຫາຈຸດໂຟກັດ</translation>
+        <translation>ກຳນົດຈຸດເທິງວົງຮີ, ຫຼື ໄລຍະລວມໄປຫາຈຸດໂຟກັດ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipsefocipoint.cpp" line="178"></location>
@@ -49177,7 +49183,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipseinscribe.cpp" line="226"></location>
         <source>Can not determine uniquely an ellipse</source>
-        <translation>ບໍ່ສາມາດກຳນົດວົງລີໄດ້</translation>
+        <translation>ບໍ່ສາມາດກຳນົດວົງຮີໄດ້</translation>
     </message>
 </context>
 <context>
@@ -49270,7 +49276,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineorthtan.cpp" line="258"></location>
         <source>Select circle, arc or ellipse</source>
-        <translation>ເລືອກວົງມົນ, ເສັ້ນໂຄ້ງ ຫຼື ວົງລີ</translation>
+        <translation>ເລືອກວົງມົນ, ເສັ້ນໂຄ້ງ ຫຼື ວົງຮີ</translation>
     </message>
 </context>
 <context>
@@ -49327,7 +49333,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent1.cpp" line="197"></location>
         <source>Select circle, arc or ellipse</source>
-        <translation>ເລືອກວົງມົນ, ເສັ້ນໂຄ້ງ ຫຼື ວົງລີ</translation>
+        <translation>ເລືອກວົງມົນ, ເສັ້ນໂຄ້ງ ຫຼື ວົງຮີ</translation>
     </message>
 </context>
 <context>
@@ -49335,12 +49341,12 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent2.cpp" line="217"></location>
         <source>Select first circle/ellipse/parabola</source>
-        <translation>ເລືອກ ວົງມົນ/ວົງລີ/ພາຣາໂບລາ ທຳອິດ</translation>
+        <translation>ເລືອກ ວົງມົນ/ວົງຮີ/ພາຣາໂບລາ ທຳອິດ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent2.cpp" line="220"></location>
         <source>Select second circle/ellipse/parabola</source>
-        <translation>ເລືອກ ວົງມົນ/ວົງລີ/ພາຣາໂບລາ ທີສອງ</translation>
+        <translation>ເລືອກ ວົງມົນ/ວົງຮີ/ພາຣາໂບລາ ທີສອງ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent2.cpp" line="223"></location>
@@ -49777,7 +49783,7 @@ End: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="197"></location>
         <source>Printout offset ignores relative zero. Ignoring '@'</source>
-        <translation>ອັອບເຊັດການພິມອອກບໍ່ສົນໃຈສູນສຳພັນ. ກໍາລັງຂ້າມ '@'</translation>
+        <translation>ອັອບເຊັດການພິມອອກບໍ່ສົນໃຈສູນສຳພັນ. ກຳລັງຂ້າມ &apos;@&apos;</translation>
     </message>
     <message>
         <location filename="../src/actions/print_preview/rs_actionprintpreview.cpp" line="177"></location>
@@ -49811,7 +49817,7 @@ End: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/snap/rs_actionsnapintersectionmanual.cpp" line="142"></location>
         <source>Select first entity</source>
-        <translation>ເລືອກອົງປະກອບທໍາອິດ</translation>
+        <translation>ເລືອກອົງປະກອບທຳອິດ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/snap/rs_actionsnapintersectionmanual.cpp" line="145"></location>
@@ -49824,12 +49830,12 @@ End: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiontoolregeneratedimensions.cpp" line="63"></location>
         <source>Regenerated %1 dimension entities</source>
-        <translation>ສ້າງອົງປະກອບມິຕິໃໝ່ແລ້ວ %1 ລາຍການ</translation>
+        <translation>ສ້າງອົງປະກອບການບອກຂະໜາດໃໝ່ແລ້ວ %1 ລາຍການ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiontoolregeneratedimensions.cpp" line="66"></location>
         <source>No dimension entities found</source>
-        <translation>ບໍ່ພົບອົງປະກອບມິຕິ</translation>
+        <translation>ບໍ່ພົບອົງປະກອບການບອກຂະໜາດ</translation>
     </message>
 </context>
 <context>
@@ -49850,7 +49856,7 @@ End: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/zoom/rs_actionzoomwindow.cpp" line="140"></location>
         <source>Specify first edge</source>
-        <translation>ກຳນົດຂອບທໍາອິດ</translation>
+        <translation>ກຳນົດຂອບທຳອິດ</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/zoom/rs_actionzoomwindow.cpp" line="143"></location>
@@ -50107,7 +50113,7 @@ End: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="32"></location>
         <source>Dimension Options</source>
-        <translation>ຕົວເລືອກມິຕິ</translation>
+        <translation>ຕົວເລືອກການບອກຂະໜາດ</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="50"></location>
@@ -50117,7 +50123,7 @@ End: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="57"></location>
         <source>Dimension style</source>
-        <translation>ຮູບແບບມິຕິ</translation>
+        <translation>ຮູບແບບການບອກຂະໜາດ</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="76"></location>
@@ -50132,7 +50138,7 @@ End: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="115"></location>
         <source>User-specified dimension's label. Enter value or either "&lt;&gt;" or just leave empty for automatic measurement.</source>
-        <translation>ປ້າຍມິຕິທີ່ຜູ້ໃຊ້ກຳນົດເອງ. ປ້ອນຄ່າ ຫຼື "&lt;&gt;" ຫຼື ປະຫວ່າງໄວ້ເພື່ອໃຫ້ວັດແທກອັດຕະໂນມັດ.</translation>
+        <translation>ປ້າຍບອກຂະໜາດທີ່ຜູ້ໃຊ້ກຳນົດເອງ. ປ້ອນຄ່າ ຫຼື &quot;&lt;&gt;&quot; ຫຼື ປະຫວ່າງໄວ້ເພື່ອໃຫ້ວັດແທກອັດຕະໂນມັດ.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="128"></location>
@@ -50194,17 +50200,17 @@ End: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="265"></location>
         <source>Dimension angle</source>
-        <translation>ມຸມມິຕິ</translation>
+        <translation>ມຸມການບອກຂະໜາດ</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="287"></location>
         <source>Horizontal Dimension</source>
-        <translation>ມິຕິແນວນອນ</translation>
+        <translation>ການບອກຂະໜາດແນວນອນ</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="316"></location>
         <source>Vertical Dimension</source>
-        <translation>ມິຕິແນວຕັ້ງ</translation>
+        <translation>ການບອກຂະໜາດແນວຕັ້ງ</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="333"></location>
@@ -50214,12 +50220,12 @@ End: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="346"></location>
         <source>Distance between dimensions in baseline</source>
-        <translation>ໄລຍະຫ່າງລະຫວ່າງມິຕິໃນເສັ້ນພື້ນຖານ</translation>
+        <translation>ໄລຍະຫ່າງລະຫວ່າງການບອກຂະໜາດໃນເສັ້ນພື້ນຖານ</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="353"></location>
         <source>If checked, distance between dimenions is defined by mouse</source>
-        <translation>ຖ້າເລືອກ, ໄລຍະຫ່າງລະຫວ່າງມິຕິຈະຖືກກຳນົດດ້ວຍເມົ້າ</translation>
+        <translation>ຖ້າເລືອກ, ໄລຍະຫ່າງລະຫວ່າງການບອກຂະໜາດຈະຖືກກຳນົດດ້ວຍເມົ້າ</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="356"></location>
@@ -50230,12 +50236,12 @@ End: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="376"></location>
         <source>Angle for dimension</source>
-        <translation>ມຸມສຳລັບມິຕິ</translation>
+        <translation>ມຸມສຳລັບການບອກຂະໜາດ</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="383"></location>
         <source>If checked, angle for dimension is defined by mouse</source>
-        <translation>ຖ້າເລືອກ, ມຸມສຳລັບມິຕິຈະຖືກກຳນົດດ້ວຍເມົ້າ</translation>
+        <translation>ຖ້າເລືອກ, ມຸມສຳລັບການບອກຂະໜາດຈະຖືກກຳນົດດ້ວຍເມົ້າ</translation>
     </message>
 </context>
 <context>
@@ -50253,7 +50259,7 @@ End: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapdistoptions.ui" line="60"></location>
         <source>Distance of snap point from initially resolved snap point</source>
-        <translation>ໄລຍະຫ່າງຂອງຈຸດຈັບຈາກຈຸດທີ່ກຳນົດໄວ້ຕອນທໍາອິດ</translation>
+        <translation>ໄລຍະຫ່າງຂອງຈຸດຈັບຈາກຈຸດທີ່ກຳນົດໄວ້ຕອນທຳອິດ</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapdistoptions.ui" line="67"></location>

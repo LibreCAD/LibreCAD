@@ -172,7 +172,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="78"/>
         <source>Line type</source>
-        <translation>Druh čáry</translation>
+        <translation>Typ čáry</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="79"/>
@@ -299,7 +299,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="174"/>
         <source>MTEXT</source>
-        <translation>VTEXT</translation>
+        <translation>VÍCEŘÁDKOVÝ TEXT</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="177"/>
@@ -309,12 +309,12 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="181"/>
         <source>TEXTCONTENT</source>
-        <translation>TEXTCONTENT</translation>
+        <translation>OBSAH TEXTU</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="184"/>
         <source>INSERT</source>
-        <translation>VLOŽENÉ</translation>
+        <translation>REFERENCE BLOKU</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="187"/>
@@ -379,17 +379,17 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="232"/>
         <source>SPLINE</source>
-        <translation>SPLAJNA</translation>
+        <translation>SPLAJN</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="235"/>
         <source>SPLINEPOINTS</source>
-        <translation>BODY SPLAJNY</translation>
+        <translation>SPLAJN PŘES BODY</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="238"/>
         <source>HATCH</source>
-        <translation>ŠRAFA</translation>
+        <translation>ŠRAFY</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="241"/>
@@ -404,7 +404,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="247"/>
         <source>DIMLINEAR</source>
-        <translation>PŘÍMÁ KÓTA</translation>
+        <translation>LINEÁRNÍ KÓTA</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="250"/>
@@ -692,7 +692,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../divide/divide.cpp" line="439"/>
         <source>Empty Entity</source>
-        <translation>Prázdná entita</translation>
+        <translation>Prázdný prvek</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="447"/>
@@ -707,7 +707,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../divide/divide.cpp" line="455"/>
         <source>Layer</source>
-        <translation>Vrstva</translation>
+        <translation>Hladina</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="457"/>
@@ -791,7 +791,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../divide/divide.cpp" line="513"/>
         <source>CIRCLE</source>
-        <translation>KRUH</translation>
+        <translation>KRUŽNICE</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="519"/>
@@ -806,7 +806,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../divide/divide.cpp" line="525"/>
         <source>POLYLINE</source>
-        <translation>POLYLINKA</translation>
+        <translation>KŘIVKA</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="526"/>
@@ -849,7 +849,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../divide/dividedlg.cpp" line="68"/>
         <source>Layers</source>
-        <translation>Vrstvy</translation>
+        <translation>Hladiny</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="74"/>
@@ -904,7 +904,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../divide/dividedlg.cpp" line="245"/>
         <source>&lt;i&gt;&quot;New&quot;&lt;/i&gt;&lt;br&gt;Enter name&lt;br&gt;for a new layer&lt;br&gt;(if required?) to&lt;br&gt;draw ticks on.</source>
-        <translation>&lt;i&gt;&quot;Nový&quot;&lt;/i&gt;&lt;br&gt;Zadejte název nové vrstvy (volitelné), na kterou se budou kreslit čárky.</translation>
+        <translation>&lt;i&gt;&quot;Nový&quot;&lt;/i&gt;&lt;br&gt;Zadejte název nové hladiny (volitelné), do které se budou kreslit čárky.</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="250"/>
@@ -1005,7 +1005,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../gear/gear.cpp" line="123"/>
         <source>Use layers?</source>
-        <translation>Použít vrstvy?</translation>
+        <translation>Použít hladiny?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="124"/>
