@@ -1625,6 +1625,13 @@ TEST_CASE("Worker client generates crossing mixed-bulge polyline regions",
     RS_Layer layer{QStringLiteral("mixed-bulge source")};
     RS_Line attributes{&owner, RS_LineData{{0, 0}, {1, 0}}};
     attributes.setLayer(&layer);
+    RS_Polyline oracleSource;
+    oracleSource.addVertex({20, 10});
+    oracleSource.addVertex({20, -10}, -0.5);
+    oracleSource.addVertex({-20, 10});
+    oracleSource.addVertex({-20, -10});
+    oracleSource.setClosed(true);
+    oracleSource.endPolyline();
 
     constexpr double rotation = 0.37;
     struct Lane {
@@ -1732,6 +1739,31 @@ TEST_CASE("Worker client generates crossing mixed-bulge polyline regions",
                 branches.push_back(spline->getData());
             }
             CHECK(owner.count() == 0);
+
+            for (const RS_SplineData& branch : branches) {
+                const RS_Spline branchSpline{nullptr, branch};
+                double start = 0.0;
+                double end = 0.0;
+                REQUIRE(branchSpline.getParameterDomain(start, end));
+                constexpr int sourceDistanceSamples = 256;
+                for (int sample = 0; sample <= sourceDistanceSamples; ++sample) {
+                    const double fraction = static_cast<double>(sample) /
+                                            sourceDistanceSamples;
+                    RS_Vector point = branchSpline.getPointAt(
+                        start + (end - start) * fraction);
+                    if (frame > 0)
+                        point = (point - translation).rotated(-rotation);
+                    double bestOffsetDistanceError = std::numeric_limits<double>::infinity();
+                    for (const RS_Entity* sourceSegment : oracleSource.getEntityList()) {
+                        const RS_Vector nearest = sourceSegment->getNearestPointOnEntity(point, true);
+                        bestOffsetDistanceError = std::min(
+                            bestOffsetDistanceError,
+                            std::abs(nearest.distanceTo(point) - std::abs(signedDistance)));
+                    }
+                    CAPTURE(frame, signedDistance, sample, bestOffsetDistanceError);
+                    CHECK(bestOffsetDistanceError <= frameComparisonTolerance);
+                }
+            }
 
             RS_Graphic graphic;
             graphic.initForNewDocument();
