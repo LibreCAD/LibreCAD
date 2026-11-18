@@ -1624,8 +1624,8 @@ TEST_CASE("Worker client generates crossing mixed-bulge polyline regions",
     attributes.setLayer(&layer);
 
     constexpr double rotation = 0.37;
-    const std::array<RS_Vector, 3> translations{{
-        {0.0, 0.0}, {1e6, -2e6}, {1e9, -2e9}}};
+    const std::array<RS_Vector, 4> translations{{
+        {0.0, 0.0}, {1e6, -2e6}, {1e9, -2e9}, {1e12, -2e12}}};
     std::array<std::vector<RS_SplineData>, 2> originBranches;
     qint64 requestId = 501;
     for (std::size_t frame = 0; frame < translations.size(); ++frame) {
@@ -1652,6 +1652,32 @@ TEST_CASE("Worker client generates crossing mixed-bulge polyline regions",
             auto liveSource = source->makeGenerationEntity();
             REQUIRE(liveSource);
             const auto directOptions = LC_OffsetWorkerTolerance::directOptions(definition, *liveSource);
+            if (frame == 3) {
+                REQUIRE_FALSE(directOptions);
+                const Req::Request refusalRequest{
+                    token(requestId), Req::GenerateSource{definition, {}}};
+                const auto refusalBytes = Req::encode(refusalRequest);
+                REQUIRE(refusalBytes);
+                const auto decodedRefusal = Req::decode(*refusalBytes);
+                REQUIRE(decodedRefusal);
+                Receipts refusalReceipts;
+                REQUIRE(owned.get().submit(refusalRequest, Client::Mode::Commit,
+                                           refusalReceipts.into(0)));
+                rt.until([&] { return refusalReceipts.calls[0] != 0; });
+                const auto& refusalCompletion = completed(
+                    refusalReceipts.at(0), requestId, 7);
+                REQUIRE(std::holds_alternative<Reply::Native>(
+                    refusalCompletion.reply().result));
+                const auto& refusal = std::get<Reply::Native>(
+                    refusalCompletion.reply().result);
+                CHECK(refusal.refusal == LC_OffsetCurveRefusal::InvalidInput);
+                CHECK(refusal.engineRuns == 0);
+                CHECK(refusal.ordinaryStatus == Reply::OrdinaryStatus::None);
+                CHECK(refusal.ordinary.empty());
+                CHECK_FALSE(refusal.curve);
+                CHECK(owner.count() == 0);
+                continue;
+            }
             REQUIRE(directOptions);
             const double frameComparisonTolerance =
                 2.5 * directOptions->tolerance.requestedGeometry;

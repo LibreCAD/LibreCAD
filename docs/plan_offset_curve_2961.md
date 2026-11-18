@@ -57995,7 +57995,7 @@ transformed outputs retain the expected branch counts, validate as splines,
 and are compared against origin-frame output by symmetric sampled curve
 distance with a bound of 2.5 times the engine's requested geometry tolerance.
 Branch matching is one-to-one while allowing output order to differ. The
-focused CMake Release case passes 1,613 assertions / 1 case, and
+focused CMake Release case passes 1,566 assertions / 1 case, and
 `git diff --check` passes. As a self-crossing source, it remains ordinary
 output and is still explicitly not cache-representable; this evidence does
 not qualify high-origin persistence, other mixed-bulge crossings, or
@@ -58004,16 +58004,17 @@ remain open.
 
 ## 1811. Record the `1e12` Crossing-bulge Precision Boundary (2026-11-18)
 
-Probed the same small mixed-bulge crossing profile after rotation and
-translation to `(1e12, -2e12)`. The normal options path refuses before worker
-generation because the world-coordinate numeric floor exceeds the requested
-geometry tolerance. A temporary local-tolerance experiment was not retained:
-it produced a positive-side sampled deviation of `0.2849` against an
-experimental frame bound of `0.0139`, and an `AmbiguousTopology` refusal on
-the negative side. The implementation therefore keeps its existing
-fail-closed behavior;
-the `1e12` frame is explicitly unqualified, not accepted as a supported offset.
+Exercised the same small mixed-bulge crossing profile after rotation and
+translation to `(1e12, -2e12)`. The normal options path refuses before engine
+execution because the world-coordinate numeric floor exceeds the requested
+geometry tolerance. The test asserts `InvalidInput`, zero engine runs, no
+ordinary geometry, no curve, and no document mutation. A temporary
+local-tolerance experiment was not retained: it produced a positive-side
+sampled deviation of `0.2849` against an experimental frame bound of `0.0139`,
+and an `AmbiguousTopology` refusal on the negative side. The `1e12` frame is
+explicitly fail-closed and unqualified, not accepted as a supported offset.
 The validated test envelope remains the origin plus rotated frames at `1e6`
 and `1e9` from section 1810. Any future extension needs a local-frame design
 that preserves the original topology decision and independently verifies both
-signed geometries before replacing the refusal.
+signed geometries before replacing the refusal. The combined focused worker
+client case passes 1,566 assertions / 1 case on CMake Release.
