@@ -58926,8 +58926,8 @@ normalizes lengths before interval bounding, carrying an explicit allowance for
 roundoff from the original coordinates. This lets the same continuous
 candidate-span claim be tested at multiple uniform scales without using a
 scale-dependent absolute slack. The qualified `.15` bulge / `.25` distance
-profile passes at scales `1e-3` and `10` in addition to the existing origin,
-rotation, translation, and reflection matrix.
+profile passes at scales `1e-3`, `10`, and `1e3` in addition to the existing
+origin, rotation, translation, and reflection matrix.
 
 At candidate junctions the certificate checks all exact spans within one error
 budget of the nearest midpoint span, instead of allowing an arbitrary
@@ -58935,18 +58935,17 @@ nearest-only tie to force subdivision failure. Source circular arcs retain
 their source-derived angular domains; generated arc provenance is used only
 for round joins whose center matches an original polyline vertex. This avoids
 interpreting a source arc's cumulative polyline parameter as a circle angle.
-The certificate remains a union-of-spans locus check, not an independent
-retained-side or cycle oracle.
+When a subcurve straddles a candidate-span junction, a second certificate
+checks whether its four Bezier controls fit inside a disk around an exact
+endpoint in the candidate union. The Bezier convex-hull property then bounds
+the whole subcurve by that endpoint without assigning it to either adjacent
+span. This certifies the `1000x` row that was previously unresolved. The result
+remains a union-of-spans locus check, not an independent retained-side or cycle
+oracle, and does not establish general scale invariance.
 
-A `1000x` probe returns `Ok`, with kernel-reported `maxObservedError`
-`0.4209068` below `requestedGeometry/8 = 0.5927942`, but the independent
-continuous candidate-span certificate cannot prove the output. It is therefore
-not included as a passing scale claim; determine whether this is an oracle
-limitation or a geometric mismatch before admitting the scale. This bounded
-profile does not establish general scale invariance or retained-side topology.
-
-Validation: the focused mixed-bulge selector passes 880 assertions across four
+Validation: the focused mixed-bulge selector passes 886 assertions across four
 cases; `[region-boundary]` passes 2,886 assertions across six cases. Code
-commits: `0fc0e8a99` (parameter mapping) and `6f8fc9654` (certificate).
+commits: `0fc0e8a99` (parameter mapping), `6f8fc9654` (normalized
+candidate-span certificate), and `8e897dd99` (junction endpoint bound).
 Larger-scale certification, expected cycle/topology independence, and other
 profile/distance combinations remain open.
