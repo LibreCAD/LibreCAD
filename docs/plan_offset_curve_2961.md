@@ -58474,3 +58474,28 @@ macOS qmake6 application/plugin build exits 0 (with only the missing optional
 Cargo environment warning). Implementation commit: `60163dd24`; this roadmap
 entry is a separate documentation commit. Cross-platform PR checks and
 independent CAD/ODA acceptance remain open.
+
+## 1839. Tighten Frame Error and Probe Larger Bulges (2026-11-18)
+
+Refined section 1838's transform uncertainty from the conservative
+`SourceScale.numericFloor` (`64 ε · coordinate`) to an operation-based bound
+of `8 ε · coordinate`. The numeric floor remains the admission threshold;
+using it as a geometric near-contact allowance was unnecessarily broad. The
+smaller bound still covers the measured `4e-12` candidate straightness
+deviation and the `.15/.25` reflected/translated regressions continue to pass.
+The direct-kernel locus comparison now measures point-to-sampled-segment
+distance rather than point-to-point sample spacing, avoiding a sampling-phase
+artifact. Focused validation remains 52 kernel assertions, 35,304 worker
+client assertions, full CMake `offset_worker_kernel` 1/1 in 282.89 seconds,
+and recursive qmake6 build exit 0. The refinement is commit `8d64c8186`; this
+plan update is a separate documentation commit.
+
+The same exploratory segment-distance matrix for larger second bulges `.35`
+and `.5` still returns `Ok` but differs from the origin locus by approximately
+`2.4e-3` and `7.8e-4`, respectively, after translation/rotation. A 256-step
+per-cubic polyline approximation gave nearly the same gaps as the 64-step run,
+and the `.35` origin and translated results both contain one branch and 31
+cubic pieces. These larger profiles are not qualified by the current `.15/.25`
+tests; investigate their actual cubic geometry/candidate classification before
+adding them to persistence coverage. This is exploratory evidence, not a
+production assertion or external-CAD result.
