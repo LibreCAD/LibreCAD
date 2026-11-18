@@ -59164,3 +59164,37 @@ Validation: `[seam]` passes 108 assertions across three matching cases;
 passes. The other observed seam-dependent `FitFailed`, `LimitExceeded`, and
 arrangement-ambiguity rows remain unclassified and require case-specific
 reproduction before changing fitting or topology decisions.
+
+## 1873. Recover Small-scale Mixed-bulge Source Noding (2026-11-18)
+
+The seam sweep isolated the depth-48 source-noding exhaustion to exact
+line/arc polyline spans whose concatenated child parameter landed a few ULPs
+inside a child endpoint. `PolylineSource::straightSpan()` now recognizes
+child endpoints within the existing ULP roundoff bound, capped at one quarter
+of the child's parameter domain. Parameter evaluation itself remains
+unchanged.
+When interval self-noding still returns `LimitExceeded`, closed polylines with
+circular primitives now get a bounded exact line/arc self-noding pass. It
+charges pair/root work against the interval solver's already-consumed budget,
+retains non-shared adjacent-span intersections, and refuses unresolved
+near-contacts as `AmbiguousTopology` rather than guessing a node.
+
+The previously failing identity-frame seam-3 sweep at scale `1e-3` now
+produces closed branches for 31 of the 32 tested bulge/distance/direction
+combinations. The remaining `.15` bulge, `.125` relative-distance dilation
+has multiple cycle continuations and remains a conservative
+`AmbiguousTopology` refusal. An independent sampled dilation/erosion oracle
+also now covers both seam starts for all 32 small-scale rotated cases, across
+bulges `.15/.25/.35/.5`, relative distances `.125/.25/.5/.75`, and both
+directions.
+
+Validation: `[self-noding]` passes 5 assertions / 1 case; `[seam]` passes 269
+assertions / 4 cases; `[mixed-bulge]` passes 220,745 assertions / 9 cases;
+`[region-boundary]` passes 222,745 assertions / 11 cases. Registered
+`offset_worker_kernel` CTest passes in 299.64 seconds; the polyline
+`[trim-action]` selection passes 102,202 assertions / 7 cases; the incremental
+qmake6 application/plugin build succeeds (with the existing optional Cargo
+environment-file warning); the roadmap inventory parser passes all five
+tests; `git diff --check` passes. This closes
+the reproduced seam-3 depth-limit defect for the tested analytic polyline
+domain, not every small-scale or near-contact topology.

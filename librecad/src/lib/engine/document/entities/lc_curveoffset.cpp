@@ -786,8 +786,14 @@ public:
         const auto localStart = localParameter(piece, m_breaks[span]);
         const auto localEnd = localParameter(piece, m_breaks[span + 1]);
         const auto& localBreaks = piece.source->breaks();
-        return localStart && localEnd && *localStart == localBreaks.front() &&
-               *localEnd == localBreaks.back();
+        if (!localStart || !localEnd) return false;
+        const double roundoff = 16.0 * std::numeric_limits<double>::epsilon() *
+            std::max({1.0, std::abs(m_breaks[span]), std::abs(m_breaks[span + 1]),
+                      std::abs(piece.offset), std::abs(*localStart), std::abs(*localEnd),
+                      std::abs(localBreaks.front()), std::abs(localBreaks.back())});
+        const double slack = std::min(roundoff, (localBreaks.back() - localBreaks.front()) * 0.25);
+        return std::abs(*localStart - localBreaks.front()) <= slack &&
+               std::abs(*localEnd - localBreaks.back()) <= slack;
     }
     bool straightVertices(std::vector<RS_Vector>& vertices) const override {
         vertices.clear();
@@ -4465,6 +4471,174 @@ void recordIntersectionDiagnostics(LC_CurveOffsetGeometryResult::IntersectionDia
     diagnostics.failureDepth = result.failureDepth;
 }
 
+bool exactPolylineSelfNoding(const OffsetSource& source, const PolylineOffsetSource& polyline,
+                             const LC_IntersectionOptions& options,
+                             const double evaluationTolerance,
+                             const LC_IntersectionWorkStats& priorWork,
+                             LC_IntersectionResult& result) {
+    struct Primitive {
+        LC_OffsetSegment segment;
+        double parameter0;
+        double parameter1;
+    };
+    const std::vector<double>& breaks = source.breaks();
+    if (!source.closed() || breaks.size() < 3 || !polyline.hasCircularSegment()) return false;
+
+    std::vector<Primitive> primitives;
+    primitives.reserve(breaks.size() - 1);
+    for (std::size_t i = 0; i + 1 < breaks.size(); ++i) {
+        LC_OffsetSegment segment;
+        if (!polyline.circularOffsetSpan(breaks[i], breaks[i + 1], 0.0, segment)) {
+            if (!polyline.straightSpan(i)) return false;
+            LC_CurveJet start;
+            LC_CurveJet end;
+            if (!source.jet(breaks[i], LC_CurveEvaluationSide::Right, start) ||
+                !source.jet(breaks[i + 1], LC_CurveEvaluationSide::Left, end) ||
+                !isFinite(start.point) || !isFinite(end.point) || start.point == end.point) {
+                return false;
+            }
+            segment.a = start.point;
+            segment.b = end.point;
+        }
+        primitives.push_back({segment, breaks[i], breaks[i + 1]});
+    }
+
+    result = LC_IntersectionResult{};
+    result.work = priorWork;
+    result.status = LC_IntersectionStatus::Ok;
+    const auto parameterAt = [&options, evaluationTolerance](const Primitive& primitive, const RS_Vector& point,
+                                        double& parameter, double& fraction) {
+        const LC_OffsetSegment& segment = primitive.segment;
+        if (segment.arc) {
+            double along = std::remainder(
+                std::atan2(point.y - segment.centre.y, point.x - segment.centre.x) - segment.startAngle,
+                2.0 * M_PI);
+            if (segment.sweep > 0.0 && along < 0.0) along += 2.0 * M_PI;
+            if (segment.sweep < 0.0 && along > 0.0) along -= 2.0 * M_PI;
+            fraction = along / segment.sweep;
+        } else {
+            const RS_Vector axis = segment.b - segment.a;
+            const double lengthSquared = dot(axis, axis);
+            if (!(lengthSquared > 0.0)) return false;
+            fraction = dot(point - segment.a, axis) / lengthSquared;
+        }
+        if (!std::isfinite(fraction)) return false;
+        const double slack = 128.0 * std::numeric_limits<double>::epsilon();
+        if (fraction < -slack || fraction > 1.0 + slack) {
+            if (point.distanceTo(segment.a) <= evaluationTolerance) {
+                fraction = 0.0;
+            } else if (point.distanceTo(segment.b) <= evaluationTolerance) {
+                fraction = 1.0;
+            } else {
+                return false;
+            }
+        }
+        fraction = std::clamp(fraction, 0.0, 1.0);
+        parameter = primitive.parameter0 + (primitive.parameter1 - primitive.parameter0) * fraction;
+        return std::isfinite(parameter);
+    };
+
+    for (std::size_t i = 0; i < primitives.size(); ++i) {
+        for (std::size_t j = i + 1; j < primitives.size(); ++j) {
+            const bool adjacent = j == i + 1 || (i == 0 && j + 1 == primitives.size());
+            if (result.work.totalBoxPairs >= options.maxBoxPairs) {
+                result.status = LC_IntersectionStatus::LimitExceeded;
+                return true;
+            }
+            ++result.work.totalBoxPairs;
+            ++result.work.candidateBoxPairs;
+            const LC_OffsetSegment& first = primitives[i].segment;
+            const LC_OffsetSegment& second = primitives[j].segment;
+            std::vector<RS_Vector> roots = segmentIntersections(first, second, 0.0);
+            if (roots.empty()) {
+                const double separation = segmentDistance(first, second);
+                if (separation <= options.tolerance) {
+                    if (adjacent) continue;
+                    result.status = LC_IntersectionStatus::AmbiguousTopology;
+                    result.hasFailureDomain = true;
+                    result.failureDomain = {i, j,
+                        LC_Interval::hull(primitives[i].parameter0, primitives[i].parameter1),
+                        LC_Interval::hull(primitives[j].parameter0, primitives[j].parameter1)};
+                    return true;
+                }
+            }
+            if (roots.size() > 1 && !first.arc && !second.arc) {
+                result.status = LC_IntersectionStatus::AmbiguousTopology;
+                result.hasFailureDomain = true;
+                result.failureDomain = {i, j, LC_Interval::hull(primitives[i].parameter0, primitives[i].parameter1),
+                                        LC_Interval::hull(primitives[j].parameter0, primitives[j].parameter1)};
+                return true;
+            }
+            if (roots.size() > 1 && first.arc && second.arc && first.centre == second.centre &&
+                first.radius == second.radius) {
+                result.status = LC_IntersectionStatus::AmbiguousTopology;
+                result.hasFailureDomain = true;
+                result.failureDomain = {i, j, LC_Interval::hull(primitives[i].parameter0, primitives[i].parameter1),
+                                        LC_Interval::hull(primitives[j].parameter0, primitives[j].parameter1)};
+                return true;
+            }
+            if (adjacent && !roots.empty()) {
+                const RS_Vector firstEnd = j == i + 1 ? first.b : first.a;
+                const RS_Vector secondEnd = j == i + 1 ? second.a : second.b;
+                const RS_Vector shared = (firstEnd + secondEnd) * 0.5;
+                const auto sharedRoot = std::find_if(roots.begin(), roots.end(), [&](const RS_Vector& point) {
+                    return point.distanceTo(shared) <= evaluationTolerance;
+                });
+                if (sharedRoot != roots.end()) roots.erase(sharedRoot);
+            }
+            if (result.work.generatedItems > options.maxGeneratedItems) {
+                result.status = LC_IntersectionStatus::LimitExceeded;
+                return true;
+            }
+            if (roots.size() > options.maxGeneratedItems - result.work.generatedItems) {
+                result.status = LC_IntersectionStatus::LimitExceeded;
+                return true;
+            }
+            for (const RS_Vector& point : roots) {
+                double parameterA = 0.0;
+                double parameterB = 0.0;
+                double fractionA = 0.0;
+                double fractionB = 0.0;
+                if (!parameterAt(primitives[i], point, parameterA, fractionA) ||
+                    !parameterAt(primitives[j], point, parameterB, fractionB)) {
+                    result.status = LC_IntersectionStatus::AmbiguousTopology;
+                    result.hasFailureDomain = true;
+                    result.failureDomain = {i, j,
+                        LC_Interval::hull(primitives[i].parameter0, primitives[i].parameter1),
+                        LC_Interval::hull(primitives[j].parameter0, primitives[j].parameter1)};
+                    return true;
+                }
+                const RS_Vector tangentA = first.arc
+                    ? RS_Vector{-(point.y - first.centre.y), point.x - first.centre.x} *
+                          std::copysign(1.0, first.sweep)
+                    : first.b - first.a;
+                const RS_Vector tangentB = second.arc
+                    ? RS_Vector{-(point.y - second.centre.y), point.x - second.centre.x} *
+                          std::copysign(1.0, second.sweep)
+                    : second.b - second.a;
+                const double tangentScale = tangentA.magnitude() * tangentB.magnitude();
+                LC_ParametricIntersection::Kind kind = LC_ParametricIntersection::Kind::Transverse;
+                if (fractionA == 0.0 || fractionA == 1.0 || fractionB == 0.0 || fractionB == 1.0) {
+                    kind = LC_ParametricIntersection::Kind::Endpoint;
+                } else if (tangentScale > 0.0 &&
+                           std::abs(cross(tangentA, tangentB)) <=
+                               256.0 * std::numeric_limits<double>::epsilon() * tangentScale) {
+                    kind = LC_ParametricIntersection::Kind::Tangent;
+                }
+                LC_ParametricIntersection event;
+                event.parameterA = parameterA;
+                event.parameterB = parameterB;
+                event.point = point;
+                event.point.z = 0.0;
+                event.kind = kind;
+                result.intersections.push_back(event);
+                ++result.work.generatedItems;
+            }
+        }
+    }
+    return true;
+}
+
 /**
  * Nodes the branches where the offset meets itself, and counts the source's
  * own crossings with the same engine at distance zero.
@@ -4515,7 +4689,16 @@ LC_CurveOffsetStatus nodeBranches(const OffsetSource& source, const double d, co
         whole.cubicPieces.push_back(piece);
     }
     // a count only: a source that retraces itself leaves it at zero
-    const LC_IntersectionResult crossings = findIntersections(OffsetCurves{source, 0.0, speedFloor, {whole}}, query);
+    LC_IntersectionResult crossings = findIntersections(OffsetCurves{source, 0.0, speedFloor, {whole}}, query);
+    if (crossings.status == LC_IntersectionStatus::LimitExceeded) {
+        if (const auto* polyline = dynamic_cast<const PolylineOffsetSource*>(&source)) {
+            LC_IntersectionResult exact;
+            if (exactPolylineSelfNoding(source, *polyline, query, options.tolerance.evaluation,
+                                        crossings.work, exact)) {
+                crossings = std::move(exact);
+            }
+        }
+    }
     recordIntersectionDiagnostics(result.intersectionDiagnostics, crossings,
                                   LC_CurveOffsetGeometryResult::IntersectionDiagnostics::Stage::SourceSelfNoding);
     if (crossings.status == LC_IntersectionStatus::Ok) {
@@ -6751,7 +6934,16 @@ LC_CurveOffsetStatus regionBoundary(const OffsetSource& source, const SourceScal
         piece.provenance = {span, breaks[span], breaks[span + 1], 0.0, true};
         whole.cubicPieces.push_back(piece);
     }
-    const LC_IntersectionResult crossings = findIntersections(OffsetCurves{source, 0.0, speedFloor, {whole}}, query);
+    LC_IntersectionResult crossings = findIntersections(OffsetCurves{source, 0.0, speedFloor, {whole}}, query);
+    if (crossings.status == LC_IntersectionStatus::LimitExceeded) {
+        if (const auto* polyline = dynamic_cast<const PolylineOffsetSource*>(&source)) {
+            LC_IntersectionResult exact;
+            if (exactPolylineSelfNoding(source, *polyline, query, options.tolerance.evaluation,
+                                        crossings.work, exact)) {
+                crossings = std::move(exact);
+            }
+        }
+    }
     recordIntersectionDiagnostics(result.intersectionDiagnostics, crossings,
                                   LC_CurveOffsetGeometryResult::IntersectionDiagnostics::Stage::RegionBoundary);
     if (crossings.status != LC_IntersectionStatus::Ok) {

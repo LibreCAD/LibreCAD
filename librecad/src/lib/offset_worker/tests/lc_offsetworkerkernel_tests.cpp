@@ -12079,15 +12079,91 @@ TEST_CASE("small crossing mixed-bulge topology refuses consistently across the s
     }
 }
 
+TEST_CASE("small mixed-bulge RegionBoundary survives seam endpoint roundoff",
+          "[lc-offsetcurve][worker-kernel][polyline][mixed-bulge][region-boundary][self-noding]") {
+    constexpr double scale = 1e-3;
+    RS_Polyline source;
+    source.addVertex({-20 * scale, -10 * scale});
+    source.addVertex({20 * scale, 10 * scale});
+    source.addVertex({20 * scale, -10 * scale}, -0.5);
+    source.addVertex({-20 * scale, 10 * scale}, 0.25);
+    source.setClosed(true);
+    source.endPolyline();
+
+    const auto sourceGeometry = LC_OffsetSourceGeometry::captureForGeneration(source);
+    REQUIRE(sourceGeometry);
+    const double distance = 0.125 * scale;
+    const LC_OffsetSourceDefinition definition{*sourceGeometry, -distance, 1e-4 * scale, false};
+    const auto options = LC_OffsetWorkerTolerance::directOptions(definition, source);
+    REQUIRE(options);
+    const auto result = LC_CurveOffset::buildDirectBranches(
+        source, LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Right, distance),
+        *options, LC_CurveOffset::makeDirectSourceBudget());
+    CAPTURE(result.status, result.intersectionDiagnostics.stage,
+            result.intersectionDiagnostics.failureSite, result.intersectionDiagnostics.status,
+            result.intersectionDiagnostics.failureDepth, result.intersectionDiagnostics.hasFailureDomain,
+            result.intersectionDiagnostics.work.totalBoxPairs);
+    CHECK(result.status == LC_CurveOffsetStatus::Ok);
+    REQUIRE_FALSE(result.branches.empty());
+    CHECK(std::all_of(result.branches.begin(), result.branches.end(),
+                      [](const LC_OffsetBranch& branch) { return branch.closed; }));
+}
+
+TEST_CASE("small mixed-bulge seam matrix resolves except the known multiple-continuation case",
+          "[lc-offsetcurve][worker-kernel][polyline][mixed-bulge][region-boundary][seam]") {
+    constexpr double scale = 1e-3;
+    const std::array<RS_Vector, 4> vertices{{{20, 10}, {20, -10}, {-20, 10}, {-20, -10}}};
+    for (const double secondBulge : {0.15, 0.25, 0.35, 0.5}) {
+        for (const double ratio : {0.125, 0.25, 0.5, 0.75}) {
+            for (const bool erosion : {false, true}) {
+                const std::array<double, 4> bulges{{0.0, -0.5, secondBulge, 0.0}};
+                RS_Polyline source;
+                for (std::size_t i = 0; i < vertices.size(); ++i) {
+                    const std::size_t vertex = (3 + i) % vertices.size();
+                    source.addVertex(vertices[vertex] * scale, bulges[vertex]);
+                }
+                source.setClosed(true);
+                source.endPolyline();
+                const auto sourceGeometry = LC_OffsetSourceGeometry::captureForGeneration(source);
+                REQUIRE(sourceGeometry);
+                const double distance = ratio * scale;
+                const LC_OffsetSourceDefinition definition{*sourceGeometry, -distance, 1e-4 * scale, false};
+                const auto options = LC_OffsetWorkerTolerance::directOptions(definition, source);
+                REQUIRE(options);
+                const auto result = LC_CurveOffset::buildDirectBranches(
+                    source, LC_CurveOffset::makeSideRequest(
+                        erosion ? LC_CurveOffsetSide::Left : LC_CurveOffsetSide::Right, distance),
+                    *options, LC_CurveOffset::makeDirectSourceBudget());
+                CAPTURE(secondBulge, ratio, erosion);
+                const bool touchingCase = secondBulge == 0.15 && ratio == 0.125 && !erosion;
+                if (touchingCase) {
+                    CHECK(result.status == LC_CurveOffsetStatus::AmbiguousTopology);
+                    CHECK(result.branches.empty());
+                    CHECK(result.intersectionDiagnostics.failureSite ==
+                          LC_CurveOffsetGeometryResult::IntersectionDiagnostics::FailureSite::CycleAssembly);
+                    CHECK(result.intersectionDiagnostics.cycleAssemblyFailure ==
+                          LC_CurveOffsetGeometryResult::IntersectionDiagnostics::CycleAssemblyFailure::MultipleContinuations);
+                    continue;
+                }
+                CHECK(result.status == LC_CurveOffsetStatus::Ok);
+                REQUIRE_FALSE(result.branches.empty());
+                CHECK(std::all_of(result.branches.begin(), result.branches.end(),
+                                  [](const LC_OffsetBranch& branch) { return branch.closed; }));
+            }
+        }
+    }
+}
+
 TEST_CASE("mixed-bulge region cycles match independent dilation and erosion membership",
           "[lc-offsetcurve][worker-kernel][polyline][mixed-bulge][region-boundary][topology]") {
     const double scale = GENERATE(1e-3, 1.0, 10.0, 1e3);
     const unsigned frame = scale < 0.01 ? 1u : GENERATE(0u, 1u, 2u, 3u);
+    const std::size_t seamStart = scale < 0.01 ? GENERATE(std::size_t{0}, std::size_t{3}) : 0;
     const bool erosion = GENERATE(false, true);
     for (const double secondArcBulge : {0.15, 0.25, 0.35, 0.5}) {
         for (const double baseDistance : {0.125, 0.25, 0.5, 0.75}) {
             const double distance = baseDistance * scale;
-            CAPTURE(scale, frame, secondArcBulge, distance, erosion);
+            CAPTURE(scale, frame, seamStart, secondArcBulge, distance, erosion);
             const bool reflected = frame == 3u;
             const auto transform = [&](RS_Vector point) {
                 point.scale(scale);
@@ -12098,10 +12174,13 @@ TEST_CASE("mixed-bulge region cycles match independent dilation and erosion memb
             };
             const double orientation = reflected ? -1.0 : 1.0;
             auto source = std::make_unique<RS_Polyline>();
-            source->addVertex(transform({20, 10}));
-            source->addVertex(transform({20, -10}), -0.5 * orientation);
-            source->addVertex(transform({-20, 10}), secondArcBulge * orientation);
-            source->addVertex(transform({-20, -10}));
+            const std::array<RS_Vector, 4> vertices{{{20, 10}, {20, -10}, {-20, 10}, {-20, -10}}};
+            const std::array<double, 4> bulges{{0.0, -0.5 * orientation,
+                                                secondArcBulge * orientation, 0.0}};
+            for (std::size_t i = 0; i < vertices.size(); ++i) {
+                const std::size_t vertex = (seamStart + i) % vertices.size();
+                source->addVertex(transform(vertices[vertex]), bulges[vertex]);
+            }
             source->setClosed(true);
             source->endPolyline();
 
