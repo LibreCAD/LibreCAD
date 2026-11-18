@@ -59316,7 +59316,7 @@ frame grid, not a continuous proof or general scale-invariance guarantee.
 
 ## 1880. Densify Small-scale Mixed-bulge Membership Checks (2026-11-18)
 
-Test slice in progress; not committed yet.
+Test commit: `c5e114b19`.
 
 The independent sampled dilation/erosion oracle now samples the `0.001x`
 rotated profile at half-scale spacing instead of `2x`, and excludes only a
@@ -59332,5 +59332,37 @@ with no branches. The other three starts return only closed branches. This is
 an unresolved seam-origin discrepancy, not evidence of general seam
 invariance; no production topology rule is relaxed to force acceptance.
 
-Validation before commit: rebuilt `librecad_offset_worker_kernel_tests` and
+Validation: rebuilt `librecad_offset_worker_kernel_tests` and
 `[topology]` passes 1,622,065 assertions / 2 cases; `git diff --check` passes.
+
+## 1881. Deduplicate Coincident Region-boundary Cubic Fragments (2026-11-18)
+
+Implementation commit: `c2787ca64`.
+
+Tracing the rotated `0.001x` seam-1 refusal found two kept fragments with the
+same endpoints and same-direction cubic control nets. Their control points
+differed by at most roughly `5e-16`, below evaluation tolerance; the fragments
+came from source spans 2 and 0 and were both just larger than `nodeMerge`, so
+the existing negligible-fragment filter retained both and cycle assembly
+reported a false multiple continuation. A full-endpoint-graph precheck did
+not fix the seam discrepancy and was discarded.
+
+After candidate classification, RegionBoundary now drops a kept fragment only
+when an already-kept fragment has the same number of cubic pieces and every
+corresponding Bézier control point is within `options.tolerance.evaluation`.
+This preserves direction and shape, does not widen any geometric tolerance,
+and leaves oppositely-oriented or differently segmented fragments distinct.
+The retained fragment carries one valid source provenance; when two source
+spans produce indistinguishable geometry, the other provenance is not retained
+in the single-boundary result. The measured mixed-bulge case now returns closed
+branches with equal component count for all four seam starts.
+
+The independent membership oracle now includes both identity and rotated
+frames at scale `0.001`, all four seam starts, all tested bulges and distances,
+and both offset directions. This supersedes section 1880's temporary note
+excluding seam 1. Validation: `[topology]` passes 2,749,119 assertions / 2
+cases; `[seam]` passes 4,143 assertions / 7 cases; `[self-noding]` passes 5
+assertions / 1 case; registered `offset_worker_kernel` CTest passes 1/1 in
+315.50 seconds; `git diff --check` passes. This is qualified against these
+fixtures and tolerances; it does not establish general coincident-fragment
+or tangency resolution.
