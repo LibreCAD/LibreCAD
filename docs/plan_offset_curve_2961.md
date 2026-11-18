@@ -58429,3 +58429,20 @@ flip. The next probe should compare the actual candidate cut endpoints and
 their source-parameter reconstruction at the cycle join (span 3 to span 2),
 including exact roots that were accepted rather than only pairs with no root.
 No code change or new pass claim results from this diagnostic experiment.
+
+## 1837. Compare Reflected `.25` Candidate Event Sets (2026-11-18)
+
+Compared candidate-arrangement events for the reflected `.25` source at origin
+and after rotation plus translation. Exact primitive noding reports 15 events
+at origin but only 4 in the combined frame; the latter does not set the
+near-unresolved-pair fallback flag. The missing-event count makes the
+candidate arrangement itself the primary suspect, ahead of cycle stitching;
+the matching source-span classification trace from section 1836 describes
+only the pieces that survived that arrangement and does not show that the
+candidate sets are equivalent. A forced whole-arrangement interval retry was
+also observed not to change the final refusal, so the next slice should map
+primitive branch IDs back to candidate source spans and compare each
+transformed candidate's exact intersection roots and segment distances,
+including roots lost while converting primitive-local fractions to branch
+parameters. Debug tracing and the reflected test probe were removed; there is
+no new code or pass result in this section.
