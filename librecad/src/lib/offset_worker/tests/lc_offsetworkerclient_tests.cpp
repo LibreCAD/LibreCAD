@@ -1616,6 +1616,9 @@ TEST_CASE("Worker client persists concave mixed-bulge native offsets",
 
 TEST_CASE("Worker client generates crossing mixed-bulge polyline regions",
           "[lc-offsetcurve][worker-client][polyline][region-boundary][mixed-bulge]") {
+    REQUIRE(lc::test::ensureSettings());
+    lc::test::QuietLog quiet;
+    lc::test::OutputDirectory directory("offset-worker-crossing-mixed-bulge");
     auto& rt = runtime();
     OwnedClient owned{rt};
     RS_EntityContainer owner;
@@ -1624,6 +1627,17 @@ TEST_CASE("Worker client generates crossing mixed-bulge polyline regions",
     attributes.setLayer(&layer);
 
     constexpr double rotation = 0.37;
+    struct Lane {
+        RS2::FormatType format;
+        const char* extension;
+    };
+    const std::array<Lane, 5> lanes{{
+        {RS2::FormatDXFRW14, "r14.dxf"},
+        {RS2::FormatDXFRW2000, "r2000.dxf"},
+        {RS2::FormatDWG, "r2000.dwg"},
+        {RS2::FormatDXFRW2018, "r2018.dxf"},
+        {RS2::FormatDWG2018, "r2018.dwg"},
+    }};
     const std::array<RS_Vector, 4> translations{{
         {0.0, 0.0}, {1e6, -2e6}, {1e9, -2e9}, {1e12, -2e12}}};
     std::array<std::vector<RS_SplineData>, 2> originBranches;
@@ -1718,6 +1732,74 @@ TEST_CASE("Worker client generates crossing mixed-bulge polyline regions",
                 branches.push_back(spline->getData());
             }
             CHECK(owner.count() == 0);
+
+            RS_Graphic graphic;
+            graphic.initForNewDocument();
+            RS_Layer* outputLayer = graphic.findLayer("0");
+            REQUIRE(outputLayer);
+            for (const auto& branch : branches) {
+                auto* spline = new RS_Spline(&graphic, branch);
+                spline->setLayer(outputLayer);
+                graphic.addEntity(spline);
+            }
+
+            const auto sampledCurveError = [](const RS_SplineData& expectedData,
+                                              const RS_Spline& actualSpline) {
+                const RS_Spline expectedSpline{nullptr, expectedData};
+                double expectedStart = 0.0;
+                double expectedEnd = 0.0;
+                double actualStart = 0.0;
+                double actualEnd = 0.0;
+                REQUIRE(expectedSpline.getParameterDomain(expectedStart, expectedEnd));
+                REQUIRE(actualSpline.getParameterDomain(actualStart, actualEnd));
+                constexpr int sampleIntervals = 256;
+                double maxError = 0.0;
+                for (int sample = 0; sample <= sampleIntervals; ++sample) {
+                    const double fraction = static_cast<double>(sample) / sampleIntervals;
+                    const RS_Vector expectedPoint = expectedSpline.getPointAt(
+                        expectedStart + (expectedEnd - expectedStart) * fraction);
+                    const RS_Vector actualPoint = actualSpline.getPointAt(
+                        actualStart + (actualEnd - actualStart) * fraction);
+                    maxError = std::max(maxError, expectedPoint.distanceTo(actualPoint));
+                }
+                return maxError;
+            };
+
+            for (const Lane& lane : lanes) {
+                const auto path = directory.file(
+                    std::to_string(requestId) + "-" + lane.extension);
+                REQUIRE(lc::test::exportDrawing(graphic, path, lane.format));
+                for (int pass = 0; pass < 2; ++pass) {
+                    RS_Graphic reopened;
+                    REQUIRE(lc::test::importDrawing(reopened, path, lane.format));
+                    std::vector<const RS_Spline*> reopenedBranches;
+                    for (const RS_Entity* entity : reopened) {
+                        if (const auto* spline = dynamic_cast<const RS_Spline*>(entity))
+                            reopenedBranches.push_back(spline);
+                    }
+                    REQUIRE(reopenedBranches.size() == branches.size());
+                    for (const RS_Spline* spline : reopenedBranches)
+                        REQUIRE(spline->validate());
+                    double bestPairingError = std::numeric_limits<double>::infinity();
+                    if (branches.size() == 1) {
+                        bestPairingError = sampledCurveError(branches[0],
+                                                             *reopenedBranches[0]);
+                    } else {
+                        const double sameOrder = std::max(
+                            sampledCurveError(branches[0], *reopenedBranches[0]),
+                            sampledCurveError(branches[1], *reopenedBranches[1]));
+                        const double swappedOrder = std::max(
+                            sampledCurveError(branches[0], *reopenedBranches[1]),
+                            sampledCurveError(branches[1], *reopenedBranches[0]));
+                        bestPairingError = std::min(sameOrder, swappedOrder);
+                    }
+                    CAPTURE(frame, signedDistance, lane.extension, pass,
+                            bestPairingError);
+                    CHECK(bestPairingError <= frameComparisonTolerance);
+                    if (pass == 0)
+                        REQUIRE(lc::test::exportDrawing(reopened, path, lane.format));
+                }
+            }
 
             if (frame == 0) {
                 originBranches[side] = branches;
