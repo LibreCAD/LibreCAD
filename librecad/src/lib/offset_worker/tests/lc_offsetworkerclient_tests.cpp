@@ -1628,7 +1628,7 @@ TEST_CASE("Worker client generates crossing mixed-bulge polyline regions",
     RS_Polyline oracleSource;
     oracleSource.addVertex({20, 10});
     oracleSource.addVertex({20, -10}, -0.5);
-    oracleSource.addVertex({-20, 10});
+    oracleSource.addVertex({-20, 10}, 0.1);
     oracleSource.addVertex({-20, -10});
     oracleSource.setClosed(true);
     oracleSource.endPolyline();
@@ -1667,7 +1667,7 @@ TEST_CASE("Worker client generates crossing mixed-bulge polyline regions",
         RS_Polyline sourceEntity;
         sourceEntity.addVertex({20, 10});
         sourceEntity.addVertex({20, -10}, -0.5);
-        sourceEntity.addVertex({-20, 10});
+        sourceEntity.addVertex({-20, 10}, 0.1);
         sourceEntity.addVertex({-20, -10});
         sourceEntity.setClosed(true);
         sourceEntity.endPolyline();

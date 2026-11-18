@@ -58251,3 +58251,16 @@ passes 30 assertions / 2 cases; `[polyline][mixed-bulge]` passes 427 assertions
 case passes 9,102 assertions / 1 case across its R14, R2000, and R2018 DXF/DWG
 lanes. The earlier local-frame heuristic experiments remain discarded. The
 broader CTest shards, CI, and external CAD acceptance gates remain open.
+
+## 1825. Qualify the Two-arc Profile through Persistence (2026-11-18)
+
+Upgraded the existing crossing mixed-bulge worker-client matrix to include the
+second circular arc (`0.1`) in both the independent source-distance oracle and
+the generated source. The focused case passes 9,114 assertions / 1 case over
+both signed distances, identity and rotated frames, translations through
+`1e12`, reflection, reversal, combined reflection/reversal, and the existing
+R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG round-trip plus second-save/reopen
+lanes. This qualifies the previously failing two-arc geometry within that
+bounded matrix; other bulge combinations, rotations, and topology classes are
+not implied. ODA GUI conversion remains unavailable (`cgWindowNotFound`), and
+PR cross-platform checks remain pending.
