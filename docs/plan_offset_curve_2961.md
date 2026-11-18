@@ -58370,3 +58370,25 @@ slice should identify which arrangement split changes that candidate run and
 whether the winding probe is on an uncertified source boundary; keep the
 `.01/.1` positive matrix unchanged until a fix passes it and the `.15` frame
 comparison end to end.
+
+## 1834. Fall Back on Unresolved Near-contact Primitive Pairs (2026-11-18)
+
+For the `.15` mixed-bulge profile, exact candidate-primitive intersection
+queries returned no root for pairs whose measured separation was within the
+configured node-merge tolerance. That left the candidate arrangement
+under-noded after translation, and cycle assembly rejected a valid offset.
+Candidate noding now detects this exact-miss/near-contact condition and
+retries through the existing budgeted interval solver. The interval path must
+certify the arrangement or returns its bounded failure; near contacts are not
+snapped into intersections.
+
+The kernel regression compares origin, rotation-only, translation-only, and
+combined rotation plus `(1e6,-2e6)` for bulge `.15`, checks the normalized
+sampled loci within `2.5e-4`, and asserts interval fallback is used for the
+translated and combined cases. The worker-client persistence matrix covers
+both offset signs, transformed/reflected/reversed/high-origin sources, and
+R14/R2000/R2018 DXF/DWG reopen and second-save lanes: 26,744 assertions pass.
+The focused kernel case passes 18 assertions. The full registered CMake
+`offset_worker_kernel` suite passes 1/1 in 284.60 seconds. The fix and tests
+are committed as `e1fe3b914`; the roadmap update is a separate follow-up
+commit. Independent CAD/ODA acceptance and cross-platform CI remain open.
