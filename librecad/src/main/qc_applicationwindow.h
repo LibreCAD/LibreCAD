@@ -369,6 +369,7 @@ private:
     CollapsedDockGroup captureDockGroup(QDockWidget* dock) const;
     void restoreCollapsedGroup(int index);
     QByteArray dockStateForSaving();
+    QVariantMap dockSizesForSaving() const;
     void clampToAvailableScreen();
     QC_ApplicationWindow();
 
