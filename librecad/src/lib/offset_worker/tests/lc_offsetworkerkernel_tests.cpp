@@ -11679,6 +11679,15 @@ TEST_CASE("mixed-bulge region offset is rotation invariant",
             return std::min(point.distanceTo(endpoint(0.0)),
                             point.distanceTo(endpoint(primitive.sweep)));
         };
+        const auto primitiveEndpoint = [](const ExactPrimitive& primitive, const bool end) {
+            if (primitive.kind == ExactPrimitive::Kind::Segment) {
+                return end ? primitive.end : primitive.start;
+            }
+            const double parameter = end ? primitive.sweep : 0.0;
+            const double angle = primitive.startAngle + primitive.direction * parameter;
+            return primitive.centre +
+                RS_Vector{std::cos(angle), std::sin(angle)} * primitive.radius;
+        };
         const auto bezierAt = [](const std::array<RS_Vector, 4>& bezier, const double parameter) {
             const double inverse = 1.0 - parameter;
             return bezier[0] * (inverse * inverse * inverse) +
@@ -11772,6 +11781,19 @@ TEST_CASE("mixed-bulge region offset is rotation invariant",
                 }
                 const double bound = certifiedBound(bezier, primitive);
                 if (bound <= normalizedErrorLimit) return bound;
+            }
+            // A hull that straddles a span junction may fit neither span alone.
+            // If all four controls fit in a disk about their shared exact endpoint,
+            // convexity bounds the whole Bezier to that point on the candidate union.
+            for (const ExactPrimitive& primitive : primitives) {
+                for (const bool end : {false, true}) {
+                    const RS_Vector endpoint = primitiveEndpoint(primitive, end);
+                    double endpointBound = 0.0;
+                    for (const RS_Vector& control : bezier) {
+                        endpointBound = std::max(endpointBound, control.distanceTo(endpoint));
+                    }
+                    if (endpointBound <= normalizedErrorLimit) return endpointBound;
+                }
             }
             if (depth >= 20) return std::numeric_limits<double>::infinity();
             const auto [left, right] = splitBezier(bezier);
@@ -11903,7 +11925,7 @@ TEST_CASE("mixed-bulge region offset is rotation invariant",
         checkCertifiedLocus(reflectedRotatedTranslated,
                             *reflectedRotatedTranslatedSource, distance);
         if (secondArcBulge == 0.15 && distance == 0.25) {
-            for (const double sourceScale : {1e-3, 10.0}) {
+            for (const double sourceScale : {1e-3, 10.0, 1e3}) {
                 CAPTURE(sourceScale);
                 auto scaledProfile = makeSourceProfile(secondArcBulge, false, false, false, sourceScale);
                 const auto scaledSource = LC_OffsetSourceGeometry::captureForGeneration(*scaledProfile);
