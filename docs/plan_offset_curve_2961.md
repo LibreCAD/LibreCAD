@@ -59067,6 +59067,18 @@ Validation: topology passes 50,278 assertions across 104 combinations;
 `[region-boundary]` passes 53,164 across seven. Large-origin translated frames
 at scales 1x/10x/1000x remain included.
 
+## 1868. Broaden Mixed-bulge Membership Profiles (2026-11-18)
+
+Expanded the independent membership matrix from two to four second-arc bulges:
+`.15`, `.25`, `.35`, and `.5`. It retains the 0.001x rotated-frame regression,
+the 1x/10x/1000x four-frame matrix, both relative distances, both offset
+directions, and the independently derived source-dilation/erosion predicate.
+
+Validation: topology passes 101,160 assertions across 208 combinations;
+`[mixed-bulge]` passes 102,046 assertions across five cases and
+`[region-boundary]` passes 104,046 across seven. Other 0.001x frames still
+refuse with touching/multiple-cycle topology and are not claimed as supported.
+
 ## 1866. Recheck Scale Normalization With Corrected Arc Distances (2026-11-18)
 
 The first normalization probe in section 1864 also passed a normalized
