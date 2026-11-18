@@ -58767,3 +58767,21 @@ rebuilt; and `git diff --check` passes. The code/test slice is commit
 `f74420a9b`. Keep exact source-offset/corner-circle distance validation and
 certified error reporting open before claiming general high-bulge geometry
 accuracy.
+
+## 1852. Reject the First Mixed-bulge Exact-point Oracle as Unproven (2026-11-18)
+
+An exploratory test mapped each retained non-corner cubic's provenance span
+directly to the iterated `RS_Polyline` child list and compared corresponding
+parameters against exact line/arc offsets. It reported point discrepancies of
+about `0.00035` to `0.00055`, above the `/8` fit cap. That result is not valid
+evidence of product error: the oracle's child/span mapping does not account
+reliably for the source's successive break remapping and reversed intervals.
+The test was removed; no production or test code from this attempt remains.
+
+The next exact-geometry test must avoid assuming that provenance span indexes
+polyline children. Build an independent geometric-distance oracle over exact
+source-offset primitives and corner-circle loci (or expose a stable source
+parameter map with explicit domain metadata), then separately validate retained
+topology. Do not reinterpret this failed exploratory correspondence as either
+a passing accuracy bound or a confirmed geometry defect. Existing transform
+invariance and fitter-observed-error tests remain the current evidence.
