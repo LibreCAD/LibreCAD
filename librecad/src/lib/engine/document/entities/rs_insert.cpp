@@ -444,7 +444,9 @@ void RS_Insert::update(const RS_InsertExpansionBudget& budget) {
             clone->setLayer(nullptr);
         clone->setParent(this);
         clone->setVisible(hasEffectiveInsertVisibility(source, inheritedVisibility));
-        clone->setSelectionFlag(false);
+        // The renderer draws a child only in the pass of its own selected flag (#3013), so the
+        // expansion of a selected insert is selected too, or neither pass draws it.
+        clone->setSelectionFlag(getFlag(RS2::FlagSelected));
         clone->setPen(updatePen(clone->getPen(false), blockPen));
         if (m_data.updateMode != RS2::PreviewUpdate)
             clone->update();
