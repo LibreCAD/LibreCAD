@@ -58352,3 +58352,21 @@ is geometrically correct. Next compare the pre-arrangement region fragment
 classification and generated candidate endpoints in normalized coordinates
 for the combined frame, then add a positive invariance regression with an
 independent offset-locus oracle before retaining any kernel change.
+
+## 1833. Trace the Combined-frame Candidate Classification (2026-11-18)
+
+Instrumented the in-process kernel path for the `.15` profile. In the rotated,
+translated normalized frame, source noding still reports the same single
+intersection and the seven candidate endpoints agree with the origin and
+single-transform runs to approximately `1e-10`. The candidate arrangement
+changes from 23 pieces to 22, however. At the node arc that disappears, the
+selected interior probe changes from winding 0 plus visible distance in the
+single-transform runs to winding 1 in the combined frame, so the classifier
+removes it and cycle assembly later reports an open boundary. A trial that
+sampled fixed fractions of the run's source-parameter interval instead of the
+chosen cubic-piece midpoint did not resolve the refusal and was reverted. No
+production or test changes from this probe are retained. The next debugging
+slice should identify which arrangement split changes that candidate run and
+whether the winding probe is on an uncertified source boundary; keep the
+`.01/.1` positive matrix unchanged until a fix passes it and the `.15` frame
+comparison end to end.
