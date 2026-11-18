@@ -82,6 +82,30 @@ TEST_CASE("A closed polyline gets one closing edge, however often it is ended", 
     CHECK(copy.count() == 3);
 }
 
+TEST_CASE("Reversing a polyline keeps stored endpoints aligned with its segments",
+          "[polyline][direction]") {
+    RS_Polyline open;
+    open.addVertex({0.0, 0.0});
+    open.addVertex({10.0, 0.0}, 0.25);
+    open.addVertex({10.0, 10.0});
+
+    RS_Polyline closed = makeClosed({RS_Vector(0.0, 0.0), RS_Vector(10.0, 0.0),
+                                     RS_Vector(10.0, 10.0)});
+    for (RS_Polyline* polyline : {&open, &closed}) {
+        polyline->revertDirection();
+        const RS_Entity* first = polyline->first();
+        const RS_Entity* last = polyline->last();
+        REQUIRE(first != nullptr);
+        REQUIRE(last != nullptr);
+        CHECK(polyline->getStartpoint().distanceTo(first->getStartpoint()) < 1.0e-9);
+        const RS_Entity* endpointSegment = polyline->isClosed()
+            ? polyline->entityAt(polyline->count() - 2)
+            : last;
+        REQUIRE(endpointSegment != nullptr);
+        CHECK(polyline->getEndpoint().distanceTo(endpointSegment->getEndpoint()) < 1.0e-9);
+    }
+}
+
 // Once the polyline has been built and dropped, everything it allocated is
 // freed: the heap must not grow.
 TEST_CASE("Building a closed polyline that ends on its start leaves nothing behind", "[polyline][closing][leak]") {

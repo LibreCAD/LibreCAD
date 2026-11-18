@@ -58105,3 +58105,31 @@ unobservable and no GUI conversion was performed in this retry. The SSH CLI
 failure in section 1812 remains the latest conversion attempt; ODA acceptance
 for the staged batch is still open pending a controllable converter window
 or a working CLI environment.
+
+## 1817. Preserve Closed-polyline Endpoints when Reversing (2026-11-18)
+
+Extended the mixed-bulge crossing worker/persistence fixture with a reflected
+frame and a reversed-traversal frame at `(1e6,-2e6)`. Reflection passed, but
+`captureForGeneration()` rejected the reversed closed polyline before offset
+generation. The cause was `RS_Polyline::revertDirection()` swapping its
+stored start/end fields after reversing child order. For a closed polyline,
+the stored endpoint is the vertex immediately before the closing edge, not
+the old startpoint; swapping leaves it inconsistent with the reversed
+segments. The implementation now calls `updateEndpoints()` after reversing
+the children. This keeps stored endpoints aligned with the actual chain for
+open and closed polylines.
+
+Added a focused core regression that checks stored endpoints against the
+reversed segment chain for an open bulged polyline and a closed polyline. The
+mixed-bulge worker case now passes 7,789 assertions / 1 case, covering direct
+source capture, both signed offsets, reflected/reversed transformed frames,
+independent distance checks, branch persistence through R14 DXF, R2000
+DXF/DWG and R2018 DXF/DWG, reopen, and second-save/reopen. Core tests pass:
+`[polyline][direction]` (10 assertions / 1 case), the source snapshot case
+(38 assertions), lossy-projection refusal (11 assertions), and the polyline
+closing selection (14 assertions / 3 cases). `git diff --check` passes. The
+broader `[polyline]` core selection was intentionally interrupted after it
+entered unrelated high-origin Trim Two file matrices; it is not a pass or a
+failure result. This closes endpoint bookkeeping for the tested reverse
+operation and geometries, not the remaining mixed-bulge topology matrix or
+external-CAD acceptance.

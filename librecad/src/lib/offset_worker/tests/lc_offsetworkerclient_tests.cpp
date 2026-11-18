@@ -1645,12 +1645,24 @@ TEST_CASE("Worker client generates crossing mixed-bulge polyline regions",
         {RS2::FormatDXFRW2018, "r2018.dxf"},
         {RS2::FormatDWG2018, "r2018.dwg"},
     }};
-    const std::array<RS_Vector, 4> translations{{
-        {0.0, 0.0}, {1e6, -2e6}, {1e9, -2e9}, {1e12, -2e12}}};
+    struct SourceFrame {
+        RS_Vector translation;
+        bool reflected;
+        bool reversed;
+    };
+    const std::array<SourceFrame, 6> frames{{
+        {{0.0, 0.0}, false, false},
+        {{1e6, -2e6}, false, false},
+        {{1e9, -2e9}, false, false},
+        {{1e12, -2e12}, false, false},
+        {{1e6, -2e6}, true, false},
+        {{1e6, -2e6}, false, true},
+    }};
     std::array<std::vector<RS_SplineData>, 2> originBranches;
     qint64 requestId = 501;
-    for (std::size_t frame = 0; frame < translations.size(); ++frame) {
-        const RS_Vector translation = translations[frame];
+    for (std::size_t frame = 0; frame < frames.size(); ++frame) {
+        const SourceFrame sourceFrame = frames[frame];
+        const RS_Vector translation = sourceFrame.translation;
         RS_Polyline sourceEntity;
         sourceEntity.addVertex({20, 10});
         sourceEntity.addVertex({20, -10}, -0.5);
@@ -1658,10 +1670,16 @@ TEST_CASE("Worker client generates crossing mixed-bulge polyline regions",
         sourceEntity.addVertex({-20, -10});
         sourceEntity.setClosed(true);
         sourceEntity.endPolyline();
+        if (sourceFrame.reflected)
+            sourceEntity.mirror({0, 0}, {1, 0});
+        if (sourceFrame.reversed)
+            sourceEntity.revertDirection();
         if (frame > 0) {
             sourceEntity.rotate({0, 0}, rotation);
             sourceEntity.move(translation);
         }
+        INFO("frame=" << frame << " reflected=" << sourceFrame.reflected
+                       << " reversed=" << sourceFrame.reversed);
         const auto source = LC_OffsetSourceGeometry::captureForGeneration(sourceEntity);
         REQUIRE(source);
         CHECK_FALSE(source->isWellFormed());
@@ -1753,6 +1771,8 @@ TEST_CASE("Worker client generates crossing mixed-bulge polyline regions",
                         start + (end - start) * fraction);
                     if (frame > 0)
                         point = (point - translation).rotated(-rotation);
+                    if (sourceFrame.reflected)
+                        point.y = -point.y;
                     double bestOffsetDistanceError = std::numeric_limits<double>::infinity();
                     for (const RS_Entity* sourceSegment : oracleSource.getEntityList()) {
                         const RS_Vector nearest = sourceSegment->getNearestPointOnEntity(point, true);
@@ -1860,6 +1880,8 @@ TEST_CASE("Worker client generates crossing mixed-bulge polyline regions",
                             actualStart + (actualEnd - actualStart) * fraction);
                         if (frame > 0)
                             point = (point - translation).rotated(-rotation);
+                        if (sourceFrame.reflected)
+                            point.y = -point.y;
                         actualPoints.push_back(point);
                     }
                     const auto pointSegmentDistance = [](const RS_Vector& point,
