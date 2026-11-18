@@ -12357,7 +12357,7 @@ TEST_CASE("mixed-bulge region cycles match independent dilation and erosion memb
     const unsigned frame = scale < 0.01 ? 1u : GENERATE(0u, 1u, 2u, 3u);
     const std::size_t seamStart = scale < 0.01
                                       ? GENERATE(std::size_t{0}, std::size_t{3})
-                                  : (scale == 1.0 || scale == 10.0)
+                                  : (scale == 1.0 || scale == 10.0 || scale == 1e3)
                                       ? GENERATE(std::size_t{0}, std::size_t{1},
                                                  std::size_t{2}, std::size_t{3})
                                       : 0;
