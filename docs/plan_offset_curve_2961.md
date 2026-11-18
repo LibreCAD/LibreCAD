@@ -58077,3 +58077,31 @@ rerun each group; do not raise the watchdog without identifying why the suite
 exceeds its budget. PR CI at the time of this note: Ubuntu x64/arm64 and macOS
 latest checks passed, while Windows, macOS Intel, DWG/DXF verification, and
 static analysis were still in progress; a Headless OFF run was cancelled.
+
+## 1815. Run the Registered Sharded Worker-client Matrix (2026-11-18)
+
+The monolithic manual invocation in section 1814 bypassed the repository's
+CTest sharding and accumulated all cases under one 30-minute watchdog. Re-ran
+the registered worker-client set from the current CMake Release build using
+`ctest --test-dir /private/tmp/offset-2961-cmake-clean
+--output-on-failure -R '^offset_worker_client_' -j 2`. All 30/30 CTest jobs
+passed in 3,445.14 seconds. This includes the eight standard shards, the
+dedicated parabola permutation/profile matrices, and all twenty
+hyperbola-cusp persistence shards. The target rebuild reported no work, so
+the test executable matched the current source tree. This supersedes the
+manual aggregate-watchdog failure as the worker-client suite result; retain
+section 1814 as a record of why the unsharded command is not the supported
+full-suite invocation. This result qualifies the registered worker-client
+tests on this local CMake Release environment only; platform CI and external
+CAD acceptance remain separate.
+
+## 1816. Retry ODA Window Access after Desktop Confirmation (2026-11-18)
+
+After the user confirmed ODAFileConverter was open, the desktop inventory
+reported its process as running. CUA still could not bind either the app
+identifier `ODAFileConverter` or `/Applications/ODAFileConverter.app`; both
+returned `cgWindowNotFound`. The converter window therefore remains
+unobservable and no GUI conversion was performed in this retry. The SSH CLI
+failure in section 1812 remains the latest conversion attempt; ODA acceptance
+for the staged batch is still open pending a controllable converter window
+or a working CLI environment.
