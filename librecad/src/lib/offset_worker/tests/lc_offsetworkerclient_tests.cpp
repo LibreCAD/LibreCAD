@@ -1650,13 +1650,14 @@ TEST_CASE("Worker client generates crossing mixed-bulge polyline regions",
         bool reflected;
         bool reversed;
     };
-    const std::array<SourceFrame, 6> frames{{
+    const std::array<SourceFrame, 7> frames{{
         {{0.0, 0.0}, false, false},
         {{1e6, -2e6}, false, false},
         {{1e9, -2e9}, false, false},
         {{1e12, -2e12}, false, false},
         {{1e6, -2e6}, true, false},
         {{1e6, -2e6}, false, true},
+        {{1e9, -2e9}, true, true},
     }};
     std::array<std::vector<RS_SplineData>, 2> originBranches;
     qint64 requestId = 501;

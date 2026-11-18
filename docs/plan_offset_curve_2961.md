@@ -23058,6 +23058,17 @@ including importer-level one-ended direction and natural-boundary checks; and
 one-ended fit tangents`). These are local results and do not qualify PR CI or
 external-CAD acceptance.
 
+## 1818. Combine Reflection and Reversal at a High Origin (2026-11-18)
+
+Extended section 1817's mixed-bulge crossing fixture with one combined
+reflection-plus-reversed-traversal frame at `(1e9,-2e9)`. Both signed
+offsets pass through worker generation and the independent source-distance
+oracle, and their ordinary spline branches survive R14 DXF, R2000 DXF/DWG,
+and R2018 DXF/DWG round-trip plus second-save/reopen. The focused case passes
+8,730 assertions / 1 case. This adds one combined high-origin transform
+profile; other reflected/reversed mixed-bulge layouts and origins remain
+unqualified.
+
 Remaining tangent work: define equivalent exact semantics or explicit refusal
 for constrained `LC_SplinePoints`; validate source/cache identity and schema-3
 metadata across transforms/reversal; establish a lossless DWG representation
