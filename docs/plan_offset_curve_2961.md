@@ -59301,3 +59301,15 @@ code changed in this slice.
 Validation: `[topology]` passes 591,770 assertions / 1 case for scales 1 and
 10. This raises sampled membership coverage to the recorded scale/frame/seam
 grid; it is not a continuous proof or general scale-invariance guarantee.
+
+## 1879. Extend Seam Membership to Large-scale Profiles (2026-11-18)
+
+Test commit: `55e9e0215`.
+
+Extended the independent membership oracle to scale 1000 across all four
+frames and seam starts, retaining the four second-arc bulges, four relative
+offset distances, and both offset directions. No production change was made.
+
+Validation: `[topology]` passes 777,836 assertions / 1 case across scales 1,
+10, and 1000. This remains sampled membership for the recorded profiles and
+frame grid, not a continuous proof or general scale-invariance guarantee.
