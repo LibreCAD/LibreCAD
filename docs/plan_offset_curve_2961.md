@@ -59079,6 +59079,20 @@ Validation: topology passes 101,160 assertions across 208 combinations;
 `[region-boundary]` passes 104,046 across seven. Other 0.001x frames still
 refuse with touching/multiple-cycle topology and are not claimed as supported.
 
+## 1869. Broaden Mixed-bulge Offset Distances (2026-11-18)
+
+Expanded the independent membership oracle to relative offset magnitudes
+`.125`, `.25`, `.5`, and `.75` for all four bulges. Distances continue to scale
+with the source. Each case checks both dilation and erosion, with the same
+scale and frame coverage, and excludes only grid samples within `0.75 * scale`
+of the exact offset boundary.
+
+Validation: topology passes 202,852 assertions across 416 combinations;
+`[mixed-bulge]` passes 203,738 assertions across five cases and
+`[region-boundary]` passes 205,738 across seven. This remains sampled membership
+evidence for one closed polyline layout, not a continuous proof or general
+offset-distance guarantee.
+
 ## 1866. Recheck Scale Normalization With Corrected Arc Distances (2026-11-18)
 
 The first normalization probe in section 1864 also passed a normalized

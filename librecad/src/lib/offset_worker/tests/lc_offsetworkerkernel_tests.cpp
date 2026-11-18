@@ -11985,7 +11985,7 @@ TEST_CASE("mixed-bulge region cycles match independent dilation and erosion memb
     const unsigned frame = scale < 0.01 ? 1u : GENERATE(0u, 1u, 2u, 3u);
     const bool erosion = GENERATE(false, true);
     for (const double secondArcBulge : {0.15, 0.25, 0.35, 0.5}) {
-        for (const double baseDistance : {0.25, 0.5}) {
+        for (const double baseDistance : {0.125, 0.25, 0.5, 0.75}) {
             const double distance = baseDistance * scale;
             CAPTURE(scale, frame, secondArcBulge, distance, erosion);
             const bool reflected = frame == 3u;
