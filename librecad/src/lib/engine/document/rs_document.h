@@ -28,6 +28,8 @@
 #ifndef RS_DOCUMENT_H
 #define RS_DOCUMENT_H
 
+#include <memory>
+
 #include "lc_selectedset.h"
 #include "rs_entitycontainer.h"
 #include "rs_pen.h"
@@ -236,8 +238,12 @@ public:
         }
     }
 
+    /** Lifetime witness for observers that must unregister before dereferencing a retained document. */
+    std::weak_ptr<void> watchLifetime() const { return m_lifetimeToken; }
+
 
 protected:
+    void invalidateLifetime() noexcept { m_lifetimeToken.reset(); }
     /** Flag set if the document was modified and not yet saved. */
     bool m_modified = false;
     /** Active pen. */
@@ -299,6 +305,11 @@ protected:
     QList<LC_DocumentModificationListener*> m_modificationListeners;
 
     friend class LC_UndoSection;
+    friend class LC_OffsetCurvePublication;
     friend class RS_Selection;
+private:
+    friend class LC_GraphicViewport;
+    std::weak_ptr<void> lifetimeToken() const { return m_lifetimeToken; }
+    std::shared_ptr<void> m_lifetimeToken = std::make_shared<int>(0);
 };
 #endif

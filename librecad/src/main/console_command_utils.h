@@ -31,6 +31,7 @@
 #include <QString>
 #include <QStringList>
 #include <QVector>
+#include <memory>
 
 #include "rs.h"
 
@@ -99,10 +100,12 @@ bool validateOutputTargets(const QStringList& inputFiles, const QStringList& out
  * Import errors are reported on stderr. Without this, the import opens a
  * message box that a console command can never close.
  *
- * @return false if the file cannot be read; a partial import is accepted
+ * Supported DXF/DWG imports use the staged offset-validation session. A
+ * partial result is accepted only when it recovered at least one entity.
+ * Other formats retain the ordinary importer.
  */
-bool importGraphic(RS_Graphic& graphic, const QString& inputFile,
-                   RS2::FormatType type = RS2::FormatUnknown);
+std::unique_ptr<RS_Graphic> importGraphic(const QString& inputFile,
+                                         RS2::FormatType type = RS2::FormatUnknown);
 
 } // namespace LC_Console
 

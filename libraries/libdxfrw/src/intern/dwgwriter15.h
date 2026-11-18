@@ -38,7 +38,7 @@ class dwgRW;
 /// ACadSharp/ODA expectations.
 class dwgWriter15 : public dwgWriter {
 public:
-    dwgWriter15(std::ofstream *stream, DRW_Header *header)
+    dwgWriter15(std::ostream *stream, DRW_Header *header)
         : dwgWriter(stream, header) {
         configureTextCodec();
         // Pre-seed with canonical reserved handles so add*() deduplication

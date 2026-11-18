@@ -178,14 +178,17 @@ QString QG_FileDialog::getOpenFile(RS2::FormatType* type) {
     // read default settings:
     LC_GROUP("Paths");
     const QString defDir = LC_GET_STR("Open", RS_SYSTEM->getHomeDir());
+#ifndef DWGSUPPORT
     const QString openFilter = LC_GET_STR("OpenFilter", fDxfrw);
+#endif
     LC_GROUP_END();
 
     RS_DEBUG->print("defDir: %s", defDir.toLatin1().data());
     QString fn = "";
     QStringList filters;
 #ifdef DWGSUPPORT
-    filters << fDxfrw << fDxf1 << fDwg << fLff << fCxf << fJww << fShp;
+    const QString fDxfDwg = tr("Drawing Exchange %1").arg("(*.dxf *.dwg)");
+    filters << fDxfDwg << fDxfrw << fDxf1 << fDwg << fLff << fCxf << fJww << fShp;
 #else
     filters << fDxfrw << fDxf1 << fLff << fCxf << fJww << fShp;
 #endif
@@ -194,7 +197,13 @@ QString QG_FileDialog::getOpenFile(RS2::FormatType* type) {
     setNameFilters(filters);
     setDirectory(defDir);
     setFileMode(QFileDialog::ExistingFile);
+#ifdef DWGSUPPORT
+    // Keep both drawing formats visible even when an older profile remembers
+    // the DXF-only filter; native and Qt dialogs interpret filters differently.
+    selectNameFilter(fDxfDwg);
+#else
     selectNameFilter(openFilter);
+#endif
     m_type = RS2::FormatDXFRW;
     RS_DEBUG->print("defFilter: %s", fDxfrw.toLatin1().data());
 
@@ -214,6 +223,11 @@ QString QG_FileDialog::getOpenFile(RS2::FormatType* type) {
         fn = QDir::toNativeSeparators(QFileInfo(fn).absoluteFilePath());
 
         m_type = getType(selectedNameFilter());
+#ifdef DWGSUPPORT
+        if (QFileInfo(fn).suffix().compare(QStringLiteral("dwg"), Qt::CaseInsensitive) == 0) {
+            m_type = RS2::FormatDWG;
+        }
+#endif
         if (type != nullptr) {
             *type = m_type;
         }
@@ -470,110 +484,6 @@ QString QG_FileDialog::getSaveFileName(QWidget* parent, RS2::FormatType* type) {
  *         or an empty string if the dialog was cancelled.
  */
 QString QG_FileDialog::getOpenFileName(QWidget* parent, RS2::FormatType* type) {
-    RS_DEBUG->print("QG_FileDialog::getOpenFileName");
-
-    // read default settings:
-    LC_GROUP("Paths");
-    const QString defDir = LC_GET_STR("Open", RS_SYSTEM->getHomeDir());
-    //QString defFilter = RS_SETTINGS->readEntry("/OpenFilter",
-    //                      "Drawing Exchange (*.dxf *.DXF)");
-    const QString defFilter = "Drawing Exchange (*.dxf)";
-    LC_GROUP_END();
-
-    RS_DEBUG->print("defDir: %s", defDir.toLatin1().data());
-    RS_DEBUG->print("defFilter: %s", defFilter.toLatin1().data());
-
-    // QString fDxfOld(QObject::tr("Old Drawing Exchange %1").arg("(*.dxf *.DXF)"));
-    const QString fDxfrw(QObject::tr("Drawing Exchange %1").arg("(*.dxf)"));
-
-#ifdef DWGSUPPORT
-    const QString fDwg(QObject::tr("dwg Drawing %1").arg("(*.dwg)"));
-#endif
-    const QString fDxf1(QObject::tr("QCad 1.x file %1").arg("(*.dxf *.DXF)"));
-    const QString fLff(QObject::tr("LFF Font %1").arg("(*.lff)"));
-    const QString fCxf(QObject::tr("Font %1").arg("(*.cxf)"));
-    const QString fJww(QObject::tr("Jww %1").arg("(*.jww)"));
-    const QString fShp(QObject::tr("ESRI Shapefile %1").arg("(*.shp)"));
-
-    RS_DEBUG->print("fDxfrw: %s", fDxfrw.toLatin1().data());
-    RS_DEBUG->print("fDxf1: %s", fDxf1.toLatin1().data());
-    RS_DEBUG->print("fCxf: %s", fCxf.toLatin1().data());
-    RS_DEBUG->print("fJww: %s", fJww.toLatin1().data());
-
-    QString fn = "";
-    bool cancel = false;
-
-    auto fileDlg = QFileDialog(parent, "File Dialog");
-
-    QStringList filters;
-    filters.append(fDxfrw);
-#ifdef DWGSUPPORT
-    filters.append(fDwg);
-#endif
-    filters.append(fDxf1);
-    filters.append(fLff);
-    filters.append(fCxf);
-    filters.append(fJww);
-    filters.append(fShp);
-
-    fileDlg.setNameFilters(filters);
-    fileDlg.setFileMode(QFileDialog::ExistingFile);
-    fileDlg.setWindowTitle(QObject::tr("Open Drawing"));
-    fileDlg.setDirectory(defDir);
-    fileDlg.selectNameFilter(defFilter);
-
-    /** preview RVT PORT preview is currently not supported by QT4
-    RS_Graphic* gr = new RS_Graphic;
-    QG_GraphicView* prev = new QG_GraphicView(parent);
-    prev->setContainer(gr);
-    prev->setBorders(1, 1, 1, 1);
-    fileDlg->setContentsPreviewEnabled(true);
-    fileDlg->setContentsPreview(prev, prev);
-    */
-
-    if (fileDlg.exec() == QDialog::Accepted) {
-        QStringList fl = fileDlg.selectedFiles();
-        if (!fl.isEmpty()) {
-            fn = fl[0];
-        }
-        fn = QDir::toNativeSeparators(QFileInfo(fn).absoluteFilePath());
-        if (type != nullptr) {
-            if (fileDlg.selectedNameFilter() == fDxf1) {
-                *type = RS2::FormatDXF1;
-            }
-            else if (fileDlg.selectedNameFilter() == fDxfrw) {
-                *type = RS2::FormatDXFRW;
-#ifdef DWGSUPPORT
-            }
-            else if (fileDlg.selectedNameFilter() == fDwg) {
-                *type = RS2::FormatDWG;
-#endif
-            }
-            else if (fileDlg.selectedNameFilter() == fCxf) {
-                *type = RS2::FormatCXF;
-            }
-            else if (fileDlg.selectedNameFilter() == fJww) {
-                *type = RS2::FormatJWW;
-            }
-            else if (fileDlg.selectedNameFilter() == fShp) {
-                *type = RS2::FormatSHP;
-            }
-        }
-        cancel = false;
-    }
-    else {
-        cancel = true;
-    }
-
-    // store new default settings:
-    if (!cancel) {
-        LC_GROUP("Paths");
-        LC_SET("Open", QFileInfo(fn).absolutePath());
-        LC_SET("OpenFilter", fileDlg.selectedNameFilter());
-        LC_GROUP_END();
-    }
-
-    RS_DEBUG->print("QG_FileDialog::getOpenFileName: fileName: %s", fn.toLatin1().data());
-    RS_DEBUG->print("QG_FileDialog::getOpenFileName: OK");
-    return fn;
+    QG_FileDialog dialog(parent);
+    return dialog.getOpenFile(type);
 }

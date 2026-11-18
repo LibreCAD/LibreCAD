@@ -276,10 +276,10 @@ int console_dwg2svg(int argc, char* argv[])
 }
 
 static std::unique_ptr<RS_Document> openDocAndSetGraphic(const QString& dxfFile){
-    auto doc = std::make_unique<RS_Graphic>();
     // LC_Console::importGraphic() reports on stderr. Importing through the
     // document storage opens a message box no console command can close.
-    if (!LC_Console::importGraphic(*doc, dxfFile))
+    auto doc = LC_Console::importGraphic(dxfFile);
+    if (!doc)
         return {};
 
     const RS_Graphic* graphic = doc->getGraphic();

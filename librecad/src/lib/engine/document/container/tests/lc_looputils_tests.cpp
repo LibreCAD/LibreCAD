@@ -362,6 +362,357 @@ TEST_CASE("Collinear pattern pieces: bottom and right drawn, top and left not",
     }
 }
 
+TEST_CASE("Rotated parabola pattern clipping preserves the exact subcurve",
+          "[lc-hatchfix][pattern][parabola][trim]") {
+    constexpr double rotation = 0.73;
+    const RS_Vector translation{1e9, -2e9};
+    const auto toWorld = [rotation, translation](const RS_Vector& point) {
+        return point.rotated(rotation) + translation;
+    };
+    const std::array<RS_Vector, 3> localControls{{{-2.0, 0.0}, {0.0, 2.0}, {2.0, 0.0}}};
+    std::array<RS_Vector, 3> worldControls;
+    std::transform(localControls.begin(), localControls.end(), worldControls.begin(), toWorld);
+    const LC_ParabolaData sourceData{worldControls};
+    REQUIRE(sourceData.isValid());
+
+    auto boundary = std::make_unique<RS_EntityContainer>(nullptr, true);
+    const Ring localBounds{{-1.0, -2.0}, {1.0, -2.0}, {1.0, 2.0}, {-1.0, 2.0}};
+    for (std::size_t i = 0; i < localBounds.size(); ++i) {
+        boundary->addEntity(new RS_Line(boundary.get(), toWorld(localBounds[i]),
+                                        toWorld(localBounds[(i + 1) % localBounds.size()])));
+    }
+    LC_LoopUtils::LoopOptimizer optimizer(*boundary);
+    auto roots = optimizer.getResults();
+    REQUIRE(roots);
+    REQUIRE_FALSE(roots->empty());
+
+    RS_Pattern pattern{QStringLiteral("TESTPARABOLA")};
+    pattern.addEntity(new LC_Parabola(&pattern, sourceData));
+    const std::vector<LC_LoopUtils::LC_TileSlot> tiles{{RS_Vector{0.0, 0.0}, false}};
+    LC_HatchPieceBudget budget{std::numeric_limits<std::size_t>::max()};
+    const auto trimmed = LC_LoopUtils::trimPatternEntities(*roots, pattern, tiles, budget);
+    REQUIRE(trimmed);
+    REQUIRE(trimmed->count() == 1);
+    REQUIRE(trimmed->entityAt(0)->rtti() == RS2::EntityParabola);
+
+    const auto* result = static_cast<const LC_Parabola*>(trimmed->entityAt(0));
+    const auto bezierAt = [](const std::array<RS_Vector, 3>& controls, const double t) {
+        const double u = 1.0 - t;
+        return controls[0] * (u * u) + controls[1] * (2.0 * u * t) +
+               controls[2] * (t * t);
+    };
+    const auto& resultControls = result->getData().m_controlPoints;
+    for (const double parameter : {0.0, 0.2, 0.5, 0.8, 1.0}) {
+        const double sourceParameter = 0.25 + 0.5 * parameter;
+        CHECK(bezierAt(resultControls, parameter).distanceTo(
+                  bezierAt(worldControls, sourceParameter)) < 2e-6);
+    }
+}
+
+TEST_CASE("Reversed near-vertical parabola clipping preserves directed order",
+          "[lc-hatchfix][pattern][parabola][trim][reversed]") {
+    constexpr double rotation = 1.5707963267948966;
+    const RS_Vector translation{-13.0, 21.0};
+    const auto toWorld = [rotation, translation](const RS_Vector& point) {
+        return point.rotated(rotation) + translation;
+    };
+    std::array<RS_Vector, 3> controls{{toWorld({2.0, 0.0}), toWorld({0.0, 2.0}),
+                                      toWorld({-2.0, 0.0})}};
+    const LC_ParabolaData sourceData{controls};
+    REQUIRE(sourceData.isValid());
+
+    auto boundary = std::make_unique<RS_EntityContainer>(nullptr, true);
+    const Ring localBounds{{-1.0, -2.0}, {0.5, -2.0}, {0.5, 2.0}, {-1.0, 2.0}};
+    for (std::size_t i = 0; i < localBounds.size(); ++i) {
+        boundary->addEntity(new RS_Line(boundary.get(), toWorld(localBounds[i]),
+                                        toWorld(localBounds[(i + 1) % localBounds.size()])));
+    }
+    LC_LoopUtils::LoopOptimizer optimizer(*boundary);
+    auto roots = optimizer.getResults();
+    REQUIRE(roots);
+    REQUIRE_FALSE(roots->empty());
+
+    RS_Pattern pattern{QStringLiteral("TESTREVERSEDPARABOLA")};
+    pattern.addEntity(new LC_Parabola(&pattern, sourceData));
+    const std::vector<LC_LoopUtils::LC_TileSlot> tiles{{RS_Vector{0.0, 0.0}, false}};
+    LC_HatchPieceBudget budget{std::numeric_limits<std::size_t>::max()};
+    const auto trimmed = LC_LoopUtils::trimPatternEntities(*roots, pattern, tiles, budget);
+    REQUIRE(trimmed);
+    REQUIRE(trimmed->count() == 1);
+    REQUIRE(trimmed->entityAt(0)->rtti() == RS2::EntityParabola);
+
+    const auto bezierAt = [](const std::array<RS_Vector, 3>& points, const double t) {
+        const double u = 1.0 - t;
+        return points[0] * (u * u) + points[1] * (2.0 * u * t) + points[2] * (t * t);
+    };
+    const auto& resultControls =
+        static_cast<const LC_Parabola*>(trimmed->entityAt(0))->getData().m_controlPoints;
+    for (const double parameter : {0.0, 0.2, 0.5, 0.8, 1.0}) {
+        const double sourceParameter = 0.375 + 0.375 * parameter;
+        CHECK(bezierAt(resultControls, parameter).distanceTo(
+                  bezierAt(controls, sourceParameter)) < 1e-7);
+    }
+}
+
+TEST_CASE("High-origin parabola clipping uses local circle intersections",
+          "[lc-hatchfix][pattern][parabola][trim][large-origin][circle]") {
+    constexpr double rotation = 0.73;
+    const RS_Vector translation{1e9, -2e9};
+    const auto toWorld = [rotation, translation](const RS_Vector& point) {
+        return point.rotated(rotation) + translation;
+    };
+    const std::array<RS_Vector, 3> localControls{{{-2.0, 0.0}, {0.0, 2.0},
+                                                  {2.0, 0.0}}};
+    std::array<RS_Vector, 3> controls;
+    std::transform(localControls.begin(), localControls.end(), controls.begin(), toWorld);
+    const LC_ParabolaData sourceData{controls};
+    REQUIRE(sourceData.isValid());
+
+    auto boundary = std::make_unique<RS_EntityContainer>(nullptr, true);
+    boundary->addEntity(new RS_Circle(boundary.get(),
+                                      RS_CircleData{translation, 1.8}));
+    LC_LoopUtils::LoopOptimizer optimizer(*boundary);
+    auto roots = optimizer.getResults();
+    REQUIRE(roots);
+    REQUIRE_FALSE(roots->empty());
+
+    RS_Pattern pattern{QStringLiteral("TESTPARABOLACIRCLE")};
+    pattern.addEntity(new LC_Parabola(&pattern, sourceData));
+    const std::vector<LC_LoopUtils::LC_TileSlot> tiles{{RS_Vector{0.0, 0.0}, false}};
+    LC_HatchPieceBudget budget{std::numeric_limits<std::size_t>::max()};
+    const auto trimmed = LC_LoopUtils::trimPatternEntities(*roots, pattern, tiles, budget);
+    REQUIRE(trimmed);
+    REQUIRE(trimmed->count() == 1);
+    REQUIRE(trimmed->entityAt(0)->rtti() == RS2::EntityParabola);
+
+    const auto bezierAt = [](const std::array<RS_Vector, 3>& points, const double t) {
+        const double u = 1.0 - t;
+        return points[0] * (u * u) + points[1] * (2.0 * u * t) + points[2] * (t * t);
+    };
+    const auto* result = static_cast<const LC_Parabola*>(trimmed->entityAt(0));
+    const auto& resultControls = result->getData().m_controlPoints;
+    const RS_Circle* circle = static_cast<const RS_Circle*>(boundary->entityAt(0));
+    for (const double parameter : {0.0, 0.2, 0.5, 0.8, 1.0}) {
+        const RS_Vector point = bezierAt(resultControls, parameter);
+        const double sourceParameter =
+            (sourceData.findX(point) - sourceData.findX(controls.front())) /
+            (sourceData.findX(controls.back()) - sourceData.findX(controls.front()));
+        CHECK(point.distanceTo(bezierAt(controls, sourceParameter)) < 2e-6);
+        const double radialDistance = point.distanceTo(circle->getCenter());
+        if (parameter == 0.0 || parameter == 1.0)
+            CHECK(std::abs(radialDistance - circle->getRadius()) < 2e-6);
+        else
+            CHECK(radialDistance < circle->getRadius() + 2e-6);
+    }
+}
+
+TEST_CASE("High-origin parabola clipping uses local ellipse intersections",
+          "[lc-hatchfix][pattern][parabola][trim][large-origin][ellipse]") {
+    constexpr double sourceRotation = 0.73;
+    constexpr double ellipseRotation = 0.25;
+    const RS_Vector translation{1e9, -2e9};
+    const auto toWorld = [sourceRotation, translation](const RS_Vector& point) {
+        return point.rotated(sourceRotation) + translation;
+    };
+    const std::array<RS_Vector, 3> localControls{{{-2.0, 0.0}, {0.0, 2.0},
+                                                  {2.0, 0.0}}};
+    std::array<RS_Vector, 3> controls;
+    std::transform(localControls.begin(), localControls.end(), controls.begin(), toWorld);
+    const LC_ParabolaData sourceData{controls};
+    REQUIRE(sourceData.isValid());
+
+    auto boundary = std::make_unique<RS_EntityContainer>(nullptr, true);
+    const RS_Vector majorP{2.0 * std::cos(ellipseRotation),
+                           2.0 * std::sin(ellipseRotation)};
+    boundary->addEntity(new RS_Ellipse(boundary.get(),
+        RS_EllipseData{translation, majorP, 0.7, 0.0, 0.0, false}));
+    LC_LoopUtils::LoopOptimizer optimizer(*boundary);
+    auto roots = optimizer.getResults();
+    REQUIRE(roots);
+    REQUIRE_FALSE(roots->empty());
+
+    RS_Pattern pattern{QStringLiteral("TESTPARABOLAELLIPSE")};
+    pattern.addEntity(new LC_Parabola(&pattern, sourceData));
+    const std::vector<LC_LoopUtils::LC_TileSlot> tiles{{RS_Vector{0.0, 0.0}, false}};
+    LC_HatchPieceBudget budget{std::numeric_limits<std::size_t>::max()};
+    const auto trimmed = LC_LoopUtils::trimPatternEntities(*roots, pattern, tiles, budget);
+    REQUIRE(trimmed);
+    REQUIRE(trimmed->count() == 1);
+    REQUIRE(trimmed->entityAt(0)->rtti() == RS2::EntityParabola);
+
+    const auto bezierAt = [](const std::array<RS_Vector, 3>& points, const double t) {
+        const double u = 1.0 - t;
+        return points[0] * (u * u) + points[1] * (2.0 * u * t) + points[2] * (t * t);
+    };
+    const auto* result = static_cast<const LC_Parabola*>(trimmed->entityAt(0));
+    const auto& resultControls = result->getData().m_controlPoints;
+    for (const double parameter : {0.0, 0.2, 0.5, 0.8, 1.0}) {
+        const RS_Vector point = bezierAt(resultControls, parameter);
+        const double sourceParameter =
+            (sourceData.findX(point) - sourceData.findX(controls.front())) /
+            (sourceData.findX(controls.back()) - sourceData.findX(controls.front()));
+        CHECK(point.distanceTo(bezierAt(controls, sourceParameter)) < 2e-6);
+        const RS_Vector local = (point - translation).rotated(-ellipseRotation);
+        const double normalizedRadius =
+            local.x * local.x / 4.0 + local.y * local.y / (4.0 * 0.7 * 0.7);
+        if (parameter == 0.0 || parameter == 1.0)
+            CHECK(std::abs(normalizedRadius - 1.0) < 2e-6);
+        else
+            CHECK(normalizedRadius < 1.0 + 2e-6);
+    }
+}
+
+TEST_CASE("High-origin parabola clipping uses local elliptic-arc intersections",
+          "[lc-hatchfix][pattern][parabola][trim][large-origin][elliptic-arc]") {
+    const bool reversed = GENERATE(false, true);
+    CAPTURE(reversed);
+    constexpr double rotation = 0.73;
+    constexpr double majorRadius = 1.8;
+    constexpr double ratio = 0.7;
+    const RS_Vector translation{1e9, -2e9};
+    const auto toWorld = [rotation, translation](const RS_Vector& point) {
+        return point.rotated(rotation) + translation;
+    };
+    const std::array<RS_Vector, 3> localControls{{{-2.0, 0.0}, {0.0, 2.0},
+                                                  {2.0, 0.0}}};
+    std::array<RS_Vector, 3> controls;
+    std::transform(localControls.begin(), localControls.end(), controls.begin(), toWorld);
+    const LC_ParabolaData sourceData{controls};
+    REQUIRE(sourceData.isValid());
+
+    auto boundary = std::make_unique<RS_EntityContainer>(nullptr, true);
+    const RS_Vector majorP{majorRadius * std::cos(rotation),
+                           majorRadius * std::sin(rotation)};
+    auto* arc = new RS_Ellipse(boundary.get(),
+        RS_EllipseData{translation, majorP, ratio,
+                       reversed ? M_PI : 0.0, reversed ? 0.0 : M_PI, reversed});
+    boundary->addEntity(arc);
+    boundary->addEntity(new RS_Line(boundary.get(),
+        RS_LineData{arc->getEndpoint(), arc->getStartpoint()}));
+    LC_LoopUtils::LoopOptimizer optimizer(*boundary);
+    auto roots = optimizer.getResults();
+    REQUIRE(roots);
+    REQUIRE_FALSE(roots->empty());
+    CAPTURE(reversed, roots->size(), roots->front().getTotalArea(),
+            roots->front().isInside(toWorld({0.0, 0.5})));
+    REQUIRE(roots->front().isInside(toWorld({0.0, 0.5})));
+
+    RS_Pattern pattern{QStringLiteral("TESTPARABOLAELLIPTICARC")};
+    pattern.addEntity(new LC_Parabola(&pattern, sourceData));
+    const std::vector<LC_LoopUtils::LC_TileSlot> tiles{{RS_Vector{0.0, 0.0}, false}};
+    LC_HatchPieceBudget budget{std::numeric_limits<std::size_t>::max()};
+    const auto trimmed = LC_LoopUtils::trimPatternEntities(*roots, pattern, tiles, budget);
+    REQUIRE(trimmed);
+    REQUIRE(trimmed->count() == 1);
+    REQUIRE(trimmed->entityAt(0)->rtti() == RS2::EntityParabola);
+
+    const auto bezierAt = [](const std::array<RS_Vector, 3>& points, const double t) {
+        const double u = 1.0 - t;
+        return points[0] * (u * u) + points[1] * (2.0 * u * t) + points[2] * (t * t);
+    };
+    const auto* result = static_cast<const LC_Parabola*>(trimmed->entityAt(0));
+    const auto& resultControls = result->getData().m_controlPoints;
+    for (const double parameter : {0.0, 0.2, 0.5, 0.8, 1.0}) {
+        const RS_Vector point = bezierAt(resultControls, parameter);
+        const RS_Vector local = (point - translation).rotated(-rotation);
+        const double sourceParameter = (local.x + 2.0) / 4.0;
+        CHECK(point.distanceTo(bezierAt(controls, sourceParameter)) < 2e-6);
+        const double normalizedRadius =
+            local.x * local.x / (majorRadius * majorRadius) +
+            local.y * local.y / (majorRadius * majorRadius * ratio * ratio);
+        if (parameter == 0.0 || parameter == 1.0)
+            CHECK(std::abs(normalizedRadius - 1.0) < 2e-6);
+        else {
+            CHECK(normalizedRadius < 1.0 + 2e-6);
+            CHECK(local.y >= -2e-6);
+        }
+    }
+}
+
+TEST_CASE("High-origin parabola clipping handles independently rotated elliptic arcs",
+          "[lc-hatchfix][pattern][parabola][trim][large-origin][elliptic-arc][rotated]") {
+    const bool reversedArc = GENERATE(false, true);
+    const bool reversedSource = GENERATE(false, true);
+    const double scale = GENERATE(1e-3, 1.0, 1e3);
+    CAPTURE(reversedArc, reversedSource, scale);
+    constexpr double sourceRotation = 0.73;
+    constexpr double ellipseRotation = 0.25;
+    const double majorRadius = 1.8 * scale;
+    constexpr double ratio = 0.7;
+    const RS_Vector translation{1e9, -2e9};
+    const double worldUlp = std::max(
+        std::nextafter(translation.x, std::numeric_limits<double>::infinity()) - translation.x,
+        std::nextafter(translation.y, std::numeric_limits<double>::infinity()) - translation.y);
+    const double worldTolerance = std::max(2e-6, 4.0 * worldUlp);
+    const auto toSourceWorld = [sourceRotation, translation](const RS_Vector& point) {
+        return point.rotated(sourceRotation) + translation;
+    };
+    const std::array<RS_Vector, 3> localControls{{{-2.0 * scale, 0.0},
+                                                  {0.0, 2.0 * scale},
+                                                  {2.0 * scale, 0.0}}};
+    std::array<RS_Vector, 3> controls;
+    std::transform(localControls.begin(), localControls.end(), controls.begin(), toSourceWorld);
+    if (reversedSource) std::reverse(controls.begin(), controls.end());
+    const LC_ParabolaData sourceData{controls};
+    REQUIRE(sourceData.isValid());
+
+    auto boundary = std::make_unique<RS_EntityContainer>(nullptr, true);
+    const RS_Vector majorP{majorRadius * std::cos(ellipseRotation),
+                           majorRadius * std::sin(ellipseRotation)};
+    auto* arc = new RS_Ellipse(boundary.get(),
+        RS_EllipseData{translation, majorP, ratio,
+                       reversedArc ? M_PI : 0.0, reversedArc ? 0.0 : M_PI, reversedArc});
+    boundary->addEntity(arc);
+    boundary->addEntity(new RS_Line(boundary.get(),
+        RS_LineData{arc->getEndpoint(), arc->getStartpoint()}));
+    LC_LoopUtils::LoopOptimizer optimizer(*boundary);
+    auto roots = optimizer.getResults();
+    REQUIRE(roots);
+    REQUIRE_FALSE(roots->empty());
+
+    RS_Pattern pattern{QStringLiteral("TESTPARABOLAELLIPTICARCROTATED")};
+    pattern.addEntity(new LC_Parabola(&pattern, sourceData));
+    const std::vector<LC_LoopUtils::LC_TileSlot> tiles{{RS_Vector{0.0, 0.0}, false}};
+    LC_HatchPieceBudget budget{std::numeric_limits<std::size_t>::max()};
+    const auto trimmed = LC_LoopUtils::trimPatternEntities(*roots, pattern, tiles, budget);
+    REQUIRE(trimmed);
+    REQUIRE(trimmed->count() == 1);
+    REQUIRE(trimmed->entityAt(0)->rtti() == RS2::EntityParabola);
+
+    const auto bezierAt = [](const std::array<RS_Vector, 3>& points, const double t) {
+        const double u = 1.0 - t;
+        return points[0] * (u * u) + points[1] * (2.0 * u * t) + points[2] * (t * t);
+    };
+    const auto* result = static_cast<const LC_Parabola*>(trimmed->entityAt(0));
+    const auto& resultControls = result->getData().m_controlPoints;
+    for (const double parameter : {0.0, 0.2, 0.5, 0.8, 1.0}) {
+        const RS_Vector point = bezierAt(resultControls, parameter);
+        const RS_Vector sourceLocal = (point - translation).rotated(-sourceRotation);
+        const double sourceParameter = reversedSource
+                                           ? (2.0 * scale - sourceLocal.x) / (4.0 * scale)
+                                           : (sourceLocal.x + 2.0 * scale) / (4.0 * scale);
+        CHECK(point.distanceTo(bezierAt(controls, sourceParameter)) < worldTolerance);
+
+        const RS_Vector ellipseLocal = (point - translation).rotated(-ellipseRotation);
+        const double normalizedRadius =
+            ellipseLocal.x * ellipseLocal.x / (majorRadius * majorRadius) +
+            ellipseLocal.y * ellipseLocal.y /
+                (majorRadius * majorRadius * ratio * ratio);
+        const double normalizedTolerance =
+            std::max(2e-6, 4.0 * worldUlp / (majorRadius * ratio));
+        if (parameter == 0.0 || parameter == 1.0) {
+            const bool onArc = ellipseLocal.y >= -worldTolerance &&
+                               std::abs(normalizedRadius - 1.0) < normalizedTolerance;
+            const bool onChord = std::abs(ellipseLocal.y) < worldTolerance &&
+                                 std::abs(ellipseLocal.x) <= majorRadius + worldTolerance;
+            CHECK((onArc || onChord));
+        } else {
+            CHECK(ellipseLocal.y >= -worldTolerance);
+            CHECK(normalizedRadius < 1.0 + normalizedTolerance);
+        }
+    }
+}
+
 namespace {
 
 /** Signature of a loop container used to compare extraction runs byte-for-byte. */

@@ -54,6 +54,8 @@ class LC_VisualSnapManager : public QObject {
     void addGuidesForBasePoint(const RS_Vector& snapPoint, const RS_Vector& graphPoint, const RS_Vector& relZero);
     bool isNotInVisualSnap(RS_Entity* e) const;
     void clear();
+    /** Stop pending work and forget view-owned storage without touching it. */
+    void detachFromView();
 
     void invalidateSolution() const;
 

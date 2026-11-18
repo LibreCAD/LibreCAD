@@ -672,7 +672,7 @@ void LC_SplineHelper::ensureMonotonic(std::vector<double> &knots) {
  */
 bool LC_SplineHelper::validate(const RS_SplineData &data) {
   const size_t deg = data.degree;
-  if (deg < 1 || deg > 3) {
+  if (deg < 1 || deg > RS_Spline::MaxSupportedDegree) {
       return false;
   }
 

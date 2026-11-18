@@ -39,6 +39,45 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_painter.h"
 
 namespace {
+    void transformTangentByMirror(RS_Vector& tangent, const RS_Vector& axisStart,
+                                  const RS_Vector& axisEnd) {
+        RS_Vector origin{0.0, 0.0, 0.0};
+        RS_Vector mirroredOrigin = origin;
+        mirroredOrigin.mirror(axisStart, axisEnd);
+        tangent.mirror(axisStart, axisEnd);
+        tangent -= mirroredOrigin;
+    }
+
+    void transformTangentByScale(RS_Vector& tangent, const RS_Vector& factor) {
+        tangent.x *= factor.x;
+        tangent.y *= factor.y;
+        tangent.z *= factor.z;
+    }
+
+    void refreshFitTangentDirections(LC_SplinePoints& spline) {
+        auto& data = spline.getData();
+        if (!data.fitTangentsConstrained) return;
+        const bool hasStartTangent = data.fitStartTangent.magnitude() > 0.0;
+        const bool hasEndTangent = data.fitEndTangent.magnitude() > 0.0;
+        if (!hasStartTangent && !hasEndTangent) return;
+
+        LC_CurveJet startJet;
+        LC_CurveJet endJet;
+        const double endParameter = static_cast<double>(spline.getSegmentCount());
+        if (!(endParameter > 0.0) ||
+            !spline.tryEvaluateJet(0.0, LC_CurveEvaluationSide::Right, startJet) ||
+            !spline.tryEvaluateJet(endParameter, LC_CurveEvaluationSide::Left, endJet)) {
+            data.fitTangentsConstrained = false;
+            data.fitStartTangent = {0.0, 0.0};
+            data.fitEndTangent = {0.0, 0.0};
+            return;
+        }
+
+        // Refitting after a non-similarity transform can change endpoint directions.
+        if (hasStartTangent) data.fitStartTangent = startJet.first;
+        if (hasEndTangent) data.fitEndTangent = endJet.first;
+    }
+
     RS_Vector getQuadPoint(const RS_Vector& x1, const RS_Vector& c1, const RS_Vector& x2, const double dt) {
         return x1 * (1.0 - dt) * (1.0 - dt) + c1 * 2.0 * dt * (1.0 - dt) + x2 * dt * dt;
     }
@@ -861,7 +900,7 @@ bool LC_SplinePoints::tryBoundJet(const double a, const double b, LC_CurveJetBou
             break;
         case LC_SplinePointsSegment::Kind::Line: {
             auto at = [&](const LC_Interval& u, const LC_Interval& p0, const LC_Interval& p1) {
-                return (one - u) * p0 + u * p1;
+                return p0 + u * (p1 - p0);
             };
             const LC_Interval x0 = px(segment.start);
             const LC_Interval x1 = px(segment.end);
@@ -881,8 +920,9 @@ bool LC_SplinePoints::tryBoundJet(const double a, const double b, LC_CurveJetBou
             // Bezier control points of the segment restricted to [a, b]
             auto blossom = [&](const LC_Interval& u1, const LC_Interval& u2, const LC_Interval& p0,
                                const LC_Interval& p1, const LC_Interval& p2) {
-                return (one - u1) * (one - u2) * p0 + ((one - u1) * u2 + u1 * (one - u2)) * p1 +
-                       u1 * u2 * p2;
+                const LC_Interval c1 = (one - u1) * u2 + u1 * (one - u2);
+                const LC_Interval c2 = u1 * u2;
+                return p0 + c1 * (p1 - p0) + c2 * (p2 - p0);
             };
             LC_Interval qx[3];
             LC_Interval qy[3];
@@ -904,8 +944,8 @@ bool LC_SplinePoints::tryBoundJet(const double a, const double b, LC_CurveJetBou
             const LC_Interval dy[2] = {slope(ua, y0, y1, y2), slope(ub, y0, y1, y2)};
             result.dx = LC_Interval::hull(dx[0], dx[1]);
             result.dy = LC_Interval::hull(dy[0], dy[1]);
-            result.ddx = two * (x2 - two * x1 + x0);
-            result.ddy = two * (y2 - two * y1 + y0);
+            result.ddx = two * ((x2 - x1) - (x1 - x0));
+            result.ddy = two * ((y2 - y1) - (y1 - y0));
             if (products) {
                 // |C'|^2 and C' x C'' from the Bezier coefficients of the products,
                 // which cancel only by rounding where C' and C'' are parallel
@@ -987,9 +1027,10 @@ bool LC_SplinePoints::tryEvaluateJet(double t, const LC_CurveEvaluationSide side
             break;
         case LC_SplinePointsSegment::Kind::Quadratic: {
             const double v = 1.0 - u;
-            point = segment.start * (v * v) + segment.control * (2.0 * u * v) + segment.end * (u * u);
+            point = segment.start + (segment.control - segment.start) * (2.0 * u * v) +
+                    (segment.end - segment.start) * (u * u);
             first = ((segment.control - segment.start) * v + (segment.end - segment.control) * u) * 2.0;
-            second = (segment.end - segment.control * 2.0 + segment.start) * 2.0;
+            second = ((segment.end - segment.control) - (segment.control - segment.start)) * 2.0;
             break;
         }
     }
@@ -1334,17 +1375,23 @@ void LC_SplinePoints::rotate(const RS_Vector& center, const RS_Vector& angleVect
     for (auto& v : m_data.controlPoints) {
         v.rotate(center, angleVector);
     }
+    m_data.fitStartTangent.rotate(RS_Vector{0.0, 0.0, 0.0}, angleVector);
+    m_data.fitEndTangent.rotate(RS_Vector{0.0, 0.0, 0.0}, angleVector);
     update();
 }
 
 void LC_SplinePoints::scale(const RS_Vector& center, const RS_Vector& factor) {
+    const bool hadConsistentFitTangents = fitTangentsMatchCurve();
     for (auto& v : m_data.splinePoints) {
         v.scale(center, factor);
     }
     for (auto& v : m_data.controlPoints) {
         v.scale(center, factor);
     }
+    transformTangentByScale(m_data.fitStartTangent, factor);
+    transformTangentByScale(m_data.fitEndTangent, factor);
     update();
+    if (hadConsistentFitTangents) refreshFitTangentDirections(*this);
 }
 
 void LC_SplinePoints::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) {
@@ -1354,33 +1401,43 @@ void LC_SplinePoints::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisP
     for (auto& v : m_data.controlPoints) {
         v.mirror(axisPoint1, axisPoint2);
     }
+    transformTangentByMirror(m_data.fitStartTangent, axisPoint1, axisPoint2);
+    transformTangentByMirror(m_data.fitEndTangent, axisPoint1, axisPoint2);
     update();
 }
 
 RS_Entity& LC_SplinePoints::shear(const double k) {
+    const bool hadConsistentFitTangents = fitTangentsMatchCurve();
     for (auto& v : m_data.splinePoints) {
         v.shear(k);
     }
     for (auto& v : m_data.controlPoints) {
         v.shear(k);
     }
+    m_data.fitStartTangent.shear(k);
+    m_data.fitEndTangent.shear(k);
     update();
+    if (hadConsistentFitTangents) refreshFitTangentDirections(*this);
     return *this;
 }
 
 void LC_SplinePoints::moveRef(const RS_Vector& ref, const RS_Vector& offset) {
+    bool moved = false;
     for (auto& v : m_data.splinePoints) {
         // fixme - magic value - replace by constant
         if (ref.distanceTo(v) < 1.0e-4) {
             v.move(offset);
+            moved = true;
         }
     }
     for (auto& v : m_data.controlPoints) {
         // fixme - magic value - replace by constant
         if (ref.distanceTo(v) < 1.0e-4) {
             v.move(offset);
+            moved = true;
         }
     }
+    if (moved) m_data.clearFitTangents();
     update();
 }
 
@@ -1393,6 +1450,9 @@ void LC_SplinePoints::revertDirection() {
     for (size_t k = 0; k < m_data.controlPoints.size() / 2; ++k) {
         std::swap(m_data.controlPoints[k], m_data.controlPoints[j--]);
     }
+    std::swap(m_data.fitStartTangent, m_data.fitEndTangent);
+    m_data.fitStartTangent *= -1.0;
+    m_data.fitEndTangent *= -1.0;
     update();
 }
 
@@ -1449,6 +1509,7 @@ bool LC_SplinePoints::addPoint(const RS_Vector& v) {
     }
 
     if (m_data.splinePoints.empty() || (v - m_data.splinePoints.back()).squared() > RS_TOLERANCE2) {
+        m_data.clearFitTangents();
         m_data.splinePoints.push_back(v);
         return true;
     }
@@ -1459,10 +1520,14 @@ bool LC_SplinePoints::addPoint(const RS_Vector& v) {
  * Removes the control point that was last added.
  */
 void LC_SplinePoints::removeLastPoint() {
-    m_data.splinePoints.pop_back();
+    if (!m_data.splinePoints.empty()) {
+        m_data.clearFitTangents();
+        m_data.splinePoints.pop_back();
+    }
 }
 
 void LC_SplinePoints::addControlPoint(const RS_Vector& v) {
+    m_data.clearFitTangents();
     m_data.controlPoints.push_back(v);
 }
 
@@ -1589,6 +1654,26 @@ bool isFiniteValue(const double v) {
 bool fitControlPoints(const LC_SplinePointsData& data, std::vector<RS_Vector>& controls) {
 
     const size_t n = data.splinePoints.size();
+
+    std::vector<RS_Vector> uniqueFitPoints;
+    uniqueFitPoints.reserve(n);
+    for (const RS_Vector& point : data.splinePoints) {
+        if (uniqueFitPoints.empty() || point.x != uniqueFitPoints.back().x || point.y != uniqueFitPoints.back().y ||
+            point.z != uniqueFitPoints.back().z) {
+            uniqueFitPoints.push_back(point);
+        }
+    }
+    if (data.closed && uniqueFitPoints.size() > 1 &&
+        uniqueFitPoints.front().x == uniqueFitPoints.back().x &&
+        uniqueFitPoints.front().y == uniqueFitPoints.back().y &&
+        uniqueFitPoints.front().z == uniqueFitPoints.back().z) {
+        uniqueFitPoints.pop_back();
+    }
+    if (uniqueFitPoints.size() != n) {
+        LC_SplinePointsData normalized = data;
+        normalized.splinePoints = std::move(uniqueFitPoints);
+        return fitControlPoints(normalized, controls);
+    }
 
     if (data.closed && n < 3) {
         if (n > 0) {
@@ -3149,6 +3234,70 @@ bool LC_SplinePoints::isEdge() const {
 /** @return Copy of m_data that defines the spline. */
 const LC_SplinePointsData& LC_SplinePoints::getData() const {
     return m_data;
+}
+
+bool LC_SplinePoints::fitTangentsMatchCurve() const {
+    const auto finitePlanar = [](const RS_Vector& point) {
+        return point.valid && std::isfinite(point.x) && std::isfinite(point.y) &&
+               std::isfinite(point.z) && std::abs(point.z) <= RS_TOLERANCE;
+    };
+    if (!m_data.fitTangentsConstrained || m_data.closed || m_data.cut ||
+        m_data.useControlPoints || m_data.splinePoints.size() < 2 ||
+        m_data.controlPoints.size() < 2 || !std::isfinite(m_data.fitTolerance) ||
+        m_data.fitTolerance <= 0.0 || !finitePlanar(m_data.fitStartTangent) ||
+        !finitePlanar(m_data.fitEndTangent)) return false;
+    const double startMagnitude = m_data.fitStartTangent.magnitude();
+    const double endMagnitude = m_data.fitEndTangent.magnitude();
+    if (!std::isfinite(startMagnitude) || !std::isfinite(endMagnitude) ||
+        (startMagnitude == 0.0 && endMagnitude == 0.0)) return false;
+
+    double coordinateScale = 1.0;
+    for (const auto& point : m_data.controlPoints) {
+        if (!finitePlanar(point)) return false;
+        coordinateScale = std::max({coordinateScale, std::abs(point.x),
+                                    std::abs(point.y)});
+    }
+    for (const auto& point : m_data.splinePoints) {
+        if (!finitePlanar(point)) return false;
+        coordinateScale = std::max({coordinateScale, std::abs(point.x),
+                                    std::abs(point.y)});
+    }
+
+    const double endParameter = static_cast<double>(getSegmentCount());
+    if (!(endParameter > 0.0) || !std::isfinite(endParameter)) return false;
+    LC_CurveJet startJet;
+    LC_CurveJet endJet;
+    if (!tryEvaluateJet(0.0, LC_CurveEvaluationSide::Right, startJet) ||
+        !tryEvaluateJet(endParameter, LC_CurveEvaluationSide::Left, endJet))
+        return false;
+
+    const double pointTolerance = std::max(
+        m_data.fitTolerance, 128.0 * std::numeric_limits<double>::epsilon() *
+                                 coordinateScale);
+    for (std::size_t index = 0; index < m_data.splinePoints.size(); ++index) {
+        const auto& point = m_data.splinePoints[index];
+        if (point.distanceTo(index == 0 ? startJet.point :
+                             index + 1 == m_data.splinePoints.size()
+                                 ? endJet.point
+                                 : getNearestPointOnEntity(point, true)) >
+            pointTolerance) return false;
+    }
+
+    const auto matchesDirection = [coordinateScale](const RS_Vector& actual,
+                                                     const RS_Vector& expected) {
+        if (expected.magnitude() == 0.0) return true;
+        const double actualLength = actual.magnitude();
+        if (!std::isfinite(actualLength) || !(actualLength > 0.0)) return false;
+        const double representationalError =
+            16.0 * std::numeric_limits<double>::epsilon() * coordinateScale /
+            actualLength;
+        if (!std::isfinite(representationalError) ||
+            representationalError > 1e-3) return false;
+        return (actual / actualLength - expected / expected.magnitude()).magnitude() <=
+               std::max(1e-8, representationalError);
+    };
+    return matchesDirection(startJet.first, m_data.fitStartTangent) &&
+           matchesDirection(endJet.first, m_data.fitEndTangent);
 }
 
 /** @return Copy of m_data that defines the spline. */

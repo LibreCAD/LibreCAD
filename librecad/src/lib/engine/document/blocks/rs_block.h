@@ -80,6 +80,7 @@ public:
      * @param blockData defining data of the block.
      */
     RS_Block(RS_EntityContainer* parent, const RS_BlockData& blockData);
+    ~RS_Block() override;
 
     RS_Entity* clone() const override;
 

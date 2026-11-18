@@ -224,7 +224,7 @@ public:
     /// Construct around an output stream and a populated header.
     /// The stream is held by reference for the final flush; the
     /// writer does NOT close it (caller manages lifetime).
-    dwgWriter(std::ofstream *stream, DRW_Header *header)
+    dwgWriter(std::ostream *stream, DRW_Header *header)
         : m_stream{stream}, m_header{header}
     {
         m_handles.seedReserved();
@@ -1895,7 +1895,7 @@ protected:
     /// Per-section byte sizes, same indexing as `m_sectionOffsets`.
     std::map<int, std::uint32_t> m_sectionSizes;
 
-    std::ofstream *m_stream {nullptr};
+    std::ostream *m_stream {nullptr};
     DRW_Header *m_header {nullptr};
     std::uint32_t m_headerHandseedBitOffset {
         DRW_Header::kInvalidDwgHandseedBitOffset};

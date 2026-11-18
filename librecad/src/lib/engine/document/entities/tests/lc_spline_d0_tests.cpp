@@ -77,6 +77,10 @@ void checkEncloses(const BoundFn& bound, const EvalFn& eval, const double a, con
         CHECK(bounds.dy.contains(jet.first.y));
         CHECK(bounds.ddx.contains(jet.second.x));
         CHECK(bounds.ddy.contains(jet.second.y));
+        if (bounds.dddx.isValid() && bounds.dddy.isValid()) {
+            CHECK(bounds.dddx.contains(jet.third.x));
+            CHECK(bounds.dddy.contains(jet.third.y));
+        }
         // the products, to the rounding of evaluating them from the jet
         const double speed2 = jet.first.x * jet.first.x + jet.first.y * jet.first.y;
         const double cross = jet.first.x * jet.second.y - jet.first.y * jet.second.x;
@@ -128,8 +132,18 @@ TEST_CASE("RS_Spline::tryBoundJet encloses the curve on the box", "[curve-offset
         const std::vector<double> breaks = spline->getBreakParameters();
         for (size_t i = 0; i + 1 < breaks.size(); ++i) {
             checkEncloses(bound, eval, breaks[i], breaks[i + 1]);
+            LC_CurveJetBounds spanBounds;
+            REQUIRE(bound(breaks[i], breaks[i + 1], spanBounds));
+            REQUIRE(spanBounds.dddx.isValid());
+            REQUIRE(spanBounds.dddy.isValid());
             const double third = (breaks[i + 1] - breaks[i]) / 3.0;
-            checkEncloses(bound, eval, breaks[i] + third, breaks[i] + 2.0 * third);
+            const double subspanStart = breaks[i] + third;
+            const double subspanEnd = breaks[i] + 2.0 * third;
+            checkEncloses(bound, eval, subspanStart, subspanEnd);
+            LC_CurveJetBounds subspanBounds;
+            REQUIRE(bound(subspanStart, subspanEnd, subspanBounds));
+            REQUIRE(subspanBounds.dddx.isValid());
+            REQUIRE(subspanBounds.dddy.isValid());
         }
     }
     const RS_Spline arc = quarterCircle();
@@ -138,6 +152,90 @@ TEST_CASE("RS_Spline::tryBoundJet encloses the curve on the box", "[curve-offset
                       return arc.tryEvaluateJet(t, side, out);
                   },
                   0.2, 0.7);
+
+    LC_CurveJetBounds arcBounds;
+    REQUIRE(arc.tryBoundJet(0.2, 0.7, arcBounds, true));
+    REQUIRE(arcBounds.dddx.isValid());
+    REQUIRE(arcBounds.dddy.isValid());
+    const double signedDistance = 0.37;
+    const LC_Interval factorDerivative = arcBounds.offsetFactorDerivativeNumerator(signedDistance);
+    REQUIRE(factorDerivative.isValid());
+    for (int i = 0; i <= 64; ++i) {
+        const double t = 0.2 + 0.5 * i / 64.0;
+        LC_CurveJet jet;
+        REQUIRE(arc.tryEvaluateJet(t, LC_CurveEvaluationSide::Interior, jet));
+        const double speedSquared = jet.first.x * jet.first.x + jet.first.y * jet.first.y;
+        REQUIRE(speedSquared > 0.0);
+        const double firstDotSecond = jet.first.x * jet.second.x + jet.first.y * jet.second.y;
+        const double firstCrossThird = jet.first.x * jet.third.y - jet.first.y * jet.third.x;
+        const double derivative = 3.0 * std::sqrt(speedSquared) * firstDotSecond -
+                                  signedDistance * firstCrossThird;
+        const double rounding = 1e-12 * (std::abs(derivative) + 1.0);
+        CHECK(factorDerivative.lo() <= derivative + rounding);
+        CHECK(factorDerivative.hi() >= derivative - rounding);
+    }
+}
+
+TEST_CASE("Rational periodic spline product bounds remain conservative near the seam",
+          "[curve-offset][d0][bound][periodic][rational]") {
+    RS_Spline periodic{nullptr, RS_SplineData{2, false}};
+    const std::vector<RS_Vector> controls{{0, 0}, {25, -15}, {55, -5}, {70, 20},
+                                          {50, 45}, {15, 50}, {-15, 25}};
+    for (const RS_Vector& point : controls) {
+        periodic.addControlPoint({point.x + 1000.0, point.y - 2000.0});
+    }
+    periodic.setKnotVector({0, 0, 0, .5, 1.5, 3, 4.5, 5, 5, 5});
+    REQUIRE(periodic.validate());
+    periodic.setClosed(true);
+    RS_SplineData sourceData = periodic.getData();
+    const std::vector<double> baseWeights{1e-6, 1e-4, 1e-2, 1.0, 1e2, 1e4, 1e6};
+    sourceData.weights = baseWeights;
+    sourceData.weights.insert(sourceData.weights.end(), baseWeights.begin(),
+                              baseWeights.begin() + sourceData.degree);
+    RS_Spline source{nullptr, sourceData};
+    REQUIRE(source.validate());
+    REQUIRE(source.hasWrappedControlPoints());
+
+    const std::vector<double> breaks = source.getBreakParameters();
+    REQUIRE(breaks.size() >= 2);
+    const double spanStart = breaks[breaks.size() - 2];
+    const double spanEnd = breaks.back();
+    const double boxStart = spanEnd - (spanEnd - spanStart) / 1048576.0;
+    LC_CurveJetBounds bounds;
+    REQUIRE(source.tryBoundJet(boxStart, spanEnd, bounds, true));
+    REQUIRE(bounds.rationalFactorDerivativeBase.isValid());
+    REQUIRE(bounds.rationalFactorDerivativeDistanceTerm.isValid());
+
+    constexpr double signedDistance = 0.005;
+    const LC_Interval signBound = bounds.offsetFactorDerivativeSignNumerator(signedDistance);
+    REQUIRE(signBound.isValid());
+    // The near-stationary seam may remain unresolved, but boxes elsewhere in
+    // the spline should still produce useful monotonicity proofs. Every such
+    // proof must agree with an independently evaluated jet in that box.
+    size_t signProvedBoxes = 0;
+    for (size_t spanIndex = 0; spanIndex + 1 < breaks.size(); ++spanIndex) {
+        const double spanLength = breaks[spanIndex + 1] - breaks[spanIndex];
+        for (int piece = 0; piece < 16; ++piece) {
+            const double a = breaks[spanIndex] + spanLength * piece / 16.0;
+            const double b = breaks[spanIndex] + spanLength * (piece + 1) / 16.0;
+            LC_CurveJetBounds pieceBounds;
+            REQUIRE(source.tryBoundJet(a, b, pieceBounds, true));
+            const LC_Interval pieceSignBound =
+                pieceBounds.offsetFactorDerivativeSignNumerator(signedDistance);
+            if (!pieceSignBound.excludesZero()) continue;
+            ++signProvedBoxes;
+            LC_CurveJet jet;
+            REQUIRE(source.tryEvaluateJet((a + b) / 2.0, LC_CurveEvaluationSide::Interior, jet));
+            const double speedSquared = jet.first.x * jet.first.x + jet.first.y * jet.first.y;
+            REQUIRE(speedSquared > 0.0);
+            const double derivative = 3.0 * std::sqrt(speedSquared) *
+                    (jet.first.x * jet.second.x + jet.first.y * jet.second.y) -
+                signedDistance * (jet.first.x * jet.third.y - jet.first.y * jet.third.x);
+            CHECK(((pieceSignBound.lo() > 0.0 && derivative > 0.0) ||
+                   (pieceSignBound.hi() < 0.0 && derivative < 0.0)));
+        }
+    }
+    CHECK(signProvedBoxes > 0);
 }
 
 TEST_CASE("RS_Spline::tryBoundJet narrows as the box shrinks", "[curve-offset][d0][bound]") {
@@ -176,6 +274,52 @@ TEST_CASE("Derivative bounds stay tight on a tiny box far from the origin", "[cu
     CHECK(b.dy.width() < 1e-5);
 }
 
+TEST_CASE("Rational spline product bounds normalize conditioned active weights",
+          "[curve-offset][d0][bound][rational][conditioned]") {
+    RS_Spline periodic{nullptr, RS_SplineData{2, false}};
+    const std::vector<RS_Vector> controls{{1000, -2000}, {1025, -2015}, {1055, -2005}, {1070, -1980},
+                                          {1050, -1955}, {1015, -1950}, {985, -1975}};
+    for (const RS_Vector& point : controls) {
+        periodic.addControlPoint(point);
+    }
+    periodic.setKnotVector({0, 0, 0, .5, 1.5, 3, 4.5, 5, 5, 5});
+    REQUIRE(periodic.validate());
+    periodic.setClosed(true);
+    auto data = periodic.getData();
+    data.weights = {1e-6, 1e-4, 1e-2, 1.0, 1e2, 1e4, 1e6,
+                    1e-6, 1e-4};
+    RS_Spline spline{nullptr, data};
+    REQUIRE(spline.validate());
+
+    constexpr double a = 5.5;
+    constexpr double b = 5.5000001;
+    LC_CurveJetBounds bounds;
+    REQUIRE(spline.tryBoundJet(a, b, bounds, true));
+    REQUIRE(bounds.speedSquaredProduct.isValid());
+    REQUIRE(bounds.crossProduct.isValid());
+    constexpr double signedDistance = 0.005;
+    const LC_Interval factor = bounds.offsetFactorNumerator(signedDistance);
+    double maxSpeedSquared = 0.0;
+    for (int i = 0; i <= 16; ++i) {
+        const double t = a + (b - a) * i / 16.0;
+        LC_CurveJet jet;
+        REQUIRE(spline.tryEvaluateJet(t, LC_CurveEvaluationSide::Interior, jet));
+        const double speedSquared = jet.first.x * jet.first.x + jet.first.y * jet.first.y;
+        maxSpeedSquared = std::max(maxSpeedSquared, speedSquared);
+        const double rounding = 1e-10 * std::max(1.0, speedSquared);
+        CHECK(bounds.speedSquared().lo() <= speedSquared + rounding);
+        CHECK(bounds.speedSquared().hi() >= speedSquared - rounding);
+        const double cross = jet.first.x * jet.second.y - jet.first.y * jet.second.x;
+        CHECK(bounds.cross().contains(cross));
+        const double factorValue = speedSquared * std::sqrt(speedSquared) - signedDistance * cross;
+        const double factorRounding = 1e-10 * std::max(1.0, std::abs(factorValue));
+        CHECK(factor.lo() <= factorValue + factorRounding);
+        CHECK(factor.hi() >= factorValue - factorRounding);
+    }
+    CHECK(bounds.speedSquared().isPositive());
+    CHECK(bounds.speedSquared().width() < maxSpeedSquared * 0.02);
+}
+
 TEST_CASE("Next to a vanishing tangent the products' own bounds keep the sign of the curvature",
           "[curve-offset][d0][bound]") {
     // A cubic whose first handle is doubled onto its start: C' = 0 there, and
@@ -191,16 +335,17 @@ TEST_CASE("Next to a vanishing tangent the products' own bounds keep the sign of
         CHECK(b.cross().isNegative());
         CHECK(b.speedSquared().isPositive());
     }
-    // unless asked for, and at a rational span, there are none: the components alone bound it
+    // unless asked for; rational speed uses the homogeneous derivative numerator.
     LC_CurveJetBounds plain;
     REQUIRE(doubled.tryBoundJet(1e-2, 2e-2, plain));
     CHECK_FALSE(plain.crossProduct.isValid());
     const RS_Spline arc = quarterCircle();
     LC_CurveJetBounds b;
     REQUIRE(arc.tryBoundJet(0.2, 0.4, b, true));
-    CHECK_FALSE(b.crossProduct.isValid());
-    CHECK_FALSE(b.speedSquaredProduct.isValid());
-    CHECK(b.cross().isValid());
+    CHECK(b.crossProduct.isPositive());
+    CHECK(b.speedSquaredProduct.isPositive());
+    CHECK(b.speedSquared().isPositive());
+    CHECK(b.cross().isPositive());
 }
 
 TEST_CASE("RS_Spline::tryBoundJet refuses a box it cannot bound", "[curve-offset][d0][bound]") {

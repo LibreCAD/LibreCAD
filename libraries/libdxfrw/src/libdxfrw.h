@@ -15,6 +15,7 @@
 #define LIBDXFRW_H
 
 #include <functional>
+#include <istream>
 #include <list>
 #include <map>
 #include <memory>
@@ -105,6 +106,9 @@ public:
      * @return true for success
      */
     [[nodiscard]] bool read(DRW_Interface *interface_, bool ext);
+    /// Read from the current position of a caller-owned, seekable binary stream.
+    /// The stream must remain valid for the duration of this synchronous call.
+    [[nodiscard]] bool readStream(DRW_Interface *interface_, bool ext, std::istream& input);
     [[nodiscard]] bool readAscii(DRW_Interface *interface_, bool ext, std::string& content);
     /** Select before read()/readAscii(); the choice applies to each new reader.
      * Recovery interprets only known pre-R2007 default/ANSI_1252 DXF input as
@@ -115,12 +119,21 @@ public:
         m_dxfTextEncoding = encoding;
     }
     void setBinary(bool b) {binFile = b;}
+    bool isBinary() const noexcept { return binFile; }
 
     [[nodiscard]] bool write(DRW_Interface *interface_, DRW::Version ver, bool bin);
+    /** Revalidate caller-owned destination policy immediately before publish. */
+    [[nodiscard]] bool writeGuarded(DRW_Interface *interface_, DRW::Version ver,
+                                    bool bin, DRW_OutputPublishGuard guard,
+                                    void* guardContext);
     /// Requires a nonnull per-call verifier; ordinary write remains unchecked.
     [[nodiscard]] bool writeVerified(DRW_Interface *interface_, DRW::Version ver,
                                     bool bin, DRW_StagedFileVerifier verifier,
                                     void* context);
+    [[nodiscard]] bool writeVerified(DRW_Interface *interface_, DRW::Version ver,
+                                    bool bin, DRW_StagedFileVerifier verifier,
+                                    void* context, DRW_OutputPublishGuard guard,
+                                    void* guardContext);
     bool writeLineType(DRW_LType *ent);
     bool writeLayer(DRW_Layer *ent);
     bool writeDimstyle(DRW_Dimstyle *ent);
@@ -385,8 +398,11 @@ public:
     DRW_WritingContext* getWritingContext() { return &m_writingContext; }
 
 private:
+    friend struct LC_DxfReadProbeTestAccess;
+    void resetReadSession(DRW_Interface *interface_, bool ext);
     bool writeImpl(DRW_Interface *interface_, DRW::Version ver, bool bin,
-                   DRW_StagedFileVerifier verifier, void* context);
+                   DRW_StagedFileVerifier verifier, void* context,
+                   DRW_OutputPublishGuard guard, void* guardContext);
     enum class DxfEntityBoundary {
         NextEntity,
         EndSection,
@@ -650,6 +666,7 @@ private:
     bool m_writeError {false};
     std::string fileName;
     std::string codePage;
+    std::function<void()> m_testAfterProbe;
     bool binFile {false};
     std::unique_ptr<dxfReader> reader;
     DRW::DxfTextEncoding m_dxfTextEncoding {DRW::DxfTextEncoding::Declared};

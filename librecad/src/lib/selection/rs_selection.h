@@ -111,7 +111,7 @@ public:
     void countSelectedEntities(QMap<RS2::EntityType, int> &entityTypeMaps) const;
     void collectCurrentSelectionState(CurrentSelectionState& selectionState) const;
     void performBulkSelection(const std::function<void(RS_EntityContainer*, LC_GraphicViewport*, RS_Document*)>& fun) const;
-    void justSelect(RS_Entity* rsEntity, const bool on = true) const {m_document->select(rsEntity, on);}
+    void justSelect(RS_Entity* rsEntity, bool on = true) const;
 protected:
     RS_Document* m_document = nullptr;
     LC_GraphicViewport* m_viewPort = nullptr;

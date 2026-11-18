@@ -36,17 +36,19 @@
 #include <QPushButton>
 #include <QStandardItemModel>
 #include <QStandardPaths>
+#include <QTimer>
 #include <QTreeView>
 #include <QVBoxLayout>
 
 #include "lc_action_block_library_insert.h"
 #include "lc_containertraverser.h"
-#include "lc_documentsstorage.h"
 #include "lc_graphicviewport.h"
+#include "lc_offsetimportsession.h"
 #include "lc_printviewportrenderer.h"
 #include "qg_actionhandler.h"
 #include "rs_actioninterface.h"
 #include "rs_debug.h"
+#include "rs_fileio.h"
 #include "rs_graphic.h"
 #include "rs_painter.h"
 #include "rs_settings.h"
@@ -54,7 +56,7 @@
 
 namespace {
     // fixme - sand - rework, use reusable class
-    void writePng(const QString& pngPath, const QPixmap& pixmap) {
+    bool writePng(const QString& pngPath, const QPixmap& pixmap) {
         QImageWriter iio;
         QImage img = pixmap.toImage();
         img = img.scaled(64, 64, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
@@ -64,7 +66,9 @@ namespace {
         if (!iio.write(img)) {
             RS_DEBUG->print(RS_Debug::D_ERROR, "QG_LibraryWidget::getPathToPixmap: Cannot write thumbnail: '%s'",
                             pngPath.toLatin1().data());
+            return false;
         }
+        return true;
     }
 }
 
@@ -76,6 +80,8 @@ namespace {
  */
 QG_LibraryWidget::QG_LibraryWidget(const QG_ActionHandler* actionHandler, QWidget* parent, const char* name, const Qt::WindowFlags fl)
     : LC_GraphicViewAwareWidget(parent, name, fl), m_actionHandler{actionHandler} {
+    m_thumbnailCacheRoot = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation) +
+        QDir::separator() + "iconCache" + QDir::separator();
     const auto vboxLayout = new QVBoxLayout(this);
     vboxLayout->setSpacing(2);
     vboxLayout->setContentsMargins(2, 2, 2, 2);
@@ -148,7 +154,7 @@ void QG_LibraryWidget::insert() {
         if (m_actionHandler != nullptr) {
             const std::shared_ptr<RS_ActionInterface> a = m_actionHandler->setCurrentAction(RS2::ActionLibraryInsert);
             if (a) {
-                const auto* action = static_cast<LC_ActionBlockLibraryInsert*>(a.get());
+                auto* action = static_cast<LC_ActionBlockLibraryInsert*>(a.get());
                 action->setFile(std::move(dxfPath));
             }
             else {
@@ -281,6 +287,15 @@ void QG_LibraryWidget::updatePreview(const QModelIndex& idx) {
         return;
     }
 
+    ++m_thumbnailGeneration;
+    if (m_thumbnailSession) {
+        m_thumbnailSession->cancel();
+        delete m_thumbnailSession.data();
+        m_thumbnailSession = nullptr;
+    }
+    m_pendingThumbnails.clear();
+    m_nextThumbnail = 0;
+
     QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
 
     // dir from the point of view of the library browser (e.g. /mechanical/screws)
@@ -309,12 +324,22 @@ void QG_LibraryWidget::updatePreview(const QModelIndex& idx) {
 
     // Fill items into icon view:
     for (int i = 0; i < itemPathList.size(); ++i) {
-        QString label = QFileInfo(itemPathList.at(i)).completeBaseName();
-        QIcon icon = getIcon(directory, QFileInfo(itemPathList.at(i)).fileName(), itemPathList.at(i));
+        const QString sourcePath = itemPathList.at(i);
+        const QFileInfo sourceInfo(sourcePath);
+        const QString label = sourceInfo.completeBaseName();
+        const QString cachedPath = getPathToPixmap(directory, sourceInfo.fileName(), sourcePath);
+        const QIcon icon = cachedPath.isEmpty() ? QIcon(QPixmap(64, 64)) : QIcon(cachedPath);
         const auto newItem = new QStandardItem(icon, label);
         m_iconModel->setItem(i, newItem);
+        if (cachedPath.isEmpty()) {
+            m_pendingThumbnails.push_back({sourcePath, getThumbnailOutputPath(directory, sourcePath),
+                                           m_iconModel->index(i, 0), m_thumbnailGeneration});
+        }
     }
     QApplication::restoreOverrideCursor();
+    if (!m_pendingThumbnails.empty()) {
+        QTimer::singleShot(0, this, &QG_LibraryWidget::processNextThumbnail);
+    }
 }
 
 //RLZ change to do-while
@@ -368,35 +393,16 @@ QString QG_LibraryWidget::getItemPath(const QStandardItem* item) {
  * @param dxfPath Full path to the existing DXF file on disk
  *                          (e.g. /home/tux/.qcad/library/mechanical/screws/screw1.dxf)
  */
-QIcon QG_LibraryWidget::getIcon(const QString& dir, const QString& dxfFile, const QString& dxfPath) {
-    const QString pngFile = getPathToPixmap(dir, dxfFile, dxfPath);
-    const QFileInfo fiPng(pngFile);
-
-    // found existing thumbnail:
-    if (fiPng.isFile()) {
-        return QIcon(pngFile);
-    }
-    // default thumbnail:
-    return QIcon(QPixmap(64, 64));
-}
-
-// fixme - sand - files - generation of thumbnails should be extracted!!! Do this on general rework of the library
-
 /**
- * @return Path to the thumbnail of the given DXF file. If no thumbnail exists, one is
- * created in the user's home. If no thumbnail can be created, an empty string is returned.
+ * @return Path to an existing, current thumbnail or an empty string if it must be regenerated.
  */
 QString QG_LibraryWidget::getPathToPixmap(const QString& dir, const QString& dxfFile, const QString& dxfPath) {
-    // the thumbnail must be created in the user's home.
-    QString iconCacheLocation = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation) + QDir::separator() + "iconCache" +
-        QDir::separator();
-
     RS_DEBUG->print("QG_LibraryWidget::getPathToPixmap: " "dir: '%s' dxfFile: '%s' dxfPath: '%s'", dir.toLatin1().data(),
                     dxfFile.toLatin1().data(), dxfPath.toLatin1().data());
 
     // List of all directories that contain part libraries:
     QStringList directoryList = RS_SYSTEM->getDirectoryList("library");
-    directoryList.prepend(iconCacheLocation);
+    directoryList.prepend(m_thumbnailCacheRoot);
 
     QFileInfo fiDxf(dxfPath);
 
@@ -420,11 +426,60 @@ QString QG_LibraryWidget::getPathToPixmap(const QString& dir, const QString& dxf
         }
     }
 
-    // create all directories needed:
-    RS_SYSTEM->createPaths(iconCacheLocation + dir);
+    return {};
+}
 
-    QString pngPath = iconCacheLocation + dir + QDir::separator() + fiDxf.baseName() + ".png";
+QString QG_LibraryWidget::getThumbnailOutputPath(const QString& dir, const QString& dxfPath) const {
+    return m_thumbnailCacheRoot + dir + QDir::separator() + QFileInfo(dxfPath).baseName() + ".png";
+}
 
+void QG_LibraryWidget::processNextThumbnail() {
+    if (m_thumbnailSession) {
+        return;
+    }
+    while (m_nextThumbnail < m_pendingThumbnails.size()) {
+        const ThumbnailRequest request = m_pendingThumbnails[m_nextThumbnail++];
+        if (request.generation != m_thumbnailGeneration || !request.item.isValid() ||
+            request.item.model() != m_iconModel.get()) {
+            continue;
+        }
+        const RS2::FormatType type = RS_FileIO::detectFormat(request.sourcePath);
+        if (!LC_OffsetImportSession::supportsType(type)) {
+            continue;
+        }
+
+        auto* session = new LC_OffsetImportSession(this);
+        m_thumbnailSession = session;
+        const QPointer<QG_LibraryWidget> alive(this);
+        const QPointer<LC_OffsetImportSession> pending(session);
+        if (!session->start(request.sourcePath, type, RS2::DxfTextEncoding::Declared, false,
+            [alive, pending, request](LC_OffsetImportSession::Outcome outcome) {
+                if (!alive || !pending || alive->m_thumbnailSession != pending) return;
+                alive->m_thumbnailSession = nullptr;
+                pending->deleteLater();
+                if (request.generation == alive->m_thumbnailGeneration && request.item.isValid() &&
+                    request.item.model() == alive->m_iconModel.get() &&
+                    outcome.status == LC_OffsetImportSession::Status::Complete && outcome.graphic &&
+                    !outcome.sourceUnverified && outcome.sourceStamp.matches(request.sourcePath) &&
+                    alive->renderThumbnail(request.outputPath, *outcome.graphic)) {
+                    alive->m_iconModel->setData(request.item, QIcon(request.outputPath), Qt::DecorationRole);
+                }
+                if (request.generation == alive->m_thumbnailGeneration) {
+                    QTimer::singleShot(0, alive, &QG_LibraryWidget::processNextThumbnail);
+                }
+            })) {
+            m_thumbnailSession = nullptr;
+            delete session;
+            continue;
+        }
+        return;
+    }
+    m_pendingThumbnails.clear();
+    m_nextThumbnail = 0;
+}
+
+bool QG_LibraryWidget::renderThumbnail(const QString& pngPath, RS_Graphic& graphic) {
+    RS_SYSTEM->createPaths(QFileInfo(pngPath).absolutePath());
     QPixmap buffer(128, 128); // fixme - sand - add settings for thumbnail size, generate per setting!
     RS_Painter painter(&buffer);
     painter.setBackground(RS_Color(255, 255, 255));
@@ -432,15 +487,6 @@ QString QG_LibraryWidget::getPathToPixmap(const QString& dir, const QString& dxf
 
     LC_GraphicViewport viewport;
     viewport.setSize(128, 128);
-
-    RS_Graphic graphic;
-
-    LC_DocumentsStorage storage;
-
-    if (!storage.loadDocument(&graphic, dxfPath, RS2::FormatUnknown)) {
-        RS_DEBUG->print(RS_Debug::D_ERROR, "QG_LibraryWidget::getPathToPixmap: Cannot open file: '%s'", dxfPath.toLatin1().data());
-        return {};
-    }
 
     viewport.setDocument(&graphic);
     viewport.initAfterDocumentOpen();
@@ -463,7 +509,9 @@ QString QG_LibraryWidget::getPathToPixmap(const QString& dir, const QString& dxf
     painter.end();
 
     // Write to PNG
-    writePng(pngPath, std::move(buffer));
-    LC_LOG << "Writing to " << pngPath << " OK";
-    return pngPath;
+    const bool written = writePng(pngPath, std::move(buffer));
+    if (written) {
+        LC_LOG << "Writing to " << pngPath << " OK";
+    }
+    return written;
 }

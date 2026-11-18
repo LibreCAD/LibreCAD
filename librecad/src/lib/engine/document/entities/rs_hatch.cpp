@@ -407,22 +407,24 @@ void appendExportLoops(const LC_LoopUtils::LC_Loops& node,
         appendExportLoops(child, depth + 1, pivot, loopAngle, out);
 }
 
-// True when the given extracted container holds exactly one RS_Spline
-// anywhere in it. validate() flattens source entities with ResolveAll, so
-// an RS_Spline reaches the sorter as its chord lines; the writer wants to
-// write the SPLINE edge back for the single-spline draw-hatch input.
+// True when the given source container holds one spline-family entity and
+// only straight-line remainder. validate() flattens splines with ResolveAll,
+// so the writer must preserve the original spline alongside its closing lines.
 bool holdsSingleRsSpline(const RS_EntityContainer& container) {
     bool found = false;
     lc::LC_ContainerTraverser traverser{container, RS2::ResolveNone};
     for (const RS_Entity* entity : traverser.entities()) {
         if (entity == nullptr) continue;
-        if (entity->rtti() == RS2::EntitySpline) {
+        if (entity->rtti() == RS2::EntitySpline ||
+            entity->rtti() == RS2::EntityOffsetCurve) {
             if (found) return false;
             found = true;
             continue;
         }
+        if (entity->rtti() == RS2::EntityLine)
+            continue;
         // A nested container is explored by the traverser already; any
-        // non-spline atomic entity rules the single-spline case out.
+        // other atomic entity rules this source-preservation case out.
         if (entity->isAtomic())
             return false;
     }

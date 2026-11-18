@@ -59,11 +59,11 @@ RS2::FormatType parseDxfVersion(const QString& ver) {
 }
 
 bool convertFile(const QString& inputFile, const QString& outputFile, RS2::FormatType outFmt) {
-    RS_Graphic graphic;
-    if (!LC_Console::importGraphic(graphic, inputFile))
+    auto graphic = LC_Console::importGraphic(inputFile);
+    if (!graphic)
         return false;
 
-    if (!RS_FileIO::instance()->fileExport(graphic, outputFile, outFmt)) {
+    if (!RS_FileIO::instance()->fileExport(*graphic, outputFile, outFmt)) {
         qCritical("ERROR: failed to export '%s'", qPrintable(outputFile));
         return false;
     }
@@ -136,23 +136,12 @@ int runDwgAdmissionReport(int argc, char** argv) {
 
     RS_FONTLIST->init();
     RS_PATTERNLIST->init();
-    RS_Graphic graphic;
-    graphic.initForNewDocument();
-    if (!RS_FileIO::instance()->fileImport(
-            graphic, input, RS2::FormatDWG,
-            [](bool partial, const QString& error) {
-                if (partial) {
-                    qWarning("WARNING: partial import: %s", qPrintable(error));
-                    return true;
-                }
-                qCritical("ERROR: import failed: %s", qPrintable(error));
-                return false;
-            })) {
+    auto graphic = LC_Console::importGraphic(input, RS2::FormatDWG);
+    if (!graphic) {
         return EXIT_FAILURE;
     }
-    graphic.onLoadingCompleted();
     const RS2::FormatType target = formatForDwgVersion(
-        graphic.dwgAdvancedMetadata().sourceDwgVersion());
+        graphic->dwgAdvancedMetadata().sourceDwgVersion());
     if (target == RS2::FormatUnknown) {
         qCritical("ERROR: imported DWG version has no LibreCAD DWG export target.");
         return EXIT_FAILURE;
@@ -165,7 +154,7 @@ int runDwgAdmissionReport(int argc, char** argv) {
     }
     RS_FilterDXFRW filter;
     const bool published = filter.fileExport(
-        graphic, temporaryDirectory.filePath("admission-check.dwg"), target);
+        *graphic, temporaryDirectory.filePath("admission-check.dwg"), target);
     qInfo().noquote() << filter.dwgExportAdmissionReport();
     qInfo("publish=%s", published ? "success" : "refused");
     return published ? EXIT_SUCCESS : EXIT_FAILURE;

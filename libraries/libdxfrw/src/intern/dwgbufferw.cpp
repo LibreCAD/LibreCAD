@@ -502,7 +502,7 @@ void dwgBufferW::putUCSText(const std::string& utf8) {
 std::string dwgBufferW::encodeTextAreaString(const std::string& utf8,
                                              bool unicode) const {
     if (!unicode)
-        return m_decoder ? m_decoder->fromUtf8(utf8) : utf8;
+        return m_decoder ? m_decoder->fromUtf8TextArea(utf8) : utf8;
 
     std::string encoded;
     for (size_t i = 0; i < utf8.size();) {

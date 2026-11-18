@@ -104,6 +104,8 @@
 #include "lc_action_modify_move_adjust.h"
 #include "lc_action_modify_move_rotate.h"
 #include "lc_action_modify_offset.h"
+#include "lc_action_offsetcurve_updatesource.h"
+#include "lc_action_offsetcurve_restoreoriginal.h"
 #include "lc_action_modify_order.h"
 #include "lc_action_modify_revert_direction.h"
 #include "lc_action_modify_rotate.h"
@@ -764,6 +766,12 @@ namespace InnerFactory{
             }
             case RS2::ActionModifyOffset: {
                 return new LC_ActionModifyOffset(ctx);
+            }
+            case RS2::ActionOffsetCurveUpdateSource: {
+                return new LC_ActionOffsetCurveUpdateSource(ctx);
+            }
+            case RS2::ActionOffsetCurveRestoreOriginal: {
+                return new LC_ActionOffsetCurveRestoreOriginal(ctx);
             }
             case RS2::ActionModifyExplodeText: {
                 return new LC_ActionModifyExplodeText(ctx);

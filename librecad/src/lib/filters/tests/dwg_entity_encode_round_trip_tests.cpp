@@ -137,6 +137,13 @@ bool encodeThreeStreams(DRW_Entity& source, DRW::Version version,
         return false;
     }
 
+    std::uint64_t objectSizeBit = 0;
+    if (version == DRW::AC1021) {
+        dwgBufferW prefix;
+        prefix.putObjType(version, DrwEntityEncodeTestAccess::oType(source));
+        objectSizeBit = prefix.bitCount();
+    }
+
     body.alignToByte();
     const std::size_t stringBytes = strings.data().size();
     if (stringBytes != 0)
@@ -148,6 +155,9 @@ bool encodeThreeStreams(DRW_Entity& source, DRW::Version version,
     body.putRawShort16(stringBitSize);
     body.putBit(stringBytes != 0 ? 1 : 0);
     body.alignToByte();
+
+    if (version == DRW::AC1021)
+        body.patchRawLong32AtBit(objectSizeBit, body.bitCount());
 
     handles.alignToByte();
     const std::size_t handleStart = body.size();
@@ -1139,22 +1149,76 @@ TEST_CASE("DRW_Spline::encodeDwg round-trips a fit-point spline",
     src.nfit = 3;
     DrwEntityEncodeTestAccess::layerH(src).ref = 0x12;
 
-    for (DRW::Version ver : {DRW::AC1015, DRW::AC1018}) {
-        dwgBufferW w;
-        REQUIRE(DrwEntityEncodeTestAccess::encode(src, ver, &w));
-        auto bytes = snapshot(w);
+    for (DRW::Version ver : {DRW::AC1015, DRW::AC1018, DRW::AC1021,
+                             DRW::AC1024, DRW::AC1027, DRW::AC1032}) {
+        INFO("DWG version " << static_cast<int>(ver));
+        std::vector<std::uint8_t> bytes;
+        std::uint32_t handleBitSize = 0;
+        if (ver <= DRW::AC1018) {
+            dwgBufferW w;
+            REQUIRE(DrwEntityEncodeTestAccess::encode(src, ver, &w));
+            bytes = snapshot(w);
+        } else {
+            EncodedEntityFrame frame;
+            REQUIRE(encodeThreeStreams(src, ver, frame));
+            bytes = std::move(frame.bytes);
+            handleBitSize = frame.handleBitSize;
+        }
         dwgBuffer r(bytes.data(), bytes.size());
         DRW_Spline dst;
-        REQUIRE(DrwEntityEncodeTestAccess::parse(dst, ver, &r));
+        REQUIRE(DrwEntityEncodeTestAccess::parse(dst, ver, &r, handleBitSize));
 
+        CHECK(dst.m_scenario == 2);
         REQUIRE(dst.degree         == 3);
         REQUIRE(dst.nfit           == 3);
         REQUIRE(dst.fitlist.size() == 3);
-        REQUIRE(dst.fitlist[1]->x  == 5.0);
-        REQUIRE(dst.fitlist[1]->y  == 5.0);
-        REQUIRE(dst.tgStart.x      == 1.0);
-        REQUIRE(dst.tgEnd.y        == 1.0);
+        CHECK(dst.fitlist[0]->x == 0.0);
+        CHECK(dst.fitlist[0]->y == 0.0);
+        CHECK(dst.fitlist[1]->x == 5.0);
+        CHECK(dst.fitlist[1]->y == 5.0);
+        CHECK(dst.fitlist[2]->x == 10.0);
+        CHECK(dst.fitlist[2]->y == 0.0);
+        CHECK(dst.tolfit == Approx(src.tolfit));
+        CHECK(dst.tgStart.x == 1.0);
+        CHECK(dst.tgStart.y == 0.0);
+        CHECK(dst.tgEnd.x == 0.0);
+        CHECK(dst.tgEnd.y == 1.0);
     }
+}
+
+TEST_CASE("DRW_Spline::encodeDwg preserves closed fit-point state in R2018",
+          "[dwg-write][entity-encode]") {
+    DRW_Spline src;
+    src.handle = 0xF2;
+    src.flags = 0x09;
+    src.degree = 2;
+    src.tolfit = 2e-8;
+    src.tgStart = DRW_Coord{1.0, 0.0, 0.0};
+    src.tgEnd = DRW_Coord{1.0, 0.0, 0.0};
+    src.m_scenario = 2;
+    src.fitlist.push_back(std::make_shared<DRW_Coord>(DRW_Coord{0.0, 0.0, 0.0}));
+    src.fitlist.push_back(std::make_shared<DRW_Coord>(DRW_Coord{2.0, 0.0, 0.0}));
+    src.fitlist.push_back(std::make_shared<DRW_Coord>(DRW_Coord{1.0, 2.0, 0.0}));
+    src.nfit = static_cast<std::int32_t>(src.fitlist.size());
+    DrwEntityEncodeTestAccess::layerH(src).ref = 0x12;
+
+    EncodedEntityFrame frame;
+    REQUIRE(encodeThreeStreams(src, DRW::AC1032, frame));
+    dwgBuffer r(frame.bytes.data(), frame.bytes.size());
+    DRW_Spline dst;
+    REQUIRE(DrwEntityEncodeTestAccess::parse(
+        dst, DRW::AC1032, &r, frame.handleBitSize));
+
+    CHECK(dst.m_scenario == 2);
+    CHECK(dst.m_splineFlags1 & 0x01);
+    CHECK(dst.m_splineFlags1 & 0x04);
+    CHECK(dst.m_splineFlags1 & 0x08);
+    CHECK(dst.m_knotParam == 0);
+    CHECK(dst.flags & 0x01);
+    REQUIRE(dst.fitlist.size() == src.fitlist.size());
+    CHECK(dst.fitlist[1]->x == 2.0);
+    CHECK(dst.fitlist[2]->y == 2.0);
+    CHECK(dst.tolfit == Approx(src.tolfit));
 }
 
 TEST_CASE("DRW_Spline::parseDwg rejects impossible control-point layout",

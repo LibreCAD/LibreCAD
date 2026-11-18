@@ -76,6 +76,9 @@ RS_EntityContainer* LC_OverlaysManager::getEntitiesContainer(const RS2::OverlayG
     if (position == RS2::OverlayEffects) {
         m_entities[position]->setOwner(true);
     }
+    if (position == RS2::OffsetSourceHighlights) {
+        m_entities[position]->setOwner(false);
+    }
     return m_entities[position];
 }
 

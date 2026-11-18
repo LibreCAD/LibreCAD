@@ -48,7 +48,8 @@ namespace LC_CopyUtils {
         double angle = 0.;
     };
     RS_Vector getInterGraphicsScaleFactor(double userFactor, const RS_Graphic *source, const RS_Graphic* destination);
-    void copy(const RS_Vector& ref, QList<RS_Entity*>& entities, const RS_Graphic* graphic);
+    /** Returns source identities whose copies actually reached the clipboard. */
+    QList<RS_Entity*> copy(const RS_Vector& ref, QList<RS_Entity*>& entities, const RS_Graphic* graphic);
     void paste(const RS_PasteData& data, RS_Graphic* graphic, LC_DocumentModificationBatch& ctx);
     /**
      * Puts the entity and its owned descendants on the graphic's layers of the same names, adding missing ones.

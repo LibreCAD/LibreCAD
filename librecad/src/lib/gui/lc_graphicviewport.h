@@ -43,6 +43,7 @@ class LC_View;
 class QDateTime;
 class RS_Undoable;
 class LC_GraphicViewPortListener;
+class LC_OffsetSourceHighlightState;
 
 class LC_GraphicViewport: public LC_CoordinatesMapper{
 public:
@@ -50,7 +51,7 @@ public:
     virtual ~LC_GraphicViewport();
 
     void setDocument(RS_Document *c);
-    RS_Document *getDocument() const {return m_document;}
+    RS_Document *getDocument() const {return m_documentLifetime.expired() ? nullptr : m_document;}
     int getWidth() const {return m_width;}
     int getHeight() const {return m_height;}
 
@@ -178,6 +179,9 @@ public:
     void clearOverlayDrawablesContainer(RS2::OverlayGraphics overlayType) const;
     RS_Grid *getGrid() const;
     LC_OverlaysManager* getOverlaysManager() { return &m_overlaysManager;}
+    std::shared_ptr<void> highlightOffsetSource(const RS_Entity& entity);
+    std::weak_ptr<void> offsetSourceHighlightLifetime() const;
+    std::weak_ptr<void> watchOffsetSourceHighlightLifetime();
     bool isPanning() const {return m_panning;}
     void setPanning(const bool state) {  m_panning = state;}
     RS_Graphic* getGraphic() const {return m_graphic;}
@@ -221,6 +225,7 @@ protected:
     int m_ucsApplyingPolicy = UCSApplyingPolicy::ZoomAuto;
 
     RS_Document *m_document = nullptr; // Holds a pointer to all the entities
+    std::weak_ptr<void> m_documentLifetime;
     RS_Graphic* m_graphic = nullptr; // may be extracted from document, yet have separate reference for performance reasons
 
     bool m_printPreview = false;
@@ -233,6 +238,7 @@ protected:
     bool m_relativeZeroLocked = false;
 
     LC_OverlaysManager m_overlaysManager;
+    std::shared_ptr<LC_OffsetSourceHighlightState> m_offsetSourceHighlights;
 
     bool m_panning = false;
     bool m_hideRelativeZero = false; // fixme - should be dispatched from action

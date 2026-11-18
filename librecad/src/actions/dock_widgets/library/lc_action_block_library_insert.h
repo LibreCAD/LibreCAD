@@ -31,6 +31,8 @@
 #include "rs_creation.h"
 #include "rs_previewactioninterface.h"
 
+class LC_OffsetImportSession;
+
 /**
  * This action class can handle user events for inserting library items 
  * (or any other DXF files) into the current drawing (as block/insert).
@@ -45,7 +47,9 @@ public:
     void init(int status) override;
     void reset() const;
     QStringList getAvailableCommands() override;
-    void setFile(const QString& file) const;
+    void setFile(const QString& file);
+    bool isSourceLoading() const noexcept;
+    bool hasSource() const noexcept;
     double getAngle() const;
     void setAngle(double a) const;
     double getFactor() const;

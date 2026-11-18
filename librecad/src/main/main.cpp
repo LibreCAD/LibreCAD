@@ -329,7 +329,7 @@ bool setupDebugLevel(const char level) {
  * Main. Creates Application window.
  */
  // fixme - sand - refactor and split to several specialized functions
-#ifndef BUILD_TESTS
+#if !defined(BUILD_TESTS) && !defined(LC_OFFSET_GEOMETRY_WORKER)
 
 int main(int argc, char** argv) {
 

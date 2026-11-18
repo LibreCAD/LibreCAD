@@ -29,7 +29,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "lc_offset_options_widget.h"
 
 #include "lc_action_modify_offset.h"
-#include "lc_guarded_signals_blocker.h"
+#include <QSignalBlocker>
 #include "ui_lc_offset_options_widget.h"
 
 /*
@@ -44,6 +44,8 @@ LC_OffsetOptionsWidget::LC_OffsetOptionsWidget(): ui(new Ui::LC_OffsetOptionsWid
     connect(ui->leDist, &QLineEdit::editingFinished, this, &LC_OffsetOptionsWidget::onDistEditingFinished);
     connect(ui->sbNumberOfCopies, &QSpinBox::valueChanged, this, &LC_OffsetOptionsWidget::onNumberOfCopiesValueChanged);
     connect(ui->cbFixedDistance, &QCheckBox::clicked, this, &LC_OffsetOptionsWidget::onFixedDistanceClicked);
+    connect(ui->cbEditableOffsetCurve, &QCheckBox::clicked, this,
+        &LC_OffsetOptionsWidget::onEditableOffsetCurveClicked);
     pickDistanceSetup("distance", ui->tbPickDistance, ui->leDist);
 }
 
@@ -71,15 +73,10 @@ void LC_OffsetOptionsWidget::doUpdateByAction(RS_ActionInterface* a) {
     const bool keepOriginals = m_action->isKeepOriginals();
     const bool useMultipleCopies = m_action->isUseMultipleCopies();
 
-    LC_GuardedSignalsBlocker({
-        ui->leDist,
-        ui->cbFixedDistance,
-        ui->cbMultipleCopies,
-        ui->sbNumberOfCopies,
-        ui->cbCurrentLayer,
-        ui->cbCurrentAttr,
-        ui->cbKeepOriginals
-    });
+    const QSignalBlocker distanceSignals(ui->leDist), fixedSignals(ui->cbFixedDistance),
+        multipleSignals(ui->cbMultipleCopies), numberSignals(ui->sbNumberOfCopies),
+        layerSignals(ui->cbCurrentLayer), attributeSignals(ui->cbCurrentAttr),
+        originalSignals(ui->cbKeepOriginals), nativeSignals(ui->cbEditableOffsetCurve);
     ui->leDist->setText(dist);
     ui->leDist->setEnabled(distanceFixed);
     ui->tbPickDistance->setEnabled(distanceFixed);
@@ -91,6 +88,7 @@ void LC_OffsetOptionsWidget::doUpdateByAction(RS_ActionInterface* a) {
     ui->cbCurrentLayer->setChecked(useCurrentLayer);
     ui->cbCurrentAttr->setChecked(useCurrentAttributes);
     ui->cbKeepOriginals->setChecked(keepOriginals);
+    ui->cbEditableOffsetCurve->setChecked(m_action->isEditableOffsetCurve());
 }
 
 void LC_OffsetOptionsWidget::onDistEditingFinished() {
@@ -103,6 +101,11 @@ void LC_OffsetOptionsWidget::onDistEditingFinished() {
 
 void LC_OffsetOptionsWidget::onFixedDistanceClicked(const bool val) {
     m_action->setDistanceFixed(val);
+    m_action->updateOptions();
+}
+
+void LC_OffsetOptionsWidget::onEditableOffsetCurveClicked(bool enabled) {
+    m_action->setEditableOffsetCurve(enabled);
     m_action->updateOptions();
 }
 

@@ -69,6 +69,10 @@ RS_Block::RS_Block(RS_EntityContainer* parent, const RS_BlockData& blockData)
     setPen(blockDefinitionPreviewPen());
 }
 
+RS_Block::~RS_Block() {
+    invalidateLifetime();
+}
+
 RS_Entity* RS_Block::clone() const {
     const auto blk = new RS_Block(getParent(), RS_BlockData(m_data));
     blk->setGraphicView(getGraphicView()); // fixme - remove this dependency

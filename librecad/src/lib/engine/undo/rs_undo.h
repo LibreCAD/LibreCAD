@@ -30,6 +30,7 @@
 #define RS_UNDO_H
 
 #include <memory>
+#include <cstdint>
 #include <vector>
 
 class RS_UndoCycle;
@@ -54,6 +55,8 @@ public:
       **/
     void updateUndoState() const;
     void collectUndoState(bool& undoAvailable, bool& redoAvailable) const;
+    /** Invalidates gestures even if undo/redo returns to the same visible state. */
+    std::uint64_t undoStateEpoch() const noexcept { return m_undoStateEpoch; }
     friend std::ostream& operator <<(std::ostream& os, const RS_Undo& l);
 
 protected:
@@ -78,6 +81,8 @@ protected:
     virtual void removeUndoable(RS_Undoable* u) = 0;
 
 private:
+    friend class LC_OffsetCurvePublication;
+    std::uint64_t m_undoStateEpoch = 0;
     void addUndoCycle(std::shared_ptr<RS_UndoCycle> undoCycle);
     void pruneRedoCycles();
     //! List of undo list items. every item is something that can be undone.

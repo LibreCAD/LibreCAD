@@ -178,6 +178,14 @@ TEST_CASE("Closed-form intersections between lines and arcs", "[offset][check]")
     CHECK(shared[0].distanceTo({4, 0}) < 1e-12);
     CHECK(shared[1].distanceTo({10, 0}) < 1e-12);
 
+    // At a large drawing origin, coordinate-scaled slack must not merge
+    // distinct short, parallel segments into a false collinear overlap.
+    const LC_OffsetSegment distant = line({1e6, 1e6}, {1e6 + 1.0, 1e6});
+    const LC_OffsetSegment nearby = line({1e6, 1e6 + 1e-7}, {1e6 + 1.0, 1e6 + 1e-7});
+    CHECK(segmentIntersections(distant, nearby, 0.0).empty());
+    CHECK(segmentDistance(distant, nearby) == Catch::Approx(1e-7).margin(2e-10));
+    CHECK(segmentIntersections(distant, line({1e6 + 0.5, 1e6 - 1.0}, {1e6 + 0.5, 1e6 + 1.0}), 0.0).size() == 1);
+
     const LC_OffsetSegment quarter = arc({0, 0}, 5.0, 0.0, M_PI_2);
     // a line through the arc's circle meets the arc once, at (3, 4); its other root is off the sweep
     const std::vector<RS_Vector> once = segmentIntersections(line({-10, 4}, {10, 4}), quarter, 0.0);

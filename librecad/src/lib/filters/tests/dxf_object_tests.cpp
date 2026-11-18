@@ -10566,6 +10566,79 @@ TEST_CASE("DXF SPLINE and HELIX writers reject invalid payloads",
   std::filesystem::remove(path);
 }
 
+TEST_CASE("DXF SPLINE and HELIX writers omit an unspecified zero normal",
+          "[dxf][spline][helix][writer]") {
+  class Emitter final : public StubInterface {
+  public:
+    dxfRW *writer = nullptr;
+    DRW_Spline defaultNormal;
+    DRW_Spline explicitNormal;
+    DRW_Helix helix;
+    std::array<bool, 3> results{};
+
+    void writeEntities() override {
+      results[0] = writer->writeSpline(&defaultNormal);
+      results[1] = writer->writeSpline(&explicitNormal);
+      results[2] = writer->writeHelix(&helix);
+    }
+  };
+
+  const auto initializeSpline = [](DRW_Spline &spline) {
+    spline.degree = 1;
+    spline.knotslist = {0.0, 0.0, 1.0, 1.0};
+    spline.controllist = {
+        std::make_shared<DRW_Coord>(0.0, 0.0, 0.0),
+        std::make_shared<DRW_Coord>(1.0, 1.0, 0.0)};
+  };
+
+  Emitter emitter;
+  initializeSpline(emitter.defaultNormal);
+  initializeSpline(emitter.explicitNormal);
+  emitter.explicitNormal.normalVec = DRW_Coord(0.0, 1.0, 0.0);
+  initializeSpline(emitter.helix);
+  emitter.helix.axisVector = DRW_Coord(0.0, 0.0, 1.0);
+  emitter.helix.radius = 1.0;
+  emitter.helix.turns = 1.0;
+  emitter.helix.turnHeight = 1.0;
+
+  const auto path = std::filesystem::temp_directory_path()
+                    / "lc_dxf_unspecified_spline_normal.dxf";
+  std::filesystem::remove(path);
+  dxfRW writer(path.string().c_str());
+  emitter.writer = &writer;
+  REQUIRE(writer.write(&emitter, DRW::AC1021, false));
+  CHECK(emitter.results[0]);
+  CHECK(emitter.results[1]);
+  CHECK(emitter.results[2]);
+
+  const auto groups = readGroups(path);
+  const auto recordExtrusion = [&groups](const std::string &type,
+                                          std::size_t occurrence) {
+    std::vector<std::pair<std::string, std::string>> extrusion;
+    std::size_t seen = 0;
+    for (std::size_t i = 0; i < groups.size(); ++i) {
+      if (groups[i] != std::pair<std::string, std::string>{"0", type})
+        continue;
+      if (seen++ != occurrence)
+        continue;
+      for (std::size_t j = i + 1; j < groups.size() && groups[j].first != "0"; ++j) {
+        if (groups[j].first == "210" || groups[j].first == "220"
+            || groups[j].first == "230")
+          extrusion.push_back(groups[j]);
+      }
+      break;
+    }
+    return extrusion;
+  };
+
+  const std::vector<std::pair<std::string, std::string>> expectedNormal = {
+      {"210", "0"}, {"220", "1"}, {"230", "0"}};
+  CHECK(recordExtrusion("SPLINE", 0).empty());
+  CHECK(recordExtrusion("SPLINE", 1) == expectedNormal);
+  CHECK(recordExtrusion("HELIX", 0).empty());
+  std::filesystem::remove(path);
+}
+
 TEST_CASE("DXF rejects invalid HELIX trailer fields",
           "[dxf][helix][malformed]") {
   class HelixCapture : public StubInterface {
