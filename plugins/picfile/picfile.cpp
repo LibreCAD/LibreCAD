@@ -252,9 +252,15 @@ void picPunto::processFilePic(QFile* file)
                     i++; // dashed line
                 }
                 for (;i <  data.size(); i += 2) {
+                    const QStringList xy = data.at(i).split(',');
+                    if (xy.size() < 2) {
+                        QMessageBox::critical ( this, "picPunto",
+                            QString(tr("format error in %1")).arg(line) );
+                        return;
+                    }
                     pd = new pointData;
-                    pd->x = data.at(i).split(',').at(0);
-                    pd->y = data.at(i).split(',').at(1);
+                    pd->x = xy.at(0);
+                    pd->y = xy.at(1);
                     dataList.append(pd);
                     if ( i < data.size()-1 && data.at(i+1) != "to") {
                         QMessageBox::critical ( this, "picPunto", QString(tr("format error in %1")).arg(line) );
@@ -269,20 +275,38 @@ void picPunto::processFilePic(QFile* file)
                     QMessageBox::critical ( this, "picPunto", QString(tr("format error in %1")).arg(line) );
                     return;
                 }
-                drawCircle(data.at(2).split(',').at(0), data.at(2).split(',').at(1), data.at(4));
+                const QStringList xy = data.at(2).split(',');
+                if (xy.size() < 2) {
+                    QMessageBox::critical ( this, "picPunto", QString(tr("format error in %1")).arg(line) );
+                    return;
+                }
+                drawCircle(xy.at(0), xy.at(1), data.at(4));
             } else {
                 if (cmd == "box") { // box invis fill 0.000 with .sw at (7.480,6.917) width 0.079 height 0.157
-                    if ( data.size() < 11 ) {
+                    if ( data.size() < 12 ) {
                         // QMessageBox::critical ( this, "picPunto", QString(tr("format error in %1")).arg(line) );
                         continue;
                     }
-                    QString posx = data.at(7).split(',').at(0);
-                    QString posy = data.at(7).split(',').at(1);
+                    const QStringList xy = data.at(7).split(',');
+                    if (xy.size() < 2) {
+                        continue;
+                    }
+                    QString posx = xy.at(0);
+                    QString posy = xy.at(1);
                     drawBox(posx.remove(0,1), posy.remove(posy.size()-1,1), data.at(9), data.at(11));
                 } else {
                     if ( cmd.startsWith("\"\\s") && data.size() > 3 ) { // "\s5\fRAbstell fl?che\fP" at 8.132,7.456 ljust
-                        QString txt = line.split("\"", skip).at(1);
-                        QStringList rline = line.split("\"", skip).at(2).split(" ",skip);
+                        const QStringList quoted = line.split("\"", skip);
+                        if (quoted.size() < 3) {
+                            QMessageBox::critical ( this, "picPunto", QString(tr("format error in %1")).arg(line) );
+                            return;
+                        }
+                        QString txt = quoted.at(1);
+                        QStringList rline = quoted.at(2).split(" ",skip);
+                        if (rline.size() < 4) {
+                            QMessageBox::critical ( this, "picPunto", QString(tr("format error in %1")).arg(line) );
+                            return;
+                        }
                         txt.remove ( txt.size()-3, 3);
                         txt.remove (QRegularExpression("^.*fR"));
                         // printf("process line: %s: %s\n",rline.at(2).toStdString().c_str(),txt.toStdString().c_str() );
