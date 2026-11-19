@@ -307,10 +307,15 @@ void picPunto::processFilePic(QFile* file)
                             QMessageBox::critical ( this, "picPunto", QString(tr("format error in %1")).arg(line) );
                             return;
                         }
+                        const QStringList xy = rline.at(2).split(',');
+                        if (xy.size() < 2) {
+                            QMessageBox::critical ( this, "picPunto", QString(tr("format error in %1")).arg(line) );
+                            return;
+                        }
                         txt.remove ( txt.size()-3, 3);
                         txt.remove (QRegularExpression("^.*fR"));
                         // printf("process line: %s: %s\n",rline.at(2).toStdString().c_str(),txt.toStdString().c_str() );
-                        drawText(rline.at(2).split(',').at(0), rline.at(2).split(',').at(1), txt, rline.at(3));
+                        drawText(xy.at(0), xy.at(1), txt, rline.at(3));
                     }
                 }
             }
