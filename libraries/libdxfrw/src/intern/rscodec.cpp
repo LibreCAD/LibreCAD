@@ -252,10 +252,17 @@ int RScodec::calcDecode(unsigned char* data, int* recd, int** elp, int* d, int* 
             for (i = 0; i<bb; i++) {
                 elp[u + 1][i] = 0;
             }
+            /* the next error-locator polynomial does not fit in elp[row] */
+            if (l[q] + u - q >= bb) {
+                return -1;
+            }
             for (i = 0; i <= l[q]; i++){
                 if (elp[q][i] != -1) {
                     elp[u + 1][i + u - q] = alpha_to[(d[u] + nn - d[q] + elp[q][i]) % nn];
                 }
+            }
+            if (l[u] >= bb) {
+                return -1;
             }
             for (i = 0; i <= l[u]; i++) {
                 elp[u + 1][i] ^= elp[u][i];
