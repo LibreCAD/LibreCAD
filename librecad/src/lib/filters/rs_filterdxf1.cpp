@@ -1865,9 +1865,23 @@ bool RS_FilterDXF1::readFileInBuffer(int _bNum) {
     fPointer = fopen(name.toLatin1().data(), "rb");//RLZ verify with locales
     if(fPointer) {
         if(file.open(fPointer, QIODevice::ReadOnly)) {
-            fSize=file.size();
-            if(_bNum==-1)
-                _bNum=fSize;
+            constexpr int kMaxReadSize = 0x7FFFFFEF; // INT_MAX - 16
+            const qint64 fileSize = file.size();
+            if (fileSize < 0 || fileSize > kMaxReadSize) {
+                file.close();
+                fclose(fPointer);
+                fPointer = nullptr;
+                return false;
+            }
+            fSize = static_cast<unsigned>(fileSize);
+            if (_bNum == -1)
+                _bNum = static_cast<int>(fileSize);
+            if (_bNum < 0 || _bNum > kMaxReadSize) {
+                file.close();
+                fclose(fPointer);
+                fPointer = nullptr;
+                return false;
+            }
 
             fBuf = new char[_bNum+16];
 
