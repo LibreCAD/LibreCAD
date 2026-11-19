@@ -59492,3 +59492,25 @@ and structural audit with zero read errors, audit errors, or repairs (section
 geometry equivalence or semantic acceptance. Keep external CAD/DWG acceptance
 open; a future retry needs operable ODA GUI selector controls or a converter
 process launched directly from the interactive desktop session.
+
+## 1888. Revalidate Mixed-bulge Topology and Probe Editable GUI Fixtures (2026-11-18)
+
+The current CMake Release worker-kernel executable was rebuilt at the same
+source timestamp as the topology tests and rerun with `[topology]`. Both cases
+pass all 5,089,791 assertions. The mixed-bulge membership matrix requires
+successful closed branches for the recorded scales `0.001`, `1`, `10`, and
+`1000`, all four rigid frames, all four seam starts, bulges `0.15/0.25/0.35/0.5`,
+relative distances `0.125/0.25/0.5/0.75`, and dilation/erosion. This supersedes
+the earlier 31/32 outcome in section 1873 for the exact rows now covered by
+the expanded test; it remains bounded fixture evidence, not a general
+topology or scale-invariance proof.
+
+The visible Properties retry used the independently authored R2018 typed
+source DXF for source index 0 (ellipse), but LibreCAD reported that its marked
+offset could not be restored as editable. The R2018 native-degree-1 DWG also
+opened, but the observed selection count remained zero; it therefore did not
+provide an editable source-picker target. No drawing was saved. Visible
+packaged-app source-picker acceptance remains open until a fixture proven to
+load as an editable `LC_OffsetCurve` can be selected and its source widget
+operated. `gh pr checks` could not reach GitHub's API in this environment, so
+CI state also remains unverified here.
