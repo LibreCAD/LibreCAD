@@ -585,7 +585,7 @@ QString RS_Units::formatArchitecturalMetric(const double length, const RS2::Unit
         ret = ret.replace(ret.length() - 1, 1, "\u2075");
     }
     else {
-        ret = RS_Math::doubleToString(length, prec);
+        ret = RS_Math::doubleToString(std::abs(length), prec);
     }
 
     // return values < 1.00m in cm (0.42 -> 42)

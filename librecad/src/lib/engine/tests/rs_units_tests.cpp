@@ -39,6 +39,17 @@ std::string dms(double degrees, int prec) {
 }
 }
 
+TEST_CASE("formatArchitecturalMetric writes one minus sign", "[rs_units]") {
+    auto metric = [](double length, int prec) {
+        return RS_Units::formatArchitecturalMetric(length, RS2::Meter, prec, false).toStdString();
+    };
+    CHECK(metric(1.239, 2) == "1.24");
+    CHECK(metric(-1.239, 2) == "-1.24");
+    CHECK(metric(-1.235, 2) == "-1.23\u2075");
+    CHECK(metric(0.42, 2) == "42");
+    CHECK(metric(-0.42, 2) == "-42");
+}
+
 TEST_CASE("formatAngle DMS rounds the whole angle", "[rs_units]") {
     CHECK(dms(10.4999, 0) == "10°");
     CHECK(dms(10.5, 0) == "11°");
