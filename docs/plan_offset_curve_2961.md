@@ -59508,9 +59508,34 @@ topology or scale-invariance proof.
 The visible Properties retry used the independently authored R2018 typed
 source DXF for source index 0 (ellipse), but LibreCAD reported that its marked
 offset could not be restored as editable. The R2018 native-degree-1 DWG also
-opened, but the observed selection count remained zero; it therefore did not
-provide an editable source-picker target. No drawing was saved. Visible
-packaged-app source-picker acceptance remains open until a fixture proven to
-load as an editable `LC_OffsetCurve` can be selected and its source widget
-operated. `gh pr checks` could not reach GitHub's API in this environment, so
-CI state also remains unverified here.
+opened, but the observed selection count remained zero; neither was a valid
+visible source-picker target. Section 1889 identifies a separate binary DXF
+fixture that is proven to load as an editable `LC_OffsetCurve`. `gh pr checks`
+could not reach GitHub's API in this environment, so CI state also remains
+unverified here.
+
+## 1889. Identify a Proven Editable Fixture for Visible Properties (2026-11-18)
+
+The application-level test `G matrix independent binary DXF R14 and R2018
+inputs reach actual application adoption` loads
+`librecad/src/lib/filters/tests/testdata/offsetcurve_independent/dxf-binary-R2018-native-degree1.dxf`
+through the real drawing importer and requires a native `LC_OffsetCurve` of
+degree 1. The current CMake Release test binary passes the full focused
+`[g-matrix][read][dxf][binary]` case: 772 assertions / 1 case, including R14
+and R2018 degree-1/degree-3 fixtures. This is now the correct candidate for
+the visible picker check; the typed-source ODA fixtures are intentionally
+ordinary fallbacks and are not suitable for it.
+
+Opening this correct fixture visibly remains unverified. CUA could not attach
+to either the CMake bundle or the qmake6 bundle (`cgWindowNotFound`) after the
+desktop inventory showed LibreCAD processes running. The prior GUI actions
+made no drawing edits and no file was saved. Next visible attempt: open the
+proven R2018 binary-DXF fixture, select its editable offset, and verify the
+source-family widget, current-source highlight, family switching, candidate
+replacement, and cancellation/refusal. This gap is desktop-control access,
+not lack of a suitable fixture.
+
+Fresh headless rechecks also pass: the full Properties dialog executable
+passes 47,459 assertions / 99 cases, and the worker `[topology]` selector
+passes 5,089,791 assertions / 2 cases. These do not close the visible GUI,
+external ODA DWG-output, AutoCAD-semantic, or current remote CI gates.
