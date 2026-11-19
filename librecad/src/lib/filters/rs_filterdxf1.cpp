@@ -1885,8 +1885,17 @@ bool RS_FilterDXF1::readFileInBuffer(int _bNum) {
 
             fBuf = new char[_bNum+16];
 
-            file.read(fBuf, _bNum);
-            fBuf[_bNum] = '\0';
+            const qint64 bytesRead = file.read(fBuf, _bNum);
+            if (bytesRead < 0) {
+                delete[] fBuf;
+                fBuf = nullptr;
+                file.close();
+                fclose(fPointer);
+                fPointer = nullptr;
+                return false;
+            }
+            fSize = static_cast<unsigned>(bytesRead);
+            fBuf[bytesRead] = '\0';
             file.close();
         }
         fclose(fPointer);
