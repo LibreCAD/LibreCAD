@@ -59550,3 +59550,29 @@ SSH CLI retry without a change in launch context: the prior interactive-session
 attempt already aborted before processing. External DWG acceptance remains
 open pending an operable ODA window or a converter process launched directly
 from the desktop session.
+
+## 1891. Run the Complete Registered CTest Suite and Recheck PR CI (2026-11-18)
+
+The current CMake Release build completed the full registered suite with
+`ctest --test-dir /tmp/offset-2961-cmake-clean --output-on-failure -j 4`:
+57/57 tests passed in 3,742.47 seconds. This includes the worker kernel,
+all worker-client shards, parabola profile/permutation persistence, hyperbola
+cusp persistence shards, worker process/fault/geometry-timeout tests, DXF/DWG
+fast tests, and the remaining registered application/library tests. This
+confirms the bounded automated matrix in this build; it does not substitute
+for visible Properties interaction or independent CAD semantic validation.
+
+PR #3193 CI was rechecked at head `d9a8cb12c9b95eeec1f6d0490901dc77be351e26`.
+All five jobs completed successfully: `ubuntu-latest`, `ubuntu-24.04-arm`,
+`windows-latest`, `macos-15-intel`, and `macos-latest`. Annotations were
+workflow warnings only: the setup action's Node.js 20 deprecation notice,
+cache restore/save service failures, and a macOS runner queue notice. No build
+or test failure was reported.
+
+The earlier unqualified mixed-bulge scale/frame/seam rows are covered by the
+expanded `[topology]` test documented in section 1883 and included in this
+full CTest run. The evidence remains finite-grid membership testing, not a
+general proof of scale invariance or arbitrary topology. Remaining acceptance
+gates are visible packaged-app Properties workflow and independent CAD
+semantic/DWG-output validation; the latter remains blocked by ODA window
+access in sections 1887 and 1890.
