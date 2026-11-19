@@ -59539,3 +59539,14 @@ Fresh headless rechecks also pass: the full Properties dialog executable
 passes 47,459 assertions / 99 cases, and the worker `[topology]` selector
 passes 5,089,791 assertions / 2 cases. These do not close the visible GUI,
 external ODA DWG-output, AutoCAD-semantic, or current remote CI gates.
+
+## 1890. ODA Window Still Unavailable to Desktop Control (2026-11-18)
+
+After the user confirmed ODAFileConverter was open, the desktop inventory
+reported its process as running, but selecting the application failed with
+`cgWindowNotFound`. No window controls or conversion settings were accessible,
+so no DWG conversion was started and no output was created. Do not repeat the
+SSH CLI retry without a change in launch context: the prior interactive-session
+attempt already aborted before processing. External DWG acceptance remains
+open pending an operable ODA window or a converter process launched directly
+from the desktop session.
