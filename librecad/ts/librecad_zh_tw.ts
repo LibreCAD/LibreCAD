@@ -1716,7 +1716,7 @@ or [x|y|p|number|edges|distance]</source>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="599"/>
         <source>Specify fixed distance between points
 or [x|y|p|number|edges]</source>
-       <translation>指定點之間的固定距離
+        <translation>指定點之間的固定距離
 或 [x|y|p|number|edges]</translation>
     </message>
     <message>
@@ -10380,17 +10380,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="175"/>
         <source>Measured value:</source>
-        <translation type="unfinished"></translation>
+        <translation>測量值：</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="182"/>
         <source>Unavailable</source>
-        <translation type="unfinished"></translation>
+        <translation>無法取得</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="183"/>
         <source>Geometric measurement in drawing units, or decimal degrees for angles; excludes dimension scale factor.</source>
-        <translation type="unfinished"></translation>
+        <translation>以圖面單位表示的幾何測量值，角度則為十進位度數；不含標註比例係數。</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="209"/>
@@ -11241,7 +11241,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="242"/>
         <source>NOTE: Menu assignment will be ignored. It is reserved for &apos;Select Contour&apos;.</source>
-        <translation type="unfinished"></translation>
+        <translation>注意：選單指派將被忽略，此組合已保留給「選擇輪廓」。</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="243"/>
@@ -11251,7 +11251,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="248"/>
         <source>NOTE: This combination is reserved for Pan! Menu assignment will be ignored.</source>
-        <translation type="unfinished"></translation>
+        <translation>注意：此組合已保留給「平移」功能，選單指派將被忽略。</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="251"/>
@@ -12771,12 +12771,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/main/persistence/lc_documentsstorage.cpp" line="113"/>
         <source>The original legacy DXF is protected. Choose a different name for the recovered drawing.</source>
-        <translation type="unfinished"></translation>
+        <translation>原始舊版 DXF 檔案已受保護，請為復原的圖面選擇其他名稱。</translation>
     </message>
     <message>
         <location filename="../src/ui/main/persistence/lc_documentsstorage.cpp" line="121"/>
         <source>LibreCAD cannot save &quot;%1&quot; in its own format. Choose a name to save the drawing as.</source>
-        <translation type="unfinished"></translation>
+        <translation>LibreCAD 無法以其原生格式儲存 &quot;%1&quot;，請選擇另存的檔案名稱。</translation>
     </message>
     <message>
         <location filename="../src/ui/main/persistence/lc_documentsstorage.cpp" line="148"/>
@@ -12787,12 +12787,12 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/main/persistence/lc_documentsstorage.cpp" line="281"/>
         <location filename="../src/ui/main/persistence/lc_documentsstorage.cpp" line="380"/>
         <source>The original legacy DXF is protected. Save the recovered drawing to a different file.</source>
-        <translation type="unfinished"></translation>
+        <translation>原始舊版 DXF 檔案已受保護，請將復原的圖面儲存到其他檔案。</translation>
     </message>
     <message>
         <location filename="../src/ui/main/persistence/lc_documentsstorage.cpp" line="446"/>
         <source>Skipped a backup that would replace the protected original legacy DXF.</source>
-        <translation type="unfinished"></translation>
+        <translation>已略過會覆蓋受保護之原始舊版 DXF 的備份。</translation>
     </message>
 </context>
 <context>
@@ -13755,7 +13755,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.h" line="330"/>
         <source>Unavailable</source>
-        <translation type="unfinished"></translation>
+        <translation>無法取得</translation>
     </message>
 </context>
 <context>
@@ -13790,15 +13790,15 @@ Are you sure you are going to discard changes?</source>
     <message numerus="yes">
         <location filename="../src/lib/gui/lc_hatchdensitytext.cpp" line="87"/>
         <source>%n hatch(es) exceed the hatch pattern limit and are shown as fills.</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n 個剖面線超過剖面線圖樣上限，將以填滿顯示。</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <location filename="../src/lib/gui/lc_hatchdensitytext.cpp" line="95"/>
         <source>R12 export: %n hatch(es) are too dense; their pattern is not written and they will look empty in the file.</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>R12 匯出：%n 個剖面線過於密集，其圖樣不會寫入，在檔案中將顯示為空白。</numerusform>
         </translation>
     </message>
 </context>
@@ -15220,7 +15220,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="774"/>
         <source>Restore Model/Paper Space Entity Visibility...</source>
-        <translation type="unfinished"></translation>
+        <translation>還原模型/圖紙空間物件可見性...</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="726"/>
@@ -15307,12 +15307,14 @@ Please specify a different value.</source>
         <source>Make %1 individually invisible model/paper-space entities on layer &quot;%2&quot; visible?
 
 This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entities that were intentionally hidden.</source>
-        <translation type="unfinished"></translation>
+        <translation>要將圖層 &quot;%2&quot; 上 %1 個個別隱藏的模型/圖紙空間物件設為可見嗎？
+
+這可以復原以 LibreCAD 2.2.1 儲存的圖面，但也會顯示原本刻意隱藏的物件。</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1807"/>
         <source>Restore Entity Visibility</source>
-        <translation type="unfinished"></translation>
+        <translation>還原物件可見性</translation>
     </message>
 </context>
 <context>
@@ -19160,7 +19162,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimlinear.cpp" line="72"/>
         <source>Oblique</source>
-        <translation type="unfinished"></translation>
+        <translation>傾斜</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimlinear.cpp" line="72"/>
@@ -19583,7 +19585,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_hyperbola.cpp" line="43"/>
         <source>Y coordinate for first focus point</source>
-        <translation type="unfinished"></translation>
+        <translation>焦點 1 的 Y 座標</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_hyperbola.cpp" line="47"/>
@@ -20995,12 +20997,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="573"/>
         <source>Copy value</source>
-        <translation type="unfinished"></translation>
+        <translation>複製值</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="578"/>
         <source>Copy formatted</source>
-        <translation type="unfinished"></translation>
+        <translation>複製格式化內容</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="583"/>
@@ -22857,22 +22859,22 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="310"/>
         <source>Hidden</source>
-        <translation type="unfinished"></translation>
+        <translation>隱藏線</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="311"/>
         <source>Hidden (tiny)</source>
-        <translation type="unfinished"></translation>
+        <translation>隱藏線 (極小)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="312"/>
         <source>Hidden (small)</source>
-        <translation type="unfinished"></translation>
+        <translation>隱藏線 (小)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="313"/>
         <source>Hidden (large)</source>
-        <translation type="unfinished"></translation>
+        <translation>隱藏線 (大)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="310"/>
@@ -22937,22 +22939,22 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="326"/>
         <source>Phantom</source>
-        <translation type="unfinished"></translation>
+        <translation>假想線</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="327"/>
         <source>Phantom (tiny)</source>
-        <translation type="unfinished"></translation>
+        <translation>假想線 (極小)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="328"/>
         <source>Phantom (small)</source>
-        <translation type="unfinished"></translation>
+        <translation>假想線 (小)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="329"/>
         <source>Phantom (large)</source>
-        <translation type="unfinished"></translation>
+        <translation>假想線 (大)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="322"/>
@@ -23471,7 +23473,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/plugins/lc_plugininvoker.cpp" line="113"/>
         <source>Could not load plugin %1: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>無法載入外掛程式 %1：%2</translation>
     </message>
 </context>
 <context>
@@ -24780,7 +24782,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="158"/>
         <source>Create tangental circle by 2 entities and radius</source>
-        <translation type="unfinished"></translation>
+        <translation>透過 2 個物件和半徑建立相切圓</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="178"/>
@@ -24805,7 +24807,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="191"/>
         <source>Creation of dimension, ordinate or arc</source>
-        <translation type="unfinished"></translation>
+        <translation>建立標註、座標標註或圓弧</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="192"/>
@@ -24867,7 +24869,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="166"/>
         <source>Creation of orthogonal lines</source>
-        <translation type="unfinished"></translation>
+        <translation>建立正交線條</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="163"/>
@@ -24892,7 +24894,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="171"/>
         <source>Creation of line with relative angle or fillet</source>
-        <translation type="unfinished"></translation>
+        <translation>建立具相對角度的線條或倒圓角</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="168"/>
@@ -25179,7 +25181,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="89"/>
         <source>Create tangental circle by 2 entities and radius</source>
-        <translation type="unfinished"></translation>
+        <translation>透過 2 個物件和半徑建立相切圓</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="104"/>
@@ -25189,7 +25191,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="107"/>
         <source>Creation of line with relative angle or fillet</source>
-        <translation type="unfinished"></translation>
+        <translation>建立具相對角度的線條或倒圓角</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="113"/>
@@ -25199,7 +25201,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="122"/>
         <source>Creation of ordinate dimension or leader</source>
-        <translation type="unfinished"></translation>
+        <translation>建立座標標註或引線</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="84"/>
@@ -25256,7 +25258,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="97"/>
         <source>Creation of orthogonal lines</source>
-        <translation type="unfinished"></translation>
+        <translation>建立正交線條</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="98"/>
@@ -26188,12 +26190,12 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="739"/>
         <source>Measured value</source>
-        <translation type="unfinished"></translation>
+        <translation>測量值</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="740"/>
         <source>Geometric measurement in drawing units, or decimal degrees for angles; excludes dimension scale factor.</source>
-        <translation type="unfinished"></translation>
+        <translation>以圖面單位表示的幾何測量值，角度則為十進位度數；不含標註比例係數。</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="746"/>
@@ -27216,7 +27218,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_ellipse.cpp" line="120"/>
         <source>Creation of orthogonal lines</source>
-        <translation type="unfinished"></translation>
+        <translation>建立正交線條</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_ellipse.cpp" line="120"/>
@@ -27232,7 +27234,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_ellipse.cpp" line="130"/>
         <source>Creation of line with relative angle or fillet</source>
-        <translation type="unfinished"></translation>
+        <translation>建立具相對角度的線條或倒圓角</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_ellipse.cpp" line="121"/>
@@ -28078,7 +28080,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_workspace.cpp" line="108"/>
         <source>Defines whether status bar is shown or not</source>
-        <translation type="unfinished"></translation>
+        <translation>定義是否顯示狀態列</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_workspace.cpp" line="118"/>
@@ -28151,12 +28153,12 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_hatch.cpp" line="78"/>
         <source>Pattern lines</source>
-        <translation type="unfinished"></translation>
+        <translation>圖樣線條</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_hatch.cpp" line="79"/>
         <source>Whether the pattern lines were generated</source>
-        <translation type="unfinished"></translation>
+        <translation>是否已產生圖樣線條</translation>
     </message>
 </context>
 <context>
@@ -28720,7 +28722,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="99"/>
         <source>Lengthen or shorten the line by a given distance</source>
-        <translation type="unfinished"></translation>
+        <translation>依指定距離加長或縮短線條</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="100"/>
@@ -29484,7 +29486,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_polyline.cpp" line="60"/>
         <source>Vertex of polyline with given index</source>
-        <translation type="unfinished"></translation>
+        <translation>指定索引的聚合線頂點</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_polyline.cpp" line="71"/>
@@ -30203,7 +30205,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_text.cpp" line="83"/>
         <source>Content of the text</source>
-        <translation type="unfinished"></translation>
+        <translation>文字內容</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_text.cpp" line="89"/>
@@ -31364,7 +31366,7 @@ Layer: </source>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1396"/>
         <source>Pattern lines</source>
-        <translation type="unfinished"></translation>
+        <translation>圖樣線條</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1505"/>
@@ -31785,7 +31787,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="701"/>
         <source>Layer &quot;%1&quot; is locked: unlock it to edit its entities.</source>
-        <translation type="unfinished"></translation>
+        <translation>圖層 &quot;%1&quot; 已鎖定：請解除鎖定以編輯其物件。</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="786"/>
@@ -36641,7 +36643,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="952"/>
         <source>Saved drawing: %1. Left out: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>已儲存圖面：%1。未包含：%2</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="406"/>
@@ -36758,46 +36760,48 @@ Please check its existence and permissions.</source>
         <source>Use this only for known old LibreCAD R12–R2004 DXF files that contain UTF-8 text but declare the ANSI_1252 code page. This is not automatic encoding detection.
 
 The original opens in a separate document. Mixed encodings and raw metadata are not guaranteed to recover correctly. Review the result, then use Save As to save a corrected copy instead of replacing the original.</source>
-        <translation type="unfinished"></translation>
+        <translation>僅用於已知的舊版 LibreCAD R12–R2004 DXF 檔案：這類檔案內含 UTF-8 文字，卻宣告為 ANSI_1252 字碼頁。此功能並非自動偵測編碼。
+
+原始檔案會在另一份文件中開啟。混合編碼與原始中繼資料不保證能正確復原。請檢視結果，再使用「另存新檔」儲存修正後的副本，而不要覆蓋原始檔案。</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1640"/>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1777"/>
         <source>Legacy LibreCAD DXF recovery</source>
-        <translation type="unfinished"></translation>
+        <translation>舊版 LibreCAD DXF 復原</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1648"/>
         <source>Open Legacy LibreCAD DXF (UTF-8)</source>
-        <translation type="unfinished"></translation>
+        <translation>開啟舊版 LibreCAD DXF (UTF-8)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1649"/>
         <source>DXF drawings (*.dxf *.DXF)</source>
-        <translation type="unfinished"></translation>
+        <translation>DXF 圖面 (*.dxf *.DXF)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1774"/>
         <source>Legacy LibreCAD UTF-8 recovery opens DXF files only. Use ordinary Open for DWG and other formats.</source>
-        <translation type="unfinished"></translation>
+        <translation>舊版 LibreCAD UTF-8 復原僅能開啟 DXF 檔案。DWG 及其他格式請使用一般的「開啟」。</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1847"/>
         <source>Loaded with legacy LibreCAD UTF-8 recovery: %1. Use Save As to save a corrected copy. Mixed encodings and raw metadata are not guaranteed to recover correctly.</source>
-        <translation type="unfinished"></translation>
+        <translation>已使用舊版 LibreCAD UTF-8 復原載入：%1。請使用「另存新檔」儲存修正後的副本。混合編碼與原始中繼資料不保證能正確復原。</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1851"/>
         <source> Modelspace is empty; %n block(s) in the Blocks dock contain geometry.</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform> 模型空間為空；圖塊停靠區中有 %n 個圖塊含有幾何圖形。</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1134"/>
         <source>Loaded %1 — modelspace is empty; %n block(s) in the Blocks dock contain geometry.</source>
         <translation>
-            <numerusform></numerusform>
+            <numerusform>已載入 %1 — 模型空間為空；圖塊停靠區中有 %n 個圖塊含有幾何圖形。</numerusform>
         </translation>
     </message>
     <message>
@@ -36868,12 +36872,12 @@ Auto-save disabled.</source>
     <message>
         <location filename="../src/ui/components/status_bar/qg_activelayername.cpp" line="90"/>
         <source>The current layer is hidden: what is drawn on it is not shown until the layer is shown.</source>
-        <translation type="unfinished"></translation>
+        <translation>目前圖層已隱藏：在其上繪製的內容要等到圖層顯示後才會出現。</translation>
     </message>
     <message>
         <location filename="../src/ui/components/status_bar/qg_activelayername.cpp" line="93"/>
         <source>The current layer is locked, as no other layer is unlocked: it cannot be selected or modified.</source>
-        <translation type="unfinished"></translation>
+        <translation>目前圖層已鎖定，且沒有其他未鎖定的圖層：無法選取或修改該圖層上的物件。</translation>
     </message>
 </context>
 <context>
@@ -36901,12 +36905,12 @@ Auto-save disabled.</source>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="354"/>
         <source>Add Block</source>
-        <translation type="unfinished"></translation>
+        <translation>新增圖塊</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="390"/>
         <source>Rename Block</source>
-        <translation type="unfinished"></translation>
+        <translation>重新命名圖塊</translation>
     </message>
 </context>
 <context>
@@ -37009,7 +37013,7 @@ Auto-save disabled.</source>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="316"/>
         <source>Select Color</source>
-        <translation type="unfinished"></translation>
+        <translation>選擇顏色</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="112"/>
@@ -37395,7 +37399,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.cpp" line="213"/>
         <source>Preview: </source>
-        <translation type="unfinished"></translation>
+        <translation>預覽：</translation>
     </message>
 </context>
 <context>
@@ -41266,12 +41270,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="102"/>
         <source>Marks the drawing&apos;s range along each scrollbar where it lies outside the view, and gives the ranges and the drawing&apos;s distance in the scrollbar&apos;s tooltip, so the drawing can be found again when panned far away</source>
-        <translation type="unfinished"></translation>
+        <translation>在每個捲軸上標示圖面超出視圖的範圍，並在捲軸的工具提示中顯示該範圍及圖面的距離，以便在平移到很遠處時能再次找到圖面</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="105"/>
         <source>Show drawing extents on scrollbars</source>
-        <translation type="unfinished"></translation>
+        <translation>在捲軸上顯示圖面範圍</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="376"/>
@@ -41311,22 +41315,22 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2057"/>
         <source>If selected, toolbar angle snap only snaps when the cursor is near the configured angle step.</source>
-        <translation type="unfinished"></translation>
+        <translation>若選取，工具列角度鎖點僅在游標接近所設定的角度步階時才會鎖點。</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2060"/>
         <source>Soft Angle Snap</source>
-        <translation type="unfinished"></translation>
+        <translation>柔性角度鎖點</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2067"/>
         <source>Soft Snap sensitivity:</source>
-        <translation type="unfinished"></translation>
+        <translation>柔性鎖點靈敏度：</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2074"/>
         <source>Maximum angular distance from the angle step before toolbar angle snap is applied.</source>
-        <translation type="unfinished"></translation>
+        <translation>套用工具列角度鎖點前，與角度步階之間允許的最大角度差。</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2044"/>
@@ -41653,7 +41657,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5114"/>
         <source>Hide backup and autosave files</source>
-        <translation type="unfinished"></translation>
+        <translation>隱藏備份與自動儲存檔案</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5111"/>
@@ -41703,67 +41707,67 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5635"/>
         <source>Draw Fast Defaults</source>
-        <translation type="unfinished"></translation>
+        <translation>快速繪圖預設值</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5641"/>
         <source>Opening marker depth:</source>
-        <translation type="unfinished"></translation>
+        <translation>開口標記深度：</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5648"/>
         <source>Length of the perpendicular tick marks drawn on each side of a wall opening (Draw Fast &apos;o&apos; / &apos;opening&apos; command).</source>
-        <translation type="unfinished"></translation>
+        <translation>牆面開口兩側所繪製垂直刻度線的長度（快速繪圖 &apos;o&apos; / &apos;opening&apos; 指令）。</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5670"/>
         <source>Window offset width:</source>
-        <translation type="unfinished"></translation>
+        <translation>窗戶偏移寬度：</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5677"/>
         <source>Distance between the wall line and the inner window line in Draw Fast window mode (&apos;w&apos; / &apos;window&apos; command).</source>
-        <translation type="unfinished"></translation>
+        <translation>快速繪圖窗戶模式中，牆線與窗戶內側線之間的距離（&apos;w&apos; / &apos;window&apos; 指令）。</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5699"/>
         <source>Door thickness:</source>
-        <translation type="unfinished"></translation>
+        <translation>門厚度：</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5706"/>
         <source>Thickness of the door slab in Draw Fast door mode. Set to 0 for a single-line door leaf.</source>
-        <translation type="unfinished"></translation>
+        <translation>快速繪圖門模式中門板的厚度。設為 0 則門扇以單線表示。</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5728"/>
         <source>Door swing angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>門開啟角度：</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5735"/>
         <source>Arc sweep angle for the door swing in Draw Fast door mode. 90 degrees draws a quarter-circle; 45 degrees draws a shallower arc.</source>
-        <translation type="unfinished"></translation>
+        <translation>快速繪圖門模式中門扇開啟弧線的掃掠角度。90 度繪製四分之一圓；45 度則繪製較平緩的圓弧。</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5752"/>
         <source>Door design:</source>
-        <translation type="unfinished"></translation>
+        <translation>門樣式：</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5759"/>
         <source>Door symbol style. &apos;Swing only&apos; draws the leaf and arc. &apos;Swing with opening line&apos; also draws a straight line across the full door opening.</source>
-        <translation type="unfinished"></translation>
+        <translation>門符號樣式。「僅開啟弧線」繪製門扇與弧線；「開啟弧線加開口線」則另外在整個門口開口處繪製一條直線。</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5763"/>
         <source>Swing only</source>
-        <translation type="unfinished"></translation>
+        <translation>僅開啟弧線</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5768"/>
         <source>Swing with opening line</source>
-        <translation type="unfinished"></translation>
+        <translation>開啟弧線加開口線</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5573"/>
@@ -42650,12 +42654,12 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="161"/>
         <source>Left to Right</source>
-        <translation type="unfinished"></translation>
+        <translation>由左至右</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="166"/>
         <source>Right to Left</source>
-        <translation type="unfinished"></translation>
+        <translation>由右至左</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="197"/>
@@ -43301,17 +43305,17 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="148"/>
         <source>Drawing Exchange DXF 2018 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>圖形交換 DXF 2018 %1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="149"/>
         <source>Drawing Exchange DXF 2013 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>圖形交換 DXF 2013 %1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="150"/>
         <source>Drawing Exchange DXF 2010 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>圖形交換 DXF 2010 %1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="133"/>
@@ -43336,7 +43340,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="164"/>
         <source>ESRI Shapefile %1</source>
-        <translation type="unfinished"></translation>
+        <translation>ESRI Shapefile %1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="146"/>
@@ -43376,94 +43380,94 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/view/qg_graphicview.cpp" line="1352"/>
         <source>View X %1..%2</source>
-        <translation type="unfinished"></translation>
+        <translation>視圖 X %1..%2</translation>
     </message>
     <message>
         <location filename="../src/ui/view/qg_graphicview.cpp" line="1353"/>
         <source>View Y %1..%2</source>
-        <translation type="unfinished"></translation>
+        <translation>視圖 Y %1..%2</translation>
     </message>
     <message>
         <location filename="../src/ui/view/qg_graphicview.cpp" line="1358"/>
         <source>The drawing is empty · %1</source>
         <comment>scrollbar tooltip: %1 is the view&apos;s range</comment>
-        <translation type="unfinished"></translation>
+        <translation>圖面為空 · %1</translation>
     </message>
     <message>
         <location filename="../src/ui/view/qg_graphicview.cpp" line="1365"/>
         <source>Drawing X %1..%2</source>
-        <translation type="unfinished"></translation>
+        <translation>圖面 X %1..%2</translation>
     </message>
     <message>
         <location filename="../src/ui/view/qg_graphicview.cpp" line="1366"/>
         <source>Drawing Y %1..%2</source>
-        <translation type="unfinished"></translation>
+        <translation>圖面 Y %1..%2</translation>
     </message>
     <message>
         <location filename="../src/ui/view/qg_graphicview.cpp" line="1372"/>
         <source>less than 0.1 view widths</source>
-        <translation type="unfinished"></translation>
+        <translation>小於 0.1 個視圖寬度</translation>
     </message>
     <message>
         <location filename="../src/ui/view/qg_graphicview.cpp" line="1372"/>
         <source>less than 0.1 view heights</source>
-        <translation type="unfinished"></translation>
+        <translation>小於 0.1 個視圖高度</translation>
     </message>
     <message>
         <location filename="../src/ui/view/qg_graphicview.cpp" line="1376"/>
         <source>≈%1 view widths</source>
-        <translation type="unfinished"></translation>
+        <translation>≈%1 個視圖寬度</translation>
     </message>
     <message>
         <location filename="../src/ui/view/qg_graphicview.cpp" line="1376"/>
         <source>≈%1 view heights</source>
-        <translation type="unfinished"></translation>
+        <translation>≈%1 個視圖高度</translation>
     </message>
     <message>
         <location filename="../src/ui/view/qg_graphicview.cpp" line="1381"/>
         <source>view spans the drawing&apos;s X range</source>
-        <translation type="unfinished"></translation>
+        <translation>視圖涵蓋圖面的 X 範圍</translation>
     </message>
     <message>
         <location filename="../src/ui/view/qg_graphicview.cpp" line="1381"/>
         <source>view spans the drawing&apos;s Y range</source>
-        <translation type="unfinished"></translation>
+        <translation>視圖涵蓋圖面的 Y 範圍</translation>
     </message>
     <message>
         <location filename="../src/ui/view/qg_graphicview.cpp" line="1384"/>
         <source>drawing&apos;s X range is in view</source>
-        <translation type="unfinished"></translation>
+        <translation>圖面的 X 範圍在視圖內</translation>
     </message>
     <message>
         <location filename="../src/ui/view/qg_graphicview.cpp" line="1384"/>
         <source>drawing&apos;s Y range is in view</source>
-        <translation type="unfinished"></translation>
+        <translation>圖面的 Y 範圍在視圖內</translation>
     </message>
     <message>
         <location filename="../src/ui/view/qg_graphicview.cpp" line="1388"/>
         <source>drawing&apos;s X range is %1 to the left (%2)</source>
-        <translation type="unfinished"></translation>
+        <translation>圖面的 X 範圍在左側 %1 處 (%2)</translation>
     </message>
     <message>
         <location filename="../src/ui/view/qg_graphicview.cpp" line="1389"/>
         <source>drawing&apos;s Y range is %1 down (%2)</source>
-        <translation type="unfinished"></translation>
+        <translation>圖面的 Y 範圍在下方 %1 處 (%2)</translation>
     </message>
     <message>
         <location filename="../src/ui/view/qg_graphicview.cpp" line="1394"/>
         <source>drawing&apos;s X range is %1 to the right (%2)</source>
-        <translation type="unfinished"></translation>
+        <translation>圖面的 X 範圍在右側 %1 處 (%2)</translation>
     </message>
     <message>
         <location filename="../src/ui/view/qg_graphicview.cpp" line="1395"/>
         <source>drawing&apos;s Y range is %1 up (%2)</source>
-        <translation type="unfinished"></translation>
+        <translation>圖面的 Y 範圍在上方 %1 處 (%2)</translation>
     </message>
     <message>
         <location filename="../src/ui/view/qg_graphicview.cpp" line="1399"/>
         <source>%1 · %2 · %3</source>
         <comment>scrollbar tooltip: the drawing&apos;s range, the view&apos;s range, where the drawing is</comment>
-        <translation type="unfinished"></translation>
+        <translation>%1 · %2 · %3</translation>
     </message>
 </context>
 <context>
@@ -43694,22 +43698,22 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="98"/>
         <source>Hidden</source>
-        <translation type="unfinished"></translation>
+        <translation>隱藏線</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="99"/>
         <source>Hidden (tiny)</source>
-        <translation type="unfinished"></translation>
+        <translation>隱藏線 (極小)</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="100"/>
         <source>Hidden (small)</source>
-        <translation type="unfinished"></translation>
+        <translation>隱藏線 (小)</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="101"/>
         <source>Hidden (large)</source>
-        <translation type="unfinished"></translation>
+        <translation>隱藏線 (大)</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="98"/>
@@ -43774,22 +43778,22 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="114"/>
         <source>Phantom</source>
-        <translation type="unfinished"></translation>
+        <translation>假想線</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="115"/>
         <source>Phantom (tiny)</source>
-        <translation type="unfinished"></translation>
+        <translation>假想線 (極小)</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="116"/>
         <source>Phantom (small)</source>
-        <translation type="unfinished"></translation>
+        <translation>假想線 (小)</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="117"/>
         <source>Phantom (large)</source>
-        <translation type="unfinished"></translation>
+        <translation>假想線 (大)</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="110"/>
@@ -44036,7 +44040,7 @@ This action can NOT be undone.</source>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1787"/>
         <source>Remove %n layer(s)</source>
         <translation>
-            <numerusform></numerusform>
+            <numerusform>移除 %n 個圖層</numerusform>
         </translation>
     </message>
     <message>
@@ -44081,7 +44085,7 @@ This action can NOT be undone.</source>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="463"/>
         <source>Remove %n block(s)</source>
         <translation>
-            <numerusform></numerusform>
+            <numerusform>移除 %n 個圖塊</numerusform>
         </translation>
     </message>
     <message>
@@ -44874,7 +44878,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="496"/>
         <source>ESRI Shapefile %1</source>
-        <translation type="unfinished"></translation>
+        <translation>ESRI Shapefile %1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="500"/>
@@ -45016,22 +45020,22 @@ Do you want to replace it?</source>
     <message numerus="yes">
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4365"/>
         <source>DWG load: the block table lists %n block record(s) that the file does not contain (erased). They were skipped.</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>DWG 載入：圖塊表列出 %n 筆檔案中不存在（已清除）的圖塊記錄，已略過。</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4373"/>
         <source>DWG load: %n entity(ies) belonged to block records that no longer exist (erased) and were skipped.</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>DWG 載入：%n 個物件屬於已不存在（已清除）的圖塊記錄，已略過。</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="1151"/>
         <source>, and %n more class(es)</source>
         <translation>
-            <numerusform></numerusform>
+            <numerusform>，另有 %n 個類別</numerusform>
         </translation>
     </message>
     <message>
@@ -45043,7 +45047,7 @@ Do you want to replace it?</source>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="1180"/>
         <source>, and %n more object type(s)</source>
         <translation>
-            <numerusform></numerusform>
+            <numerusform>，另有 %n 種物件類型</numerusform>
         </translation>
     </message>
     <message>
@@ -45070,19 +45074,19 @@ Do you want to replace it?</source>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="17114"/>
         <source>%1 object(s) read from another DXF version, which this version cannot hold</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
+        <translation>%1 個從其他 DXF 版本讀入、此版本無法容納的物件</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="17123"/>
         <source>annotation scale or column data of %1 multi-line attribute(s)</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
+        <translation>%1 個多行屬性的註解比例或欄位資料</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="17130"/>
         <source>%1 object(s) DWG cannot hold</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
+        <translation>%1 個 DWG 無法容納的物件</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="12410"/>
@@ -45188,7 +45192,7 @@ Do you want to replace it?</source>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="218"/>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="11655"/>
         <source>The original legacy DXF is protected. Save the recovered drawing to a different file.</source>
-        <translation type="unfinished"></translation>
+        <translation>原始舊版 DXF 檔案已受保護，請將復原的圖面儲存到其他檔案。</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="69"/>
@@ -45994,13 +45998,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="145"/>
         <source>dfast</source>
         <comment>draw fast</comment>
-        <translation type="unfinished"></translation>
+        <translation>dfast</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="146"/>
         <source>df</source>
         <comment>draw fast</comment>
-        <translation type="unfinished"></translation>
+        <translation>df</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="266"/>
@@ -46746,7 +46750,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="751"/>
         <source>rotate</source>
         <comment>modify - rotate</comment>
-        <translation type="unfinished"></translation>
+        <translation>rotate</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="724"/>
@@ -46758,7 +46762,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="758"/>
         <source>scale</source>
         <comment>modify - scale</comment>
-        <translation type="unfinished"></translation>
+        <translation>scale</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="730"/>
@@ -46770,7 +46774,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="765"/>
         <source>mirror</source>
         <comment>modify -  mirror</comment>
-        <translation type="unfinished"></translation>
+        <translation>mirror</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="736"/>
@@ -47461,19 +47465,19 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="813"/>
         <source>o</source>
         <comment>modify - offset</comment>
-        <translation type="unfinished"></translation>
+        <translation>o</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="820"/>
         <source>bevel</source>
         <comment>modify - bevel</comment>
-        <translation type="unfinished"></translation>
+        <translation>bevel</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="821"/>
         <source>chamfer</source>
         <comment>modify - bevel</comment>
-        <translation type="unfinished"></translation>
+        <translation>chamfer</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="820"/>
@@ -47485,7 +47489,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="870"/>
         <source>explode</source>
         <comment>explode block/polyline into entities</comment>
-        <translation type="unfinished"></translation>
+        <translation>explode</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="855"/>
@@ -48369,12 +48373,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/main/console_dxf2dwg.cpp" line="230"/>
         <source>DXF output version: r12, r14, r2000, r2004, r2007 (default), r2010, r2013, r2018.</source>
-        <translation type="unfinished"></translation>
+        <translation>DXF 輸出版本：r12、r14、r2000、r2004、r2007（預設）、r2010、r2013、r2018。</translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2dwg.cpp" line="236"/>
         <source>DWG output version: r2000 (default), r2004, r2007, r2010, r2013, r2018.</source>
-        <translation type="unfinished"></translation>
+        <translation>DWG 輸出版本：r2000（預設）、r2004、r2007、r2010、r2013、r2018。</translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2dwg.cpp" line="189"/>
@@ -48410,7 +48414,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="39"/>
         <source>/CustomColor%1</source>
-        <translation type="unfinished"></translation>
+        <translation>/CustomColor%1</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="40"/>
@@ -48623,27 +48627,27 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/lib/engine/document/rs_graphic.cpp" line="130"/>
         <source>There is no layer &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>不存在圖層 &quot;%1&quot;。</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/document/rs_graphic.cpp" line="146"/>
         <source>Layer &quot;%1&quot; is locked: unlock it to make it the current layer.</source>
-        <translation type="unfinished"></translation>
+        <translation>圖層 &quot;%1&quot; 已鎖定：請先解除鎖定才能設為目前圖層。</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/document/rs_graphic.cpp" line="163"/>
         <source>Layer &quot;%1&quot; is locked, so it cannot stay the current layer: &quot;%2&quot; is the current layer now.</source>
-        <translation type="unfinished"></translation>
+        <translation>圖層 &quot;%1&quot; 已鎖定，因此無法維持為目前圖層：目前圖層改為 &quot;%2&quot;。</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/document/rs_graphic.cpp" line="168"/>
         <source>Layer &quot;%1&quot; was not locked: it is the current layer, and no other layer is unlocked to take its place.</source>
-        <translation type="unfinished"></translation>
+        <translation>圖層 &quot;%1&quot; 未被鎖定：它是目前圖層，且沒有其他未鎖定的圖層可取代。</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/document/rs_graphic.cpp" line="357"/>
         <source>Layer &quot;%1&quot; is being removed, so &quot;%2&quot; is the current layer now.</source>
-        <translation type="unfinished"></translation>
+        <translation>圖層 &quot;%1&quot; 正在被移除，因此目前圖層改為 &quot;%2&quot;。</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/document/rs_graphic.cpp" line="418"/>
@@ -48668,7 +48672,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/lib/printing/lc_printing.cpp" line="375"/>
         <source>Cannot start printing on %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>無法在 %1 上開始列印。</translation>
     </message>
     <message>
         <location filename="../src/lib/printing/lc_printing.cpp" line="376"/>
@@ -48682,7 +48686,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/lib/printing/lc_printing.cpp" line="379"/>
         <source>Print</source>
-        <translation type="unfinished"></translation>
+        <translation>列印</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="432"/>
@@ -48848,32 +48852,32 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/lib/engine/document/layers/rs_layerlist.cpp" line="346"/>
         <source>Layer &quot;%1&quot; was not removed: it is the current layer. Make another layer current to remove it.</source>
-        <translation type="unfinished"></translation>
+        <translation>圖層 &quot;%1&quot; 未被移除：它是目前圖層。請先將其他圖層設為目前圖層再移除。</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/document/layers/rs_layerlist.cpp" line="354"/>
         <source>Layer &quot;%1&quot; was not removed: it is the current layer, and no other layer is unlocked to take its place.</source>
-        <translation type="unfinished"></translation>
+        <translation>圖層 &quot;%1&quot; 未被移除：它是目前圖層，且沒有其他未鎖定的圖層可取代。</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/document/layers/rs_layerlist.cpp" line="517"/>
         <source>The current layer cannot be locked: no other layer is unlocked to take its place.</source>
-        <translation type="unfinished"></translation>
+        <translation>無法鎖定目前圖層：沒有其他未鎖定的圖層可取代。</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/undo/lc_undosection.cpp" line="130"/>
         <source>Layer &quot;%1&quot; is the current layer and it is locked: unlock it, or add a layer that is not locked, to draw.</source>
-        <translation type="unfinished"></translation>
+        <translation>圖層 &quot;%1&quot; 是目前圖層且已鎖定：請解除鎖定，或新增一個未鎖定的圖層，才能繪圖。</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filtershp.cpp" line="493"/>
         <source>Cannot open shapefile %1 (missing or corrupt .shx?)</source>
-        <translation type="unfinished"></translation>
+        <translation>無法開啟 shapefile %1（.shx 遺失或損毀？）</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filtershp.cpp" line="623"/>
         <source>Shapefile %1 contained %2 records but none were readable</source>
-        <translation type="unfinished"></translation>
+        <translation>Shapefile %1 含有 %2 筆記錄，但全部無法讀取</translation>
     </message>
 </context>
 <context>
@@ -48881,7 +48885,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/dock_widgets/block/rs_actionblockscreate.cpp" line="61"/>
         <source>Create Block</source>
-        <translation type="unfinished"></translation>
+        <translation>建立圖塊</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/block/rs_actionblockscreate.cpp" line="105"/>
@@ -49304,8 +49308,8 @@ Please check the filename and permissions.</source>
     <message numerus="yes">
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="134"/>
         <source>Hatch has %n duplicate boundary loop(s); duplicates cancel each other and leave that area empty.</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>剖面線有 %n 個重複的邊界迴圈；重複的迴圈會互相抵銷，使該區域變為空白。</numerusform>
         </translation>
     </message>
     <message>
