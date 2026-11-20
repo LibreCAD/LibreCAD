@@ -32,7 +32,10 @@
 #include "dl_attributes.h"
 #include "dl_codes.h"
 #include "dl_writer_ascii.h"
+#include "drw_base.h"
+#ifndef LIBDXFRW_HAS_LEGACY_CODEPAGE_DECODER
 #include "intern/drw_textcodec.h"
+#endif
 #include "lc_containertraverser.h"
 #include "rs_arc.h"
 #include "rs_block.h"
@@ -90,10 +93,17 @@ QChar toJisSymbol(QChar c) {
  * 0x5C (95 5C is U+8868): that byte is not a backslash.
  */
 QString fromJwwString(const std::string& text) {
+#ifdef LIBDXFRW_HAS_LEGACY_CODEPAGE_DECODER
+    DRW_LegacyCodePageDecoder shiftJis(932);
+    const auto decode = [&shiftJis](const std::string_view run) {
+        return QString::fromStdString(shiftJis.toUtf8(run).value());
+    };
+#else
     DRW_Conv932Table shiftJis;
     const auto decode = [&shiftJis](const std::string_view run) {
         return QString::fromStdString(shiftJis.toUtf8(run));
     };
+#endif
     QString res;
     std::size_t runStart = 0;
     for (std::size_t i = 0; i < text.size(); ++i) {
