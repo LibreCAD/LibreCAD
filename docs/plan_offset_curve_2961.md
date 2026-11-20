@@ -59660,3 +59660,21 @@ particular, do not use the earlier 42-fixture ODA result as evidence for these
 outputs, and do not label R2007+ output interoperable until ODA or another
 independent CAD reader successfully consumes it. The visible source-picker
 test also remains open as recorded in section 1893.
+
+## 1895. Revalidate Nine-family Source Replacement on Current Checkout (2026-11-20)
+
+Built `librecad_offset_properties_dialog_tests` from the current checkout with
+the fresh CMake Release build and ran
+`QT_QPA_PLATFORM=offscreen librecad_offset_properties_dialog_tests
+'[gui][dialog][offsetcurve][source]' --reporter compact`. All 15,601
+assertions across 45 cases passed. This revalidates the editable family filter,
+all nine typed source kinds (including distinct parabola and spline-points),
+candidate replacement, current-source/highlight transitions, and guarded
+worker preparation on the current source tree.
+
+This is automated widget/action evidence only. It does not satisfy the
+packaged-app interaction gate: CUA still cannot attach to the rebuilt LibreCAD
+window (`cgWindowNotFound`), so the source-type menu, candidate list,
+selection/highlight behavior, and cancellation were not rechecked visually.
+No source or fixture was edited or saved. Independent CAD acceptance remains
+open as documented in section 1894.
