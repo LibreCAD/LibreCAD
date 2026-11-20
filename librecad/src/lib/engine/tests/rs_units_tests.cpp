@@ -19,7 +19,8 @@
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 **********************************************************************/
 
-// Tests for the degrees/minutes/seconds format of RS_Units::formatAngle().
+// Tests for the degrees/minutes/seconds format of RS_Units::formatAngle() and
+// the architectural length format.
 
 #include <catch2/catch_test_macros.hpp>
 
@@ -63,4 +64,17 @@ TEST_CASE("formatAngle DMS with a negative precision rounds to whole seconds", "
     CHECK(dms(10.4999, -1) == "10° 30' 0\"");
     CHECK(dms(280.25, -1) == "280° 15' 0\"");
     CHECK(dms(30.52555, -1) == "30° 31' 32\"");
+}
+
+TEST_CASE("formatArchitectural keeps the sign of lengths below one foot", "[rs_units]") {
+    auto arch = [](double length, RS2::Unit unit, int prec) {
+        return RS_Units::formatArchitectural(length, unit, prec, false).toStdString();
+    };
+    CHECK(arch(-6.0, RS2::Inch, 1) == "-6\"");
+    CHECK(arch(-0.5, RS2::Foot, 1) == "-6\"");
+    CHECK(arch(-0.25, RS2::Inch, 1) == "-1/4\"");
+    CHECK(arch(6.0, RS2::Inch, 1) == "6\"");
+    CHECK(arch(-18.0, RS2::Inch, 1) == "-1'-6\"");
+    // rounds to zero, so no sign
+    CHECK(arch(-0.01, RS2::Inch, 1) == "0\"");
 }

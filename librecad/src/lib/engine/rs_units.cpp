@@ -556,11 +556,12 @@ QString RS_Units::formatArchitectural(const double length, const RS2::Unit unit,
         sInches = "0";
     }
 
+    // keep the sign below one foot too, but do not print -0"
+    const QString negativeSign = (std::signbit(length) && (feet != 0 || sInches != "0")) ? "-" : "";
     if (feet != 0) {
-        const QString negativeSign = std::signbit(length) ? "-" : "";
         return QString(R"(%1%2'-%3")").arg(negativeSign).arg(feet).arg(sInches);
     }
-    return QString(R"(%1")").arg(sInches);
+    return QString(R"(%1%2")").arg(negativeSign).arg(sInches);
 }
 
 /**
