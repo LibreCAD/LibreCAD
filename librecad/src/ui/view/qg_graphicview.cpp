@@ -328,7 +328,7 @@ QG_GraphicView::QG_GraphicView(QWidget* parent, RS_Document* doc, LC_ActionConte
     setAttribute(Qt::WA_NoMousePropagation);
 
     // Issue #2264: prevents macOS from applying text-related features like the Caps Lock indicator to the non-text canvas
-#ifdef Q_OS_MAC
+#ifdef Q_OS_MACOS
     setAttribute(Qt::WA_InputMethodEnabled, false); setInputMethodHints(Qt::ImhNone);
 #endif
 }
