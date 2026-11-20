@@ -25,6 +25,7 @@
 
 #include <catch2/catch_test_macros.hpp>
 
+#include <array>
 #include <cstdint>
 #include <vector>
 
@@ -112,4 +113,72 @@ TEST_CASE("RScodec: invalid configuration fails closed", "[dwg][rscodec][safety]
     CHECK_FALSE(invalidCorrection.isOkey());
     CHECK_FALSE(invalidCorrection.encode(nullptr, nullptr));
     CHECK(invalidCorrection.decode(nullptr) == -1);
+}
+
+namespace {
+
+// Coefficients of prod_{i=1..k} (x + alpha^i) over the GF(256) that
+// RScodec(pp, 8, tt) builds. RScodec reads pp bit-reversed, so its
+// alpha^8 is the reverse of pp's bits; alpha is 2. Read as a received
+// block, the polynomial makes syndromes 1..k zero and syndrome k+1
+// non-zero.
+std::array<unsigned char, 255> rsSyndromeVanishingBlock(unsigned int pp, int k) {
+    int alpha8 = 0;
+    for (int bit = 0; bit < 8; ++bit)
+        if ((pp >> (7 - bit)) & 1u)
+            alpha8 |= 1 << bit;
+    std::array<int, 255> powerOf{};
+    std::array<int, 256> logOf{};
+    int value = 1;
+    for (int exponent = 0; exponent < 255; ++exponent) {
+        powerOf[exponent] = value;
+        logOf[value] = exponent;
+        value = (value & 0x80) ? (((value << 1) & 0xFF) ^ alpha8) : (value << 1);
+    }
+    auto times = [&](int a, int b) {
+        return (a == 0 || b == 0) ? 0 : powerOf[(logOf[a] + logOf[b]) % 255];
+    };
+
+    std::array<int, 256> poly{};
+    poly[0] = 1;
+    for (int i = 1; i <= k; ++i) {
+        for (int j = i; j > 0; --j)
+            poly[j] = poly[j - 1] ^ times(poly[j], powerOf[i]);
+        poly[0] = times(poly[0], powerOf[i]);
+    }
+    std::array<unsigned char, 255> block{};
+    for (int j = 0; j <= k; ++j)
+        block[j] = static_cast<unsigned char>(poly[j]);
+    return block;
+}
+
+}  // namespace
+
+// Berlekamp-Massey raises the error-locator degree to k+1 at step k+1 when
+// syndromes 1..k vanish. For k == 2*tt-1 that locator has degree 2*tt, one
+// more term than an elp row holds, and decode() wrote past the row (heap
+// overflow, seen under AddressSanitizer). Any degree above tt must be
+// rejected instead; degrees up to tt are ordinary correctable error patterns.
+TEST_CASE("RScodec: error locators above tt are rejected, not built",
+          "[dwg][rscodec][safety]") {
+    struct Code { unsigned int pp; int tt; };
+    // (255,239) system pages and (255,251) R2007 data pages.
+    for (const Code code : {Code{0x96, 8}, Code{0xB8, 2}}) {
+        RScodec codec(code.pp, 8, code.tt);
+        REQUIRE(codec.isOkey());
+        for (int k = 0; k < 2 * code.tt; ++k) {
+            CAPTURE(code.pp, code.tt, k);
+            const auto received = rsSyndromeVanishingBlock(code.pp, k);
+            auto block = received;
+            const int corrected = codec.decode(block.data());
+            if (k < code.tt) {
+                // k+1 symbols away from the all-zero codeword.
+                CHECK(corrected == k + 1);
+                CHECK(block == std::array<unsigned char, 255>{});
+            } else {
+                CHECK(corrected == -1);
+                CHECK(block == received);
+            }
+        }
+    }
 }

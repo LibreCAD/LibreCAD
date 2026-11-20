@@ -248,21 +248,24 @@ int RScodec::calcDecode(unsigned char* data, int* recd, int** elp, int* d, int* 
                 l[u + 1] = l[q] + u - q;
             }
 
-            /* form new elp(x) */
-            for (i = 0; i<bb; i++) {
-                elp[u + 1][i] = 0;
-            }
-            /* the next error-locator polynomial does not fit in elp[row] */
-            if (l[q] + u - q >= bb) {
+            /* A locator of degree > tt means more than tt errors, which the
+               code cannot correct.  Reject it now, before building it: the
+               loop would stop on this degree and reject the codeword anyway,
+               and building it is unsafe, as its highest term i + u - q can reach
+               bb (when u == bb and q == 0, i.e. syndromes 1..bb-1 are all
+               zero), one past the end of the bb-int elp row. */
+            if (l[u + 1] > tt) {
                 return -1;
+            }
+
+            /* form new elp(x); entries above its degree l[u+1] are never read */
+            for (i = 0; i <= l[u + 1]; i++) {
+                elp[u + 1][i] = 0;
             }
             for (i = 0; i <= l[q]; i++){
                 if (elp[q][i] != -1) {
                     elp[u + 1][i + u - q] = alpha_to[(d[u] + nn - d[q] + elp[q][i]) % nn];
                 }
-            }
-            if (l[u] >= bb) {
-                return -1;
             }
             for (i = 0; i <= l[u]; i++) {
                 elp[u + 1][i] ^= elp[u][i];
@@ -286,12 +289,10 @@ int RScodec::calcDecode(unsigned char* data, int* recd, int** elp, int* d, int* 
             }
             d[u + 1] = index_of[d[u + 1]];    /* put d[u+1] into index form */
         }
-    } while ((u<bb) && (l[u + 1] <= tt));
+    } while (u<bb);
 
     u++;
-    if (l[u]>tt) {              /* elp has degree has degree >tt hence cannot solve */
-        return -1;              /* just output is received codeword as is */
-    }
+    /* l[u] <= tt here: every degree above tt was rejected inside the loop */
 
     /* can correct error */
     /* put elp into index form */
