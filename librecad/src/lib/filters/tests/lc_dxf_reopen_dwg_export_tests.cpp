@@ -274,6 +274,17 @@ TEST_CASE("DIMSTYLE source XDATA is emitted once and conflicts refuse safely",
     REQUIRE(dict->entries.size() == 1u);
     CHECK(dict->entries.front().handle == readbackPlot.front().handle);
     CHECK(dict->entries.front().name == readbackPlot.front().pageSetupName);
+    const auto nod = std::find_if(readbackDictionaries.begin(), readbackDictionaries.end(),
+                                  [](const auto& item) {
+        return item.handle == DRW::DwgNamedObjectsDictionaryHandle;
+    });
+    REQUIRE(nod != readbackDictionaries.end());
+    const auto plotEntry = std::find_if(nod->entries.begin(), nod->entries.end(),
+                                        [&readbackPlot](const auto& entry) {
+        return entry.name == "ACAD_PLOTSETTINGS" &&
+               entry.handle == readbackPlot.front().parentHandle;
+    });
+    REQUIRE(plotEntry != nod->entries.end());
 
     const QString guardedDwg = QDir(directory.path()).filePath("guarded.dwg");
     QFile guarded(guardedDwg);
@@ -287,11 +298,38 @@ TEST_CASE("DIMSTYLE source XDATA is emitted once and conflicts refuse safely",
     const double right = activePlot->getMarginRightMm();
     const double bottom = activePlot->getMarginBottomMm();
     activePlot->setMarginsInMm(left + 1.0, top, right, bottom);
-    CHECK_FALSE(writer.fileExport(reopened, guardedDwg, RS2::FormatDWG));
+    REQUIRE(writer.fileExport(reopened, guardedDwg, RS2::FormatDWG));
+    RS_Graphic editedPlotReadback;
+    editedPlotReadback.initForNewDocument();
+    REQUIRE(importFrom(editedPlotReadback, guardedDwg.toStdString(), RS2::FormatDWG));
+    const auto& editedPlots = editedPlotReadback.dwgAdvancedMetadata().plotSettings();
+    REQUIRE(editedPlots.size() == 1u);
+    CHECK(editedPlots.front().marginLeft == left + 1.0);
+    CHECK(editedPlots.front().handle == sourcePlot.handle);
+    CHECK(editedPlots.front().parentHandle == sourcePlot.parentHandle);
+    CHECK(editedPlots.front().pageSetupName == sourcePlot.pageSetupName);
+    const auto& editedDictionaries = editedPlotReadback.dwgAdvancedMetadata().dictionaries();
+    const auto editedNod = std::find_if(editedDictionaries.begin(), editedDictionaries.end(),
+                                        [](const auto& item) {
+        return item.handle == DRW::DwgNamedObjectsDictionaryHandle;
+    });
+    REQUIRE(editedNod != editedDictionaries.end());
+    REQUIRE(std::count_if(editedNod->entries.begin(), editedNod->entries.end(),
+                          [&editedPlots](const auto& entry) {
+        return entry.name == "ACAD_PLOTSETTINGS" &&
+               entry.handle == editedPlots.front().parentHandle;
+    }) == 1);
     REQUIRE(guarded.open(QIODevice::ReadOnly));
-    CHECK(guarded.readAll() == QByteArray("sentinel"));
+    const QByteArray editedPlotBytes = guarded.readAll();
     guarded.close();
     activePlot->setMarginsInMm(left, top, right, bottom);
+    const int oldShadeMode = activePlot->getShadePlotMode();
+    activePlot->setShadePlotMode(oldShadeMode == 0 ? 1 : 0);
+    CHECK_FALSE(writer.fileExport(reopened, guardedDwg, RS2::FormatDWG));
+    REQUIRE(guarded.open(QIODevice::ReadOnly));
+    CHECK(guarded.readAll() == editedPlotBytes);
+    guarded.close();
+    activePlot->setShadePlotMode(oldShadeMode);
     REQUIRE(writer.fileExport(reopened, guardedDwg, RS2::FormatDWG));
     REQUIRE(guarded.open(QIODevice::ReadOnly));
     const QByteArray validDwg = guarded.readAll();
@@ -301,6 +339,37 @@ TEST_CASE("DIMSTYLE source XDATA is emitted once and conflicts refuse safely",
     tampered.initForNewDocument();
     REQUIRE(importFrom(tampered, dwg, RS2::FormatDWG));
     tampered.onLoadingCompleted();
+    auto& sourceDictionaries = const_cast<std::vector<LC_DwgAdvancedMetadata::DictionaryRecord>&>(
+        tampered.dwgAdvancedMetadata().dictionaries());
+    auto sourceNod = std::find_if(sourceDictionaries.begin(), sourceDictionaries.end(),
+                                  [](const auto& item) {
+        return item.handle == DRW::DwgNamedObjectsDictionaryHandle;
+    });
+    REQUIRE(sourceNod != sourceDictionaries.end());
+    auto sourceNodPlot = std::find_if(sourceNod->entries.begin(), sourceNod->entries.end(),
+                                      [](const auto& entry) {
+        return entry.name == "ACAD_PLOTSETTINGS";
+    });
+    REQUIRE(sourceNodPlot != sourceNod->entries.end());
+    const auto originalNodTarget = sourceNodPlot->handle;
+    sourceNodPlot->handle += 1u;
+    CHECK_FALSE(writer.fileExport(tampered, guardedDwg, RS2::FormatDWG));
+    REQUIRE(guarded.open(QIODevice::ReadOnly));
+    CHECK(guarded.readAll() == validDwg);
+    guarded.close();
+    sourceNodPlot->handle = originalNodTarget;
+    REQUIRE(writer.fileExport(tampered, guardedDwg, RS2::FormatDWG));
+    sourceNod->entries.push_back({"UNMODELED_ROOT", 0x123u});
+    REQUIRE(guarded.open(QIODevice::ReadOnly));
+    const QByteArray beforeExtraRoot = guarded.readAll();
+    guarded.close();
+    CHECK_FALSE(writer.fileExport(tampered, guardedDwg, RS2::FormatDWG));
+    REQUIRE(guarded.open(QIODevice::ReadOnly));
+    CHECK(guarded.readAll() == beforeExtraRoot);
+    guarded.close();
+    sourceNod->entries.pop_back();
+    REQUIRE(writer.fileExport(tampered, guardedDwg, RS2::FormatDWG));
+
     // Deliberately corrupt the otherwise read-only source receipt to exercise
     // the wrong-owner guard; the underlying metadata object is mutable.
     auto& tamperedRaw = const_cast<std::vector<LC_DwgAdvancedMetadata::RawObjectRecord>&>(
@@ -310,6 +379,22 @@ TEST_CASE("DIMSTYLE source XDATA is emitted once and conflicts refuse safely",
         return raw.handle == sourcePlot.handle && raw.recordName == "PLOTSETTINGS";
     });
     REQUIRE(badRaw != tamperedRaw.end());
+    auto* tamperedActive = tampered.getPlotSettings();
+    REQUIRE(tamperedActive != nullptr);
+    const auto oldClassAppName = badRaw->classAppName;
+    badRaw->classAppName = "OTHER_APP";
+    tamperedActive->setMarginsInMm(left + 1.0, top, right, bottom);
+    REQUIRE(guarded.open(QIODevice::ReadOnly));
+    const QByteArray beforeChangedClass = guarded.readAll();
+    guarded.close();
+    CHECK_FALSE(writer.fileExport(tampered, guardedDwg, RS2::FormatDWG));
+    REQUIRE(guarded.open(QIODevice::ReadOnly));
+    CHECK(guarded.readAll() == beforeChangedClass);
+    guarded.close();
+    badRaw->classAppName = oldClassAppName;
+    REQUIRE(writer.fileExport(tampered, guardedDwg, RS2::FormatDWG));
+    tamperedActive->setMarginsInMm(left, top, right, bottom);
+    REQUIRE(writer.fileExport(tampered, guardedDwg, RS2::FormatDWG));
     const auto originalOwner = badRaw->parentHandle;
     badRaw->parentHandle = originalOwner + 1u;
     CHECK_FALSE(writer.fileExport(tampered, guardedDwg, RS2::FormatDWG));

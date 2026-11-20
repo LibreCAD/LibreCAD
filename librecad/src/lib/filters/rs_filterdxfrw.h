@@ -2755,6 +2755,16 @@ private:
     std::optional<DwgOpaqueTableOwnerGraphPlanRecord> ownerGraph;
     std::optional<DwgOpaqueTableFailure> preflightFailure;
   };
+  struct DwgEditedPlotSettingsPlanRecord {
+    std::size_t rawIndex;
+    std::uint32_t handle;
+    std::uint32_t parentHandle;
+    int objectType;
+    std::uint32_t bodyBitSize;
+    std::uint32_t objectSize;
+    std::vector<std::uint8_t> rawBytes;
+    double marginLeft;
+  };
   struct DwgExportAdmissionPlan {
     DRW::Version version = DRW::UNKNOWNV;
     bool valid = true;
@@ -2771,6 +2781,7 @@ private:
     std::map<const LC_Wipeout *, std::size_t> wipeoutRecordIndexes;
     std::map<std::size_t, DwgOpaqueTablePlanRecord> opaqueTableRecordIndexes;
     std::map<std::size_t, std::size_t> plotSettingsRecordIndexes;
+    std::map<std::size_t, DwgEditedPlotSettingsPlanRecord> editedPlotSettings;
     std::map<std::uint32_t, std::size_t> rawPlotSettingsRecordIndexes;
     std::set<std::uint32_t> rawPlotSettingsHandles;
   };
