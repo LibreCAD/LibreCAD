@@ -877,6 +877,31 @@ void overlayActivePlotSettings(DRW_PlotSettings &target,
   target.paperImageOriginY = source.getPaperImageOriginY();
 }
 
+// Return the start of the sole, exactly modeled DIMTALN application group.
+// Extra fields, duplicate groups and out-of-range values remain opaque.
+std::size_t exactDimstyleToleranceGroup(const DRW_Dimstyle &style) {
+  const auto &data = style.extData;
+  std::size_t found = data.size();
+  for (std::size_t i = 0; i < data.size(); ++i) {
+    const auto *app = data[i];
+    if (!app || app->code() != 1001 || app->type() != DRW_Variant::STRING ||
+        !app->content.s ||
+        normalizeDwgTableName(*app->content.s) != "ACAD_DSTYLE_DIMTALN")
+      continue;
+    if (found != data.size() || i + 2 >= data.size() || !data[i + 1] ||
+        !data[i + 2] || data[i + 1]->code() != 1070 ||
+        data[i + 1]->type() != DRW_Variant::INTEGER ||
+        data[i + 1]->i_val() != 392 || data[i + 2]->code() != 1070 ||
+        data[i + 2]->type() != DRW_Variant::INTEGER ||
+        data[i + 2]->i_val() < 0 || data[i + 2]->i_val() > 1 ||
+        (i + 3 < data.size() &&
+         (!data[i + 3] || data[i + 3]->code() != 1001)))
+      return data.size();
+    found = i;
+  }
+  return found;
+}
+
 bool restoreTableEntryExtData(
     DRW_TableEntry &destination,
     const std::vector<std::shared_ptr<DRW_Variant>> &source) {
@@ -20973,7 +20998,20 @@ void RS_FilterDXFRW::writeDimstyles() {
         m_writeFailed = true;
         continue;
       }
-      if (!restoreTableEntryExtData(dst, sourceStyle->extData)) {
+      const auto toleranceIndex = exactDimstyleToleranceGroup(*sourceStyle);
+      const auto *tolerance = ds->latteralTolerance();
+      const bool emitTolerance = ds->isBaseStyle() ||
+          tolerance->checkModifyState(LC_DimStyle::LatteralTolerance::$DIMTALN);
+      std::unique_ptr<DRW_Dimstyle> updatedSource;
+      const auto *xdataSource = sourceStyle;
+      if (m_dxfW != nullptr && emitTolerance &&
+          toleranceIndex != sourceStyle->extData.size()) {
+        updatedSource = std::make_unique<DRW_Dimstyle>(*sourceStyle);
+        *updatedSource->extData[toleranceIndex + 2] =
+            DRW_Variant(1070, static_cast<int>(tolerance->adjustment()));
+        xdataSource = updatedSource.get();
+      }
+      if (!restoreTableEntryExtData(dst, xdataSource->extData)) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
                         "RS_FilterDXFRW: cannot restore DXF "
                         "DIMSTYLE XDATA");
@@ -21401,33 +21439,17 @@ void RS_FilterDXFRW::prepareDRWDimStyleLeader(DRW_Dimstyle &d,
 void RS_FilterDXFRW::prepareDRWDimStyleExtData(DRW_Dimstyle &d,
                                                const LC_DimStyle *ds) {
   auto tolerance = ds->latteralTolerance();
-  // A source DIMSTYLE can already carry the exact group that the model would
-  // generate. Replay it once, but leave conflicting or extended groups for
-  // the strict writer to refuse rather than silently dropping source data.
-  bool sourceMatchesGeneratedTolerance = false;
-  if (const auto *source =
-          m_graphic->dwgAdvancedMetadata().findDimStyleTableEntryByName(d.name)) {
-    const auto &xdata = source->extData;
-    for (std::size_t i = 0; i < xdata.size(); ++i) {
-      const DRW_Variant *app = xdata[i];
-      if (app == nullptr || app->code() != 1001 ||
-          app->type() != DRW_Variant::STRING || app->content.s == nullptr ||
-          normalizeDwgTableName(*app->content.s) != "ACAD_DSTYLE_DIMTALN")
-        continue;
-      const bool exactEnd = i + 3 == xdata.size() ||
-          (i + 3 < xdata.size() && xdata[i + 3] != nullptr &&
-           xdata[i + 3]->code() == 1001);
-      if (i + 2 < xdata.size() && exactEnd && xdata[i + 1] != nullptr &&
-          xdata[i + 2] != nullptr && xdata[i + 1]->code() == 1070 &&
-          xdata[i + 1]->type() == DRW_Variant::INTEGER &&
-          xdata[i + 1]->i_val() == 392 && xdata[i + 2]->code() == 1070 &&
-          xdata[i + 2]->type() == DRW_Variant::INTEGER &&
-          xdata[i + 2]->i_val() == tolerance->adjustment())
-        sourceMatchesGeneratedTolerance = true;
-    }
-  }
+  // Reuse a sole, fully modeled source group. writeDimstyles updates its
+  // copied value; ambiguous or extended groups remain subject to refusal.
+  const auto *source =
+      m_graphic->dwgAdvancedMetadata().findDimStyleTableEntryByName(d.name);
+  const auto sourceIndex = source ? exactDimstyleToleranceGroup(*source) : 0;
+  const bool canReuseSourceTolerance = source &&
+      sourceIndex != source->extData.size() &&
+      (m_dxfW != nullptr ||
+       source->extData[sourceIndex + 2]->i_val() == tolerance->adjustment());
   if (tolerance->checkModifyState(LC_DimStyle::LatteralTolerance::$DIMTALN) &&
-      !sourceMatchesGeneratedTolerance) {
+      !canReuseSourceTolerance) {
     try {
       if (!d.addExtData(
               std::make_unique<DRW_Variant>(1001, "ACAD_DSTYLE_DIMTALN")) ||

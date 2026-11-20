@@ -46,6 +46,8 @@
 #include <QTemporaryDir>
 
 #include "lc_dwgadvancedmetadata.h"
+#include "lc_dimstyle.h"
+#include "lc_dimstyleslist.h"
 #include "rs_filterdxfrw.h"
 #include "rs_graphic.h"
 #include "rs_line.h"
@@ -265,6 +267,7 @@ TEST_CASE("DIMSTYLE source XDATA is emitted once and conflicts refuse safely",
     DRW_Dimstyle original(*source);
     DRW_Dimstyle conflicting(original);
     bool changed = false;
+    std::size_t toleranceIndex = conflicting.extData.size();
     for (std::size_t i = 0; i + 2 < conflicting.extData.size(); ++i) {
         const auto* app = conflicting.extData[i];
         auto* adjustment = conflicting.extData[i + 2];
@@ -272,7 +275,10 @@ TEST_CASE("DIMSTYLE source XDATA is emitted once and conflicts refuse safely",
             app->content.s && *app->content.s == "ACAD_DSTYLE_DIMTALN" &&
             adjustment && adjustment->code() == 1070 &&
             adjustment->type() == DRW_Variant::INTEGER) {
-            *adjustment = DRW_Variant(1070, adjustment->i_val() == 0 ? 1 : 0);
+            auto extra = std::make_unique<DRW_Variant>(1000, "unmodeled-value");
+            conflicting.extData.insert(conflicting.extData.begin() + i + 3, extra.get());
+            extra.release();
+            toleranceIndex = i;
             changed = true;
             break;
         }
@@ -283,8 +289,66 @@ TEST_CASE("DIMSTYLE source XDATA is emitted once and conflicts refuse safely",
     REQUIRE(written.open(QIODevice::ReadOnly));
     CHECK(written.readAll() == originalBytes);
     written.close();
+    REQUIRE(original.addExtData(std::make_unique<DRW_Variant>(1001, "TEST_KEEP")));
+    REQUIRE(original.addExtData(std::make_unique<DRW_Variant>(1000, "source-payload")));
     metadata.addDimStyleTableEntry(original);
-    CHECK(writer.fileExport(reopened, output, RS2::FormatDXFRW2000));
+    REQUIRE(writer.fileExport(reopened, output, RS2::FormatDXFRW2000));
+
+    auto* style = reopened.getDimStyleList()->findByName(QStringLiteral("Standard"));
+    REQUIRE(style != nullptr);
+    auto* tolerance = style->latteralTolerance();
+    const int editedValue = tolerance->adjustment() == 0 ? 1 : 0;
+    tolerance->setAdjustmentRaw(editedValue);
+    REQUIRE(tolerance->adjustment() == editedValue);
+    REQUIRE(writer.fileExport(reopened, output, RS2::FormatDXFRW2000));
+    REQUIRE(written.open(QIODevice::ReadOnly));
+    std::istringstream editedPairs(written.readAll().toStdString());
+    written.close();
+    bool foundEditedGroup = false;
+    int editedGroups = 0;
+    while (std::getline(editedPairs, code) && std::getline(editedPairs, value)) {
+        if (QString::fromStdString(code).trimmed() != QStringLiteral("1001") ||
+            QString::fromStdString(value).trimmed() != QStringLiteral("ACAD_DSTYLE_DIMTALN"))
+            continue;
+        ++editedGroups;
+        std::string c1, v1, c2, v2;
+        REQUIRE(std::getline(editedPairs, c1));
+        REQUIRE(std::getline(editedPairs, v1));
+        REQUIRE(std::getline(editedPairs, c2));
+        REQUIRE(std::getline(editedPairs, v2));
+        foundEditedGroup = QString::fromStdString(c1).trimmed() == QStringLiteral("1070") &&
+            QString::fromStdString(v1).trimmed() == QStringLiteral("392") &&
+            QString::fromStdString(c2).trimmed() == QStringLiteral("1070") &&
+            QString::fromStdString(v2).trimmed().toInt() == editedValue;
+    }
+    CHECK(editedGroups == 1);
+    CHECK(foundEditedGroup);
+    RS_Graphic editedReadback;
+    editedReadback.initForNewDocument();
+    REQUIRE(importFrom(editedReadback, output.toStdString(), RS2::FormatDXFRW));
+    editedReadback.onLoadingCompleted();
+    auto* editedStyle = editedReadback.getDimStyleList()->findByName(QStringLiteral("Standard"));
+    REQUIRE(editedStyle != nullptr);
+    CHECK(editedStyle->latteralTolerance()->adjustment() == editedValue);
+    const auto* editedSource = editedReadback.dwgAdvancedMetadata()
+                                   .findDimStyleTableEntryByName("Standard");
+    REQUIRE(editedSource != nullptr);
+    bool retainedUnknown = false;
+    for (std::size_t i = 0; i + 1 < editedSource->extData.size(); ++i) {
+        const auto* app = editedSource->extData[i];
+        const auto* payload = editedSource->extData[i + 1];
+        if (app && payload && app->code() == 1001 && payload->code() == 1000 &&
+            app->type() == DRW_Variant::STRING && payload->type() == DRW_Variant::STRING &&
+            app->content.s && payload->content.s && *app->content.s == "TEST_KEEP" &&
+            *payload->content.s == "source-payload")
+            retainedUnknown = true;
+    }
+    CHECK(retainedUnknown);
+    const auto* unchangedSource = metadata.findDimStyleTableEntryByName("Standard");
+    REQUIRE(unchangedSource != nullptr);
+    REQUIRE(toleranceIndex + 2 < unchangedSource->extData.size());
+    CHECK(unchangedSource->extData[toleranceIndex + 2]->i_val() != editedValue);
+
 }
 
 TEST_CASE("a drawing saved as DXF and opened again is saved as DWG",
