@@ -26,32 +26,42 @@
 
 
 #include "rscodec.h"
-#include <cstdint>
+#include <algorithm>
 #include <fstream>
-#include <limits>
 #include <new>          // std::nothrow
 
 RScodec::RScodec(unsigned int pp, int mmValue, int ttValue)
     : mm(mmValue), tt(ttValue) {
-    if (mm <= 0 || mm >= 31 || tt <= 0)
+    // encode() and decode() exchange one symbol per unsigned char, so only
+    // GF(2^8) works: a smaller field indexes index_of[] with byte values past
+    // its end, a larger one truncates symbols. The bound also keeps every
+    // exponent expression in int: with nn == 255 the largest, recd[j] + i*j
+    // in the syndrome loop, stays below 2*tt*nn + nn < 66000, while a field
+    // of 2^16 or more can overflow it.
+    if (mm != 8 || tt <= 0)
         return;
 
-    const std::int64_t fieldSize = std::int64_t{1} << mm;
-    if (fieldSize - 1 > std::numeric_limits<int>::max())
-        return;
-    nn = static_cast<int>(fieldSize - 1); // mm==8 -> nn==255
+    nn = (1 << mm) - 1; // 255
     if (tt > nn / 2)
         return;
     kk = nn - (tt * 2);
 
-    alpha_to.reset(new (std::nothrow) int[nn + 1]);
-    index_of.reset(new (std::nothrow) unsigned int[nn + 1]);
+    alpha_to.reset(new (std::nothrow) int[nn + 1]());
+    index_of.reset(new (std::nothrow) int[nn + 1]);
     gg.reset(new (std::nothrow) int[nn - kk + 1]);
     if (!alpha_to || !index_of || !gg)
         return;
-    isOk = true;
+    std::fill_n(index_of.get(), nn + 1, -1);
 
     RSgenerate_gf(pp) ;
+    // Only a primitive pp makes alpha a generator of the field. Any other pp
+    // leaves non-zero symbols without a log, which would turn the exponent
+    // sums below negative and index alpha_to[] out of bounds.
+    for (int symbol = 1; symbol <= nn; ++symbol) {
+        if (index_of[symbol] < 0)
+            return;
+    }
+    isOk = true;
     /* compute the generator polynomial for this RS code */
     RSgen_poly() ;
     if (!isOk)
@@ -248,8 +258,18 @@ int RScodec::calcDecode(unsigned char* data, int* recd, int** elp, int* d, int* 
                 l[u + 1] = l[q] + u - q;
             }
 
-            /* form new elp(x) */
-            for (i = 0; i<bb; i++) {
+            /* A locator of degree > tt means more than tt errors, which the
+               code cannot correct.  Reject it now, before building it: the
+               loop would stop on this degree and reject the codeword anyway,
+               and building it is unsafe, as its highest term i + u - q can reach
+               bb (when u == bb and q == 0, i.e. syndromes 1..bb-1 are all
+               zero), one past the end of the bb-int elp row. */
+            if (l[u + 1] > tt) {
+                return -1;
+            }
+
+            /* form new elp(x); entries above its degree l[u+1] are never read */
+            for (i = 0; i <= l[u + 1]; i++) {
                 elp[u + 1][i] = 0;
             }
             for (i = 0; i <= l[q]; i++){
@@ -279,12 +299,10 @@ int RScodec::calcDecode(unsigned char* data, int* recd, int** elp, int* d, int* 
             }
             d[u + 1] = index_of[d[u + 1]];    /* put d[u+1] into index form */
         }
-    } while ((u<bb) && (l[u + 1] <= tt));
+    } while (u<bb);
 
     u++;
-    if (l[u]>tt) {              /* elp has degree has degree >tt hence cannot solve */
-        return -1;              /* just output is received codeword as is */
-    }
+    /* l[u] <= tt here: every degree above tt was rejected inside the loop */
 
     /* can correct error */
     /* put elp into index form */

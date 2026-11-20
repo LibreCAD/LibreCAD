@@ -168,25 +168,20 @@ bool dwgRSCodec::encode251(const std::uint8_t *in, std::uint8_t *out,
  * @param blk number of codewords ( 1 cw == 255 bytes)
  */
 bool dwgRSCodec::decode239I(unsigned char *in, unsigned char *out, std::uint32_t blk){
-    int k=0;
     bool allOk = true;
-    unsigned char data[255];
+    std::array<unsigned char, 255> data{};
     RScodec rsc(0x96, 8, 8); //(255, 239)
-    for (std::uint32_t i=0; i<blk; i++){
-        k = i;
-        for (int j=0; j<255; j++) {
-            data[j] = in[k];
-            k +=blk;
-        }
-        int r = rsc.decode(data);
-        if (r<0) {
+    // size_t offsets: symbol * blk and block * 239 reach 255 * blk, which
+    // an int index or a uint32_t product would wrap for large blk.
+    for (std::uint32_t block = 0; block < blk; ++block) {
+        for (std::size_t symbol = 0; symbol < data.size(); ++symbol)
+            data[symbol] = in[symbol * blk + block];
+        if (rsc.decode(data.data()) < 0) {
             DRW_DBG("\nWARNING: dwgRSCodec::decode239I, can't correct all errors");
             allOk = false;
         }
-        k = i*239;
-        for (int j=0; j<239; j++) {
-            out[k++] = data[j];
-        }
+        std::copy_n(data.cbegin(), 239,
+                    out + static_cast<std::size_t>(block) * 239u);
     }
     return allOk;
 }
@@ -198,25 +193,20 @@ bool dwgRSCodec::decode239I(unsigned char *in, unsigned char *out, std::uint32_t
  * @param blk number of codewords ( 1 cw == 255 bytes)
  */
 bool dwgRSCodec::decode251I(unsigned char *in, unsigned char *out, std::uint32_t blk){
-    int k=0;
     bool allOk = true;
-    unsigned char data[255];
+    std::array<unsigned char, 255> data{};
     RScodec rsc(0xB8, 8, 2); //(255, 251)
-    for (std::uint32_t i=0; i<blk; i++){
-        k = i;
-        for (int j=0; j<255; j++) {
-            data[j] = in[k];
-            k +=blk;
-        }
-        int r = rsc.decode(data);
-        if (r<0) {
+    // size_t offsets: symbol * blk and block * 251 reach 255 * blk, which
+    // an int index or a uint32_t product would wrap for large blk.
+    for (std::uint32_t block = 0; block < blk; ++block) {
+        for (std::size_t symbol = 0; symbol < data.size(); ++symbol)
+            data[symbol] = in[symbol * blk + block];
+        if (rsc.decode(data.data()) < 0) {
             DRW_DBG("\nWARNING: dwgRSCodec::decode251I, can't correct all errors");
             allOk = false;
         }
-        k = i*251;
-        for (int j=0; j<251; j++) {
-            out[k++] = data[j];
-        }
+        std::copy_n(data.cbegin(), 251,
+                    out + static_cast<std::size_t>(block) * 251u);
     }
     return allOk;
 }
