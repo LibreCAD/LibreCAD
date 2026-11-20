@@ -59602,3 +59602,34 @@ on all five jobs (macOS arm64, macOS Intel, Windows, Ubuntu x86_64, and Ubuntu
 ARM). This supersedes the CI status recorded in section 1891 for the current
 head. No source changes were made for this validation pass; this section is a
 roadmap evidence update only.
+
+## 1893. Inspect the Rebuilt Properties Dialog and Reject the Fixture (2026-11-19)
+
+The current qmake6 bundle was attachable through its canonical path
+`/tmp/offset-2961-qmake-current/LibreCAD.app`. It loaded
+`dxf-binary-R2018-native-degree1.dxf`, selected the imported `Offset Curve`,
+and opened the actual Offset Curve Properties dialog. The dialog visibly
+contains the Source type control (showing Ellipse), the Source curve control,
+and a Select in drawing button. However, the source selector reads
+`Embedded source (not found)` and Select in drawing is disabled. This fixture
+therefore cannot prove existing-source highlighting or replacement behavior;
+the earlier application-adoption test only proves the offset imports as an
+editable native entity, not that its referenced source resolves.
+
+The desktop automation could inspect the dialog but did not activate the
+Source type menu: accessibility click/keyboard attempts left the value at
+Ellipse and did not open a candidate list. Properties was canceled without
+committing any changes; the fixture was not saved. This supersedes section
+1889's blanket claim that CUA could not attach to LibreCAD, but it does not
+close the visible interaction gate. Next, create or identify a fixture whose
+native offset source handle resolves to a separate selectable curve, and use
+an operable interaction route to switch families (including parabola), verify
+candidate filtering and highlight, accept/cancel/refuse, and check atomicity.
+
+The external DWG gate is still narrower than planned: section 1892 confirms
+ODA can audit/read all 42 existing DWG fixtures, not DWGs freshly exported by
+LibreCAD. Do not mark output interoperability complete without producing
+LibreCAD DWG exports, reopening/auditing them with ODA, and checking geometry
+and native offset semantics. PR CI for the documentation-only follow-up at
+`de4e4979c266de40bc1a63351f130353c77e475f` was queued when this entry was
+written; poll this exact revision before recording it as green.
