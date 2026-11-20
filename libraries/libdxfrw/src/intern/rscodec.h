@@ -32,7 +32,7 @@
 #include <memory>
 #include <vector>
 /**
-mm: RS code over GF(2^4)
+mm: RS code over GF(2^mm); must be 8, symbols are unsigned char
 nn: nn= (2^mm) - 1   length of codeword
 tt: number of errors that can be corrected
 kk: kk = nn-2*tt
@@ -50,7 +50,7 @@ public:
     bool encode(unsigned char *data, unsigned char *parity) const;
     int decode(unsigned char *data);
     bool isOkey() const {return isOk;}
-    const unsigned int* indexOf() const {return index_of.get();}
+    const int* indexOf() const {return index_of.get();}
     const int* alphaTo() const {return alpha_to.get();}
 
 private:
@@ -65,7 +65,7 @@ private:
 
     std::unique_ptr<int[]> gg;
     bool isOk = false;
-    std::unique_ptr<unsigned int[]> index_of;
+    std::unique_ptr<int[]> index_of; // index_of[0] == -1: zero has no log
     std::unique_ptr<int[]> alpha_to;
 
     // calcDecode() scratch buffers, sized once from nn/tt/(nn-kk) in the

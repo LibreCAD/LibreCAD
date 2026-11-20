@@ -113,6 +113,29 @@ TEST_CASE("RScodec: invalid configuration fails closed", "[dwg][rscodec][safety]
     CHECK_FALSE(invalidCorrection.isOkey());
     CHECK_FALSE(invalidCorrection.encode(nullptr, nullptr));
     CHECK(invalidCorrection.decode(nullptr) == -1);
+
+    // Symbols are unsigned char: GF(2^4) would index its 16-entry log table
+    // with byte values, and GF(2^16) with tt == 8 would truncate symbols (and
+    // with large tt overflow int in the syndrome exponents).
+    for (const int mm : {4, 7, 9, 16, 30}) {
+        CAPTURE(mm);
+        RScodec unsupportedField(0x96, mm, 8);
+        CHECK_FALSE(unsupportedField.isOkey());
+        CHECK(unsupportedField.decode(nullptr) == -1);
+    }
+
+    // A non-primitive polynomial leaves symbols without a log. pp == 0 gives
+    // alpha^8 == 0; 0xFF gives x^8 + x^7 + ... + 1, which divides x^9 + 1,
+    // so alpha has order 9.
+    for (const unsigned int pp : {0x00u, 0xFFu}) {
+        CAPTURE(pp);
+        RScodec nonPrimitive(pp, 8, 8);
+        CHECK_FALSE(nonPrimitive.isOkey());
+        CHECK(nonPrimitive.decode(nullptr) == -1);
+    }
+
+    CHECK(RScodec(0x96, 8, 8).isOkey());
+    CHECK(RScodec(0xB8, 8, 2).isOkey());
 }
 
 namespace {
