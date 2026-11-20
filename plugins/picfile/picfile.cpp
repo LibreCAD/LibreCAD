@@ -29,6 +29,22 @@
 #include "document_interface.h"
 #include "picfile.h"
 
+namespace {
+void formatError(QWidget* parent, const QString& line)
+{
+    QMessageBox::critical(parent, "picPunto", picPunto::tr("format error in %1").arg(line));
+}
+
+bool readCoordinates(const QString& value, QString& x, QString& y)
+{
+    const QStringList xy = value.split(',');
+    if (xy.size() < 2) return false;
+    x = xy.at(0);
+    y = xy.at(1);
+    return true;
+}
+}
+
 PluginCapabilities PicFile::getCapabilities() const
 {
     PluginCapabilities pluginCapabilities;
@@ -254,12 +270,17 @@ void picPunto::processFilePic(QFile* file)
                     i++; // dashed line
                 }
                 for (;i <  data.size(); i += 2) {
+                    QString x, y;
+                    if (!readCoordinates(data.at(i), x, y)) {
+                        formatError(this, line);
+                        return;
+                    }
                     pd = new pointData;
-                    pd->x = data.at(i).split(',').at(0);
-                    pd->y = data.at(i).split(',').at(1);
+                    pd->x = x;
+                    pd->y = y;
                     dataList.append(pd);
                     if ( i < data.size()-1 && data.at(i+1) != "to") {
-                        QMessageBox::critical ( this, "picPunto", QString(tr("format error in %1")).arg(line) );
+                        formatError(this, line);
                         return;
                     }
                 }
@@ -268,27 +289,46 @@ void picPunto::processFilePic(QFile* file)
         } else {
             if (cmd == "circle") { // circle at 7.935,3.643 rad 0.035
                 if ( data.size() != 5 ) {
-                    QMessageBox::critical ( this, "picPunto", QString(tr("format error in %1")).arg(line) );
+                    formatError(this, line);
                     return;
                 }
-                drawCircle(data.at(2).split(',').at(0), data.at(2).split(',').at(1), data.at(4));
+                QString x, y;
+                if (!readCoordinates(data.at(2), x, y)) {
+                    formatError(this, line);
+                    return;
+                }
+                drawCircle(x, y, data.at(4));
             } else {
                 if (cmd == "box") { // box invis fill 0.000 with .sw at (7.480,6.917) width 0.079 height 0.157
                     if ( data.size() < 12 ) {
                         // QMessageBox::critical ( this, "picPunto", QString(tr("format error in %1")).arg(line) );
                         continue;
                     }
-                    QString posx = data.at(7).split(',').at(0);
-                    QString posy = data.at(7).split(',').at(1);
+                    QString posx, posy;
+                    if (!readCoordinates(data.at(7), posx, posy)) continue;
                     drawBox(posx.remove(0,1), posy.remove(posy.size()-1,1), data.at(9), data.at(11));
                 } else {
                     if ( cmd.startsWith("\"\\s") && data.size() > 3 ) { // "\s5\fRAbstell fl?che\fP" at 8.132,7.456 ljust
-                        QString txt = line.split("\"", skip).at(1);
-                        QStringList rline = line.split("\"", skip).at(2).split(" ",skip);
+                        const QStringList quoted = line.split("\"", skip);
+                        if (quoted.size() < 3) {
+                            formatError(this, line);
+                            return;
+                        }
+                        QString txt = quoted.at(1);
+                        QStringList rline = quoted.at(2).split(" ",skip);
+                        if (rline.size() < 4) {
+                            formatError(this, line);
+                            return;
+                        }
+                        QString x, y;
+                        if (!readCoordinates(rline.at(2), x, y)) {
+                            formatError(this, line);
+                            return;
+                        }
                         txt.remove ( txt.size()-3, 3);
                         txt.remove (QRegExp("^.*fR"));
                         // printf("process line: %s: %s\n",rline.at(2).toStdString().c_str(),txt.toStdString().c_str() );
-                        drawText(rline.at(2).split(',').at(0), rline.at(2).split(',').at(1), txt, rline.at(3));
+                        drawText(x, y, txt, rline.at(3));
                     }
                 }
             }
