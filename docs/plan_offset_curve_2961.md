@@ -59576,3 +59576,29 @@ general proof of scale invariance or arbitrary topology. Remaining acceptance
 gates are visible packaged-app Properties workflow and independent CAD
 semantic/DWG-output validation; the latter remains blocked by ODA window
 access in sections 1887 and 1890.
+
+## 1892. Rebuild qmake6 UI and Run ODA Fixture Audit (2026-11-19)
+
+A fresh out-of-tree qmake6 build completed successfully using the current
+Homebrew Qt 6.12 toolchain. The binary was produced at
+`/private/tmp/offset-2961-qmake-current/LibreCAD.app`. CUA could see the new
+LibreCAD process, but attaching to its window repeatedly timed out with
+`Computer Use server error -10005: timeoutReached`; therefore the source-family
+picker, selected-source highlight, candidate filtering/replacement, and cancel
+behavior were not visually verified. No drawing was edited or saved.
+
+The user opened ODAFileConverter in the interactive desktop session, making its
+window controllable. With the Audit checkbox enabled and the input filter
+restricted to `*.DWG`, ODA processed all 42 DWG files in
+`librecad/src/lib/filters/tests/testdata/offsetcurve_independent` and produced
+42 ASCII-DXF outputs in the isolated
+`/private/tmp/offset-2961-oda-dwg-only-20261119` directory. This establishes
+that ODA consumed these existing fixture DWGs. It does **not** test DWGs
+exported by LibreCAD, establish geometric equivalence, or prove AutoCAD
+semantics. Those export/reopen checks remain open.
+
+PR #3193 exact-head CI at `888fe106214d1ff6e7ff4d763db4752919842d1c` is green
+on all five jobs (macOS arm64, macOS Intel, Windows, Ubuntu x86_64, and Ubuntu
+ARM). This supersedes the CI status recorded in section 1891 for the current
+head. No source changes were made for this validation pass; this section is a
+roadmap evidence update only.
