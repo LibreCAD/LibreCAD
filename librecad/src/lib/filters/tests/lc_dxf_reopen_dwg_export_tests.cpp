@@ -242,7 +242,128 @@ TEST_CASE("DIMSTYLE source XDATA is emitted once and conflicts refuse safely",
     reopened.initForNewDocument();
     REQUIRE(importFrom(reopened, dwg, RS2::FormatDWG));
     reopened.onLoadingCompleted();
+#ifdef LIBDXFRW_HAS_AC1015_PLOTSETTINGS_RAW_VERIFY
+    const auto& sourceMetadata = reopened.dwgAdvancedMetadata();
+    REQUIRE(sourceMetadata.plotSettings().size() == 1u);
+    const auto& sourcePlot = sourceMetadata.plotSettings().front();
+    const auto rawPlot = std::find_if(sourceMetadata.rawObjects().begin(),
+                                     sourceMetadata.rawObjects().end(),
+                                     [&sourcePlot](const auto& raw) {
+        return raw.handle == sourcePlot.handle && raw.recordName == "PLOTSETTINGS";
+    });
+    REQUIRE(rawPlot != sourceMetadata.rawObjects().end());
+    REQUIRE(rawPlot->commonHandleDataValidated);
+    REQUIRE(rawPlot->parentHandle == sourcePlot.parentHandle);
+    const QString reexportedDwg = QDir(directory.path()).filePath("reexported.dwg");
     RS_FilterDXFRW writer;
+    REQUIRE(writer.fileExport(reopened, reexportedDwg, RS2::FormatDWG));
+    RS_Graphic sameVersionReadback;
+    sameVersionReadback.initForNewDocument();
+    REQUIRE(importFrom(sameVersionReadback, reexportedDwg.toStdString(), RS2::FormatDWG));
+    const auto& readbackPlot = sameVersionReadback.dwgAdvancedMetadata().plotSettings();
+    REQUIRE(readbackPlot.size() == 1u);
+    CHECK(readbackPlot.front().handle == sourcePlot.handle);
+    CHECK(readbackPlot.front().parentHandle == sourcePlot.parentHandle);
+    CHECK(readbackPlot.front().pageSetupName == sourcePlot.pageSetupName);
+    const auto& readbackDictionaries = sameVersionReadback.dwgAdvancedMetadata().dictionaries();
+    const auto dict = std::find_if(readbackDictionaries.begin(), readbackDictionaries.end(),
+                                   [&readbackPlot](const auto& item) {
+        return item.handle == readbackPlot.front().parentHandle;
+    });
+    REQUIRE(dict != readbackDictionaries.end());
+    REQUIRE(dict->entries.size() == 1u);
+    CHECK(dict->entries.front().handle == readbackPlot.front().handle);
+    CHECK(dict->entries.front().name == readbackPlot.front().pageSetupName);
+
+    const QString guardedDwg = QDir(directory.path()).filePath("guarded.dwg");
+    QFile guarded(guardedDwg);
+    REQUIRE(guarded.open(QIODevice::WriteOnly));
+    REQUIRE(guarded.write("sentinel") == 8);
+    guarded.close();
+    auto* activePlot = reopened.getPlotSettings();
+    REQUIRE(activePlot != nullptr);
+    const double left = activePlot->getMarginLeftMm();
+    const double top = activePlot->getMarginTopMm();
+    const double right = activePlot->getMarginRightMm();
+    const double bottom = activePlot->getMarginBottomMm();
+    activePlot->setMarginsInMm(left + 1.0, top, right, bottom);
+    CHECK_FALSE(writer.fileExport(reopened, guardedDwg, RS2::FormatDWG));
+    REQUIRE(guarded.open(QIODevice::ReadOnly));
+    CHECK(guarded.readAll() == QByteArray("sentinel"));
+    guarded.close();
+    activePlot->setMarginsInMm(left, top, right, bottom);
+    REQUIRE(writer.fileExport(reopened, guardedDwg, RS2::FormatDWG));
+    REQUIRE(guarded.open(QIODevice::ReadOnly));
+    const QByteArray validDwg = guarded.readAll();
+    guarded.close();
+
+    RS_Graphic tampered;
+    tampered.initForNewDocument();
+    REQUIRE(importFrom(tampered, dwg, RS2::FormatDWG));
+    tampered.onLoadingCompleted();
+    // Deliberately corrupt the otherwise read-only source receipt to exercise
+    // the wrong-owner guard; the underlying metadata object is mutable.
+    auto& tamperedRaw = const_cast<std::vector<LC_DwgAdvancedMetadata::RawObjectRecord>&>(
+        tampered.dwgAdvancedMetadata().rawObjects());
+    auto badRaw = std::find_if(tamperedRaw.begin(), tamperedRaw.end(),
+                               [&sourcePlot](const auto& raw) {
+        return raw.handle == sourcePlot.handle && raw.recordName == "PLOTSETTINGS";
+    });
+    REQUIRE(badRaw != tamperedRaw.end());
+    const auto originalOwner = badRaw->parentHandle;
+    badRaw->parentHandle = originalOwner + 1u;
+    CHECK_FALSE(writer.fileExport(tampered, guardedDwg, RS2::FormatDWG));
+    REQUIRE(guarded.open(QIODevice::ReadOnly));
+    CHECK(guarded.readAll() == validDwg);
+    guarded.close();
+    badRaw->parentHandle = originalOwner;
+    REQUIRE(writer.fileExport(tampered, guardedDwg, RS2::FormatDWG));
+
+    // Tamper with the retained owner handle role while leaving the metadata
+    // receipt unchanged; a stale validated flag must not admit altered bytes.
+    REQUIRE(badRaw->rawBytes.size() >= 4u);
+    const std::size_t ownerRoleByte = badRaw->rawBytes.size() - 4u;
+    const auto originalByte = badRaw->rawBytes[ownerRoleByte];
+    badRaw->rawBytes[ownerRoleByte] ^= 1u;
+    REQUIRE(guarded.open(QIODevice::ReadOnly));
+    const QByteArray beforeByteTamper = guarded.readAll();
+    guarded.close();
+    CHECK_FALSE(writer.fileExport(tampered, guardedDwg, RS2::FormatDWG));
+    REQUIRE(guarded.open(QIODevice::ReadOnly));
+    CHECK(guarded.readAll() == beforeByteTamper);
+    guarded.close();
+    badRaw->rawBytes[ownerRoleByte] = originalByte;
+    REQUIRE(writer.fileExport(tampered, guardedDwg, RS2::FormatDWG));
+
+    DRW_UnsupportedObject duplicate;
+    duplicate.m_version = badRaw->version;
+    duplicate.m_objectType = badRaw->objectType;
+    duplicate.m_handle = badRaw->handle;
+    duplicate.m_parentHandle = badRaw->parentHandle;
+    duplicate.setCommonLinkEvidence(badRaw->commonLinkEvidence);
+    duplicate.m_reactorHandles = badRaw->reactorHandles;
+    duplicate.m_xDictHandle = badRaw->xDictHandle;
+    duplicate.m_numReactors = badRaw->numReactors;
+    duplicate.m_xDictFlag = badRaw->xDictFlag;
+    duplicate.m_bodyBitSize = badRaw->bodyBitSize;
+    duplicate.m_objectSize = badRaw->objectSize;
+    duplicate.m_isCustomClass = badRaw->isCustomClass;
+    duplicate.m_hasClassDefinition = badRaw->hasClassDefinition;
+    duplicate.m_recordName = badRaw->recordName;
+    duplicate.m_className = badRaw->className;
+    duplicate.m_rawBytes = badRaw->rawBytes;
+    tampered.dwgAdvancedMetadata().addUnsupportedObject(duplicate);
+    REQUIRE(guarded.open(QIODevice::ReadOnly));
+    const QByteArray beforeDuplicate = guarded.readAll();
+    guarded.close();
+    CHECK_FALSE(writer.fileExport(tampered, guardedDwg, RS2::FormatDWG));
+    REQUIRE(guarded.open(QIODevice::ReadOnly));
+    CHECK(guarded.readAll() == beforeDuplicate);
+    guarded.close();
+    CHECK(writer.fileExport(reopened, guardedDwg, RS2::FormatDWG));
+#else
+    RS_FilterDXFRW writer;
+#endif
     REQUIRE(writer.fileExport(reopened, output, RS2::FormatDXFRW2000));
     QFile written(output);
     REQUIRE(written.open(QIODevice::ReadOnly));
