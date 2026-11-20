@@ -90,7 +90,11 @@ public:
     AcDbAssocActionBody,
     AcDbEvalExpr,
     AcDbShHistoryNode,
-    AcShActionBody
+    AcShActionBody,
+    AcDbAssocValueDependency,
+    AcDbAssocDependencyBody,
+    AcDbAssoc2dConstraintGroup,
+    AcDbAssocVariable
   };
 
   enum class AssociativePrefixParseStatus {
@@ -2183,6 +2187,11 @@ public:
     size_t boundedCountOverflow = 0;
     size_t decodedHandleCount = 0;
     size_t decodedValueCount = 0;
+    // Append new counters to preserve offsets of existing diagnostic fields.
+    size_t assocValueDependency = 0;
+    size_t assocDependencyBody = 0;
+    size_t assoc2dConstraintGroup = 0;
+    size_t assocVariable = 0;
   };
 
   struct TableRecord {
@@ -10594,6 +10603,14 @@ public:
       return "AcDbShHistoryNode";
     case AssociativePrefixKind::AcShActionBody:
       return "AcShActionBody";
+    case AssociativePrefixKind::AcDbAssocValueDependency:
+      return "AcDbAssocValueDependency";
+    case AssociativePrefixKind::AcDbAssocDependencyBody:
+      return "AcDbAssocDependencyBody";
+    case AssociativePrefixKind::AcDbAssoc2dConstraintGroup:
+      return "AcDbAssoc2dConstraintGroup";
+    case AssociativePrefixKind::AcDbAssocVariable:
+      return "AcDbAssocVariable";
     }
     return "unknown";
   }
@@ -12383,6 +12400,16 @@ private:
       return AssociativePrefixKind::AcDbShHistoryNode;
     case DRW_AssociativePrefixStatus::Kind::AcShActionBody:
       return AssociativePrefixKind::AcShActionBody;
+#ifdef LIBDXFRW_HAS_EXTENDED_ASSOCIATIVE_PREFIX_KINDS
+    case DRW_AssociativePrefixStatus::Kind::AcDbAssocValueDependency:
+      return AssociativePrefixKind::AcDbAssocValueDependency;
+    case DRW_AssociativePrefixStatus::Kind::AcDbAssocDependencyBody:
+      return AssociativePrefixKind::AcDbAssocDependencyBody;
+    case DRW_AssociativePrefixStatus::Kind::AcDbAssoc2dConstraintGroup:
+      return AssociativePrefixKind::AcDbAssoc2dConstraintGroup;
+    case DRW_AssociativePrefixStatus::Kind::AcDbAssocVariable:
+      return AssociativePrefixKind::AcDbAssocVariable;
+#endif
     }
     return AssociativePrefixKind::AcDbAssocAction;
   }
@@ -12611,6 +12638,18 @@ private:
       break;
     case AssociativePrefixKind::AcShActionBody:
       ++counts.shActionBody;
+      break;
+    case AssociativePrefixKind::AcDbAssocValueDependency:
+      ++counts.assocValueDependency;
+      break;
+    case AssociativePrefixKind::AcDbAssocDependencyBody:
+      ++counts.assocDependencyBody;
+      break;
+    case AssociativePrefixKind::AcDbAssoc2dConstraintGroup:
+      ++counts.assoc2dConstraintGroup;
+      break;
+    case AssociativePrefixKind::AcDbAssocVariable:
+      ++counts.assocVariable;
       break;
     }
     switch (prefix.status) {
