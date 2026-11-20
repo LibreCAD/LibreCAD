@@ -59678,3 +59678,34 @@ window (`cgWindowNotFound`), so the source-type menu, candidate list,
 selection/highlight behavior, and cancellation were not rechecked visually.
 No source or fixture was edited or saved. Independent CAD acceptance remains
 open as documented in section 1894.
+
+## 1896. Fix R2007+ DWG String-Stream Framing (2026-11-20)
+
+Investigating the LibreDWG `bit_read_TU buffer overflow` on fresh LibreCAD DWG
+exports isolated the defect to string-stream placement, not offset entities.
+The root DICTIONARY advertises one item, but its string bytes had been appended
+after byte-aligning the bit-packed object body. The footer-derived string start
+therefore pointed into padding, and the dictionary entry name could not be
+decoded. The LINE-only control reproduced the same failure.
+
+`dwgWriter24::appendR2007StringStream` now appends string bytes immediately at
+the current numeric-body bit position, encodes the actual string bit count plus
+only the padding needed before its footer, and leaves the final has-strings bit
+byte-aligned. The empty-string trailer receives corresponding minimal padding.
+R2007 and R2010+ object/header finalization no longer inserts byte alignment
+between the packed body and string stream; handle streams remain byte-aligned.
+
+Validation on the rebuilt current source:
+
+- `[lc-offsetcurve][g-matrix][write][dwg]`: 5,822 assertions passed; emitted
+  the six-version offset matrix and reopened each file in LibreCAD.
+- `[lc-offsetcurve][g-matrix][line-control][dwg]`: passed.
+- `[dwg-write][dictionary]`: 556 assertions across 16 cases passed.
+- Homebrew LibreDWG `dwgread -O JSON` reports `SUCCESS` for all 18 regenerated
+  R2000-R2018 offset and LINE-control DWGs. R2018 JSON now decodes root
+  DICTIONARY handle `0xC` with its expected `ACAD_GROUP` entry. This is a
+  substantive independent parser check, but is not ODA or AutoCAD acceptance.
+
+ODAFileConverter was running after the user opened it, but the desktop control
+bridge still returned `cgWindowNotFound`; no ODA conversion was performed.
+External CAD acceptance and the visible source-picker interaction remain open.
