@@ -2296,7 +2296,7 @@ file(TO_CMAKE_PATH "${LC_PLUGIN_INSTALL_DIR}" LC_PLUGIN_INSTALL_DIR)
 option(LIBRECAD_USE_SYSTEM_LIBDXFRW
        "Link a separately installed libdxfrw instead of the bundled source" OFF)
 if (LIBRECAD_USE_SYSTEM_LIBDXFRW)
-    find_package(libdxfrw CONFIG REQUIRED)
+    find_package(libdxfrw 3.0 CONFIG REQUIRED)
     list(REMOVE_ITEM SHARED_INCLUDES
          libraries/libdxfrw/src libraries/libdxfrw/src/intern)
     list(REMOVE_ITEM SHARED_SOURCES ${LIBDXFRW_ALL_FILES})
