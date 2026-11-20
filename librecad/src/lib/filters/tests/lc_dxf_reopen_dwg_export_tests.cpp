@@ -36,6 +36,7 @@
 #include <filesystem>
 #include <fstream>
 #include <iterator>
+#include <limits>
 #include <sstream>
 #include <string>
 
@@ -297,7 +298,7 @@ TEST_CASE("DIMSTYLE source XDATA is emitted once and conflicts refuse safely",
     const double top = activePlot->getMarginTopMm();
     const double right = activePlot->getMarginRightMm();
     const double bottom = activePlot->getMarginBottomMm();
-    activePlot->setMarginsInMm(left + 1.0, top, right, bottom);
+    activePlot->setMarginsInMm(left + 1.0, top + 2.0, right + 3.0, bottom + 4.0);
     REQUIRE(writer.fileExport(reopened, guardedDwg, RS2::FormatDWG));
     RS_Graphic editedPlotReadback;
     editedPlotReadback.initForNewDocument();
@@ -305,6 +306,9 @@ TEST_CASE("DIMSTYLE source XDATA is emitted once and conflicts refuse safely",
     const auto& editedPlots = editedPlotReadback.dwgAdvancedMetadata().plotSettings();
     REQUIRE(editedPlots.size() == 1u);
     CHECK(editedPlots.front().marginLeft == left + 1.0);
+    CHECK(editedPlots.front().marginTop == top + 2.0);
+    CHECK(editedPlots.front().marginRight == right + 3.0);
+    CHECK(editedPlots.front().marginBottom == bottom + 4.0);
     CHECK(editedPlots.front().handle == sourcePlot.handle);
     CHECK(editedPlots.front().parentHandle == sourcePlot.parentHandle);
     CHECK(editedPlots.front().pageSetupName == sourcePlot.pageSetupName);
@@ -319,8 +323,31 @@ TEST_CASE("DIMSTYLE source XDATA is emitted once and conflicts refuse safely",
         return entry.name == "ACAD_PLOTSETTINGS" &&
                entry.handle == editedPlots.front().parentHandle;
     }) == 1);
+    const QString singleMarginDwg = QDir(directory.path()).filePath("single-margin.dwg");
+    for (int which = 0; which < 4; ++which) {
+        const double changedLeft = left + (which == 0 ? 1.0 : 0.0);
+        const double changedTop = top + (which == 1 ? 1.0 : 0.0);
+        const double changedRight = right + (which == 2 ? 1.0 : 0.0);
+        const double changedBottom = bottom + (which == 3 ? 1.0 : 0.0);
+        activePlot->setMarginsInMm(changedLeft, changedTop, changedRight, changedBottom);
+        REQUIRE(writer.fileExport(reopened, singleMarginDwg, RS2::FormatDWG));
+        RS_Graphic singleMarginReadback;
+        singleMarginReadback.initForNewDocument();
+        REQUIRE(importFrom(singleMarginReadback, singleMarginDwg.toStdString(), RS2::FormatDWG));
+        const auto& singlePlot = singleMarginReadback.dwgAdvancedMetadata().plotSettings();
+        REQUIRE(singlePlot.size() == 1u);
+        CHECK(singlePlot.front().marginLeft == changedLeft);
+        CHECK(singlePlot.front().marginTop == changedTop);
+        CHECK(singlePlot.front().marginRight == changedRight);
+        CHECK(singlePlot.front().marginBottom == changedBottom);
+    }
     REQUIRE(guarded.open(QIODevice::ReadOnly));
     const QByteArray editedPlotBytes = guarded.readAll();
+    guarded.close();
+    activePlot->setMarginsInMm(left, top, std::numeric_limits<double>::infinity(), bottom);
+    CHECK_FALSE(writer.fileExport(reopened, guardedDwg, RS2::FormatDWG));
+    REQUIRE(guarded.open(QIODevice::ReadOnly));
+    CHECK(guarded.readAll() == editedPlotBytes);
     guarded.close();
     activePlot->setMarginsInMm(left, top, right, bottom);
     const int oldShadeMode = activePlot->getShadePlotMode();

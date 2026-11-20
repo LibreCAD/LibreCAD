@@ -882,13 +882,13 @@ void overlayActivePlotSettings(DRW_PlotSettings &target,
 // in the retained source frame and are never overwritten here.
 bool matchesImportedPlotSettings(LC_PlotSettings &active,
                                  const DRW_PlotSettings &source,
-                                 bool allowLeftMarginChange = false) {
+                                 bool allowMarginChanges = false) {
   return QString("%1x%2").arg(active.getPagesNumHoriz()).arg(active.getPagesNumVert())
              == QString::fromStdString(source.plotViewName)
-      && (allowLeftMarginChange || active.getMarginLeftMm() == source.marginLeft)
-      && active.getMarginTopMm() == source.marginTop
-      && active.getMarginRightMm() == source.marginRight
-      && active.getMarginBottomMm() == source.marginBottom
+      && (allowMarginChanges || active.getMarginLeftMm() == source.marginLeft)
+      && (allowMarginChanges || active.getMarginTopMm() == source.marginTop)
+      && (allowMarginChanges || active.getMarginRightMm() == source.marginRight)
+      && (allowMarginChanges || active.getMarginBottomMm() == source.marginBottom)
       && active.getPaperWidthMm() == source.paperWidth
       && active.getPaperHeightMm() == source.paperHeight
       && active.getCustomPrintScaleDrawingUnitsDenominator() == source.drawingUnits
@@ -1478,7 +1478,10 @@ bool isQualifiedAc1015PlotProfile(
 #ifdef LIBDXFRW_HAS_AC1015_PLOTSETTINGS_RAW_VERIFY
   if (!active || metadata.plotSettings().size() != 1u ||
       rawIndex >= metadata.rawObjects().size() ||
-      !std::isfinite(active->getMarginLeftMm()))
+      !std::isfinite(active->getMarginLeftMm()) ||
+      !std::isfinite(active->getMarginTopMm()) ||
+      !std::isfinite(active->getMarginRightMm()) ||
+      !std::isfinite(active->getMarginBottomMm()))
     return false;
   const auto &plot = metadata.plotSettings().front();
   const auto &raw = metadata.rawObjects()[rawIndex];
@@ -1496,7 +1499,10 @@ bool isQualifiedAc1015PlotProfile(
       (editedMargin && (raw.classAppName != "ODBX" || raw.classProxyFlag != 0 ||
                         raw.classWasProxy || raw.classEntityFlagRaw != 0x1F3)) ||
       !matchesImportedPlotSettings(*active, plot, editedMargin) ||
-      (active->getMarginLeftMm() != plot.marginLeft) != editedMargin)
+      ((active->getMarginLeftMm() != plot.marginLeft ||
+        active->getMarginTopMm() != plot.marginTop ||
+        active->getMarginRightMm() != plot.marginRight ||
+        active->getMarginBottomMm() != plot.marginBottom) != editedMargin))
     return false;
   std::size_t rawCount = 0;
   for (const auto &item : metadata.rawObjects())
@@ -16454,7 +16460,10 @@ bool RS_FilterDXFRW::prepareDwgExportAdmissionPlan() {
             index, DwgEditedPlotSettingsPlanRecord{
                        rawIt->second.index, raw.handle, raw.parentHandle,
                        raw.objectType, raw.bodyBitSize, raw.objectSize,
-                       raw.rawBytes, m_graphic->getPlotSettings()->getMarginLeftMm()});
+                       raw.rawBytes, m_graphic->getPlotSettings()->getMarginLeftMm(),
+                       m_graphic->getPlotSettings()->getMarginTopMm(),
+                       m_graphic->getPlotSettings()->getMarginRightMm(),
+                       m_graphic->getPlotSettings()->getMarginBottomMm()});
       } else {
         record.policy = DwgExportAdmissionPolicy::SameVersionRaw;
         record.relatedSourceHandle = settings.handle;
@@ -17217,7 +17226,10 @@ bool RS_FilterDXFRW::validateDwgExportAdmissionPlan(
     if (raw.handle != snapshot.handle || raw.parentHandle != snapshot.parentHandle ||
         raw.objectType != snapshot.objectType || raw.bodyBitSize != snapshot.bodyBitSize ||
         raw.objectSize != snapshot.objectSize || raw.rawBytes != snapshot.rawBytes ||
-        m_graphic->getPlotSettings()->getMarginLeftMm() != snapshot.marginLeft)
+        m_graphic->getPlotSettings()->getMarginLeftMm() != snapshot.marginLeft ||
+        m_graphic->getPlotSettings()->getMarginTopMm() != snapshot.marginTop ||
+        m_graphic->getPlotSettings()->getMarginRightMm() != snapshot.marginRight ||
+        m_graphic->getPlotSettings()->getMarginBottomMm() != snapshot.marginBottom)
       return false;
   }
   for (const auto &entry : plan.rawPlotSettingsRecordIndexes) {
@@ -23107,6 +23119,9 @@ void RS_FilterDXFRW::writeObjects() {
               return;
             }
             plotSettings.marginLeft = graphicPlotSettings->getMarginLeftMm();
+            plotSettings.marginTop = graphicPlotSettings->getMarginTopMm();
+            plotSettings.marginRight = graphicPlotSettings->getMarginRightMm();
+            plotSettings.marginBottom = graphicPlotSettings->getMarginBottomMm();
           } else {
             overlayActivePlotSettings(plotSettings, *graphicPlotSettings);
           }

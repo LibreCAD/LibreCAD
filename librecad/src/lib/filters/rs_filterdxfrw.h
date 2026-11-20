@@ -2764,6 +2764,9 @@ private:
     std::uint32_t objectSize;
     std::vector<std::uint8_t> rawBytes;
     double marginLeft;
+    double marginTop;
+    double marginRight;
+    double marginBottom;
   };
   struct DwgExportAdmissionPlan {
     DRW::Version version = DRW::UNKNOWNV;
