@@ -26,6 +26,8 @@
 
 #include<cstdlib>
 #include<cstring>
+#include<limits>
+#include<memory>
 #include<QRegularExpression>
 #include<QStringDecoder>
 
@@ -1862,51 +1864,24 @@ bool RS_FilterDXF1::readFileInBuffer(char* _name, int _bNum) {
 //         false: file not found
 //
 bool RS_FilterDXF1::readFileInBuffer(int _bNum) {
-    fPointer = fopen(name.toLatin1().data(), "rb");//RLZ verify with locales
-    if(fPointer) {
-        if(file.open(fPointer, QIODevice::ReadOnly)) {
-            constexpr int kMaxReadSize = 0x7FFFFFEF; // INT_MAX - 16
-            const qint64 fileSize = file.size();
-            if (fileSize < 0 || fileSize > kMaxReadSize) {
-                file.close();
-                fclose(fPointer);
-                fPointer = nullptr;
-                return false;
-            }
-            fSize = static_cast<unsigned>(fileSize);
-            if (_bNum == -1)
-                _bNum = static_cast<int>(fileSize);
-            if (_bNum < 0 || _bNum > kMaxReadSize) {
-                file.close();
-                fclose(fPointer);
-                fPointer = nullptr;
-                return false;
-            }
+    QFile input(name);
+    if (!input.open(QIODevice::ReadOnly)) return false;
 
-            fBuf = new char[_bNum+16];
+    constexpr int maxReadSize = std::numeric_limits<int>::max() - 16;
+    const qint64 fileSize = input.size();
+    if (fileSize < 0 || fileSize > maxReadSize || _bNum < -1 || _bNum > maxReadSize)
+        return false;
 
-            const qint64 bytesRead = file.read(fBuf, _bNum);
-            if (bytesRead < 0) {
-                delete[] fBuf;
-                fBuf = nullptr;
-                file.close();
-                fclose(fPointer);
-                fPointer = nullptr;
-                return false;
-            }
-            fSize = static_cast<unsigned>(bytesRead);
-            fBuf[bytesRead] = '\0';
-            file.close();
-        }
-        fclose(fPointer);
+    const int readSize = _bNum == -1 ? static_cast<int>(fileSize) : _bNum;
+    auto buffer = std::unique_ptr<char[]>(new char[readSize + 16]);
+    const qint64 bytesRead = input.read(buffer.get(), readSize);
+    if (bytesRead < 0) return false;
 
-        // Convert 13/10 to 10
-        dos2unix();
-		fPointer=nullptr;
-
-        return true;
-    }
-    return false;
+    buffer[bytesRead] = '\0';
+    fSize = static_cast<unsigned>(bytesRead);
+    fBuf = buffer.release();
+    dos2unix();
+    return true;
 }
 
 
