@@ -26,6 +26,8 @@
 
 #include<cstdlib>
 #include<cstring>
+#include<limits>
+#include<memory>
 #include<QRegularExpression>
 #include<QStringDecoder>
 
@@ -1862,28 +1864,24 @@ bool RS_FilterDXF1::readFileInBuffer(char* _name, int _bNum) {
 //         false: file not found
 //
 bool RS_FilterDXF1::readFileInBuffer(int _bNum) {
-    fPointer = fopen(name.toLatin1().data(), "rb");//RLZ verify with locales
-    if(fPointer) {
-        if(file.open(fPointer, QIODevice::ReadOnly)) {
-            fSize=file.size();
-            if(_bNum==-1)
-                _bNum=fSize;
+    QFile input(name);
+    if (!input.open(QIODevice::ReadOnly)) return false;
 
-            fBuf = new char[_bNum+16];
+    constexpr int maxReadSize = std::numeric_limits<int>::max() - 16;
+    const qint64 fileSize = input.size();
+    if (fileSize < 0 || fileSize > maxReadSize || _bNum < -1 || _bNum > maxReadSize)
+        return false;
 
-            file.read(fBuf, _bNum);
-            fBuf[_bNum] = '\0';
-            file.close();
-        }
-        fclose(fPointer);
+    const int readSize = _bNum == -1 ? static_cast<int>(fileSize) : _bNum;
+    auto buffer = std::unique_ptr<char[]>(new char[readSize + 16]);
+    const qint64 bytesRead = input.read(buffer.get(), readSize);
+    if (bytesRead < 0) return false;
 
-        // Convert 13/10 to 10
-        dos2unix();
-		fPointer=nullptr;
-
-        return true;
-    }
-    return false;
+    buffer[bytesRead] = '\0';
+    fSize = static_cast<unsigned>(bytesRead);
+    fBuf = buffer.release();
+    dos2unix();
+    return true;
 }
 
 
