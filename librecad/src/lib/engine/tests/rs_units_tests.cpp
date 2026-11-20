@@ -94,3 +94,13 @@ TEST_CASE("formatEngineering and formatFractional drop the sign of lengths that 
     CHECK(frac(-0.4) == "- 3/8");
     CHECK(frac(-1.5) == "- 1 1/2");
 }
+
+TEST_CASE("formatEngineering carries inches that round up to 12 into the feet", "[rs_units]") {
+    auto eng = [](double length, int prec) {
+        return RS_Units::formatEngineering(length, RS2::Inch, prec, false).toStdString();
+    };
+    CHECK(eng(23.999, 2) == "2'-0.00\"");
+    CHECK(eng(-23.999, 2) == "-2'-0.00\"");
+    CHECK(eng(11.9999, 2) == "1'-0.00\"");
+    CHECK(eng(23.999, 0) == "2'-0\"");
+}
