@@ -523,7 +523,9 @@ QString RS_Units::formatEngineering(const double length, const RS2::Unit unit, c
         ret = sInches + '"';
     }
 
-    return std::signbit(length) ? "-" + ret : ret;
+    // no sign when the length rounds to zero
+    const bool negative = std::signbit(length) && (feet > 0 || sInches.toDouble() != 0.0);
+    return negative ? "-" + ret : ret;
 }
 
 /**
@@ -623,8 +625,9 @@ QString RS_Units::formatFractional(const double length, [[maybe_unused]]RS2::Uni
 
     // Issue #2218: negative number support
     if (std::signbit(length)) {
-        const QString sign = std::signbit(length + RS_TOLERANCE) ? QString{"- "} : QString{};
-        return sign + formatFractional(std::abs(length), RS2::Inch, prec, false);
+        const QString magnitude = formatFractional(std::abs(length), RS2::Inch, prec, false);
+        // no sign when the length rounds to zero
+        return magnitude == "0" ? magnitude : "- " + magnitude;
     }
     // number of complete inches (num' 7/128")
     unsigned num = static_cast<unsigned>(std::abs(length));

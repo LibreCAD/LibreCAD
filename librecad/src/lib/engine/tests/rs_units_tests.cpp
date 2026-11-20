@@ -78,3 +78,19 @@ TEST_CASE("formatArchitectural keeps the sign of lengths below one foot", "[rs_u
     // rounds to zero, so no sign
     CHECK(arch(-0.01, RS2::Inch, 1) == "0\"");
 }
+
+TEST_CASE("formatEngineering and formatFractional drop the sign of lengths that round to zero", "[rs_units]") {
+    auto eng = [](double length) {
+        return RS_Units::formatEngineering(length, RS2::Inch, 2, false).toStdString();
+    };
+    auto frac = [](double length) {
+        return RS_Units::formatFractional(length, RS2::Inch, 2, false).toStdString();
+    };
+    CHECK(eng(-0.001) == "0.00\"");
+    CHECK(eng(-0.0) == "0.00\"");
+    CHECK(eng(-0.4) == "-0.40\"");
+    CHECK(eng(-18.0) == "-1'-6.00\"");
+    CHECK(frac(-0.001) == "0");
+    CHECK(frac(-0.4) == "- 3/8");
+    CHECK(frac(-1.5) == "- 1 1/2");
+}
