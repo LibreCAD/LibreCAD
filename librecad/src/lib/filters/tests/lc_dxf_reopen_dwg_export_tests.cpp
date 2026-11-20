@@ -36,6 +36,7 @@
 #include <filesystem>
 #include <fstream>
 #include <iterator>
+#include <sstream>
 #include <string>
 
 #include <QCoreApplication>
@@ -190,6 +191,100 @@ TEST_CASE("DXF import retains the default DIMSTYLE as a string for DWG export",
     reopened.initForNewDocument();
     REQUIRE(importFrom(reopened, output, RS2::FormatDWG));
     checkTheLine(reopened);
+    const std::string roundTrip = QDir(directory.path()).filePath("roundtrip.dxf").toStdString();
+    REQUIRE(exportTo(reopened, roundTrip, RS2::FormatDXFRW2000));
+    std::ifstream stream(roundTrip);
+    REQUIRE(stream.good());
+    const std::string text{std::istreambuf_iterator<char>(stream), {}};
+    std::istringstream pairs(text);
+    std::string code, value;
+    int toleranceGroups = 0;
+    while (std::getline(pairs, code) && std::getline(pairs, value)) {
+        if (QString::fromStdString(code).trimmed() == QStringLiteral("1001") &&
+            QString::fromStdString(value).trimmed() == QStringLiteral("ACAD_DSTYLE_DIMTALN"))
+            ++toleranceGroups;
+    }
+    CHECK(toleranceGroups == 1);
+    RS_Graphic dxfReopened;
+    dxfReopened.initForNewDocument();
+    REQUIRE(importFrom(dxfReopened, roundTrip, RS2::FormatDXFRW));
+    checkTheLine(dxfReopened);
+
+
+}
+
+TEST_CASE("DIMSTYLE source XDATA is emitted once and conflicts refuse safely",
+          "[dxf][dwg][filter][dimstyle-xdata-roundtrip]") {
+    ensureSettings();
+    QTemporaryDir directory;
+    REQUIRE(directory.isValid());
+    const QString input = QDir(directory.path()).filePath("source.dxf");
+    const std::string dwg = QDir(directory.path()).filePath("source.dwg").toStdString();
+    const QString output = QDir(directory.path()).filePath("output.dxf");
+    {
+        QFile file(input);
+        REQUIRE(file.open(QIODevice::WriteOnly));
+        const QByteArray dxf("0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1015\n"
+                             "0\nENDSEC\n0\nSECTION\n2\nENTITIES\n0\nLINE\n8\n0\n"
+                             "10\n1.25\n20\n2.5\n30\n0.0\n11\n12.5\n21\n7.5\n31\n0.0\n"
+                             "0\nENDSEC\n0\nEOF\n");
+        REQUIRE(file.write(dxf) == dxf.size());
+        REQUIRE(file.flush());
+    }
+    RS_Graphic drawing;
+    drawing.initForNewDocument();
+    REQUIRE(importFrom(drawing, input.toStdString(), RS2::FormatDXFRW));
+    drawing.onLoadingCompleted();
+    REQUIRE(exportTo(drawing, dwg, RS2::FormatDWG));
+    RS_Graphic reopened;
+    reopened.initForNewDocument();
+    REQUIRE(importFrom(reopened, dwg, RS2::FormatDWG));
+    reopened.onLoadingCompleted();
+    RS_FilterDXFRW writer;
+    REQUIRE(writer.fileExport(reopened, output, RS2::FormatDXFRW2000));
+    QFile written(output);
+    REQUIRE(written.open(QIODevice::ReadOnly));
+    const QByteArray originalBytes = written.readAll();
+    written.close();
+    std::istringstream pairs(originalBytes.toStdString());
+    std::string code, value;
+    int count = 0;
+    while (std::getline(pairs, code) && std::getline(pairs, value)) {
+        if (QString::fromStdString(code).trimmed() == QStringLiteral("1001") &&
+            QString::fromStdString(value).trimmed() == QStringLiteral("ACAD_DSTYLE_DIMTALN"))
+            ++count;
+    }
+    CHECK(count == 1);
+    RS_Graphic readback;
+    readback.initForNewDocument();
+    REQUIRE(importFrom(readback, output.toStdString(), RS2::FormatDXFRW));
+
+    auto& metadata = reopened.dwgAdvancedMetadata();
+    const auto* source = metadata.findDimStyleTableEntryByName("Standard");
+    REQUIRE(source != nullptr);
+    DRW_Dimstyle original(*source);
+    DRW_Dimstyle conflicting(original);
+    bool changed = false;
+    for (std::size_t i = 0; i + 2 < conflicting.extData.size(); ++i) {
+        const auto* app = conflicting.extData[i];
+        auto* adjustment = conflicting.extData[i + 2];
+        if (app && app->code() == 1001 && app->type() == DRW_Variant::STRING &&
+            app->content.s && *app->content.s == "ACAD_DSTYLE_DIMTALN" &&
+            adjustment && adjustment->code() == 1070 &&
+            adjustment->type() == DRW_Variant::INTEGER) {
+            *adjustment = DRW_Variant(1070, adjustment->i_val() == 0 ? 1 : 0);
+            changed = true;
+            break;
+        }
+    }
+    REQUIRE(changed);
+    metadata.addDimStyleTableEntry(conflicting);
+    CHECK_FALSE(writer.fileExport(reopened, output, RS2::FormatDXFRW2000));
+    REQUIRE(written.open(QIODevice::ReadOnly));
+    CHECK(written.readAll() == originalBytes);
+    written.close();
+    metadata.addDimStyleTableEntry(original);
+    CHECK(writer.fileExport(reopened, output, RS2::FormatDXFRW2000));
 }
 
 TEST_CASE("a drawing saved as DXF and opened again is saved as DWG",

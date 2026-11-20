@@ -21401,7 +21401,33 @@ void RS_FilterDXFRW::prepareDRWDimStyleLeader(DRW_Dimstyle &d,
 void RS_FilterDXFRW::prepareDRWDimStyleExtData(DRW_Dimstyle &d,
                                                const LC_DimStyle *ds) {
   auto tolerance = ds->latteralTolerance();
-  if (tolerance->checkModifyState(LC_DimStyle::LatteralTolerance::$DIMTALN)) {
+  // A source DIMSTYLE can already carry the exact group that the model would
+  // generate. Replay it once, but leave conflicting or extended groups for
+  // the strict writer to refuse rather than silently dropping source data.
+  bool sourceMatchesGeneratedTolerance = false;
+  if (const auto *source =
+          m_graphic->dwgAdvancedMetadata().findDimStyleTableEntryByName(d.name)) {
+    const auto &xdata = source->extData;
+    for (std::size_t i = 0; i < xdata.size(); ++i) {
+      const DRW_Variant *app = xdata[i];
+      if (app == nullptr || app->code() != 1001 ||
+          app->type() != DRW_Variant::STRING || app->content.s == nullptr ||
+          normalizeDwgTableName(*app->content.s) != "ACAD_DSTYLE_DIMTALN")
+        continue;
+      const bool exactEnd = i + 3 == xdata.size() ||
+          (i + 3 < xdata.size() && xdata[i + 3] != nullptr &&
+           xdata[i + 3]->code() == 1001);
+      if (i + 2 < xdata.size() && exactEnd && xdata[i + 1] != nullptr &&
+          xdata[i + 2] != nullptr && xdata[i + 1]->code() == 1070 &&
+          xdata[i + 1]->type() == DRW_Variant::INTEGER &&
+          xdata[i + 1]->i_val() == 392 && xdata[i + 2]->code() == 1070 &&
+          xdata[i + 2]->type() == DRW_Variant::INTEGER &&
+          xdata[i + 2]->i_val() == tolerance->adjustment())
+        sourceMatchesGeneratedTolerance = true;
+    }
+  }
+  if (tolerance->checkModifyState(LC_DimStyle::LatteralTolerance::$DIMTALN) &&
+      !sourceMatchesGeneratedTolerance) {
     try {
       if (!d.addExtData(
               std::make_unique<DRW_Variant>(1001, "ACAD_DSTYLE_DIMTALN")) ||
