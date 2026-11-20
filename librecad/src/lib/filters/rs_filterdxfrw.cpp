@@ -4288,7 +4288,7 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic &g, const QString &file,
     }
   } stackGuard{&m_xrefStack, thisFileAbs, stackInsertedSelf};
   // add some variables that need to be there for DXF drawings:
-  m_graphic->addVariable("$DIMSTYLE", "Standard", 2);
+  m_graphic->addVariable("$DIMSTYLE", QStringLiteral("Standard"), 2);
   m_dimStyle = "Standard";
   m_codePage = "ANSI_1252";
   m_textStyle = "Standard";

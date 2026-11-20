@@ -39,7 +39,10 @@
 #include <string>
 
 #include <QCoreApplication>
+#include <QDir>
+#include <QFile>
 #include <QString>
+#include <QTemporaryDir>
 
 #include "lc_dwgadvancedmetadata.h"
 #include "rs_filterdxfrw.h"
@@ -157,6 +160,37 @@ std::string dxfWithViewports(const std::string& records) {
 }
 
 } // namespace
+
+TEST_CASE("DXF import retains the default DIMSTYLE as a string for DWG export",
+          "[dxf][dwg][filter][dimstyle-default]") {
+    ensureSettings();
+    QTemporaryDir directory;
+    REQUIRE(directory.isValid());
+    const QString input = QDir(directory.path()).filePath("input.dxf");
+    const std::string output = QDir(directory.path()).filePath("output.dwg").toStdString();
+    {
+        QFile file(input);
+        REQUIRE(file.open(QIODevice::WriteOnly));
+        const std::string dxf = dxfWithViewports(viewportRecord("29", "*Active"));
+        const auto size = static_cast<qint64>(dxf.size());
+        REQUIRE(file.write(dxf.data(), size) == size);
+        REQUIRE(file.flush());
+    }
+    RS_Graphic drawing;
+    drawing.initForNewDocument();
+    REQUIRE(importFrom(drawing, input.toStdString(), RS2::FormatDXFRW));
+    const auto& variables = drawing.getVariableDict();
+    const auto style = variables.constFind("$DIMSTYLE");
+    REQUIRE(style != variables.cend());
+    CHECK(style->getType() == RS2::VariableString);
+    CHECK(style->getCode() == 2);
+    CHECK(style->getString() == QStringLiteral("Standard"));
+    REQUIRE(exportTo(drawing, output, RS2::FormatDWG));
+    RS_Graphic reopened;
+    reopened.initForNewDocument();
+    REQUIRE(importFrom(reopened, output, RS2::FormatDWG));
+    checkTheLine(reopened);
+}
 
 TEST_CASE("a drawing saved as DXF and opened again is saved as DWG",
           "[dxf][dwg][filter][vport]") {

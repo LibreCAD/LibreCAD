@@ -193,7 +193,7 @@ bool RS_FilterJWW::fileImport(RS_Graphic& g, const QString& file, RS2::FormatTyp
         // add some variables that need to be there for JWW drawings:
         if (graphic->getVariableString("$DIMSTYLE", "").isEmpty()) {
                 RS_DEBUG->print("RS_FilterJWW::fileImport: adding DIMSTYLE");
-                graphic->addVariable("$DIMSTYLE", "Standard", 2);
+                graphic->addVariable("$DIMSTYLE", QStringLiteral("Standard"), 2);
                 RS_DEBUG->print("RS_FilterJWW::fileImport: adding DIMSTYLE: OK");
         }
         RS_DEBUG->print("RS_FilterJWW::fileImport: adding variables: OK");
