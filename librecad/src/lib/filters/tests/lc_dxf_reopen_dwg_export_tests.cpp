@@ -369,6 +369,21 @@ TEST_CASE("DIMSTYLE source XDATA is emitted once and conflicts refuse safely",
     guarded.close();
     sourceNod->entries.pop_back();
     REQUIRE(writer.fileExport(tampered, guardedDwg, RS2::FormatDWG));
+    sourceNodPlot = std::find_if(sourceNod->entries.begin(), sourceNod->entries.end(),
+                                 [](const auto& entry) {
+        return entry.name == "ACAD_PLOTSETTINGS";
+    });
+    REQUIRE(sourceNodPlot != sourceNod->entries.end());
+    sourceNodPlot->name = "acad_plotsettings";
+    REQUIRE(guarded.open(QIODevice::ReadOnly));
+    const QByteArray beforeChangedName = guarded.readAll();
+    guarded.close();
+    CHECK_FALSE(writer.fileExport(tampered, guardedDwg, RS2::FormatDWG));
+    REQUIRE(guarded.open(QIODevice::ReadOnly));
+    CHECK(guarded.readAll() == beforeChangedName);
+    guarded.close();
+    sourceNodPlot->name = "ACAD_PLOTSETTINGS";
+    REQUIRE(writer.fileExport(tampered, guardedDwg, RS2::FormatDWG));
 
     // Deliberately corrupt the otherwise read-only source receipt to exercise
     // the wrong-owner guard; the underlying metadata object is mutable.

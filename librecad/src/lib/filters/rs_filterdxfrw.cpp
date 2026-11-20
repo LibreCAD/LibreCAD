@@ -1519,12 +1519,12 @@ bool isQualifiedAc1015PlotProfile(
           dictionary.replayState != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed)
         return false;
       for (const auto &entry : dictionary.entries) {
-        if (normalizeDwgTableName(entry.name) == "ACAD_GROUP") {
+        if (entry.name == "ACAD_GROUP") {
           ++nodGroupEntryCount;
           if (entry.handle != DRW::DwgAcadGroupDictionaryHandle)
             return false;
         }
-        if (normalizeDwgTableName(entry.name) == "ACAD_PLOTSETTINGS") {
+        if (entry.name == "ACAD_PLOTSETTINGS") {
           ++nodPlotEntryCount;
           if (entry.handle != plot.parentHandle)
             return false;
