@@ -3440,6 +3440,8 @@ public:
   void clear() {
     m_sourceDwgVersion = DRW::UNKNOWNV;
     m_rawObjects.clear();
+    m_plotRawSources.clear();
+    m_plotTypedSources.clear();
     m_dwgFramePublications.clear();
     m_dwgDictionaryMemberships.clear();
     m_dwgGroupMemberships.clear();
@@ -3593,7 +3595,23 @@ public:
     record.classMaintenanceVersion = object.m_classMaintenanceVersion;
     record.classUnknown1 = object.m_classUnknown1;
     record.classUnknown2 = object.m_classUnknown2;
+    if ((record.recordName == "PLOTSETTINGS" || record.className == "AcDbPlotSettings") &&
+        record.parentHandle == 0u && record.rawBytes.size() <= 4096u) {
+      const auto inserted = m_plotRawSources.emplace(record.handle, record);
+      if (!inserted.second)
+        inserted.first->second.handle = DRW::NoHandle;
+    }
     m_rawObjects.push_back(std::move(record));
+  }
+
+  const RawObjectRecord *plotRawSource(std::uint32_t handle) const {
+    const auto found = m_plotRawSources.find(handle);
+    return found == m_plotRawSources.end() ? nullptr : &found->second;
+  }
+
+  const DRW_PlotSettings *plotTypedSource(std::uint32_t handle) const {
+    const auto found = m_plotTypedSources.find(handle);
+    return found == m_plotTypedSources.end() ? nullptr : &found->second;
   }
 
   void addDwgFramePublication(const DRW_DwgFramePublication &publication) {
@@ -3750,6 +3768,11 @@ public:
   }
 
   void addPlotSettings(const DRW_PlotSettings &data) {
+    if (data.parentHandle == 0u && data.extData.empty() && data.appData.empty()) {
+      const auto inserted = m_plotTypedSources.emplace(data.handle, data);
+      if (!inserted.second)
+        inserted.first->second.handle = DRW::NoHandle;
+    }
     m_plotSettings.push_back(data);
     noteFamilyExposure("PLOTSETTINGS", data.handle,
                        static_cast<std::uint32_t>(data.parentHandle),
@@ -13357,6 +13380,8 @@ private:
 
   DRW::Version m_sourceDwgVersion = DRW::UNKNOWNV;
   std::vector<RawObjectRecord> m_rawObjects;
+  std::map<std::uint32_t, RawObjectRecord> m_plotRawSources;
+  std::map<std::uint32_t, DRW_PlotSettings> m_plotTypedSources;
   std::vector<DRW_DwgFramePublication> m_dwgFramePublications;
   std::vector<DRW_DwgDictionaryMembership> m_dwgDictionaryMemberships;
   std::vector<DRW_DwgDictionaryWithDefaultMembership>

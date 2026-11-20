@@ -33,6 +33,7 @@
 #include <algorithm>
 #include <cctype>
 #include <cstddef>
+#include <cstdlib>
 #include <filesystem>
 #include <fstream>
 #include <iterator>
@@ -678,4 +679,115 @@ TEST_CASE("a DXF that declares its viewports is saved as DWG",
 
     std::filesystem::remove(src);
     std::filesystem::remove(out);
+}
+
+TEST_CASE("ownerless plot records replay unchanged and reject edits safely",
+          "[dxf][dwg][filter][plotsettings][regression]") {
+    ensureSettings();
+    const Format dwg = GENERATE(from_range(std::begin(kDwgFormats), std::end(kDwgFormats)));
+    CAPTURE(dwg.m_name);
+    QTemporaryDir directory;
+    REQUIRE(directory.isValid());
+    const std::string source = QDir(directory.path()).filePath("source.dxf").toStdString();
+    const char *witnessDirectory = std::getenv("LIBRECAD_TEST_OWNERLESS_DWG_DIR");
+    const std::string initial = witnessDirectory && *witnessDirectory
+        ? QDir(QString::fromLocal8Bit(witnessDirectory))
+              .filePath(QString("lc-viewport-before-%1.dwg").arg(QString::fromLatin1(dwg.m_name))).toStdString()
+        : QDir(directory.path()).filePath("initial.dwg").toStdString();
+    const QString destination = QDir(directory.path()).filePath("destination.dwg");
+    std::ofstream(source, std::ios::binary) << dxfWithViewports(viewportRecord("29", "*Active"));
+    RS_Graphic drawing;
+    drawing.initForNewDocument();
+    REQUIRE(importFrom(drawing, source, RS2::FormatDXFRW));
+    if (!witnessDirectory || !*witnessDirectory)
+        REQUIRE(exportTo(drawing, initial, dwg.m_type));
+    RS_Graphic reopened;
+    reopened.initForNewDocument();
+    REQUIRE(importFrom(reopened, initial, RS2::FormatDWG));
+    auto &metadata = reopened.dwgAdvancedMetadata();
+    auto &raws = const_cast<std::vector<LC_DwgAdvancedMetadata::RawObjectRecord>&>(metadata.rawObjects());
+    auto raw = std::find_if(raws.begin(), raws.end(), [](const auto &record) {
+        return record.recordName == "PLOTSETTINGS";
+    });
+    REQUIRE(raw != raws.end());
+    if (raw->parentHandle != 0u)
+        SKIP("The selected codec generated a rooted plot record; supply an ownerless witness to exercise this path.");
+    const auto originalBytes = raw->rawBytes;
+    const auto originalHandle = raw->handle;
+    auto &plots = const_cast<std::vector<DRW_PlotSettings>&>(metadata.plotSettings());
+    REQUIRE(plots.size() == 1u);
+    auto &dictionaries = const_cast<std::vector<LC_DwgAdvancedMetadata::DictionaryRecord>&>(
+        metadata.dictionaries());
+    auto nod = std::find_if(dictionaries.begin(), dictionaries.end(), [](const auto &row) {
+        return row.handle == DRW::DwgNamedObjectsDictionaryHandle;
+    });
+    REQUIRE(nod != dictionaries.end());
+    auto *active = reopened.getPlotSettings();
+    REQUIRE(active != nullptr);
+    RS_FilterDXFRW writer;
+    const QByteArray sentinel("ownerless plot destination sentinel\n");
+    const auto refusesAndPreserves = [&]() {
+        QFile file(destination);
+        if (!file.open(QIODevice::WriteOnly | QIODevice::Truncate) || file.write(sentinel) != sentinel.size())
+            return false;
+        file.close();
+        if (writer.fileExport(reopened, destination, dwg.m_type) || !file.open(QIODevice::ReadOnly))
+            return false;
+        return file.readAll() == sentinel;
+    };
+    const auto retries = [&]() { return writer.fileExport(reopened, destination, dwg.m_type); };
+    raw->rawBytes.front() ^= 1u;
+    CHECK(refusesAndPreserves());
+    raw->rawBytes.front() ^= 1u;
+    REQUIRE(retries());
+    const double oldOrigin = plots.front().plotOriginX;
+    plots.front().plotOriginX += 1.0;
+    CHECK(refusesAndPreserves());
+    plots.front().plotOriginX = oldOrigin;
+    REQUIRE(retries());
+    const auto oldPlotViewHandle = plots.front().plotViewHandle;
+    plots.front().plotViewHandle.ref64 = std::uint64_t{1} << 32u;
+    CHECK(refusesAndPreserves());
+    plots.front().plotViewHandle = oldPlotViewHandle;
+    REQUIRE(retries());
+    plots.front().plotViewHandle.code = 6u;
+    CHECK(refusesAndPreserves());
+    plots.front().plotViewHandle = oldPlotViewHandle;
+    REQUIRE(retries());
+#ifdef LIBDXFRW_HAS_AC1015_PLOTSETTINGS_RAW_VERIFY
+    plots.front().plotViewHandle.rawCode = 6u;
+    CHECK(refusesAndPreserves());
+    plots.front().plotViewHandle = oldPlotViewHandle;
+    REQUIRE(retries());
+    plots.front().dwgEedAppIdReferences.push_back({0u, 0x12u});
+    CHECK(refusesAndPreserves());
+    plots.front().dwgEedAppIdReferences.clear();
+    REQUIRE(retries());
+#endif
+    const double oldMargin = active->getMarginLeftMm();
+    active->setMarginsInMm(oldMargin + 1.0, active->getMarginTopMm(),
+                           active->getMarginRightMm(), active->getMarginBottomMm());
+    CHECK(refusesAndPreserves());
+    active->setMarginsInMm(oldMargin, active->getMarginTopMm(),
+                           active->getMarginRightMm(), active->getMarginBottomMm());
+    REQUIRE(retries());
+    nod->entries.push_back({"ACAD_PLOTSETTINGS", originalHandle});
+    CHECK(refusesAndPreserves());
+    nod->entries.pop_back();
+    REQUIRE(retries());
+    RS_Graphic result;
+    result.initForNewDocument();
+    REQUIRE(importFrom(result, destination.toStdString(), RS2::FormatDWG));
+    const auto &outputRaw = result.dwgAdvancedMetadata().rawObjects();
+    const auto output = std::find_if(outputRaw.begin(), outputRaw.end(), [originalHandle](const auto &record) {
+        return record.handle == originalHandle && record.recordName == "PLOTSETTINGS";
+    });
+    REQUIRE(output != outputRaw.end());
+    CHECK(output->rawBytes == originalBytes);
+    CHECK(output->parentHandle == 0u);
+    // Removing a duplicate later must not turn an ambiguous import into a
+    // trusted single-source profile.
+    metadata.addPlotSettings(plots.front());
+    plots.pop_back();
+    CHECK(refusesAndPreserves());
 }
