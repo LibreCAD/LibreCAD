@@ -66,7 +66,7 @@
 #include <QStringList>
 
 #include "drw_acis.h"
-#include "dwg_fixed_handles.h"
+#include "intern/dwg_fixed_handles.h"
 #include "dxf_format.h"
 #include "intern/dwgbufferw.h"
 #include "intern/dwgsafety.h"
