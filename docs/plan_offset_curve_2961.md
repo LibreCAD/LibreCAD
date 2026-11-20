@@ -59633,3 +59633,30 @@ LibreCAD DWG exports, reopening/auditing them with ODA, and checking geometry
 and native offset semantics. PR CI for the documentation-only follow-up at
 `de4e4979c266de40bc1a63351f130353c77e475f` was queued when this entry was
 written; poll this exact revision before recording it as green.
+
+## 1894. Export LibreCAD DWG Matrix and Retry Independent Readers (2026-11-20)
+
+A fresh CMake Release build of `librecad_offset_matrix_tests` completed
+successfully. The focused `[lc-offsetcurve][g-matrix][write][dwg]` selector
+passed all 5,858 assertions and emitted 12 actual LibreCAD DWGs: degree-1 and
+degree-3 native offsets in R2000, R2004, R2007, R2010, R2013, and R2018. The
+test also inspected each output and reopened it through LibreCAD, verifying
+native offset data and its source/spline semantics. Outputs are retained only
+under `/private/tmp/offset-2961-librecad-dwgs-20261120`.
+
+Independent-reader probes are mixed and do not close interoperability. The
+installed `dwgread` reports `SUCCESS` for all four R2000/R2004 outputs, but reports
+`Invalid num_pages 0` for R2007 and `bit_read_TU buffer overflow` for R2010,
+R2013, and R2018. Treat these as reader diagnostics, not evidence that the
+files are valid or invalid without a second independent parser. ODAFileConverter
+was visible as a running app in desktop inventory, but CUA could not attach to
+its window (`cgWindowNotFound`). Retrying its CLI on one of the freshly
+exported files still aborted before conversion (exit 134) with macOS pasteboard
+and `hiservices-xpcservice` errors. No ODA output was produced.
+
+This closes the previously missing **production and LibreCAD self-reopen**
+part of the export gate, but external DWG acceptance remains open. In
+particular, do not use the earlier 42-fixture ODA result as evidence for these
+outputs, and do not label R2007+ output interoperable until ODA or another
+independent CAD reader successfully consumes it. The visible source-picker
+test also remains open as recorded in section 1893.
