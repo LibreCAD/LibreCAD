@@ -6195,12 +6195,23 @@ TEST_CASE("T Trim Two action trims worker-created typed spline and spline-points
                 if (!close(a.weights[i], b.weights[i])) return false;
             return true;
         };
+        bool controlNetFallback = false;
         const auto sameGeometry = [&](const RS_Entity& expected, const RS_Entity& actual) {
             if (const auto* a = dynamic_cast<const LC_SplinePoints*>(&expected)) {
                 if (const auto* b = dynamic_cast<const LC_SplinePoints*>(&actual)) {
                     const auto& x = a->getData();
                     const auto& y = b->getData();
                     if (x.closed != y.closed) return false;
+                    if (controlNetFallback) {
+                        if (y.fitTangentsConstrained || !y.useControlPoints || y.cut)
+                            return false;
+                        const auto sourceControls = a->getControlPoints();
+                        const auto actualControls = b->getControlPoints();
+                        if (sourceControls.size() != actualControls.size()) return false;
+                        for (std::size_t i = 0; i < sourceControls.size(); ++i)
+                            if (!closeVector(sourceControls[i], actualControls[i])) return false;
+                        return true;
+                    }
                     if (x.closed && !x.cut && !x.useControlPoints && y.cut) {
                         const double sourceEnd = static_cast<double>(a->getSegmentCount());
                         const double actualEnd = static_cast<double>(b->getSegmentCount());
@@ -6244,6 +6255,16 @@ TEST_CASE("T Trim Two action trims worker-created typed spline and spline-points
                 if (!b) return false;
                 const auto& sourceData = a->getData();
                 const auto& loadedData = b->getData();
+                if (controlNetFallback) {
+                    if (loadedData.fitTangentsConstrained || loadedData.degree != 2)
+                        return false;
+                    const auto sourceControls = a->getControlPoints();
+                    if (sourceControls.size() != loadedData.controlPoints.size()) return false;
+                    for (std::size_t i = 0; i < sourceControls.size(); ++i)
+                        if (!closeVector(sourceControls[i], loadedData.controlPoints[i]))
+                            return false;
+                    return true;
+                }
                 if (sourceData.fitTangentsConstrained &&
                     (!loadedData.fitTangentsConstrained ||
                      !closeVector(sourceData.fitStartTangent, loadedData.fitStartTangent) ||
@@ -6308,6 +6329,10 @@ TEST_CASE("T Trim Two action trims worker-created typed spline and spline-points
         };
         for (std::size_t i = 0; i < formats.size(); ++i) {
             const bool dwg = formats[i] == RS2::FormatDWG || formats[i] == RS2::FormatDWG2018;
+            const auto* sourcePoints = dynamic_cast<const LC_SplinePoints*>(source);
+            controlNetFallback = sourcePoints &&
+                (sourcePoints->getData().closed || sourcePoints->getData().cut ||
+                 (dwg && sourcePoints->getData().fitTangentsConstrained));
             const auto file = std::filesystem::path(directory.filePath(
                 QStringLiteral("typed-spline-trim-two-%1-%2").arg(profile).arg(i) +
                     (dwg ? ".dwg" : ".dxf")).toStdString());

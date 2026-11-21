@@ -9313,9 +9313,9 @@ void RS_FilterDXFRW::addSpline(const DRW_Spline *data) {
   if (data->degree == 2 && !hasRationalSplineWeights(data) &&
       validSplinePointsLayout &&
       (!hasFitTangents || data->controllist.empty())) {
-    bool controlOnly = data->nfit == 0;
-
-    const LC_SplinePointsData d(splineClosed, controlOnly);
+    const bool controlOnly = data->nfit == 0;
+    LC_SplinePointsData d(splineClosed, false);
+    d.useControlPoints = controlOnly;
     const auto splinePoints = new LC_SplinePoints(m_currentContainer, d);
     applyImportedSplineAttributes(splinePoints, data, remaining);
 
@@ -33032,7 +33032,7 @@ void RS_FilterDXFRW::writeSplinePoints(LC_SplinePoints *s) {
   }
   const bool writeFitScenario = !data.useControlPoints && !data.cut &&
                                 fitPoints.size() >= 2 &&
-                                (!data.fitTangentsConstrained || m_dwgW) &&
+                                !data.fitTangentsConstrained &&
                                 !s->isClosed();
   sp.degree = 2;
   sp.nfit = writeFitScenario ? static_cast<std::int32_t>(fitPoints.size()) : 0;

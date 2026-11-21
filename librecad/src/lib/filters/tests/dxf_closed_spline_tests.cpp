@@ -1277,7 +1277,8 @@ TEST_CASE("DWG round-trips closed spline-points control geometry",
       auto* reopenedSpline = dynamic_cast<LC_SplinePoints*>(*reopened.begin());
       REQUIRE(reopenedSpline != nullptr);
       CHECK(reopenedSpline->isClosed());
-      CHECK(reopenedSpline->getData().cut);
+      CHECK(reopenedSpline->getData().useControlPoints);
+      CHECK_FALSE(reopenedSpline->getData().cut);
       std::vector<RS_Vector> reopenedCurve;
       for (int i = 0; i <= 500; ++i) {
         const double parameter =

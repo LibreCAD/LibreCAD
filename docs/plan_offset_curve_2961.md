@@ -60305,3 +60305,43 @@ This is Qt integration-test evidence for type switching, candidate binding,
 worker preparation, and source replacement; it is not visible packaged-app
 acceptance and does not prove candidate highlighting or cancellation in a
 native desktop session.
+
+## 1927. Preserve Tangent-constrained Spline Geometry in DWG (2026-11-21)
+
+Aligned `LC_SplinePoints` DWG export with the recorded independent ODA geometry
+comparison: tangent-constrained fit splines use the degree-2 control-net
+scenario rather than DWG fit-point scenario 2. The earlier scenario-2 output
+preserved authoring metadata but ODA-converted geometry differed by
+`0.05682145538738505` drawing units for the recorded profile. The control-net
+fallback preserves the exact evaluated control geometry for that case, while
+fit-point and endpoint-tangent authoring metadata are not represented in that
+DWG entity. DXF retains the supported fit scenario and its metadata. Do not
+generalize this tradeoff beyond the covered three-point constrained profile
+without new geometry comparisons.
+
+Fixed the corresponding import classification: a degree-2 SPLINE with no fit
+points is a control-point spline, not a cut spline. Previously `nfit == 0` was
+passed as the `cut` constructor argument, yielding the wrong semantic state
+after reopening scenario-1 control-net output. The reader now sets
+`useControlPoints` explicitly and leaves `cut` false.
+
+Updated the worker-created typed-spline Trim round-trip matrix to validate the
+format-aware fallback: compare exact control points and require loss of
+tangent/fit metadata only for the constrained DWG fallback; preserve and check
+the full metadata where the format lane supports it. The closed control-spline
+round-trip test likewise now asserts control-point mode and `cut == false`.
+
+Validation: `cmake --build /tmp/offset-2961-cmake-matrix --target
+librecad_tests -j4` passed. The focused regression command covering the
+tangent-constrained fallback, closed control spline, closed seam-cut spline,
+and worker-created typed spline passed **254,838 assertions across 4 test
+cases**. `git diff --check` passed before the roadmap update. A fresh ODA
+conversion could not be run: the desktop inventory showed ODAFileConverter as
+running, but attaching to its window failed with `cgWindowNotFound`; do not
+claim new ODA evidence from this slice. Existing ODA comparison evidence above
+is the rationale, not a re-run. The untracked editor lock file in the
+independent fixture directory is unrelated and intentionally untouched.
+
+Remaining gates are unchanged: visible packaged-app interaction, a successful
+source-bearing ODA/AutoCAD acceptance run, broader constrained-fit variants,
+and current PR publication/CI status. This slice does not complete the roadmap.
