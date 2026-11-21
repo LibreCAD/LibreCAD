@@ -338,7 +338,9 @@ calling any local result PR evidence.
 Section 1908 adds LibreDWG 0.14 parsing and R2004 round-trip evidence for the
 source-bearing ellipse fixture; extend independent parser coverage to the other
 source families without conflating it with ODA/AutoCAD acceptance.
-Section 1909 emits a nine-family R2018 DXF fixture, but LibreDWG 0.14's
+Section 1909 now verifies all nine typed source definitions through LibreCAD's
+R2018 DXF export and production import path, and emits that drawing as an
+external fixture. LibreDWG 0.14's
 `dxf2dwg` reports invalid hex members while converting schema-2 code-1004 EED
 and `dwgread -O JSON` returns truncated binary values. The same decode error
 occurs on the existing ODA-produced typed-source R2000 fixture, so this does
@@ -59991,17 +59993,20 @@ AutoCAD acceptance, rendered geometry, every source family, or the Properties
 interaction. Those gates remain open; the section 1907 ODA attachment failure
 is unchanged.
 
-## 1909. Emit All Supported Source Families for External Audit (2026-11-20)
+## 1909. Round-trip and Emit All Supported Source Families (2026-11-20)
 
-Extended the real worker-backed source-picker matrix test to optionally emit
-one native offset carrier for each of the nine supported source kinds in an
-R2018 DXF. Set `LIBRECAD_DWG_FIXTURE_DIR` to retain
-`offset-source-picker-all-families.dxf`. Fixture-only clones clear the copied
-source handle, avoiding artificial duplicate-handle warnings while keeping
-the embedded source definitions and caches unchanged. The focused case passes
-431 assertions; the complete source-picker selector passes 15,651 assertions
-across 46 cases. The R2018 DXF contains nine `LC_OFFSET_CURVE` markers and 14
-binary XDATA chunks, each no longer than the 127-byte group-1004 limit.
+Extended the real worker-backed source-picker matrix test to export one native
+offset carrier for each of the nine supported source kinds in R2018 DXF, reopen
+the drawing through LibreCAD's production DXF filter, and require exactly one
+carrier per kind with its canonical captured source geometry preserved. Set
+`LIBRECAD_DWG_FIXTURE_DIR` to retain
+`offset-source-picker-all-families.dxf` for independent inspection. Fixture-only
+clones clear the copied source handle, avoiding artificial duplicate-handle
+warnings while keeping embedded source definitions and caches unchanged. The
+focused case passes 495 assertions; the complete source-picker selector passes
+15,715 assertions across 46 cases. The generated R2018 DXF contains nine
+`LC_OFFSET_CURVE` markers and 14 binary XDATA chunks, each no longer than the
+127-byte group-1004 limit.
 
 LibreDWG 0.14 converts the fixture to R2004 DWG and parses nine carrier
 SPLINEs, but logs invalid hex members and reduces the schema-2 binary EED to
@@ -60009,7 +60014,8 @@ truncated values. The same error occurs converting the existing
 ODA-produced `typed-source-31-r2000.dxf` fixture, so this is not evidence of a
 LibreCAD encoding defect or of successful typed-source interoperability. The
 generated files are retained under `/private/tmp/offset-source-picker-fixture`
-for independent follow-up. R2004 output SHA-256 is
+for independent follow-up. This does not qualify LibreDWG as a schema-2
+round-trip validator. R2004 output SHA-256 is
 `419793de0d0c9062f5ddc3a9b95b634201f566b11d6dbb9472b270b3e5d27ef7`; source
 R2018 DXF SHA-256 is
 `fd6890f05b2842a79c3f402b8b8f0d173aa741d5e0bcd5e2b1c71b85dbe1ace8`.
