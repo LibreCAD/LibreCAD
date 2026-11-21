@@ -7790,6 +7790,23 @@ TEST_CASE("High-origin small-scale parabola worker refuses cache promotion",
         CHECK_FALSE(generated.curve);
         CHECK_FALSE(generated.changed);
         REQUIRE_FALSE(generated.ordinary.empty());
+        RS_SplineData cache;
+        CHECK(LC_OffsetWorkerSourceCache::combine(generated.ordinary, cache));
+        RS_Spline checked{nullptr, cache};
+        CHECK(checked.validate());
+        auto sourceEntity = definition.source.makeEntity();
+        REQUIRE(sourceEntity);
+        CHECK_FALSE(LC_OffsetWorkerTolerance::directOptions(definition, *sourceEntity).has_value());
+        const auto* worldParabola = std::get_if<LC_ParabolaData>(&definition.source.value);
+        REQUIRE(worldParabola);
+        auto localPoints = worldParabola->m_controlPoints;
+        const RS_Vector localOrigin = localPoints.front();
+        for (RS_Vector& point : localPoints) point -= localOrigin;
+        const LC_ParabolaData localParabolaData{localPoints};
+        LC_Parabola localParabola{nullptr, localParabolaData};
+        const LC_OffsetSourceDefinition localDefinition{
+            LC_OffsetSourceGeometry{localParabolaData}, signedDistance, 1e-4, false};
+        CHECK(LC_OffsetWorkerTolerance::directOptions(localDefinition, localParabola).has_value());
         CHECK_FALSE(completion.nativeSource(attributes));
         requestId++;
     }
