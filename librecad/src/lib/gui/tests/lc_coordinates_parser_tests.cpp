@@ -35,6 +35,7 @@
 #include "lc_coordinates_parser.h"
 #include "lc_graphicviewport.h"
 #include "rs_graphic.h"
+#include "rs_math.h"
 #include "rs_vector.h"
 
 namespace {
@@ -127,6 +128,38 @@ TEST_CASE("WCS polar input follows the drawing's angle base and direction", "[co
             const RS_Vector wcs = fixture.parse("!100<" + angle);
             const RS_Vector plain = fixture.parse("100<" + angle);
             checkPoint(wcs, plain.x, plain.y);
+        }
+    }
+}
+
+TEST_CASE("Polar input on an axis is exact", "[coordinates_parser]") {
+    ParserFixture fixture;
+    struct Case {
+        const char* angle;
+        double x;
+        double y;
+    };
+    for (const auto& [angle, x, y] : {Case{"0", 100., 0.}, Case{"90", 0., 100.}, Case{"180", -100., 0.},
+                                      Case{"270", 0., -100.}, Case{"360", 100., 0.}, Case{"-90", 0., -100.},
+                                      Case{"-180", -100., 0.}, Case{"-270", 0., 100.}, Case{"450", 0., 100.}}) {
+        for (const QString prefix : {"", "!", "@"}) {
+            const RS_Vector point = fixture.parse(prefix + "100<" + angle);
+            CAPTURE(prefix.toStdString(), angle, point.x, point.y);
+            // exact, not within a tolerance
+            CHECK(point.x == x);
+            CHECK(point.y == y);
+        }
+    }
+}
+
+TEST_CASE("Polar input off the axes matches RS_Vector::polar", "[coordinates_parser]") {
+    ParserFixture fixture;
+    for (const double degrees : {30., 45., 89.5, 135., 200., -135., 1000., 0.001}) {
+        const RS_Vector expected = RS_Vector::polar(100., RS_Math::deg2rad(degrees));
+        const QString angle = QString::number(degrees, 'g', 17);
+        for (const QString prefix : {"", "!", "@"}) {
+            CAPTURE(prefix.toStdString(), degrees);
+            checkPoint(fixture.parse(prefix + "100<" + angle), expected.x, expected.y);
         }
     }
 }

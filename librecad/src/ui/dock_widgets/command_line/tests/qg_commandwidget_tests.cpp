@@ -46,3 +46,20 @@ TEST_CASE("A long prompt leaves the command line panel as narrow as before",
     }
 }
 
+
+TEST_CASE("Typed coordinates are not reported as unknown commands", "[gui][command_line]") {
+    (void)lc::test::application();
+
+    // no action handler: nothing takes the input
+    QG_CommandWidget widget(nullptr, nullptr, "command_widget");
+    for (const char* coordinate : {"0,0", "@10,5", "100<-90", "@100<45", "!100<30", "!3,4"}) {
+        widget.teHistory->clear();
+        widget.handleCommand(QString::fromLatin1(coordinate));
+        CAPTURE(coordinate);
+        CHECK_FALSE(widget.teHistory->toPlainText().contains(QStringLiteral("Unknown command")));
+    }
+
+    widget.teHistory->clear();
+    widget.handleCommand(QStringLiteral("notacommand"));
+    CHECK(widget.teHistory->toPlainText().contains(QStringLiteral("Unknown command")));
+}

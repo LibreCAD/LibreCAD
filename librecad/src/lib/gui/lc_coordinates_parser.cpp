@@ -23,10 +23,35 @@
 
 #include "lc_coordinates_parser.h"
 
+#include <cmath>
+
 #include "lc_convert.h"
 #include "lc_graphicviewport.h"
 #include "rs_graphicview.h"
 #include "rs_math.h"
+
+namespace {
+/**
+ * RS_Vector::polar() that is exact on the axes: the angle is reduced to a
+ * quarter turn first, so 100<-90 is (0, -100) instead of (6.1e-15, -100).
+ */
+RS_Vector polarPoint(const double distance, const double angle) {
+    const double quarters = std::nearbyint(angle / M_PI_2);
+    const double rest = angle - quarters * M_PI_2;
+    const double along = distance * std::cos(rest);
+    const double across = distance * std::sin(rest);
+    switch ((static_cast<int>(std::fmod(quarters, 4.)) + 4) % 4) {
+        case 1:
+            return {-across, along};
+        case 2:
+            return {-along, -across};
+        case 3:
+            return {across, -along};
+        default:
+            return {along, across};
+    }
+}
+}
 
 LC_CoordinatesParser::LC_CoordinatesParser(RS_GraphicView* gview):m_graphicView{gview} {}
 
@@ -84,7 +109,7 @@ RS_CoordinateEvent LC_CoordinatesParser::parseCoordinate(const QString& inputStr
                 if (ok2) {
                     // the drawing's angle base and direction apply, the UCS does not
                     const double wcsAngle = toAbsUCSAngle(RS_Math::deg2rad(angleDegrees));
-                    const RS_Vector wcsCoordinate = RS_Vector::polar(distance, wcsAngle);
+                    const RS_Vector wcsCoordinate = polarPoint(distance, wcsAngle);
                     return RS_CoordinateEvent(wcsCoordinate);
                 }
             }
@@ -135,7 +160,7 @@ RS_CoordinateEvent LC_CoordinatesParser::parseCoordinate(const QString& inputStr
             if (ok1 && ok2) {
                 double ucsBasisAngleRad = RS_Math::deg2rad(ucsBasisAngleDegrees);
                 double ucsAngle = toAbsUCSAngle(ucsBasisAngleRad);
-                RS_Vector ucsCoordinate{RS_Vector::polar(ucsDistance, ucsAngle)};
+                RS_Vector ucsCoordinate{polarPoint(ucsDistance, ucsAngle)};
                 RS_Vector wcsCoordinate = toWCS(ucsCoordinate);
                 return RS_CoordinateEvent(wcsCoordinate);
             }
@@ -151,7 +176,7 @@ RS_CoordinateEvent LC_CoordinatesParser::parseCoordinate(const QString& inputStr
         if (ok1 && ok2) {
             double ucsBasisAngleRad = RS_Math::deg2rad(ucsBasisAngleDegrees);
             double ucsAngle = toAbsUCSAngle(ucsBasisAngleRad);
-            RS_Vector ucsOffset = RS_Vector::polar(ucsDistance, ucsAngle);
+            RS_Vector ucsOffset = polarPoint(ucsDistance, ucsAngle);
             const RS_Vector ucsRelZero = toUCS(m_graphicView->getViewPort()->getRelativeZero());
             const RS_Vector ucsCoordinate = ucsOffset + ucsRelZero;
             const RS_Vector& wcsCoordinate = toWCS(ucsCoordinate);
