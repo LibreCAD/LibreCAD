@@ -1571,8 +1571,12 @@ TEST_CASE("Native source picker filters and replaces every supported source fami
         REQUIRE_FALSE(error);
     }
 #ifdef DWGSUPPORT
-    const std::array<std::pair<RS2::FormatType, const char*>, 2> dwgLanes{{
+    const std::array<std::pair<RS2::FormatType, const char*>, 6> dwgLanes{{
         {RS2::FormatDWG, "offset-source-picker-all-families-r2000.dwg"},
+        {RS2::FormatDWG2004, "offset-source-picker-all-families-r2004.dwg"},
+        {RS2::FormatDWG2007, "offset-source-picker-all-families-r2007.dwg"},
+        {RS2::FormatDWG2010, "offset-source-picker-all-families-r2010.dwg"},
+        {RS2::FormatDWG2013, "offset-source-picker-all-families-r2013.dwg"},
         {RS2::FormatDWG2018, "offset-source-picker-all-families-r2018.dwg"}}};
     for (const auto& [format, fileName] : dwgLanes) {
         const auto dwgPath = output.file(fileName);
