@@ -60884,3 +60884,20 @@ isolation, which is not a substitute. The desktop ODA retry directories still
 contain no converted DXFs, so source-bearing ODA acceptance is unverified.
 Visible source-picker/replace/highlight GUI acceptance and external
 AutoCAD/ODA acceptance remain open. The roadmap is incomplete.
+
+## 1950. Reproduce the Remaining Offset Fast-lane Commands (2026-11-21)
+
+On the same local Release build used for section 1949, reran the four commands
+that follow CTest in `.github/workflows/dwg-dxf-verify.yml`. The adapter
+`[sync-api]` selector passed 299 assertions; the creation-worker selector
+passed 398 assertions across 14 cases; trim failure/cancellation recovery
+passed its 40 staging-failure combinations and conic controls; cache-check
+failure recovery passed all fixtures across 1,470 allocation-injection
+points. No offset-specific failure reproduced in these commands.
+
+This narrows the local red CTest result to the single VXCONTROL round-trip
+case recorded in section 1949; the workflow stops at CTest, so these later
+commands cannot turn the remote job green. The plan remains incomplete until
+that out-of-scope baseline is resolved or explicitly accepted by the CI owner,
+and the interrupted broad sanitizer, visible GUI, and external
+source-bearing ODA/AutoCAD gates are closed.
