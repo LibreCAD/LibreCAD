@@ -1029,6 +1029,37 @@ private slots:
         }
     }
 
+    // Help > License shows the licences of the bundled fonts beside the GPLv2: the GPLv3 of
+    // WenQuanYi Micro Hei and the OFL of Noto Sans SC/TC.  The dialog is modal, so it is
+    // read from a timer, and closed after five seconds whatever it shows.
+    void licenseWindowListsBundledLicences()
+    {
+        QStringList names;
+        QStringList empty;
+        int ticks = 0;
+        QTimer answer;
+        connect(&answer, &QTimer::timeout, [&] {
+            ++ticks;
+            for (QWidget* widget : QApplication::topLevelWidgets()) {
+                auto* dialog = qobject_cast<QDialog*>(widget);
+                if (dialog == nullptr || !dialog->isVisible()) continue;
+                const auto* list = dialog->findChild<QListWidget*>("list");
+                if (list == nullptr && ticks < 500) continue;
+                answer.stop();
+                for (int i = 0; list != nullptr && i < list->count(); ++i) {
+                    names << list->item(i)->text();
+                    if (list->item(i)->whatsThis().trimmed().isEmpty()) empty << list->item(i)->text();
+                }
+                dialog->reject();
+                return;
+            }
+        });
+        answer.start(10);
+        QC_ApplicationWindow::getAppWindow()->invokeLicenseWindow();
+        QCOMPARE(names, QStringList({"readme", "GPLv2", "GPLv3", "OFL (Noto Sans SC/TC)"}));
+        QVERIFY2(empty.isEmpty(), qPrintable("empty: " + empty.join(", ")));
+    }
+
     void picBoxFieldCount()
     {
         QFETCH(QByteArray, record);
