@@ -60653,7 +60653,23 @@ captured because the failure did not reproduce in these isolated executions.
 A fresh broad retry was stopped during a prolonged profile before reaching a
 final summary and did not reproduce a new assertion in its captured log; it is
 not a pass. Keep the broad sanitizer order/timing stability gate open. Continue
-by running the exact prior `towardCentre` and cutter-order combination with
-diagnostic capture, then repeat the broad action selector without interrupting
-it. Visible GUI acceptance, a successful source-bearing ODA/AutoCAD run, and
+by running the pinned profile under the same preceding suite load that exposed
+the failure, then repeat the broad action selector without interrupting it.
+The exact isolated `towardCentre=true` and cutter-order runs are covered above.
+Visible GUI acceptance, a successful source-bearing ODA/AutoCAD run, and
 exact-head CI remain open; the overall plan is incomplete.
+
+## 1940. Preserve Trim Commit Cleanup for Unknown Exceptions (2026-11-21)
+
+Reviewing the new preview-diagnostic exception split caught a regression risk:
+the catch-all path for commit-mode Trim must continue to cancel an admitted
+worker and report that publication was refused, just as before diagnostics
+were added. Restored that behavior while keeping the preview-only diagnostic
+classification. No geometry, worker deadline, or successful publication path
+changed.
+
+The focused `[trim-worker-action-fault]` selector passes Release (2 cases,
+1,343 assertions) and ASan/UBSan (2 cases, 3,658 assertions). This closes the
+exception-handling regression introduced during diagnosis. The profile-34
+intermittent preview and broad sanitizer order/timing gate, visible GUI,
+source-bearing ODA/AutoCAD validation, and exact-head CI remain open.

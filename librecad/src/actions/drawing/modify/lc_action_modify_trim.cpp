@@ -602,7 +602,11 @@ void LC_ActionModifyTrim::beginNativeTrimWork(RS_Entity* target, RS_Entity* limi
         if (preview && qEnvironmentVariableIsSet("LC_OFFSET_TRIM_DIAGNOSTICS"))
             m_actionData->previewDiagnosticForTest = QStringLiteral("admission failed: unknown exception");
         if (!alive) return;
-        if (initiated && m_actionData->work == initiated) cancelNativePreview(initiated);
+        if (initiated && m_actionData->work == initiated) {
+            if (preview) cancelNativePreview(initiated); else cancelNativeTrim();
+        }
+        if (alive && !preview && currentTrimContext())
+            commandMessage(tr("Offset cache trim preparation failed; nothing changed"));
     }
 }
 
