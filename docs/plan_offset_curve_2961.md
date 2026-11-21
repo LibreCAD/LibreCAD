@@ -59935,3 +59935,18 @@ could not attach to a LibreCAD window. Keep the manual visible check open and
 use this fixture for the next valid desktop attempt. The local commit is not
 yet on PR #3193; the GitHub head remains the revision recorded in the current
 checkpoint.
+
+## 1907. Record Source-bearing ODA Round-trip Retry (2026-11-20)
+
+Attempted to extend the independent CAD check to the section 1906
+source-bearing fixture. The desktop inventory reports ODAFileConverter as
+running, but `cua.getApp("ODAFileConverter")` and selection by
+`/Applications/ODAFileConverter.app` both return `cgWindowNotFound`; no
+converter interaction or output file was observed. The SSH CLI path is not
+used because prior runs abort before processing in the logged-in macOS
+service context. No ODA result is claimed for the source-bearing fixture.
+Retry conversion when the converter window is attachable, then compare the
+source ELLIPSE, native SPLINE carrier, alternate ELLIPSE/LINE candidates, and
+the complete LibreCad XDATA payload after DWG and DXF conversion. Sections
+1900 and 1903-1904 remain the completed ODA audit for the separate 18-file
+degree-1/degree-3 offset plus LINE-control matrix.
