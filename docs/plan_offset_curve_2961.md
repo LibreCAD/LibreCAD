@@ -60141,3 +60141,20 @@ weights, knot multiplicities, closed/periodic topology, or all
 trim/conditioning profiles. Those remain separate family-by-variant rows.
 Visible GUI acceptance, source-bearing ODA/AutoCAD acceptance, and PR
 publication also remain open.
+
+## 1916. Qualify Mixed-bulge Polyline Source Persistence (2026-11-21)
+
+Added a picker/worker-backed typed-source test for an open polyline composed of
+a bulged semicircular arc followed by a line. The expected value is captured
+from the materialized source entity, because polyline materialization
+canonicalizes the arc parameterization; the selected source and every reopened
+file must then match that canonical geometry exactly. The profile passes R14,
+R2000, and R2018 DXF plus R2000 and R2018 DWG. Both DWGs independently pass
+LibreDWG JSON parsing and complete typed-source CBOR decode/re-encode checks.
+The focused test passes 104 assertions; the complete source-picker suite passes
+17,610 assertions across 48 cases.
+
+This qualifies one open mixed line/arc polyline source for typed persistence;
+it does not qualify closed or multi-bulge variants, seam/topology changes,
+all offset modes, or independent visual CAD acceptance. Those remain separate
+family-by-variant and external-acceptance work.
