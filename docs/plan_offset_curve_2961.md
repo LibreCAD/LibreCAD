@@ -60810,3 +60810,18 @@ The workflow is validated with the repository YAML parser and
 exact-head CI run is queued by the push. Independent broad sanitizer order
 stability, visible GUI acceptance, source-bearing ODA/AutoCAD acceptance, and
 the overall roadmap remain open.
+
+## 1947. Retry Source-bearing ODA Conversion After Desktop Launch (2026-11-21)
+
+After the user confirmed ODAFileConverter was open in the logged-in desktop
+session, retried the committed 18-file typed-source DWG matrix to ACAD2018 DXF
+using `scripts/oda-validate.sh` and a fresh output directory at
+`/private/tmp/PR3193-oda-retry-20261121`. The SSH-launched converter still
+aborted before conversion with macOS pasteboard and
+`com.apple.hiservices-xpcservice` connection errors (exit 134); no converted
+outputs were produced. This is an execution-context failure, not a DWG
+acceptance result. To close this gate, run the same conversion from the
+interactive desktop Terminal or ODA GUI and verify all 18 expected DXF outputs
+(including no `.err` files) before claiming external acceptance. Exact-head CI,
+broad sanitizer order/timing stability, physical GUI acceptance, and
+source-bearing ODA/AutoCAD validation remain open; the roadmap is incomplete.
