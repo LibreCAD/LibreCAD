@@ -60358,12 +60358,13 @@ control-point mode with no false cut flag, and compare every control point to
 the source curve. DXF lanes continue checking the fit-point and tangent source
 fields.
 
-The targeted test passes **28,367 assertions in one Catch2 case**; the CMake
-`librecad_tests` target rebuilds successfully. `git diff --check` is required
-before commit. This confirms these two longer, two-end-constrained profiles
-through the action workflow, not arbitrary fit counts/point layouts, one-end
-constraint action workflows, or semantic authoring-metadata retention on a
-standalone DWG SPLINE. The lower-level DWG writer matrix separately covers
+The targeted test passes **28,059 assertions in one Catch2 case**; the CMake
+`librecad_tests` target rebuilds successfully. Explicit point-count assertions
+ensure the new profiles cannot silently fall through to the existing broad
+profile initializer. This confirms these two longer, two-end-constrained
+profiles through the action workflow, not arbitrary fit counts/point layouts,
+one-end constraint action workflows, or semantic authoring-metadata retention
+on a standalone DWG SPLINE. The lower-level DWG writer matrix separately covers
 one-end tangent modes. DWG scenario-1 remains the geometry-preserving fallback
 documented in section 1927; no fresh ODA conversion was available in this
 slice.

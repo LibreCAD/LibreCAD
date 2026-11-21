@@ -5772,6 +5772,13 @@ TEST_CASE("T Trim Two action trims worker-created typed spline and spline-points
                                              {3.6, -1.8}, {-1.7, -3}}
                     : profile == 11
                     ? std::vector<RS_Vector>{{-4, 0}, {0, 3}, {4, 0}, {0, -3}}
+                    : profile == 36
+                        ? std::vector<RS_Vector>{{-4, 0}, {-2, 2.2}, {0, 3.1},
+                                                 {2, 2.2}, {4, 0}}
+                    : profile == 37
+                        ? std::vector<RS_Vector>{{-4, 0}, {-3, 1.5}, {-2, 2.5},
+                                                 {-1, 3.1}, {0, 3.3}, {1, 3.1},
+                                                 {2, 2.5}, {4, 0}}
                     : profile == 10
                     ? std::vector<RS_Vector>{{-5, 0}, {-4, 3}, {-1, 5}, {3, 4},
                                              {5, 0}, {3, -4}, {-1, -5}, {-4, -3}}
@@ -5783,13 +5790,6 @@ TEST_CASE("T Trim Two action trims worker-created typed spline and spline-points
                     : profile == 7
                         ? std::vector<RS_Vector>{{-4, 0}, {-2, 1.5}, {0, 2.2},
                                                  {2, 1.4}, {4, 0}}
-                    : profile == 36
-                        ? std::vector<RS_Vector>{{-4, 0}, {-2, 2.2}, {0, 3.1},
-                                                 {2, 2.2}, {4, 0}}
-                    : profile == 37
-                        ? std::vector<RS_Vector>{{-4, 0}, {-3, 1.5}, {-2, 2.5},
-                                                 {-1, 3.1}, {0, 3.3}, {1, 3.1},
-                                                 {2, 2.5}, {4, 0}}
                         : std::vector<RS_Vector>{{-4, 0}, {0, 3}, {4, 0}};
                 if (profile == 25 || profile == 26)
                     data.splinePoints = {{-4.0, -2.0}, {4.0, -2.0}, {0.0, 5.0}};
@@ -6003,6 +6003,9 @@ TEST_CASE("T Trim Two action trims worker-created typed spline and spline-points
             if (profile == 6 || profile == 36 || profile == 37) {
                 auto* fitted = dynamic_cast<LC_SplinePoints*>(source);
                 REQUIRE(fitted);
+                CHECK(fitted->getData().splinePoints.size() ==
+                      (profile == 6 ? 4u : profile == 36 ? 5u :
+                       profile == 37 ? 8u : 3u));
                 LC_CurveJet startJet;
                 LC_CurveJet endJet;
                 REQUIRE(fitted->tryEvaluateJet(0.0, LC_CurveEvaluationSide::Right, startJet));
