@@ -59709,3 +59709,30 @@ Validation on the rebuilt current source:
 ODAFileConverter was running after the user opened it, but the desktop control
 bridge still returned `cgWindowNotFound`; no ODA conversion was performed.
 External CAD acceptance and the visible source-picker interaction remain open.
+
+## 1897. Guard DWG Writer Matrix with LibreDWG Dictionary Parsing (2026-11-20)
+
+The R2007+ framing regression in section 1896 was not detectable by the
+writer's LibreCAD self-reopen check. Extended the application DWG writer
+matrix with an optional independent `dwgread -O JSON` check. When LibreDWG is
+available (or `DWGREAD` is set), every newly written native-offset and
+LINE-control DWG must decode root DICTIONARY handle `0xC`, its single entry,
+and the `ACAD_GROUP` name. Machines without LibreDWG retain the existing
+writer/self-reopen checks without failing due to a missing optional tool.
+
+Validation on the rebuilt CMake Release test target with
+`DWGREAD=/opt/homebrew/bin/dwgread`:
+
+- `[lc-offsetcurve][g-matrix][write][dwg]`: 5,930 assertions passed across
+  all 12 offset outputs and six DWG releases.
+- `[lc-offsetcurve][g-matrix][line-control][dwg]`: 802 assertions passed
+  across the six plain LINE control files.
+- The independent JSON assertions passed for all 18 generated outputs;
+  `git diff --check` passes.
+
+This pins independent structural parsing of the dictionary string stream. It
+does not establish complete DWG semantics, ODA/AutoCAD acceptance, or close
+the visible source-picker gate. The PR branch is still at `714011a08`: local
+push remains blocked by DNS resolution, while the connected GitHub integration
+returns 403 for repository writes. The local implementation and roadmap
+commits are preserved; do not report them as pushed.

@@ -3,6 +3,13 @@
 
 #include <QByteArray>
 #include <QCryptographicHash>
+#include <QJsonArray>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonParseError>
+#include <QProcess>
+#include <QStandardPaths>
+#include <QString>
 
 #include <algorithm>
 #include <array>
@@ -78,6 +85,42 @@ void preserveForExternalInspection(const Path &source, const std::string &fileNa
         std::filesystem::copy_options::overwrite_existing, error);
     REQUIRE(copied);
     REQUIRE_FALSE(error);
+}
+void checkLibreDwgRootDictionary(const Path &path) {
+#ifdef DWGSUPPORT
+    QString reader = qEnvironmentVariable("DWGREAD");
+    if (reader.isEmpty()) reader = QStandardPaths::findExecutable("dwgread");
+    if (reader.isEmpty()) return;
+
+    QProcess process;
+    process.start(reader, {"-O", "JSON", QString::fromStdString(path.string())});
+    REQUIRE(process.waitForStarted());
+    REQUIRE(process.waitForFinished(30000));
+    INFO(process.readAllStandardError().toStdString());
+    REQUIRE(process.exitStatus() == QProcess::NormalExit);
+    REQUIRE(process.exitCode() == 0);
+
+    QJsonParseError parseError;
+    const auto document = QJsonDocument::fromJson(
+        process.readAllStandardOutput(), &parseError);
+    REQUIRE(parseError.error == QJsonParseError::NoError);
+    REQUIRE(document.isObject());
+    const auto objects = document.object().value("OBJECTS").toArray();
+    const auto rootDictionary = std::find_if(
+        objects.cbegin(), objects.cend(), [](const QJsonValue &value) {
+            const auto object = value.toObject();
+            const auto handle = object.value("handle").toArray();
+            return object.value("object").toString() == "DICTIONARY"
+                && handle.size() == 3 && handle[0].toInt() == 0
+                && handle[1].toInt() == 1 && handle[2].toInt() == 12;
+        });
+    REQUIRE(rootDictionary != objects.cend());
+    const auto root = rootDictionary->toObject();
+    CHECK(root.value("numitems").toInt() == 1);
+    CHECK(root.value("items").toObject().contains("ACAD_GROUP"));
+#else
+    static_cast<void>(path);
+#endif
 }
 std::string boundedBytes(const Path &path) {
     std::ifstream in(path, std::ios::binary);
@@ -362,9 +405,12 @@ void writerRow(const Format &format, int degree, bool edited = false) {
     const Snapshot before(curve, graphic);
     const auto target = out.file(format.dwg ? "actual.dwg" : "actual.dxf");
     REQUIRE(lc::test::exportDrawing(graphic, target, format.app)); before.check();
-    if (format.dwg) preserveForExternalInspection(target,
-        "offset-" + std::string(format.release) + "-degree" + std::to_string(degree) +
-        (edited ? "-edited.dwg" : ".dwg"));
+    if (format.dwg) {
+        checkLibreDwgRootDictionary(target);
+        preserveForExternalInspection(target,
+            "offset-" + std::string(format.release) + "-degree" + std::to_string(degree) +
+            (edited ? "-edited.dwg" : ".dwg"));
+    }
     inspectSpline(target, format, curve.getData(), handTag(degree), distance);
     RS_Graphic reopened; load(reopened, target, format);
     native(reopened, edited ? 0 : degree, handTag(degree), distance);
@@ -385,8 +431,11 @@ void lineWriter(const Format &format) {
     line(graphic, "hand-ascii-line-control");
     const auto target = out.file(format.dwg ? "actual-line.dwg" : "actual-line.dxf");
     REQUIRE(lc::test::exportDrawing(graphic, target, format.app));
-    if (format.dwg) preserveForExternalInspection(target,
-        "offset-" + std::string(format.release) + "-line-control.dwg");
+    if (format.dwg) {
+        checkLibreDwgRootDictionary(target);
+        preserveForExternalInspection(target,
+            "offset-" + std::string(format.release) + "-line-control.dwg");
+    }
     const auto captured = inspect(target, format);
     REQUIRE(captured.lines.size() == 1); CHECK(captured.splines.empty()); CHECK(captured.ellipses == 0);
     appIds(captured, false); checkForeign(captured.lines.front().extData, "hand-ascii-line-control");
