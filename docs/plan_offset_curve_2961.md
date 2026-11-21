@@ -59837,3 +59837,22 @@ geometry against the originals, and it does not prove AutoCAD behavior. The
 packaged source-picker interaction and full independent semantic CAD checks
 remain open. The local PR commits are still not pushed because GitHub DNS is
 unavailable in this environment.
+
+## 1904. Compare ODA Offset XDATA and Spline Geometry (2026-11-20)
+
+Compared the original DWGs decoded by LibreDWG with the corresponding ODA
+ASCII-DXF outputs for all 12 degree-1/degree-3 offset files. The complete
+17-record `LibreCad` native-offset XDATA sequence matches in order and value,
+including typed source, origin/direction, radii/parameters, signed distance,
+and tolerances. Separately compared the SPLINE degree, full knot vector,
+ordered control points, and weights. Every field matches; numeric geometry is
+checked with relative tolerance `2e-13` and absolute tolerance `1e-14`.
+Combined with section 1900's Audit-enabled successful batch, this establishes
+independent ODA open/audit/conversion and preservation of the tested offset
+entity representation across the six DWG release families.
+
+Scope remains limited to the generated degree-1/degree-3 ellipse-source
+matrix and six LINE controls. It does not establish every source kind, DWG
+version-specific behavior beyond these fixtures, UI editability in ODA, or
+AutoCAD interoperability. The packaged LibreCAD source-picker interaction
+and PR push remain open.
