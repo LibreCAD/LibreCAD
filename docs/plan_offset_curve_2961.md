@@ -59925,8 +59925,8 @@ export helper retains the deterministic file at
 `offset-source-picker-visible_source-picker-visible.dxf`, SHA-256
 `078576a20e1e9524538c68850229a902886fa17ae07213e4366930bdabe22fc9`.
 
-The focused fixture case passes 26 assertions. The complete rebuilt
-`[gui][dialog][offsetcurve][source]` selection passes 15,627 assertions across
+The focused fixture case passes 30 assertions. The complete rebuilt
+`[gui][dialog][offsetcurve][source]` selection passes 15,631 assertions across
 46 cases. This is automated import/widget/worker integration, not visible
 desktop acceptance. LaunchServices rejected the temporary qmake bundle with
 `kLSNoExecutableErr` despite its executable being present; directly launching
