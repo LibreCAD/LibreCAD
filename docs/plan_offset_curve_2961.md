@@ -60105,3 +60105,19 @@ profile per source kind; it does not close other geometric variants, ODA or
 AutoCAD acceptance, visual rendering, or visible packaged-app interaction.
 The separate 18-file ODA audit remains the narrower degree-1/degree-3 ellipse
 source plus LINE-control matrix described in sections 1900 and 1903-1904.
+
+## 1914. Classify LibreDWG DWG-to-DXF Output Rejection (2026-11-20)
+
+Probed LibreDWG 0.14 `dwg2dxf --as r2018` on the generated all-family R2000
+DWG. The converter exits successfully, but the resulting DXF repeats the
+`BYBLOCK` and `BYLAYER` LTYPE records with the same names and handles. The
+source DWG's independently decoded object inventory contains exactly one of
+each (`0xF` and `0x10`). LibreCAD's production DXF importer rejects the
+converted file while validating the LTYPE table's unique handle/name mapping.
+This classifies the rejection as malformed duplicate table output from the
+independent converter, not a failure to decode the source DWG. Do not weaken
+the importer’s duplicate-symbol safeguards to accept ambiguous records; retry
+cross-converter DXF round-trip after LibreDWG fixes or when another independent
+writer is available. The optional conversion assertion was removed rather
+than making the test suite depend on this invalid converter output. The
+13-lane LibreCAD-generated DXF/DWG round-trip matrix remains green.
