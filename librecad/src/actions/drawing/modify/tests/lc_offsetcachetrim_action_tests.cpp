@@ -5735,7 +5735,7 @@ TEST_CASE("T Trim Two trims a worker-created high-origin ellipse offset",
 
 TEST_CASE("T Trim Two action trims worker-created typed spline and spline-points sources in both pick orders",
           "[gui][lc-offsetcurve][trim-action][typed-source][spline][fit-points][trim-two]") {
-    for (unsigned profile = 0; profile <= 38; ++profile)
+    for (unsigned profile = 0; profile <= 39; ++profile)
     for (const bool nativeFirst : {false, true}) {
         const bool fitPoints = profile >= 5;
         const bool splinePointsSource = profile == 2 || fitPoints;
@@ -5782,6 +5782,9 @@ TEST_CASE("T Trim Two action trims worker-created typed spline and spline-points
                     : profile == 38
                         ? std::vector<RS_Vector>{{0, 0}, {1, 4}, {3, 5},
                                                  {6, 2}, {8, 0}}
+                    : profile == 39
+                        ? std::vector<RS_Vector>{{-4, 0}, {-2, 2.2}, {0, 3.1},
+                                                 {2, 2.2}, {4, 0}}
                     : profile == 10
                     ? std::vector<RS_Vector>{{-5, 0}, {-4, 3}, {-1, 5}, {3, 4},
                                              {5, 0}, {3, -4}, {-1, -5}, {-4, -3}}
@@ -6004,7 +6007,8 @@ TEST_CASE("T Trim Two action trims worker-created typed spline and spline-points
                 data.controlPoints = {{-4, 0}, {0, 3}, {4, 0}};
             }
             source = new LC_SplinePoints(&f.graphic, data);
-            if (profile == 6 || profile == 36 || profile == 37 || profile == 38) {
+            if (profile == 6 || profile == 36 || profile == 37 || profile == 38 ||
+                profile == 39) {
                 auto* fitted = dynamic_cast<LC_SplinePoints*>(source);
                 REQUIRE(fitted);
                 CHECK(fitted->getData().splinePoints.size() ==
@@ -6017,7 +6021,8 @@ TEST_CASE("T Trim Two action trims worker-created typed spline and spline-points
                     LC_CurveEvaluationSide::Left, endJet));
                 LC_SplinePointsData fittedData = fitted->getData();
                 fittedData.fitTangentsConstrained = true;
-                fittedData.fitStartTangent = startJet.first;
+                fittedData.fitStartTangent = profile == 39
+                    ? RS_Vector{0.0, 0.0, 0.0} : startJet.first;
                 fittedData.fitEndTangent = profile == 38
                     ? RS_Vector{0.0, 0.0, 0.0} : endJet.first;
                 auto constrained = std::make_unique<LC_SplinePoints>(

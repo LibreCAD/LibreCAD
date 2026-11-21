@@ -60435,3 +60435,24 @@ not the whole sanitizer action matrix or broader curve/profile matrix. Visible
 application acceptance, successful source-bearing ODA/AutoCAD validation,
 broader family/profile coverage, remaining sanitizer action coverage, and
 final exact-head CI are still open; the overall roadmap is not complete.
+
+## 1931. Cover End-Only Tangent-Constrained Fit Splines in Trim Persistence (2026-11-21)
+
+Added a five-fit-point open spline profile with only its end tangent constrained
+to the worker-created typed-spline/SplinePoints Trim Two action matrix. It runs
+in both entity pick orders through worker generation, Trim preview/commit,
+undo/redo, and R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG save/reopen. The test
+requires the expected fit-point count and verifies constrained tangent and
+geometry persistence where supported, including the existing format-aware DWG
+control-net fallback.
+
+The focused Release matrix passes **33,935 assertions in 1 Catch2 case**. The
+same matrix under AddressSanitizer and UndefinedBehaviorSanitizer, using the
+bounded 10,000 ms test-only worker wait from section 1930, passes **111,495
+assertions in 1 case** without sanitizer diagnostics. `git diff --check` passes.
+
+This closes the specifically recorded end-only fit-tangent action-persistence
+gap. It does not close arbitrary fit-point layouts, other spline degree/weight
+profiles, visible application acceptance, a successful source-bearing
+ODA/AutoCAD run, the remaining sanitizer matrix, or final exact-head CI. The
+overall roadmap remains incomplete.
