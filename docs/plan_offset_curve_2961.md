@@ -329,11 +329,13 @@ candidate refresh, replacement, highlight, and cancellation using the
 resolvable fixture from section 1906; (3) extend independent CAD checks to
 other source families and record AutoCAD acceptance separately; (4) keep
 publishing each tested slice and verify PR state. Current local and remote PR
-branch head is `73dc21b6532263b1d67592d1de5eebd95ec558b9`; run
-`44872853669` has five `build_with_pixi` jobs pending across macOS, Linux,
-Linux ARM, and Windows. ODAFileConverter remains listed as running, but the
-desktop bridge returns `cgWindowNotFound`, so no external conversion result
-is available.
+branch head is `fe95d1a18b944697139d4fc1e3724c216f48fe86`; run
+`44872923603` has five `build_with_pixi` jobs pending across macOS, Linux,
+Linux ARM, and Windows. Section 1924's focused 4,968-assertion test and the
+single registered CTest pass; an exploratory all-tests binary run was stopped
+after sustained high-volume unrelated DWG diagnostics and is not counted as a
+pass. ODAFileConverter remains listed as running, but the desktop bridge
+returns `cgWindowNotFound`, so no external conversion result is available.
 ODAFileConverter is reported running, but the desktop bridge still returns
 `cgWindowNotFound`, so no source-bearing ODA conversion result is available.
 Visible packaged-app acceptance also remains open. Continue polling the
