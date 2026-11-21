@@ -60209,3 +60209,20 @@ This covers one cyclic start-vertex shift for one closed mixed-bulge loop. It
 does not claim generalized seam normalization, invariance across every segment
 ordering, or equivalence of arbitrary reparameterizations. Offset-kernel seam
 invariance and serialized source identity remain distinct contracts.
+
+## 1920. Qualify High-degree and Periodic Spline Source Persistence (2026-11-21)
+
+Expanded the rational spline source matrix with a degree-4 rational multispan
+profile containing a repeated interior knot and non-unit weights, and a
+degree-4 wrapped-closed spline. The test explicitly requires the latter's
+closed/periodic representation and checks source selection, worker preparation,
+exact canonical typed geometry, and reopen persistence through R14, R2000, and
+R2018 DXF plus R2000 and R2018 DWG. Both DWG lanes for every profile pass
+LibreDWG JSON parsing and typed-source CBOR decode/re-encode validation. The
+focused case passes 343 assertions; the complete source-picker selector passes
+18,093 assertions across 49 cases.
+
+This adds bounded degree-4 multispan rational and wrapped-closed profiles; it
+does not cover arbitrary degrees, knot multiplicities, weight conditioning,
+periodic rational splines, or all trim/offset conditioning. Those remain
+separate family-by-variant rows.

@@ -1626,7 +1626,7 @@ TEST_CASE("Native source picker filters and replaces every supported source fami
 #endif
 }
 
-TEST_CASE("Rational and nonuniform spline sources survive native DXF and DWG lanes",
+TEST_CASE("Rational, high-degree, and periodic spline sources survive native file lanes",
           "[gui][dialog][offsetcurve][source][typed][variant][rational-nurbs]") {
     RS_SplineData quarterCircle{2, false};
     quarterCircle.controlPoints = {{4, 0}, {4, 4}, {0, 4}};
@@ -1636,9 +1636,54 @@ TEST_CASE("Rational and nonuniform spline sources survive native DXF and DWG lan
     nonuniformCubic.controlPoints = {{-4, 0}, {-3, 4}, {0, -4}, {3, 4}, {4, 0}};
     nonuniformCubic.knotslist = {0, 0, 0, 0, .35, 1, 1, 1, 1};
     nonuniformCubic.weights = {1, .6, 1.4, .75, 1};
-    const std::array<LC_OffsetSourceGeometry, 2> profiles{{
+    const auto multiSpanRationalSpline = [](const std::size_t degree) {
+        RS_SplineData data;
+        data.degree = degree;
+        data.type = data.savedOpenType = RS_SplineData::SplineType::ClampedOpen;
+        const std::size_t count = degree + 4;
+        for (std::size_t i = 0; i < count; ++i) {
+            const double t = static_cast<double>(i) / static_cast<double>(count - 1);
+            data.controlPoints.emplace_back(8.0 * t,
+                2.5 * t * (1.0 - t) * (1.0 + 0.15 * (2.0 * t - 1.0)));
+            data.weights.push_back(0.6 + 0.9 * t);
+        }
+        data.knotslist.insert(data.knotslist.end(), degree + 1, 0.0);
+        data.knotslist.insert(data.knotslist.end(), {0.35, 0.65, 0.65});
+        data.knotslist.insert(data.knotslist.end(), degree + 1, 1.0);
+        return data;
+    };
+    const auto periodicHighDegreeSpline = [](const std::size_t degree) {
+        RS_SplineData data;
+        data.degree = degree;
+        data.type = data.savedOpenType = RS_SplineData::SplineType::ClampedOpen;
+        const std::size_t controls = degree + 3;
+        for (std::size_t i = 0; i < controls; ++i) {
+            const double angle = 2.0 * M_PI * static_cast<double>(i) /
+                                 static_cast<double>(controls);
+            data.controlPoints.emplace_back(10.0 * std::cos(angle),
+                                            7.0 * std::sin(angle));
+        }
+        data.weights.assign(controls, 1.0);
+        data.knotslist.insert(data.knotslist.end(), degree + 1, 0.0);
+        for (std::size_t i = 1; i <= controls - degree - 1; ++i)
+            data.knotslist.push_back(static_cast<double>(i) /
+                                     static_cast<double>(controls - degree));
+        data.knotslist.insert(data.knotslist.end(), degree + 1, 1.0);
+        RS_Spline spline{nullptr, data};
+        spline.setClosed(true);
+        REQUIRE(spline.validate());
+        return spline.getData();
+    };
+    const auto highDegree = multiSpanRationalSpline(4);
+    const auto periodic = periodicHighDegreeSpline(4);
+    REQUIRE(highDegree.degree == 4);
+    REQUIRE(periodic.degree == 4);
+    REQUIRE(periodic.isClosed());
+    const std::array<LC_OffsetSourceGeometry, 4> profiles{{
         LC_OffsetSourceGeometry{quarterCircle},
-        LC_OffsetSourceGeometry{nonuniformCubic}}};
+        LC_OffsetSourceGeometry{nonuniformCubic},
+        LC_OffsetSourceGeometry{highDegree},
+        LC_OffsetSourceGeometry{periodic}}};
     std::vector<QCborArray> expectedEncodings;
     for (const auto& profile : profiles) {
         REQUIRE(profile.isWellFormed());
