@@ -335,6 +335,9 @@ qualified. Local `HEAD` contains unpushed commits beyond the PR branch, and
 `github.com`.
 Retry publication when connectivity returns, then verify the remote head before
 calling any local result PR evidence.
+Section 1908 adds LibreDWG 0.14 parsing and R2004 round-trip evidence for the
+source-bearing ellipse fixture; extend independent parser coverage to the other
+source families without conflating it with ODA/AutoCAD acceptance.
 
 **Latest source-widget disposition (reconciled 2026-11-16):** The source
 widget contract is that a user can change the requested source type while
@@ -59958,3 +59961,24 @@ source ELLIPSE, native SPLINE carrier, alternate ELLIPSE/LINE candidates, and
 the complete LibreCad XDATA payload after DWG and DXF conversion. Sections
 1900 and 1903-1904 remain the completed ODA audit for the separate 18-file
 degree-1/degree-3 offset plus LINE-control matrix.
+
+## 1908. LibreDWG Round-trip of the Source-picker Fixture (2026-11-20)
+
+Used Homebrew LibreDWG 0.14 to convert the section 1906 AC1032 DXF fixture to
+R2004 DWG with `dxf2dwg --as r2004`, decode it with `dwgread -O JSON`, and
+export the result back to DXF. The JSON inventory contains one native SPLINE
+carrier, two ELLIPSE entities, and one LINE. The carrier EED decodes the full
+`LC_OFFSET_CURVE` schema-1 source record: source kind ELLIPSE, center, major
+axis, ratio, start/end parameters, closed flag, offset distance, tolerance,
+and terminal schema value. The decoded values match the input XDATA semantics;
+LibreDWG's DXF writer changes only numeric text formatting (for example,
+`0.69999999999999996` to `0.7`). Input SHA-256 is
+`078576a20e1e9524538c68850229a902886fa17ae07213e4366930bdabe22fc9`; generated
+DWG SHA-256 is
+`e4c072645c2fe434d3109e22eccd62fcf5747f1cea09c696e1d6c043fc4cff1b`.
+
+This is independent semantic parsing and one R2004 DWG round-trip for the
+source-bearing ellipse fixture. It does not validate an AC1032 DWG, ODA or
+AutoCAD acceptance, rendered geometry, every source family, or the Properties
+interaction. Those gates remain open; the section 1907 ODA attachment failure
+is unchanged.
