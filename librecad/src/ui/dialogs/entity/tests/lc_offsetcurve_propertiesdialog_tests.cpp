@@ -44,6 +44,7 @@
 #include "lc_propertieseditingwidget_ellipse.h"
 #include "lc_propertieseditingwidget_line.h"
 #include "lc_testsettingsisolation.h"
+#include "lc_filtertestsupport.h"
 #include "qc_applicationwindow.h"
 #include "qg_layerbox.h"
 #include "qg_widgetpen.h"
@@ -625,6 +626,89 @@ TEST_CASE("Native offset properties resolve, replace, and select a source ellips
     CHECK(clone->definition().basis.ratio == replacementData.ratio);
     CHECK(f.curve->definition().basis.center.x == 0);
     CHECK(sourceBox->currentData().toULongLong() == replacement->getId());
+}
+
+TEST_CASE("Exported source-picker drawing reopens with resolvable source candidates",
+          "[gui][dialog][offsetcurve][source][visible-fixture]") {
+    REQUIRE(lc::test::application() != nullptr);
+    REQUIRE(lc::test::ensureSettings());
+    lc::test::QuietLog quiet;
+    lc::test::OutputDirectory output{"offset-source-picker-visible"};
+
+    Graphic drawing;
+    drawing.initForNewDocument();
+    const RS_EllipseData sourceData{{0, 0}, {10, 0}, 0.7, 0.1, 1.2, false};
+    auto* originalSource = new RS_Ellipse(&drawing, sourceData);
+    drawing.addEntity(originalSource);
+    RS_Ellipse sourceForOffset{nullptr, sourceData};
+    auto created = LC_OffsetCurve::create(sourceForOffset, 0.5, false, {}, 1e-4);
+    REQUIRE(created);
+    drawing.addEntity(created.entity.release());
+    auto* alternateEllipse = new RS_Ellipse(nullptr,
+        RS_EllipseData{{18, 3}, {5, 0}, 0.8, 0.2, 1.4, false});
+    drawing.addEntity(alternateEllipse);
+    auto* alternateLine = new RS_Line(nullptr, RS_LineData{{-8, -4}, {-2, -4}});
+    drawing.addEntity(alternateLine);
+
+    const auto file = output.file("source-picker-visible.dxf");
+    REQUIRE(lc::test::exportDrawing(drawing, file, RS2::FormatDXFRW2018));
+
+    Graphic reopened;
+    reopened.initForNewDocument();
+    REQUIRE(lc::test::importDrawing(reopened, file, RS2::FormatDXFRW2018));
+    reopened.onLoadingCompleted();
+    LC_OffsetCurve* importedOffset = nullptr;
+    RS_Ellipse* importedSource = nullptr;
+    RS_Line* importedLine = nullptr;
+    for (RS_Entity* entity : reopened) {
+        if (entity->isDeleted()) continue;
+        if (entity->rtti() == RS2::EntityOffsetCurve) {
+            REQUIRE(importedOffset == nullptr);
+            importedOffset = dynamic_cast<LC_OffsetCurve*>(entity);
+        } else if (auto* ellipse = dynamic_cast<RS_Ellipse*>(entity)) {
+            if (ellipse->getData().center == sourceData.center &&
+                ellipse->getData().majorP == sourceData.majorP &&
+                ellipse->getData().ratio == sourceData.ratio &&
+                ellipse->getData().angle1 == sourceData.angle1 &&
+                ellipse->getData().angle2 == sourceData.angle2) importedSource = ellipse;
+        } else if (auto* line = dynamic_cast<RS_Line*>(entity)) {
+            if (line->getStartpoint() == RS_Vector{-8, -4} &&
+                line->getEndpoint() == RS_Vector{-2, -4}) importedLine = line;
+        }
+    }
+    REQUIRE(importedOffset);
+    REQUIRE(importedSource);
+    REQUIRE(importedLine);
+
+    lc::test::TestGraphicView view;
+    view.setDocument(&reopened);
+    std::unique_ptr<LC_OffsetCurve> editable(
+        static_cast<LC_OffsetCurve*>(importedOffset->clone()));
+    NativeWidget widget;
+    widget.setGraphicViewport(view.getViewPort());
+    widget.setEntity(editable.get());
+    auto* typeBox = widget.findChild<QComboBox*>("cbSourceType");
+    auto* sourceBox = widget.findChild<QComboBox*>("cbSource");
+    REQUIRE(typeBox);
+    REQUIRE(sourceBox);
+    REQUIRE(sourceBox->currentData().isValid());
+    CHECK(sourceBox->currentData().toULongLong() == importedSource->getId());
+    auto* selectSource = widget.findChild<QToolButton*>("tbSelectSource");
+    REQUIRE(selectSource);
+    CHECK(selectSource->isEnabled());
+
+    const int lineType = typeBox->findData(static_cast<int>(LC_OffsetSourceGeometry::Kind::Line));
+    REQUIRE(lineType >= 0);
+    typeBox->setCurrentIndex(lineType);
+    const int lineIndex = sourceBox->findData(QVariant::fromValue<qulonglong>(importedLine->getId()));
+    REQUIRE(lineIndex >= 0);
+    sourceBox->setCurrentIndex(lineIndex);
+    REQUIRE(widget.isPreparing());
+    awaitPreparation(widget);
+    REQUIRE(editable->sourceDefinition());
+    CHECK(editable->sourceDefinition()->source.kind() == LC_OffsetSourceGeometry::Kind::Line);
+    click(*selectSource);
+    CHECK(importedLine->getFlag(RS2::FlagSelected));
 }
 
 TEST_CASE("Native source picker changes family and replaces the source with a typed curve",
