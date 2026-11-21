@@ -2293,10 +2293,22 @@ else()
 endif()
 file(TO_CMAKE_PATH "${LC_PLUGIN_INSTALL_DIR}" LC_PLUGIN_INSTALL_DIR)
 
+option(LIBRECAD_USE_SYSTEM_LIBDXFRW
+       "Link a separately installed libdxfrw instead of the bundled source" OFF)
+if (LIBRECAD_USE_SYSTEM_LIBDXFRW)
+    find_package(libdxfrw 3.0 CONFIG REQUIRED)
+    list(REMOVE_ITEM SHARED_INCLUDES
+         libraries/libdxfrw/src libraries/libdxfrw/src/intern)
+    list(REMOVE_ITEM SHARED_SOURCES ${LIBDXFRW_ALL_FILES})
+endif()
+
 qt_add_library (librecad_lib STATIC
                 ${MUPARSER_SOURCES}
                 ${SHARED_SOURCES}
 )
+if (LIBRECAD_USE_SYSTEM_LIBDXFRW)
+    target_link_libraries(librecad_lib PUBLIC libdxfrw::libdxfrw)
+endif()
 # MUPARSER_STATIC, LC_VERSION and LC_PRERELEASE are already set for every
 # target by the add_compile_definitions() calls near the top of this file.
 # Repeating them here only gave them room to drift apart, and they did: this
@@ -2334,6 +2346,9 @@ target_include_directories(librecad_filter_compile_check PRIVATE
 target_link_libraries(librecad_filter_compile_check PRIVATE
     Qt6::Core Qt6::Widgets Qt6::Gui Qt6::PrintSupport Qt6::Svg Qt6::Network
 )
+if (LIBRECAD_USE_SYSTEM_LIBDXFRW)
+    target_link_libraries(librecad_filter_compile_check PRIVATE libdxfrw::libdxfrw)
+endif()
 target_compile_features(librecad_filter_compile_check PRIVATE cxx_std_17)
 target_compile_definitions(librecad_filter_compile_check PRIVATE
     DWGSUPPORT
@@ -2574,6 +2589,11 @@ install(FILES ${PLUGIN_QM_FILES}
     DESTINATION "${LIBRECAD_DATA_INSTALL_DIR}/qm" COMPONENT Resources)
 
 option (BUILD_TESTS "Build unit tests for LibreCAD" OFF)
+if (LIBRECAD_USE_SYSTEM_LIBDXFRW AND BUILD_TESTS)
+    message(FATAL_ERROR
+        "LibreCAD test targets require bundled libdxfrw internals; "
+        "set BUILD_TESTS=OFF when using LIBRECAD_USE_SYSTEM_LIBDXFRW")
+endif()
 option (LIBRECAD_REGISTER_FULL_TESTS
         "Register the complete LibreCAD test executable with CTest" OFF)
 option (LIBRECAD_REGISTER_INTEGRATION_TESTS

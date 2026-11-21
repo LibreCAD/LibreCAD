@@ -66,7 +66,7 @@
 #include <QStringList>
 
 #include "drw_acis.h"
-#include "dwg_fixed_handles.h"
+#include "intern/dwg_fixed_handles.h"
 #include "dxf_format.h"
 #include "intern/dwgbufferw.h"
 #include "intern/dwgsafety.h"
@@ -877,6 +877,197 @@ void overlayActivePlotSettings(DRW_PlotSettings &target,
   target.paperImageOriginY = source.getPaperImageOriginY();
 }
 
+// Raw replay is safe only while every PlotSettings field mapped into the
+// active graphic still equals the imported projection. Unmapped fields stay
+// in the retained source frame and are never overwritten here.
+bool matchesImportedPlotSettings(LC_PlotSettings &active,
+                                 const DRW_PlotSettings &source,
+                                 bool allowMarginChanges = false,
+                                 bool checkPageCount = true) {
+  return (!checkPageCount ||
+          QString("%1x%2").arg(active.getPagesNumHoriz()).arg(active.getPagesNumVert())
+             == QString::fromStdString(source.plotViewName))
+      && (allowMarginChanges || active.getMarginLeftMm() == source.marginLeft)
+      && (allowMarginChanges || active.getMarginTopMm() == source.marginTop)
+      && (allowMarginChanges || active.getMarginRightMm() == source.marginRight)
+      && (allowMarginChanges || active.getMarginBottomMm() == source.marginBottom)
+      && active.getPaperWidthMm() == source.paperWidth
+      && active.getPaperHeightMm() == source.paperHeight
+      && active.getCustomPrintScaleDrawingUnitsDenominator() == source.drawingUnits
+      && active.getCustomPrintScalePaperUnitsNumerator() == source.realWorldUnits
+      && active.getOriginOffsetXMm() == source.paperImageOriginX
+      && active.getOriginOffsetYMm() == source.paperImageOriginY
+      && active.getPlotWindowLowerLeftX() == source.windowMinX
+      && active.getPlotWindowLowerLeftY() == source.windowMinY
+      && active.getPlotWindowUpperRightX() == source.windowMaxX
+      && active.getPlotWindowUpperRightY() == source.windowMaxY
+      && active.getPlotType() == source.plotType
+      && active.getPlotLayoutFlag() == source.plotLayoutFlags
+      && active.getPlotPaperUnits() == source.paperUnits
+      && active.getPlotRotation() == source.plotRotation
+      && active.getStandardScaleType() == source.scaleType
+      && active.getShadePlotMode() == source.shadePlotMode
+      && active.getShadePlotResolutionMode() == source.shadePlotResLevel
+      && active.getShadePlotCustomDpi() == source.shadePlotCustomDPI
+      && active.getStandardScaleFactor() == source.scaleFactor
+      && active.getPaperImageOriginX() == source.paperImageOriginX
+      && active.getPaperImageOriginY() == source.paperImageOriginY
+      && active.getPaperSizeName() == QString::fromStdString(source.paperSize)
+      && active.getCurrentStyleName() == QString::fromStdString(source.currentStyleSheet);
+}
+
+bool sameRetainedPlotSettings(const DRW_PlotSettings &a, const DRW_PlotSettings &b) {
+#ifdef LIBDXFRW_HAS_AC1015_PLOTSETTINGS_RAW_VERIFY
+  if (a.plotViewHandle.rawCode != b.plotViewHandle.rawCode ||
+      a.shadePlotHandle.rawCode != b.shadePlotHandle.rawCode)
+    return false;
+#endif
+  return a.handle == b.handle && a.parentHandle == b.parentHandle &&
+      a.name == b.name && a.flags == b.flags && a.reactorCount() == b.reactorCount() &&
+      a.extensionDictionaryFlag() == b.extensionDictionaryFlag() &&
+      a.xDictHandle == b.xDictHandle && a.reactorHandles == b.reactorHandles &&
+      a.pageSetupName == b.pageSetupName && a.printerConfig == b.printerConfig &&
+      a.plotLayoutFlags == b.plotLayoutFlags && a.marginLeft == b.marginLeft &&
+      a.marginBottom == b.marginBottom && a.marginRight == b.marginRight &&
+      a.marginTop == b.marginTop && a.paperWidth == b.paperWidth &&
+      a.paperHeight == b.paperHeight && a.paperSize == b.paperSize &&
+      a.plotOriginX == b.plotOriginX && a.plotOriginY == b.plotOriginY &&
+      a.paperUnits == b.paperUnits && a.plotRotation == b.plotRotation &&
+      a.plotType == b.plotType && a.windowMinX == b.windowMinX &&
+      a.windowMinY == b.windowMinY && a.windowMaxX == b.windowMaxX &&
+      a.windowMaxY == b.windowMaxY && a.plotViewName == b.plotViewName &&
+      a.realWorldUnits == b.realWorldUnits && a.drawingUnits == b.drawingUnits &&
+      a.currentStyleSheet == b.currentStyleSheet && a.scaleType == b.scaleType &&
+      a.scaleFactor == b.scaleFactor && a.paperImageOriginX == b.paperImageOriginX &&
+      a.paperImageOriginY == b.paperImageOriginY && a.shadePlotMode == b.shadePlotMode &&
+      a.shadePlotResLevel == b.shadePlotResLevel &&
+      a.shadePlotCustomDPI == b.shadePlotCustomDPI &&
+      a.plotViewHandle.code == b.plotViewHandle.code &&
+      a.plotViewHandle.size == b.plotViewHandle.size &&
+      a.plotViewHandle.ref == b.plotViewHandle.ref &&
+      a.plotViewHandle.ref64 == b.plotViewHandle.ref64 &&
+      a.shadePlotHandle.code == b.shadePlotHandle.code &&
+      a.shadePlotHandle.size == b.shadePlotHandle.size &&
+      a.shadePlotHandle.ref == b.shadePlotHandle.ref &&
+      a.shadePlotHandle.ref64 == b.shadePlotHandle.ref64;
+}
+
+bool sameRetainedPlotRaw(const LC_DwgAdvancedMetadata::RawObjectRecord &a,
+                         const LC_DwgAdvancedMetadata::RawObjectRecord &b) {
+  return a.version == b.version && a.objectType == b.objectType &&
+      a.handle == b.handle && a.parentHandle == b.parentHandle &&
+      a.commonHandleDataValidated == b.commonHandleDataValidated &&
+      a.commonLinkEvidence == b.commonLinkEvidence && a.reactorHandles == b.reactorHandles &&
+      a.xDictHandle == b.xDictHandle && a.numReactors == b.numReactors &&
+      a.xDictFlag == b.xDictFlag && a.blockOwnerHandle == b.blockOwnerHandle &&
+      a.bodyBitSize == b.bodyBitSize && a.objectOffset == b.objectOffset &&
+      a.objectSize == b.objectSize && a.rawBytes == b.rawBytes &&
+      a.isEntity == b.isEntity && a.isCustomClass == b.isCustomClass &&
+      a.family == b.family && a.typedPayloadValidated == b.typedPayloadValidated &&
+      a.replayState == b.replayState && a.recordName == b.recordName &&
+      a.className == b.className && a.hasDataStorage == b.hasDataStorage &&
+      a.hasClassDefinition == b.hasClassDefinition && a.classProxyFlag == b.classProxyFlag &&
+      a.classAppName == b.classAppName && a.classWasProxy == b.classWasProxy &&
+      a.classEntityFlagRaw == b.classEntityFlagRaw && a.classDwgVersion == b.classDwgVersion &&
+      a.classMaintenanceVersion == b.classMaintenanceVersion &&
+      a.classUnknown1 == b.classUnknown1 && a.classUnknown2 == b.classUnknown2;
+}
+
+// Preserve the existing same-version raw replay for the ownerless default
+// PLOTSETTINGS records emitted by LibreCAD's bundled writer. This does not
+// qualify rooted plot dictionaries or permit changes to the imported settings.
+bool isLegacyOwnerlessPlotProfile(const LC_DwgAdvancedMetadata &metadata,
+                                 LC_PlotSettings *active,
+                                 std::size_t rawIndex, DRW::Version version) {
+  if (!active || rawIndex >= metadata.rawObjects().size() ||
+      metadata.plotSettings().size() != 1u)
+    return false;
+  const auto &raw = metadata.rawObjects()[rawIndex];
+  const auto &plot = metadata.plotSettings().front();
+  const auto *rawSource = metadata.plotRawSource(raw.handle);
+  const auto *plotSource = metadata.plotTypedSource(raw.handle);
+#ifdef LIBDXFRW_HAS_AC1015_PLOTSETTINGS_RAW_VERIFY
+  if (!plot.dwgEedAppIdReferences.empty() || !plot.dwgEedLayerReferences.empty() ||
+      (plot.plotViewHandle.rawCode != 0u &&
+       plot.plotViewHandle.rawCode != DRW::DwgHardPointer) ||
+      (plot.shadePlotHandle.rawCode != 0u &&
+       plot.shadePlotHandle.rawCode != DRW::DwgSoftPointer))
+    return false;
+#endif
+  if (raw.version != version || raw.isEntity || !raw.isCustomClass ||
+      !raw.hasClassDefinition || raw.recordName != "PLOTSETTINGS" ||
+      raw.className != "AcDbPlotSettings" || raw.handle == 0u ||
+      raw.handle == DRW::NoHandle || raw.handle != plot.handle || raw.parentHandle != 0u ||
+      plot.parentHandle != 0u || raw.numReactors != 0 ||
+      !raw.reactorHandles.empty() || !plot.reactorHandles.empty() ||
+      raw.xDictHandle != 0u || plot.xDictHandle != 0u || raw.hasDataStorage ||
+      plot.hasDataStorageBinaryData() || !plot.extData.empty() ||
+      !plot.appData.empty() || !plot.pendingAppIdResolutions.empty() ||
+      !plot.pendingLayerRefResolutions.empty() || plot.plotViewHandle.ref != 0u ||
+      plot.plotViewHandle.ref64 != 0u || plot.plotViewHandle.size != 0u ||
+      (plot.plotViewHandle.code != 0u && plot.plotViewHandle.code != DRW::DwgHardPointer) ||
+      plot.shadePlotHandle.ref != 0u || plot.shadePlotHandle.ref64 != 0u ||
+      plot.shadePlotHandle.size != 0u ||
+      (plot.shadePlotHandle.code != 0u && plot.shadePlotHandle.code != DRW::DwgSoftPointer) ||
+      raw.replayState != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed ||
+      LC_DwgAdvancedMetadata::rawReplayBlocker(raw) !=
+          LC_DwgAdvancedMetadata::ReplayBlocker::None ||
+      !rawSource || !plotSource || !sameRetainedPlotRaw(raw, *rawSource) ||
+      !sameRetainedPlotSettings(plot, *plotSource) ||
+      !matchesImportedPlotSettings(*active, plot, false, version <= DRW::AC1015) ||
+      (version > DRW::AC1015 &&
+       (!plot.plotViewName.empty() || active->getPagesNumHoriz() != 1 ||
+        active->getPagesNumVert() != 1)))
+    return false;
+  std::size_t rawCount = 0u, nodCount = 0u;
+  for (const auto &item : metadata.rawObjects())
+    if (item.handle == raw.handle) ++rawCount;
+  for (const auto &dictionary : metadata.dictionaries()) {
+    if (dictionary.handle == DRW::DwgNamedObjectsDictionaryHandle) {
+      ++nodCount;
+      if (!dictionary.typedPayloadComplete || dictionary.parentHandle != 0u ||
+          dictionary.cloning != 1 || dictionary.hardOwner != 0 ||
+          !dictionary.appData.empty() || !dictionary.extData.empty() ||
+          dictionary.numReactors != 0 || !dictionary.reactorHandles.empty() ||
+          dictionary.xDictHandle != 0u || dictionary.hasDsData ||
+          dictionary.replayState != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed ||
+          dictionary.entries.size() != 1u ||
+          dictionary.entries.front().name != "ACAD_GROUP" ||
+          dictionary.entries.front().handle != DRW::DwgAcadGroupDictionaryHandle)
+        return false;
+    }
+    for (const auto &entry : dictionary.entries)
+      if (entry.handle == raw.handle ||
+          normalizeDwgTableName(entry.name) == "ACAD_PLOTSETTINGS") return false;
+  }
+  return rawCount == 1u && nodCount == 1u;
+}
+
+// Return the start of the sole, exactly modeled DIMTALN application group.
+// Extra fields, duplicate groups and out-of-range values remain opaque.
+std::size_t exactDimstyleToleranceGroup(const DRW_Dimstyle &style) {
+  const auto &data = style.extData;
+  std::size_t found = data.size();
+  for (std::size_t i = 0; i < data.size(); ++i) {
+    const auto *app = data[i];
+    if (!app || app->code() != 1001 || app->type() != DRW_Variant::STRING ||
+        !app->content.s ||
+        normalizeDwgTableName(*app->content.s) != "ACAD_DSTYLE_DIMTALN")
+      continue;
+    if (found != data.size() || i + 2 >= data.size() || !data[i + 1] ||
+        !data[i + 2] || data[i + 1]->code() != 1070 ||
+        data[i + 1]->type() != DRW_Variant::INTEGER ||
+        data[i + 1]->i_val() != 392 || data[i + 2]->code() != 1070 ||
+        data[i + 2]->type() != DRW_Variant::INTEGER ||
+        data[i + 2]->i_val() < 0 || data[i + 2]->i_val() > 1 ||
+        (i + 3 < data.size() &&
+         (!data[i + 3] || data[i + 3]->code() != 1001)))
+      return data.size();
+    found = i;
+  }
+  return found;
+}
+
 bool restoreTableEntryExtData(
     DRW_TableEntry &destination,
     const std::vector<std::shared_ptr<DRW_Variant>> &source) {
@@ -1406,6 +1597,98 @@ rawObjectFromMetadata(const LC_DwgAdvancedMetadata::RawObjectRecord &record) {
   object.m_rawBytes = record.rawBytes;
   object.m_typedPayloadValidated = record.typedPayloadValidated;
   return object;
+}
+
+// Admit the bounded raw or edited profile only when the retained AC1015
+// frame and the source NOD/dictionary chain prove the selected object.
+bool isQualifiedAc1015PlotProfile(
+    const LC_DwgAdvancedMetadata &metadata, LC_PlotSettings *active,
+    std::size_t rawIndex, bool editedMargin) {
+#ifdef LIBDXFRW_HAS_AC1015_PLOTSETTINGS_RAW_VERIFY
+  if (!active || metadata.plotSettings().size() != 1u ||
+      rawIndex >= metadata.rawObjects().size() ||
+      !std::isfinite(active->getMarginLeftMm()) ||
+      !std::isfinite(active->getMarginTopMm()) ||
+      !std::isfinite(active->getMarginRightMm()) ||
+      !std::isfinite(active->getMarginBottomMm()))
+    return false;
+  const auto &plot = metadata.plotSettings().front();
+  const auto &raw = metadata.rawObjects()[rawIndex];
+  if (raw.version != DRW::AC1015 || raw.isEntity || !raw.isCustomClass ||
+      raw.handle == 0 || raw.parentHandle == 0 ||
+      raw.handle != plot.handle || raw.parentHandle != plot.parentHandle ||
+      !raw.commonHandleDataValidated || !plot.hasDwgCommonLinkTail() ||
+      raw.numReactors != 0 || !raw.reactorHandles.empty() ||
+      raw.xDictHandle != 0 || plot.xDictHandle != 0 || raw.hasDataStorage ||
+      !plot.extData.empty() ||
+      raw.replayState != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed ||
+      LC_DwgAdvancedMetadata::rawReplayBlocker(raw) !=
+          LC_DwgAdvancedMetadata::ReplayBlocker::None ||
+      !plot.matchesAc1015RawNoEed(rawObjectFromMetadata(raw)) ||
+      (editedMargin && (raw.classAppName != "ODBX" || raw.classProxyFlag != 0 ||
+                        raw.classWasProxy || raw.classEntityFlagRaw != 0x1F3)) ||
+      !matchesImportedPlotSettings(*active, plot, editedMargin) ||
+      ((active->getMarginLeftMm() != plot.marginLeft ||
+        active->getMarginTopMm() != plot.marginTop ||
+        active->getMarginRightMm() != plot.marginRight ||
+        active->getMarginBottomMm() != plot.marginBottom) != editedMargin))
+    return false;
+  std::size_t rawCount = 0;
+  for (const auto &item : metadata.rawObjects())
+    if (item.handle == raw.handle)
+      ++rawCount;
+  std::size_t ownerCount = 0;
+  std::size_t targetCount = 0;
+  std::size_t nodCount = 0;
+  std::size_t nodPlotEntryCount = 0;
+  std::size_t nodGroupEntryCount = 0;
+  for (const auto &dictionary : metadata.dictionaries()) {
+    if (dictionary.handle == DRW::DwgNamedObjectsDictionaryHandle) {
+      ++nodCount;
+      if (!dictionary.typedPayloadComplete || dictionary.parentHandle != 0 ||
+          dictionary.cloning != 1 || dictionary.hardOwner != 0 ||
+          dictionary.entries.size() != 2u || !dictionary.extData.empty() ||
+          !dictionary.appData.empty() || dictionary.numReactors != 0 ||
+          !dictionary.reactorHandles.empty() || dictionary.xDictHandle != 0 ||
+          dictionary.hasDsData ||
+          dictionary.replayState != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed)
+        return false;
+      for (const auto &entry : dictionary.entries) {
+        if (entry.name == "ACAD_GROUP") {
+          ++nodGroupEntryCount;
+          if (entry.handle != DRW::DwgAcadGroupDictionaryHandle)
+            return false;
+        }
+        if (entry.name == "ACAD_PLOTSETTINGS") {
+          ++nodPlotEntryCount;
+          if (entry.handle != plot.parentHandle)
+            return false;
+        }
+      }
+    }
+    if (dictionary.handle == plot.parentHandle) {
+      ++ownerCount;
+      if (dictionary.parentHandle != DRW::DwgNamedObjectsDictionaryHandle ||
+          !dictionary.typedPayloadComplete ||
+          dictionary.replayState != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed ||
+          dictionary.entries.size() != 1u ||
+          dictionary.entries.front().handle != plot.handle ||
+          dictionary.entries.front().name != plot.pageSetupName)
+        return false;
+    }
+    for (const auto &entry : dictionary.entries)
+      if (entry.handle == plot.handle)
+        ++targetCount;
+  }
+  return rawCount == 1u && ownerCount == 1u && targetCount == 1u &&
+         nodCount == 1u && nodPlotEntryCount == 1u && nodGroupEntryCount == 1u;
+#else
+  (void)metadata;
+  (void)active;
+  (void)rawIndex;
+  (void)editedMargin;
+  return false;
+#endif
 }
 
 bool rawCustomEntityOwnerFieldsAreReplayable(
@@ -4288,7 +4571,7 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic &g, const QString &file,
     }
   } stackGuard{&m_xrefStack, thisFileAbs, stackInsertedSelf};
   // add some variables that need to be there for DXF drawings:
-  m_graphic->addVariable("$DIMSTYLE", "Standard", 2);
+  m_graphic->addVariable("$DIMSTYLE", QStringLiteral("Standard"), 2);
   m_dimStyle = "Standard";
   m_codePage = "ANSI_1252";
   m_textStyle = "Standard";
@@ -12185,6 +12468,30 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
     m_exactColor = true;
   }
   m_dxfExportVersion = exportVersion;
+  // A modeled tolerance group must not be emitted beside an ambiguous
+  // retained group. Reject before the DXF writer opens the destination; the
+  // bundled codec does not enforce this group uniqueness itself.
+  for (const LC_DimStyle *style : *g.getDimStyleList()->getStylesList()) {
+    if (style == nullptr)
+      continue;
+    const auto *source =
+        g.dwgAdvancedMetadata().findDimStyleTableEntryByName(
+            style->getName().toStdString());
+    if (source == nullptr || exactDimstyleToleranceGroup(*source) != source->extData.size())
+      continue;
+    const bool hasToleranceGroup = std::any_of(
+        source->extData.begin(), source->extData.end(), [](const DRW_Variant *v) {
+          return v && v->code() == 1001 && v->type() == DRW_Variant::STRING &&
+              v->content.s &&
+              normalizeDwgTableName(*v->content.s) == "ACAD_DSTYLE_DIMTALN";
+        });
+    if (hasToleranceGroup &&
+        (style->isBaseStyle() || style->latteralTolerance()->checkModifyState(
+             LC_DimStyle::LatteralTolerance::$DIMTALN))) {
+      m_writeFailed = true;
+      return false;
+    }
+  }
   /**
    * fixme - sand - files - RESTORE!!! Under win, encodeName() prevents using
    * unicode file names!!! Due to that, blocks/files may be saved incorrectly if
@@ -16272,11 +16579,27 @@ bool RS_FilterDXFRW::prepareDwgExportAdmissionPlan() {
         duplicateRawPlotHandles.count(settings.handle) == 0 &&
         (!settings.hasDataStorageBinaryData() ||
          rawIt->second.hasDataStorage)) {
-      record.policy = DwgExportAdmissionPolicy::SameVersionRaw;
-      record.relatedSourceHandle = settings.handle;
-      plan.rawPlotSettingsRecordIndexes.emplace(settings.handle,
-                                                rawIt->second.index);
-      plan.rawPlotSettingsHandles.insert(settings.handle);
+      if (plan.version == DRW::AC1015 &&
+          isQualifiedAc1015PlotProfile(metadata, m_graphic->getPlotSettings(),
+                                       rawIt->second.index, true)) {
+        const auto &raw = metadata.rawObjects()[rawIt->second.index];
+        record.policy = DwgExportAdmissionPolicy::Typed;
+        record.relatedSourceHandle = settings.handle;
+        plan.editedPlotSettings.emplace(
+            index, DwgEditedPlotSettingsPlanRecord{
+                       rawIt->second.index, raw.handle, raw.parentHandle,
+                       raw.objectType, raw.bodyBitSize, raw.objectSize,
+                       raw.rawBytes, m_graphic->getPlotSettings()->getMarginLeftMm(),
+                       m_graphic->getPlotSettings()->getMarginTopMm(),
+                       m_graphic->getPlotSettings()->getMarginRightMm(),
+                       m_graphic->getPlotSettings()->getMarginBottomMm()});
+      } else {
+        record.policy = DwgExportAdmissionPolicy::SameVersionRaw;
+        record.relatedSourceHandle = settings.handle;
+        plan.rawPlotSettingsRecordIndexes.emplace(settings.handle,
+                                                  rawIt->second.index);
+        plan.rawPlotSettingsHandles.insert(settings.handle);
+      }
     } else if (settings.hasDataStorageBinaryData()) {
       record.policy = DwgExportAdmissionPolicy::Refuse;
       record.reason =
@@ -16323,6 +16646,16 @@ bool RS_FilterDXFRW::prepareDwgExportAdmissionPlan() {
                handle,
                entry.second.index,
                {}});
+  }
+  if (plan.rawPlotSettingsRecordIndexes.size() == 1u) {
+    const auto &entry = *plan.rawPlotSettingsRecordIndexes.begin();
+    if (isLegacyOwnerlessPlotProfile(metadata, m_graphic->getPlotSettings(),
+                                    entry.second, plan.version)) {
+      plan.ownerlessPlotSettings.emplace(entry.first,
+          DwgOwnerlessPlotSettingsPlanRecord{
+              entry.second, metadata.rawObjects()[entry.second],
+              metadata.plotSettings().front()});
+    }
   }
   for (std::uint32_t handle : invalidRawPlotHandles) {
     if (handle != 0 && typedPlotSettingsHandles.count(handle) != 0)
@@ -17021,6 +17354,23 @@ bool RS_FilterDXFRW::validateDwgExportAdmissionPlan(
     }
   }
   const auto &rawObjects = m_graphic->dwgAdvancedMetadata().rawObjects();
+  for (const auto &entry : plan.editedPlotSettings) {
+    const auto &snapshot = entry.second;
+    if (entry.first != 0 || snapshot.rawIndex >= rawObjects.size() ||
+        !isQualifiedAc1015PlotProfile(m_graphic->dwgAdvancedMetadata(),
+                                      m_graphic->getPlotSettings(), snapshot.rawIndex,
+                                      true))
+      return false;
+    const auto &raw = rawObjects[snapshot.rawIndex];
+    if (raw.handle != snapshot.handle || raw.parentHandle != snapshot.parentHandle ||
+        raw.objectType != snapshot.objectType || raw.bodyBitSize != snapshot.bodyBitSize ||
+        raw.objectSize != snapshot.objectSize || raw.rawBytes != snapshot.rawBytes ||
+        m_graphic->getPlotSettings()->getMarginLeftMm() != snapshot.marginLeft ||
+        m_graphic->getPlotSettings()->getMarginTopMm() != snapshot.marginTop ||
+        m_graphic->getPlotSettings()->getMarginRightMm() != snapshot.marginRight ||
+        m_graphic->getPlotSettings()->getMarginBottomMm() != snapshot.marginBottom)
+      return false;
+  }
   for (const auto &entry : plan.rawPlotSettingsRecordIndexes) {
     if (entry.second >= rawObjects.size())
       return false;
@@ -17035,6 +17385,18 @@ bool RS_FilterDXFRW::validateDwgExportAdmissionPlan(
         (record.hasDataStorage && !canReplayDwgDataStorage(record.handle))) {
       return false;
     }
+  }
+  for (const auto &entry : plan.ownerlessPlotSettings) {
+    const auto &snapshot = entry.second;
+    if (snapshot.rawIndex >= rawObjects.size() || metadata.plotSettings().size() != 1u ||
+        !isLegacyOwnerlessPlotProfile(metadata, m_graphic->getPlotSettings(),
+                                     snapshot.rawIndex, plan.version) ||
+        !sameRetainedPlotSettings(metadata.plotSettings().front(), snapshot.plot))
+      return false;
+    const auto &current = rawObjects[snapshot.rawIndex];
+    const auto &saved = snapshot.raw;
+    if (entry.first != saved.handle || !sameRetainedPlotRaw(current, saved))
+      return false;
   }
   return true;
 }
@@ -18603,6 +18965,40 @@ void RS_FilterDXFRW::writeDwgClasses() {
   }
   const bool emitNativePlotSettings =
       canRegisterCustomClassObjects && nativePlotSettingsCount != 0;
+  // Register the proven source NOD edge before class registration. Otherwise
+  // both raw replay and typed writes can emit an orphan PLOTSETTINGS dictionary.
+  std::uint32_t sourcePlotDictionary = 0;
+  if (!m_dwgExportAdmissionPlan.editedPlotSettings.empty()) {
+    sourcePlotDictionary =
+        m_dwgExportAdmissionPlan.editedPlotSettings.begin()->second.parentHandle;
+  } else if (!m_dwgExportAdmissionPlan.rawPlotSettingsRecordIndexes.empty()) {
+    const auto &raws = m_dwgExportAdmissionPlan.rawPlotSettingsRecordIndexes;
+    if (raws.size() != 1u) {
+      m_writeFailed = true;
+      m_dwgW->markDwgWriteFailure();
+      return;
+    }
+    const auto rawIndex = raws.begin()->second;
+    if (isQualifiedAc1015PlotProfile(metadata, m_graphic->getPlotSettings(),
+                                     rawIndex, false)) {
+      sourcePlotDictionary = metadata.rawObjects()[rawIndex].parentHandle;
+    } else if (m_dwgExportAdmissionPlan.ownerlessPlotSettings.count(raws.begin()->first) != 1u ||
+               resolveDwgWriteHandle(raws.begin()->first) != raws.begin()->first ||
+               !isLegacyOwnerlessPlotProfile(metadata, m_graphic->getPlotSettings(),
+                                             rawIndex, m_dwgW->getVersion())) {
+      m_writeFailed = true;
+      m_dwgW->markDwgWriteFailure();
+      return;
+    }
+  }
+  if (sourcePlotDictionary != 0 &&
+      (resolveDwgWriteHandle(sourcePlotDictionary) != sourcePlotDictionary ||
+       !m_dwgW->registerDwgNamedObjectDictionaryEntry(
+           "ACAD_PLOTSETTINGS", sourcePlotDictionary))) {
+    m_writeFailed = true;
+    m_dwgW->markDwgWriteFailure();
+    return;
+  }
   if (emitNativePlotSettings) {
     if (metadata.plotSettings().empty()) {
       if (!m_dwgW->registerPlotSettingsObjectClass())
@@ -18627,7 +19023,11 @@ void RS_FilterDXFRW::writeDwgClasses() {
           break;
         }
         std::uint16_t classNumber = 0;
+        const auto edited = m_dwgExportAdmissionPlan.editedPlotSettings.find(index);
         if (!m_dwgW->getDwgClassInstanceClass(outputHandle, classNumber) ||
+            (edited != m_dwgExportAdmissionPlan.editedPlotSettings.end() &&
+             (outputHandle != settings.handle ||
+              classNumber != edited->second.objectType)) ||
             !admitDwgClassFrameDescriptor(
                 DwgWriteSourceKind::Object, settings.handle, outputHandle,
                 classNumber, 0, m_dwgW->getVersion())) {
@@ -20973,7 +21373,20 @@ void RS_FilterDXFRW::writeDimstyles() {
         m_writeFailed = true;
         continue;
       }
-      if (!restoreTableEntryExtData(dst, sourceStyle->extData)) {
+      const auto toleranceIndex = exactDimstyleToleranceGroup(*sourceStyle);
+      const auto *tolerance = ds->latteralTolerance();
+      const bool emitTolerance = ds->isBaseStyle() ||
+          tolerance->checkModifyState(LC_DimStyle::LatteralTolerance::$DIMTALN);
+      std::unique_ptr<DRW_Dimstyle> updatedSource;
+      const auto *xdataSource = sourceStyle;
+      if (m_dxfW != nullptr && emitTolerance &&
+          toleranceIndex != sourceStyle->extData.size()) {
+        updatedSource = std::make_unique<DRW_Dimstyle>(*sourceStyle);
+        *updatedSource->extData[toleranceIndex + 2] =
+            DRW_Variant(1070, static_cast<int>(tolerance->adjustment()));
+        xdataSource = updatedSource.get();
+      }
+      if (!restoreTableEntryExtData(dst, xdataSource->extData)) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
                         "RS_FilterDXFRW: cannot restore DXF "
                         "DIMSTYLE XDATA");
@@ -21401,7 +21814,17 @@ void RS_FilterDXFRW::prepareDRWDimStyleLeader(DRW_Dimstyle &d,
 void RS_FilterDXFRW::prepareDRWDimStyleExtData(DRW_Dimstyle &d,
                                                const LC_DimStyle *ds) {
   auto tolerance = ds->latteralTolerance();
-  if (tolerance->checkModifyState(LC_DimStyle::LatteralTolerance::$DIMTALN)) {
+  // Reuse a sole, fully modeled source group. writeDimstyles updates its
+  // copied value; ambiguous or extended groups remain subject to refusal.
+  const auto *source =
+      m_graphic->dwgAdvancedMetadata().findDimStyleTableEntryByName(d.name);
+  const auto sourceIndex = source ? exactDimstyleToleranceGroup(*source) : 0;
+  const bool canReuseSourceTolerance = source &&
+      sourceIndex != source->extData.size() &&
+      (m_dxfW != nullptr ||
+       source->extData[sourceIndex + 2]->i_val() == tolerance->adjustment());
+  if (tolerance->checkModifyState(LC_DimStyle::LatteralTolerance::$DIMTALN) &&
+      !canReuseSourceTolerance) {
     try {
       if (!d.addExtData(
               std::make_unique<DRW_Variant>(1001, "ACAD_DSTYLE_DIMTALN")) ||
@@ -22184,8 +22607,8 @@ void RS_FilterDXFRW::writeObjects() {
     const bool canWriteDbColor = m_dwgW->getVersion() >= DRW::AC1018;
     const bool canWriteAssociativeObjects = m_dwgW->getVersion() >= DRW::AC1021;
     auto sanitizeDictionaryEntries =
-        [this, &metadata, &recordOptionalDrop, &recordRetainedReference,
-         &isLiveDwgWriteReference](DRW_Dictionary &dictionary) {
+        [this, &metadata, &referenceContext, &recordOptionalDrop,
+         &recordRetainedReference, &isLiveDwgWriteReference](DRW_Dictionary &dictionary) {
           std::vector<DRW_Dictionary::Entry> remapped;
           remapped.reserve(dictionary.m_entries.size());
           for (std::size_t ordinal = 0; ordinal < dictionary.m_entries.size();
@@ -22200,8 +22623,58 @@ void RS_FilterDXFRW::writeObjects() {
               return false;
             }
             std::uint32_t outputHandle = 0;
-            const DwgWriteReferenceStatus status =
+            DwgWriteSourceKind targetKind = DwgWriteSourceKind::Object;
+            DwgWriteReferenceStatus status =
                 resolveDwgWriteObjectHandle(entry.m_handle, &outputHandle);
+            if (isDwgRawPlotSettingsSelected(entry.m_handle)) {
+              const auto plan = m_dwgExportAdmissionPlan.rawPlotSettingsRecordIndexes.find(entry.m_handle);
+              const auto &plots = metadata.plotSettings();
+              if (m_dwgW->getVersion() != DRW::AC1015 ||
+                  plan == m_dwgExportAdmissionPlan.rawPlotSettingsRecordIndexes.end() ||
+                  plan->second >= metadata.rawObjects().size() || plots.size() != 1u ||
+                  dictionary.m_entries.size() != 1u) {
+                m_writeFailed = true;
+                return false;
+              }
+              const auto &raw = metadata.rawObjects()[plan->second];
+              const auto &plot = plots.front();
+              LC_PlotSettings *active = m_graphic->getPlotSettings();
+#ifdef LIBDXFRW_HAS_AC1015_PLOTSETTINGS_RAW_VERIFY
+              const bool sourceBytesMatch =
+                  plot.matchesAc1015RawNoEed(rawObjectFromMetadata(raw));
+#else
+              const bool sourceBytesMatch = false;
+#endif
+              std::uint16_t classNumber = 0;
+              bool classCommitted = false;
+              outputHandle = 0;
+              const auto rawIdentity = lookupDwgWriteIdentity(
+                  DwgWriteSourceKind::RawCarrier, entry.m_handle, &outputHandle);
+              if (!sourceBytesMatch ||
+                  !isQualifiedAc1015PlotProfile(metadata, active, plan->second, false) ||
+                  !raw.commonHandleDataValidated ||
+                  !plot.hasDwgCommonLinkTail() ||
+                  raw.version != DRW::AC1015 || raw.handle != plot.handle ||
+                  raw.parentHandle != plot.parentHandle ||
+                  raw.parentHandle != referenceContext.producerSourceHandle ||
+                  raw.reactorHandles != plot.reactorHandles || raw.numReactors != 0 ||
+                  !raw.reactorHandles.empty() || raw.xDictHandle != 0 ||
+                  plot.xDictHandle != 0 || raw.hasDataStorage || !plot.extData.empty() ||
+                  entry.m_name != plot.pageSetupName || outputHandle != entry.m_handle ||
+                  referenceContext.producerOutputHandle != raw.parentHandle ||
+                  !isDwgWriteOpaqueReferenceStable(raw.parentHandle) || !active ||
+                  !matchesImportedPlotSettings(*active, plot) ||
+                  rawIdentity != DwgWriteIdentityLookup::Committed ||
+                  !findDwgClassFrameAdmission(DwgWriteSourceKind::RawCarrier,
+                      raw.handle, outputHandle, classNumber, classCommitted) ||
+                  !classCommitted || classNumber < 500 ||
+                  classNumber != raw.objectType) {
+                m_writeFailed = true;
+                return false;
+              }
+              targetKind = DwgWriteSourceKind::RawCarrier;
+              status = DwgWriteReferenceStatus::Committed;
+            }
             if (!isLiveDwgWriteReference(status) || outputHandle == 0) {
               // A declared raw source object that is unavailable in the target
               // version is different from a genuinely dangling member. Do
@@ -22244,7 +22717,7 @@ void RS_FilterDXFRW::writeObjects() {
             }
             if (!recordRetainedReference(
                     entry.m_handle, outputHandle,
-                    DwgWriteSourceKind::Object, "DICTIONARY entry",
+                    targetKind, "DICTIONARY entry",
                     static_cast<std::uint32_t>(ordinal),
                     dictionary.dwgItemHandleCode(), true))
               return false;
@@ -22799,7 +23272,19 @@ void RS_FilterDXFRW::writeObjects() {
         }
         if (plotSettingsValid && overlayActiveSettings &&
             graphicPlotSettings != nullptr) {
-          overlayActivePlotSettings(plotSettings, *graphicPlotSettings);
+          if (sourceHandle != 0 &&
+              m_dwgExportAdmissionPlan.editedPlotSettings.count(0) != 0) {
+            if (!validateDwgExportAdmissionPlan(DwgOpaqueTableFailurePhase::Objects)) {
+              m_writeFailed = true;
+              return;
+            }
+            plotSettings.marginLeft = graphicPlotSettings->getMarginLeftMm();
+            plotSettings.marginTop = graphicPlotSettings->getMarginTopMm();
+            plotSettings.marginRight = graphicPlotSettings->getMarginRightMm();
+            plotSettings.marginBottom = graphicPlotSettings->getMarginBottomMm();
+          } else {
+            overlayActivePlotSettings(plotSettings, *graphicPlotSettings);
+          }
         }
         const bool wrote =
             plotSettingsValid &&
@@ -27931,6 +28416,17 @@ bool RS_FilterDXFRW::finalizeDwgWrite() {
     // output transaction.
     if (m_writeFailed)
       return false;
+    if (!m_dwgExportAdmissionPlan.ownerlessPlotSettings.empty()) {
+      if (!validateDwgExportAdmissionPlan(DwgOpaqueTableFailurePhase::Finalized))
+        return false;
+      for (const auto &entry : m_dwgExportAdmissionPlan.ownerlessPlotSettings) {
+        std::uint32_t output = 0u;
+        if (lookupDwgWriteIdentity(DwgWriteSourceKind::RawCarrier, entry.first,
+                                   &output) != DwgWriteIdentityLookup::Committed ||
+            output != entry.first)
+          return false;
+      }
+    }
     if (!validateDwgDataStorageReplayReceipts(m_dwgW->getVersion())) {
       RS_DEBUG->print(RS_Debug::D_WARNING,
                       "RS_FilterDXFRW: DWG DataStorage section receipts are "

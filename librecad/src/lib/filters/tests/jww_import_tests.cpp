@@ -327,6 +327,22 @@ int openDescriptors() {
 
 } // namespace
 
+TEST_CASE("JWW import stores its default DIMSTYLE as a string", "[jww-dimstyle]") {
+    ensureSettings();
+    const QString path = writeJww(QStringLiteral("dimstyle_fallback.jww"), "");
+    RS_Graphic graphic;
+    RS_FilterJWW filter;
+    const bool imported = filter.fileImport(graphic, path, RS2::FormatJWW);
+    QFile::remove(path);
+    REQUIRE(imported);
+    const auto& variables = graphic.getVariableDict();
+    const auto style = variables.constFind("$DIMSTYLE");
+    REQUIRE(style != variables.cend());
+    CHECK(style->getType() == RS2::VariableString);
+    CHECK(style->getCode() == 2);
+    CHECK(style->getString() == QStringLiteral("Standard"));
+}
+
 TEST_CASE("A JWW file with a line imports", "[jww][import]") {
     ensureSettings();
     const QString path = writeJww(QStringLiteral("jww_import_line.jww"), "");

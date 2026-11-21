@@ -90,7 +90,11 @@ public:
     AcDbAssocActionBody,
     AcDbEvalExpr,
     AcDbShHistoryNode,
-    AcShActionBody
+    AcShActionBody,
+    AcDbAssocValueDependency,
+    AcDbAssocDependencyBody,
+    AcDbAssoc2dConstraintGroup,
+    AcDbAssocVariable
   };
 
   enum class AssociativePrefixParseStatus {
@@ -2183,6 +2187,11 @@ public:
     size_t boundedCountOverflow = 0;
     size_t decodedHandleCount = 0;
     size_t decodedValueCount = 0;
+    // Append new counters to preserve offsets of existing diagnostic fields.
+    size_t assocValueDependency = 0;
+    size_t assocDependencyBody = 0;
+    size_t assoc2dConstraintGroup = 0;
+    size_t assocVariable = 0;
   };
 
   struct TableRecord {
@@ -3431,6 +3440,8 @@ public:
   void clear() {
     m_sourceDwgVersion = DRW::UNKNOWNV;
     m_rawObjects.clear();
+    m_plotRawSources.clear();
+    m_plotTypedSources.clear();
     m_dwgFramePublications.clear();
     m_dwgDictionaryMemberships.clear();
     m_dwgGroupMemberships.clear();
@@ -3584,7 +3595,23 @@ public:
     record.classMaintenanceVersion = object.m_classMaintenanceVersion;
     record.classUnknown1 = object.m_classUnknown1;
     record.classUnknown2 = object.m_classUnknown2;
+    if ((record.recordName == "PLOTSETTINGS" || record.className == "AcDbPlotSettings") &&
+        record.parentHandle == 0u && record.rawBytes.size() <= 4096u) {
+      const auto inserted = m_plotRawSources.emplace(record.handle, record);
+      if (!inserted.second)
+        inserted.first->second.handle = DRW::NoHandle;
+    }
     m_rawObjects.push_back(std::move(record));
+  }
+
+  const RawObjectRecord *plotRawSource(std::uint32_t handle) const {
+    const auto found = m_plotRawSources.find(handle);
+    return found == m_plotRawSources.end() ? nullptr : &found->second;
+  }
+
+  const DRW_PlotSettings *plotTypedSource(std::uint32_t handle) const {
+    const auto found = m_plotTypedSources.find(handle);
+    return found == m_plotTypedSources.end() ? nullptr : &found->second;
   }
 
   void addDwgFramePublication(const DRW_DwgFramePublication &publication) {
@@ -3741,6 +3768,11 @@ public:
   }
 
   void addPlotSettings(const DRW_PlotSettings &data) {
+    if (data.parentHandle == 0u && data.extData.empty() && data.appData.empty()) {
+      const auto inserted = m_plotTypedSources.emplace(data.handle, data);
+      if (!inserted.second)
+        inserted.first->second.handle = DRW::NoHandle;
+    }
     m_plotSettings.push_back(data);
     noteFamilyExposure("PLOTSETTINGS", data.handle,
                        static_cast<std::uint32_t>(data.parentHandle),
@@ -10594,6 +10626,14 @@ public:
       return "AcDbShHistoryNode";
     case AssociativePrefixKind::AcShActionBody:
       return "AcShActionBody";
+    case AssociativePrefixKind::AcDbAssocValueDependency:
+      return "AcDbAssocValueDependency";
+    case AssociativePrefixKind::AcDbAssocDependencyBody:
+      return "AcDbAssocDependencyBody";
+    case AssociativePrefixKind::AcDbAssoc2dConstraintGroup:
+      return "AcDbAssoc2dConstraintGroup";
+    case AssociativePrefixKind::AcDbAssocVariable:
+      return "AcDbAssocVariable";
     }
     return "unknown";
   }
@@ -12383,6 +12423,16 @@ private:
       return AssociativePrefixKind::AcDbShHistoryNode;
     case DRW_AssociativePrefixStatus::Kind::AcShActionBody:
       return AssociativePrefixKind::AcShActionBody;
+#ifdef LIBDXFRW_HAS_EXTENDED_ASSOCIATIVE_PREFIX_KINDS
+    case DRW_AssociativePrefixStatus::Kind::AcDbAssocValueDependency:
+      return AssociativePrefixKind::AcDbAssocValueDependency;
+    case DRW_AssociativePrefixStatus::Kind::AcDbAssocDependencyBody:
+      return AssociativePrefixKind::AcDbAssocDependencyBody;
+    case DRW_AssociativePrefixStatus::Kind::AcDbAssoc2dConstraintGroup:
+      return AssociativePrefixKind::AcDbAssoc2dConstraintGroup;
+    case DRW_AssociativePrefixStatus::Kind::AcDbAssocVariable:
+      return AssociativePrefixKind::AcDbAssocVariable;
+#endif
     }
     return AssociativePrefixKind::AcDbAssocAction;
   }
@@ -12611,6 +12661,18 @@ private:
       break;
     case AssociativePrefixKind::AcShActionBody:
       ++counts.shActionBody;
+      break;
+    case AssociativePrefixKind::AcDbAssocValueDependency:
+      ++counts.assocValueDependency;
+      break;
+    case AssociativePrefixKind::AcDbAssocDependencyBody:
+      ++counts.assocDependencyBody;
+      break;
+    case AssociativePrefixKind::AcDbAssoc2dConstraintGroup:
+      ++counts.assoc2dConstraintGroup;
+      break;
+    case AssociativePrefixKind::AcDbAssocVariable:
+      ++counts.assocVariable;
       break;
     }
     switch (prefix.status) {
@@ -13318,6 +13380,8 @@ private:
 
   DRW::Version m_sourceDwgVersion = DRW::UNKNOWNV;
   std::vector<RawObjectRecord> m_rawObjects;
+  std::map<std::uint32_t, RawObjectRecord> m_plotRawSources;
+  std::map<std::uint32_t, DRW_PlotSettings> m_plotTypedSources;
   std::vector<DRW_DwgFramePublication> m_dwgFramePublications;
   std::vector<DRW_DwgDictionaryMembership> m_dwgDictionaryMemberships;
   std::vector<DRW_DwgDictionaryWithDefaultMembership>
