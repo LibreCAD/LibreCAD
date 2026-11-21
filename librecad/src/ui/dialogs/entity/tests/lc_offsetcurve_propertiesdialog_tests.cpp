@@ -7,6 +7,7 @@
 #include <catch2/catch_test_macros.hpp>
 #include <catch2/reporters/catch_reporter_event_listener.hpp>
 #include <catch2/reporters/catch_reporter_registrars.hpp>
+#include <QDir>
 #include <QtWidgets>
 #include <QScopeGuard>
 #include <array>
@@ -14,6 +15,7 @@
 #include <cstdint>
 #include <cstring>
 #include <exception>
+#include <filesystem>
 #include <functional>
 #include <memory>
 #include <limits>
@@ -1407,6 +1409,7 @@ TEST_CASE("Native source picker filters and replaces every supported source fami
     const int allTypesIndex = typeBox->findData(
         static_cast<int>(Kind::Invalid));
     REQUIRE(allTypesIndex >= 0);
+    std::vector<std::unique_ptr<LC_OffsetCurve>> externalFixtureCarriers;
     for (std::size_t i = 0; i < candidates.size(); ++i) {
         const Kind kind = LC_OffsetSourceGeometry::SupportedKinds[i];
         CAPTURE("select-from-all-types", static_cast<int>(kind));
@@ -1420,6 +1423,24 @@ TEST_CASE("Native source picker filters and replaces every supported source fami
         CHECK(typeBox->currentData().toInt() == static_cast<int>(kind));
         REQUIRE(clone->sourceDefinition());
         CHECK(clone->sourceDefinition()->source.kind() == kind);
+        auto* carrier = static_cast<LC_OffsetCurve*>(clone->clone());
+        REQUIRE(carrier);
+        carrier->setSourceHandle(0);
+        externalFixtureCarriers.emplace_back(carrier);
+    }
+
+    const QString fixtureDirectory = qEnvironmentVariable("LIBRECAD_DWG_FIXTURE_DIR");
+    if (!fixtureDirectory.isEmpty()) {
+        REQUIRE(QDir().mkpath(fixtureDirectory));
+        for (auto& carrier : externalFixtureCarriers) {
+            REQUIRE(carrier);
+            f.graphic.addEntity(carrier.release());
+        }
+        const std::filesystem::path fixturePath =
+            std::filesystem::path(fixtureDirectory.toStdWString()) /
+            "offset-source-picker-all-families.dxf";
+        REQUIRE(lc::test::exportDrawing(f.graphic, fixturePath,
+                                        RS2::FormatDXFRW2018));
     }
 }
 
