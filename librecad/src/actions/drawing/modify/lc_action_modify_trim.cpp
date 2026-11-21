@@ -28,6 +28,7 @@
 
 #include "lc_actioninfomessagebuilder.h"
 #include "lc_actioncontext.h"
+#include <QDebug>
 #include <algorithm>
 #include <array>
 #include <cstdint>
@@ -515,12 +516,18 @@ void LC_ActionModifyTrim::beginNativeTrimWork(RS_Entity* target, RS_Entity* limi
         if (!currentNativeTrim(work)) throw std::runtime_error("Trim input changed");
         if (work->nested) work->nestedOperand = work->inputs->cloneWorkerSource(1);
         auto targetCopy = work->inputs->cloneWorkerSource(0), limitCopy = work->inputs->cloneWorkerSource(1);
-        if (!targetCopy || !limitCopy || (work->nested && !work->nestedOperand) ||
-            !m_actionData->worker->start(std::move(targetCopy), work->targetPick,
+        if (!targetCopy || !limitCopy || (work->nested && !work->nestedOperand)) {
+            throw std::runtime_error("Trim worker source clone refused");
+        }
+        const bool started = m_actionData->worker->start(std::move(targetCopy), work->targetPick,
             std::move(limitCopy), work->limitPick, m_both, work->options.kernel, qint64(work->epoch), qint64(work->epoch),
             preview ? LC_OffsetWorkerClient::Mode::Preview : LC_OffsetWorkerClient::Mode::Commit, [alive, work](LC_OffsetTrimWorker::Outcome result) {
                 if (!alive || alive->m_actionData->work != work) return;
                 if (result.status != LC_OffsetTrimWorker::Status::Completed || !result.prepared) {
+                    qWarning() << "Trim worker failed; status=" << int(result.status)
+                               << "clientStatus=" << (result.clientStatus ? int(*result.clientStatus) : -1)
+                               << "preview=" << work->preview
+                               << "diagnostics=" << result.diagnostics.left(512);
                     if (work->preview) { alive->cancelNativePreview(work); return; }
                     alive->cancelNativeTrim();
                     if (!work->preview && alive->currentTrimContext()) alive->commandMessage(result.status == LC_OffsetTrimWorker::Status::TimedOut ?
@@ -535,7 +542,10 @@ void LC_ActionModifyTrim::beginNativeTrimWork(RS_Entity* target, RS_Entity* limi
                         else { alive->cancelNativeTrim(); if (alive->currentTrimContext()) alive->commandMessage(tr("Offset cache trim preparation failed; nothing changed")); }
                     }
                 }
-            })) throw std::runtime_error("Trim worker admission refused");
+            });
+        if (!started) {
+            throw std::runtime_error("Trim worker admission refused");
+        }
         m_actionData->guard->start();
     } catch (...) {
         if (!alive) return;
@@ -566,7 +576,26 @@ void LC_ActionModifyTrim::completeNativePreview(const std::shared_ptr<NativeTrim
     catch (...) { qDeleteAll(batch.entitiesToAdd); batch.entitiesToAdd.clear(); throw; }
     for (auto* entity : std::as_const(batch.entitiesToAdd)) owners.emplace_back(entity);
     if (!alive) return;
-    if (!result.result || !currentNativeTrim(work)) { if (alive) cancelNativePreview(work); return; }
+    if (!result.result) {
+        if (qEnvironmentVariableIsSet("LC_OFFSET_TRIM_DIAGNOSTICS"))
+            qWarning() << "Trim preview refused; refusal="
+                       << int(result.cacheRefusal.value_or(LC_OffsetCacheTrim::Refusal::InvalidInput))
+                       << "stage=" << int(result.cacheWork.failureStage)
+                       << "roots=" << result.cacheWork.rootRecords
+                       << "pairs=" << result.cacheWork.intersections.totalBoxPairs
+                       << "leaves=" << result.cacheWork.intersections.generatedLeaves
+                       << "items=" << result.cacheWork.intersections.generatedItems
+                       << "comparisons=" << result.cacheWork.intersections.orderingComparisons;
+        if (alive) cancelNativePreview(work);
+        return;
+    }
+    if (!currentNativeTrim(work)) {
+        if (alive) cancelNativePreview(work);
+        return;
+    }
+    if (owners.empty() && qEnvironmentVariableIsSet("LC_OFFSET_TRIM_DIAGNOSTICS"))
+        qWarning() << "Trim preview produced no fragments; roots=" << result.cacheWork.rootRecords
+                   << "pairs=" << result.cacheWork.intersections.totalBoxPairs;
     deletePreviewAndHighlights();
     if (!alive || !currentNativeTrim(work)) { if (alive) cancelNativePreview(work); return; }
     m_preview->clear();

@@ -60548,3 +60548,46 @@ an open sanitizer/order-stability gate; do not claim a full action-suite pass.
 Visible GUI and ODA/AutoCAD acceptance, additional family/profile breadth,
 full sanitizer action-suite stability, and current exact-head CI remain open.
 The roadmap is not complete.
+
+## 1936. Stabilize the High-Segment Polyline Trim Matrix and Record Converter Gate (2026-11-21)
+
+The worker-created mixed-bulge/high-segment Trim Two matrix now gives the
+sanitizer run a test-only preview deadline override, clamped between the
+production preview and commit limits. Production deadlines are unchanged. The
+matrix distinguishes successful fragment previews from two no-op shapes in
+the 256-segment adversarial profiles and asserts those no-op paths preserve
+both source entities and the document undo epoch. The sinusoidal profile's
+bounded `LimitExceeded` at `IntersectionQuery` is logged only when
+`LC_OFFSET_TRIM_DIAGNOSTICS` is enabled; the parabolic profile can complete
+without producing display fragments.
+
+The focused Release matrix passes **9,547 assertions in 1 test case**. The
+ASan/UBSan matrix passes **21,860 assertions in 1 test case**, with no
+sanitizer diagnostics. The test-only preview deadline does not relax the
+production responsiveness bound. `git diff --check` passes.
+
+The independent ODAFileConverter retry was attempted after the GUI was left
+open, but its process still aborted before conversion (pasteboard XPC failure,
+exit 134); it adds no external DWG acceptance evidence. The earlier recorded
+84/84 ODA conversion remains limited to section 1692 and must not be treated as
+coverage of this exact head. Visible GUI acceptance, successful source-bearing
+ODA/AutoCAD validation, full sanitizer action-suite stability, and current
+exact-head CI remain open. This roadmap is not complete.
+
+## 1937. Requalify Spline Trim Matrix After Broad-Run Failure (2026-11-21)
+
+The complete worker-created typed spline/spline-points Trim Two matrix passes
+under ASan/UBSan: **135,307 assertions in 1 Catch2 case**, with no sanitizer
+diagnostics. The broad `[trim-action]` sweep still fails after earlier cases at
+spline-points profile 27 during Update from Source (`updated == 0`, first pick
+order). That broad run predates the new failure-only report details, so the
+precise refusal was not captured. The same 43-profile/two-order matrix passes
+in isolation, confirming this is not a reproducible profile-27 geometry
+failure; it does not establish broad suite order stability.
+
+The report diagnostic now records per-target refusal text and whether exact
+worker work was known when an Update assertion fails. Re-run the broad subset
+with that diagnostic before attributing the failure. Full sanitizer action
+suite stability, visible GUI acceptance, source-bearing independent
+ODA/AutoCAD acceptance, and exact-head CI remain open. The roadmap remains
+incomplete.
