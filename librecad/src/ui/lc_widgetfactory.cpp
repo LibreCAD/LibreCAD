@@ -32,6 +32,7 @@
 #include "lc_actiongroupmanager.h"
 #include "lc_dockwidget.h"
 #include "lc_layertreewidget.h"
+#include "lc_storepackage.h"
 #include "lc_widgetfactory.h"
 
 #include "qc_applicationwindow.h"
@@ -926,7 +927,9 @@ void LC_WidgetFactory::createMenus(QMenuBar* menu_bar)
     online_menu->addAction( online_widgets);
     online_menu->addAction( online_forum);
     online_menu->addAction( online_chat);
-    online_menu->addAction( online_release);
+    // The Store updates its own packages; it should not lead to other downloads.
+    if (!LC_StorePackage::runsFromStorePackage())
+        online_menu->addAction( online_release);
 
     help_menu->addSeparator();
 

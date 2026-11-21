@@ -291,6 +291,7 @@ librecad/src/lib/scripting/rs_simplepython.cpp
 librecad/src/lib/scripting/rs_script.cpp
 librecad/src/lib/scripting/rs_scriptlist.cpp
 librecad/src/main/lc_application.cpp
+librecad/src/main/lc_storepackage.cpp
 librecad/src/main/mainwindowx.cpp
 librecad/src/main/console_dxf2pdf/console_dxf2pdf.cpp
 librecad/src/main/console_dxf2pdf/pdf_print_loop.cpp
