@@ -60052,15 +60052,21 @@ checks the schema-2 typed-source binary EED prefix and kind byte. When
 LibreDWG is absent the independent check is skipped; the normal LibreCAD DWG
 writer/importer assertions still run. Here `/opt/homebrew/bin/dwgread` was
 found and both generated release lanes passed the independent parse and EED
-inventory checks.
+inventory checks. The test reconstructs every type-4 group-1004 chunk for
+each `TYPED_SOURCE` record, rejects malformed hex, parses the complete payload
+as CBOR, decodes it as `LC_OffsetSourceDefinition`, and checks canonical
+decode/re-encode equality plus agreement between the encoded kind and decoded
+source geometry. This avoids treating a valid first-chunk prefix as proof that
+the rest of the typed payload survived.
 
-The rebuilt focused typed-source matrix passes 9,243 assertions across three
-cases. The full `[gui][dialog][offsetcurve][source]` suite passes 15,947
-assertions across 46 cases. This makes the previously manual LibreDWG read a
-repeatable test gate where the tool is installed. It does not establish ODA
-or AutoCAD acceptance, source-bearing ODA conversion, rendered geometry, or
-visible packaged-app interaction; those gates remain open. The current worktree
-contains unpushed commits because GitHub DNS resolution is unavailable.
+The rebuilt focused typed-source matrix passes 9,407 assertions across three
+cases. The full `[gui][dialog][offsetcurve][source]` suite passes 16,111
+assertions across 46 cases. This makes the previously manual LibreDWG read and
+semantic EED check a repeatable test gate where the tool is installed. It does
+not establish ODA or AutoCAD acceptance, source-bearing ODA conversion,
+rendered geometry, or visible packaged-app interaction; those gates remain
+open. The current worktree contains unpushed commits because GitHub DNS
+resolution is unavailable.
 
 ## 1912. Retry Source-bearing ODA Conversion with the GUI Session Open (2026-11-20)
 

@@ -104,7 +104,7 @@ void checkLibreDwgSourceKinds(const std::filesystem::path& file) {
         if (object.value("entity").toString() != "SPLINE") continue;
         bool inOffsetDefinition = false;
         bool inTypedSource = false;
-        QString firstBinaryChunk;
+        QByteArray typedSourcePayload;
         for (const QJsonValue& eedValue : object.value("eed").toArray()) {
             const QJsonObject eed = eedValue.toObject();
             const int code = eed.value("code").toInt(-1);
@@ -118,19 +118,37 @@ void checkLibreDwgSourceKinds(const std::filesystem::path& file) {
                 inTypedSource = true;
                 continue;
             }
+            if (inTypedSource && code == 0) break;
             if (inTypedSource && code == 4) {
-                firstBinaryChunk = text;
+                REQUIRE((text.size() % 2) == 0);
+                const QByteArray chunk = QByteArray::fromHex(text.toLatin1());
+                REQUIRE(chunk.size() * 2 == text.size());
+                typedSourcePayload.append(chunk);
+                continue;
+            }
+            if (inTypedSource && code == 2 && !typedSourcePayload.isEmpty()) {
                 break;
             }
         }
-        if (firstBinaryChunk.isEmpty()) continue;
-        CHECK(firstBinaryChunk.startsWith(QStringLiteral("8482")));
-        REQUIRE(firstBinaryChunk.size() >= 6);
-        bool validKind = false;
-        const int kind = firstBinaryChunk.mid(4, 2).toInt(&validKind, 16);
-        REQUIRE(validKind);
+        if (typedSourcePayload.isEmpty()) continue;
+        REQUIRE(typedSourcePayload.size() >= 3);
+        CHECK(static_cast<unsigned char>(typedSourcePayload.at(0)) == 0x84);
+        CHECK(static_cast<unsigned char>(typedSourcePayload.at(1)) == 0x82);
+        QCborParserError parseError;
+        const QCborValue encodedSource = QCborValue::fromCbor(typedSourcePayload, &parseError);
+        REQUIRE(parseError.error == QCborError::NoError);
+        REQUIRE(encodedSource.isArray());
+        const auto source = LC_OffsetWorkerRequest::Values::decodeSourceDefinition(
+            encodedSource.toArray());
+        REQUIRE(source);
+        const auto reencodedSource =
+            LC_OffsetWorkerRequest::Values::encodeSourceDefinition(*source);
+        REQUIRE(reencodedSource);
+        CHECK(*reencodedSource == encodedSource.toArray());
+        const int kind = static_cast<unsigned char>(typedSourcePayload.at(2));
         REQUIRE(kind >= 0);
         REQUIRE(static_cast<std::size_t>(kind) < sourceKinds.size());
+        CHECK(static_cast<int>(source->source.kind()) == kind);
         CHECK_FALSE(sourceKinds[static_cast<std::size_t>(kind)]);
         sourceKinds[static_cast<std::size_t>(kind)] = true;
         ++carriers;
