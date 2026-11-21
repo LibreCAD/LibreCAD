@@ -7,6 +7,11 @@
 #include <catch2/catch_test_macros.hpp>
 #include <catch2/reporters/catch_reporter_event_listener.hpp>
 #include <catch2/reporters/catch_reporter_registrars.hpp>
+#include <QJsonArray>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QProcess>
+#include <QStandardPaths>
 #include <QtWidgets>
 #include <QScopeGuard>
 #include <algorithm>
@@ -73,6 +78,67 @@ void requireNativeHelper() {
     INFO("The real fixed-path offset helper must be built beside this test executable: " << path.toStdString());
     REQUIRE(QFileInfo(path).isFile());
     REQUIRE(QFileInfo(path).isExecutable());
+}
+
+void checkLibreDwgSourceKinds(const std::filesystem::path& file) {
+    QString reader = qEnvironmentVariable("DWGREAD");
+    if (reader.isEmpty()) reader = QStandardPaths::findExecutable("dwgread");
+    if (reader.isEmpty()) return;
+
+    QProcess process;
+    process.start(reader, {"-O", "JSON", lc::test::toQString(file)});
+    REQUIRE(process.waitForStarted());
+    REQUIRE(process.waitForFinished(30000));
+    INFO(process.readAllStandardError().toStdString());
+    REQUIRE(process.exitStatus() == QProcess::NormalExit);
+    REQUIRE(process.exitCode() == 0);
+    QJsonParseError parseError;
+    const auto document = QJsonDocument::fromJson(process.readAllStandardOutput(), &parseError);
+    REQUIRE(parseError.error == QJsonParseError::NoError);
+    REQUIRE(document.isObject());
+
+    std::array<bool, LC_OffsetSourceGeometry::SupportedKinds.size()> sourceKinds{};
+    std::size_t carriers = 0;
+    for (const QJsonValue& value : document.object().value("OBJECTS").toArray()) {
+        const QJsonObject object = value.toObject();
+        if (object.value("entity").toString() != "SPLINE") continue;
+        bool inOffsetDefinition = false;
+        bool inTypedSource = false;
+        QString firstBinaryChunk;
+        for (const QJsonValue& eedValue : object.value("eed").toArray()) {
+            const QJsonObject eed = eedValue.toObject();
+            const int code = eed.value("code").toInt(-1);
+            const QString text = eed.value("value").toString();
+            if (code == 0 && text == QStringLiteral("LC_OFFSET_CURVE")) {
+                inOffsetDefinition = true;
+                continue;
+            }
+            if (!inOffsetDefinition) continue;
+            if (code == 0 && text == QStringLiteral("TYPED_SOURCE")) {
+                inTypedSource = true;
+                continue;
+            }
+            if (inTypedSource && code == 4) {
+                firstBinaryChunk = text;
+                break;
+            }
+        }
+        if (firstBinaryChunk.isEmpty()) continue;
+        CHECK(firstBinaryChunk.startsWith(QStringLiteral("8482")));
+        REQUIRE(firstBinaryChunk.size() >= 6);
+        bool validKind = false;
+        const int kind = firstBinaryChunk.mid(4, 2).toInt(&validKind, 16);
+        REQUIRE(validKind);
+        REQUIRE(kind >= 0);
+        REQUIRE(static_cast<std::size_t>(kind) < sourceKinds.size());
+        CHECK_FALSE(sourceKinds[static_cast<std::size_t>(kind)]);
+        sourceKinds[static_cast<std::size_t>(kind)] = true;
+        ++carriers;
+    }
+    CHECK(carriers == sourceKinds.size());
+    CHECK(std::all_of(sourceKinds.begin(), sourceKinds.end(), [](bool present) {
+        return present;
+    }));
 }
 
 bool pollEventsUntil(const std::function<bool()>& ready) {
@@ -1493,6 +1559,7 @@ TEST_CASE("Native source picker filters and replaces every supported source fami
     for (const auto& [format, fileName] : dwgLanes) {
         const auto dwgPath = output.file(fileName);
         REQUIRE(lc::test::exportDrawing(reopened, dwgPath, format));
+        checkLibreDwgSourceKinds(dwgPath);
         Graphic dwgReopened;
         dwgReopened.initForNewDocument();
         REQUIRE(lc::test::importDrawing(dwgReopened, dwgPath, format));

@@ -60041,3 +60041,23 @@ DWG output SHA-256: R2000
 focused fixture passes 607 assertions and the complete source-picker suite
 passes 15,827 assertions across 46 cases. This is one bounded geometry profile
 per source kind, not ODA/AutoCAD acceptance or exhaustive variant coverage.
+
+## 1911. Gate All-family DWG Output with LibreDWG in the Test Suite (2026-11-20)
+
+The all-family source-picker integration test now discovers `dwgread` from
+`DWGREAD` or `PATH` and, when present, runs `dwgread -O JSON` on each generated
+R2000 and R2018 DWG. It requires successful process completion, parses the
+JSON, finds exactly one offset SPLINE for each supported source kind, and
+checks the schema-2 typed-source binary EED prefix and kind byte. When
+LibreDWG is absent the independent check is skipped; the normal LibreCAD DWG
+writer/importer assertions still run. Here `/opt/homebrew/bin/dwgread` was
+found and both generated release lanes passed the independent parse and EED
+inventory checks.
+
+The rebuilt focused typed-source matrix passes 9,243 assertions across three
+cases. The full `[gui][dialog][offsetcurve][source]` suite passes 15,947
+assertions across 46 cases. This makes the previously manual LibreDWG read a
+repeatable test gate where the tool is installed. It does not establish ODA
+or AutoCAD acceptance, source-bearing ODA conversion, rendered geometry, or
+visible packaged-app interaction; those gates remain open. The current worktree
+contains unpushed commits because GitHub DNS resolution is unavailable.
