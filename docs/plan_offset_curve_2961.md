@@ -60901,3 +60901,20 @@ commands cannot turn the remote job green. The plan remains incomplete until
 that out-of-scope baseline is resolved or explicitly accepted by the CI owner,
 and the interrupted broad sanitizer, visible GUI, and external
 source-bearing ODA/AutoCAD gates are closed.
+
+## 1951. Validate the Native Source Picker Families (2026-11-21)
+
+Built the dedicated `librecad_offset_properties_dialog_tests` target from the
+current PR code and ran its `[source]` filter with `QT_QPA_PLATFORM=offscreen`.
+All **49 cases / 18,243 assertions passed**, including family switching,
+typed-source replacement, filtering across all modeled source families,
+highlight preservation, and stale/deleted candidate handling. The test
+inventory covers parabola as a distinct source kind alongside line, arc,
+circle, ellipse, bounded hyperbola, spline, spline-points, and polyline.
+
+This validates the Properties dialog behavior through Qt interaction tests,
+not a visible packaged-app/manual acceptance session. Keep visible interaction
+open as a separate gate. The exact-head general build matrix remains green;
+the unrelated VXCONTROL CTest failure, interrupted broad sanitizer replay,
+and source-bearing ODA/AutoCAD acceptance remain open, so the roadmap is not
+complete.
