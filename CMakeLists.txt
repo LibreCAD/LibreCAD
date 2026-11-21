@@ -2832,6 +2832,7 @@ if (BUILD_TESTS)
         ${LIBRECAD_TEST_TEMP_DIRECTORY_TEST_SOURCE}
         librecad/src/lib/engine/document/tests/lc_graphic_unit_tests.cpp
         librecad/src/lib/gui/tests/rs_graphicview_close_tests.cpp
+        librecad/src/lib/gui/tests/lc_coordinates_parser_tests.cpp
         librecad/src/lib/gui/tests/lc_grid_tests.cpp
         librecad/src/lib/gui/tests/rs_painter_tests.cpp
         librecad/src/actions/drawing/draw/dimensions/tests/rs_actiondimleader_tests.cpp

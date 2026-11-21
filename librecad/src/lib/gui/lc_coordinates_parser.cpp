@@ -82,8 +82,9 @@ RS_CoordinateEvent LC_CoordinatesParser::parseCoordinate(const QString& inputStr
                 bool ok2{false};
                 double angleDegrees = LC_Convert::evalAngleValue(angleStr, ok2);
                 if (ok2) {
-                    double wcsAngle = RS_Math::deg2rad(angleDegrees); // fixme - sand - check whether angle base should be considered!!
-                    auto wcsCoordinate = RS_Vector(distance, wcsAngle);
+                    // the drawing's angle base and direction apply, the UCS does not
+                    const double wcsAngle = toAbsUCSAngle(RS_Math::deg2rad(angleDegrees));
+                    const RS_Vector wcsCoordinate = RS_Vector::polar(distance, wcsAngle);
                     return RS_CoordinateEvent(wcsCoordinate);
                 }
             }
