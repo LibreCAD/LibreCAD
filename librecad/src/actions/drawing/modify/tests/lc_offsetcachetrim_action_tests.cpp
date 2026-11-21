@@ -9101,7 +9101,7 @@ TEST_CASE("T Trim trims a high-origin closed polyline cache on both offset sides
     for (const bool towardCentre : {false, true}) {
         CAPTURE(towardCentre);
         Drawing<false> f;
-        constexpr double zoom = .003;
+        constexpr double zoom = .001;
         f.view.getViewPort()->setSize(640, 480);
         f.view.getViewPort()->setOffsetAndFactor(
             qRound(320.0 - center.x * zoom),

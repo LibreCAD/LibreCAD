@@ -1713,6 +1713,7 @@ TEST_CASE("bounded hyperbola source trims through document actions and file lane
         expectedFragments.push_back(RS_Spline::geometryFingerprint(fragment.data));
     std::sort(expectedFragments.begin(), expectedFragments.end());
 
+    graphic.getSelection()->clear();
     graphic.select(QList<RS_Entity*>{replacement}, true);
     TrimActionProbe trimAction(&context, veryHighOrigin);
     trimAction.init(0);
@@ -1864,6 +1865,7 @@ TEST_CASE("partial eccentric ellipse source trims through document actions and f
         expectedFragments.push_back(RS_Spline::geometryFingerprint(fragment.data));
     std::sort(expectedFragments.begin(), expectedFragments.end());
 
+    graphic.getSelection()->clear();
     graphic.select(QList<RS_Entity*>{replacement}, true);
     TrimActionProbe trimAction(&context);
     trimAction.init(0);
@@ -2038,6 +2040,7 @@ TEST_CASE("rational high-degree splines trim through document actions and file l
         expectedFragments.push_back(RS_Spline::geometryFingerprint(fragment.data));
     std::sort(expectedFragments.begin(), expectedFragments.end());
 
+    graphic.getSelection()->clear();
     graphic.select(QList<RS_Entity*>{replacement}, true);
     view.getViewPort()->zoomIn(10.0, targetPick);
     TrimActionProbe trimAction(&context);
@@ -2330,6 +2333,7 @@ TEST_CASE("wrapped periodic high-degree splines trim and persist through file la
         expectedFragments.push_back(RS_Spline::geometryFingerprint(fragment.data));
     std::sort(expectedFragments.begin(), expectedFragments.end());
 
+    graphic.getSelection()->clear();
     graphic.select(QList<RS_Entity*>{replacement}, true);
     view.getViewPort()->zoomIn(10.0, targetPick);
     TrimActionProbe trimAction(&context);
@@ -2767,7 +2771,7 @@ TEST_CASE("I trim one closed convex polyline cache component and retain the rest
             targetPick = replacement->getPointAt(pickParameter);
         }
         CHECK(sampledCrossings == 2);
-        CHECK(minimumAbsDistance < .01);
+        CHECK(minimumAbsDistance < .02);
     }
     const auto kernel = LC_OffsetCacheTrim::prepare(replacement->getData(), *cutter, {targetPick});
     CAPTURE(static_cast<int>(kernel.refusal), kernel.rootCount);

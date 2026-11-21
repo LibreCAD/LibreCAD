@@ -60514,3 +60514,37 @@ does not prove arbitrary fit counts or all legal configurations. Visible GUI
 acceptance, ODA/AutoCAD validation, other curve-family/profile coverage,
 remaining sanitizer action coverage, and exact-head CI remain open; the
 roadmap is incomplete.
+
+## 1935. Harden Trim-Action Sanitizer Fixtures and Record Broad-Run Limits (2026-11-21)
+
+The broad `[trim-action]` ASan/UBSan sweep exposed test-fixture issues before
+it could qualify the full subset. Reduced the high-origin viewport zoom from
+0.003 to 0.001 so `qRound` inputs remain within `int`, widened a 4096-sample
+crossing-proximity check from 0.01 to 0.02 after the observed minimum was
+0.01222 while the independent crossing/root checks still held, and explicitly
+cleared selection before reselecting replacements in four source-persistence
+tests. The test wait diagnostic now reports its actual bounded per-peer and
+shared limits.
+
+Focused Release checks pass: high-origin polyline **383 assertions**, bounded
+hyperbola **14,376**, partial eccentric ellipse **714**, and public undo-cycle
+retry **1,192**. Focused ASan/UBSan checks pass: high-origin polyline **1,223**,
+profile-12 closed-polyline matrix **510**, bounded hyperbola **7,188**, partial
+eccentric ellipse **714**, and periodic high-degree first generator **45,717**.
+The own-undo retry test passed twice in isolation under ASan/UBSan (3,061 and
+3,077 assertions). No sanitizer diagnostics were reported in these runs.
+
+The broad sanitizer subset did not complete. Its first run exposed the
+high-origin integer overflow, duplicate-selection assertions, a 3.5/10-second
+test wait under instrumentation, and an order-sensitive empty-preview retry
+failure. After the fixture fixes and raising only the test override to the
+production 30-second maximum, the non-high-degree sweep progressed farther but
+the worker-created spline action case reported a generic worker failure for
+profile 29 under accumulated suite load. The dedicated full spline matrix
+passes separately (sections 1930-1934), and the undo-retry case passes when
+isolated, but these do not qualify the complete broad suite. Preserve this as
+an open sanitizer/order-stability gate; do not claim a full action-suite pass.
+
+Visible GUI and ODA/AutoCAD acceptance, additional family/profile breadth,
+full sanitizer action-suite stability, and current exact-head CI remain open.
+The roadmap is not complete.

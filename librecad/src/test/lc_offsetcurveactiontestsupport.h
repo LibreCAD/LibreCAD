@@ -67,7 +67,8 @@ inline void awaitUpdate(LC_ActionOffsetCurveUpdateSource& action) {
     });
     const auto cancelOnUnwind = qScopeGuard([&] { if (alive && alive->isPreparing()) alive->suspend(); });
     poll.start(1); loop.exec();
-    INFO("Update worker exceeded its 3500ms per-peer / shared 30000ms GUI-test bounds");
+    INFO("Update worker exceeded its " << perPeerLimit << "ms per-peer / "
+         << totalLimit << "ms shared GUI-test bounds");
     REQUIRE_FALSE(expired); REQUIRE(alive); REQUIRE_FALSE(alive->isPreparing());
 }
 
