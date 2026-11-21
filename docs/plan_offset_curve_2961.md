@@ -60854,3 +60854,33 @@ Windows x64 and ARM test steps were still in progress at this checkpoint.
 Source-bearing ODA acceptance remains blocked by the SSH/macOS pasteboard
 failure recorded in section 1947, and visible GUI acceptance is still open.
 The roadmap remains incomplete.
+
+## 1949. Reproduce Exact-head Bounded DWG/DXF CTest Failure (2026-11-21)
+
+At PR head `f884eba6f51c2a29ed428785f472077c4eecbfaa`, the five-platform Pixi
+build matrix passed. The Linux fast verification and both Windows verification
+jobs built their bounded test targets successfully but failed in the combined
+test step; GitHub exposes only generic exit-code annotations and its job-log
+downloads close before returning details.
+
+Recreated the workflow's CMake options and target list locally in Release and
+ran its 57-entry CTest set. **56/57 entries passed**, including the worker
+protocol, all eight general worker-client shards, both parabola matrices, all
+20 hyperbola persistence shards, DWG fast tests, and the offset import/plugin
+lanes. The sole failure is the unrelated `[dwg][roundtrip][filter][vx]` case
+in `librecad_dxf_fast_tests`: after writing and reopening AC1027, the
+VXCONTROL parser rejects object type 1327 and the assertion at
+`dxf_roundtrip_tests.cpp:3012` sees zero controls instead of one. This test and
+its VX-specific implementation are outside the offset-curve scope; do not
+silently weaken or exclude it to make this roadmap's CI appear green. The
+remote job logs are unavailable, so this local failure is a concrete lead,
+not proof that it is the only remote failure.
+
+Exact-head build CI is green, but the bounded DWG/DXF checks remain red until
+the pre-existing/out-of-scope VXCONTROL failure is handled in its owning work
+or the CI owner establishes the expected baseline. The broad seeded ASan/UBSan
+Trim-action run remains interrupted (section 1948); profile 41 passes in
+isolation, which is not a substitute. The desktop ODA retry directories still
+contain no converted DXFs, so source-bearing ODA acceptance is unverified.
+Visible source-picker/replace/highlight GUI acceptance and external
+AutoCAD/ODA acceptance remain open. The roadmap is incomplete.
