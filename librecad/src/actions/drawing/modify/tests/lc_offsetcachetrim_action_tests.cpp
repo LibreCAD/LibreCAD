@@ -2873,8 +2873,13 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
       : profile == 0 ? GENERATE(RS_Vector{0.0, 0.0}, RS_Vector{1e6, -2e6},
                                 RS_Vector{1e8, -2e8})
                      : RS_Vector{0.0, 0.0};
-  const bool towardCentre =
-      highOrigin || sourceTranslation.x != 0.0 ? GENERATE(false, true) : false;
+  const bool hasRequestedTowardCentre =
+      qEnvironmentVariableIsSet("LC_OFFSET_TRIM_TOWARD_CENTRE");
+  const bool requestedTowardCentre =
+      qEnvironmentVariableIntValue("LC_OFFSET_TRIM_TOWARD_CENTRE") != 0;
+  const bool towardCentre = highOrigin || sourceTranslation.x != 0.0
+      ? hasRequestedTowardCentre ? requestedTowardCentre : GENERATE(false, true)
+      : false;
   auto initial = LC_OffsetCurve::create(seed, 0.5 * profileScale, towardCentre);
   REQUIRE(initial);
   auto *previous = initial.entity.release();
@@ -3059,7 +3064,13 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
   const double radius = (multiRadiusTangentProfile || steepAsymmetricTangents) && !lineCutter
                             ? GENERATE(.05, .1, .25) * profileScale
                             : .1 * profileScale;
-  const bool cutterFirst = lineCutter ? GENERATE(false, true) : false;
+  const bool hasRequestedCutterFirst =
+      qEnvironmentVariableIsSet("LC_OFFSET_TRIM_CUTTER_FIRST");
+  const bool requestedCutterFirst =
+      qEnvironmentVariableIntValue("LC_OFFSET_TRIM_CUTTER_FIRST") != 0;
+  const bool cutterFirst = lineCutter
+      ? hasRequestedCutterFirst ? requestedCutterFirst : GENERATE(false, true)
+      : false;
   CAPTURE(cutterFirst);
   const RS_Vector circleCenter = intersection + tangent * radius;
   RS_Entity *cutter = nullptr;

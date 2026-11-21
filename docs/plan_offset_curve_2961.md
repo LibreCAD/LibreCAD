@@ -60641,6 +60641,15 @@ runs then passed (9,447; 9,444; 9,490; and 9,484 assertions), another passed
 assertions. The assertion is therefore intermittent even with isolated
 generator/profile coverage.
 
+Added opt-in `LC_OFFSET_TRIM_TOWARD_CENTRE` and
+`LC_OFFSET_TRIM_CUTTER_FIRST` controls for this existing profile generator;
+unset variables preserve the full default generator matrix. Exact
+`towardCentre=true` with both cutter orders passes ASan/UBSan (4,764
+assertions), and the exact `cutterFirst=true` combination passes Release (716
+assertions). Three repeated ASan/UBSan runs of that exact combination pass
+2,399, 2,380, and 2,405 assertions. No failed diagnostic snapshot has yet been
+captured because the failure did not reproduce in these isolated executions.
+
 A fresh broad retry was stopped during a prolonged profile before reaching a
 final summary and did not reproduce a new assertion in its captured log; it is
 not a pass. Keep the broad sanitizer order/timing stability gate open. Continue
