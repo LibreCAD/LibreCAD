@@ -60412,3 +60412,26 @@ head again after subsequent pushes.
 Visible application acceptance, a successful source-bearing ODA/AutoCAD run,
 broader family/profile coverage, sanitizer action-matrix qualification, and
 final exact-head CI remain open. The overall roadmap is not complete.
+
+## 1930. Qualify the Worker Trim Matrix Under ASan/UBSan (2026-11-21)
+
+Added an opt-in `LIBRECAD_TEST_OFFSET_WORKER_TIMEOUT_MS` override to
+`lc_offsetcurveactiontestsupport.h`. The normal test default remains 3,500 ms
+per peer; explicit values are clamped to the production commit deadline, and
+the aggregate wait remains capped by that same deadline. This only adjusts
+the test harness wait and does not alter worker/client production deadlines.
+
+Rebuilt the Release test target and reran the full worker-created typed-spline
+and spline-points Trim/save/reopen matrix without the override: **28,851
+assertions in 1 case passed**, confirming the normal timeout path. Then reran
+the same matrix from `/tmp/offset-2961-asan` with the override set to 10,000
+ms and AddressSanitizer plus UndefinedBehaviorSanitizer enabled: **100,242
+assertions in 1 case passed**, with no sanitizer diagnostics. The existing
+focused format checks remain at 31,791 assertions across 2 cases (section
+1929).
+
+This closes the instrumentation timeout obstacle for this specific matrix,
+not the whole sanitizer action matrix or broader curve/profile matrix. Visible
+application acceptance, successful source-bearing ODA/AutoCAD validation,
+broader family/profile coverage, remaining sanitizer action coverage, and
+final exact-head CI are still open; the overall roadmap is not complete.

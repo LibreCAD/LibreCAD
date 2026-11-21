@@ -39,13 +39,24 @@ inline void awaitUpdate(LC_ActionOffsetCurveUpdateSource& action) {
     const QPointer<LC_ActionOffsetCurveUpdateSource> alive(&action);
     QElapsedTimer total, peer; total.start(); peer.start();
     const auto peers = std::max<qsizetype>(1, action.lastReport().outcomes.size());
-    const auto totalLimit = std::min<qint64>(LC_OffsetWorkerClient::Deadlines::commit, peers * 3500);
+    const int requestedTimeout =
+        qEnvironmentVariableIntValue("LIBRECAD_TEST_OFFSET_WORKER_TIMEOUT_MS");
+    const qint64 perPeerLimit = requestedTimeout > 0
+        ? std::clamp<qint64>(requestedTimeout, 3500,
+                             LC_OffsetWorkerClient::Deadlines::commit)
+        : 3500;
+    const auto totalLimit = std::min<qint64>(
+        LC_OffsetWorkerClient::Deadlines::commit, peers * perPeerLimit);
     qsizetype runningPeer = -1;
     QEventLoop loop;
     QTimer poll; bool expired = false;
     QObject::connect(&poll, &QTimer::timeout, &loop, [&] {
         if (!alive || !alive->isPreparing()) { loop.quit(); return; }
-        if (total.elapsed() >= totalLimit || peer.elapsed() >= 3500) { expired = true; loop.quit(); return; }
+        if (total.elapsed() >= totalLimit || peer.elapsed() >= perPeerLimit) {
+            expired = true;
+            loop.quit();
+            return;
+        }
         const auto& outcomes = alive->lastReport().outcomes;
         for (qsizetype i = 0; i < outcomes.size(); ++i) {
             const auto& outcome = outcomes.at(i);
