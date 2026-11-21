@@ -329,9 +329,11 @@ candidate refresh, replacement, highlight, and cancellation using the
 resolvable fixture from section 1906; (3) extend independent CAD checks to
 other source families and record AutoCAD acceptance separately; (4) keep
 publishing each tested slice and verify PR state. Current local and remote PR
-branch head is `50e011143f2e401a069047201a7097b6c7e44db8`; the latest
-`gh pr checks 3193` reports three `VerifyDwgDxf` jobs pending (including
-Windows ARM64 and x64).
+branch head is `73dc21b6532263b1d67592d1de5eebd95ec558b9`; run
+`44872853669` has five `build_with_pixi` jobs pending across macOS, Linux,
+Linux ARM, and Windows. ODAFileConverter remains listed as running, but the
+desktop bridge returns `cgWindowNotFound`, so no external conversion result
+is available.
 ODAFileConverter is reported running, but the desktop bridge still returns
 `cgWindowNotFound`, so no source-bearing ODA conversion result is available.
 Visible packaged-app acceptance also remains open. Continue polling the
