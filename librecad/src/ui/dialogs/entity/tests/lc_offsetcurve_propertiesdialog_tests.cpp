@@ -1441,56 +1441,43 @@ TEST_CASE("Native source picker filters and replaces every supported source fami
     reopened.initForNewDocument();
     REQUIRE(lc::test::importDrawing(reopened, fixturePath, RS2::FormatDXFRW2018));
     reopened.onLoadingCompleted();
-    std::array<bool, LC_OffsetSourceGeometry::SupportedKinds.size()> importedKinds{};
-    std::size_t importedCarriers = 0;
-    for (const RS_Entity* entity : reopened) {
-        const auto* offset = dynamic_cast<const LC_OffsetCurve*>(entity);
-        if (!offset) continue;
-        REQUIRE(offset->sourceDefinition());
-        const Kind kind = offset->sourceDefinition()->source.kind();
-        const auto kindIt = std::find(LC_OffsetSourceGeometry::SupportedKinds.begin(),
-                                      LC_OffsetSourceGeometry::SupportedKinds.end(), kind);
-        REQUIRE(kindIt != LC_OffsetSourceGeometry::SupportedKinds.end());
-        const auto kindIndex = static_cast<std::size_t>(std::distance(
-            LC_OffsetSourceGeometry::SupportedKinds.begin(), kindIt));
-        CHECK_FALSE(importedKinds[kindIndex]);
-        importedKinds[kindIndex] = true;
-        const auto expectedGeometry = LC_OffsetSourceGeometry::capture(*candidates[kindIndex]);
-        REQUIRE(expectedGeometry);
-        const auto actual = LC_OffsetWorkerRequest::Values::encodeSourceGeometry(
-            offset->sourceDefinition()->source);
-        const auto expected = LC_OffsetWorkerRequest::Values::encodeSourceGeometry(
-            *expectedGeometry);
-        INFO("round-trip source kind: " << static_cast<int>(kind));
-        if (kind == Kind::Parabola) {
-            const auto& actualParabola = std::get<LC_ParabolaData>(
-                offset->sourceDefinition()->source.value);
-            const auto& expectedParabola = std::get<LC_ParabolaData>(
-                expectedGeometry->value);
-            for (std::size_t point = 0; point < actualParabola.m_controlPoints.size(); ++point) {
-                INFO("parabola control " << point << " actual: "
-                     << actualParabola.m_controlPoints[point].x << ", "
-                     << actualParabola.m_controlPoints[point].y << " expected: "
-                     << expectedParabola.m_controlPoints[point].x << ", "
-                     << expectedParabola.m_controlPoints[point].y);
-                CHECK(actualParabola.m_controlPoints[point].x ==
-                      expectedParabola.m_controlPoints[point].x);
-                CHECK(actualParabola.m_controlPoints[point].y ==
-                      expectedParabola.m_controlPoints[point].y);
-            }
+    const auto verifyFamilies = [&](const Graphic& drawing) {
+        std::array<bool, LC_OffsetSourceGeometry::SupportedKinds.size()> importedKinds{};
+        std::size_t importedCarriers = 0;
+        for (const RS_Entity* entity : drawing) {
+            const auto* offset = dynamic_cast<const LC_OffsetCurve*>(entity);
+            if (!offset) continue;
+            REQUIRE(offset->sourceDefinition());
+            const Kind kind = offset->sourceDefinition()->source.kind();
+            const auto kindIt = std::find(LC_OffsetSourceGeometry::SupportedKinds.begin(),
+                                          LC_OffsetSourceGeometry::SupportedKinds.end(), kind);
+            REQUIRE(kindIt != LC_OffsetSourceGeometry::SupportedKinds.end());
+            const auto kindIndex = static_cast<std::size_t>(std::distance(
+                LC_OffsetSourceGeometry::SupportedKinds.begin(), kindIt));
+            CHECK_FALSE(importedKinds[kindIndex]);
+            importedKinds[kindIndex] = true;
+            const auto expectedGeometry = LC_OffsetSourceGeometry::capture(*candidates[kindIndex]);
+            REQUIRE(expectedGeometry);
+            const auto actual = LC_OffsetWorkerRequest::Values::encodeSourceGeometry(
+                offset->sourceDefinition()->source);
+            const auto expected = LC_OffsetWorkerRequest::Values::encodeSourceGeometry(
+                *expectedGeometry);
+            INFO("round-trip source kind: " << static_cast<int>(kind));
+            REQUIRE(actual);
+            CHECK(actual == expected);
+            ++importedCarriers;
         }
-        REQUIRE(actual);
-        CHECK(actual == expected);
-        ++importedCarriers;
-    }
-    CHECK(importedCarriers == LC_OffsetSourceGeometry::SupportedKinds.size());
-    CHECK(std::all_of(importedKinds.begin(), importedKinds.end(), [](bool imported) {
-        return imported;
-    }));
+        CHECK(importedCarriers == LC_OffsetSourceGeometry::SupportedKinds.size());
+        CHECK(std::all_of(importedKinds.begin(), importedKinds.end(), [](bool imported) {
+            return imported;
+        }));
+    };
+    verifyFamilies(reopened);
 
     const QString fixtureDirectory = qEnvironmentVariable("LIBRECAD_DWG_FIXTURE_DIR");
+    std::filesystem::path retainedDirectory;
     if (!fixtureDirectory.isEmpty()) {
-        const std::filesystem::path retainedDirectory(fixtureDirectory.toStdWString());
+        retainedDirectory = std::filesystem::path(fixtureDirectory.toStdWString());
         std::error_code error;
         std::filesystem::create_directories(retainedDirectory, error);
         REQUIRE_FALSE(error);
@@ -1499,6 +1486,26 @@ TEST_CASE("Native source picker filters and replaces every supported source fami
             std::filesystem::copy_options::overwrite_existing, error);
         REQUIRE_FALSE(error);
     }
+#ifdef DWGSUPPORT
+    const std::array<std::pair<RS2::FormatType, const char*>, 2> dwgLanes{{
+        {RS2::FormatDWG, "offset-source-picker-all-families-r2000.dwg"},
+        {RS2::FormatDWG2018, "offset-source-picker-all-families-r2018.dwg"}}};
+    for (const auto& [format, fileName] : dwgLanes) {
+        const auto dwgPath = output.file(fileName);
+        REQUIRE(lc::test::exportDrawing(reopened, dwgPath, format));
+        Graphic dwgReopened;
+        dwgReopened.initForNewDocument();
+        REQUIRE(lc::test::importDrawing(dwgReopened, dwgPath, format));
+        dwgReopened.onLoadingCompleted();
+        verifyFamilies(dwgReopened);
+        if (!retainedDirectory.empty()) {
+            std::error_code error;
+            std::filesystem::copy_file(dwgPath, retainedDirectory / fileName,
+                std::filesystem::copy_options::overwrite_existing, error);
+            REQUIRE_FALSE(error);
+        }
+    }
+#endif
 }
 
 TEST_CASE("Native source picker retains the picked identity for duplicate geometry",
