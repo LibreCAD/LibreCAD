@@ -7738,6 +7738,63 @@ TEST_CASE("High-origin small-scale four-point parabola survives worker and file 
     }
 }
 
+TEST_CASE("High-origin small-scale parabola worker refuses cache promotion",
+          "[lc-offsetcurve][worker-client][parabola][from-four-points][high-origin][cache-refusal]") {
+    lc::test::QuietLog quiet;
+    auto& rt = runtime();
+    OwnedClient owned{rt};
+    RS_EntityContainer owner;
+    RS_Line attributes{&owner, RS_LineData{{0, 0}, {1, 0}}};
+
+    const std::array<RS_Vector, 3> controls{{
+        {-100.0, 50.0}, {0.0, -50.0}, {100.0, 50.0}}};
+    constexpr double scale = 1e-3;
+    constexpr double angle = 0.6435011087932844;
+    const RS_Vector translation{1e12, -2e12};
+    const auto pointAt = [&](const double t) {
+        const double mt = 1.0 - t;
+        RS_Vector point = controls[0] * (mt * mt) + controls[1] * (2.0 * mt * t) +
+                          controls[2] * (t * t);
+        point *= scale;
+        point.rotate(angle);
+        return point + translation;
+    };
+    const std::array<double, 4> sampleParameters{{0.05, 0.2, 0.65, 0.95}};
+    std::vector<RS_Vector> samples;
+    for (const double t : sampleParameters)
+        samples.push_back(pointAt(t));
+    const auto candidates = LC_ParabolaData::From4Points(samples);
+    const auto candidate = std::find_if(candidates.cbegin(), candidates.cend(),
+        [&](const LC_ParabolaData& value) {
+            if (!value.isValid()) return false;
+            return std::all_of(samples.cbegin(), samples.cend(), [&](const RS_Vector& point) {
+                return value.fromX(value.findX(point)).distanceTo(point) < 0.01;
+            });
+        });
+    REQUIRE(candidate != candidates.cend());
+
+    qint64 requestId = 1;
+    for (const double signedDistance : {0.005, -0.005}) {
+        const LC_OffsetSourceDefinition definition{
+            LC_OffsetSourceGeometry{*candidate}, signedDistance, 1e-4, false};
+        Receipts receipts;
+        REQUIRE(owned.get().submit(
+            {token(requestId), Req::GenerateSource{definition, {}}},
+            Client::Mode::Commit, receipts.into(0)));
+        rt.until([&] { return receipts.calls[0] != 0; });
+        const auto& completion = completed(receipts.at(0), requestId, 7);
+        const auto& generated = std::get<Reply::Native>(completion.reply().result);
+        CHECK(generated.engineStatus == LC_CurveOffsetStatus::Ok);
+        CHECK(generated.ordinaryStatus == Reply::OrdinaryStatus::Complete);
+        CHECK(generated.refusal == LC_OffsetCurveRefusal::NotCacheRepresentable);
+        CHECK_FALSE(generated.curve);
+        CHECK_FALSE(generated.changed);
+        REQUIRE_FALSE(generated.ordinary.empty());
+        CHECK_FALSE(completion.nativeSource(attributes));
+        requestId++;
+    }
+}
+
 TEST_CASE("Four-point parabola matrix retains typed sources across file lanes",
           "[lc-offsetcurve][worker-client][parabola][from-four-points][matrix][persistence]") {
     REQUIRE(lc::test::ensureSettings());
