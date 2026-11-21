@@ -695,6 +695,78 @@ TEST_CASE("LC_Parabola: From4Points large-origin clustered profiles",
   }
 }
 
+TEST_CASE("LC_Parabola: From4Points preserves high-origin small-scale profiles",
+          "[parabola][reconstruction][high-origin][small-scale]") {
+  const std::array<std::array<RS_Vector, 3>, 3> profiles{{
+      {{{-100.0, 50.0}, {0.0, -50.0}, {100.0, 50.0}}},
+      {{{-80.0, 40.0}, {15.0, -35.0}, {110.0, 75.0}}},
+      {{{0.0, 0.0}, {5.0, 10.0}, {11.0, 2.0}}},
+  }};
+  constexpr std::array<std::array<double, 4>, 2> layouts{{
+      {{0.05, 0.2, 0.65, 0.95}},
+      {{0.1, 0.3, 0.7, 0.9}},
+  }};
+  constexpr std::array<double, 3> independentParameters{{0.15, 0.5, 0.85}};
+  constexpr double scale = 1e-3;
+  constexpr double angle = 0.6435011087932844;
+  const RS_Vector translation{1e12, -2e12};
+  const double numericTolerance = 4.0 * std::numeric_limits<double>::epsilon() *
+                                  std::max(std::abs(translation.x),
+                                           std::abs(translation.y));
+  const double independentTolerance = 2.0 * numericTolerance;
+
+  for (std::size_t profile = 0; profile < profiles.size(); ++profile) {
+    CAPTURE(profile);
+    const auto localPointAt = [&](const double t) {
+      const double mt = 1.0 - t;
+      const auto& control = profiles[profile];
+      return control[0] * (mt * mt) + control[1] * (2.0 * mt * t) +
+             control[2] * (t * t);
+    };
+    const auto mapPoint = [&](RS_Vector point) {
+      point *= scale;
+      point.rotate(angle);
+      return point + translation;
+    };
+    std::array<RS_Vector, 3> independent;
+    std::transform(independentParameters.begin(), independentParameters.end(),
+                   independent.begin(), [&](const double t) {
+                     return mapPoint(localPointAt(t));
+                   });
+
+    for (const auto& layout : layouts) {
+      CAPTURE(layout);
+      std::vector<RS_Vector> samples;
+      for (const double t : layout)
+        samples.push_back(mapPoint(localPointAt(t)));
+      for (const bool reverseInput : {false, true}) {
+        CAPTURE(reverseInput, numericTolerance, independentTolerance);
+        auto orderedSamples = samples;
+        if (reverseInput)
+          std::reverse(orderedSamples.begin(), orderedSamples.end());
+        const auto candidates = LC_ParabolaData::From4Points(orderedSamples);
+        const auto candidate = std::find_if(
+            candidates.begin(), candidates.end(), [&](const LC_ParabolaData& value) {
+              if (!value.isValid())
+                return false;
+              const auto reconstruct = [&](const RS_Vector& point) {
+                return value.fromX(value.findX(point));
+              };
+              return std::all_of(samples.begin(), samples.end(), [&](const RS_Vector& point) {
+                       return reconstruct(point).distanceTo(point) <= numericTolerance;
+                     }) &&
+                     std::all_of(independent.begin(), independent.end(),
+                         [&](const RS_Vector& point) {
+                           return reconstruct(point).distanceTo(point) <=
+                                  independentTolerance;
+                         });
+            });
+        REQUIRE(candidate != candidates.end());
+      }
+    }
+  }
+}
+
 TEST_CASE("LC_Parabola: balanced interior reconstruction is sample-order independent",
           "[parabola][reconstruction][permutation]") {
   const std::array<std::array<RS_Vector, 3>, 3> profiles{{

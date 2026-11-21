@@ -59736,3 +59736,20 @@ the visible source-picker gate. The PR branch is still at `714011a08`: local
 push remains blocked by DNS resolution, while the connected GitHub integration
 returns 403 for repository writes. The local implementation and roadmap
 commits are preserved; do not report them as pushed.
+
+## 1898. Extend Four-point Parabola Reconstruction to High Origin (2026-11-20)
+
+Added a direct reconstruction oracle for three distinct quadratic control
+profiles at scale `1e-3`, rotated by `0.6435011087932844` radians, and
+translated to `(1e12,-2e12)`. Two well-distributed four-sample layouts are
+tested in forward and reversed sample order. A candidate must fit all four
+samples within `4 * epsilon * worldMagnitude` and independently reproduce
+three points at parameters `0.15`, `0.5`, and `0.85` within twice that bound.
+All 12 profile/layout/traversal combinations pass.
+
+The focused test passes 12 assertions / 1 case; the full
+`[parabola][reconstruction]` selection passes 6,677 assertions / 13 cases.
+This is direct reconstruction evidence only: worker generation, cache
+admission, replacement, Trim, and all five persistence lanes for this exact
+high-origin/small-scale profile remain open. The separate PR push limitation
+recorded in section 1897 is unchanged.
