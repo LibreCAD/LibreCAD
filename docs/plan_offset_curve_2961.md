@@ -302,6 +302,31 @@ AutoCAD acceptance remain open. Keep raw DWG replay diagnostics
 distinct from entity-level round-trip results. Do not add a second selector or
 claim all variants from the nine-kind selector inventory.
 
+**Current checkpoint (2026-11-20):** Sections 1898-1899 now distinguish the
+direct `(1e12,-2e12)` four-point parabola reconstruction oracle from the
+successful five-lane worker/persistence profile at `(1e6,-2e6)`. Section 1905
+pins the `1e12` worker result as ordinary fallback: the generated spline
+cache is structurally valid, but world-coordinate tolerance admission refuses
+because translation precision is not demonstrated at the requested tolerance.
+Do not change this to success by only localizing option calculation. Sections
+1900 and 1903-1904 close ODA Audit/open/conversion and exact XDATA plus SPLINE
+field comparison for the generated degree-1/degree-3 ellipse-source matrix and
+LINE controls across six DWG releases; this is not all-source-kind or
+AutoCAD acceptance.
+
+Implementation and acceptance continue in this order: (1) expand only
+materially distinct family/variant cases with independent geometric oracles,
+worker/cache checks, applicable Trim and five-format persistence, maintaining
+fail-closed precision boundaries; (2) create or obtain a packaged-app drawing
+with a resolvable source entity and editable offset, then complete visible
+source-type switching, candidate refresh, replacement, highlight and cancel
+checks; the standalone carrier used in section 1901 did not contain its source
+entity, and CUA could not reconnect to a LibreCAD window on 2026-11-20; (3)
+extend independent CAD checks to other source families and record AutoCAD
+acceptance separately if available; (4) push and verify the accumulated PR
+commits. At this checkpoint the GitHub PR head is still
+`714011a08e144025721af12f963314a1ae6fffc7`; local commits are not PR evidence.
+
 **Latest source-widget disposition (reconciled 2026-11-16):** The source
 widget contract is that a user can change the requested source type while
 replacement picking is active, see candidates refresh to that type, and
