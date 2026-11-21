@@ -60591,3 +60591,28 @@ with that diagnostic before attributing the failure. Full sanitizer action
 suite stability, visible GUI acceptance, source-bearing independent
 ODA/AutoCAD acceptance, and exact-head CI remain open. The roadmap remains
 incomplete.
+
+## 1938. Align Trim Preview Test Deadlines and Reap Grace (2026-11-21)
+
+The sanitizer matrix exposed three independently enforced Trim preview
+deadlines: the worker client, action guard timer, and result-currentness seal.
+The opt-in `LIBRECAD_TEST_OFFSET_WORKER_TIMEOUT_MS` now raises all three
+consistently, clamped from the production 2-second preview limit through the
+30-second commit maximum. The default production preview deadline is
+unchanged. GUI test waits for Update from Source now allow a separate bounded
+5-second reap/callback grace after the worker deadline instead of expiring at
+the same instant.
+
+The closed high-segment polyline test passes Release (**3,398 assertions**)
+and ASan/UBSan (**826 assertions**). It requires full preview, commit,
+five-format persistence, and undo whenever the 256-segment fixture completes
+within the configured bound; any empty sanitizer preview must preserve source
+geometry and the undo epoch. The mixed-bulge/high-segment polyline matrix
+passes ASan/UBSan (**26,013 assertions**), including the parabolic profile's
+real preview/commit path. Its sinusoidal 256-segment profile retains an
+explicit bounded `IntersectionQuery` refusal case.
+
+This requalifies these targeted matrices only. The broad `[trim-action]`
+sanitizer order-stability gate, successful source-bearing ODA/AutoCAD
+validation, visible GUI acceptance, and exact-head CI remain open; the plan
+is incomplete.

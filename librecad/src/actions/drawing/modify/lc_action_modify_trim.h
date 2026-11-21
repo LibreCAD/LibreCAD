@@ -102,5 +102,6 @@ protected:
 private:
     friend class LC_ActionModifyTrimTestAccess;
     LC_OffsetTrimWorker* nativeTrimWorkerForTest() const noexcept;
+    void setNativeTrimPreviewDeadlineForTest(qint64 deadline) noexcept;
 };
 #endif

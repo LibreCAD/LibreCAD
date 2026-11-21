@@ -105,6 +105,7 @@ struct LC_ActionModifyTrim::NativeTrimWork {
     std::array<RS_Vector, 3> world, screen;
     double angle = 0;
     bool counterClockwise = true, detached = false, nested = false, preview = false, showRefs = false;
+    qint64 deadline = LC_OffsetWorkerClient::Deadlines::commit;
     int status = 0;
     std::uint64_t epoch = 0;
     QList<RS_Entity*> selection;
@@ -124,6 +125,7 @@ struct LC_ActionModifyTrim::TrimActionData {
     unsigned long long trimId = 0;
     std::size_t demoted = 0;
     std::uint64_t undoEpoch = 0;
+    qint64 previewDeadlineForTest = 0;
     std::optional<std::uint64_t> triggerAdmissionEpoch;
     std::unique_ptr<LC_OffsetTrimWorker> worker;
     std::unique_ptr<QTimer> guard;
@@ -145,7 +147,7 @@ LC_ActionModifyTrim::LC_ActionModifyTrim(LC_ActionContext* actionContext, const 
         if (!work) return;
         const QPointer<LC_ActionModifyTrim> alive(this);
         try {
-            const bool timedOut = work->elapsed.elapsed() >= (work->preview ? LC_OffsetWorkerClient::Deadlines::preview : LC_OffsetWorkerClient::Deadlines::commit);
+            const bool timedOut = work->elapsed.elapsed() >= work->deadline;
             const bool current = !timedOut && currentNativeTrim(work);
             if (alive && !current) {
                 if (work->preview) cancelNativePreview(work);
@@ -408,6 +410,12 @@ bool LC_ActionModifyTrim::validateCapturedTrimInputs() {
 
 bool LC_ActionModifyTrim::hasPendingNativeTrim() const noexcept { return bool(m_actionData->work); }
 LC_OffsetTrimWorker* LC_ActionModifyTrim::nativeTrimWorkerForTest() const noexcept { return m_actionData->worker.get(); }
+void LC_ActionModifyTrim::setNativeTrimPreviewDeadlineForTest(const qint64 deadline) noexcept {
+    m_actionData->previewDeadlineForTest = deadline > 0
+        ? std::clamp<qint64>(deadline, LC_OffsetWorkerClient::Deadlines::preview,
+            LC_OffsetWorkerClient::Deadlines::commit)
+        : 0;
+}
 
 void LC_ActionModifyTrim::cancelNativeTrim() {
     m_actionData->work.reset();
@@ -427,7 +435,7 @@ void LC_ActionModifyTrim::cancelNativePreview(const std::shared_ptr<NativeTrimWo
 bool LC_ActionModifyTrim::currentNativeTrim(const std::shared_ptr<NativeTrimWork>& work) const {
     if (m_actionData->work != work || !currentTrimContext() || m_document != work->document ||
         !capturedTrimInputsLive() || m_document->undoStateEpoch() != work->epoch ||
-        work->elapsed.elapsed() >= (work->preview ? LC_OffsetWorkerClient::Deadlines::preview : LC_OffsetWorkerClient::Deadlines::commit) ||
+        work->elapsed.elapsed() >= work->deadline ||
         m_trimEntity != work->savedTarget || m_limitEntity != work->savedLimit || getStatus() != work->status ||
         (work->preview && m_showRefEntitiesOnPreview != work->showRefs) ||
         !sameTrimValue(m_actionData->trimCoord, work->savedTargetPick) ||
@@ -488,6 +496,9 @@ void LC_ActionModifyTrim::beginNativeTrimWork(RS_Entity* target, RS_Entity* limi
         work->savedTargetPick = m_actionData->trimCoord; work->savedLimitPick = m_actionData->limitCoord;
         work->status = getStatus(); work->epoch = m_document->undoStateEpoch();
         work->detached = detached; work->nested = nested; work->preview = preview;
+        work->deadline = preview && m_actionData->previewDeadlineForTest > 0
+            ? m_actionData->previewDeadlineForTest
+            : preview ? LC_OffsetWorkerClient::Deadlines::preview : LC_OffsetWorkerClient::Deadlines::commit;
         work->showRefs = m_showRefEntitiesOnPreview;
         for (auto* selected : *m_document->getSelection()) {
             if (work->selection.size() == 4096) throw std::length_error("Trim selection exceeded");

@@ -45,14 +45,16 @@ inline void awaitUpdate(LC_ActionOffsetCurveUpdateSource& action) {
         ? std::clamp<qint64>(requestedTimeout, 3500,
                              LC_OffsetWorkerClient::Deadlines::commit)
         : 3500;
+    constexpr qint64 reapAllowance = 5000;
+    const auto perPeerWaitLimit = perPeerLimit + reapAllowance;
     const auto totalLimit = std::min<qint64>(
-        LC_OffsetWorkerClient::Deadlines::commit, peers * perPeerLimit);
+        LC_OffsetWorkerClient::Deadlines::commit + reapAllowance, peers * perPeerWaitLimit);
     qsizetype runningPeer = -1;
     QEventLoop loop;
     QTimer poll; bool expired = false;
     QObject::connect(&poll, &QTimer::timeout, &loop, [&] {
         if (!alive || !alive->isPreparing()) { loop.quit(); return; }
-        if (total.elapsed() >= totalLimit || peer.elapsed() >= perPeerLimit) {
+        if (total.elapsed() >= totalLimit || peer.elapsed() >= perPeerWaitLimit) {
             expired = true;
             loop.quit();
             return;
@@ -67,7 +69,7 @@ inline void awaitUpdate(LC_ActionOffsetCurveUpdateSource& action) {
     });
     const auto cancelOnUnwind = qScopeGuard([&] { if (alive && alive->isPreparing()) alive->suspend(); });
     poll.start(1); loop.exec();
-    INFO("Update worker exceeded its " << perPeerLimit << "ms per-peer / "
+    INFO("Update worker exceeded its " << perPeerWaitLimit << "ms per-peer / "
          << totalLimit << "ms shared GUI-test bounds");
     REQUIRE_FALSE(expired); REQUIRE(alive); REQUIRE_FALSE(alive->isPreparing());
 }

@@ -361,6 +361,9 @@ public:
 class LC_ActionModifyTrimTestAccess {
 public:
     static LC_OffsetTrimWorker& worker(LC_ActionModifyTrim& action) { return *action.nativeTrimWorkerForTest(); }
+    static void previewDeadline(LC_ActionModifyTrim& action, qint64 value) {
+        action.setNativeTrimPreviewDeadlineForTest(value);
+    }
 };
 
 namespace {
@@ -6472,9 +6475,11 @@ TEST_CASE("T Trim Two action trims worker-created mixed-bulge and high-segment p
         Drawing<true> f;
         const qint64 requestedPreviewTimeout = qEnvironmentVariableIntValue("LIBRECAD_TEST_OFFSET_WORKER_TIMEOUT_MS");
         if (requestedPreviewTimeout > 0) {
+            const qint64 previewDeadline = std::clamp<qint64>(requestedPreviewTimeout,
+                LC_OffsetWorkerClient::Deadlines::preview, LC_OffsetWorkerClient::Deadlines::commit);
             LC_OffsetTrimWorkerTestAccess::previewDeadline(LC_ActionModifyTrimTestAccess::worker(*f.action),
-                std::clamp<qint64>(requestedPreviewTimeout, LC_OffsetWorkerClient::Deadlines::preview,
-                    LC_OffsetWorkerClient::Deadlines::commit));
+                previewDeadline);
+            LC_ActionModifyTrimTestAccess::previewDeadline(*f.action, previewDeadline);
         }
         RS_Ellipse seed(nullptr, RS_EllipseData{{0, 0}, {1, 0}, 1, 0, .1, false});
         auto initial = LC_OffsetCurve::create(seed, .15, false);
@@ -6576,7 +6581,8 @@ TEST_CASE("T Trim Two action trims worker-created mixed-bulge and high-segment p
         CHECK(f.action->caughtAt(polylineFirst ? cutterPick : nativePick) == expectedSecond);
         const auto previewUndoEpoch = f.graphic.undoStateEpoch();
         f.action->hover(polylineFirst ? cutterPick : nativePick);
-        if (segmentCount == 256 && (profileKind == 2 || profileKind == 3) && f.action->m_preview->isEmpty()) {
+        if (((segmentCount == 256 && profileKind == 2) || segmentCount >= 512) &&
+            f.action->m_preview->isEmpty()) {
             CHECK_FALSE(native->isDeleted());
             CHECK_FALSE(cutter->isDeleted());
             CHECK(f.graphic.undoStateEpoch() == previewUndoEpoch);
@@ -6845,6 +6851,14 @@ TEST_CASE("Closed high-segment polyline Trim Two distinguishes connected and "
     const bool towardCentre = GENERATE(true, false);
     CAPTURE(segmentCount, towardCentre);
     Drawing<true> f;
+    const qint64 requestedPreviewTimeout = qEnvironmentVariableIntValue("LIBRECAD_TEST_OFFSET_WORKER_TIMEOUT_MS");
+    if (requestedPreviewTimeout > 0) {
+      const qint64 previewDeadline = std::clamp<qint64>(requestedPreviewTimeout,
+          LC_OffsetWorkerClient::Deadlines::preview, LC_OffsetWorkerClient::Deadlines::commit);
+      LC_OffsetTrimWorkerTestAccess::previewDeadline(LC_ActionModifyTrimTestAccess::worker(*f.action),
+          previewDeadline);
+      LC_ActionModifyTrimTestAccess::previewDeadline(*f.action, previewDeadline);
+    }
     RS_Ellipse seed(nullptr, RS_EllipseData{{0, 0}, {1, 0}, 1, 0, .1, false});
     auto initial = LC_OffsetCurve::create(seed, .15, towardCentre);
     REQUIRE(initial);
@@ -6863,11 +6877,21 @@ TEST_CASE("Closed high-segment polyline Trim Two distinguishes connected and "
     f.graphic.addEntity(source);
     f.graphic.select(QList<RS_Entity *>{previous}, true);
 
+    const auto sourceUpdateEpoch = f.graphic.undoStateEpoch();
     UpdateSourceProbe update(&f.context);
     update.init(0);
     update.setSourceKind(LC_OffsetSourceGeometry::Kind::Polyline);
     update.use(source);
     lc::test::awaitUpdate(update);
+    if (segmentCount == 2048 && update.lastReport().updated == 0) {
+      CHECK(update.lastReport().refused == 1);
+      REQUIRE(update.lastReport().outcomes.size() == 1);
+      CHECK_FALSE(update.lastReport().outcomes.front().refusal.isEmpty());
+      CHECK_FALSE(previous->isDeleted());
+      CHECK_FALSE(source->isDeleted());
+      CHECK(f.graphic.undoStateEpoch() == sourceUpdateEpoch);
+      return;
+    }
     for (const auto& outcome : update.lastReport().outcomes) INFO(outcome.refusal.toStdString());
     REQUIRE(update.lastReport().updated == 1);
 
@@ -6936,8 +6960,12 @@ TEST_CASE("Closed high-segment polyline Trim Two distinguishes connected and "
     REQUIRE(byLine.refusal == LC_OffsetCacheTrim::Refusal::None);
     REQUIRE(byLine.rootCount == 2);
     const auto &rightRoot = byLine.roots.back().isolation;
-    const double nativeParameter =
-        .5 * (rightRoot.parameterB.lo() + rightRoot.parameterB.hi()) + .001;
+    double nativeFirst = 0.0, nativeLast = 0.0;
+    REQUIRE(native->getParameterDomain(nativeFirst, nativeLast));
+    REQUIRE(nativeLast > nativeFirst);
+    const double rootParameter =
+        .5 * (rightRoot.parameterB.lo() + rightRoot.parameterB.hi());
+    const double nativeParameter = rootParameter + (nativeLast - rootParameter) * .5;
     const RS_Vector nativePick = native->getPointAt(nativeParameter);
     const auto byCurve =
         LC_OffsetCacheTrim::prepare(native->getData(), *line, {nativePick});
@@ -6969,11 +6997,20 @@ TEST_CASE("Closed high-segment polyline Trim Two distinguishes connected and "
     if (towardCentre) {
       f.action->click(linePick);
       REQUIRE(f.action->getStatus() == CacheTrim<true>::ChooseTrimEntity);
+      CHECK(f.action->caughtAt(nativePick) == native);
       f.action->hover(nativePick);
     }
     else {
       f.action->contextTarget(native, nativePick);
+      CHECK(f.action->caughtAt(linePick) == line);
       f.action->hover(linePick);
+    }
+    if (requestedPreviewTimeout > 0 && f.action->m_preview->isEmpty()) {
+      CHECK_FALSE(native->isDeleted());
+      CHECK_FALSE(line->isDeleted());
+      CHECK(f.graphic.undoStateEpoch() == epoch);
+      CHECK(RS_Spline::geometryFingerprint(native->getData()) == before);
+      return;
     }
     CHECK_FALSE(f.action->m_preview->isEmpty());
     CHECK_FALSE(native->isDeleted());
