@@ -1950,6 +1950,18 @@ TEST_CASE("Closed multi-arc polyline offset sources survive native file lanes",
         REQUIRE(geometry);
         verifyProfile(*geometry, "offset-closed-mixed-bulge-polyline-source");
     }
+    SECTION("closed mixed-bulge profile with a cyclically shifted seam") {
+        RS_Polyline polyline;
+        polyline.addVertex({8, 0}, -0.2);
+        polyline.addVertex({8, 6});
+        polyline.addVertex({0, 6});
+        polyline.addVertex({0, 0}, 0.2);
+        polyline.setClosed(true);
+        polyline.endPolyline();
+        const auto geometry = LC_OffsetSourceGeometry::capture(polyline);
+        REQUIRE(geometry);
+        verifyProfile(*geometry, "offset-closed-mixed-bulge-shifted-seam-source");
+    }
 }
 
 TEST_CASE("Native source picker retains the picked identity for duplicate geometry",

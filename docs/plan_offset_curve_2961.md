@@ -60195,3 +60195,17 @@ This closes only the two recorded closed profiles. It does not establish
 arbitrary closed polyline segment sequences, seam-invariant typed
 serialization, offset-geometry/Trim correctness for every profile, external
 CAD acceptance, or visible packaged-app behavior. Those remain open.
+
+## 1919. Preserve a Shifted Closed-polyline Seam in Native Lanes (2026-11-21)
+
+Added a third closed-profile section using the mixed-bulge loop with its start
+vertex shifted by one segment. The same source picker, worker preparation,
+canonical source capture, five-lane DXF/DWG persistence, LibreCAD reopen, and
+LibreDWG typed-CBOR checks verify the shifted representation survives exactly.
+The focused case passes 327 assertions across its three profile sections; the
+full source-picker selector passes 17,937 assertions across 49 cases.
+
+This covers one cyclic start-vertex shift for one closed mixed-bulge loop. It
+does not claim generalized seam normalization, invariance across every segment
+ordering, or equivalence of arbitrary reparameterizations. Offset-kernel seam
+invariance and serialized source identity remain distinct contracts.
