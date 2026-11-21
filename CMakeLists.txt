@@ -2645,6 +2645,7 @@ if (BUILD_TESTS)
 	### The actual tests
         librecad/src/lib/engine/document/fonts/tests/unicode_font_tests.cpp
         librecad/src/lib/engine/document/fonts/tests/rs_font_tests.cpp
+        librecad/src/lib/engine/document/fonts/tests/lc_font_lff_coordinates_tests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_splinehelper_tests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_hyperbola_tests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_parabola_tests.cpp

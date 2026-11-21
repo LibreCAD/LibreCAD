@@ -25,6 +25,8 @@
 **********************************************************************/
 
 #include <iostream>
+#include <utility>
+#include <vector>
 
 #include <QRegularExpression>
 #include <QTextStream>
@@ -505,16 +507,18 @@ RS_Block* RS_Font::generateLffFont(const QString& key) {
             if (vertex.size() < 2) {
                 continue;
             }
-            const auto pline = new RS_Polyline(letter.get(), RS_PolylineData());
-            pline->setPen(RS_Pen(RS2::FlagInvalid));
-            pline->setLayer(nullptr);
-            foreach(const QString& point, vertex) {
+            // Issue #3285: a point without any coordinate (e.g. ",") is skipped
+            std::vector<std::pair<RS_Vector, double>> points;
+            points.reserve(vertex.size());
+            for (const QString& point : std::as_const(vertex)) {
 #if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
-                QStringList coords = point.split(',', Qt::SkipEmptyParts);
+                const QStringList coords = point.split(',', Qt::SkipEmptyParts);
 #else
-                QStringList coords = point.split(',', QString::SkipEmptyParts);
+                const QStringList coords = point.split(',', QString::SkipEmptyParts);
 #endif
-                //at least X,Y is required
+                if (coords.isEmpty()) {
+                    continue;
+                }
                 const double x1 = coords.at(0).toDouble();
                 // Issue #2045, if y-coordinate is missing, default to 0
                 const double y1 = coords.size() >= 2 ? coords.at(1).toDouble() : 0.;
@@ -524,8 +528,20 @@ RS_Block* RS_Font::generateLffFont(const QString& key) {
                     QString bulgeStr = coords.at(2);
                     bulge = bulgeStr.remove(0, 1).toDouble();
                 }
+                points.emplace_back(RS_Vector(x1, y1), bulge);
+            }
+            if (points.size() < 2) {
+                LC_ERR << QString{"RS_Font::generateLffFont([%1]) : ignore a line with less than two points in %2"}
+                              .arg(key)
+                              .arg(m_fileName);
+                continue;
+            }
+            const auto pline = new RS_Polyline(letter.get(), RS_PolylineData());
+            pline->setPen(RS_Pen(RS2::FlagInvalid));
+            pline->setLayer(nullptr);
+            for (const auto& [position, bulge] : points) {
                 pline->setNextBulge(bulge);
-                pline->addVertex(RS_Vector(x1, y1), bulge);
+                pline->addVertex(position, bulge);
             }
             letter->addEntity(pline);
         }
