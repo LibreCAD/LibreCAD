@@ -60345,3 +60345,29 @@ independent fixture directory is unrelated and intentionally untouched.
 Remaining gates are unchanged: visible packaged-app interaction, a successful
 source-bearing ODA/AutoCAD acceptance run, broader constrained-fit variants,
 and current PR publication/CI status. This slice does not complete the roadmap.
+
+## 1928. Exercise Longer Constrained Fit Splines Through Trim Persistence (2026-11-21)
+
+Extended the worker-created spline/SplinePoints Trim Two matrix with an open
+five-fit-point profile constrained at both endpoints and an open eight-fit-
+point profile constrained at both endpoints. Both profiles run in both entity
+pick orders through worker source generation, Trim preview/commit, undo/redo,
+and R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG save/reopen. The format-aware
+DWG assertions require the scenario-1 degree-2 control net to reopen as
+control-point mode with no false cut flag, and compare every control point to
+the source curve. DXF lanes continue checking the fit-point and tangent source
+fields.
+
+The targeted test passes **28,367 assertions in one Catch2 case**; the CMake
+`librecad_tests` target rebuilds successfully. `git diff --check` is required
+before commit. This confirms these two longer, two-end-constrained profiles
+through the action workflow, not arbitrary fit counts/point layouts, one-end
+constraint action workflows, or semantic authoring-metadata retention on a
+standalone DWG SPLINE. The lower-level DWG writer matrix separately covers
+one-end tangent modes. DWG scenario-1 remains the geometry-preserving fallback
+documented in section 1927; no fresh ODA conversion was available in this
+slice.
+
+The roadmap remains incomplete: visible packaged-app acceptance, source-bearing
+ODA/AutoCAD acceptance, further fit/profile coverage, and exact-head CI are
+still open.

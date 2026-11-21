@@ -5735,7 +5735,7 @@ TEST_CASE("T Trim Two trims a worker-created high-origin ellipse offset",
 
 TEST_CASE("T Trim Two action trims worker-created typed spline and spline-points sources in both pick orders",
           "[gui][lc-offsetcurve][trim-action][typed-source][spline][fit-points][trim-two]") {
-    for (unsigned profile = 0; profile <= 35; ++profile)
+    for (unsigned profile = 0; profile <= 37; ++profile)
     for (const bool nativeFirst : {false, true}) {
         const bool fitPoints = profile >= 5;
         const bool splinePointsSource = profile == 2 || fitPoints;
@@ -5754,7 +5754,7 @@ TEST_CASE("T Trim Two action trims worker-created typed spline and spline-points
         if (splinePointsSource) {
             LC_SplinePointsData data{false, false};
             if (fitPoints) {
-                data.closed = profile >= 8;
+                data.closed = profile >= 8 && profile <= 34;
                 data.splinePoints = profile == 20 || profile == 21
                     ? std::vector<RS_Vector>{{0, 0}, {10, 0}, {10.001, 0}, {13, 8}, {4, 13}, {-3, 8}}
                     : profile >= 22 && profile <= 24
@@ -5783,6 +5783,13 @@ TEST_CASE("T Trim Two action trims worker-created typed spline and spline-points
                     : profile == 7
                         ? std::vector<RS_Vector>{{-4, 0}, {-2, 1.5}, {0, 2.2},
                                                  {2, 1.4}, {4, 0}}
+                    : profile == 36
+                        ? std::vector<RS_Vector>{{-4, 0}, {-2, 2.2}, {0, 3.1},
+                                                 {2, 2.2}, {4, 0}}
+                    : profile == 37
+                        ? std::vector<RS_Vector>{{-4, 0}, {-3, 1.5}, {-2, 2.5},
+                                                 {-1, 3.1}, {0, 3.3}, {1, 3.1},
+                                                 {2, 2.5}, {4, 0}}
                         : std::vector<RS_Vector>{{-4, 0}, {0, 3}, {4, 0}};
                 if (profile == 25 || profile == 26)
                     data.splinePoints = {{-4.0, -2.0}, {4.0, -2.0}, {0.0, 5.0}};
@@ -5993,7 +6000,7 @@ TEST_CASE("T Trim Two action trims worker-created typed spline and spline-points
                 data.controlPoints = {{-4, 0}, {0, 3}, {4, 0}};
             }
             source = new LC_SplinePoints(&f.graphic, data);
-            if (profile == 6) {
+            if (profile == 6 || profile == 36 || profile == 37) {
                 auto* fitted = dynamic_cast<LC_SplinePoints*>(source);
                 REQUIRE(fitted);
                 LC_CurveJet startJet;
