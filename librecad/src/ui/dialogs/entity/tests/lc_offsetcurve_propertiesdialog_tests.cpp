@@ -205,6 +205,16 @@ void checkGeneratedWorkerStages(const NativeWidget& widget) {
     CHECK(result.checkWork.cacheSpans > 0); CHECK(result.checkWork.vertices > 0);
 }
 
+void checkSourceGenerationWorkerStages(const NativeWidget& widget) {
+    REQUIRE(widget.lastWorkerResult());
+    const auto& result = *widget.lastWorkerResult();
+    CHECK(result.refusal == LC_OffsetCurveRefusal::NotCacheRepresentable);
+    CHECK_FALSE(result.changed);
+    CHECK(result.engineRuns == 1);
+    REQUIRE(result.engineStatus);
+    CHECK(*result.engineStatus == LC_CurveOffsetStatus::Ok);
+}
+
 void observeCancelledReplies() {
     // Cover the complete terminate/reap window, not just one posted callback.
     QEventLoop loop;
@@ -1721,6 +1731,7 @@ TEST_CASE("Rational, high-degree, and periodic spline sources survive native fil
         REQUIRE(sourceIndex >= 0);
         sourceBox->setCurrentIndex(sourceIndex);
         awaitPreparation(widget);
+        checkSourceGenerationWorkerStages(widget);
         REQUIRE(widget.lastEditResult());
         REQUIRE(*widget.lastEditResult());
         REQUIRE(carrier->sourceDefinition());
@@ -1919,6 +1930,7 @@ TEST_CASE("Closed multi-arc polyline offset sources survive native file lanes",
         REQUIRE(sourceIndex >= 0);
         sourceBox->setCurrentIndex(sourceIndex);
         awaitPreparation(widget);
+        checkSourceGenerationWorkerStages(widget);
         REQUIRE(widget.lastEditResult());
         REQUIRE(*widget.lastEditResult());
         REQUIRE(carrier->sourceDefinition());

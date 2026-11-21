@@ -60226,3 +60226,16 @@ This adds bounded degree-4 multispan rational and wrapped-closed profiles; it
 does not cover arbitrary degrees, knot multiplicities, weight conditioning,
 periodic rational splines, or all trim/offset conditioning. Those remain
 separate family-by-variant rows.
+
+## 1921. Assert Worker Completion for Persisted Spline and Polyline Profiles (2026-11-21)
+
+Strengthened the rational/high-degree/periodic spline and closed-polyline
+source persistence cases to inspect the worker result, not only the committed
+typed source. The source-generation operation is expected to complete one
+engine run with `Ok` status while returning
+`NotCacheRepresentable`/unchanged: this is the GenerateSource completion
+contract that allows the UI to commit the native source definition without
+claiming its generated offset is a cacheable native curve. This uses a
+source-generation-specific assertion rather than the generic successful
+cache-generation helper. The two focused test cases pass 712 assertions; the
+full source-picker selector passes 18,135 assertions across 49 cases.
