@@ -23,7 +23,7 @@ USA.
 -->
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
-Updated: 2026-11-18. Project: **LibreCAD**, not LibreCAD_3.
+Updated: 2026-11-20. Project: **LibreCAD**, not LibreCAD_3.
 
 **Current source-picker disposition (2026-11-16):** While choosing a
 replacement in the Properties widget, the user can change the source-family
@@ -330,8 +330,9 @@ still
 The latest section 1907 retry confirms ODAFileConverter is reported running but
 has no attachable CUA window; no source-bearing conversion result is available.
 The section 1906 fixture therefore remains ready for retry, not independently
-qualified. Local `HEAD` is 21 commits ahead of the PR branch, and `git push`
-still fails before authentication because SSH cannot resolve `github.com`.
+qualified. Local `HEAD` contains unpushed commits beyond the PR branch, and
+`git push` still fails before authentication because SSH cannot resolve
+`github.com`.
 Retry publication when connectivity returns, then verify the remote head before
 calling any local result PR evidence.
 
