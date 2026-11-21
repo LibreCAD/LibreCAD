@@ -60495,3 +60495,22 @@ eight-point profile. It does not prove arbitrary counts or fit layouts. Visible
 GUI acceptance, source-bearing ODA/AutoCAD acceptance, broader conic/spline
 profile coverage, remaining sanitizer action coverage, and current exact-head
 CI remain open; the plan is not complete.
+
+## 1934. Validate Transformed Sixteen-Point End-Only Fit Splines (2026-11-21)
+
+Added a 16-fit-point end-only constrained profile, translated, rotated, scaled,
+and reversed relative to the base arch. The matrix requires a certified cut
+for this profile, so both pick orders exercise worker generation, Trim
+preview/commit, undo/redo, and all five DXF/DWG save/reopen lanes instead of
+passing through an ambiguity-only refusal path.
+
+The focused Release matrix passes **31,979 assertions in 1 Catch2 case**. The
+same matrix under ASan/UBSan with the bounded 10,000 ms test-only worker wait
+passes **110,234 assertions in 1 case**, with no sanitizer diagnostics.
+`git diff --check` passes.
+
+This improves coverage of larger, transformed and reversed fit layouts, but
+does not prove arbitrary fit counts or all legal configurations. Visible GUI
+acceptance, ODA/AutoCAD validation, other curve-family/profile coverage,
+remaining sanitizer action coverage, and exact-head CI remain open; the
+roadmap is incomplete.

@@ -5735,7 +5735,7 @@ TEST_CASE("T Trim Two trims a worker-created high-origin ellipse offset",
 
 TEST_CASE("T Trim Two action trims worker-created typed spline and spline-points sources in both pick orders",
           "[gui][lc-offsetcurve][trim-action][typed-source][spline][fit-points][trim-two]") {
-    for (unsigned profile = 0; profile <= 41; ++profile)
+    for (unsigned profile = 0; profile <= 42; ++profile)
     for (const bool nativeFirst : {false, true}) {
         const bool fitPoints = profile >= 5;
         const bool splinePointsSource = profile == 2 || fitPoints;
@@ -5916,6 +5916,24 @@ TEST_CASE("T Trim Two action trims worker-created typed spline and spline-points
                         data.splinePoints.emplace_back(x, y);
                     }
                 }
+                if (profile == 42) {
+                    data.splinePoints.clear();
+                    constexpr double pi = 3.14159265358979323846;
+                    constexpr double angle = 0.47;
+                    constexpr double scale = 1.5;
+                    const double cosine = std::cos(angle);
+                    const double sine = std::sin(angle);
+                    for (unsigned i = 0; i < 16; ++i) {
+                        const double t = static_cast<double>(i) / 15.0;
+                        const double x = -5.0 + 10.0 * t;
+                        const double y = 1.4 * std::sin(pi * t) +
+                                         0.22 * std::sin(3.0 * pi * t);
+                        data.splinePoints.emplace_back(
+                            35.0 + scale * (x * cosine - y * sine),
+                            -21.0 + scale * (x * sine + y * cosine));
+                    }
+                    std::reverse(data.splinePoints.begin(), data.splinePoints.end());
+                }
                 if (profile == 14) {
                     constexpr double twoPi = 6.2831853071795864769;
                     for (unsigned i = 0; i < 9; ++i) {
@@ -6019,12 +6037,12 @@ TEST_CASE("T Trim Two action trims worker-created typed spline and spline-points
             }
             source = new LC_SplinePoints(&f.graphic, data);
             if (profile == 6 || profile == 36 || profile == 37 || profile == 38 ||
-                profile == 39 || profile == 40 || profile == 41) {
+                profile == 39 || profile == 40 || profile == 41 || profile == 42) {
                 auto* fitted = dynamic_cast<LC_SplinePoints*>(source);
                 REQUIRE(fitted);
                 CHECK(fitted->getData().splinePoints.size() ==
                       (profile == 6 ? 4u : (profile == 37 || profile == 40) ? 8u :
-                       profile == 41 ? 12u : 5u));
+                       profile == 41 ? 12u : profile == 42 ? 16u : 5u));
                 LC_CurveJet startJet;
                 LC_CurveJet endJet;
                 REQUIRE(fitted->tryEvaluateJet(0.0, LC_CurveEvaluationSide::Right, startJet));
@@ -6033,7 +6051,7 @@ TEST_CASE("T Trim Two action trims worker-created typed spline and spline-points
                 LC_SplinePointsData fittedData = fitted->getData();
                 fittedData.fitTangentsConstrained = true;
                 fittedData.fitStartTangent =
-                    profile == 39 || profile == 40 || profile == 41
+                    profile == 39 || profile == 40 || profile == 41 || profile == 42
                     ? RS_Vector{0.0, 0.0, 0.0} : startJet.first;
                 fittedData.fitEndTangent = profile == 38
                     ? RS_Vector{0.0, 0.0, 0.0} : endJet.first;
@@ -6152,7 +6170,8 @@ TEST_CASE("T Trim Two action trims worker-created typed spline and spline-points
                 }
             }
             CAPTURE(lastRefusal);
-            if (profile >= 22 && !foundCertifiedCut && profile != 40 && profile != 41) {
+            if (profile >= 22 && !foundCertifiedCut && profile != 40 && profile != 41 &&
+                profile != 42) {
                 CHECK(lastRefusal == static_cast<int>(LC_OffsetCacheTrim::Refusal::AmbiguousRoots));
                 nativePick = lastPick;
                 auto* cutter = new RS_Line(&f.graphic, lastCutterData);
