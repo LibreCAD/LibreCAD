@@ -60739,3 +60739,29 @@ attach its pasteboard services to this SSH-launched process. This is not a
 conversion or validation result; do not interpret an empty output directory as
 DWG acceptance. Keep the independent ODA gate open and run the conversion from
 the interactive desktop Terminal or the ODA GUI when available.
+
+## 1944. Correct Closed Mixed-bulge Persistence Trim Expectation (2026-11-21)
+
+The seeded `[lc-offsetcurve][trim-action]` ASan/UBSan rerun with seed
+`1453897047` advanced beyond the previously intermittent high-segment
+parabolic polyline failure without reproducing it. The run reached 103 test
+cases and 1,313,896 assertions before it was intentionally interrupted while
+investigating a separate persistence expectation; it is incomplete and does
+not qualify the broad suite. Its captured high-degree action assertion
+included the injected terminal interrupt, so it is not counted as a product
+failure.
+
+The run did expose five deterministic failures in
+`I persist closed mixed-bulge polyline updates and trim one cache component`:
+two certified roots on this single closed cache path produce one retained
+complementary fragment. The fixture is not a disconnected-cache case; separate
+unit and action fixtures cover preservation of unpicked disconnected
+components. Corrected this test to require exactly one fragment and removed its
+misleading `multi-component` tag. The focused named test now passes all five
+DXF/DWG formats in Release and ASan/UBSan (790 assertions each).
+
+The exact-head PR checks for `30482b2808b7c08521e2c1fedfbe02761d0b34d2`
+completed successfully on Ubuntu x64/ARM, Windows, macOS latest, and macOS
+Intel. The full seeded sanitizer run must be repeated after this correction;
+the broad order/timing gate remains open. Physical GUI acceptance and
+source-bearing ODA/AutoCAD validation remain open as well.

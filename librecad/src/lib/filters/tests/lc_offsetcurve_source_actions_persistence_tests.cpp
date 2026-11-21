@@ -1045,7 +1045,7 @@ TEST_CASE("I trimmed every typed source family to plain fragments",
 }
 
 TEST_CASE("I persist closed mixed-bulge polyline updates and trim one cache component",
-          "[lc-offsetcurve][source-action][polyline][closed][persistence][trim-action][multi-component]") {
+          "[lc-offsetcurve][source-action][polyline][closed][persistence][trim-action]") {
     const auto format = GENERATE(RS2::FormatDXFRW14, RS2::FormatDXFRW2000,
         RS2::FormatDWG, RS2::FormatDXFRW2018, RS2::FormatDWG2018);
     const bool dwg = format == RS2::FormatDWG || format == RS2::FormatDWG2018;
@@ -1156,7 +1156,7 @@ TEST_CASE("I persist closed mixed-bulge polyline updates and trim one cache comp
     const auto prepared = LC_OffsetCacheTrim::prepare(replacement->getData(), *cutter, {trimPick});
     CAPTURE(static_cast<int>(prepared.refusal), prepared.rootCount);
     REQUIRE(prepared.refusal == LC_OffsetCacheTrim::Refusal::None);
-    REQUIRE(prepared.fragments.size() > 1);
+    REQUIRE(prepared.fragments.size() == 1);
     std::vector<std::uint64_t> expectedTrimmed;
     for (const auto& fragment : prepared.fragments)
         expectedTrimmed.push_back(RS_Spline::geometryFingerprint(fragment.data));
