@@ -23,7 +23,7 @@ USA.
 -->
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
-Updated: 2026-11-20. Project: **LibreCAD**, not LibreCAD_3.
+Updated: 2026-11-21. Project: **LibreCAD**, not LibreCAD_3.
 
 **Current source-picker disposition (2026-11-16):** While choosing a
 replacement in the Properties widget, the user can change the source-family
@@ -302,53 +302,40 @@ AutoCAD acceptance remain open. Keep raw DWG replay diagnostics
 distinct from entity-level round-trip results. Do not add a second selector or
 claim all variants from the nine-kind selector inventory.
 
-**Current checkpoint (2026-11-20):** Sections 1898-1899 now distinguish the
-direct `(1e12,-2e12)` four-point parabola reconstruction oracle from the
-successful five-lane worker/persistence profile at `(1e6,-2e6)`. Section 1905
-pins the `1e12` worker result as ordinary fallback: the generated spline
-cache is structurally valid, but world-coordinate tolerance admission refuses
-because translation precision is not demonstrated at the requested tolerance.
-Do not change this to success by only localizing option calculation. Sections
-1900 and 1903-1904 close ODA Audit/open/conversion and exact XDATA plus SPLINE
-field comparison for the generated degree-1/degree-3 ellipse-source matrix and
-LINE controls across six DWG releases; this is not all-source-kind or
-AutoCAD acceptance.
+**Current checkpoint (2026-11-21):** Sections 1898-1905 retain the
+high-origin four-point parabola boundary: direct reconstruction at
+`(1e12,-2e12)` is distinct from the successful five-lane worker/persistence
+profile at `(1e6,-2e6)`, and the `1e12` worker case remains an ordinary fallback
+because requested world-coordinate precision is not demonstrated. Do not
+promote that case by localizing option calculation alone. Sections 1900 and
+1903-1904 independently audit the generated degree-1/degree-3 ellipse-source
+and LINE-control DWGs; that evidence is not all-source-kind or AutoCAD
+acceptance.
 
-Implementation and acceptance continue in this order: (1) expand only
-materially distinct family/variant cases with independent geometric oracles,
-worker/cache checks, applicable Trim and five-format persistence, maintaining
-fail-closed precision boundaries; (2) use the resolvable drawing generated in
-section 1906 to complete visible source-type switching, candidate refresh,
-replacement, highlight and cancel checks. That fixture now passes the
-production-filter/widget/worker integration test, but LaunchServices rejects
-the qmake bundle and SSH launch fails in macOS pasteboard services, so visible
-acceptance remains open; (3) extend independent CAD checks to other source
-families and record AutoCAD acceptance separately if available; (4) push and
-verify the accumulated PR commits. At this checkpoint the GitHub PR head is
-still
-`714011a08e144025721af12f963314a1ae6fffc7`; local commits are not PR evidence.
-The latest section 1907 retry confirms ODAFileConverter is reported running but
-has no attachable CUA window; no source-bearing conversion result is available.
-The section 1906 fixture therefore remains ready for retry, not independently
-qualified. Local `HEAD` contains unpushed commits beyond the PR branch, and
-`git push` still fails before authentication because SSH cannot resolve
-`github.com`.
-Retry publication when connectivity returns, then verify the remote head before
-calling any local result PR evidence.
-Section 1908 adds LibreDWG 0.14 parsing and R2004 round-trip evidence for the
-source-bearing ellipse fixture; extend independent parser coverage to the other
-source families without conflating it with ODA/AutoCAD acceptance.
-Section 1909 now verifies all nine typed source definitions through LibreCAD's
-R2018 DXF export and production import path. Section 1910 also covers
-LibreCAD-written R2000/R2018 DWG export/import and independent LibreDWG reads;
-these are bounded source-kind profiles, not exhaustive geometry variants.
-LibreDWG 0.14's `dxf2dwg` still reports invalid hex members while converting
-schema-2 code-1004 EED and `dwgread -O JSON` returns truncated binary values on
-that conversion path. The same decode error occurs on an existing
-ODA-produced typed-source R2000 DXF, so this does not establish a LibreCAD
-encoding defect. Keep that failed DXF-conversion path distinct from the
-successful direct DWG reads in section 1910. ODA/AutoCAD acceptance remains
-open.
+Sections 1913-1923 extend the typed-source family/variant matrix through all
+seven supported DXF and six DWG writer releases, with specific rational,
+nonuniform, periodic, high-degree, closed/mixed-bulge, shifted-seam, and
+multi-point fit-spline profiles. These remain bounded profiles; applicable
+Trim, external CAD acceptance, and visible packaged-app checks are not inferred
+from persistence results. LibreDWG direct DWG parsing and typed-CBOR
+decode/re-encode remain distinct from its failing `dxf2dwg` schema-2 conversion
+path described in section 1914.
+
+The implementation and acceptance order remains: (1) continue materially
+distinct family/variant cases with independent geometric oracles, worker/cache
+checks, applicable Trim, and five-format persistence while preserving
+fail-closed precision limits; (2) complete visible source-type switching,
+candidate refresh, replacement, highlight, and cancellation using the
+resolvable fixture from section 1906; (3) extend independent CAD checks to
+other source families and record AutoCAD acceptance separately; (4) keep
+publishing each tested slice and verify PR state. Current local and remote PR
+branch head is `38ad704801fc68997e0e2577e78c89c72a209dd7`; the latest
+`gh pr checks 3193` reports five `build_with_pixi` platform jobs pending.
+ODAFileConverter is reported running, but the desktop bridge still returns
+`cgWindowNotFound`, so no source-bearing ODA conversion result is available.
+Visible packaged-app acceptance also remains open. Continue polling the
+current exact-head checks and retry external gates when their respective
+interfaces are usable; do not mark them complete from local tests.
 
 **Latest source-widget disposition (reconciled 2026-11-16):** The source
 widget contract is that a user can change the requested source type while
@@ -60271,3 +60258,18 @@ conditioning remain separate rows. The profile is intentionally
 unconstrained-tangent: five-point tangent-constrained `LC_SplinePoints` DWG
 output remains fail-closed under the verified three-point writer subset in
 W563ax; this receipt does not widen that writer policy.
+
+## 1924. Qualify Three-point Tangent-constrained Fit Spline-points Persistence (2026-11-21)
+
+Added a three-fit-point `LC_SplinePoints` source with explicit `fitTolerance`
+and endpoint tangents derived from its evaluated endpoint jets. The test
+requires the tangent constraints to match the curve, selects the source at its
+actual midpoint through Update-from-Source, and checks worker completion and
+typed-source persistence across all seven DXF and six DWG lanes. The focused
+case passes 4,968 assertions in one case, including LibreDWG parsing and
+typed-source payload validation for DWG outputs.
+
+This verifies the existing three-point constrained writer subset only. It
+does not widen support to larger tangent-constrained fit chains, arbitrary
+tangent constraints, or fit-point Trim/offset conditioning; those remain
+fail-closed or unqualified as specified in W563ax and section 1923.

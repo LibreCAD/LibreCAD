@@ -73,8 +73,20 @@ LC_OffsetSourceGeometry sourceGeometry(SourceKind kind) {
     }
     case SourceKind::SplinePoints: {
         LC_SplinePointsData data{false, false};
-        data.useControlPoints = true;
-        data.controlPoints = {{-4, 0}, {0, 3}, {4, 0}};
+        data.splinePoints = {{-4, 0}, {0, 1.5}, {4, 0}};
+        data.fitTolerance = 1e-3;
+        LC_SplinePoints evaluator{nullptr, data};
+        LC_CurveJet start;
+        LC_CurveJet end;
+        REQUIRE(evaluator.tryEvaluateJet(0.0, LC_CurveEvaluationSide::Right, start));
+        REQUIRE(evaluator.tryEvaluateJet(
+            static_cast<double>(evaluator.getSegmentCount()),
+            LC_CurveEvaluationSide::Left, end));
+        data.fitTangentsConstrained = true;
+        data.fitStartTangent = start.first;
+        data.fitEndTangent = end.first;
+        LC_SplinePoints constrained{nullptr, data};
+        REQUIRE(constrained.fitTangentsMatchCurve());
         return LC_OffsetSourceGeometry{data};
     }
     case SourceKind::Parabola:
@@ -433,6 +445,11 @@ TEST_CASE("I Update from Source preserves every typed source through five DXF an
     mouse(*update, view, pick, true);
     lc::test::awaitUpdate(*updateAction);
 
+    const auto& report = updateAction->lastReport();
+    INFO("source refusal: " << report.sourceRefusal.toStdString()
+         << "; outcome count: " << report.outcomes.size()
+         << "; first outcome refusal: " << (report.outcomes.isEmpty()
+                 ? std::string{"none"} : report.outcomes.front().refusal.toStdString()));
     CHECK(updateAction->lastReport().updated == 1);
     CHECK(updateAction->lastReport().refused == 0);
     REQUIRE(target->isDeleted());
