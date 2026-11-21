@@ -60082,10 +60082,13 @@ acceptance gate open and do not infer failure of the DWG itself from this
 service-context abort. The already completed ODA audit of the separate
 18-file matrix in sections 1900 and 1903-1904 is unaffected.
 
-## 1913. Extend All-family DWG Round-trip Across Every Writer Release (2026-11-20)
+## 1913. Round-trip All Source Families Across Supported DXF and DWG Releases (2026-11-20)
 
-Expanded the nine-source-kind production writer/reader matrix from the R2000
-and R2018 endpoints to all six supported DWG lanes: R2000/AC1015,
+Expanded the nine-source-kind production writer/reader matrix to all seven
+supported XDATA-capable DXF lanes: R14, R2000, R2004, R2007, R2010, R2013,
+and R2018. Every lane is written, reopened through LibreCAD's production DXF
+reader, and checked for one canonical source definition per kind. The DWG
+matrix covers all six supported lanes: R2000/AC1015,
 R2004/AC1018, R2007/AC1021, R2010/AC1024, R2013/AC1027, and R2018/AC1032.
 For each lane the test writes the nine-family drawing, parses the DWG with
 LibreDWG `dwgread -O JSON`, reconstructs every binary group-1004 chunk for
@@ -60093,11 +60096,11 @@ each typed-source EED, validates its CBOR and schema, and requires exact
 source-definition decode/re-encode equality and one occurrence of each source
 kind. It then imports the same file through LibreCAD's production DWG reader
 and compares each decoded source geometry with the original candidate. The
-fixture-retention option now retains all six release files.
+fixture-retention option now retains all seven DXF and six DWG release files.
 
-The focused matrix passes 10,215 assertions across three cases; the complete
-`[gui][dialog][offsetcurve][source]` selector passes 16,919 assertions across
-46 cases. This closes all supported DWG version lanes for one bounded geometry
+The focused matrix passes 10,621 assertions across three cases; the complete
+`[gui][dialog][offsetcurve][source]` selector passes 17,325 assertions across
+46 cases. This closes all tested DXF/DWG version lanes for one bounded geometry
 profile per source kind; it does not close other geometric variants, ODA or
 AutoCAD acceptance, visual rendering, or visible packaged-app interaction.
 The separate 18-file ODA audit remains the narrower degree-1/degree-3 ellipse

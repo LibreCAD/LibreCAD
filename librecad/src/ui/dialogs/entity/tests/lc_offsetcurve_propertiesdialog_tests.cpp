@@ -1570,6 +1570,29 @@ TEST_CASE("Native source picker filters and replaces every supported source fami
             std::filesystem::copy_options::overwrite_existing, error);
         REQUIRE_FALSE(error);
     }
+    const std::array<std::pair<RS2::FormatType, const char*>, 7> dxfLanes{{
+        {RS2::FormatDXFRW14, "offset-source-picker-all-families-r14.dxf"},
+        {RS2::FormatDXFRW2000, "offset-source-picker-all-families-r2000.dxf"},
+        {RS2::FormatDXFRW2004, "offset-source-picker-all-families-r2004.dxf"},
+        {RS2::FormatDXFRW, "offset-source-picker-all-families-r2007.dxf"},
+        {RS2::FormatDXFRW2010, "offset-source-picker-all-families-r2010.dxf"},
+        {RS2::FormatDXFRW2013, "offset-source-picker-all-families-r2013.dxf"},
+        {RS2::FormatDXFRW2018, "offset-source-picker-all-families-r2018.dxf"}}};
+    for (const auto& [format, fileName] : dxfLanes) {
+        const auto dxfPath = output.file(fileName);
+        REQUIRE(lc::test::exportDrawing(reopened, dxfPath, format));
+        Graphic dxfReopened;
+        dxfReopened.initForNewDocument();
+        REQUIRE(lc::test::importDrawing(dxfReopened, dxfPath, format));
+        dxfReopened.onLoadingCompleted();
+        verifyFamilies(dxfReopened);
+        if (!retainedDirectory.empty()) {
+            std::error_code error;
+            std::filesystem::copy_file(dxfPath, retainedDirectory / fileName,
+                std::filesystem::copy_options::overwrite_existing, error);
+            REQUIRE_FALSE(error);
+        }
+    }
 #ifdef DWGSUPPORT
     const std::array<std::pair<RS2::FormatType, const char*>, 6> dwgLanes{{
         {RS2::FormatDWG, "offset-source-picker-all-families-r2000.dwg"},
