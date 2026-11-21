@@ -60278,3 +60278,19 @@ This verifies the existing three-point constrained writer subset only. It
 does not widen support to larger tangent-constrained fit chains, arbitrary
 tangent constraints, or fit-point Trim/offset conditioning; those remain
 fail-closed or unqualified as specified in W563ax and section 1923.
+
+## 1925. Assert Typed-source Identity Across Trim Undo (2026-11-21)
+
+Strengthened the all-source-family Trim integration matrix to capture the
+canonical source geometry from the actual source entity, compare it against
+the committed `LC_OffsetCurve` definition after Update-from-Source, and repeat
+that comparison after undoing Trim. This verifies that fit-point arrays,
+tolerance, tangent constraints, and the other typed source fields are restored
+as data rather than merely restoring a source-family tag. The full matrix
+passes 7,290 assertions across its source profiles and five DXF/DWG lanes.
+
+For `LC_SplinePoints`, this covers the default three-point tangent-constrained
+profile plus the matrix's existing closed fit profiles, including a transformed
+case. It does not imply every fit count, closed topology, tangent condition, or
+Trim intersection configuration is supported; those remain explicit family
+variant work.

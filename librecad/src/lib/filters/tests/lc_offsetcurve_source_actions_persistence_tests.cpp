@@ -885,6 +885,11 @@ TEST_CASE("I trimmed every typed source family to plain fragments",
     source->setLayer(graphic.findLayer("0"));
     graphic.addEntity(source);
     sourceOwner.release();
+    const auto expectedSource = LC_OffsetSourceGeometry::capture(*source);
+    REQUIRE(expectedSource);
+    const auto expectedSourceEncoding =
+        LC_OffsetWorkerRequest::Values::encodeSourceGeometry(*expectedSource);
+    REQUIRE(expectedSourceEncoding);
     graphic.select(QList<RS_Entity*>{target}, true);
 
     auto update = LC_ActionsHandlerFactory::createActionInstance(RS2::ActionOffsetCurveUpdateSource, &context);
@@ -927,6 +932,8 @@ TEST_CASE("I trimmed every typed source family to plain fragments",
         REQUIRE(nativeCurve->hasGeneralizedSourceDefinition());
         REQUIRE(nativeCurve->sourceDefinition());
         CHECK(nativeCurve->sourceDefinition()->source.kind() == kind);
+        CHECK(LC_OffsetWorkerRequest::Values::encodeSourceGeometry(
+                  nativeCurve->sourceDefinition()->source) == expectedSourceEncoding);
     }
     REQUIRE(graphic.removeEntity(source));
 
@@ -1013,7 +1020,13 @@ TEST_CASE("I trimmed every typed source family to plain fragments",
     REQUIRE(graphic.undo());
     CHECK_FALSE(nativeCurve->isDeleted());
     if (kind == SourceKind::Ellipse) CHECK(nativeCurve->hasEditableDefinition());
-    else CHECK(nativeCurve->hasGeneralizedSourceDefinition());
+    else {
+        REQUIRE(nativeCurve->hasGeneralizedSourceDefinition());
+        REQUIRE(nativeCurve->sourceDefinition());
+        CHECK(nativeCurve->sourceDefinition()->source.kind() == kind);
+        CHECK(LC_OffsetWorkerRequest::Values::encodeSourceGeometry(
+                  nativeCurve->sourceDefinition()->source) == expectedSourceEncoding);
+    }
     REQUIRE(graphic.redo());
     CHECK(nativeCurve->isDeleted());
     REQUIRE(fragments.size() == 1);
