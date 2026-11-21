@@ -32,8 +32,24 @@ class RS_GraphicView;
 
 class LC_CoordinatesParser{
 public:
+    /** What a typed coordinate says, before a view places it. */
+    struct Syntax {
+        enum Kind {None, Origin, RelativeZero, Cartesian, Polar};
+        enum Reference {Absolute, Relative, Wcs};
+        Kind kind = None;
+        Reference reference = Absolute;
+        // x and y, or the distance and the angle in degrees
+        double first = 0.;
+        double second = 0.;
+        // the values were read
+        bool valid = false;
+    };
+
     explicit LC_CoordinatesParser(RS_GraphicView* gview);
     RS_CoordinateEvent parseCoordinate(const QString& inputStr, bool &stringContainsCoordinate) const;
+    static Syntax parseSyntax(const QString& input);
+    /** Whether the input is a coordinate that can be read */
+    static bool isCoordinate(const QString& input);
 private:
     RS_GraphicView* m_graphicView;
     RS_Vector toWCS(const RS_Vector& ucs) const;

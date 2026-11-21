@@ -2665,6 +2665,7 @@ if (BUILD_TESTS)
 	### The actual tests
         librecad/src/lib/engine/document/fonts/tests/unicode_font_tests.cpp
         librecad/src/lib/engine/document/fonts/tests/rs_font_tests.cpp
+        librecad/src/lib/engine/document/fonts/tests/lc_font_lff_coordinates_tests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_splinehelper_tests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_hyperbola_tests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_parabola_tests.cpp
@@ -2852,6 +2853,7 @@ if (BUILD_TESTS)
         ${LIBRECAD_TEST_TEMP_DIRECTORY_TEST_SOURCE}
         librecad/src/lib/engine/document/tests/lc_graphic_unit_tests.cpp
         librecad/src/lib/gui/tests/rs_graphicview_close_tests.cpp
+        librecad/src/lib/gui/tests/lc_coordinates_parser_tests.cpp
         librecad/src/lib/gui/tests/lc_grid_tests.cpp
         librecad/src/lib/gui/tests/rs_painter_tests.cpp
         librecad/src/actions/drawing/draw/dimensions/tests/rs_actiondimleader_tests.cpp

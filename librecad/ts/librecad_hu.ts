@@ -4285,7 +4285,7 @@ End Edge Point: (%9 , %10)</source>
         <translation>Szög: %1
 Pótszög: %2
 Kiegészítő szög: %3
-Teljesszög-kiegészítő: %4
+Teljes szög − szög: %4
 Kezdő élpont: (%5 , %6)
 Metszéspont: (%7, %8)
 Záró élpont: (%9 , %10)</translation>

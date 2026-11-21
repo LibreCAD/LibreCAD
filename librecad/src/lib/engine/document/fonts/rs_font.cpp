@@ -514,7 +514,10 @@ RS_Block* RS_Font::generateLffFont(const QString& key) {
 #else
                 QStringList coords = point.split(',', QString::SkipEmptyParts);
 #endif
-                //at least X,Y is required
+                // Issue #3285: skip a point without any coordinate, such as ","
+                if (coords.isEmpty()) {
+                    continue;
+                }
                 const double x1 = coords.at(0).toDouble();
                 // Issue #2045, if y-coordinate is missing, default to 0
                 const double y1 = coords.size() >= 2 ? coords.at(1).toDouble() : 0.;
@@ -526,6 +529,11 @@ RS_Block* RS_Font::generateLffFont(const QString& key) {
                 }
                 pline->setNextBulge(bulge);
                 pline->addVertex(RS_Vector(x1, y1), bulge);
+            }
+            // fewer than two points left: nothing to draw
+            if (pline->isEmpty()) {
+                delete pline;
+                continue;
             }
             letter->addEntity(pline);
         }

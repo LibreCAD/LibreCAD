@@ -27,6 +27,7 @@
 #include <algorithm>
 #include <cmath>
 #include <limits>
+#include <utility>
 #include <vector>
 
 #include <QString>
@@ -148,18 +149,32 @@ TEST_CASE("RS_Math::derationalize tests", "[rs_math]") {
         REQUIRE_THAT(result.toDouble(), Catch::Matchers::WithinULP(3.14, 2));
     }
 
-/* 
-// TODO: fix for those two formats in RS_Math::derationalize()
-    SECTION("Fractal input") {
-        result = RS_Math::derationalize("2 1/4");
-        REQUIRE_THAT(result.toDouble(), Catch::Matchers::WithinAbs(2.25, 1e-6));
+    SECTION("Mixed number") {
+        for (const auto& [input, expected] : {std::pair{"2 1/4", 2.25}, std::pair{"1 1/2", 1.5},
+                                              std::pair{"1  1/2", 1.5}, std::pair{"-1 1/2", -1.5},
+                                              std::pair{"10 3/8\"", 10.375},
+                                              std::pair{" 3 3 / 4 in ", 3.75}}) {
+            CAPTURE(input);
+            result = RS_Math::derationalize(QString::fromLatin1(input));
+            REQUIRE_THAT(result.toDouble(), Catch::Matchers::WithinAbs(expected, 1e-12));
+        }
     }
 
-    SECTION("Fractal input") {
-        result = RS_Math::derationalize("2-1/4");
-        REQUIRE_THAT(result.toDouble(), Catch::Matchers::WithinAbs(2.25, 1e-6));
+    SECTION("Whole inches joined to a fraction by - or + and an inch mark") {
+        for (const char* input : {"2-1/4\"", "2+1/4\""}) {
+            CAPTURE(input);
+            result = RS_Math::derationalize(QString::fromLatin1(input));
+            REQUIRE_THAT(result.toDouble(), Catch::Matchers::WithinAbs(2.25, 1e-12));
+        }
     }
-*/
+
+    SECTION("Not a mixed number") {
+        // left to the expression parser: 2-1/4 without an inch mark is a subtraction
+        for (const char* input : {"1 2", "1 /2", "2*3", "2-1/4", "1 1/0"}) {
+            CAPTURE(input);
+            CHECK(RS_Math::derationalize(QString::fromLatin1(input)) == QString::fromLatin1(input));
+        }
+    }
 }
 
 // Regression for issue #2722.
