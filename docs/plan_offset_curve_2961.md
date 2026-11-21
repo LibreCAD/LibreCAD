@@ -60178,3 +60178,20 @@ ODAFileConverter retry is still blocked at the desktop bridge: the app is
 reported running but accessibility cannot attach to its window
 (`cgWindowNotFound`), so no conversion or interoperability result was
 produced.
+
+## 1918. Qualify Closed Mixed-bulge Polyline Source Persistence (2026-11-21)
+
+Extended the closed-polyline persistence case to include a closed profile with
+two oppositely signed bulges and straight segments, reusing the profile runner
+for both this source and the four-quarter-arc loop. Each profile is picked
+through the Properties widget and prepared by the worker, then checked for
+exact canonical typed-source preservation through R14, R2000, and R2018 DXF
+plus R2000 and R2018 DWG. Both DWG files per profile pass LibreDWG JSON parsing
+and complete typed-source CBOR decode/re-encode validation. The focused case
+passes 219 assertions; the full source-picker selector passes 17,829
+assertions across 49 cases.
+
+This closes only the two recorded closed profiles. It does not establish
+arbitrary closed polyline segment sequences, seam-invariant typed
+serialization, offset-geometry/Trim correctness for every profile, external
+CAD acceptance, or visible packaged-app behavior. Those remain open.
