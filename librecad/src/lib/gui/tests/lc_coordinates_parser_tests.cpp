@@ -99,6 +99,7 @@ TEST_CASE("WCS and plain polar input at 45 and -90 degrees", "[coordinates_parse
         checkPoint(fixture.parse("!100<45"), half, half);
         checkPoint(fixture.parse("100<45"), half, half);
         checkPoint(fixture.parse("!100<-90"), 0., -100.);
+        checkPoint(fixture.parse("100<-90"), 0., -100.);
     }
 
     SECTION("with a rotated UCS only plain input moves") {
@@ -108,6 +109,8 @@ TEST_CASE("WCS and plain polar input at 45 and -90 degrees", "[coordinates_parse
         const RS_Vector plain = fixture.parse("100<45");
         // 45 degrees in the UCS is 135 degrees in the WCS, from the UCS origin
         checkPoint(plain, 10. - half, 20. + half);
+        // -90 degrees in the UCS is 0 degrees in the WCS
+        checkPoint(fixture.parse("100<-90"), 110., 20.);
     }
 }
 
