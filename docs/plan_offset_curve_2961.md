@@ -327,6 +327,13 @@ families and record AutoCAD acceptance separately if available; (4) push and
 verify the accumulated PR commits. At this checkpoint the GitHub PR head is
 still
 `714011a08e144025721af12f963314a1ae6fffc7`; local commits are not PR evidence.
+The latest section 1907 retry confirms ODAFileConverter is reported running but
+has no attachable CUA window; no source-bearing conversion result is available.
+The section 1906 fixture therefore remains ready for retry, not independently
+qualified. Local `HEAD` is 21 commits ahead of the PR branch, and `git push`
+still fails before authentication because SSH cannot resolve `github.com`.
+Retry publication when connectivity returns, then verify the remote head before
+calling any local result PR evidence.
 
 **Latest source-widget disposition (reconciled 2026-11-16):** The source
 widget contract is that a user can change the requested source type while
