@@ -60795,3 +60795,18 @@ test details, so this is still an open CI gate and is not attributed to the
 ellipse test. Windows x64 and ARM verification, exact-head CI after this
 change, visible GUI acceptance, and source-bearing ODA/AutoCAD validation
 remain open. The overall roadmap is incomplete.
+
+## 1946. Trigger DWG/DXF CI for Trim Action Tests (2026-11-21)
+
+The source-push DWG/DXF verification workflow's path filter did not include
+`lc_offsetcachetrim_action_tests.cpp`, so the timeout-test correction at
+section 1945 only started the general Pixi build matrix. Added the Trim action
+test translation unit to the workflow paths. This makes future changes to the
+worker-driven Trim matrix run the bounded DWG/DXF and relocated-worker CI gate
+instead of silently relying on unrelated changed paths.
+
+The workflow is validated with the repository YAML parser and
+`git diff --check`; this workflow-only slice has no C++ behavior change. Its
+exact-head CI run is queued by the push. Independent broad sanitizer order
+stability, visible GUI acceptance, source-bearing ODA/AutoCAD acceptance, and
+the overall roadmap remain open.

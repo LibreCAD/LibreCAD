@@ -63,6 +63,7 @@ on:
       - 'librecad/src/ui/main/tests/lc_docklayout_tests.cpp'
       - 'librecad/src/lib/engine/document/fonts/**'
       - 'librecad/src/test/**'
+      - 'librecad/src/actions/drawing/modify/tests/lc_offsetcachetrim_action_tests.cpp'
       - 'librecad/src/main/console_dxf2png.*'
       - 'librecad/src/main/tests/lc_consolesvgexporttests.cpp'
       - 'librecad/src/lib/gui/render/headless/lc_printviewportrenderer.*'
