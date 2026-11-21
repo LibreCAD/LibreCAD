@@ -80,7 +80,9 @@ void requireNativeHelper() {
     REQUIRE(QFileInfo(path).isExecutable());
 }
 
-void checkLibreDwgSourceKinds(const std::filesystem::path& file) {
+void checkLibreDwgSourceKinds(
+    const std::filesystem::path& file,
+    std::optional<LC_OffsetSourceGeometry::Kind> onlyKind = std::nullopt) {
     QString reader = qEnvironmentVariable("DWGREAD");
     if (reader.isEmpty()) reader = QStandardPaths::findExecutable("dwgread");
     if (reader.isEmpty()) return;
@@ -97,7 +99,7 @@ void checkLibreDwgSourceKinds(const std::filesystem::path& file) {
     REQUIRE(parseError.error == QJsonParseError::NoError);
     REQUIRE(document.isObject());
 
-    std::array<bool, LC_OffsetSourceGeometry::SupportedKinds.size()> sourceKinds{};
+    std::array<std::size_t, LC_OffsetSourceGeometry::SupportedKinds.size()> sourceKinds{};
     std::size_t carriers = 0;
     for (const QJsonValue& value : document.object().value("OBJECTS").toArray()) {
         const QJsonObject object = value.toObject();
@@ -149,14 +151,16 @@ void checkLibreDwgSourceKinds(const std::filesystem::path& file) {
         REQUIRE(kind >= 0);
         REQUIRE(static_cast<std::size_t>(kind) < sourceKinds.size());
         CHECK(static_cast<int>(source->source.kind()) == kind);
-        CHECK_FALSE(sourceKinds[static_cast<std::size_t>(kind)]);
-        sourceKinds[static_cast<std::size_t>(kind)] = true;
+        ++sourceKinds[static_cast<std::size_t>(kind)];
         ++carriers;
     }
-    CHECK(carriers == sourceKinds.size());
-    CHECK(std::all_of(sourceKinds.begin(), sourceKinds.end(), [](bool present) {
-        return present;
-    }));
+    const std::size_t expectedCarriers = onlyKind ? 1 : sourceKinds.size();
+    CHECK(carriers == expectedCarriers);
+    for (std::size_t i = 0; i < sourceKinds.size(); ++i) {
+        const auto kind = LC_OffsetSourceGeometry::SupportedKinds[i];
+        const std::size_t expectedCount = !onlyKind || *onlyKind == kind ? 1 : 0;
+        CHECK(sourceKinds[i] == expectedCount);
+    }
 }
 
 bool pollEventsUntil(const std::function<bool()>& ready) {
@@ -1616,6 +1620,100 @@ TEST_CASE("Native source picker filters and replaces every supported source fami
                 std::filesystem::copy_options::overwrite_existing, error);
             REQUIRE_FALSE(error);
         }
+    }
+#endif
+}
+
+TEST_CASE("Rational quadratic spline sources survive native DXF and DWG lanes",
+          "[gui][dialog][offsetcurve][source][typed][variant][rational-spline]") {
+    RS_SplineData data{2, false};
+    data.controlPoints = {{4, 0}, {4, 4}, {0, 4}};
+    data.knotslist = {0, 0, 0, 1, 1, 1};
+    data.weights = {1, std::sqrt(.5), 1};
+    LC_OffsetSourceGeometry expectedGeometry{data};
+    REQUIRE(expectedGeometry.isWellFormed());
+    const auto expectedEncoding =
+        LC_OffsetWorkerRequest::Values::encodeSourceGeometry(expectedGeometry);
+    REQUIRE(expectedEncoding);
+
+    Fixture f;
+    auto source = expectedGeometry.makeEntity();
+    REQUIRE(source);
+    RS_Entity* sourceEntity = source.get();
+    f.graphic.addEntity(source.release());
+
+    std::unique_ptr<LC_OffsetCurve> carrier(
+        static_cast<LC_OffsetCurve*>(f.curve->clone()));
+    NativeWidget widget;
+    widget.setGraphicViewport(f.view.getViewPort());
+    widget.setEntity(carrier.get());
+    widget.show();
+    QApplication::processEvents();
+    auto* typeBox = widget.findChild<QComboBox*>("cbSourceType");
+    auto* sourceBox = widget.findChild<QComboBox*>("cbSource");
+    REQUIRE(typeBox);
+    REQUIRE(sourceBox);
+    const int splineType = typeBox->findData(
+        static_cast<int>(LC_OffsetSourceGeometry::Kind::Spline));
+    REQUIRE(splineType >= 0);
+    typeBox->setCurrentIndex(splineType);
+    const int sourceIndex = sourceBox->findData(
+        QVariant::fromValue<qulonglong>(sourceEntity->getId()));
+    REQUIRE(sourceIndex >= 0);
+    sourceBox->setCurrentIndex(sourceIndex);
+    awaitPreparation(widget);
+    REQUIRE(widget.lastEditResult());
+    REQUIRE(*widget.lastEditResult());
+    REQUIRE(carrier->sourceDefinition());
+    CHECK(carrier->sourceDefinition()->source.kind() ==
+          LC_OffsetSourceGeometry::Kind::Spline);
+    CHECK(LC_OffsetWorkerRequest::Values::encodeSourceGeometry(
+              carrier->sourceDefinition()->source) == expectedEncoding);
+    carrier->setSourceHandle(0);
+    f.graphic.addEntity(carrier.release());
+
+    const auto verifyRationalSource = [&](const Graphic& drawing) {
+        std::size_t matches = 0;
+        for (const RS_Entity* entity : drawing) {
+            const auto* offset = dynamic_cast<const LC_OffsetCurve*>(entity);
+            if (!offset || !offset->sourceDefinition() ||
+                offset->sourceDefinition()->source.kind() !=
+                    LC_OffsetSourceGeometry::Kind::Spline)
+                continue;
+            CHECK(LC_OffsetWorkerRequest::Values::encodeSourceGeometry(
+                      offset->sourceDefinition()->source) == expectedEncoding);
+            ++matches;
+        }
+        CHECK(matches == 1);
+    };
+
+    lc::test::OutputDirectory output{"offset-rational-spline-source"};
+    const std::array<std::pair<RS2::FormatType, const char*>, 3> dxfLanes{{
+        {RS2::FormatDXFRW14, "r14.dxf"},
+        {RS2::FormatDXFRW2000, "r2000.dxf"},
+        {RS2::FormatDXFRW2018, "r2018.dxf"}}};
+    for (const auto& [format, fileName] : dxfLanes) {
+        const auto path = output.file(fileName);
+        REQUIRE(lc::test::exportDrawing(f.graphic, path, format));
+        Graphic reopened;
+        reopened.initForNewDocument();
+        REQUIRE(lc::test::importDrawing(reopened, path, format));
+        reopened.onLoadingCompleted();
+        verifyRationalSource(reopened);
+    }
+#ifdef DWGSUPPORT
+    const std::array<std::pair<RS2::FormatType, const char*>, 2> dwgLanes{{
+        {RS2::FormatDWG, "r2000.dwg"},
+        {RS2::FormatDWG2018, "r2018.dwg"}}};
+    for (const auto& [format, fileName] : dwgLanes) {
+        const auto path = output.file(fileName);
+        REQUIRE(lc::test::exportDrawing(f.graphic, path, format));
+        checkLibreDwgSourceKinds(path, LC_OffsetSourceGeometry::Kind::Spline);
+        Graphic reopened;
+        reopened.initForNewDocument();
+        REQUIRE(lc::test::importDrawing(reopened, path, format));
+        reopened.onLoadingCompleted();
+        verifyRationalSource(reopened);
     }
 #endif
 }

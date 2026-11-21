@@ -60121,3 +60121,20 @@ cross-converter DXF round-trip after LibreDWG fixes or when another independent
 writer is available. The optional conversion assertion was removed rather
 than making the test suite depend on this invalid converter output. The
 13-lane LibreCAD-generated DXF/DWG round-trip matrix remains green.
+
+## 1915. Qualify Rational Quadratic Spline Source Persistence (2026-11-20)
+
+Added a worker-backed source-picker profile for a rational quadratic quarter
+circle represented by three control points, clamped degree-2 knots, and the
+non-unit middle weight `sqrt(0.5)`. The test checks typed source capture and
+then exact canonical source-geometry preservation through R14, R2000, and
+R2018 DXF plus R2000 and R2018 DWG. Each DWG also passes the optional
+LibreDWG JSON check, including reconstruction and schema decoding of the full
+binary group-1004 EED payload. The focused case passes 106 assertions; the
+complete source-picker suite passes 17,425 assertions across 47 cases.
+
+This qualifies one rational-conic spline source through the worker and five
+native-capable file lanes. It does not qualify general rational NURBS degrees,
+weights, knot multiplicities, closed/periodic topology, or all trim/conditioning
+profiles. Those remain separate family-by-variant rows. Visible GUI acceptance,
+source-bearing ODA/AutoCAD acceptance, and PR publication also remain open.
