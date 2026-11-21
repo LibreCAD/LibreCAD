@@ -317,14 +317,15 @@ AutoCAD acceptance.
 Implementation and acceptance continue in this order: (1) expand only
 materially distinct family/variant cases with independent geometric oracles,
 worker/cache checks, applicable Trim and five-format persistence, maintaining
-fail-closed precision boundaries; (2) create or obtain a packaged-app drawing
-with a resolvable source entity and editable offset, then complete visible
-source-type switching, candidate refresh, replacement, highlight and cancel
-checks; the standalone carrier used in section 1901 did not contain its source
-entity, and CUA could not reconnect to a LibreCAD window on 2026-11-20; (3)
-extend independent CAD checks to other source families and record AutoCAD
-acceptance separately if available; (4) push and verify the accumulated PR
-commits. At this checkpoint the GitHub PR head is still
+fail-closed precision boundaries; (2) use the resolvable drawing generated in
+section 1906 to complete visible source-type switching, candidate refresh,
+replacement, highlight and cancel checks. That fixture now passes the
+production-filter/widget/worker integration test, but LaunchServices rejects
+the qmake bundle and SSH launch fails in macOS pasteboard services, so visible
+acceptance remains open; (3) extend independent CAD checks to other source
+families and record AutoCAD acceptance separately if available; (4) push and
+verify the accumulated PR commits. At this checkpoint the GitHub PR head is
+still
 `714011a08e144025721af12f963314a1ae6fffc7`; local commits are not PR evidence.
 
 **Latest source-widget disposition (reconciled 2026-11-16):** The source
@@ -59910,3 +59911,27 @@ tolerance and retain exact operation-8/source-cache validation. Merely
 localizing `directOptions` would remove the refusal without proving the
 world-coordinate result. The visible source-picker interaction and PR push
 remain open.
+
+## 1906. Add a Resolvable Source-picker GUI Fixture (2026-11-20)
+
+Added an integration case that writes an AC1032 DXF containing a valid native
+ellipse offset, its matching source ellipse, an alternate ellipse, and a line
+candidate. The test reopens the file through the production DXF filter,
+confirms the imported offset resolves to the matching source entity, changes
+the Properties source-family filter to Line, completes real-helper typed
+replacement, and verifies source highlighting. With
+`LIBRECAD_DWG_FIXTURE_DIR=/private/tmp/offset-source-picker-fixture`, the
+export helper retains the deterministic file at
+`offset-source-picker-visible_source-picker-visible.dxf`, SHA-256
+`078576a20e1e9524538c68850229a902886fa17ae07213e4366930bdabe22fc9`.
+
+The focused fixture case passes 26 assertions. The complete rebuilt
+`[gui][dialog][offsetcurve][source]` selection passes 15,627 assertions across
+46 cases. This is automated import/widget/worker integration, not visible
+desktop acceptance. LaunchServices rejected the temporary qmake bundle with
+`kLSNoExecutableErr` despite its executable being present; directly launching
+the executable from SSH aborted on macOS pasteboard/XPC errors. CUA likewise
+could not attach to a LibreCAD window. Keep the manual visible check open and
+use this fixture for the next valid desktop attempt. The local commit is not
+yet on PR #3193; the GitHub head remains the revision recorded in the current
+checkpoint.
