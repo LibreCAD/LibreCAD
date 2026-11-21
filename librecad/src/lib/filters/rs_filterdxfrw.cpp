@@ -33030,9 +33030,11 @@ void RS_FilterDXFRW::writeSplinePoints(LC_SplinePoints *s) {
     sp.tgEnd = DRW_Coord{data.fitEndTangent.x, data.fitEndTangent.y,
                          data.fitEndTangent.z};
   }
+  // DXF preserves constrained fit data in scenario 2; DWG uses the exact
+  // control net because its constrained fit scenario diverges in ODA.
   const bool writeFitScenario = !data.useControlPoints && !data.cut &&
                                 fitPoints.size() >= 2 &&
-                                !data.fitTangentsConstrained &&
+                                (!data.fitTangentsConstrained || !m_dwgW) &&
                                 !s->isClosed();
   sp.degree = 2;
   sp.nfit = writeFitScenario ? static_cast<std::int32_t>(fitPoints.size()) : 0;

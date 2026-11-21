@@ -5735,7 +5735,7 @@ TEST_CASE("T Trim Two trims a worker-created high-origin ellipse offset",
 
 TEST_CASE("T Trim Two action trims worker-created typed spline and spline-points sources in both pick orders",
           "[gui][lc-offsetcurve][trim-action][typed-source][spline][fit-points][trim-two]") {
-    for (unsigned profile = 0; profile <= 37; ++profile)
+    for (unsigned profile = 0; profile <= 38; ++profile)
     for (const bool nativeFirst : {false, true}) {
         const bool fitPoints = profile >= 5;
         const bool splinePointsSource = profile == 2 || fitPoints;
@@ -5779,6 +5779,9 @@ TEST_CASE("T Trim Two action trims worker-created typed spline and spline-points
                         ? std::vector<RS_Vector>{{-4, 0}, {-3, 1.5}, {-2, 2.5},
                                                  {-1, 3.1}, {0, 3.3}, {1, 3.1},
                                                  {2, 2.5}, {4, 0}}
+                    : profile == 38
+                        ? std::vector<RS_Vector>{{0, 0}, {1, 4}, {3, 5},
+                                                 {6, 2}, {8, 0}}
                     : profile == 10
                     ? std::vector<RS_Vector>{{-5, 0}, {-4, 3}, {-1, 5}, {3, 4},
                                              {5, 0}, {3, -4}, {-1, -5}, {-4, -3}}
@@ -5995,27 +5998,33 @@ TEST_CASE("T Trim Two action trims worker-created typed spline and spline-points
                 if (profile == 15 || profile == 17 || profile == 18 || profile == 19)
                     data.fitTolerance = 2e-4;
                 if (profile == 7) data.fitTolerance = 1e-3;
+                if (profile == 38) data.fitTolerance = 1e-8;
             } else {
                 data.useControlPoints = true;
                 data.controlPoints = {{-4, 0}, {0, 3}, {4, 0}};
             }
             source = new LC_SplinePoints(&f.graphic, data);
-            if (profile == 6 || profile == 36 || profile == 37) {
+            if (profile == 6 || profile == 36 || profile == 37 || profile == 38) {
                 auto* fitted = dynamic_cast<LC_SplinePoints*>(source);
                 REQUIRE(fitted);
                 CHECK(fitted->getData().splinePoints.size() ==
                       (profile == 6 ? 4u : profile == 36 ? 5u :
-                       profile == 37 ? 8u : 3u));
+                       profile == 37 ? 8u : 5u));
                 LC_CurveJet startJet;
                 LC_CurveJet endJet;
                 REQUIRE(fitted->tryEvaluateJet(0.0, LC_CurveEvaluationSide::Right, startJet));
                 REQUIRE(fitted->tryEvaluateJet(static_cast<double>(fitted->getSegmentCount()),
                     LC_CurveEvaluationSide::Left, endJet));
-                auto& fittedData = fitted->getData();
+                LC_SplinePointsData fittedData = fitted->getData();
                 fittedData.fitTangentsConstrained = true;
                 fittedData.fitStartTangent = startJet.first;
-                fittedData.fitEndTangent = endJet.first;
-                REQUIRE(fitted->fitTangentsMatchCurve());
+                fittedData.fitEndTangent = profile == 38
+                    ? RS_Vector{0.0, 0.0, 0.0} : endJet.first;
+                auto constrained = std::make_unique<LC_SplinePoints>(
+                    &f.graphic, std::move(fittedData));
+                REQUIRE(constrained->fitTangentsMatchCurve());
+                delete source;
+                source = constrained.release();
             }
         } else if (profile == 4) {
             RS_Spline closed(nullptr, RS_SplineData{3, false});

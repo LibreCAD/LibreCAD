@@ -60350,24 +60350,31 @@ and current PR publication/CI status. This slice does not complete the roadmap.
 
 Extended the worker-created spline/SplinePoints Trim Two matrix with an open
 five-fit-point profile constrained at both endpoints and an open eight-fit-
-point profile constrained at both endpoints. Both profiles run in both entity
-pick orders through worker source generation, Trim preview/commit, undo/redo,
-and R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG save/reopen. The format-aware
-DWG assertions require the scenario-1 degree-2 control net to reopen as
+point profile constrained at both endpoints, plus a five-fit-point profile
+with only its start tangent constrained. All three run in both entity pick
+orders through worker source generation, Trim preview/commit, undo/redo, and
+R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG save/reopen. The format-aware DWG
+assertions require the scenario-1 degree-2 control net to reopen as
 control-point mode with no false cut flag, and compare every control point to
-the source curve. DXF lanes continue checking the fit-point and tangent source
-fields.
+the source curve.
 
-The targeted test passes **28,059 assertions in one Catch2 case**; the CMake
+The DXF writer now emits the constrained fit-point scenario (scenario 2)
+instead of mixing fit/tangent metadata with the control net. That lets the
+reader reconstruct the fit-point source fields correctly in DXF. DWG continues
+to use the control-net fallback from section 1927 because its scenario-2
+geometry diverged in the recorded ODA comparison.
+
+The targeted test passes **28,846 assertions in one Catch2 case**; the CMake
 `librecad_tests` target rebuilds successfully. Explicit point-count assertions
 ensure the new profiles cannot silently fall through to the existing broad
-profile initializer. This confirms these two longer, two-end-constrained
-profiles through the action workflow, not arbitrary fit counts/point layouts,
-one-end constraint action workflows, or semantic authoring-metadata retention
-on a standalone DWG SPLINE. The lower-level DWG writer matrix separately covers
-one-end tangent modes. DWG scenario-1 remains the geometry-preserving fallback
-documented in section 1927; no fresh ODA conversion was available in this
-slice.
+profile initializer. This confirms these bounded longer/tangent-mode profiles
+through the action workflow, not arbitrary fit counts or point layouts,
+end-only tangent-constrained action persistence, or semantic authoring-
+metadata retention on a standalone DWG SPLINE. The lower-level DWG writer
+matrix separately covers all tangent modes and fit counts through eight.
+The dedicated DXF/DWG format tests also pass **31,791 assertions across 2
+cases**, checking fit-only DXF output/import and control-net DWG output/import
+for all six DWG releases. No fresh ODA conversion was available in this slice.
 
 The roadmap remains incomplete: visible packaged-app acceptance, source-bearing
 ODA/AutoCAD acceptance, further fit/profile coverage, and exact-head CI are

@@ -1013,7 +1013,7 @@ TEST_CASE("Fit-point SPLINE intent survives DXF and DWG file round trips",
   }
 }
 
-TEST_CASE("Tangent-constrained quadratic fit SPLINE falls back to its control net",
+TEST_CASE("Tangent-constrained quadratic fit SPLINE preserves DXF fit data and DWG control net",
           "[dxf][dwg][filter][spline][fit-points][roundtrip]") {
   ensureSettings();
   SplineRecord source;
@@ -1074,15 +1074,19 @@ TEST_CASE("Tangent-constrained quadratic fit SPLINE falls back to its control ne
     std::filesystem::remove(path);
 
     REQUIRE(written.size() == 1);
-    CHECK_FALSE(written.front().m_controlPoints.empty());
     if (format == RS2::FormatDXFRW) {
+      CHECK(written.front().m_controlPoints.empty());
       checkSameVectors(written.front().m_fitPoints, source.m_fitPoints);
       CHECK(written.front().m_tangentStart.x == source.m_tangentStart.x);
       CHECK(written.front().m_tangentEnd.y == source.m_tangentEnd.y);
-      RS_Spline *reopenedSpline = onlySpline(reopened);
+      LC_SplinePoints *reopenedSpline = onlySplinePoints(reopened);
+      CHECK_FALSE(reopenedSpline->getData().useControlPoints);
       CHECK(reopenedSpline->getData().fitTangentsConstrained);
-      checkSameVectors(reopenedSpline->getData().fitPoints, source.m_fitPoints);
+      checkSameVectors(reopenedSpline->getData().splinePoints, source.m_fitPoints);
+      CHECK(reopenedSpline->getData().fitStartTangent.x == source.m_tangentStart.x);
+      CHECK(reopenedSpline->getData().fitEndTangent.y == source.m_tangentEnd.y);
     } else {
+      CHECK_FALSE(written.front().m_controlPoints.empty());
       CHECK(written.front().m_fitPoints.empty());
       CHECK(written.front().m_tangentStart.magnitude() == 0.0);
       CHECK(written.front().m_tangentEnd.magnitude() == 0.0);
