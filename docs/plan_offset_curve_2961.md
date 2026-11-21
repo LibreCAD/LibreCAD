@@ -60476,3 +60476,22 @@ not establish arbitrary-point-count behavior. Visible GUI acceptance,
 source-bearing external ODA/AutoCAD acceptance, wider curve/profile coverage,
 remaining sanitizer action coverage, and final exact-head CI remain open. The
 overall plan is not complete.
+
+## 1933. Extend End-Only Tangent Trim Persistence to Twelve Fit Points (2026-11-21)
+
+Added a 12-fit-point open spline with only its end tangent constrained to the
+worker-created Trim Two matrix. The profile follows a smooth nonuniform arch,
+and must produce a certified cut rather than taking the test's allowed
+ambiguous-root refusal path. Both entity pick orders run through preview,
+commit, undo/redo, and R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG save/reopen.
+
+The Release matrix passes **31,165 assertions in 1 Catch2 case**. The same
+matrix under ASan/UBSan with the bounded 10,000 ms test-only worker wait passes
+**107,997 assertions in 1 case**, without sanitizer diagnostics. `git diff
+--check` passes.
+
+This extends tangent-constrained Trim persistence beyond the previously covered
+eight-point profile. It does not prove arbitrary counts or fit layouts. Visible
+GUI acceptance, source-bearing ODA/AutoCAD acceptance, broader conic/spline
+profile coverage, remaining sanitizer action coverage, and current exact-head
+CI remain open; the plan is not complete.
