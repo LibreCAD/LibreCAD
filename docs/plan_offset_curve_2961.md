@@ -59856,3 +59856,23 @@ matrix and six LINE controls. It does not establish every source kind, DWG
 version-specific behavior beyond these fixtures, UI editability in ODA, or
 AutoCAD interoperability. The packaged LibreCAD source-picker interaction
 and PR push remain open.
+
+## 1905. Pin the High-origin Small-scale Parabola Worker Boundary (2026-11-21)
+
+Added a real-worker regression for the rotated scale-`1e-3` parabola
+reconstructed from four points at `(1e12, -2e12)`. For signed distances
+`+/-0.005`, generation completes and returns nonempty ordinary geometry, but
+explicitly refuses native cache promotion with
+`NotCacheRepresentable`; no native curve or changed result is published. The
+direct four-point reconstruction oracle for this frame remains recorded in
+section 1898, and the successful five-lane worker/persistence case at
+`(1e6, -2e6)` remains recorded in section 1899.
+
+The focused real-helper case passes 385 assertions. The neighboring
+`[parabola][from-four-points][high-origin]` worker-client selection passes
+1,583 assertions across two cases, including the successful `1e6` worker,
+cache-admission, and persistence row. This deliberately records current
+fail-closed behavior; it does not implement or claim high-origin native
+editability at `1e12`. Investigate whether exact local-frame cache validation
+can safely admit the represented geometry before changing the refusal. The
+visible source-picker interaction and PR push remain open.
