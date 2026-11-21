@@ -60252,3 +60252,19 @@ passes 18,219 assertions across 49 cases.
 
 This qualifies one rational wrapped-closed cubic profile, not arbitrary
 periodic knot layouts, weight ranges, degrees, or offset/Trim conditioning.
+
+## 1923. Qualify Multi-point Fit Spline-points Persistence (2026-11-21)
+
+Changed the SplinePoints candidate in the all-family picker/persistence matrix
+from a control-point-only quadratic to a five-point fit spline with explicit
+`fitTolerance = 1e-3`. The test selects the source through the widget, checks
+the committed typed geometry, and round-trips it through all seven supported
+DXF lanes and all six DWG lanes. Each DWG is independently parsed by LibreDWG
+and its typed source payload is decoded and re-encoded. The focused 13-lane
+case passes 2,123 assertions; the complete source-picker selector passes
+18,243 assertions across 49 cases. Control-point spline-points profiles
+remain covered in separate picker/worker cases.
+
+This qualifies one five-fit-point tolerance profile; endpoint-tangent
+fit-point metadata, other fit counts/tolerances, and fit-point Trim/offset
+conditioning remain separate rows.

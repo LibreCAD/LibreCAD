@@ -1364,8 +1364,8 @@ TEST_CASE("Native source picker filters and replaces every supported source fami
         }
         case Kind::SplinePoints: {
             LC_SplinePointsData data{false, false};
-            data.useControlPoints = true;
-            data.controlPoints = {{-4, 0}, {0, 3}, {4, 0}};
+            data.splinePoints = {{-4, 0}, {-2, 3}, {0, -1}, {2, 3}, {4, 0}};
+            data.fitTolerance = 1.0e-3;
             return LC_OffsetSourceGeometry{data};
         }
         case Kind::Parabola:
