@@ -7851,6 +7851,59 @@ TEST_CASE("Native Trim action commits asynchronously with a responsive event loo
     CHECK_FALSE(f.graphic.undo()); REQUIRE(f.graphic.redo()); CHECK(native->isDeleted()); CHECK(ordinary->isDeleted());
 }
 
+TEST_CASE("Native Trim catches unknown option exceptions without mutation and recovers",
+          "[gui][lc-offsetcurve][trim-action][trim-worker-commit][exception]") {
+    {
+        Drawing<true> f;
+        auto* native = addNative(f.graphic);
+        auto* ordinary = line(f.graphic);
+        const auto nativeBefore = trimGeometry(*native);
+        const auto ordinaryBefore = trimGeometry(*ordinary);
+        const auto undoEpoch = f.graphic.undoStateEpoch();
+
+        f.action->click({2, 0});
+        f.action->onOptionsRead = [] { throw 17; };
+        f.action->click({0, .3});
+
+        CHECK_FALSE(f.action->pending());
+        CHECK_FALSE(native->isDeleted());
+        CHECK_FALSE(ordinary->isDeleted());
+        CHECK(trimGeometry(*native) == nativeBefore);
+        CHECK(trimGeometry(*ordinary) == ordinaryBefore);
+        CHECK(f.graphic.undoStateEpoch() == undoEpoch);
+        REQUIRE(f.context.messages.size() == 1);
+        CHECK(f.context.messages.front().contains(
+            "Offset cache trim preparation failed"));
+    }
+    {
+        Drawing<false> f;
+        auto* native = addNative(f.graphic);
+        auto* limit = line(f.graphic);
+        const auto nativeBefore = trimGeometry(*native);
+        const auto limitBefore = trimGeometry(*limit);
+        const auto undoEpoch = f.graphic.undoStateEpoch();
+
+        f.action->click({-2.8, .3});
+        f.action->onOptionsRead = [] { throw 17; };
+        f.action->hover({2, 0});
+
+        CHECK_FALSE(f.action->pending());
+        CHECK(trimPreview(*f.action->m_preview).empty());
+        CHECK_FALSE(native->isDeleted());
+        CHECK_FALSE(limit->isDeleted());
+        CHECK(trimGeometry(*native) == nativeBefore);
+        CHECK(trimGeometry(*limit) == limitBefore);
+        CHECK(f.graphic.undoStateEpoch() == undoEpoch);
+        CHECK(f.context.messages.empty());
+
+        f.action->onOptionsRead = {};
+        f.action->hover({2, 0});
+        CHECK_FALSE(trimPreview(*f.action->m_preview).empty());
+        CHECK_FALSE(native->isDeleted());
+        CHECK_FALSE(limit->isDeleted());
+    }
+}
+
 TEST_CASE("Native Trim preview supersedes an earlier hover and matches the final commit",
           "[gui][lc-offsetcurve][trim-action][trim-worker-preview]") {
     Drawing<false> f; auto* native = addNative(f.graphic); auto* limit = line(f.graphic);

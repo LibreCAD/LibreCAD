@@ -60673,3 +60673,19 @@ The focused `[trim-worker-action-fault]` selector passes Release (2 cases,
 exception-handling regression introduced during diagnosis. The profile-34
 intermittent preview and broad sanitizer order/timing gate, visible GUI,
 source-bearing ODA/AutoCAD validation, and exact-head CI remain open.
+
+## 1941. Exercise Unknown Trim Option Exceptions Directly (2026-11-21)
+
+Added an action-level regression that throws a non-`std::exception` value
+during Trim option capture. In commit mode it verifies the action reports the
+preparation failure while preserving both operands and the undo epoch. In
+preview mode it verifies no preview or drawing mutation occurs, then removes
+the injected fault and requires a successful retry. This directly exercises
+the catch-all path rather than inferring it from helper-process fault tests.
+
+The focused `[trim-worker-commit][exception]` case passes Release (87
+assertions) and ASan/UBSan (300 assertions). The existing
+`[trim-worker-action-fault]` selector also passes Release (2 cases, 1,343
+assertions) and ASan/UBSan (2 cases, 3,658 assertions). Broad sanitizer-order
+stability, physical GUI, source-bearing external CAD, and exact-head CI remain
+open; the overall roadmap is incomplete.
