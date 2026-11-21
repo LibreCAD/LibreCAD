@@ -25,6 +25,7 @@
 **********************************************************************/
 
 #include <algorithm>
+#include <cmath>
 #include <QRegExp>
 #include <QAction>
 #include <QMouseEvent>
@@ -44,6 +45,27 @@ namespace {
 
     bool isInactive(const std::shared_ptr<RS_ActionInterface>& action) {
         return action == nullptr || action->isFinished();
+    }
+
+    /**
+     * RS_Vector::polar() that is exact on the axes: the angle is reduced to a
+     * quarter turn first, so 100<-90 is (0, -100) instead of (6.1e-15, -100).
+     */
+    RS_Vector polarPoint(const double distance, const double angle) {
+        const double quarters = std::nearbyint(angle / M_PI_2);
+        const double rest = angle - quarters * M_PI_2;
+        const double along = distance * std::cos(rest);
+        const double across = distance * std::sin(rest);
+        switch ((static_cast<int>(std::fmod(quarters, 4.)) + 4) % 4) {
+            case 1:
+                return {-across, along};
+            case 2:
+                return {-along, -across};
+            case 3:
+                return {across, -along};
+            default:
+                return {along, across};
+        }
     }
 
     QString evaluateFraction(QString input, QRegExp rx, int index, int tailI)
@@ -370,8 +392,7 @@ void RS_EventHandler::commandEvent(RS_CommandEvent* e) {
                         double a = RS_Math::eval(cmd.mid(commaPos+1), &ok2);
 
                         if (ok1 && ok2) {
-							RS_Vector pos{
-								RS_Vector::polar(r,RS_Math::deg2rad(a))};
+							RS_Vector pos{polarPoint(r, RS_Math::deg2rad(a))};
                             RS_CoordinateEvent ce(pos);
                             currentActions.last()->coordinateEvent(&ce);
 						} else
@@ -390,7 +411,7 @@ void RS_EventHandler::commandEvent(RS_CommandEvent* e) {
                         double a = RS_Math::eval(cmd.mid(commaPos+1), &ok2);
 
 						if (ok1 && ok2) {
-							RS_Vector pos = RS_Vector::polar(r,RS_Math::deg2rad(a));
+							RS_Vector pos = polarPoint(r, RS_Math::deg2rad(a));
                             RS_CoordinateEvent ce(pos + relative_zero);
                             currentActions.last()->coordinateEvent(&ce);
 						} else
