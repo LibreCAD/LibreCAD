@@ -8,6 +8,20 @@ on:
       - 'v*'
       - '*_rc[0-9]*'
       - '*-rc[0-9]*'
+  # Check the Windows installers and the MSIX before packaging changes reach
+  # 2.2.1. A pull request builds the Windows jobs only and publishes nothing.
+  pull_request:
+    branches:
+      - 2.2.1
+    paths:
+      - '.github/workflows/build-all.yml'
+      - 'scripts/build-msix*.ps1'
+      - 'scripts/msix/**'
+      - 'scripts/copy-vc-runtime.ps1'
+      - 'scripts/build-windows.bat'
+      - 'scripts/postprocess-windows/nsis-msvc.nsi'
+      - 'licenses/**'
+      - 'LICENSE'
 
 # A release pushes branch+tag atomically and GitHub fires two workflow runs
 # (refs/heads/<branch> and refs/tags/<tag>) on the same SHA. We let both run
@@ -21,6 +35,7 @@ concurrency:
 
 jobs:
   BuildLinux:
+    if: github.event_name == 'push'
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout code
@@ -88,6 +103,7 @@ jobs:
           retention-days: 2
 
   BuildLinuxAarch64:
+    if: github.event_name == 'push'
     runs-on: ubuntu-22.04-arm
     steps:
       - name: Checkout code
@@ -128,6 +144,7 @@ jobs:
           retention-days: 2
 
   BuildSnap:
+    if: github.event_name == 'push'
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout code
@@ -151,6 +168,7 @@ jobs:
           retention-days: 2
 
   BuildMacOS:
+    if: github.event_name == 'push'
     runs-on: macos-15-intel
     steps:
       - name: Checkout code
@@ -195,6 +213,7 @@ jobs:
           retention-days: 2
 
   BuildMacOSArm64:
+    if: github.event_name == 'push'
     runs-on: macos-15
     steps:
       - name: Checkout code
@@ -361,8 +380,209 @@ jobs:
           path: ${{github.workspace}}/LibreCAD*.exe
           retention-days: 2
 
+      # The MSIX for the stable LibreCAD product of the Microsoft Store, made from
+      # the folder the installer was built from: docs/development/msix-store.md.
+      - name: Stage the Visual C++ runtime for the MSIX
+        id: stage-msix
+        # After the installer, which stays as it was built.  A failure here must
+        # not hold back the installers of a push: PackageWindowsMsix then fails
+        # for want of the package instead.
+        continue-on-error: ${{ github.event_name == 'push' }}
+        shell: pwsh
+        run: |
+          & scripts\copy-vc-runtime.ps1 -Architecture AMD64 -Destination windows
+
+      - name: Package MSIX
+        id: package-msix
+        if: ${{ !cancelled() && steps.stage-msix.outcome == 'success' }}
+        # It takes under a minute; the limit turns a hang into a failure, which
+        # continue-on-error absorbs on a push, not a cancellation.
+        continue-on-error: ${{ github.event_name == 'push' }}
+        timeout-minutes: 10
+        shell: pwsh
+        run: |
+          # The Store reserves the revision component, so it stays 0; the run
+          # number, which counts the runs of this workflow on every branch, keeps
+          # the build component increasing.
+          $match = Select-String -Path librecad\src\src.pro -Pattern '^LC_VERSION="([0-9]+)\.([0-9]+)\.' |
+            Select-Object -First 1
+          if (-not $match) { throw 'LC_VERSION was not found in librecad\src\src.pro.' }
+          $packageVersion = "$($match.Matches[0].Groups[1].Value).$($match.Matches[0].Groups[2].Value).${{ github.run_number }}.0"
+
+          # Repository variables carry the real identity of the stable Store
+          # product; the fallbacks below are placeholders that the submission
+          # workflow refuses.
+          $identity = '${{ vars.MICROSOFT_STORE_IDENTITY_NAME }}'
+          if (-not $identity) { $identity = 'LibreCAD.Development' }
+          $publisher = '${{ vars.MICROSOFT_STORE_PUBLISHER }}'
+          if (-not $publisher) { $publisher = 'CN=LibreCAD Development' }
+          $publisherDisplayName = '${{ vars.MICROSOFT_STORE_PUBLISHER_DISPLAY_NAME }}'
+          if (-not $publisherDisplayName) { $publisherDisplayName = 'LibreCAD' }
+
+          & scripts\build-msix.ps1 `
+            -Architecture x64 `
+            -InputDirectory windows `
+            -BoostDirectory ..\boost `
+            -OutputDirectory msix-output `
+            -PackageVersion $packageVersion `
+            -IdentityName $identity `
+            -Publisher $publisher `
+            -PublisherDisplayName $publisherDisplayName `
+            -PackageName LibreCAD
+
+      - name: Show MakeAppx output
+        # Package MSIX prints MakeAppx's file list only when MakeAppx fails;
+        # this also shows where it stopped if the step hit its time limit.
+        if: ${{ !cancelled() && steps.package-msix.outcome == 'failure' }}
+        continue-on-error: true
+        shell: pwsh
+        run: |
+          Get-ChildItem msix-output -Filter 'makeappx-*.log' -ErrorAction SilentlyContinue |
+            ForEach-Object { Write-Host "== $($_.Name)"; Get-Content -LiteralPath $_.FullName -Tail 40 }
+
+      - name: Upload MSIX artifact
+        if: steps.package-msix.outcome == 'success'
+        continue-on-error: ${{ github.event_name == 'push' }}
+        timeout-minutes: 10
+        uses: actions/upload-artifact@v5
+        with:
+          name: win64Msix
+          path: msix-output/*.msix*
+          if-no-files-found: error
+          retention-days: 2
+
+  PackageWindowsMsix:
+    needs: [BuildWindows64]
+    # The bundle holds the x64 package only: 2.2.1 has no arm64 build.
+    runs-on: windows-2022
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@main
+        with:
+          ref: ${{ github.ref }}
+
+      - name: Download x64 package
+        uses: actions/download-artifact@v6
+        with:
+          name: win64Msix
+          path: msix-x64
+
+      - name: Build MSIX bundle
+        shell: pwsh
+        run: |
+          # -Filter '*.msix' also matches '*.msixbundle' under 8.3 wildcard
+          # rules, so compare the extension instead.
+          $x64 = Get-ChildItem msix-x64 -File | Where-Object { $_.Extension -eq '.msix' } | Select-Object -First 1
+          if (-not $x64) { throw 'No x64 .msix was downloaded.' }
+
+          $match = Select-String -Path librecad\src\src.pro -Pattern '^LC_VERSION="([0-9]+)\.([0-9]+)\.' |
+            Select-Object -First 1
+          if (-not $match) { throw 'LC_VERSION was not found in librecad\src\src.pro.' }
+          $packageVersion = "$($match.Matches[0].Groups[1].Value).$($match.Matches[0].Groups[2].Value).${{ github.run_number }}.0"
+
+          & scripts\build-msix-bundle.ps1 `
+            -X64Package $x64.FullName `
+            -OutputDirectory msix-bundle `
+            -PackageVersion $packageVersion `
+            -PackageName LibreCAD
+
+      - name: Smoke test the package
+        # A Qt error dialog would otherwise hold the runner until the job limit.
+        timeout-minutes: 15
+        run: |
+          # Registering an unpacked layout exercises the manifest, identity and
+          # entry point without a certificate.  Developer Mode is already on for
+          # every GitHub Windows image.
+          $x64 = Get-ChildItem msix-x64 -File | Where-Object { $_.Extension -eq '.msix' } | Select-Object -First 1
+          $staged = Join-Path $env:RUNNER_TEMP 'msix-register'
+          if (Test-Path $staged) { Remove-Item $staged -Recurse -Force }
+          # Expand-Archive only accepts a .zip extension; the ZIP API does not care.
+          Add-Type -AssemblyName System.IO.Compression.FileSystem
+          [System.IO.Compression.ZipFile]::ExtractToDirectory($x64.FullName, $staged)
+          [xml]$manifest = Get-Content -LiteralPath (Join-Path $staged 'AppxManifest.xml') -Raw
+          $identityName = $manifest.Package.Identity.Name
+          Add-AppxPackage -Register (Join-Path $staged 'AppxManifest.xml')
+          $installed = Get-AppxPackage -Name $identityName
+          if (-not $installed) { throw "The package $identityName did not register." }
+          Write-Host "Registered $($installed.PackageFullName)"
+
+          # Run the packaged program once, as a converter.  It is a GUI
+          # program, so wait for it explicitly.  This also checks that the
+          # package holds every DLL it needs.  Without a console window Qt
+          # logs to the debugger, so it is told to log to the redirected
+          # stderr instead.
+          $sample = Get-Item -LiteralPath (Join-Path $staged 'resources\library\misc\screw.dxf')
+          $png = Join-Path $env:RUNNER_TEMP 'msix-smoke.png'
+          $errors = Join-Path $env:RUNNER_TEMP 'msix-smoke-stderr.txt'
+          $env:QT_FORCE_STDERR_LOGGING = '1'
+          $converter = Start-Process -FilePath (Join-Path $staged 'LibreCAD.exe') `
+            -ArgumentList @('dxf2png', '-o', "`"$png`"", "`"$($sample.FullName)`"") `
+            -NoNewWindow -Wait -PassThru -RedirectStandardError $errors
+          if (Test-Path $errors) { Get-Content $errors }
+          if ($converter.ExitCode -ne 0) { throw "LibreCAD.exe dxf2png exited with $($converter.ExitCode)." }
+          if (-not (Test-Path $png)) { throw "LibreCAD.exe dxf2png wrote no PNG for $($sample.Name)." }
+          if (-not ((Test-Path -LiteralPath $errors) -and (Select-String -LiteralPath $errors -SimpleMatch 'Done' -Quiet))) {
+            throw "LibreCAD.exe dxf2png wrote nothing to the redirected stderr; Qt's messages went elsewhere."
+          }
+          Write-Host "Converted $($sample.Name) to PNG"
+
+          Remove-AppxPackage -Package $installed.PackageFullName
+        # Windows PowerShell, not pwsh: the Appx module is built on WinRT and
+        # fails to load in PowerShell 7 with 0x80131539.
+        shell: powershell
+
+      - name: Windows App Certification Kit
+        run: |
+          # Not contractually present on hosted images, so skip rather than fail.
+          $appcert = Join-Path ${env:ProgramFiles(x86)} 'Windows Kits\10\App Certification Kit\appcert.exe'
+          if (-not (Test-Path -LiteralPath $appcert)) {
+            Write-Host 'App Certification Kit is not installed on this runner; skipping.'
+            exit 0
+          }
+          $bundle = Get-ChildItem msix-bundle -File |
+            Where-Object { $_.Extension -eq '.msixbundle' } | Select-Object -First 1
+          $report = Join-Path $env:RUNNER_TEMP 'wack-report.xml'
+          & $appcert reset
+          & $appcert test -appxpackagepath $bundle.FullName -reportoutputpath $report
+          if ($LASTEXITCODE -ne 0) {
+            Write-Host "::warning::App Certification Kit exited with $LASTEXITCODE"
+          }
+          if (Test-Path -LiteralPath $report) {
+            # The overall result is an attribute of the root; each test's
+            # result is the text of its RESULT element.
+            [xml]$xml = Get-Content -LiteralPath $report -Raw
+            $failed = @($xml.SelectNodes('//TEST[normalize-space(RESULT)="FAIL"]'))
+            foreach ($test in $failed) {
+              Write-Host "::warning::App Certification Kit test failed: $($test.NAME) (optional: $($test.OPTIONAL))"
+            }
+            Write-Host "App Certification Kit: overall $($xml.REPORT.OVERALL_RESULT), $($failed.Count) failing test(s)."
+            New-Item -ItemType Directory -Force -Path wack | Out-Null
+            Copy-Item -LiteralPath $report -Destination wack\wack-report.xml
+          }
+        shell: pwsh
+        continue-on-error: true
+
+      - name: Upload App Certification Kit report
+        if: always()
+        uses: actions/upload-artifact@v5
+        with:
+          name: winMsixWackReport
+          path: wack/wack-report.xml
+          if-no-files-found: ignore
+          retention-days: 30
+
+      - name: Upload MSIX bundle
+        uses: actions/upload-artifact@v5
+        with:
+          name: winMsixBundle
+          # The .msixupload holds the .msixbundle; uploading both would store
+          # the same package twice.
+          path: msix-bundle/*.msixupload*
+          if-no-files-found: error
+          retention-days: 30
+
   UpdateAssets:
-    if: ${{ github.repository_owner == 'LibreCAD' && !startsWith(github.ref, 'refs/tags/') }}
+    if: ${{ github.event_name == 'push' && github.repository_owner == 'LibreCAD' && !startsWith(github.ref, 'refs/tags/') }}
     needs: [BuildLinux, BuildLinuxAarch64, BuildMacOS, BuildMacOSArm64, BuildWindows, BuildWindows64, BuildSnap]
     runs-on: ubuntu-latest
     steps:
@@ -393,7 +613,7 @@ jobs:
             LICENSE
 
   ReleaseAssets:
-    if: ${{ github.repository_owner == 'LibreCAD' && startsWith(github.ref, 'refs/tags/') }}
+    if: ${{ github.event_name == 'push' && github.repository_owner == 'LibreCAD' && startsWith(github.ref, 'refs/tags/') }}
     needs: [BuildLinux, BuildLinuxAarch64, BuildMacOS, BuildMacOSArm64, BuildWindows, BuildWindows64, BuildSnap]
     runs-on: ubuntu-latest
     permissions:

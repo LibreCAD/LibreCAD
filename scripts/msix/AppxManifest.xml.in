@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ ********************************************************************************
+ This file is part of the LibreCAD project, a 2D CAD program
+
+ Copyright (C) 2026 LibreCAD.org
+ Copyright (C) 2026 Dongxu Li (github.com/dxli)
+
+ This program is free software; you can redistribute it and/or
+ modify it under the terms of the GNU General Public License
+ as published by the Free Software Foundation; either version 2
+ of the License, or (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program; if not, write to the Free Software
+ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ USA.
+ ********************************************************************************
+-->
+<Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
+         xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
+         xmlns:uap3="http://schemas.microsoft.com/appx/manifest/uap/windows10/3"
+         xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
+         xmlns:rescap3="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities/3"
+         IgnorableNamespaces="uap uap3 rescap rescap3">
+  <Identity Name="@IDENTITY_NAME@"
+            Publisher="@PUBLISHER@"
+            Version="@PACKAGE_VERSION@"
+            ProcessorArchitecture="@ARCHITECTURE@" />
+  <Properties>
+    <DisplayName>@PACKAGE_NAME@</DisplayName>
+    <PublisherDisplayName>@PUBLISHER_DISPLAY_NAME@</PublisherDisplayName>
+    <Logo>Assets\StoreLogo.png</Logo>
+  </Properties>
+  <Resources>
+    <Resource Language="en-us" />
+  </Resources>
+  <Dependencies>
+    <TargetDeviceFamily Name="Windows.Desktop"
+                        MinVersion="10.0.17763.0"
+                        MaxVersionTested="10.0.26100.0" />
+  </Dependencies>
+  <Capabilities>
+    <rescap:Capability Name="runFullTrust" />
+  </Capabilities>
+  <Applications>
+    <Application Id="LibreCAD"
+                 Executable="LibreCAD.exe"
+                 EntryPoint="Windows.FullTrustApplication">
+      <uap:VisualElements AppListEntry="default"
+                          DisplayName="@PACKAGE_NAME@"
+                          Description="@PACKAGE_NAME@ 2D CAD application"
+                          BackgroundColor="transparent"
+                          Square150x150Logo="Assets\Square150x150Logo.png"
+                          Square44x44Logo="Assets\Square44x44Logo.png">
+        <uap:DefaultTile Square71x71Logo="Assets\Square71x71Logo.png"
+                         Wide310x150Logo="Assets\Wide310x150Logo.png"
+                         Square310x310Logo="Assets\Square310x310Logo.png" />
+      </uap:VisualElements>
+      <Extensions>
+        <uap3:Extension Category="windows.fileTypeAssociation">
+          <uap3:FileTypeAssociation Name="librecad-dxf">
+            <uap:DisplayName>AutoCAD DXF Drawing</uap:DisplayName>
+            <uap:SupportedFileTypes>
+              <uap:FileType>.dxf</uap:FileType>
+            </uap:SupportedFileTypes>
+            <rescap3:MigrationProgIds>
+              <rescap3:MigrationProgId>@LEGACY_DXF_PROGID@</rescap3:MigrationProgId>
+            </rescap3:MigrationProgIds>
+          </uap3:FileTypeAssociation>
+        </uap3:Extension>
+        <uap3:Extension Category="windows.fileTypeAssociation">
+          <uap3:FileTypeAssociation Name="librecad-dwg">
+            <uap:DisplayName>AutoCAD DWG Drawing</uap:DisplayName>
+            <uap:SupportedFileTypes>
+              <uap:FileType>.dwg</uap:FileType>
+            </uap:SupportedFileTypes>
+            <rescap3:MigrationProgIds>
+              <rescap3:MigrationProgId>@LEGACY_DWG_PROGID@</rescap3:MigrationProgId>
+            </rescap3:MigrationProgIds>
+          </uap3:FileTypeAssociation>
+        </uap3:Extension>
+      </Extensions>
+    </Application>
+  </Applications>
+</Package>
