@@ -59808,3 +59808,15 @@ paths still pass in the widget tests. It records that the packaged-app manual
 gate remains unverified and needs a fixture with a resolvable source plus a
 reliable canvas/action route. PR push remains blocked by GitHub DNS as in
 section 1900.
+
+## 1902. Rebuild and Rerun Source-picker Widget Matrix (2026-11-20)
+
+Rebuilt `librecad_offset_properties_dialog_tests` from the current CMake
+Release tree and reran
+`QT_QPA_PLATFORM=offscreen librecad_offset_properties_dialog_tests
+'[gui][dialog][offsetcurve][source]' --reporter compact`. All 15,601
+assertions across 45 cases pass, including nine-family filtering, candidate
+replacement, parabola typing, selected-source highlighting, and refusal paths.
+This confirms the automated widget behavior on the checkout containing the
+latest DWG and parabola test slices. It is not packaged-app interaction
+evidence; section 1901's GUI gate remains open.
