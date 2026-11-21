@@ -52,14 +52,24 @@ TEST_CASE("Typed coordinates are not reported as unknown commands", "[gui][comma
 
     // no action handler: nothing takes the input
     QG_CommandWidget widget(nullptr, nullptr, "command_widget");
-    for (const char* coordinate : {"0,0", "@10,5", "100<-90", "@100<45", "!100<30", "!3,4"}) {
+    for (const char* coordinate : {"0,0", "@10,5", "100<-90", "@100<45", "!100<30", "!3,4", "100 < -90",
+                                   "@ 10 , 5", "! 100 < 30", "0", "."}) {
         widget.teHistory->clear();
         widget.handleCommand(QString::fromLatin1(coordinate));
         CAPTURE(coordinate);
         CHECK_FALSE(widget.teHistory->toPlainText().contains(QStringLiteral("Unknown command")));
     }
 
+    // neither a command nor a coordinate that can be read
+    for (const char* input : {"notacommand", "1,abc", "100<", "@line"}) {
+        widget.teHistory->clear();
+        widget.handleCommand(QString::fromLatin1(input));
+        CAPTURE(input);
+        CHECK(widget.teHistory->toPlainText().contains(QStringLiteral("Unknown command")));
+    }
+
+    // nothing typed: nothing to report
     widget.teHistory->clear();
-    widget.handleCommand(QStringLiteral("notacommand"));
-    CHECK(widget.teHistory->toPlainText().contains(QStringLiteral("Unknown command")));
+    widget.handleCommand(QString());
+    CHECK(widget.teHistory->toPlainText().isEmpty());
 }

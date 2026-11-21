@@ -163,3 +163,42 @@ TEST_CASE("Polar input off the axes matches RS_Vector::polar", "[coordinates_par
         }
     }
 }
+
+TEST_CASE("Whitespace around the prefix and the separator is ignored", "[coordinates_parser]") {
+    ParserFixture fixture;
+    fixture.m_view.getViewPort()->setRelativeZero(RS_Vector(1., 2.));
+    const double cos30 = 100. * std::cos(M_PI / 6.);
+    struct Case {
+        const char* input;
+        double x;
+        double y;
+    };
+    for (const auto& [input, x, y] : {Case{"3 , 4", 3., 4.}, Case{"  3,4  ", 3., 4.}, Case{"@ 10 , 5", 11., 7.},
+                                      Case{"@10 ,5", 11., 7.}, Case{"! 3 , 4", 3., 4.}, Case{"100 < 30", cos30, 50.},
+                                      Case{"100< -90", 0., -100.}, Case{"@ 100 < 0", 101., 2.},
+                                      Case{"! 100 < 30", cos30, 50.}, Case{"\t!100<30\t", cos30, 50.},
+                                      Case{"2 * 3 , 4", 6., 4.}, Case{" 0 ", 0., 0.}, Case{" . ", 1., 2.}}) {
+        CAPTURE(input);
+        checkPoint(fixture.parse(QString::fromLatin1(input)), x, y);
+    }
+}
+
+TEST_CASE("The coordinate syntax tells coordinates from commands", "[coordinates_parser]") {
+    using Syntax = LC_CoordinatesParser::Syntax;
+    for (const char* input : {"0", ".", ",", "3,4", "@3,4", "!3,4", "100<30", "@ 100 < -90", "! 100<30",
+                              "1/2,2", "2*3,4", "100<30d"}) {
+        CAPTURE(input);
+        CHECK(LC_CoordinatesParser::isCoordinate(QString::fromLatin1(input)));
+    }
+    for (const char* input : {"", "  ", "line", "zoomauto", "x", "@", "!", "@line", "1,", ",2", "<30", "100<",
+                              "1,abc", "abc<30", "100<abc", "!abc", "!100"}) {
+        CAPTURE(input);
+        CHECK_FALSE(LC_CoordinatesParser::isCoordinate(QString::fromLatin1(input)));
+    }
+    // a command that is no coordinate goes on to the action; a broken coordinate does not
+    CHECK(LC_CoordinatesParser::parseSyntax("zoomauto").kind == Syntax::None);
+    CHECK(LC_CoordinatesParser::parseSyntax("@line").kind == Syntax::None);
+    CHECK(LC_CoordinatesParser::parseSyntax("1,abc").kind == Syntax::Cartesian);
+    CHECK(LC_CoordinatesParser::parseSyntax("100<abc").kind == Syntax::Polar);
+    CHECK(LC_CoordinatesParser::parseSyntax("!abc").kind == Syntax::Cartesian);
+}

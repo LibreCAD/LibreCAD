@@ -30,6 +30,7 @@
 #include <QFileDialog>
 #include <QKeyEvent>
 
+#include "lc_coordinates_parser.h"
 #include "qc_applicationwindow.h"
 #include "qg_actionhandler.h"
 #include "rs_commands.h"
@@ -206,8 +207,8 @@ void QG_CommandWidget::handleCommand(QString cmd) const {
         isAction = m_actionHandler->command(cmd);
     }
 
-    // coordinates (x,y, d<a, @..., !...) are no commands, even without an action to take them
-    if (!isAction && !(cmd.contains(',') || cmd.contains('<') || cmd.at(0) == '@')) {
+    // a coordinate is no command, even without an action to take it
+    if (!isAction && !cmd.isEmpty() && !LC_CoordinatesParser::isCoordinate(cmd)) {
         appendHistory(tr("Unknown command: %1").arg(cmd));
     }
 
