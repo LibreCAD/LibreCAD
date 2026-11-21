@@ -4440,6 +4440,8 @@ void QC_ApplicationWindow::invokeLicenseWindow()
 
     viewer->addFile("readme", ":/readme.md");
     viewer->addFile("GPLv2", ":/gpl-2.0.txt");
+    viewer->addFile("GPLv3", ":/gpl-3.0.txt");
+    viewer->addFile("OFL (Noto Sans SC/TC)", ":/OFL-noto-cjk.txt");
 
     viewer->setFile("readme");
 
