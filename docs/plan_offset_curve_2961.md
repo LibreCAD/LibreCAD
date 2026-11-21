@@ -60379,3 +60379,36 @@ for all six DWG releases. No fresh ODA conversion was available in this slice.
 The roadmap remains incomplete: visible packaged-app acceptance, source-bearing
 ODA/AutoCAD acceptance, further fit/profile coverage, and exact-head CI are
 still open.
+
+## 1929. Run Focused macOS ASan/UBSan and Retry External Acceptance (2026-11-21)
+
+Configured a separate Debug tree at `/tmp/offset-2961-asan` with
+`-fsanitize=address,undefined -fno-omit-frame-pointer` on compile, executable,
+and shared-library link flags, then built the `librecad_tests` target. Under
+`ASAN_OPTIONS=detect_leaks=0:halt_on_error=1` and
+`UBSAN_OPTIONS=halt_on_error=1:print_stacktrace=1`, the dedicated tangent-fit
+DXF/DWG format cases pass **31,791 assertions across 2 cases** with no
+AddressSanitizer or UndefinedBehaviorSanitizer report. The combined run that
+also included the worker-driven Trim matrix hit that helper's fixed 3.5-second
+per-peer bound under instrumentation; the matrix passes in the normal Release
+tree as recorded in section 1928. This is focused sanitizer coverage, not a
+full-suite sanitizer result; allow a bounded sanitizer-specific worker timeout
+before treating the instrumented action matrix as qualified.
+
+Retried ODA access after the user confirmed the desktop app was open. The CUA
+bridge still could not attach to either ODAFileConverter or LibreCAD
+(`cgWindowNotFound`). `open -a ODAFileConverter` could not resolve a Launch
+Services application; opening `/Applications/ODAFileConverter.app` returned
+`kLSNoExecutableErr`, although the bundle executable is present. Directly
+launching that executable from SSH exited 134 with pasteboard and
+`hiservices-xpcservice` connection errors. No conversion was produced; this is
+an environment/session failure, not an ODA acceptance result.
+
+At PR head `6d50ff6df0a801c7eb8573f9a6c3e8d4587bb9f0`, GitHub reported the five
+`build_with_pixi` platform jobs and three DWG/DXF verification jobs in
+progress. This receipt is a snapshot for that exact revision; check the latest
+head again after subsequent pushes.
+
+Visible application acceptance, a successful source-bearing ODA/AutoCAD run,
+broader family/profile coverage, sanitizer action-matrix qualification, and
+final exact-head CI remain open. The overall roadmap is not complete.
