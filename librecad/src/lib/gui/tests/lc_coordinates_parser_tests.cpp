@@ -91,6 +91,26 @@ TEST_CASE("WCS input ignores the relative zero and the UCS", "[coordinates_parse
     CHECK_FALSE(ucsPolar.distanceTo(RS_Vector(100. * std::cos(M_PI / 6.), 50.)) < 1e-6);
 }
 
+TEST_CASE("WCS and plain polar input at 45 and -90 degrees", "[coordinates_parser]") {
+    ParserFixture fixture;
+    const double half = 100. * M_SQRT1_2;
+
+    SECTION("without a UCS both read the same") {
+        checkPoint(fixture.parse("!100<45"), half, half);
+        checkPoint(fixture.parse("100<45"), half, half);
+        checkPoint(fixture.parse("!100<-90"), 0., -100.);
+    }
+
+    SECTION("with a rotated UCS only plain input moves") {
+        fixture.useRotatedUCS();
+        checkPoint(fixture.parse("!100<45"), half, half);
+        checkPoint(fixture.parse("!100<-90"), 0., -100.);
+        const RS_Vector plain = fixture.parse("100<45");
+        // 45 degrees in the UCS is 135 degrees in the WCS, from the UCS origin
+        checkPoint(plain, 10. - half, 20. + half);
+    }
+}
+
 TEST_CASE("WCS polar input follows the drawing's angle base and direction", "[coordinates_parser]") {
     ParserFixture fixture;
     fixture.m_graphic.setAnglesBase(M_PI_2);
