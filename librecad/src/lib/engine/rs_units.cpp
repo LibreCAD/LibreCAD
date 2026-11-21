@@ -495,21 +495,30 @@ QString RS_Units::formatDecimal(const double length, const RS2::Unit unit, const
 
 namespace {
 /**
- * Splits |length| into whole feet and inches, with the inches rounded to a
- * multiple of 1/steps. Rounding up to 12 inches carries into the feet, so the
- * caller can decide the sign from the rounded numbers, not the text.
+ * Splits |length| into whole feet and whole steps of 1/stepsPerInch inch,
+ * rounded half to even like formatFractional() and printf. Steps that add up
+ * to 12 inches carry into the feet. The caller decides the sign from these
+ * integers, without comparing floating point values or the text.
  */
-double roundInches(const double length, const RS2::Unit unit, const double steps, unsigned& feet) {
+long long roundInchSteps(const double length, const RS2::Unit unit, const long long stepsPerInch, unsigned& feet) {
     feet = static_cast<unsigned>(RS_Units::convert(std::abs(length), unit, RS2::Foot));
     const double inches = RS_Units::convert(std::abs(length), unit, RS2::Inch) - feet * 12.;
-    // half to even, like the rounding of formatFractional() and printf;
-    // 0. first: also turns -0. and tiny negative leftovers into 0.
-    double rounded = std::max(0., std::nearbyint(inches * steps) / steps);
-    if (rounded >= 12.) {
+    // a tiny negative leftover of the feet split is no step at all
+    const long long steps = std::max(0LL, std::llrint(inches * stepsPerInch));
+    if (steps >= 12 * stepsPerInch) {
         feet++;
-        rounded = 0.;
+        return steps - 12 * stepsPerInch;
     }
-    return rounded;
+    return steps;
+}
+
+// 10^prec; precision beyond 15 decimals is lost in a double anyway
+long long decimalSteps(const int prec) {
+    long long steps = 1;
+    for (int i = 0; i < std::clamp(prec, 0, 15); ++i) {
+        steps *= 10;
+    }
+    return steps;
 }
 }
 
@@ -528,13 +537,14 @@ QString RS_Units::formatEngineering(const double length, const RS2::Unit unit, c
 
     unsigned feet = 0;
     // round the inches to the shown precision before formatting
-    const double inches = roundInches(length, unit, std::pow(10., prec), feet);
+    const long long stepsPerInch = decimalSteps(prec);
+    const long long steps = roundInchSteps(length, unit, stepsPerInch, feet);
 
-    const QString sInches = RS_Math::doubleToString(inches, prec);
+    const QString sInches = RS_Math::doubleToString(static_cast<double>(steps) / stepsPerInch, prec);
     const QString ret = (feet > 0) ? QString(R"(%1'-%2")").arg(feet).arg(sInches) : sInches + '"';
 
     // no sign when the length rounds to zero
-    return (std::signbit(length) && (feet > 0 || inches > 0.)) ? "-" + ret : ret;
+    return (std::signbit(length) && (feet != 0 || steps != 0)) ? "-" + ret : ret;
 }
 
 /**
@@ -552,12 +562,13 @@ QString RS_Units::formatArchitectural(const double length, const RS2::Unit unit,
 
     unsigned feet = 0;
     // round the inches to the shown fraction before formatting
-    const double inches = roundInches(length, unit, 2 << prec, feet);
+    const long long stepsPerInch = 2LL << prec;
+    const long long steps = roundInchSteps(length, unit, stepsPerInch, feet);
 
-    const QString sInches = formatFractional(inches, RS2::Inch, prec, showUnit);
+    const QString sInches = formatFractional(static_cast<double>(steps) / stepsPerInch, RS2::Inch, prec, showUnit);
 
     // keep the sign below one foot too, but do not print -0"
-    const QString negativeSign = (std::signbit(length) && (feet != 0 || inches > 0.)) ? "-" : "";
+    const QString negativeSign = (std::signbit(length) && (feet != 0 || steps != 0)) ? "-" : "";
     if (feet != 0) {
         return QString(R"(%1%2'-%3")").arg(negativeSign).arg(feet).arg(sInches);
     }
