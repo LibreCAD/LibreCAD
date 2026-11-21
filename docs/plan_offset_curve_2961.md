@@ -60825,3 +60825,32 @@ interactive desktop Terminal or ODA GUI and verify all 18 expected DXF outputs
 (including no `.err` files) before claiming external acceptance. Exact-head CI,
 broad sanitizer order/timing stability, physical GUI acceptance, and
 source-bearing ODA/AutoCAD validation remain open; the roadmap is incomplete.
+
+## 1948. Isolate the High-origin Tangent-spline Trim Profile (2026-11-21)
+
+The seeded broad ASan/UBSan `[lc-offsetcurve][trim-action]` replay was retried
+with `LIBRECAD_TEST_OFFSET_WORKER_TIMEOUT_MS=30000` after the high-origin
+ellipse test fix. After about one hour it was interrupted while exercising
+typed spline profile 41 (scale 1000, translation `(1e9,-2e9)`, constrained
+tangents, near-zero tangent slope, rotation `0.371234567890123`). Catch2
+reported 52 cases / 1,094,299 assertions: 51 cases passed and the sole failed
+case contained the terminal SIGINT interruption. No ASan/UBSan diagnostic or
+independent product assertion failure was reported. This is an incomplete
+broad-suite result, not a pass.
+
+Added test-only `LC_OFFSET_TRIM_TYPED_SPLINE_PROFILE` selection, range-checked
+to profiles 0-42, so this expensive matrix can be narrowed without changing
+production timeouts or geometry. Rebuilt the ASan/UBSan test executable and
+ran profile 41 in both pick orders with the 30-second harness override: **one
+Catch2 case, 2,516 assertions passed**, with no sanitizer diagnostics. This
+isolated result does not replace the interrupted full selector; broad action
+suite order/timing stability remains open.
+
+For exact PR head `7bfe799e2817775506bf6a46d1a5e3458c8f1c13`, all three
+DWG/DXF verification jobs built successfully. `VerifyDwgDxfFast` then failed
+its bounded test step with exit code 8 and one generic annotation; GitHub's
+job-log endpoint returned transport errors, so the failing test is unknown.
+Windows x64 and ARM test steps were still in progress at this checkpoint.
+Source-bearing ODA acceptance remains blocked by the SSH/macOS pasteboard
+failure recorded in section 1947, and visible GUI acceptance is still open.
+The roadmap remains incomplete.

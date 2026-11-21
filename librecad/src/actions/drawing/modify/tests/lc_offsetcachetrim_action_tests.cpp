@@ -5764,8 +5764,13 @@ TEST_CASE("T Trim Two trims a worker-created high-origin ellipse offset",
 
 TEST_CASE("T Trim Two action trims worker-created typed spline and spline-points sources in both pick orders",
           "[gui][lc-offsetcurve][trim-action][typed-source][spline][fit-points][trim-two]") {
+    const bool pinProfile = qEnvironmentVariableIsSet("LC_OFFSET_TRIM_TYPED_SPLINE_PROFILE");
+    const int requestedProfile =
+        qEnvironmentVariableIntValue("LC_OFFSET_TRIM_TYPED_SPLINE_PROFILE");
+    REQUIRE_FALSE((pinProfile && (requestedProfile < 0 || requestedProfile > 42)));
     for (unsigned profile = 0; profile <= 42; ++profile)
     for (const bool nativeFirst : {false, true}) {
+        if (pinProfile && profile != static_cast<unsigned>(requestedProfile)) continue;
         const bool fitPoints = profile >= 5;
         const bool splinePointsSource = profile == 2 || fitPoints;
         CAPTURE(profile, fitPoints, splinePointsSource, nativeFirst);
