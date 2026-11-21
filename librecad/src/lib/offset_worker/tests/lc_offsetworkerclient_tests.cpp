@@ -7595,6 +7595,149 @@ TEST_CASE("Four-point parabola reconstruction matrix survives worker cache valid
     }
 }
 
+TEST_CASE("High-origin small-scale four-point parabola survives worker and file lanes",
+          "[lc-offsetcurve][worker-client][parabola][from-four-points][high-origin][small-scale][persistence]") {
+    REQUIRE(lc::test::ensureSettings());
+    lc::test::QuietLog quiet;
+    lc::test::OutputDirectory directory("offset-parabola-high-origin-small-scale");
+    auto& rt = runtime();
+    OwnedClient owned{rt};
+    RS_EntityContainer owner;
+    RS_Line attributes{&owner, RS_LineData{{0, 0}, {1, 0}}};
+
+    const std::array<RS_Vector, 3> controls{{
+        {-100.0, 50.0}, {0.0, -50.0}, {100.0, 50.0}}};
+    constexpr double scale = 1e-3;
+    constexpr double angle = 0.6435011087932844;
+    const RS_Vector translation{1e6, -2e6};
+    const double worldMagnitude = std::max(std::abs(translation.x),
+                                           std::abs(translation.y));
+    const double fitTolerance = std::max(scale * 1e-7,
+        256.0 * std::numeric_limits<double>::epsilon() * worldMagnitude);
+    const double independentTolerance = 2.0 * fitTolerance;
+    const auto pointAt = [&](const double t) {
+        const double mt = 1.0 - t;
+        RS_Vector point = controls[0] * (mt * mt) + controls[1] * (2.0 * mt * t) +
+                          controls[2] * (t * t);
+        point *= scale;
+        point.rotate(angle);
+        return point + translation;
+    };
+    const std::array<double, 4> sampleParameters{{0.05, 0.2, 0.65, 0.95}};
+    std::vector<RS_Vector> samples;
+    for (const double t : sampleParameters)
+        samples.push_back(pointAt(t));
+    const std::array<RS_Vector, 3> independent{{pointAt(0.15), pointAt(0.5), pointAt(0.85)}};
+    const auto candidates = LC_ParabolaData::From4Points(samples);
+    const auto candidate = std::find_if(
+        candidates.cbegin(), candidates.cend(), [&](const LC_ParabolaData& value) {
+            if (!value.isValid())
+                return false;
+            const auto errorAt = [&](const RS_Vector& point) {
+                return value.fromX(value.findX(point)).distanceTo(point);
+            };
+            return std::all_of(samples.cbegin(), samples.cend(), [&](const RS_Vector& point) {
+                       return errorAt(point) <= fitTolerance;
+                   }) &&
+                   std::all_of(independent.cbegin(), independent.cend(),
+                       [&](const RS_Vector& point) {
+                           return errorAt(point) <= independentTolerance;
+                       });
+        });
+    REQUIRE(candidate != candidates.cend());
+
+    struct Lane {
+        RS2::FormatType format;
+        const char* extension;
+    };
+    const std::array<Lane, 5> lanes{{
+        {RS2::FormatDXFRW14, "r14.dxf"},
+        {RS2::FormatDXFRW2000, "r2000.dxf"},
+        {RS2::FormatDWG, "r2000.dwg"},
+        {RS2::FormatDXFRW2018, "r2018.dxf"},
+        {RS2::FormatDWG2018, "r2018.dwg"},
+    }};
+    qint64 requestId = 1;
+    for (const double signedDistance : {5.0 * scale, -5.0 * scale}) {
+        CAPTURE(signedDistance, fitTolerance);
+        const LC_OffsetSourceDefinition definition{
+            LC_OffsetSourceGeometry{*candidate}, signedDistance, 1e-4, false};
+        Receipts generatedReceipts;
+        REQUIRE(owned.get().submit(
+            {token(requestId), Req::GenerateSource{definition, {}}},
+            Client::Mode::Commit, generatedReceipts.into(0)));
+        rt.until([&] { return generatedReceipts.calls[0] != 0; });
+        const auto& generated = completed(generatedReceipts.at(0), requestId, 7);
+        const auto& generatedResult = std::get<Reply::Native>(generated.reply().result);
+        REQUIRE(generatedResult.engineStatus == LC_CurveOffsetStatus::Ok);
+        REQUIRE(generatedResult.ordinaryStatus == Reply::OrdinaryStatus::Complete);
+        RS_SplineData cache;
+        REQUIRE(LC_OffsetWorkerSourceCache::combine(generatedResult.ordinary, cache));
+        auto native = generated.nativeSource(attributes);
+        REQUIRE(native);
+        REQUIRE(native->sourceDefinition());
+        CHECK(native->sourceDefinition()->source.kind() ==
+              LC_OffsetSourceGeometry::Kind::Parabola);
+        exactCache(native->getData(), cache);
+
+        Receipts validatedReceipts;
+        REQUIRE(owned.get().submit(
+            {token(requestId + 1), Req::ValidateSourceCache{cache, definition, {}}},
+            Client::Mode::Commit, validatedReceipts.into(0)));
+        rt.until([&] { return validatedReceipts.calls[0] != 0; });
+        const auto& validated = completed(validatedReceipts.at(0), requestId + 1, 8);
+        auto admitted = validated.nativeValidatedSource(attributes);
+        REQUIRE(admitted);
+        REQUIRE(admitted->sourceDefinition());
+        CHECK(admitted->sourceDefinition()->source.kind() ==
+              LC_OffsetSourceGeometry::Kind::Parabola);
+        exactCache(admitted->getData(), cache);
+
+        RS_Graphic graphic;
+        graphic.initForNewDocument();
+        admitted->setLayer(graphic.getActiveLayer());
+        graphic.addEntity(admitted.release());
+        const auto fingerprint = RS_Spline::geometryFingerprint(cache);
+        for (const Lane& lane : lanes) {
+            CAPTURE(lane.extension);
+#ifndef DWGSUPPORT
+            if (lane.format == RS2::FormatDWG || lane.format == RS2::FormatDWG2018)
+                continue;
+#endif
+            const auto path = directory.file(
+                std::to_string(requestId) + "-" + lane.extension);
+            REQUIRE(lc::test::exportDrawing(graphic, path, lane.format));
+            for (int pass = 0; pass < 2; ++pass) {
+                RS_Graphic reopened;
+                REQUIRE(lc::test::importDrawing(reopened, path, lane.format));
+                LC_OffsetCurve* reopenedOffset = nullptr;
+                for (RS_Entity* entity : reopened) {
+                    if (entity->isDeleted() || entity->rtti() != RS2::EntityOffsetCurve)
+                        continue;
+                    REQUIRE(reopenedOffset == nullptr);
+                    reopenedOffset = dynamic_cast<LC_OffsetCurve*>(entity);
+                }
+                REQUIRE(reopenedOffset);
+                REQUIRE(reopenedOffset->sourceDefinition());
+                const auto& reopenedDefinition = *reopenedOffset->sourceDefinition();
+                CHECK(reopenedDefinition.source.kind() ==
+                      LC_OffsetSourceGeometry::Kind::Parabola);
+                CHECK(reopenedDefinition.signedDistance == signedDistance);
+                CHECK(RS_Spline::geometryFingerprint(reopenedOffset->getData()) == fingerprint);
+                const auto* reopenedParabola =
+                    std::get_if<LC_ParabolaData>(&reopenedDefinition.source.value);
+                REQUIRE(reopenedParabola);
+                for (std::size_t i = 0; i < candidate->m_controlPoints.size(); ++i)
+                    CHECK(reopenedParabola->m_controlPoints[i].distanceTo(
+                              candidate->m_controlPoints[i]) <= independentTolerance);
+                if (pass == 0)
+                    REQUIRE(lc::test::exportDrawing(reopened, path, lane.format));
+            }
+        }
+        requestId += 2;
+    }
+}
+
 TEST_CASE("Four-point parabola matrix retains typed sources across file lanes",
           "[lc-offsetcurve][worker-client][parabola][from-four-points][matrix][persistence]") {
     REQUIRE(lc::test::ensureSettings());

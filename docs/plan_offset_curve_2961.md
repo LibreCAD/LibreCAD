@@ -59753,3 +59753,22 @@ This is direct reconstruction evidence only: worker generation, cache
 admission, replacement, Trim, and all five persistence lanes for this exact
 high-origin/small-scale profile remain open. The separate PR push limitation
 recorded in section 1897 is unchanged.
+
+## 1899. Validate Small-scale Parabola Through Worker and File Lanes (2026-11-20)
+
+Added an isolated worker-client case for the same rotated quadratic profile at
+scale `1e-3`, using a translated frame `(1e6,-2e6)`. The source is reconstructed
+from four samples and independently checked before worker use. Both signed
+offsets (`+/-0.005`) pass GenerateSource, typed-source materialization,
+ValidateSourceCache, and two reopen/re-export cycles per supported persistence
+lane: R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG. The focused test passes 1,244
+assertions in one case on the CMake Release build.
+
+The worker/file result deliberately does not claim the exact `(1e12,-2e12)`
+frame from section 1898 is cache-representable: that scale/origin combination
+can produce ordinary geometry while native-cache materialization refuses it.
+The direct reconstruction oracle remains the acceptance test for that frame;
+this section covers typed worker/cache and persistence behavior at the tested
+`(1e6,-2e6)` frame. This is not a fix or relaxation of the representability
+guard. External ODA/AutoCAD acceptance, visible source-picker interaction, and
+PR push remain open as recorded in sections 1893, 1894, and 1897.
