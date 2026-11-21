@@ -60158,3 +60158,23 @@ This qualifies one open mixed line/arc polyline source for typed persistence;
 it does not qualify closed or multi-bulge variants, seam/topology changes,
 all offset modes, or independent visual CAD acceptance. Those remain separate
 family-by-variant and external-acceptance work.
+
+## 1917. Qualify Closed Multi-arc Polyline Source Persistence (2026-11-21)
+
+Added a source-picker/worker-backed persistence case for a closed polyline
+whose four quarter-circle arc segments form one full circle. The picked source
+is captured after entity materialization, and exact canonical typed geometry
+is checked after export/import through R14, R2000, and R2018 DXF and R2000 and
+R2018 DWG. Both DWGs additionally pass LibreDWG JSON parsing and complete
+typed-source CBOR decode/re-encode validation. The focused case passes 111
+assertions; the complete source-picker selector passes 17,721 assertions over
+49 cases.
+
+This qualifies closed topology for this bounded all-arc profile; it does not
+qualify arbitrary closed mixed line/arc polylines, multiple non-tangent bulges,
+seam normalization, offset geometry/trim correctness, external CAD acceptance,
+or visible packaged-app interaction. Those remain open. The independent
+ODAFileConverter retry is still blocked at the desktop bridge: the app is
+reported running but accessibility cannot attach to its window
+(`cgWindowNotFound`), so no conversion or interoperability result was
+produced.

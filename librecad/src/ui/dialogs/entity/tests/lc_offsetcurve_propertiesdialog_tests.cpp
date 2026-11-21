@@ -1839,6 +1839,101 @@ TEST_CASE("Mixed-bulge polyline offset sources survive native file lanes",
 #endif
 }
 
+TEST_CASE("Closed multi-arc polyline offset sources survive native file lanes",
+          "[gui][dialog][offsetcurve][source][typed][variant][closed-multi-arc]") {
+    LC_OffsetSourceGeometry expectedGeometry{LC_OffsetPolylineData{{1, 0}, {1, 0}, true,
+        {RS_ArcData{{0, 0}, 1, 0, M_PI_2, false},
+         RS_ArcData{{0, 0}, 1, M_PI_2, M_PI, false},
+         RS_ArcData{{0, 0}, 1, M_PI, 3 * M_PI_2, false},
+         RS_ArcData{{0, 0}, 1, 3 * M_PI_2, 2 * M_PI, false}}}};
+    REQUIRE(expectedGeometry.isWellFormed());
+
+    Fixture f;
+    auto source = expectedGeometry.makeEntity();
+    REQUIRE(source);
+    RS_Entity* sourceEntity = source.get();
+    const auto canonicalGeometry = LC_OffsetSourceGeometry::capture(*sourceEntity);
+    REQUIRE(canonicalGeometry);
+    const auto expectedEncoding =
+        LC_OffsetWorkerRequest::Values::encodeSourceGeometry(*canonicalGeometry);
+    REQUIRE(expectedEncoding);
+    f.graphic.addEntity(source.release());
+    std::unique_ptr<LC_OffsetCurve> carrier(
+        static_cast<LC_OffsetCurve*>(f.curve->clone()));
+    NativeWidget widget;
+    widget.setGraphicViewport(f.view.getViewPort());
+    widget.setEntity(carrier.get());
+    widget.show();
+    QApplication::processEvents();
+    auto* typeBox = widget.findChild<QComboBox*>("cbSourceType");
+    auto* sourceBox = widget.findChild<QComboBox*>("cbSource");
+    REQUIRE(typeBox);
+    REQUIRE(sourceBox);
+    const int polylineType = typeBox->findData(
+        static_cast<int>(LC_OffsetSourceGeometry::Kind::Polyline));
+    REQUIRE(polylineType >= 0);
+    typeBox->setCurrentIndex(polylineType);
+    const int sourceIndex = sourceBox->findData(
+        QVariant::fromValue<qulonglong>(sourceEntity->getId()));
+    REQUIRE(sourceIndex >= 0);
+    sourceBox->setCurrentIndex(sourceIndex);
+    awaitPreparation(widget);
+    REQUIRE(widget.lastEditResult());
+    REQUIRE(*widget.lastEditResult());
+    REQUIRE(carrier->sourceDefinition());
+    CHECK(carrier->sourceDefinition()->source.kind() ==
+          LC_OffsetSourceGeometry::Kind::Polyline);
+    CHECK(LC_OffsetWorkerRequest::Values::encodeSourceGeometry(
+              carrier->sourceDefinition()->source) == expectedEncoding);
+    carrier->setSourceHandle(0);
+    f.graphic.addEntity(carrier.release());
+
+    const auto verifyClosedPolyline = [&](const Graphic& drawing) {
+        std::size_t matches = 0;
+        for (const RS_Entity* entity : drawing) {
+            const auto* offset = dynamic_cast<const LC_OffsetCurve*>(entity);
+            if (!offset || !offset->sourceDefinition() ||
+                offset->sourceDefinition()->source.kind() !=
+                    LC_OffsetSourceGeometry::Kind::Polyline)
+                continue;
+            CHECK(LC_OffsetWorkerRequest::Values::encodeSourceGeometry(
+                      offset->sourceDefinition()->source) == expectedEncoding);
+            ++matches;
+        }
+        CHECK(matches == 1);
+    };
+
+    lc::test::OutputDirectory output{"offset-closed-multi-arc-polyline-source"};
+    const std::array<std::pair<RS2::FormatType, const char*>, 3> dxfLanes{{
+        {RS2::FormatDXFRW14, "r14.dxf"},
+        {RS2::FormatDXFRW2000, "r2000.dxf"},
+        {RS2::FormatDXFRW2018, "r2018.dxf"}}};
+    for (const auto& [format, fileName] : dxfLanes) {
+        const auto path = output.file(fileName);
+        REQUIRE(lc::test::exportDrawing(f.graphic, path, format));
+        Graphic reopened;
+        reopened.initForNewDocument();
+        REQUIRE(lc::test::importDrawing(reopened, path, format));
+        reopened.onLoadingCompleted();
+        verifyClosedPolyline(reopened);
+    }
+#ifdef DWGSUPPORT
+    const std::array<std::pair<RS2::FormatType, const char*>, 2> dwgLanes{{
+        {RS2::FormatDWG, "r2000.dwg"},
+        {RS2::FormatDWG2018, "r2018.dwg"}}};
+    for (const auto& [format, fileName] : dwgLanes) {
+        const auto path = output.file(fileName);
+        REQUIRE(lc::test::exportDrawing(f.graphic, path, format));
+        checkLibreDwgSourceKinds(path, LC_OffsetSourceGeometry::Kind::Polyline);
+        Graphic reopened;
+        reopened.initForNewDocument();
+        REQUIRE(lc::test::importDrawing(reopened, path, format));
+        reopened.onLoadingCompleted();
+        verifyClosedPolyline(reopened);
+    }
+#endif
+}
+
 TEST_CASE("Native source picker retains the picked identity for duplicate geometry",
           "[gui][dialog][offsetcurve][source][identity]") {
     Fixture f;
