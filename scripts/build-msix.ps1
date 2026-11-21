@@ -78,7 +78,7 @@ param(
     [string]$IconPath = (Join-Path $PSScriptRoot 'msix\librecad-logo.png'),
 
     # 2.2.1: lrelease writes LibreCAD's and its plugins' .qm next to the .ts.
-    [string[]]$TranslationDirectory = @(
+    [string[]]$TranslationSourceDirectory = @(
         (Join-Path $PSScriptRoot '..\librecad\ts'),
         (Join-Path $PSScriptRoot '..\plugins\ts')
     ),
@@ -401,7 +401,7 @@ if ($IdentityName -notmatch '^[A-Za-z0-9.-]+$') {
 
 $inputDirectory = Resolve-ExistingDirectory -Path $InputDirectory -Description 'Input'
 $boostDirectory = Resolve-ExistingDirectory -Path $BoostDirectory -Description 'Boost'
-$translationDirectories = @($TranslationDirectory | ForEach-Object { Resolve-ExistingDirectory -Path $_ -Description 'Translation' })
+$translationSources = @($TranslationSourceDirectory | ForEach-Object { Resolve-ExistingDirectory -Path $_ -Description 'Translation' })
 $resourceDirectory = Resolve-ExistingDirectory -Path $ResourceDirectory -Description 'Resource'
 $licenseDirectory = Resolve-ExistingDirectory -Path $LicenseDirectory -Description 'License'
 $licenseFile = Join-Path $PSScriptRoot '..\LICENSE'
@@ -513,9 +513,9 @@ if ($layoutPlugins.Count -eq 0) {
 $translationDirectory = Join-Path $layoutResources 'qm'
 Copy-MatchingFiles -Source (Join-Path $inputDirectory 'translations') -Filter '*.qm' -Destination $translationDirectory
 foreach ($filter in @('librecad_*.qm', 'plugins_*.qm')) {
-    $found = @($translationDirectories | ForEach-Object { Get-ChildItem -LiteralPath $_ -Filter $filter -File })
+    $found = @($translationSources | ForEach-Object { Get-ChildItem -LiteralPath $_ -Filter $filter -File })
     if ($found.Count -eq 0) {
-        throw "No files matching $filter were found under $($translationDirectories -join ', '); run lrelease first."
+        throw "No files matching $filter were found under $($translationSources -join ', '); run lrelease first."
     }
     New-Item -ItemType Directory -Force -Path $translationDirectory | Out-Null
     foreach ($item in $found) {
