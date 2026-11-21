@@ -59789,3 +59789,22 @@ The implementation and plan commits are still local: `git push origin HEAD`
 continues to fail before authentication because this environment cannot
 resolve `github.com`. Do not report the commits as present on PR #3193 until a
 push succeeds.
+
+## 1901. Retry Packaged Source-picker Interaction (2026-11-20)
+
+Reopened the qmake6 application bundle and the R2018 binary-DXF native offset
+fixture. The real Offset Curve Properties dialog confirms that the source
+family control is present, but the imported offset has no resolvable embedded
+source and the in-drawing selection button is disabled. An unsaved candidate
+LINE was added to exercise the filter; after that, canvas clicks repeatedly
+left the application in `Choose second edge` instead of selecting the offset
+and opening its properties for replacement. The dialog could therefore not
+reach the candidate list/highlight workflow. The drawing was not saved, and
+the committed fixture was not modified.
+
+This does not supersede the automated source-picker evidence in section 1895;
+the nine-family filtering, typed replacement, selection/highlight, and refusal
+paths still pass in the widget tests. It records that the packaged-app manual
+gate remains unverified and needs a fixture with a resolvable source plus a
+reliable canvas/action route. PR push remains blocked by GitHub DNS as in
+section 1900.
