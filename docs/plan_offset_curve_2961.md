@@ -60239,3 +60239,16 @@ claiming its generated offset is a cacheable native curve. This uses a
 source-generation-specific assertion rather than the generic successful
 cache-generation helper. The two focused test cases pass 712 assertions; the
 full source-picker selector passes 18,135 assertions across 49 cases.
+
+## 1922. Qualify a Rational Wrapped-closed Spline Source (2026-11-21)
+
+Added a degree-3 wrapped-closed spline with six control points and varied
+non-unit weights to the source persistence matrix. The test asserts that the
+source is both closed and rational before selection, then checks worker source
+generation, exact typed geometry, and all five native DXF/DWG lanes. LibreDWG
+validates each emitted DWG's typed-source payload through decode/re-encode. The
+focused spline case passes 451 assertions; the complete source-picker selector
+passes 18,219 assertions across 49 cases.
+
+This qualifies one rational wrapped-closed cubic profile, not arbitrary
+periodic knot layouts, weight ranges, degrees, or offset/Trim conditioning.

@@ -1684,16 +1684,46 @@ TEST_CASE("Rational, high-degree, and periodic spline sources survive native fil
         REQUIRE(spline.validate());
         return spline.getData();
     };
+    const auto periodicRationalSpline = [] {
+        constexpr std::size_t degree = 3;
+        constexpr std::size_t controls = 6;
+        RS_SplineData data;
+        data.degree = degree;
+        data.type = data.savedOpenType = RS_SplineData::SplineType::ClampedOpen;
+        constexpr std::array<double, controls> weights{0.6, 1.4, 0.8, 1.8, 0.9, 1.2};
+        for (std::size_t i = 0; i < controls; ++i) {
+            const double angle = 2.0 * M_PI * static_cast<double>(i) /
+                                 static_cast<double>(controls);
+            data.controlPoints.emplace_back(8.0 * std::cos(angle),
+                                            5.0 * std::sin(angle));
+            data.weights.push_back(weights[i]);
+        }
+        data.knotslist.insert(data.knotslist.end(), degree + 1, 0.0);
+        for (std::size_t i = 1; i <= controls - degree - 1; ++i)
+            data.knotslist.push_back(static_cast<double>(i) /
+                                     static_cast<double>(controls - degree));
+        data.knotslist.insert(data.knotslist.end(), degree + 1, 1.0);
+        RS_Spline spline{nullptr, data};
+        spline.setClosed(true);
+        REQUIRE(spline.validate());
+        return spline.getData();
+    };
     const auto highDegree = multiSpanRationalSpline(4);
     const auto periodic = periodicHighDegreeSpline(4);
+    const auto periodicRational = periodicRationalSpline();
     REQUIRE(highDegree.degree == 4);
     REQUIRE(periodic.degree == 4);
     REQUIRE(periodic.isClosed());
-    const std::array<LC_OffsetSourceGeometry, 4> profiles{{
+    REQUIRE(periodicRational.degree == 3);
+    REQUIRE(periodicRational.isClosed());
+    REQUIRE(std::any_of(periodicRational.weights.begin(), periodicRational.weights.end(),
+                        [](double weight) { return weight != 1.0; }));
+    const std::array<LC_OffsetSourceGeometry, 5> profiles{{
         LC_OffsetSourceGeometry{quarterCircle},
         LC_OffsetSourceGeometry{nonuniformCubic},
         LC_OffsetSourceGeometry{highDegree},
-        LC_OffsetSourceGeometry{periodic}}};
+        LC_OffsetSourceGeometry{periodic},
+        LC_OffsetSourceGeometry{periodicRational}}};
     std::vector<QCborArray> expectedEncodings;
     for (const auto& profile : profiles) {
         REQUIRE(profile.isWellFormed());
