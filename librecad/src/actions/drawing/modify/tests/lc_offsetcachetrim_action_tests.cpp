@@ -5536,6 +5536,14 @@ TEST_CASE("T Trim Two trims a worker-created high-origin ellipse offset",
         if (boundedArc && (frame != 1e13 || axisRatio != 0.45 || rotation != 0.17)) continue;
         CAPTURE(frame, axisRatio, rotation, boundedArc, towardCentre, ellipseFirst);
         Drawing<true> f;
+        const qint64 requestedPreviewTimeout = qEnvironmentVariableIntValue("LIBRECAD_TEST_OFFSET_WORKER_TIMEOUT_MS");
+        if (requestedPreviewTimeout > 0) {
+            const qint64 previewDeadline = std::clamp<qint64>(requestedPreviewTimeout,
+                LC_OffsetWorkerClient::Deadlines::preview, LC_OffsetWorkerClient::Deadlines::commit);
+            LC_OffsetTrimWorkerTestAccess::previewDeadline(LC_ActionModifyTrimTestAccess::worker(*f.action),
+                previewDeadline);
+            LC_ActionModifyTrimTestAccess::previewDeadline(*f.action, previewDeadline);
+        }
         const bool largestFrame = frame == 1e13;
         const double sourceRadius = largestFrame ? 1e6 : 1e5;
         const double offsetDistance = sourceRadius *

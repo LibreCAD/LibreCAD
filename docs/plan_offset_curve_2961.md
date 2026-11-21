@@ -60765,3 +60765,33 @@ completed successfully on Ubuntu x64/ARM, Windows, macOS latest, and macOS
 Intel. The full seeded sanitizer run must be repeated after this correction;
 the broad order/timing gate remains open. Physical GUI acceptance and
 source-bearing ODA/AutoCAD validation remain open as well.
+
+## 1945. Apply the Test-only Preview Deadline to High-origin Ellipse Stress (2026-11-21)
+
+The seeded broad ASan/UBSan Trim-action replay reached the high-origin ellipse
+Trim Two matrix and reported an empty preview for `(frame=1e12, axisRatio=0.1,
+rotation=0.41, towardCentre=false, ellipseFirst=false)`. The worker itself
+completed (`clientStatus=Completed`); the enclosing Trim worker returned
+`TimedOut` because this stress matrix did not apply the existing
+`LIBRECAD_TEST_OFFSET_WORKER_TIMEOUT_MS` override to its 2-second preview
+deadline. The broad process then stopped advancing during the following
+persistence case and was interrupted. Catch2 reported 88 cases / 1,064,852
+assertions: 86 passed, one genuine preview-timeout failure, and one
+SIGINT-interrupted assertion. No ASan/UBSan diagnostic was emitted.
+
+Updated only this test to apply the same opt-in, commit-deadline-clamped
+preview-timeout override already used by other heavy worker action matrices.
+The normal unset environment and all production deadlines remain unchanged.
+The isolated high-origin ellipse matrix passes Release (22,730 assertions)
+without the override and ASan/UBSan (69,871 assertions) with the explicit
+30-second test override. The pre-edit isolated Release and ASan/UBSan runs also
+passed (19,787 and 74,182 assertions, respectively), confirming the failure
+was load-sensitive rather than a deterministic geometry refusal.
+
+At PR head `ee6033daddd24980f27d9ef272ae58857526e9b1`, all five platform build
+jobs pass. The separate Linux `VerifyDwgDxfFast` CTest step failed with exit
+code 8; its job-log endpoint repeatedly closed before returning the failing
+test details, so this is still an open CI gate and is not attributed to the
+ellipse test. Windows x64 and ARM verification, exact-head CI after this
+change, visible GUI acceptance, and source-bearing ODA/AutoCAD validation
+remain open. The overall roadmap is incomplete.
