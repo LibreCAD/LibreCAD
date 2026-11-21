@@ -60877,8 +60877,9 @@ remote job logs are unavailable, so this local failure is a concrete lead,
 not proof that it is the only remote failure.
 
 Exact-head build CI is green, but the bounded DWG/DXF checks remain red until
-the pre-existing/out-of-scope VXCONTROL failure is handled in its owning work
-or the CI owner establishes the expected baseline. The broad seeded ASan/UBSan
+the out-of-scope VXCONTROL failure is handled in its owning work or the CI
+owner establishes the expected baseline. Its status on `origin/master` has not
+been verified. The broad seeded ASan/UBSan
 Trim-action run remains interrupted (section 1948); profile 41 passes in
 isolation, which is not a substitute. The desktop ODA retry directories still
 contain no converted DXFs, so source-bearing ODA acceptance is unverified.
