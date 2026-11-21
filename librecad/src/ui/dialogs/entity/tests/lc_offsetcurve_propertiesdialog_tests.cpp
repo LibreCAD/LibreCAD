@@ -82,7 +82,8 @@ void requireNativeHelper() {
 
 void checkLibreDwgSourceKinds(
     const std::filesystem::path& file,
-    std::optional<LC_OffsetSourceGeometry::Kind> onlyKind = std::nullopt) {
+    std::optional<LC_OffsetSourceGeometry::Kind> onlyKind = std::nullopt,
+    std::size_t expectedKindCount = 1) {
     QString reader = qEnvironmentVariable("DWGREAD");
     if (reader.isEmpty()) reader = QStandardPaths::findExecutable("dwgread");
     if (reader.isEmpty()) return;
@@ -154,11 +155,12 @@ void checkLibreDwgSourceKinds(
         ++sourceKinds[static_cast<std::size_t>(kind)];
         ++carriers;
     }
-    const std::size_t expectedCarriers = onlyKind ? 1 : sourceKinds.size();
+    const std::size_t expectedCarriers = onlyKind ? expectedKindCount : sourceKinds.size();
     CHECK(carriers == expectedCarriers);
     for (std::size_t i = 0; i < sourceKinds.size(); ++i) {
         const auto kind = LC_OffsetSourceGeometry::SupportedKinds[i];
-        const std::size_t expectedCount = !onlyKind || *onlyKind == kind ? 1 : 0;
+        const std::size_t expectedCount = !onlyKind ? 1
+            : *onlyKind == kind ? expectedKindCount : 0;
         CHECK(sourceKinds[i] == expectedCount);
     }
 }
@@ -1624,67 +1626,91 @@ TEST_CASE("Native source picker filters and replaces every supported source fami
 #endif
 }
 
-TEST_CASE("Rational quadratic spline sources survive native DXF and DWG lanes",
-          "[gui][dialog][offsetcurve][source][typed][variant][rational-spline]") {
-    RS_SplineData data{2, false};
-    data.controlPoints = {{4, 0}, {4, 4}, {0, 4}};
-    data.knotslist = {0, 0, 0, 1, 1, 1};
-    data.weights = {1, std::sqrt(.5), 1};
-    LC_OffsetSourceGeometry expectedGeometry{data};
-    REQUIRE(expectedGeometry.isWellFormed());
-    const auto expectedEncoding =
-        LC_OffsetWorkerRequest::Values::encodeSourceGeometry(expectedGeometry);
-    REQUIRE(expectedEncoding);
+TEST_CASE("Rational and nonuniform spline sources survive native DXF and DWG lanes",
+          "[gui][dialog][offsetcurve][source][typed][variant][rational-nurbs]") {
+    RS_SplineData quarterCircle{2, false};
+    quarterCircle.controlPoints = {{4, 0}, {4, 4}, {0, 4}};
+    quarterCircle.knotslist = {0, 0, 0, 1, 1, 1};
+    quarterCircle.weights = {1, std::sqrt(.5), 1};
+    RS_SplineData nonuniformCubic{3, false};
+    nonuniformCubic.controlPoints = {{-4, 0}, {-3, 4}, {0, -4}, {3, 4}, {4, 0}};
+    nonuniformCubic.knotslist = {0, 0, 0, 0, .35, 1, 1, 1, 1};
+    nonuniformCubic.weights = {1, .6, 1.4, .75, 1};
+    const std::array<LC_OffsetSourceGeometry, 2> profiles{{
+        LC_OffsetSourceGeometry{quarterCircle},
+        LC_OffsetSourceGeometry{nonuniformCubic}}};
+    std::vector<QCborArray> expectedEncodings;
+    for (const auto& profile : profiles) {
+        REQUIRE(profile.isWellFormed());
+        const auto encoded =
+            LC_OffsetWorkerRequest::Values::encodeSourceGeometry(profile);
+        REQUIRE(encoded);
+        expectedEncodings.push_back(*encoded);
+    }
 
     Fixture f;
-    auto source = expectedGeometry.makeEntity();
-    REQUIRE(source);
-    RS_Entity* sourceEntity = source.get();
-    f.graphic.addEntity(source.release());
+    std::vector<std::unique_ptr<LC_OffsetCurve>> carriers;
+    for (const auto& profile : profiles) {
+        auto source = profile.makeEntity();
+        REQUIRE(source);
+        RS_Entity* sourceEntity = source.get();
+        f.graphic.addEntity(source.release());
 
-    std::unique_ptr<LC_OffsetCurve> carrier(
-        static_cast<LC_OffsetCurve*>(f.curve->clone()));
-    NativeWidget widget;
-    widget.setGraphicViewport(f.view.getViewPort());
-    widget.setEntity(carrier.get());
-    widget.show();
-    QApplication::processEvents();
-    auto* typeBox = widget.findChild<QComboBox*>("cbSourceType");
-    auto* sourceBox = widget.findChild<QComboBox*>("cbSource");
-    REQUIRE(typeBox);
-    REQUIRE(sourceBox);
-    const int splineType = typeBox->findData(
-        static_cast<int>(LC_OffsetSourceGeometry::Kind::Spline));
-    REQUIRE(splineType >= 0);
-    typeBox->setCurrentIndex(splineType);
-    const int sourceIndex = sourceBox->findData(
-        QVariant::fromValue<qulonglong>(sourceEntity->getId()));
-    REQUIRE(sourceIndex >= 0);
-    sourceBox->setCurrentIndex(sourceIndex);
-    awaitPreparation(widget);
-    REQUIRE(widget.lastEditResult());
-    REQUIRE(*widget.lastEditResult());
-    REQUIRE(carrier->sourceDefinition());
-    CHECK(carrier->sourceDefinition()->source.kind() ==
-          LC_OffsetSourceGeometry::Kind::Spline);
-    CHECK(LC_OffsetWorkerRequest::Values::encodeSourceGeometry(
-              carrier->sourceDefinition()->source) == expectedEncoding);
-    carrier->setSourceHandle(0);
-    f.graphic.addEntity(carrier.release());
+        auto carrier = std::unique_ptr<LC_OffsetCurve>(
+            static_cast<LC_OffsetCurve*>(f.curve->clone()));
+        NativeWidget widget;
+        widget.setGraphicViewport(f.view.getViewPort());
+        widget.setEntity(carrier.get());
+        widget.show();
+        QApplication::processEvents();
+        auto* typeBox = widget.findChild<QComboBox*>("cbSourceType");
+        auto* sourceBox = widget.findChild<QComboBox*>("cbSource");
+        REQUIRE(typeBox);
+        REQUIRE(sourceBox);
+        const int splineType = typeBox->findData(
+            static_cast<int>(LC_OffsetSourceGeometry::Kind::Spline));
+        REQUIRE(splineType >= 0);
+        typeBox->setCurrentIndex(splineType);
+        const int sourceIndex = sourceBox->findData(
+            QVariant::fromValue<qulonglong>(sourceEntity->getId()));
+        REQUIRE(sourceIndex >= 0);
+        sourceBox->setCurrentIndex(sourceIndex);
+        awaitPreparation(widget);
+        REQUIRE(widget.lastEditResult());
+        REQUIRE(*widget.lastEditResult());
+        REQUIRE(carrier->sourceDefinition());
+        CHECK(carrier->sourceDefinition()->source.kind() ==
+              LC_OffsetSourceGeometry::Kind::Spline);
+        CHECK(LC_OffsetWorkerRequest::Values::encodeSourceGeometry(
+                  carrier->sourceDefinition()->source) == expectedEncodings[carriers.size()]);
+        carrier->setSourceHandle(0);
+        carriers.push_back(std::move(carrier));
+    }
+    for (auto& carrier : carriers) f.graphic.addEntity(carrier.release());
 
-    const auto verifyRationalSource = [&](const Graphic& drawing) {
-        std::size_t matches = 0;
+    const auto verifyRationalSources = [&](const Graphic& drawing) {
+        std::vector<bool> matched(expectedEncodings.size(), false);
+        std::size_t splineSources = 0;
         for (const RS_Entity* entity : drawing) {
             const auto* offset = dynamic_cast<const LC_OffsetCurve*>(entity);
             if (!offset || !offset->sourceDefinition() ||
                 offset->sourceDefinition()->source.kind() !=
                     LC_OffsetSourceGeometry::Kind::Spline)
                 continue;
-            CHECK(LC_OffsetWorkerRequest::Values::encodeSourceGeometry(
-                      offset->sourceDefinition()->source) == expectedEncoding);
-            ++matches;
+            const auto actual = LC_OffsetWorkerRequest::Values::encodeSourceGeometry(
+                offset->sourceDefinition()->source);
+            REQUIRE(actual);
+            const auto found = std::find(expectedEncodings.begin(), expectedEncodings.end(),
+                                         *actual);
+            REQUIRE(found != expectedEncodings.end());
+            const auto index = static_cast<std::size_t>(
+                std::distance(expectedEncodings.begin(), found));
+            CHECK_FALSE(matched[index]);
+            matched[index] = true;
+            ++splineSources;
         }
-        CHECK(matches == 1);
+        CHECK(splineSources == expectedEncodings.size());
+        CHECK(std::all_of(matched.begin(), matched.end(), [](bool value) { return value; }));
     };
 
     lc::test::OutputDirectory output{"offset-rational-spline-source"};
@@ -1699,7 +1725,7 @@ TEST_CASE("Rational quadratic spline sources survive native DXF and DWG lanes",
         reopened.initForNewDocument();
         REQUIRE(lc::test::importDrawing(reopened, path, format));
         reopened.onLoadingCompleted();
-        verifyRationalSource(reopened);
+        verifyRationalSources(reopened);
     }
 #ifdef DWGSUPPORT
     const std::array<std::pair<RS2::FormatType, const char*>, 2> dwgLanes{{
@@ -1708,12 +1734,13 @@ TEST_CASE("Rational quadratic spline sources survive native DXF and DWG lanes",
     for (const auto& [format, fileName] : dwgLanes) {
         const auto path = output.file(fileName);
         REQUIRE(lc::test::exportDrawing(f.graphic, path, format));
-        checkLibreDwgSourceKinds(path, LC_OffsetSourceGeometry::Kind::Spline);
+        checkLibreDwgSourceKinds(path, LC_OffsetSourceGeometry::Kind::Spline,
+                                 expectedEncodings.size());
         Graphic reopened;
         reopened.initForNewDocument();
         REQUIRE(lc::test::importDrawing(reopened, path, format));
         reopened.onLoadingCompleted();
-        verifyRationalSource(reopened);
+        verifyRationalSources(reopened);
     }
 #endif
 }
