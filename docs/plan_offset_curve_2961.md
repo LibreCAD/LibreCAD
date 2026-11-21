@@ -59772,3 +59772,20 @@ this section covers typed worker/cache and persistence behavior at the tested
 `(1e6,-2e6)` frame. This is not a fix or relaxation of the representability
 guard. External ODA/AutoCAD acceptance, visible source-picker interaction, and
 PR push remain open as recorded in sections 1893, 1894, and 1897.
+
+## 1900. Audit LibreCAD DWG Matrix with ODAFileConverter (2026-11-20)
+
+Ran the 18 freshly exported DWGs from section 1894 through ODAFileConverter
+with its Audit option enabled. ODA completed the batch (`Done`, progress 18)
+and produced 18 converted files in 2010 ASCII DXF format, covering degree-1
+and degree-3 native offsets plus LINE controls for R2000, R2004, R2007,
+R2010, R2013, and R2018 inputs. This closes the independent ODA
+open/audit/conversion gate for this generated matrix; it does not by itself
+prove geometric equivalence or preservation of native offset metadata in the
+converted DXFs. LibreCAD's own readback and DWG metadata checks remain the
+semantic assertions. The visible source-picker interaction remains open.
+
+The implementation and plan commits are still local: `git push origin HEAD`
+continues to fail before authentication because this environment cannot
+resolve `github.com`. Do not report the commits as present on PR #3193 until a
+push succeeds.
