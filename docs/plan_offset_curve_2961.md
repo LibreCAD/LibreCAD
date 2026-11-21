@@ -59820,3 +59820,20 @@ replacement, parabola typing, selected-source highlighting, and refusal paths.
 This confirms the automated widget behavior on the checkout containing the
 latest DWG and parabola test slices. It is not packaged-app interaction
 evidence; section 1901's GUI gate remains open.
+
+## 1903. Inspect ODA-converted DWG Entity and XDATA Matrix (2026-11-20)
+
+Inspected all 18 ASCII DXFs produced by the audited ODAFileConverter batch in
+section 1900. Each of the 12 degree-1/degree-3 offset inputs converts to
+exactly one model-space `SPLINE` and retains the `LC_OFFSET_CURVE` XDATA
+marker. Each of the six LINE controls converts to exactly one model-space
+`LINE` and has no offset marker. The filenames cover all three content cases
+for R2000, R2004, R2007, R2010, R2013, and R2018 DWG inputs.
+
+This strengthens the ODA result from successful open/conversion to the
+expected entity-type and native-marker checks. It does not compare every
+source-definition XDATA field, spline control/knot/weight values, or sampled
+geometry against the originals, and it does not prove AutoCAD behavior. The
+packaged source-picker interaction and full independent semantic CAD checks
+remain open. The local PR commits are still not pushed because GitHub DNS is
+unavailable in this environment.
