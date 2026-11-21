@@ -206,7 +206,8 @@ void QG_CommandWidget::handleCommand(QString cmd)
         isAction=actionHandler->command(cmd);
     }
 
-    if (!isAction && !(cmd.contains(',') || cmd.at(0)=='@')) {
+    // a coordinate (x,y or distance<angle, maybe relative) is no command, even without an action to take it
+    if (!isAction && !cmd.isEmpty() && !(cmd.contains(',') || cmd.contains('<') || cmd.at(0)=='@')) {
        appendHistory(tr("Unknown command: %1").arg(cmd));
     }
 
