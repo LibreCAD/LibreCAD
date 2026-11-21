@@ -60061,3 +60061,17 @@ repeatable test gate where the tool is installed. It does not establish ODA
 or AutoCAD acceptance, source-bearing ODA conversion, rendered geometry, or
 visible packaged-app interaction; those gates remain open. The current worktree
 contains unpushed commits because GitHub DNS resolution is unavailable.
+
+## 1912. Retry Source-bearing ODA Conversion with the GUI Session Open (2026-11-20)
+
+After the user opened ODAFileConverter and left it running, retried its bundled
+executable against the generated all-family R2018 DWG in isolated temporary
+input/output directories, requesting audited 2018 DXF output. The process
+aborted before conversion (exit 134) with pasteboard clipboard/find errors
+and an invalid `com.apple.hiservices-xpcservice` connection. The output
+directory contains no converted DXF; therefore this is not an ODA parse or
+interoperability result. The UI bridge also still reports
+`cgWindowNotFound` for the running app. Keep the source-bearing ODA/AutoCAD
+acceptance gate open and do not infer failure of the DWG itself from this
+service-context abort. The already completed ODA audit of the separate
+18-file matrix in sections 1900 and 1903-1904 is unaffected.
