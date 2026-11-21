@@ -60616,3 +60616,35 @@ This requalifies these targeted matrices only. The broad `[trim-action]`
 sanitizer order-stability gate, successful source-bearing ODA/AutoCAD
 validation, visible GUI acceptance, and exact-head CI remain open; the plan
 is incomplete.
+
+## 1939. Isolate Intermittent Tangent-Parabola Trim Preview Under ASan (2026-11-21)
+
+A fresh broad `[lc-offsetcurve][trim-action]` ASan/UBSan run reached tangent-
+parabola profile 34 and intermittently produced an empty action preview where
+the worker-prepared Trim result contains three entities. The run was stopped
+after observing the assertion; it is not a completed broad-suite result. The
+failure is not currently explained by a geometry refusal: the same profile
+passes its synchronous and prepared checks, its Release action/persistence run
+passes **5,364 assertions**, and a focused ASan/UBSan rerun passes **11,165
+assertions** with no sanitizer diagnostic. A prior focused ASan attempt also
+observed an empty later preview in the same profile, so the focused pass does
+not close the nondeterminism.
+
+Do not change the production deadline, turn the profile into an accepted
+no-op, or weaken its preview assertion. Added a test-only diagnostic snapshot
+to the Trim action and failure-only Catch2 context at both preview assertions.
+It records admission, worker completion/failure, geometry refusal, timeout,
+currentness invalidation, completion exceptions, or rendered preview count;
+no geometry or timeout behavior changes. Four consecutive focused ASan/UBSan
+runs then passed (9,447; 9,444; 9,490; and 9,484 assertions), another passed
+11,165 assertions, and the post-instrumentation Release run passed 2,903
+assertions. The assertion is therefore intermittent even with isolated
+generator/profile coverage.
+
+A fresh broad retry was stopped during a prolonged profile before reaching a
+final summary and did not reproduce a new assertion in its captured log; it is
+not a pass. Keep the broad sanitizer order/timing stability gate open. Continue
+by running the exact prior `towardCentre` and cutter-order combination with
+diagnostic capture, then repeat the broad action selector without interrupting
+it. Visible GUI acceptance, a successful source-bearing ODA/AutoCAD run, and
+exact-head CI remain open; the overall plan is incomplete.

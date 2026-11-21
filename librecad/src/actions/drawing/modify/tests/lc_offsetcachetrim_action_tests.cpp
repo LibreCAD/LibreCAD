@@ -364,6 +364,9 @@ public:
     static void previewDeadline(LC_ActionModifyTrim& action, qint64 value) {
         action.setNativeTrimPreviewDeadlineForTest(value);
     }
+    static QString previewDiagnostic(const LC_ActionModifyTrim& action) {
+        return action.nativeTrimPreviewDiagnosticForTest();
+    }
 };
 
 namespace {
@@ -3339,6 +3342,8 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
     CHECK(f.action->caughtAt(circlePick) == circle);
     f.action->hover(circlePick);
     const auto circlePreview = trimPreview(*f.action->m_preview);
+    INFO("native Trim preview outcome: "
+         << LC_ActionModifyTrimTestAccess::previewDiagnostic(*f.action).toStdString());
     REQUIRE(circlePreview.size() == preparedBatch.entitiesToAdd.size());
     CHECK_FALSE(native->isDeleted());
     CHECK_FALSE(circle->isDeleted());
@@ -3446,6 +3451,8 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
     CHECK(f.action->caughtAt(secondPick) == (cutterFirst ? native : cutter));
     f.action->hover(secondPick);
     const auto preview = trimPreview(*f.action->m_preview);
+    INFO("native Trim preview outcome: "
+         << LC_ActionModifyTrimTestAccess::previewDiagnostic(*f.action).toStdString());
     REQUIRE_FALSE(preview.empty());
     CHECK_FALSE(native->isDeleted());
     CHECK_FALSE(cutter->isDeleted());

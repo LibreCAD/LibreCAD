@@ -30,6 +30,7 @@
 #include "lc_undoabledocumentmodificationaction.h"
 #include "lc_selectedsetlistener.h"
 #include <QPointer>
+#include <QString>
 
 class RS_AtomicEntity;
 class LC_OffsetTrimWorker;
@@ -103,5 +104,6 @@ private:
     friend class LC_ActionModifyTrimTestAccess;
     LC_OffsetTrimWorker* nativeTrimWorkerForTest() const noexcept;
     void setNativeTrimPreviewDeadlineForTest(qint64 deadline) noexcept;
+    QString nativeTrimPreviewDiagnosticForTest() const;
 };
 #endif

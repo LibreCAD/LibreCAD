@@ -126,6 +126,7 @@ struct LC_ActionModifyTrim::TrimActionData {
     std::size_t demoted = 0;
     std::uint64_t undoEpoch = 0;
     qint64 previewDeadlineForTest = 0;
+    QString previewDiagnosticForTest;
     std::optional<std::uint64_t> triggerAdmissionEpoch;
     std::unique_ptr<LC_OffsetTrimWorker> worker;
     std::unique_ptr<QTimer> guard;
@@ -150,7 +151,13 @@ LC_ActionModifyTrim::LC_ActionModifyTrim(LC_ActionContext* actionContext, const 
             const bool timedOut = work->elapsed.elapsed() >= work->deadline;
             const bool current = !timedOut && currentNativeTrim(work);
             if (alive && !current) {
-                if (work->preview) cancelNativePreview(work);
+                if (work->preview) {
+                    if (qEnvironmentVariableIsSet("LC_OFFSET_TRIM_DIAGNOSTICS"))
+                        m_actionData->previewDiagnosticForTest = timedOut
+                            ? QStringLiteral("timed out while pending")
+                            : QStringLiteral("invalidated while pending");
+                    cancelNativePreview(work);
+                }
                 else if (m_actionData->work == work) {
                     cancelNativeTrim();
                     if (currentTrimContext()) commandMessage(timedOut ? tr("Trim worker timed out; nothing changed") :
@@ -410,6 +417,9 @@ bool LC_ActionModifyTrim::validateCapturedTrimInputs() {
 
 bool LC_ActionModifyTrim::hasPendingNativeTrim() const noexcept { return bool(m_actionData->work); }
 LC_OffsetTrimWorker* LC_ActionModifyTrim::nativeTrimWorkerForTest() const noexcept { return m_actionData->worker.get(); }
+QString LC_ActionModifyTrim::nativeTrimPreviewDiagnosticForTest() const {
+    return m_actionData->previewDiagnosticForTest;
+}
 void LC_ActionModifyTrim::setNativeTrimPreviewDeadlineForTest(const qint64 deadline) noexcept {
     m_actionData->previewDeadlineForTest = deadline > 0
         ? std::clamp<qint64>(deadline, LC_OffsetWorkerClient::Deadlines::preview,
@@ -425,6 +435,9 @@ void LC_ActionModifyTrim::cancelNativeTrim() {
 
 void LC_ActionModifyTrim::cancelNativePreview(const std::shared_ptr<NativeTrimWork>& work) {
     if (m_actionData->work != work) return;
+    if (qEnvironmentVariableIsSet("LC_OFFSET_TRIM_DIAGNOSTICS") &&
+        m_actionData->previewDiagnosticForTest.isEmpty())
+        m_actionData->previewDiagnosticForTest = QStringLiteral("cancelled without a classified outcome");
     const QPointer<LC_ActionModifyTrim> alive(this);
     cancelNativeTrim();
     if (currentTrimContext()) deletePreviewAndHighlights();
@@ -476,6 +489,8 @@ void LC_ActionModifyTrim::beginNativeTrim() {
 void LC_ActionModifyTrim::beginNativeTrimWork(RS_Entity* target, RS_Entity* limit,
     const RS_Vector& targetPick, const RS_Vector& limitPick, const bool preview) {
     const QPointer<LC_ActionModifyTrim> alive(this);
+    if (preview && qEnvironmentVariableIsSet("LC_OFFSET_TRIM_DIAGNOSTICS"))
+        m_actionData->previewDiagnosticForTest = QStringLiteral("admission started");
     std::shared_ptr<NativeTrimWork> initiated;
     try {
         QElapsedTimer elapsed; elapsed.start();
@@ -535,6 +550,12 @@ void LC_ActionModifyTrim::beginNativeTrimWork(RS_Entity* target, RS_Entity* limi
             preview ? LC_OffsetWorkerClient::Mode::Preview : LC_OffsetWorkerClient::Mode::Commit, [alive, work](LC_OffsetTrimWorker::Outcome result) {
                 if (!alive || alive->m_actionData->work != work) return;
                 if (result.status != LC_OffsetTrimWorker::Status::Completed || !result.prepared) {
+                    if (work->preview && qEnvironmentVariableIsSet("LC_OFFSET_TRIM_DIAGNOSTICS"))
+                        alive->m_actionData->previewDiagnosticForTest =
+                            QStringLiteral("worker failed status=%1 client=%2: %3")
+                                .arg(int(result.status))
+                                .arg(result.clientStatus ? int(*result.clientStatus) : -1)
+                                .arg(QString::fromUtf8(result.diagnostics.left(512)));
                     qWarning() << "Trim worker failed; status=" << int(result.status)
                                << "clientStatus=" << (result.clientStatus ? int(*result.clientStatus) : -1)
                                << "preview=" << work->preview
@@ -545,11 +566,18 @@ void LC_ActionModifyTrim::beginNativeTrimWork(RS_Entity* target, RS_Entity* limi
                         tr("Trim worker timed out; nothing changed") : tr("Offset cache trim worker failed; nothing changed"));
                     return;
                 }
+                if (work->preview && qEnvironmentVariableIsSet("LC_OFFSET_TRIM_DIAGNOSTICS"))
+                    alive->m_actionData->previewDiagnosticForTest = QStringLiteral("worker completed");
                 work->prepared = std::move(result.prepared);
                 try { if (work->preview) alive->completeNativePreview(work); else alive->completeNativeTrim(work); }
                 catch (...) {
                     if (alive && alive->m_actionData->work == work) {
-                        if (work->preview) alive->cancelNativePreview(work);
+                        if (work->preview) {
+                            if (qEnvironmentVariableIsSet("LC_OFFSET_TRIM_DIAGNOSTICS"))
+                                alive->m_actionData->previewDiagnosticForTest =
+                                    QStringLiteral("completion threw; result publication aborted");
+                            alive->cancelNativePreview(work);
+                        }
                         else { alive->cancelNativeTrim(); if (alive->currentTrimContext()) alive->commandMessage(tr("Offset cache trim preparation failed; nothing changed")); }
                     }
                 }
@@ -557,20 +585,38 @@ void LC_ActionModifyTrim::beginNativeTrimWork(RS_Entity* target, RS_Entity* limi
         if (!started) {
             throw std::runtime_error("Trim worker admission refused");
         }
+        if (preview && qEnvironmentVariableIsSet("LC_OFFSET_TRIM_DIAGNOSTICS"))
+            m_actionData->previewDiagnosticForTest = QStringLiteral("worker admitted");
         m_actionData->guard->start();
-    } catch (...) {
+    } catch (const std::exception& error) {
+        if (preview && qEnvironmentVariableIsSet("LC_OFFSET_TRIM_DIAGNOSTICS"))
+            m_actionData->previewDiagnosticForTest =
+                QStringLiteral("admission failed: %1").arg(QString::fromUtf8(error.what()));
         if (!alive) return;
         if (initiated && m_actionData->work == initiated) {
             if (preview) cancelNativePreview(initiated); else cancelNativeTrim();
         }
         if (!alive) return;
         if (!preview && currentTrimContext()) commandMessage(tr("Offset cache trim preparation failed; nothing changed"));
+    } catch (...) {
+        if (preview && qEnvironmentVariableIsSet("LC_OFFSET_TRIM_DIAGNOSTICS"))
+            m_actionData->previewDiagnosticForTest = QStringLiteral("admission failed: unknown exception");
+        if (!alive) return;
+        if (initiated && m_actionData->work == initiated) cancelNativePreview(initiated);
     }
 }
 
 void LC_ActionModifyTrim::completeNativePreview(const std::shared_ptr<NativeTrimWork>& work) {
     const QPointer<LC_ActionModifyTrim> alive(this);
-    if (!currentNativeTrim(work)) { if (alive) cancelNativePreview(work); return; }
+    if (!currentNativeTrim(work)) {
+        if (alive && qEnvironmentVariableIsSet("LC_OFFSET_TRIM_DIAGNOSTICS"))
+            m_actionData->previewDiagnosticForTest =
+                work->elapsed.elapsed() >= work->deadline
+                    ? QStringLiteral("timed out before completion")
+                    : QStringLiteral("invalidated before completion");
+        if (alive) cancelNativePreview(work);
+        return;
+    }
     const auto receipt = work->prepared->completions(work->epoch);
     if (!receipt) throw std::runtime_error("Trim preview completion missing");
     LC_DocumentModificationBatch batch;
@@ -589,6 +635,13 @@ void LC_ActionModifyTrim::completeNativePreview(const std::shared_ptr<NativeTrim
     if (!alive) return;
     if (!result.result) {
         if (qEnvironmentVariableIsSet("LC_OFFSET_TRIM_DIAGNOSTICS"))
+            m_actionData->previewDiagnosticForTest =
+                QStringLiteral("geometry refused=%1 stage=%2 roots=%3 pairs=%4 leaves=%5")
+                    .arg(int(result.cacheRefusal.value_or(LC_OffsetCacheTrim::Refusal::InvalidInput)))
+                    .arg(int(result.cacheWork.failureStage)).arg(result.cacheWork.rootRecords)
+                    .arg(result.cacheWork.intersections.totalBoxPairs)
+                    .arg(result.cacheWork.intersections.generatedLeaves);
+        if (qEnvironmentVariableIsSet("LC_OFFSET_TRIM_DIAGNOSTICS"))
             qWarning() << "Trim preview refused; refusal="
                        << int(result.cacheRefusal.value_or(LC_OffsetCacheTrim::Refusal::InvalidInput))
                        << "stage=" << int(result.cacheWork.failureStage)
@@ -601,6 +654,11 @@ void LC_ActionModifyTrim::completeNativePreview(const std::shared_ptr<NativeTrim
         return;
     }
     if (!currentNativeTrim(work)) {
+        if (alive && qEnvironmentVariableIsSet("LC_OFFSET_TRIM_DIAGNOSTICS"))
+            m_actionData->previewDiagnosticForTest =
+                work->elapsed.elapsed() >= work->deadline
+                    ? QStringLiteral("timed out after geometry completion")
+                    : QStringLiteral("invalidated after geometry completion");
         if (alive) cancelNativePreview(work);
         return;
     }
@@ -630,6 +688,9 @@ void LC_ActionModifyTrim::completeNativePreview(const std::shared_ptr<NativeTrim
         return;
     }
     m_actionData->work.reset();
+    if (qEnvironmentVariableIsSet("LC_OFFSET_TRIM_DIAGNOSTICS"))
+        m_actionData->previewDiagnosticForTest =
+            QStringLiteral("completed preview entities=%1").arg(m_preview->count());
 }
 
 void LC_ActionModifyTrim::completeNativeTrim(const std::shared_ptr<NativeTrimWork>& work) {
