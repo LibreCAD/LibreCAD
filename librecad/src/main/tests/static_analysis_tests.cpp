@@ -16,6 +16,7 @@
 #include "lc_layertreemodel.h"
 #include "lc_layertreeview.h"
 #include "lc_layertreewidget.h"
+#include "lc_storepackage.h"
 #include "lc_widgetoptionsdialog.h"
 #include "picfile.h"
 #include "qc_applicationwindow.h"
@@ -254,6 +255,19 @@ private slots:
 
         QVERIFY(writeAlias("gl\tgapline\n"));
         lineGapCommands();
+    }
+
+    // Only a copy the Microsoft Store installed leaves out Help > Online > Release
+    // Information, the GitHub releases page: the Store updates it.  This process has no
+    // package identity, so it keeps the item.
+    void onlineMenuKeepsReleasesOutsideTheStore()
+    {
+        QVERIFY(!LC_StorePackage::runsFromStorePackage());
+        const auto* menu = QC_ApplicationWindow::getAppWindow()->findChild<QMenu*>("online_menu");
+        QVERIFY(menu != nullptr);
+        QStringList items;
+        for (const QAction* action : menu->actions()) items << action->text();
+        QVERIFY2(items.contains("&Release Information"), qPrintable(items.join(", ")));
     }
 
     void hyperbolaIntersections_data()

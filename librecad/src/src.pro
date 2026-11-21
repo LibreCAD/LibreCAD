@@ -259,6 +259,7 @@ HEADERS += \
     lib/printing/lc_printing.h \
     actions/lc_actiondrawlinepolygon3.h \
     main/lc_application.h \
+    main/lc_storepackage.h \
     ui/generic/lc_flexlayout.h \
     ui/forms/lc_linefrompointtolineoptions.h \
     ui/forms/lc_linepointsoptions.h \
@@ -412,6 +413,7 @@ SOURCES += \
     lib/printing/lc_printing.cpp \
     actions/lc_actiondrawlinepolygon3.cpp \
     main/lc_application.cpp \
+    main/lc_storepackage.cpp \
     ui/forms/LC_DlgParabola.cpp \
     ui/generic/lc_flexlayout.cpp \
     ui/forms/lc_linefrompointtolineoptions.cpp \
