@@ -104,3 +104,52 @@ TEST_CASE("formatEngineering carries inches that round up to 12 into the feet", 
     CHECK(eng(11.9999, 2) == "1'-0.00\"");
     CHECK(eng(23.999, 0) == "2'-0\"");
 }
+
+TEST_CASE("Negative lengths get a sign exactly when the text is not zero", "[rs_units]") {
+    using Formatter = QString (*)(double, RS2::Unit, int, bool);
+    const std::pair<const char*, Formatter> formats[] = {
+        {"engineering", &RS_Units::formatEngineering},
+        {"architectural", &RS_Units::formatArchitectural},
+        {"fractional", &RS_Units::formatFractional},
+    };
+    auto hasNonZeroDigit = [](const std::string& s) {
+        return s.find_first_of("123456789") != std::string::npos;
+    };
+    for (const auto& [name, format] : formats) {
+        for (int prec = 0; prec <= 8; ++prec) {
+            // half of the smallest shown step: the rounding boundary next to zero
+            const double step = (format == &RS_Units::formatEngineering) ? std::pow(10., -prec) : 1. / (2 << prec);
+            std::vector<double> lengths{-0., -std::numeric_limits<double>::denorm_min()};
+            for (const double base : {0.5 * step, step, 1.5 * step, 12. - 0.5 * step, 12., 24. - 0.5 * step}) {
+                for (const double eps : {0., 1e-12, -1e-12}) {
+                    const double x = base + eps;
+                    lengths.push_back(-x);
+                    lengths.push_back(-std::nextafter(x, 0.));
+                    lengths.push_back(-std::nextafter(x, 100.));
+                }
+            }
+            for (int i = 1; i <= 2000; ++i) {
+                lengths.push_back(-i * 0.0137);
+            }
+            for (const double length : lengths) {
+                const std::string text = format(length, RS2::Inch, prec, false).toStdString();
+                const std::string positive = format(-length, RS2::Inch, prec, false).toStdString();
+                CAPTURE(name, prec, length, text, positive);
+                CHECK((text.front() == '-') == hasNonZeroDigit(text));
+                CHECK(positive.front() != '-');
+                // the sign is the only difference from the positive length
+                const std::string unsigned_text = text.front() != '-' ? text
+                    : text.substr(text.compare(0, 2, "- ") == 0 ? 2 : 1);
+                CHECK(unsigned_text == positive);
+                // inches that round to 12 carry into the feet: never 12", 12.00" or 12 1/2"
+                const std::size_t dash = unsigned_text.find("'-");
+                const std::string inches = unsigned_text.substr(dash == std::string::npos ? 0 : dash + 2);
+                if (format != &RS_Units::formatFractional) {
+                    const bool wholeTwelve = inches.rfind("12", 0) == 0 && inches.size() > 2
+                        && (inches[2] == '"' || inches[2] == '.' || inches[2] == ' ');
+                    CHECK_FALSE(wholeTwelve);
+                }
+            }
+        }
+    }
+}
