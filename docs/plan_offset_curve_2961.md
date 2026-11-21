@@ -60294,3 +60294,14 @@ profile plus the matrix's existing closed fit profiles, including a transformed
 case. It does not imply every fit count, closed topology, tangent condition, or
 Trim intersection configuration is supported; those remain explicit family
 variant work.
+
+## 1926. Revalidate All Source-widget Family Routes (2026-11-21)
+
+Ran the production Properties-widget integration tests for replacement across
+all modeled source families, all ordered source-family pairs, and the
+supported spline/polyline variant picker. They pass 9,447 assertions in three
+test cases, including the parabola type and the nine-family selector inventory.
+This is Qt integration-test evidence for type switching, candidate binding,
+worker preparation, and source replacement; it is not visible packaged-app
+acceptance and does not prove candidate highlighting or cancellation in a
+native desktop session.
