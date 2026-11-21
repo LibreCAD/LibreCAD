@@ -1125,6 +1125,19 @@ double RS_Math::convertUnit(const QRegularExpressionMatch& match, const QString&
 QString RS_Math::derationalize(const QString& expression) {
     //RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Math::derationalize: expr = '%s'", expr.toLatin1().data());
 
+    // a mixed number, with or without an inch mark: 1 1/2 is 1.5. The expression parser would
+    // drop the space and read 11/2.
+    static const QRegularExpression mixedNumber(
+        R"(^\s*(-?)\s*(\d+)\s+(\d+)\s*/\s*(\d+)\s*(?:inches|inch|in|")?\s*$)");
+    const QRegularExpressionMatch mixed = mixedNumber.match(expression);
+    if (mixed.hasMatch()) {
+        const double denominator = mixed.captured(4).toDouble();
+        if (denominator != 0.) {
+            const double value = mixed.captured(2).toDouble() + mixed.captured(3).toDouble() / denominator;
+            return QString::number(mixed.captured(1).isEmpty() ? value : -value, 'g', 16);
+        }
+    }
+
     const QRegularExpressionMatch match = REGEXP_UNIT.match(expression);
     if (match.hasMatch()) {
         RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Math::derationalize: matches = '%s'",
