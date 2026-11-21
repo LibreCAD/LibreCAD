@@ -177,7 +177,10 @@ TEST_CASE("Whitespace around the prefix and the separator is ignored", "[coordin
                                       Case{"@10 ,5", 11., 7.}, Case{"! 3 , 4", 3., 4.}, Case{"100 < 30", cos30, 50.},
                                       Case{"100< -90", 0., -100.}, Case{"@ 100 < 0", 101., 2.},
                                       Case{"! 100 < 30", cos30, 50.}, Case{"\t!100<30\t", cos30, 50.},
-                                      Case{"2 * 3 , 4", 6., 4.}, Case{" 0 ", 0., 0.}, Case{" . ", 1., 2.}}) {
+                                      Case{"2 * 3 , 4", 6., 4.}, Case{" 0 ", 0., 0.}, Case{" . ", 1., 2.},
+                                      // a mixed number: 1 1/2 is 1.5
+                                      Case{"1 1/2 , 2", 1.5, 2.}, Case{"!1 1/2,2 1/4", 1.5, 2.25},
+                                      Case{"@ 1 1/2 , 0", 2.5, 2.}, Case{"1 1/2<0", 1.5, 0.}}) {
         CAPTURE(input);
         checkPoint(fixture.parse(QString::fromLatin1(input)), x, y);
     }
@@ -186,7 +189,7 @@ TEST_CASE("Whitespace around the prefix and the separator is ignored", "[coordin
 TEST_CASE("The coordinate syntax tells coordinates from commands", "[coordinates_parser]") {
     using Syntax = LC_CoordinatesParser::Syntax;
     for (const char* input : {"0", ".", ",", "3,4", "@3,4", "!3,4", "100<30", "@ 100 < -90", "! 100<30",
-                              "1/2,2", "2*3,4", "100<30d"}) {
+                              "1/2,2", "1 1/2,2", "2*3,4", "100<30d"}) {
         CAPTURE(input);
         CHECK(LC_CoordinatesParser::isCoordinate(QString::fromLatin1(input)));
     }
