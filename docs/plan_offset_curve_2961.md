@@ -59868,11 +59868,20 @@ direct four-point reconstruction oracle for this frame remains recorded in
 section 1898, and the successful five-lane worker/persistence case at
 `(1e6, -2e6)` remains recorded in section 1899.
 
-The focused real-helper case passes 385 assertions. The neighboring
-`[parabola][from-four-points][high-origin]` worker-client selection passes
-1,583 assertions across two cases, including the successful `1e6` worker,
-cache-admission, and persistence row. This deliberately records current
-fail-closed behavior; it does not implement or claim high-origin native
-editability at `1e12`. Investigate whether exact local-frame cache validation
-can safely admit the represented geometry before changing the refusal. The
-visible source-picker interaction and PR push remain open.
+The focused real-helper case passes 347 assertions. Intermediate checks
+confirm the ordinary branches combine into a valid spline cache, but
+`directOptions` on the world-coordinate source refuses; the same typed
+parabola translated to its local origin produces valid options. Thus local
+generation success does not prove that adding the `1e12` translation retains
+the requested geometric tolerance. The neighboring
+`[parabola][from-four-points][high-origin]` selection passes 1,473 assertions
+across two cases, including the successful `1e6` worker/cache and persistence
+row. These totals are from the latest rebuilt tree.
+
+This deliberately records current fail-closed behavior; it does not
+implement or claim high-origin native editability at `1e12`. Any future
+admission change must quantify translation-rounding error against the requested
+tolerance and retain exact operation-8/source-cache validation. Merely
+localizing `directOptions` would remove the refusal without proving the
+world-coordinate result. The visible source-picker interaction and PR push
+remain open.
