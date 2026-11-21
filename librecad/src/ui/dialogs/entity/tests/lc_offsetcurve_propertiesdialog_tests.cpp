@@ -7,9 +7,9 @@
 #include <catch2/catch_test_macros.hpp>
 #include <catch2/reporters/catch_reporter_event_listener.hpp>
 #include <catch2/reporters/catch_reporter_registrars.hpp>
-#include <QDir>
 #include <QtWidgets>
 #include <QScopeGuard>
+#include <algorithm>
 #include <array>
 #include <cmath>
 #include <cstdint>
@@ -1429,18 +1429,75 @@ TEST_CASE("Native source picker filters and replaces every supported source fami
         externalFixtureCarriers.emplace_back(carrier);
     }
 
+    lc::test::OutputDirectory output{"offset-source-picker-all-families"};
+    const auto fixturePath = output.file("offset-source-picker-all-families.dxf");
+    for (auto& carrier : externalFixtureCarriers) {
+        REQUIRE(carrier);
+        f.graphic.addEntity(carrier.release());
+    }
+    REQUIRE(lc::test::exportDrawing(f.graphic, fixturePath, RS2::FormatDXFRW2018));
+
+    Graphic reopened;
+    reopened.initForNewDocument();
+    REQUIRE(lc::test::importDrawing(reopened, fixturePath, RS2::FormatDXFRW2018));
+    reopened.onLoadingCompleted();
+    std::array<bool, LC_OffsetSourceGeometry::SupportedKinds.size()> importedKinds{};
+    std::size_t importedCarriers = 0;
+    for (const RS_Entity* entity : reopened) {
+        const auto* offset = dynamic_cast<const LC_OffsetCurve*>(entity);
+        if (!offset) continue;
+        REQUIRE(offset->sourceDefinition());
+        const Kind kind = offset->sourceDefinition()->source.kind();
+        const auto kindIt = std::find(LC_OffsetSourceGeometry::SupportedKinds.begin(),
+                                      LC_OffsetSourceGeometry::SupportedKinds.end(), kind);
+        REQUIRE(kindIt != LC_OffsetSourceGeometry::SupportedKinds.end());
+        const auto kindIndex = static_cast<std::size_t>(std::distance(
+            LC_OffsetSourceGeometry::SupportedKinds.begin(), kindIt));
+        CHECK_FALSE(importedKinds[kindIndex]);
+        importedKinds[kindIndex] = true;
+        const auto expectedGeometry = LC_OffsetSourceGeometry::capture(*candidates[kindIndex]);
+        REQUIRE(expectedGeometry);
+        const auto actual = LC_OffsetWorkerRequest::Values::encodeSourceGeometry(
+            offset->sourceDefinition()->source);
+        const auto expected = LC_OffsetWorkerRequest::Values::encodeSourceGeometry(
+            *expectedGeometry);
+        INFO("round-trip source kind: " << static_cast<int>(kind));
+        if (kind == Kind::Parabola) {
+            const auto& actualParabola = std::get<LC_ParabolaData>(
+                offset->sourceDefinition()->source.value);
+            const auto& expectedParabola = std::get<LC_ParabolaData>(
+                expectedGeometry->value);
+            for (std::size_t point = 0; point < actualParabola.m_controlPoints.size(); ++point) {
+                INFO("parabola control " << point << " actual: "
+                     << actualParabola.m_controlPoints[point].x << ", "
+                     << actualParabola.m_controlPoints[point].y << " expected: "
+                     << expectedParabola.m_controlPoints[point].x << ", "
+                     << expectedParabola.m_controlPoints[point].y);
+                CHECK(actualParabola.m_controlPoints[point].x ==
+                      expectedParabola.m_controlPoints[point].x);
+                CHECK(actualParabola.m_controlPoints[point].y ==
+                      expectedParabola.m_controlPoints[point].y);
+            }
+        }
+        REQUIRE(actual);
+        CHECK(actual == expected);
+        ++importedCarriers;
+    }
+    CHECK(importedCarriers == LC_OffsetSourceGeometry::SupportedKinds.size());
+    CHECK(std::all_of(importedKinds.begin(), importedKinds.end(), [](bool imported) {
+        return imported;
+    }));
+
     const QString fixtureDirectory = qEnvironmentVariable("LIBRECAD_DWG_FIXTURE_DIR");
     if (!fixtureDirectory.isEmpty()) {
-        REQUIRE(QDir().mkpath(fixtureDirectory));
-        for (auto& carrier : externalFixtureCarriers) {
-            REQUIRE(carrier);
-            f.graphic.addEntity(carrier.release());
-        }
-        const std::filesystem::path fixturePath =
-            std::filesystem::path(fixtureDirectory.toStdWString()) /
-            "offset-source-picker-all-families.dxf";
-        REQUIRE(lc::test::exportDrawing(f.graphic, fixturePath,
-                                        RS2::FormatDXFRW2018));
+        const std::filesystem::path retainedDirectory(fixtureDirectory.toStdWString());
+        std::error_code error;
+        std::filesystem::create_directories(retainedDirectory, error);
+        REQUIRE_FALSE(error);
+        std::filesystem::copy_file(fixturePath,
+            retainedDirectory / "offset-source-picker-all-families.dxf",
+            std::filesystem::copy_options::overwrite_existing, error);
+        REQUIRE_FALSE(error);
     }
 }
 
