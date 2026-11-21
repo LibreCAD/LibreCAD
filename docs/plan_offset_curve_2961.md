@@ -60725,3 +60725,17 @@ also runs other high-volume conic tests.
 Broad sanitizer order/timing stability, physical GUI acceptance,
 source-bearing ODA/AutoCAD validation, and exact-head CI remain open; the
 overall roadmap is incomplete.
+
+## 1943. Retry ODA Typed-source Conversion from the Logged-in SSH Session (2026-11-21)
+
+After the user confirmed ODAFileConverter was open in the macOS desktop
+session, retried conversion of the committed typed-source DWG fixture folder
+to ACAD2018 DXF with the documented ODA command and a new empty output folder
+under `/private/tmp/PR3193-oda-retry-5ba52d3ce`. The executable again failed
+before producing converted output with `com.apple.pasteboard.clipboard`,
+`com.apple.pasteboard.find`, and invalid `com.apple.hiservices-xpcservice`
+connection errors (exit 134). Opening ODA in the desktop session does not
+attach its pasteboard services to this SSH-launched process. This is not a
+conversion or validation result; do not interpret an empty output directory as
+DWG acceptance. Keep the independent ODA gate open and run the conversion from
+the interactive desktop Terminal or the ODA GUI when available.
