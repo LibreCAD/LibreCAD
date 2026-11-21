@@ -60267,4 +60267,7 @@ remain covered in separate picker/worker cases.
 
 This qualifies one five-fit-point tolerance profile; endpoint-tangent
 fit-point metadata, other fit counts/tolerances, and fit-point Trim/offset
-conditioning remain separate rows.
+conditioning remain separate rows. The profile is intentionally
+unconstrained-tangent: five-point tangent-constrained `LC_SplinePoints` DWG
+output remains fail-closed under the verified three-point writer subset in
+W563ax; this receipt does not widen that writer policy.
