@@ -699,7 +699,13 @@ TEST_CASE("Exported source-picker drawing reopens with resolvable source candida
 
     const int lineType = typeBox->findData(static_cast<int>(LC_OffsetSourceGeometry::Kind::Line));
     REQUIRE(lineType >= 0);
+    const auto originalCache = RS_Spline::geometryFingerprint(editable->getData());
+    const auto originalBasis = editable->definition().basis;
     typeBox->setCurrentIndex(lineType);
+    CHECK_FALSE(editable->sourceDefinition());
+    CHECK(RS_Spline::geometryFingerprint(editable->getData()) == originalCache);
+    CHECK(editable->definition().basis.center == originalBasis.center);
+    CHECK(editable->definition().basis.majorP == originalBasis.majorP);
     const int lineIndex = sourceBox->findData(QVariant::fromValue<qulonglong>(importedLine->getId()));
     REQUIRE(lineIndex >= 0);
     sourceBox->setCurrentIndex(lineIndex);
