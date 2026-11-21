@@ -238,6 +238,10 @@ void exchangeFault(Runtime& rt, Fault fault, Client::Status expected) {
     if (fault == Fault::AllocationFailure || fault == Fault::InternalFailure) {
         // A matched null-result failure is parsed transport, never known work.
         CHECK(receipts.at(0).diagnostics.contains(receipt(fault)));
+        const int workerFailure = fault == Fault::AllocationFailure ? 1 : 2;
+        const QByteArray workerFailureDiagnostic =
+            QByteArrayLiteral("worker-reply-failure=") + QByteArray::number(workerFailure);
+        CHECK(receipts.at(0).diagnostics.contains(workerFailureDiagnostic));
         CHECK(receipts.at(0).transportWork.payloadBytes > 0);
         CHECK(receipts.at(0).transportWork.items > 0);
     }

@@ -60689,3 +60689,39 @@ assertions) and ASan/UBSan (300 assertions). The existing
 assertions) and ASan/UBSan (2 cases, 3,658 assertions). Broad sanitizer-order
 stability, physical GUI, source-bearing external CAD, and exact-head CI remain
 open; the overall roadmap is incomplete.
+
+## 1942. Capture Typed Worker Failure and Pin High-Segment Polyline Fixture (2026-11-21)
+
+The preceding-suite ASan/UBSan run exposed a second intermittent symptom in
+the worker-created 256-segment parabolic polyline case: the action preview was
+empty after the worker reported `ProcessFailed`, although direct and prepared
+geometry checks succeeded. The client previously discarded the matched reply's
+typed failure enum, leaving the action diagnostic unable to distinguish worker
+allocation failure from internal failure. Preserve that enum in bounded
+diagnostic text (`worker-reply-failure=1` for allocation failure and `=2` for
+internal failure); this is observability only and does not change worker result
+authority or retry policy. Add assertions for both reply categories.
+
+Added opt-in `LC_OFFSET_TRIM_POLYLINE_SEGMENTS`,
+`LC_OFFSET_TRIM_POLYLINE_PROFILE_KIND`, and `LC_OFFSET_TRIM_POLYLINE_FIRST`
+filters so the exact case can be repeated without changing the default matrix.
+The focused named test for the 256-segment parabolic profile with polyline-first
+order passes Release (366 assertions) and ASan/UBSan (165 assertions). The
+typed worker-reply failure case passes Release (2,312 assertions) and
+ASan/UBSan (6,034 assertions).
+
+The full fault-helper binary under ASan/UBSan did not pass as a suite: one
+timeout-fixture receipt assertion failed and two cases crossed its existing
+24-second watchdog by 420-433 ms. The isolated typed-failure case passes, so
+these results do not establish a typed-failure regression; retain the complete
+fault-suite sanitizer gate as open and do not increase timeout policy based on
+this run. A broad loaded Trim-action sanitizer run also observed the empty
+polyline preview, then was interrupted after identifying its typed
+`ProcessFailed` status; this is not a completed broad result. The exact isolated
+case above passes, but suite-load stability remains unresolved. Select the
+named Catch2 test when pinning the polyline fixture: the shared tag selector
+also runs other high-volume conic tests.
+
+Broad sanitizer order/timing stability, physical GUI acceptance,
+source-bearing ODA/AutoCAD validation, and exact-head CI remain open; the
+overall roadmap is incomplete.

@@ -6482,6 +6482,15 @@ TEST_CASE("T Trim Two action trims worker-created typed spline and spline-points
 
 TEST_CASE("T Trim Two action trims worker-created mixed-bulge and high-segment polyline sources in both pick orders",
           "[gui][lc-offsetcurve][trim-action][typed-source][polyline][trim-two]") {
+    const bool pinSegments = qEnvironmentVariableIsSet("LC_OFFSET_TRIM_POLYLINE_SEGMENTS");
+    const bool pinProfile = qEnvironmentVariableIsSet("LC_OFFSET_TRIM_POLYLINE_PROFILE_KIND");
+    const bool pinOrder = qEnvironmentVariableIsSet("LC_OFFSET_TRIM_POLYLINE_FIRST");
+    const int requestedSegments =
+        qEnvironmentVariableIntValue("LC_OFFSET_TRIM_POLYLINE_SEGMENTS");
+    const int requestedProfile =
+        qEnvironmentVariableIntValue("LC_OFFSET_TRIM_POLYLINE_PROFILE_KIND");
+    const int requestedOrder =
+        qEnvironmentVariableIntValue("LC_OFFSET_TRIM_POLYLINE_FIRST");
     for (const unsigned segmentCount : {0u, 256u})
     for (const unsigned profileKind : {0u, 1u, 2u, 3u})
     for (const double sourceBulge : {1.0, .5})
@@ -6489,6 +6498,9 @@ TEST_CASE("T Trim Two action trims worker-created mixed-bulge and high-segment p
         for (const bool trimLineSpan : {false, true}) for (const bool polylineFirst : {false, true}) {
         if ((profileKind && !segmentCount) ||
             (segmentCount && (sourceBulge != 1.0 || addThirdSpan || trimLineSpan))) continue;
+        if ((pinSegments && requestedSegments != int(segmentCount)) ||
+            (pinProfile && requestedProfile != int(profileKind)) ||
+            (pinOrder && requestedOrder != int(polylineFirst))) continue;
         CAPTURE(segmentCount, profileKind, sourceBulge, addThirdSpan, trimLineSpan, polylineFirst);
         Drawing<true> f;
         const qint64 requestedPreviewTimeout = qEnvironmentVariableIntValue("LIBRECAD_TEST_OFFSET_WORKER_TIMEOUT_MS");

@@ -357,6 +357,7 @@ void LC_OffsetWorkerClient::finish(bool reaped) {
     if (!m_active) return;
     if (!m_active->stopping) drain();
     Outcome outcome;
+    QByteArray replyFailureDiagnostic;
     outcome.reaped = reaped;
     outcome.elapsedMilliseconds = elapsedSince(m_startedAt);
     try {
@@ -370,7 +371,11 @@ void LC_OffsetWorkerClient::finish(bool reaped) {
             outcome.transportWork = message.work;
             auto reply = message ? LC_OffsetWorkerResult::decode(message.fields, m_active->request) : std::nullopt;
             if (!reply || !matchesInputs(*reply, m_active->request)) outcome.status = Status::ProtocolFailed;
-            else if (reply->failure != LC_OffsetWorkerResult::Failure::None) outcome.status = Status::ProcessFailed;
+            else if (reply->failure != LC_OffsetWorkerResult::Failure::None) {
+                outcome.status = Status::ProcessFailed;
+                replyFailureDiagnostic = QByteArrayLiteral("worker-reply-failure=") +
+                    QByteArray::number(int(reply->failure));
+            }
             else if (Deadlines::expired(elapsedSince(m_startedAt),
                 m_active->mode == Mode::Preview ? m_previewLimit : m_commitLimit)) outcome.status = Status::TimedOut;
             else {
@@ -381,6 +386,11 @@ void LC_OffsetWorkerClient::finish(bool reaped) {
         }
     } catch (...) { outcome.status = Status::AllocationFailed; outcome.completed.reset(); }
     outcome.diagnostics = std::move(m_active->diagnostics);
+    if (!replyFailureDiagnostic.isEmpty()) {
+        if (!outcome.diagnostics.isEmpty() && !outcome.diagnostics.endsWith('\n'))
+            outcome.diagnostics.append('\n');
+        outcome.diagnostics.append(replyFailureDiagnostic);
+    }
     auto callback = std::move(m_active->callback);
     m_active.reset(); m_process.reset(); m_timer.stop();
     deliver(std::move(callback), std::move(outcome));
