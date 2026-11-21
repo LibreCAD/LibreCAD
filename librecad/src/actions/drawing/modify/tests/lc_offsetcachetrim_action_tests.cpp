@@ -5735,7 +5735,7 @@ TEST_CASE("T Trim Two trims a worker-created high-origin ellipse offset",
 
 TEST_CASE("T Trim Two action trims worker-created typed spline and spline-points sources in both pick orders",
           "[gui][lc-offsetcurve][trim-action][typed-source][spline][fit-points][trim-two]") {
-    for (unsigned profile = 0; profile <= 39; ++profile)
+    for (unsigned profile = 0; profile <= 40; ++profile)
     for (const bool nativeFirst : {false, true}) {
         const bool fitPoints = profile >= 5;
         const bool splinePointsSource = profile == 2 || fitPoints;
@@ -5775,7 +5775,7 @@ TEST_CASE("T Trim Two action trims worker-created typed spline and spline-points
                     : profile == 36
                         ? std::vector<RS_Vector>{{-4, 0}, {-2, 2.2}, {0, 3.1},
                                                  {2, 2.2}, {4, 0}}
-                    : profile == 37
+                    : profile == 37 || profile == 40
                         ? std::vector<RS_Vector>{{-4, 0}, {-3, 1.5}, {-2, 2.5},
                                                  {-1, 3.1}, {0, 3.3}, {1, 3.1},
                                                  {2, 2.5}, {4, 0}}
@@ -6008,12 +6008,11 @@ TEST_CASE("T Trim Two action trims worker-created typed spline and spline-points
             }
             source = new LC_SplinePoints(&f.graphic, data);
             if (profile == 6 || profile == 36 || profile == 37 || profile == 38 ||
-                profile == 39) {
+                profile == 39 || profile == 40) {
                 auto* fitted = dynamic_cast<LC_SplinePoints*>(source);
                 REQUIRE(fitted);
                 CHECK(fitted->getData().splinePoints.size() ==
-                      (profile == 6 ? 4u : profile == 36 ? 5u :
-                       profile == 37 ? 8u : 5u));
+                      (profile == 6 ? 4u : (profile == 37 || profile == 40) ? 8u : 5u));
                 LC_CurveJet startJet;
                 LC_CurveJet endJet;
                 REQUIRE(fitted->tryEvaluateJet(0.0, LC_CurveEvaluationSide::Right, startJet));
@@ -6021,7 +6020,7 @@ TEST_CASE("T Trim Two action trims worker-created typed spline and spline-points
                     LC_CurveEvaluationSide::Left, endJet));
                 LC_SplinePointsData fittedData = fitted->getData();
                 fittedData.fitTangentsConstrained = true;
-                fittedData.fitStartTangent = profile == 39
+                fittedData.fitStartTangent = profile == 39 || profile == 40
                     ? RS_Vector{0.0, 0.0, 0.0} : startJet.first;
                 fittedData.fitEndTangent = profile == 38
                     ? RS_Vector{0.0, 0.0, 0.0} : endJet.first;
@@ -6140,7 +6139,7 @@ TEST_CASE("T Trim Two action trims worker-created typed spline and spline-points
                 }
             }
             CAPTURE(lastRefusal);
-            if (profile >= 22 && !foundCertifiedCut) {
+            if (profile >= 22 && !foundCertifiedCut && profile != 40) {
                 CHECK(lastRefusal == static_cast<int>(LC_OffsetCacheTrim::Refusal::AmbiguousRoots));
                 nativePick = lastPick;
                 auto* cutter = new RS_Line(&f.graphic, lastCutterData);

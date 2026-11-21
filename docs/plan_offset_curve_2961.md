@@ -60456,3 +60456,23 @@ gap. It does not close arbitrary fit-point layouts, other spline degree/weight
 profiles, visible application acceptance, a successful source-bearing
 ODA/AutoCAD run, the remaining sanitizer matrix, or final exact-head CI. The
 overall roadmap remains incomplete.
+
+## 1932. Verify Eight-Point End-Only Tangent Fit Through Trim Persistence (2026-11-21)
+
+Extended the same Trim Two matrix with an eight-fit-point open profile whose
+end tangent alone is constrained. Unlike profiles that are allowed to take the
+ambiguous-root refusal path, this profile must find a certified cut; that
+prevents a passing test from silently skipping worker generation, commit, and
+save/reopen. It is exercised in both entity pick orders across R14 DXF, R2000
+DXF/DWG, and R2018 DXF/DWG.
+
+The focused Release matrix passes **30,506 assertions in 1 Catch2 case**. The
+same test under ASan/UBSan with the bounded test-only 10,000 ms worker wait
+passes **105,453 assertions in 1 case**, with no sanitizer diagnostics.
+`git diff --check` passes.
+
+This adds breadth for end-only tangent metadata at a larger fit count; it does
+not establish arbitrary-point-count behavior. Visible GUI acceptance,
+source-bearing external ODA/AutoCAD acceptance, wider curve/profile coverage,
+remaining sanitizer action coverage, and final exact-head CI remain open. The
+overall plan is not complete.
