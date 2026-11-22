@@ -2419,6 +2419,10 @@ TEST_CASE("I trim one closed convex polyline cache component and retain the rest
     const double quarterArcBulge = std::tan(M_PI / 8.0);
     const auto format = GENERATE(RS2::FormatDXFRW14, RS2::FormatDXFRW2000,
         RS2::FormatDWG, RS2::FormatDXFRW2018, RS2::FormatDWG2018);
+    const bool profilePinned = qEnvironmentVariableIsSet("LC_OFFSET_TRIM_CLOSED_POLYLINE_PROFILE");
+    const int requestedProfile = qEnvironmentVariableIntValue("LC_OFFSET_TRIM_CLOSED_POLYLINE_PROFILE");
+    const bool formatPinned = qEnvironmentVariableIsSet("LC_OFFSET_TRIM_CLOSED_POLYLINE_FORMAT");
+    const int requestedFormat = qEnvironmentVariableIntValue("LC_OFFSET_TRIM_CLOSED_POLYLINE_FORMAT");
     const std::array<const char*, 19> profileNames{{
         "square", "rounded", "unequal-radii", "all-arc-circle-ccw", "all-arc-circle-cw",
         "all-arc-circle-cw-centerline-audit", "all-arc-circle-cw-rotated-translated",
@@ -2434,6 +2438,12 @@ TEST_CASE("I trim one closed convex polyline cache component and retain the rest
         "equal-radius-rounded-rectangle-rotated-billion-origin-inward",
         "equal-radius-rounded-rectangle-rotated-billion-origin-outward"}};
     CAPTURE(profileNames[static_cast<std::size_t>(profile)], static_cast<int>(format));
+    REQUIRE_FALSE((profilePinned && (requestedProfile < 0 || requestedProfile >= 19)));
+    REQUIRE_FALSE((formatPinned && requestedFormat != RS2::FormatDXFRW14 &&
+        requestedFormat != RS2::FormatDXFRW2000 && requestedFormat != RS2::FormatDWG &&
+        requestedFormat != RS2::FormatDXFRW2018 && requestedFormat != RS2::FormatDWG2018));
+    if ((profilePinned && profile != requestedProfile) ||
+        (formatPinned && static_cast<int>(format) != requestedFormat)) return;
     REQUIRE(lc::test::application());
     lc::test::QuietLog quiet;
     QTemporaryDir directory;
@@ -2573,6 +2583,17 @@ TEST_CASE("I trim one closed convex polyline cache component and retain the rest
     for (unsigned i = 0; i < 2; ++i) mouse(*update, view, sourcePick, false);
     mouse(*update, view, sourcePick, true);
     lc::test::awaitUpdate(*updateAction);
+    QStringList updateOutcomes;
+    for (const auto& outcome : updateAction->lastReport().outcomes) {
+        updateOutcomes << QStringLiteral("target=%1 refusal=%2 exactWorkerWorkKnown=%3")
+            .arg(qulonglong(outcome.targetId)).arg(outcome.refusal)
+            .arg(outcome.exactWorkerWorkKnown ? QStringLiteral("true") : QStringLiteral("false"));
+    }
+    INFO("Update from Source report: updated=" << updateAction->lastReport().updated
+         << " unchanged=" << updateAction->lastReport().unchanged
+         << " refused=" << updateAction->lastReport().refused
+         << " sourceRefusal=" << updateAction->lastReport().sourceRefusal.toStdString()
+         << " outcomes=" << updateOutcomes.join(QStringLiteral("; ")).toStdString());
     REQUIRE(updateAction->lastReport().updated == 1);
     auto* replacement = onlyNative(graphic);
     REQUIRE(replacement->sourceDefinition());
