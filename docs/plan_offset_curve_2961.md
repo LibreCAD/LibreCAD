@@ -334,12 +334,18 @@ were unrelated and do not explain the SIGKILLs.
 Section 1960 pins the interrupted high-degree spline Update-from-Source row;
 that row passes isolated Release and ASan/UBSan checks, so the broad-run
 interrupt remains an order/load question, not a reproduced fixture failure.
+Section 1961 runs four previously sensitive Trim test declarations together
+in one process. Its initial assertion-count discrepancy was traced to
+`REQUIRE` checks repeated inside 1 ms event-pump loops; section 1962 removes
+that timing-dependent count inflation without changing wait bounds and
+revalidates matching Release/ASan totals. This bounded selection does not
+qualify the broad action suite.
 Source-bearing ODA/AutoCAD
 conversion remains unverified because SSH and SSH-launched GUI automation
 cannot access the desktop pasteboard/Terminal session. Broader family/variant
 coverage is still open.
 
-The current pushed PR #3193 head is `7e28a23a5` (open draft). No workflow run
+The current pushed PR #3193 head is `80c978e1f` (open draft). No workflow run
 or commit status is attached to this
 documentation/test-only head; do not carry CI results from older revisions
 forward. Continue with the broad sanitizer/order investigation, concrete
@@ -61121,3 +61127,59 @@ reproduction with the PID-bearing diagnostics over changing geometry or
 deadlines; do not relabel the interrupted run as a pass. ODA execution context,
 VXCONTROL baseline, visible GUI, exact-head CI, and family/variant coverage
 also remain open.
+
+## 1961. Run a Bounded Multi-case Trim Sequence in One Process (2026-11-22)
+
+Ran a deterministic, four-declaration selection in one `librecad_tests`
+process: endpoint-tangent parabola Trim (profile 58), closed convex polyline
+Trim (profile 10, R14 DXF), the captured high-origin closed-seam row, and the
+high-degree spline Trim test. The ASan/UBSan build and Release build both
+completed all four selected test cases with no failures; the ASan run emitted
+no sanitizer diagnostic. Both used seed `1453897047`, declaration order, and
+the 30-second test-only worker deadline override. The exact high-degree row is
+independently pinned and qualified in section 1960; Catch2 generator filters
+are shared across test cases in this grouped invocation, so do not infer that
+the grouped run selected that same row.
+
+The initial compact reporter totals differed (2,706 assertions under
+ASan/UBSan versus 857 in Release). Section 1962 traced this to repeated
+`REQUIRE(elapsed < bound)` checks inside 1 ms polling loops; slower instrumented
+workers accumulated more assertions although normalized test logs matched.
+The earlier colon-separated Catch2 syntax attempt did not run any tests and is
+excluded from results.
+
+Keep the broad seeded sanitizer/order gate open. Continue bounded suite-load
+reproduction while capturing PID-bearing helper failures. Do not change
+production deadlines or accept the interrupted broad run as passed. ODA
+execution context, VXCONTROL baseline, visible GUI, exact-head CI, and
+family/variant coverage also remain open.
+
+## 1962. Stabilize Trim Test Wait Assertions and Revalidate the Sensitive Rows (2026-11-22)
+
+Replaced repeated elapsed-time `REQUIRE` calls inside Trim action and worker
+event-pump loops with the same bounded loop conditions followed by one
+readiness assertion. This covers Trim preview/commit waits, joined worker
+completion, async worker receipts and state waits, and the helper-reap check.
+The existing 35-second and 5-second bounds, 1 ms event pumping, cancellation,
+and production deadlines are unchanged. This is test-harness accounting and
+failure-reporting cleanup; it does not alter production worker behavior.
+
+Rebuilt `librecad_tests` in CMake Debug+ASan/UBSan and Release. The isolated
+parabola profile 58 now reports **242 assertions in each build**, versus
+2,358 ASan/UBSan and 703 Release before this change. The three-case same-process
+sequence (profile 58, closed-polyline profile 10/R14 DXF, and captured seam)
+passes **623 assertions / 3 cases in each build**. The exact high-degree spline
+row from section 1960 passes **103 assertions / 1 case in each build** after
+rebuild. The five-case `[lc-offsetcurve][trim-action][trim-worker-async]`
+selector, covering joined completion, detached inputs, cancellation/deadline
+recovery, and owner destruction, passes **170 assertions / 5 cases in each
+build**. ASan/UBSan reports no sanitizer diagnostics. These bounded results
+improve count stability and targeted same-process evidence but do not qualify
+the full `[lc-offsetcurve][trim-action]` suite or explain the historical
+helper SIGKILLs.
+
+Keep the broad seeded sanitizer/order gate open. Run the full action selection
+only when a bounded invocation can finish without manual interruption, and
+preserve PID-bearing process diagnostics on any real helper failure. ODA
+execution context, VXCONTROL baseline, visible GUI, exact-head CI, and
+family/variant coverage remain open.
