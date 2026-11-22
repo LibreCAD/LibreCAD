@@ -1,6 +1,7 @@
 /*
  * This file is part of the LibreCAD project.
  * Copyright (C) 2026 LibreCAD.org
+ * Copyright (C) 2026 Dongxu Li (github.com/dxli)
  * Licensed under GPL-2.0-or-later.
  */
 #ifndef LC_TRIMBATCH_H
@@ -52,12 +53,10 @@ private:
 
 class LC_TrimBatch {
 public:
-    enum class Verdict { Kept, Removed, Undetermined };
     struct Stats {
         int trimmed = 0;
         int removed = 0;
         int undetermined = 0;
-        int untouched = 0;
     };
 
     LC_TrimBatch(const QList<RS_Entity*>& targets, const LC_TrimLimitSet& limits);
@@ -68,16 +67,10 @@ public:
     LC_TrimBatch& operator=(const LC_TrimBatch&) = delete;
 
     bool anyCut() const;
-    int targetCount() const;
-    int pieceCount(int target) const;
     std::vector<RS_Vector> cutPoints() const;
-    Verdict verdict(int target, int piece, const std::vector<int>& cursorSides) const;
     std::vector<int> cursorSides(const RS_Vector& cursor) const;
     std::vector<std::unique_ptr<RS_AtomicEntity>> removedPieces(const std::vector<int>& cursorSides) const;
-    bool pieceAt(const RS_Vector& point, double catchDistance, int& target, int& piece) const;
-    void toggle(int target, int piece);
-    bool undoToggle();
-    Stats apply(const std::vector<int>& cursorSides, bool divideOnly, LC_DocumentModificationBatch& context) const;
+    Stats apply(const std::vector<int>& cursorSides, LC_DocumentModificationBatch& context) const;
 
 private:
     struct Data;

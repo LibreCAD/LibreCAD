@@ -4215,6 +4215,11 @@ or [%2]</source>
         <source>Save A&amp;ll...</source>
         <translation>다운로드.</translation>
     </message>
+    <message>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="392"/>
+        <source>Batch Trim</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LC_ActionFileExportMakerCam</name>
@@ -6146,6 +6151,44 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim_amount.cpp" line="267"/>
         <source>Select line/arc to trim OR enter length value:</source>
         <translation type="unfinished">트림할 선/호를 선택하거나 길이 값을 입력하십시오:</translation>
+    </message>
+</context>
+<context>
+    <name>LC_ActionModifyTrimBatch</name>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_trim_batch.cpp" line="127"/>
+        <source>Removed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_trim_batch.cpp" line="127"/>
+        <source>Trim Batch</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_trim_batch.cpp" line="169"/>
+        <source>Trimmed %1 entities, removed %2 pieces (%3 undetermined kept)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_trim_batch.cpp" line="212"/>
+        <source>Select entities to trim</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_trim_batch.cpp" line="218"/>
+        <source>Select limiting entity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_trim_batch.cpp" line="221"/>
+        <source>Specify the side to keep</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_trim_batch.cpp" line="84"/>
+        <source>None of the selected entities crosses the limit</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -48831,6 +48874,21 @@ Please check the filename and permissions.</source>
         <source>Shapefile %1 contained %2 records but none were readable</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../src/cmd/lc_commandItems.h" line="811"/>
+        <source>trimbatch</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/cmd/lc_commandItems.h" line="812"/>
+        <source>tb</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/cmd/lc_commandItems.h" line="813"/>
+        <source>mtrim</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionBlocksCreate</name>
@@ -50347,4 +50405,5 @@ End: (%8 , %9)</source>
         <translation>분기점수</translation>
     </message>
 </context>
+
 </TS>

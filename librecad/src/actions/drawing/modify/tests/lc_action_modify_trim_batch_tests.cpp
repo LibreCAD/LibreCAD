@@ -1,3 +1,9 @@
+/*
+ * This file is part of the LibreCAD project.
+ * Copyright (C) 2026 LibreCAD.org
+ * Copyright (C) 2026 Dongxu Li (github.com/dxli)
+ * Licensed under GPL-2.0-or-later.
+ */
 #include <catch2/catch_test_macros.hpp>
 
 #include "lc_action_modify_trim_batch.h"
@@ -49,6 +55,9 @@ TEST_CASE("batch trim selection, limit and side clicks use one undo cycle", "[ac
     fixture.m_action->init(TrimBatchProbe::SelectTargets);
 
     REQUIRE(fixture.m_action->getStatus() == TrimBatchProbe::SelectLimit);
+    addLine(fixture.m_graphic, {15.0, -5.0}, {15.0, 5.0});
+    fixture.m_action->click({15.0, 3.0});
+    CHECK(fixture.m_action->getStatus() == TrimBatchProbe::SelectLimit);
     fixture.m_action->click({5.0, 3.0});
     REQUIRE(fixture.m_action->getStatus() == TrimBatchProbe::ChooseSide);
     fixture.m_action->click({8.0, 0.0});

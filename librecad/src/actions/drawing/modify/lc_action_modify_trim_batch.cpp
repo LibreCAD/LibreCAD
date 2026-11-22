@@ -1,6 +1,7 @@
 /*
  * This file is part of the LibreCAD project.
  * Copyright (C) 2026 LibreCAD.org
+ * Copyright (C) 2026 Dongxu Li (github.com/dxli)
  * Licensed under GPL-2.0-or-later.
  */
 #include "lc_action_modify_trim_batch.h"
@@ -141,7 +142,7 @@ void LC_ActionModifyTrimBatch::onCoordinateEvent(const int status, [[maybe_unuse
 
 bool LC_ActionModifyTrimBatch::doTriggerModifications(LC_DocumentModificationBatch& context) {
     if (m_batch == nullptr) return false;
-    m_lastStats = m_batch->apply(m_cursorSides, false, context);
+    m_lastStats = m_batch->apply(m_cursorSides, context);
     return m_lastStats.trimmed > 0;
 }
 

@@ -1,3 +1,9 @@
+/*
+ * This file is part of the LibreCAD project.
+ * Copyright (C) 2026 LibreCAD.org
+ * Copyright (C) 2026 Dongxu Li (github.com/dxli)
+ * Licensed under GPL-2.0-or-later.
+ */
 #include <catch2/catch_test_macros.hpp>
 #include <catch2/catch_approx.hpp>
 
@@ -38,4 +44,17 @@ TEST_CASE("a circle is split into a counterclockwise arc", "[modify][trim][batch
     CHECK(segment->rtti() == RS2::EntityArc);
     CHECK(segment->getStartpoint().distanceTo(start) < 1e-7);
     CHECK(segment->getEndpoint().distanceTo(end) < 1e-7);
+}
+
+TEST_CASE("ellipse arc splitting preserves its direction", "[modify][trim][batch]") {
+    RS_Ellipse source{nullptr, RS_EllipseData{{0.0, 0.0}, {10.0, 0.0}, 0.5, 1.5, 0.1, true}};
+    const RS_Vector start = source.getEllipsePoint(1.1);
+    const RS_Vector end = source.getEllipsePoint(0.4);
+    const auto segment = lc::curvesplit::subCurve(source, 0.4, start, 1.1, end);
+    REQUIRE(segment != nullptr);
+    const auto* ellipseSegment = static_cast<const RS_Ellipse*>(segment.get());
+    CHECK(ellipseSegment->isReversed());
+    CHECK(segment->getStartpoint().distanceTo(start) < 1e-7);
+    CHECK(segment->getEndpoint().distanceTo(end) < 1e-7);
+    CHECK(lc::curvesplit::paramOf(source, start) == Catch::Approx(0.4));
 }

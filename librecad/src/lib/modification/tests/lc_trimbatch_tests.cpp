@@ -1,6 +1,13 @@
+/*
+ * This file is part of the LibreCAD project.
+ * Copyright (C) 2026 LibreCAD.org
+ * Copyright (C) 2026 Dongxu Li (github.com/dxli)
+ * Licensed under GPL-2.0-or-later.
+ */
 #include <catch2/catch_test_macros.hpp>
 
 #include "lc_trimbatch.h"
+#include "rs_circle.h"
 #include "rs_document.h"
 #include "rs_line.h"
 
@@ -32,6 +39,17 @@ TEST_CASE("batch trim leaves targets that do not intersect unchanged", "[modify]
     CHECK_FALSE(batch.anyCut());
 }
 
+TEST_CASE("batch trim ignores intersections at open target endpoints", "[modify][trim][batch]") {
+    RS_Line target{nullptr, {0.0, 0.0}, {10.0, 0.0}};
+    RS_Line limit{nullptr, {0.0, -5.0}, {0.0, 5.0}};
+    LC_TrimLimitSet limits;
+    limits.add(limit);
+    limits.build();
+    LC_TrimBatch batch{{&target}, limits};
+
+    CHECK_FALSE(batch.anyCut());
+}
+
 TEST_CASE("batch trim applies all changed targets in one document batch", "[modify][trim][batch]") {
     RS_Line first{nullptr, {0.0, -2.0}, {10.0, -2.0}};
     RS_Line second{nullptr, {0.0, 2.0}, {10.0, 2.0}};
@@ -42,7 +60,7 @@ TEST_CASE("batch trim applies all changed targets in one document batch", "[modi
     LC_TrimBatch batch{{&first, &second}, limits};
     LC_DocumentModificationBatch context;
 
-    const auto stats = batch.apply(batch.cursorSides({8.0, 0.0}), false, context);
+    const auto stats = batch.apply(batch.cursorSides({8.0, 0.0}), context);
     CHECK(stats.trimmed == 2);
     CHECK(context.entitiesToDelete.size() == 2);
     CHECK(context.entitiesToAdd.size() == 2);
@@ -101,6 +119,21 @@ TEST_CASE("two limit components trim to the region containing the cursor", "[mod
     CHECK(removed[1]->getEndpoint().distanceTo({10.0, 0.0}) < 1e-7);
 }
 
+TEST_CASE("batch trim splits a closed circle at the limit", "[modify][trim][batch]") {
+    RS_Circle target{nullptr, {{0.0, 0.0}, 5.0}};
+    RS_Line limit{nullptr, {-6.0, 0.0}, {6.0, 0.0}};
+    LC_TrimLimitSet limits;
+    limits.add(limit);
+    limits.build();
+    LC_TrimBatch batch{{&target}, limits};
+
+    const auto removed = batch.removedPieces(batch.cursorSides({0.0, 3.0}));
+    REQUIRE(removed.size() == 1);
+    CHECK(removed.front()->rtti() == RS2::EntityArc);
+    CHECK(removed.front()->getStartpoint().distanceTo({-5.0, 0.0}) < 1e-7);
+    CHECK(removed.front()->getEndpoint().distanceTo({5.0, 0.0}) < 1e-7);
+}
+
 TEST_CASE("a cut close to the end of a short limit is classified locally", "[modify][trim][batch]") {
     RS_Line target{nullptr, {0.0, 0.9}, {10.0, 0.9}};
     RS_Line shortLimit{nullptr, {5.0, -1.0}, {5.0, 1.0}};
@@ -112,25 +145,4 @@ TEST_CASE("a cut close to the end of a short limit is classified locally", "[mod
     const auto removed = batch.removedPieces(batch.cursorSides({8.0, 2.0}));
     REQUIRE(removed.size() == 1);
     CHECK(removed[0]->getEndpoint().distanceTo({5.0, 0.9}) < 1e-7);
-}
-
-TEST_CASE("review toggles can be undone and identify hovered pieces", "[modify][trim][batch]") {
-    RS_Line target{nullptr, {0.0, 0.0}, {10.0, 0.0}};
-    RS_Line limit{nullptr, {5.0, -2.0}, {5.0, 2.0}};
-    LC_TrimLimitSet limits;
-    limits.add(limit);
-    limits.build();
-    LC_TrimBatch batch{{&target}, limits};
-    const auto cursor = batch.cursorSides({8.0, 0.0});
-    int targetIndex = -1;
-    int pieceIndex = -1;
-    REQUIRE(batch.pieceAt({2.0, 0.0}, 1.0, targetIndex, pieceIndex));
-    CHECK(targetIndex == 0);
-    CHECK(pieceIndex == 0);
-    CHECK(batch.verdict(0, 0, cursor) == LC_TrimBatch::Verdict::Removed);
-    batch.toggle(0, 0);
-    CHECK(batch.verdict(0, 0, cursor) == LC_TrimBatch::Verdict::Kept);
-    CHECK(batch.undoToggle());
-    CHECK(batch.verdict(0, 0, cursor) == LC_TrimBatch::Verdict::Removed);
-    CHECK_FALSE(batch.undoToggle());
 }

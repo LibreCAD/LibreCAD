@@ -1,6 +1,7 @@
 /*
  * This file is part of the LibreCAD project.
  * Copyright (C) 2026 LibreCAD.org
+ * Copyright (C) 2026 Dongxu Li (github.com/dxli)
  * Licensed under GPL-2.0-or-later.
  */
 #include "lc_curvesplit.h"

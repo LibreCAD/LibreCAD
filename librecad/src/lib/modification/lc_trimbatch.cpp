@@ -1,6 +1,7 @@
 /*
  * This file is part of the LibreCAD project.
  * Copyright (C) 2026 LibreCAD.org
+ * Copyright (C) 2026 Dongxu Li (github.com/dxli)
  * Licensed under GPL-2.0-or-later.
  */
 #include "lc_trimbatch.h"
@@ -38,27 +39,6 @@ bool finiteEndpoint(const RS_Vector& point) {
     return point.valid && std::isfinite(point.x) && std::isfinite(point.y);
 }
 
-RS_Vector pointOn(const RS_AtomicEntity& entity, const double t) {
-    if (entity.rtti() == RS2::EntityLine) {
-        const auto& line = static_cast<const RS_Line&>(entity);
-        return line.getStartpoint() + (line.getEndpoint() - line.getStartpoint()) * t;
-    }
-    if (entity.rtti() == RS2::EntityArc) {
-        const auto& arc = static_cast<const RS_Arc&>(entity);
-        const double angle = arc.isReversed() ? arc.getAngle1() - t : arc.getAngle1() + t;
-        return arc.getCenter() + RS_Vector::polar(arc.getRadius(), angle);
-    }
-    if (entity.rtti() == RS2::EntityCircle) {
-        const auto& circle = static_cast<const RS_Circle&>(entity);
-        return circle.getCenter() + RS_Vector::polar(circle.getRadius(), t);
-    }
-    const auto& ellipse = static_cast<const RS_Ellipse&>(entity);
-    const double angle = ellipse.isEllipticArc()
-                             ? (ellipse.isReversed() ? ellipse.getAngle1() - t : ellipse.getAngle1() + t)
-                             : t;
-    return ellipse.getEllipsePoint(angle);
-}
-
 double parameterLimit(const RS_AtomicEntity& entity) {
     switch (entity.rtti()) {
     case RS2::EntityLine:
@@ -88,11 +68,23 @@ struct Piece {
     std::vector<int> sides;
 };
 
+enum class PieceVerdict { Kept, Removed, Undetermined };
+
+PieceVerdict verdict(const Piece& piece, const std::vector<int>& cursorSides) {
+    bool known = false;
+    bool removed = false;
+    for (std::size_t component = 0; component < piece.sides.size() && component < cursorSides.size(); ++component) {
+        const int side = piece.sides[component];
+        if (side == 0) continue;
+        known = true;
+        if (cursorSides[component] != 0 && side != cursorSides[component]) removed = true;
+    }
+    return removed ? PieceVerdict::Removed : (known ? PieceVerdict::Kept : PieceVerdict::Undetermined);
+}
+
 std::vector<int> pieceSidesFor(const RS_AtomicEntity& target,
                                const double tA,
                                const double tB,
-                               const RS_Vector& pA,
-                               const RS_Vector& pB,
                                const std::vector<LC_TrimCut>& cuts,
                                const int componentCount) {
     std::vector<int> sides(static_cast<std::size_t>(componentCount), 0);
@@ -136,8 +128,6 @@ std::vector<int> pieceSidesFor(const RS_AtomicEntity& target,
             }
         }
     }
-    Q_UNUSED(pA);
-    Q_UNUSED(pB);
     return sides;
 }
 
@@ -160,7 +150,7 @@ std::vector<Piece> makePieces(const RS_AtomicEntity& source,
         points.push_back(source.getEndpoint());
         for (std::size_t i = 0; i + 1 < ts.size(); ++i) {
             Piece piece{ts[i], ts[i + 1], points[i], points[i + 1], {}};
-            piece.sides = pieceSidesFor(source, piece.tA, piece.tB, piece.pA, piece.pB, cuts, componentCount);
+            piece.sides = pieceSidesFor(source, piece.tA, piece.tB, cuts, componentCount);
             pieces.push_back(std::move(piece));
         }
         return pieces;
@@ -171,7 +161,7 @@ std::vector<Piece> makePieces(const RS_AtomicEntity& source,
         const LC_TrimCut& first = cuts[i];
         const LC_TrimCut& second = cuts[(i + 1) % cuts.size()];
         Piece piece{first.t, second.t, first.point, second.point, {}};
-        piece.sides = pieceSidesFor(source, piece.tA, piece.tB, piece.pA, piece.pB, cuts, componentCount);
+        piece.sides = pieceSidesFor(source, piece.tA, piece.tB, cuts, componentCount);
         if (i + 1 == cuts.size()) {
             for (int component = 0; component < componentCount; ++component) {
                 const LC_TrimCut* last = nullptr;
@@ -439,11 +429,9 @@ struct LC_TrimBatch::Data {
         RS_AtomicEntity* source = nullptr;
         std::vector<LC_TrimCut> cuts;
         std::vector<Piece> pieces;
-        std::vector<bool> toggled;
     };
     const LC_TrimLimitSet* limits = nullptr;
     std::vector<Target> targets;
-    std::vector<std::pair<int, int>> toggleHistory;
 };
 
 LC_TrimBatch::LC_TrimBatch(const QList<RS_Entity*>& targets, const LC_TrimLimitSet& limits)
@@ -460,7 +448,11 @@ LC_TrimBatch::LC_TrimBatch(const QList<RS_Entity*>& targets, const LC_TrimLimitS
             for (const RS_Vector& point : intersections) {
                 if (!point.valid || !target->isPointOnEntity(point, kJoinTolerance) ||
                     !element.entity->isPointOnEntity(point, kJoinTolerance)) continue;
+                if (!lc::curvesplit::isClosed(*target) &&
+                    (point.distanceTo(target->getStartpoint()) <= kJoinTolerance ||
+                     point.distanceTo(target->getEndpoint()) <= kJoinTolerance)) continue;
                 const double t = lc::curvesplit::paramOf(*target, point);
+                if (!std::isfinite(t)) continue;
                 const RS_Vector targetTangent = lc::curvesplit::tangentAt(*target, point);
                 const int before = limits.sideOfDirection(element.component, point, targetTangent * -1.0);
                 const int after = limits.sideOfDirection(element.component, point, targetTangent);
@@ -472,7 +464,6 @@ LC_TrimBatch::LC_TrimBatch(const QList<RS_Entity*>& targets, const LC_TrimLimitS
             return a.component == b.component && a.point.distanceTo(b.point) <= kJoinTolerance;
         }), data.cuts.end());
         data.pieces = makePieces(*target, data.cuts, limits.componentCount());
-        data.toggled.resize(data.pieces.size(), false);
         m_data->targets.push_back(std::move(data));
     }
 }
@@ -483,10 +474,6 @@ LC_TrimBatch& LC_TrimBatch::operator=(LC_TrimBatch&&) noexcept = default;
 
 bool LC_TrimBatch::anyCut() const {
     return std::any_of(m_data->targets.begin(), m_data->targets.end(), [](const Data::Target& target) { return !target.cuts.empty(); });
-}
-int LC_TrimBatch::targetCount() const { return static_cast<int>(m_data->targets.size()); }
-int LC_TrimBatch::pieceCount(const int target) const {
-    return target >= 0 && target < targetCount() ? static_cast<int>(m_data->targets[static_cast<std::size_t>(target)].pieces.size()) : 0;
 }
 std::vector<RS_Vector> LC_TrimBatch::cutPoints() const {
     std::vector<RS_Vector> points;
@@ -499,25 +486,6 @@ std::vector<RS_Vector> LC_TrimBatch::cutPoints() const {
         }
     }
     return points;
-}
-
-LC_TrimBatch::Verdict LC_TrimBatch::verdict(const int targetIndex, const int pieceIndex,
-                                            const std::vector<int>& cursorSides) const {
-    if (targetIndex < 0 || targetIndex >= targetCount()) return Verdict::Undetermined;
-    const Data::Target& target = m_data->targets[static_cast<std::size_t>(targetIndex)];
-    if (pieceIndex < 0 || pieceIndex >= static_cast<int>(target.pieces.size())) return Verdict::Undetermined;
-    bool known = false;
-    bool removed = false;
-    const Piece& piece = target.pieces[static_cast<std::size_t>(pieceIndex)];
-    for (std::size_t component = 0; component < piece.sides.size() && component < cursorSides.size(); ++component) {
-        const int side = piece.sides[component];
-        if (side == 0) continue;
-        known = true;
-        if (cursorSides[component] != 0 && side != cursorSides[component]) removed = true;
-    }
-    const Verdict result = removed ? Verdict::Removed : (known ? Verdict::Kept : Verdict::Undetermined);
-    if (!target.toggled[static_cast<std::size_t>(pieceIndex)]) return result;
-    return result == Verdict::Removed ? Verdict::Kept : Verdict::Removed;
 }
 
 std::vector<int> LC_TrimBatch::cursorSides(const RS_Vector& cursor) const {
@@ -533,79 +501,37 @@ std::vector<std::unique_ptr<RS_AtomicEntity>> LC_TrimBatch::removedPieces(const 
     std::vector<std::unique_ptr<RS_AtomicEntity>> result;
     for (const Data::Target& target : m_data->targets) {
         for (std::size_t i = 0; i < target.pieces.size(); ++i) {
-            if (verdict(static_cast<int>(&target - m_data->targets.data()), static_cast<int>(i), cursorSides) != Verdict::Removed) continue;
+            if (verdict(target.pieces[i], cursorSides) != PieceVerdict::Removed) continue;
             const Piece& piece = target.pieces[i];
-            result.push_back(lc::curvesplit::subCurve(*target.source, piece.tA, piece.pA, piece.tB, piece.pB));
+            auto removed = lc::curvesplit::subCurve(*target.source, piece.tA, piece.pA, piece.tB, piece.pB);
+            if (removed != nullptr) result.push_back(std::move(removed));
         }
     }
     return result;
 }
 
-bool LC_TrimBatch::pieceAt(const RS_Vector& point, const double catchDistance, int& targetIndex, int& pieceIndex) const {
-    double bestDistance = catchDistance;
-    bool found = false;
-    for (std::size_t ti = 0; ti < m_data->targets.size(); ++ti) {
-        const Data::Target& target = m_data->targets[ti];
-        for (std::size_t pi = 0; pi < target.pieces.size(); ++pi) {
-            const Piece& piece = target.pieces[pi];
-            auto candidate = lc::curvesplit::subCurve(*target.source, piece.tA, piece.pA, piece.tB, piece.pB);
-            if (candidate == nullptr) continue;
-            double distance = std::numeric_limits<double>::max();
-            candidate->getNearestPointOnEntity(point, true, &distance);
-            if (distance <= bestDistance) {
-                bestDistance = distance;
-                targetIndex = static_cast<int>(ti);
-                pieceIndex = static_cast<int>(pi);
-                found = true;
-            }
-        }
-    }
-    return found;
-}
-
-void LC_TrimBatch::toggle(const int target, const int piece) {
-    if (target < 0 || target >= targetCount() || piece < 0 || piece >= pieceCount(target)) return;
-    m_data->targets[static_cast<std::size_t>(target)].toggled[static_cast<std::size_t>(piece)] =
-        !m_data->targets[static_cast<std::size_t>(target)].toggled[static_cast<std::size_t>(piece)];
-    m_data->toggleHistory.emplace_back(target, piece);
-}
-
-bool LC_TrimBatch::undoToggle() {
-    if (m_data->toggleHistory.empty()) return false;
-    const auto [target, piece] = m_data->toggleHistory.back();
-    m_data->toggleHistory.pop_back();
-    m_data->targets[static_cast<std::size_t>(target)].toggled[static_cast<std::size_t>(piece)] =
-        !m_data->targets[static_cast<std::size_t>(target)].toggled[static_cast<std::size_t>(piece)];
-    return true;
-}
-
 LC_TrimBatch::Stats LC_TrimBatch::apply(const std::vector<int>& cursorSides,
-                                        const bool divideOnly,
                                         LC_DocumentModificationBatch& context) const {
     Stats stats;
     for (std::size_t ti = 0; ti < m_data->targets.size(); ++ti) {
         const Data::Target& target = m_data->targets[ti];
-        if (target.source == nullptr || target.pieces.empty()) { ++stats.untouched; continue; }
+        if (target.source == nullptr || target.pieces.empty()) continue;
         std::vector<bool> keep(target.pieces.size(), false);
         bool allKept = true;
         for (std::size_t pi = 0; pi < target.pieces.size(); ++pi) {
-            const Verdict result = verdict(static_cast<int>(ti), static_cast<int>(pi), cursorSides);
-            keep[pi] = divideOnly || result != Verdict::Removed;
-            if (result == Verdict::Removed) ++stats.removed;
-            else if (result == Verdict::Undetermined) ++stats.undetermined;
+            const PieceVerdict result = verdict(target.pieces[pi], cursorSides);
+            keep[pi] = result != PieceVerdict::Removed;
+            if (result == PieceVerdict::Removed) ++stats.removed;
+            else if (result == PieceVerdict::Undetermined) ++stats.undetermined;
             allKept = allKept && keep[pi];
         }
-        if (!divideOnly && allKept) { ++stats.untouched; continue; }
+        if (allKept) continue;
         if (!isReplaceableByTrim(*target.source) || target.source->isLocked() || !target.source->isVisible()) {
-            ++stats.untouched;
             continue;
         }
 
         std::vector<std::pair<std::size_t, std::size_t>> runs;
-        if (divideOnly) {
-            for (std::size_t i = 0; i < keep.size(); ++i) runs.emplace_back(i, i);
-        }
-        else if (!lc::curvesplit::isClosed(*target.source)) {
+        if (!lc::curvesplit::isClosed(*target.source)) {
             std::size_t i = 0;
             while (i < keep.size()) {
                 if (!keep[i]) { ++i; continue; }
@@ -636,29 +562,24 @@ LC_TrimBatch::Stats LC_TrimBatch::apply(const std::vector<int>& cursorSides,
             }
         }
 
-        if (divideOnly) {
-            for (const Piece& piece : target.pieces) {
-                auto output = lc::curvesplit::subCurve(*target.source, piece.tA, piece.pA, piece.tB, piece.pB);
-                if (output == nullptr) continue;
-                output->setPen(target.source->getPen(false));
-                output->setLayer(target.source->getLayer(false));
-                context += output.release();
-            }
+        std::vector<std::unique_ptr<RS_AtomicEntity>> outputs;
+        outputs.reserve(runs.size());
+        for (const auto [first, last] : runs) {
+            const Piece& start = target.pieces[first];
+            const Piece& end = target.pieces[last];
+            auto output = lc::curvesplit::subCurve(*target.source, start.tA, start.pA, end.tB, end.pB);
+            if (output == nullptr) break;
+            outputs.push_back(std::move(output));
         }
-        else {
-            for (const auto [first, last] : runs) {
-                const Piece& start = target.pieces[first];
-                const Piece& end = target.pieces[last];
-                auto output = lc::curvesplit::subCurve(*target.source, start.tA, start.pA, end.tB, end.pB);
-                if (output == nullptr) continue;
-                output->setPen(target.source->getPen(false));
-                output->setLayer(target.source->getLayer(false));
-                context += output.release();
-            }
+        if (outputs.size() != runs.size()) continue;
+        for (auto& output : outputs) {
+            output->setPen(target.source->getPen(false));
+            output->setLayer(target.source->getLayer(false));
+            context += output.release();
         }
         context -= target.source;
         ++stats.trimmed;
     }
-    if (stats.trimmed > 0 || (divideOnly && stats.removed > 0)) context.dontSetActiveLayerAndPen();
+    if (stats.trimmed > 0) context.dontSetActiveLayerAndPen();
     return stats;
 }
