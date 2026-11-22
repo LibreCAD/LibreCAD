@@ -61665,3 +61665,18 @@ Keep monolithic process/order stability open; do not attribute the original
 exit-9 assertion to the isolated first case. Continue with bounded isolated
 reproductions and the remaining family/variant, visible-app, independent CAD,
 VXCONTROL-baseline, and exact-head-CI gates.
+
+## 1989. Recheck Visible-app Access from the Current Session (2026-11-22)
+
+Rechecked the physical GUI gate after resuming the roadmap. The previously
+referenced `/private/tmp/LibreCAD-PR3193-visible.app` is not present in this
+session; the current Release and ASan build bundles do exist. `screencapture`
+could not access a display, and `osascript` querying System Events returned
+macOS error `-10827`. No visible app interaction or screenshot was obtained.
+
+This supersedes the immediate-next-action wording in section 7 that described
+the test copy as currently controllable. The source-family picker and worker
+tests remain automated/offscreen evidence only; physical preview/commit,
+held-drag cancellation, actual Qt window DPR, and stale-peer interaction stay
+open. Resume those checks only in a desktop-control session with display and
+accessibility access. No product change is justified by this access failure.
