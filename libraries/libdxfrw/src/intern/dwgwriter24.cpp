@@ -39,36 +39,31 @@ bool dwgWriter24::appendR2007StringStream(dwgBufferW& data,
         return true;
 
     if (stringBytes == 0) {
-        const unsigned padding = static_cast<unsigned>(
-            (8u - ((data.bitCount() + 17u) & 7u)) & 7u);
-        for (unsigned bit = 0; bit < padding; ++bit)
+        for (unsigned bit = 0; bit < 7; ++bit)
             data.putBit(0);
         data.putRawShort16(0);
         data.putBit(0);
         return data.isGood();
     }
 
-    // Keep the has-strings flag as the final bit in the data stream. The
-    // string payload starts immediately after the numeric bits; only the
-    // unused tail bits of the last string byte may precede this trailer.
-    const std::uint64_t stringBitSize = static_cast<std::uint64_t>(stringBytes) * 8u;
-    const unsigned padding = static_cast<unsigned>(
-        (8u - ((data.bitCount() + stringBitSize + 17u) & 7u)) & 7u);
-    const std::uint64_t encodedSize = stringBitSize + padding;
-    if (encodedSize > 0x7FFFFFFFULL)
+    // The R2007+ string footer is preceded by seven zero alignment bits.
+    // Callers byte-align the data and string streams before appending it.
+    const std::uint64_t stringBitSize =
+        static_cast<std::uint64_t>(stringBytes) * 8u + 7u;
+    if (stringBitSize > 0x7FFFFFFFULL)
         return false;
 
     data.putBytes(strings.data().data(), stringBytes);
-    for (unsigned bit = 0; bit < padding; ++bit)
+    for (unsigned bit = 0; bit < 7; ++bit)
         data.putBit(0);
-    if (encodedSize <= 0x7FFFU) {
-        data.putRawShort16(static_cast<std::uint16_t>(encodedSize));
+    if (stringBitSize <= 0x7FFFU) {
+        data.putRawShort16(static_cast<std::uint16_t>(stringBitSize));
     } else {
-        data.putRawShort16(static_cast<std::uint16_t>(encodedSize >> 15));
+        data.putRawShort16(static_cast<std::uint16_t>(stringBitSize >> 15));
         data.putRawShort16(static_cast<std::uint16_t>(
-            0x8000U | (encodedSize & 0x7FFFU)));
+            0x8000U | (stringBitSize & 0x7FFFU)));
     }
-    data.putBit(1);
+    data.putBit(stringBytes != 0 ? 1 : 0);
     return data.isGood();
 }
 
@@ -106,6 +101,8 @@ bool dwgWriter24::writeDwgHeader() {
         // Propagate encode failure: writeDwgHeader reports success as a bool.
         if (!m_header->encodeDwg(m_version, &dataBuf, &handleBuf, &strBuf))
             return false;
+        dataBuf.alignToByte();
+        strBuf.alignToByte();
         handleBuf.alignToByte();
 
         if (m_version > DRW::AC1018) {
@@ -341,7 +338,9 @@ void dwgWriter24::finishObject() {
         m_writeError = true;
         return;
     }
-    // Keep the string stream contiguous with the bit-packed object body.
+    // The R2007+ string stream starts at a byte boundary, followed by seven
+    // alignment bits and its size/presence footer.
+    m_objectBody.alignToByte();
     const std::uint64_t mergedStringBaseBit = m_objectBody.bitCount();
     if (!appendR2007StringStream(m_objectBody, m_objectStrings, true)) {
         m_writeError = true;

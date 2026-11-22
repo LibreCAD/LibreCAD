@@ -61531,3 +61531,24 @@ Together with the current Release/ASan exact profile-2 passes (section 1978),
 the earlier profile-2 SIGKILL is non-reproducible. No cause is assigned to
 that historical event. Continue with remaining concrete family/variant,
 visible-GUI, AutoCAD, VXCONTROL-baseline, and exact-head-CI work.
+
+## 1982. Repair AC1024+ String-footer Alignment and Recheck VXCONTROL (2026-11-22)
+
+Compared the exact `[dwg][roundtrip][filter][vx]` test on the PR branch and
+`origin/master`. At PR head `8c1cd9533`, the PR failed because the AC1024+
+writer merged its bit-packed object body directly with the string/footer
+stream, while the reader requires the seven zero alignment bits before the
+footer. The same test passed on `origin/master` (**31 assertions / 1 case**),
+confirming a PR-branch regression. Restored byte alignment before the
+R2007+ string stream and the fixed seven-bit footer framing, retaining
+write-status checks. Rebuilt and reran the PR test: **31 assertions / 1 case
+pass**.
+
+The broader `[dwg][roundtrip][filter]` selector is not clean on this branch:
+it reports **20/23 cases passed**, with failures in two arrow-enabled/disabled
+round-trip variants and one SHAPE-name round trip. The same selector passes
+on `origin/master` (**23 cases / 1,405 assertions**). These three additional
+branch regressions are not attributed to the footer repair and remain open;
+do not represent the broader DWG/DXF round-trip gate as passing. Recheck and
+triage them before final PR acceptance, then rerun the selector after any
+fixes. GUI, AutoCAD, and exact-head CI gates also remain open.
