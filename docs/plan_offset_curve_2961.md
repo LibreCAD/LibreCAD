@@ -61386,3 +61386,17 @@ failure remain. Finish shards 10 and 11, but keep full Trim qualification open
 until all partitions and retained failures are reconciled. The SIGKILL cause,
 ODA/external CAD, visible GUI, VXCONTROL baseline, exact-head CI, and
 family/variant acceptance remain open.
+
+## 1975. Run the Unpinned Seeded Trim Shard 10 (2026-11-22)
+
+Ran shard 10 of the same 12-way `[lc-offsetcurve][trim-action]` ASan/UBSan
+selection with seed `1453897047`, the 30-second test-only worker bound, and the
+same established profile selectors. It completed **8 cases / 41,366
+assertions** with no failures or sanitizer diagnostics. The quiet interval was
+inside the DWG persistence path; the run eventually completed normally.
+
+Shards 0, 2-10 have clean unpinned reruns. Shard 1 and the initial shard-0
+failure remain unresolved historical results. Run shard 11 next; do not call
+the broad gate complete until it and the retained failure investigation are
+addressed. External CAD/ODA, visible GUI, VXCONTROL, exact-head CI, and
+family/variant acceptance remain open.
