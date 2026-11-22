@@ -61249,3 +61249,31 @@ recurs, preserve the stable PID and correlate the event before changing worker
 or geometry behavior. Do not claim full `[lc-offsetcurve][trim-action]`
 qualification from a single shard. ODA execution context, VXCONTROL baseline,
 visible GUI, exact-head CI, and family/variant acceptance remain open.
+
+## 1966. Isolate the Shard-1 Ellipse Update Failure (2026-11-22)
+
+The unpinned ASan/UBSan shard 1 ended with **8 passed / 1 failed**, 5,536
+assertions. Its failure was in the worker-created typed-ellipse Trim matrix at
+profile 21, ellipse picked second: `Update from Source` reported `updated=0`
+instead of 1. Earlier in the same shard, two Trim worker processes had also
+exited by SIGKILL, with stable PIDs 65518 and 65521. They preceded the ellipse
+failure; no causal relationship is established. A macOS unified-log query for
+those PIDs could not run in the sandbox (`log: Cannot run while sandboxed`),
+so the signal source remains unknown.
+
+Added the default-neutral `LC_OFFSET_TRIM_TYPED_ELLIPSE_ROW` selector and
+failure-only update/refusal details. Row 42 (profile 21, ellipse picked
+second) passes Release and ASan/UBSan (**154 assertions each**). The complete
+76-row ellipse matrix also passes ASan/UBSan (**9,177 assertions**) when run
+with the same 30-second test-only worker allowance as the shard. An earlier
+standalone attempt without this override stopped at profile 7 on the default
+8.5-second test bound and is not a valid full-matrix result.
+
+The exact row and full family matrix pass independently, while shard 1 fails
+after preceding work and contains separate SIGKILLs. This supports an
+intermittent suite-load/order issue but does not prove resource pressure or
+explain the kills. Keep both broad sanitizer/order and worker-termination
+investigations open; do not modify production deadlines or accept the failed
+shard as passing evidence. Repeat under controlled host diagnostics when
+available. ODA, VXCONTROL baseline, visible GUI, exact-head CI, and
+family/variant acceptance remain open.
