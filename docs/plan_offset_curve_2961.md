@@ -61183,3 +61183,33 @@ only when a bounded invocation can finish without manual interruption, and
 preserve PID-bearing process diagnostics on any real helper failure. ODA
 execution context, VXCONTROL baseline, visible GUI, exact-head CI, and
 family/variant coverage remain open.
+
+## 1963. Preserve Worker PID and Pin the Reported Parabola Trim Row (2026-11-22)
+
+The bounded ASan run from section 1962 completed with one failure in the
+generated typed-parabola Trim matrix: low origin, ordinary curvature, shape 0,
+scale 0.1, untransformed, positive side, elliptic cutter, native picked first.
+The worker had exited by SIGKILL (`CrashExit`, exit code 9), but the diagnostic
+reported `pid=0` because `QProcess::processId()` had already been cleared by
+reaping. The client now snapshots the child PID at `started()` and reports that
+stable value for later process failures. The isolated worker fault test asserts
+that an observed `ProcessFailed` diagnostic contains a parseable positive PID.
+
+Added the default-neutral `LC_OFFSET_TRIM_TYPED_PARABOLA_PROFILE` test selector
+to pin individual valid rows in the 152-row typed-parabola matrix. The affected
+tuple is profile 2. It passes the Trim action and persistence checks in Release
+and ASan/UBSan (**126 assertions in each**), with no sanitizer diagnostics. The
+focused Release worker fault/reaping case passes (**1,891 assertions**). Its
+ASan invocation still encounters the pre-existing short fault-suite watchdog:
+one intended crash case times out instead of producing `ProcessFailed`, so that
+ASan fault-fixture run is not a pass. The outcome assertion still reports the
+status mismatch; PID assertions are applied only when the observed status is
+actually `ProcessFailed`.
+
+The isolated row did not reproduce the SIGKILL. Stable PID diagnostics now
+enable correlation if a future broad run reproduces it; no causal attribution
+to geometry, worker lifecycle, or external resource pressure is justified yet.
+Keep the broad seeded sanitizer/order gate open, do not alter production
+deadlines based on this evidence, and do not count the interrupted run as
+qualified. ODA execution context, VXCONTROL baseline, visible GUI, exact-head
+CI, and family/variant coverage also remain open.
