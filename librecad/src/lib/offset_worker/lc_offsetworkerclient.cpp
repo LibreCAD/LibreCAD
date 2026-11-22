@@ -174,6 +174,7 @@ struct LC_OffsetWorkerClient::Job {
     QByteArray frame, diagnostics;
     LC_OffsetWorkerWire::Receiver receiver{};
     qsizetype sent = 0;
+    qint64 processId = 0;
     bool started = false, inputClosed = false;
     std::optional<Status> stopping;
 };
@@ -278,6 +279,7 @@ void LC_OffsetWorkerClient::start() {
             } catch (...) { stop(Status::AllocationFailed); return; }
             if (!m_active || !m_process) return;
             m_active->started = true;
+            m_active->processId = m_process->processId();
             if (m_active->stopping) m_process->terminate();
             else pump();
         });
@@ -399,7 +401,7 @@ void LC_OffsetWorkerClient::finish(bool reaped) {
             QByteArray::number(int(m_process->state())) + QByteArrayLiteral(" exit-status=") +
             QByteArray::number(int(m_process->exitStatus())) + QByteArrayLiteral(" exit-code=") +
             QByteArray::number(m_process->exitCode()) + QByteArrayLiteral(" pid=") +
-            QByteArray::number(m_process->processId()) + QByteArrayLiteral(" started=") +
+            QByteArray::number(m_active->processId) + QByteArrayLiteral(" started=") +
             QByteArray::number(m_active->started) + QByteArrayLiteral(" input-closed=") +
             QByteArray::number(m_active->inputClosed);
         appendDiagnostic(processDiagnostic);

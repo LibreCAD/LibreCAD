@@ -205,9 +205,16 @@ void failed(const Client::Outcome& outcome, Client::Status expected) {
     CHECK(outcome.status == expected);
     CHECK_FALSE(outcome.completed);
     CHECK_FALSE(outcome.exactGeometryWorkKnown);
-    if (expected == Client::Status::ProcessFailed) {
+    if (expected == Client::Status::ProcessFailed && outcome.status == Client::Status::ProcessFailed) {
         CHECK(outcome.diagnostics.contains("worker-process-state="));
         CHECK(outcome.diagnostics.contains(" pid="));
+        const auto pidMarker = outcome.diagnostics.indexOf(" pid=");
+        REQUIRE(pidMarker >= 0);
+        bool pidOk = false;
+        const auto pidText = outcome.diagnostics.mid(pidMarker + 5).split(' ').first();
+        const auto pid = pidText.toLongLong(&pidOk);
+        CHECK(pidOk);
+        CHECK(pid > 0);
     }
 }
 

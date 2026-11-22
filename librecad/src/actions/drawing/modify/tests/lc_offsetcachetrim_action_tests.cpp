@@ -1596,6 +1596,11 @@ TEST_CASE("T Trim Two commits certified exact- and post-cusp hyperbola caches at
 
 TEST_CASE("T Trim Two action trims a worker-created typed parabola against circular and elliptic cutters",
           "[gui][lc-offsetcurve][trim-action][typed-source][parabola][trim-two]") {
+    const bool pinProfile = qEnvironmentVariableIsSet("LC_OFFSET_TRIM_TYPED_PARABOLA_PROFILE");
+    const int requestedProfile =
+        qEnvironmentVariableIntValue("LC_OFFSET_TRIM_TYPED_PARABOLA_PROFILE");
+    REQUIRE_FALSE((pinProfile && (requestedProfile < 0 || requestedProfile > 151)));
+    unsigned profile = 0;
     for (const bool highOrigin : {false, true})
     for (const bool nearCusp : {false, true})
     for (const unsigned shape : {0u, 1u, 2u})
@@ -1607,7 +1612,13 @@ TEST_CASE("T Trim Two action trims a worker-created typed parabola against circu
         if (nearCusp && (shape != 0 || scale != 1.0 || transformed)) continue;
         if (highOrigin && (nearCusp || scale != 1e6)) continue;
         if (!highOrigin && (scale == 1e6 || shape == 2)) continue;
-        CAPTURE(highOrigin, nearCusp, shape, scale, transformed, oppositeSide, cutterKind, parabolaFirst);
+        if (pinProfile && profile != static_cast<unsigned>(requestedProfile)) {
+            ++profile;
+            continue;
+        }
+        CAPTURE(profile, highOrigin, nearCusp, shape, scale, transformed, oppositeSide, cutterKind,
+                parabolaFirst);
+        ++profile;
         Drawing<true> f;
         const double seedRadius = highOrigin ? scale : 1.0;
         RS_Ellipse seed(nullptr, RS_EllipseData{{0, 0}, {seedRadius, 0}, 1, 0, .1, false});
