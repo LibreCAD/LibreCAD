@@ -61427,11 +61427,12 @@ Thus the observed profile-20 mismatch is intermittent and suite-contextual;
 its unexpected refusal text was not captured before the harness was improved,
 and the failure has not reproduced with the capture active. Keep the captured
 refusal values for a future recurrence. Do not equate intentional fault-test
-SIGKILLs with the independent, still-unresolved historical shard-0 profile-2
-Trim failure. The broad selector is not yet fully qualified solely because
-all 12 shards have run: reconcile or re-run the historical shard-0 failure on
-the current test binary before closing its sanitizer/order gate. ODA, visible
-GUI, VXCONTROL, exact-head CI, and family/variant gates remain open.
+SIGKILLs with the historical shard-0 profile-2 Trim failure. Section 1978
+records that the exact profile-2 row passes on current Release and ASan/UBSan
+binaries and that the current shard-0 run advanced beyond it without failure,
+but was interrupted before a terminal shard result. Keep the broad selector
+gate open until a complete, bounded current-revision shard result is available.
+ODA, visible GUI, VXCONTROL, exact-head CI, and family/variant gates remain open.
 
 ## 1978. Bound the Current Shard-0 and ODA Retries (2026-11-22)
 
@@ -61441,10 +61442,15 @@ test-only worker bound. The process was stopped after roughly nine minutes
 because it continued emitting legacy document-initialization diagnostics
 without reaching a terminal test summary; its partial log is
 `/private/tmp/lc3193-trim-action-shard0-current-asan.log` (about 62 MB at
-interruption). This is an incomplete run, not a failure or pass. Existing
-focused profile-2/parabola passes remain useful but do not reconcile the
-historical broad-shard failure. Prefer a bounded, low-noise reproduction or
-the specific row selector before retrying the whole shard.
+interruption). It reached profile 10; the historical profile-2 tuple had
+already been passed without a reported failure, but the process ended before
+the shard summary. This is an incomplete run, not a shard pass. Re-ran the
+exact profile-2 test by name on the current ASan/UBSan and Release binaries;
+both completed **126 assertions / 1 case** without failure or sanitizer
+diagnostic. Together with section 1965's complete unpinned shard-0 pass, the
+historical profile-2 SIGKILL remains non-reproducible. Do not count the
+interrupted current run as terminal shard evidence; use the exact row selector
+for any further profile-specific debugging.
 
 Also retried the 18 independently authored typed-source DWGs through
 ODAFileConverter 27.1 with the application reported open in the logged-in
