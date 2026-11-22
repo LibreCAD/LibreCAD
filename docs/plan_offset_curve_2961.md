@@ -61277,3 +61277,20 @@ investigations open; do not modify production deadlines or accept the failed
 shard as passing evidence. Repeat under controlled host diagnostics when
 available. ODA, VXCONTROL baseline, visible GUI, exact-head CI, and
 family/variant acceptance remain open.
+
+## 1967. Run the Unpinned Seeded Trim Shard 2 (2026-11-22)
+
+Ran shard 2 of the same 12-way `[lc-offsetcurve][trim-action]` ASan/UBSan
+selection with seed `1453897047`, the 30-second test-only worker bound, and the
+same established profile selectors. It completed **9 cases / 3,535
+assertions** with no failures and no sanitizer diagnostics.
+
+This adds one passing partition but does not qualify the full selector. Shards
+0 and 2 have clean reruns; shard 1 failed once after two helper SIGKILLs and a
+typed-ellipse source-update failure, while the earlier shard-0 attempt also
+failed once on a typed-parabola Trim commit. Those observations remain part of
+the evidence and are not canceled by later passes. Continue the remaining
+shards individually, retain per-shard logs and seeds, and investigate any
+recurrence using stable helper PIDs. The broad sanitizer/order gate, external
+CAD/ODA, visible GUI, VXCONTROL baseline, exact-head CI, and family/variant
+acceptance remain open.
