@@ -60919,3 +60919,19 @@ open as a separate gate. The exact-head general build matrix remains green;
 the unrelated VXCONTROL CTest failure, interrupted broad sanitizer replay,
 and source-bearing ODA/AutoCAD acceptance remain open, so the roadmap is not
 complete.
+
+## 1952. Retry ODA Through the Active GUI Bootstrap (2026-11-21)
+
+The GUI launch domain reports an active Aqua session, so retried the exact
+source-bearing DWG directory by invoking ODAFileConverter under
+`launchctl asuser 502` with a fresh `/private/tmp` output path. It still
+aborted before conversion with `com.apple.pasteboard.clipboard` and
+`com.apple.pasteboard.find` errors (`-4960`) plus an invalid
+`com.apple.hiservices-xpcservice` connection (exit 134); no output directory
+or DXFs were produced. Switching only the launchd bootstrap does not resolve
+the SSH execution-context limitation. The remaining external-validation step
+must be run from Terminal inside the interactive desktop session, then
+checked for all 18 DXFs and absence of `.err` files. Do not mark ODA accepted
+from this failed attempt. The broad seeded sanitizer run is active in this
+turn and remains unreported until it exits; visible GUI and exact-head
+DWG/DXF verification gates remain open.
