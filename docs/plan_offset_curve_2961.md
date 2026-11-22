@@ -317,15 +317,16 @@ remaining offset fast lanes locally. The bounded failure is the out-of-scope
 VXCONTROL round trip; its `origin/master` baseline is unverified. Section 1951
 passes the offscreen all-nine-family Properties picker matrix, but visible
 packaged-app acceptance remains open. Sections 1953-1955 record three
-incomplete broad ASan/UBSan runs: the isolated parabola profile 58,
-closed-polyline profile 10/R14-DXF, and high-origin closed-seam trim all pass
-when isolated, but their broad-run worker failures remain unexplained and do
-not establish order stability. Source-bearing ODA/AutoCAD
+incomplete broad ASan/UBSan runs: the isolated parabola profile 58 and
+closed-polyline profile 10/R14-DXF pass in focused checks, and the full
+high-origin closed-seam test matrix passes in isolation, but broad-run worker
+failures remain unexplained and do not establish order stability.
+Source-bearing ODA/AutoCAD
 conversion remains unverified because SSH and SSH-launched GUI automation
 cannot access the desktop pasteboard/Terminal session. Broader family/variant
 coverage is still open.
 
-The current pushed PR #3193 head is `313d46797` (open draft). No workflow run
+The current pushed PR #3193 head is `9c175359d` (open draft). No workflow run
 or commit status is attached to this
 documentation/test-only head; do not carry CI results from older revisions
 forward. Continue with the broad sanitizer/order investigation, concrete
@@ -60981,10 +60982,12 @@ after this first new actionable assertion and is incomplete.
 Added `LC_OFFSET_TRIM_CLOSED_SEAM_REPRO` to the existing generated test to
 run only that captured row and pick order. The focused case passed twice in
 the same ASan build (the seeded repeat reported 1,291 assertions) and once in
-Release (365 assertions), including its five-format round-trip checks. This
-does not explain the broad-run helper exit or establish stability under suite
-load/order. Keep the selector for future diagnosis; do not suppress or weaken
-the assertion.
+Release (365 assertions). Then the entire generated seam test was run without
+the selector under ASan/UBSan: all 187,345 assertions passed across its
+profiles, both sides, both pick orders, and five-format round trips. This
+does not explain the earlier broad-run helper exit or establish stability
+after preceding test suites. Keep the selector for future diagnosis; do not
+suppress or weaken the assertion.
 
 The broad sanitizer/order gate remains open. The unrelated VXCONTROL CTest
 failure, visible GUI acceptance, source-bearing ODA/AutoCAD validation, and
