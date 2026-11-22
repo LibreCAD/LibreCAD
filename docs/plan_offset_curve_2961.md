@@ -60935,3 +60935,21 @@ checked for all 18 DXFs and absence of `.err` files. Do not mark ODA accepted
 from this failed attempt. The broad seeded sanitizer run is active in this
 turn and remains unreported until it exits; visible GUI and exact-head
 DWG/DXF verification gates remain open.
+
+## 1953. Isolate the Seeded ASan Parabola Trim Failure (2026-11-21)
+
+The broad seeded ASan/UBSan `[lc-offsetcurve][trim-action]` replay was stopped
+after it reported one worker `ProcessFailed` in parabola Trim Two profile 58
+(status 5, helper reaped, 114 ms, no helper stderr). The process had not
+completed the suite, so this is not a pass. No ASan/UBSan diagnostic was
+present. To avoid claiming a code defect from a single broad-run helper
+failure, isolated the exact parabola test and profile 58 in the same ASan
+build. It passed twice, once with an automatically selected seed and once
+with the broad run's seed `1453897047` (9,938 assertions on the seeded run).
+This narrows the evidence to a load/order-sensitive helper failure, but does
+not identify its cause or replace a completed broad replay.
+
+The broad seeded sanitizer gate remains open. Exact-head DWG/DXF CTest still
+has the unrelated VXCONTROL failure recorded in section 1949; visible GUI
+acceptance and source-bearing ODA/AutoCAD validation also remain open. The
+roadmap is incomplete.
