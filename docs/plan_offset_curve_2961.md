@@ -319,14 +319,16 @@ passes the offscreen all-nine-family Properties picker matrix, but visible
 packaged-app acceptance remains open. Sections 1953-1955 record three
 incomplete broad ASan/UBSan runs: the isolated parabola profile 58 and
 closed-polyline profile 10/R14-DXF pass in focused checks, and the full
-high-origin closed-seam test matrix passes in isolation, but broad-run worker
-failures remain unexplained and do not establish order stability.
+high-origin closed-seam test matrix passes in isolation. Section 1956 adds
+bounded process-exit diagnostics to distinguish helper crashes/nonzero exits
+from typed worker refusals; broad-run worker failures remain unexplained and
+do not establish order stability.
 Source-bearing ODA/AutoCAD
 conversion remains unverified because SSH and SSH-launched GUI automation
 cannot access the desktop pasteboard/Terminal session. Broader family/variant
 coverage is still open.
 
-The current pushed PR #3193 head is `9c175359d` (open draft). No workflow run
+The current pushed PR #3193 head is `70d5927b4` (open draft). No workflow run
 or commit status is attached to this
 documentation/test-only head; do not carry CI results from older revisions
 forward. Continue with the broad sanitizer/order investigation, concrete
@@ -60992,3 +60994,26 @@ suppress or weaken the assertion.
 The broad sanitizer/order gate remains open. The unrelated VXCONTROL CTest
 failure, visible GUI acceptance, source-bearing ODA/AutoCAD validation, and
 broader family/variant matrix also remain open. The roadmap is incomplete.
+
+## 1956. Preserve Bounded Worker Process-exit Diagnostics (2026-11-21)
+
+To make the broad-run `ProcessFailed` result actionable, the worker client now
+adds bounded process state, exit status/code, and request-start/input-closed
+flags to failure diagnostics. Existing stderr and typed reply-failure text
+remain preserved; the total diagnostic stays within the existing 64 KiB cap.
+This is observability only and does not change geometry authority, retry
+policy, deadlines, or publication behavior.
+
+The isolated fault-fixture case covering crash, nonzero exit, and typed
+worker failures passes Release (2,387 assertions) and ASan/UBSan (6,107
+assertions), including a check that process failures carry the new metadata.
+The full fault-fixture ASan selector still has the previously observed
+24-second watchdog/timeouts and is not a pass. The focused captured closed
+seam Trim case passes after the change in Release (368 assertions) and
+ASan/UBSan (1,259 assertions); the full seam profile matrix had passed before
+this diagnostics-only edit (187,345 assertions). No post-change broad
+sanitizer replay has yet qualified the original load/order symptom.
+
+Keep broad sanitizer/order stability, the unrelated VXCONTROL CTest failure,
+visible GUI acceptance, source-bearing ODA/AutoCAD validation, and remaining
+family/variant coverage open. The roadmap is incomplete.
