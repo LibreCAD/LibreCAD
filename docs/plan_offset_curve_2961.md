@@ -61373,3 +61373,16 @@ failure remain in the record. Continue shards 9-11 and retain their full
 results. This partial partition set does not qualify the entire Trim
 selection or resolve worker SIGKILL causality; ODA, visible GUI, VXCONTROL,
 exact-head CI, and family/variant acceptance remain open.
+
+## 1974. Run the Unpinned Seeded Trim Shard 9 (2026-11-22)
+
+Ran shard 9 of the same 12-way `[lc-offsetcurve][trim-action]` ASan/UBSan
+selection with seed `1453897047`, the 30-second test-only worker bound, and the
+same established profile selectors. It completed **8 cases / 8,995
+assertions** with no failures or sanitizer diagnostics.
+
+Shards 0, 2-9 have clean unpinned reruns; shard 1 and the initial shard-0
+failure remain. Finish shards 10 and 11, but keep full Trim qualification open
+until all partitions and retained failures are reconciled. The SIGKILL cause,
+ODA/external CAD, visible GUI, VXCONTROL baseline, exact-head CI, and
+family/variant acceptance remain open.
