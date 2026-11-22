@@ -61555,4 +61555,22 @@ fixes. GUI, AutoCAD, and exact-head CI gates also remain open.
 
 ## 1983. Publish the Footer Fix and Reconcile PR Metadata (2026-11-22)
 
-Committed the writer repair and this checkpoint as `cbbcd7b995304a7850a82e6c6d51964cdc45fdd2`, then pushed it to `codex/offset-2961-native-worker`. GitHub PR #3193 metadata confirms the PR is still open/draft and its head is this exact commit. An attempted Conversation comment was rejected by the GitHub integration (HTTP 403, resource not accessible); the pushed source and roadmap are the available PR update. The open failures from section 1982 and all external/GUI gates are unchanged.
+Committed the writer repair and this checkpoint as `cbbcd7b995304a7850a82e6c6d51964cdc45fdd2`, then pushed it to `codex/offset-2961-native-worker`. GitHub PR #3193 metadata confirms the PR is still open/draft and its head is this exact commit. An attempted Conversation comment was rejected by the GitHub integration (HTTP 403, resource not accessible); the pushed source and roadmap are the available PR update. At that moment, the failures from section 1982 and all external/GUI gates remained open; section 1984 below closes the local round-trip failures.
+
+## 1984. Restore AC1021 String-stream Alignment and Close Local Round-trip Regression (2026-11-22)
+
+Follow-up triage showed all three failures from section 1982 were generated as
+AC1021/R2007 (`RS2::FormatDWG2007`, enum value 18), not AC1032. The R2007
+writer had removed byte alignment before appending its string stream, so
+minimal files failed class/section validation and leader/SHAPE round trips
+failed on import. Restored the pre-string alignment in
+`dwgWriter21::finishObject()` in commit `d64b403eee13c99b2787984e618a9a899c3c982e`.
+
+Validation on that product commit: the full `[dwg][roundtrip][filter]`
+selector passes **23 cases / 1,405 assertions**; the VXCONTROL/VXTABLERECORD
+selector passes **1 case / 31 assertions**; `git diff --check` passes. This
+supersedes section 1982's open status for the two leader variants and SHAPE
+round trips. The AC1024+ footer fix remains in `cbbcd7b99` and is separately
+covered by the VX test. Local selected test gates are now green, but they do
+not establish the full version matrix, external ODA/AutoCAD acceptance, GUI
+acceptance, or current-head CI.
