@@ -9398,6 +9398,7 @@ TEST_CASE("T Trim Two trims a high-origin closed polyline cache across its cutte
     REQUIRE(lc::test::ensureSettings());
     const double baseRadius = 1e5;
     constexpr double distance = 2500.0;
+    const bool isolateFailure = qEnvironmentVariableIsSet("LC_OFFSET_TRIM_CLOSED_SEAM_REPRO");
     const auto profiles = GENERATE(Catch::Generators::table<double, double, bool, int, double, double>({
         {0.0, 1.0, false, 0, 1.0, 1.0}, {.37, 1.0, false, 0, 1.0, 1.0},
         {0.0, .7, false, 0, 1.0, 1.0}, {.37, .7, false, 0, 1.0, 1.0},
@@ -9437,6 +9438,8 @@ TEST_CASE("T Trim Two trims a high-origin closed polyline cache across its cutte
     const int topology = std::get<3>(profiles);
     const double scale = std::get<4>(profiles);
     const double originScale = std::get<5>(profiles);
+    if (isolateFailure && !(rotation == .37 && verticalRatio == .7 && !bulged &&
+                            topology == 1 && scale == 1.7 && originScale == 1.0)) return;
     const double radius = baseRadius * scale;
     const RS_Vector center{1e12 * originScale, -2e12 * originScale};
     const double cosine = std::cos(rotation), sine = std::sin(rotation);
@@ -9445,7 +9448,9 @@ TEST_CASE("T Trim Two trims a high-origin closed polyline cache across its cutte
     };
     CAPTURE(rotation, verticalRatio, bulged, topology, scale, originScale);
     for (const bool towardCentre : {false, true}) {
+        if (isolateFailure && towardCentre) continue;
         for (const bool nativeFirst : {false, true}) {
+            if (isolateFailure && nativeFirst) continue;
             CAPTURE(towardCentre, nativeFirst);
             Drawing<true> f;
             constexpr double zoom = .00005;
