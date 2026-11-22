@@ -398,7 +398,8 @@ void LC_OffsetWorkerClient::finish(bool reaped) {
         QByteArray processDiagnostic = QByteArrayLiteral("worker-process-state=") +
             QByteArray::number(int(m_process->state())) + QByteArrayLiteral(" exit-status=") +
             QByteArray::number(int(m_process->exitStatus())) + QByteArrayLiteral(" exit-code=") +
-            QByteArray::number(m_process->exitCode()) + QByteArrayLiteral(" started=") +
+            QByteArray::number(m_process->exitCode()) + QByteArrayLiteral(" pid=") +
+            QByteArray::number(m_process->processId()) + QByteArrayLiteral(" started=") +
             QByteArray::number(m_active->started) + QByteArrayLiteral(" input-closed=") +
             QByteArray::number(m_active->inputClosed);
         appendDiagnostic(processDiagnostic);

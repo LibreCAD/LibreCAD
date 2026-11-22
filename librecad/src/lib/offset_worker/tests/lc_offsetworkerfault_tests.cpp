@@ -205,8 +205,10 @@ void failed(const Client::Outcome& outcome, Client::Status expected) {
     CHECK(outcome.status == expected);
     CHECK_FALSE(outcome.completed);
     CHECK_FALSE(outcome.exactGeometryWorkKnown);
-    if (expected == Client::Status::ProcessFailed)
+    if (expected == Client::Status::ProcessFailed) {
         CHECK(outcome.diagnostics.contains("worker-process-state="));
+        CHECK(outcome.diagnostics.contains(" pid="));
+    }
 }
 
 void recoverQueue(Runtime& rt, Client& client, Receipts& receipts) {
