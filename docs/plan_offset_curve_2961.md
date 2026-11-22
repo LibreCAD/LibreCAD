@@ -328,12 +328,15 @@ case. The SIGKILL source and broad order stability remain unresolved.
 Section 1958 records that opening ODAFileConverter in the logged-in desktop
 did not unblock a shell-launched conversion: it still exits before processing
 with pasteboard/HIServices errors and produces no files.
+Section 1959 records a targeted unified-log search with no entries for the
+geometry-worker process; generic RunningBoard memorystatus conversion errors
+were unrelated and do not explain the SIGKILLs.
 Source-bearing ODA/AutoCAD
 conversion remains unverified because SSH and SSH-launched GUI automation
 cannot access the desktop pasteboard/Terminal session. Broader family/variant
 coverage is still open.
 
-The current pushed PR #3193 head is `fa454dc5f` (open draft). No workflow run
+The current pushed PR #3193 head is `913f62a1f` (open draft). No workflow run
 or commit status is attached to this
 documentation/test-only head; do not carry CI results from older revisions
 forward. Continue with the broad sanitizer/order investigation, concrete
@@ -61072,3 +61075,22 @@ DXFs and absence of `.err` files before recording acceptance. The broad
 sanitizer/order gate, unrelated VXCONTROL baseline, visible packaged-app
 acceptance, exact-head CI, and family/variant coverage also remain open. The
 roadmap is incomplete.
+
+## 1959. Check Unified Logs for Geometry-worker Terminations (2026-11-22)
+
+Read-only `log show` was unavailable in the default sandbox, then succeeded
+with the approved escalated read. A 24-hour targeted query for process or
+message text `librecad_offset_worker` returned no records. A broader
+memorystatus query produced many RunningBoard
+`MEMORYSTATUS_CMD_CONVERT_MEMLIMIT_MB` invalid-argument messages but no
+worker PID, termination, or resource-pressure event tied to the recorded
+SIGKILLs. These logs therefore do not identify their cause; do not attribute
+them to system memory pressure from this evidence.
+
+The broad sanitizer/order gate remains open. On the next captured
+`ProcessFailed`, correlate its newly reported PID with a narrow time-window
+query immediately, or add test-runner supervision/resource telemetry if the
+OS continues to omit child-process records. Do not rerun the 54-minute broad
+matrix solely to recover PIDs for already completed exits. The ODA execution
+context, VXCONTROL baseline, visible GUI, exact-head CI, and family/variant
+coverage gates remain open; the roadmap is incomplete.
