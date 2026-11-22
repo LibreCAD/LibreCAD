@@ -342,18 +342,21 @@ Section 1961 runs four previously sensitive Trim test declarations together
 in one process. Its initial assertion-count discrepancy was traced to
 `REQUIRE` checks repeated inside 1 ms event-pump loops; section 1962 removes
 that timing-dependent count inflation without changing wait bounds and
-revalidates matching Release/ASan totals. This bounded selection does not
-qualify the broad action suite.
+revalidates matching Release/ASan totals. Section 1981 completes the seeded
+12-way Trim-action partition with passing terminal results; a single-process
+monolithic replay remains unqualified because prior runs were interrupted or
+had a non-reproducing worker failure.
 Broader source-family/variant ODA coverage, AutoCAD interoperability, and
 visible GUI acceptance remain open. Do not generalize the 18-file conversion
 and comparison to untested geometry variants.
 
-The current pushed PR #3193 head is `41bcdba68` (open draft). No workflow run
-or commit status was attached to this documentation/test-only head at the last
-check; do not carry CI results from older revisions forward. Continue with the
-broad sanitizer/order investigation, concrete family/variant slices, visible
-GUI acceptance, and remaining independent-CAD validation. Do not mark the
-roadmap complete from isolated passes.
+At the latest check PR #3193 was open and draft at `41bcdba68`; section 1980
+records the matching local branch and no attached workflow run/status for that
+head. Subsequent commits may advance the PR; query the live head and checks
+before carrying CI evidence forward. Continue with the monolithic sanitizer
+load/order investigation, concrete family/variant slices, visible GUI
+acceptance, and remaining independent-CAD validation. Do not mark the roadmap
+complete from isolated passes.
 
 **Latest source-widget disposition (reconciled 2026-11-16):** The source
 widget contract is that a user can change the requested source type while
@@ -61507,3 +61510,24 @@ Next: continue the bounded Trim sanitizer/order investigation and concrete
 family/variant implementation slices, then rerun current-head CI. The ODA
 result is limited to the 18 fixtures, and AutoCAD, visible GUI, the VXCONTROL
 baseline, and broader family/variant coverage remain open.
+
+## 1981. Complete the Quiet Current-binary Trim Shard 0 (2026-11-22)
+
+Re-ran shard 0 of the same seeded 12-way `[lc-offsetcurve][trim-action]`
+ASan/UBSan selection on the current test binary, retaining seed `1453897047`,
+all established profile selectors, and the 30-second test-only worker bound.
+Shell stderr was discarded to avoid writing the legacy debug stream; Catch2's
+reporter output and process exit status were retained. The shard completed
+successfully: **9 cases / 34,452 assertions**, exit status 0, with no failure
+or sanitizer report. The compact output is
+`/private/tmp/lc3193-trim-action-shard0-current-quiet-asan.log`.
+
+The 12-way partition now has passing terminal results for every shard index:
+shard 0 and the refusal-capture shard 1 pass on the current test-only source;
+shards 2-11 passed earlier on identical product code before that diagnostic-
+only test change. This closes the seeded partitioned selection, not a
+monolithic process/order replay or every possible scheduling sequence.
+Together with the current Release/ASan exact profile-2 passes (section 1978),
+the earlier profile-2 SIGKILL is non-reproducible. No cause is assigned to
+that historical event. Continue with remaining concrete family/variant,
+visible-GUI, AutoCAD, VXCONTROL-baseline, and exact-head-CI work.
