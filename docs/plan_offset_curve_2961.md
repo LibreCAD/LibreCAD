@@ -61574,3 +61574,14 @@ round trips. The AC1024+ footer fix remains in `cbbcd7b99` and is separately
 covered by the VX test. Local selected test gates are now green, but they do
 not establish the full version matrix, external ODA/AutoCAD acceptance, GUI
 acceptance, or current-head CI.
+
+## 1985. Revalidate the Nine-family Source Picker on the Fixed Tree (2026-11-22)
+
+Rebuilt the main CMake test target on the tree containing the AC1024+ and
+AC1021 string-alignment fixes. The focused selector
+`[gui][dialog][offsetcurve][source]` passes **49 cases / 18,243 assertions**
+offscreen. This revalidates the source-family filter/replacement path,
+including distinct parabola identity, on the current product tree; it is not
+physical visible-app acceptance. No product code changed for this check.
+Visible packaged-app interaction, source-bearing external CAD acceptance,
+broader sanitizer/order stability, and exact-head CI remain open.
