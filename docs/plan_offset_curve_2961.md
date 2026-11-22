@@ -302,7 +302,7 @@ AutoCAD acceptance remain open. Keep raw DWG replay diagnostics
 distinct from entity-level round-trip results. Do not add a second selector or
 claim all variants from the nine-kind selector inventory.
 
-**Current checkpoint (2026-11-21):** Sections 1898-1905 retain the
+**Current checkpoint (2026-11-22):** Sections 1898-1905 retain the
 high-origin four-point parabola boundary: direct reconstruction at
 `(1e12,-2e12)` is distinct from the successful five-lane worker/persistence
 profile at `(1e6,-2e6)`, and the `1e12` worker case remains an ordinary fallback
@@ -326,8 +326,12 @@ system logs. Section 1957 records two broad-run helper exits by SIGKILL; the
 constrained run was later interrupted during a generated Update-from-Source
 case. The SIGKILL source and broad order stability remain unresolved.
 Section 1958 records that opening ODAFileConverter in the logged-in desktop
-did not unblock a shell-launched conversion: it still exits before processing
-with pasteboard/HIServices errors and produces no files.
+did not unblock a sandboxed conversion. Section 1978 records the same failure
+for a later sandboxed retry; section 1979 supersedes those attempts for the
+18-file typed-source fixture matrix: conversion with macOS service access
+succeeded, and the resulting DXFs passed the external-reader comparison in
+Release and ASan/UBSan. This does not establish other source variants or
+AutoCAD interoperability.
 Section 1959 records a targeted unified-log search with no entries for the
 geometry-worker process; generic RunningBoard memorystatus conversion errors
 were unrelated and do not explain the SIGKILLs.
@@ -340,17 +344,16 @@ in one process. Its initial assertion-count discrepancy was traced to
 that timing-dependent count inflation without changing wait bounds and
 revalidates matching Release/ASan totals. This bounded selection does not
 qualify the broad action suite.
-Source-bearing ODA/AutoCAD
-conversion remains unverified because SSH and SSH-launched GUI automation
-cannot access the desktop pasteboard/Terminal session. Broader family/variant
-coverage is still open.
+Broader source-family/variant ODA coverage, AutoCAD interoperability, and
+visible GUI acceptance remain open. Do not generalize the 18-file conversion
+and comparison to untested geometry variants.
 
-The current pushed PR #3193 head is `80c978e1f` (open draft). No workflow run
-or commit status is attached to this
-documentation/test-only head; do not carry CI results from older revisions
-forward. Continue with the broad sanitizer/order investigation, concrete
-family/variant slices, visible GUI acceptance, and source-bearing independent
-CAD validation. Do not mark the roadmap complete from isolated passes.
+The current pushed PR #3193 head is `76b6c661f` (open draft). No workflow run
+or commit status was attached to this documentation/test-only head at the last
+check; do not carry CI results from older revisions forward. Continue with the
+broad sanitizer/order investigation, concrete family/variant slices, visible
+GUI acceptance, and remaining independent-CAD validation. Do not mark the
+roadmap complete from isolated passes.
 
 **Latest source-widget disposition (reconciled 2026-11-16):** The source
 widget contract is that a user can change the requested source type while
@@ -61463,3 +61466,28 @@ requires conversion from an execution context that can access macOS services.
 
 Do not close broad Trim sanitizer/order, ODA, visible GUI, VXCONTROL baseline,
 exact-head CI, or remaining family/variant gates on these attempts.
+
+## 1979. Complete the Typed-source ODA Conversion and Comparison (2026-11-22)
+
+With ODAFileConverter 27.1 open in the logged-in desktop, reran the
+18 independently authored typed-source DWGs through its batch interface with
+macOS service access, converting to ACAD2018 DXF with audit enabled. The
+converter completed successfully and produced **18 DXFs / 0 `.err` files** in
+`/private/tmp/offset-2961-oda-rerun-20261122`. This supersedes the sandboxed
+execution failures in sections 1958 and 1978; those remain accurate records
+of their individual attempts.
+
+Ran
+`[lc-offsetcurve][persistence][typed-source][external][oda]` against the
+committed DWGs and the fresh ODA DXFs. Release passed **1 case / 1,988
+assertions**; ASan/UBSan (`detect_leaks=0`) passed **1 case / 5,761 assertions**
+with no sanitizer diagnostic. The test checks the decoded typed-source
+metadata across the DWG/DXF pairs and staged import behavior for all nine
+source families at R2000 and R2018. This closes independent ODA conversion and
+semantic comparison for these 18 fixtures only; it does not prove geometric
+variant completeness, native promotion where the cache intentionally refuses,
+AutoCAD behavior, visible GUI acceptance, or other CAD interoperability.
+
+The broad Trim shard-0 retry in section 1978 remains incomplete, and the
+VXCONTROL baseline, visible GUI, exact-head CI, and remaining family/variant
+gates remain open.
