@@ -61707,3 +61707,18 @@ Ubuntu x64, Ubuntu ARM64, macOS Intel, and macOS arm64. This is cross-platform
 build/resource-install validation, not physical GUI acceptance. A subsequent
 roadmap-only refinement records the isolated Trim test identity from section
 1988; it does not change product sources.
+
+## 1991. Recheck the Existing ODA Typed-source Batch (2026-11-22)
+
+After the user confirmed ODAFileConverter was open in the logged-in desktop,
+verified that the previously generated batch at
+`/private/tmp/offset-2961-oda-rerun-20261122` still contains all 18 expected
+R2000/R2018 DXFs and no `.err` files. Re-ran
+`[lc-offsetcurve][persistence][typed-source][external][oda]` from the current
+Release test binary against those DXFs and the committed DWGs: **1 case /
+2,311 assertions passed**. This is a fresh LibreCAD comparison of the retained
+ODA output, not a new ODA conversion; the SSH session still does not provide
+GUI control to initiate/verify another converter run. The earlier conversion
+and ASan/UBSan comparison remain recorded in section 1979. Do not broaden this
+result beyond the 18 typed-source fixtures or treat it as AutoCAD, visible-GUI,
+variant-completeness, or full external-CAD acceptance.
