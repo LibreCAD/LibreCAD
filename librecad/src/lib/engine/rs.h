@@ -446,6 +446,7 @@ namespace RS2 {
         ActionModifyTrim,
         ActionModifyTrim2,
         ActionModifyTrimAmount,
+        ActionModifyTrimBatch,
         ActionModifyCut,
         ActionModifyStretch,
         ActionModifyBevel,
