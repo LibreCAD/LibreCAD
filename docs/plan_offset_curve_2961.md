@@ -61308,3 +61308,16 @@ remaining partitions and preserve the broad gate until all shards are
 qualified and the intermittent worker SIGKILL is explained or bounded with
 adequate host evidence. ODA, VXCONTROL baseline, visible GUI, exact-head CI,
 and family/variant acceptance remain open.
+
+## 1969. Run the Unpinned Seeded Trim Shard 4 (2026-11-22)
+
+Ran shard 4 of the same 12-way `[lc-offsetcurve][trim-action]` ASan/UBSan
+selection with seed `1453897047`, the 30-second test-only worker bound, and the
+same established profile selectors. It completed **9 cases / 8,354
+assertions** with no failures or sanitizer diagnostics.
+
+Shards 0, 2, 3, and 4 have clean unpinned reruns; shard 1 and the earlier
+shard-0 attempt still have unresolved failures in the retained evidence.
+Continue through shards 5-11, and do not treat partial partition coverage as
+full Trim qualification. The worker SIGKILL investigation and ODA, VXCONTROL,
+visible-GUI, exact-head-CI, and family/variant gates remain open.
