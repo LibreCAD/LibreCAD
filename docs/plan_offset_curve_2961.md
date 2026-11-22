@@ -61334,3 +61334,16 @@ shards 0 and 1 remain open. Continue the remaining partitions without
 weakening the selectors or using a pinned rerun as a substitute. Full Trim
 qualification, causal worker-SIGKILL evidence, external CAD/ODA, visible GUI,
 VXCONTROL baseline, exact-head CI, and family/variant acceptance remain open.
+
+## 1971. Run the Unpinned Seeded Trim Shard 6 (2026-11-22)
+
+Ran shard 6 of the same 12-way `[lc-offsetcurve][trim-action]` ASan/UBSan
+selection with seed `1453897047`, the 30-second test-only worker bound, and the
+same established profile selectors. It completed **9 cases / 2,249
+assertions** with no failures or sanitizer diagnostics.
+
+Shards 0, 2, 3, 4, 5, and 6 have clean unpinned reruns. Shard 1 and the initial
+shard-0 attempt remain failures in the validation record. Continue shards
+7-11; partial coverage does not close the broad gate or explain the worker
+SIGKILL. External CAD/ODA, visible GUI, VXCONTROL baseline, exact-head CI, and
+family/variant acceptance also remain open.
