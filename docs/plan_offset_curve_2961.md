@@ -61611,3 +61611,25 @@ the source-picker selector's current sanitizer run and the specific viewport
 lifetime regression. It does not close broader process/order sanitizer
 coverage, visible packaged-app acceptance, external CAD acceptance, or
 exact-head CI; those remain open.
+
+## 1987. Reorder the Source-picker Selector and Capture the Non-reproducing Failure (2026-11-22)
+
+Ran the full `[gui][dialog][offsetcurve][source]` selector with additional
+Catch2 orders to probe process/order stability. ASan/UBSan seed `8675309`
+passes **49 cases / 18,243 assertions**; Release seed `20261122` passes the
+same totals. ASan/UBSan seed `20261122` initially had one assertion failure
+at the plain linear-spline replacement (`lastEditResult()` was empty after
+the wait), with **48/49 cases and 18,237/18,238 assertions** passing and no
+sanitizer report. The exact test passes alone in Release and ASan/UBSan; a
+same-seed full ASan/UBSan rerun also passes **49 / 18,243**. The earlier
+baseline seed `2617323518` passes in both configurations. No cause is assigned
+to the single non-reproducing result.
+
+Added null-safe failure context to that exact assertion (attempt count,
+selected ID, UI refusal, worker refusal) in test commit `037c88f09`. This is
+diagnostic instrumentation only. Treat the source-picker selector as passing
+these recorded runs but keep broader order/scheduling stability open until
+the intermittent result is explained or enough controlled repetitions
+establish its scope. The viewport lifetime fix and its evidence remain in
+section 1986. Visible packaged-app acceptance, broader family/variant
+coverage, independent CAD acceptance, and exact-head CI remain open.
