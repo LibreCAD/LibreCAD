@@ -182,6 +182,7 @@ public:
     std::shared_ptr<void> highlightOffsetSource(const RS_Entity& entity);
     std::weak_ptr<void> offsetSourceHighlightLifetime() const;
     std::weak_ptr<void> watchOffsetSourceHighlightLifetime();
+    std::weak_ptr<void> watchLifetime() const { return m_lifetimeToken; }
     bool isPanning() const {return m_panning;}
     void setPanning(const bool state) {  m_panning = state;}
     RS_Graphic* getGraphic() const {return m_graphic;}
@@ -239,6 +240,7 @@ protected:
 
     LC_OverlaysManager m_overlaysManager;
     std::shared_ptr<LC_OffsetSourceHighlightState> m_offsetSourceHighlights;
+    std::shared_ptr<void> m_lifetimeToken = std::make_shared<int>(0);
 
     bool m_panning = false;
     bool m_hideRelativeZero = false; // fixme - should be dispatched from action

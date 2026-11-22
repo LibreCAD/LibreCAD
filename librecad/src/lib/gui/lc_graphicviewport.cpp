@@ -125,6 +125,7 @@ LC_GraphicViewport::LC_GraphicViewport():
 }
 
 LC_GraphicViewport::~LC_GraphicViewport() {
+    m_lifetimeToken.reset();
     if (m_offsetSourceHighlights) m_offsetSourceHighlights->shutdown();
     m_offsetSourceHighlights.reset();
 }

@@ -661,7 +661,7 @@ void LC_PropertiesEditingWidgetOffsetCurve::restartSourceChoiceScan() const {
     cancelSourceChoiceScan();
     m_sourceChoiceListDocument = nullptr;
     m_sourceChoiceListLifetime.reset();
-    if (m_sourceChoiceRestartQueued || !m_entity || !m_viewport || m_busy) return;
+    if (m_sourceChoiceRestartQueued || !m_entity || !m_viewport || m_viewportLifetime.expired() || m_busy) return;
     {
         const QSignalBlocker blocked(ui->cbSource);
         ui->cbSource->clear();
@@ -674,13 +674,17 @@ void LC_PropertiesEditingWidgetOffsetCurve::restartSourceChoiceScan() const {
     m_sourceChoiceRestartQueued = true;
     QTimer::singleShot(0, const_cast<LC_PropertiesEditingWidgetOffsetCurve*>(this), [this] {
         m_sourceChoiceRestartQueued = false;
-        if (m_entity && m_viewport && m_viewport->getDocument() && !m_busy)
+        if (m_entity && m_viewport && !m_viewportLifetime.expired() && m_viewport->getDocument() && !m_busy)
             refreshSourceChoices(true);
     });
 }
 
 void LC_PropertiesEditingWidgetOffsetCurve::processSourceChoiceScanSlice() const {
     if (!m_sourceChoiceScanActive) return;
+    if (!m_viewport || m_viewportLifetime.expired()) {
+        cancelSourceChoiceScan();
+        return;
+    }
     if (m_choiceScanLifetime.expired() || !m_viewport || m_viewport != m_choiceScanViewport ||
         m_viewport->getDocument() != m_choiceScanDocument) {
         restartSourceChoiceScan();
@@ -908,8 +912,12 @@ void LC_PropertiesEditingWidgetOffsetCurve::refreshSourceHighlight(bool preserve
 }
 
 void LC_PropertiesEditingWidgetOffsetCurve::beginSourceHighlightScan(bool clearExisting) {
-    if (!m_sourceHighlightVisible || !m_viewport || m_highlightLifetime.expired()) {
+    if (!m_sourceHighlightVisible || !m_viewport || m_viewportLifetime.expired()) {
         clearSourceWatch();
+        return;
+    }
+    if (m_highlightLifetime.expired()) {
+        refreshSourceHighlight(false);
         return;
     }
     auto* document = m_viewport->getDocument();
@@ -949,6 +957,7 @@ void LC_PropertiesEditingWidgetOffsetCurve::beginSourceHighlightScan(bool clearE
 
 void LC_PropertiesEditingWidgetOffsetCurve::invalidateSourceHighlightScan() {
     ++m_watchMutationRevision;
+    if (!m_viewport || m_viewportLifetime.expired()) return;
     if (m_viewport && m_viewport->getDocument() &&
         (m_sourceChoiceScanActive || m_viewport->getDocument()->getEntityList().size() >
                                      static_cast<int>(SourceChoiceSynchronousLimit)))
@@ -966,8 +975,12 @@ void LC_PropertiesEditingWidgetOffsetCurve::invalidateSourceHighlightScan() {
 void LC_PropertiesEditingWidgetOffsetCurve::processSourceHighlightScanSlice() {
     if (!m_highlightScanActive) return;
     if (!m_sourceHighlightVisible || !m_highlightViewport || m_viewport != m_highlightViewport ||
-        !m_viewport) {
+        !m_viewport || m_viewportLifetime.expired()) {
         clearSourceWatch();
+        return;
+    }
+    if (m_highlightLifetime.expired()) {
+        refreshSourceHighlight(false);
         return;
     }
     auto* document = m_viewport ? m_viewport->getDocument() : nullptr;
@@ -1045,7 +1058,7 @@ void LC_PropertiesEditingWidgetOffsetCurve::completeSourceHighlightScan() {
     m_highlightScanActive = false;
     m_highlightSliceTimer->stop();
     if (!m_sourceHighlightVisible || !m_highlightViewport || m_viewport != m_highlightViewport ||
-        !m_viewport) {
+        !m_viewport || m_viewportLifetime.expired()) {
         clearSourceWatch();
         return;
     }
@@ -1108,8 +1121,12 @@ void LC_PropertiesEditingWidgetOffsetCurve::completeSourceHighlightScan() {
 
 void LC_PropertiesEditingWidgetOffsetCurve::checkSourceHighlight() const {
     if (!m_sourceHighlightVisible || !m_highlightViewport ||
-        m_viewport != m_highlightViewport || !m_viewport) {
+        m_viewport != m_highlightViewport || !m_viewport || m_viewportLifetime.expired()) {
         clearSourceWatch();
+        return;
+    }
+    if (m_highlightLifetime.expired()) {
+        refreshSourceHighlight(false);
         return;
     }
     auto* document = m_highlightViewport->getDocument();

@@ -3431,7 +3431,7 @@ TEST_CASE("Native source picker replaces every modeled source family without fil
         click(*selectSource);
         CHECK(sourceEntities[i]->getFlag(RS2::FlagSelected));
 
-        sourceEntities[i]->delFlag(RS2::FlagSelected);
+        f.graphic.unselect(sourceEntities[i]);
         NativeWidget reopenedWidget;
         reopenedWidget.setGraphicViewport(f.view.getViewPort());
         reopenedWidget.setEntity(clone.get());
