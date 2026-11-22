@@ -5275,13 +5275,9 @@ TEST_CASE("T Trim Two action trims a worker-created typed ellipse offset against
         update.setSourceKind(LC_OffsetSourceGeometry::Kind::Ellipse);
         update.use(source);
         lc::test::awaitUpdate(update);
-        if (update.lastReport().updated != 1) {
-            INFO("source update updated=" << update.lastReport().updated << ", refused=" <<
-                 update.lastReport().refused << ", outcomes=" << update.lastReport().outcomes.size());
-            if (!update.lastReport().outcomes.empty())
-                INFO("source update refusal=" <<
-                     update.lastReport().outcomes.front().refusal.toStdString());
-        }
+        const QString updateRefusal = update.lastReport().outcomes.empty()
+            ? QString{} : update.lastReport().outcomes.front().refusal;
+        CAPTURE(update.lastReport().updated, update.lastReport().refused, updateRefusal);
         if (profile == 20) {
             REQUIRE(update.lastReport().updated == 0);
             REQUIRE(update.lastReport().refused == 1);
