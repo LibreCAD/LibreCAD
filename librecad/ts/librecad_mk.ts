@@ -4216,7 +4216,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="392"/>
         <source>Batch Trim</source>
-        <translation type="unfinished"></translation>
+        <translation>Скрати повеќе објекти</translation>
     </message>
 </context>
 <context>
@@ -6156,37 +6156,37 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim_batch.cpp" line="127"/>
         <source>Removed</source>
-        <translation type="unfinished"></translation>
+        <translation>Отстранети</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim_batch.cpp" line="127"/>
         <source>Trim Batch</source>
-        <translation type="unfinished"></translation>
+        <translation>Скрати повеќе објекти</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim_batch.cpp" line="169"/>
         <source>Trimmed %1 entities, removed %2 pieces (%3 undetermined kept)</source>
-        <translation type="unfinished"></translation>
+        <translation>Скратени објекти: %1, отстранети делови: %2 (%3 се задржани бидејќи страната не можеше да се одреди)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim_batch.cpp" line="212"/>
         <source>Select entities to trim</source>
-        <translation type="unfinished"></translation>
+        <translation>Изберете објекти за скратување</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim_batch.cpp" line="218"/>
         <source>Select limiting entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Изберете ограничувачки објект</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim_batch.cpp" line="221"/>
         <source>Specify the side to keep</source>
-        <translation type="unfinished"></translation>
+        <translation>Наведете ја страната што треба да се задржи</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim_batch.cpp" line="84"/>
         <source>None of the selected entities crosses the limit</source>
-        <translation type="unfinished"></translation>
+        <translation>Ниту еден од избраните објекти не го пресекува граничниот објект</translation>
     </message>
 </context>
 <context>

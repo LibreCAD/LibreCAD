@@ -4217,7 +4217,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="392"/>
         <source>Batch Trim</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajustement multiple</translation>
     </message>
 </context>
 <context>
@@ -6157,37 +6157,37 @@ Point : (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim_batch.cpp" line="127"/>
         <source>Removed</source>
-        <translation type="unfinished"></translation>
+        <translation>Supprimés</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim_batch.cpp" line="127"/>
         <source>Trim Batch</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajustement multiple</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim_batch.cpp" line="169"/>
         <source>Trimmed %1 entities, removed %2 pieces (%3 undetermined kept)</source>
-        <translation type="unfinished"></translation>
+        <translation>Entités ajustées : %1 ; parties supprimées : %2 (%3 conservées car le côté est indéterminé)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim_batch.cpp" line="212"/>
         <source>Select entities to trim</source>
-        <translation type="unfinished"></translation>
+        <translation>Sélectionner les entités à ajuster</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim_batch.cpp" line="218"/>
         <source>Select limiting entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Sélectionner l’entité limite</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim_batch.cpp" line="221"/>
         <source>Specify the side to keep</source>
-        <translation type="unfinished"></translation>
+        <translation>Indiquer le côté à conserver</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim_batch.cpp" line="84"/>
         <source>None of the selected entities crosses the limit</source>
-        <translation type="unfinished"></translation>
+        <translation>Aucune des entités sélectionnées ne coupe l’entité limite</translation>
     </message>
 </context>
 <context>

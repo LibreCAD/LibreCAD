@@ -4218,7 +4218,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="392"/>
         <source>Batch Trim</source>
-        <translation type="unfinished"></translation>
+        <translation>Shkurto disa entitete</translation>
     </message>
 </context>
 <context>
@@ -6158,37 +6158,37 @@ Pika: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim_batch.cpp" line="127"/>
         <source>Removed</source>
-        <translation type="unfinished"></translation>
+        <translation>Hequr</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim_batch.cpp" line="127"/>
         <source>Trim Batch</source>
-        <translation type="unfinished"></translation>
+        <translation>Shkurto disa entitete</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim_batch.cpp" line="169"/>
         <source>Trimmed %1 entities, removed %2 pieces (%3 undetermined kept)</source>
-        <translation type="unfinished"></translation>
+        <translation>Entitete të shkurtuara: %1, pjesë të hequra: %2 (%3 u mbajtën sepse ana nuk u përcaktua)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim_batch.cpp" line="212"/>
         <source>Select entities to trim</source>
-        <translation type="unfinished"></translation>
+        <translation>Zgjidh entitetet për t’i shkurtuar</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim_batch.cpp" line="218"/>
         <source>Select limiting entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Zgjidh entitetin kufizues</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim_batch.cpp" line="221"/>
         <source>Specify the side to keep</source>
-        <translation type="unfinished"></translation>
+        <translation>Përcakto anën që do të ruhet</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim_batch.cpp" line="84"/>
         <source>None of the selected entities crosses the limit</source>
-        <translation type="unfinished"></translation>
+        <translation>Asnjë nga entitetet e zgjedhura nuk pret objektin kufizues</translation>
     </message>
 </context>
 <context>

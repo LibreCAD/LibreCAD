@@ -4217,7 +4217,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="392"/>
         <source>Batch Trim</source>
-        <translation type="unfinished"></translation>
+        <translation>Oříznout více prvků</translation>
     </message>
 </context>
 <context>
@@ -6157,37 +6157,37 @@ Bod: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim_batch.cpp" line="127"/>
         <source>Removed</source>
-        <translation type="unfinished"></translation>
+        <translation>Odstraněno</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim_batch.cpp" line="127"/>
         <source>Trim Batch</source>
-        <translation type="unfinished"></translation>
+        <translation>Oříznout více prvků</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim_batch.cpp" line="169"/>
         <source>Trimmed %1 entities, removed %2 pieces (%3 undetermined kept)</source>
-        <translation type="unfinished"></translation>
+        <translation>Oříznuté prvky: %1, odstraněné části: %2 (%3 ponecháno kvůli neurčené straně)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim_batch.cpp" line="212"/>
         <source>Select entities to trim</source>
-        <translation type="unfinished"></translation>
+        <translation>Vyberte prvky k oříznutí</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim_batch.cpp" line="218"/>
         <source>Select limiting entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Vyberte omezující prvek</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim_batch.cpp" line="221"/>
         <source>Specify the side to keep</source>
-        <translation type="unfinished"></translation>
+        <translation>Určete stranu, která se má zachovat</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim_batch.cpp" line="84"/>
         <source>None of the selected entities crosses the limit</source>
-        <translation type="unfinished"></translation>
+        <translation>Žádný z vybraných prvků neprotíná omezující prvek</translation>
     </message>
 </context>
 <context>

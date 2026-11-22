@@ -4217,7 +4217,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="392"/>
         <source>Batch Trim</source>
-        <translation type="unfinished"></translation>
+        <translation>Meerdere objecten trimmen</translation>
     </message>
 </context>
 <context>
@@ -6157,37 +6157,37 @@ Punt: (%8 , %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim_batch.cpp" line="127"/>
         <source>Removed</source>
-        <translation type="unfinished"></translation>
+        <translation>Verwijderd</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim_batch.cpp" line="127"/>
         <source>Trim Batch</source>
-        <translation type="unfinished"></translation>
+        <translation>Meerdere objecten trimmen</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim_batch.cpp" line="169"/>
         <source>Trimmed %1 entities, removed %2 pieces (%3 undetermined kept)</source>
-        <translation type="unfinished"></translation>
+        <translation>Getrimde objecten: %1, verwijderde delen: %2 (%3 behouden omdat de zijde niet kon worden bepaald)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim_batch.cpp" line="212"/>
         <source>Select entities to trim</source>
-        <translation type="unfinished"></translation>
+        <translation>Selecteer objecten om te trimmen</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim_batch.cpp" line="218"/>
         <source>Select limiting entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Selecteer het begrenzende object</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim_batch.cpp" line="221"/>
         <source>Specify the side to keep</source>
-        <translation type="unfinished"></translation>
+        <translation>Geef de te behouden zijde op</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim_batch.cpp" line="84"/>
         <source>None of the selected entities crosses the limit</source>
-        <translation type="unfinished"></translation>
+        <translation>Geen van de geselecteerde objecten snijdt het begrenzende object</translation>
     </message>
 </context>
 <context>
