@@ -61680,3 +61680,18 @@ tests remain automated/offscreen evidence only; physical preview/commit,
 held-drag cancellation, actual Qt window DPR, and stale-peer interaction stay
 open. Resume those checks only in a desktop-control session with display and
 accessibility access. No product change is justified by this access failure.
+
+## 1990. Requalify the Nine-family Source Picker Locally (2026-11-22)
+
+Re-ran the complete `[gui][dialog][offsetcurve][source]` selector from the
+current product tree after confirming visible desktop access is unavailable.
+The CMake Release build passes **49 cases / 18,243 assertions** with seed
+`20261122`; the ASan/UBSan build passes the same totals with seed `8675309`
+and no sanitizer diagnostic (`detect_leaks=0`). This covers family switching,
+typed replacement, selection/highlight lifetimes, and refusal paths in the
+automated/offscreen test surface, including the distinct parabola source kind.
+
+This requalifies the picker locally but does not replace section 1989's
+physical GUI gate or prove visible source selection, preview/commit parity,
+held-drag cancellation, actual application-window DPR, or independent CAD
+acceptance. Those integration gates remain open.
