@@ -402,10 +402,10 @@ public:
     void togglePreviewRefs() { m_showRefEntitiesOnPreview = !m_showRefEntitiesOnPreview; }
     void waitForTrim() {
         QElapsedTimer elapsed; elapsed.start();
-        while (pending()) {
-            REQUIRE(elapsed.elapsed() < 35000);
+        while (pending() && elapsed.elapsed() < 35000) {
             QCoreApplication::processEvents(QEventLoop::AllEvents); QThread::msleep(1);
         }
+        REQUIRE_FALSE(pending());
     }
     void clickAsync(RS_Vector p) { auto e = lc::test::eventAt(p.x, p.y); onMouseLeftButtonRelease(getStatus(), &e); }
     void click(RS_Vector p) { clickAsync(p); waitForTrim(); }
@@ -7630,11 +7630,11 @@ std::unique_ptr<LC_OffsetWorkerCompletion> joinedTrimWorker(const trimWorkerRequ
     REQUIRE(client.submit(request, LC_OffsetWorkerClient::Mode::Commit,
         [&](LC_OffsetWorkerClient::Outcome received) { outcome.emplace(std::move(received)); }));
     QElapsedTimer elapsed; elapsed.start();
-    while (!outcome) {
-        REQUIRE(elapsed.elapsed() < 35000);
+    while (!outcome && elapsed.elapsed() < 35000) {
         QCoreApplication::processEvents(QEventLoop::AllEvents);
         if (!outcome) QThread::msleep(1);
     }
+    REQUIRE(outcome.has_value());
     INFO("worker status=" << int(outcome->status)
          << " reaped=" << outcome->reaped
          << " exactWorkKnown=" << outcome->exactGeometryWorkKnown
@@ -7858,7 +7858,8 @@ TEST_CASE("Async trim worker owns detached inputs and returns only a complete jo
         [&](LC_OffsetTrimWorker::Outcome value) { outcome.emplace(std::move(value)); }));
     CHECK(f.graphic.count() == 2); CHECK_FALSE(canUndo(f.graphic));
     QElapsedTimer elapsed; elapsed.start();
-    while (!outcome) { REQUIRE(elapsed.elapsed() < 35000); QCoreApplication::processEvents(QEventLoop::AllEvents); QThread::msleep(1); }
+    while (!outcome && elapsed.elapsed() < 35000) { QCoreApplication::processEvents(QEventLoop::AllEvents); QThread::msleep(1); }
+    REQUIRE(outcome.has_value());
     heartbeat.stop(); CHECK(ticks > 0); REQUIRE(outcome->status == LC_OffsetTrimWorker::Status::Completed);
     REQUIRE(outcome->clientStatus); CHECK(*outcome->clientStatus == LC_OffsetWorkerClient::Status::Completed);
     REQUIRE(outcome->prepared); CHECK(outcome->prepared->target().getParent() == nullptr);
@@ -8175,10 +8176,10 @@ void trimActionWorkerFailure(bool preview, bool timeout) {
         CHECK(f.context.messages.front().contains(timeout ? "timed out" : "worker failed"));
     }
     QElapsedTimer elapsed; elapsed.start();
-    while (worker.busy()) {
-        REQUIRE(elapsed.elapsed() < 5000);
+    while (worker.busy() && elapsed.elapsed() < 5000) {
         QCoreApplication::processEvents(QEventLoop::AllEvents); QThread::msleep(1);
     }
+    REQUIRE_FALSE(worker.busy());
 #ifdef Q_OS_UNIX
     errno = 0;
     CHECK(::kill(static_cast<pid_t>(childId), 0) == -1);
@@ -8243,7 +8244,8 @@ TEST_CASE("Async trim worker consumes sealed detached limit snapshots",
         false, options.kernel, 17, qint64(f.graphic.undoStateEpoch()), LC_OffsetWorkerClient::Mode::Commit,
         [&](LC_OffsetTrimWorker::Outcome value) { outcome.emplace(std::move(value)); }));
     QElapsedTimer elapsed; elapsed.start();
-    while (!outcome) { REQUIRE(elapsed.elapsed() < 35000); QCoreApplication::processEvents(QEventLoop::AllEvents); QThread::msleep(1); }
+    while (!outcome && elapsed.elapsed() < 35000) { QCoreApplication::processEvents(QEventLoop::AllEvents); QThread::msleep(1); }
+    REQUIRE(outcome.has_value());
     REQUIRE(outcome->status == LC_OffsetTrimWorker::Status::Completed); REQUIRE(outcome->prepared);
     REQUIRE(inputs->matchesDetached(f.graphic, limit.get()));
     auto receipt = outcome->prepared->completions(f.graphic.undoStateEpoch()); REQUIRE(receipt);
@@ -8267,7 +8269,8 @@ TEST_CASE("Async trim worker cancels without delivery and recovers after a share
         [&](LC_OffsetTrimWorker::Outcome value) { ++deliveries; outcome.emplace(std::move(value)); }); };
     const auto wait = [&](const std::function<bool()>& ready) {
         QElapsedTimer elapsed; elapsed.start();
-        while (!ready()) { REQUIRE(elapsed.elapsed() < 35000); QCoreApplication::processEvents(QEventLoop::AllEvents); QThread::msleep(1); }
+        while (!ready() && elapsed.elapsed() < 35000) { QCoreApplication::processEvents(QEventLoop::AllEvents); QThread::msleep(1); }
+        REQUIRE(ready());
     };
     REQUIRE(start()); wait([&] { return LC_OffsetTrimWorkerTestAccess::processRunning(worker) || bool(outcome); });
     REQUIRE(LC_OffsetTrimWorkerTestAccess::processRunning(worker));
@@ -8294,12 +8297,14 @@ TEST_CASE("Async trim worker survives source-document death and suppresses deliv
         17, qint64(graphic->undoStateEpoch()), LC_OffsetWorkerClient::Mode::Commit,
         [&](LC_OffsetTrimWorker::Outcome value) { ++deliveries; outcome.emplace(std::move(value)); }));
     QElapsedTimer elapsed; elapsed.start();
-    while (!LC_OffsetTrimWorkerTestAccess::clientBusy(*worker)) {
-        REQUIRE(elapsed.elapsed() < 35000); QCoreApplication::processEvents(QEventLoop::AllEvents); QThread::msleep(1);
+    while (!LC_OffsetTrimWorkerTestAccess::clientBusy(*worker) && elapsed.elapsed() < 35000) {
+        QCoreApplication::processEvents(QEventLoop::AllEvents); QThread::msleep(1);
     }
+    REQUIRE(LC_OffsetTrimWorkerTestAccess::clientBusy(*worker));
     SECTION("document dies") {
         graphic.reset();
-        while (!outcome) { REQUIRE(elapsed.elapsed() < 35000); QCoreApplication::processEvents(QEventLoop::AllEvents); QThread::msleep(1); }
+        while (!outcome && elapsed.elapsed() < 35000) { QCoreApplication::processEvents(QEventLoop::AllEvents); QThread::msleep(1); }
+        REQUIRE(outcome.has_value());
         REQUIRE(outcome->status == LC_OffsetTrimWorker::Status::Completed); REQUIRE(outcome->prepared);
         CHECK(outcome->prepared->target().getParent() == nullptr);
         CHECK(outcome->prepared->target().getLayer(false) == nullptr); CHECK(deliveries == 1);
@@ -8322,7 +8327,8 @@ TEST_CASE("Async trim worker can be destroyed by its completion callback",
         17, qint64(f.graphic.undoStateEpoch()), LC_OffsetWorkerClient::Mode::Commit,
         [&](LC_OffsetTrimWorker::Outcome value) { outcome.emplace(std::move(value)); worker.reset(); }));
     QElapsedTimer elapsed; elapsed.start();
-    while (!outcome) { REQUIRE(elapsed.elapsed() < 35000); QCoreApplication::processEvents(QEventLoop::AllEvents); QThread::msleep(1); }
+    while (!outcome && elapsed.elapsed() < 35000) { QCoreApplication::processEvents(QEventLoop::AllEvents); QThread::msleep(1); }
+    REQUIRE(outcome.has_value());
     CHECK_FALSE(worker); REQUIRE(outcome->status == LC_OffsetTrimWorker::Status::Completed);
     REQUIRE(outcome->prepared); CHECK(outcome->prepared->ready()); CHECK_FALSE(canUndo(f.graphic));
 }
