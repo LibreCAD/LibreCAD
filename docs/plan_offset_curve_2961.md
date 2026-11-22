@@ -307,40 +307,29 @@ high-origin four-point parabola boundary: direct reconstruction at
 `(1e12,-2e12)` is distinct from the successful five-lane worker/persistence
 profile at `(1e6,-2e6)`, and the `1e12` worker case remains an ordinary fallback
 because requested world-coordinate precision is not demonstrated. Do not
-promote that case by localizing option calculation alone. Sections 1900 and
-1903-1904 independently audit the generated degree-1/degree-3 ellipse-source
-and LINE-control DWGs; that evidence is not all-source-kind or AutoCAD
-acceptance.
+promote that case by localizing option calculation alone. Sections 1913-1923
+extend typed-source persistence through all supported DXF/DWG writer releases
+for bounded spline, polyline, and parabola profiles; these results do not
+establish arbitrary variants, Trim, visible interaction, or AutoCAD acceptance.
 
-Sections 1913-1923 extend the typed-source family/variant matrix through all
-seven supported DXF and six DWG writer releases, with specific rational,
-nonuniform, periodic, high-degree, closed/mixed-bulge, shifted-seam, and
-multi-point fit-spline profiles. These remain bounded profiles; applicable
-Trim, external CAD acceptance, and visible packaged-app checks are not inferred
-from persistence results. LibreDWG direct DWG parsing and typed-CBOR
-decode/re-encode remain distinct from its failing `dxf2dwg` schema-2 conversion
-path described in section 1914.
+Sections 1949-1950 reproduce the exact-head CTest failure and pass the
+remaining offset fast lanes locally. The bounded failure is the out-of-scope
+VXCONTROL round trip; its `origin/master` baseline is unverified. Section 1951
+passes the offscreen all-nine-family Properties picker matrix, but visible
+packaged-app acceptance remains open. Sections 1953-1954 record two incomplete
+broad ASan/UBSan runs: the isolated parabola profile 58 and closed-polyline
+profile 10/R14-DXF cases pass, but their broad-run worker failures remain
+unexplained and do not establish order stability. Source-bearing ODA/AutoCAD
+conversion remains unverified because SSH and SSH-launched GUI automation
+cannot access the desktop pasteboard/Terminal session. Broader family/variant
+coverage is still open.
 
-The implementation and acceptance order remains: (1) continue materially
-distinct family/variant cases with independent geometric oracles, worker/cache
-checks, applicable Trim, and five-format persistence while preserving
-fail-closed precision limits; (2) complete visible source-type switching,
-candidate refresh, replacement, highlight, and cancellation using the
-resolvable fixture from section 1906; (3) extend independent CAD checks to
-other source families and record AutoCAD acceptance separately; (4) keep
-publishing each tested slice and verify PR state. Current local and remote PR
-branch head is `fe95d1a18b944697139d4fc1e3724c216f48fe86`; run
-`44872923603` has five `build_with_pixi` jobs pending across macOS, Linux,
-Linux ARM, and Windows. Section 1924's focused 4,968-assertion test and the
-single registered CTest pass; an exploratory all-tests binary run was stopped
-after sustained high-volume unrelated DWG diagnostics and is not counted as a
-pass. ODAFileConverter remains listed as running, but the desktop bridge
-returns `cgWindowNotFound`, so no external conversion result is available.
-ODAFileConverter is reported running, but the desktop bridge still returns
-`cgWindowNotFound`, so no source-bearing ODA conversion result is available.
-Visible packaged-app acceptance also remains open. Continue polling the
-current exact-head checks and retry external gates when their respective
-interfaces are usable; do not mark them complete from local tests.
+The current pushed PR #3193 head is `72cb3711a38f4ee88ab34a6b0d49a72ebbca3eac`
+(open draft). No workflow run or commit status is attached to this
+documentation/test-only head; do not carry CI results from older revisions
+forward. Continue with the broad sanitizer/order investigation, concrete
+family/variant slices, visible GUI acceptance, and source-bearing independent
+CAD validation. Do not mark the roadmap complete from isolated passes.
 
 **Latest source-widget disposition (reconciled 2026-11-16):** The source
 widget contract is that a user can change the requested source type while
