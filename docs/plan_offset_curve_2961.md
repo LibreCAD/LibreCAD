@@ -61633,3 +61633,22 @@ the intermittent result is explained or enough controlled repetitions
 establish its scope. The viewport lifetime fix and its evidence remain in
 section 1986. Visible packaged-app acceptance, broader family/variant
 coverage, independent CAD acceptance, and exact-head CI remain open.
+
+## 1988. Bound the Monolithic Trim ASan Replay (2026-11-22)
+
+Started the full `[lc-offsetcurve][trim-action]` ASan/UBSan selector in one
+process with seed `1453897047` and the established 30-second worker bound. The
+run logged one failed completion assertion in the worker-driven Trim helper:
+the child exited with code 9 after 118 ms, with no transport payload. No
+AddressSanitizer or UndefinedBehaviorSanitizer diagnostic appeared. After
+initial progress, the output stopped changing for more than two minutes; the
+run was interrupted (exit 130) and produced no Catch2 terminal summary. Its
+partial log is `/private/tmp/lc3193-trim-action-monolithic-current-asan.log`.
+
+This is an incomplete/stalled monolithic run, not a pass and not evidence that
+the single exit-9 assertion is a product defect. Section 1981's complete
+seeded 12-shard ASan/UBSan run remains the current broad terminal evidence;
+the exact worker/test case behind this monolithic assertion is not identified
+by the partial log. Keep monolithic process/order stability open. Continue
+with bounded isolated reproductions and the remaining family/variant,
+visible-app, independent CAD, VXCONTROL-baseline, and exact-head-CI gates.
