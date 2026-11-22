@@ -60953,3 +60953,26 @@ The broad seeded sanitizer gate remains open. Exact-head DWG/DXF CTest still
 has the unrelated VXCONTROL failure recorded in section 1949; visible GUI
 acceptance and source-bearing ODA/AutoCAD validation also remain open. The
 roadmap is incomplete.
+
+## 1954. Isolate the Closed-polyline Update-from-Source Broad-run Failure (2026-11-21)
+
+The seeded constrained ASan/UBSan `[lc-offsetcurve][trim-action]` replay
+advanced beyond profile 58 and reported `updated == 0` in
+`I trim one closed convex polyline cache component and retain the rest`, for
+profile `unequal-radii-rounded-rotated-inward` (10), R14 DXF (`FormatDXFRW14`,
+numeric value 6). Catch2 reported 88 cases / 921,556 assertions at the
+interruption: 87 cases passed and two assertions failed. The first was the
+Update-from-Source assertion; the second was the SIGINT generated when the
+following profile was stopped. No ASan/UBSan diagnostic was emitted. The
+broad run is incomplete and this does not establish a product regression.
+
+Added test-only `LC_OFFSET_TRIM_CLOSED_POLYLINE_PROFILE` and
+`LC_OFFSET_TRIM_CLOSED_POLYLINE_FORMAT` selectors plus bounded action-report
+details on failure. The exact profile/format passes in Release and ASan/UBSan
+with seed `1453897047` (292 assertions in each build). Its broad-run refusal
+reason remains unknown; the isolated pass does not prove order stability.
+
+Keep the broad seeded sanitizer gate open and rerun the selector with the
+diagnostic enabled if another broad failure occurs. Exact-head DWG/DXF CTest,
+visible GUI acceptance, external source-bearing ODA/AutoCAD validation, and
+the broader family/variant matrix remain open. The roadmap is incomplete.
