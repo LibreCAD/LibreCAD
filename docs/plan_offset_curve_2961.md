@@ -61213,3 +61213,20 @@ Keep the broad seeded sanitizer/order gate open, do not alter production
 deadlines based on this evidence, and do not count the interrupted run as
 qualified. ODA execution context, VXCONTROL baseline, visible GUI, exact-head
 CI, and family/variant coverage also remain open.
+
+## 1964. Repeat the Seeded Trim Shard with the Parabola Row Pinned (2026-11-22)
+
+Repeated the section 1962 seeded ASan/UBSan shard with the same shard index,
+seed, and existing ellipse, spline, seam, and closed-polyline selectors, adding
+`LC_OFFSET_TRIM_TYPED_PARABOLA_PROFILE=2`. The run completed **9 test cases / 15,577 assertions** with no failures and no sanitizer diagnostics. In contrast to the earlier unpinned run, the reported profile-2 Trim row did not fail and emitted no worker `ProcessFailed` diagnostic.
+
+Together with the standalone Release and ASan/UBSan passes in section 1963,
+this establishes that the SIGKILL is not deterministic for the selected row.
+The pinned run removes the other 151 typed-parabola scenarios, however, and
+therefore does not isolate whether the original failure depended on earlier
+rows in that matrix, transient system/resource pressure, or another factor.
+The original broad run remains failed evidence; a repeat pass does not erase
+it or close the broad sanitizer/order gate. Keep the stable-PID diagnostic and
+row selector for a future unpinned reproduction, and keep production geometry
+and deadlines unchanged until causal evidence exists. ODA, VXCONTROL baseline,
+visible GUI, exact-head CI, and family/variant acceptance remain open.
