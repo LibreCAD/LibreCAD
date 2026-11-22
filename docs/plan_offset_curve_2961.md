@@ -23,7 +23,7 @@ USA.
 -->
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
-Updated: 2026-11-21. Project: **LibreCAD**, not LibreCAD_3.
+Updated: 2026-11-22. Project: **LibreCAD**, not LibreCAD_3.
 
 **Current source-picker disposition (2026-11-16):** While choosing a
 replacement in the Properties widget, the user can change the source-family
@@ -331,12 +331,15 @@ with pasteboard/HIServices errors and produces no files.
 Section 1959 records a targeted unified-log search with no entries for the
 geometry-worker process; generic RunningBoard memorystatus conversion errors
 were unrelated and do not explain the SIGKILLs.
+Section 1960 pins the interrupted high-degree spline Update-from-Source row;
+that row passes isolated Release and ASan/UBSan checks, so the broad-run
+interrupt remains an order/load question, not a reproduced fixture failure.
 Source-bearing ODA/AutoCAD
 conversion remains unverified because SSH and SSH-launched GUI automation
 cannot access the desktop pasteboard/Terminal session. Broader family/variant
 coverage is still open.
 
-The current pushed PR #3193 head is `913f62a1f` (open draft). No workflow run
+The current pushed PR #3193 head is `7e28a23a5` (open draft). No workflow run
 or commit status is attached to this
 documentation/test-only head; do not carry CI results from older revisions
 forward. Continue with the broad sanitizer/order investigation, concrete
@@ -61094,3 +61097,27 @@ OS continues to omit child-process records. Do not rerun the 54-minute broad
 matrix solely to recover PIDs for already completed exits. The ODA execution
 context, VXCONTROL baseline, visible GUI, exact-head CI, and family/variant
 coverage gates remain open; the roadmap is incomplete.
+
+## 1960. Isolate the Interrupted High-degree Spline Update Row (2026-11-22)
+
+Used Catch2's per-generator filters to pin the row reported when the broad
+`[lc-offsetcurve][trim-action]` run was manually interrupted in
+`awaitUpdate`: degree 5, interior multiplicity 1, transformed frame, signed
+distance `-0.02`, interior knot `0.5`, and R2018 DWG (format value 12). The
+reproducible generator selection is `-g 1 -g 0 -g 1 -g 0 -g 1 -g 4` for the
+test `rational high-degree splines trim through document actions and file
+lanes`.
+
+The exact row passes in the current ASan/UBSan build (103 assertions, no
+sanitizer diagnostics) and Release build (103 assertions). Both runs use seed
+`1453897047` and the test-only worker deadline override of 30 seconds. The
+isolated pass demonstrates no deterministic failure in this row; it does not
+explain earlier unrelated helper SIGKILLs or prove broad-suite load/order
+stability. The attempted colon-separated generator syntax was rejected by
+Catch2 and is not a test result.
+
+Keep the broad sanitizer/order gate open. Prefer bounded suite-load
+reproduction with the PID-bearing diagnostics over changing geometry or
+deadlines; do not relabel the interrupted run as a pass. ODA execution context,
+VXCONTROL baseline, visible GUI, exact-head CI, and family/variant coverage
+also remain open.
