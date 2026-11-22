@@ -61255,11 +61255,11 @@ visible GUI, exact-head CI, and family/variant acceptance remain open.
 The unpinned ASan/UBSan shard 1 ended with **8 passed / 1 failed**, 5,536
 assertions. Its failure was in the worker-created typed-ellipse Trim matrix at
 profile 21, ellipse picked second: `Update from Source` reported `updated=0`
-instead of 1. Earlier in the same shard, two Trim worker processes had also
-exited by SIGKILL, with stable PIDs 65518 and 65521. They preceded the ellipse
-failure; no causal relationship is established. A macOS unified-log query for
-those PIDs could not run in the sandbox (`log: Cannot run while sandboxed`),
-so the signal source remains unknown.
+instead of 1. Earlier in the same shard, two Trim worker processes had exited
+by SIGKILL, with stable PIDs 65518 and 65521. Subsequent source inspection
+identified those as the deliberate action fault fixtures: the test calls
+`QProcess::kill()` for preview and commit, then verifies reap and retry. They
+are not unexplained system kills and are unrelated to this matrix assertion.
 
 Added the default-neutral `LC_OFFSET_TRIM_TYPED_ELLIPSE_ROW` selector and
 failure-only update/refusal details. Row 42 (profile 21, ellipse picked
@@ -61269,13 +61269,11 @@ with the same 30-second test-only worker allowance as the shard. An earlier
 standalone attempt without this override stopped at profile 7 on the default
 8.5-second test bound and is not a valid full-matrix result.
 
-The exact row and full family matrix pass independently, while shard 1 fails
-after preceding work and contains separate SIGKILLs. This supports an
-intermittent suite-load/order issue but does not prove resource pressure or
-explain the kills. Keep both broad sanitizer/order and worker-termination
-investigations open; do not modify production deadlines or accept the failed
-shard as passing evidence. Repeat under controlled host diagnostics when
-available. ODA, VXCONTROL baseline, visible GUI, exact-head CI, and
+The exact row and full family matrix pass independently, while shard 1 failed
+after preceding work. This supports an intermittent suite-context issue but
+does not prove resource pressure. Keep the broad sanitizer/order gate open;
+do not modify production deadlines or accept the failed shard as passing
+evidence. ODA, VXCONTROL baseline, visible GUI, exact-head CI, and
 family/variant acceptance remain open.
 
 ## 1967. Run the Unpinned Seeded Trim Shard 2 (2026-11-22)
@@ -61400,3 +61398,62 @@ failure remain unresolved historical results. Run shard 11 next; do not call
 the broad gate complete until it and the retained failure investigation are
 addressed. External CAD/ODA, visible GUI, VXCONTROL, exact-head CI, and
 family/variant acceptance remain open.
+
+## 1976. Complete the Unpinned Seeded Trim Shard 11 (2026-11-22)
+
+Ran shard 11 of the same 12-way `[lc-offsetcurve][trim-action]` ASan/UBSan
+selection with seed `1453897047`, the 30-second test-only worker bound, and the
+same established profile selectors. It completed **8 cases / 150,648
+assertions** with no failures or sanitizer diagnostics.
+
+All twelve shard indices now have a terminal run, but this does not close the
+selector: shard 1 and the initial shard-0 attempt contain earlier failures
+that require reconciliation or same-binary reruns. The action-fault fixture's
+SIGKILL entries are intentional and are verified by its reap/retry assertions;
+they must not be treated as external worker instability. ODA, visible GUI,
+VXCONTROL, exact-head CI, and family/variant acceptance remain open.
+
+## 1977. Re-run Shard 1 with Captured Ellipse Refusal Context (2026-11-22)
+
+The shard-1 rerun with the new refusal capture completed **9 cases / 9,515
+assertions** with no failures or sanitizer diagnostics. It did log two helper
+SIGKILLs, but source inspection matched them to the explicit killed-helper
+preview/commit test described above. The earlier profile-20 refusal-text
+mismatch did not recur. Profile 20, ellipse-picked-second (row 41), also passes
+alone in Release and ASan/UBSan (**13 assertions each**). Profile 21, row 42,
+passes in both configurations (**154 assertions each**).
+
+Thus the observed profile-20 mismatch is intermittent and suite-contextual;
+its unexpected refusal text was not captured before the harness was improved,
+and the failure has not reproduced with the capture active. Keep the captured
+refusal values for a future recurrence. Do not equate intentional fault-test
+SIGKILLs with the independent, still-unresolved historical shard-0 profile-2
+Trim failure. The broad selector is not yet fully qualified solely because
+all 12 shards have run: reconcile or re-run the historical shard-0 failure on
+the current test binary before closing its sanitizer/order gate. ODA, visible
+GUI, VXCONTROL, exact-head CI, and family/variant gates remain open.
+
+## 1978. Bound the Current Shard-0 and ODA Retries (2026-11-22)
+
+Retried the current ASan/UBSan shard 0 for `[lc-offsetcurve][trim-action]`
+with seed `1453897047`, the established profile selectors, and the 30-second
+test-only worker bound. The process was stopped after roughly nine minutes
+because it continued emitting legacy document-initialization diagnostics
+without reaching a terminal test summary; its partial log is
+`/private/tmp/lc3193-trim-action-shard0-current-asan.log` (about 62 MB at
+interruption). This is an incomplete run, not a failure or pass. Existing
+focused profile-2/parabola passes remain useful but do not reconcile the
+historical broad-shard failure. Prefer a bounded, low-noise reproduction or
+the specific row selector before retrying the whole shard.
+
+Also retried the 18 independently authored typed-source DWGs through
+ODAFileConverter 27.1 with the application reported open in the logged-in
+desktop. The executable still exited before processing (status 134) with
+PasteBoard `-4960` errors for `clipboard` and `find`, followed by an invalid
+HIServices XPC connection. No fresh output DXFs were produced in
+`/private/tmp/offset-2961-oda-rerun-20261122`. This is another execution-context
+failure, not an ODA file audit. The source-bearing ODA gate remains open and
+requires conversion from an execution context that can access macOS services.
+
+Do not close broad Trim sanitizer/order, ODA, visible GUI, VXCONTROL baseline,
+exact-head CI, or remaining family/variant gates on these attempts.
