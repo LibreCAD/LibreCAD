@@ -6890,8 +6890,18 @@ TEST_CASE("Sinusoidal Trim Two resolves multiple roots across operand roles",
 TEST_CASE("Closed high-segment polyline Trim Two distinguishes connected and "
           "overlapping offsets",
           "[lc-offsetcurve][trim-action][polyline][closed][high-segment]") {
+    const bool pinSegmentCount = qEnvironmentVariableIsSet("LC_OFFSET_TRIM_CLOSED_HIGH_SEGMENTS");
+    const bool pinSide = qEnvironmentVariableIsSet("LC_OFFSET_TRIM_CLOSED_HIGH_SIDE");
+    const int requestedSegmentCount =
+        qEnvironmentVariableIntValue("LC_OFFSET_TRIM_CLOSED_HIGH_SEGMENTS");
+    const int requestedSide = qEnvironmentVariableIntValue("LC_OFFSET_TRIM_CLOSED_HIGH_SIDE");
+    REQUIRE_FALSE((pinSegmentCount && requestedSegmentCount != 256 && requestedSegmentCount != 512 &&
+                   requestedSegmentCount != 1024 && requestedSegmentCount != 2048));
+    REQUIRE_FALSE((pinSide && (requestedSide < 0 || requestedSide > 1)));
     const unsigned segmentCount = GENERATE(256u, 512u, 1024u, 2048u);
     const bool towardCentre = GENERATE(true, false);
+    if (pinSegmentCount && segmentCount != static_cast<unsigned>(requestedSegmentCount)) return;
+    if (pinSide && towardCentre != bool(requestedSide)) return;
     CAPTURE(segmentCount, towardCentre);
     Drawing<true> f;
     const qint64 requestedPreviewTimeout = qEnvironmentVariableIntValue("LIBRECAD_TEST_OFFSET_WORKER_TIMEOUT_MS");
