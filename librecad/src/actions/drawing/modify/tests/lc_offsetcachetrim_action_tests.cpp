@@ -5174,6 +5174,9 @@ TEST_CASE("T Trim kernel certifies exact internal knots on a worker-created clos
 
 TEST_CASE("T Trim Two action trims a worker-created typed ellipse offset against a line in both pick orders",
           "[gui][lc-offsetcurve][trim-action][typed-source][ellipse][trim-two]") {
+    const bool pinProfile = qEnvironmentVariableIsSet("LC_OFFSET_TRIM_TYPED_ELLIPSE_ROW");
+    const int requestedRow = qEnvironmentVariableIntValue("LC_OFFSET_TRIM_TYPED_ELLIPSE_ROW");
+    REQUIRE_FALSE((pinProfile && (requestedRow < 0 || requestedRow > 75)));
     constexpr double rotation = .41;
     constexpr double fullRotation = .67;
     constexpr double inwardRotation = .93;
@@ -5184,7 +5187,9 @@ TEST_CASE("T Trim Two action trims a worker-created typed ellipse offset against
                                    21u, 22u, 23u, 24u, 25u, 26u, 27u, 28u, 29u, 30u, 31u,
                                    32u, 33u, 34u, 35u, 36u, 37u})
     for (const bool ellipseFirst : {false, true}) {
-        CAPTURE(profile, ellipseFirst);
+        const unsigned row = profile * 2 + unsigned(ellipseFirst);
+        if (pinProfile && row != static_cast<unsigned>(requestedRow)) continue;
+        CAPTURE(profile, ellipseFirst, row);
         Drawing<true> f;
         RS_Ellipse seed(nullptr, RS_EllipseData{{0, 0}, {1, 0}, 1, 0, .1, false});
         const double offsetDistance = profile >= 35 ? .03 :
@@ -5270,6 +5275,13 @@ TEST_CASE("T Trim Two action trims a worker-created typed ellipse offset against
         update.setSourceKind(LC_OffsetSourceGeometry::Kind::Ellipse);
         update.use(source);
         lc::test::awaitUpdate(update);
+        if (update.lastReport().updated != 1) {
+            INFO("source update updated=" << update.lastReport().updated << ", refused=" <<
+                 update.lastReport().refused << ", outcomes=" << update.lastReport().outcomes.size());
+            if (!update.lastReport().outcomes.empty())
+                INFO("source update refusal=" <<
+                     update.lastReport().outcomes.front().refusal.toStdString());
+        }
         if (profile == 20) {
             REQUIRE(update.lastReport().updated == 0);
             REQUIRE(update.lastReport().refused == 1);
