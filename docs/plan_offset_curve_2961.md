@@ -61230,3 +61230,22 @@ it or close the broad sanitizer/order gate. Keep the stable-PID diagnostic and
 row selector for a future unpinned reproduction, and keep production geometry
 and deadlines unchanged until causal evidence exists. ODA, VXCONTROL baseline,
 visible GUI, exact-head CI, and family/variant acceptance remain open.
+
+## 1965. Re-run the Unpinned Seeded Trim Shard with Stable PID Diagnostics (2026-11-22)
+
+Re-ran the section 1962 ASan/UBSan command without
+`LC_OFFSET_TRIM_TYPED_PARABOLA_PROFILE`, keeping the same seed, shard index,
+and all other profile selectors. The complete generated typed-parabola matrix
+and its neighboring selected action cases ran in one process. The shard passed
+**9 cases / 34,452 assertions** with no sanitizer diagnostics. The formerly
+failing profile-2 row did not emit a process failure, so this run did not
+exercise the stable-PID diagnostic itself.
+
+This is stronger repeat evidence than the pinned run, but it remains one of 12
+shards and does not erase the earlier failure (**8 passed / 1 failed**, SIGKILL
+with the old `pid=0` diagnostic). Treat the behavior as intermittent and
+unexplained. Keep the unpinned multi-shard sanitizer/order gate open; if it
+recurs, preserve the stable PID and correlate the event before changing worker
+or geometry behavior. Do not claim full `[lc-offsetcurve][trim-action]`
+qualification from a single shard. ODA execution context, VXCONTROL baseline,
+visible GUI, exact-head CI, and family/variant acceptance remain open.
