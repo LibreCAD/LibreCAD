@@ -61552,3 +61552,7 @@ branch regressions are not attributed to the footer repair and remain open;
 do not represent the broader DWG/DXF round-trip gate as passing. Recheck and
 triage them before final PR acceptance, then rerun the selector after any
 fixes. GUI, AutoCAD, and exact-head CI gates also remain open.
+
+## 1983. Publish the Footer Fix and Reconcile PR Metadata (2026-11-22)
+
+Committed the writer repair and this checkpoint as `cbbcd7b995304a7850a82e6c6d51964cdc45fdd2`, then pushed it to `codex/offset-2961-native-worker`. GitHub PR #3193 metadata confirms the PR is still open/draft and its head is this exact commit. An attempted Conversation comment was rejected by the GitHub integration (HTTP 403, resource not accessible); the pushed source and roadmap are the available PR update. The open failures from section 1982 and all external/GUI gates are unchanged.
