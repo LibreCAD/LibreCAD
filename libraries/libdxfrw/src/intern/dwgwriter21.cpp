@@ -900,6 +900,7 @@ void dwgWriter21::finishObject() {
         m_writeError = true;
         return;
     }
+    m_objectBody.alignToByte();
     if (m_objectStrings.data().size() > std::numeric_limits<std::uint32_t>::max()
         || m_objectBody.size() > std::numeric_limits<std::uint32_t>::max()
         || m_objectHandles.size() > std::numeric_limits<std::uint32_t>::max()
