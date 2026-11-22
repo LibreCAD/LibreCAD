@@ -61649,6 +61649,19 @@ This is an incomplete/stalled monolithic run, not a pass and not evidence that
 the single exit-9 assertion is a product defect. Section 1981's complete
 seeded 12-shard ASan/UBSan run remains the current broad terminal evidence;
 the exact worker/test case behind this monolithic assertion is not identified
-by the partial log. Keep monolithic process/order stability open. Continue
-with bounded isolated reproductions and the remaining family/variant,
-visible-app, independent CAD, VXCONTROL-baseline, and exact-head-CI gates.
+by the partial log.
+
+Follow-up used Catch2's streaming TeamCity reporter on the same-seed Release
+order. Its first case, `T Trim Two action trims a worker-created typed line
+offset against a circle in both pick orders`, completed in 13.8 seconds. The
+matching isolated ASan/UBSan case passes **2,160 assertions / 1 case** with no
+sanitizer diagnostic. This does not reproduce the child exit. The Release
+replay was stopped during the next, much larger transformed-parabola case;
+its SIGINT report is caused by that deliberate interruption and is not a test
+failure. Two aggregate abort-first attempts were also stopped for runtime and
+produced no further terminal evidence.
+
+Keep monolithic process/order stability open; do not attribute the original
+exit-9 assertion to the isolated first case. Continue with bounded isolated
+reproductions and the remaining family/variant, visible-app, independent CAD,
+VXCONTROL-baseline, and exact-head-CI gates.
