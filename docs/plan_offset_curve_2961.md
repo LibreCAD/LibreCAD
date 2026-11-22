@@ -61648,8 +61648,9 @@ partial log is `/private/tmp/lc3193-trim-action-monolithic-current-asan.log`.
 This is an incomplete/stalled monolithic run, not a pass and not evidence that
 the single exit-9 assertion is a product defect. Section 1981's complete
 seeded 12-shard ASan/UBSan run remains the current broad terminal evidence;
-the exact worker/test case behind this monolithic assertion is not identified
-by the partial log.
+the failure was later mapped from its Catch2 context to
+`Prepared trim consumes original ordinary spline and double native operands
+in either order`, at `secondNative=false, nativeFirst=false, both=false`.
 
 Follow-up used Catch2's streaming TeamCity reporter on the same-seed Release
 order. Its first case, `T Trim Two action trims a worker-created typed line
@@ -61662,8 +61663,12 @@ failure. Two aggregate abort-first attempts were also stopped for runtime and
 produced no further terminal evidence.
 
 Keep monolithic process/order stability open; do not attribute the original
-exit-9 assertion to the isolated first case. Continue with bounded isolated
-reproductions and the remaining family/variant, visible-app, independent CAD,
+exit-9 assertion to the isolated line/circle case or infer a cause from the
+later reproduction. The exact identified test case passes Release and
+ASan/UBSan with **520 assertions / 1 case** in each build, including the
+captured tuple; no sanitizer diagnostic appears. This closes the bounded
+isolated reproduction only, not monolithic process/order stability. Continue
+with the remaining family/variant, visible-app, independent CAD,
 VXCONTROL-baseline, and exact-head-CI gates.
 
 ## 1989. Recheck Visible-app Access from the Current Session (2026-11-22)
@@ -61695,3 +61700,10 @@ This requalifies the picker locally but does not replace section 1989's
 physical GUI gate or prove visible source selection, preview/commit parity,
 held-drag cancellation, actual application-window DPR, or independent CAD
 acceptance. Those integration gates remain open.
+
+The exact pushed PR head `58698ba15ffe05387b63c7c5d641dd5b3a345fa2` also
+passed Pixi workflow run `45031588734` on all five matrix entries: Windows,
+Ubuntu x64, Ubuntu ARM64, macOS Intel, and macOS arm64. This is cross-platform
+build/resource-install validation, not physical GUI acceptance. A subsequent
+roadmap-only refinement records the isolated Trim test identity from section
+1988; it does not change product sources.
