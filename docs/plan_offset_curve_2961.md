@@ -348,7 +348,7 @@ Broader source-family/variant ODA coverage, AutoCAD interoperability, and
 visible GUI acceptance remain open. Do not generalize the 18-file conversion
 and comparison to untested geometry variants.
 
-The current pushed PR #3193 head is `76b6c661f` (open draft). No workflow run
+The current pushed PR #3193 head is `41bcdba68` (open draft). No workflow run
 or commit status was attached to this documentation/test-only head at the last
 check; do not carry CI results from older revisions forward. Continue with the
 broad sanitizer/order investigation, concrete family/variant slices, visible
@@ -61491,3 +61491,19 @@ AutoCAD behavior, visible GUI acceptance, or other CAD interoperability.
 The broad Trim shard-0 retry in section 1978 remains incomplete, and the
 VXCONTROL baseline, visible GUI, exact-head CI, and remaining family/variant
 gates remain open.
+
+## 1980. Reconcile ODA Acceptance and PR Head (2026-11-22)
+
+The 18-file ODA conversion and Release/ASan semantic comparisons are recorded
+in section 1979. Rechecked PR #3193 after pushing the evidence: it is open and
+draft at `41bcdba687aff276861a510a2d939ffa2c3b4664`, matching the local branch.
+The GitHub workflow-run and combined-status queries return no checks for this
+documentation/test-only head. Older-head CI results are not carried forward.
+The attempted PR Conversation comment was denied by the GitHub integration
+with HTTP 403 (`Resource not accessible by integration`); the pushed roadmap
+and commits remain visible on the PR branch.
+
+Next: continue the bounded Trim sanitizer/order investigation and concrete
+family/variant implementation slices, then rerun current-head CI. The ODA
+result is limited to the 18 fixtures, and AutoCAD, visible GUI, the VXCONTROL
+baseline, and broader family/variant coverage remain open.
