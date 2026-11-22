@@ -4210,6 +4210,13 @@ TEST_CASE("Native source picker refuses unrepresentable source variants atomical
     REQUIRE(plainSplineIndex >= 0);
     sourceBox->setCurrentIndex(plainSplineIndex);
     awaitPreparation(widget);
+    const auto* refusalLabel = widget.findChild<QLabel*>("lRefusal");
+    INFO("plain spline replacement attempts=" << widget.editAttemptCount()
+         << ", busy=" << widget.isPreparing()
+         << ", selected id=" << sourceBox->currentData().toULongLong()
+         << ", ui refusal=" << (refusalLabel ? refusalLabel->text().toStdString() : "missing")
+         << ", worker refusal=" << (widget.lastWorkerResult()
+             ? static_cast<int>(widget.lastWorkerResult()->refusal) : -1));
     REQUIRE(widget.lastEditResult());
     REQUIRE(*widget.lastEditResult());
     REQUIRE(clone->sourceDefinition());
