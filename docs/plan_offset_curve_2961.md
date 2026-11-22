@@ -61294,3 +61294,17 @@ shards individually, retain per-shard logs and seeds, and investigate any
 recurrence using stable helper PIDs. The broad sanitizer/order gate, external
 CAD/ODA, visible GUI, VXCONTROL baseline, exact-head CI, and family/variant
 acceptance remain open.
+
+## 1968. Run the Unpinned Seeded Trim Shard 3 (2026-11-22)
+
+Ran shard 3 of the same 12-way `[lc-offsetcurve][trim-action]` ASan/UBSan
+selection with seed `1453897047`, the 30-second test-only worker bound, and the
+same established profile selectors. It completed **9 cases / 20,210
+assertions** with no failures or sanitizer diagnostics.
+
+Shards 0, 2, and 3 have clean unpinned reruns. Shard 1 and the earlier shard-0
+run retain their failures; no passing shard erases them. Continue with the
+remaining partitions and preserve the broad gate until all shards are
+qualified and the intermittent worker SIGKILL is explained or bounded with
+adequate host evidence. ODA, VXCONTROL baseline, visible GUI, exact-head CI,
+and family/variant acceptance remain open.
