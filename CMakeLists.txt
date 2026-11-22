@@ -2821,6 +2821,7 @@ if (BUILD_TESTS)
         librecad/src/lib/filters/tests/mleader_text_tests.cpp
         librecad/src/lib/filters/tests/mleader_dxf_context_tests.cpp
         librecad/src/lib/filters/tests/dxf_roundtrip_tests.cpp
+        librecad/src/lib/filters/tests/lc_table_projection_tests.cpp
         librecad/src/lib/filters/tests/dxf_line_width_mapping_tests.cpp
         librecad/src/lib/filters/tests/dxf_layer0_declared_tests.cpp
         librecad/src/lib/filters/tests/dxf_unknown_version_tests.cpp
@@ -3226,6 +3227,7 @@ if (BUILD_TESTS)
         librecad/src/lib/filters/tests/dxf_attribute_tests.cpp
         librecad/src/lib/filters/tests/dxf_object_tests.cpp
         librecad/src/lib/filters/tests/dxf_roundtrip_tests.cpp
+        librecad/src/lib/filters/tests/lc_table_projection_tests.cpp
         librecad/src/lib/filters/tests/dxf_string_codec_tests.cpp
         librecad/src/lib/filters/tests/eed_tests.cpp
         librecad/src/lib/filters/tests/entity_metadata_tests.cpp
@@ -3367,6 +3369,7 @@ if (BUILD_TESTS)
         librecad/src/lib/filters/tests/dxf_attribute_tests.cpp
         librecad/src/lib/filters/tests/dxf_object_tests.cpp
         librecad/src/lib/filters/tests/dxf_roundtrip_tests.cpp
+        librecad/src/lib/filters/tests/lc_table_projection_tests.cpp
         librecad/src/lib/filters/tests/dxf_string_codec_tests.cpp
         librecad/src/lib/filters/tests/entity_metadata_tests.cpp
         librecad/src/lib/filters/tests/lc_attribute_export_tests.cpp
@@ -3459,6 +3462,10 @@ if (BUILD_TESTS)
             LIBRECAD_TEST_DIR="${CMAKE_CURRENT_SOURCE_DIR}/librecad/src/lib/filters/tests/testdata"
         )
     endfunction()
+
+    add_librecad_filter_micro_test(
+        librecad_table_projection_tests
+        librecad/src/lib/filters/tests/lc_table_projection_tests.cpp)
 
     add_librecad_filter_micro_test(
         librecad_text_source_tests

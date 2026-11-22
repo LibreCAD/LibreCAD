@@ -8538,8 +8538,12 @@ void RS_FilterDXFRW::addInsert(const DRW_Insert &data) {
   // cout << "Insert: " << name << " " << ip << " " << cols << "/" << rows <<
   // endl;
 
+  // TABLE inherits INSERT's count fields, but its reader uses them for the
+  // table grid. Its anonymous picture block is a single insert, not a MINSERT.
+  const bool tableProjection = data.eType == DRW::TABLE;
   RS_InsertData d(QString::fromUtf8(data.name.c_str()), ip, sc, data.angle,
-                  data.colcount, data.rowcount, sp, nullptr, RS2::NoUpdate);
+                  tableProjection ? 1 : data.colcount,
+                  tableProjection ? 1 : data.rowcount, sp, nullptr, RS2::NoUpdate);
   d.extrusion = RS_Vector(data.extPoint.x, data.extPoint.y, data.extPoint.z);
   RS_Insert *entity = new RS_Insert(m_currentContainer, d);
   setEntityAttributes(entity, &data);
