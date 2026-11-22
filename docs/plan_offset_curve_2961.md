@@ -316,16 +316,17 @@ Sections 1949-1950 reproduce the exact-head CTest failure and pass the
 remaining offset fast lanes locally. The bounded failure is the out-of-scope
 VXCONTROL round trip; its `origin/master` baseline is unverified. Section 1951
 passes the offscreen all-nine-family Properties picker matrix, but visible
-packaged-app acceptance remains open. Sections 1953-1954 record two incomplete
-broad ASan/UBSan runs: the isolated parabola profile 58 and closed-polyline
-profile 10/R14-DXF cases pass, but their broad-run worker failures remain
-unexplained and do not establish order stability. Source-bearing ODA/AutoCAD
+packaged-app acceptance remains open. Sections 1953-1955 record three
+incomplete broad ASan/UBSan runs: the isolated parabola profile 58,
+closed-polyline profile 10/R14-DXF, and high-origin closed-seam trim all pass
+when isolated, but their broad-run worker failures remain unexplained and do
+not establish order stability. Source-bearing ODA/AutoCAD
 conversion remains unverified because SSH and SSH-launched GUI automation
 cannot access the desktop pasteboard/Terminal session. Broader family/variant
 coverage is still open.
 
-The current pushed PR #3193 head is `72cb3711a38f4ee88ab34a6b0d49a72ebbca3eac`
-(open draft). No workflow run or commit status is attached to this
+The current pushed PR #3193 head is `313d46797` (open draft). No workflow run
+or commit status is attached to this
 documentation/test-only head; do not carry CI results from older revisions
 forward. Continue with the broad sanitizer/order investigation, concrete
 family/variant slices, visible GUI acceptance, and source-bearing independent
@@ -60965,3 +60966,26 @@ Keep the broad seeded sanitizer gate open and rerun the selector with the
 diagnostic enabled if another broad failure occurs. Exact-head DWG/DXF CTest,
 visible GUI acceptance, external source-bearing ODA/AutoCAD validation, and
 the broader family/variant matrix remain open. The roadmap is incomplete.
+
+## 1955. Isolate the High-origin Closed-seam Trim Worker Failure (2026-11-21)
+
+The constrained seeded ASan/UBSan `[lc-offsetcurve][trim-action]` replay
+advanced beyond the earlier failures, then reported an empty preview in
+`T Trim Two trims a high-origin closed polyline cache across its cutter seam`.
+The captured row is rotation `0.37`, vertical ratio `0.7`, no bulge, topology
+1, scale `1.7`, origin scale `1.0`, inward side, and cutter-first pick order.
+The worker returned `WorkerFailed` with client `ProcessFailed` and no
+diagnostic text; no ASan/UBSan report was present. The broad suite was stopped
+after this first new actionable assertion and is incomplete.
+
+Added `LC_OFFSET_TRIM_CLOSED_SEAM_REPRO` to the existing generated test to
+run only that captured row and pick order. The focused case passed twice in
+the same ASan build (the seeded repeat reported 1,291 assertions) and once in
+Release (365 assertions), including its five-format round-trip checks. This
+does not explain the broad-run helper exit or establish stability under suite
+load/order. Keep the selector for future diagnosis; do not suppress or weaken
+the assertion.
+
+The broad sanitizer/order gate remains open. The unrelated VXCONTROL CTest
+failure, visible GUI acceptance, source-bearing ODA/AutoCAD validation, and
+broader family/variant matrix also remain open. The roadmap is incomplete.
