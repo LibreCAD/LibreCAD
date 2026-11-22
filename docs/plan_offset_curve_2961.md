@@ -320,16 +320,20 @@ packaged-app acceptance remains open. Sections 1953-1955 record three
 incomplete broad ASan/UBSan runs: the isolated parabola profile 58 and
 closed-polyline profile 10/R14-DXF pass in focused checks, and the full
 high-origin closed-seam test matrix passes in isolation. Section 1956 adds
-bounded process-exit diagnostics to distinguish helper crashes/nonzero exits
-from typed worker refusals. Section 1957 records two broad-run helper exits by
-SIGKILL and an incomplete constrained rerun; the failure source and broad
-order stability remain unresolved.
+bounded process-exit diagnostics, including helper PID, to distinguish
+crashes/nonzero exits from typed worker refusals and correlate them with
+system logs. Section 1957 records two broad-run helper exits by SIGKILL; the
+constrained run was later interrupted during a generated Update-from-Source
+case. The SIGKILL source and broad order stability remain unresolved.
+Section 1958 records that opening ODAFileConverter in the logged-in desktop
+did not unblock a shell-launched conversion: it still exits before processing
+with pasteboard/HIServices errors and produces no files.
 Source-bearing ODA/AutoCAD
 conversion remains unverified because SSH and SSH-launched GUI automation
 cannot access the desktop pasteboard/Terminal session. Broader family/variant
 coverage is still open.
 
-The current pushed PR #3193 head is `a4e21ca42` (open draft). No workflow run
+The current pushed PR #3193 head is `fa454dc5f` (open draft). No workflow run
 or commit status is attached to this
 documentation/test-only head; do not carry CI results from older revisions
 forward. Continue with the broad sanitizer/order investigation, concrete
@@ -61006,8 +61010,9 @@ This is observability only and does not change geometry authority, retry
 policy, deadlines, or publication behavior.
 
 The isolated fault-fixture case covering crash, nonzero exit, and typed
-worker failures passes Release (2,387 assertions) and ASan/UBSan (6,107
-assertions), including a check that process failures carry the new metadata.
+worker failures passes Release (2,370 assertions) and ASan/UBSan (6,096
+assertions), including checks that process failures carry the new metadata
+and PID.
 The full fault-fixture ASan selector still has the previously observed
 24-second watchdog/timeouts and is not a pass. The focused captured closed
 seam Trim case passes after the change in Release (368 assertions) and
@@ -61030,18 +61035,40 @@ assertions), making this geometry lane selectable independently of the costly
 
 Retried the seeded `[lc-offsetcurve][trim-action]` selection with the known
 parabola, spline, closed-polyline, seam, and 256-edge profiles pinned. After
-about 54 minutes and 257 MB of debug output, the run was manually stopped
-without a Catch2 summary. It recorded two Trim helper exits as
+about 54 minutes and 257 MB of debug output, the run was manually stopped.
+Catch2 reported 90 cases / 789,887 assertions: 89 cases passed, and the sole
+failure was the generated SIGINT during `lc::test::awaitUpdate`, captured at
+degree 5, interior multiplicity 1, transformed case, signed distance `-0.02`,
+interior knot `0.5`, format 12. It recorded two Trim helper exits as
 `ProcessFailed`: one commit and one preview, both `CrashExit`/exit code 9
 (SIGKILL), `started=1`, `input-closed=1`, with no helper stderr. Neither was a
-worker deadline (`TimedOut`). The test case active for those warnings is not
-identified from the current reporter output. No ASan/UBSan diagnostic or test
-assertion failure was observed before interruption, but this is not a suite
-pass and does not establish the source of SIGKILL.
+worker deadline (`TimedOut`). No ASan/UBSan diagnostic or assertion failure
+preceded the interrupt. Because the run was stopped before completion, the 89
+passing cases do not qualify the selected suite or establish the source of
+SIGKILL.
 
-Use the new worker exit metadata to retain this distinction on future runs;
-next isolate the responsible action/profile and determine whether the signal
-comes from external resource pressure or a worker lifecycle defect. Keep the
+Use the worker PID metadata to correlate future exits with macOS process and
+system logs; next isolate the responsible action/profile and determine whether
+the signal comes from external resource pressure or a worker lifecycle defect. Keep the
 broad sanitizer/order gate open. The VXCONTROL CTest baseline, visible GUI,
 ODA/AutoCAD, and remaining family/variant acceptance also remain open; the
+roadmap is incomplete.
+
+## 1958. Retry ODA Conversion with the Desktop Application Open (2026-11-21)
+
+After the user confirmed ODAFileConverter was open in the logged-in desktop,
+retried the committed 18-file typed-source DWG matrix to ACAD2018 DXF, writing
+to a fresh `/private/tmp` output directory. The shell-launched converter still
+exited before processing (status 134) with
+`com.apple.pasteboard.clipboard` and `com.apple.pasteboard.find` errors
+(`-4960`) and an invalid `com.apple.hiservices-xpcservice` connection. No DXF
+or `.err` output was produced. This is an execution-context failure, not an
+ODA audit result; opening the app did not transfer the shell process into the
+interactive desktop session.
+
+Keep source-bearing ODA/AutoCAD validation open. Complete the conversion from
+Terminal inside the interactive desktop session, then verify all 18 expected
+DXFs and absence of `.err` files before recording acceptance. The broad
+sanitizer/order gate, unrelated VXCONTROL baseline, visible packaged-app
+acceptance, exact-head CI, and family/variant coverage also remain open. The
 roadmap is incomplete.
