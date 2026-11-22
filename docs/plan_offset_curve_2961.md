@@ -61360,3 +61360,16 @@ failure remain unresolved observations. Continue shards 8-11. The broad gate
 is not closed by these passing partitions, and helper SIGKILL causality,
 external CAD/ODA, visible GUI, VXCONTROL baseline, exact-head CI, and
 family/variant acceptance remain open.
+
+## 1973. Run the Unpinned Seeded Trim Shard 8 (2026-11-22)
+
+Ran shard 8 of the same 12-way `[lc-offsetcurve][trim-action]` ASan/UBSan
+selection with seed `1453897047`, the 30-second test-only worker bound, and the
+same established profile selectors. It completed **8 cases / 15,319
+assertions** with no failures or sanitizer diagnostics.
+
+Shards 0, 2-8 have clean unpinned reruns; shard 1 and the initial shard-0
+failure remain in the record. Continue shards 9-11 and retain their full
+results. This partial partition set does not qualify the entire Trim
+selection or resolve worker SIGKILL causality; ODA, visible GUI, VXCONTROL,
+exact-head CI, and family/variant acceptance remain open.
