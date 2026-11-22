@@ -61585,3 +61585,29 @@ including distinct parabola identity, on the current product tree; it is not
 physical visible-app acceptance. No product code changed for this check.
 Visible packaged-app interaction, source-bearing external CAD acceptance,
 broader sanitizer/order stability, and exact-head CI remain open.
+
+## 1986. Guard Source-picker Timers Against Viewport Destruction (2026-11-22)
+
+The full ASan/UBSan source-picker selector exposed a real heap-use-after-free:
+the periodic highlight callback dereferenced its raw viewport pointer before
+checking whether that viewport still existed. Added a stable viewport lifetime
+token that remains valid across document replacement, captured it through the
+shared entity-properties editor setup, and checked it before asynchronous
+source-choice/highlight scan callbacks access the viewport. Expiration of the
+separate overlay-state token now triggers a refresh/rebind when the viewport is
+alive, rather than incorrectly stopping the monitor after `setDocument()`.
+
+The same full selector uncovered a test fixture that cleared `FlagSelected`
+directly while leaving the entity in the document selection set. Replaced that
+flag mutation with `RS_Document::unselect()` so the test resets both pieces of
+selection state consistently. Product and test changes are committed as
+`7ab8da82a` (`Guard offset source scans against viewport destruction`).
+
+Validation on that commit: the focused viewport destroyed/document replaced
+ASan/UBSan test passes **14 assertions / 1 case**; the complete
+`[gui][dialog][offsetcurve][source]` selector passes in ASan/UBSan and Release,
+each **49 cases / 18,243 assertions**; `git diff --check` passes. This closes
+the source-picker selector's current sanitizer run and the specific viewport
+lifetime regression. It does not close broader process/order sanitizer
+coverage, visible packaged-app acceptance, external CAD acceptance, or
+exact-head CI; those remain open.
