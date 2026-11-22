@@ -321,14 +321,15 @@ incomplete broad ASan/UBSan runs: the isolated parabola profile 58 and
 closed-polyline profile 10/R14-DXF pass in focused checks, and the full
 high-origin closed-seam test matrix passes in isolation. Section 1956 adds
 bounded process-exit diagnostics to distinguish helper crashes/nonzero exits
-from typed worker refusals; broad-run worker failures remain unexplained and
-do not establish order stability.
+from typed worker refusals. Section 1957 records two broad-run helper exits by
+SIGKILL and an incomplete constrained rerun; the failure source and broad
+order stability remain unresolved.
 Source-bearing ODA/AutoCAD
 conversion remains unverified because SSH and SSH-launched GUI automation
 cannot access the desktop pasteboard/Terminal session. Broader family/variant
 coverage is still open.
 
-The current pushed PR #3193 head is `70d5927b4` (open draft). No workflow run
+The current pushed PR #3193 head is `a4e21ca42` (open draft). No workflow run
 or commit status is attached to this
 documentation/test-only head; do not carry CI results from older revisions
 forward. Continue with the broad sanitizer/order investigation, concrete
@@ -61017,3 +61018,30 @@ sanitizer replay has yet qualified the original load/order symptom.
 Keep broad sanitizer/order stability, the unrelated VXCONTROL CTest failure,
 visible GUI acceptance, source-bearing ODA/AutoCAD validation, and remaining
 family/variant coverage open. The roadmap is incomplete.
+
+## 1957. Bound the High-segment Matrix and Capture Broad-run SIGKILLs (2026-11-21)
+
+Added default-neutral `LC_OFFSET_TRIM_CLOSED_HIGH_SEGMENTS` and
+`LC_OFFSET_TRIM_CLOSED_HIGH_SIDE` filters to the generated 256/512/1024/2048
+closed-polyline Trim test. Default coverage is unchanged. The isolated 256-edge
+case for one side passes ASan/UBSan (157 assertions) and Release (365
+assertions), making this geometry lane selectable independently of the costly
+2048-edge quadratic checks.
+
+Retried the seeded `[lc-offsetcurve][trim-action]` selection with the known
+parabola, spline, closed-polyline, seam, and 256-edge profiles pinned. After
+about 54 minutes and 257 MB of debug output, the run was manually stopped
+without a Catch2 summary. It recorded two Trim helper exits as
+`ProcessFailed`: one commit and one preview, both `CrashExit`/exit code 9
+(SIGKILL), `started=1`, `input-closed=1`, with no helper stderr. Neither was a
+worker deadline (`TimedOut`). The test case active for those warnings is not
+identified from the current reporter output. No ASan/UBSan diagnostic or test
+assertion failure was observed before interruption, but this is not a suite
+pass and does not establish the source of SIGKILL.
+
+Use the new worker exit metadata to retain this distinction on future runs;
+next isolate the responsible action/profile and determine whether the signal
+comes from external resource pressure or a worker lifecycle defect. Keep the
+broad sanitizer/order gate open. The VXCONTROL CTest baseline, visible GUI,
+ODA/AutoCAD, and remaining family/variant acceptance also remain open; the
+roadmap is incomplete.
