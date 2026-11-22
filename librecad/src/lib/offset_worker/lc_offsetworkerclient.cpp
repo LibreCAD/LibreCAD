@@ -386,11 +386,24 @@ void LC_OffsetWorkerClient::finish(bool reaped) {
         }
     } catch (...) { outcome.status = Status::AllocationFailed; outcome.completed.reset(); }
     outcome.diagnostics = std::move(m_active->diagnostics);
-    if (!replyFailureDiagnostic.isEmpty()) {
-        if (!outcome.diagnostics.isEmpty() && !outcome.diagnostics.endsWith('\n'))
-            outcome.diagnostics.append('\n');
-        outcome.diagnostics.append(replyFailureDiagnostic);
+    const auto appendDiagnostic = [&outcome](const QByteArray& diagnostic) {
+        if (diagnostic.isEmpty()) return;
+        const qsizetype newline = outcome.diagnostics.isEmpty() || outcome.diagnostics.endsWith('\n') ? 0 : 1;
+        const qsizetype available = DiagnosticCap - diagnostic.size() - newline;
+        if (outcome.diagnostics.size() > available) outcome.diagnostics.truncate(available);
+        if (newline && !outcome.diagnostics.isEmpty()) outcome.diagnostics.append('\n');
+        outcome.diagnostics.append(diagnostic);
+    };
+    if (outcome.status == Status::ProcessFailed && m_process) {
+        QByteArray processDiagnostic = QByteArrayLiteral("worker-process-state=") +
+            QByteArray::number(int(m_process->state())) + QByteArrayLiteral(" exit-status=") +
+            QByteArray::number(int(m_process->exitStatus())) + QByteArrayLiteral(" exit-code=") +
+            QByteArray::number(m_process->exitCode()) + QByteArrayLiteral(" started=") +
+            QByteArray::number(m_active->started) + QByteArrayLiteral(" input-closed=") +
+            QByteArray::number(m_active->inputClosed);
+        appendDiagnostic(processDiagnostic);
     }
+    appendDiagnostic(replyFailureDiagnostic);
     auto callback = std::move(m_active->callback);
     m_active.reset(); m_process.reset(); m_timer.stop();
     deliver(std::move(callback), std::move(outcome));
