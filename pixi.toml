@@ -16,6 +16,12 @@ check-plugin-install = {cmd = ["cmake", "-D", "LIBRECAD_BUILD_DIR=build",
                               "-P", "scripts/check-plugin-install.cmake"], depends-on=["build"]}
 check-resource-install = {cmd = ["cmake", "-D", "LIBRECAD_BUILD_DIR=build",
                                 "-P", "scripts/check-resource-install.cmake"], depends-on=["check-plugin-install"]}
+# The test executable is not part of the default build. These two build it, without running it,
+# in the same directory: it links the application library, so once "build" has run only the tests
+# themselves are compiled. Catch2 is a submodule: git submodule update --init externals/Catch2
+configure-tests = {cmd = ["cmake", "-B", "build", "-D", "BUILD_TESTS=ON"], depends-on=["configure"]}
+# -k 0: go on after a file fails, so that one run names every file that does not compile
+build-tests = {cmd = ["ninja", "-C", "build", "-k", "0", "librecad_tests"], depends-on=["configure-tests"]}
 
 [dependencies]
 qt6-main = ">=6.8.1,<7"
