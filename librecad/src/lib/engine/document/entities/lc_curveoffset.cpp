@@ -6846,13 +6846,9 @@ LC_CurveOffsetStatus regionBoundary(const OffsetSource& source, const SourceScal
         if (!std::isfinite(angle) || !isFinite(startJet.point)) {
             return LC_CurveOffsetStatus::InvalidSource;
         }
-        const double angleFloor = 64.0 * g_eps;
-        // Rotated profiles also use a local origin so inverse rotation does
-        // not magnify the rounding introduced when their arc centers were
-        // constructed in world coordinates.
-        const bool translateToLocal = scale.coordinate > 16.0 * scale.feature || std::abs(angle) > angleFloor;
+        const bool translateToLocal = scale.coordinate > 16.0 * scale.feature;
         const RS_Vector origin = translateToLocal ? startJet.point : RS_Vector{0.0, 0.0};
-        if (translateToLocal || std::abs(angle) > angleFloor) {
+        if (translateToLocal) {
             LocalFrameOffsetSource localSource{source, origin, angle};
             SourceScale localScale;
             if (!computeScale(localSource, magnitude, localScale)) return LC_CurveOffsetStatus::InvalidSource;

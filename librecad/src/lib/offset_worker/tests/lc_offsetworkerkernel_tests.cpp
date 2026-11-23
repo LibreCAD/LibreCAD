@@ -12458,7 +12458,15 @@ TEST_CASE("mixed-bulge region cycles match independent dilation and erosion memb
                     static_cast<int>(result.intersectionDiagnostics.failureSite),
                     static_cast<int>(result.intersectionDiagnostics.cycleAssemblyFailure),
                     result.intersectionDiagnostics.failureDepth,
-                    result.intersectionDiagnostics.cycleAssemblyEndpointGap);
+                    result.intersectionDiagnostics.cycleAssemblyEndpointGap,
+                    result.branches.size(), result.sourceIntersections, result.offsetIntersections,
+                    result.removedIntervals,
+                    result.intersectionDiagnostics.regionArrangementWork.exactPrimitiveNoding,
+                    result.intersectionDiagnostics.regionArrangementWork.intervalFallback,
+                    result.intersectionDiagnostics.regionArrangementWork.exact.totalBoxPairs,
+                    result.intersectionDiagnostics.regionArrangementWork.exact.generatedItems,
+                    result.intersectionDiagnostics.regionArrangementWork.intervalSolver.totalBoxPairs,
+                    result.intersectionDiagnostics.regionArrangementWork.intervalSolver.generatedItems);
             REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
             REQUIRE_FALSE(result.branches.empty());
 

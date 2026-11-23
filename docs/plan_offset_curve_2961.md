@@ -62030,3 +62030,41 @@ self-crossing source (`scale=0.001`, `frame=1`, second bulge `0.25`, distance
 `0.0005`). This is a separate region-boundary cycle/classification defect;
 do not conflate it with ellipse origin precision. Use the captured cycle and a
 minimal reproducer to identify why that lobe's boundary is omitted on Linux.
+
+## 2001. Publish the Thin-ellipse Precision Repair (2026-11-23)
+
+Committed and pushed the center-localized thin-ellipse repair as
+`95efb60e7` (`fix(offset): localize translated thin ellipse generation`). The
+full typed-source worker-client matrix passes **2,902,098 assertions**, the
+captured ellipse regression passes **3 assertions**, and the hyperbola
+translation-boundary test passes **134,570 assertions**. The previously
+observed exact-cusp status changes are avoided by limiting localization to
+translated ellipses with ratio in `[0.001, 0.01)`; the typed-source matrix
+validates the established limit/ambiguity outcomes as well as success paths.
+
+ODAFileConverter completed the Audit-enabled conversion of the 18 independent
+R2000/R2018 DWG inputs, producing all 18 requested output files. This is a
+bounded conversion/audit check only, not a visual geometry acceptance claim.
+Actions for `95efb60e7` are still running; inspect exact-head CI before closing
+this verification gate.
+
+## 2002. Isolate Linux Mixed-bulge Arrangement Drift (2026-11-23)
+
+The Linux failure is the rotation-only small-coordinate cell of the
+independent dilation-membership matrix (`scale=0.001`, `frame=1`, seam 0,
+second bulge `0.25`, distance `0.0005`). Its status is `Ok`, but the assembled
+single cycle excludes an interior sample in the lower-left lobe. The first
+failure report now includes source/offset event counts, retained/removed
+intervals, and exact-vs-interval arrangement work so a rerun can distinguish
+candidate noding from classification/assembly.
+
+The region builder now applies the nearest-cardinal rotation only when it also
+translates genuinely world-distant geometry; rotation-only inputs stay in the
+source frame. This avoids an unnecessary rotate/unrotate round trip while
+preserving the large-origin local-frame path. The local `[mixed-bulge]`
+selector passes **5,094,749 assertions / 12 cases**, including all current
+rigid-frame and large-origin checks. This is a hypothesis under cross-platform
+verification, not yet a resolved Linux defect: push the slice, inspect the
+Linux report and exact arrangement counters, then keep or revise the frame
+policy based on the result. The geometric mismatch remains an open plan item
+until Linux membership passes.
