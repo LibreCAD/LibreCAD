@@ -75,6 +75,7 @@ on:
       - 'librecad/src/lib/gui/render/lc_graphicviewportrenderer.h'
       - 'librecad/src/lib/gui/tests/lc_linetype_render_tests.cpp'
       - 'librecad/src/lib/gui/tests/lc_graphicviewrenderer_tests.cpp'
+      - 'librecad/src/lib/offset_worker/**'
       - 'librecad/src/ui/components/comboboxes/**'
       - 'librecad/src/lib/engine/document/linetypes/**'
       - 'scripts/dwg-fast-check.sh'

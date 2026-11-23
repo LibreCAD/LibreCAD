@@ -61921,3 +61921,10 @@ coordinates and ellipse request parameters; then reproduce those inputs in
 focused tests and fix the underlying cross-platform behavior. Keep the roadmap
 open until the affected lanes pass. The visible GUI, full family/variant,
 independent CAD, and Trim sanitizer/order gates also remain open.
+
+The diagnostic and roadmap slice was committed and pushed as
+`b7a4fb122`. Inspection showed that the workflow's push path filter omitted
+`librecad/src/lib/offset_worker/**`, so worker implementation and test changes
+would not automatically launch this verification. Added that path to the
+workflow filter; pushing this workflow change will trigger the required exact-
+head run with diagnostic captures enabled.
