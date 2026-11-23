@@ -62068,3 +62068,18 @@ verification, not yet a resolved Linux defect: push the slice, inspect the
 Linux report and exact arrangement counters, then keep or revise the frame
 policy based on the result. The geometric mismatch remains an open plan item
 until Linux membership passes.
+
+## 2003. Publish the Rotation-only Frame Policy (2026-11-23)
+
+Committed and pushed the source-frame policy and expanded failure diagnostics
+as `aeab27591` (`fix(offset): keep rotation-only regions in source frame`).
+Local validation passes: `[mixed-bulge]` kernel selector **5,094,749
+assertions / 12 cases** and `[mixed-bulge]` worker-client selector **40,832
+assertions / 4 cases**. `git diff --check` passed before commit.
+
+The PR check endpoint had not listed a workflow for this head at the time of
+this update. The change is therefore not yet accepted as the Linux fix. Recheck
+CI for `aeab27591`; if the independent membership matrix passes on Linux, close
+the defect with that evidence. If it still fails, use the now-captured exact
+and fallback arrangement counters to identify the missing candidate and keep
+the geometry defect open.
