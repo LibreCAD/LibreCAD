@@ -4,7 +4,7 @@
 
 // Issue #3302: with an input method active, Qt 5 on macOS matched Return
 // against the End shortcut and Tab against Home. The application-wide filter
-// keeps these keys for the focused widget.
+// accepts these shortcut overrides for the focused widget.
 
 #include <QKeyEvent>
 #include <QtTest>
@@ -12,32 +12,39 @@
 #include "qc_applicationwindow.h"
 
 namespace {
-bool kept(int key, Qt::KeyboardModifiers modifiers) {
-    const QKeyEvent override(QEvent::ShortcutOverride, key, modifiers);
-    return QC_ApplicationWindow::keepsKeyFromShortcuts(override);
+bool accepted(int key, Qt::KeyboardModifiers modifiers) {
+    QKeyEvent override(QEvent::ShortcutOverride, key, modifiers);
+    return QC_ApplicationWindow::acceptsShortcutOverride(override) && override.isAccepted();
+}
+
+bool remainsUnaccepted(int key, Qt::KeyboardModifiers modifiers) {
+    QKeyEvent override(QEvent::ShortcutOverride, key, modifiers);
+    override.ignore();
+    return !QC_ApplicationWindow::acceptsShortcutOverride(override) && !override.isAccepted();
 }
 }
 
 class LC_ShortcutOverrideTests : public QObject {
     Q_OBJECT
 private slots:
-    void returnEnterAndTabNeverTriggerAWindowShortcut() {
-        QVERIFY(kept(Qt::Key_Return, Qt::NoModifier));
-        QVERIFY(kept(Qt::Key_Return, Qt::ShiftModifier));
-        QVERIFY(kept(Qt::Key_Enter, Qt::KeypadModifier));
-        QVERIFY(kept(Qt::Key_Tab, Qt::NoModifier));
+    void returnEnterAndTabOverridesAreAccepted() {
+        QVERIFY(accepted(Qt::Key_Return, Qt::NoModifier));
+        QVERIFY(accepted(Qt::Key_Return, Qt::ShiftModifier));
+        QVERIFY(accepted(Qt::Key_Enter, Qt::KeypadModifier));
+        QVERIFY(accepted(Qt::Key_Tab, Qt::NoModifier));
+        QVERIFY(accepted(Qt::Key_Tab, Qt::ShiftModifier));
     }
 
-    void shortcutsWithCtrlAltOrMetaStillWork() {
-        QVERIFY(!kept(Qt::Key_Return, Qt::ControlModifier));
-        QVERIFY(!kept(Qt::Key_Return, Qt::AltModifier));
-        QVERIFY(!kept(Qt::Key_Enter, Qt::MetaModifier | Qt::KeypadModifier));
-        QVERIFY(!kept(Qt::Key_Tab, Qt::ControlModifier));
+    void shortcutsWithCtrlAltOrMetaRemainAvailable() {
+        QVERIFY(remainsUnaccepted(Qt::Key_Return, Qt::ControlModifier));
+        QVERIFY(remainsUnaccepted(Qt::Key_Return, Qt::AltModifier));
+        QVERIFY(remainsUnaccepted(Qt::Key_Enter, Qt::MetaModifier | Qt::KeypadModifier));
+        QVERIFY(remainsUnaccepted(Qt::Key_Tab, Qt::ControlModifier));
     }
 
     void endAndHomeKeepTheirShortcuts() {
-        QVERIFY(!kept(Qt::Key_End, Qt::NoModifier));
-        QVERIFY(!kept(Qt::Key_Home, Qt::NoModifier));
+        QVERIFY(remainsUnaccepted(Qt::Key_End, Qt::NoModifier));
+        QVERIFY(remainsUnaccepted(Qt::Key_Home, Qt::NoModifier));
     }
 };
 

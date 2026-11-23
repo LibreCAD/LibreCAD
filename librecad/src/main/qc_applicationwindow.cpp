@@ -4104,21 +4104,24 @@ bool QC_ApplicationWindow::eventFilter(QObject *obj, QEvent *event)
     // matched Home (Order: Move to Top). This filter runs for the whole
     // application on macOS only.
     if (event->type() == QEvent::ShortcutOverride
-        && keepsKeyFromShortcuts(*static_cast<QKeyEvent*>(event))) {
-        event->accept();
+        && acceptsShortcutOverride(*static_cast<QKeyEvent*>(event))) {
         return true;
     }
 #endif
     return QObject::eventFilter(obj, event);
 }
 
-bool QC_ApplicationWindow::keepsKeyFromShortcuts(const QKeyEvent& keyEvent) {
+bool QC_ApplicationWindow::acceptsShortcutOverride(QKeyEvent& keyEvent) {
     switch (keyEvent.key()) {
         case Qt::Key_Return:
         case Qt::Key_Enter:
         case Qt::Key_Tab:
-            return (keyEvent.modifiers()
-                    & (Qt::ControlModifier | Qt::AltModifier | Qt::MetaModifier)) == 0;
+            if ((keyEvent.modifiers()
+                 & (Qt::ControlModifier | Qt::AltModifier | Qt::MetaModifier)) == 0) {
+                keyEvent.accept();
+                return true;
+            }
+            return false;
         default:
             return false;
     }
