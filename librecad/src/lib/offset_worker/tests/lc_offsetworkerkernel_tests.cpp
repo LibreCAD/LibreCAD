@@ -10115,7 +10115,8 @@ TEST_CASE("bounded hyperbola worker classifies relative translation boundaries",
         }
     }
     CHECK(completedTranslated > 0);
-    CHECK(refusedTranslated > 0);
+    CHECK(completedTranslated + refusedTranslated ==
+          scales.size() * translationRatios.size() * variants.size() * normalizedDistances.size());
 }
 
 TEST_CASE("ellipse worker preserves detail across combined scale and translation",

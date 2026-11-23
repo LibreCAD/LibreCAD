@@ -203,6 +203,11 @@ result::Native LC_OffsetWorkerKernel::generateSource(const req::GenerateSource& 
         ellipse->center.x = 0.0;
         ellipse->center.y = 0.0;
     }
+    else if (auto* hyperbola = std::get_if<LC_HyperbolaData>(&definition.source.value)) {
+        outputTranslation = {hyperbola->center.x, hyperbola->center.y};
+        hyperbola->center.x = 0.0;
+        hyperbola->center.y = 0.0;
+    }
     else if (auto* parabola = std::get_if<LC_ParabolaData>(&definition.source.value)) {
         outputTranslation = parabola->m_controlPoints.front();
         auto points = parabola->m_controlPoints;

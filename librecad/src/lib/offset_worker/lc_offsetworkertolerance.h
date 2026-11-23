@@ -171,6 +171,16 @@ inline std::optional<LC_CurveOffsetOptions> directOptions(
         return std::nullopt;
     }
 
+    if (const auto* hyperbola = dynamic_cast<const LC_Hyperbola*>(&source)) {
+        LC_HyperbolaData localData = hyperbola->getData();
+        if (localData.center.x != 0.0 || localData.center.y != 0.0) {
+            localData.center.x = 0.0;
+            localData.center.y = 0.0;
+            const LC_Hyperbola local{nullptr, localData};
+            return directOptions(local, distance, relativeFactor);
+        }
+    }
+
     distance = std::abs(distance);
     relativeFactor = relativeFactor == 0.0
         ? LC_CurveOffset::relativeOffsetTolerance(source)

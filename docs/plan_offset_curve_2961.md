@@ -61928,3 +61928,45 @@ The diagnostic and roadmap slice was committed and pushed as
 would not automatically launch this verification. Added that path to the
 workflow filter; pushing this workflow change will trigger the required exact-
 head run with diagnostic captures enabled.
+
+## 1999. Localize Hyperbola Generation and Capture Remaining Failures (2026-11-23)
+
+Windows ARM64's canceled-after-tests run reported **187 kernel assertions
+failed** and two typed-source client assertions failed. In addition to the 184
+mixed-bulge membership mismatches, three local-deviation assertions failed in
+two bounded-hyperbola translation tests: `scale=0.001`, `variantIndex=2`, and
+`normalizedDistance=1.05`; the combined-scale test uses a translation of
+`1e9 * scale`, and the translation-boundary test failed at ratios `1e6` and
+`1e9`. Maximum deviation was approximately `3.5129e-5` against limits near
+`6e-7`. The typed-source failure remains index 439 (`Ellipse`) with
+`AmbiguousTopology`. Linux x64 has the same mixed-bulge and typed-source
+failures, but did not run these newly discovered hyperbola checks differently.
+
+The kernel already evaluates ellipse, parabola, spline-points, and some
+polyline sources in a local frame before restoring world translation, but did
+not do so for hyperbolas. Applied center-relative localization to the
+hyperbola path, matching the established ellipse treatment. A focused local
+macOS arm64 rerun of the two affected hyperbola tests passes **152,763
+assertions / 2 cases**; cross-platform verification is still required.
+
+Commit `bb27cce2b` added `librecad/src/lib/offset_worker/**` to the workflow's
+push path filter, but the GitHub connector currently reports no checks for
+that head. Its push canceled the older Windows run during post-job cleanup; the
+old run is not evidence for the new code. Next, push the hyperbola localization
+slice, verify that a fresh run starts for the worker path, then fix the
+mixed-bulge membership and typed-source ellipse failures from their exact
+captured inputs. Do not close the plan until Linux and Windows lanes pass.
+
+The first local run exposed an outdated aggregate assertion that required at
+least one translated hyperbola to refuse. Center-relative generation completes
+all bounded matrix cases, so the assertion now checks complete accounting
+instead; the per-case refusal branch still requires empty, unchanged output.
+
+Validation after this slice: both hyperbola translation tests pass locally on
+macOS arm64 (**194,835 assertions / 2 cases**); the mixed-bulge membership
+selector passes (**5,089,768 assertions / 1 case**); and the full typed-source
+worker-client selector passes (**3,012,952 assertions / 1 case**) with the
+extended client watchdog. These local passes do not clear Linux/Windows
+cross-platform discrepancies. The hyperbola source/helper/test fix is ready to
+commit and push; confirm that its path-filtered Actions run starts before
+addressing the remaining failures.
