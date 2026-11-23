@@ -2628,7 +2628,31 @@ bool QC_ApplicationWindow::eventFilter(QObject* obj, QEvent* event) {
         openFile(openEvent->file(), RS2::FormatUnknown);
         return true;
     }
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+    // Issue #3302: with an input method such as Pinyin, Qt 5 on macOS truncates
+    // Qt::Key_Return and Qt::Key_Tab to 16-bit character codes when it lists the
+    // shortcut candidates, so Return matched End (Order: Move to Bottom) and Tab
+    // matched Home (Order: Move to Top). This filter runs for the whole
+    // application on macOS only.
+    if (event->type() == QEvent::ShortcutOverride
+        && keepsKeyFromShortcuts(*static_cast<QKeyEvent*>(event))) {
+        event->accept();
+        return true;
+    }
+#endif
     return QObject::eventFilter(obj, event);
+}
+
+bool QC_ApplicationWindow::keepsKeyFromShortcuts(const QKeyEvent& keyEvent) {
+    switch (keyEvent.key()) {
+        case Qt::Key_Return:
+        case Qt::Key_Enter:
+        case Qt::Key_Tab:
+            return (keyEvent.modifiers()
+                    & (Qt::ControlModifier | Qt::AltModifier | Qt::MetaModifier)) == 0;
+        default:
+            return false;
+    }
 }
 
 void QC_ApplicationWindow::showEvent(QShowEvent* event) {

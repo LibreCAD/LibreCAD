@@ -2861,6 +2861,7 @@ if (BUILD_TESTS)
         librecad/src/lib/generators/layers/tests/lc_layersexporter_tests.cpp
         librecad/src/ui/main/persistence/tests/lc_documentsstorage_tests.cpp
         librecad/src/ui/main/tests/lc_mdiwindow_close_tests.cpp
+        librecad/src/ui/main/tests/lc_shortcutoverride_tests.cpp
         librecad/src/ui/main/tests/lc_docklayout_tests.cpp
         librecad/src/ui/components/pen/tests/qg_widgetpen_tests.cpp
         librecad/src/ui/components/comboboxes/tests/qg_linetypebox_tests.cpp
