@@ -8005,6 +8005,19 @@ LC_CurveOffsetGeometryResult buildDirectBranches(const RS_Entity& source, const 
         result.status = LC_CurveOffsetStatus::InvalidSource;
         return result;
     }
+    const auto restoreWorldFrame = [](LC_CurveOffsetGeometryResult& geometry, const RS_Vector& origin) {
+        for (LC_OffsetBranch& branch : geometry.branches) {
+            for (LC_OffsetCubicPiece& piece : branch.cubicPieces) {
+                for (RS_Vector& point : piece.bezier) point += origin;
+                if (piece.provenance.arcCentre.valid) piece.provenance.arcCentre += origin;
+            }
+        }
+        for (LC_ParametricIntersection& intersection : geometry.intersections)
+            intersection.point += origin;
+        auto& diagnostics = geometry.intersectionDiagnostics;
+        if (diagnostics.cycleAssemblyOpenEnd.valid) diagnostics.cycleAssemblyOpenEnd += origin;
+        if (diagnostics.cycleAssemblyNearestStart.valid) diagnostics.cycleAssemblyNearestStart += origin;
+    };
     const auto* polyline = dynamic_cast<const RS_Polyline*>(&source);
     const auto* polylineAdapter = dynamic_cast<const PolylineOffsetSource*>(adapter.get());
     bool localizeSimplePolyline = false;
@@ -8048,21 +8061,37 @@ LC_CurveOffsetGeometryResult buildDirectBranches(const RS_Entity& source, const 
         }
         result = buildDirectBranches(*localPolyline, localRequest, localOptions,
                                      budget, cuspDiagnostics);
-        for (LC_OffsetBranch& branch : result.branches) {
-            for (LC_OffsetCubicPiece& piece : branch.cubicPieces) {
-                for (RS_Vector& point : piece.bezier) point += origin;
-                if (piece.provenance.arcCentre.valid)
-                    piece.provenance.arcCentre += origin;
-            }
-        }
-        for (LC_ParametricIntersection& intersection : result.intersections)
-            intersection.point += origin;
-        auto& diagnostics = result.intersectionDiagnostics;
-        if (diagnostics.cycleAssemblyOpenEnd.valid)
-            diagnostics.cycleAssemblyOpenEnd += origin;
-        if (diagnostics.cycleAssemblyNearestStart.valid)
-            diagnostics.cycleAssemblyNearestStart += origin;
+        restoreWorldFrame(result, origin);
         return result;
+    }
+    if (const auto* ellipse = dynamic_cast<const RS_Ellipse*>(&source)) {
+        const RS_Vector origin = ellipse->getCenter();
+        if (std::abs(ellipse->getData().ratio) >= 0.001 &&
+            std::abs(ellipse->getData().ratio) < 0.01 &&
+            std::hypot(origin.x, origin.y) > 16.0 * scale.feature) {
+            std::unique_ptr<RS_Entity> localEntity{source.clone()};
+            auto* localEllipse = dynamic_cast<RS_Ellipse*>(localEntity.get());
+            if (localEllipse == nullptr || !isFinite(origin)) {
+                result.status = LC_CurveOffsetStatus::InvalidSource;
+                return result;
+            }
+            localEllipse->move({-origin.x, -origin.y});
+            LC_CurveOffsetOptions localOptions = options;
+            const LC_CurveOffsetOptions recalibrated = makeDirectOptions(
+                *localEllipse, request.distanceMagnitude, options.tolerance.requestedGeometry);
+            if (!validDirectOptions(recalibrated)) {
+                result.status = LC_CurveOffsetStatus::InvalidRequest;
+                return result;
+            }
+            localOptions.tolerance = recalibrated.tolerance;
+            LC_CurveOffsetRequest localRequest = request;
+            if (localRequest.side == LC_CurveOffsetSide::FromDirectionPoint)
+                localRequest.directionPoint -= origin;
+            result = buildDirectBranches(*localEllipse, localRequest, localOptions,
+                                         budget, cuspDiagnostics);
+            restoreWorldFrame(result, origin);
+            return result;
+        }
     }
     if (!isPlanar(*adapter, scale.numericFloor)) {
         result.status = LC_CurveOffsetStatus::UnsupportedNonPlanar;

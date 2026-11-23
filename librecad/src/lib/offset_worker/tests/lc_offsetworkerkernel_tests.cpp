@@ -10120,6 +10120,34 @@ TEST_CASE("bounded hyperbola worker classifies relative translation boundaries",
           scales.size() * translationRatios.size() * variants.size() * normalizedDistances.size());
 }
 
+TEST_CASE("legacy thin elliptic arcs offset correctly at a large origin",
+          "[lc-offsetcurve][worker-kernel][ellipse][precision][translation]") {
+    const RS_EllipseData data{{10000.0, -10000.0},
+                              {70.71067811865475505, 70.71067811865474084},
+                              0.001, 0.2, 0.0, true};
+    RS_Ellipse source{nullptr, data};
+    constexpr double distance = 0.0001;
+    const auto options = LC_CurveOffset::makeOffsetOptions(source, distance);
+    const auto request = LC_CurveOffset::makeDirectionRequest(data.center, distance);
+    const auto result = LC_CurveOffset::buildDirectBranches(
+        source, request, options, LC_CurveOffset::makeDirectSourceBudget());
+    CAPTURE(static_cast<int>(result.status),
+            static_cast<int>(result.intersectionDiagnostics.stage),
+            static_cast<int>(result.intersectionDiagnostics.failureSite),
+            static_cast<int>(result.intersectionDiagnostics.cycleAssemblyFailure),
+            result.intersectionDiagnostics.failureDepth,
+            result.intersectionDiagnostics.cycleAssemblyEndpointGap);
+    REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+    REQUIRE_FALSE(result.branches.empty());
+    CHECK(std::all_of(result.branches.begin(), result.branches.end(), [](const LC_OffsetBranch& branch) {
+        return std::all_of(branch.cubicPieces.begin(), branch.cubicPieces.end(), [](const LC_OffsetCubicPiece& piece) {
+            return std::all_of(piece.bezier.begin(), piece.bezier.end(), [](const RS_Vector& point) {
+                return point.valid && std::isfinite(point.x) && std::isfinite(point.y);
+            });
+        });
+    }));
+}
+
 TEST_CASE("ellipse worker preserves detail across combined scale and translation",
           "[lc-offsetcurve][worker-kernel][source-cache][ellipse][precision][combined]") {
     constexpr double tau = 2.0 * M_PI;

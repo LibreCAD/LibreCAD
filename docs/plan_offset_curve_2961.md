@@ -61993,3 +61993,40 @@ completed, so the next run can capture the exact source and result data.
 The revised capture code compiles and the full local typed-source client
 selector passes (**2,905,926 assertions / 1 case**). This is diagnostic-only
 coverage on macOS; it does not resolve the Linux failure.
+
+## 2000. Localize Legacy Ellipse Offsets and Isolate Region Mismatch (2026-11-23)
+
+Diagnostic run `45264672535` on `2115631be` reproduced the same Linux failures:
+184 mixed-bulge assertions and two worker-client assertions for source 439.
+The corrected client capture identifies the exact ellipse as center
+`(10000,-10000)`, major vector
+`(70.71067811865475505,70.71067811865474084)`, ratio `0.001`, parameter bounds
+`0.2 -> 0`, reversed, offset distance `0.0001`, with both direction point and
+fallback at the center. The failure status is `AmbiguousTopology` (engine 10).
+
+The legacy `RS_Ellipse::createOffset` route enters `LC_CurveOffset` without the
+center-localization already performed by typed `GenerateSource`. Added
+center-relative evaluation to `buildDirectBranches` for translated ellipses
+whose ratio is in `[0.001, 0.01)` and whose origin dominates their feature
+scale; the lower bound preserves the established conservative topology results
+for more ill-conditioned thin-cusp cases. The request point and returned
+geometry are translated consistently, and tolerance is recalibrated in the
+local frame. Added a direct regression using the captured geometry.
+
+Validation on the current local tree: focused thin-ellipse regression passes
+(3 assertions); hyperbola translation-boundary test passes (134,570
+assertions); full typed-source worker-client matrix passes (2,902,098
+assertions). The GUI ODAFileConverter audit/conversion finished with all 18
+R2000/R2018 output files produced in `/private/tmp`; this records that bounded
+conversion pass only, not semantic visual acceptance. The slice is ready to
+commit and push; Linux still has the independent mixed-bulge region-membership
+failure described below.
+
+The kernel failure log now includes a bounded control-point summary for the
+first mixed-bulge mismatch. It describes one closed output cycle whose sampled
+winding excludes source-interior points in the lower-left lobe. All 184 samples
+span all seam starts and both dilation/erosion modes for the same small rotated
+self-crossing source (`scale=0.001`, `frame=1`, second bulge `0.25`, distance
+`0.0005`). This is a separate region-boundary cycle/classification defect;
+do not conflate it with ellipse origin precision. Use the captured cycle and a
+minimal reproducer to identify why that lobe's boundary is omitted on Linux.
