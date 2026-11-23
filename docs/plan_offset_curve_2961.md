@@ -61888,3 +61888,36 @@ desktop bridge still reports `cgWindowNotFound`; this turn did not produce a
 new ODA conversion and makes no new independent-CAD claim. All visible GUI,
 independent CAD, family/variant, Trim sanitizer/order, and exact-head CI gates
 remain open; the roadmap is incomplete.
+
+## 1998. Capture Exact Cross-platform Failure Inputs (2026-11-23)
+
+Manually dispatched run `45236039553` reached terminal Linux x64 failure while
+both Windows jobs remained active at the time of this update. The Linux CTest
+run completed 56/58 tests successfully; `offset_worker_kernel` and
+`offset_worker_client_4` failed. This supersedes the narrower failure
+description in section 1995: the kernel mismatch is not limited to seam start
+3 or erosion. The log reports **184 failed membership checks**, all for
+`scale=0.001`, `frame=1`, `secondArcBulge=0.25`, and `distance=0.0005`, spanning
+all four seam starts and both erosion/dilation modes. The engine returned OK
+and no intersection-assembly diagnostic. Local macOS arm64 passes the full
+membership selector (5,089,768 assertions / 1 case), so platform/compiler
+numerics or behavior remain unresolved; this is not waived as a test issue.
+
+The Linux typed-source matrix failed twice at generated item `i=439`,
+`Kind::Ellipse`, with `OffsetFailed` / `AmbiguousTopology` and no outputs.
+Rebuilt and ran that complete selector locally on macOS arm64 with an extended
+client watchdog: **2,991,115 assertions / 1 case passed**. This establishes a
+platform discrepancy but does not yet reveal the exact ellipse parameters
+because the Linux failure log did not capture them. Test-only, failure-path
+captures are now added to both cases: the kernel captures sample point and
+oracle distances; the typed-source matrix captures its ellipse geometry and
+offset request at index 439. These diagnostics compile and the kernel selector
+plus focused ellipse regression pass locally after rebuilding.
+
+Next slice: finish collecting the Windows x64/ARM64 outcomes from this same
+Actions run; commit and push the bounded diagnostics and this correction to
+the roadmap; rerun exact-head CI so Linux and Windows expose full kernel sample
+coordinates and ellipse request parameters; then reproduce those inputs in
+focused tests and fix the underlying cross-platform behavior. Keep the roadmap
+open until the affected lanes pass. The visible GUI, full family/variant,
+independent CAD, and Trim sanitizer/order gates also remain open.

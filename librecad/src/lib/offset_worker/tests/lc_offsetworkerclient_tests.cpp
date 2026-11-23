@@ -4840,6 +4840,13 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
                 REQUIRE(typed);
                 CHECK(typed->kind() == sources[i].kind());
             }
+            if (i == 439 && sources[i].kind() == LC_OffsetSourceGeometry::Kind::Ellipse) {
+                const auto& ellipse = std::get<RS_EllipseData>(sources[i].value);
+                CAPTURE(ellipse.center.x, ellipse.center.y, ellipse.majorP.x, ellipse.majorP.y,
+                        ellipse.ratio, ellipse.angle1, ellipse.angle2, ellipse.reversed,
+                        offset.distance, offset.coord.x, offset.coord.y,
+                        offset.sideFallback.x, offset.sideFallback.y);
+            }
             CHECK(Req::admitted(*workerRequest));
             const auto sourceBefore = Req::Values::encodeSourceGeometry(sources[i]);
             REQUIRE(sourceBefore);

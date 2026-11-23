@@ -12557,7 +12557,14 @@ TEST_CASE("mixed-bulge region cycles match independent dilation and erosion memb
                         ? sourceInside && boundaryDistance > distance
                         : sourceInside || boundaryDistance < distance;
                     const bool actualInside = winding(outputSegments, point) != 0;
-                    CHECK(actualInside == expectedInside);
+                    if (actualInside != expectedInside) {
+                        CAPTURE(x, y, sourceInside, boundaryDistance, expectedInside, actualInside,
+                                sampleStep, boundaryExclusion);
+                        CHECK(actualInside == expectedInside);
+                    }
+                    else {
+                        CHECK(actualInside == expectedInside);
+                    }
                     expectedInside ? ++insideCount : ++outsideCount;
                     ++checked;
                 }
