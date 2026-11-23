@@ -1071,6 +1071,14 @@ namespace {
                                                     "(?:((?:\\.\\d+)|(?:\\d+\\.\\d*)|(?:\\d+))\")?" // seconds
                                                     ")" "(?:[^\\d]|$)", // followed by not a number or end
                                                     QRegularExpression::CaseInsensitiveOption);
+
+    // minutes and seconds are optional, an empty field is 0 and not a failed conversion
+    double angleField(const QString& field, bool* ok) {
+        if (field.isEmpty()) {
+            return 0.0;
+        }
+        return field.toDouble(ok);
+    }
 }
 
 QString RS_Units::replaceSurveyorsAnglesByDecimalDegrees(const QString& val, bool* ok, QString& errorMsg) {
@@ -1118,12 +1126,9 @@ QString RS_Units::replaceSurveyorsAnglesByDecimalDegrees(const QString& val, boo
                     degrees = match.captured(6).toDouble(ok);
                 }
                 else {
-                    const QString& strDegrees = match.captured(3);
-                    const QString& strMinutes = match.captured(4);
-                    const QString& strSeconds = match.captured(5);
-                    degrees = strDegrees.toDouble(ok);
-                    minutes = strMinutes.toDouble(ok);
-                    seconds = strSeconds.toDouble(ok);
+                    degrees = angleField(match.captured(3), ok);
+                    minutes = angleField(match.captured(4), ok);
+                    seconds = angleField(match.captured(5), ok);
                 }
                 const QString& group7 = match.captured(7).toUpper();
                 const bool east = group7 == "E";
@@ -1183,15 +1188,9 @@ QString RS_Units::replaceExplicitDegreesByDecimalDegrees(const QString& val, boo
             break;
         }
 
-        double degrees = 0.0;
-        double minutes = 0.0;
-        double seconds = 0.0;
-        const QString& strDegrees = match.captured(2);
-        const QString& strMinutes = match.captured(3);
-        const QString& strSeconds = match.captured(4);
-        degrees = strDegrees.toDouble(ok);
-        minutes = strMinutes.toDouble(ok);
-        seconds = strSeconds.toDouble(ok);
+        const double degrees = angleField(match.captured(2), ok);
+        const double minutes = angleField(match.captured(3), ok);
+        const double seconds = angleField(match.captured(4), ok);
 
         const double angle = degrees + minutes / 60.0 + seconds / 3600.0;
 
@@ -1212,15 +1211,9 @@ QString RS_Units::replaceExplicitBearingAnglesByDecimalDegrees(const QString& va
             break;
         }
 
-        double degrees = 0.0;
-        double minutes = 0.0;
-        double seconds = 0.0;
-        const QString& strDegrees = match.captured(2);
-        const QString& strMinutes = match.captured(3);
-        const QString& strSeconds = match.captured(4);
-        degrees = strDegrees.toDouble(ok);
-        minutes = strMinutes.toDouble(ok);
-        seconds = strSeconds.toDouble(ok);
+        const double degrees = angleField(match.captured(2), ok);
+        const double minutes = angleField(match.captured(3), ok);
+        const double seconds = angleField(match.captured(4), ok);
 
         double angle = degrees + minutes / 60.0 + seconds / 3600.0;
         angle = 90.0 - angle;
@@ -1235,16 +1228,19 @@ QString RS_Units::replaceExplicitBearingAnglesByDecimalDegrees(const QString& va
 QString RS_Units::replaceAllPotentialAnglesByDecimalDegrees(const QString& val, bool* ok) {
     QString expr = val;
     QString msg;
-    bool noError = false;
+    bool noError = true;
     expr = replaceSurveyorsAnglesByDecimalDegrees(expr, &noError, msg);
     if (noError) {
         expr = replaceRadiantAnglesByDecimalDegrees(expr, &noError);
-        if (noError) {
-            expr = replaceExplicitDegreesByDecimalDegrees(expr, &noError);
-            if (noError) {
-                expr = replaceExplicitDegreesByDecimalDegrees(expr, &noError);
-            }
-        }
+    }
+    if (noError) {
+        expr = replaceGradAnglesByDecimalDegrees(expr, &noError);
+    }
+    if (noError) {
+        expr = replaceExplicitDegreesByDecimalDegrees(expr, &noError);
+    }
+    if (noError) {
+        expr = replaceExplicitBearingAnglesByDecimalDegrees(expr, &noError);
     }
     if (ok != nullptr) {
         *ok = noError;

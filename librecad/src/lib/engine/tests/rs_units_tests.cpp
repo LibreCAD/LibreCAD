@@ -24,6 +24,7 @@
 
 #include <catch2/catch_test_macros.hpp>
 
+#include <cmath>
 #include <string>
 
 #include <QString>
@@ -163,4 +164,26 @@ TEST_CASE("Negative lengths get a sign exactly when the text is not zero", "[rs_
             }
         }
     }
+}
+
+TEST_CASE("RS_Units::replaceAllPotentialAnglesByDecimalDegrees converts angle notations", "[rs_units]") {
+    const auto convert = [](const QString& input) {
+        bool ok = false;
+        const QString result = RS_Units::replaceAllPotentialAnglesByDecimalDegrees(input, &ok);
+        REQUIRE(ok);
+        return result;
+    };
+
+    CHECK(convert("45") == "45");
+    CHECK(convert("2*45") == "2*45");
+    CHECK(convert("85d30'") == "85.5");
+    CHECK(convert("-85d30'") == "-85.5");
+    CHECK(convert("85d") == "85");
+    CHECK(convert("10+5d30'") == "10+5.5");
+    CHECK(convert("100g") == "90");
+    CHECK(convert("N45dE") == "45");
+    CHECK(convert("N45d30'W") == "135.5");
+    CHECK(convert("S10E") == "280");
+    CHECK(convert("W") == "180");
+    CHECK(std::abs(convert("83b24'30\"").toDouble() - (90.0 - (83.0 + 24.0 / 60.0 + 30.0 / 3600.0))) < 1e-9);
 }
