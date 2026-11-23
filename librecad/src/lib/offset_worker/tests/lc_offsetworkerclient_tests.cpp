@@ -2677,6 +2677,50 @@ TEST_CASE("Worker client validates mixed-frame negative-bulge region outcomes",
     CHECK(refusedCells == 0);
 }
 
+TEST_CASE("Worker client completes a tiny offset of a high-origin thin reversed ellipse arc",
+          "[lc-offsetcurve][worker-client][ellipse][regression]") {
+    auto& rt = runtime();
+    OwnedClient owned{rt};
+    RS_EntityContainer owner;
+    RS_Layer layer{QStringLiteral("thin reversed ellipse")};
+    RS_Ellipse source{&owner, RS_EllipseData{{1.0e4, -1.0e4},
+        {100.0 * std::cos(M_PI / 4.0), 100.0 * std::sin(M_PI / 4.0)},
+        1.0e-3, 0.2, 0.0, true}};
+    source.setLayer(&layer);
+
+    RS_OffsetData offset;
+    offset.coord = {3.0, 2.0};
+    offset.sideFallback = {10.0, 10.0};
+    offset.distance = 5.0e-7;
+    LC_OffsetBatchPreparation prepared{offset, {&source}, false, {}};
+    LC_DocumentModificationBatch batch;
+    if (prepared.advance(batch)) {
+        REQUIRE(prepared.outcome().sources.size() == 1);
+        CHECK(prepared.outcome().sources.front().complete());
+        return;
+    }
+
+    const auto request = prepared.request(token(1));
+    REQUIRE(request);
+    Receipts receipts;
+    REQUIRE(owned.get().submit(*request, Client::Mode::Commit, receipts.into(0)));
+    rt.until([&] { return receipts.calls[0] != 0; });
+    const auto& completion = completed(receipts.at(0), 1, 5);
+    const auto* produced = std::get_if<Reply::Produced>(&completion.reply().result);
+    REQUIRE(produced);
+    CAPTURE(produced->source.status, produced->source.engineStatus,
+            produced->source.detail, produced->outputs.size());
+    CHECK(produced->source.status == LC_OffsetSourceStatus::Succeeded);
+    CHECK(produced->source.engineStatus == LC_CurveOffsetStatus::Ok);
+    REQUIRE(prepared.accept(completion));
+    REQUIRE(prepared.advance(batch));
+    REQUIRE(prepared.outcome().sources.size() == 1);
+    CHECK(prepared.outcome().sources.front().complete());
+    CHECK_FALSE(batch.entitiesToAdd.empty());
+    prepared.release();
+    qDeleteAll(batch.entitiesToAdd);
+}
+
 TEST_CASE("Worker client joins typed source generation for every modeled source family", Tags) {
     auto& rt = runtime();
     OwnedClient owned{rt};

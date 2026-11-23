@@ -61773,10 +61773,17 @@ Failure details from Linux and Windows ARM logs:
   (**5,089,768 assertions / 1 case**), so this needs a compiler/architecture
   reproduction and cannot be dismissed as a general test-only or pass.
 - `offset_worker_client_4`: the typed-source worker-client matrix fails for
-  generated source index 439 (`Kind::Line`), with an incomplete produced source
-  and engine status value 10. This was not reproduced locally: the matching
-  macOS shard exceeded the test client's callback watchdog during the large
-  fixture setup before a result could be established.
+  generated source index 439 (`Kind::Ellipse`): a reversed arc centered at
+  `(10000, -10000)`, major vector approximately `(70.7107, 70.7107)`, ratio
+  `0.001`, parameter bounds `0.2 -> 0`, and signed distance `5e-7`. It
+  produces no copy and reports
+  `AmbiguousTopology` (engine status 10), leaving the prepared source
+  incomplete. The matching macOS shard exceeded the test client's callback
+  watchdog during the large fixture setup before a result could be
+  established. Added a compact direct worker-client regression with these
+  exact inputs; it passes locally on macOS (**367 assertions / 1 case**).
+  The Linux/Windows ARM discrepancy is still unresolved, so retain the exact
+  full-matrix failure and use the compact test for cross-platform diagnosis.
 - Windows x64's job annotation reports lost runner communication; no code
   conclusion is drawn from that lane.
 
@@ -61789,6 +61796,25 @@ specialized CI lanes. Preserve the successful Pixi matrix result but do not
 claim PR validation green. These failures join the still-open visible-app,
 full family/variant, independent-CAD, and Trim sanitizer/order gates; the
 roadmap remains incomplete.
+
+## 1996. Repeat the Typed-source ODA Audit on R2010 DXF (2026-11-23)
+
+With ODA File Converter 27.1 open in the logged-in macOS desktop, converted
+the 18 committed independently authored typed-source DWGs with Audit enabled
+to `/private/tmp/offset-2961-oda-rerun-gui-20261123`. The GUI completed all 18
+files and generated **18 DXFs / 0 `.err` files**. The output-version control
+did not accept a change from its default `2010 ASCII DXF`; inspecting a sample
+header confirms `AC1024`. Therefore this is an R2010 comparison only, not a
+fresh R2018 conversion.
+
+Ran `[lc-offsetcurve][persistence][typed-source][external][oda]` with the
+committed DWG directory and fresh output directory overrides. Release passed
+**1 case / 4,374 assertions** across the nine modeled source families and
+their R2000/R2018 source pairs. This validates the current ODA R2010 DXF
+round-trip for those fixtures; the prior R2018 ODA audit remains the separate
+record in section 1979. It does not close general external-CAD acceptance,
+other geometry variants, the visible LibreCAD workflow, or pending exact-head
+CI.
 
 ## 1992. Run a Fresh ODA GUI Batch (2026-11-22)
 
