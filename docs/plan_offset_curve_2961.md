@@ -61742,3 +61742,30 @@ fresh AC1024 files and the committed source DWGs. Release passed **1 case /
 across the 18 source/version pairs against ODA's R2010 DXF conversion; it does
 not establish R2018 conversion in this run, every geometry variant, AutoCAD
 behavior, visible LibreCAD workflow, or general external-CAD acceptance.
+
+## 1993. Rebuild qmake6 and Retry the Visible Source-picker Gate (2026-11-22)
+
+Rebuilt the full current qmake6 application and plugin set from the exact
+worktree source in `/private/tmp/offset-2961-qmake-current`; `make -j8`
+completed successfully. This supplements the earlier scoped qmake6 object
+builds and CMake validation with a full application link from the current
+checkout.
+
+Used the isolated ad-hoc-signed test copy with a unique bundle identifier in
+the logged-in macOS desktop. It opened the R2018 typed-source fixture and the
+fresh ODA AC1024 conversion, both of which correctly downgraded their
+intentionally non-canonical offset cache to ordinary geometry. In a new
+unsaved drawing, the UI created an ellipse through the Ellipse (Axis) action
+and opened Modify > Offset with Editable Offset Curve enabled. The resulting
+canvas/property selection did not establish that a native `LC_OffsetCurve`
+was created or that the replacement-source widget was exercised; the visible
+attempt is therefore **inconclusive**, not a pass or product defect. No
+tracked drawing or user source file was saved.
+
+The source-family dialog matrix remains the automated/offscreen evidence in
+section 1990, including all nine supported kinds and the distinct parabola.
+Physical packaged-app acceptance remains open for repeated family changes,
+existing-source highlight, successful typed replacement, refusal/cancellation,
+and save/reopen. The broad Trim sanitizer/order gate, unrelated VXCONTROL
+baseline, broader family/variant matrix, independent CAD acceptance, and
+exact-head CI also remain open. The roadmap is incomplete.
