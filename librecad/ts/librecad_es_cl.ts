@@ -6151,12 +6151,12 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim_batch.cpp" line="169"/>
         <source>Trimmed %1 entities, removed %2 pieces (%3 undetermined kept)</source>
-        <translation>Entidades recortadas: %1; partes eliminadas: %2 (%3 conservadas porque no se pudo determinar el lado)</translation>
+        <translation>Objetos recortados: %1; partes eliminadas: %2 (%3 conservadas porque no se pudo determinar el lado)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim_batch.cpp" line="212"/>
         <source>Select entities to trim</source>
-        <translation>Seleccione las entidades que desea recortar</translation>
+        <translation>Seleccione los objetos que desea recortar</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim_batch.cpp" line="218"/>
@@ -6171,7 +6171,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim_batch.cpp" line="84"/>
         <source>None of the selected entities crosses the limit</source>
-        <translation>Ninguna de las entidades seleccionadas intersecta el límite</translation>
+        <translation>Ninguno de los objetos seleccionados intersecta el objeto límite</translation>
     </message>
 </context>
 <context>

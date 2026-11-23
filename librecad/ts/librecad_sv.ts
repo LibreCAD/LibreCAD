@@ -6169,12 +6169,12 @@ Punkt: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim_batch.cpp" line="169"/>
         <source>Trimmed %1 entities, removed %2 pieces (%3 undetermined kept)</source>
-        <translation>Trimmade objekt: %1, borttagna delar: %2 (%3 behållna eftersom sidan inte kunde avgöras)</translation>
+        <translation>Trimmade entiteter: %1, borttagna delar: %2 (%3 behållna eftersom sidan inte kunde avgöras)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim_batch.cpp" line="212"/>
         <source>Select entities to trim</source>
-        <translation>Välj objekt att trimma</translation>
+        <translation>Välj entiteter att trimma</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim_batch.cpp" line="218"/>
@@ -6189,7 +6189,7 @@ Punkt: (%8, %9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim_batch.cpp" line="84"/>
         <source>None of the selected entities crosses the limit</source>
-        <translation>Inget av de valda objekten skär gränsobjektet</translation>
+        <translation>Ingen av de valda entiteterna skär den begränsande entiteten</translation>
     </message>
 </context>
 <context>

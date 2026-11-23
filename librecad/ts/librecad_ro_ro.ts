@@ -6167,12 +6167,12 @@ Punct: (%8,%9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim_batch.cpp" line="169"/>
         <source>Trimmed %1 entities, removed %2 pieces (%3 undetermined kept)</source>
-        <translation>Obiecte decupate: %1, părți eliminate: %2 (%3 păstrate deoarece partea nu a putut fi determinată)</translation>
+        <translation>Entități decupate: %1, părți eliminate: %2 (%3 păstrate deoarece partea nu a putut fi determinată)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim_batch.cpp" line="212"/>
         <source>Select entities to trim</source>
-        <translation>Selectați obiectele de decupat</translation>
+        <translation>Selectați entitățile de decupat</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim_batch.cpp" line="218"/>
@@ -6187,7 +6187,7 @@ Punct: (%8,%9)</translation>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim_batch.cpp" line="84"/>
         <source>None of the selected entities crosses the limit</source>
-        <translation>Niciunul dintre obiectele selectate nu intersectează obiectul limită</translation>
+        <translation>Niciuna dintre entitățile selectate nu intersectează entitatea limită</translation>
     </message>
 </context>
 <context>

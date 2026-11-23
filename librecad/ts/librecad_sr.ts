@@ -6169,12 +6169,12 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim_batch.cpp" line="169"/>
         <source>Trimmed %1 entities, removed %2 pieces (%3 undetermined kept)</source>
-        <translation>Одсечени објекти: %1, уклоњени делови: %2 (%3 задржани јер страна није могла да се одреди)</translation>
+        <translation>Одсечени ентитети: %1, уклоњени делови: %2 (%3 задржани јер страна није могла да се одреди)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim_batch.cpp" line="212"/>
         <source>Select entities to trim</source>
-        <translation>Изаберите објекте за одсецање</translation>
+        <translation>Изаберите ентитете за одсецање</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim_batch.cpp" line="218"/>
@@ -6189,7 +6189,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim_batch.cpp" line="84"/>
         <source>None of the selected entities crosses the limit</source>
-        <translation>Ниједан од изабраних објеката не пресеца гранични објекат</translation>
+        <translation>Ниједан од изабраних ентитета не пресеца гранични ентитет</translation>
     </message>
 </context>
 <context>
