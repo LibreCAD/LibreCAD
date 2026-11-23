@@ -61753,6 +61753,43 @@ acceptance, the broad family/variant and Trim sanitizer/order matrix,
 independent CAD acceptance, or pending exact-head CI. The roadmap remains
 incomplete.
 
+## 1995. Triage Exact-head CI After the Master Merge (2026-11-23)
+
+The pushed merge head `bf6cb0be3ce0db4c418a8f83dbb517a746e98b1c` passed the
+five-platform Pixi build matrix (Windows, Ubuntu x64, Ubuntu ARM64, macOS Intel,
+and macOS arm64). The specialized `VerifyDwgDxf` workflow is **not green**:
+Linux x64 and Windows ARM each report the same two CTest failures,
+`offset_worker_kernel` and `offset_worker_client_4`. Windows x64 lost runner
+communication before a test result was produced.
+
+Failure details from Linux and Windows ARM logs:
+
+- `offset_worker_kernel`: 184 point-membership checks fail in
+  `mixed-bulge region cycles match independent dilation and erosion membership`
+  for the captured case `scale=0.001`, `frame=1`, `seamStart=3`,
+  `secondArcBulge=0.25`, `distance=0.0005`, erosion enabled. The operation
+  returns status OK, but the sampled result-boundary winding disagrees with the
+  independent morphology oracle. The focused test passes on local macOS arm64
+  (**5,089,768 assertions / 1 case**), so this needs a compiler/architecture
+  reproduction and cannot be dismissed as a general test-only or pass.
+- `offset_worker_client_4`: the typed-source worker-client matrix fails for
+  generated source index 439 (`Kind::Line`), with an incomplete produced source
+  and engine status value 10. This was not reproduced locally: the matching
+  macOS shard exceeded the test client's callback watchdog during the large
+  fixture setup before a result could be established.
+- Windows x64's job annotation reports lost runner communication; no code
+  conclusion is drawn from that lane.
+
+The two failing functional cases remain release-blocking. Next implementation
+slice: obtain compact, deterministic reproducers for kernel index parameters
+and worker source 439; add their exact inputs as focused tests; fix the
+underlying offset/containment or worker failure rather than suppressing CTest;
+then rerun those tests on the affected compiler/platforms and all five
+specialized CI lanes. Preserve the successful Pixi matrix result but do not
+claim PR validation green. These failures join the still-open visible-app,
+full family/variant, independent-CAD, and Trim sanitizer/order gates; the
+roadmap remains incomplete.
+
 ## 1992. Run a Fresh ODA GUI Batch (2026-11-22)
 
 Used the logged-in ODA File Converter 27.1 GUI with Audit enabled to convert
