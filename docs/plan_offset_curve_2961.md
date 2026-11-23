@@ -61722,3 +61722,23 @@ GUI control to initiate/verify another converter run. The earlier conversion
 and ASan/UBSan comparison remain recorded in section 1979. Do not broaden this
 result beyond the 18 typed-source fixtures or treat it as AutoCAD, visible-GUI,
 variant-completeness, or full external-CAD acceptance.
+
+## 1992. Run a Fresh ODA GUI Batch (2026-11-22)
+
+Used the logged-in ODA File Converter 27.1 GUI with Audit enabled to convert
+the 18 committed typed-source DWGs from
+`librecad/src/lib/filters/tests/testdata/offsetcurve_independent/oda_typed_source/dwg`
+into `/private/tmp/offset-2961-oda-rerun-gui-20261122`. The converter reached
+`Done` with progress 18; the output directory contains **18 DXFs and zero
+`.err` files**. The selected output version was 2010 ASCII DXF (AC1024), not
+2018; a sample output header confirms AC1024. The version selector did not
+respond to accessibility or keyboard selection in this session, so this batch
+must not be reported as a fresh R2018 conversion. Section 1979 remains the
+record for the previous R2018 batch.
+
+Ran `[lc-offsetcurve][persistence][typed-source][external][oda]` against the
+fresh AC1024 files and the committed source DWGs. Release passed **1 case /
+2,701 assertions**. This independently checks the nine typed-source families
+across the 18 source/version pairs against ODA's R2010 DXF conversion; it does
+not establish R2018 conversion in this run, every geometry variant, AutoCAD
+behavior, visible LibreCAD workflow, or general external-CAD acceptance.
