@@ -369,6 +369,7 @@ private:
     CollapsedDockGroup captureDockGroup(QDockWidget* dock) const;
     void restoreCollapsedGroup(int index);
     QByteArray dockStateForSaving();
+    QVariantMap dockSizesForSaving() const;
     void clampToAvailableScreen();
     QC_ApplicationWindow();
 
@@ -424,6 +425,7 @@ private:
     QMap<QString, bool> factoryDockVisibility;
     QMap<QString, QString> selectedDockByGroup;
     QMap<int, bool> requestedDockAreas;
+    QVariantMap dockAreaSizes;
     QList<CollapsedDockGroup> collapsedDockGroups;
     bool dockFitQueued {false};
     bool dockFitRunning {false};
