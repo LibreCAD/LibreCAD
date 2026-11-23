@@ -1,0 +1,9 @@
+<!-- Copyright (C) 2026 Dongxu Li (github.com/dxli), GPL-2.0-or-later. -->
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 72.248892 72.248892">
+  <g fill="none" stroke="#000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 8 61 63"/>
+    <path d="M10 27h52M10 44h52M10 59h52"/>
+    <path d="M13 25h16M43 25h17M13 42h16M43 42h17M13 57h16M43 57h17" stroke="#00ff7f" stroke-width="4"/>
+    <path d="M29 20v10M43 37v10M29 52v10" stroke="#00ff7f" stroke-width="3"/>
+  </g>
+</svg>
