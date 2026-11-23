@@ -29,6 +29,19 @@
 
 #define ALLOW_PICK_SCALE false
 
+namespace {
+// A count outside 1..MaxArrayCount empties the reference or makes the saved file unreadable: keep the current one.
+int toArrayCount(QLineEdit* edit, const int current) {
+    bool ok = false;
+    const double value = RS_Math::eval(edit->text(), &ok);
+    if (ok && value >= 1 && value <= RS_InsertData::MaxArrayCount) {
+        return RS_Math::round(value);
+    }
+    edit->setText(QString::number(current));
+    return current;
+}
+}
+
 LC_PropertiesEditingWidgetInsert::LC_PropertiesEditingWidgetInsert(QWidget *parent)
     : LC_EntityPropertiesEditorWidget(parent)
     , ui(new Ui::LC_InsertPropertiesEditingWidget){
@@ -39,7 +52,7 @@ LC_PropertiesEditingWidgetInsert::LC_PropertiesEditingWidgetInsert(QWidget *pare
     connect(ui->leScaleY, &QLineEdit::editingFinished, this, &LC_PropertiesEditingWidgetInsert::onScaleEditingFinishedChanged);
     connect(ui->leAngle, &QLineEdit::editingFinished, this, &LC_PropertiesEditingWidgetInsert::onAngleEditingFinished);
     connect(ui->leRows, &QLineEdit::editingFinished, this, &LC_PropertiesEditingWidgetInsert::onRowsEditingFinished);
-    connect(ui->leCols, &QLineEdit::editingFinished, this, &LC_PropertiesEditingWidgetInsert::onRowsEditingFinished);
+    connect(ui->leCols, &QLineEdit::editingFinished, this, &LC_PropertiesEditingWidgetInsert::onColsEditingFinished);
     connect(ui->leColSpacing, &QLineEdit::editingFinished, this, &LC_PropertiesEditingWidgetInsert::onSpacingEditingFinished);
     connect(ui->leRowSpacing, &QLineEdit::editingFinished, this, &LC_PropertiesEditingWidgetInsert::onSpacingEditingFinished);
     if (!ALLOW_PICK_SCALE) {
@@ -65,11 +78,11 @@ void LC_PropertiesEditingWidgetInsert::onAngleEditingFinished() const {
 }
 
 void LC_PropertiesEditingWidgetInsert::onRowsEditingFinished() const {
-    m_entity->setRows(RS_Math::round(RS_Math::eval(ui->leRows->text())));
+    m_entity->setRows(toArrayCount(ui->leRows, m_entity->getRows()));
 }
 
 void LC_PropertiesEditingWidgetInsert::onColsEditingFinished() const {
-    m_entity->setCols(RS_Math::round(RS_Math::eval(ui->leCols->text())));
+    m_entity->setCols(toArrayCount(ui->leCols, m_entity->getCols()));
 }
 
 void LC_PropertiesEditingWidgetInsert::onSpacingEditingFinished() const {
@@ -85,7 +98,7 @@ void LC_PropertiesEditingWidgetInsert::setupInteractiveInputWidgets() {
     }
     pickAngleSetup(ui->tbPickAngle, "angle",ui->leAngle);
     pickDistanceSetup(ui->tbPickRowSpacing,  "rowSpacing",ui->leRowSpacing);
-    pickDistanceSetup(ui->tbPickRowSpacing,  "colSpacing",ui->leColSpacing);
+    pickDistanceSetup(ui->tbPickColumnSpacing,  "colSpacing",ui->leColSpacing);
 }
 
 void LC_PropertiesEditingWidgetInsert::setEntity(RS_Entity* entity) {
