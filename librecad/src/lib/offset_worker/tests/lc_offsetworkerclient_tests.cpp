@@ -2699,8 +2699,11 @@ TEST_CASE("Worker client completes a tiny offset of a high-origin thin reversed 
     LC_OffsetBatchPreparation prepared{offset, {&source}, false, {}};
     LC_DocumentModificationBatch batch;
     if (prepared.advance(batch)) {
-        REQUIRE(prepared.outcome().sources.size() == 1);
-        CHECK(prepared.outcome().sources.front().complete());
+        CHECK(prepared.outcome().sources.size() == 1);
+        if (!prepared.outcome().sources.empty())
+            CHECK(prepared.outcome().sources.front().complete());
+        prepared.release();
+        qDeleteAll(batch.entitiesToAdd);
         return;
     }
 

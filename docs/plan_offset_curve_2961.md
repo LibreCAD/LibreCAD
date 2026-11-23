@@ -61871,8 +61871,11 @@ the matching macOS arm64 Release build at
 `/private/tmp/offset-2961-cmake-matrix` to rerun the two currently reported
 cross-platform failures. The complete mixed-bulge region-membership selector
 passed **4,345,504 assertions / 1 test case**. The compact high-origin thin
-reversed-ellipse worker-client case passed **295 assertions / 1 test case**.
-Neither Linux x64 nor Windows ARM64 behavior is thereby explained or cleared;
+reversed-ellipse worker-client case passed **255 assertions / 1 test case**
+after rebuilding its test target. Its direct-completion branch now releases
+and deletes test-owned batch outputs before returning, avoiding a leak if a
+platform bypasses the worker. Neither Linux x64 nor Windows ARM64 behavior is
+thereby explained or cleared;
 those failures remain release-blocking until exact-head Actions results and a
 platform-level diagnosis are available.
 
