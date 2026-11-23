@@ -62083,3 +62083,29 @@ CI for `aeab27591`; if the independent membership matrix passes on Linux, close
 the defect with that evidence. If it still fails, use the now-captured exact
 and fallback arrangement counters to identify the missing candidate and keep
 the geometry defect open.
+
+## 2004. Revalidate Build and Independent DWG/DXF Conversion (2026-11-23)
+
+Rebuilt the current PR source with the qmake6 configuration and full application
+plus plugin/resource targets; `make -j8` completed successfully. This covers
+the qmake6 build path separately from the current CMake and hosted CI jobs.
+
+With ODAFileConverter open in the logged-in macOS session, audited and converted
+the 18 independent R2000/R2018 DWG fixtures to R2010 ASCII DXF. All 18 output
+files were produced. The current LibreCAD reader comparison against this batch
+passed **2,794 assertions / 1 case**. This is format-conversion and parser
+comparison evidence only; it does not establish visual equivalence or full CAD
+semantic acceptance.
+
+The current branch head is `27327dafbdeab26356ef49a321e7d06081ac723e`.
+Hosted `build_with_pixi` jobs for Ubuntu x64/ARM64, macOS arm64/Intel, and
+Windows were still in progress at the time of this checkpoint. Docker is
+installed locally but its daemon socket is not accessible, so no local Linux
+container run can substitute for the Linux hosted result. Do not close the
+Linux mixed-bulge region-membership issue until the exact-head Linux test
+reports its result; inspect its arrangement counters if the failure persists.
+
+The broader roadmap remains open for exact-head specialized DWG/DXF tests,
+physical packaged-app repeated source-family changes and save/reopen, the broad
+Trim sanitizer/order matrix, additional family/variant coverage, and external
+visual/semantic CAD acceptance.
