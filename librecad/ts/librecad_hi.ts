@@ -4214,6 +4214,11 @@ or [%2]</source>
         <source>Focus on &amp;Command Line</source>
         <translation>कमांड लाइन पर फ़ोकस करें (&amp;C)</translation>
     </message>
+    <message>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="392"/>
+        <source>Batch Trim</source>
+        <translation>कई एंटिटी ट्रिम करें</translation>
+    </message>
 </context>
 <context>
     <name>LC_ActionFileExportMakerCam</name>
@@ -6145,6 +6150,44 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim_amount.cpp" line="267"/>
         <source>Select line/arc to trim OR enter length value:</source>
         <translation type="unfinished">लाइन / चाप को ट्रिम करने के लिए चुनें या लंबाई मान दर्ज करें:</translation>
+    </message>
+</context>
+<context>
+    <name>LC_ActionModifyTrimBatch</name>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_trim_batch.cpp" line="127"/>
+        <source>Removed</source>
+        <translation>हटाए गए</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_trim_batch.cpp" line="127"/>
+        <source>Trim Batch</source>
+        <translation>कई एंटिटी ट्रिम करें</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_trim_batch.cpp" line="169"/>
+        <source>Trimmed %1 entities, removed %2 pieces (%3 undetermined kept)</source>
+        <translation>ट्रिम की गई एंटिटी: %1, हटाए गए हिस्से: %2 (%3 को पक्ष निर्धारित न होने के कारण रखा गया)</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_trim_batch.cpp" line="212"/>
+        <source>Select entities to trim</source>
+        <translation>ट्रिम करने के लिए एंटिटियाँ चुनें</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_trim_batch.cpp" line="218"/>
+        <source>Select limiting entity</source>
+        <translation>सीमित एंटिटी का चयन करें</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_trim_batch.cpp" line="221"/>
+        <source>Specify the side to keep</source>
+        <translation>रखने वाला पक्ष निर्दिष्ट करें</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_trim_batch.cpp" line="84"/>
+        <source>None of the selected entities crosses the limit</source>
+        <translation>चयनित एंटिटियों में से कोई भी सीमा एंटिटी को नहीं काटती</translation>
     </message>
 </context>
 <context>
@@ -48824,6 +48867,21 @@ Please check the filename and permissions.</source>
         <source>Shapefile %1 contained %2 records but none were readable</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../src/cmd/lc_commandItems.h" line="811"/>
+        <source>trimbatch</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/cmd/lc_commandItems.h" line="812"/>
+        <source>tb</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/cmd/lc_commandItems.h" line="813"/>
+        <source>mtrim</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionBlocksCreate</name>
@@ -50341,4 +50399,5 @@ End: (%8 , %9)</source>
         <translation>समतुल्य विभाजन बिंदुओं की संख्या</translation>
     </message>
 </context>
+
 </TS>

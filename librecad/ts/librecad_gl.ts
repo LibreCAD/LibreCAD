@@ -4215,6 +4215,11 @@ or [%2]</source>
         <source>Save A&amp;ll...</source>
         <translation>A&amp;ll ...</translation>
     </message>
+    <message>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="392"/>
+        <source>Batch Trim</source>
+        <translation>Tallar varias entidades</translation>
+    </message>
 </context>
 <context>
     <name>LC_ActionFileExportMakerCam</name>
@@ -6146,6 +6151,44 @@ Punto: (%8,%9)</translation>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim_amount.cpp" line="267"/>
         <source>Select line/arc to trim OR enter length value:</source>
         <translation type="unfinished">Seleccione a liña/arco que quere tallar OU introduza o valor da lonxitude:</translation>
+    </message>
+</context>
+<context>
+    <name>LC_ActionModifyTrimBatch</name>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_trim_batch.cpp" line="127"/>
+        <source>Removed</source>
+        <translation>Eliminadas</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_trim_batch.cpp" line="127"/>
+        <source>Trim Batch</source>
+        <translation>Tallar varias entidades</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_trim_batch.cpp" line="169"/>
+        <source>Trimmed %1 entities, removed %2 pieces (%3 undetermined kept)</source>
+        <translation>Entidades talladas: %1; partes eliminadas: %2 (%3 conservadas porque non se puido determinar o lado)</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_trim_batch.cpp" line="212"/>
+        <source>Select entities to trim</source>
+        <translation>Escolla as entidades que quere tallar</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_trim_batch.cpp" line="218"/>
+        <source>Select limiting entity</source>
+        <translation>Escolla a entidade limitante</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_trim_batch.cpp" line="221"/>
+        <source>Specify the side to keep</source>
+        <translation>Indique o lado que quere conservar</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_trim_batch.cpp" line="84"/>
+        <source>None of the selected entities crosses the limit</source>
+        <translation>Ningunha das entidades seleccionadas corta a entidade límite</translation>
     </message>
 </context>
 <context>
@@ -48825,6 +48868,21 @@ Please check the filename and permissions.</source>
         <source>Shapefile %1 contained %2 records but none were readable</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../src/cmd/lc_commandItems.h" line="811"/>
+        <source>trimbatch</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/cmd/lc_commandItems.h" line="812"/>
+        <source>tb</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/cmd/lc_commandItems.h" line="813"/>
+        <source>mtrim</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionBlocksCreate</name>
@@ -50342,4 +50400,5 @@ Fin (%8,%9)</translation>
         <translation>Cantidade de puntos medios equidistantes para forzado</translation>
     </message>
 </context>
+
 </TS>

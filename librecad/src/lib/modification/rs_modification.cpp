@@ -41,6 +41,7 @@
 #include "lc_linemath.h"
 #include "lc_offsetresultcheck.h"
 #include "lc_splinepoints.h"
+#include "lc_trimbatch.h"
 #include "rs_spline.h"
 #include "lc_undosection.h"
 #include "rs_arc.h"
@@ -75,15 +76,6 @@ namespace {
     bool acceptedInsertSourceEdit(const RS_Entity& entity) {
         return entity.rtti() != RS2::EntityInsert
                || static_cast<const RS_Insert&>(entity).lastSourceEditSucceeded();
-    }
-
-    // RS_Modification::trim() replaces what it trims by a copy it adds to the document, which is right only for
-    // an entity the document holds itself. A segment of a polyline would leave a gap in it, and a line of a block
-    // reference, dimension or spline would be freed by its owner when that rebuilds its lines, while the undo
-    // history still holds it.
-    bool isReplaceableByTrim(const RS_Entity& entity) {
-        const RS_EntityContainer* parent = entity.getParent();
-        return parent == nullptr || parent->isDocument();
     }
 
     RS_VectorSolutions findIntersection(const RS_Entity& trimEntity, const RS_Entity& limitEntity, double tolerance = 1e-4) {

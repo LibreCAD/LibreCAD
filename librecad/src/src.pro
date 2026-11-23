@@ -648,6 +648,8 @@ HEADERS += \
     lib/gui/lc_relative_point_input_widget.h \
     lib/math/lc_quadraticutils.h \
     lib/modification/lc_division.h \
+    lib/modification/lc_curvesplit.h \
+    lib/modification/lc_trimbatch.h \
     lib/modification/lc_copyutils.h \
     lib/properties/lc_property.h \
     lib/properties/lc_property_atomic.h \
@@ -1100,6 +1102,8 @@ SOURCES += \
     lib/gui/lc_relative_point_input_widget.cpp \
     lib/math/lc_quadraticutils.cpp \
     lib/modification/lc_division.cpp \
+    lib/modification/lc_curvesplit.cpp \
+    lib/modification/lc_trimbatch.cpp \
     lib/modification/lc_copyutils.cpp \
     plugins/lc_plugininvoker.cpp \
     lib/actions/lc_actioncontext.cpp \
@@ -1579,6 +1583,7 @@ HEADERS += actions/dock_widgets/block/rs_actionblocksadd.h \
     actions/drawing/modify/lc_action_modify_scale.h \
     actions/drawing/modify/lc_action_modify_stretch.h \
     actions/drawing/modify/lc_action_modify_trim.h \
+    actions/drawing/modify/lc_action_modify_trim_batch.h \
     actions/drawing/modify/lc_action_modify_trim_amount.h \
     actions/drawing/modify/lc_action_modify_order.h \
     actions/drawing/pen/lc_actionpenapply.h \
@@ -1745,6 +1750,7 @@ SOURCES += actions/dock_widgets/block/rs_actionblocksadd.cpp \
     actions/drawing/modify/lc_action_modify_scale.cpp \
     actions/drawing/modify/lc_action_modify_stretch.cpp \
     actions/drawing/modify/lc_action_modify_trim.cpp \
+    actions/drawing/modify/lc_action_modify_trim_batch.cpp \
     actions/drawing/modify/lc_action_modify_trim_amount.cpp \
     actions/drawing/modify/lc_action_modify_order.cpp \
     actions/drawing/pen/lc_actionpenapply.cpp \
