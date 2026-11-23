@@ -19,6 +19,7 @@
 #include <limits>
 #include <numeric>
 #include <optional>
+#include <string>
 #include <tuple>
 #include <vector>
 #include <boost/multiprecision/cpp_bin_float.hpp>
@@ -12544,6 +12545,8 @@ TEST_CASE("mixed-bulge region cycles match independent dilation and erosion memb
             std::size_t checked = 0;
             std::size_t insideCount = 0;
             std::size_t outsideCount = 0;
+            bool capturedFirstMismatch = false;
+            std::string firstMismatchGeometry;
             const double padding = scale * (baseDistance + 4.0);
             const double sampleStep = scale < 0.01 ? 0.5 * scale : 2.0 * scale;
             const double boundaryExclusion = scale < 0.01 ? 0.05 * distance : 0.75 * scale;
@@ -12559,8 +12562,23 @@ TEST_CASE("mixed-bulge region cycles match independent dilation and erosion memb
                         : sourceInside || boundaryDistance < distance;
                     const bool actualInside = winding(outputSegments, point) != 0;
                     if (actualInside != expectedInside) {
+                        if (!capturedFirstMismatch) {
+                            for (std::size_t branchIndex = 0; branchIndex < result.branches.size(); ++branchIndex) {
+                                const auto& branch = result.branches[branchIndex];
+                                firstMismatchGeometry += " branch " + std::to_string(branchIndex);
+                                for (const auto& piece : branch.cubicPieces) {
+                                    firstMismatchGeometry += " [";
+                                    for (const RS_Vector& control : piece.bezier) {
+                                        firstMismatchGeometry += std::to_string(control.x) + "," +
+                                            std::to_string(control.y) + ";";
+                                    }
+                                    firstMismatchGeometry += "]";
+                                }
+                            }
+                            capturedFirstMismatch = true;
+                        }
                         CAPTURE(x, y, sourceInside, boundaryDistance, expectedInside, actualInside,
-                                sampleStep, boundaryExclusion);
+                                sampleStep, boundaryExclusion, firstMismatchGeometry);
                         CHECK(actualInside == expectedInside);
                     }
                     else {

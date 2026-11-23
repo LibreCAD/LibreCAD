@@ -4840,13 +4840,6 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
                 REQUIRE(typed);
                 CHECK(typed->kind() == sources[i].kind());
             }
-            if (i == 439 && sources[i].kind() == LC_OffsetSourceGeometry::Kind::Ellipse) {
-                const auto& ellipse = std::get<RS_EllipseData>(sources[i].value);
-                CAPTURE(ellipse.center.x, ellipse.center.y, ellipse.majorP.x, ellipse.majorP.y,
-                        ellipse.ratio, ellipse.angle1, ellipse.angle2, ellipse.reversed,
-                        offset.distance, offset.coord.x, offset.coord.y,
-                        offset.sideFallback.x, offset.sideFallback.y);
-            }
             CHECK(Req::admitted(*workerRequest));
             const auto sourceBefore = Req::Values::encodeSourceGeometry(sources[i]);
             REQUIRE(sourceBefore);
@@ -4958,6 +4951,18 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
             REQUIRE(prepared.accept(produced));
             REQUIRE(prepared.advance(batch));
             REQUIRE(prepared.outcome().sources.size() == 1);
+            const auto* diagnosticEllipse = std::get_if<RS_EllipseData>(&sources[i].value);
+            CAPTURE(i, static_cast<int>(sources[i].kind()), diagnosticEllipse != nullptr,
+                    diagnosticEllipse ? diagnosticEllipse->center.x : 0.0,
+                    diagnosticEllipse ? diagnosticEllipse->center.y : 0.0,
+                    diagnosticEllipse ? diagnosticEllipse->majorP.x : 0.0,
+                    diagnosticEllipse ? diagnosticEllipse->majorP.y : 0.0,
+                    diagnosticEllipse ? diagnosticEllipse->ratio : 0.0,
+                    diagnosticEllipse ? diagnosticEllipse->angle1 : 0.0,
+                    diagnosticEllipse ? diagnosticEllipse->angle2 : 0.0,
+                    diagnosticEllipse ? diagnosticEllipse->reversed : false,
+                    offset.distance, offset.coord.x, offset.coord.y,
+                    offset.sideFallback.x, offset.sideFallback.y);
             if (expectedVanished != expectedVanishingThinCuspFixtures.end()) {
                 CHECK(producedValue->source.status == LC_OffsetSourceStatus::Vanished);
                 CHECK(producedValue->source.copiesMade == 0);

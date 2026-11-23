@@ -61950,12 +61950,12 @@ macOS arm64 rerun of the two affected hyperbola tests passes **152,763
 assertions / 2 cases**; cross-platform verification is still required.
 
 Commit `bb27cce2b` added `librecad/src/lib/offset_worker/**` to the workflow's
-push path filter, but the GitHub connector currently reports no checks for
-that head. Its push canceled the older Windows run during post-job cleanup; the
-old run is not evidence for the new code. Next, push the hyperbola localization
-slice, verify that a fresh run starts for the worker path, then fix the
-mixed-bulge membership and typed-source ellipse failures from their exact
-captured inputs. Do not close the plan until Linux and Windows lanes pass.
+push path filter. The hyperbola localization commit `9a01ba7dd` then launched
+run `45253634480`, confirming automatic verification for worker changes. That
+run's Linux result is recorded below; its Windows jobs were still active when
+the next diagnostic slice was prepared. Continue with exact mixed-bulge and
+typed-source ellipse inputs, and do not close the plan until Linux and Windows
+lanes pass.
 
 The first local run exposed an outdated aggregate assertion that required at
 least one translated hyperbola to refuse. Center-relative generation completes
@@ -61970,3 +61970,26 @@ extended client watchdog. These local passes do not clear Linux/Windows
 cross-platform discrepancies. The hyperbola source/helper/test fix is ready to
 commit and push; confirm that its path-filtered Actions run starts before
 addressing the remaining failures.
+
+Exact-head run `45253634480` on commit `9a01ba7dd` started through the updated
+path filter. Linux completed **56/58 CTests**; only kernel and client shard 4
+failed. Its kernel log still has 184 mixed-bulge membership mismatches, but no
+hyperbola deviation failures, confirming the hyperbola fix on Linux. The first
+bad sample for seam 0/dilation is `(-0.02691534106462825,
+-0.01655558209535958)` with source-inside=true and boundary distance
+`0.00912077093172278`; all cases share `scale=0.001`, `frame=1`, second bulge
+`0.25`, and distance `0.0005`. The ellipse failure again reaches generated
+source 439 with `AmbiguousTopology`, but the source diagnostic capture was
+inside a narrower scope and did not survive to the later failing assertion.
+
+Moved ellipse request captures into the assertion's loop scope and added a
+first-mismatch-only compact cubic-control summary to the kernel failure path.
+The next platform run will therefore expose the exact typed ellipse request
+and enough result geometry to diagnose why nonzero source-interior samples are
+outside the returned cycles. Windows ARM64/x64 were still testing when this
+diagnostic correction was prepared; this push supersedes them if they have not
+completed, so the next run can capture the exact source and result data.
+
+The revised capture code compiles and the full local typed-source client
+selector passes (**2,905,926 assertions / 1 case**). This is diagnostic-only
+coverage on macOS; it does not resolve the Linux failure.
