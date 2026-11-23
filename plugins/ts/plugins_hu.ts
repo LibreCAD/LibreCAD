@@ -147,7 +147,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="58"/>
         <source>Empty Entity</source>
-        <translation>Üres entitás</translation>
+        <translation>Üres elem</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="65"/>
@@ -162,7 +162,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="75"/>
         <source>Layer</source>
-        <translation>Fólia</translation>
+        <translation>Réteg</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="77"/>
@@ -284,7 +284,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="164"/>
         <source>CONSTRUCTIONLINE</source>
-        <translation>ÉPÍTŐVONAL</translation>
+        <translation>SZERKESZTŐVONAL</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="167"/>
@@ -324,12 +324,12 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="189"/>
         <source>Insertion point</source>
-        <translation>Beillesztési pont</translation>
+        <translation>Beszúrási pont</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="192"/>
         <source>Scale</source>
-        <translation>Méretezés</translation>
+        <translation>Lépték</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="195"/>
@@ -349,7 +349,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="212"/>
         <source>POLYLINE</source>
-        <translation>POLILÍNIA</translation>
+        <translation>VONALLÁNC</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="213"/>
@@ -369,7 +369,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="215"/>
         <source>Vertices</source>
-        <translation>Tetőpontok</translation>
+        <translation>Csúcspontok</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="229"/>
@@ -389,27 +389,27 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="238"/>
         <source>HATCH</source>
-        <translation>MINTA</translation>
+        <translation>SRAFFOZÁS</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="241"/>
         <source>DIMLEADER</source>
-        <translation>DIMENZIÓVÉG</translation>
+        <translation>MUTATÓVONAL</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="244"/>
         <source>DIMALIGNED</source>
-        <translation>DIMENZIÓ, EGYVONALÚ</translation>
+        <translation>MÉRET, IGAZÍTOTT</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="247"/>
         <source>DIMLINEAR</source>
-        <translation>DIMENZIÓ, VONAL</translation>
+        <translation>MÉRET, LINEÁRIS</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="250"/>
         <source>DIMRADIAL</source>
-        <translation>DIMENZIÓ, SUGÁR</translation>
+        <translation>MÉRET, SUGÁR</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="253"/>
@@ -443,12 +443,12 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../sameprop/sameprop.cpp" line="40"/>
         <source>select original entity:</source>
-        <translation>Válassza ki az eredeti entitást:</translation>
+        <translation>válassza ki az eredeti elemet:</translation>
     </message>
     <message>
         <location filename="../sameprop/sameprop.cpp" line="42"/>
         <source>select entities to change</source>
-        <translation>Válassza ki a módosítandó entitásokat</translation>
+        <translation>válassza ki a módosítandó elemeket</translation>
     </message>
 </context>
 <context>
@@ -692,7 +692,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../divide/divide.cpp" line="439"/>
         <source>Empty Entity</source>
-        <translation>Üres entitás</translation>
+        <translation>Üres elem</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="447"/>
@@ -717,7 +717,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../divide/divide.cpp" line="458"/>
         <source>Line type</source>
-        <translation>Vonal típus</translation>
+        <translation>Vonaltípus</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="460"/>
@@ -806,7 +806,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../divide/divide.cpp" line="525"/>
         <source>POLYLINE</source>
-        <translation>POLIGON</translation>
+        <translation>VONALLÁNC</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="526"/>
@@ -884,7 +884,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../divide/dividedlg.cpp" line="133"/>
         <source>Breaks - Off</source>
-        <translation>Szünetek - Ki</translation>
+        <translation>Megszakítások - Ki</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="178"/>
@@ -1010,7 +1010,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../gear/gear.cpp" line="124"/>
         <source>Draw addendum circle?</source>
-        <translation>Rajzoljon kiegészítő kört?</translation>
+        <translation>Rajzoljon fejkört?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="125"/>
@@ -1025,7 +1025,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../gear/gear.cpp" line="127"/>
         <source>Draw root circle?</source>
-        <translation>Rajzoljon gyökérkört?</translation>
+        <translation>Rajzoljon lábkört?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="128"/>
@@ -1063,7 +1063,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../list/list.cpp" line="276"/>
         <source>List entities</source>
-        <translation>Entitások listázása</translation>
+        <translation>Elemek listázása</translation>
     </message>
 </context>
 <context>
@@ -1139,7 +1139,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../picfile/picfile.cpp" line="75"/>
         <source>Scale:</source>
-        <translation>Méretezés:</translation>
+        <translation>Lépték:</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="79"/>
@@ -1159,7 +1159,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../picfile/picfile.cpp" line="118"/>
         <source>Scale Factor is empty or invalid</source>
-        <translation>A skálázási tényező üres vagy érvénytelen.</translation>
+        <translation>A léptéktényező üres vagy érvénytelen</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="131"/>
@@ -1271,7 +1271,7 @@ Használjon &quot;t&quot; vagy &quot;x&quot; változót az egyenletben.</transla
         <location filename="../plotequation/plotdialog.cpp" line="60"/>
         <source>Polyline</source>
         <comment>Plot Equation to generate RS_Polyline</comment>
-        <translation>Poligon</translation>
+        <translation>Vonallánc</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="61"/>

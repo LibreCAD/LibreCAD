@@ -294,12 +294,12 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="170"/>
         <source>SOLID</source>
-        <translation>BRYŁA</translation>
+        <translation>WYPEŁNIENIE</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="174"/>
         <source>MTEXT</source>
-        <translation>TEKST</translation>
+        <translation>TEKSTWIELOWIERSZOWY</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="177"/>
@@ -314,7 +314,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="184"/>
         <source>INSERT</source>
-        <translation>WSTAW</translation>
+        <translation>WSTAWIENIE</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="187"/>
@@ -379,12 +379,12 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="232"/>
         <source>SPLINE</source>
-        <translation>KRZYWA</translation>
+        <translation>SPLAJN</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="235"/>
         <source>SPLINEPOINTS</source>
-        <translation>PUNKTYKRZYWEJ</translation>
+        <translation>SPLAJNPRZEZPUNKTY</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="238"/>
@@ -394,12 +394,12 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="241"/>
         <source>DIMLEADER</source>
-        <translation>WYMIARWIODĄCY</translation>
+        <translation>ODNOŚNIK</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="244"/>
         <source>DIMALIGNED</source>
-        <translation>WYRÓWNANIE_DO_SIATKI</translation>
+        <translation>WYMIARWYRÓWNANY</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="247"/>
@@ -692,7 +692,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../divide/divide.cpp" line="439"/>
         <source>Empty Entity</source>
-        <translation>Pusta jednostka</translation>
+        <translation>Pusty obiekt</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="447"/>

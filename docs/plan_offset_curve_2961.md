@@ -61723,6 +61723,36 @@ and ASan/UBSan comparison remain recorded in section 1979. Do not broaden this
 result beyond the 18 typed-source fixtures or treat it as AutoCAD, visible-GUI,
 variant-completeness, or full external-CAD acceptance.
 
+## 1994. Integrate Current origin/master and Revalidate (2026-11-22)
+
+Merged the fetched `origin/master` tip `78014ecde` into the PR branch. The
+merge preview identified conflicts in `.github/workflows/dwg-dxf-verify.yml`
+and `rs_insert.cpp`; both resolutions preserve the offset-worker CI targets
+and add upstream's colorbox UI test, and preserve offset-cache finite checking
+alongside upstream's post-update insert selection propagation. `CMakeLists.txt`
+and the remaining upstream changes merged automatically. The Windows workflow's
+duplicate configure invocation was removed during conflict resolution.
+
+Validation on the merged tree:
+
+- Full qmake6 application/plugin rebuild passed (`make -j8`); a follow-up
+  no-op verification exited 0.
+- CMake Release configure passed with worker tests enabled.
+- CMake built the app library, offset worker, adapter, creation-action,
+  worker-client, worker-process, and cache-failure test executables.
+- Adapter `[sync-api]`: **299 assertions passed**.
+- Creation-worker selector: **398 assertions / 14 cases passed**.
+- Worker process stress: **121,618 assertions / 7 cases passed**.
+- Cache trim/check failure executables both exited successfully.
+
+The full merge diff's whitespace check reports trailing whitespace in
+upstream translation catalog updates; those unrelated catalog entries were
+left unchanged. The workflow and C++ conflict resolutions pass whitespace and
+conflict-marker checks. This integration does not close physical visible-app
+acceptance, the broad family/variant and Trim sanitizer/order matrix,
+independent CAD acceptance, or pending exact-head CI. The roadmap remains
+incomplete.
+
 ## 1992. Run a Fresh ODA GUI Batch (2026-11-22)
 
 Used the logged-in ODA File Converter 27.1 GUI with Audit enabled to convert

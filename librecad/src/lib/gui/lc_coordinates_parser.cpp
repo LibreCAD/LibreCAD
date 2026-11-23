@@ -23,143 +23,159 @@
 
 #include "lc_coordinates_parser.h"
 
+#include <cmath>
+
 #include "lc_convert.h"
 #include "lc_graphicviewport.h"
 #include "rs_graphicview.h"
 #include "rs_math.h"
 
+namespace {
+/**
+ * RS_Vector::polar() that is exact on the axes: the angle is reduced to a
+ * quarter turn first, so 100<-90 is (0, -100) instead of (6.1e-15, -100).
+ */
+RS_Vector polarPoint(const double distance, const double angle) {
+    const double quarters = std::nearbyint(angle / M_PI_2);
+    const double rest = angle - quarters * M_PI_2;
+    const double along = distance * std::cos(rest);
+    const double across = distance * std::sin(rest);
+    switch ((static_cast<int>(std::fmod(quarters, 4.)) + 4) % 4) {
+        case 1:
+            return {-across, along};
+        case 2:
+            return {-along, -across};
+        case 3:
+            return {across, -along};
+        default:
+            return {along, across};
+    }
+}
+}
+
 LC_CoordinatesParser::LC_CoordinatesParser(RS_GraphicView* gview):m_graphicView{gview} {}
 
-RS_CoordinateEvent LC_CoordinatesParser::parseCoordinate(const QString& inputStr, bool &stringContainsCoordinate) const {
-    RS_CoordinateEvent invalid(RS_Vector(false));
+/**
+ * Reads the syntax of a typed coordinate, without a view:
+ *   0 | . | ,               the UCS origin, or the relative zero
+ *   [@|!] x , y             Cartesian: absolute, relative or WCS
+ *   [@|!] distance < angle  polar: absolute, relative or WCS
+ * Whitespace around the prefix and the separator is ignored; each value
+ * goes to the expression parser as typed.
+ * The first ',' separates Cartesian values; otherwise the first '<'
+ * separates polar ones.
+ */
+LC_CoordinatesParser::Syntax LC_CoordinatesParser::parseSyntax(const QString& input) {
+    Syntax syntax;
+    const QString text = input.trimmed();
+    if (text.isEmpty()) {
+        return syntax;
+    }
 
-    stringContainsCoordinate = true;
-
-    // handle quick shortcuts for absolute/current origins:
-    if (inputStr.length() == 1) {
-        switch (inputStr[0].toLatin1()) {
-            case '0': {
-                auto ucs0 = RS_Vector(0, 0, 0);
-                RS_Vector wcs0 = toWCS(ucs0);
-                return RS_CoordinateEvent(wcs0, true, false);
-            }
+    // quick shortcuts for the absolute and the relative origin
+    if (text.length() == 1) {
+        switch (text.at(0).toLatin1()) {
+            case '0':
+                syntax.kind = Syntax::Origin;
+                syntax.valid = true;
+                break;
             case '.':
-            case ',': {
-                RS_Vector wcs0 = m_graphicView->getViewPort()->getRelativeZero();
-                return RS_CoordinateEvent(wcs0, false, true);
-            }
-            default: /* NO OP */
-                stringContainsCoordinate = false;
-                return invalid;
+            case ',':
+                syntax.kind = Syntax::RelativeZero;
+                syntax.valid = true;
+                break;
+            default:
+                break;
         }
+        return syntax;
     }
 
-    bool wcsCoordinates = inputStr.at(0) == '!';
-    if (wcsCoordinates) {
-        // proceed absolute wcs coordinates
-        QString candidate = inputStr.mid(1);
-        bool isCartesian = inputStr.contains(',');
-        if (isCartesian) {
-            qsizetype separatorPos = candidate.indexOf(',');
-            bool ok1{false}, ok2{false};
-            double x = RS_Math::eval(LC_Convert::updateForFraction(candidate.left(separatorPos)), &ok1);
-            double y = RS_Math::eval(LC_Convert::updateForFraction(candidate.mid(separatorPos + 1)), &ok2);
-            if (ok1 && ok2) {
-                const auto& wcsCoordinate = RS_Vector(x, y);
-                return RS_CoordinateEvent(wcsCoordinate);
-            }
-            return invalid;
-        }
-        bool isPolar = candidate.contains('<');
-        if (isPolar) {
-            // proceed absolute polar coordinates
-            qsizetype separatorPos = candidate.indexOf('<');
-            bool ok1{false};
-            double distance = RS_Math::eval(LC_Convert::updateForFraction(candidate.left(separatorPos)), &ok1);
-            const QString& angleStr = candidate.mid(separatorPos + 1);
+    QString body = text;
+    if (text.at(0) == '!') {
+        syntax.reference = Syntax::Wcs;
+        body = text.mid(1).trimmed();
+    }
+    else if (text.at(0) == '@') {
+        syntax.reference = Syntax::Relative;
+        body = text.mid(1).trimmed();
+    }
 
-            if (ok1) {
-                bool ok2{false};
-                double angleDegrees = LC_Convert::evalAngleValue(angleStr, ok2);
-                if (ok2) {
-                    double wcsAngle = RS_Math::deg2rad(angleDegrees); // fixme - sand - check whether angle base should be considered!!
-                    auto wcsCoordinate = RS_Vector(distance, wcsAngle);
-                    return RS_CoordinateEvent(wcsCoordinate);
+    const qsizetype comma = body.indexOf(',');
+    const qsizetype less = body.indexOf('<');
+    if (comma >= 0) {
+        syntax.kind = Syntax::Cartesian;
+    }
+    else if (less >= 0) {
+        syntax.kind = Syntax::Polar;
+    }
+    else {
+        // "!" always starts a coordinate; anything else is a command
+        syntax.kind = syntax.reference == Syntax::Wcs ? Syntax::Cartesian : Syntax::None;
+        return syntax;
+    }
+
+    const qsizetype separator = syntax.kind == Syntax::Cartesian ? comma : less;
+    const QString first = body.left(separator).trimmed();
+    const QString second = body.mid(separator + 1).trimmed();
+    if (first.isEmpty() || second.isEmpty()) {
+        return syntax;
+    }
+
+    bool ok1 = false;
+    bool ok2 = false;
+    syntax.first = RS_Math::eval(LC_Convert::updateForFraction(first), &ok1);
+    if (syntax.kind == Syntax::Cartesian) {
+        syntax.second = RS_Math::eval(LC_Convert::updateForFraction(second), &ok2);
+    }
+    else {
+        syntax.second = LC_Convert::evalAngleValue(second, ok2);
+    }
+    syntax.valid = ok1 && ok2;
+    return syntax;
+}
+
+bool LC_CoordinatesParser::isCoordinate(const QString& input) {
+    return parseSyntax(input).valid;
+}
+
+RS_CoordinateEvent LC_CoordinatesParser::parseCoordinate(const QString& inputStr, bool &stringContainsCoordinate) const {
+    const RS_CoordinateEvent invalid(RS_Vector(false));
+    const Syntax syntax = parseSyntax(inputStr);
+    stringContainsCoordinate = syntax.kind != Syntax::None;
+    if (!syntax.valid) {
+        return invalid;
+    }
+
+    switch (syntax.kind) {
+        case Syntax::Origin:
+            return RS_CoordinateEvent(toWCS(RS_Vector(0, 0, 0)), true, false);
+        case Syntax::RelativeZero:
+            return RS_CoordinateEvent(m_graphicView->getViewPort()->getRelativeZero(), false, true);
+        case Syntax::Cartesian:
+        case Syntax::Polar: {
+            RS_Vector point;
+            if (syntax.kind == Syntax::Cartesian) {
+                point = RS_Vector(syntax.first, syntax.second);
+            }
+            else {
+                // the drawing's angle base and direction apply, in the UCS or, for "!", the WCS
+                const double angle = toAbsUCSAngle(RS_Math::deg2rad(syntax.second));
+                point = polarPoint(syntax.first, angle);
+            }
+            switch (syntax.reference) {
+                case Syntax::Wcs:
+                    return RS_CoordinateEvent(point);
+                case Syntax::Relative: {
+                    const RS_Vector ucsRelZero = toUCS(m_graphicView->getViewPort()->getRelativeZero());
+                    return RS_CoordinateEvent(toWCS(point + ucsRelZero));
                 }
+                default:
+                    return RS_CoordinateEvent(toWCS(point));
             }
+        }
+        default:
             return invalid;
-        }
-        return invalid;
     }
-    bool absoluteCoordinates = inputStr.at(0) != '@';
-    bool isCartesian = inputStr.contains(',');
-    if (isCartesian) {
-        qsizetype separatorPos = inputStr.indexOf(',');
-        if (absoluteCoordinates) {
-            // absolute cartesian coordinates
-            bool ok1{false}, ok2{false};
-            double x = RS_Math::eval(LC_Convert::updateForFraction(inputStr.left(separatorPos)), &ok1);
-            double y = RS_Math::eval(LC_Convert::updateForFraction(inputStr.mid(separatorPos + 1)), &ok2);
-            if (ok1 && ok2) {
-                const auto& ucsCoordinate = RS_Vector(x, y);
-                RS_Vector wcsCoordinate = toWCS(ucsCoordinate);
-                return RS_CoordinateEvent(wcsCoordinate);
-            }
-            return invalid;
-        }
-        // relative cartesian coordinates
-        bool ok1{false}, ok2{false};
-        double x = RS_Math::eval(LC_Convert::updateForFraction(inputStr.mid(1, separatorPos - 1)), &ok1);
-        double y = RS_Math::eval(LC_Convert::updateForFraction(inputStr.mid(separatorPos + 1)), &ok2);
-
-        if (ok1 && ok2) {
-            const auto& ucsOffset = RS_Vector(x, y);
-            const RS_Vector ucsRelZero = toUCS(m_graphicView->getViewPort()->getRelativeZero());
-            const RS_Vector ucsCoordinate = ucsOffset + ucsRelZero;
-            const RS_Vector& wcsCoordinate = toWCS(ucsCoordinate);
-            return RS_CoordinateEvent(wcsCoordinate);
-        }
-        return invalid;
-    }
-    // try to handle polar coordinate input:
-    bool isPolar = inputStr.contains('<');
-    if (isPolar) {
-        qsizetype separatorPos = inputStr.indexOf('<');
-        if (absoluteCoordinates) {
-            // handle absolute polar coordinate input:
-            bool ok1{false}, ok2{false};
-            double ucsDistance = RS_Math::eval(LC_Convert::updateForFraction(inputStr.left(separatorPos)), &ok1);
-            const QString& angleStr = inputStr.mid(separatorPos + 1);
-            double ucsBasisAngleDegrees = LC_Convert::evalAngleValue(angleStr, ok2);
-            if (ok1 && ok2) {
-                double ucsBasisAngleRad = RS_Math::deg2rad(ucsBasisAngleDegrees);
-                double ucsAngle = toAbsUCSAngle(ucsBasisAngleRad);
-                RS_Vector ucsCoordinate{RS_Vector::polar(ucsDistance, ucsAngle)};
-                RS_Vector wcsCoordinate = toWCS(ucsCoordinate);
-                return RS_CoordinateEvent(wcsCoordinate);
-            }
-            return invalid;
-        }
-        // handle relative polar coordinate input:
-        qsizetype commaPos = inputStr.indexOf('<');
-        bool ok1{false}, ok2{false};
-        double ucsDistance = RS_Math::eval(LC_Convert::updateForFraction(inputStr.mid(1, commaPos - 1)), &ok1);
-        const QString& angleStr = inputStr.mid(commaPos + 1);
-        double ucsBasisAngleDegrees = LC_Convert::evalAngleValue(angleStr, ok2);
-
-        if (ok1 && ok2) {
-            double ucsBasisAngleRad = RS_Math::deg2rad(ucsBasisAngleDegrees);
-            double ucsAngle = toAbsUCSAngle(ucsBasisAngleRad);
-            RS_Vector ucsOffset = RS_Vector::polar(ucsDistance, ucsAngle);
-            const RS_Vector ucsRelZero = toUCS(m_graphicView->getViewPort()->getRelativeZero());
-            const RS_Vector ucsCoordinate = ucsOffset + ucsRelZero;
-            const RS_Vector& wcsCoordinate = toWCS(ucsCoordinate);
-            return RS_CoordinateEvent(wcsCoordinate);
-        }
-        return invalid;
-    }
-    stringContainsCoordinate = false;
-    return invalid;
 }
 
 RS_Vector LC_CoordinatesParser::toWCS(const RS_Vector &ucs) const {

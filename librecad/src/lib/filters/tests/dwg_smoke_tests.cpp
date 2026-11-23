@@ -5109,8 +5109,12 @@ bool phantomNear(const RS_Vector &p, double tol = 50.0) {
 
 } // namespace chicun
 
-TEST_CASE("INSERT expand does not select children (policy A)",
-          "[insert][selection]") {
+// Only the INSERT is in the selection set; the entities of its expansion carry its
+// selected flag, as selecting it gives them, because the renderer draws a child only
+// in the pass of its own flag. An expansion rebuilt unselected under a selected
+// INSERT was drawn by neither pass (#3013).
+TEST_CASE("INSERT expand keeps the selection set on the parent, its flag on the children",
+          "[insert][selection][3013]") {
   chicun::ensureTestApp();
   RS_Graphic graphic;
   graphic.initForNewDocument();
@@ -5125,13 +5129,27 @@ TEST_CASE("INSERT expand does not select children (policy A)",
   graphic.addEntity(ins);
   ins->update();
   REQUIRE(ins->count() >= 1);
-  ins->setSelectionFlag(true);
+
+  graphic.select(QList<RS_Entity *>{ins});
   ins->update();
   CHECK(ins->isSelected());
   for (RS_Entity *e : *ins) {
     REQUIRE(e != nullptr);
-    CHECK_FALSE(e->isSelected());
+    CHECK(e->getFlag(RS2::FlagSelected));
   }
+  QList<RS_Entity *> selected;
+  graphic.collectSelected(selected);
+  CHECK(selected == QList<RS_Entity *>{ins});
+
+  graphic.unselect(ins);
+  ins->update();
+  CHECK_FALSE(ins->isSelected());
+  for (RS_Entity *e : *ins) {
+    REQUIRE(e != nullptr);
+    CHECK_FALSE(e->getFlag(RS2::FlagSelected));
+  }
+  selected.clear();
+  CHECK_FALSE(graphic.collectSelected(selected));
 }
 
 // Probe incorrect geometry near WCS (120, 35220) in 2带尺寸图库.dwg.

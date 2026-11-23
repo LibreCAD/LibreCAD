@@ -25,8 +25,8 @@ class dividedlg : public QDialog
 {
     Q_OBJECT
 public:
-    dividedlg( Document_Interface *doc, QString,
-               QWidget *parent = nullptr );
+    dividedlg( Document_Interface *doc, int entityType,
+               const QString &entityName, QWidget *parent = nullptr );
     ~dividedlg();
 
 protected:

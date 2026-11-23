@@ -6,7 +6,7 @@
     <message>
         <location filename="../asciifile/asciifile.cpp" line="35"/>
         <source>Read ASCII points</source>
-        <translation>ASCII 포인트 읽기</translation>
+        <translation>ASCII 점 읽기</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="36"/>
@@ -16,7 +16,7 @@
     <message>
         <location filename="../asciifile/asciifile.cpp" line="42"/>
         <source>Read ascii points</source>
-        <translation>ASCII 포인트 읽기</translation>
+        <translation>ASCII 점 읽기</translation>
     </message>
 </context>
 <context>
@@ -24,7 +24,7 @@
     <message>
         <location filename="../pointstocsv/pointstocsv.cpp" line="34"/>
         <source>Export points to csv</source>
-        <translation>CSV 파일로 포인트 내보내기</translation>
+        <translation>CSV 파일로 점 내보내기</translation>
     </message>
     <message>
         <location filename="../pointstocsv/pointstocsv.cpp" line="41"/>
@@ -57,7 +57,7 @@
     <message>
         <location filename="../align/align.cpp" line="48"/>
         <source>Specify base points first</source>
-        <translation>기준 포인트 먼저 지정</translation>
+        <translation>기준점 먼저 지정</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="52"/>
@@ -127,7 +127,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
         <location filename="../list/list.cpp" line="22"/>
         <location filename="../list/list.cpp" line="29"/>
         <source>List entities</source>
-        <translation>구성요소 목록</translation>
+        <translation>엔티티 목록</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="30"/>
@@ -142,7 +142,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="58"/>
         <source>Empty Entity</source>
-        <translation>구성요소가 없습니다.</translation>
+        <translation>빈 엔티티</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="65"/>
@@ -157,7 +157,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="75"/>
         <source>Layer</source>
-        <translation>도면층</translation>
+        <translation>레이어</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="77"/>
@@ -289,7 +289,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="170"/>
         <source>SOLID</source>
-        <translation>단색</translation>
+        <translation>솔리드</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="174"/>
@@ -324,7 +324,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="192"/>
         <source>Scale</source>
-        <translation>크기</translation>
+        <translation>축척</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="195"/>
@@ -379,7 +379,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="235"/>
         <source>SPLINEPOINTS</source>
-        <translation>스플라인 포인트</translation>
+        <translation>스플라인 점</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="238"/>
@@ -389,7 +389,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="241"/>
         <source>DIMLEADER</source>
-        <translation>치수 리더</translation>
+        <translation>치수 지시선</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="244"/>
@@ -438,12 +438,12 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../sameprop/sameprop.cpp" line="40"/>
         <source>select original entity:</source>
-        <translation>원본 엔터티 선택:</translation>
+        <translation>원본 엔티티 선택:</translation>
     </message>
     <message>
         <location filename="../sameprop/sameprop.cpp" line="42"/>
         <source>select entities to change</source>
-        <translation>변경할 엔터티 선택</translation>
+        <translation>변경할 엔티티 선택</translation>
     </message>
 </context>
 <context>
@@ -483,7 +483,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="220"/>
         <source>Read ascii points</source>
-        <translation>ASCII 포인트 읽기</translation>
+        <translation>ASCII 점 읽기</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="226"/>
@@ -687,7 +687,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../divide/divide.cpp" line="439"/>
         <source>Empty Entity</source>
-        <translation>빈 엔터티</translation>
+        <translation>빈 엔티티</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="447"/>
@@ -712,7 +712,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../divide/divide.cpp" line="458"/>
         <source>Line type</source>
-        <translation>선 유형</translation>
+        <translation>선종류</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="460"/>
@@ -821,7 +821,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../divide/divide.cpp" line="529"/>
         <source>Vertices</source>
-        <translation>꼭짓점</translation>
+        <translation>정점</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="534"/>
@@ -884,7 +884,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../divide/dividedlg.cpp" line="178"/>
         <source>&lt;i&gt;New&lt;/i&gt;</source>
-        <translation>translation 1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="209"/>
@@ -1005,7 +1005,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../gear/gear.cpp" line="124"/>
         <source>Draw addendum circle?</source>
-        <translation>추가 원을 그릴까요?</translation>
+        <translation>이끝원을 그릴까요?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="125"/>
@@ -1058,7 +1058,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../list/list.cpp" line="276"/>
         <source>List entities</source>
-        <translation>엔터티 목록</translation>
+        <translation>엔티티 목록</translation>
     </message>
 </context>
 <context>
@@ -1272,7 +1272,7 @@ Use t or x in your equation as a variable/parameter.
         <location filename="../plotequation/plotdialog.cpp" line="61"/>
         <source>SplinePoints</source>
         <comment>Plot Equation to generate 2nd spline by LC_SplinePoints</comment>
-        <translation>스플라인 포인트</translation>
+        <translation>스플라인 점</translation>
     </message>
 </context>
 <context>
@@ -1280,7 +1280,7 @@ Use t or x in your equation as a variable/parameter.
     <message>
         <location filename="../asciifile/asciifile.cpp" line="176"/>
         <source>Layer:</source>
-        <translation>도면층 :</translation>
+        <translation>레이어:</translation>
     </message>
 </context>
 <context>

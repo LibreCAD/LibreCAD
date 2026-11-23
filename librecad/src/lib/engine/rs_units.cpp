@@ -29,6 +29,7 @@
 #include<QObject>
 #include <QRegularExpression>
 #include<QStringList>
+#include<algorithm>
 #include<cmath>
 #include<iostream>
 #include<limits>
@@ -492,6 +493,35 @@ QString RS_Units::formatDecimal(const double length, const RS2::Unit unit, const
     return ret;
 }
 
+namespace {
+/**
+ * Splits |length| into whole feet and whole steps of 1/stepsPerInch inch,
+ * rounded half to even like formatFractional() and printf. Steps that add up
+ * to 12 inches carry into the feet. The caller decides the sign from these
+ * integers, without comparing floating point values or the text.
+ */
+long long roundInchSteps(const double length, const RS2::Unit unit, const long long stepsPerInch, unsigned& feet) {
+    feet = static_cast<unsigned>(RS_Units::convert(std::abs(length), unit, RS2::Foot));
+    const double inches = RS_Units::convert(std::abs(length), unit, RS2::Inch) - feet * 12.;
+    // a tiny negative leftover of the feet split is no step at all
+    const long long steps = std::max(0LL, std::llrint(inches * stepsPerInch));
+    if (steps >= 12 * stepsPerInch) {
+        feet++;
+        return steps - 12 * stepsPerInch;
+    }
+    return steps;
+}
+
+// 10^prec; precision beyond 15 decimals is lost in a double anyway
+long long decimalSteps(const int prec) {
+    long long steps = 1;
+    for (int i = 0; i < std::clamp(prec, 0, 15); ++i) {
+        steps *= 10;
+    }
+    return steps;
+}
+}
+
 /**
  * Formats the given length in engineering format (e.g. 5' 4.5").
  *
@@ -505,25 +535,16 @@ QString RS_Units::formatEngineering(const double length, const RS2::Unit unit, c
         return "<Invalid length>";
     }
 
-    unsigned feet = convert(std::abs(length), unit, RS2::Foot);
-    const double inches = convert(std::abs(length), unit, RS2::Inch) - feet * 12;
+    unsigned feet = 0;
+    // round the inches to the shown precision before formatting
+    const long long stepsPerInch = decimalSteps(prec);
+    const long long steps = roundInchSteps(length, unit, stepsPerInch, feet);
 
-    QString sInches = RS_Math::doubleToString(inches, prec);
+    const QString sInches = RS_Math::doubleToString(static_cast<double>(steps) / stepsPerInch, prec);
+    const QString ret = (feet > 0) ? QString(R"(%1'-%2")").arg(feet).arg(sInches) : sInches + '"';
 
-    if (sInches == "12") {
-        feet++;
-        sInches = "0";
-    }
-
-    QString ret;
-    if (feet > 0) {
-        ret = QString(R"(%1'-%2")").arg(feet).arg(sInches);
-    }
-    else {
-        ret = sInches + '"';
-    }
-
-    return std::signbit(length) ? "-" + ret : ret;
+    // no sign when the length rounds to zero
+    return (std::signbit(length) && (feet != 0 || steps != 0)) ? "-" + ret : ret;
 }
 
 /**
@@ -539,28 +560,19 @@ QString RS_Units::formatArchitectural(const double length, const RS2::Unit unit,
         return "<Invalid length>";
     }
 
-    unsigned feet = convert(std::abs(length), unit, RS2::Foot);
-    double inches = convert(std::abs(length), unit, RS2::Inch) - feet * 12;
+    unsigned feet = 0;
+    // round the inches to the shown fraction before formatting
+    const long long stepsPerInch = 2LL << prec;
+    const long long steps = roundInchSteps(length, unit, stepsPerInch, feet);
 
-    // potential rounding off
-    if (inches >= 12.) {
-        feet++;
-        inches -= 12.;
-    }
+    const QString sInches = formatFractional(static_cast<double>(steps) / stepsPerInch, RS2::Inch, prec, showUnit);
 
-    QString sInches = formatFractional(inches, RS2::Inch, prec, showUnit);
-
-    // due to precision
-    if (sInches == "12") {
-        feet++;
-        sInches = "0";
-    }
-
+    // keep the sign below one foot too, but do not print -0"
+    const QString negativeSign = (std::signbit(length) && (feet != 0 || steps != 0)) ? "-" : "";
     if (feet != 0) {
-        const QString negativeSign = std::signbit(length) ? "-" : "";
         return QString(R"(%1%2'-%3")").arg(negativeSign).arg(feet).arg(sInches);
     }
-    return QString(R"(%1")").arg(sInches);
+    return QString(R"(%1%2")").arg(negativeSign).arg(sInches);
 }
 
 /**
@@ -585,7 +597,7 @@ QString RS_Units::formatArchitecturalMetric(const double length, const RS2::Unit
         ret = ret.replace(ret.length() - 1, 1, "\u2075");
     }
     else {
-        ret = RS_Math::doubleToString(length, prec);
+        ret = RS_Math::doubleToString(std::abs(length), prec);
     }
 
     // return values < 1.00m in cm (0.42 -> 42)
@@ -620,16 +632,12 @@ QString RS_Units::formatFractional(const double length, [[maybe_unused]]RS2::Uni
         return "<Invalid length>";
     }
 
-    // Issue #2218: negative number support
-    if (std::signbit(length)) {
-        const QString sign = std::signbit(length + RS_TOLERANCE) ? QString{"- "} : QString{};
-        return sign + formatFractional(std::abs(length), RS2::Inch, prec, false);
-    }
     // number of complete inches (num' 7/128")
-    unsigned num = static_cast<unsigned>(std::abs(length));
+    const double magnitude = std::abs(length);
+    unsigned num = static_cast<unsigned>(magnitude);
 
     unsigned denominator = 2 << prec;
-    unsigned nominator = static_cast<unsigned>(RS_Math::round((length - num) * denominator));
+    unsigned nominator = static_cast<unsigned>(RS_Math::round((magnitude - num) * denominator));
 
     // fraction rounds up to 1:
     if (nominator == denominator) {
@@ -652,8 +660,8 @@ QString RS_Units::formatFractional(const double length, [[maybe_unused]]RS2::Uni
         }
     }
 
-    // sign:
-    const QString neg = std::signbit(length) ? "-" : "";
+    // Issue #2218: negative number support; no sign when the length rounds to zero
+    const QString neg = (std::signbit(length) && (num != 0 || nominator != 0)) ? "- " : "";
     QString ret;
     if (num != 0 && nominator != 0) {
         ret = QString("%1%2 %3/%4").arg(neg).arg(num).arg(nominator).arg(denominator);
@@ -715,34 +723,23 @@ QString RS_Units::formatAngle(double angle, RS2::AngleFormat format, int prec) {
             break;
         }
         case RS2::DegreesMinutesSeconds: {
-            unsigned vDegrees, vMinutes;
-            double vSeconds;
-            QString degrees, minutes, seconds;
+            // Round once at the resolution that is shown and split afterwards, so that a value
+            // rounded up carries into the minutes and degrees instead of showing 60.
+            const int secDecimals = prec > 1 ? prec - 2 : 0;
+            const double secScale = std::pow(10., secDecimals);
+            // the same cases as the switch below: 0 shows degrees, 1 minutes, any other value seconds
+            const double unitsPerMinute = prec == 0 || prec == 1 ? 1. : 60. * secScale;
+            const double unitsPerDegree = prec == 0 ? 1. : 60. * unitsPerMinute;
 
-            vDegrees = static_cast<unsigned>(std::floor(value));
-            vMinutes = static_cast<unsigned>(std::floor((value - vDegrees) * 60.0));
-            vSeconds = (value - vDegrees - (vMinutes / 60.0)) * 3600.0;
+            const double total = std::round(value * unitsPerDegree);
+            const double inDegree = std::fmod(total, unitsPerDegree);
+            const double inMinute = std::fmod(inDegree, unitsPerMinute);
+            const auto vDegrees = static_cast<unsigned>((total - inDegree) / unitsPerDegree);
+            const auto vMinutes = static_cast<unsigned>((inDegree - inMinute) / unitsPerMinute);
 
-            seconds = RS_Math::doubleToString(vSeconds, (prec > 1 ? prec - 2 : 0));
-
-            if (seconds == "60") {
-                seconds = "0";
-                ++vMinutes;
-                if (vMinutes == 60) {
-                    vMinutes = 0;
-                    ++vDegrees;
-                }
-            }
-
-            if (prec == 0 && vMinutes >= 30.0) {
-                vDegrees++;
-            }
-            else if (prec == 1 && vSeconds >= 30.0) {
-                vMinutes++;
-            }
-
-            degrees.setNum(vDegrees);
-            minutes.setNum(vMinutes);
+            const QString degrees = QString::number(vDegrees);
+            const QString minutes = QString::number(vMinutes);
+            const QString seconds = RS_Math::doubleToString(inMinute / secScale, secDecimals);
 
             switch (prec) {
                 case 0:

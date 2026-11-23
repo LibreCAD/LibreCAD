@@ -677,7 +677,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../divide/divide.cpp" line="53"/>
         <source>Select a line, circle or arc and press return</source>
-        <translation>Επιλέξτε μια γραμμή, έναν κύκλο ή μια καμπύλη και πατήστε Enter</translation>
+        <translation>Επιλέξτε μια γραμμή, έναν κύκλο ή ένα τόξο και πατήστε Enter</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="64"/>
@@ -707,7 +707,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../divide/divide.cpp" line="455"/>
         <source>Layer</source>
-        <translation>Επίπεδο</translation>
+        <translation>Στρώση</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="457"/>
@@ -849,7 +849,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../divide/dividedlg.cpp" line="68"/>
         <source>Layers</source>
-        <translation>Επίπεδα</translation>
+        <translation>Στρώσεις</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="74"/>
@@ -1000,17 +1000,17 @@ anti-clockwise.</source>
     <message>
         <location filename="../gear/gear.cpp" line="121"/>
         <source>Draw symmetric face?</source>
-        <translation>Σχεδίαση συμμετρικού προσώπου;</translation>
+        <translation>Σχεδίαση συμμετρικής παρειάς;</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="123"/>
         <source>Use layers?</source>
-        <translation>Χρήση επιπέδων;</translation>
+        <translation>Χρήση στρώσεων;</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="124"/>
         <source>Draw addendum circle?</source>
-        <translation>Σχεδίαση βοηθητικού κύκλου;</translation>
+        <translation>Σχεδίαση κύκλου κεφαλής;</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="125"/>
@@ -1265,7 +1265,7 @@ Use t or x in your equation as a variable/parameter.
         <location filename="../plotequation/plotdialog.cpp" line="59"/>
         <source>Line Segments</source>
         <comment>Plot Equation to generate RS_Line segments</comment>
-        <translation>Τομείς Γραμμής</translation>
+        <translation>Ευθύγραμμα τμήματα</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="60"/>

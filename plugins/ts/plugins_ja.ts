@@ -105,7 +105,7 @@
     </message>
     <message>
         <source>DIMLINEAR</source>
-        <translation>線形寸法</translation>
+        <translation>長さ寸法</translation>
     </message>
     <message>
         <source>DIMRADIAL</source>

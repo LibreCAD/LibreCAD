@@ -380,7 +380,7 @@ Despois, complete os campos e prema o botón &apos;Aceptar&apos;.</translation>
     <message>
         <location filename="../list/list.cpp" line="235"/>
         <source>SPLINEPOINTS</source>
-        <translation>NODOS DE SPLINE</translation>
+        <translation>SPLINE POR PUNTOS</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="238"/>
@@ -395,27 +395,27 @@ Despois, complete os campos e prema o botón &apos;Aceptar&apos;.</translation>
     <message>
         <location filename="../list/list.cpp" line="244"/>
         <source>DIMALIGNED</source>
-        <translation>ACOUTAMENTO ALIÑADO</translation>
+        <translation>COTA ALIÑADA</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="247"/>
         <source>DIMLINEAR</source>
-        <translation>ACOUTAMENTO LINEAR</translation>
+        <translation>COTA LINEAL</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="250"/>
         <source>DIMRADIAL</source>
-        <translation>ACOUTAMENTO RADIAL</translation>
+        <translation>COTA RADIAL</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="253"/>
         <source>DIMDIAMETRIC</source>
-        <translation>ACOUTAMENTO DIAMETRAL</translation>
+        <translation>COTA DIAMÉTRICA</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="256"/>
         <source>DIMANGULAR</source>
-        <translation>ACOUTAMENTO ANGULAR</translation>
+        <translation>COTA ANGULAR</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="259"/>
@@ -772,7 +772,7 @@ Despois, complete os campos e prema o botón &apos;Aceptar&apos;.</translation>
         <location filename="../divide/divide.cpp" line="518"/>
         <location filename="../divide/divide.cpp" line="540"/>
         <source>radius</source>
-        <translation>radio</translation>
+        <translation>raio</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="502"/>
@@ -802,7 +802,7 @@ Despois, complete os campos e prema o botón &apos;Aceptar&apos;.</translation>
     <message>
         <location filename="../divide/divide.cpp" line="525"/>
         <source>POLYLINE</source>
-        <translation>POLILÍNEA</translation>
+        <translation>POLILIÑA</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="526"/>
@@ -1155,7 +1155,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../picfile/picfile.cpp" line="118"/>
         <source>Scale Factor is empty or invalid</source>
-        <translation>Factor de Escala está baleiro ou non é válido</translation>
+        <translation>O factor de escala está baleiro ou non é válido</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="131"/>
@@ -1274,7 +1274,7 @@ Use t ou x na súa ecuación como unha variable/parámetro.
         <location filename="../plotequation/plotdialog.cpp" line="61"/>
         <source>SplinePoints</source>
         <comment>Plot Equation to generate 2nd spline by LC_SplinePoints</comment>
-        <translation>Spline por Puntos</translation>
+        <translation>Spline por puntos</translation>
     </message>
 </context>
 <context>

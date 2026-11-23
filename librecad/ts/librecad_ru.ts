@@ -216,7 +216,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimarc.cpp" line="191"/>
         <source>Specify dimension arc location</source>
-        <translation>Указать положение размерности дуги</translation>
+        <translation>Укажите положение размерной дуги</translation>
     </message>
 </context>
 <context>
@@ -224,12 +224,12 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="310"/>
         <source>Specify first extension line origin</source>
-        <translation>Укажите точку привязки первой размерной линии</translation>
+        <translation>Укажите начало первой выносной линии</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="300"/>
         <source>Specify second extension line origin</source>
-        <translation>Укажите точку привязки второй размерной линии</translation>
+        <translation>Укажите начало второй выносной линии</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondimlinearbase.cpp" line="304"/>
@@ -453,7 +453,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_center_point_param.cpp" line="549"/>
         <source>Specify end angle or [angle/chordlen]</source>
-        <translation>Укажите конечный угол или [угол/длину хорды]</translation>
+        <translation>Укажите конечный угол или [угол/хорда]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_center_point_param.cpp" line="549"/>
@@ -717,7 +717,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_1entity_2points.cpp" line="449"/>
         <source>Specify a line/arc/circle</source>
-        <translation>Укажите прямую, дугу или окружность</translation>
+        <translation>Укажите линию, дугу или окружность</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_1entity_2points.cpp" line="452"/>
@@ -740,12 +740,12 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_2entities_1point.cpp" line="338"/>
         <source>Specify a line/arc/circle</source>
-        <translation>Укажите прямую, дугу или окружность</translation>
+        <translation>Укажите линию, дугу или окружность</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_2entities_1point.cpp" line="341"/>
         <source>Specify the another line/arc/circle</source>
-        <translation>Укажите вторую прямую, дугу или окружность</translation>
+        <translation>Укажите вторую линию, дугу или окружность</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_2entities_1point.cpp" line="344"/>
@@ -768,12 +768,12 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_2entities_radius.cpp" line="292"/>
         <source>Specify the first line/arc/circle</source>
-        <translation>Укажите первую прямую, дугу или окружность</translation>
+        <translation>Укажите первую линию, дугу или окружность</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_2entities_radius.cpp" line="295"/>
         <source>Specify the second line/arc/circle</source>
-        <translation>Укажите вторую прямую, дугу или окружность</translation>
+        <translation>Укажите вторую линию, дугу или окружность</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_2entities_radius.cpp" line="298"/>
@@ -791,12 +791,12 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_3entities.cpp" line="520"/>
         <source>Specify the first line/arc/circle</source>
-        <translation>Укажите первую прямую, дугу или окружность</translation>
+        <translation>Укажите первую линию, дугу или окружность</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_3entities.cpp" line="523"/>
         <source>Specify the second line/arc/circle</source>
-        <translation>Укажите вторую прямую, дугу или окружность</translation>
+        <translation>Укажите вторую линию, дугу или окружность</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/circle/lc_action_draw_circle_tangental_3entities.cpp" line="526"/>
@@ -814,17 +814,17 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="416"/>
         <source>Select base linear/aligned dimension</source>
-        <translation>Выберите базовый линейный/выровненный размер</translation>
+        <translation>Выберите базовый линейный/параллельный размер</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="416"/>
         <source>Select distant extension point</source>
-        <translation>Выбрать дальную точку выноски</translation>
+        <translation>Выберите дальнюю точку выносной линии</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="419"/>
         <source>Specify second extension line origin</source>
-        <translation>Укажите точку привязки второй размерной линии</translation>
+        <translation>Укажите начало второй выносной линии</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="419"/>
@@ -1145,12 +1145,12 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_bisector.cpp" line="282"/>
         <source>Select first line</source>
-        <translation>Выделите первую прямую</translation>
+        <translation>Выделите первую линию</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_bisector.cpp" line="285"/>
         <source>Select second line</source>
-        <translation>Выделите вторую прямую</translation>
+        <translation>Выделите вторую линию</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_line_bisector.cpp" line="288"/>
@@ -1375,7 +1375,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_line_radiant.cpp" line="74"/>
         <source>Resulting line is too short</source>
-        <translation>Результирующая прямая слишком короткая</translation>
+        <translation>Результирующая линия слишком короткая</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_line_radiant.cpp" line="180"/>
@@ -1683,21 +1683,21 @@ distance between points=%2 is larger than diameter=%3</source>
         <source>Specify Second Point
 or [number|x|y|angle|p|edges|distance]</source>
         <translation>Укажите вторую точку
-или [number|x|y|angle|p|edges|distance]</translation>
+или [number|x|y|угол|p|edges|distance]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="586"/>
         <source>Specify Second Point
 or [number]</source>
         <translation>Укажите вторую точку
-или [number]</translation>
+или [число]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="590"/>
         <source>Specify line direction
 [x|y|angle|p|distance]</source>
         <translation>Укажите направление линии
-[x|y|angle|p|distance]</translation>
+[x|y|угол|p|distance]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="593"/>
@@ -1944,12 +1944,12 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_2points.cpp" line="310"/>
         <source>Specify point 1 snap [corner|mid-vert|mid-hor|middle]</source>
-        <translation>Укажите режим привязки первой точку [corner|mid-vert|mid-hor|middle]</translation>
+        <translation>Укажите режим привязки первой точки [corner|mid-vert|mid-hor|middle]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_2points.cpp" line="313"/>
         <source>Specify point 2 snap [corner|mid-vert|mid-hor|middle]</source>
-        <translation>Укажите режим привязки второй точку [corner|mid-vert|mid-hor|middle]</translation>
+        <translation>Укажите режим привязки второй точки [corner|mid-vert|mid-hor|middle]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_2points.cpp" line="316"/>
@@ -2093,7 +2093,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_slice_divide.cpp" line="238"/>
         <source>Line</source>
-        <translation>Прямая</translation>
+        <translation>Линия</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_action_draw_slice_divide.cpp" line="248"/>
@@ -2280,12 +2280,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="597"/>
         <source>&amp;Window Zoom</source>
-        <translation>&amp;Увеличение окна</translation>
+        <translation>Показать &amp;рамкой</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="338"/>
         <source>Zoom &amp;Panning</source>
-        <translation>Масштабирование &amp;Панорамирование</translation>
+        <translation>&amp;Панорамирование</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="246"/>
@@ -2446,32 +2446,32 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="222"/>
         <source>Angle From Line</source>
-        <translation>Угол от Прямой</translation>
+        <translation>Угол от линии</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="223"/>
         <source>Orthogonal From Line</source>
-        <translation>Ортогональ от прямой</translation>
+        <translation>Ортогональ от линии</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="224"/>
         <source>From Point To Line</source>
-        <translation>От точки к прямой</translation>
+        <translation>От точки к линии</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="227"/>
         <source>Slice/Divide Line</source>
-        <translation>Поделить Прямую</translation>
+        <translation>Разделить линию</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="228"/>
         <source>Slice/Divide Circle</source>
-        <translation>Поделить Окружность</translation>
+        <translation>Разделить окружность</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="236"/>
         <source>Line of Points</source>
-        <translation>Прямая Точек</translation>
+        <translation>Линия точек</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="261"/>
@@ -2602,7 +2602,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="328"/>
         <source>&amp;Trim segments</source>
-        <translation>&amp;Подогнать отрезки</translation>
+        <translation>&amp;Обрезать сегменты</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="329"/>
@@ -2612,7 +2612,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="339"/>
         <source>&amp;MText</source>
-        <translation>&amp;Текст по строкам</translation>
+        <translation>&amp;Многострочный текст</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="340"/>
@@ -2662,7 +2662,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="357"/>
         <source>&amp;Leader</source>
-        <translation>П&amp;олка-выноска</translation>
+        <translation>&amp;Выноска</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="378"/>
@@ -2692,7 +2692,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="284"/>
         <source>&amp;2 Points, Length</source>
-        <translation>Дуга 2 Tочки, Длина дуги</translation>
+        <translation>&amp;Дуга: 2 точки, длина дуги</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="80"/>
@@ -2703,17 +2703,17 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="225"/>
         <source>Centerline</source>
-        <translation>Центральная линия</translation>
+        <translation>Осевая линия</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="226"/>
         <source>Center Mark</source>
-        <translation>Центральная Метка</translation>
+        <translation>Маркер центра</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="285"/>
         <source>&amp;2 Points, Height</source>
-        <translation>Дуга 2 Tочки, Высота</translation>
+        <translation>Ду&amp;га: 2 точки, высота</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="331"/>
@@ -2733,17 +2733,17 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="386"/>
         <source>Rotate T&amp;wo</source>
-        <translation>Вращени&amp;е по двум</translation>
+        <translation>Поворот по &amp;двум</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="387"/>
         <source>&amp;Properties</source>
-        <translation>&amp;Характеристики</translation>
+        <translation>&amp;Свойства</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="388"/>
         <source>&amp;Trim</source>
-        <translation>Подо&amp;гнать</translation>
+        <translation>&amp;Обрезать</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="390"/>
@@ -2758,7 +2758,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="393"/>
         <source>&amp;Stretch</source>
-        <translation>&amp;Вытянуть</translation>
+        <translation>&amp;Растянуть</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="394"/>
@@ -2808,7 +2808,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="472"/>
         <source>Add Guiding Line</source>
-        <translation>Добавить Опорную Прямую</translation>
+        <translation>Добавить опорную линию</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="473"/>
@@ -2828,7 +2828,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="586"/>
         <source>An&amp;gle between two lines</source>
-        <translation>&amp;Угол между двумя прямыми</translation>
+        <translation>&amp;Угол между двумя линиями</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="588"/>
@@ -2873,7 +2873,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="282"/>
         <source>&amp;2 Points, Angle</source>
-        <translation>Дуга 2 Tочки, Угол</translation>
+        <translation>Дуга: 2 точки, &amp;угол</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="283"/>
@@ -2943,7 +2943,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="400"/>
         <source>Line Join</source>
-        <translation>Соединить прямые</translation>
+        <translation>Соединить линии</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="401"/>
@@ -2973,7 +2973,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="416"/>
         <source>&amp;Pick Pen From Entity</source>
-        <translation>Выбрать Перо из Oбъекта</translation>
+        <translation>&amp;Выбрать перо из объекта</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="417"/>
@@ -3029,7 +3029,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="455"/>
         <source>Snap on Endpoints</source>
-        <translation>К конечным точками</translation>
+        <translation>К конечным точкам</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="456"/>
@@ -3124,7 +3124,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="591"/>
         <source>Ang&amp;le between 3 points</source>
-        <translation>Угол между 3-мя Tочками</translation>
+        <translation>Уго&amp;л между 3 точками</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="604"/>
@@ -3144,17 +3144,17 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="608"/>
         <source>&amp;Isometric Left Grid</source>
-        <translation>Изметрическая сетка (Левая)</translation>
+        <translation>&amp;Изометрическая сетка (левая)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="609"/>
         <source>&amp;Isometric Top Grid</source>
-        <translation>Изметрическая сетка (Сверху)</translation>
+        <translation>Изо&amp;метрическая сетка (сверху)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="610"/>
         <source>&amp;Isometric Right Grid</source>
-        <translation>Изметрическая сетка (Правая)</translation>
+        <translation>Изометри&amp;ческая сетка (правая)</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="621"/>
@@ -3279,12 +3279,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="720"/>
         <source>Zoom &amp;In</source>
-        <translation>&amp;Приблизить</translation>
+        <translation>&amp;Увеличить</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="721"/>
         <source>Zoom &amp;Out</source>
-        <translation>&amp;Отдалить</translation>
+        <translation>У&amp;меньшить</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="722"/>
@@ -3509,12 +3509,12 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="67"/>
         <source>Line</source>
-        <translation>ПРЯМАЯ</translation>
+        <translation>ЛИНИЯ</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="67"/>
         <source>Line drawing commands</source>
-        <translation>Команды создания прямых</translation>
+        <translation>Команды создания линий</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="68"/>
@@ -3750,7 +3750,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="229"/>
         <source>Radiant Line</source>
-        <translation>Лучистая прямая</translation>
+        <translation>Лучистая линия</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="237"/>
@@ -3825,7 +3825,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="302"/>
         <source>&amp;Explode spline to lines</source>
-        <translation>Прямые из сплайна</translation>
+        <translation>&amp;Разбить сплайн на отрезки</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="303"/>
@@ -3870,7 +3870,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="389"/>
         <source>Tr&amp;im Two</source>
-        <translation>&amp;Подогнать по двум</translation>
+        <translation>Обрезать &amp;два</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="391"/>
@@ -4085,7 +4085,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="762"/>
         <source>&amp;Dimension Styles</source>
-        <translation>Стили Размеров</translation>
+        <translation>&amp;Размерные стили</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="772"/>
@@ -4238,17 +4238,17 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="143"/>
         <source>Select first edge point of angle</source>
-        <translation>Укажите первую точку первой прямой угла</translation>
+        <translation>Укажите первую точку первой стороны угла</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="147"/>
         <source>Select second (intersection) point of angle</source>
-        <translation>Укажите точку вершины угла (пересечение прямых)</translation>
+        <translation>Укажите точку вершины угла (пересечение линий)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="151"/>
         <source>Select second edge point of angle</source>
-        <translation>Укажите вторую точку второй прямой угла</translation>
+        <translation>Укажите вторую точку второй стороны угла</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="192"/>
@@ -4356,10 +4356,10 @@ Polar: (%4 &lt; %5)
 Point On Entity: (%6 , %7)
 Point: (%8 , %9)</source>
         <translation>Расстояние: %1
-Картезианские: (%2 , %3)
+Декартовы: (%2 , %3)
 Полярные: (%4 &lt; %5)
-Точка в объекте: (%6 , %7)
-Точка: (%8 , %9)&quot;</translation>
+Точка на объекте: (%6 , %7)
+Точка: (%8 , %9)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_action_info_dist_point_to_entity.cpp" line="301"/>
@@ -4497,7 +4497,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="139"/>
         <source>Lines are parallel</source>
-        <translation>Прямые параллельны</translation>
+        <translation>Линии параллельны</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="159"/>
@@ -4541,32 +4541,32 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="165"/>
         <source>Line 1 Angle:</source>
-        <translation>Угол прямой 1:</translation>
+        <translation>Угол линии 1:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="166"/>
         <source>Line 2 Angle:</source>
-        <translation>Угол прямой 2:</translation>
+        <translation>Угол линии 2:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="288"/>
         <source>Select first edge point of angle</source>
-        <translation>Укажите первую точку первой прямой угла</translation>
+        <translation>Укажите первую точку первой стороны угла</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="288"/>
         <source>Select first line/Pick Supplementary</source>
-        <translation>Выбрать первую прямую /Выбрать Смежный</translation>
+        <translation>Выберите первую линию / смежный угол</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="288"/>
         <source>Pick from line</source>
-        <translation>Выбрать угол прямой</translation>
+        <translation>Выбрать угол линии</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="292"/>
         <source>Select second (intersection) point of angle</source>
-        <translation>Укажите точку вершины угла (пересечение прямых)</translation>
+        <translation>Укажите точку вершины угла (пересечение линий)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="292"/>
@@ -4576,7 +4576,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="296"/>
         <source>Select second edge point of angle</source>
-        <translation>Укажите вторую точку второй прямой угла</translation>
+        <translation>Укажите вторую точку второй стороны угла</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="296"/>
@@ -4587,7 +4587,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="300"/>
         <source>Specify second line</source>
-        <translation>Укажите вторую прямую</translation>
+        <translation>Укажите вторую линию</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="300"/>
@@ -4997,7 +4997,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_attributes.cpp" line="71"/>
         <source>Select to modify attributes</source>
-        <translation>Выберите объекты для изменения аттрибутов</translation>
+        <translation>Выберите объекты для изменения атрибутов</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_attributes.cpp" line="72"/>
@@ -5007,7 +5007,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_attributes.cpp" line="72"/>
         <source>Modify attributes immediately after selecting</source>
-        <translation>Изменить аттрибуты сразу после выделения</translation>
+        <translation>Изменить атрибуты сразу после выделения</translation>
     </message>
 </context>
 <context>
@@ -5046,17 +5046,17 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_bevel.cpp" line="253"/>
         <source>Selected lines are parallel</source>
-        <translation>Выбраные прямые параллельны</translation>
+        <translation>Выбранные линии параллельны</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_bevel.cpp" line="257"/>
         <source>Selected lines are not children of the same polyline</source>
-        <translation>Выбраные прямые не принадлежат одной ломаной</translation>
+        <translation>Выбранные линии не принадлежат одной ломаной</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_bevel.cpp" line="261"/>
         <source>Both selected entities should be lines</source>
-        <translation>Оба выбраных объекта должны быть прямыми</translation>
+        <translation>Оба выбранных объекта должны быть линиями</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_bevel.cpp" line="265"/>
@@ -5105,7 +5105,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="248"/>
         <source>Break/Divide Line</source>
-        <translation>Разделение Прямой по пересечениям</translation>
+        <translation>Разделение линии по пересечениям</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="249"/>
@@ -5331,12 +5331,12 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_gap.cpp" line="459"/>
         <source>Select line</source>
-        <translation>Выберите прямую</translation>
+        <translation>Выберите линию</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_gap.cpp" line="459"/>
         <source>Use Alternative Line Endpoint</source>
-        <translation>Использовать другой конец прямой</translation>
+        <translation>Использовать другой конец линии</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_gap.cpp" line="463"/>
@@ -5354,7 +5354,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_join.cpp" line="132"/>
         <source>Lines are parallel</source>
-        <translation>Прямые параллельны</translation>
+        <translation>Линии параллельны</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_join.cpp" line="135"/>
@@ -5365,32 +5365,32 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_join.cpp" line="188"/>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_join.cpp" line="240"/>
         <source>No line selected</source>
-        <translation>Нет выбранной прямой</translation>
+        <translation>Нет выбранной линии</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_join.cpp" line="210"/>
         <source>Lines are parallel, can&apos;t merge</source>
-        <translation>Прямые параллельны, объединить нельзя</translation>
+        <translation>Линии параллельны, объединить нельзя</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_join.cpp" line="215"/>
         <source>Lines already intersects, can&apos;t merge</source>
-        <translation>Прямый уже пересекаются, нечего объединять</translation>
+        <translation>Линии уже пересекаются, объединить нельзя</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_join.cpp" line="836"/>
         <source>Select first line</source>
-        <translation>Выделите первую прямую</translation>
+        <translation>Выделите первую линию</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_join.cpp" line="839"/>
         <source>Select second line</source>
-        <translation>Выделите вторую прямую</translation>
+        <translation>Выделите вторую линию</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_line_join.cpp" line="842"/>
         <source>Select part of first line that should remain after trim</source>
-        <translation>Выберите часть первой прямой которая должна остаться после отсечения</translation>
+        <translation>Выберите часть первой линии, которая должна остаться после обрезки</translation>
     </message>
 </context>
 <context>
@@ -5413,12 +5413,12 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_mirror.cpp" line="151"/>
         <source>Line From:</source>
-        <translation>Начало прямой:</translation>
+        <translation>Начало линии:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_mirror.cpp" line="152"/>
         <source>Line To:</source>
-        <translation>Конец прямой:</translation>
+        <translation>Конец линии:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_mirror.cpp" line="251"/>
@@ -5433,7 +5433,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_mirror.cpp" line="258"/>
         <source>Specify mirror line</source>
-        <translation>Выберите прямую которая будет осью симметрии</translation>
+        <translation>Выберите линию, которая будет осью симметрии</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_mirror.cpp" line="258"/>
@@ -5510,7 +5510,7 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/modify/lc_action_modify_move_rotate.cpp" line="124"/>
         <location filename="../src/actions/drawing/modify/lc_action_modify_move_rotate.cpp" line="153"/>
         <source>Moving with rotation</source>
-        <translation>Сдвиг с поворотом</translation>
+        <translation>Перемещение с поворотом</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_move_rotate.cpp" line="124"/>
@@ -5845,12 +5845,12 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate.cpp" line="711"/>
         <source>Specify rotation center</source>
-        <translation>Укажите центр вращения</translation>
+        <translation>Укажите центр поворота</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate.cpp" line="714"/>
         <source>Specify target point to rotate to</source>
-        <translation>Укажите целевую точку вращения</translation>
+        <translation>Укажите целевую точку поворота</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate.cpp" line="717"/>
@@ -5863,7 +5863,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate_twice.cpp" line="145"/>
         <source>Rotating Twice</source>
-        <translation>Двойное вращение</translation>
+        <translation>Двойной поворот</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate_twice.cpp" line="146"/>
@@ -5888,7 +5888,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate_twice.cpp" line="214"/>
         <source>Select for two axis rotation</source>
-        <translation>Выберите объекты для вращения</translation>
+        <translation>Выберите объекты для поворота вокруг двух центров</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_rotate_twice.cpp" line="215"/>
@@ -6137,7 +6137,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim_amount.cpp" line="207"/>
         <source>The chosen Entity is not an atomic entity or cannot be trimmed.</source>
-        <translation>Выбранный объект не является элементарным объектом или его невозможно подогнать.</translation>
+        <translation>Выбранный объект не является элементарным объектом или не может быть обрезан.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim_amount.cpp" line="232"/>
@@ -6147,7 +6147,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim_amount.cpp" line="267"/>
         <source>Select line/arc to trim OR enter length value:</source>
-        <translation>Выберите прямую/дугу для подгонки ИЛИ укажите значение длины</translation>
+        <translation>Выберите линию/дугу для обрезки ИЛИ укажите значение длины:</translation>
     </message>
 </context>
 <context>
@@ -6155,7 +6155,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/lc_action_options_properties_filler_base.cpp" line="294"/>
         <source>Snap Distance</source>
-        <translation>Дистанция привязки:</translation>
+        <translation>Расстояние привязки</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/lc_action_options_properties_filler_base.cpp" line="294"/>
@@ -6415,7 +6415,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node_between.cpp" line="195"/>
         <source>At least two segments of polyline should be between selected points.</source>
-        <translation>Как минимум два сегмента ломаной должны быть между выбраными точками</translation>
+        <translation>Как минимум два сегмента ломаной должны быть между выбранными точками</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_delete_node_between.cpp" line="213"/>
@@ -6500,7 +6500,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_trim.cpp" line="188"/>
         <source>Specify polyline to trim</source>
-        <translation>Укажите ломаную для подгонки</translation>
+        <translation>Укажите ломаную для обрезки</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/polyline/lc_action_polyline_trim.cpp" line="191"/>
@@ -7190,13 +7190,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_filler.cpp" line="51"/>
         <source>Current attributes</source>
-        <translation>С текущими аттрибутами</translation>
+        <translation>С текущими атрибутами</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_filler.cpp" line="52"/>
         <source>If checked, current attributes will be used for mirrored entities, otherwise - original ones</source>
-        <translation>Если выбрано, текущие аттрибуты будут применены к созданным объектам.
-Иначе, к копиям будут применены аттрибуты оригинальных объектов. </translation>
+        <translation>Если выбрано, текущие атрибуты будут применены к созданным объектам. Иначе к копиям будут применены атрибуты оригинальных объектов.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_filler.cpp" line="61"/>
@@ -7219,13 +7218,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="46"/>
         <source>If checked, current attributes will be used for mirrored entities, otherwise - original ones. </source>
-        <translation>Если выбрано, текущие аттрибуты будут применены к созданным объектам.
-Иначе, к копиям будут применены аттрибуты оригинальных объектов. </translation>
+        <translation>Если выбрано, текущие атрибуты будут применены к созданным объектам. Иначе к копиям будут применены атрибуты оригинальных объектов. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="49"/>
         <source>Use Current Attributes</source>
-        <translation>С текущими &amp;аттрибутами</translation>
+        <translation>С текущими &amp;атрибутами</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_align_ref_options_widget.ui" line="56"/>
@@ -7442,7 +7440,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/components/status_bar/lc_anglesbasiswidget.ui" line="96"/>
         <source>Zero base angle relative to the current user coordinate system. 0.0 is 3pm.</source>
-        <translation>Угол на котором расположен базовый нулевой угол базиса, в градусах. Значение 0 - нулевой угол на 15 часов, 90 - на 12 часов. 180 - нулевой угол на 9 часов.</translation>
+        <translation>Базовый нулевой угол относительно текущей пользовательской системы координат. Значение 0 — направление на 15 часов, 90 — на 12 часов, 180 — на 9 часов.</translation>
     </message>
     <message>
         <location filename="../src/ui/components/status_bar/lc_anglesbasiswidget.ui" line="105"/>
@@ -7743,7 +7741,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="256"/>
         <source>Pick diameter value from the drawing</source>
-        <translation>Измерить угловую длину на чертеже</translation>
+        <translation>Измерить диаметр на чертеже</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="282"/>
@@ -7758,7 +7756,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="311"/>
         <source>Pick arc length value from the drawing</source>
-        <translation>Измерить угол на чертеже</translation>
+        <translation>Измерить длину дуги на чертеже</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_arc.ui" line="337"/>
@@ -7963,12 +7961,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_widget.ui" line="59"/>
         <source>Check to trim both entities to the bevel</source>
-        <translation>Установите, чтобы подогнать два объекта к фаске</translation>
+        <translation>Установите, чтобы обрезать оба объекта по фаске</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_widget.ui" line="62"/>
         <source>Trim</source>
-        <translation>Подогнать</translation>
+        <translation>Обрезать</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_bevel_options_widget.ui" line="85"/>
@@ -8258,7 +8256,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/misc/lc_center_line_options_filler.cpp" line="30"/>
         <source>Offset of line&apos;s length from original lines</source>
-        <translation>Смещение конца центральной прямой от линии, соединяющей вершины оригинальных прямых</translation>
+        <translation>Смещение конца осевой линии от линии, соединяющей вершины исходных линий</translation>
     </message>
 </context>
 <context>
@@ -8276,7 +8274,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/misc/lc_center_line_options_widget.ui" line="39"/>
         <source>Offset of line&apos;s length from original lines </source>
-        <translation>Смещение конца центральной прямой от линии, соединяющей вершины оригинальных прямых</translation>
+        <translation>Смещение конца осевой линии от линии, соединяющей вершины исходных линий </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/misc/lc_center_line_options_widget.ui" line="46"/>
@@ -8873,7 +8871,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/lc_dimstyleitem.cpp" line="111"/>
         <source>Leader and Tolerance</source>
-        <translation>Сноска и точность</translation>
+        <translation>Выноска и допуски</translation>
     </message>
 </context>
 <context>
@@ -8901,7 +8899,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/support/lc_dimstylepreviewpanel.ui" line="90"/>
         <source>Zoom Pan</source>
-        <translation>Позиционировать</translation>
+        <translation>Панорамирование</translation>
     </message>
 </context>
 <context>
@@ -8909,48 +8907,48 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="104"/>
         <source>Dimension Styles Export Error</source>
-        <translation>Ошибка Экспорта Стиля Размеров</translation>
+        <translation>Ошибка экспорта размерных стилей</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="105"/>
         <source>Can&apos;t open provided file for writing - check that provided location is writable. Dimension styles were not exported.</source>
-        <translation>Невозможно открыть указанный файл для записи - проверьте что запись разрешена. Стили размеров не были экспортированы.</translation>
+        <translation>Невозможно открыть указанный файл для записи - проверьте что запись разрешена. Размерные стили не были экспортированы.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="114"/>
         <source>Dimension Styles Export</source>
-        <translation>Экспорт Стиля Размеров</translation>
+        <translation>Экспорт размерных стилей</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="114"/>
         <source>Dimensions Styles were exported.</source>
-        <translation>Стили Размеров были экспортированы успешно.</translation>
+        <translation>Размерные стили экспортированы.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="125"/>
         <source>Dimension Styles Import Error</source>
-        <translation>Ошибка Импорта Стилей Размеров</translation>
+        <translation>Ошибка импорта размерных стилей</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="127"/>
         <source>Can&apos;t open provided file for reading. Dimension styles were not imported.</source>
-        <translation>Невозможно открыть указанный файл для чтения - проверьте что он доступен для записи. Стили размеров не были импортированы.</translation>
+        <translation>Невозможно открыть указанный файл для чтения. Размерные стили не были импортированы.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="133"/>
         <source>Unexpected error during dimension styles parsing. Message:</source>
-        <translation>Возникла неожиданная ошибка во время импорта стилей размеров. Сообщение:</translation>
+        <translation>Возникла неожиданная ошибка во время импорта размерных стилей. Сообщение:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="137"/>
         <source>Unexpected format of file, it does not contains LibreCAD dimension styles.</source>
-        <translation>Неизвестыный формат файла, он не содержит стили размеров LibreCAD.</translation>
+        <translation>Неизвестный формат файла: он не содержит размерных стилей LibreCAD.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="143"/>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="175"/>
         <source>Dimension Styles Import</source>
-        <translation>Импорт Стиля Размеров</translation>
+        <translation>Импорт размерных стилей</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="143"/>
@@ -8960,22 +8958,22 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="175"/>
         <source>Dimension styles were imported.</source>
-        <translation>Стили Размеров были импортированы успешно.</translation>
+        <translation>Размерные стили импортированы.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="183"/>
         <source>Import Dimension Styles</source>
-        <translation>Импорт Стилей Размеров</translation>
+        <translation>Импорт размерных стилей</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="183"/>
         <source>Export Dimension Styles</source>
-        <translation>Экспорт Стилей Размеров</translation>
+        <translation>Экспорт размерных стилей</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dimstylesexporter.cpp" line="184"/>
         <source>LibreCAD dimension styles file (*.%1)</source>
-        <translation>Файл стилей размеров LibreCAD (*.%1)</translation>
+        <translation>Файл размерных стилей LibreCAD (*.%1)</translation>
     </message>
 </context>
 <context>
@@ -10418,12 +10416,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="274"/>
         <source>Select dimension style</source>
-        <translation>Выделить текущий стиль размера</translation>
+        <translation>Выбрать размерный стиль</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="301"/>
         <source>Override entity&apos;s style</source>
-        <translation>Переопределить Стиль объекта размер </translation>
+        <translation>Переопределить стиль объекта</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="318"/>
@@ -10458,7 +10456,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="404"/>
         <source>Style Info</source>
-        <translation>Cтиль размера</translation>
+        <translation>Сведения о стиле</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="418"/>
@@ -10485,7 +10483,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="457"/>
         <source>Indicates whether style is overriden for specific entity (and so is unique for it).</source>
-        <translation>Указывает, переопределен ли стиль размер для этого объекта размер или же используется общий стиль.</translation>
+        <translation>Указывает, переопределён ли стиль для этого объекта (и, следовательно, уникален для него).</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="499"/>
@@ -10571,7 +10569,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="163"/>
         <source>Aligned Dimension</source>
-        <translation>Выравненный размер</translation>
+        <translation>Параллельный размер</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="169"/>
@@ -10617,17 +10615,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="465"/>
         <source>New Dimension Style Override - </source>
-        <translation>Создание Переопределенного Стиля Размера - </translation>
+        <translation>Новое переопределение размерного стиля - </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="515"/>
         <source>Edit Dimension Style Override - </source>
-        <translation>Редактирование Переопределенного Стиля Размера - </translation>
+        <translation>Редактирование переопределения размерного стиля - </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="527"/>
         <source>View Dimension Style - </source>
-        <translation>Просмотр Стиля Размера - </translation>
+        <translation>Просмотр размерного стиля - </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.cpp" line="580"/>
@@ -10732,7 +10730,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="181"/>
         <source>Line Properties</source>
-        <translation>Свойства Прямой</translation>
+        <translation>Свойства линии</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="187"/>
@@ -10757,7 +10755,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="211"/>
         <source>Polyline Properties</source>
-        <translation>Свойства Кривой</translation>
+        <translation>Свойства ломаной</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="217"/>
@@ -10782,7 +10780,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="241"/>
         <source>Insert Properties</source>
-        <translation>Свойка Вставки</translation>
+        <translation>Свойства вставки</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="247"/>
@@ -10792,7 +10790,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="253"/>
         <source>MText Properties</source>
-        <translation>Свойства MText</translation>
+        <translation>Свойства многострочного текста</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_entityproperties.cpp" line="259"/>
@@ -11064,7 +11062,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.ui" line="139"/>
         <source>CTRL</source>
-        <translation>СTRL</translation>
+        <translation>CTRL</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.ui" line="146"/>
@@ -11139,7 +11137,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="110"/>
         <source>Line</source>
-        <translation>Прямая</translation>
+        <translation>Линия</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="111"/>
@@ -11204,7 +11202,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="123"/>
         <source>Dimension Aligned</source>
-        <translation>Выравненный размер</translation>
+        <translation>Параллельный размер</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="124"/>
@@ -11464,7 +11462,7 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.cpp" line="142"/>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.cpp" line="146"/>
         <source>New Dimension Style</source>
-        <translation>Новый Стиль Размерностей</translation>
+        <translation>Новый размерный стиль</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="20"/>
@@ -11474,7 +11472,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="30"/>
         <source>Defines which type of dimensions are controlled by this style.</source>
-        <translation>Определяет к каким типам разменростей будет применяться этот стиль.</translation>
+        <translation>Определяет, к каким типам размеров будет применяться этот стиль.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="34"/>
@@ -11509,7 +11507,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="64"/>
         <source>Leader And Tolerances</source>
-        <translation>Выносок и точностей</translation>
+        <translation>Выносок и допусков</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="95"/>
@@ -11519,7 +11517,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="105"/>
         <source>Existing dimension style which new style is based on</source>
-        <translation>Существующий базовый стиль размера, на основании которого будет создан новый стиль (все свойства стиля будут скопированы из базового)</translation>
+        <translation>Существующий базовый размерный стиль, на основании которого будет создан новый стиль (все свойства стиля будут скопированы из базового)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="112"/>
@@ -11529,7 +11527,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.ui" line="128"/>
         <source>Name of new dimension style</source>
-        <translation>Имя нового стиля размеров</translation>
+        <translation>Имя нового размерного стиля</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.cpp" line="142"/>
@@ -11539,7 +11537,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/lc_dlgnewdimstyle.cpp" line="146"/>
         <source>Provided name of dimension style (%1) is not unique! Please enter another one.</source>
-        <translation>Указанное имя стиля размера (%1) не уникально, стиль с таким именем уже существует. Укажите другое имя.</translation>
+        <translation>Указанное имя размерного стиля (%1) не уникально, стиль с таким именем уже существует. Укажите другое имя.</translation>
     </message>
 </context>
 <context>
@@ -11984,12 +11982,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/actions/quick_selection/lc_dlgquickselection.ui" line="509"/>
         <source>Tolerance:</source>
-        <translation>Точность:</translation>
+        <translation>Допуск:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/quick_selection/lc_dlgquickselection.ui" line="553"/>
         <source>Update tolerance based on the document unit precision settings.</source>
-        <translation>Обновить точность согласно настройкам точности единиц в документе.</translation>
+        <translation>Обновить допуск согласно настройкам точности единиц документа.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/actions/quick_selection/lc_dlgquickselection.ui" line="117"/>
@@ -12150,7 +12148,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="45"/>
         <source>Pen attributes</source>
-        <translation>Аттрибуты пера</translation>
+        <translation>Атрибуты пера</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="58"/>
@@ -12170,7 +12168,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="127"/>
         <source>Stated Tolerance</source>
-        <translation>Заявленная точность</translation>
+        <translation>Заданный допуск</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="133"/>
@@ -12301,12 +12299,12 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="140"/>
         <source>Pan, UCS Origin in Center</source>
-        <translation>Позиционирование, основание в центре</translation>
+        <translation>Панорамирование, начало ПСК в центре</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="145"/>
         <source>Pan, UCS Origin in Left-Bottom</source>
-        <translation>Позиционирование, основание слева-внизу</translation>
+        <translation>Панорамирование, начало ПСК слева внизу</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="153"/>
@@ -12366,7 +12364,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="46"/>
         <source>If checked, column with details of UCS origin and angle will be shown in the table.</source>
-        <translation>Если выбрано, будет показана колонка с деталями базовой точки и угла системы координат</translation>
+        <translation>Если выбрано, в таблице будет показана колонка с началом координат и углом ПСК.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="170"/>
@@ -12406,7 +12404,7 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucsproperties.cpp" line="48"/>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucsproperties.cpp" line="51"/>
         <source>UCS Edit</source>
-        <translation>Пользовательская Система Координат</translation>
+        <translation>Редактирование ПСК</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucsproperties.ui" line="37"/>
@@ -12434,7 +12432,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucsproperties.ui" line="69"/>
         <source>Origin:</source>
-        <translation>Базовая точка:</translation>
+        <translation>Начало координат:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucsproperties.ui" line="88"/>
@@ -13101,7 +13099,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse_1_point_options_filler.cpp" line="37"/>
         <source>Minor Radius</source>
-        <translation>Радиус младшей оси</translation>
+        <translation>Радиус малой оси</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse_1_point_options_filler.cpp" line="37"/>
@@ -13403,7 +13401,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="79"/>
         <source>Line</source>
-        <translation>Прямая</translation>
+        <translation>Линия</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="80"/>
@@ -13463,7 +13461,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="91"/>
         <source>Dimension Aligned</source>
-        <translation>Выравненный размер</translation>
+        <translation>Параллельный размер</translation>
     </message>
     <message>
         <location filename="../src/ui/components/utils/lc_entitymetauiutils.cpp" line="92"/>
@@ -13697,7 +13695,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="109"/>
         <source>Move rotate</source>
-        <translation>Сдвиг и поворот</translation>
+        <translation>Перемещение и поворот</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="110"/>
@@ -13808,18 +13806,18 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/lib/gui/lc_hatchdensitytext.cpp" line="87"/>
         <source>%n hatch(es) exceed the hatch pattern limit and are shown as fills.</source>
         <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+            <numerusform>%n штриховка превышает допустимую плотность образца и показана как заливка.</numerusform>
+            <numerusform>%n штриховки превышают допустимую плотность образца и показаны как заливка.</numerusform>
+            <numerusform>%n штриховок превышают допустимую плотность образца и показаны как заливка.</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <location filename="../src/lib/gui/lc_hatchdensitytext.cpp" line="95"/>
         <source>R12 export: %n hatch(es) are too dense; their pattern is not written and they will look empty in the file.</source>
         <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+            <numerusform>Экспорт R12: %n штриховка слишком плотная; её образец не записан, и в файле она будет выглядеть пустой.</numerusform>
+            <numerusform>Экспорт R12: %n штриховки слишком плотные; их образец не записан, и в файле они будут выглядеть пустыми.</numerusform>
+            <numerusform>Экспорт R12: %n штриховок слишком плотные; их образец не записан, и в файле они будут выглядеть пустыми.</numerusform>
         </translation>
     </message>
 </context>
@@ -13833,7 +13831,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_hatchpropertieseditingwidget.ui" line="35"/>
         <source>Pattern</source>
-        <translation>Шаблон</translation>
+        <translation>Образец</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_hatchpropertieseditingwidget.ui" line="41"/>
@@ -13843,17 +13841,17 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_hatchpropertieseditingwidget.ui" line="48"/>
         <source>Toggle solid fill (no pattern)</source>
-        <translation>Включает сплошную заливку цветом (без шаблона)</translation>
+        <translation>Включает сплошную заливку цветом (без образца)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_hatchpropertieseditingwidget.ui" line="58"/>
         <source>Pattern:</source>
-        <translation>Шаблон:</translation>
+        <translation>Образец:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_hatchpropertieseditingwidget.ui" line="65"/>
         <source>Hatch pattern name</source>
-        <translation>Имя шаблона штриховки</translation>
+        <translation>Имя образца штриховки</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_hatchpropertieseditingwidget.ui" line="75"/>
@@ -13863,7 +13861,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_hatchpropertieseditingwidget.ui" line="88"/>
         <source>Hatch pattern scale factor</source>
-        <translation>Коэффициент масштабирования шаблона штриховки</translation>
+        <translation>Коэффициент масштабирования образца штриховки</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_hatchpropertieseditingwidget.ui" line="95"/>
@@ -13879,7 +13877,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_hatchpropertieseditingwidget.ui" line="111"/>
         <source>Hatch pattern rotation angle, degrees</source>
-        <translation>Угло поворота шаблона в градусах (в пользовательской системе координат)</translation>
+        <translation>Угол поворота образца в градусах (в пользовательской системе координат)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_hatchpropertieseditingwidget.ui" line="121"/>
@@ -14069,7 +14067,7 @@ Are you sure you are going to discard changes?</source>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_hyperbola.ui" line="65"/>
         <source>Minor Radius (b):</source>
-        <translation>Радиус младшей оси (b):</translation>
+        <translation>Радиус малой оси (b):</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_hyperbola.ui" line="75"/>
@@ -15346,13 +15344,13 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_filler.cpp" line="34"/>
         <source>Angle of line</source>
-        <translation>Угол прямой</translation>
+        <translation>Угол линии</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_filler.cpp" line="44"/>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_filler.cpp" line="53"/>
         <source>Line</source>
-        <translation>Прямая</translation>
+        <translation>Линия</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_filler.cpp" line="45"/>
@@ -15388,7 +15386,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_filler.cpp" line="68"/>
         <source>Length of line</source>
-        <translation>Длина прямой</translation>
+        <translation>Длина линии</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_filler.cpp" line="77"/>
@@ -15408,12 +15406,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_filler.cpp" line="85"/>
         <source>Line Snap</source>
-        <translation>Где в прямой</translation>
+        <translation>Привязка на линии</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_filler.cpp" line="86"/>
         <source>Snap point for position of intersection point between created line and source entity (within original line)</source>
-        <translation>Положение точки пересечения прямых в базовой прямой</translation>
+        <translation>Положение точки пересечения линий на базовой линии</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_filler.cpp" line="98"/>
@@ -15423,7 +15421,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_filler.cpp" line="99"/>
         <source>If selected, line will be orhotogonal to axis of angles basis. Otherwise - to screen axis</source>
-        <translation>Если выбрано, то прямая будет ортогональна к оси базиса углов. Иначе. к оси координат.</translation>
+        <translation>Если выбрано, линия будет ортогональна оси базиса углов. Иначе — оси экрана.</translation>
     </message>
 </context>
 <context>
@@ -15431,7 +15429,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_widget.ui" line="32"/>
         <source>Line Angle Options</source>
-        <translation>Параметры прямой под заданным углом</translation>
+        <translation>Параметры линии под заданным углом</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_widget.ui" line="62"/>
@@ -15451,7 +15449,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_widget.ui" line="135"/>
         <source>Point on created line that will be placed into insertion point</source>
-        <translation>Определяет какая точка создаваемой прямой окажется в точке вставки</translation>
+        <translation>Определяет какая точка создаваемой линии окажется в точке вставки</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_widget.ui" line="139"/>
@@ -15471,12 +15469,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_widget.ui" line="169"/>
         <source>Length of line</source>
-        <translation>Длина прямой</translation>
+        <translation>Длина линии</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_widget.ui" line="176"/>
         <source>If selected, line will be orhotogonal to axis of angles basis. Otherwise - to screen axis</source>
-        <translation>Если выбрано, то прямая будет ортогональна к оси базиса углов. Иначе. к оси координат.</translation>
+        <translation>Если выбрано, линия будет ортогональна оси базиса углов. Иначе — оси экрана.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_widget.ui" line="179"/>
@@ -15486,17 +15484,17 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_widget.ui" line="198"/>
         <source>Line angle</source>
-        <translation>Угол прямой</translation>
+        <translation>Угол линии</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_widget.ui" line="205"/>
         <source>Pick line angle from drawing</source>
-        <translation>Измерить угол прямой на чертеже</translation>
+        <translation>Измерить угол линии на чертеже</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_widget.ui" line="219"/>
         <source>PIck line length from drawing</source>
-        <translation>Измерить длину прямой на чертеже</translation>
+        <translation>Измерить длину линии на чертеже</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_widget.ui" line="246"/>
@@ -15506,7 +15504,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_widget.cpp" line="65"/>
         <source>Line</source>
-        <translation>Прямая</translation>
+        <translation>Линия</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_options_widget.cpp" line="67"/>
@@ -15534,7 +15532,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="32"/>
         <source>If checked, the length of line is defined by mouse position instead of setting</source>
-        <translation>Если выбрано, длина создаваемой прямой задается интерактивно с помощью мыши</translation>
+        <translation>Если выбрано, длина создаваемой линии задается интерактивно с помощью мыши</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="40"/>
@@ -15544,7 +15542,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="40"/>
         <source>Length of line</source>
-        <translation>Длина прямой</translation>
+        <translation>Длина линии</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="46"/>
@@ -15554,7 +15552,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="46"/>
         <source>Angle of line</source>
-        <translation>Угол прямой</translation>
+        <translation>Угол линии</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="52"/>
@@ -15564,8 +15562,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="52"/>
         <source>If checked, angle is relative to angle of selected entity</source>
-        <translation>Если выбрано, заданый угол будет относительным (от базовой прямой).
-Иначе, заданный угол будет относительно оси X.</translation>
+        <translation>Если выбрано, заданный угол будет относительным (от базовой линии). Иначе заданный угол отсчитывается от оси X.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="63"/>
@@ -15593,12 +15590,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="72"/>
         <source>Line Snap</source>
-        <translation>Где в прямой</translation>
+        <translation>Привязка на линии</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="73"/>
         <source>Snap point for position of intersection point between created line and source entity (within original line)</source>
-        <translation>Положение точки пересечения прямых в базовой прямой</translation>
+        <translation>Положение точки пересечения линий на базовой линии</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="80"/>
@@ -15613,7 +15610,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="95"/>
         <source>Defines which part of created line will be snapped to intersection point</source>
-        <translation>Определяет какая точка создаваемой прямой окажется в точке пересечения с базовой прямой.</translation>
+        <translation>Определяет какая точка создаваемой линии окажется в точке пересечения с базовой линией.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="102"/>
@@ -15623,7 +15620,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="102"/>
         <source>Offset of tick snap point from intersection point</source>
-        <translation>Смещение точки привязки создаваемой прямой относительно точки пересечения прямых</translation>
+        <translation>Смещение точки привязки создаваемой линии относительно точки пересечения линий</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="108"/>
@@ -15633,7 +15630,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="108"/>
         <source>If checked, original entity will be divided by intersection point.</source>
-        <translation>Если выбрано, то базовая прямая будет разделена точкой пересечения на отдельные прямые</translation>
+        <translation>Если выбрано, то базовая линия будет разделена точкой пересечения на отдельные линии</translation>
     </message>
 </context>
 <context>
@@ -15646,12 +15643,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="50"/>
         <source>Distance of intersection point from specified line snap point</source>
-        <translation>Расстояние точки пересечения прямых от точки привязки базовой прямой</translation>
+        <translation>Расстояние точки пересечения линий от точки привязки базовой линии</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="57"/>
         <source>Snap point for position of intersection point between created line and source entity (within original line)</source>
-        <translation>Положение точки пересечения прямых в базовой прямой</translation>
+        <translation>Положение точки пересечения линий на базовой линии</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="61"/>
@@ -15680,12 +15677,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="102"/>
         <source>Angle of line</source>
-        <translation>Угол прямой</translation>
+        <translation>Угол линии</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="122"/>
         <source>If checked, original entity will be divided by intersection point.</source>
-        <translation>Если выбрано, то базовая прямая будет разделена точкой пересечения на отдельные прямые</translation>
+        <translation>Если выбрано, то базовая линия будет разделена точкой пересечения на отдельные линии</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="125"/>
@@ -15705,8 +15702,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="146"/>
         <source>If checked, angle is relative to angle of selected entity</source>
-        <translation>Если выбрано, заданый угол будет относительным (от базовой прямой).
-Иначе, заданный угол будет относительно оси X.</translation>
+        <translation>Если выбрано, заданный угол будет относительным (от базовой линии). Иначе заданный угол отсчитывается от оси X.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="149"/>
@@ -15716,12 +15712,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="156"/>
         <source>Line Snap:</source>
-        <translation>Где в прямой:</translation>
+        <translation>Привязка на линии:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="163"/>
         <source>If checked, the length of line is defined by mouse position instead of setting</source>
-        <translation>Если выбрано, длина создаваемой прямой задается интерактивно с помощью мыши</translation>
+        <translation>Если выбрано, длина создаваемой линии задается интерактивно с помощью мыши</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="166"/>
@@ -15736,7 +15732,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="205"/>
         <source>Length of line</source>
-        <translation>Длина прямой</translation>
+        <translation>Длина линии</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="212"/>
@@ -15756,12 +15752,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="265"/>
         <source>Offset of tick snap point from intersection point</source>
-        <translation>Смещение точки привязки создаваемой прямой относительно точки пересечения прямых</translation>
+        <translation>Смещение точки привязки создаваемой линии относительно точки пересечения линий</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="272"/>
         <source>Defines which part of created line will be snapped to intersection point</source>
-        <translation>Определяет какая точка создаваемой прямой окажется в точке пересечения с базовой прямой.</translation>
+        <translation>Определяет какая точка создаваемой линии окажется в точке пересечения с базовой линией.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_widget.ui" line="294"/>
@@ -15845,7 +15841,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="34"/>
         <source>If checked, created line will be orthogonal to selected line</source>
-        <translation>Если выбрано, создаст прямую ортогональную выбранному объекту</translation>
+        <translation>Если выбрано, создаваемая линия будет ортогональна выбранной линии</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="41"/>
@@ -15855,7 +15851,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="41"/>
         <source>Angle between original line and created one</source>
-        <translation>Угол между оригинальным объектов прямой и создаваемой прямой</translation>
+        <translation>Угол между исходной и создаваемой линиями</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="48"/>
@@ -15875,7 +15871,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="56"/>
         <source>Defines whether created line should be created to intersection point or should have fixed length</source>
-        <translation>Определяет нужно ли продлить линию до точки пересечения прямых или же ее длина должна быть фиксирована</translation>
+        <translation>Определяет, нужно ли продлить линию до точки пересечения линий или её длина должна быть фиксированной</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="66"/>
@@ -15885,7 +15881,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="66"/>
         <source>Offset for created line from intersection point</source>
-        <translation>Смещение конца созданной прямой относительно точки пересечения</translation>
+        <translation>Смещение конца созданной линии относительно точки пересечения</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="73"/>
@@ -15895,7 +15891,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="73"/>
         <source>Fixed length of created line</source>
-        <translation>Фиксированная длина созданой прямой</translation>
+        <translation>Фиксированная длина созданной линии</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="82"/>
@@ -15920,7 +15916,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_filler.cpp" line="88"/>
         <source>Snap point for created line</source>
-        <translation>Режим точки привязки для создаваемой прямой</translation>
+        <translation>Режим точки привязки для создаваемой линии</translation>
     </message>
 </context>
 <context>
@@ -15933,7 +15929,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="44"/>
         <source>Angle between original line and created one</source>
-        <translation>Угол между оригинальным объектов прямой и создаваемой прямой</translation>
+        <translation>Угол между исходной и создаваемой линиями</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="51"/>
@@ -15943,7 +15939,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="65"/>
         <source>If checked, created line will be orthogonal to selected line</source>
-        <translation>Если выбрано, создаст прямую ортогональную выбранному объекту</translation>
+        <translation>Если выбрано, создаваемая линия будет ортогональна выбранной линии</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="68"/>
@@ -15953,7 +15949,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="120"/>
         <source>Snap point for created line</source>
-        <translation>Режим точки привязки для создаваемой прямой</translation>
+        <translation>Режим точки привязки для создаваемой линии</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="124"/>
@@ -15983,7 +15979,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="196"/>
         <source>Fixed length of created line</source>
-        <translation>Фиксированная длина созданой прямой</translation>
+        <translation>Фиксированная длина созданной линии</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="203"/>
@@ -15993,7 +15989,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="259"/>
         <source>Offset for created line from intersection point</source>
-        <translation>Смещение конца созданной прямой относительно точки пересечения</translation>
+        <translation>Смещение конца созданной линии относительно точки пересечения</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="266"/>
@@ -16008,7 +16004,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="318"/>
         <source>Defines whether created line should be created to intersection point or should have fixed length</source>
-        <translation>Определяет нужно ли продлить линию до точки пересечения прямых или же ее длина должна быть фиксирована</translation>
+        <translation>Определяет, нужно ли продлить линию до точки пересечения линий или её длина должна быть фиксированной</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_from_point_to_line_options_widget.ui" line="322"/>
@@ -16079,12 +16075,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="56"/>
         <source>Line Snap</source>
-        <translation>Где в прямой</translation>
+        <translation>Привязка на линии</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="56"/>
         <source>Snap point for gap on the line</source>
-        <translation>Позиция разрыва в прямой- может быть плавающей и задаваться вручную мышью, или же быть одной из точек прямой</translation>
+        <translation>Позиция разрыва на линии — может быть плавающей и задаваться мышью или быть одной из точек линии</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="63"/>
@@ -16094,7 +16090,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="63"/>
         <source>Distance from snap point</source>
-        <translation>Расстояние от точки привязки в прямой до точки привязки разрыва</translation>
+        <translation>Расстояние от точки привязки на линии до точки привязки разрыва</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="80"/>
@@ -16104,7 +16100,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_filler.cpp" line="80"/>
         <source>Snap point of gap to line snap point</source>
-        <translation>Точка привязки разрыва относительно точки привязки в прямой</translation>
+        <translation>Точка привязки разрыва относительно точки привязки на линии</translation>
     </message>
 </context>
 <context>
@@ -16117,7 +16113,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="32"/>
         <source>Snap point of gap to line snap point</source>
-        <translation>Точка привязки разрыва относительно точки привязки в прямой</translation>
+        <translation>Точка привязки разрыва относительно точки привязки на линии</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="36"/>
@@ -16150,7 +16146,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="68"/>
         <source>Snap point for gap on the line</source>
-        <translation>Позиция разрыва в прямой- может быть плавающей и задаваться вручную мышью, или же быть одной из точек прямой</translation>
+        <translation>Позиция разрыва на линии — может быть плавающей и задаваться мышью или быть одной из точек линии</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="72"/>
@@ -16179,7 +16175,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="95"/>
         <source>Line Snap:</source>
-        <translation>Где в прямой:</translation>
+        <translation>Привязка на линии:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="134"/>
@@ -16204,17 +16200,17 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="177"/>
         <source>Distance from snap point</source>
-        <translation>Расстояние от точки привязки в прямой до точки привязки разрыва</translation>
+        <translation>Расстояние от точки привязки на линии до точки привязки разрыва</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="184"/>
         <source>Snap Distance:</source>
-        <translation>Дистанция привязки:</translation>
+        <translation>Расстояние привязки:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_gap_options_widget.ui" line="191"/>
         <source>Pick snap distance from drawing</source>
-        <translation>Измерить смещение расстояние от точки привязки на прямой до точки привязки разрыва на чертеже</translation>
+        <translation>Измерить на чертеже расстояние от точки привязки на линии до точки привязки разрыва</translation>
     </message>
 </context>
 <context>
@@ -16222,7 +16218,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="35"/>
         <source>Extend/Trim</source>
-        <translation>Продлить/Обрезать</translation>
+        <translation>Удлинить/Обрезать</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="36"/>
@@ -16238,23 +16234,23 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="41"/>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="59"/>
         <source>Line 1</source>
-        <translation>Как в прямой 1</translation>
+        <translation>Как в линии 1</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="41"/>
         <source>Policy for joining line that was selected first</source>
-        <translation>Политика изменения для первой выбраной прямой</translation>
+        <translation>Политика изменения для первой выбранной линии</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="48"/>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="60"/>
         <source>Line 2</source>
-        <translation>Как в прямой 2</translation>
+        <translation>Как в линии 2</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="48"/>
         <source>Policy for the line was selected second</source>
-        <translation>Политика изменения для второй выбраной прямой</translation>
+        <translation>Политика изменения для второй выбранной линии</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="58"/>
@@ -16284,7 +16280,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="78"/>
         <source>If checked, polyline will be created instead of individual lines</source>
-        <translation>Если выбрано, то вместо индивидуальных прямых будет создана ломаная</translation>
+        <translation>Если выбрано, то вместо отдельных линий будет создана ломаная</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="89"/>
@@ -16294,7 +16290,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="89"/>
         <source>If checked, original lines will be removed</source>
-        <translation>Если выбрано, оригинальные прямые будут удалены. </translation>
+        <translation>Если выбрано, оригинальные линии будут удалены.</translation>
     </message>
 </context>
 <context>
@@ -16307,7 +16303,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="38"/>
         <source>If checked, polyline will be created instead of individual lines</source>
-        <translation>Если выбрано, то вместо индивидуальных прямых будет создана ломаная</translation>
+        <translation>Если выбрано, то вместо отдельных линий будет создана ломаная</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="41"/>
@@ -16317,13 +16313,13 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="66"/>
         <source>Policy for the line was selected second</source>
-        <translation>Политика изменения для второй выбраной прямой</translation>
+        <translation>Политика изменения для второй выбранной линии</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="70"/>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="124"/>
         <source>Extend/Trim</source>
-        <translation>Продлить/Обрезать</translation>
+        <translation>Удлинить/Обрезать</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="75"/>
@@ -16340,17 +16336,17 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="88"/>
         <source>Line 1:</source>
-        <translation>Прямая 1:</translation>
+        <translation>Линия 1:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="95"/>
         <source>Line 2:</source>
-        <translation>Прямая 2:</translation>
+        <translation>Линия 2:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="120"/>
         <source>Policy for joining line that was selected first</source>
-        <translation>Политика изменения для первой выбраной прямой</translation>
+        <translation>Политика изменения для первой выбранной линии</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="160"/>
@@ -16365,12 +16361,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="169"/>
         <source>Line 1</source>
-        <translation>Как в прямой 1</translation>
+        <translation>Как в линии 1</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="174"/>
         <source>Line 2</source>
-        <translation>Как в прямой 2</translation>
+        <translation>Как в линии 2</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="179"/>
@@ -16380,12 +16376,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="187"/>
         <source>Attributes:</source>
-        <translation>Аттрибуты:</translation>
+        <translation>Атрибуты:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="207"/>
         <source>If checked, original lines will be removed</source>
-        <translation>Если выбрано, оригинальные прямые будут удалены. </translation>
+        <translation>Если выбрано, оригинальные линии будут удалены.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_widget.ui" line="210"/>
@@ -16408,7 +16404,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_options_filler.cpp" line="36"/>
         <source>Generic commands for line</source>
-        <translation>Общие команды для прямой</translation>
+        <translation>Общие команды для линии</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_options_filler.cpp" line="38"/>
@@ -16433,7 +16429,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_options_filler.cpp" line="46"/>
         <source>Undo/redo commands for line</source>
-        <translation>Команды отмены\повторения для прямой</translation>
+        <translation>Команды отмены/повторения для линии</translation>
     </message>
 </context>
 <context>
@@ -16441,7 +16437,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_options_widget.ui" line="32"/>
         <source>Line Options</source>
-        <translation>Параметры прямой</translation>
+        <translation>Параметры линии</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_options_widget.ui" line="53"/>
@@ -16494,7 +16490,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_parallel_options_filler.cpp" line="37"/>
         <source>Number of parallels to create</source>
-        <translation>Количество создаваемых параллельных прямых</translation>
+        <translation>Количество создаваемых параллельных линий</translation>
     </message>
 </context>
 <context>
@@ -16502,7 +16498,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_parallel_options_widget.ui" line="32"/>
         <source>Line Parallel Options</source>
-        <translation>Параметры параллельной прямой</translation>
+        <translation>Параметры параллельной линии</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_parallel_options_widget.ui" line="56"/>
@@ -16527,7 +16523,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_parallel_options_widget.ui" line="109"/>
         <source>Number of parallels to create</source>
-        <translation>Количество создаваемых параллельных прямых</translation>
+        <translation>Количество создаваемых параллельных линий</translation>
     </message>
 </context>
 <context>
@@ -16540,7 +16536,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_parallel_through_options_filler.cpp" line="31"/>
         <source>Number of parallels to create</source>
-        <translation>Количество создаваемых параллельных прямых</translation>
+        <translation>Количество создаваемых параллельных линий</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_parallel_through_options_filler.cpp" line="39"/>
@@ -16573,7 +16569,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_parallel_through_options_widget.ui" line="50"/>
         <source>Number of parallels to create</source>
-        <translation>Количество создаваемых параллельных прямых</translation>
+        <translation>Количество создаваемых параллельных линий</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_parallel_through_options_widget.ui" line="79"/>
@@ -16657,7 +16653,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/point/lc_points_line_options_widget.ui" line="143"/>
         <source>Distance between points.</source>
-        <translation>Дистанция между точками</translation>
+        <translation>Расстояние между точками.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/point/lc_points_line_options_widget.ui" line="153"/>
@@ -16673,7 +16669,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/point/lc_points_line_options_widget.ui" line="179"/>
         <source>Fixed Distance</source>
-        <translation>Дистанция</translation>
+        <translation>Фиксированное расстояние</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/point/lc_points_line_options_widget.ui" line="193"/>
@@ -16688,7 +16684,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/point/lc_points_line_options_widget.ui" line="250"/>
         <source>Angle of line</source>
-        <translation>Угол прямой</translation>
+        <translation>Угол линии</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/point/lc_points_line_options_widget.ui" line="257"/>
@@ -16774,7 +16770,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_radiant_options_filler.cpp" line="32"/>
         <source>Selection of radiant (center) point draw to</source>
-        <translation>Выбор центральной точки, к которой направлены прямые</translation>
+        <translation>Выбор центральной точки, к которой направлены линии</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_radiant_options_filler.cpp" line="38"/>
@@ -16784,12 +16780,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_radiant_options_filler.cpp" line="38"/>
         <source>Specifies position of active radiant point</source>
-        <translation>Выбор центральной точки, к которой направлены прямые</translation>
+        <translation>Выбор центральной точки, к которой направлены линии</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_radiant_options_filler.cpp" line="47"/>
         <source>Line</source>
-        <translation>Прямая</translation>
+        <translation>Линия</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_radiant_options_filler.cpp" line="48"/>
@@ -16829,7 +16825,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_radiant_options_filler.cpp" line="63"/>
         <source>Length of line to draw</source>
-        <translation>Длина создаваемой прямой</translation>
+        <translation>Длина создаваемой линии</translation>
     </message>
 </context>
 <context>
@@ -16847,7 +16843,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_radiant_options_widget.ui" line="46"/>
         <source>Selection of radiant (center) point draw to</source>
-        <translation>Выбор центральной точки к которой направлены прямые</translation>
+        <translation>Выбор центральной точки к которой направлены линии</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_radiant_options_widget.ui" line="50"/>
@@ -16877,7 +16873,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_radiant_options_widget.ui" line="80"/>
         <source>Length of line to draw</source>
-        <translation>Длина создаваемой прямой</translation>
+        <translation>Длина создаваемой линии</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_radiant_options_widget.ui" line="87"/>
@@ -16893,7 +16889,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_radiant_options_widget.ui" line="111"/>
         <source>Pick X coordinate of radiant point from drawing</source>
-        <translation>Измерить X координатy центральной точки на чертеже</translation>
+        <translation>Измерить X координату центральной точки на чертеже</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_radiant_options_widget.ui" line="125"/>
@@ -16913,7 +16909,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_radiant_options_widget.ui" line="143"/>
         <source>Line</source>
-        <translation>Прямая</translation>
+        <translation>Линия</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_radiant_options_widget.ui" line="148"/>
@@ -16943,7 +16939,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_radiant_options_widget.ui" line="185"/>
         <source>Pick Y coordinate of radiant point from drawing</source>
-        <translation>Измерить Y координатy центральной точки на чертеже</translation>
+        <translation>Измерить Y координату центральной точки на чертеже</translation>
     </message>
 </context>
 <context>
@@ -16956,7 +16952,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_rel_angle_options_filler.cpp" line="35"/>
         <source>Angle of line</source>
-        <translation>Угол прямой</translation>
+        <translation>Угол линии</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_rel_angle_options_filler.cpp" line="42"/>
@@ -16966,7 +16962,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_rel_angle_options_filler.cpp" line="42"/>
         <source>Length of line</source>
-        <translation>Длина прямой</translation>
+        <translation>Длина линии</translation>
     </message>
 </context>
 <context>
@@ -16974,7 +16970,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_rel_angle_options_widget.ui" line="32"/>
         <source>Line Relative Angle Options</source>
-        <translation>Параметры прямой под относительным углом</translation>
+        <translation>Параметры линии под относительным углом</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_rel_angle_options_widget.ui" line="56"/>
@@ -16984,7 +16980,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_rel_angle_options_widget.ui" line="72"/>
         <source>Line angle</source>
-        <translation>Угол прямой</translation>
+        <translation>Угол линии</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_rel_angle_options_widget.ui" line="79"/>
@@ -17038,12 +17034,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="42"/>
         <source>Direction mode for line drawing</source>
-        <translation>Режим направления для рисования прямой</translation>
+        <translation>Режим направления для рисования линии</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="50"/>
         <source>Angle of line</source>
-        <translation>Угол прямой</translation>
+        <translation>Угол линии</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="57"/>
@@ -17053,7 +17049,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="57"/>
         <source>If checked, angle is relative to previous segment</source>
-        <translation>Если выбрано,использовать угол относительный к предыдущей прямой</translation>
+        <translation>Если выбрано, угол задаётся относительно предыдущего сегмента</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="64"/>
@@ -17073,13 +17069,13 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="65"/>
         <source>Creates polyline from line segments</source>
-        <translation>Объединить все нарисованные прямые в ломаную</translation>
+        <translation>Объединить все нарисованные линии в ломаную</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="72"/>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="82"/>
         <source>Generic commands for line</source>
-        <translation>Общие команды для прямой</translation>
+        <translation>Общие команды для линии</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_filler.cpp" line="74"/>
@@ -17107,7 +17103,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="32"/>
         <source>Line Options</source>
-        <translation>Параметры прямой</translation>
+        <translation>Параметры линии</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="62"/>
@@ -17127,7 +17123,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="168"/>
         <source>Line to arbitrary point</source>
-        <translation>Рисовать прямую к произвольной точке</translation>
+        <translation>Рисовать линию к произвольной точке</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="171"/>
@@ -17147,12 +17143,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="218"/>
         <source>Angle of line</source>
-        <translation>Угол прямой</translation>
+        <translation>Угол линии</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="237"/>
         <source>Line by specified angle</source>
-        <translation>Прямая под фиксированным углом.</translation>
+        <translation>Линия под фиксированным углом</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="240"/>
@@ -17193,7 +17189,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="311"/>
         <source>If checked, angle is relative to previous segment</source>
         <extracomment>Angle is relative to previous segment</extracomment>
-        <translation>Если выбрано,использовать угол относительный к предыдущей прямой</translation>
+        <translation>Если выбрано, угол задаётся относительно предыдущего сегмента</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="314"/>
@@ -17203,7 +17199,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="321"/>
         <source>Creates polyline from line segments</source>
-        <translation>Объединить все нарисованные прямые в ломаную</translation>
+        <translation>Объединить все нарисованные линии в ломаную</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_snake_options_widget.ui" line="324"/>
@@ -17287,7 +17283,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/dialogs/entity/lc_mtextpropertieseditingwidget.ui" line="31"/>
         <source>MText content. Format codes (\F, \P, \S) are accepted as-is.</source>
-        <translation>Текстовое содержимое. Коды формата (\F, \P, \S) принимаются как есть.</translation>
+        <translation>Содержимое многострочного текста. Коды формата (\F, \P, \S) принимаются как есть.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_mtextpropertieseditingwidget.ui" line="44"/>
@@ -17559,7 +17555,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_base.h" line="45"/>
         <source>Color attribute as it is stored in the entity</source>
-        <translation>Значение аттрибута цвета объекта</translation>
+        <translation>Значение атрибута цвета объекта</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_base.h" line="51"/>
@@ -17579,7 +17575,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_base.h" line="57"/>
         <source>Width of line attribute that is stored in the entity</source>
-        <translation>Значение аттрибута ширины линии объекта</translation>
+        <translation>Значение атрибута толщины линии объекта</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_base.h" line="63"/>
@@ -17599,7 +17595,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_base.h" line="69"/>
         <source>Type of line attribute stored in the entity</source>
-        <translation>Значение аттрибута типа линии объекта</translation>
+        <translation>Значение атрибута типа линии объекта</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_base.h" line="75"/>
@@ -17686,7 +17682,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimaligned.cpp" line="29"/>
         <source>Dimension Aligned</source>
-        <translation>Выравненный размер</translation>
+        <translation>Параллельный размер</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimaligned.cpp" line="35"/>
@@ -17711,42 +17707,42 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimaligned.cpp" line="43"/>
         <source>First Extension Point X</source>
-        <translation>Первая точка выноски X</translation>
+        <translation>Первая точка выносной линии X</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimaligned.cpp" line="43"/>
         <source>X coordinate for first extension point</source>
-        <translation>Координата первой точки выноски по оси X</translation>
+        <translation>Координата первой точки выносной линии по оси X</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimaligned.cpp" line="47"/>
         <source>First Extension Point Y</source>
-        <translation>Первая точка выноски Y</translation>
+        <translation>Первая точка выносной линии Y</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimaligned.cpp" line="47"/>
         <source>Y coordinate for first extension point</source>
-        <translation>Координата первой точки выноски по оси Y</translation>
+        <translation>Координата первой точки выносной линии по оси Y</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimaligned.cpp" line="51"/>
         <source>Second Extension Point X</source>
-        <translation>Вторая точка выноски X</translation>
+        <translation>Вторая точка выносной линии X</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimaligned.cpp" line="51"/>
         <source>X coordinate for second extension point</source>
-        <translation>Координата второй точки выноски по оси X</translation>
+        <translation>Координата второй точки выносной линии по оси X</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimaligned.cpp" line="55"/>
         <source>Second Extension Point Y</source>
-        <translation>Вторая точка выноски Y</translation>
+        <translation>Вторая точка выносной линии Y</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimaligned.cpp" line="55"/>
         <source>Y coordinate for second extension point</source>
-        <translation>Координата второй точки выноски по оси Y</translation>
+        <translation>Координата второй точки выносной линии по оси Y</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimaligned.cpp" line="59"/>
@@ -17855,7 +17851,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="138"/>
         <source>Whether dimension has dimension style override or not</source>
-        <translation>Определяте, был ли преопределен стиль размера в конкретном размере</translation>
+        <translation>Определяет, переопределён ли размерный стиль в данном размере</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="193"/>
@@ -17890,7 +17886,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="210"/>
         <source>Center mark</source>
-        <translation>Центральная метка</translation>
+        <translation>Маркер центра</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="211"/>
@@ -17910,12 +17906,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="218"/>
         <source>Center mark size</source>
-        <translation>Размер центральной метки</translation>
+        <translation>Размер маркера центра</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="218"/>
         <source>Specifies size of the center mark on the dimension (DIMCEN variable)</source>
-        <translation>Задает размер центрального маркера (переменная DIMCEN)</translation>
+        <translation>Задает размер маркера центра (переменная DIMCEN)</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="224"/>
@@ -17984,7 +17980,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="253"/>
         <source>Dim line ext</source>
-        <translation>Удлинение за размерные</translation>
+        <translation>Удлинение за выносные</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="253"/>
@@ -18327,7 +18323,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="456"/>
         <source>Specifies the overall scale factor applied to properties, that specify sizes, distances or offsets (DIMSCALE variable)</source>
-        <translation>Задает общий коэффициент масштабирования, применяемый к свойствам которые задают размеры, дистанции или смещения размеров (переменная DIMSCALE)</translation>
+        <translation>Задает общий коэффициент масштабирования, применяемый к свойствам, которые задают размеры, расстояния или смещения размеров (переменная DIMSCALE)</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="495"/>
@@ -18377,7 +18373,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="210"/>
         <source>Specifies type of center mark on dimension (DIMCEN variable)</source>
-        <translation type="unfinished">Задает тип центрального маркера (переменная DIMCEN)</translation>
+        <translation type="unfinished">Задает тип маркера центра (переменная DIMCEN)</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="332"/>
@@ -18437,12 +18433,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="520"/>
         <source>Move text, add leader</source>
-        <translation>Двигать текст и строить выноску</translation>
+        <translation>Перемещать текст, строить выноску</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="521"/>
         <source>Move text, no leader</source>
-        <translation>Двигать текст, без выноски</translation>
+        <translation>Перемещать текст, без выноски</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="533"/>
@@ -19019,7 +19015,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="927"/>
         <source>Alt tolerance suppress leading zeros</source>
-        <translation>Альт. допуск без ведущиx 0</translation>
+        <translation>Альт. допуск без ведущих 0</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="928"/>
@@ -19115,42 +19111,42 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimlinear.cpp" line="44"/>
         <source>First Extension Point X</source>
-        <translation>Первая точка выноски X</translation>
+        <translation>Первая точка выносной линии X</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimlinear.cpp" line="44"/>
         <source>X coordinate for first extension point</source>
-        <translation>Координата первой точки выноски по оси X</translation>
+        <translation>Координата первой точки выносной линии по оси X</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimlinear.cpp" line="48"/>
         <source>First Extension Point Y</source>
-        <translation>Первая точка выноски Y</translation>
+        <translation>Первая точка выносной линии Y</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimlinear.cpp" line="48"/>
         <source>Y coordinate for first extension point</source>
-        <translation>Координата первой точки выноски по оси Y</translation>
+        <translation>Координата первой точки выносной линии по оси Y</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimlinear.cpp" line="52"/>
         <source>Second Extension Point X</source>
-        <translation>Вторая точка выноски X</translation>
+        <translation>Вторая точка выносной линии X</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimlinear.cpp" line="52"/>
         <source>X coordinate for second extension point</source>
-        <translation>Координата второй точки выноски по оси X</translation>
+        <translation>Координата второй точки выносной линии по оси X</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimlinear.cpp" line="56"/>
         <source>Second Extension Point Y</source>
-        <translation>Вторая точка выноски Y</translation>
+        <translation>Вторая точка выносной линии Y</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimlinear.cpp" line="56"/>
         <source>Y coordinate for second extension point</source>
-        <translation>Координата второй точки выноски по оси Y</translation>
+        <translation>Координата второй точки выносной линии по оси Y</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimlinear.cpp" line="60"/>
@@ -19379,7 +19375,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_ellipse.cpp" line="45"/>
         <source>Minor Radius</source>
-        <translation>Радиус младшей оси</translation>
+        <translation>Радиус малой оси</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_ellipse.cpp" line="45"/>
@@ -19524,12 +19520,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_hatch.cpp" line="38"/>
         <source>Pattern</source>
-        <translation>Шаблон</translation>
+        <translation>Образец</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_hatch.cpp" line="38"/>
         <source>Hatch pattern name</source>
-        <translation>Имя шаблона штриховки</translation>
+        <translation>Имя образца штриховки</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_hatch.cpp" line="42"/>
@@ -19633,7 +19629,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_hyperbola.cpp" line="58"/>
         <source>Minor Radius</source>
-        <translation>Радиус младшей оси</translation>
+        <translation>Радиус малой оси</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_hyperbola.cpp" line="58"/>
@@ -19988,7 +19984,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_line.cpp" line="29"/>
         <source>Line</source>
-        <translation>Прямая</translation>
+        <translation>Линия</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_line.cpp" line="33"/>
@@ -20038,7 +20034,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_line.cpp" line="49"/>
         <source>X coordinate for middle point</source>
-        <translation>Координата точки середины прямой по оси X</translation>
+        <translation>Координата точки середины линии по оси X</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_line.cpp" line="53"/>
@@ -20048,7 +20044,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_line.cpp" line="53"/>
         <source>Y coordinate for middle point</source>
-        <translation>Координата точки середины прямой по оси Y</translation>
+        <translation>Координата точки середины линии по оси Y</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_line.cpp" line="57"/>
@@ -20058,7 +20054,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_line.cpp" line="57"/>
         <source>Length of line</source>
-        <translation>Длина прямой</translation>
+        <translation>Длина линии</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_line.cpp" line="61"/>
@@ -20068,7 +20064,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_line.cpp" line="61"/>
         <source>Angle from the 0.0 to start point</source>
-        <translation>Угол прямой в начальной точке</translation>
+        <translation>Угол линии в начальной точке</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_line.cpp" line="65"/>
@@ -20078,7 +20074,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_line.cpp" line="65"/>
         <source>Angle from the 0.0 to end point</source>
-        <translation>Угол прямой в конечной точке</translation>
+        <translation>Угол линии в конечной точке</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_line.cpp" line="69"/>
@@ -20088,7 +20084,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_line.cpp" line="69"/>
         <source>Angle of the line inclination to x-axis</source>
-        <translation>Угол наклона прямой к оси X</translation>
+        <translation>Угол наклона линии к оси X</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_line.cpp" line="74"/>
@@ -20276,7 +20272,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_mtext.cpp" line="88"/>
         <source>Style of linespacing</source>
-        <translation>Cтиль применения межстрочного интервала</translation>
+        <translation>Стиль применения межстрочного интервала</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_mtext.cpp" line="89"/>
@@ -20793,7 +20789,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_text.cpp" line="72"/>
         <source>Fit</source>
-        <translation>Подогнать</translation>
+        <translation>По ширине</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_text.cpp" line="77"/>
@@ -20883,7 +20879,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="139"/>
         <source>Line</source>
-        <translation>Прямая</translation>
+        <translation>Линия</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="143"/>
@@ -20943,7 +20939,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="220"/>
         <source>Draw Order</source>
-        <translation>Порядок</translation>
+        <translation>Порядок прорисовки</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="228"/>
@@ -21030,7 +21026,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="583"/>
         <source>Modify Line</source>
-        <translation>Изменить Прямую</translation>
+        <translation>Изменить линию</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="603"/>
@@ -21039,7 +21035,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="782"/>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="886"/>
         <source>Draw Line</source>
-        <translation>Рисовать Прямую</translation>
+        <translation>Рисовать линию</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="620"/>
@@ -21091,7 +21087,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="867"/>
         <source>Modify MText</source>
-        <translation>Изменить МТекст</translation>
+        <translation>Изменить многострочный текст</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="1025"/>
@@ -21194,7 +21190,7 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="212"/>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="246"/>
         <source>&amp;Line</source>
-        <translation>&amp;Прямая</translation>
+        <translation>&amp;Линия</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_main.cpp" line="178"/>
@@ -21484,12 +21480,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_filler.cpp" line="31"/>
         <source>By line</source>
-        <translation>Относительно прямой</translation>
+        <translation>Относительно линии</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_filler.cpp" line="31"/>
         <source>If checked, mirror will be performed by selected line entity</source>
-        <translation>Если выбрано, то объекты будут отражены относительно выбранной прямой</translation>
+        <translation>Если выбрано, то объекты будут отражены относительно выбранной линии</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_filler.cpp" line="38"/>
@@ -21504,13 +21500,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_filler.cpp" line="47"/>
         <source>Current attributes</source>
-        <translation>С текущими аттрибутами</translation>
+        <translation>С текущими атрибутами</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_filler.cpp" line="48"/>
         <source>If checked, current attributes will be used for mirrored entities, otherwise - original ones</source>
-        <translation>Если выбрано, текущие аттрибуты будут применены к созданным объектам.
-Иначе, к копиям будут применены аттрибуты оригинальных объектов. </translation>
+        <translation>Если выбрано, текущие атрибуты будут применены к созданным объектам. Иначе к копиям будут применены атрибуты оригинальных объектов.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_filler.cpp" line="57"/>
@@ -21627,12 +21622,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="32"/>
         <source>If checked, mirror will be performed by selected line entity.</source>
-        <translation>Если выбрано, то объекты будут отражены относительно выбранной прямой.</translation>
+        <translation>Если выбрано, то объекты будут отражены относительно выбранной линии.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="35"/>
         <source>Mirror to selected line</source>
-        <translation>От прямой</translation>
+        <translation>От линии</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="42"/>
@@ -21647,13 +21642,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="59"/>
         <source>If checked, current attributes will be used for mirrored entities, otherwise - original ones. </source>
-        <translation>Если выбрано, текущие аттрибуты будут применены к созданным объектам.
-Иначе, к копиям будут применены аттрибуты оригинальных объектов. </translation>
+        <translation>Если выбрано, текущие атрибуты будут применены к созданным объектам. Иначе к копиям будут применены атрибуты оригинальных объектов. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="62"/>
         <source>Use Current Attributes</source>
-        <translation>С текущими &amp;аттрибутами</translation>
+        <translation>С текущими &amp;атрибутами</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="82"/>
@@ -21702,13 +21696,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_filler.cpp" line="54"/>
         <source>Current attributes</source>
-        <translation>С текущими аттрибутами</translation>
+        <translation>С текущими атрибутами</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_filler.cpp" line="55"/>
         <source>If checked, current attributes will be applied to created entities, otherwise original ones will be used</source>
-        <translation>Если выбрано, текущие аттрибуты будут применены к созданным объектам.
-Иначе, к копиям будут применены аттрибуты оригинальных объектов.</translation>
+        <translation>Если выбрано, текущие атрибуты будут применены к созданным объектам. Иначе к копиям будут применены атрибуты оригинальных объектов.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_filler.cpp" line="64"/>
@@ -21746,13 +21739,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_widget.ui" line="68"/>
         <source>If checked, current attributes will be applied to created entities, owtherwise original ones will be used. </source>
-        <translation>Если выбрано, текущие аттрибуты будут применены к созданным объектам. 
-Иначе, к копиям будут применены аттрибуты оригинальных объектов. </translation>
+        <translation>Если выбрано, текущие атрибуты будут применены к созданным объектам. Иначе к копиям будут применены атрибуты оригинальных объектов. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_widget.ui" line="71"/>
         <source>Use Current Attributes</source>
-        <translation>С текущими &amp;аттрибутами</translation>
+        <translation>С текущими &amp;атрибутами</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_options_widget.ui" line="78"/>
@@ -21844,13 +21836,12 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_filler.cpp" line="84"/>
         <source>Current attributes</source>
-        <translation>С текущими аттрибутами</translation>
+        <translation>С текущими атрибутами</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_filler.cpp" line="85"/>
         <source>If checked, current attributes will be applied to created entities, otherwise original ones will be used</source>
-        <translation>Если выбрано, текущие аттрибуты будут применены к созданным объектам.
-Иначе, к копиям будут применены аттрибуты оригинальных объектов.</translation>
+        <translation>Если выбрано, текущие атрибуты будут применены к созданным объектам. Иначе к копиям будут применены атрибуты оригинальных объектов.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_filler.cpp" line="94"/>
@@ -21868,18 +21859,17 @@ This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entit
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="32"/>
         <source>Move Rotate Options</source>
-        <translation>Параметры сдвига и поворота</translation>
+        <translation>Параметры перемещения и поворота</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="50"/>
         <source>If checked, current attributes will be applied to created entities, otherwise original ones will be used. </source>
-        <translation>Если выбрано, текущие аттрибуты будут применены к созданным объектам.
-Иначе, к копиям будут применены аттрибуты оригинальных объектов.</translation>
+        <translation>Если выбрано, текущие атрибуты будут применены к созданным объектам. Иначе к копиям будут применены атрибуты оригинальных объектов. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="53"/>
         <source>Use Current Attributes</source>
-        <translation>С текущими &amp;аттрибутами</translation>
+        <translation>С текущими &amp;атрибутами</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_move_rotate_options_widget.ui" line="60"/>
@@ -22078,7 +22068,7 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="479"/>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="493"/>
         <source>&amp;Add View</source>
-        <translation>Coхранить Вид</translation>
+        <translation>&amp;Добавить вид</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.cpp" line="475"/>
@@ -22166,7 +22156,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="378"/>
         <source>UCS</source>
-        <translation>Пользовательская</translation>
+        <translation>ПСК</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="383"/>
@@ -22192,7 +22182,7 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="389"/>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="398"/>
         <source>UCS: </source>
-        <translation>Пользовательская: </translation>
+        <translation>ПСК: </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="398"/>
@@ -22207,12 +22197,12 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="400"/>
         <source>UCS Origin X: </source>
-        <translation>Базовый X: </translation>
+        <translation>Начало ПСК X: </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="400"/>
         <source>UCS Origin Y: </source>
-        <translation>Базовый Y: </translation>
+        <translation>Начало ПСК Y: </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewsmodel.cpp" line="401"/>
@@ -22256,7 +22246,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_filler.cpp" line="41"/>
         <source>Distance for offset from original entity</source>
-        <translation>Дистанция смещения относительно оригинального объекта</translation>
+        <translation>Расстояние смещения от исходного объекта</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_filler.cpp" line="49"/>
@@ -22292,13 +22282,12 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_filler.cpp" line="72"/>
         <source>Current attributes</source>
-        <translation>С текущими аттрибутами</translation>
+        <translation>С текущими атрибутами</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_filler.cpp" line="73"/>
         <source>If checked, current attributes will be applied to created entities, otherwise original ones will be used</source>
-        <translation>Если выбрано, текущие аттрибуты будут применены к созданным объектам.
-Иначе, к копиям будут применены аттрибуты оригинальных объектов.</translation>
+        <translation>Если выбрано, текущие атрибуты будут применены к созданным объектам. Иначе к копиям будут применены атрибуты оригинальных объектов.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_filler.cpp" line="82"/>
@@ -22357,13 +22346,12 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="119"/>
         <source>If checked, current attributes will be applied to created entities, otherwise original ones will be used. </source>
-        <translation>Если выбрано, текущие аттрибуты будут применены к созданным объектам.
-Иначе, к копиям будут применены аттрибуты оригинальных объектов.</translation>
+        <translation>Если выбрано, текущие атрибуты будут применены к созданным объектам. Иначе к копиям будут применены атрибуты оригинальных объектов. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="122"/>
         <source>Use Current Attributes</source>
-        <translation>С текущими &amp;аттрибутами</translation>
+        <translation>С текущими &amp;атрибутами</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="136"/>
@@ -22378,7 +22366,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="158"/>
         <source>Distance for offset from original entity</source>
-        <translation>Дистанция смещения относительно оригинального объекта</translation>
+        <translation>Расстояние смещения от исходного объекта</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_offset_options_widget.ui" line="172"/>
@@ -22942,7 +22930,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="314"/>
         <source>Divide</source>
-        <translation>Пунктир 2</translation>
+        <translation>Штрихпунктирная с двумя точками</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="315"/>
@@ -23301,7 +23289,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.cpp" line="53"/>
         <source>Select entities by attributes pen</source>
-        <translation>Выбрать объекты с аттрибутами пера</translation>
+        <translation>Выбрать объекты с атрибутами пера</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.cpp" line="54"/>
@@ -23334,7 +23322,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="100"/>
         <source>Select Entities By Pen Attributes</source>
-        <translation>Выбрать объекты с такими же аттрибутами пера</translation>
+        <translation>Выбрать объекты с такими же атрибутами пера</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.ui" line="120"/>
@@ -23476,7 +23464,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="306"/>
         <source>&amp;Select Entities With Attributes Pen</source>
-        <translation>Выбрать объекты с пером с такими же аттрибутами</translation>
+        <translation>&amp;Выбрать объекты с пером с такими же атрибутами</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="308"/>
@@ -23660,7 +23648,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="50"/>
         <source>Angle of line</source>
-        <translation>Угол прямой</translation>
+        <translation>Угол линии</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/point/lc_points_line_options_filler.cpp" line="55"/>
@@ -23881,7 +23869,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_equidistant_options_widget.ui" line="32"/>
         <source>Line Relative Angle Options</source>
-        <translation>Параметры прямой под относительным углом</translation>
+        <translation>Параметры линии под относительным углом</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_equidistant_options_widget.ui" line="56"/>
@@ -23914,7 +23902,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_filler.cpp" line="35"/>
         <source>Line</source>
-        <translation>Прямая</translation>
+        <translation>Линия</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_filler.cpp" line="36"/>
@@ -24037,7 +24025,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_widget.ui" line="80"/>
         <source>Line</source>
-        <translation>Прямая</translation>
+        <translation>Линия</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/polyline/lc_polyline_options_widget.ui" line="100"/>
@@ -24203,7 +24191,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="72"/>
         <source>Apply Print Scale to line width</source>
-        <translation>Применить масштаб печати к ширине линии</translation>
+        <translation>Применить масштаб печати к толщине линий</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_filler.cpp" line="78"/>
@@ -24346,7 +24334,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_widget.ui" line="105"/>
         <source>Apply Print Scale to line width</source>
-        <translation>Применить Шкалу печати к ширине линии</translation>
+        <translation>Применить масштаб печати к толщине линий</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/print_preview/lc_print_preview_options_widget.ui" line="134"/>
@@ -24495,7 +24483,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_hyperbola.cpp" line="141"/>
         <source>Ratio or minor radius must be positive</source>
-        <translation>Отношение радиусов или младший радиус дожны быть позитивны</translation>
+        <translation>Отношение радиусов или малый радиус должны быть положительны</translation>
     </message>
 </context>
 <context>
@@ -24769,12 +24757,12 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="199"/>
         <source>Center marks and circle creation</source>
-        <translation>Создание центральной метки или окружности</translation>
+        <translation>Создание маркера центра или окружности</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="200"/>
         <source>Create center mark for selected circles and arcs</source>
-        <translation>Создать центральную метку для выделенных окружностей, дуг или эллипсов</translation>
+        <translation>Создать маркер центра для выделенных окружностей, дуг или эллипсов</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="201"/>
@@ -24809,7 +24797,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="142"/>
         <source>Arc trimming or dividing</source>
-        <translation>Разделение и подгонка дуги</translation>
+        <translation>Обрезка или разделение дуги</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="143"/>
@@ -24824,7 +24812,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="144"/>
         <source>Trim the arc by other entity</source>
-        <translation>Подогнать дугу с помощью другого объекта</translation>
+        <translation>Обрезать дугу другим объектом</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="148"/>
@@ -24844,22 +24832,22 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="158"/>
         <source>Create line tangental to arc</source>
-        <translation>Создать прямую, касательную к дуге</translation>
+        <translation>Создать линию, касательную к дуге</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="159"/>
         <source>Create line tangental for two circles/arcs</source>
-        <translation>Создать прямую, касательную в двум окружностям/дугам</translation>
+        <translation>Создать линию, касательную к двум окружностям/дугам</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="163"/>
         <source>Create line orthogonal to arc</source>
-        <translation>Создание прямой, касательной к дуге</translation>
+        <translation>Создать линию, ортогональную к дуге</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="168"/>
         <source>Create line with relative angle to arc</source>
-        <translation>Создать прямую под относительным углом к этой дуге</translation>
+        <translation>Создать линию под относительным углом к этой дуге</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="169"/>
@@ -24874,7 +24862,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="144"/>
         <source>Trim</source>
-        <translation>Подогнать</translation>
+        <translation>Обрезать</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="153"/>
@@ -24931,7 +24919,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="164"/>
         <source>Create arc tangental line orthogonal to line</source>
-        <translation>Создать прямую, касательную к дуге и ортогональную к прямой</translation>
+        <translation>Создать линию, касательную к дуге и ортогональную к линии</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="171"/>
@@ -24951,12 +24939,12 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="173"/>
         <source>Slice/Divide</source>
-        <translation>Поделить дугу</translation>
+        <translation>Разделить дугу</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="173"/>
         <source>Slice or divide an arc</source>
-        <translation>Поделить дугу на дуги</translation>
+        <translation>Разделить дугу на дуги</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="174"/>
@@ -25021,7 +25009,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="200"/>
         <source>Center mark</source>
-        <translation>Центральная метка</translation>
+        <translation>Маркер центра</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="201"/>
@@ -25167,7 +25155,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="77"/>
         <source>Circle trimming or dividing</source>
-        <translation>Разделение или подгонка окружности</translation>
+        <translation>Обрезка или разделение окружности</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="78"/>
@@ -25182,7 +25170,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="79"/>
         <source>Trim circle by other entity</source>
-        <translation>Подогнать окружность с помощью другого объекта</translation>
+        <translation>Обрезать окружность другим объектом</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="88"/>
@@ -25192,22 +25180,22 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="93"/>
         <source>Create line tangental to circle</source>
-        <translation>Создать прямую, касательную к окружности</translation>
+        <translation>Создать линию, касательную к окружности</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="94"/>
         <source>Create line tangental to two circles</source>
-        <translation>Создать прямую, касательную в двум окружностям</translation>
+        <translation>Создать линию, касательную к двум окружностям</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="98"/>
         <source>Create line orthogonal to circle</source>
-        <translation>Создание прямой, касательной к окружности</translation>
+        <translation>Создать линию, ортогональную к окружности</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="99"/>
         <source>Create tangental orthogonal line to line</source>
-        <translation>Создать прямую, касательную к окружности и ортогональную к прямой</translation>
+        <translation>Создать линию, касательную к окружности и ортогональную к линии</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="102"/>
@@ -25217,12 +25205,12 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="103"/>
         <source>Slice or divide a circle</source>
-        <translation>Поделить окружность</translation>
+        <translation>Разделить окружность</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="108"/>
         <source>Create line with relative angle to circle</source>
-        <translation>Создать прямую под относительным углом к этой окружности</translation>
+        <translation>Создать линию под относительным углом к этой окружности</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="114"/>
@@ -25252,12 +25240,12 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="136"/>
         <source>Create center mark for selected circles, ellipses and arcs</source>
-        <translation>Создать центральную метку для выделенных окружностей, дуг или эллипсов</translation>
+        <translation>Создать маркер центра для выделенных окружностей, дуг или эллипсов</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="79"/>
         <source>Trim</source>
-        <translation>Подогнать</translation>
+        <translation>Обрезать</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="82"/>
@@ -25339,7 +25327,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="103"/>
         <source>Slice/Divide</source>
-        <translation>Поделить Окружность</translation>
+        <translation>Разделить окружность</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="104"/>
@@ -25424,12 +25412,12 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="135"/>
         <source>Center marks creation</source>
-        <translation>Создание центральной метки</translation>
+        <translation>Создание маркера центра</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="136"/>
         <source>Center mark</source>
-        <translation>Центральная метка</translation>
+        <translation>Маркер центра</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="49"/>
@@ -25458,22 +25446,22 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_aligned.cpp" line="29"/>
         <source>Ext point 1</source>
-        <translation>Первая точка выноски</translation>
+        <translation>Точка выносной линии 1</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_aligned.cpp" line="29"/>
         <source>Position of first extension point</source>
-        <translation>Координаты первой точки выноски</translation>
+        <translation>Координаты первой точки выносной линии</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_aligned.cpp" line="36"/>
         <source>Ext point 2</source>
-        <translation>Вторая точка выноски</translation>
+        <translation>Точка выносной линии 2</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_aligned.cpp" line="36"/>
         <source>Position of second extension point</source>
-        <translation>Координаты второй точки выноски</translation>
+        <translation>Координаты второй точки выносной линии</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_aligned.cpp" line="43"/>
@@ -25498,7 +25486,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_aligned.cpp" line="55"/>
         <source>Continues aligned dimension</source>
-        <translation>Продолжить цепь выравненных размеров</translation>
+        <translation>Продолжить цепь параллельных размеров</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_aligned.cpp" line="56"/>
@@ -25508,12 +25496,12 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_aligned.cpp" line="56"/>
         <source>Uses aligned dimension as base line and creates other dimensions</source>
-        <translation>Использовать выровненный размер для построения других размеров базовой линии</translation>
+        <translation>Использовать параллельный размер для построения других размеров базовой линии</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_aligned.cpp" line="64"/>
         <source>Apply dimension style to other dimension</source>
-        <translation>Применить стиль размера к другим размерам</translation>
+        <translation>Применить размерный стиль к другим размерам</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_aligned.cpp" line="65"/>
@@ -25531,42 +25519,42 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_angular.cpp" line="29"/>
         <source>Line 1 start point</source>
-        <translation>Начало первой прямой</translation>
+        <translation>Начало первой линии</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_angular.cpp" line="29"/>
         <source>Start point of first line</source>
-        <translation>Начальная точка первой прямой построения размера</translation>
+        <translation>Начальная точка первой линии построения размера</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_angular.cpp" line="36"/>
         <source>Line 1 end point</source>
-        <translation>Конец первой прямой</translation>
+        <translation>Конец первой линии</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_angular.cpp" line="36"/>
         <source>End point of first line</source>
-        <translation>Конечная точка первой прямой построения размера</translation>
+        <translation>Конечная точка первой линии построения размера</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_angular.cpp" line="43"/>
         <source>Line 2 start point</source>
-        <translation>Начало второй прямой</translation>
+        <translation>Начало второй линии</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_angular.cpp" line="43"/>
         <source>Start point of second line</source>
-        <translation>Начальная точка второй прямой построения размера</translation>
+        <translation>Начальная точка второй линии построения размера</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_angular.cpp" line="50"/>
         <source>Line 2 end point</source>
-        <translation>Конец второй прямой</translation>
+        <translation>Конец второй линии</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_angular.cpp" line="50"/>
         <source>End point of second line</source>
-        <translation>Конечная точка второй прямой построения размера</translation>
+        <translation>Конечная точка второй линии построения размера</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_angular.cpp" line="57"/>
@@ -25581,7 +25569,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_angular.cpp" line="69"/>
         <source>Apply dimension style to other dimension</source>
-        <translation>Применить стиль размера к другим размерам</translation>
+        <translation>Применить размерный стиль к другим размерам</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_angular.cpp" line="70"/>
@@ -25609,7 +25597,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_arc.cpp" line="42"/>
         <source>Apply dimension style to other dimension</source>
-        <translation>Применить стиль размера к другим размерам</translation>
+        <translation>Применить размерный стиль к другим размерам</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_arc.cpp" line="43"/>
@@ -25662,7 +25650,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="63"/>
         <source>Specifies current dimension style by name</source>
-        <translation>Задает имя используемого стиля размеров</translation>
+        <translation>Задает имя используемого размерного стиля</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="99"/>
@@ -25672,17 +25660,17 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="100"/>
         <source>Clears dimension style override, if one is present for dimension</source>
-        <translation>Очищает переопределение стиля размера, если оно есть</translation>
+        <translation>Очищает переопределение размерного стиля, если оно есть</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="128"/>
         <source>Invokes dimension styles management UI</source>
-        <translation>Показывает интерфес редактирования стилей размеров</translation>
+        <translation>Открывает диспетчер размерных стилей</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="130"/>
         <source>Dimension styles management</source>
-        <translation>Управление стилем размера</translation>
+        <translation>Управление размерными стилями</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="221"/>
@@ -25697,7 +25685,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="265"/>
         <source>Arrow 1</source>
-        <translation>Стрелкa 1</translation>
+        <translation>Стрелка 1</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="265"/>
@@ -25707,7 +25695,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="287"/>
         <source>Arrow 2</source>
-        <translation>Стрелкa 2</translation>
+        <translation>Стрелка 2</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="287"/>
@@ -25744,17 +25732,17 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="334"/>
         <source>Center mark</source>
-        <translation>Центральная метка</translation>
+        <translation>Маркер центра</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="360"/>
         <source>Center mark size</source>
-        <translation>Размер центральной метки</translation>
+        <translation>Размер маркера центра</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="361"/>
         <source>Specifies size of the center mark on the dimension (DIMCEN variable)</source>
-        <translation>Задает размер центрального маркера (переменная DIMCEN)</translation>
+        <translation>Задает размер маркера центра (переменная DIMCEN)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="387"/>
@@ -25823,7 +25811,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="439"/>
         <source>Dim line ext</source>
-        <translation>Удлинение за размерные</translation>
+        <translation>Удлинение за выносные</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="440"/>
@@ -26172,7 +26160,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="800"/>
         <source>Specifies the overall scale factor applied to properties, that specify sizes, distances or offsets (DIMSCALE variable)</source>
-        <translation>Задает общий коэффициент масштабирования, применяемый к свойствам которые задают размеры, дистанции или смещения размеров (переменная DIMSCALE)</translation>
+        <translation>Задает общий коэффициент масштабирования, применяемый к свойствам, которые задают размеры, расстояния или смещения размеров (переменная DIMSCALE)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="811"/>
@@ -26222,12 +26210,12 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="898"/>
         <source>Move text, add leader</source>
-        <translation>Двигать текст и строить выноску</translation>
+        <translation>Перемещать текст, строить выноску</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="899"/>
         <source>Move text, no leader</source>
-        <translation>Двигать текст, без выноски</translation>
+        <translation>Перемещать текст, без выноски</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="905"/>
@@ -26323,7 +26311,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="334"/>
         <source>Specifies type of center mark on dimension (DIMCEN variable)</source>
-        <translation type="unfinished">Задает тип центрального маркера (переменная DIMCEN)</translation>
+        <translation type="unfinished">Задает тип маркера центра (переменная DIMCEN)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="586"/>
@@ -26538,7 +26526,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1179"/>
         <source>Alternate units for dimensions</source>
-        <translation>Настройки альтернативныx единиц размеров</translation>
+        <translation>Настройки альтернативных единиц размеров</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1183"/>
@@ -26830,7 +26818,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1588"/>
         <source>Alt tolerance suppress leading zeros</source>
-        <translation>Альт. допуск без ведущиx 0</translation>
+        <translation>Альт. допуск без ведущих 0</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1589"/>
@@ -26908,7 +26896,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_diametric.cpp" line="54"/>
         <source>Apply dimension style to other dimension</source>
-        <translation>Применить стиль размера к другим размерам</translation>
+        <translation>Применить размерный стиль к другим размерам</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_diametric.cpp" line="55"/>
@@ -26926,7 +26914,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_linear.cpp" line="30"/>
         <source>Ext point 1</source>
-        <translation>Первая точка выноски</translation>
+        <translation>Точка выносной линии 1</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_linear.cpp" line="30"/>
@@ -26936,12 +26924,12 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_linear.cpp" line="37"/>
         <source>Ext point 2</source>
-        <translation>Вторая точка выноски</translation>
+        <translation>Точка выносной линии 2</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_linear.cpp" line="37"/>
         <source>Position of second extension point</source>
-        <translation>Координаты второй точки выноски</translation>
+        <translation>Координаты второй точки выносной линии</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_linear.cpp" line="44"/>
@@ -26997,7 +26985,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_linear.cpp" line="79"/>
         <source>Apply dimension style to other dimension</source>
-        <translation>Применить стиль размера к другим размерам</translation>
+        <translation>Применить размерный стиль к другим размерам</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_linear.cpp" line="80"/>
@@ -27015,7 +27003,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_ordinate.cpp" line="35"/>
         <source>Feature point</source>
-        <translation>Тоачка определения</translation>
+        <translation>Точка определения</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_ordinate.cpp" line="35"/>
@@ -27050,7 +27038,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_ordinate.cpp" line="100"/>
         <source>Applies dimension style to other dimensions</source>
-        <translation>Применить стиль размера к другим размерам</translation>
+        <translation>Применить размерный стиль к другим размерам</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_ordinate.cpp" line="101"/>
@@ -27118,7 +27106,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_radial.cpp" line="54"/>
         <source>Apply dimension style to other dimension</source>
-        <translation>Применить стиль размера к другим размерам</translation>
+        <translation>Применить размерный стиль к другим размерам</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_radial.cpp" line="55"/>
@@ -27189,7 +27177,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_ellipse.cpp" line="63"/>
         <source>Radius Minor</source>
-        <translation>Радиус младшей оси</translation>
+        <translation>Радиус малой оси</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_ellipse.cpp" line="63"/>
@@ -27235,7 +27223,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_ellipse.cpp" line="120"/>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_ellipse.cpp" line="125"/>
         <source>Creation of line tangental to ellipse</source>
-        <translation>Создать прямую, касательную к эллипсу</translation>
+        <translation>Создать линию, касательную к эллипсу</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_ellipse.cpp" line="121"/>
@@ -27245,12 +27233,12 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_ellipse.cpp" line="121"/>
         <source>Create line orthogonal to ellipse</source>
-        <translation>Создать прямую, касательную к элипсу</translation>
+        <translation>Создать линию, ортогональную к эллипсу</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_ellipse.cpp" line="122"/>
         <source>Create tangental orthogonal line to line</source>
-        <translation>Создать прямую, касательную к эллипсу и ортогональную к прямой</translation>
+        <translation>Создать линию, касательную к эллипсу и ортогональную к линии</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_ellipse.cpp" line="126"/>
@@ -27260,7 +27248,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_ellipse.cpp" line="131"/>
         <source>Create line with relative angle to ellipse</source>
-        <translation>Создать прямую под относительным углом</translation>
+        <translation>Создать линию под относительным углом к эллипсу</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_ellipse.cpp" line="132"/>
@@ -27275,7 +27263,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_ellipse.cpp" line="149"/>
         <source>Create center mark for selected circles, ellipses and arcs</source>
-        <translation>Создать центральную метку для выделенных окружностей, дуг или эллипсов</translation>
+        <translation>Создать маркер центра для выделенных окружностей, дуг или эллипсов</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_ellipse.cpp" line="122"/>
@@ -27295,7 +27283,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_ellipse.cpp" line="127"/>
         <source>Create line tangental for two entities</source>
-        <translation type="unfinished">Создать пряму, касательную у двум объектам</translation>
+        <translation type="unfinished">Создать линию, касательную к двум объектам</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_ellipse.cpp" line="130"/>
@@ -27335,12 +27323,12 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_ellipse.cpp" line="148"/>
         <source>Center marks creation</source>
-        <translation>Создание центральной метки</translation>
+        <translation>Создание маркера центра</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_ellipse.cpp" line="149"/>
         <source>Center mark</source>
-        <translation>Центральная метка</translation>
+        <translation>Маркер центра</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_ellipse.cpp" line="94"/>
@@ -27419,7 +27407,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_grid.cpp" line="71"/>
         <source>Isometric Right</source>
-        <translation>Изометрическа сетка &quot;Справа&quot;</translation>
+        <translation>Изометрическая сетка &quot;Справа&quot;</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_grid.cpp" line="72"/>
@@ -27836,7 +27824,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_ucs.cpp" line="112"/>
         <source>Isometric Right</source>
-        <translation>Изометрическа сетка &quot;Справа&quot;</translation>
+        <translation>Изометрическая сетка &quot;Справа&quot;</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_ucs.cpp" line="116"/>
@@ -27906,7 +27894,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_ucs.cpp" line="190"/>
         <source>Origin</source>
-        <translation>Базовая точка</translation>
+        <translation>Начало координат</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_ucs.cpp" line="190"/>
@@ -28165,12 +28153,12 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_hatch.cpp" line="39"/>
         <source>Pattern</source>
-        <translation>Шаблон</translation>
+        <translation>Образец</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_hatch.cpp" line="39"/>
         <source>Hatch pattern name</source>
-        <translation>Имя шаблона штриховки</translation>
+        <translation>Имя образца штриховки</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_hatch.cpp" line="53"/>
@@ -28268,7 +28256,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_hyperbola.cpp" line="71"/>
         <source>Radius Minor</source>
-        <translation>Радиус младшей оси</translation>
+        <translation>Радиус малой оси</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_hyperbola.cpp" line="71"/>
@@ -28688,7 +28676,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="35"/>
         <source>Start point of line</source>
-        <translation>Начальная точка прямой</translation>
+        <translation>Начальная точка линии</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="41"/>
@@ -28698,7 +28686,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="41"/>
         <source>End point of line</source>
-        <translation>Конечная точка прямой</translation>
+        <translation>Конечная точка линии</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="49"/>
@@ -28708,7 +28696,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="49"/>
         <source>Length of line</source>
-        <translation>Длина прямой</translation>
+        <translation>Длина линии</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="55"/>
@@ -28718,7 +28706,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="55"/>
         <source>Angle from 0.0 to first point of line</source>
-        <translation>Угол прямой в начальной точке</translation>
+        <translation>Угол линии в начальной точке</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="61"/>
@@ -28728,7 +28716,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="61"/>
         <source>Angle from 0.0 to second point of line</source>
-        <translation>Угол прямой в конечной точке</translation>
+        <translation>Угол линии в конечной точке</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="99"/>
@@ -28743,43 +28731,43 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="100"/>
         <source>Line Join</source>
-        <translation>Соединить прямые</translation>
+        <translation>Соединить линии</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="103"/>
         <source>Trimming two lines</source>
-        <translation>Подгонка прямой</translation>
+        <translation>Обрезка двух линий</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="104"/>
         <source>Trim</source>
-        <translation>Подогнать</translation>
+        <translation>Обрезать</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="98"/>
         <source>Length and lines join</source>
-        <translation>Размер и объединение прямых</translation>
+        <translation>Размер и объединение линий</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="99"/>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="140"/>
         <source>Create parallel line through point</source>
-        <translation>Создать параллельную прямую, проходящую через заданную точку</translation>
+        <translation>Создать параллельную линию, проходящую через заданную точку</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="104"/>
         <source>Trim line by limiting entity</source>
-        <translation>Подогнать прямую по другому объекту</translation>
+        <translation>Обрезать линию по ограничивающему объекту</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="105"/>
         <source>Trim Two</source>
-        <translation>Подогнать по двум</translation>
+        <translation>Обрезать две</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="105"/>
         <source>Trim two lines</source>
-        <translation>Подогнать по двум</translation>
+        <translation>Обрезать две линии</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="108"/>
@@ -28794,7 +28782,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="109"/>
         <source>Divide line</source>
-        <translation>Разделить прямую</translation>
+        <translation>Разделить линию</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="110"/>
@@ -28804,7 +28792,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="110"/>
         <source>Break the line by gap</source>
-        <translation>Создать разрыв прямой</translation>
+        <translation>Создать разрыв линии</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="132"/>
@@ -28814,12 +28802,12 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="133"/>
         <source>Create tangental arc in start point</source>
-        <translation>Создать дугу, касательную прямой в начальной точке</translation>
+        <translation>Создать дугу, касательную линии в начальной точке</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="134"/>
         <source>Create tangental arc in end point</source>
-        <translation>Создать дугу, касательную прямой в конечной точке</translation>
+        <translation>Создать дугу, касательную линии в конечной точке</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="135"/>
@@ -28829,12 +28817,12 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="150"/>
         <source>Create line from point to this line</source>
-        <translation>Создать прямую от точки к этой прямой</translation>
+        <translation>Создать линию от точки к этой линии</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="151"/>
         <source>Create orthogonal line that is tangental to other entity</source>
-        <translation>Создать прямую, ортогональную к этой прямой и касательную к другому объекту </translation>
+        <translation>Создать линию, ортогональную к этой линии и касательную к другому объекту</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="155"/>
@@ -28864,32 +28852,32 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="170"/>
         <source>Create a bevel</source>
-        <translation>Создать фаску угла прямых</translation>
+        <translation>Создать фаску на углу между линиями</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="171"/>
         <source>Create rounding between line and other entity</source>
-        <translation>Создать скругление между прямой и другим объектом</translation>
+        <translation>Создать скругление между линией и другим объектом</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="175"/>
         <source>Slice or divide a line</source>
-        <translation>Поделить прямую на отрезки</translation>
+        <translation>Разделить линию на отрезки</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="179"/>
         <source>Create center line between two lines</source>
-        <translation>Создать центральную прямую между двумя прямыми</translation>
+        <translation>Создать осевую линию между двумя линиями</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="184"/>
         <source>Create aligned dimension for line</source>
-        <translation>Создать выровненный размер для прямой</translation>
+        <translation>Создать параллельный размер для линии</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="185"/>
         <source>Create linear dimension for line</source>
-        <translation>Создать линейный размер для прямой</translation>
+        <translation>Создать линейный размер для линии</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="189"/>
@@ -28899,12 +28887,12 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="190"/>
         <source>Create ordinate dimension for line</source>
-        <translation>Создать ординатный размер для прямой</translation>
+        <translation>Создать ординатный размер для линии</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="203"/>
         <source>Change direction of line by swapping start and end points</source>
-        <translation>Изменить направление прямой, поменяв начальную и конечную точки</translation>
+        <translation>Изменить направление линии, поменяв начальную и конечную точки</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="134"/>
@@ -28914,7 +28902,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="100"/>
         <source>Join two lines</source>
-        <translation>Объединить две прямые</translation>
+        <translation>Объединить две линии</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="139"/>
@@ -28934,12 +28922,12 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="141"/>
         <source>Create bisector between lines</source>
-        <translation>Создать биссектриссу между прямыми</translation>
+        <translation>Создать биссектрису между линиями</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="144"/>
         <source>Creating orthogonal or relative angle lines</source>
-        <translation>Создание ортогонали или относительной прямой</translation>
+        <translation>Создание ортогональной линии или линии под относительным углом</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="145"/>
@@ -28949,7 +28937,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="145"/>
         <source>Create line orthogonal to this line</source>
-        <translation type="unfinished">Создать прямую, ортогональную этой</translation>
+        <translation type="unfinished">Создать линию, ортогональную этой</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="146"/>
@@ -28959,7 +28947,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="150"/>
         <source>Line from Point</source>
-        <translation>От точки к прямой</translation>
+        <translation>От точки к линии</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="151"/>
@@ -28970,17 +28958,17 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="154"/>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="159"/>
         <source>Creation of circle tangental to line</source>
-        <translation>Создание окружности, касательной к прямой</translation>
+        <translation>Создание окружности, касательной к линии</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="146"/>
         <source>Create line with relative angle to this line</source>
-        <translation type="unfinished">Создать прямую под относительным углом к этой прямой</translation>
+        <translation type="unfinished">Создать линию под относительным углом к этой линии</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="149"/>
         <source>Creation of line from point or tangental orthogonal</source>
-        <translation type="unfinished">Создание прямой от точки или касательной ортогонали</translation>
+        <translation type="unfinished">Создание линии от точки или касательной ортогонали</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="155"/>
@@ -29020,12 +29008,12 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="166"/>
         <source>Create bounding box for line</source>
-        <translation type="unfinished">Создать рамку вокруг прямой</translation>
+        <translation type="unfinished">Создать рамку вокруг линии</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="169"/>
         <source>Modification of line with bevel or fillet</source>
-        <translation>Именение прямой фаской или скруглением</translation>
+        <translation>Изменение линии фаской или скруглением</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="170"/>
@@ -29040,12 +29028,12 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="174"/>
         <source>Dividing line</source>
-        <translation>Разделение прямой</translation>
+        <translation>Разделение линии</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="175"/>
         <source>Slice/Divide</source>
-        <translation>Поделить прямую</translation>
+        <translation>Разделить линию</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="176"/>
@@ -29055,17 +29043,17 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="176"/>
         <source>Break or divide the line by intersection points</source>
-        <translation type="unfinished">Разбить прямую в точках пересечения с другими объектами</translation>
+        <translation type="unfinished">Разбить линию в точках пересечения с другими объектами</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="178"/>
         <source>Center line</source>
-        <translation>Центральная линия</translation>
+        <translation>Осевая линия</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="179"/>
         <source>Centerline</source>
-        <translation>Центральная линия</translation>
+        <translation>Осевая линия</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="180"/>
@@ -29080,12 +29068,12 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="183"/>
         <source>Creation of dimension, aligned or linear</source>
-        <translation>Создание размера, выровненного или линейного</translation>
+        <translation>Создание размера, параллельного или линейного</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="184"/>
         <source>Dim Aligned</source>
-        <translation>Разм. Выровненный</translation>
+        <translation>Разм. параллельный</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="185"/>
@@ -29135,7 +29123,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="88"/>
         <source>Middle point of line</source>
-        <translation>Средняя точка прямой</translation>
+        <translation>Средняя точка линии</translation>
     </message>
 </context>
 <context>
@@ -29168,7 +29156,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_mtext.cpp" line="45"/>
         <source>Content text of MText</source>
-        <translation>Содержимое MText </translation>
+        <translation>Содержимое многострочного текста</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_mtext.cpp" line="52"/>
@@ -29298,7 +29286,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_mtext.cpp" line="127"/>
         <source>Style of linespacing</source>
-        <translation>Cтиль применения межстрочного интервала</translation>
+        <translation>Стиль применения межстрочного интервала</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_mtext.cpp" line="135"/>
@@ -29454,7 +29442,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_point.cpp" line="49"/>
         <source>Draw points in the middle of line between two points</source>
-        <translation>Рисовать точки на заданной прямой</translation>
+        <translation>Рисовать точки на линии между двумя точками</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_point.cpp" line="52"/>
@@ -29464,7 +29452,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_point.cpp" line="53"/>
         <source>Line of points</source>
-        <translation>Прямая точек</translation>
+        <translation>Линия точек</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_point.cpp" line="53"/>
@@ -29639,17 +29627,17 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_polyline.cpp" line="109"/>
         <source>Trimming and exploding polyline</source>
-        <translation>Подгонка и разбивка ломаной</translation>
+        <translation>Обрезка и разбиение ломаной</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_polyline.cpp" line="110"/>
         <source>Trim segments</source>
-        <translation>Подогнать отрезки</translation>
+        <translation>Обрезать сегменты</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_polyline.cpp" line="110"/>
         <source>Trim segments of polyline</source>
-        <translation>Подгонка сегментов ломаной</translation>
+        <translation>Обрезка сегментов ломаной</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_polyline.cpp" line="111"/>
@@ -30217,7 +30205,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_text.cpp" line="58"/>
         <source>Fit</source>
-        <translation>Подогнать</translation>
+        <translation>По ширине</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_text.cpp" line="65"/>
@@ -30412,12 +30400,12 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/properties/double/lc_property_double_interactivepick_view.cpp" line="173"/>
         <source>Pick X component of position from drawing</source>
-        <translation>Измерить X координатy точки на чертеже</translation>
+        <translation>Измерить X координату точки на чертеже</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/properties/double/lc_property_double_interactivepick_view.cpp" line="175"/>
         <source>Pick Y component of position from drawing</source>
-        <translation>Измерить Y координатy точки на чертеже</translation>
+        <translation>Измерить Y координату точки на чертеже</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/properties/double/lc_property_double_interactivepick_view.cpp" line="177"/>
@@ -30445,7 +30433,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/properties/string/lc_property_qstring.cpp" line="45"/>
         <source>(Multiline Text)</source>
-        <translation>(Строки...)</translation>
+        <translation>(Многострочный текст)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/properties/string/lc_property_qstring.cpp" line="56"/>
@@ -30626,7 +30614,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="560"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="578"/>
         <source>LINE</source>
-        <translation>ПРЯМАЯ</translation>
+        <translation>ЛИНИЯ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="604"/>
@@ -30708,7 +30696,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="935"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="956"/>
         <source>INSERT</source>
-        <translation>БЛОК</translation>
+        <translation>ВСТАВКА</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="971"/>
@@ -30972,7 +30960,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="807"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="827"/>
         <source>Minor Radius</source>
-        <translation>Радиус младшей оси</translation>
+        <translation>Радиус малой оси</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="718"/>
@@ -31253,7 +31241,7 @@ Layer: </source>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1057"/>
         <source>Fit</source>
-        <translation>Подогнать</translation>
+        <translation>По ширине</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1071"/>
@@ -31580,7 +31568,7 @@ Layer: </source>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1578"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1594"/>
         <source>Extension Point 1</source>
-        <translation>Точка линии-выноски 2</translation>
+        <translation>Точка выносной линии 1</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1525"/>
@@ -31588,7 +31576,7 @@ Layer: </source>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1579"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1595"/>
         <source>Extension Point 2</source>
-        <translation>Точка линии-выноски 1</translation>
+        <translation>Точка выносной линии 2</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1557"/>
@@ -31644,7 +31632,7 @@ Layer: </source>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1574"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1589"/>
         <source>DIMALIGNED</source>
-        <translation>РАЗМЕР ВЫРОВНЕННЫЙ</translation>
+        <translation>РАЗМЕР ПАРАЛЛЕЛЬНЫЙ</translation>
     </message>
 </context>
 <context>
@@ -31889,9 +31877,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="81"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If selected, more detailed information about lines and arcs that are part of polyline will be shown in Entity Info widget.&lt;br/&gt;Otherwise, only information about vertexes/bulges will be displayed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>Если выбрано, будет показана более детальная информация о индивидуальных 
-сегментах (прямые, дуги) ломаной.
-Иначе, будет включена только информация о вершинах и выпуклостях ломаной.</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Если выбрано, в виджете информации об объекте будет показана более детальная информация об отдельных сегментах (линиях и дугах) ломаной.&lt;br/&gt;Иначе будет показана только информация о вершинах и выпуклостях.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="84"/>
@@ -32922,7 +32908,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/components/status_bar/lc_relzerocoordinateswidget.ui" line="35"/>
         <source>Relative Zero (Cartesian)</source>
-        <translation>Координаты Относительного Ноля (Картезианские)</translation>
+        <translation>Координаты относительного нуля (декартовы)</translation>
     </message>
     <message>
         <location filename="../src/ui/components/status_bar/lc_relzerocoordinateswidget.ui" line="45"/>
@@ -33082,7 +33068,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="485"/>
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="1128"/>
         <source>Angle from base to new point</source>
-        <translation>Угол прямой от базовой к относительной точке</translation>
+        <translation>Угол линии от базовой к относительной точке</translation>
     </message>
     <message>
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="501"/>
@@ -33288,13 +33274,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_filler.cpp" line="84"/>
         <source>Current attributes</source>
-        <translation>С текущими аттрибутами</translation>
+        <translation>С текущими атрибутами</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_filler.cpp" line="85"/>
         <source>If checked, current attributes will be applied to created entities, otherwise original ones will be used</source>
-        <translation>Если выбрано, текущие аттрибуты будут применены к созданным объектам.
-Иначе, к копиям будут применены аттрибуты оригинальных объектов.</translation>
+        <translation>Если выбрано, текущие атрибуты будут применены к созданным объектам. Иначе к копиям будут применены атрибуты оригинальных объектов.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_filler.cpp" line="94"/>
@@ -33312,7 +33297,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="32"/>
         <source>Move Rotate Options</source>
-        <translation>Параметры сдвига и поворота</translation>
+        <translation>Параметры перемещения и поворота</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="50"/>
@@ -33405,7 +33390,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="231"/>
         <source>Use Current Attributes</source>
-        <translation>С текущими &amp;аттрибутами</translation>
+        <translation>С текущими &amp;атрибутами</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_2_options_widget.ui" line="238"/>
@@ -33438,7 +33423,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_filler.cpp" line="49"/>
         <source>Angle to rotate entity around rotation center point</source>
-        <translation>Угол поворота объектов относительно точки центра вращения</translation>
+        <translation>Угол поворота объектов относительно центра поворота</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_filler.cpp" line="60"/>
@@ -33453,7 +33438,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_filler.cpp" line="72"/>
         <source>Rotate Twice</source>
-        <translation>Вращать дважды</translation>
+        <translation>Повернуть дважды</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_filler.cpp" line="35"/>
@@ -33531,13 +33516,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_filler.cpp" line="130"/>
         <source>Current attributes</source>
-        <translation>С текущими аттрибутами</translation>
+        <translation>С текущими атрибутами</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_filler.cpp" line="131"/>
         <source>If checked, current attributes will be applied to created entities, otherwise original ones will be used</source>
-        <translation>Если выбрано, текущие аттрибуты будут применены к созданным объектам.
-Иначе, к копиям будут применены аттрибуты оригинальных объектов.</translation>
+        <translation>Если выбрано, текущие атрибуты будут применены к созданным объектам. Иначе к копиям будут применены атрибуты оригинальных объектов.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_filler.cpp" line="140"/>
@@ -33555,7 +33539,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="32"/>
         <source>Move Rotate Options</source>
-        <translation>Параметры сдвига и поворота</translation>
+        <translation>Параметры перемещения и поворота</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="63"/>
@@ -33565,23 +33549,22 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="89"/>
         <source>If checked, current attributes will be applied to created entities, othewise original ones will be used. </source>
-        <translation>Если выбрано, текущие аттрибуты будут применены к созданным объектам.
-Иначе, к копиям будут применены аттрибуты оригинальных объектов.</translation>
+        <translation>Если выбрано, текущие атрибуты будут применены к созданным объектам. Иначе к копиям будут применены атрибуты оригинальных объектов. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="92"/>
         <source>Use Current Attributes</source>
-        <translation>С текущими &amp;аттрибутами</translation>
+        <translation>С текущими &amp;атрибутами</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="118"/>
         <source>Angle to rotate entity around rotation center point</source>
-        <translation>Угол поворота объектов относительно точки центра вращения</translation>
+        <translation>Угол поворота объектов относительно центра поворота</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="141"/>
         <source>Pick rotation angle from drawing</source>
-        <translation>Измерить угол поворота относительно центра вращения на чертеже</translation>
+        <translation>Измерить угол поворота на чертеже</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="155"/>
@@ -33627,7 +33610,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="202"/>
         <source>Rotate twice</source>
-        <translation>Вращать дважды</translation>
+        <translation>Повернуть дважды</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_rotate_options_widget.ui" line="209"/>
@@ -33697,12 +33680,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_round_options_filler.cpp" line="31"/>
         <source>Trim</source>
-        <translation>Подогнать</translation>
+        <translation>Обрезать</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_round_options_filler.cpp" line="31"/>
         <source>Check to trim both edges to the rounding</source>
-        <translation>Включите, чтобы подогнать грани при скруглении</translation>
+        <translation>Включите, чтобы обрезать обе кромки по скруглению</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_round_options_filler.cpp" line="37"/>
@@ -33725,12 +33708,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_round_options_widget.ui" line="59"/>
         <source>Check to trim both edges to the rounding</source>
-        <translation>Включите, чтобы подогнать грани при скруглении</translation>
+        <translation>Включите, чтобы обрезать обе кромки по скруглению</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_round_options_widget.ui" line="62"/>
         <source>Trim</source>
-        <translation>Подогнать</translation>
+        <translation>Обрезать</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_round_options_widget.ui" line="85"/>
@@ -33825,13 +33808,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_filler.cpp" line="87"/>
         <source>Current attributes</source>
-        <translation>С текущими аттрибутами</translation>
+        <translation>С текущими атрибутами</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_filler.cpp" line="88"/>
         <source>If checked, current attributes will be applied to created entities, otherwise original ones will be used</source>
-        <translation>Если выбрано, текущие аттрибуты будут применены к созданным объектам.
-Иначе, к копиям будут применены аттрибуты оригинальных объектов.</translation>
+        <translation>Если выбрано, текущие атрибуты будут применены к созданным объектам. Иначе к копиям будут применены атрибуты оригинальных объектов.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_filler.cpp" line="97"/>
@@ -33849,7 +33831,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="32"/>
         <source>Move Rotate Options</source>
-        <translation>Параметры сдвига и поворота</translation>
+        <translation>Параметры перемещения и поворота</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="50"/>
@@ -33926,13 +33908,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="199"/>
         <source>If checked, current attributes will be applied to created entities, otherwise original ones will be used. </source>
-        <translation>Если выбрано, текущие аттрибуты будут применены к созданным объектам.
-Иначе, к копиям будут применены аттрибуты оригинальных объектов.</translation>
+        <translation>Если выбрано, текущие атрибуты будут применены к созданным объектам. Иначе к копиям будут применены атрибуты оригинальных объектов. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="202"/>
         <source>Use Current Attributes</source>
-        <translation>С текущими &amp;аттрибутами</translation>
+        <translation>С текущими &amp;атрибутами</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_scale_options_widget.ui" line="209"/>
@@ -34025,7 +34006,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="130"/>
         <source>Line</source>
-        <translation>Прямая</translation>
+        <translation>Линия</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/selection/lc_selectwindowoptions.ui" line="137"/>
@@ -34394,7 +34375,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="111"/>
         <source>Distance between ticks.</source>
-        <translation>Расстояние между лучами</translation>
+        <translation>Расстояние между засечками.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="142"/>
@@ -34431,7 +34412,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="179"/>
         <source>If checked, selected entity will be divided by tick intersection points. </source>
-        <translation>Если выбрано, то базовый объект будет разделен на несколько точками пересечения с лучами.</translation>
+        <translation>Если выбрано, то базовый объект будет разделен точками пересечения с засечками. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="182"/>
@@ -34451,22 +34432,22 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="203"/>
         <source>Pick tick offset from drawing</source>
-        <translation>Измерить смещение луча на чертеже</translation>
+        <translation>Измерить смещение засечки на чертеже</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="229"/>
         <source>Length of tick.</source>
-        <translation>Длина луча</translation>
+        <translation>Длина засечки.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="236"/>
         <source>Pick tick angle from drawing</source>
-        <translation>Измерить угол луча на чертеже</translation>
+        <translation>Измерить угол засечки на чертеже</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="250"/>
         <source>Defines which point of tick should be placed to intersection point with selected entity.</source>
-        <translation>Определяет какая точка луча должна оказаться в точке пересечения с базовым объектом</translation>
+        <translation>Определяет, какая точка засечки должна оказаться в точке пересечения с базовым объектом.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="259"/>
@@ -34476,17 +34457,17 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="284"/>
         <source>Offset of tick snap point to intersection point. </source>
-        <translation>Смещение точки пересечения луча и базового объекта в направлении луча</translation>
+        <translation>Смещение точки привязки засечки относительно точки пересечения. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="291"/>
         <source>Tick snap:</source>
-        <translation>Привязка луча:</translation>
+        <translation>Привязка засечки:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="298"/>
         <source>Tick Length:</source>
-        <translation>Длина луча:</translation>
+        <translation>Длина засечки:</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="312"/>
@@ -34502,12 +34483,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="322"/>
         <source>Pick tick length from drawing</source>
-        <translation>Измерить длину прямой на чертеже</translation>
+        <translation>Измерить длину линии на чертеже</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="375"/>
         <source>Start angle for circle from which ticks will start. </source>
-        <translation>Начальный угол с которого начинаются лучи в окружности</translation>
+        <translation>Начальный угол на окружности, с которого начинаются засечки. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="382"/>
@@ -34533,7 +34514,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="454"/>
         <source>Count of ticks between edges of selected entity.</source>
-        <translation>Количество лучей между концами выбранного объекта</translation>
+        <translation>Количество засечек между концами выбранного объекта.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="464"/>
@@ -34543,7 +34524,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_widget.ui" line="486"/>
         <source>Angle between tick and selected entity.</source>
-        <translation>Угол между лучом и базовым объектом</translation>
+        <translation>Угол между засечкой и базовым объектом.</translation>
     </message>
 </context>
 <context>
@@ -34575,8 +34556,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="43"/>
         <source>Defines the number of line segments to be generated for each spline-fit polyline</source>
-        <translation>Определяет количество прямых для сегмента сплайна которые будут сгенерированы.
-Чем выше значение - тем точнее аппроксимация.</translation>
+        <translation>Определяет количество отрезков, создаваемых для каждого сегмента сплайна. Чем выше значение, тем точнее аппроксимация.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="49"/>
@@ -34586,8 +34566,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="50"/>
         <source>If checked, line segments will be part of polyline. Otherwise, they will be individual lines</source>
-        <translation>Если выбрана, будет создана одна ломаная из сегментов сплайна.
-Иначе, будут созданны отдельные прямые. </translation>
+        <translation>Если выбрано, сегменты будут частью ломаной. Иначе будут созданы отдельные линии.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="57"/>
@@ -34602,13 +34581,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="66"/>
         <source>Current attributes</source>
-        <translation>С текущими аттрибутами</translation>
+        <translation>С текущими атрибутами</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="67"/>
         <source>If checked, current attributes will be used for created entities, otherwise - original ones</source>
-        <translation>Если выбрано, текущие аттрибуты будут применены к созданным объектам.
-Иначе, к созданным объектам будут применены аттрибуты оригинальных объектов. </translation>
+        <translation>Если выбрано, текущие атрибуты будут применены к созданным объектам. Иначе к созданным объектам будут применены атрибуты оригинальных объектов.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="76"/>
@@ -34631,8 +34609,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="32"/>
         <source>Defines the number of line segments to be generated for each spline-fit polyline</source>
-        <translation>Определяет количество прямых для сегмента сплайна которые будут сгенерированы. 
-Чем выше значение - тем точнее аппроксимация.</translation>
+        <translation>Определяет количество отрезков, создаваемых для каждого сегмента сплайна. Чем выше значение, тем точнее аппроксимация.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="39"/>
@@ -34647,13 +34624,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="56"/>
         <source>If checked, current attributes will be used for created entities, otherwise - original ones. </source>
-        <translation>Если выбрано, текущие аттрибуты будут применены к созданным объектам.
-Иначе, к созданным объектам будут применены аттрибуты оригинальных объектов. </translation>
+        <translation>Если выбрано, текущие атрибуты будут применены к созданным объектам. Иначе к созданным объектам будут применены атрибуты оригинальных объектов. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="59"/>
         <source>Use Current Attributes</source>
-        <translation>С текущими &amp;аттрибутами</translation>
+        <translation>С текущими &amp;атрибутами</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="73"/>
@@ -34679,8 +34655,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="93"/>
         <source>If checked, line segments will be part of polyline. Otherwise, they will be individual lines</source>
-        <translation>Если выбрана, будет создана одна ломаная из сегментов сплайна. 
-Иначе, будут созданны отдельные прямые. </translation>
+        <translation>Если выбрано, сегменты будут частью ломаной. Иначе будут созданы отдельные линии.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="96"/>
@@ -34729,18 +34704,17 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_filler.cpp" line="51"/>
         <source>If unchecked, original polyline will be removed, otherwise it will survive</source>
-        <translation>Если выбрано, то оригинальнaя ломаная останется, иначе она будет удалена</translation>
+        <translation>Если выбрано, то оригинальная ломаная останется, иначе она будет удалена</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_filler.cpp" line="60"/>
         <source>Current attributes</source>
-        <translation>С текущими аттрибутами</translation>
+        <translation>С текущими атрибутами</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_filler.cpp" line="61"/>
         <source>If checked, current attributes will be used for created entities, otherwise - original ones</source>
-        <translation>Если выбрано, текущие аттрибуты будут применены к созданным объектам.
-Иначе, к созданным объектам будут применены аттрибуты оригинальных объектов. </translation>
+        <translation>Если выбрано, текущие атрибуты будут применены к созданным объектам. Иначе к созданным объектам будут применены атрибуты оригинальных объектов.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_filler.cpp" line="70"/>
@@ -34783,7 +34757,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="68"/>
         <source>If unchecked, original polyline will be removed, otherwise it will survive.</source>
-        <translation>Если выбрано, то оригинальнaя ломаная останется, иначе она будет удалена</translation>
+        <translation>Если выбрано, то оригинальная ломаная останется, иначе она будет удалена</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="71"/>
@@ -34798,13 +34772,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="85"/>
         <source>If checked, current attributes will be used for created entities, otherwise - original ones. </source>
-        <translation>Если выбрано, текущие аттрибуты будут применены к созданным объектам.
-Иначе, к созданным объектам будут применены аттрибуты оригинальных объектов. </translation>
+        <translation>Если выбрано, текущие атрибуты будут применены к созданным объектам. Иначе к созданным объектам будут применены атрибуты оригинальных объектов. </translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="88"/>
         <source>Use Current Attributes</source>
-        <translation>С текущими &amp;аттрибутами</translation>
+        <translation>С текущими &amp;атрибутами</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_from_polyline_options_widget.ui" line="95"/>
@@ -35500,7 +35473,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dialogs/entity/lc_textpropertieseditingwidget.cpp" line="58"/>
         <source>Fit</source>
-        <translation></translation>
+        <translation>По ширине</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_textpropertieseditingwidget.cpp" line="59"/>
@@ -35590,7 +35563,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="327"/>
         <source>Line</source>
-        <translation>Прямая</translation>
+        <translation>Линия</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="328"/>
@@ -35663,7 +35636,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="360"/>
         <source>Lines</source>
-        <translation>Прямые</translation>
+        <translation>Линии</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="361"/>
@@ -35718,7 +35691,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="395"/>
         <source>UCS</source>
-        <translation>Системa Координат</translation>
+        <translation>ПСК</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_toolbarfactory.cpp" line="416"/>
@@ -35756,7 +35729,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_trim_amount_options_filler.cpp" line="43"/>
         <source>If checked, trim/extension is performed for both sides of line.</source>
-        <translation>Если выбрано, то подгонка прямой будет выполнена для двух ее концов</translation>
+        <translation>Если выбрано, обрезка/удлинение линии выполняется с обоих концов.</translation>
     </message>
 </context>
 <context>
@@ -35764,7 +35737,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_trim_amount_options_widget.ui" line="20"/>
         <source>Trim Amount Options</source>
-        <translation>Параметры подгонки на величину</translation>
+        <translation>Параметры обрезки на величину</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_trim_amount_options_widget.ui" line="23"/>
@@ -35799,7 +35772,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/action_options/modify/lc_trim_amount_options_widget.ui" line="137"/>
         <source>If checked, trim/extension is performed for both sides of line.</source>
-        <translation>Если выбрано, то подгонка прямой будет выполнена для двух ее концов</translation>
+        <translation>Если выбрано, обрезка/удлинение линии выполняется с обоих концов.</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/modify/lc_trim_amount_options_widget.ui" line="140"/>
@@ -35899,12 +35872,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistmodel.cpp" line="329"/>
         <source>Origin X: </source>
-        <translation>Базовый X: </translation>
+        <translation>Начало координат X: </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistmodel.cpp" line="330"/>
         <source>Origin Y: </source>
-        <translation>Базовый Y: </translation>
+        <translation>Начало координат Y: </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistmodel.cpp" line="331"/>
@@ -35919,7 +35892,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistmodel.cpp" line="333"/>
         <source>UCS: </source>
-        <translation>Пользовательская: </translation>
+        <translation>ПСК: </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistmodel.cpp" line="333"/>
@@ -36142,7 +36115,7 @@ Warning: this action can NOT be undone!</source>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="130"/>
         <source>Line</source>
-        <translation>Прямая</translation>
+        <translation>Линия</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_widgetfactory.cpp" line="131"/>
@@ -37259,7 +37232,7 @@ The original opens in a separate document. Mixed encodings and raw metadata are 
     <message>
         <location filename="../src/ui/components/status_bar/qg_coordinatewidget.ui" line="70"/>
         <source>Absolute Coordinates (Cartesian)</source>
-        <translation>Абсолютные координаты (Картезианские)</translation>
+        <translation>Абсолютные координаты (декартовы)</translation>
     </message>
     <message>
         <location filename="../src/ui/components/status_bar/qg_coordinatewidget.ui" line="89"/>
@@ -37269,7 +37242,7 @@ The original opens in a separate document. Mixed encodings and raw metadata are 
     <message>
         <location filename="../src/ui/components/status_bar/qg_coordinatewidget.ui" line="137"/>
         <source>Relative Coordinates (Cartesian)</source>
-        <translation>Относительные координаты (Картезианские)</translation>
+        <translation>Относительные координаты (декартовы)</translation>
     </message>
     <message>
         <location filename="../src/ui/components/status_bar/qg_coordinatewidget.ui" line="150"/>
@@ -37407,13 +37380,13 @@ The original opens in a separate document. Mixed encodings and raw metadata are 
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.ui" line="69"/>
         <source>Pen attributes</source>
-        <translation>Аттрибуты пера</translation>
+        <translation>Атрибуты пера</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.ui" line="76"/>
         <source>Apply attributes also to all sub-entities of selected INSERT.
 This recursively modifies all entities of the Block itself.</source>
-        <translation>Для применения атрибутов ко всем подобъектам нажмите INSERT.
+        <translation>Применить атрибуты также ко всем подобъектам выбранной вставки блока (INSERT).
 Это рекурсивно изменит все объекты самого блока.</translation>
     </message>
     <message>
@@ -37442,7 +37415,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="28"/>
         <source>Scale factor for hatch pattern</source>
-        <translation>Коэффициент масштабирования шаблона штриховки</translation>
+        <translation>Коэффициент масштабирования образца штриховки</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="35"/>
@@ -37472,7 +37445,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="72"/>
         <source>Pattern of hatch</source>
-        <translation>Шаблон штриховки</translation>
+        <translation>Образец штриховки</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="95"/>
@@ -37482,7 +37455,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="101"/>
         <source>If enabled, preview of hatch pattern will be shown below</source>
-        <translation>Если выбрано, предпросмотр шаблона будет показан ниже</translation>
+        <translation>Если выбрано, предпросмотр образца будет показан ниже</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="104"/>
@@ -37515,9 +37488,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/main/qg_dlginitial.ui" line="85"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:large; font-weight:700;&quot;&gt;Welcome to LibreCAD&lt;/span&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;Please choose the unit you want to use for new drawings and your preferred language for Ui and Command.&lt;br/&gt;&lt;/p&gt;&lt;p&gt;You can change these settings later.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:large; font-weight:700;&quot;&gt;Добро пожаловать в LibreCAD!&lt;/span&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;PПожалуйста выберите единицы измерения, которые вы хотите использовать для новых чертежей
-и язык, который вы предпочитаете для интерфейса и команд.
-&lt;br/&gt;&lt;/p&gt;&lt;p&gt;Вы сможете поменять эти настройки позже.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:large; font-weight:700;&quot;&gt;Добро пожаловать в LibreCAD!&lt;/span&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;Выберите единицы измерения, которые вы хотите использовать для новых чертежей, и язык интерфейса и команд.&lt;br/&gt;&lt;/p&gt;&lt;p&gt;Вы сможете поменять эти настройки позже.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/main/qg_dlginitial.ui" line="231"/>
@@ -37615,7 +37586,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="70"/>
         <source>Layer of MText</source>
-        <translation>Слой текста</translation>
+        <translation>Слой многострочного текста</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="144"/>
@@ -38566,17 +38537,17 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="627"/>
         <source>Dimension style editing - </source>
-        <translation>Редактирование Стиля Размера - </translation>
+        <translation>Редактирование размерного стиля - </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="651"/>
         <source>Rename Dimension Style</source>
-        <translation>Переименование Стиля Размеров</translation>
+        <translation>Переименование размерного стиля</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="652"/>
         <source>Enter new unique name of dimension style (was &quot;%1&quot;):</source>
-        <translation>Укажите новое уникальное имя стиля размеров (было &quot;%1&quot;):</translation>
+        <translation>Укажите новое уникальное имя размерного стиля (было &quot;%1&quot;):</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="671"/>
@@ -38584,27 +38555,27 @@ This recursively modifies all entities of the Block itself.</source>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="692"/>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="699"/>
         <source>Removing Dimension Style</source>
-        <translation>Удаление Стиля Размера</translation>
+        <translation>Удаление размерного стиля</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="672"/>
         <source>Can&apos;t delete last dimension style. At least one should be present! </source>
-        <translation>Нельзя удалить все стили размеров. Чертеж должен содержать как минимум один стиль!</translation>
+        <translation>Нельзя удалить все размерные стили. Чертеж должен содержать как минимум один стиль! </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="685"/>
         <source>Can&apos;t delete dimension style as it&apos;s children is used in drawing. Only unused style may be deleted.</source>
-        <translation>Невозможно удалить Стиль РРазмера, поскольку дочерние стили используются в чертеже. Только неиспользуемые стили могут быть удалены.</translation>
+        <translation>Невозможно удалить размерный стиль, поскольку его дочерние стили используются в чертеже. Удалить можно только неиспользуемый стиль.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="693"/>
         <source>Are you sure you want to remove the dimension style &quot;%1&quot; together with child styles?</source>
-        <translation>Вы уверены что хотите удалить Стиль Размера  &quot;%1&quot; вместе с его дочерними стилями?</translation>
+        <translation>Вы уверены, что хотите удалить размерный стиль &quot;%1&quot; вместе с его дочерними стилями?</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="700"/>
         <source>Are you sure you want to remove the dimension style &quot;%1&quot;?</source>
-        <translation>Вы уверены что хотите удалить Стиль Размера &quot;%1&quot;?</translation>
+        <translation>Вы уверены, что хотите удалить размерный стиль &quot;%1&quot;?</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.cpp" line="936"/>
@@ -38881,7 +38852,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="576"/>
         <source>Zero base angle relative to the current user coordinate system. Affects polar coordinates input, snap to angle. 0.0 is 3pm.</source>
-        <translation>Угол на котором расположен базовый нулевой угол базиса, в градусах, от которого будут отсчитываться задаваемые углы. Значение 0 - нулевой угол на 15 часов, 90 - на 12 часов. 180 - нулевой угол на 9 часов.</translation>
+        <translation>Базовый нулевой угол относительно текущей пользовательской системы координат. Влияет на ввод полярных координат и привязку к углу. Значение 0 — направление на 15 часов, 90 — на 12 часов, 180 — на 9 часов.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="586"/>
@@ -38911,12 +38882,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="753"/>
         <source>Right isometric grid</source>
-        <translation>Изометрическа сетка проекция &quot;Справа&quot;</translation>
+        <translation>Изометрическая сетка, проекция &quot;Справа&quot;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="756"/>
         <source>Isometric Right</source>
-        <translation>Изометрическа сетка &quot;Справа&quot;</translation>
+        <translation>Изометрическая сетка &quot;Справа&quot;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="775"/>
@@ -39123,7 +39094,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1727"/>
         <source>Extension lines</source>
-        <translation>Линии-выноски</translation>
+        <translation>Выносные линии</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1734"/>
@@ -39468,7 +39439,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="1771"/>
         <source>fixed extension line length</source>
-        <translation>Фиксированная длина линии-выноски</translation>
+        <translation>Фиксированная длина выносной линии</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_drawing/qg_dlgoptionsdrawing.ui" line="2176"/>
@@ -39578,7 +39549,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5966"/>
         <source>Hatch Patterns:</source>
-        <translation>Стили штриховки:</translation>
+        <translation>Образцы штриховки:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5990"/>
@@ -39684,7 +39655,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="872"/>
         <source>&amp;Handle Color:</source>
-        <translation>Цвет маркера &amp;продолжения:</translation>
+        <translation>Цвет &amp;промежуточного маркера:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="751"/>
@@ -39726,7 +39697,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6307"/>
         <source>Line length:</source>
-        <translation>Длина прямой:</translation>
+        <translation>Длина линии:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5147"/>
@@ -39741,7 +39712,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5267"/>
         <source>RIght Isometric Grid</source>
-        <translation>Изометрическа сетка &quot;Справа&quot;</translation>
+        <translation>Изометрическая сетка &quot;Справа&quot;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5205"/>
@@ -39920,7 +39891,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1329"/>
         <source>Select Hatch Patterns Folder</source>
-        <translation>Выбор папки с штриховками</translation>
+        <translation>Выбор папки с образцами штриховки</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.cpp" line="1336"/>
@@ -40196,7 +40167,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="745"/>
         <source>Entity Handle</source>
-        <translation>Контрольные точки объектов</translation>
+        <translation>Маркеры объектов</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="888"/>
@@ -40206,32 +40177,32 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="809"/>
         <source>Color of end handle for entity</source>
-        <translation>Цвет конечной контрольной точки объекта</translation>
+        <translation>Цвет конечного маркера объекта</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="771"/>
         <source>Color for start handle of entity</source>
-        <translation>Цвет маркера начальной контрольной точки объекта</translation>
+        <translation>Цвет начального маркера объекта</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="854"/>
         <source>Color of non-endpoint handle of entity</source>
-        <translation>Цвет маркера промежуточной контрольной точки объекта</translation>
+        <translation>Цвет промежуточных маркеров объекта</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="847"/>
         <source>Handle Size:</source>
-        <translation>Размер точки</translation>
+        <translation>Размер маркера:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="933"/>
         <source>If enabled, entity handles are highlighted on hover (requires &quot;highlight entities on hover&quot; to be enabled)</source>
-        <translation>&lt;p&gt;Если выбрано, контрольные точки объектов показываются при подсветке объектов (если выбран режим подсветки объектов под курсором мыши)&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;Если выбрано, маркеры объектов показываются при подсветке объектов (если выбран режим подсветки объектов под курсором мыши)&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="939"/>
         <source>Show entity handles on mouse hover</source>
-        <translation>Показывать контрольные точки при наведении мыши</translation>
+        <translation>Показывать маркеры объектов при наведении мыши</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="268"/>
@@ -40307,7 +40278,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="214"/>
         <source>If selected, drawing will be panned automatically if mouse is near drawing view boundaries</source>
-        <translation>&lt;p&gt;Если выбрано, чертеж будет позиционироваться автоматически&lt;br&gt;при приближении указателя мыши у границам области чертежа.&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;Если выбрано, чертеж будет автоматически панорамироваться&lt;br&gt;при приближении указателя мыши к границам области чертежа.&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="166"/>
@@ -40374,17 +40345,17 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="147"/>
         <source>On mouse wheel zoom, pan to the middle of the window.</source>
-        <translation>При масштабировании чертежа колесиком мыши, позиционировать чертеж в центр окна</translation>
+        <translation>При масштабировании колесиком мыши панорамировать чертеж к центру окна.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="150"/>
         <source>Pan on wheel zoom</source>
-        <translation>Позиционировать при масштабировании колесиком мыши</translation>
+        <translation>Панорамировать при масштабировании колесиком мыши</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="134"/>
         <source>First time only pan</source>
-        <translation>Первый раз только позиционировать</translation>
+        <translation>В первый раз только панорамировать</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="950"/>
@@ -40605,12 +40576,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1005"/>
         <source>If checked, grid will not be drawn within view pan by mouse operation</source>
-        <translation>Если выбрано, сетка не будет отрисовываться во время позиционирования чертежа</translation>
+        <translation>Если выбрано, сетка не будет отрисовываться во время панорамирования чертежа мышью</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1008"/>
         <source>Don&apos;t draw grid on panning</source>
-        <translation>Не показывать сетку во время позиционирования чертежа</translation>
+        <translation>Не показывать сетку во время панорамирования</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1044"/>
@@ -40876,7 +40847,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6408"/>
         <source>Ellipse Minor Axis:</source>
-        <translation>Радиус младшей оси эллипса:</translation>
+        <translation>Радиус малой оси эллипса:</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6314"/>
@@ -41194,17 +41165,17 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2517"/>
         <source>Dynamic distance circles for points</source>
-        <translation>Oкружности расстояний между точками</translation>
+        <translation>Окружности расстояний между точками</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2524"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If checked, visual snap will also create guiding rays for enpoints of lines from the document,  added into visual snap with step, similar to angle snap yet which is related to the line&apos;s own angle. &lt;/p&gt;&lt;p&gt;Otherwise, only tangential and normal rays will be considered for vertexes.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Если выбрано, визуальная привязка будет создавать опорные линии, расположенные с шагом угла угловой привязки в вершинах прямых из документа, включенных в привязку. Будут использоваться относительные углы с учетом угла прямой &lt;/p&gt;&lt;p&gt;Иначе, опорные прямые относительных углов создаваться не будут.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Если выбрано, визуальная привязка будет также создавать опорные лучи в конечных точках линий документа с шагом угла, как при угловой привязке, но относительно собственного угла линии.&lt;/p&gt;&lt;p&gt;Иначе для вершин будут учитываться только касательные и нормальные лучи.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2527"/>
         <source>Relative step rays for lines</source>
-        <translation>Относительные прямые с шагом угла для прямых</translation>
+        <translation>Относительные лучи с шагом угла для линий</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2534"/>
@@ -41384,17 +41355,17 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6160"/>
         <source>If enabled, during pan operation TEXT and MTEXT objects will be drawn schematically</source>
-        <translation>Если выбрано, объекты ТЕКСТ и MTEXT будут отрисованы при позиционировании чертежа как черновики</translation>
+        <translation>Если выбрано, объекты TEXT и MTEXT будут отрисованы при панорамировании чертежа схематично</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6163"/>
         <source>If selected, text baselines will be drawn instead of the text letters (similar to draft mode) during panning. </source>
-        <translation>&lt;p&gt;Если выбрано, то вместо букв только базовые линии текста будут отрисованы во время позиционирования чертежа (как в режиме черновика).&lt;br&gt;Иначе, текст будет отрисован по-буквенно.&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;Если выбрано, то во время панорамирования чертежа вместо букв будут отрисованы только базовые линии текста (как в режиме черновика).&lt;br&gt;Иначе текст будет отрисован побуквенно.&lt;/p&gt; </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6166"/>
         <source>Draw text as draft within paning operations</source>
-        <translation>Рисовать текст черновиком при позиционировании чертежа</translation>
+        <translation>Рисовать текст черновиком при панорамировании</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6173"/>
@@ -41535,7 +41506,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1859"/>
         <source>Distance in screen coordinates that is used for catching entities </source>
-        <translation>Дистанция в экранныхкоординатах используемая для захвата объектов</translation>
+        <translation>Расстояние в экранных координатах, используемое для захвата объектов </translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1898"/>
@@ -41892,7 +41863,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6198"/>
         <source>Interpolate by line segments</source>
-        <translation>Интерполяция прямыми</translation>
+        <translation>Интерполяция отрезками</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6215"/>
@@ -41922,7 +41893,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6263"/>
         <source>Maximal distance betwen arc and segment interpolation line</source>
-        <translation>Максимальная допустимая дистанция между дугой и прямой интерполяции</translation>
+        <translation>Максимальное допустимое расстояние между дугой и линией интерполяции</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="6291"/>
@@ -41992,7 +41963,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5157"/>
         <source>If enabled, it is possible to do with keys - zooming via +/-, scrolling via arrow keys, moving selected entities position via arrow keys and SHIFT/CTRL modifiers.</source>
-        <translation>&lt;p&gt;Если выбрано, то клавиатурой можно &lt;br&gt;&lt;ol&gt;&lt;li&gt;Менять масштаб чертежа клавишами +/-&lt;li&gt;Позиционировать чертеж (клавиши верх, вниз, влево, вправо)&lt;li&gt;Двигать выбранные объекты клавишами стрелок  с зажатыми SHIFT и (или) CTRL &lt;/ol&gt;&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;Если выбрано, то клавиатурой можно &lt;br&gt;&lt;ol&gt;&lt;li&gt;Менять масштаб чертежа клавишами +/-&lt;li&gt;Панорамировать чертеж клавишами со стрелками&lt;li&gt;Перемещать выбранные объекты клавишами со стрелками с зажатыми SHIFT и (или) CTRL &lt;/ol&gt;&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5160"/>
@@ -42022,7 +41993,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5221"/>
         <source>Zero base angle relative to the current user coordinate system. Affects polar coordinates input, snap to angle. 0.0 is 3pm.</source>
-        <translation>Угол на котором расположен базовый нулевой угол базиса, в градусах, от которого будут отсчитываться задаваемые углы. Значение 0 - нулевой угол на 15 часов, 90 - на 12 часов. 180 - нулевой угол на 9 часов.</translation>
+        <translation>Базовый нулевой угол относительно текущей пользовательской системы координат. Влияет на ввод полярных координат и привязку к углу. Значение 0 — направление на 15 часов, 90 — на 12 часов, 180 — на 9 часов.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5260"/>
@@ -42052,7 +42023,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2034"/>
         <source> Snap to grid lines if &quot;Snap to Grid&quot; is active</source>
-        <translation>Привязываться к линиям сетки если включена привязка &quot;К cетке&quot;</translation>
+        <translation> Привязываться к линиям сетки, если включена привязка &quot;К сетке&quot;</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2044"/>
@@ -42327,7 +42298,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5983"/>
         <source>Path to folder with hatch patterns</source>
-        <translation>Путь к папке с шаблонами штриховки</translation>
+        <translation>Путь к папке с образцами штриховки</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5941"/>
@@ -43354,7 +43325,7 @@ so default step value required for baking</source>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="547"/>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="550"/>
         <source>Fit</source>
-        <translation>Подогнать</translation>
+        <translation>По ширине</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="938"/>
@@ -43838,7 +43809,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="102"/>
         <source>Divide</source>
-        <translation>Пунктир 2</translation>
+        <translation>Штрихпунктирная с двумя точками</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="104"/>
@@ -44036,7 +44007,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="222"/>
         <source>locked</source>
-        <translation>закрытый</translation>
+        <translation>заблокировано</translation>
     </message>
     <message>
         <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="222"/>
@@ -44405,7 +44376,7 @@ Please specify a different value.</source>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1456"/>
         <source>Please use different pen attributes.</source>
-        <translation>Пожалуйста используйте другой набор аттрибутов пера.</translation>
+        <translation>Пожалуйста используйте другой набор атрибутов пера.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpalettewidget.cpp" line="1466"/>
@@ -44754,7 +44725,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="787"/>
         <source>ZSoft Paintbrush</source>
-        <translation>ZМягкая кисть</translation>
+        <translation>ZSoft Paintbrush</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="790"/>
@@ -45093,7 +45064,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="342"/>
         <source>poly2</source>
         <comment>polygon by 2 vertices</comment>
-        <translation>многоуг2</translation>
+        <translation>poly2</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="349"/>
@@ -45123,7 +45094,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="406"/>
         <source>tan3</source>
         <comment>circle tangent to 3</comment>
-        <translation>касат3</translation>
+        <translation>tan3</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="405"/>
@@ -45300,7 +45271,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="648"/>
         <source>dimaligned</source>
         <comment>dimension - aligned</comment>
-        <translation>размвыравн</translation>
+        <translation>размпарал</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="671"/>
@@ -45348,7 +45319,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="699"/>
         <source>dan</source>
         <comment>dimension - angular</comment>
-        <translation>руг</translation>
+        <translation>dan</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="684"/>
@@ -45372,7 +45343,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="691"/>
         <source>dd</source>
         <comment>dimension - diametric</comment>
-        <translation>рд</translation>
+        <translation>dd</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="704"/>
@@ -45384,7 +45355,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="705"/>
         <source>ld</source>
         <comment>dimension - leader</comment>
-        <translation>пв</translation>
+        <translation>ld</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="710"/>
@@ -45469,7 +45440,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="805"/>
         <source>cut</source>
         <comment>modify - divide (cut)</comment>
-        <translation>обрезать</translation>
+        <translation>разрезать</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="806"/>
@@ -45567,7 +45538,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="918"/>
         <source>snapfree</source>
         <comment>snap - free</comment>
-        <translation>безлимитный</translation>
+        <translation>привсвоб</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="920"/>
@@ -45771,7 +45742,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1096"/>
         <source>columnspacing</source>
-        <translation>столбинтервал</translation>
+        <translation>columnspacing</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1098"/>
@@ -45782,12 +45753,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1099"/>
         <source>length</source>
-        <translation>длина</translation>
+        <translation>length</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1102"/>
         <source>number</source>
-        <translation>номер</translation>
+        <translation>number</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1103"/>
@@ -45798,12 +45769,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1104"/>
         <source>rows</source>
-        <translation>строк</translation>
+        <translation>rows</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1105"/>
         <source>rowspacing</source>
-        <translation>рядинтервал</translation>
+        <translation>rowspacing</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1106"/>
@@ -45814,7 +45785,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1107"/>
         <source>trim</source>
-        <translation>подогнать</translation>
+        <translation>trim</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1197"/>
@@ -45962,7 +45933,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="1242"/>
         <source>number</source>
         <comment>number</comment>
-        <translation>номер</translation>
+        <translation>число</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1243"/>
@@ -46211,7 +46182,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="95"/>
         <source>line2p</source>
         <comment>draw line</comment>
-        <translation>линия2p</translation>
+        <translation>линия2т</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="103"/>
@@ -46271,7 +46242,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="124"/>
         <source>lineang</source>
         <comment>angled line</comment>
-        <translation>изогнутая</translation>
+        <translation>линугол</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="125"/>
@@ -46283,7 +46254,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="130"/>
         <source>linehor</source>
         <comment>horizontal line</comment>
-        <translation>линопер</translation>
+        <translation>лингор</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="131"/>
@@ -46295,7 +46266,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="136"/>
         <source>linever</source>
         <comment>vertical line</comment>
-        <translation>линприв</translation>
+        <translation>линверт</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="137"/>
@@ -46307,7 +46278,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="142"/>
         <source>linerec</source>
         <comment>draw rectangle</comment>
-        <translation>линпроц</translation>
+        <translation>прямоугольник</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="143"/>
@@ -46577,7 +46548,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="266"/>
         <source>lineoff</source>
         <comment>create parallel</comment>
-        <translation>линвыкл</translation>
+        <translation>линсмещ</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="267"/>
@@ -46661,7 +46632,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="313"/>
         <source>linerelang</source>
         <comment>relative line</comment>
-        <translation type="unfinished">от</translation>
+        <translation type="unfinished">линотн</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="314"/>
@@ -46673,7 +46644,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="319"/>
         <source>polygoncencor</source>
         <comment>polygon centre point</comment>
-        <translation>центральная точка многоугольника</translation>
+        <translation>многоугцентругол</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="320"/>
@@ -46763,7 +46734,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="369"/>
         <source>circle3p</source>
         <comment>circle 3 points</comment>
-        <translation>круг3p</translation>
+        <translation>круг3т</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="371"/>
@@ -46775,7 +46746,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="376"/>
         <source>circlecr</source>
         <comment>circle point radius</comment>
-        <translation>круг cr</translation>
+        <translation>кругцр</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="377"/>
@@ -46943,7 +46914,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="471"/>
         <source>arcellc2ax</source>
         <comment>arc ellipse</comment>
-        <translation>дуга эллипса2ax</translation>
+        <translation>дугаэллипса</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="472"/>
@@ -47093,7 +47064,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="566"/>
         <source>plineadd</source>
         <comment>pl add node</comment>
-        <translation>доблин</translation>
+        <translation>вставузел</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="567"/>
@@ -47117,7 +47088,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="578"/>
         <source>plinedel</source>
         <comment>pl delete node</comment>
-        <translation>удаллин</translation>
+        <translation>удалузел</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="579"/>
@@ -47129,7 +47100,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="584"/>
         <source>plinedeltwn</source>
         <comment>pl del between nodes</comment>
-        <translation>деленмежузл</translation>
+        <translation>удалмежузл</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="585"/>
@@ -47141,7 +47112,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="590"/>
         <source>plinetrm</source>
         <comment>pl trim segments</comment>
-        <translation>подгсегм</translation>
+        <translation>обрсегм</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="591"/>
@@ -47297,7 +47268,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="724"/>
         <source>modrotate</source>
         <comment>modify - rotate</comment>
-        <translation>вращение</translation>
+        <translation>поворот</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="758"/>
@@ -47363,19 +47334,19 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="791"/>
         <source>trim</source>
         <comment>modify - trim (extend)</comment>
-        <translation type="unfinished">подогнать</translation>
+        <translation type="unfinished">обрезать</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="761"/>
         <source>modtrim</source>
         <comment>modify - trim (extend)</comment>
-        <translation>подгонка</translation>
+        <translation>обрезка</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="767"/>
         <source>modtrim2</source>
         <comment>modify - multi trim (extend)</comment>
-        <translation>подгонка2</translation>
+        <translation>обрезка2</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="774"/>
@@ -47471,7 +47442,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="832"/>
         <source>modexpltext</source>
         <comment>explode text strings</comment>
-        <translation>текстопис</translation>
+        <translation>разбтекст</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="833"/>
@@ -47501,7 +47472,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="853"/>
         <source>infodistance</source>
         <comment>distance point to point</comment>
-        <translation>дистанция</translation>
+        <translation>расстояние</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="854"/>
@@ -47513,7 +47484,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="861"/>
         <source>infodistep</source>
         <comment>distance entity to point</comment>
-        <translation>инфшаг</translation>
+        <translation>инфрасстобъект</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="862"/>
@@ -47609,7 +47580,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="1035"/>
         <source>drawpref</source>
         <comment>drawing preferences</comment>
-        <translation>предпрорис</translation>
+        <translation>настрчертежа</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1036"/>
@@ -47657,7 +47628,7 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="1094"/>
         <location filename="../src/cmd/lc_commandItems.h" line="1204"/>
         <source>chordlen</source>
-        <translation></translation>
+        <translation>хорда</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1097"/>
@@ -47669,13 +47640,13 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/lc_commandItems.h" line="1100"/>
         <source>length1</source>
         <comment>bevel/fillet length1</comment>
-        <translation>длина1</translation>
+        <translation>length1</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1101"/>
         <source>length2</source>
         <comment>bevel/fillet length2</comment>
-        <translation>длина2</translation>
+        <translation>length2</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1110"/>
@@ -47966,7 +47937,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1179"/>
         <source>fixed</source>
-        <translation type="unfinished">Зафиксировать</translation>
+        <translation type="unfinished">fixed</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="1182"/>
@@ -48438,7 +48409,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="129"/>
         <source>Output scale. E.g.: 0.01 (for 1:100 scale).</source>
-        <translation>Выходная шкала. Например: 0,01 (для масштаба 1:100).</translation>
+        <translation>Выходной масштаб. Например: 0,01 (для масштаба 1:100).</translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="133"/>
@@ -48511,7 +48482,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="39"/>
         <source>/CustomColor%1</source>
-        <translation>/Пользовательский Цвет%1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="40"/>
@@ -48558,12 +48529,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/lib/engine/document/patterns/rs_patternlist.cpp" line="66"/>
         <source>Hatch:: no pattern found. Please set pattern path in application preferences</source>
-        <translation>Штриховка: Шаблоны не найдены. Пожалуйста укажите путь к шаблонам в настройках приложения</translation>
+        <translation>Штриховка: образцы не найдены. Укажите путь к образцам в настройках приложения</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/document/patterns/rs_patternlist.cpp" line="93"/>
         <source>Hatch:: loading pattern failed: %1</source>
-        <translation>Штриховка: ошибка загрузки шаблона: %1</translation>
+        <translation>Штриховка: ошибка загрузки образца: %1</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_widthbox.cpp" line="50"/>
@@ -48833,7 +48804,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="472"/>
         <source>Line</source>
-        <translation>Прямая</translation>
+        <translation>Линия</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="476"/>
@@ -48898,7 +48869,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="524"/>
         <source>Dim. Aligned</source>
-        <translation>Разм.Выровненный</translation>
+        <translation>Разм. параллельный</translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="528"/>
@@ -49017,7 +48988,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1002"/>
         <source>Lengthen Line</source>
-        <translation>Увеличить прямую</translation>
+        <translation>Удлинить линию</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="576"/>
@@ -49047,7 +49018,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="622"/>
         <source>Line</source>
-        <translation>Прямая</translation>
+        <translation>Линия</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="623"/>
@@ -49144,7 +49115,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1018"/>
         <source>Zoom, pan or select entity</source>
-        <translation>Увеличте или позиционируйте чертеж или выберите объект</translation>
+        <translation>Масштабируйте, панорамируйте чертеж или выберите объект</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/rs_actiondefault.cpp" line="1018"/>
@@ -49229,12 +49200,12 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimlinear.cpp" line="224"/>
         <source>Snap to Adjacent Dim</source>
-        <translation>Привязка к соседней размерной линии/cвободная</translation>
+        <translation>Привязка к соседнему размеру</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimlinear.cpp" line="214"/>
         <source>Specify second extension line origin</source>
-        <translation>Укажите точку привязки второй размерной линии</translation>
+        <translation>Укажите начало второй выносной линии</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/rs_actiondimlinear.cpp" line="224"/>
@@ -49418,12 +49389,12 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="138"/>
         <source>Hatch Error: Pattern not found!</source>
-        <translation>Ошибка штриховки: вид штриховки не найден!</translation>
+        <translation>Ошибка штриховки: образец штриховки не найден!</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="141"/>
         <source>Hatch Error: Contour or pattern too small!</source>
-        <translation>Ошибка штриховки: контур или вид штриховки слишком мал!</translation>
+        <translation>Ошибка штриховки: контур или образец штриховки слишком мал!</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="144"/>
@@ -49555,7 +49526,7 @@ Please check the filename and permissions.</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent2.cpp" line="226"/>
         <source>Select the tangent line closest to cursor</source>
-        <translation>Выберите касательную прямую</translation>
+        <translation>Выберите касательную линию</translation>
     </message>
 </context>
 <context>
@@ -49631,17 +49602,17 @@ Please check the filename and permissions.</source>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="148"/>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="202"/>
         <source>Lines are parallel</source>
-        <translation>Прямые параллельны</translation>
+        <translation>Линии параллельны</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="251"/>
         <source>Specify first line</source>
-        <translation>Укажите первую прямую</translation>
+        <translation>Укажите первую линию</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="251"/>
         <source>Single Line Mode</source>
-        <translation>Угол одной прямой</translation>
+        <translation>Угол одной линии</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="96"/>
@@ -49676,7 +49647,7 @@ Intersection :@(%7, %8)</source>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="254"/>
         <source>Restart with first line selection</source>
-        <translation>Заново выбрать первую прямую</translation>
+        <translation>Заново выбрать первую линию</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="273"/>
@@ -49714,22 +49685,22 @@ Intersection :@(%7, %8)</source>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="275"/>
         <source>Line From:</source>
-        <translation>Начало прямой:</translation>
+        <translation>Начало линии:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="275"/>
         <source>Line To:</source>
-        <translation>Конец прямой:</translation>
+        <translation>Конец линии:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="276"/>
         <source>Line Angle 1:</source>
-        <translation>Угол прямой 1:</translation>
+        <translation>Угол линии 1:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="276"/>
         <source>Line Angle 2:</source>
-        <translation>Угол прямой 2:</translation>
+        <translation>Угол линии 2:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="292"/>
@@ -49739,17 +49710,17 @@ Intersection :@(%7, %8)</source>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="292"/>
         <source>Line 1 Angle:</source>
-        <translation>Угол прямой 1:</translation>
+        <translation>Угол линии 1:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="292"/>
         <source>Line 2 Angle:</source>
-        <translation>Угол прямой 2:</translation>
+        <translation>Угол линии 2:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="254"/>
         <source>Specify second line</source>
-        <translation>Укажите вторую прямую</translation>
+        <translation>Укажите вторую линию</translation>
     </message>
 </context>
 <context>
@@ -49801,7 +49772,11 @@ Cartesian: (%2 , %3)
 Polar: (%4 &lt; %5)
 Start: (%6 , %7)
 End: (%8 , %9)</source>
-        <translation>Расстояние: %1\nКартезианские: (%2 , %3)\nПолярные: (%4 &lt; %5)\nНачало: (%6 , %7)\nКонец: (%8 , %9)</translation>
+        <translation>Расстояние: %1
+Декартовы: (%2 , %3)
+Полярные: (%4 &lt; %5)
+Начало: (%6 , %7)
+Конец: (%8 , %9)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfodist.cpp" line="102"/>
@@ -50109,7 +50084,7 @@ End: (%8 , %9)</source>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1351"/>
         <source>Distance</source>
-        <translation>К Дистанции</translation>
+        <translation>На расстоянии</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1353"/>
@@ -50181,7 +50156,7 @@ End: (%8 , %9)</source>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1435"/>
         <source>Tangential Distance (Explicit)</source>
-        <translation>Касательная к дистанции (заданной)</translation>
+        <translation>По касательной на расстоянии (заданном)</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1438"/>
@@ -50207,7 +50182,7 @@ End: (%8 , %9)</source>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1405"/>
         <source>Line ray</source>
-        <translation>Луч прямой</translation>
+        <translation>Луч по линии</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1417"/>
@@ -50229,7 +50204,7 @@ End: (%8 , %9)</source>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1432"/>
         <source>Distance (Explicit)</source>
-        <translation>Дистанция (Заданная)</translation>
+        <translation>Расстояние (заданное)</translation>
     </message>
     <message>
         <location filename="../src/lib/actions/rs_snapper.cpp" line="1441"/>
@@ -50323,7 +50298,7 @@ End: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="57"/>
         <source>Dimension style</source>
-        <translation>Стиль размера</translation>
+        <translation>Размерный стиль</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="76"/>
@@ -50384,12 +50359,12 @@ End: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="188"/>
         <source>Tolerance - Upper Limit</source>
-        <translation>Точность - верхний предел</translation>
+        <translation>Допуск - верхний предел</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="218"/>
         <source>Tolerance - Lower Limit</source>
-        <translation>Точность - нижний предел</translation>
+        <translation>Допуск - нижний предел</translation>
     </message>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="243"/>
@@ -50464,7 +50439,7 @@ End: (%8 , %9)</source>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapdistoptions.ui" line="67"/>
         <source>Pick distance from drawing.</source>
-        <translation>Измерить дистанцию на чертеже</translation>
+        <translation>Измерить расстояние на чертеже.</translation>
     </message>
 </context>
 <context>

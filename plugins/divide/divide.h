@@ -34,9 +34,7 @@ public slots:
     void gotReturnedDataSlot( QString );
 
 private:
-    QString getStrData( Plug_Entity *ent );
-    double polylineRadius( const Plug_VertexData& ptA,
-                           const Plug_VertexData& ptB );
+    QString entityName( int entityType ) const;
     Document_Interface *d;
     QString returnedData;
     double findHypLength( double, double, double, double );

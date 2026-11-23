@@ -225,7 +225,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="116"/>
         <source>ARC</source>
-        <translation>ARK</translation>
+        <translation>HARK</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="117"/>
@@ -309,7 +309,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="184"/>
         <source>INSERT</source>
-        <translation>FUQIZO</translation>
+        <translation>FUTJE</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="187"/>
@@ -384,42 +384,42 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="238"/>
         <source>HATCH</source>
-        <translation>translation 1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="241"/>
         <source>DIMLEADER</source>
-        <translation>translation 2</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="244"/>
         <source>DIMALIGNED</source>
-        <translation>translation 3</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="247"/>
         <source>DIMLINEAR</source>
-        <translation>translation 4</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="250"/>
         <source>DIMRADIAL</source>
-        <translation>translation 5</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="253"/>
         <source>DIMDIAMETRIC</source>
-        <translation>translation 6</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="256"/>
         <source>DIMANGULAR</source>
-        <translation>translation 7</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="259"/>
         <source>UNKNOWN</source>
-        <translation>translation 8</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -428,12 +428,12 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
         <location filename="../sameprop/sameprop.cpp" line="21"/>
         <location filename="../sameprop/sameprop.cpp" line="28"/>
         <source>Same properties</source>
-        <translation>Pronahej të njëjtat prona</translation>
+        <translation>Veti të njëjta</translation>
     </message>
     <message>
         <location filename="../sameprop/sameprop.cpp" line="29"/>
         <source>Same properties test tip...</source>
-        <translation>Testi i pronave të njëjta...</translation>
+        <translation>Testi i vetive të njëjta...</translation>
     </message>
     <message>
         <location filename="../sameprop/sameprop.cpp" line="40"/>
@@ -758,13 +758,13 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../divide/divide.cpp" line="494"/>
         <source>ARC</source>
-        <translation>ARC</translation>
+        <translation>HARK</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="495"/>
         <location filename="../divide/divide.cpp" line="514"/>
         <source>center point</source>
-        <translation>qendra</translation>
+        <translation>pika qendrore</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="501"/>
@@ -995,7 +995,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../gear/gear.cpp" line="121"/>
         <source>Draw symmetric face?</source>
-        <translation>Vizato fytyrën simetrike?</translation>
+        <translation>Vizato faqen simetrike?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="123"/>
@@ -1005,7 +1005,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../gear/gear.cpp" line="124"/>
         <source>Draw addendum circle?</source>
-        <translation>Vizato rrethin e shtojcës?</translation>
+        <translation>Vizato rrethin e kokës?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="125"/>
@@ -1266,7 +1266,7 @@ Përdorni t ose x në ekuacionin tuaj si një variabël/parametër.</translation
         <location filename="../plotequation/plotdialog.cpp" line="60"/>
         <source>Polyline</source>
         <comment>Plot Equation to generate RS_Polyline</comment>
-        <translation>Vijë shumëkëndëshe</translation>
+        <translation>Polilinjë</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="61"/>

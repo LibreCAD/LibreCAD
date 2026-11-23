@@ -276,7 +276,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="142"/>
         <source>ELLIPSE</source>
-        <translation>ວົງລີ</translation>
+        <translation>ວົງຮີ</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="146"/>

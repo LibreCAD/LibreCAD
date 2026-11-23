@@ -294,7 +294,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="174"/>
         <source>MTEXT</source>
-        <translation>MTEXTO</translation>
+        <translation>TEXTOM</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="177"/>
@@ -1269,7 +1269,7 @@ Use t or x in your equation as a variable/parameter.
         <location filename="../plotequation/plotdialog.cpp" line="61"/>
         <source>SplinePoints</source>
         <comment>Plot Equation to generate 2nd spline by LC_SplinePoints</comment>
-        <translation>Puntos de la curva de Bézier</translation>
+        <translation>Spline por puntos</translation>
     </message>
 </context>
 <context>

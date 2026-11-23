@@ -11,7 +11,7 @@
     <message>
         <location filename="../asciifile/asciifile.cpp" line="36"/>
         <source>Read ASCII test tip...</source>
-        <translation>Ler dica do teste ASCII...</translation>
+        <translation>Sugestão do teste Ler ASCII...</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="42"/>
@@ -29,7 +29,7 @@
     <message>
         <location filename="../pointstocsv/pointstocsv.cpp" line="41"/>
         <source>Export to csv test tip...</source>
-        <translation>Exportar para CSV - dica do teste...</translation>
+        <translation>Sugestão do teste Exportar para CSV...</translation>
     </message>
 </context>
 <context>
@@ -47,7 +47,7 @@
     <message>
         <location filename="../align/align.cpp" line="32"/>
         <source>Align test tip...</source>
-        <translation>Dica do teste de alinhamento...</translation>
+        <translation>Sugestão do teste Alinhar...</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="47"/>
@@ -118,7 +118,8 @@ first base, second base, first target, second target.</source>
         <location filename="../gear/gear.cpp" line="42"/>
         <source>Select point for center of gear and press left mouse button.
 Then fill in the fields and press &apos;Accept&apos; button.</source>
-        <translation>Selecione o ponto para o centro da engrenagem e pressione o botão esquerdo do mouse. Em seguida, preencha os campos e pressione o botão &apos;Aceitar&apos;.</translation>
+        <translation>Selecione o ponto para o centro da engrenagem e prima o botão esquerdo do rato.
+Em seguida, preencha os campos e prima o botão &apos;Aceitar&apos;.</translation>
     </message>
 </context>
 <context>
@@ -132,7 +133,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="30"/>
         <source>List test tip...</source>
-        <translation>Dica para listar...</translation>
+        <translation>Sugestão do teste Listar...</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="44"/>
@@ -384,7 +385,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="238"/>
         <source>HATCH</source>
-        <translation>HATCH</translation>
+        <translation>TRAMA</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="241"/>
@@ -433,7 +434,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../sameprop/sameprop.cpp" line="29"/>
         <source>Same properties test tip...</source>
-        <translation>Teste da dica de mesmas propriedades...</translation>
+        <translation>Sugestão do teste Mesmas propriedades...</translation>
     </message>
     <message>
         <location filename="../sameprop/sameprop.cpp" line="40"/>
@@ -457,7 +458,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../sample/sample.cpp" line="34"/>
         <source>Sample test tip...</source>
-        <translation>Dica de teste de exemplo...</translation>
+        <translation>Sugestão do teste de exemplo...</translation>
     </message>
 </context>
 <context>
@@ -470,7 +471,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../picfile/picfile.cpp" line="37"/>
         <source>PIC test tip...</source>
-        <translation>Dica de teste PIC...</translation>
+        <translation>Sugestão do teste PIC...</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="43"/>
@@ -667,12 +668,12 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../divide/divide.cpp" line="42"/>
         <source>Divide test tip...</source>
-        <translation>Dica para dividir...</translation>
+        <translation>Sugestão do teste Dividir...</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="53"/>
         <source>Select a line, circle or arc and press return</source>
-        <translation>Selecione uma linha, círculo ou arco e pressione Enter</translation>
+        <translation>Selecione uma linha, círculo ou arco e prima Enter</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="64"/>
@@ -992,7 +993,7 @@ desenhar as marcas.</translation>
     <message>
         <location filename="../gear/gear.cpp" line="119"/>
         <source>Number of segments to draw (addendum)</source>
-        <translation>Número de segmentos a desenhar (adição)</translation>
+        <translation>Número de segmentos a desenhar (adendo)</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="120"/>
@@ -1012,7 +1013,7 @@ desenhar as marcas.</translation>
     <message>
         <location filename="../gear/gear.cpp" line="124"/>
         <source>Draw addendum circle?</source>
-        <translation>Desenhar círculo de adição?</translation>
+        <translation>Desenhar círculo de cabeça (adendo)?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="125"/>
@@ -1206,7 +1207,7 @@ desenhar as marcas.</translation>
     <message>
         <location filename="../plotequation/plot.cpp" line="38"/>
         <source>Plot test tip...</source>
-        <translation>Dica do gráfico...</translation>
+        <translation>Sugestão do teste Gráfico...</translation>
     </message>
 </context>
 <context>

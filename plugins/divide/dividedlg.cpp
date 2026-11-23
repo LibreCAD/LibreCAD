@@ -25,8 +25,8 @@
 
 //#include <QDebug>
 
-dividedlg::dividedlg( Document_Interface *doc, QString passedData,
-                      QWidget *parent ) : QDialog( parent )
+dividedlg::dividedlg( Document_Interface *doc, int entityType,
+                      const QString &entityName, QWidget *parent ) : QDialog( parent )
 {
     //hide titie bar '?'
     this->setWindowFlags( this->windowFlags() & ~Qt::WindowContextHelpButtonHint );
@@ -39,13 +39,7 @@ dividedlg::dividedlg( Document_Interface *doc, QString passedData,
 
     d = doc; //Document_Interface
 
-    QList<QString> data = ( passedData.split
-                            ( QRegularExpression ( "[\\n\\t\\r]" ) ) );
-
-    QList<QString> splitList = data.at( 0 ).split( ": " );
-    QString entType = splitList.at( 1 );
-    this->setWindowTitle( tr("Divide - ") + entType );
-    entType = entType.toLower();
+    this->setWindowTitle( tr("Divide - ") + entityName );
 
     QHBoxLayout *mainLayout = new QHBoxLayout;
     setLayout(mainLayout);
@@ -147,6 +141,9 @@ dividedlg::dividedlg( Document_Interface *doc, QString passedData,
         num = QString::number( i );
         RB->setObjectName( num );
         RB->setText( num % " - " % layerList.at( i ) );
+        // the layer is looked up by name, not cut out of the button text
+        RB->setProperty( "layerName", layerList.at( i ) );
+        RB->setProperty( "plainText", RB->text() );
 
         QObject::connect( RB, SIGNAL( toggled( bool ) ), this,
                           SLOT( onWhichButtonSlot( bool ) ) );
@@ -185,13 +182,13 @@ dividedlg::dividedlg( Document_Interface *doc, QString passedData,
     QVBoxLayout* rtcolayout = new QVBoxLayout;
     mainLayout->addLayout(rtcolayout);
 
-    if ( entType == "line" )
+    if ( entityType == DPI::LINE )
     {
         dataToReturn.append( "LINE:" );
 	rtcolayout->addWidget(choice(STRAIGHT, font4));
     } //end line
 
-    else if ( entType == "circle" )
+    else if ( entityType == DPI::CIRCLE )
     {
         dataToReturn.append( "CIRCLE:" );
 
@@ -224,13 +221,13 @@ dividedlg::dividedlg( Document_Interface *doc, QString passedData,
         rtcolayout->addWidget(choice(CURVED, font4));
     } //end circle
 
-    else if ( entType == "arc" )
+    else if ( entityType == DPI::ARC )
     {
         dataToReturn.append( "ARC:" );
 	rtcolayout->addWidget(choice(CURVED, font4));
     }
 
-    else if ( entType == "polyline" )
+    else if ( entityType == DPI::POLYLINE )
     {
         dataToReturn.append( "POLYLINE:" );
     }
@@ -355,14 +352,14 @@ void dividedlg::onQtyChangedSlot( int q )
 
 void dividedlg::onOffTicksSlot( bool state )
 {
-    state ? R1->setText( "Ticks - On" ) : R1->setText( "Ticks - Off" );
+    state ? R1->setText( tr( "Ticks - On" ) ) : R1->setText( tr( "Ticks - Off" ) );
 
     ticksShowHideFlag = state;
 }
 
 void dividedlg::onOffBreaksSlot( bool state )
 {
-    state ? R2->setText( "Breaks - On" ) : R2->setText( "Breaks - Off" );
+    state ? R2->setText( tr( "Breaks - On" ) ) : R2->setText( tr( "Breaks - Off" ) );
 
     breaksOnOffFlag = state;
 }
@@ -372,14 +369,15 @@ void dividedlg::onWhichButtonSlot( bool state )
     QObject *object = QObject::sender();
     QRadioButton *btn = qobject_cast<QRadioButton *>(object);
 
+    const QString plainText = btn->property( "plainText" ).toString();
     if ( state )
     {
-        d->setLayer( ( btn->text() ).split( "- " ).at( 1 ) );
-        btn->setText( btn->text() + " (ticks)" );
+        d->setLayer( btn->property( "layerName" ).toString() );
+        btn->setText( plainText + tr( " (ticks)" ) );
         activeLayer = btn->objectName().toInt();
     }
     else
-        btn->setText( btn->text().remove( " (ticks)" ) );
+        btn->setText( plainText );
 }
 
 void dividedlg::onOkClickedSlot() //OK quit dividedlg
@@ -397,8 +395,7 @@ void dividedlg::onOkClickedSlot() //OK quit dividedlg
 
     QString test = Le2->text().simplified(); //QLineEdit, new layer name
 
-    dataToReturn.append( test.isEmpty() ? ( d->getCurrentLayer()
-                                            .remove( " (ticks)" ).append( ":" ) )
+    dataToReturn.append( test.isEmpty() ? ( d->getCurrentLayer().append( ":" ) )
                                         : ( test.append( ":" ).append( "lay" ) ) );
     emit returnData( dataToReturn );
     this->accept();

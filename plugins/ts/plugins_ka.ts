@@ -37,7 +37,7 @@
     <message>
         <location filename="../align/align.cpp" line="24"/>
         <source>Align</source>
-        <translation>სწორება</translation>
+        <translation>გასწორება</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="31"/>
@@ -210,7 +210,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
         <location filename="../list/list.cpp" line="105"/>
         <location filename="../list/list.cpp" line="129"/>
         <source>length</source>
-        <translation>ხანგრძლივობა</translation>
+        <translation>სიგრძე</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="110"/>
@@ -269,7 +269,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
     <message>
         <location filename="../list/list.cpp" line="142"/>
         <source>ELLIPSE</source>
-        <translation>ოვალი</translation>
+        <translation>ელიფსი</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="146"/>
@@ -743,7 +743,7 @@ Then fill in the fields and press &apos;Accept&apos; button.</source>
         <location filename="../divide/divide.cpp" line="482"/>
         <location filename="../divide/divide.cpp" line="509"/>
         <source>length</source>
-        <translation>ხანგრძლივობა</translation>
+        <translation>სიგრძე</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="487"/>

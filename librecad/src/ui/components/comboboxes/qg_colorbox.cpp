@@ -36,9 +36,19 @@
 namespace {
     constexpr size_t MAX_CUSTOM_COLORS = 3;
 
-    const QString CUSTOM_COLOR_NAME = QObject::tr("/CustomColor%1");
-    const QString CUSTOM_ITEM_TEXT = QObject::tr("Custom Picked");
-    const QString USER_COLOR_TEXT = QObject::tr("User Color");
+    // Settings key of the n-th picked custom color in group "ColorBox". It is a key, not text:
+    // it must not be translated, or the colors are stored under a key that changes with the language.
+    const QString CUSTOM_COLOR_KEY = QStringLiteral("/CustomColor%1");
+
+    // What an item is, stored in ITEM_KIND_ROLE. Items are told apart by kind, never by their
+    // (translated) text.
+    constexpr int ITEM_KIND_ROLE = Qt::UserRole + 1;
+    enum ItemKind {
+        StandardItem = 0, // no kind stored: By Layer, a named color, ...
+        CustomDialogItem, // "Custom": opens the color dialog
+        CustomPickedItem, // a color picked with the dialog, kept in the settings
+        UserColorItem     // a color set from outside that is in no other item, not kept
+    };
 
     // find total difference in colors
     int getDictionaryDistance(const RS_Color& lhs, const RS_Color& rhs) {
@@ -103,6 +113,7 @@ void QG_ColorBox::init(const bool showByLayer, const bool showUnchanged) {
 
     // a special "Custom" color
     addItem(QIcon(":/controls/colorxx.png"), tr("Custom"));
+    setItemData(count() - 1, CustomDialogItem, ITEM_KIND_ROLE);
 
     //static colors starts here
     const QString red(tr("Red"));
@@ -149,12 +160,15 @@ void QG_ColorBox::readCustomColorSettings() {
     LC_GROUP_GUARD("ColorBox");
     {
         for (size_t i = 0; i < MAX_CUSTOM_COLORS; i++) {
-            QString colorName = CUSTOM_COLOR_NAME.arg(i);
-            const int color = LC_GET_COLOR(colorName, -1);
-            if (color < 0) {
+            const QString colorName = CUSTOM_COLOR_KEY.arg(i);
+            // readColor() folds every value, a negative default too, into a valid color,
+            // so a key that was never written is found by its absence
+            if (LC_GET_STR(colorName).isEmpty()) {
                 break;
             }
+            const int color = LC_GET_COLOR(colorName, 0);
             addColor(static_cast<QRgb>(color), tr("Custom Picked"));
+            setItemData(count() - 1, CustomPickedItem, ITEM_KIND_ROLE);
         }
     }
 }
@@ -164,9 +178,9 @@ void QG_ColorBox::writeCustomColorSettings() const {
     {
         int customIndex = 0;
         for (int cIndex = m_colorIndexStart; cIndex < count(); cIndex++) {
-            if (itemText(cIndex) == CUSTOM_ITEM_TEXT) {
+            if (itemData(cIndex, ITEM_KIND_ROLE).toInt() == CustomPickedItem) {
                 auto itemColor = itemData(cIndex).value<QColor>();
-                QString colorName = CUSTOM_COLOR_NAME.arg(customIndex++);
+                QString colorName = CUSTOM_COLOR_KEY.arg(customIndex++);
                 LC_SET_COLOR(colorName, itemColor.rgb());
             }
         }
@@ -179,7 +193,7 @@ void QG_ColorBox::writeCustomColorSettings() const {
 void QG_ColorBox::setColor(const RS_Color& color) {
     *m_currentColor = color;
     const int lastItem = count() - 1;
-    if (itemText(lastItem) == USER_COLOR_TEXT) {
+    if (itemData(lastItem, ITEM_KIND_ROLE).toInt() == UserColorItem) {
         // we had user color already in combobox, remove it first
         removeItem(lastItem);
     }
@@ -241,14 +255,16 @@ int QG_ColorBox::addCustomColor(const RS_Color& color) {
     }
     std::vector<int> customIndices;
     for (int cIndex = m_colorIndexStart; cIndex < count(); cIndex++) {
-        if (itemText(cIndex) == CUSTOM_ITEM_TEXT) {
+        if (itemData(cIndex, ITEM_KIND_ROLE).toInt() == CustomPickedItem) {
             customIndices.push_back(cIndex);
         }
     }
-    if (customIndices.size() > MAX_CUSTOM_COLORS) {
+    // keep at most MAX_CUSTOM_COLORS, as many as readCustomColorSettings() reads back
+    if (customIndices.size() >= MAX_CUSTOM_COLORS) {
         removeItem(customIndices.front());
     }
-    addColor(color.toQColor(), CUSTOM_ITEM_TEXT);
+    addColor(color.toQColor(), tr("Custom Picked"));
+    setItemData(count() - 1, CustomPickedItem, ITEM_KIND_ROLE);
 
     // save custom colors to settings
     writeCustomColorSettings();
@@ -311,7 +327,7 @@ void QG_ColorBox::slotColorChanged(const int index) {
         }
     }
 
-    if (itemText(index) == tr("Custom")) {
+    if (itemData(index, ITEM_KIND_ROLE).toInt() == CustomDialogItem) {
         const auto selectedColor = RS_Color(QColorDialog::getColor(*m_currentColor, this,
                                                                      tr("Select Color"),
                                                                      QColorDialog::DontUseNativeDialog));
@@ -347,7 +363,8 @@ bool QG_ColorBox::isUnchanged() const {
 }
 
 int QG_ColorBox::addTemporaryCustomColor(const RS_Color& color) {
-    addColor(color.toQColor(), USER_COLOR_TEXT);
+    addColor(color.toQColor(), tr("User Color"));
     const int index = count() - 1;
+    setItemData(index, UserColorItem, ITEM_KIND_ROLE);
     return index;
 }

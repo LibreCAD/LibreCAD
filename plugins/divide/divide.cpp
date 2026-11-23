@@ -12,6 +12,7 @@
 *  along with this program.  If not, see <http://www.gnu.org/licenses/>.    *
 ****************************************************************************/
 
+#include <cmath>
 #include <complex>
 
 #include <QtGui>
@@ -95,15 +96,15 @@ void divide::execComm( Document_Interface *doc,
         return;
     }
 
-    QString passedData;
-    for ( int i = 0; i < obj.size(); ++i )
-    {
-        passedData.append( QString("%1 %2: ").arg( tr("n") ).arg( i + 1 ) );
-        passedData.append( getStrData( obj.at( i ) ) );
-        passedData.append( "\n" );
-    }
+    // The geometry comes from the entity's own data, never from text shown to
+    // the user: that text is translated and formatted in the drawing's units.
+    QHash<int, QVariant> entData;
+    obj.at( 0 )->getData( &entData );
+    const int entityType = entData.value( DPI::ETYPE ).toInt();
+    const QPointF entStart { entData.value( DPI::STARTX ).toDouble(),
+                             entData.value( DPI::STARTY ).toDouble() };
 
-    dividedlg dlg( d, passedData, parent );
+    dividedlg dlg( d, entityType, entityName( entityType ), parent );
     QObject::connect( &dlg, SIGNAL( returnData( QString ) ), this,
                       SLOT( gotReturnedDataSlot( QString ) ) );
     if ( dlg.exec() == QDialog::Accepted )
@@ -124,39 +125,20 @@ void divide::execComm( Document_Interface *doc,
             QPointF startX { 0.0, 0.0 };
             QPointF startXY { 0.0, 0.0 };
             QPointF centerCircle { 0.0, 0.0 };
-            QString test { "" };
-            QList<QString> xy { "" } ;
 
             QString oldLayer = doc->getCurrentLayer();
             int dataSize = data.size();
             if ( data.at( dataSize - 1 ) == "lay" )
                 doc->setLayer( data.at( dataSize - 2 ) ); //layer for ticks
 
-            QList<QString> pData = ( passedData.split
-                                     ( QRegularExpression ( "[\\n\\t\\r]" ) ) );
-
             doc->updateView();
             QString entType = data.at( 0 ).simplified().toLower();
 
             //***********
-            if ( entType.startsWith( "ci" ) ) //circle
+            if ( entityType == DPI::CIRCLE )
             {
-                for ( int i = 0; i < pData.size(); i++ )
-                {
-                    test = pData.at( i ).simplified().toLower();
-
-                    if ( test.startsWith( "ra" ) ) //radius
-                        radius = ( test.split( ":" ).at( 1 ) ).toDouble();
-
-                    else if ( test.startsWith( "ce" ) ) //center point
-                    {
-                        xy = ( ( test.split( ":" ) ).at( 1 ).split( " " ) );
-                        centerCircle = { ( ( ( xy.at( 1 )
-                                         .split( "=" ) ).at( 1 ) ).toDouble() ),
-                                         ( ( ( xy.at( 2 )
-                                         .split( "=" ) ).at( 1 ) ).toDouble() )  };
-                    }
-                }
+                radius = entData.value( DPI::RADIUS ).toDouble();
+                centerCircle = entStart;
 
                 //if data.at(5) is empty, startAngle defaults to zero
                 double startAngle = ( data.at( 5 ).toDouble() * M_PI ) / 180.0; //radians
@@ -181,48 +163,29 @@ void divide::execComm( Document_Interface *doc,
             } // end if CIRCLE
 
             //***********
-            else if ( entType.startsWith( "li" ) ) //line
+            else if ( entityType == DPI::LINE )
             {
-                QPointF endXY ( 0.0, 0.0 );
-                QList<QString> part { "" };
-                QString test { "" };
-                int size = data.at( 2 ).toInt();
+                startXY = entStart;
+                QPointF endXY { entData.value( DPI::ENDX ).toDouble(),
+                                      entData.value( DPI::ENDY ).toDouble() };
+                const QPointF inc = endXY - startXY;
+                const double length = std::hypot( inc.x(), inc.y() );
+                const int size = data.at( 2 ).toInt();
 
-                for ( int i = 0; i < pData.size(); i++ )
+                // line direction in degrees, 0 to 360
+                double direction = 0.0;
+                if ( length > 0.0 )
                 {
-                    test = pData.at( i ).simplified().toLower();
-                    part = test.split( ":");
-
-                    if ( test.startsWith( "fr" ) ) //from point
-                    {
-                        part = part.at( 1 ).split( " " );
-                        startXY += QPointF( ((part.at( 1 ).split("=")).at( 1 )).toDouble(),
-                                            ((part.at( 2 ).split("=")).at( 1 )).toDouble() );
-                    }
-                    else if ( test.startsWith( "to" ) ) //to point
-                    {
-                        part = part.at( 1 ).split( " " );
-                        endXY += QPointF( ((part.at( 1 ).split("=")).at( 1 )).toDouble(),
-                                          ((part.at( 2 ).split("=")).at( 1 )).toDouble() );
-                    }
-
-                    else if ( test.startsWith( "an" ) ) //angle
-                        tickAngle = ( (part.at( 1 ).simplified().toDouble() + 90.0 )
-                                      * M_PI ) / 180; //rads
-
-                    else if ( test.startsWith( "le" ) ) //length
-                        tickLength = ( test.split( ":" ).at( 1 )
-                                       .toDouble() ) * size / 100.0 ; //%
-
-                    else if ( test.startsWith("in") ) //inc
-                    {
-                        //test if line goes left to right or right to left
-                        part = part.at( 1 ).split( "=" );
-                        if ( part.at( 1 ).startsWith( "-" ) ) //inc, minus 'x' pos
-                            if ( tickAngle >= M_PI )
-                                tickAngle -= M_PI; //180°
-                    }
+                    direction = std::asin( inc.y() / length ) * 180.0 / M_PI;
+                    if ( inc.x() < 0 ) direction = 180.0 - direction;
+                    if ( direction < 0 ) direction += 360.0;
                 }
+                tickAngle = ( ( direction + 90.0 ) * M_PI ) / 180; //rads
+                tickLength = length * size / 100.0; //%
+
+                //line going right to left
+                if ( inc.x() < 0 && tickAngle >= M_PI )
+                    tickAngle -= M_PI; //180°
 
                 if ( data.at( dataSize - 3 ) == "i") //ticks above/below linw
                     tickLength *= -1;
@@ -243,44 +206,15 @@ void divide::execComm( Document_Interface *doc,
             } //end if LINE
 
             //***********
-            else if ( entType.startsWith( "ar" ) ) //arc
+            else if ( entityType == DPI::ARC )
             {
-                double initial { 0.0 };
-                double final { 0.0 };
-                double arcLength { 0.0 };
-                double res { 0.0 };
-                QString copyTest { "" };
-
-                for ( int i = 0; i < pData.size(); i++ )
-                {
-                    test = pData.at( i ).simplified().toLower();
-
-                    if ( test.isEmpty() ) continue; //not valid data for 'res = (...'
-
-                    copyTest = test;
-                    res = ( copyTest.split( ":" ).at( 1 ) ).toDouble();
-
-                    if ( test.startsWith( "ce" ) ) //center
-                    {
-                        xy = ( ( test.split( ":" ) ).at( 1 ).split( " " ) );
-                        centerCircle = { ( ( ( xy.at( 1 )
-                                         .split( "=" ) ).at( 1 ) ).toDouble() ),
-                                         ( ( ( xy.at( 2 )
-                                         .split( "=" ) ).at( 1 ) ).toDouble() )  };
-                    }
-
-                    else if ( test.startsWith( "ra" ) ) //radius
-                        radius = res;
-
-                    else if ( test.startsWith( "in" ) ) //initial angle
-                        initial = res / 180.0 * M_PI; //degrees to rads
-
-                    else if ( test.startsWith( "fi" ) ) //final angle
-                        final = res / 180.0 * M_PI; //degrees to rads
-
-                    else if ( test.startsWith( "le" ) ) //length
-                        arcLength = res;
-                }
+                centerCircle = entStart;
+                radius = entData.value( DPI::RADIUS ).toDouble();
+                const double initial = entData.value( DPI::STARTANGLE ).toDouble(); //rads
+                const double final = entData.value( DPI::ENDANGLE ).toDouble(); //rads
+                const double sweepStart = ( initial > final ) ? initial - 2.0 * M_PI
+                                                              : initial;
+                const double arcLength = ( final - sweepStart ) * radius;
 
                 tickLength = ( 2 * radius * ( data.at( 2 ).toDouble() / 100.0 ) ); //%
                 if ( data.at( dataSize - 3 ) == "i" ) //ticks inside/outside arc
@@ -433,124 +367,21 @@ void divide::gotReturnedDataSlot( QString data )
     returnedData = data;
 }
 
-QString divide::getStrData( Plug_Entity *ent )
+QString divide::entityName( int entityType ) const
 {
-    if ( nullptr == ent )
-        return QString( "%1\n" ).arg( tr( "Empty Entity" ) );
-
-    QHash<int, QVariant> data;
-    QString strData(""),
-            strEntity( "%1\n" ),
-            strCommon( "  %1: %2\n" ),
-            strSpecific( "    %1: %2\n" ),
-            strSpecificXY( QString("    %1: %2=%3 %4=%5\n")
-                           .arg("%1",tr("X"), "%2",tr("Y"),"%3") );
-    double numA {0.0};
-    double numB {0.0};
-    double numC {0.0};
-    QPointF ptA, ptB, ptC;
-
-    //common entity data
-    ent->getData(&data);
-    strData  = strCommon.arg(tr("Layer")).arg(data.value(DPI::LAYER).toString());
-    int col = data.value(DPI::COLOR).toInt();
-    strData.append( strCommon.arg(tr("Color")).arg( ent->intColor2str(col)) );
-    strData.append( strCommon.arg(tr("Line type"))
-                    .arg(data.value(DPI::LTYPE).toString()) );
-    strData.append( strCommon.arg(tr("Line thickness"))
-                    .arg(data.value(DPI::LWIDTH).toString()) );
-    strData.append( strCommon.arg(tr("ID")).arg(data.value(DPI::EID).toLongLong()) );
-
-    //specific entity data
-    int et = data.value(DPI::ETYPE).toInt();
-    switch ( et )
+    switch ( entityType )
     {
     case DPI::LINE:
-        strData.prepend( strEntity.arg(tr("LINE")));
-        ptA.setX( data.value(DPI::STARTX).toDouble());
-        ptA.setY( data.value(DPI::STARTY).toDouble());
-        ptB.setX( data.value(DPI::ENDX).toDouble());
-        ptB.setY( data.value(DPI::ENDY).toDouble());
-        strData.append( strSpecificXY.arg(tr("from point")).
-                        arg(d->realToStr(ptA.x())).
-                        arg(d->realToStr(ptA.y())));
-        strData.append( strSpecificXY.arg(tr("to point")).
-                        arg(d->realToStr(ptB.x())).
-                        arg(d->realToStr(ptB.y())));
-        ptC = ptB - ptA;
-        numA = sqrt( (ptC.x()*ptC.x()) + (ptC.y()*ptC.y()) );
-        strData.append( strSpecific.arg(tr("length")).arg( d->realToStr(numA)));
-        numB = asin(ptC.y() / numA);
-        numC = numB*180/M_PI;
-        if (ptC.x() < 0) numC = 180 - numC;
-        if (numC < 0) numC = 360 + numC;
-        strData.append( strSpecific.arg(tr("Angle in XY plane"))
-                        .arg(d->realToStr(numC)));
-        strData.append( strSpecificXY.arg(tr("Inc.")).
-                        arg(d->realToStr(ptC.x())).
-                        arg(d->realToStr(ptC.y())));
-        break;
+        return tr( "LINE" );
     case DPI::ARC:
-        strData.prepend( strEntity.arg(tr("ARC")));
-        strData.append( strSpecificXY.arg(tr("center point")).
-                        arg(d->realToStr(data.value(DPI::STARTX).toDouble())).
-                        arg(d->realToStr(data.value(DPI::STARTY).toDouble())));
-        numA = data.value(DPI::RADIUS).toDouble();
-        numB = data.value(DPI::STARTANGLE).toDouble();
-        numC = data.value(DPI::ENDANGLE).toDouble();
-        strData.append( strSpecific.arg(tr("radius")).arg(d->realToStr(numA)));
-        strData.append( strSpecific.arg(tr("initial angle"))
-                        .arg(d->realToStr(numB*180/M_PI)) );
-        strData.append( strSpecific.arg(tr("final angle"))
-                        .arg(d->realToStr(numC*180/M_PI)) );
-        if( numB > numC) {
-            numB -= 2.0 * M_PI;
-        }
-        strData.append( strSpecific.arg(tr("length"))
-                        .arg( d->realToStr((numC-numB)*numA)) );
-        break;
+        return tr( "ARC" );
     case DPI::CIRCLE:
-        strData.prepend( strEntity.arg(tr("CIRCLE")));
-        strData.append( strSpecificXY.arg(tr("center point"))
-                        .arg(d->realToStr(data.value(DPI::STARTX).toDouble()))
-                        .arg(d->realToStr(data.value(DPI::STARTY).toDouble())));
-        numA = data.value(DPI::RADIUS).toDouble();
-        strData.append( strSpecific.arg(tr("radius")).arg(d->realToStr(numA)));
-        strData.append( strSpecific.arg(tr("circumference"))
-                        .arg(d->realToStr(numA*2*M_PI)));
-        strData.append( strSpecific.arg(tr("area"))
-                        .arg(d->realToStr(numA*numA*M_PI)));
-        break;
-    case DPI::POLYLINE: {
-        strData.prepend( strEntity.arg(tr("POLYLINE")));
-        strData.append( strSpecific.arg(tr("Closed"))
-                        .arg( (0 == data.value(DPI::CLOSEPOLY).toInt())
-                              ? tr("No") : tr("Yes")));
-        strData.append( strSpecific.arg(tr("Vertices")).arg(""));
-        QList<Plug_VertexData> vl;
-        ent->getPolylineData(&vl);
-        int iVertices = vl.size();
-        for (int i = 0; i < iVertices; ++i) {
-            strData.append( strSpecificXY.arg(tr("in point")).
-                            arg(d->realToStr(vl.at( i ).point.x()) ).
-                            arg(d->realToStr(vl.at( i ).point.y())) );
-            //***
-            if ( 0.0 != vl.at( i ).bulge) { //was 0
-            //***
-                strData.append( strSpecific.arg( tr("radius") )
-                                .arg(d->realToStr
-                                     (polylineRadius
-                                      (vl.at( i ), vl.at(( i + 1 ) % iVertices)))) );
-            }
-        }
-        break;
-    }
+        return tr( "CIRCLE" );
+    case DPI::POLYLINE:
+        return tr( "POLYLINE" );
     default:
-        strData.prepend( strEntity.arg
-                         ( tr( "MUST be a line, circle or arc" ) ) );
-        break;
+        return tr( "MUST be a line, circle or arc" );
     }
-    return strData;
 }
 
 //return center of active window
@@ -564,13 +395,4 @@ QPoint divide::findWindowCentre()
                  + QApplication::activeWindow()->y() );
 
     return (centXY);
-}
-
-double divide::polylineRadius( const Plug_VertexData& ptA,
-                                      const Plug_VertexData& ptB )
-{
-    double dChord = sqrt( pow(ptA.point.x() - ptB.point.x(), 2) +
-                          pow(ptA.point.y() - ptB.point.y(), 2) );
-
-    return fabs( 0.5 * dChord / sin( 2.0 * atan( ptA.bulge ) ) );
 }

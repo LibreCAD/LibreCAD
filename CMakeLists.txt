@@ -2757,6 +2757,7 @@ if (BUILD_TESTS)
 	### The actual tests
         librecad/src/lib/engine/document/fonts/tests/unicode_font_tests.cpp
         librecad/src/lib/engine/document/fonts/tests/rs_font_tests.cpp
+        librecad/src/lib/engine/document/fonts/tests/lc_font_lff_coordinates_tests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_splinehelper_tests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_hyperbola_tests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_parabola_tests.cpp
@@ -2827,6 +2828,7 @@ if (BUILD_TESTS)
         librecad/src/lib/engine/document/linetypes/tests/lc_linetypelist_tests.cpp
         librecad/src/lib/engine/document/views/tests/lc_view_tests.cpp
         librecad/src/lib/engine/tests/rs_pen_tests.cpp
+        librecad/src/lib/engine/tests/rs_units_tests.cpp
         librecad/src/lib/actions/tests/lc_snappercatchtests.cpp
         librecad/src/actions/drawing/tests/lc_offsetcurve_drag_tests.cpp
         librecad/src/lib/actions/tests/lc_modifiersinfo_tests.cpp
@@ -2983,6 +2985,7 @@ if (BUILD_TESTS)
         ${LIBRECAD_TEST_TEMP_DIRECTORY_TEST_SOURCE}
         librecad/src/lib/engine/document/tests/lc_graphic_unit_tests.cpp
         librecad/src/lib/gui/tests/rs_graphicview_close_tests.cpp
+        librecad/src/lib/gui/tests/lc_coordinates_parser_tests.cpp
         librecad/src/lib/gui/tests/lc_grid_tests.cpp
         librecad/src/lib/gui/tests/rs_painter_tests.cpp
         librecad/src/actions/drawing/draw/dimensions/tests/rs_actiondimleader_tests.cpp
@@ -3009,6 +3012,7 @@ if (BUILD_TESTS)
         librecad/src/ui/main/tests/lc_docklayout_tests.cpp
         librecad/src/ui/components/pen/tests/qg_widgetpen_tests.cpp
         librecad/src/ui/components/comboboxes/tests/qg_linetypebox_tests.cpp
+        librecad/src/ui/components/comboboxes/tests/lc_colorbox_tests.cpp
         librecad/src/ui/dialogs/tests/lc_dialog_tests.cpp
         librecad/src/ui/dialogs/entity/tests/lc_offsetcurve_propertiesdialog_tests.cpp
         librecad/src/ui/dialogs/tests/lc_language_selection_tests.cpp
@@ -3023,6 +3027,7 @@ if (BUILD_TESTS)
         librecad/src/plugins/tests/doc_plugin_offsetcurve_tests.cpp
         librecad/src/lib/gui/tests/lc_graphicviewrenderer_tests.cpp
         librecad/src/lib/gui/tests/lc_linetype_render_tests.cpp
+        librecad/src/lib/gui/tests/lc_selected_insert_tests.cpp
         librecad/src/lib/gui/tests/lc_scrollmodel_tests.cpp
         librecad/src/lib/gui/tests/lc_graphicviewport_zoomauto_tests.cpp
         librecad/src/ui/view/tests/qg_graphicview_scroll_tests.cpp
@@ -4037,7 +4042,8 @@ if (BUILD_TESTS)
         librecad/src/lib/gui/tests/rs_painter_tests.cpp)
     target_sources(librecad_painter_tests PRIVATE
         librecad/src/lib/gui/tests/lc_graphicviewrenderer_tests.cpp
-        librecad/src/lib/gui/tests/lc_linetype_render_tests.cpp)
+        librecad/src/lib/gui/tests/lc_linetype_render_tests.cpp
+        librecad/src/lib/gui/tests/lc_selected_insert_tests.cpp)
     add_librecad_filter_micro_test(
         librecad_dock_layout_tests
         librecad/src/ui/main/tests/lc_docklayout_tests.cpp)
@@ -4058,6 +4064,11 @@ if (BUILD_TESTS)
     # Later rungs test widgets whose headers include their uic output.
     target_include_directories(librecad_linetype_ui_tests PRIVATE
         "${CMAKE_CURRENT_BINARY_DIR}/librecad_lib_autogen/include")
+    add_librecad_filter_micro_test(
+        librecad_colorbox_ui_tests
+        librecad/src/ui/components/comboboxes/tests/lc_colorbox_tests.cpp)
+    target_sources(librecad_colorbox_ui_tests PRIVATE ${LIBRECAD_RES})
+    set_target_properties(librecad_colorbox_ui_tests PROPERTIES AUTORCC ON)
     add_librecad_filter_micro_test(
         librecad_dimension_clipboard_tests
         librecad/src/lib/engine/document/entities/tests/lc_dimension_clipboard_tests.cpp)
@@ -4410,6 +4421,10 @@ if (BUILD_TESTS)
         add_test(NAME librecad_linetype_ui_tests
             COMMAND $<TARGET_FILE:librecad_linetype_ui_tests> --reporter compact)
         set_tests_properties(librecad_linetype_ui_tests PROPERTIES
+            ENVIRONMENT "QT_QPA_PLATFORM=offscreen" TIMEOUT 120)
+        add_test(NAME librecad_colorbox_ui_tests
+            COMMAND $<TARGET_FILE:librecad_colorbox_ui_tests> --reporter compact)
+        set_tests_properties(librecad_colorbox_ui_tests PROPERTIES
             ENVIRONMENT "QT_QPA_PLATFORM=offscreen" TIMEOUT 120)
         add_test(NAME librecad_console_svg_tests
             COMMAND $<TARGET_FILE:librecad_lc_consolesvgexporttests>
