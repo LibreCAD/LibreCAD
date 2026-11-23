@@ -61863,3 +61863,25 @@ existing-source highlight, successful typed replacement, refusal/cancellation,
 and save/reopen. The broad Trim sanitizer/order gate, unrelated VXCONTROL
 baseline, broader family/variant matrix, independent CAD acceptance, and
 exact-head CI also remain open. The roadmap is incomplete.
+
+## 1997. Recheck the Cross-platform Geometry Regressions Locally (2026-11-23)
+
+On the exact pushed head `0b697ed328f26ffc529d7faefca2f7b0f9a21d2e`, reused
+the matching macOS arm64 Release build at
+`/private/tmp/offset-2961-cmake-matrix` to rerun the two currently reported
+cross-platform failures. The complete mixed-bulge region-membership selector
+passed **4,345,504 assertions / 1 test case**. The compact high-origin thin
+reversed-ellipse worker-client case passed **295 assertions / 1 test case**.
+Neither Linux x64 nor Windows ARM64 behavior is thereby explained or cleared;
+those failures remain release-blocking until exact-head Actions results and a
+platform-level diagnosis are available.
+
+Manually dispatched exact-head Actions run `45236039553` remains in progress:
+Linux x64 is building the bounded test lanes, and Windows ARM64 and x64 are
+still configuring/building. The GitHub job-log endpoint has not published
+logs while these jobs are active. Keep polling this same run rather than
+creating a duplicate. The user confirmed ODAFileConverter was open, but the
+desktop bridge still reports `cgWindowNotFound`; this turn did not produce a
+new ODA conversion and makes no new independent-CAD claim. All visible GUI,
+independent CAD, family/variant, Trim sanitizer/order, and exact-head CI gates
+remain open; the roadmap is incomplete.
