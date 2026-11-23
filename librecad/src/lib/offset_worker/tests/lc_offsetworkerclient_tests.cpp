@@ -2683,15 +2683,19 @@ TEST_CASE("Worker client completes a tiny offset of a high-origin thin reversed 
     OwnedClient owned{rt};
     RS_EntityContainer owner;
     RS_Layer layer{QStringLiteral("thin reversed ellipse")};
-    RS_Ellipse source{&owner, RS_EllipseData{{1.0e4, -1.0e4},
+    const RS_EllipseData ellipse{{1.0e4, -1.0e4},
         {100.0 * std::cos(M_PI / 4.0), 100.0 * std::sin(M_PI / 4.0)},
-        1.0e-3, 0.2, 0.0, true}};
+        1.0e-3, 0.2, 0.0, true};
+    RS_Ellipse source{&owner, ellipse};
     source.setLayer(&layer);
 
     RS_OffsetData offset;
-    offset.coord = {3.0, 2.0};
-    offset.sideFallback = {10.0, 10.0};
+    offset.coord = ellipse.center + ellipse.majorP * 2.0;
+    offset.sideFallback = offset.coord;
     offset.distance = 5.0e-7;
+    offset.number = 1;
+    offset.multipleCopies = true;
+    offset.keepOriginals = true;
     LC_OffsetBatchPreparation prepared{offset, {&source}, false, {}};
     LC_DocumentModificationBatch batch;
     if (prepared.advance(batch)) {

@@ -61775,13 +61775,14 @@ Failure details from Linux and Windows ARM logs:
 - `offset_worker_client_4`: the typed-source worker-client matrix fails for
   generated source index 439 (`Kind::Ellipse`): a reversed arc centered at
   `(10000, -10000)`, major vector approximately `(70.7107, 70.7107)`, ratio
-  `0.001`, parameter bounds `0.2 -> 0`, and signed distance `5e-7`. It
+  `0.001`, parameter bounds `0.2 -> 0`, signed distance `5e-7`, and exterior
+  pick `center + 2*majorP`. It
   produces no copy and reports
   `AmbiguousTopology` (engine status 10), leaving the prepared source
   incomplete. The matching macOS shard exceeded the test client's callback
   watchdog during the large fixture setup before a result could be
   established. Added a compact direct worker-client regression with these
-  exact inputs; it passes locally on macOS (**367 assertions / 1 case**).
+  exact inputs; it passes locally on macOS (**313 assertions / 1 case**).
   The Linux/Windows ARM discrepancy is still unresolved, so retain the exact
   full-matrix failure and use the compact test for cross-platform diagnosis.
 - Windows x64's job annotation reports lost runner communication; no code
