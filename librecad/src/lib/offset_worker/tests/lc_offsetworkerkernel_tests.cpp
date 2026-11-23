@@ -10129,14 +10129,23 @@ TEST_CASE("legacy thin elliptic arcs offset correctly at a large origin",
     constexpr double distance = 0.0001;
     const auto options = LC_CurveOffset::makeOffsetOptions(source, distance);
     const auto request = LC_CurveOffset::makeDirectionRequest(data.center, distance);
+    LC_CurveOffsetCuspIsolationDiagnostics cuspDiagnostics;
     const auto result = LC_CurveOffset::buildDirectBranches(
-        source, request, options, LC_CurveOffset::makeDirectSourceBudget());
+        source, request, options, LC_CurveOffset::makeDirectSourceBudget(), &cuspDiagnostics);
     CAPTURE(static_cast<int>(result.status),
             static_cast<int>(result.intersectionDiagnostics.stage),
             static_cast<int>(result.intersectionDiagnostics.failureSite),
             static_cast<int>(result.intersectionDiagnostics.cycleAssemblyFailure),
             result.intersectionDiagnostics.failureDepth,
-            result.intersectionDiagnostics.cycleAssemblyEndpointGap);
+            result.intersectionDiagnostics.cycleAssemblyEndpointGap,
+            result.signedDistance, result.exactSamples, result.branches.size(),
+            static_cast<int>(cuspDiagnostics.status), cuspDiagnostics.complete,
+            cuspDiagnostics.candidateParameters, cuspDiagnostics.stallIntervals,
+            cuspDiagnostics.spansVisited, cuspDiagnostics.isolationBoxesVisited,
+            cuspDiagnostics.failureSpan, cuspDiagnostics.failureT0, cuspDiagnostics.failureT1,
+            static_cast<int>(cuspDiagnostics.failureStage),
+            cuspDiagnostics.failingRunBoxes, cuspDiagnostics.failingRunExtent,
+            cuspDiagnostics.unclassifiedBoundaries.size());
     REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
     REQUIRE_FALSE(result.branches.empty());
     CHECK(std::all_of(result.branches.begin(), result.branches.end(), [](const LC_OffsetBranch& branch) {

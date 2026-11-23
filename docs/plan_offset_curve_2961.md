@@ -62109,3 +62109,40 @@ The broader roadmap remains open for exact-head specialized DWG/DXF tests,
 physical packaged-app repeated source-family changes and save/reopen, the broad
 Trim sanitizer/order matrix, additional family/variant coverage, and external
 visual/semantic CAD acceptance.
+
+## 2005. Keep Cross-platform Geometry Gates Open (2026-11-23)
+
+Exact-head specialized run `45280867379` confirms Linux x64 still fails the
+bounded CTest lane (56/58 tests). The two failures are `offset_worker_kernel`
+and `offset_worker_client_4`. The Linux kernel reports the captured high-origin
+thin ellipse as `AmbiguousTopology` (status 10), while the same focused test
+passes on local macOS arm64. The geometry is an exact endpoint cusp: its
+curvature radius equals the requested offset distance at parameter zero. This
+is a real cross-platform behavior discrepancy, not an accepted refusal or a
+test-only failure. The kernel fixture now captures cusp-isolation status,
+candidate parameters, stall intervals, box counts, failure span, and the count
+of unclassified boundaries if a platform reproduces it. A rebuilt local
+macOS focused test passes (**3 assertions / 1 case**); no source algorithm
+change is claimed by this diagnostic slice.
+
+The second Linux failure remains separate: the small rotation-only mixed-bulge
+case (`scale=0.001`, `frame=1`, second bulge `0.25`, distance `0.0005`) returns
+one cycle whose winding incorrectly excludes source-interior samples. Exact
+primitive noding reports success (66 pair checks, 15 generated items), with no
+interval fallback. Local macOS selectors pass, so the cycle/classification
+defect remains unresolved pending a minimal reproducer and platform-level
+investigation; do not change tolerances or mark the gate waived.
+
+The general build workflow `45283725354` passed Ubuntu x64/ARM64, Windows x64,
+and macOS arm64; macOS Intel was still building at this checkpoint. The
+specialized DWG/DXF run's Windows x64 and ARM64 lanes were also still running;
+Linux's failure is already terminal. The current PR head is
+`8022660623acd705d165297f9316e3cb1718299e`. Preserve the two user-owned
+untracked fixture files in the independent-DWG test directory.
+
+Next: record terminal Windows and Intel results; publish the additional
+failure-only ellipse diagnostics; rerun exact-head verification; use the
+Linux cusp evidence to implement a certified endpoint-cusp path, then build a
+minimal mixed-bulge repro that isolates candidate generation from cycle
+classification. Keep both gates open until Linux and Windows pass. The other
+open gates listed in section 2004 remain in force.
