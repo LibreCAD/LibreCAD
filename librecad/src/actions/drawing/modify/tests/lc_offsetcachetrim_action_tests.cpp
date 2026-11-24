@@ -2735,6 +2735,19 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
           "trim-two][offset-trim-profile-parabola-tangent]") {
   REQUIRE(lc::test::ensureSettings());
   Drawing<true> f;
+  const qint64 requestedPreviewTimeout =
+      qEnvironmentVariableIntValue("LIBRECAD_TEST_OFFSET_WORKER_TIMEOUT_MS");
+  const auto applyPreviewTimeout = [&] {
+    if (requestedPreviewTimeout <= 0)
+      return;
+    const qint64 previewDeadline = std::clamp<qint64>(
+        requestedPreviewTimeout, LC_OffsetWorkerClient::Deadlines::preview,
+        LC_OffsetWorkerClient::Deadlines::commit);
+    LC_OffsetTrimWorkerTestAccess::previewDeadline(
+        LC_ActionModifyTrimTestAccess::worker(*f.action), previewDeadline);
+    LC_ActionModifyTrimTestAccess::previewDeadline(*f.action, previewDeadline);
+  };
+  applyPreviewTimeout();
   const bool hasRequestedProfile =
       qEnvironmentVariableIsSet("LC_OFFSET_TRIM_PROFILE");
   const int profile = hasRequestedProfile
@@ -3459,6 +3472,7 @@ TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
         CHECK_FALSE(circle->isDeleted());
         for (const auto* fragment : circleFragments) CHECK(fragment->isDeleted());
         f.action = std::make_unique<CacheTrim<true>>(&f.context);
+        applyPreviewTimeout();
 
         CHECK_FALSE(native->isDeleted());
         CHECK_FALSE(circle->isDeleted());

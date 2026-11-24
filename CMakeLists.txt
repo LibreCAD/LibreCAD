@@ -3808,9 +3808,9 @@ if (BUILD_TESTS)
             set_tests_properties(offset_worker_${kind} PROPERTIES
                 TIMEOUT 30 ENVIRONMENT "QT_QPA_PLATFORM=offscreen")
         endforeach()
-        # The process-framing suite launches hundreds of isolated helpers and
-        # takes about 40 seconds on macOS even when every operation succeeds.
-        set_tests_properties(offset_worker_process PROPERTIES TIMEOUT 120)
+        # The process-framing suite launches hundreds of isolated helpers;
+        # allow slower Windows runners to finish the full bounded matrix.
+        set_tests_properties(offset_worker_process PROPERTIES TIMEOUT 600)
         # The complete kernel matrix is intentionally broad and takes several
         # minutes in Release; keep CTest's timeout above its full-suite runtime.
         set_tests_properties(offset_worker_kernel PROPERTIES TIMEOUT 1800)
