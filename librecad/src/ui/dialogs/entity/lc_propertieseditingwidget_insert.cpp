@@ -23,24 +23,13 @@
 
 #include "lc_propertieseditingwidget_insert.h"
 
+#include <QSpinBox>
+
 #include "rs_insert.h"
 #include "rs_math.h"
 #include "ui_lc_propertieseditingwidget_insert.h"
 
 #define ALLOW_PICK_SCALE false
-
-namespace {
-// A count outside 1..MaxArrayCount empties the reference or makes the saved file unreadable: keep the current one.
-int toArrayCount(QLineEdit* edit, const int current) {
-    bool ok = false;
-    const double value = RS_Math::eval(edit->text(), &ok);
-    if (ok && value >= 1 && value <= RS_InsertData::MaxArrayCount) {
-        return RS_Math::round(value);
-    }
-    edit->setText(QString::number(current));
-    return current;
-}
-}
 
 LC_PropertiesEditingWidgetInsert::LC_PropertiesEditingWidgetInsert(QWidget *parent)
     : LC_EntityPropertiesEditorWidget(parent)
@@ -51,8 +40,10 @@ LC_PropertiesEditingWidgetInsert::LC_PropertiesEditingWidgetInsert(QWidget *pare
     connect(ui->leScaleX, &QLineEdit::editingFinished, this, &LC_PropertiesEditingWidgetInsert::onScaleEditingFinishedChanged);
     connect(ui->leScaleY, &QLineEdit::editingFinished, this, &LC_PropertiesEditingWidgetInsert::onScaleEditingFinishedChanged);
     connect(ui->leAngle, &QLineEdit::editingFinished, this, &LC_PropertiesEditingWidgetInsert::onAngleEditingFinished);
-    connect(ui->leRows, &QLineEdit::editingFinished, this, &LC_PropertiesEditingWidgetInsert::onRowsEditingFinished);
-    connect(ui->leCols, &QLineEdit::editingFinished, this, &LC_PropertiesEditingWidgetInsert::onColsEditingFinished);
+    ui->sbRows->setRange(1, RS_InsertData::MaxArrayCount);
+    ui->sbCols->setRange(1, RS_InsertData::MaxArrayCount);
+    connect(ui->sbRows, &QSpinBox::valueChanged, this, &LC_PropertiesEditingWidgetInsert::onRowsValueChanged);
+    connect(ui->sbCols, &QSpinBox::valueChanged, this, &LC_PropertiesEditingWidgetInsert::onColsValueChanged);
     connect(ui->leColSpacing, &QLineEdit::editingFinished, this, &LC_PropertiesEditingWidgetInsert::onSpacingEditingFinished);
     connect(ui->leRowSpacing, &QLineEdit::editingFinished, this, &LC_PropertiesEditingWidgetInsert::onSpacingEditingFinished);
     if (!ALLOW_PICK_SCALE) {
@@ -77,12 +68,12 @@ void LC_PropertiesEditingWidgetInsert::onAngleEditingFinished() const {
     m_entity->setAngle(toWCSAngle(ui->leAngle, m_entity->getAngle()));
 }
 
-void LC_PropertiesEditingWidgetInsert::onRowsEditingFinished() const {
-    m_entity->setRows(toArrayCount(ui->leRows, m_entity->getRows()));
+void LC_PropertiesEditingWidgetInsert::onRowsValueChanged(const int value) const {
+    m_entity->setRows(value);
 }
 
-void LC_PropertiesEditingWidgetInsert::onColsEditingFinished() const {
-    m_entity->setCols(toArrayCount(ui->leCols, m_entity->getCols()));
+void LC_PropertiesEditingWidgetInsert::onColsValueChanged(const int value) const {
+    m_entity->setCols(value);
 }
 
 void LC_PropertiesEditingWidgetInsert::onSpacingEditingFinished() const {
@@ -108,11 +99,9 @@ void LC_PropertiesEditingWidgetInsert::setEntity(RS_Entity* entity) {
     toUIRaw(m_entity->getScale(), ui->leScaleX, ui->leScaleY);
     toUIAngleDeg(m_entity->getAngle(), ui->leAngle);
 
+    ui->sbRows->setValue(m_entity->getRows());
+    ui->sbCols->setValue(m_entity->getCols());
     QString s;
-    s.setNum(m_entity->getRows());
-    ui->leRows->setText(s);
-    s.setNum(m_entity->getCols());
-    ui->leCols->setText(s);
     s.setNum(m_entity->getSpacing().y);
     ui->leRowSpacing->setText(s);
     s.setNum(m_entity->getSpacing().x);

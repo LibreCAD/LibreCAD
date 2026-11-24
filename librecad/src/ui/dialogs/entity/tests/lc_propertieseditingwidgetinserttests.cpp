@@ -22,7 +22,7 @@
 ****************************************************************************/
 
 // The Insert Properties dialog (Modify > Properties on a block reference): the Columns field that was wired to the
-// Rows slot, the crossed spacing pick buttons, and the counts and the scale factor that emptied the reference.
+// Rows slot, the crossed spacing pick buttons, and the counts and scale factor that could empty the reference.
 
 #include <catch2/catch_test_macros.hpp>
 
@@ -30,6 +30,7 @@
 
 #include <QLineEdit>
 #include <QStringList>
+#include <QSpinBox>
 #include <QToolButton>
 
 #include "lc_actiontestsupport.h"
@@ -83,6 +84,12 @@ struct Dialog : TestApplication {
         return edit;
     }
 
+    QSpinBox* countField(const char* name) const {
+        auto* spinBox = widget->findChild<QSpinBox*>(name);
+        REQUIRE(spinBox != nullptr);
+        return spinBox;
+    }
+
     /// what the user does to a field: enters \p text and leaves it
     void type(const char* name, const char* text) const {
         QLineEdit* edit = field(name);
@@ -96,7 +103,7 @@ struct Dialog : TestApplication {
 TEST_CASE("The Insert Properties dialog applies the Columns field", "[gui][dialog][insert]") {
     Dialog d;
 
-    d.type("leCols", "4");
+    d.countField("sbCols")->setValue(4);
 
     CHECK(d.clone->getCols() == 4);
     CHECK(d.clone->getRows() == 1);
@@ -122,24 +129,22 @@ TEST_CASE("Each spacing pick button of the Insert Properties dialog asks for its
     CHECK(asked.join(",").toStdString() == "colSpacing");
 }
 
-TEST_CASE("The Insert Properties dialog keeps the array counts it cannot use", "[gui][dialog][insert]") {
-    // below 1 the reference is empty and Save as DXF fails; above 32767 the saved DXF file cannot be opened
-    for (const char* text : {"0", "-2", "abc", "", "32768"}) {
-        Dialog d;
-        INFO("typed '" << text << "'");
-
-        d.type("leRows", text);
-        d.type("leCols", text);
-
-        CHECK(d.clone->getRows() == 1);
-        CHECK(d.clone->getCols() == 1);
-        CHECK(d.field("leRows")->text().toStdString() == "1");
-        CHECK(d.field("leCols")->text().toStdString() == "1");
-    }
-
+TEST_CASE("The Insert Properties dialog uses bounded spin boxes for array counts", "[gui][dialog][insert]") {
     Dialog d;
-    d.type("leRows", "32767");
-    CHECK(d.clone->getRows() == 32767);
+    auto* rows = d.countField("sbRows");
+    auto* columns = d.countField("sbCols");
+
+    CHECK(rows->minimum() == 1);
+    CHECK(rows->maximum() == RS_InsertData::MaxArrayCount);
+    CHECK(columns->minimum() == 1);
+    CHECK(columns->maximum() == RS_InsertData::MaxArrayCount);
+
+    rows->setValue(0);
+    columns->setValue(RS_InsertData::MaxArrayCount + 1);
+    CHECK(rows->value() == 1);
+    CHECK(columns->value() == RS_InsertData::MaxArrayCount);
+    CHECK(d.clone->getRows() == 1);
+    CHECK(d.clone->getCols() == RS_InsertData::MaxArrayCount);
 }
 
 TEST_CASE("The Insert Properties dialog keeps a zero scale factor from emptying the reference", "[gui][dialog][insert]") {
