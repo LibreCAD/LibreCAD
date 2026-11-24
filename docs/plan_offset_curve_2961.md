@@ -62260,3 +62260,31 @@ Keep the mixed-bulge geometry gate open pending exact-head CI and independent
 membership review. External ODA/GUI acceptance, visible packaged-app checks,
 the full Trim sanitizer/order matrix, remaining family/variant coverage, and
 the other gates in sections 2004 and 2006 remain open.
+
+## 2010. Raise Test-only Windows CI Budgets from Exact-head Evidence (2026-11-24)
+
+Exact-head run `45323645860` completed Linux successfully, including the full
+bounded DWG/DXF CTest selection and relocated-worker installation/persistence
+matrices. Windows ARM64's bounded CTest selection also passed; its relocated
+worker matrix was still running at this checkpoint. The five-platform general
+build run `45323645921` passed on all platforms.
+
+Windows x64's bounded CTest selection failed for two test-harness reasons. The
+full `[lc-offsetcurve]` kernel selector reached CTest's 900-second timeout; it
+reported no failing geometry assertion before termination. The same job's
+following process-test case exhausted its 24-second aggregate *test-only*
+watchdog at 24,001 ms (the helper child limit was 2,500 ms); the case then
+finished with one failure after 27.18 seconds. Linux ran the same kernel
+selector in 449.45 seconds and the process test in 47.93 seconds. The later
+x64 process startup failure may be affected by the preceding timed-out test,
+but that causal link is not established.
+
+Commit `5e482bd1f` raises the CTest kernel-suite timeout to 1,800 seconds and
+the process harness's aggregate test-only watchdog to 60 seconds. The
+per-child 2,500 ms timeout, reaping bound, and production worker deadlines are
+unchanged. On the current local CMake build, the rebuilt process-test target
+passes **1/1 CTest in 50.34 seconds**. This adjustment permits the broad
+Windows kernel suite to complete while keeping a finite bound; it does not
+waive a geometry failure. Push only after the prior Windows ARM64 relocated
+worker step terminates, then rerun exact-head CI and inspect both Windows
+results. Keep all geometry and external acceptance gates open meanwhile.
