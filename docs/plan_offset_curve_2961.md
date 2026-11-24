@@ -62585,8 +62585,8 @@ and 1079) passed **3/3 profiles, 553 assertions** without a sanitizer report;
 this is a sample, not an exhaustive sanitizer matrix.
 
 The broad current-source Release case inventory discovered 104 unique Trim
-test names. It ran the 102 cases not represented by dedicated exhaustive
-profile matrices, passing **102/102 cases and 178,455 assertions** in 872
+test names. It ran the 102 cases other than the two largest separately
+enumerated families, passing **102/102 cases and 178,455 assertions** in 872
 seconds. The two explicit exclusions were the periodic spline case above and
 the endpoint-tangent parabola case, whose **223/223 Release profiles and
 269,518 assertions** are recorded in section 2021. The five typed-source
@@ -62607,3 +62607,42 @@ sanitizer sample for the new matrix. Full broad randomized Trim ASan/UBSan,
 visible packaged-app acceptance, exact-head cross-platform CI, and external
 ODA/AutoCAD acceptance remain open. Do not infer external acceptance from
 input conversion or from local file round-trips.
+
+## 2023. Isolate High-origin Ellipse Trim and Close Sanitizer Outliers (2026-11-24)
+
+The ASan/UBSan case matrix from section 2022 passed **100/102 cases and
+164,865 assertions** without a sanitizer diagnostic. The only timeouts were
+the typed-ellipse action case and the high-origin ellipse action case; both
+were long aggregate generators, not assertion or sanitizer failures. The
+typed-ellipse case is already isolated as 76 profiles and passed exhaustively
+in the typed-source ASan matrix (section 2020).
+
+Added `LC_OFFSET_TRIM_HIGH_ORIGIN_ELLIPSE_PROFILE` and the unique
+`[offset-trim-profile-high-origin-ellipse]` tag. Its 52 profile IDs exhaust
+the original valid combinations: six ellipse geometries at each of two frame
+origins, both offset sides and both pick orders, plus the special bounded-arc
+geometry at the larger origin. The new `high-origin-ellipse` runner family
+requires exactly one test case with assertions for each profile. The rebuilt
+Release target passed **52/52 profiles and 4,500 assertions** in 69 seconds;
+the rebuilt ASan/UBSan target passed **52/52 and 4,500 assertions** in 772
+seconds, with no sanitizer diagnostic.
+
+This resolves both timed-out broad ASan cases by direct exhaustive evidence.
+Across the 104 discovered Trim test names, 100 non-profile-heavy cases passed
+in the broad sanitizer run, while the typed ellipse and high-origin ellipse
+cases are covered by their exhaustive family matrices. The periodic-spline
+family has a representative ASan sample of 3/3 profiles and the endpoint-
+parabola family a representative sample of 36/36; their complete Release
+matrices remain exhaustive. No broad sanitizer finding or assertion failure
+was observed. The extra high-origin matrix raises the Release profile totals
+to **1,649 profiles and 461,730 assertions** when combined with sections
+2020-2022.
+
+Exact-head Pixi run `45410530328` passed on the preceding PR head `7e28fa37c`.
+Its specialized DWG/DXF fast lane also passed; Windows x64 and ARM64 jobs were
+still in progress at this checkpoint. The high-origin test pin, profile
+runner registration, and updated evidence are not yet part of that CI head;
+push this slice and track its exact-head workflows. Visible packaged-app
+acceptance, external ODA/AutoCAD acceptance, the Linux mixed-bulge
+cross-platform question, and exhaustive sanitizer execution of the two
+deliberately sampled large families remain open.

@@ -1,6 +1,7 @@
 /* Copyright (C) 2026 LibreCAD.org. SPDX-License-Identifier: GPL-2.0-or-later */
 #include <catch2/catch_test_macros.hpp>
 #include <catch2/generators/catch_generators.hpp>
+#include <catch2/generators/catch_generators_range.hpp>
 #include <algorithm>
 #include <array>
 #include <atomic>
@@ -5548,243 +5549,289 @@ TEST_CASE("T Trim Two action trims a worker-created typed ellipse offset against
 }
 
 TEST_CASE("T Trim Two trims a worker-created high-origin ellipse offset",
-          "[gui][lc-offsetcurve][trim-action][typed-source][ellipse][high-origin][trim-two]") {
+          "[gui][lc-offsetcurve][trim-action][typed-source][ellipse][high-origin][trim-two]"
+          "[offset-trim-profile-high-origin-ellipse]") {
     REQUIRE(lc::test::ensureSettings());
     const std::array<std::pair<double, double>, 6> profiles{{
         {0.1, 0.41}, {0.25, 0.67}, {0.45, 0.17}, {0.45, 1.2},
         {0.75, 0.67}, {0.9, 0.93}}};
-    for (const double frame : {1e12, 1e13})
-    for (const auto& [axisRatio, rotation] : profiles)
-    for (const bool boundedArc : {false, true})
-    for (const bool towardCentre : {false, true})
-    for (const bool ellipseFirst : {false, true}) {
-        if (boundedArc && (frame != 1e13 || axisRatio != 0.45 || rotation != 0.17)) continue;
-        CAPTURE(frame, axisRatio, rotation, boundedArc, towardCentre, ellipseFirst);
-        Drawing<true> f;
-        const qint64 requestedPreviewTimeout = qEnvironmentVariableIntValue("LIBRECAD_TEST_OFFSET_WORKER_TIMEOUT_MS");
-        if (requestedPreviewTimeout > 0) {
-            const qint64 previewDeadline = std::clamp<qint64>(requestedPreviewTimeout,
-                LC_OffsetWorkerClient::Deadlines::preview, LC_OffsetWorkerClient::Deadlines::commit);
-            LC_OffsetTrimWorkerTestAccess::previewDeadline(LC_ActionModifyTrimTestAccess::worker(*f.action),
-                previewDeadline);
-            LC_ActionModifyTrimTestAccess::previewDeadline(*f.action, previewDeadline);
-        }
-        const bool largestFrame = frame == 1e13;
-        const double sourceRadius = largestFrame ? 1e6 : 1e5;
-        const double offsetDistance = sourceRadius *
-            (axisRatio < .2 ? axisRatio * axisRatio * .25 : .025);
-        const RS_Vector center{frame, -2 * frame};
-        const double zoom = largestFrame ? 5e-5 : .001;
-        f.view.getViewPort()->setSize(640, 480);
-        f.view.getViewPort()->setOffsetAndFactor(
-            qRound(320.0 - center.x * zoom),
-            qRound(240.0 - center.y * zoom), zoom);
-
-        RS_Ellipse seed(nullptr, RS_EllipseData{{0, 0}, {sourceRadius * .2, 0}, .25, 0, 0, false});
-        auto initial = LC_OffsetCurve::create(seed, offsetDistance, towardCentre);
-        REQUIRE(initial);
-        auto* previous = initial.entity.release();
-        f.graphic.addEntity(previous);
-
-        RS_EllipseData sourceData{center,
-            {sourceRadius * std::cos(rotation), sourceRadius * std::sin(rotation)}, axisRatio};
-        if (boundedArc) {
-            sourceData.setAngle1(5.9);
-            sourceData.setAngle2(.2);
-            sourceData.reversed = true;
-        }
-        auto* source = new RS_Ellipse(&f.graphic, sourceData);
-        f.graphic.addEntity(source);
-        f.graphic.select(QList<RS_Entity*>{previous}, true);
-        UpdateSourceProbe update(&f.context);
-        update.init(0);
-        update.setSourceKind(LC_OffsetSourceGeometry::Kind::Ellipse);
-        update.use(source);
-        lc::test::awaitUpdate(update);
-        INFO(f.context.messages.join('\n').toStdString());
-        REQUIRE(update.lastReport().updated == 1);
-        REQUIRE(previous->isDeleted());
-
-        LC_OffsetCurve* native = nullptr;
-        for (auto* entity : live(f.graphic)) {
-            if (entity->rtti() != RS2::EntityOffsetCurve) continue;
-            REQUIRE(native == nullptr);
-            native = dynamic_cast<LC_OffsetCurve*>(entity);
-        }
-        REQUIRE(native);
-        CHECK(native->definition().distance == offsetDistance);
-        CHECK(native->definition().towardCentre == towardCentre);
-
-        double first = 0, last = 0;
-        REQUIRE(native->getParameterDomain(first, last));
-        const RS_Vector major{std::cos(rotation), std::sin(rotation)};
-        const RS_Vector target = center + major *
-            (boundedArc ? -1.0 : towardCentre ? .9 : 1.2) * sourceRadius;
-        double nativePickParameter = first;
-        double nearestDistance = std::numeric_limits<double>::infinity();
-        for (unsigned i = 0; i <= 8192; ++i) {
-            const double parameter = first + (last - first) * i / 8192.0;
-            const double distance = native->getPointAt(parameter).distanceTo(target);
-            if (distance >= nearestDistance) continue;
-            nearestDistance = distance;
-            nativePickParameter = parameter;
-        }
-        const RS_Vector nativePick = native->getPointAt(nativePickParameter);
-        const RS_Vector minor{-major.y, major.x};
-        const double cutterHalfLength = sourceRadius * axisRatio * 1.5;
-        const RS_Vector cutterPick = center + minor * sourceRadius * axisRatio * .8;
-        auto* cutter = new RS_Line(&f.graphic,
-            RS_LineData{center - minor * cutterHalfLength,
-                        center + minor * cutterHalfLength});
-        f.graphic.addEntity(cutter);
-        const auto trimProbe = LC_OffsetCacheTrim::prepare(
-            native->getData(), *cutter, {nativePick});
-        INFO("high-origin ellipse trim probe refusal=" << static_cast<int>(trimProbe.refusal)
-             << " roots=" << trimProbe.rootCount
-             << " fragments=" << trimProbe.fragments.size());
-        REQUIRE(trimProbe.refusal == LC_OffsetCacheTrim::Refusal::None);
-
-        const auto geometryBefore = RS_Spline::geometryFingerprint(native->getData());
-        f.action->click(ellipseFirst ? nativePick : cutterPick);
-        REQUIRE(f.action->getStatus() == CacheTrim<true>::ChooseTrimEntity);
-        RS_Entity* expectedLimit = ellipseFirst ? static_cast<RS_Entity*>(native) : cutter;
-        CHECK(f.action->retainedLimit() == expectedLimit);
-        const auto undoEpoch = f.graphic.undoStateEpoch();
-        f.action->hover(ellipseFirst ? cutterPick : nativePick);
-        f.action->waitForTrim();
-        REQUIRE_FALSE(f.action->m_preview->isEmpty());
-        CHECK_FALSE(native->isDeleted());
-        CHECK_FALSE(cutter->isDeleted());
-        CHECK(f.graphic.undoStateEpoch() == undoEpoch);
-        f.action->click(ellipseFirst ? cutterPick : nativePick);
-        INFO(f.context.messages.join('\n').toStdString());
-        REQUIRE(native->isDeleted());
-        REQUIRE(cutter->isDeleted());
-        CHECK(native->hasEditableDefinition());
-        CHECK_FALSE(native->sourceDefinition());
-        std::vector<RS_Entity*> fragments;
-        for (auto* entity : live(f.graphic)) {
-            if (entity == source) continue;
-            CHECK(entity->rtti() != RS2::EntityOffsetCurve);
-            fragments.push_back(entity);
-        }
-        REQUIRE(std::any_of(fragments.begin(), fragments.end(), [](const RS_Entity* entity) {
-            return entity->rtti() == RS2::EntitySpline;
-        }));
-
-        QTemporaryDir directory;
-        REQUIRE(directory.isValid());
-        const std::array<RS2::FormatType, 5> formats{{
-            RS2::FormatDXFRW14, RS2::FormatDXFRW2000, RS2::FormatDWG,
-            RS2::FormatDXFRW2018, RS2::FormatDWG2018}};
-        const double geometryTolerance = largestFrame ? .02 : 1e-3;
-        const auto sameRoundTripGeometry = [geometryTolerance](const RS_Entity& expected,
-                                                               const RS_Entity& actual) {
-            if (expected.rtti() != actual.rtti()) return false;
-            if (const auto* a = dynamic_cast<const RS_Spline*>(&expected)) {
-                const auto* b = dynamic_cast<const RS_Spline*>(&actual);
-                if (!b) return false;
-                const auto& x = a->getData();
-                const auto& y = b->getData();
-                if (x.degree != y.degree || x.m_closedFlag != y.m_closedFlag ||
-                    x.m_periodicFlag != y.m_periodicFlag ||
-                    x.controlPoints.size() != y.controlPoints.size() ||
-                    x.knotslist.size() != y.knotslist.size() ||
-                    x.weights.size() != y.weights.size())
-                    return false;
-                for (std::size_t i = 0; i < x.controlPoints.size(); ++i)
-                    if (x.controlPoints[i].distanceTo(y.controlPoints[i]) > geometryTolerance)
-                        return false;
-                for (std::size_t i = 0; i < x.knotslist.size(); ++i)
-                    if (std::abs(x.knotslist[i] - y.knotslist[i]) > 1e-12)
-                        return false;
-                for (std::size_t i = 0; i < x.weights.size(); ++i)
-                    if (std::abs(x.weights[i] - y.weights[i]) > 1e-12)
-                        return false;
-                return true;
-            }
-            if (const auto* a = dynamic_cast<const RS_Ellipse*>(&expected)) {
-                const auto* b = dynamic_cast<const RS_Ellipse*>(&actual);
-                if (!b) return false;
-                const auto& x = a->getData();
-                const auto& y = b->getData();
-                if (x.isArc || y.isArc) {
-                    if (!x.isArc || !y.isArc) return false;
-                    const bool sameEnds = a->getStartpoint().distanceTo(b->getStartpoint()) <= geometryTolerance &&
-                        a->getEndpoint().distanceTo(b->getEndpoint()) <= geometryTolerance;
-                    const bool reversedEnds = a->getStartpoint().distanceTo(b->getEndpoint()) <= geometryTolerance &&
-                        a->getEndpoint().distanceTo(b->getStartpoint()) <= geometryTolerance;
-                    return x.center.distanceTo(y.center) <= geometryTolerance &&
-                        x.majorP.distanceTo(y.majorP) <= geometryTolerance &&
-                        std::abs(x.ratio - y.ratio) <= 1e-12 &&
-                        std::abs(a->getLength() - b->getLength()) <= geometryTolerance &&
-                        a->getMiddlePoint().distanceTo(b->getMiddlePoint()) <= geometryTolerance &&
-                        (sameEnds || reversedEnds);
-                }
-                return x.center.distanceTo(y.center) <= geometryTolerance &&
-                       x.majorP.distanceTo(y.majorP) <= geometryTolerance &&
-                       std::abs(x.ratio - y.ratio) <= 1e-12 &&
-                       std::abs(x.angle1 - y.angle1) <= 1e-12 &&
-                       std::abs(x.angle2 - y.angle2) <= 1e-12 &&
-                       x.isArc == y.isArc && x.reversed == y.reversed;
-            }
-            if (const auto* a = dynamic_cast<const RS_Line*>(&expected)) {
-                const auto* b = dynamic_cast<const RS_Line*>(&actual);
-                if (!b) return false;
-                const auto& x = a->getData();
-                const auto& y = b->getData();
-                const bool same = x.startpoint.distanceTo(y.startpoint) <= geometryTolerance &&
-                                  x.endpoint.distanceTo(y.endpoint) <= geometryTolerance;
-                const bool reversed = x.startpoint.distanceTo(y.endpoint) <= geometryTolerance &&
-                                      x.endpoint.distanceTo(y.startpoint) <= geometryTolerance;
-                return same || reversed;
-            }
-            return trimGeometry(expected) == trimGeometry(actual);
-        };
-        for (std::size_t i = 0; i < formats.size(); ++i) {
-            const bool dwg = formats[i] == RS2::FormatDWG ||
-                             formats[i] == RS2::FormatDWG2018;
-            const auto file = std::filesystem::path(directory.filePath(
-                QStringLiteral("high-origin-ellipse-trim-%1-%2")
-                    .arg(towardCentre ? 1 : 0)
-                    .arg(ellipseFirst ? 1 : 0).arg(i) +
-                (dwg ? ".dwg" : ".dxf")
-            ).toStdString());
-            REQUIRE(lc::test::exportDrawing(f.graphic, file, formats[i]));
-            RS_Graphic reopened;
-            REQUIRE(lc::test::importDrawing(reopened, file, formats[i]));
-            const auto reopenedEntities = live(reopened);
-            CHECK(std::none_of(reopenedEntities.begin(), reopenedEntities.end(),
-                               [](const RS_Entity* entity) {
-                                   return entity->rtti() == RS2::EntityOffsetCurve;
-                               }));
-            const auto expectedEntities = live(f.graphic);
-            REQUIRE(reopenedEntities.size() == expectedEntities.size());
-            std::vector<bool> matched(reopenedEntities.size(), false);
-            for (const auto* expected : expectedEntities) {
-                bool found = false;
-                for (std::size_t j = 0; j < reopenedEntities.size(); ++j) {
-                    if (matched[j] || !sameRoundTripGeometry(*expected,
-                                                              *reopenedEntities[j]))
-                        continue;
-                    matched[j] = true;
-                    found = true;
-                    break;
-                }
-                CAPTURE(formats[i], expected->rtti());
-                CHECK(found);
-            }
-        }
-
-        REQUIRE(f.graphic.undo());
-        CHECK_FALSE(native->isDeleted());
-        CHECK_FALSE(cutter->isDeleted());
-        CHECK(RS_Spline::geometryFingerprint(native->getData()) == geometryBefore);
-        REQUIRE(f.graphic.redo());
-        CHECK(native->isDeleted());
-        CHECK(cutter->isDeleted());
-        for (const auto* fragment : fragments) CHECK_FALSE(fragment->isDeleted());
+    constexpr int profileCount = 52;
+    const bool hasRequestedProfile =
+        qEnvironmentVariableIsSet("LC_OFFSET_TRIM_HIGH_ORIGIN_ELLIPSE_PROFILE");
+    bool profileValid = true;
+    const int profile = hasRequestedProfile
+        ? qEnvironmentVariableIntValue("LC_OFFSET_TRIM_HIGH_ORIGIN_ELLIPSE_PROFILE", &profileValid)
+        : GENERATE(Catch::Generators::range(0, 52));
+    REQUIRE(profileValid);
+    REQUIRE(profile >= 0);
+    REQUIRE(profile < profileCount);
+    const bool ellipseFirst = (profile % 2) != 0;
+    const bool towardCentre = ((profile / 2) % 2) != 0;
+    const int geometryProfile = profile / 4;
+    const bool boundedArc = geometryProfile == 12;
+    const double frame = geometryProfile < 6 ? 1e12 : 1e13;
+    const std::size_t ellipseProfile =
+        boundedArc ? 2 : std::size_t(geometryProfile % 6);
+    const auto [axisRatio, rotation] = profiles.at(ellipseProfile);
+    CAPTURE(frame, axisRatio, rotation, boundedArc, towardCentre, ellipseFirst);
+    Drawing<true> f;
+    const qint64 requestedPreviewTimeout =
+        qEnvironmentVariableIntValue("LIBRECAD_TEST_OFFSET_WORKER_TIMEOUT_MS");
+    if (requestedPreviewTimeout > 0) {
+      const qint64 previewDeadline = std::clamp<qint64>(
+          requestedPreviewTimeout, LC_OffsetWorkerClient::Deadlines::preview,
+          LC_OffsetWorkerClient::Deadlines::commit);
+      LC_OffsetTrimWorkerTestAccess::previewDeadline(
+          LC_ActionModifyTrimTestAccess::worker(*f.action), previewDeadline);
+      LC_ActionModifyTrimTestAccess::previewDeadline(*f.action,
+                                                     previewDeadline);
     }
+    const bool largestFrame = frame == 1e13;
+    const double sourceRadius = largestFrame ? 1e6 : 1e5;
+    const double offsetDistance =
+        sourceRadius * (axisRatio < .2 ? axisRatio * axisRatio * .25 : .025);
+    const RS_Vector center{frame, -2 * frame};
+    const double zoom = largestFrame ? 5e-5 : .001;
+    f.view.getViewPort()->setSize(640, 480);
+    f.view.getViewPort()->setOffsetAndFactor(
+        qRound(320.0 - center.x * zoom), qRound(240.0 - center.y * zoom), zoom);
+
+    RS_Ellipse seed(
+        nullptr,
+        RS_EllipseData{{0, 0}, {sourceRadius * .2, 0}, .25, 0, 0, false});
+    auto initial = LC_OffsetCurve::create(seed, offsetDistance, towardCentre);
+    REQUIRE(initial);
+    auto *previous = initial.entity.release();
+    f.graphic.addEntity(previous);
+
+    RS_EllipseData sourceData{
+        center,
+        {sourceRadius * std::cos(rotation), sourceRadius * std::sin(rotation)},
+        axisRatio};
+    if (boundedArc) {
+      sourceData.setAngle1(5.9);
+      sourceData.setAngle2(.2);
+      sourceData.reversed = true;
+    }
+    auto *source = new RS_Ellipse(&f.graphic, sourceData);
+    f.graphic.addEntity(source);
+    f.graphic.select(QList<RS_Entity *>{previous}, true);
+    UpdateSourceProbe update(&f.context);
+    update.init(0);
+    update.setSourceKind(LC_OffsetSourceGeometry::Kind::Ellipse);
+    update.use(source);
+    lc::test::awaitUpdate(update);
+    INFO(f.context.messages.join('\n').toStdString());
+    REQUIRE(update.lastReport().updated == 1);
+    REQUIRE(previous->isDeleted());
+
+    LC_OffsetCurve *native = nullptr;
+    for (auto *entity : live(f.graphic)) {
+      if (entity->rtti() != RS2::EntityOffsetCurve)
+        continue;
+      REQUIRE(native == nullptr);
+      native = dynamic_cast<LC_OffsetCurve *>(entity);
+    }
+    REQUIRE(native);
+    CHECK(native->definition().distance == offsetDistance);
+    CHECK(native->definition().towardCentre == towardCentre);
+
+    double first = 0, last = 0;
+    REQUIRE(native->getParameterDomain(first, last));
+    const RS_Vector major{std::cos(rotation), std::sin(rotation)};
+    const RS_Vector target = center + major *
+                                          (boundedArc     ? -1.0
+                                           : towardCentre ? .9
+                                                          : 1.2) *
+                                          sourceRadius;
+    double nativePickParameter = first;
+    double nearestDistance = std::numeric_limits<double>::infinity();
+    for (unsigned i = 0; i <= 8192; ++i) {
+      const double parameter = first + (last - first) * i / 8192.0;
+      const double distance = native->getPointAt(parameter).distanceTo(target);
+      if (distance >= nearestDistance)
+        continue;
+      nearestDistance = distance;
+      nativePickParameter = parameter;
+    }
+    const RS_Vector nativePick = native->getPointAt(nativePickParameter);
+    const RS_Vector minor{-major.y, major.x};
+    const double cutterHalfLength = sourceRadius * axisRatio * 1.5;
+    const RS_Vector cutterPick = center + minor * sourceRadius * axisRatio * .8;
+    auto *cutter =
+        new RS_Line(&f.graphic, RS_LineData{center - minor * cutterHalfLength,
+                                            center + minor * cutterHalfLength});
+    f.graphic.addEntity(cutter);
+    const auto trimProbe =
+        LC_OffsetCacheTrim::prepare(native->getData(), *cutter, {nativePick});
+    INFO("high-origin ellipse trim probe refusal="
+         << static_cast<int>(trimProbe.refusal) << " roots="
+         << trimProbe.rootCount << " fragments=" << trimProbe.fragments.size());
+    REQUIRE(trimProbe.refusal == LC_OffsetCacheTrim::Refusal::None);
+
+    const auto geometryBefore =
+        RS_Spline::geometryFingerprint(native->getData());
+    f.action->click(ellipseFirst ? nativePick : cutterPick);
+    REQUIRE(f.action->getStatus() == CacheTrim<true>::ChooseTrimEntity);
+    RS_Entity *expectedLimit =
+        ellipseFirst ? static_cast<RS_Entity *>(native) : cutter;
+    CHECK(f.action->retainedLimit() == expectedLimit);
+    const auto undoEpoch = f.graphic.undoStateEpoch();
+    f.action->hover(ellipseFirst ? cutterPick : nativePick);
+    f.action->waitForTrim();
+    REQUIRE_FALSE(f.action->m_preview->isEmpty());
+    CHECK_FALSE(native->isDeleted());
+    CHECK_FALSE(cutter->isDeleted());
+    CHECK(f.graphic.undoStateEpoch() == undoEpoch);
+    f.action->click(ellipseFirst ? cutterPick : nativePick);
+    INFO(f.context.messages.join('\n').toStdString());
+    REQUIRE(native->isDeleted());
+    REQUIRE(cutter->isDeleted());
+    CHECK(native->hasEditableDefinition());
+    CHECK_FALSE(native->sourceDefinition());
+    std::vector<RS_Entity *> fragments;
+    for (auto *entity : live(f.graphic)) {
+      if (entity == source)
+        continue;
+      CHECK(entity->rtti() != RS2::EntityOffsetCurve);
+      fragments.push_back(entity);
+    }
+    REQUIRE(std::any_of(fragments.begin(), fragments.end(),
+                        [](const RS_Entity *entity) {
+                          return entity->rtti() == RS2::EntitySpline;
+                        }));
+
+    QTemporaryDir directory;
+    REQUIRE(directory.isValid());
+    const std::array<RS2::FormatType, 5> formats{
+        {RS2::FormatDXFRW14, RS2::FormatDXFRW2000, RS2::FormatDWG,
+         RS2::FormatDXFRW2018, RS2::FormatDWG2018}};
+    const double geometryTolerance = largestFrame ? .02 : 1e-3;
+    const auto sameRoundTripGeometry = [geometryTolerance](
+                                           const RS_Entity &expected,
+                                           const RS_Entity &actual) {
+      if (expected.rtti() != actual.rtti())
+        return false;
+      if (const auto *a = dynamic_cast<const RS_Spline *>(&expected)) {
+        const auto *b = dynamic_cast<const RS_Spline *>(&actual);
+        if (!b)
+          return false;
+        const auto &x = a->getData();
+        const auto &y = b->getData();
+        if (x.degree != y.degree || x.m_closedFlag != y.m_closedFlag ||
+            x.m_periodicFlag != y.m_periodicFlag ||
+            x.controlPoints.size() != y.controlPoints.size() ||
+            x.knotslist.size() != y.knotslist.size() ||
+            x.weights.size() != y.weights.size())
+          return false;
+        for (std::size_t i = 0; i < x.controlPoints.size(); ++i)
+          if (x.controlPoints[i].distanceTo(y.controlPoints[i]) >
+              geometryTolerance)
+            return false;
+        for (std::size_t i = 0; i < x.knotslist.size(); ++i)
+          if (std::abs(x.knotslist[i] - y.knotslist[i]) > 1e-12)
+            return false;
+        for (std::size_t i = 0; i < x.weights.size(); ++i)
+          if (std::abs(x.weights[i] - y.weights[i]) > 1e-12)
+            return false;
+        return true;
+      }
+      if (const auto *a = dynamic_cast<const RS_Ellipse *>(&expected)) {
+        const auto *b = dynamic_cast<const RS_Ellipse *>(&actual);
+        if (!b)
+          return false;
+        const auto &x = a->getData();
+        const auto &y = b->getData();
+        if (x.isArc || y.isArc) {
+          if (!x.isArc || !y.isArc)
+            return false;
+          const bool sameEnds = a->getStartpoint().distanceTo(
+                                    b->getStartpoint()) <= geometryTolerance &&
+                                a->getEndpoint().distanceTo(b->getEndpoint()) <=
+                                    geometryTolerance;
+          const bool reversedEnds =
+              a->getStartpoint().distanceTo(b->getEndpoint()) <=
+                  geometryTolerance &&
+              a->getEndpoint().distanceTo(b->getStartpoint()) <=
+                  geometryTolerance;
+          return x.center.distanceTo(y.center) <= geometryTolerance &&
+                 x.majorP.distanceTo(y.majorP) <= geometryTolerance &&
+                 std::abs(x.ratio - y.ratio) <= 1e-12 &&
+                 std::abs(a->getLength() - b->getLength()) <=
+                     geometryTolerance &&
+                 a->getMiddlePoint().distanceTo(b->getMiddlePoint()) <=
+                     geometryTolerance &&
+                 (sameEnds || reversedEnds);
+        }
+        return x.center.distanceTo(y.center) <= geometryTolerance &&
+               x.majorP.distanceTo(y.majorP) <= geometryTolerance &&
+               std::abs(x.ratio - y.ratio) <= 1e-12 &&
+               std::abs(x.angle1 - y.angle1) <= 1e-12 &&
+               std::abs(x.angle2 - y.angle2) <= 1e-12 && x.isArc == y.isArc &&
+               x.reversed == y.reversed;
+      }
+      if (const auto *a = dynamic_cast<const RS_Line *>(&expected)) {
+        const auto *b = dynamic_cast<const RS_Line *>(&actual);
+        if (!b)
+          return false;
+        const auto &x = a->getData();
+        const auto &y = b->getData();
+        const bool same =
+            x.startpoint.distanceTo(y.startpoint) <= geometryTolerance &&
+            x.endpoint.distanceTo(y.endpoint) <= geometryTolerance;
+        const bool reversed =
+            x.startpoint.distanceTo(y.endpoint) <= geometryTolerance &&
+            x.endpoint.distanceTo(y.startpoint) <= geometryTolerance;
+        return same || reversed;
+      }
+      return trimGeometry(expected) == trimGeometry(actual);
+    };
+    for (std::size_t i = 0; i < formats.size(); ++i) {
+      const bool dwg =
+          formats[i] == RS2::FormatDWG || formats[i] == RS2::FormatDWG2018;
+      const auto file = std::filesystem::path(
+          directory
+              .filePath(QStringLiteral("high-origin-ellipse-trim-%1-%2")
+                            .arg(towardCentre ? 1 : 0)
+                            .arg(ellipseFirst ? 1 : 0)
+                            .arg(i) +
+                        (dwg ? ".dwg" : ".dxf"))
+              .toStdString());
+      REQUIRE(lc::test::exportDrawing(f.graphic, file, formats[i]));
+      RS_Graphic reopened;
+      REQUIRE(lc::test::importDrawing(reopened, file, formats[i]));
+      const auto reopenedEntities = live(reopened);
+      CHECK(std::none_of(reopenedEntities.begin(), reopenedEntities.end(),
+                         [](const RS_Entity *entity) {
+                           return entity->rtti() == RS2::EntityOffsetCurve;
+                         }));
+      const auto expectedEntities = live(f.graphic);
+      REQUIRE(reopenedEntities.size() == expectedEntities.size());
+      std::vector<bool> matched(reopenedEntities.size(), false);
+      for (const auto *expected : expectedEntities) {
+        bool found = false;
+        for (std::size_t j = 0; j < reopenedEntities.size(); ++j) {
+          if (matched[j] ||
+              !sameRoundTripGeometry(*expected, *reopenedEntities[j]))
+            continue;
+          matched[j] = true;
+          found = true;
+          break;
+        }
+        CAPTURE(formats[i], expected->rtti());
+        CHECK(found);
+      }
+    }
+
+    REQUIRE(f.graphic.undo());
+    CHECK_FALSE(native->isDeleted());
+    CHECK_FALSE(cutter->isDeleted());
+    CHECK(RS_Spline::geometryFingerprint(native->getData()) == geometryBefore);
+    REQUIRE(f.graphic.redo());
+    CHECK(native->isDeleted());
+    CHECK(cutter->isDeleted());
+    for (const auto *fragment : fragments)
+      CHECK_FALSE(fragment->isDeleted());
 }
 
 TEST_CASE("T Trim Two action trims worker-created typed spline and spline-points sources in both pick orders",

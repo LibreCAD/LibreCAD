@@ -14,6 +14,11 @@ import time
 
 
 FAMILIES = {
+    "high-origin-ellipse": {
+        "environment": "LC_OFFSET_TRIM_HIGH_ORIGIN_ELLIPSE_PROFILE",
+        "profiles": range(52),
+        "test_spec": "[offset-trim-profile-high-origin-ellipse]",
+    },
     "periodic-spline": {
         "environment": "LC_OFFSET_TRIM_PERIODIC_SPLINE_PROFILE",
         "profiles": range(1080),
