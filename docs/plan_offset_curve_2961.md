@@ -62561,3 +62561,49 @@ ODA/AutoCAD acceptance and physical visible LibreCAD acceptance remain open;
 converting independently authored input DWGs is not evidence that ODA accepts
 LibreCAD's generated DWGs. The monolithic mixed Trim selector also remains
 incomplete even though the enumerated Release profile matrices now pass.
+
+## 2022. Isolate and Complete the Broad Trim Qualification (2026-11-24)
+
+Added `scripts/run_offset_trim_case_matrix.py` for bounded per-test-case Trim
+execution. It discovers the tagged Catch2 inventory with a fixed RNG seed,
+executes each exact test name in its own process, requires exactly one case
+and at least one assertion, enforces per-case timeouts, and terminates the
+whole child process group on timeout. Its JSON manifest records stable names,
+indices, assertion counts, elapsed times, explicitly excluded cases, and
+failures. Catch2's randomized listing order was found during validation and
+fixed before relying on numeric indices; targeted reruns now refer to a stable
+inventory.
+
+The 1,080-combination wrapped periodic high-degree spline Trim/persistence
+case was decomposed into a test-only profile pin. The radix profile covers all
+combinations of degree 4-6, three weight profiles, four knot profiles, three
+transformed frames, both signed offsets, and five DXF/DWG formats. The runner
+registers this as the `periodic-spline` family. The complete Release matrix
+passed **1,080/1,080 profiles, 144,291 assertions**, one Catch2 case per
+profile, in 513 seconds. A representative ASan/UBSan subset (profiles 0, 539,
+and 1079) passed **3/3 profiles, 553 assertions** without a sanitizer report;
+this is a sample, not an exhaustive sanitizer matrix.
+
+The broad current-source Release case inventory discovered 104 unique Trim
+test names. It ran the 102 cases not represented by dedicated exhaustive
+profile matrices, passing **102/102 cases and 178,455 assertions** in 872
+seconds. The two explicit exclusions were the periodic spline case above and
+the endpoint-tangent parabola case, whose **223/223 Release profiles and
+269,518 assertions** are recorded in section 2021. The five typed-source
+matrices from section 2020 plus that tangent family and the new periodic
+spline family now total **1,597/1,597 profiles and 457,230 assertions** in
+Release. This closes the previously unbounded broad Trim Release case/profile
+inventory without misclassifying profile-heavy tests as timeouts.
+
+The periodic spline test-only pin and both runners were rebuilt and exercised
+in CMake Release; the focused sanitizer build was also rebuilt. Production
+geometry, worker deadlines, and GUI behavior were not changed by this slice.
+The source picker already exposes all nine supported source kinds, including
+the distinct parabola option; the 49-case offscreen picker validation remains
+as recorded in section 2017.
+
+This closes the automated broad Trim Release inventory and adds a focused
+sanitizer sample for the new matrix. Full broad randomized Trim ASan/UBSan,
+visible packaged-app acceptance, exact-head cross-platform CI, and external
+ODA/AutoCAD acceptance remain open. Do not infer external acceptance from
+input conversion or from local file round-trips.

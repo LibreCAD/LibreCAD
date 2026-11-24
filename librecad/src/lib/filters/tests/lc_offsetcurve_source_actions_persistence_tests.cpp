@@ -2112,14 +2112,30 @@ TEST_CASE("rational high-degree splines trim through document actions and file l
 }
 
 TEST_CASE("wrapped periodic high-degree splines trim and persist through file lanes",
-          "[lc-offsetcurve][source-action][spline][high-degree][periodic][trim-action][persistence]") {
-    const std::size_t degree = GENERATE(std::size_t{4}, std::size_t{5}, std::size_t{6});
-    const int weightProfile = GENERATE(0, 1, 2);
-    const int knotProfile = GENERATE(0, 1, 2, 3);
-    const int transformed = GENERATE(0, 1, 2);
-    const double signedDistance = GENERATE(-0.02, 0.02);
-    const auto format = GENERATE(RS2::FormatDXFRW14, RS2::FormatDXFRW2000,
-        RS2::FormatDWG, RS2::FormatDXFRW2018, RS2::FormatDWG2018);
+          "[lc-offsetcurve][source-action][spline][high-degree][periodic][trim-action][persistence]"
+          "[offset-trim-profile-periodic-spline]") {
+    constexpr int profileCount = 1080;
+    const bool hasRequestedProfile =
+        qEnvironmentVariableIsSet("LC_OFFSET_TRIM_PERIODIC_SPLINE_PROFILE");
+    bool profileValid = true;
+    const int profile = hasRequestedProfile
+        ? qEnvironmentVariableIntValue("LC_OFFSET_TRIM_PERIODIC_SPLINE_PROFILE", &profileValid)
+        : GENERATE(range(0, 1080));
+    REQUIRE(profileValid);
+    REQUIRE(profile >= 0);
+    REQUIRE(profile < profileCount);
+    int dimensions = profile;
+    const int formatIndex = dimensions % 5; dimensions /= 5;
+    const int distanceIndex = dimensions % 2; dimensions /= 2;
+    const int transformed = dimensions % 3; dimensions /= 3;
+    const int knotProfile = dimensions % 4; dimensions /= 4;
+    const int weightProfile = dimensions % 3; dimensions /= 3;
+    const std::size_t degree = std::size_t{4} + std::size_t(dimensions);
+    const double signedDistance = distanceIndex == 0 ? -0.02 : 0.02;
+    const std::array formats{
+        RS2::FormatDXFRW14, RS2::FormatDXFRW2000, RS2::FormatDWG,
+        RS2::FormatDXFRW2018, RS2::FormatDWG2018};
+    const auto format = formats.at(std::size_t(formatIndex));
     const bool dwg = format == RS2::FormatDWG || format == RS2::FormatDWG2018;
     const double frameAngle = transformed == 1 ? 0.37 : transformed == 2 ? -0.29 : 0.0;
     const RS_Vector frameOrigin = transformed ? RS_Vector{2.0, -3.0} : RS_Vector{0.0, 0.0};
@@ -2130,7 +2146,7 @@ TEST_CASE("wrapped periodic high-degree splines trim and persist through file la
         return RS_Vector{cosine * point.x - sine * reflectedY + frameOrigin.x,
                          sine * point.x + cosine * reflectedY + frameOrigin.y};
     };
-    CAPTURE(degree, weightProfile, knotProfile, transformed, signedDistance,
+    CAPTURE(profile, degree, weightProfile, knotProfile, transformed, signedDistance,
             static_cast<int>(format));
     REQUIRE(lc::test::application());
     lc::test::QuietLog quiet;

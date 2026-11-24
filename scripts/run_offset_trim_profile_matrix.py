@@ -14,6 +14,11 @@ import time
 
 
 FAMILIES = {
+    "periodic-spline": {
+        "environment": "LC_OFFSET_TRIM_PERIODIC_SPLINE_PROFILE",
+        "profiles": range(1080),
+        "test_spec": "[offset-trim-profile-periodic-spline]",
+    },
     "parabola-tangent": {
         "environment": "LC_OFFSET_TRIM_PROFILE",
         "profiles": range(223),
