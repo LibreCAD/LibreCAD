@@ -4372,7 +4372,7 @@ if (BUILD_TESTS)
                 --reporter compact)
         set_tests_properties(librecad_tests PROPERTIES
             WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
-            ENVIRONMENT "QT_QPA_PLATFORM=offscreen"
+            ENVIRONMENT "QT_QPA_PLATFORM=offscreen;LIBRECAD_TEST_OFFSET_WORKER_TIMEOUT_MS=30000"
         )
         # A relative configfile: Qt splits the platform argument at colons, as in C:/
         add_test(NAME librecad_dock_layout_tests
