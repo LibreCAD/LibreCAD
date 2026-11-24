@@ -62146,3 +62146,38 @@ Linux cusp evidence to implement a certified endpoint-cusp path, then build a
 minimal mixed-bulge repro that isolates candidate generation from cycle
 classification. Keep both gates open until Linux and Windows pass. The other
 open gates listed in section 2004 remain in force.
+
+## 2006. Bound Exact Endpoint-cusp Snap (2026-11-24)
+
+The exact-head Linux run `45291686415` reproduced both known geometry failures.
+Its added ellipse diagnostics show cusp isolation completed normally and found
+one candidate at `0.19999999998690329`, just inside the endpoint of the
+`[0, 0.2]` ellipse parameter span. The resulting tiny post-cusp interval was
+rejected by the platform's fit path, leaving no published branches. This
+distinguishes the failure from cusp-isolation uncertainty.
+
+The kernel now snaps an isolated cusp to an *open source endpoint* only when
+both conditions hold: the endpoint offset-factor residual is within a
+scale-aware floating-point roundoff bound, and interval jet bounds prove the
+remaining offset motion is no greater than the requested fit tolerance. This
+does not snap a merely nearby, nonzero endpoint factor; the curved thin-ellipse
+cusp regression guards that case. Local validation after rebuilding the
+affected targets: the exact high-origin ellipse regression passes (**3
+assertions / 1 case**), the `[cusp][ellipse]` kernel selector passes (**77
+assertions / 3 cases**), and the worker-client high-origin ellipse regression
+passes (**587 assertions / 1 case** on the final rebuilt run; an earlier rerun
+reported 589 assertions).
+
+The Linux mixed-bulge mismatch remains unchanged and independently open: 184
+membership assertions fail in the small rotation-only case despite exact
+noding reporting 66 pair checks and 15 generated events. Do not attribute it
+to this cusp fix. The five-platform general build workflow for head
+`59af1f515` passed Ubuntu x64/ARM64, Windows x64, and macOS arm64/Intel. The
+specialized Windows x64/ARM64 lanes for that same head were still executing
+after Linux failed. They test the pre-fix source and will be superseded by the
+endpoint-cusp commit; rerun the complete exact-head matrix on the updated head.
+The source-picker offscreen dialog
+selector was also revalidated locally on the rebuilt tree (**18,243
+assertions / 49 cases**). Visible packaged-app and external CAD acceptance,
+the full Trim sanitizer/order matrix, remaining family/variant coverage, and
+mixed-bulge geometry remain open.

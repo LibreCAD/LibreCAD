@@ -2666,6 +2666,58 @@ private:
                               LC_CurveOffsetCuspFailureStage::RunResolution);
             }
         }
+        // Root isolation bisects sign-changing brackets. At an exact endpoint
+        // cusp, floating evaluation can put the last bracket slightly inside
+        // the span and leave a tiny, unfit post-cusp branch. Snap only when a
+        // derivative enclosure proves that the intervening offset motion is
+        // below the fit tolerance.
+        if (!m_source.closed()) {
+            for (double& cusp : cusps) {
+                double nearestBreak = cusp;
+                double nearestGap = std::numeric_limits<double>::infinity();
+                for (const double boundary : breaks) {
+                    if (boundary != breaks.front() && boundary != breaks.back()) continue;
+                    const double gap = std::abs(boundary - cusp);
+                    if (gap == 0.0 || gap >= nearestGap) continue;
+                    LC_CurveJet endpointJet;
+                    const auto side = boundary == breaks.front() ? LC_CurveEvaluationSide::Right
+                                                                  : LC_CurveEvaluationSide::Left;
+                    if (!m_source.jet(boundary, side, endpointJet)) continue;
+                    const double endpointSpeedSquared = dot(endpointJet.first, endpointJet.first);
+                    const double endpointSpeed = std::sqrt(endpointSpeedSquared);
+                    const double endpointFactor = endpointSpeedSquared * endpointSpeed -
+                        m_d * cross(endpointJet.first, endpointJet.second);
+                    const double endpointRoundoff = 64.0 * g_eps *
+                        (endpointSpeedSquared * endpointSpeed + std::abs(m_d) * endpointSpeed *
+                         endpointJet.second.magnitude());
+                    if (!std::isfinite(endpointFactor) || !std::isfinite(endpointRoundoff) ||
+                        std::abs(endpointFactor) > endpointRoundoff) {
+                        continue;
+                    }
+                    const double lo = std::min(boundary, cusp);
+                    const double hi = std::max(boundary, cusp);
+                    const auto upper = std::upper_bound(breaks.begin(), breaks.end(), lo);
+                    if (upper == breaks.begin() || upper == breaks.end()) continue;
+                    const std::size_t span = static_cast<std::size_t>(upper - breaks.begin() - 1);
+                    if (hi > breaks[span + 1]) continue;
+                    LC_CurveJetBounds bounds;
+                    if (!m_source.boundJetForCusp(lo, hi, m_d, bounds) ||
+                        !bounds.speedSquared().isPositive()) {
+                        continue;
+                    }
+                    const LC_Interval factor = bounds.offsetFactorNumerator(m_d);
+                    if (!factor.isValid()) continue;
+                    const double motionBound =
+                        std::max(std::abs(factor.lo()), std::abs(factor.hi())) /
+                        bounds.speedSquared().lo() * gap;
+                    if (std::isfinite(motionBound) && motionBound <= m_options.tolerance.fit) {
+                        nearestBreak = boundary;
+                        nearestGap = gap;
+                    }
+                }
+                cusp = nearestBreak;
+            }
+        }
         std::sort(cusps.begin(), cusps.end());
         cusps.erase(std::unique(cusps.begin(), cusps.end()), cusps.end());
         std::sort(stalls.begin(), stalls.end());
