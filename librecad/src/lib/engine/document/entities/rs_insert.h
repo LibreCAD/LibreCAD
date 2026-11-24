@@ -89,6 +89,10 @@ struct RS_InsertData {
     //! out of one that was explicitly marked invalid.
     static RS_Vector usableScale(const RS_Vector& scale);
 
+    //! The largest column or row count LibreCAD reads back from a DXF file
+    //! (libdxfrw's kMaxMInsertCount); one more and the whole file fails to open.
+    static constexpr int MaxArrayCount = 32767;
+
 	QString name;
 	RS_Vector insertionPoint;
 	RS_Vector scaleFactor;
@@ -199,7 +203,8 @@ public:
     }
 
     void setScale(const RS_Vector& s) {
-        m_data.scaleFactor = s;
+        // The constructor's rule: a zero or non-finite factor leaves the reference empty.
+        m_data.scaleFactor = RS_InsertData::usableScale(s);
     }
 
     double getAngle() const {
