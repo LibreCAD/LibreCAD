@@ -62285,6 +62285,30 @@ per-child 2,500 ms timeout, reaping bound, and production worker deadlines are
 unchanged. On the current local CMake build, the rebuilt process-test target
 passes **1/1 CTest in 50.34 seconds**. This adjustment permits the broad
 Windows kernel suite to complete while keeping a finite bound; it does not
-waive a geometry failure. Push only after the prior Windows ARM64 relocated
-worker step terminates, then rerun exact-head CI and inspect both Windows
-results. Keep all geometry and external acceptance gates open meanwhile.
+waive a geometry failure. The prior Windows ARM64 relocated-worker step
+terminated successfully, as recorded in section 2011.
+
+## 2011. Complete Prior-head ARM64 Evidence and Validate the New Bounds (2026-11-24)
+
+The prior-head run `45323645860` is now terminal. Linux passed the complete
+bounded suite and relocated-worker matrices. Windows ARM64 passed both its
+bounded CTest suite and relocated-worker matrices. The five-platform general
+build matrix passed. Windows x64 alone failed: its broad kernel selector hit
+the 900-second CTest timeout and the following process test exceeded the
+24-second aggregate harness budget once. No geometry assertion failure was
+reported before the kernel timeout.
+
+On the revised local CMake tree, the full `[lc-offsetcurve]` kernel selector
+passes **1/1 CTest in 297.32 seconds**. The process-test target rebuilt with
+the 60-second aggregate test budget passes **1/1 CTest in 50.34 seconds**;
+individual helper children remain capped at 2,500 ms. These local timings
+support the new finite CTest/test-harness bounds but do not substitute for
+Windows x64 validation.
+
+Commits `5e482bd1f` and `29bf5e146` contain the test-only watchdog changes and
+this roadmap checkpoint. Both are ready to push now that all prior-head jobs
+are terminal. The next exact-head run must verify that x64 completes the kernel
+suite under 1,800 seconds and that the 60-second process-test bound avoids the
+single aggregate-timeout failure, while preserving the Linux and ARM64 passes.
+External GUI/ODA acceptance, broad Trim sanitizer/order qualification, and
+remaining family/variant evidence remain open.
