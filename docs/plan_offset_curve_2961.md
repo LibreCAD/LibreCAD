@@ -62378,3 +62378,17 @@ split into independently bounded selectors if broad randomized ASan coverage
 is required; this is validation plumbing, not a user-facing geometry fix.
 Exact-head general CI remains in progress, and exact-head specialized DWG/DXF
 CI plus external ODA/visible GUI acceptance remain open.
+
+## 2014. Record Terminal Exact-head CI Access (2026-11-24)
+
+General workflow run `45356401047` on code head `0ed66df35` is now terminal:
+Ubuntu x64 and Ubuntu ARM64 passed. Windows, macOS arm64, and macOS Intel were
+cancelled before producing results when a newer branch push superseded the
+run. Attempts to rerun those three jobs through the connected GitHub
+integration returned HTTP 403 (`Resource not accessible by integration`), so
+no retry was started. The latest PR head `6660d774c` changes only this roadmap;
+no build workflow was triggered for that documentation-only commit. Therefore
+the exact-head cross-platform build gate is **incomplete**, not green. The
+specialized DWG/DXF run is likewise still pending, along with external
+ODA/visible-GUI acceptance and the broad sanitizer qualification recorded in
+section 2013.
