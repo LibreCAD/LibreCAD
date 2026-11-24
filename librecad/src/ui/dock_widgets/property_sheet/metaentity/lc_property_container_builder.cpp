@@ -182,6 +182,10 @@ QString LC_PropertyContainerBuilder::formatRawAngle(const double length) const {
     return result;
 }
 
+QString LC_PropertyContainerBuilder::formatAngleAmount(const double angle) const {
+    return getFormatter()->formatAngleAmount(angle);
+}
+
 QString LC_PropertyContainerBuilder::formatRawAngle(const double length, const RS2::AngleFormat format) const {
     const LC_Formatter* formatter = getFormatter();
     auto result = formatter->formatRawAngle(length, format);

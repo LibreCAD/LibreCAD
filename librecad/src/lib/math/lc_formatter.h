@@ -45,6 +45,8 @@ public:
     QString formatUCSAngle(double wcsAngle) const;
     QString formatRawAngle(double angle) const;
     QString formatRawAngle(double angle, RS2::AngleFormat format) const;
+    QString formatAngleAmount(double angle) const;
+    QString formatAbsoluteAngle(double absAngle) const;
     QString formatLinear(double length) const;
     QString formatDouble(double x) const;
     QString formatInt(int x) const;

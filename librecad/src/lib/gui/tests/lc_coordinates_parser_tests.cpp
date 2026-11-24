@@ -290,3 +290,40 @@ TEST_CASE("The coordinate syntax tells coordinates from commands", "[coordinates
     CHECK(LC_CoordinatesParser::parseSyntax("100<abc").kind == Syntax::Polar);
     CHECK(LC_CoordinatesParser::parseSyntax("!abc").kind == Syntax::Cartesian);
 }
+
+TEST_CASE("A minus in front of a bearing is refused", "[coordinates_parser]") {
+    ParserFixture fixture;
+    double degrees = 0.;
+    CHECK(LC_Convert::parseToDirectionDegrees("N45dE", degrees, 0., true));
+    CHECK(degrees == Catch::Approx(45.));
+    CHECK_FALSE(LC_Convert::parseToDirectionDegrees("-N45dE", degrees, 0., true));
+    CHECK_FALSE(LC_Convert::parseToDirectionDegrees(" -45b", degrees, 0., true));
+    CHECK(LC_Convert::parseToDirectionDegrees("-30", degrees, 0., true));
+    CHECK(degrees == Catch::Approx(-30.));
+}
+
+TEST_CASE("With Surveyor's units amounts are shown in degrees and absolute angles from world north",
+          "[coordinates_parser]") {
+    ParserFixture fixture;
+    LC_GraphicViewport* viewport = fixture.m_view.getViewPort();
+    fixture.m_graphic.setAngleFormat(RS2::Surveyors);
+    fixture.m_graphic.setAnglesBase(0.);
+    fixture.m_graphic.setAnglesCounterClockwise(true);
+    LC_Formatter reference{viewport};
+    reference.updateByGraphic(&fixture.m_graphic);
+    // with the default basis an angle is its own absolute angle
+    const QString east = reference.formatRawAngle(0.);
+    const QString northWest = reference.formatRawAngle(3. * M_PI_4);
+
+    for (const double base : {0., M_PI_2, M_PI / 6.}) {
+        for (const bool counterClockwise : {true, false}) {
+            fixture.m_graphic.setAnglesBase(base);
+            fixture.m_graphic.setAnglesCounterClockwise(counterClockwise);
+            LC_Formatter formatter{viewport};
+            formatter.updateByGraphic(&fixture.m_graphic);
+            CHECK(formatter.formatAbsoluteAngle(0.) == east);
+            CHECK(formatter.formatAbsoluteAngle(3. * M_PI_4) == northWest);
+            CHECK(formatter.formatAngleAmount(M_PI / 3.) == formatter.formatRawAngle(M_PI / 3., RS2::DegreesDecimal));
+        }
+    }
+}

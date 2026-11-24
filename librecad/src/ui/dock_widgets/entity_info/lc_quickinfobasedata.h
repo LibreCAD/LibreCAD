@@ -87,7 +87,7 @@ protected:
     void appendRelativePolar(QString &result, const QString &label, const RS_Vector& value) const;
     void appendInt(QString &result, const QString &label, int value) const;
     void appendValue(QString &result, const QString &label, const QString& value) const;
-    QString formatRawAngle(double angle) const;
+    QString formatAngleAmount(double angle) const;
 
     const RS_Vector& getRelativeZero() const;
 private:

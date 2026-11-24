@@ -301,7 +301,7 @@ QString LC_UCSListModel::getUCSInfo(const LC_UCS *ucs) const {
     if (m_formatter != nullptr) {
         QString originX = m_formatter->formatLinear(ucs->getOrigin().x);
         const QString originY = m_formatter->formatLinear(ucs->getOrigin().y);
-        const QString angle = m_formatter->formatRawAngle(ucs->getXAxis().angle());
+        const QString angle = m_formatter->formatAbsoluteAngle(ucs->getXAxis().angle());
         result = originX.append(", "). append(originY).append(" < ").append(angle);
     }
     return result;
@@ -324,7 +324,7 @@ LC_UCSListModel::UCSItem *LC_UCSListModel::createUCSItem(LC_UCS *ucs) {
     const double angleValue = RS_Math::correctAnglePlusMinusPi(ucs->getXAxis().angle());
     const QString originX =  m_formatter->formatLinear(ucs->getOrigin().x);
     const QString originY =  m_formatter->formatLinear(ucs->getOrigin().y);
-    const QString angle =  m_formatter->formatRawAngle(angleValue);
+    const QString angle =  m_formatter->formatAbsoluteAngle(angleValue);
 
     QString ucsInfo;
     ucsInfo.append(originX).append(" , "). append(originY).append(" < ").append(angle);

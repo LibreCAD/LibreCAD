@@ -106,8 +106,11 @@ namespace {
             angleDegrees = RS_Math::eval(stringToEval, &ok);
         }
         else{
-            if (!direction && RS_Units::containsDirectionAngle(stringToEval)) {
-                return false;
+            if (RS_Units::containsDirectionAngle(stringToEval)) {
+                // a bearing is a direction: it is not an amount, and a minus in front of it has no meaning
+                if (!direction || stringToEval.trimmed().startsWith('-')) {
+                    return false;
+                }
             }
             stringToEval = RS_Units::replaceAllPotentialAnglesByDecimalDegrees(stringToEval, &ok, RS_Math::rad2deg(anglesBase),
                                                                                anglesCounterClockwise);
