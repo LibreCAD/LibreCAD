@@ -132,6 +132,32 @@ TEST_CASE("WCS polar input follows the drawing's angle base and direction", "[co
     }
 }
 
+TEST_CASE("Clockwise polar input is measured from the base", "[coordinates_parser]") {
+    ParserFixture fixture;
+    fixture.m_graphic.setAnglesBase(M_PI_2);
+    fixture.m_graphic.setAnglesCounterClockwise(false);
+    // base at north and clockwise, as in surveying: 90 is east and 180 is south
+    checkPoint(fixture.parse("100<0"), 0., 100.);
+    checkPoint(fixture.parse("100<90"), 100., 0.);
+    checkPoint(fixture.parse("100<180"), 0., -100.);
+    checkPoint(fixture.parse("!100<30"), 50., 100. * std::cos(M_PI / 6.));
+}
+
+TEST_CASE("Angles shown in the drawing's basis read back to the same angle", "[coordinates_parser]") {
+    ParserFixture fixture;
+    LC_GraphicViewport* viewport = fixture.m_view.getViewPort();
+    for (const double base : {0., M_PI / 6., M_PI_2, M_PI}) {
+        fixture.m_graphic.setAnglesBase(base);
+        for (const bool counterClockwise : {true, false}) {
+            fixture.m_graphic.setAnglesCounterClockwise(counterClockwise);
+            for (const double angle : {0., 0.2, M_PI_2, 2., M_PI, 4.5}) {
+                const double back = viewport->toAbsUCSAngle(viewport->toBasisUCSAngle(angle));
+                CHECK(std::remainder(back - angle, 2. * M_PI) == Catch::Approx(0.).margin(1e-9));
+            }
+        }
+    }
+}
+
 TEST_CASE("Polar input on an axis is exact", "[coordinates_parser]") {
     ParserFixture fixture;
     struct Case {
