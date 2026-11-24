@@ -62712,3 +62712,41 @@ This closes the merge-resolution and focused integration slice only. Do not
 claim the complete PR roadmap: exact-head CI, visible packaged-app acceptance,
 independent CAD/AutoCAD acceptance, remaining family/variant validation, and
 the documented cross-platform geometry and sanitizer gates remain open.
+
+## 2026. Complete Periodic-spline Sanitizer Matrix and Retry ODA Audit (2026-11-24)
+
+The exhaustive periodic-spline Trim sanitizer matrix completed in eight
+disjoint shards. All **1,080/1,080 profiles** passed, covering profile IDs
+0-1079 exactly once, with **145,371 assertions** and no ASan or UBSan
+diagnostics. The runner used a 180-second per-profile deadline,
+`--worker-timeout-ms 30000`, and
+`ASAN_OPTIONS=detect_leaks=0:quarantine_size_mb=16:thread_local_quarantine_size_kb=256:malloc_context_size=5`.
+As documented for the endpoint-parabola sanitizer matrix, leak detection is
+disabled and this result does not establish leak freedom. The binary was
+built from pre-merge PR commit `5741be242`; the merge only replaces the local
+`isReplaceableByTrim` helper with the same shared predicate implementation and
+adds the independent master batch-trim changes. Thus this is exhaustive
+evidence for the offset periodic-spline code at the PR parent, not a sanitizer
+build of merge commit `f0eab3bd2`. The merged tree separately compiled the full
+test target and passed the focused batch-trim, batch action, retained-owner,
+and core selector tests recorded in section 2025.
+
+Retried the staged DWG audit after the user confirmed ODAFileConverter was
+running in the logged-in desktop. The converter still aborted before parsing
+or converting any input, with macOS pasteboard errors for `clipboard` and
+`find`, followed by an invalid `com.apple.hiservices-xpcservice` connection
+(exit 134). The isolated output directory remained empty. This is an
+SSH/service-context launch failure, not an ODA audit result; it neither
+validates nor rejects these DWGs. `cua.getApp("ODAFileConverter")` also
+reported `cgWindowNotFound` despite the desktop inventory listing the process.
+The prior bounded 18-file ODA conversion remains the only successful ODA
+receipt, and independent acceptance of this source-bearing DWG set remains
+open.
+
+At this checkpoint, exact-head CI for `f0eab3bd2` still has DWG/DXF fast,
+Windows x64 and ARM64, Windows ARM64 build, macOS build, CodeQL, and several
+Pixi platform jobs queued or running. Headless ON/OFF have passed. The PR is
+still draft/review-required. Visible packaged-app acceptance, the Linux
+mixed-bulge portability question, independent CAD/AutoCAD acceptance, and
+remaining family/variant validation remain open; this sanitizer completion
+does not close the overall roadmap.
