@@ -12604,7 +12604,12 @@ TEST_CASE("mixed-bulge region cycles match independent dilation and erosion memb
             for (double y = minY - padding; y <= maxY + padding; y += sampleStep) {
                 for (double x = minX - padding; x <= maxX + padding; x += sampleStep) {
                     const RS_Vector point{x, y};
-                    const bool withinSourceBounds = x >= minX && x <= maxX && y >= minY && y <= maxY;
+                    const double boundsRoundoff = 16.0 * std::numeric_limits<double>::epsilon() *
+                        std::max({std::abs(x), std::abs(y), std::abs(minX), std::abs(minY),
+                                  std::abs(maxX), std::abs(maxY), maxX - minX, maxY - minY});
+                    const bool withinSourceBounds = x > minX + boundsRoundoff &&
+                        x < maxX - boundsRoundoff && y > minY + boundsRoundoff &&
+                        y < maxY - boundsRoundoff;
                     const bool sourceInside = withinSourceBounds && winding(sourceSegments, point) != 0;
                     const double boundaryDistance = sourceBoundaryDistance(point);
                     if (std::abs(boundaryDistance - distance) < boundaryExclusion)
@@ -12630,7 +12635,7 @@ TEST_CASE("mixed-bulge region cycles match independent dilation and erosion memb
                             capturedFirstMismatch = true;
                         }
                         CAPTURE(x, y, sourceInside, boundaryDistance, expectedInside, actualInside,
-                                sampleStep, boundaryExclusion, withinSourceBounds, minX, minY,
+                                sampleStep, boundaryExclusion, boundsRoundoff, withinSourceBounds, minX, minY,
                                 maxX, maxY, firstMismatchGeometry);
                         CHECK(actualInside == expectedInside);
                     }
