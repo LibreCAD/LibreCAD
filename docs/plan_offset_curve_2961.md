@@ -62529,3 +62529,35 @@ bind its window (`cgWindowNotFound`) and launching its CLI from SSH still
 aborts before processing, so independent ODA acceptance remains blocked.
 Visible LibreCAD GUI acceptance also remains open. Keep these gates open and
 record terminal CI outcomes before treating this roadmap as complete.
+
+## 2021. Cover the Generated Endpoint-parabola Trim Family (2026-11-24)
+
+Added the unique `[offset-trim-profile-parabola-tangent]` tag to the existing
+endpoint-tangent parabola Trim case and registered its 223 explicit profile
+IDs (`LC_OFFSET_TRIM_PROFILE=0..222`) in the matrix runner. This is test-only
+isolation; the case assertions and production worker behavior are unchanged.
+The selector and runner entry were committed as `3d31e83d3`.
+
+The full endpoint-tangent family passed in CMake Release: **223/223 profiles,
+269,518 assertions**, one Catch2 case per profile. Combined with the five
+typed-source families in section 2020, Release matrix coverage is **517/517
+profiles and 312,939 assertions**.
+
+ASan/UBSan validation for this costly family uses a deliberately representative
+subset rather than claiming all 223 profiles: 36 selected profiles passed
+**48,981 assertions**. The sample covers baseline/extreme-scale/high-origin
+cases and start/middle/end representatives from each curvature, reversal,
+backtracking, and cusp class. It took about 18 minutes; extrapolating from that
+sample, an exhaustive sanitizer run would be operationally excessive. The five
+typed-source matrices were also exhaustive under ASan/UBSan this turn:
+**294/294 profiles, 43,421 assertions**. No sanitizer diagnostic was emitted
+in either completed scope.
+
+General Pixi CI run `45378785226` passed on all five platforms at the preceding
+head `cfd16e786`. Specialized DWG/DXF run `45378785206` has its fast lane green;
+Windows x64 and ARM64 lanes remain in progress. The current endpoint-profile
+commit still needs fresh exact-head CI after push. External source-bearing
+ODA/AutoCAD acceptance and physical visible LibreCAD acceptance remain open;
+converting independently authored input DWGs is not evidence that ODA accepts
+LibreCAD's generated DWGs. The monolithic mixed Trim selector also remains
+incomplete even though the enumerated Release profile matrices now pass.
