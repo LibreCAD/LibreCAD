@@ -54,8 +54,18 @@ public:
         return m_formatter;
     }
 
+    // an angle that is a direction (shown and edited from the angles basis), not an amount
+    bool isAngleDirection() const {
+        return m_angleDirection;
+    }
+
+    void setAngleDirection(const bool angleDirection) {
+        m_angleDirection = angleDirection;
+    }
+
 protected:
     LC_ActionContext::InteractiveInputInfo::InputType m_interactiveInputType = LC_ActionContext::InteractiveInputInfo::NOTNEEDED;
+    bool m_angleDirection = false;
     LC_ActionContext* m_actionContext = nullptr;
     LC_LateCompletionRequestor* m_lateCompletionRequestor = nullptr;
     LC_Formatter* m_formatter = nullptr;

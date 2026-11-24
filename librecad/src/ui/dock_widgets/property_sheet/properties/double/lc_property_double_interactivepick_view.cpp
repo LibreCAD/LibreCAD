@@ -24,6 +24,7 @@
 #include "lc_property_double_interactivepick_view.h"
 
 #include "lc_convert.h"
+#include "rs_math.h"
 #include "lc_property_editor_button_handler.h"
 #include "lc_property_editor_utils.h"
 #include "lc_property_lineedit_with_button.h"
@@ -125,7 +126,19 @@ bool LC_PropertyDoubleInteractivePickView::getPropertyValueFromEditString(const 
             break;
         }
         case LC_ActionContext::InteractiveInputInfo::ANGLE: {
-            result = LC_Convert::toDoubleAngleRad(text, val, 0.0, m_positiveOnly);
+            const auto formatter = typedProperty().getFormatter();
+            if (typedProperty().isAngleDirection() && formatter != nullptr) {
+                // a direction may be typed as a bearing, which is read from the angles basis the value is shown in
+                double degrees = 0.0;
+                result = LC_Convert::parseToDirectionDegrees(text, degrees, formatter->getAnglesBase(),
+                                                             formatter->isAnglesCounterClockWise());
+                if (result) {
+                    val = RS_Math::deg2rad(degrees);
+                }
+            }
+            else {
+                result = LC_Convert::toDoubleAngleRad(text, val, 0.0, m_positiveOnly);
+            }
             break;
         }
         case LC_ActionContext::InteractiveInputInfo::DISTANCE: {
@@ -233,7 +246,8 @@ bool LC_PropertyDoubleInteractivePickView::doPropertyValueToStrForView(QString& 
                 }
                 break;
             case LC_ActionContext::InteractiveInputInfo::ANGLE:
-                value = formatter->formatRawAngle(doubleValue);
+                value = typedProperty().isAngleDirection() ? formatter->formatRawAngle(doubleValue)
+                                                           : formatter->formatAngleAmount(doubleValue);
                 break;
             case LC_ActionContext::InteractiveInputInfo::DISTANCE:
                 value = formatter->formatDouble(doubleValue);
@@ -264,7 +278,8 @@ bool LC_PropertyDoubleInteractivePickView::doPropertyValueToStrForEdit(QString& 
             strValue = formatter->formatDouble(doubleValue);
             break;
         case LC_ActionContext::InteractiveInputInfo::ANGLE:
-            strValue = formatter->formatRawAngle(doubleValue);
+            strValue = typedProperty().isAngleDirection() ? formatter->formatRawAngle(doubleValue)
+                                                          : formatter->formatAngleAmount(doubleValue);
             // todo - this is workaround for editing angles in decimal degrees. What about other formats?
             strValue = strValue.remove( QChar(0xB0));
             break;

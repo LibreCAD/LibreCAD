@@ -131,6 +131,7 @@ void LC_ActionOptionsPropertiesFillerBase::addWCSAngle(const LC_Property::Names&
                                                        LC_PropertyContainer* cont, const FunPepareDescriptor& funFillViewAttrs) {
     const auto property = createDoubleProperty(names, cont, LC_ActionContext::InteractiveInputInfo::InputType::ANGLE, m_actionContext,
                                                m_widget);
+    property->setAngleDirection(true);
 
     auto funGetValue = [this, funGet]() -> double {
         const double wcsAngle = funGet();

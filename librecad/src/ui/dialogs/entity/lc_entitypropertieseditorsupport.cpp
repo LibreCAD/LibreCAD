@@ -52,7 +52,8 @@ double LC_EntityPropertiesEditorSupport::toWCSAngle(const QString &val, const do
     const double ucsDefault = toUCSAngle(wcsDefault);
     const double ucsDefaultDeg = RS_Math::rad2deg(ucsDefault);
 
-    const double ucsAngleDeg = toDoubleAngle(val, 0.0, ucsDefaultDeg);
+    double ucsAngleDeg = ucsDefaultDeg;
+    LC_Convert::parseToDirectionDegrees(val, ucsAngleDeg, m_viewport->getAnglesBaseAngle(), m_viewport->areAnglesCounterClockwise());
     const double ucsAngleBasis = RS_Math::deg2rad(ucsAngleDeg);
     const double ucsAngleAbs = m_viewport->toAbsUCSAngle(ucsAngleBasis);
     const double wcsAngle =  m_viewport->toWorldAngle(ucsAngleAbs);

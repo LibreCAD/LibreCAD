@@ -42,8 +42,8 @@ protected slots:
     void onInsertionPointEditingFinished() const;
     void onScaleEditingFinishedChanged() const;
     void onAngleEditingFinished() const;
-    void onRowsEditingFinished() const;
-    void onColsEditingFinished() const;
+    void onRowsValueChanged(int value) const;
+    void onColsValueChanged(int value) const;
     void onSpacingEditingFinished() const;
 public:
     void setupInteractiveInputWidgets() override;

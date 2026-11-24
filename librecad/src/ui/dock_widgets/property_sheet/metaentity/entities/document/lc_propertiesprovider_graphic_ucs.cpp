@@ -191,7 +191,7 @@ void LC_PropertiesProviderGraphicUCS::createUcsOriginAndDirection(LC_PropertyCon
     createDirectDelegatedReadonlyString(cont, namesOrigin, originString);
 
     const double xAxisDirection = currentUcs->getXAxisDirection();
-    const QString axisValue = formatter->formatRawAngle(xAxisDirection);
+    const QString axisValue = formatter->formatAbsoluteAngle(xAxisDirection);
 
     const LC_Property::Names namesDirection = {
         "ucsXAxis",

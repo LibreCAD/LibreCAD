@@ -97,12 +97,19 @@ public:
     static double dpiToScale(double dpi, RS2::Unit unit);
     static double scaleToDpi(double scale, RS2::Unit unit);
 
-    static QString replaceSurveyorsAnglesByDecimalDegrees(const QString& val, bool *ok, QString& errorMsg);
+    // Bearings and surveyor's angles are directions in the UCS, with north along +Y. They are returned as
+    // the angle measured from the drawing's angle base (in degrees) in the drawing's angle direction.
+    static QString replaceSurveyorsAnglesByDecimalDegrees(const QString& val, bool *ok, QString& errorMsg,
+                                                          double anglesBaseDeg = 0.0, bool anglesCounterClockwise = true);
     static QString replaceRadiantAnglesByDecimalDegrees(const QString& val, bool *ok);
     static QString replaceGradAnglesByDecimalDegrees(const QString& val, bool *ok);
     static QString replaceExplicitDegreesByDecimalDegrees(const QString& val, bool *ok);
-    static QString replaceExplicitBearingAnglesByDecimalDegrees(const QString& val, bool *ok);
-    static QString replaceAllPotentialAnglesByDecimalDegrees(const QString& val, bool *ok);
+    static QString replaceExplicitBearingAnglesByDecimalDegrees(const QString& val, bool *ok,
+                                                                double anglesBaseDeg = 0.0, bool anglesCounterClockwise = true);
+    static QString replaceAllPotentialAnglesByDecimalDegrees(const QString& val, bool *ok,
+                                                             double anglesBaseDeg = 0.0, bool anglesCounterClockwise = true);
+    // true if the text holds a bearing or a surveyor's angle, which only make sense as a direction
+    static bool containsDirectionAngle(const QString& val);
     static double evalAngleValue(const QString &c, bool *ok);
 private:
     static RS2::Unit m_currentDrawingUnits;
