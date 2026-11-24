@@ -62349,3 +62349,32 @@ was terminated after confirming the wrong-variable behavior and is not a
 qualification result. Run exact-head specialized DWG/DXF CI after the pushed
 fix. The source-bearing ODA/GUI gates and remaining family/variant coverage in
 sections 2004-2011 remain open.
+
+## 2013. Classify Broad Trim Sanitizer Runtime (2026-11-24)
+
+The corrected-environment broad Trim ASan/UBSan selector was allowed to reach
+its 1,800-second command bound. It completed 43 of 283 test cases before
+termination. Two reported failures were termination effects: the typed-ellipse
+row 23 case had previously hit the worker's 30-second process deadline while
+the broad sanitizer run was under load, and the next active generated case was
+interrupted when the overall command timeout sent SIGTERM. No ASan/UBSan
+diagnostic was emitted. This broad run is incomplete and must not be recorded
+as a pass or as evidence of a deterministic geometry failure.
+
+The typed-ellipse row 23 was then pinned in isolation. The release CMake-matrix
+binary completed its selected tests with 4,409 assertions passing. The current
+ASan/UBSan binary passed the typed-ellipse test case itself; the broad tag also
+selected the following high-origin ellipse case, which exceeded the separate
+180-second command bound and was terminated at frame `1e12`. That second case
+is not controlled by the row pin. The focused worker-created high-segment Trim
+matrix remains green at 492 assertions across segment counts 256, 512, 1024,
+and 2048, both sides, with the corrected test-only worker timeout.
+
+Retain these as the current evidence: focused high-segment sanitizer pass,
+typed-ellipse row 23 pass in isolation, and broad sanitizer selector
+incomplete due runtime bounds. Do not raise production deadlines or weaken
+geometry assertions to make the sanitizer sweep fit. The full suite should be
+split into independently bounded selectors if broad randomized ASan coverage
+is required; this is validation plumbing, not a user-facing geometry fix.
+Exact-head general CI remains in progress, and exact-head specialized DWG/DXF
+CI plus external ODA/visible GUI acceptance remain open.
