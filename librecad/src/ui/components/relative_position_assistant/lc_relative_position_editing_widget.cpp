@@ -607,7 +607,8 @@ void LC_RelativePositionEditingWidget::updateByEditedValue() {
             const QString txt = ui->leValueEditAngle->text();
             if (txt != m_editingStartValueString) {
                 double ucsAngleDegrees;
-                const bool ok = LC_Convert::parseToToDoubleAngleDegrees(txt, ucsAngleDegrees, 0.0, false);
+                const bool ok = LC_Convert::parseToDirectionDegrees(txt, ucsAngleDegrees, m_viewport->getAnglesBaseAngle(),
+                                                                    m_viewport->areAnglesCounterClockwise());
                 if (ok) {
                     hasValue = true;
                     const double ucsAngleRad = RS_Math::deg2rad(ucsAngleDegrees);

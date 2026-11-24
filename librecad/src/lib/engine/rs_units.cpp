@@ -693,6 +693,9 @@ QString RS_Units::formatAngle(double angle, RS2::AngleFormat format, int prec) {
 
     switch (format) {
         case RS2::Surveyors:
+            // the azimuth of a direction, so a negative one is the same direction a turn later
+            value = RS_Math::rad2deg(value < 0. ? value + 2. * M_PI : value);
+            break;
         case RS2::DegreesDecimal:
         case RS2::DegreesMinutesSeconds:
             value = RS_Math::rad2deg(value);
@@ -1071,9 +1074,24 @@ namespace {
                                                     "(?:((?:\\.\\d+)|(?:\\d+\\.\\d*)|(?:\\d+))\")?" // seconds
                                                     ")" "(?:[^\\d]|$)", // followed by not a number or end
                                                     QRegularExpression::CaseInsensitiveOption);
+
+    // minutes and seconds are optional, an empty field is 0 and not a failed conversion
+    double angleField(const QString& field, bool* ok) {
+        if (field.isEmpty()) {
+            return 0.0;
+        }
+        return field.toDouble(ok);
+    }
+
+    // a direction, counterclockwise from +X, as the angle measured from the base in the given direction
+    double directionInBasis(const double direction, const double anglesBaseDeg, const bool counterClockwise) {
+        const double angle = std::fmod(counterClockwise ? direction - anglesBaseDeg : anglesBaseDeg - direction, 360.0);
+        return angle < 0.0 ? angle + 360.0 : angle;
+    }
 }
 
-QString RS_Units::replaceSurveyorsAnglesByDecimalDegrees(const QString& val, bool* ok, QString& errorMsg) {
+QString RS_Units::replaceSurveyorsAnglesByDecimalDegrees(const QString& val, bool* ok, QString& errorMsg,
+                                                        const double anglesBaseDeg, const bool anglesCounterClockwise) {
     QString expr = val;
     // convert surveyor type angles (e.g. N21d33'19.9"E) to degrees:
     if (expr.contains(REGEXP_SURVEYOR_QUICK_CHECK)) {
@@ -1118,12 +1136,9 @@ QString RS_Units::replaceSurveyorsAnglesByDecimalDegrees(const QString& val, boo
                     degrees = match.captured(6).toDouble(ok);
                 }
                 else {
-                    const QString& strDegrees = match.captured(3);
-                    const QString& strMinutes = match.captured(4);
-                    const QString& strSeconds = match.captured(5);
-                    degrees = strDegrees.toDouble(ok);
-                    minutes = strMinutes.toDouble(ok);
-                    seconds = strSeconds.toDouble(ok);
+                    degrees = angleField(match.captured(3), ok);
+                    minutes = angleField(match.captured(4), ok);
+                    seconds = angleField(match.captured(5), ok);
                 }
                 const QString& group7 = match.captured(7).toUpper();
                 const bool east = group7 == "E";
@@ -1134,6 +1149,7 @@ QString RS_Units::replaceSurveyorsAnglesByDecimalDegrees(const QString& val, boo
                 angle = base + dir * (degrees + minutes / 60.0 + seconds / 3600.0);
             }
 
+            angle = directionInBasis(angle, anglesBaseDeg, anglesCounterClockwise);
             expr.replace(match.captured(0), QString("%1%2").arg(sign).arg(angle, 0, 'g', 16));
         }
         while (true);
@@ -1183,15 +1199,9 @@ QString RS_Units::replaceExplicitDegreesByDecimalDegrees(const QString& val, boo
             break;
         }
 
-        double degrees = 0.0;
-        double minutes = 0.0;
-        double seconds = 0.0;
-        const QString& strDegrees = match.captured(2);
-        const QString& strMinutes = match.captured(3);
-        const QString& strSeconds = match.captured(4);
-        degrees = strDegrees.toDouble(ok);
-        minutes = strMinutes.toDouble(ok);
-        seconds = strSeconds.toDouble(ok);
+        const double degrees = angleField(match.captured(2), ok);
+        const double minutes = angleField(match.captured(3), ok);
+        const double seconds = angleField(match.captured(4), ok);
 
         const double angle = degrees + minutes / 60.0 + seconds / 3600.0;
 
@@ -1201,7 +1211,8 @@ QString RS_Units::replaceExplicitDegreesByDecimalDegrees(const QString& val, boo
     return expr;
 }
 
-QString RS_Units::replaceExplicitBearingAnglesByDecimalDegrees(const QString& val, bool* ok) {
+QString RS_Units::replaceExplicitBearingAnglesByDecimalDegrees(const QString& val, bool* ok,
+                                                              const double anglesBaseDeg, const bool anglesCounterClockwise) {
     // convert explicitly indicated bearing angles (e.g. "83b24'7"") to degrees:
     QRegularExpressionMatch match;
     QString expr = val;
@@ -1212,19 +1223,13 @@ QString RS_Units::replaceExplicitBearingAnglesByDecimalDegrees(const QString& va
             break;
         }
 
-        double degrees = 0.0;
-        double minutes = 0.0;
-        double seconds = 0.0;
-        const QString& strDegrees = match.captured(2);
-        const QString& strMinutes = match.captured(3);
-        const QString& strSeconds = match.captured(4);
-        degrees = strDegrees.toDouble(ok);
-        minutes = strMinutes.toDouble(ok);
-        seconds = strSeconds.toDouble(ok);
+        const double degrees = angleField(match.captured(2), ok);
+        const double minutes = angleField(match.captured(3), ok);
+        const double seconds = angleField(match.captured(4), ok);
 
-        double angle = degrees + minutes / 60.0 + seconds / 3600.0;
-        angle = 90.0 - angle;
-        angle = fmod(angle, 360.0);
+        // a bearing is measured clockwise from north
+        const double bearing = degrees + minutes / 60.0 + seconds / 3600.0;
+        const double angle = directionInBasis(90.0 - bearing, anglesBaseDeg, anglesCounterClockwise);
 
         expr.replace(match.captured(1), QString("%1").arg(angle, 0, 'g', 16));
     }
@@ -1232,19 +1237,23 @@ QString RS_Units::replaceExplicitBearingAnglesByDecimalDegrees(const QString& va
     return expr;
 }
 
-QString RS_Units::replaceAllPotentialAnglesByDecimalDegrees(const QString& val, bool* ok) {
+QString RS_Units::replaceAllPotentialAnglesByDecimalDegrees(const QString& val, bool* ok,
+                                                           const double anglesBaseDeg, const bool anglesCounterClockwise) {
     QString expr = val;
     QString msg;
-    bool noError = false;
-    expr = replaceSurveyorsAnglesByDecimalDegrees(expr, &noError, msg);
+    bool noError = true;
+    expr = replaceSurveyorsAnglesByDecimalDegrees(expr, &noError, msg, anglesBaseDeg, anglesCounterClockwise);
     if (noError) {
         expr = replaceRadiantAnglesByDecimalDegrees(expr, &noError);
-        if (noError) {
-            expr = replaceExplicitDegreesByDecimalDegrees(expr, &noError);
-            if (noError) {
-                expr = replaceExplicitDegreesByDecimalDegrees(expr, &noError);
-            }
-        }
+    }
+    if (noError) {
+        expr = replaceGradAnglesByDecimalDegrees(expr, &noError);
+    }
+    if (noError) {
+        expr = replaceExplicitDegreesByDecimalDegrees(expr, &noError);
+    }
+    if (noError) {
+        expr = replaceExplicitBearingAnglesByDecimalDegrees(expr, &noError, anglesBaseDeg, anglesCounterClockwise);
     }
     if (ok != nullptr) {
         *ok = noError;
@@ -1254,6 +1263,13 @@ QString RS_Units::replaceAllPotentialAnglesByDecimalDegrees(const QString& val, 
     }
     return val;
 }
+bool RS_Units::containsDirectionAngle(const QString& val) {
+    bool ok = true;
+    QString msg;
+    return replaceSurveyorsAnglesByDecimalDegrees(val, &ok, msg) != val
+           || replaceExplicitBearingAnglesByDecimalDegrees(val, &ok) != val;
+}
+
 [[deprecated]] // fixme - this function is not used. Yet there is similar in LC_Convert and RS_PreviewActionInterface
 double RS_Units::evalAngleValue(const QString& c, bool* ok) {
     const QString normalizedString = replaceAllPotentialAnglesByDecimalDegrees(c, ok);

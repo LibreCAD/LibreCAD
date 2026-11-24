@@ -32,7 +32,9 @@
 #include <QString>
 
 #include "lc_actiontestsupport.h"
+#include "lc_convert.h"
 #include "lc_coordinates_parser.h"
+#include "lc_formatter.h"
 #include "lc_graphicviewport.h"
 #include "rs_graphic.h"
 #include "rs_math.h"
@@ -132,6 +134,89 @@ TEST_CASE("WCS polar input follows the drawing's angle base and direction", "[co
     }
 }
 
+TEST_CASE("Clockwise polar input is measured from the base", "[coordinates_parser]") {
+    ParserFixture fixture;
+    fixture.m_graphic.setAnglesBase(M_PI_2);
+    fixture.m_graphic.setAnglesCounterClockwise(false);
+    // base at north and clockwise, as in surveying: 90 is east and 180 is south
+    checkPoint(fixture.parse("100<0"), 0., 100.);
+    checkPoint(fixture.parse("100<90"), 100., 0.);
+    checkPoint(fixture.parse("100<180"), 0., -100.);
+    checkPoint(fixture.parse("!100<30"), 50., 100. * std::cos(M_PI / 6.));
+}
+
+TEST_CASE("Angles shown in the drawing's basis read back to the same angle", "[coordinates_parser]") {
+    ParserFixture fixture;
+    LC_GraphicViewport* viewport = fixture.m_view.getViewPort();
+    for (const double base : {0., M_PI / 6., M_PI_2, M_PI}) {
+        fixture.m_graphic.setAnglesBase(base);
+        for (const bool counterClockwise : {true, false}) {
+            fixture.m_graphic.setAnglesCounterClockwise(counterClockwise);
+            for (const double angle : {0., 0.2, M_PI_2, 2., M_PI, 4.5}) {
+                const double back = viewport->toAbsUCSAngle(viewport->toBasisUCSAngle(angle));
+                CHECK(std::remainder(back - angle, 2. * M_PI) == Catch::Approx(0.).margin(1e-9));
+            }
+        }
+    }
+}
+
+TEST_CASE("A bearing shown by LibreCAD reads back to the same direction", "[coordinates_parser]") {
+    ParserFixture fixture;
+    LC_GraphicViewport* viewport = fixture.m_view.getViewPort();
+    struct Basis {
+        double base;
+        bool counterClockwise;
+    };
+    for (const bool rotatedUCS : {false, true}) {
+        if (rotatedUCS) {
+            fixture.useRotatedUCS();
+        }
+        for (const Basis basis : {Basis{0., true}, Basis{M_PI_2, false}, Basis{M_PI / 6., true}, Basis{M_PI / 6., false}}) {
+            fixture.m_graphic.setAnglesBase(basis.base);
+            fixture.m_graphic.setAnglesCounterClockwise(basis.counterClockwise);
+            LC_Formatter formatter{viewport};
+            formatter.updateByGraphic(&fixture.m_graphic);
+            for (const double degrees : {10., 100., 200., 340., -20.}) {
+                const double ucsBasisAngle = viewport->toBasisUCSAngle(RS_Math::deg2rad(degrees));
+                const QString bearing = formatter.formatRawAngle(ucsBasisAngle, RS2::Surveyors);
+                INFO("base " << basis.base << (basis.counterClockwise ? " ccw " : " cw ") << degrees << " shown as "
+                     << bearing.toStdString());
+                const RS_Vector expected = fixture.parse("100<" + QString::number(RS_Math::rad2deg(ucsBasisAngle), 'g', 17));
+                const RS_Vector typed = fixture.parse("100<" + bearing);
+                checkPoint(typed, expected.x, expected.y);
+            }
+        }
+    }
+}
+
+TEST_CASE("A bearing points the same way whatever the angle base", "[coordinates_parser]") {
+    ParserFixture fixture;
+    for (const double base : {0., M_PI_2, M_PI / 6.}) {
+        fixture.m_graphic.setAnglesBase(base);
+        for (const bool counterClockwise : {true, false}) {
+            fixture.m_graphic.setAnglesCounterClockwise(counterClockwise);
+            checkPoint(fixture.parse("100<N0dE"), 0., 100.);
+            checkPoint(fixture.parse("100<90b"), 100., 0.);
+            checkPoint(fixture.parse("100<S45dW"), -100. * M_SQRT1_2, -100. * M_SQRT1_2);
+        }
+    }
+    // north is the UCS +Y, and with "!" the WCS +Y
+    fixture.useRotatedUCS();
+    checkPoint(fixture.parse("100<N0dE"), -90., 20.);
+    checkPoint(fixture.parse("!100<N0dE"), 0., 100.);
+}
+
+TEST_CASE("Angle amounts do not take bearings", "[coordinates_parser]") {
+    ParserFixture fixture;
+    double degrees = 0.;
+    CHECK(LC_Convert::parseToToDoubleAngleDegrees("85d30'", degrees, 0.0, false));
+    CHECK(degrees == Catch::Approx(85.5));
+    CHECK_FALSE(LC_Convert::parseToToDoubleAngleDegrees("N45dE", degrees, 0.0, false));
+    CHECK_FALSE(LC_Convert::parseToToDoubleAngleDegrees("45b", degrees, 0.0, false));
+    CHECK(LC_Convert::parseToDirectionDegrees("45b", degrees, M_PI_2, false));
+    CHECK(degrees == Catch::Approx(45.));
+}
+
 TEST_CASE("Polar input on an axis is exact", "[coordinates_parser]") {
     ParserFixture fixture;
     struct Case {
@@ -204,4 +289,41 @@ TEST_CASE("The coordinate syntax tells coordinates from commands", "[coordinates
     CHECK(LC_CoordinatesParser::parseSyntax("1,abc").kind == Syntax::Cartesian);
     CHECK(LC_CoordinatesParser::parseSyntax("100<abc").kind == Syntax::Polar);
     CHECK(LC_CoordinatesParser::parseSyntax("!abc").kind == Syntax::Cartesian);
+}
+
+TEST_CASE("A minus in front of a bearing is refused", "[coordinates_parser]") {
+    ParserFixture fixture;
+    double degrees = 0.;
+    CHECK(LC_Convert::parseToDirectionDegrees("N45dE", degrees, 0., true));
+    CHECK(degrees == Catch::Approx(45.));
+    CHECK_FALSE(LC_Convert::parseToDirectionDegrees("-N45dE", degrees, 0., true));
+    CHECK_FALSE(LC_Convert::parseToDirectionDegrees(" -45b", degrees, 0., true));
+    CHECK(LC_Convert::parseToDirectionDegrees("-30", degrees, 0., true));
+    CHECK(degrees == Catch::Approx(-30.));
+}
+
+TEST_CASE("With Surveyor's units amounts are shown in degrees and absolute angles from world north",
+          "[coordinates_parser]") {
+    ParserFixture fixture;
+    LC_GraphicViewport* viewport = fixture.m_view.getViewPort();
+    fixture.m_graphic.setAngleFormat(RS2::Surveyors);
+    fixture.m_graphic.setAnglesBase(0.);
+    fixture.m_graphic.setAnglesCounterClockwise(true);
+    LC_Formatter reference{viewport};
+    reference.updateByGraphic(&fixture.m_graphic);
+    // with the default basis an angle is its own absolute angle
+    const QString east = reference.formatRawAngle(0.);
+    const QString northWest = reference.formatRawAngle(3. * M_PI_4);
+
+    for (const double base : {0., M_PI_2, M_PI / 6.}) {
+        for (const bool counterClockwise : {true, false}) {
+            fixture.m_graphic.setAnglesBase(base);
+            fixture.m_graphic.setAnglesCounterClockwise(counterClockwise);
+            LC_Formatter formatter{viewport};
+            formatter.updateByGraphic(&fixture.m_graphic);
+            CHECK(formatter.formatAbsoluteAngle(0.) == east);
+            CHECK(formatter.formatAbsoluteAngle(3. * M_PI_4) == northWest);
+            CHECK(formatter.formatAngleAmount(M_PI / 3.) == formatter.formatRawAngle(M_PI / 3., RS2::DegreesDecimal));
+        }
+    }
 }

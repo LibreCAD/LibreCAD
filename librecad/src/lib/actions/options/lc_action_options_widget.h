@@ -58,6 +58,8 @@ protected:
     void pickDistanceSetup(const QString& tag, QToolButton* button, QLineEdit* lineedit) const;
     void pickAngleSetup(const QString& tag, QToolButton* button, QLineEdit* editor) const;
     void onInteractiveInputButtonClicked(bool checked) const;
+    // a direction in the UCS, measured from the drawing's angle base, which may also be typed as a bearing
+    bool toDoubleDirectionDegrees(const QString& strValue, double& res);
 protected slots:
     virtual void languageChange() {}
 };

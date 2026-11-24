@@ -91,6 +91,7 @@ public:
     QString formatInt(qsizetype length) const;
     QString formatWCSAngleDegrees(double wcsAngle) const;
     QString formatRawAngle(double length) const;
+    QString formatAngleAmount(double angle) const;
     QString formatRawAngle(double length, RS2::AngleFormat format) const;
 
     RS_Document* getDocument() const {
