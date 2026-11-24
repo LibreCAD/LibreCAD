@@ -62655,3 +62655,37 @@ interoperability, or AutoCAD acceptance.
 Visible packaged-app repeated source-change/save-reopen acceptance, the Linux
 mixed-bulge cross-platform question, and exhaustive sanitizer execution of the
 two deliberately sampled large families remain open.
+
+## 2024. Complete Endpoint-parabola Sanitizer Matrix and Raise Slow Windows Watchdog (2026-11-24)
+
+Commit `3c094ec4c` makes two validation-only adjustments. The endpoint-tangent
+Trim profile test now applies the runner's requested preview timeout after each
+test action construction, so sanitizer overhead does not silently use the
+production 2-second preview deadline. Production worker deadlines are
+unchanged. The aggregate `offset_worker_process` CTest watchdog is increased
+from 120 to 600 seconds; this bounded suite launches hundreds of real helper
+processes, and its Windows x64 job exceeded the previous CTest limit after
+120.02 seconds. The ordinary-only process test retains its 30-second bound.
+
+Current CMake Release validation passes the broad `offset_worker_process`
+CTest in 52.90 seconds, and endpoint-parabola profile 65 passes 726
+assertions. The complete endpoint-tangent family passes **223/223 profiles,
+269,518 assertions**, in ASan/UBSan with no sanitizer diagnostics. The
+reproducible command uses `ASAN_OPTIONS=detect_leaks=0:quarantine_size_mb=16:thread_local_quarantine_size_kb=256:malloc_context_size=5`,
+`--worker-timeout-ms 30000`, and a 180-second per-profile runner timeout. This
+bounded quarantine avoids sanitizer-only worker SIGKILLs observed when the
+default ASan quarantine was retained after the multi-format round-trip lane;
+it does not change product allocation limits or assert leak freedom.
+
+The prior DWG/DXF run `45433328463` checked out `c2bdd3c6b`, not the then-current
+PR head. Its Windows x64 job failed only because `offset_worker_process`
+reached the 120-second CTest watchdog; the DWG/DXF fast lane and Windows
+ARM64 job passed. Commit `3c094ec4c` is pushed so fresh checks use the 600-
+second test watchdog and the runner-aware test preview deadline. Await those
+exact-head CI results before revising the cross-platform status.
+
+The external ODA audit receipt above remains limited to converting 18 DWG
+fixtures with Audit enabled. Visible packaged-app Trim acceptance, independent
+CAD acceptance of LibreCAD-authored outputs, and the mixed-bulge Linux
+cross-platform question are still open; this validation slice does not close
+the overall roadmap.
