@@ -62412,3 +62412,15 @@ identity across the batches in Release and the supported focused sanitizer
 scope. Do not increase the production worker deadline or report interrupted
 profiles as passing. Exact-head specialized DWG/DXF CI, complete cross-platform
 build results, and external ODA/visible-GUI acceptance remain open.
+
+## 2016. Isolate the Slow Parabola Profile (2026-11-24)
+
+The active profile-102 case from the timed-out broad Release run was rerun by
+itself using the existing `LC_OFFSET_TRIM_PROFILE=102` test pin and the
+corrected test-only worker timeout. It passes **1 test case / 1,448
+assertions** in under four seconds. This confirms profile 102 is not itself a
+slow or failing case; the 30-minute cutoff reflects aggregate selector cost
+before the full generated matrix could finish. The broad Release/ASan gates
+remain incomplete. A batched runner must retain exact discovery/execution
+accounting across all generated profile values, rather than infer coverage
+from this single pinned case.
