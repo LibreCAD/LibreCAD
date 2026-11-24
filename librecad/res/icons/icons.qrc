@@ -319,6 +319,7 @@
         <file alias="tolerance2.lci">tolerance2.svg</file>
         <file alias="total_length_selected_entities.lci">total_length_selected_entities.svg</file>
         <file alias="trim.lci">trim.svg</file>
+        <file alias="trim_batch.lci">trim_batch.svg</file>
         <file alias="trim2.lci">trim2.svg</file>
         <file alias="trim_segments.lci">trim_segments.svg</file>
         <file alias="trim_value.lci">trim_value.svg</file>

@@ -55,6 +55,7 @@
 #include "lc_offsetcurvexdata.h"
 #include "rs_document.h"
 #include "lc_splinepoints.h"
+#include "lc_trimbatch.h"
 #include "rs_spline.h"
 #include "lc_undosection.h"
 #include "rs_arc.h"
@@ -96,11 +97,6 @@ namespace {
     // an entity the document holds itself. A segment of a polyline would leave a gap in it, and a line of a block
     // reference, dimension or spline would be freed by its owner when that rebuilds its lines, while the undo
     // history still holds it.
-    bool isReplaceableByTrim(const RS_Entity& entity) {
-        const RS_EntityContainer* parent = entity.getParent();
-        return parent == nullptr || parent->isDocument();
-    }
-
     bool isNativeCacheChild(const RS_Entity& entity) {
         return entity.getParent() && entity.getParent()->rtti() == RS2::EntityOffsetCurve;
     }

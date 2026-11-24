@@ -755,6 +755,8 @@ set (SHARED_SOURCES
      librecad/src/actions/drawing/modify/lc_action_modify_stretch.h
      librecad/src/actions/drawing/modify/lc_action_modify_trim.cpp
      librecad/src/actions/drawing/modify/lc_action_modify_trim.h
+     librecad/src/actions/drawing/modify/lc_action_modify_trim_batch.cpp
+     librecad/src/actions/drawing/modify/lc_action_modify_trim_batch.h
      librecad/src/actions/drawing/modify/lc_action_modify_trim_amount.cpp
      librecad/src/actions/drawing/modify/lc_action_modify_trim_amount.h
      librecad/src/actions/drawing/modify/lc_action_modify_order.cpp
@@ -1294,6 +1296,10 @@ set (SHARED_SOURCES
      librecad/src/lib/modification/lc_offsetcachetrim.h
      librecad/src/lib/modification/lc_offsetpreviewsnapshot.h
      librecad/src/lib/modification/lc_offsetbatchpreparation.h
+     librecad/src/lib/modification/lc_curvesplit.cpp
+     librecad/src/lib/modification/lc_curvesplit.h
+     librecad/src/lib/modification/lc_trimbatch.cpp
+     librecad/src/lib/modification/lc_trimbatch.h
      librecad/src/lib/modification/rs_modification.cpp
      librecad/src/lib/modification/rs_modification.h
      librecad/src/lib/printing/lc_printing.cpp
@@ -2835,6 +2841,9 @@ if (BUILD_TESTS)
         librecad/src/actions/drawing/modify/tests/lc_action_modify_round_tests.cpp
         librecad/src/actions/drawing/modify/tests/lc_action_modify_trim_tests.cpp
         librecad/src/actions/drawing/modify/tests/lc_offsetcachetrim_action_tests.cpp
+        librecad/src/lib/modification/tests/lc_curvesplit_tests.cpp
+        librecad/src/lib/modification/tests/lc_trimbatch_tests.cpp
+        librecad/src/actions/drawing/modify/tests/lc_action_modify_trim_batch_tests.cpp
         librecad/src/actions/drawing/modify/tests/lc_actionmodifylinejointests.cpp
         librecad/src/actions/drawing/modify/tests/lc_action_modify_move_tests.cpp
         librecad/src/actions/drawing/draw/hatch/tests/lc_actiondrawhatch_tests.cpp

@@ -62689,3 +62689,26 @@ fixtures with Audit enabled. Visible packaged-app Trim acceptance, independent
 CAD acceptance of LibreCAD-authored outputs, and the mixed-bulge Linux
 cross-platform question are still open; this validation slice does not close
 the overall roadmap.
+
+## 2025. Integrate Current Master Trim Changes (2026-11-24)
+
+PR #3193 conflicted with current `origin/master` (`954217a71`, batch trim
+`#3301`) in `CMakeLists.txt` and `rs_modification.cpp`. Rehearsed the merge in
+an isolated clone so the active worktree and user-owned fixture files were
+untouched. Kept both feature sets registered in CMake, retained the offset
+cache-child trim guard, and reused upstream's shared `isReplaceableByTrim`
+implementation instead of retaining a duplicate with the same global symbol.
+
+The merged macOS CMake Release configuration succeeds. The full
+`librecad_tests` target compiles against the combined tree. Focused tests pass:
+`[modify][trim][batch]` (54 assertions / 14 cases), the GUI batch-trim action
+(12 assertions / 1 case), and the offset-cache trim ownership suite
+(82 assertions / 2 cases). The separate core batch action selector also passes
+(12 assertions / 1 case). `git diff --check` reports only upstream translation
+catalog CRLF additions in `librecad/ts/librecad_zh_tw.ts`; no whitespace issue
+was found in the resolved source/build conflicts.
+
+This closes the merge-resolution and focused integration slice only. Do not
+claim the complete PR roadmap: exact-head CI, visible packaged-app acceptance,
+independent CAD/AutoCAD acceptance, remaining family/variant validation, and
+the documented cross-platform geometry and sanitizer gates remain open.

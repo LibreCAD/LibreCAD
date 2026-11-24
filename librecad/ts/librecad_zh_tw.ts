@@ -4216,6 +4216,11 @@ or [%2]</source>
         <source>Focus on &amp;Command Line</source>
         <translation>焦點移至指令列(&amp;C)</translation>
     </message>
+    <message>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="392"/>
+        <source>Batch Trim</source>
+        <translation>批次修剪</translation>
+    </message>
 </context>
 <context>
     <name>LC_ActionFileExportMakerCam</name>
@@ -6149,6 +6154,44 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/modify/lc_action_modify_trim_amount.cpp" line="267"/>
         <source>Select line/arc to trim OR enter length value:</source>
         <translation>選擇要修剪的線段/圓弧或輸入長度值：</translation>
+    </message>
+</context>
+<context>
+    <name>LC_ActionModifyTrimBatch</name>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_trim_batch.cpp" line="127"/>
+        <source>Removed</source>
+        <translation>已移除</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_trim_batch.cpp" line="127"/>
+        <source>Trim Batch</source>
+        <translation>批次修剪</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_trim_batch.cpp" line="169"/>
+        <source>Trimmed %1 entities, removed %2 pieces (%3 undetermined kept)</source>
+        <translation>已修剪 %1 個物件，移除 %2 個部分（%3 個因無法判定保留側而保留）</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_trim_batch.cpp" line="212"/>
+        <source>Select entities to trim</source>
+        <translation>選擇要修剪的物件</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_trim_batch.cpp" line="218"/>
+        <source>Select limiting entity</source>
+        <translation>選擇邊界物件</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_trim_batch.cpp" line="221"/>
+        <source>Specify the side to keep</source>
+        <translation>指定要保留的一側</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_trim_batch.cpp" line="84"/>
+        <source>None of the selected entities crosses the limit</source>
+        <translation>所選物件皆未與邊界物件相交</translation>
     </message>
 </context>
 <context>
@@ -48879,6 +48922,21 @@ Please check the filename and permissions.</source>
         <source>Shapefile %1 contained %2 records but none were readable</source>
         <translation>Shapefile %1 含有 %2 筆記錄，但全部無法讀取</translation>
     </message>
+    <message>
+        <location filename="../src/cmd/lc_commandItems.h" line="811"/>
+        <source>trimbatch</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/cmd/lc_commandItems.h" line="812"/>
+        <source>tb</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/cmd/lc_commandItems.h" line="813"/>
+        <source>mtrim</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionBlocksCreate</name>
@@ -50396,4 +50454,5 @@ End: (%8 , %9)</source>
         <translation>等分點數量</translation>
     </message>
 </context>
+
 </TS>

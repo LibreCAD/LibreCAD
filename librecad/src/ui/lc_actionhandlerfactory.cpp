@@ -115,6 +115,7 @@
 #include "lc_action_modify_stretch.h"
 #include "lc_action_modify_trim.h"
 #include "lc_action_modify_trim_amount.h"
+#include "lc_action_modify_trim_batch.h"
 #include "lc_action_polyline_add.h"
 #include "lc_action_polyline_append.h"
 #include "lc_action_polyline_arcs_to_lines.h"
@@ -751,6 +752,9 @@ namespace InnerFactory{
             }
             case RS2::ActionModifyTrimAmount: {
                 return new LC_ActionModifyTrimAmount(ctx);
+            }
+            case RS2::ActionModifyTrimBatch: {
+                return new LC_ActionModifyTrimBatch(ctx);
             }
             case RS2::ActionModifyCut: {
                 return new LC_ActionModifyCut(ctx);

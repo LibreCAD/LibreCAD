@@ -806,6 +806,13 @@ const LC_CommandItem g_commandList[] = {
             {{"le", LC_CommandText QT_TRANSLATE_NOOP3("QObject", "le", "modify - lengthen")}},
             RS2::ActionModifyTrimAmount
         },
+        // batch trim
+        {
+            {{"trimbatch", LC_CommandText QT_TRANSLATE_NOOP3("QObject", "trimbatch", "modify - batch trim")}},
+            {{"tb", LC_CommandText QT_TRANSLATE_NOOP3("QObject", "tb", "modify - batch trim")},
+             {"mtrim", LC_CommandText QT_TRANSLATE_NOOP3("QObject", "mtrim", "modify - batch trim")}},
+            RS2::ActionModifyTrimBatch
+        },
         // offset
         {
             {{"offset", LC_CommandText QT_TRANSLATE_NOOP3("QObject", "offset", "modify - offset")}},
