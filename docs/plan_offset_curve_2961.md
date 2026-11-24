@@ -62642,7 +62642,16 @@ Exact-head Pixi run `45410530328` passed on the preceding PR head `7e28fa37c`.
 Its specialized DWG/DXF fast lane also passed; Windows x64 and ARM64 jobs were
 still in progress at this checkpoint. The high-origin test pin, profile
 runner registration, and updated evidence are not yet part of that CI head;
-push this slice and track its exact-head workflows. Visible packaged-app
-acceptance, external ODA/AutoCAD acceptance, the Linux mixed-bulge
-cross-platform question, and exhaustive sanitizer execution of the two
-deliberately sampled large families remain open.
+the exact-head workflows for `c2bdd3c6b` are pending.
+
+ODAFileConverter 27.1 was available in the logged-in desktop during this
+checkpoint. With Audit enabled and output set to 2010 ASCII DXF, it completed
+conversion of the 18 LibreCAD-generated `dwg-R*.dwg` fixtures spanning R14
+through R2018; the UI reported `Done`, progress 18, and exactly 18 output DXFs
+were present. This closes the bounded ODA audit/conversion check for those
+fixtures only; it does not establish visual equivalence, all-drawing
+interoperability, or AutoCAD acceptance.
+
+Visible packaged-app repeated source-change/save-reopen acceptance, the Linux
+mixed-bulge cross-platform question, and exhaustive sanitizer execution of the
+two deliberately sampled large families remain open.
