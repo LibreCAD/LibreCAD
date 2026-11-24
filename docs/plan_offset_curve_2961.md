@@ -62483,3 +62483,49 @@ change local indefinitely, push this slice now; branch concurrency may cancel
 the old Intel lane. The new exact-head general and workflow-filtered DWG/DXF
 runs must be tracked to terminal status, and any canceled Intel result must
 not be represented as a pass. This supersedes the wait-before-push note above.
+
+## 2020. Add Auditable Per-profile Trim Matrix Runs (2026-11-24)
+
+Added `scripts/run_offset_trim_profile_matrix.py` to execute each existing
+generated-family pin in its own test process. The runner validates profile
+ranges, accepts an explicit profile subset, enforces a per-profile timeout,
+and requires exactly one Catch2 case with at least one assertion for every
+requested profile. It prints one line per profile and can write per-profile
+logs plus a JSON manifest containing requested, passed, and failed profile
+IDs. Unique `[offset-trim-profile-*]` tags prevent nearby tests that share
+broader geometry tags from being counted as part of a pinned matrix.
+The runner and unique profile tags were committed as `da7c25154`.
+
+On the current CMake Release `librecad_tests` build, all enumerated profiles
+passed with exact per-process accounting:
+
+| Family | Profiles | Assertions |
+|---|---:|---:|
+| Typed arc | 19/19 | 4,237 |
+| Typed ellipse | 76/76 | 9,252 |
+| Typed parabola | 152/152 | 19,152 |
+| Typed spline / spline-points | 43/43 | 8,371 |
+| Typed polyline | 4/4 | 2,409 |
+| **Total** | **294/294** | **43,421** |
+
+Example full-family invocation:
+
+```sh
+python3 scripts/run_offset_trim_profile_matrix.py \
+  /path/to/librecad_tests parabola \
+  --timeout-seconds 120 \
+  --summary-json /tmp/offset-trim-parabola-matrix.json
+```
+
+This closes the generated profile-matrix execution/accounting gap for these
+five typed-source Trim test cases. It does not close the broader mixed Trim
+selector or ASan matrix, source-update and high-origin scenarios outside the
+profile-pinned cases, or GUI interoperability acceptance.
+
+Exact-head general CI run `45376441050` and specialized DWG/DXF run
+`45376441044` are still in progress on commit `74b7a16f1`; neither is claimed
+green. ODAFileConverter appears in the desktop app inventory, but CUA cannot
+bind its window (`cgWindowNotFound`) and launching its CLI from SSH still
+aborts before processing, so independent ODA acceptance remains blocked.
+Visible LibreCAD GUI acceptance also remains open. Keep these gates open and
+record terminal CI outcomes before treating this roadmap as complete.
