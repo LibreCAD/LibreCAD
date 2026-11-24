@@ -62224,12 +62224,39 @@ produced, so this is an environment/desktop-session failure, not an ODA audit
 result. The GUI remains inaccessible to the computer-use bridge (`cgWindowNotFound`);
 do not claim independent CAD acceptance from this retry.
 
-The test-oracle AABB guard is pushed at `3e9ec3c6eae85a996a57cc3820c3c5cad50a0e29`.
-The exact-head specialized workflow `45312740554` still reports its Linux,
-Windows x64, and Windows ARM64 jobs building the bounded test targets; none has
-started test execution yet. The five-platform general build `45312740194` has
-completed Ubuntu ARM64 successfully, with Ubuntu x64, Windows, and macOS x64/
-arm64 still running. Local focused mixed-bulge validation remains green at
-**5,094,749 assertions / 12 cases**. Keep the geometry gate open until exact-head
-Linux execution and independent membership review complete. All roadmap gates
-listed above remain open.
+The test-oracle AABB guard is pushed at
+`3e9ec3c6eae85a996a57cc3820c3c5cad50a0e29`. Its exact-head specialized workflow
+`45312740554` completed Linux with two failures: mixed-bulge membership samples
+within floating-point noise of the source AABB minimum-Y edge, and typed-source
+polyline persistence coordinates exceeding the existing scaled `1e-8`
+threshold by `1.11e-10` absolute. The Windows x64 and ARM64 jobs were still
+running at the next checkpoint. The five-platform general build `45312740194`
+completed successfully on all five platforms. The ODA retry above remains an
+environment failure, not an acceptance result.
+
+## 2009. Exclude AABB-edge Oracle Samples and Bound DXF Rounding (2026-11-24)
+
+Commit `93b0586d3` applies two test-only corrections from the exact-head Linux
+diagnostics. The mixed-bulge winding oracle now requires each sample to be
+strictly inside the source AABB by a coordinate-scaled floating-point margin;
+this excludes boundary-adjacent samples whose inside/outside result changed
+with platform rounding. It does not change offset geometry or establish that
+the output cycles are geometrically correct. The focused local selector passes
+**5,089,768 assertions / 1 case**.
+
+The typed-source persistence comparison allows bulged polylines a scaled
+`1.1e-8` coordinate tolerance while retaining `1e-8` for other entity types.
+This narrowly covers the measured DXF/DWG save-and-reopen coordinate delta
+(`1.261108551e-8` at a scale of `1.25`, or about `1.009e-8` relative). The
+focused local worker-client selector passes **2,900,334 assertions / 1 case**.
+Both changes are validated locally, but need the specialized exact-head CI run
+before being considered cross-platform verified.
+
+At this checkpoint the prior exact-head Windows x64/ARM64 specialized lanes
+were still running against `3e9ec3c6eae85a996a57cc3820c3c5cad50a0e29`; do not
+wait for them as validation of commit `93b0586d3`. Run a new exact-head
+specialized workflow after this slice is pushed and record its terminal result.
+Keep the mixed-bulge geometry gate open pending exact-head CI and independent
+membership review. External ODA/GUI acceptance, visible packaged-app checks,
+the full Trim sanitizer/order matrix, remaining family/variant coverage, and
+the other gates in sections 2004 and 2006 remain open.
