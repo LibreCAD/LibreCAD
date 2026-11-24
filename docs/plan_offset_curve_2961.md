@@ -62187,3 +62187,27 @@ offscreen dialog selector was also revalidated locally on the rebuilt tree
 (**18,243 assertions / 49 cases**). Visible packaged-app and external CAD
 acceptance, the full Trim sanitizer/order matrix, remaining family/variant
 coverage, and mixed-bulge geometry remain open.
+
+## 2007. Bound the Mixed-bulge Membership Oracle (2026-11-24)
+
+The Linux kernel lane for `76b1db888` completed with the known 184 failures in
+the small rotated mixed-bulge membership matrix. The first failing sample was
+`(-0.02691534106462825, -0.01655558209535958)`, although it was outside the
+sampled source boundary's x-range on the matching local case: the source
+segments span `[-0.02241534106462825, 0.02226270123177031]`. A deliberate local
+assertion confirmed the sample is outside that bound and the local winding
+oracle returns outside. Linux had classified it as source-inside, so that
+failure is not yet evidence of a missing output cycle; it exposes a
+platform-sensitive test-oracle result.
+
+The test now gates sampled winding membership by the sampled closed boundary's
+axis-aligned bounds and captures those bounds on any remaining mismatch. This
+is an oracle-only change: no geometry or tolerance behavior changed. The full
+focused mixed-bulge matrix passes locally (**5,089,768 assertions / 1 case**).
+The exact-head Linux rerun is required to confirm whether any true membership
+mismatch remains after correcting the oracle; keep mixed-bulge geometry open
+until that result and independent membership validation are reviewed. The
+specialized Windows x64/ARM64 lanes for `76b1db888` are still running; the
+five-platform general build matrix for that head passed, while the current
+roadmap-only head's general matrix is also running. All other acceptance gates
+listed in sections 2004 and 2006 remain open.

@@ -12604,7 +12604,8 @@ TEST_CASE("mixed-bulge region cycles match independent dilation and erosion memb
             for (double y = minY - padding; y <= maxY + padding; y += sampleStep) {
                 for (double x = minX - padding; x <= maxX + padding; x += sampleStep) {
                     const RS_Vector point{x, y};
-                    const bool sourceInside = winding(sourceSegments, point) != 0;
+                    const bool withinSourceBounds = x >= minX && x <= maxX && y >= minY && y <= maxY;
+                    const bool sourceInside = withinSourceBounds && winding(sourceSegments, point) != 0;
                     const double boundaryDistance = sourceBoundaryDistance(point);
                     if (std::abs(boundaryDistance - distance) < boundaryExclusion)
                         continue;
@@ -12629,7 +12630,8 @@ TEST_CASE("mixed-bulge region cycles match independent dilation and erosion memb
                             capturedFirstMismatch = true;
                         }
                         CAPTURE(x, y, sourceInside, boundaryDistance, expectedInside, actualInside,
-                                sampleStep, boundaryExclusion, firstMismatchGeometry);
+                                sampleStep, boundaryExclusion, withinSourceBounds, minX, minY,
+                                maxX, maxY, firstMismatchGeometry);
                         CHECK(actualInside == expectedInside);
                     }
                     else {
