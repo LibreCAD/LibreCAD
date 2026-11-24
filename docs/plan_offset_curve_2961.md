@@ -62169,19 +62169,21 @@ worker-client high-origin ellipse regression passes (**587 assertions / 1
 case** on the final rebuilt run; an earlier rerun reported 589 assertions).
 The endpoint regression now also requires the normalized cusp parameter to
 equal an authored ellipse endpoint; the strengthened focused case passes (**5
-assertions / 1 case**).
+assertions / 1 case**). The full qmake6 `make -j8` application/worker/plugin/
+resource build also completed successfully after the production source change;
+compiler output contains existing warnings in neighboring offset code, but none
+from the new endpoint-snap block.
 
 The Linux mixed-bulge mismatch remains unchanged and independently open: 184
 membership assertions fail in the small rotation-only case despite exact
 noding reporting 66 pair checks and 15 generated events. Do not attribute it
-to this cusp fix. The five-platform general build workflow for head
-`59af1f515` passed Ubuntu x64/ARM64, Windows x64, and macOS arm64/Intel. The
-specialized Windows x64/ARM64 lanes for that same head were still executing
-after Linux failed. They test the pre-fix source and will be superseded by the
-endpoint-cusp/test commit; rerun the complete exact-head matrix on the updated
-head.
-The source-picker offscreen dialog
-selector was also revalidated locally on the rebuilt tree (**18,243
-assertions / 49 cases**). Visible packaged-app and external CAD acceptance,
-the full Trim sanitizer/order matrix, remaining family/variant coverage, and
-mixed-bulge geometry remain open.
+to this cusp fix. On exact endpoint-fix head `76b1db888`, the five-platform
+general build workflow `45302442788` passed Ubuntu x64/ARM64, Windows x64, and
+macOS arm64/Intel. The qmake6 application/worker/plugin/resource build also
+completed locally with `make -j8` after the production change. The exact-head
+specialized DWG/DXF workflow `45302443032` is still running on Linux, Windows
+x64, and Windows ARM64; its result is pending, not passed. The source-picker
+offscreen dialog selector was also revalidated locally on the rebuilt tree
+(**18,243 assertions / 49 cases**). Visible packaged-app and external CAD
+acceptance, the full Trim sanitizer/order matrix, remaining family/variant
+coverage, and mixed-bulge geometry remain open.
