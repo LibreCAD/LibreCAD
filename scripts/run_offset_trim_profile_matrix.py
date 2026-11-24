@@ -59,6 +59,10 @@ def parse_args() -> argparse.Namespace:
         help="per-profile timeout (default: 120 seconds)",
     )
     parser.add_argument(
+        "--worker-timeout-ms", type=int,
+        help="test-only worker wait bound inherited by each profile process",
+    )
+    parser.add_argument(
         "--log-dir", type=Path,
         help="optional directory for one combined stdout/stderr log per profile",
     )
@@ -77,6 +81,9 @@ def main() -> int:
         return 2
     if args.timeout_seconds <= 0:
         print("--timeout-seconds must be positive", file=sys.stderr)
+        return 2
+    if args.worker_timeout_ms is not None and args.worker_timeout_ms <= 0:
+        print("--worker-timeout-ms must be positive", file=sys.stderr)
         return 2
 
     family = FAMILIES[args.family]
@@ -97,6 +104,8 @@ def main() -> int:
     for index, profile in enumerate(profiles, start=1):
         env = os.environ.copy()
         env[family["environment"]] = str(profile)
+        if args.worker_timeout_ms is not None:
+            env["LIBRECAD_TEST_OFFSET_WORKER_TIMEOUT_MS"] = str(args.worker_timeout_ms)
         command = [str(binary), family["test_spec"], "--reporter", "compact"]
         case_started = time.monotonic()
         try:
