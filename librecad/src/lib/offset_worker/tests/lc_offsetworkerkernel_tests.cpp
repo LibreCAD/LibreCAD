@@ -10140,7 +10140,8 @@ TEST_CASE("legacy thin elliptic arcs offset correctly at a large origin",
             result.intersectionDiagnostics.cycleAssemblyEndpointGap,
             result.signedDistance, result.exactSamples, result.branches.size(),
             static_cast<int>(cuspDiagnostics.status), cuspDiagnostics.complete,
-            cuspDiagnostics.candidateParameters, cuspDiagnostics.stallIntervals,
+            cuspDiagnostics.candidateParameters, cuspDiagnostics.candidateBoxes,
+            cuspDiagnostics.stallIntervals,
             cuspDiagnostics.spansVisited, cuspDiagnostics.isolationBoxesVisited,
             cuspDiagnostics.failureSpan, cuspDiagnostics.failureT0, cuspDiagnostics.failureT1,
             static_cast<int>(cuspDiagnostics.failureStage),
@@ -10148,6 +10149,11 @@ TEST_CASE("legacy thin elliptic arcs offset correctly at a large origin",
             cuspDiagnostics.unclassifiedBoundaries.size());
     REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
     REQUIRE_FALSE(result.branches.empty());
+    REQUIRE_FALSE(cuspDiagnostics.candidateParameters.empty());
+    CHECK(std::any_of(cuspDiagnostics.candidateParameters.begin(),
+                      cuspDiagnostics.candidateParameters.end(), [&](const double parameter) {
+        return parameter == data.angle1 || parameter == data.angle2;
+    }));
     CHECK(std::all_of(result.branches.begin(), result.branches.end(), [](const LC_OffsetBranch& branch) {
         return std::all_of(branch.cubicPieces.begin(), branch.cubicPieces.end(), [](const LC_OffsetCubicPiece& piece) {
             return std::all_of(piece.bezier.begin(), piece.bezier.end(), [](const RS_Vector& point) {

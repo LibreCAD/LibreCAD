@@ -62163,10 +62163,13 @@ remaining offset motion is no greater than the requested fit tolerance. This
 does not snap a merely nearby, nonzero endpoint factor; the curved thin-ellipse
 cusp regression guards that case. Local validation after rebuilding the
 affected targets: the exact high-origin ellipse regression passes (**3
-assertions / 1 case**), the `[cusp][ellipse]` kernel selector passes (**77
-assertions / 3 cases**), and the worker-client high-origin ellipse regression
-passes (**587 assertions / 1 case** on the final rebuilt run; an earlier rerun
-reported 589 assertions).
+assertions / 1 case before the endpoint-ownership assertion was added), the
+`[cusp][ellipse]` kernel selector passes (**77 assertions / 3 cases**), and the
+worker-client high-origin ellipse regression passes (**587 assertions / 1
+case** on the final rebuilt run; an earlier rerun reported 589 assertions).
+The endpoint regression now also requires the normalized cusp parameter to
+equal an authored ellipse endpoint; the strengthened focused case passes (**5
+assertions / 1 case**).
 
 The Linux mixed-bulge mismatch remains unchanged and independently open: 184
 membership assertions fail in the small rotation-only case despite exact
@@ -62175,7 +62178,8 @@ to this cusp fix. The five-platform general build workflow for head
 `59af1f515` passed Ubuntu x64/ARM64, Windows x64, and macOS arm64/Intel. The
 specialized Windows x64/ARM64 lanes for that same head were still executing
 after Linux failed. They test the pre-fix source and will be superseded by the
-endpoint-cusp commit; rerun the complete exact-head matrix on the updated head.
+endpoint-cusp/test commit; rerun the complete exact-head matrix on the updated
+head.
 The source-picker offscreen dialog
 selector was also revalidated locally on the rebuilt tree (**18,243
 assertions / 49 cases**). Visible packaged-app and external CAD acceptance,
