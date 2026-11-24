@@ -62392,3 +62392,23 @@ the exact-head cross-platform build gate is **incomplete**, not green. The
 specialized DWG/DXF run is likewise still pending, along with external
 ODA/visible-GUI acceptance and the broad sanitizer qualification recorded in
 section 2013.
+
+## 2015. Bound the Release Trim Matrix by Runtime Evidence (2026-11-24)
+
+Rebuilt the complete current-source Release `librecad_tests` target from the
+worktree and reran `[lc-offsetcurve][trim-action]` with
+`LIBRECAD_TEST_OFFSET_WORKER_TIMEOUT_MS=30000`. The 1,800-second command bound
+expired after 77 of 283 generated test cases; 76 passed and the active case
+was terminated by SIGTERM while running profile 102. There were no reported
+geometry assertion failures before termination. This is not a complete Release
+pass and does not clear the broad Trim gate. Together with the earlier ASan
+run (43/283 cases), it demonstrates that this monolithic selector is not a
+practical single qualification job. The focused high-segment ASan matrix and
+isolated typed-ellipse row remain separately green as recorded above.
+
+Next validation work should split the 104 Trim action declarations into
+independently bounded family/variant selectors, then execute every discovered
+identity across the batches in Release and the supported focused sanitizer
+scope. Do not increase the production worker deadline or report interrupted
+profiles as passing. Exact-head specialized DWG/DXF CI, complete cross-platform
+build results, and external ODA/visible-GUI acceptance remain open.
