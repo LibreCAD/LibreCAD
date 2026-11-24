@@ -62335,8 +62335,17 @@ completed successfully, and `ctest -N -V -R '^librecad_tests$'` confirms the
 generated test environment contains the new variable. The in-flight manual
 run still uses the wrong environment and must not be counted as validation.
 
-Next, run the affected high-segment Trim cases and the full broad selector
-with `LIBRECAD_TEST_OFFSET_WORKER_TIMEOUT_MS=30000` against the rebuilt current
-source, then record the terminal result. Run exact-head specialized DWG/DXF
-CI after pushing the fix. The source-bearing ODA/GUI gates and remaining
-family/variant coverage in sections 2004-2011 remain open.
+With the corrected environment, the complete high-segment Trim case passes
+**492 assertions / 1 test case** across the 256-, 512-, 1024-, and 2048-segment
+generators on both sides; the run used the rebuilt current-source ASan/UBSan
+binary and emitted no sanitizer diagnostic. This confirms that the eight
+timeout-dependent failures observed under the accidental 8.5-second helper
+budget do not reproduce when the intended 30-second test-only override is
+active.
+
+The full broad randomized selector still needs one bounded run with
+`LIBRECAD_TEST_OFFSET_WORKER_TIMEOUT_MS=30000`; the earlier redirected attempt
+was terminated after confirming the wrong-variable behavior and is not a
+qualification result. Run exact-head specialized DWG/DXF CI after the pushed
+fix. The source-bearing ODA/GUI gates and remaining family/variant coverage in
+sections 2004-2011 remain open.
