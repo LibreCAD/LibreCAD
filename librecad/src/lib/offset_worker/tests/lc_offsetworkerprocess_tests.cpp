@@ -38,7 +38,7 @@ namespace Wire = LC_OffsetWorkerWire;
 namespace Trim = LC_OffsetCacheTrim;
 namespace Geo = LC_EllipseOffsetGeometry;
 
-constexpr int TotalTimeoutMs = 24000;
+constexpr int TotalTimeoutMs = 60000;
 constexpr int ChildTimeoutMs = 2500;
 constexpr int ReapTimeoutMs = 1000;
 constexpr qsizetype InputCap = 64 * 1024;

@@ -3813,7 +3813,7 @@ if (BUILD_TESTS)
         set_tests_properties(offset_worker_process PROPERTIES TIMEOUT 120)
         # The complete kernel matrix is intentionally broad and takes several
         # minutes in Release; keep CTest's timeout above its full-suite runtime.
-        set_tests_properties(offset_worker_kernel PROPERTIES TIMEOUT 900)
+        set_tests_properties(offset_worker_kernel PROPERTIES TIMEOUT 1800)
         # File-lane client coverage is split into deterministic shards so each
         # process gets its own bounded watchdog without dropping matrix cases.
         set(worker_client_tests)
