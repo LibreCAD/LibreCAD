@@ -14,6 +14,11 @@ import time
 
 
 FAMILIES = {
+    "parabola-tangent": {
+        "environment": "LC_OFFSET_TRIM_PROFILE",
+        "profiles": range(223),
+        "test_spec": "[offset-trim-profile-parabola-tangent]",
+    },
     "arc": {
         "environment": "LC_OFFSET_TRIM_TYPED_ARC_PROFILE",
         "profiles": range(19),

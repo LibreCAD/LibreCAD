@@ -2731,7 +2731,7 @@ TEST_CASE("T Trim Two trims reconstructed parabolas across transformed frames "
 
 TEST_CASE("T Trim Two trims an endpoint-tangent parabola",
           "[gui][lc-offsetcurve][trim-action][typed-source][parabola][tangent]["
-          "trim-two]") {
+          "trim-two][offset-trim-profile-parabola-tangent]") {
   REQUIRE(lc::test::ensureSettings());
   Drawing<true> f;
   const bool hasRequestedProfile =
