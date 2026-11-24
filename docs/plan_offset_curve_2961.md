@@ -62472,3 +62472,14 @@ General CI run `45367271608` remains in progress on Windows and macOS; Linux
 x64 and ARM64 have passed. Do not push this code slice until that run is
 terminal, to avoid canceling the active lanes. Physical GUI, specialized
 DWG/DXF CI, and external CAD acceptance remain open.
+
+## 2019. Supersede the Stalled Intel Build with the Tested Pin (2026-11-24)
+
+The Intel macOS job in run `45367271608` remained in its build/resource-install
+step for about 57 minutes after the other four platform jobs completed; its
+job-log endpoint returned no log while active. The typed-arc profile pin and
+its full local Release validation are ready. To avoid leaving the tested PR
+change local indefinitely, push this slice now; branch concurrency may cancel
+the old Intel lane. The new exact-head general and workflow-filtered DWG/DXF
+runs must be tracked to terminal status, and any canceled Intel result must
+not be represented as a pass. This supersedes the wait-before-push note above.
