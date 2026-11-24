@@ -62312,3 +62312,31 @@ suite under 1,800 seconds and that the 60-second process-test bound avoids the
 single aggregate-timeout failure, while preserving the Linux and ARM64 passes.
 External GUI/ODA acceptance, broad Trim sanitizer/order qualification, and
 remaining family/variant evidence remain open.
+
+## 2012. Correct the Full-suite Trim Worker Test Budget (2026-11-24)
+
+The full `librecad_tests` CTest registration previously set only
+`QT_QPA_PLATFORM=offscreen`. Its asynchronous Trim worker tests therefore used
+the helper defaults: a 3.5-second worker wait plus a 5-second reap allowance,
+and the normal 2-second preview deadline. A broad local ASan/UBSan selector
+run using the unrelated `LC_OFFSET_CLIENT_TEST_TIMEOUT_MS` variable reported
+timeout-dependent failures in high-segment closed-polyline Trim cases; at the
+checkpoint there were eight assertions/timeouts and no ASan/UBSan diagnostic.
+That run is not a valid qualification result. The variable is consumed only
+by the separate worker-client test harness, not by
+`lc_offsetcurveactiontestsupport.h`.
+
+Commit `a69ee16f7` sets
+`LIBRECAD_TEST_OFFSET_WORKER_TIMEOUT_MS=30000` for the registered full-suite
+CTest. The helper clamps this test-only override to the production commit
+deadline (30 seconds), with a 5-second bounded reap allowance; production
+deadlines and user-facing behavior are unchanged. CMake reconfiguration
+completed successfully, and `ctest -N -V -R '^librecad_tests$'` confirms the
+generated test environment contains the new variable. The in-flight manual
+run still uses the wrong environment and must not be counted as validation.
+
+Next, run the affected high-segment Trim cases and the full broad selector
+with `LIBRECAD_TEST_OFFSET_WORKER_TIMEOUT_MS=30000` against the rebuilt current
+source, then record the terminal result. Run exact-head specialized DWG/DXF
+CI after pushing the fix. The source-bearing ODA/GUI gates and remaining
+family/variant coverage in sections 2004-2011 remain open.
