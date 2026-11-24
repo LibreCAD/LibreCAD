@@ -74,7 +74,7 @@ void LC_ImageOptionsWidget::doUpdateByAction(RS_ActionInterface* a) {
 void LC_ImageOptionsWidget::onAngleEditingFinished() {
     const auto val = ui->leAngle->text();
     double angleDegree = 0.;
-    if (toDoubleAngleDegrees(val, angleDegree, 0.0, false)) {
+    if (toDoubleDirectionDegrees(val, angleDegree)) {
         m_action->setUcsAngleDegrees(angleDegree);
     }
     m_action->updateOptions();

@@ -125,12 +125,16 @@ QString LC_Formatter::formatUCSAngle(const double wcsAngle) const {
 }
 
 QString LC_Formatter::formatRawAngle(const double angle) const {
-    QString result =  RS_Units::formatAngle(angle, m_angleFormat, m_anglePrecision);
-    return result;
+    return formatRawAngle(angle, m_angleFormat);
 }
 
 QString LC_Formatter::formatRawAngle(const double angle, const RS2::AngleFormat format) const {
-    QString result =  RS_Units::formatAngle(angle, format, m_anglePrecision);
+    double value = angle;
+    if (format == RS2::Surveyors && m_viewport != nullptr) {
+        // a bearing is a direction, clockwise from north in the UCS whatever the angle base and direction
+        value = M_PI_2 - m_viewport->toUCSAbsAngle(angle, m_anglesBase, m_anglesCounterClockWise);
+    }
+    QString result =  RS_Units::formatAngle(value, format, m_anglePrecision);
     return result;
 }
 

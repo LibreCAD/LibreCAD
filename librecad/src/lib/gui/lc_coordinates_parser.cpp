@@ -65,7 +65,8 @@ LC_CoordinatesParser::LC_CoordinatesParser(RS_GraphicView* gview):m_graphicView{
  * The first ',' separates Cartesian values; otherwise the first '<'
  * separates polar ones.
  */
-LC_CoordinatesParser::Syntax LC_CoordinatesParser::parseSyntax(const QString& input) {
+LC_CoordinatesParser::Syntax LC_CoordinatesParser::parseSyntax(const QString& input, const double anglesBase,
+                                                               const bool anglesCounterClockwise) {
     Syntax syntax;
     const QString text = input.trimmed();
     if (text.isEmpty()) {
@@ -128,7 +129,7 @@ LC_CoordinatesParser::Syntax LC_CoordinatesParser::parseSyntax(const QString& in
         syntax.second = RS_Math::eval(LC_Convert::updateForFraction(second), &ok2);
     }
     else {
-        syntax.second = LC_Convert::evalAngleValue(second, ok2);
+        ok2 = LC_Convert::parseToDirectionDegrees(second, syntax.second, anglesBase, anglesCounterClockwise);
     }
     syntax.valid = ok1 && ok2;
     return syntax;
@@ -140,7 +141,8 @@ bool LC_CoordinatesParser::isCoordinate(const QString& input) {
 
 RS_CoordinateEvent LC_CoordinatesParser::parseCoordinate(const QString& inputStr, bool &stringContainsCoordinate) const {
     const RS_CoordinateEvent invalid(RS_Vector(false));
-    const Syntax syntax = parseSyntax(inputStr);
+    const LC_GraphicViewport* viewport = m_graphicView->getViewPort();
+    const Syntax syntax = parseSyntax(inputStr, viewport->getAnglesBaseAngle(), viewport->areAnglesCounterClockwise());
     stringContainsCoordinate = syntax.kind != Syntax::None;
     if (!syntax.valid) {
         return invalid;

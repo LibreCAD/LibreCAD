@@ -30,11 +30,14 @@ namespace LC_Convert{
     QString asStringAngle(double value, int precision = 10);
     QString asStringAngleDeg(double value, int precision = 10);
     bool toDouble(const QString &strValue, double &res, double notMeaningful, bool positiveOnly);
+    // an amount of angle, so bearings and surveyor's angles, which are directions, are not accepted
     bool parseToToDoubleAngleDegrees(const QString &strValue, double &res, double notMeaningful, bool positiveOnly);
+    // a direction in the UCS, as the angle measured from the drawing's angle base (in radians) in its angle
+    // direction; bearings and surveyor's angles are converted to that angle
+    bool parseToDirectionDegrees(const QString &strValue, double &res, double anglesBase, bool anglesCounterClockwise);
     bool toDoubleAngleRad(const QString &strValue, double& res, double notMeaningful, bool positiveOnly);
     QString evaluateFraction(QString input, const QRegularExpression& rx, int index, int tailI);
     QString updateForFraction(QString input);
-    double evalAngleValue(const QString &angleStr, bool &ok2);
     bool toInt(const QString& strVal, int& res);
 }
 

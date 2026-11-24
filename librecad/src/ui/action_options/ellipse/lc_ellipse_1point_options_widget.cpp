@@ -91,7 +91,7 @@ void LC_Ellipse1PointOptionsWidget::languageChange() {
 void LC_Ellipse1PointOptionsWidget::onAngleEditingFinished() {
     const auto val = ui->leAngle->text();
     double y;
-    if (toDoubleAngleDegrees(val, y, 0, false)) {
+    if (toDoubleDirectionDegrees(val, y)) {
         m_action->setUcsMajorAngleDegrees(y);
     }
     m_action->updateOptions();

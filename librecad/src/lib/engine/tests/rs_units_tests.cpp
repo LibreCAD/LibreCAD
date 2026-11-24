@@ -22,6 +22,7 @@
 // Tests for the degrees/minutes/seconds format of RS_Units::formatAngle() and
 // the architectural length format.
 
+#include <catch2/catch_approx.hpp>
 #include <catch2/catch_test_macros.hpp>
 
 #include <cmath>
@@ -186,4 +187,38 @@ TEST_CASE("RS_Units::replaceAllPotentialAnglesByDecimalDegrees converts angle no
     CHECK(convert("S10E") == "280");
     CHECK(convert("W") == "180");
     CHECK(std::abs(convert("83b24'30\"").toDouble() - (90.0 - (83.0 + 24.0 / 60.0 + 30.0 / 3600.0))) < 1e-9);
+}
+
+TEST_CASE("RS_Units reads bearings and surveyor's angles as directions in the angle basis", "[rs_units]") {
+    const auto convert = [](const QString& input, const double baseDeg, const bool counterClockwise) {
+        bool ok = false;
+        const QString result = RS_Units::replaceAllPotentialAnglesByDecimalDegrees(input, &ok, baseDeg, counterClockwise);
+        REQUIRE(ok);
+        return result.toDouble();
+    };
+
+    SECTION("base at north and clockwise, as in surveying") {
+        CHECK(convert("N10d0'0\"E", 90., false) == Catch::Approx(10.));
+        CHECK(convert("S80d0'0\"E", 90., false) == Catch::Approx(100.));
+        CHECK(convert("N45dW", 90., false) == Catch::Approx(315.));
+        CHECK(convert("83b24'30\"", 90., false) == Catch::Approx(83. + 24. / 60. + 30. / 3600.));
+    }
+    SECTION("a base of 30 degrees, counterclockwise") {
+        CHECK(convert("N10dE", 30., true) == Catch::Approx(50.));
+        CHECK(convert("E", 30., true) == Catch::Approx(330.));
+        CHECK(convert("100b", 30., true) == Catch::Approx(320.));
+    }
+    SECTION("amounts do not depend on the basis") {
+        CHECK(convert("85d30'", 90., false) == Catch::Approx(85.5));
+        CHECK(convert("100g", 30., true) == Catch::Approx(90.));
+    }
+}
+
+TEST_CASE("RS_Units tells directions from amounts", "[rs_units]") {
+    for (const char* direction : {"N45dE", "S10E", "W", "83b24'30\"", "10+N45dE"}) {
+        CHECK(RS_Units::containsDirectionAngle(direction));
+    }
+    for (const char* amount : {"45", "85d30'", "-85d30'", "100g", "1.5r", "2*45", "sin(30)"}) {
+        CHECK_FALSE(RS_Units::containsDirectionAngle(amount));
+    }
 }
