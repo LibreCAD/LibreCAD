@@ -1595,7 +1595,7 @@ TEST_CASE("T Trim Two commits certified exact- and post-cusp hyperbola caches at
 }
 
 TEST_CASE("T Trim Two action trims a worker-created typed parabola against circular and elliptic cutters",
-          "[gui][lc-offsetcurve][trim-action][typed-source][parabola][trim-two]") {
+          "[gui][lc-offsetcurve][trim-action][typed-source][parabola][trim-two][offset-trim-profile-parabola]") {
     const bool pinProfile = qEnvironmentVariableIsSet("LC_OFFSET_TRIM_TYPED_PARABOLA_PROFILE");
     const int requestedProfile =
         qEnvironmentVariableIntValue("LC_OFFSET_TRIM_TYPED_PARABOLA_PROFILE");
@@ -4515,7 +4515,7 @@ TEST_CASE("T Trim Two action trims a worker-created typed line offset against a 
 }
 
 TEST_CASE("T Trim Two action trims a worker-created typed arc offset against a line in both pick orders",
-          "[gui][lc-offsetcurve][trim-action][typed-source][arc][trim-two]") {
+          "[gui][lc-offsetcurve][trim-action][typed-source][arc][trim-two][offset-trim-profile-arc]") {
     const bool pinProfile =
         qEnvironmentVariableIsSet("LC_OFFSET_TRIM_TYPED_ARC_PROFILE");
     const int requestedProfile =
@@ -5179,7 +5179,7 @@ TEST_CASE("T Trim kernel certifies exact internal knots on a worker-created clos
 }
 
 TEST_CASE("T Trim Two action trims a worker-created typed ellipse offset against a line in both pick orders",
-          "[gui][lc-offsetcurve][trim-action][typed-source][ellipse][trim-two]") {
+          "[gui][lc-offsetcurve][trim-action][typed-source][ellipse][trim-two][offset-trim-profile-ellipse]") {
     const bool pinProfile = qEnvironmentVariableIsSet("LC_OFFSET_TRIM_TYPED_ELLIPSE_ROW");
     const int requestedRow = qEnvironmentVariableIntValue("LC_OFFSET_TRIM_TYPED_ELLIPSE_ROW");
     REQUIRE_FALSE((pinProfile && (requestedRow < 0 || requestedRow > 75)));
@@ -5788,7 +5788,7 @@ TEST_CASE("T Trim Two trims a worker-created high-origin ellipse offset",
 }
 
 TEST_CASE("T Trim Two action trims worker-created typed spline and spline-points sources in both pick orders",
-          "[gui][lc-offsetcurve][trim-action][typed-source][spline][fit-points][trim-two]") {
+          "[gui][lc-offsetcurve][trim-action][typed-source][spline][fit-points][trim-two][offset-trim-profile-spline]") {
     const bool pinProfile = qEnvironmentVariableIsSet("LC_OFFSET_TRIM_TYPED_SPLINE_PROFILE");
     const int requestedProfile =
         qEnvironmentVariableIntValue("LC_OFFSET_TRIM_TYPED_SPLINE_PROFILE");
@@ -6519,7 +6519,7 @@ TEST_CASE("T Trim Two action trims worker-created typed spline and spline-points
 }
 
 TEST_CASE("T Trim Two action trims worker-created mixed-bulge and high-segment polyline sources in both pick orders",
-          "[gui][lc-offsetcurve][trim-action][typed-source][polyline][trim-two]") {
+          "[gui][lc-offsetcurve][trim-action][typed-source][polyline][trim-two][offset-trim-profile-polyline]") {
     const bool pinSegments = qEnvironmentVariableIsSet("LC_OFFSET_TRIM_POLYLINE_SEGMENTS");
     const bool pinProfile = qEnvironmentVariableIsSet("LC_OFFSET_TRIM_POLYLINE_PROFILE_KIND");
     const bool pinOrder = qEnvironmentVariableIsSet("LC_OFFSET_TRIM_POLYLINE_FIRST");
