@@ -62211,3 +62211,25 @@ specialized Windows x64/ARM64 lanes for `76b1db888` are still running; the
 five-platform general build matrix for that head passed, while the current
 roadmap-only head's general matrix is also running. All other acceptance gates
 listed in sections 2004 and 2006 remain open.
+
+## 2008. Retry ODA CLI Audit from the Logged-in Session (2026-11-24)
+
+After the user confirmed ODAFileConverter was open in the logged-in macOS
+session, retried the repository's Audit-enabled conversion wrapper on the 18
+committed typed-source DWGs, targeting a fresh `/private/tmp` output directory
+and ACAD2010 DXF. The process still aborts before conversion (exit 134) with
+macOS pasteboard errors (`com.apple.pasteboard.clipboard` and `find`, `-4960`)
+followed by invalid `hiservices-xpcservice` replies. No output DXFs were
+produced, so this is an environment/desktop-session failure, not an ODA audit
+result. The GUI remains inaccessible to the computer-use bridge (`cgWindowNotFound`);
+do not claim independent CAD acceptance from this retry.
+
+The test-oracle AABB guard is pushed at `3e9ec3c6eae85a996a57cc3820c3c5cad50a0e29`.
+The exact-head specialized workflow `45312740554` still reports its Linux,
+Windows x64, and Windows ARM64 jobs building the bounded test targets; none has
+started test execution yet. The five-platform general build `45312740194` has
+completed Ubuntu ARM64 successfully, with Ubuntu x64, Windows, and macOS x64/
+arm64 still running. Local focused mixed-bulge validation remains green at
+**5,094,749 assertions / 12 cases**. Keep the geometry gate open until exact-head
+Linux execution and independent membership review complete. All roadmap gates
+listed above remain open.
