@@ -62413,6 +62413,33 @@ scope. Do not increase the production worker deadline or report interrupted
 profiles as passing. Exact-head specialized DWG/DXF CI, complete cross-platform
 build results, and external ODA/visible-GUI acceptance remain open.
 
+## 2017. Revalidate Source Picker and Refine Trim Shards (2026-11-24)
+
+On the rebuilt current-source Release test executable, the offscreen source
+picker selector `[gui][dialog][offsetcurve][source]` passes **49 test cases /
+18,243 assertions**. It covers source-family selection/replacement and the
+distinct parabola identity; this remains automated UI evidence, not physical
+visible-app acceptance. The CUA inventory still lists the approved PR test
+copy and LibreCAD as running, but a fresh window interaction failed with
+`noWindowsAvailable`, so the visible gate remains open.
+
+The typed-source Trim batch `[lc-offsetcurve][trim-action][typed-source]`
+also exceeded 1,800 seconds. It completed 14 generated cases: 13 passed, and
+the active typed-arc row (`profile=0`, `arcFirst=true`) was interrupted by the
+overall command limit. This is incomplete validation, not a geometry failure.
+The previous full Trim selector and the typed-source-only selector are both
+too coarse for one bounded job. Existing test-only profile pins cover
+parabola, ellipse, spline, and polyline cases, but the typed-arc matrix lacks
+an equivalent pin. The next validation slice should add that missing arc pin
+and run family-specific bounded shards with exact Catch2 identity accounting;
+reduce captured diagnostic output so long runs do not consume excessive disk.
+
+Exact-head general workflow run `45367271608` on `ad496a6ea` has Ubuntu x64
+and Ubuntu ARM64 green; Windows and both macOS jobs were still running at this
+checkpoint. Do not push a new branch commit until those jobs are terminal,
+because workflow concurrency cancels superseded runs. Specialized DWG/DXF CI
+and independent ODA/visible-GUI acceptance remain open.
+
 ## 2016. Isolate the Slow Parabola Profile (2026-11-24)
 
 The active profile-102 case from the timed-out broad Release run was rerun by
@@ -62424,3 +62451,24 @@ before the full generated matrix could finish. The broad Release/ASan gates
 remain incomplete. A batched runner must retain exact discovery/execution
 accounting across all generated profile values, rather than infer coverage
 from this single pinned case.
+
+## 2018. Add a Typed-arc Trim Profile Pin (2026-11-24)
+
+Added `LC_OFFSET_TRIM_TYPED_ARC_PROFILE` to the worker-created typed-arc Trim
+test, with a range check for profiles 0-18 and an early skip of unrequested
+profiles. This is test-only isolation; production behavior and normal
+unfiltered execution are unchanged. The current CMake Release test target
+rebuilds successfully. The unpinned complete arc selector passes **4,219
+assertions / 1 test case**, and every individually pinned profile 0-18 also
+passes. Invalid profile 19 is rejected by the test guard. The pin enables
+bounded arc-family shards and avoids the massive captured-log output from the
+full mixed selector.
+
+This closes the missing arc-pin subtask only. Broad Trim identity coverage is
+still incomplete: the full selector and typed-source-only selector exceeded
+their 1,800-second bounds, while the focused high-segment, ellipse row 23,
+parabola profile 102, and complete typed-arc matrix passed independently.
+General CI run `45367271608` remains in progress on Windows and macOS; Linux
+x64 and ARM64 have passed. Do not push this code slice until that run is
+terminal, to avoid canceling the active lanes. Physical GUI, specialized
+DWG/DXF CI, and external CAD acceptance remain open.
