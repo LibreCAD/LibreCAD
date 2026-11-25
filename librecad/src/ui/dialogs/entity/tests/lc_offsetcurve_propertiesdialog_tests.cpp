@@ -363,7 +363,12 @@ void key(QWidget& widget, int code, Qt::KeyboardModifiers modifiers = Qt::NoModi
 }
 void click(QWidget& widget) {
     widget.setFocus(Qt::MouseFocusReason);
-    const QPointF point(widget.rect().center());
+    QPointF point(widget.rect().center());
+    if (auto* checkbox = qobject_cast<QCheckBox*>(&widget)) {
+        QStyleOptionButton option;
+        option.initFrom(checkbox);
+        point = checkbox->style()->subElementRect(QStyle::SE_CheckBoxIndicator, &option, checkbox).center();
+    }
     for (auto type : {QEvent::MouseButtonPress, QEvent::MouseButtonRelease}) {
         QMouseEvent event(type, point, QPointF(widget.mapToGlobal(point.toPoint())), Qt::LeftButton,
             type == QEvent::MouseButtonPress ? Qt::LeftButton : Qt::NoButton, Qt::NoModifier);
@@ -563,29 +568,37 @@ TEST_CASE("Native properties dialog constructs without control net edits or geom
     before.exact(*f.curve);
 }
 
-TEST_CASE("Offset properties retains readable source controls at minimum dialog size",
+TEST_CASE("Offset properties retains readable controls on initial show and resize",
           "[gui][dialog][offsetcurve][layout]") {
     Fixture f; f.show();
-    f.dialog->resize(1, 1);
-    QApplication::processEvents();
     auto& widget = native(*f.dialog);
     auto* group = widget.findChild<QGroupBox*>("gbDefinition");
     REQUIRE(group != nullptr);
-    for (auto* label : group->findChildren<QLabel*>()) {
-        if (!label->buddy() || !label->isVisible()) continue;
-        INFO(label->objectName().toStdString());
-        CHECK(label->width() >= label->sizeHint().width());
-    }
     auto* source = group->findChild<QComboBox*>("cbSource");
     auto* select = group->findChild<QToolButton*>("tbSelectSource");
     REQUIRE(source != nullptr); REQUIRE(select != nullptr);
-    CHECK(source->width() >= source->fontMetrics().horizontalAdvance(QStringLiteral("Ellipse 12345")));
-    CHECK(select->width() >= select->sizeHint().width());
-    for (auto* editor : group->findChildren<QLineEdit*>()) {
-        if (!editor->isVisible()) continue;
-        INFO(editor->objectName().toStdString());
-        CHECK(editor->width() >= editor->fontMetrics().horizontalAdvance(QStringLiteral("-123456.123456")));
-    }
+    const auto checkLayout = [&] {
+        for (auto* label : group->findChildren<QLabel*>()) {
+            if (!label->buddy() || !label->isVisible()) continue;
+            INFO(label->objectName().toStdString());
+            CHECK(label->width() >= label->sizeHint().width());
+            CHECK(label->geometry().right() < label->buddy()->geometry().left());
+            CHECK(group->rect().contains(label->geometry()));
+        }
+        CHECK(source->width() >= source->fontMetrics().horizontalAdvance(QStringLiteral("Ellipse 12345")));
+        CHECK(select->width() >= select->sizeHint().width());
+        CHECK(group->rect().contains(select->geometry()));
+        for (auto* editor : group->findChildren<QLineEdit*>()) {
+            if (!editor->isVisible()) continue;
+            INFO(editor->objectName().toStdString());
+            CHECK(editor->width() >= editor->fontMetrics().horizontalAdvance(QStringLiteral("-123456.123456")));
+            CHECK(group->rect().contains(editor->geometry()));
+        }
+    };
+    checkLayout();
+    f.dialog->resize(1, 1);
+    QApplication::processEvents();
+    checkLayout();
 }
 
 TEST_CASE("Native dialog real field completion edits every source and offset scalar once",

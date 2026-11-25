@@ -25,6 +25,7 @@
 
 #include <QToolButton>
 #include <QPushButton>
+#include <QLayout>
 
 #include "lc_dlg_dimension.h"
 #include "lc_hatchpropertieseditingwidget.h"
@@ -130,6 +131,12 @@ LC_DlgEntityProperties::LC_DlgEntityProperties(QWidget* parent, LC_GraphicViewpo
     QList<QToolButton*> list = findChildren<QToolButton*>();
     for (const auto button : std::as_const(list)) {
         button->setAutoRaise(autoRaiseButtons);
+    }
+    if (m_offsetEditor) {
+        layout()->invalidate();
+        const QSize minimum = minimumSizeHint();
+        setMinimumSize(minimumSize().expandedTo(minimum));
+        resize(size().expandedTo(minimum));
     }
 }
 
