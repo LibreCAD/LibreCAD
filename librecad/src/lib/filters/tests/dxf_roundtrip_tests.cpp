@@ -959,6 +959,22 @@ TEST_CASE("System codec preserves a layer material link and refuses a missing ca
   rawDictionary->rawValues[dictionaryNameIndex] = "Different";
   expectRefusal();
   rawDictionary->rawValues[dictionaryNameIndex] = oldRawDictionaryName;
+  // A valid selected material must not mask a missing dictionary sibling.
+  rawDictionary->groups.emplace_back(3, std::string("MissingMat"));
+  rawDictionary->groups.emplace_back(350, std::string("A3"));
+  rawDictionary->rawValues.emplace_back("MissingMat");
+  rawDictionary->rawValues.emplace_back("A3");
+  expectRefusal(); // raw entry absent from the typed dictionary
+  dictionary->entries.push_back({"MissingMat", 0xA3u});
+  expectRefusal(); // both entries exist, but the target does not
+  dictionary->entries.pop_back();
+  rawDictionary->groups.pop_back();
+  rawDictionary->groups.pop_back();
+  rawDictionary->rawValues.pop_back();
+  rawDictionary->rawValues.pop_back();
+  dictionary->entries.push_back({"MissingMat", 0xA3u});
+  expectRefusal(); // typed entry absent from the raw dictionary
+  dictionary->entries.pop_back();
   writeText(output, sentinel);
   CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
   std::ifstream crossVersion(output, std::ios::binary);
@@ -985,6 +1001,70 @@ TEST_CASE("System codec preserves a layer material link and refuses a missing ca
   std::filesystem::remove(source);
   std::filesystem::remove(output);
   std::filesystem::remove(retry);
+}
+
+TEST_CASE("System codec retains all material dictionary targets for a layer",
+          "[system-codec][dxf][material][layer][transaction]") {
+  ensureSettings();
+  const auto source = tmpFile("system_layer_material_siblings_source.dxf");
+  const auto output = tmpFile("system_layer_material_siblings_output.dxf");
+  writeText(source,
+      "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1021\n0\nENDSEC\n"
+      "0\nSECTION\n2\nTABLES\n0\nTABLE\n2\nLAYER\n70\n1\n"
+      "0\nLAYER\n5\n30\n100\nAcDbSymbolTableRecord\n100\nAcDbLayerTableRecord\n"
+      "2\nRAWTEST\n70\n0\n62\n7\n6\nCONTINUOUS\n347\nA1\n"
+      "0\nENDTAB\n0\nENDSEC\n0\nSECTION\n2\nENTITIES\n0\nENDSEC\n"
+      "0\nSECTION\n2\nOBJECTS\n0\nDICTIONARY\n5\nC\n330\n0\n"
+      "100\nAcDbDictionary\n281\n1\n3\nACAD_MATERIAL\n350\nA0\n"
+      "0\nDICTIONARY\n5\nA0\n330\nC\n100\nAcDbDictionary\n281\n1\n"
+      "3\nPlainMat\n350\nA1\n3\nSiblingMat\n350\nA2\n"
+      "0\nMATERIAL\n5\nA1\n330\nA0\n100\nAcDbMaterial\n1\nPlainMat\n"
+      "0\nMATERIAL\n5\nA2\n330\nA0\n100\nAcDbMaterial\n1\nSiblingMat\n"
+      "0\nENDSEC\n0\nEOF\n");
+  RS_Graphic graphic;
+  RS_FilterDXFRW filter;
+  REQUIRE(filter.fileImport(graphic, QString::fromStdString(source), RS2::FormatDXFRW));
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  const auto materials = recordGroupValues(output, "MATERIAL", "5");
+  REQUIRE(materials.size() == 2);
+  const auto layer = recordGroupsWithValue(output, "LAYER", "2", "RAWTEST");
+  CHECK(std::count(layer.begin(), layer.end(),
+                   std::make_pair(std::string("347"), materials.front())) == 1);
+  auto &raw = const_cast<std::vector<DRW_RawDxfObject>&>(
+      graphic.dwgAdvancedMetadata().rawDxfObjects());
+  const auto sibling = std::find_if(raw.begin(), raw.end(), [](const auto &record) {
+    return record.name == "MATERIAL" && record.handle == 0xA2u;
+  });
+  REQUIRE(sibling != raw.end());
+  const auto savedSibling = *sibling;
+  raw.erase(sibling);
+  const std::string sentinel = "preserve missing sibling destination\n";
+  writeText(output, sentinel);
+  CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  std::ifstream retained(output, std::ios::binary);
+  CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel);
+  retained.close();
+  raw.push_back(savedSibling);
+  auto &restoredSibling = raw.back();
+  const auto self = std::find_if(restoredSibling.groups.begin(), restoredSibling.groups.end(),
+                                 [](const auto &group) { return group.code() == 5; });
+  REQUIRE(self != restoredSibling.groups.end());
+  const auto selfIndex = static_cast<std::size_t>(
+      std::distance(restoredSibling.groups.begin(), self));
+  REQUIRE(restoredSibling.hasRawValues);
+  restoredSibling.rawValues[selfIndex] = "A3";
+  CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  std::ifstream stillRetained(output, std::ios::binary);
+  CHECK(std::string(std::istreambuf_iterator<char>(stillRetained), {}) == sentinel);
+  stillRetained.close();
+  restoredSibling.rawValues[selfIndex] = "A2";
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  RS_Graphic reread;
+  REQUIRE(filter.fileImport(reread, QString::fromStdString(output), RS2::FormatDXFRW));
+  REQUIRE(filter.fileExport(reread, QString::fromStdString(output), RS2::FormatDXFRW));
+  CHECK(recordGroupValues(output, "MATERIAL", "5").size() == 2);
+  std::filesystem::remove(source);
+  std::filesystem::remove(output);
 }
 
 TEST_CASE("System codec preserves an explicit null layer material",

@@ -2850,26 +2850,46 @@ bool hasDxfLayerMaterialCarrier(
   if (rootMatches != 1)
     return false;
   const std::string materialName = normalizeDwgTableName(material->name);
-  unsigned namedEntries = 0;
+  // Every entry of the replayed dictionary must have a retained target, not
+  // just the material selected by this layer. A dangling sibling is still
+  // emitted when the dictionary itself is replayed.
+  std::map<std::uint32_t, std::string> dictionaryEntries;
+  std::set<std::string> dictionaryNames;
   for (const auto &entry : dictionary->entries) {
-    const bool sameName = normalizeDwgTableName(entry.name) == materialName;
-    if (entry.handle == handle || sameName) {
-      if (entry.handle != handle || !sameName || ++namedEntries != 1)
-        return false;
-    }
+    const auto name = normalizeDwgTableName(entry.name);
+    if (entry.handle == 0 || name.empty() || emittedObjects.count(entry.handle) == 0 ||
+        !dictionaryEntries.emplace(entry.handle, name).second ||
+        !dictionaryNames.insert(name).second)
+      return false;
   }
-  if (namedEntries != 1)
+  const auto selectedEntry = dictionaryEntries.find(handle);
+  if (selectedEntry == dictionaryEntries.end() || selectedEntry->second != materialName)
     return false;
-  const DRW_RawDxfObject *carrier = nullptr;
+  std::map<std::uint32_t, const LC_DwgAdvancedMetadata::MaterialRecord *> typedTargets;
+  for (const auto &candidate : metadata.materials()) {
+    const auto entry = dictionaryEntries.find(candidate.handle);
+    if (entry == dictionaryEntries.end())
+      continue;
+    if (!typedTargets.emplace(candidate.handle, &candidate).second ||
+        candidate.requiresRawDxfReplay || candidate.replayState !=
+            LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed ||
+        candidate.parentHandle != dictionary->handle || candidate.xDictHandle != 0 ||
+        !candidate.extData.empty() || hasCustomDxfApplicationGroups(candidate.appData) ||
+        std::any_of(candidate.reactorHandles.begin(), candidate.reactorHandles.end(),
+                    [&](std::uint32_t reactor) { return reactor != candidate.parentHandle; }) ||
+        normalizeDwgTableName(candidate.name) != entry->second)
+      return false;
+  }
+  if (typedTargets.size() != dictionaryEntries.size())
+    return false;
   const DRW_RawDxfObject *rawDictionary = nullptr;
+  std::map<std::uint32_t, const DRW_RawDxfObject *> rawTargets;
   for (const auto &candidate : metadata.rawDxfObjects()) {
-    if (candidate.handle == handle) {
-      if (carrier != nullptr || candidate.name != "MATERIAL" ||
-          candidate.m_version != exportVersion ||
-          candidate.parentHandle != material->parentHandle)
-        return false;
-      carrier = &candidate;
-    } else if (candidate.handle == dictionary->handle) {
+    if (dictionaryEntries.count(candidate.handle) != 0 &&
+        (!rawTargets.emplace(candidate.handle, &candidate).second || candidate.name != "MATERIAL" ||
+         candidate.m_version != exportVersion || candidate.parentHandle != dictionary->handle))
+      return false;
+    if (candidate.handle == dictionary->handle) {
       if (rawDictionary != nullptr || candidate.name != "DICTIONARY" ||
           candidate.m_version != exportVersion ||
           candidate.parentHandle != sourceRootHandle)
@@ -2877,7 +2897,7 @@ bool hasDxfLayerMaterialCarrier(
       rawDictionary = &candidate;
     }
   }
-  if (carrier == nullptr || rawDictionary == nullptr)
+  if (rawDictionary == nullptr || rawTargets.size() != dictionaryEntries.size())
     return false;
   // Both records use the same common self/owner framing; inspect their
   // bodies only after the framed identity and raw spellings agree.
@@ -2930,24 +2950,28 @@ bool hasDxfLayerMaterialCarrier(
     return !inReactors && reactorIndex == reactors.size() &&
            selfCount == 1 && ownerCount == 1;
   };
-  unsigned nameCount = 0, subclassCount = 0;
-  const bool materialValid = visitCarrier(*carrier, handle, material->parentHandle,
-      material->reactorHandles, [&](const DRW_Variant &group, std::size_t index) {
-        if (group.code() == 1)
-          return ++nameCount == 1 && group.type() == DRW_Variant::STRING &&
-                 group.c_str() != nullptr && material->name == group.c_str() &&
-                 (!carrier->hasRawValues || carrier->rawValues[index] == material->name);
-        if (group.code() == 100 && group.type() == DRW_Variant::STRING &&
-            group.c_str() && std::strcmp(group.c_str(), "AcDbMaterial") == 0) {
-          if (carrier->hasRawValues && carrier->rawValues[index] != "AcDbMaterial")
-            return false;
-          ++subclassCount;
-        }
-        return true;
-      });
-  if (!materialValid || nameCount != 1 || subclassCount != 1)
-    return false;
-  unsigned dictionaryMatches = 0;
+  for (const auto &entry : dictionaryEntries) {
+    const auto *target = typedTargets.at(entry.first);
+    const auto *rawTarget = rawTargets.at(entry.first);
+    unsigned nameCount = 0, subclassCount = 0;
+    const bool materialValid = visitCarrier(*rawTarget, entry.first, target->parentHandle,
+        target->reactorHandles, [&](const DRW_Variant &group, std::size_t index) {
+          if (group.code() == 1)
+            return ++nameCount == 1 && group.type() == DRW_Variant::STRING &&
+                   group.c_str() != nullptr && target->name == group.c_str() &&
+                   (!rawTarget->hasRawValues || rawTarget->rawValues[index] == target->name);
+          if (group.code() == 100 && group.type() == DRW_Variant::STRING &&
+              group.c_str() && std::strcmp(group.c_str(), "AcDbMaterial") == 0) {
+            if (rawTarget->hasRawValues && rawTarget->rawValues[index] != "AcDbMaterial")
+              return false;
+            ++subclassCount;
+          }
+          return true;
+        });
+    if (!materialValid || nameCount != 1 || subclassCount != 1)
+      return false;
+  }
+  std::set<std::uint32_t> rawEntries;
   std::string entryName;
   const bool dictionaryValid = visitCarrier(*rawDictionary, dictionary->handle,
       sourceRootHandle, dictionary->reactorHandles, [&](const DRW_Variant &group, std::size_t index) {
@@ -2964,17 +2988,16 @@ bool hasDxfLayerMaterialCarrier(
                (!parseMaterialHandle(rawDictionary->rawValues[index].c_str(), rawValue) ||
                 rawValue != value)))
             return false;
-          const bool sameName = normalizeDwgTableName(entryName) == materialName;
-          if (value == handle || sameName) {
-            if (value != handle || !sameName)
-              return false;
-            ++dictionaryMatches;
-          }
+          const auto expected = dictionaryEntries.find(value);
+          if (expected == dictionaryEntries.end() ||
+              expected->second != normalizeDwgTableName(entryName) ||
+              !rawEntries.insert(value).second)
+            return false;
           entryName.clear();
         }
         return true;
       });
-  return dictionaryValid && entryName.empty() && dictionaryMatches == 1;
+  return dictionaryValid && entryName.empty() && rawEntries.size() == dictionaryEntries.size();
 }
 #endif
 
