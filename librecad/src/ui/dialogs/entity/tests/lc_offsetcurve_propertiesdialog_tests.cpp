@@ -6216,6 +6216,54 @@ TEST_CASE("Native widget false busy reentry preserves its newest bound target",
     }
 }
 
+TEST_CASE("Source replacement guard reentry preserves the newly bound target",
+          "[gui][dialog][offsetcurve][source][guard-reentry]") {
+    for (bool late : {false, true}) for (int guardMode : {0, 1, 2}) {
+        CAPTURE(late, guardMode);
+        Fixture f; requireNativeHelper();
+        auto* line = new RS_Line(nullptr, RS_LineData{{0, 4}, {5, 4}});
+        f.graphic.addEntity(line);
+        auto original = makeArc(f.graphic), newest = makeArc(f.graphic);
+        REQUIRE(newest->setDistance(.4));
+        const Snapshot oldSnapshot(*original), newSnapshot(*newest);
+        NativeWidget widget;
+        widget.setGraphicViewport(f.view.getViewPort());
+        widget.setEntity(original.get());
+        widget.show();
+        QApplication::processEvents();
+        auto* type = widget.findChild<QComboBox*>("cbSourceType");
+        auto* source = widget.findChild<QComboBox*>("cbSource");
+        REQUIRE(type); REQUIRE(source);
+        type->setCurrentIndex(type->findData(static_cast<int>(LC_OffsetSourceGeometry::Kind::Line)));
+        const int index = source->findData(QVariant::fromValue<qulonglong>(line->getId()));
+        REQUIRE(index >= 0);
+        unsigned calls = 0;
+        widget.setPreparationGuard([&] {
+            ++calls;
+            if (late && calls == 1) return true;
+            widget.setEntity(newest.get());
+            if (guardMode == 2) throw std::bad_alloc{};
+            return guardMode == 1;
+        });
+        source->setCurrentIndex(index);
+        if (late) {
+            REQUIRE(widget.isPreparing());
+            awaitPreparation(widget);
+        }
+        REQUIRE(calls == (late ? 2u : 1u));
+        CHECK(widget.editedEntity() == newest.get());
+        CHECK_FALSE(widget.isPreparing());
+        CHECK(widget.findChild<QLabel*>("lRefusal")->text().isEmpty());
+        CHECK(widget.editAttemptCount() == 0);
+        observeCancelledReplies();
+        CHECK_FALSE(widget.isPreparing());
+        oldSnapshot.exact(*original);
+        newSnapshot.exact(*newest);
+        widget.setPreparationGuard({});
+        widget.setEntity(nullptr);
+    }
+}
+
 TEST_CASE("Native field completion keeps committed text after a valid viewport context refusal",
           "[gui][dialog][offsetcurve][review-regression][context-refusal-field]") {
     Fixture f;

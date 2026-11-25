@@ -1373,7 +1373,9 @@ void LC_PropertiesEditingWidgetOffsetCurve::applySourceDefinition(const LC_Offse
     m_lastWorkerResult.reset();
     try {
         const auto guard = m_preparationGuard;
-        if (guard && !guard()) {
+        const bool current = !guard || guard();
+        if (!alive || generation != m_generation || target != m_entity) return;
+        if (!current) {
             refresh(nullptr, true);
             ui->lRefusal->setText(tr("The offset editing input changed; the source was not changed."));
             return;
@@ -1442,7 +1444,9 @@ void LC_PropertiesEditingWidgetOffsetCurve::applySourceDefinition(const LC_Offse
                         LC_OffsetCurveUI::refusalText(*self->m_lastResult));
                     self->setBusy(false);
                 } catch (const std::bad_alloc&) {
-                    if (alive) refuse(self->tr("Not enough memory to replace the source; the value was not changed."));
+                    if (alive && generation == self->m_generation && revision == self->m_sourceRevision &&
+                        target == self->m_entity && self->m_busy)
+                        refuse(self->tr("Not enough memory to replace the source; the value was not changed."));
                 }
             });
         if (!accepted) {
@@ -1458,7 +1462,7 @@ void LC_PropertiesEditingWidgetOffsetCurve::applySourceDefinition(const LC_Offse
         ui->lRefusal->setText(tr("Calculating replacement source..."));
         if (!wasBusy) emit preparationBusyChanged(true);
     } catch (const std::bad_alloc&) {
-        if (alive) {
+        if (alive && generation == m_generation && target == m_entity) {
             m_inputSnapshot.reset();
             refresh(nullptr, true);
             ui->lRefusal->setText(tr("Not enough memory to replace the source; the value was not changed."));
