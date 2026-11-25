@@ -62806,3 +62806,9 @@ source replacement/highlight/family-switch acceptance remains open, along with
 the other gates listed in section 2027. The picker feature itself is complete
 at the implementation and headless-regression level; do not duplicate the UI
 or imply visible acceptance from automated tests.
+
+Post-checkpoint roadmap validation passed `node --test
+scripts/offset-curve-validation/test-roadmap-inventory-parser.js` (5/5) and
+`node --test scripts/offset-curve-validation/test-refusal-inventory.js`
+(94/94). The inventory reported 93 unique obligations, zero pending
+declarations, and zero production mismatches. `git diff --check` is clean.
