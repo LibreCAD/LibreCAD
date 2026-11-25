@@ -63094,3 +63094,25 @@ AutoCAD result, nor a qualification of all geometry variants.
 The complete roadmap remains open. Continue with visible current-head source
 replacement/preview/commit validation, broader variant and sanitizer gates,
 deployed platform checks, exact-head CI and human review.
+
+## 2039. Verify Nonempty Owned Extensions Through ODA (2026-11-25)
+
+Test commit `8eaa404a6` extends the all-family picker fixture with reserved
+flag `0x10` and five owned-tail entries per carrier: a string, 3D point,
+double, 16-bit integer and 32-bit integer. The fixture-producing integration
+passed **2,147 assertions / 1 case** with LibreDWG available and wrote six DWG
+releases. ODA File Converter audited and converted those six files to R2010
+ASCII DXF without `.err` output. Input and output fixtures are retained under
+`/private/tmp/offset-3193-oda-owned-input` and
+`/private/tmp/offset-3193-oda-owned-output`.
+
+The opt-in section 2038 comparison now checks each original flag and expected
+extension value, then compares every output tail code, type and value with the
+original. Together with its existing source-definition, foreign XDATA and
+carrier-geometry checks, this passed **20,575 assertions / 1 case** on the
+six source/output pairs in the source-equivalent scratch build. Set
+`LIBRECAD_ALL_FAMILY_ODA_DWG_DIR` and `LIBRECAD_ALL_FAMILY_ODA_DXF_DIR` to
+those directories to reproduce it; the prior section 2037 fixtures lack the
+new nonempty tails and are no longer valid inputs for this strengthened test.
+The result is limited to these values and fixtures; it does not establish
+arbitrary extension, visual rendering, AutoCAD or other open acceptance gates.
