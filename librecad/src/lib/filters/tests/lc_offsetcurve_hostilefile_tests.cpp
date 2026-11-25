@@ -2332,6 +2332,96 @@ TEST_CASE("ODA-round-tripped typed-source DWGs retain all modeled source familie
     }
 }
 
+TEST_CASE("ODA all-family DWG audit preserves typed sources and carrier geometry",
+          "[lc-offsetcurve][persistence][typed-source][external][oda][all-family]") {
+#ifndef DWGSUPPORT
+    SKIP("requires DWGSUPPORT to read the original DWGs");
+#else
+    const char* dwgDir = std::getenv("LIBRECAD_ALL_FAMILY_ODA_DWG_DIR");
+    const char* dxfDir = std::getenv("LIBRECAD_ALL_FAMILY_ODA_DXF_DIR");
+    if ((!dwgDir || !*dwgDir) && (!dxfDir || !*dxfDir))
+        SKIP("set both all-family ODA fixture directories");
+    REQUIRE(dwgDir); REQUIRE(*dwgDir);
+    REQUIRE(dxfDir); REQUIRE(*dxfDir);
+    namespace xd = LC_OffsetCurveXData;
+    namespace values = LC_OffsetWorkerRequest::Values;
+    constexpr auto kinds = LC_OffsetSourceGeometry::SupportedKinds;
+    using SplineArray = std::array<const DRW_Spline*, kinds.size()>;
+    for (const char* release : {"r2000", "r2004", "r2007", "r2010", "r2013", "r2018"}) {
+        CAPTURE(release);
+        const std::string base = std::string("offset-source-picker-all-families-") + release;
+        const auto dwgPath = std::filesystem::path(dwgDir) / (base + ".dwg");
+        const auto dxfPath = std::filesystem::path(dxfDir) / (base + ".dxf");
+        REQUIRE(std::filesystem::is_regular_file(dwgPath));
+        REQUIRE(std::filesystem::is_regular_file(dxfPath));
+        const auto original = f::readCodec(dwgPath, true);
+        const auto converted = f::readCodec(dxfPath);
+        xd::Options dwgOptions;
+        dwgOptions.eed = true;
+        dwgOptions.textEncoding = (std::string(release) == "r2000" || std::string(release) == "r2004")
+            ? xd::TextEncoding::Legacy : xd::TextEncoding::Utf16;
+        dwgOptions.legacyEncodedBytes = [](std::string_view text) -> std::optional<std::size_t> {
+            if (std::any_of(text.begin(), text.end(), [](unsigned char c) { return c >= 0x80; }))
+                return std::nullopt;
+            return text.size();
+        };
+        xd::Options dxfOptions;
+        dxfOptions.asciiDxf = true;
+        SplineArray before{}, after{};
+        const auto collect = [&](const auto& splines, const xd::Options& options, SplineArray& result) {
+            for (const auto& spline : splines) {
+                if (f::markerCount(spline.extData) == 0) continue;
+                const auto parsed = xd::parseAndStrip(spline.extData, options);
+                REQUIRE(parsed.status == xd::Status::Schema2);
+                REQUIRE(parsed.definition);
+                REQUIRE(parsed.definition->source);
+                const auto it = std::find(kinds.begin(), kinds.end(), parsed.definition->source->source.kind());
+                REQUIRE(it != kinds.end());
+                const auto index = static_cast<std::size_t>(std::distance(kinds.begin(), it));
+                REQUIRE(result[index] == nullptr);
+                result[index] = &spline;
+            }
+            REQUIRE(std::all_of(result.begin(), result.end(), [](const auto* value) { return value != nullptr; }));
+        };
+        collect(original.splines, dwgOptions, before);
+        collect(converted.splines, dxfOptions, after);
+        for (std::size_t i = 0; i < kinds.size(); ++i) {
+            CAPTURE(i);
+            const auto source = xd::parseAndStrip(before[i]->extData, dwgOptions);
+            const auto output = xd::parseAndStrip(after[i]->extData, dxfOptions);
+            REQUIRE(source.definition); REQUIRE(source.definition->source);
+            REQUIRE(output.definition); REQUIRE(output.definition->source);
+            const auto a = values::encodeSourceDefinition(*source.definition->source);
+            const auto b = values::encodeSourceDefinition(*output.definition->source);
+            REQUIRE(a); REQUIRE(b);
+            CHECK(QCborValue(*a).toCbor() == QCborValue(*b).toCbor());
+            CHECK(source.definition->reservedFlags == output.definition->reservedFlags);
+            CHECK(source.definition->tail.size() == output.definition->tail.size());
+            REQUIRE(source.remaining); REQUIRE(output.remaining);
+            CHECK(f::tagsState(*source.remaining) == f::tagsState(*output.remaining));
+            CHECK(before[i]->degree == after[i]->degree);
+            REQUIRE(before[i]->knotslist.size() == after[i]->knotslist.size());
+            REQUIRE(before[i]->controllist.size() == after[i]->controllist.size());
+            REQUIRE((before[i]->weightlist.empty() || before[i]->weightlist.size() == before[i]->controllist.size()));
+            REQUIRE((after[i]->weightlist.empty() || after[i]->weightlist.size() == after[i]->controllist.size()));
+            for (std::size_t j = 0; j < before[i]->knotslist.size(); ++j)
+                CHECK(after[i]->knotslist[j] == Catch::Approx(before[i]->knotslist[j]).epsilon(2e-12).margin(1e-13));
+            for (std::size_t j = 0; j < before[i]->controllist.size(); ++j) {
+                REQUIRE(before[i]->controllist[j]); REQUIRE(after[i]->controllist[j]);
+                CHECK(after[i]->controllist[j]->x == Catch::Approx(before[i]->controllist[j]->x).epsilon(2e-12).margin(1e-13));
+                CHECK(after[i]->controllist[j]->y == Catch::Approx(before[i]->controllist[j]->y).epsilon(2e-12).margin(1e-13));
+                CHECK(after[i]->controllist[j]->z == Catch::Approx(before[i]->controllist[j]->z).epsilon(2e-12).margin(1e-13));
+                const double w1 = before[i]->weightlist.empty() ? 1.0 : before[i]->weightlist.at(j);
+                const double w2 = after[i]->weightlist.empty() ? 1.0 : after[i]->weightlist.at(j);
+                CHECK(w2 == Catch::Approx(w1).epsilon(2e-12).margin(1e-13));
+            }
+            if (std::string(release) != "r2000") CHECK(before[i]->color24 == after[i]->color24);
+            CHECK(before[i]->lineType == after[i]->lineType);
+        }
+    }
+#endif
+}
+
 TEST_CASE("typed source DXF import materializes only an operation-8 validated cache",
           "[lc-offsetcurve][import-session][typed-source][validation]") {
     Setup setup;
