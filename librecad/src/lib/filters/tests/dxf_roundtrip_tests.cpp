@@ -851,6 +851,49 @@ TEST_CASE("System codec refuses an incomplete raw-only material after metadata s
   std::filesystem::remove(output);
 }
 
+TEST_CASE("System codec gates ambiguous AC1024 default material",
+          "[system-codec][dxf][material][transaction]") {
+  ensureSettings();
+  const auto source = tmpFile("system_ezdxf_material_source.dxf");
+  const auto output = tmpFile("system_ezdxf_material_output.dxf");
+  // Created locally from the observed default-material group shape. The
+  // second 73 is intentionally left ambiguous and must remain raw-only.
+  writeText(source,
+      "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1024\n0\nENDSEC\n"
+      "0\nSECTION\n2\nOBJECTS\n0\nMATERIAL\n5\n1F\n"
+      "102\n{ACAD_REACTORS\n330\nE\n102\n}\n330\nE\n100\nAcDbMaterial\n"
+      "1\nByBlock\n2\n\n70\n0\n40\n1\n71\n1\n41\n1\n91\n-1023410177\n"
+      "42\n1\n72\n1\n3\n\n73\n1\n74\n1\n75\n1\n44\n0.5\n73\n0\n"
+      "45\n1\n46\n1\n77\n1\n4\n\n78\n1\n79\n1\n170\n1\n48\n1\n"
+      "171\n1\n6\n\n172\n1\n173\n1\n174\n1\n140\n1\n141\n1\n"
+      "175\n1\n7\n\n176\n1\n177\n1\n178\n1\n143\n1\n179\n1\n8\n\n"
+      "270\n1\n271\n1\n272\n1\n145\n1\n146\n1\n273\n1\n9\n\n"
+      "274\n1\n275\n1\n276\n1\n42\n1\n72\n1\n3\n\n73\n1\n74\n1\n75\n1\n"
+      "94\n63\n0\nENDSEC\n0\nEOF\n");
+  struct OptInFilter : RS_FilterDXFRW, DRW_DxfSparseMaterialRawPolicy {
+    bool wantsDxfSparseMaterialRawCapture() const noexcept override { return true; }
+  };
+  RS_Graphic legacy;
+  RS_FilterDXFRW legacyFilter;
+  CHECK_FALSE(legacyFilter.fileImport(legacy, QString::fromStdString(source), RS2::FormatDXFRW));
+  RS_Graphic graphic;
+  OptInFilter importer;
+  REQUIRE(importer.fileImport(graphic, QString::fromStdString(source), RS2::FormatDXFRW));
+  REQUIRE(graphic.dwgAdvancedMetadata().materials().size() == 1u);
+  CHECK(graphic.dwgAdvancedMetadata().materials().front().requiresRawDxfReplay);
+  REQUIRE(graphic.dwgAdvancedMetadata().rawDxfObjects().size() == 1u);
+  CHECK(graphic.dwgAdvancedMetadata().rawDxfObjects().front().groups.size() == 61u);
+  const std::string sentinel = "retain AC1024 destination\n";
+  writeText(output, sentinel);
+  RS_FilterDXFRW exporter;
+  CHECK_FALSE(exporter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+  std::ifstream retained(output, std::ios::binary);
+  CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel);
+  retained.close();
+  std::filesystem::remove(source);
+  std::filesystem::remove(output);
+}
+
 TEST_CASE("System codec preserves single-line controls and literal carets",
           "[system-codec][dxf][text]") {
   ensureSettings();
