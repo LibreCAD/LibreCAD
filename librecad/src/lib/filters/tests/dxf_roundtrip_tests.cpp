@@ -61,6 +61,7 @@
 #include "lc_mleader.h"
 #include "lc_containertraverser.h"
 #include "rs_dimaligned.h"
+#include "rs_circle.h"
 #include "rs_dimension.h"
 #include "rs_insert.h"
 #include "rs_text.h"
@@ -983,7 +984,7 @@ TEST_CASE("DXF application groups reject excessive pairs before publishing",
 }
 
 TEST_CASE("DXF filter normalizes reflected LWPOLYLINE extrusion once",
-          "[dxf][roundtrip][filter][extrusion]") {
+          "[dxf][roundtrip][filter][extrusion][system-codec-extrusion]") {
   ensureSettings();
   const std::string src = tmpFile("lwpolyline_reflected_src.dxf");
   const std::string out = tmpFile("lwpolyline_reflected_out.dxf");
@@ -1015,7 +1016,7 @@ TEST_CASE("DXF filter normalizes reflected LWPOLYLINE extrusion once",
   REQUIRE(firstX.size() == 2);
   REQUIRE(firstElevation.size() == 1);
   REQUIRE(firstBulges.size() == 2);
-  CHECK(std::stod(firstX[0]) == -1.0);
+  CHECK(std::stod(firstX[0]) == Catch::Approx(-1.0));
   CHECK(std::stod(firstElevation[0]) == -7.0);
   CHECK(std::stod(firstBulges[0]) < -0.499);
   CHECK(std::stod(firstBulges[0]) > -0.501);
@@ -1033,7 +1034,7 @@ TEST_CASE("DXF filter normalizes reflected LWPOLYLINE extrusion once",
   const auto secondElevation = recordGroupValues(out2, "LWPOLYLINE", "38");
   REQUIRE(secondX.size() == 2);
   REQUIRE(secondElevation.size() == 1);
-  CHECK(std::stod(secondX[0]) == -1.0);
+  CHECK(std::stod(secondX[0]) == Catch::Approx(-1.0));
   CHECK(std::stod(secondElevation[0]) == -7.0);
   CHECK(recordGroupValues(out2, "LWPOLYLINE", "210").empty());
 
@@ -1043,7 +1044,7 @@ TEST_CASE("DXF filter normalizes reflected LWPOLYLINE extrusion once",
 }
 
 TEST_CASE("DXF filter normalizes reflected legacy POLYLINE extrusion once",
-          "[dxf][roundtrip][filter][extrusion]") {
+          "[dxf][roundtrip][filter][extrusion][system-codec-extrusion]") {
   ensureSettings();
   const std::string src = tmpFile("polyline_reflected_src.dxf");
   const std::string out = tmpFile("polyline_reflected_out.dxf");
@@ -1084,7 +1085,7 @@ TEST_CASE("DXF filter normalizes reflected legacy POLYLINE extrusion once",
   REQUIRE(firstBulges.size() == 2);
   REQUIRE(firstStartWidths.size() == 2);
   REQUIRE(firstEndWidths.size() == 2);
-  CHECK(std::stod(firstX[0]) == -1.0);
+  CHECK(std::stod(firstX[0]) == Catch::Approx(-1.0));
   CHECK(std::stod(firstElevation[0]) == -7.0);
   CHECK(std::stod(firstThickness[0]) == -0.25);
   CHECK(std::abs(std::stod(firstBulges[0]) + 0.5) < 1.0e-12);
@@ -1100,9 +1101,13 @@ TEST_CASE("DXF filter normalizes reflected legacy POLYLINE extrusion once",
     REQUIRE(filter.fileExport(graphic2, QString::fromStdString(out2),
                               RS2::FormatDXFRW));
   }
-  for (const char *code : {"10", "20", "38", "39", "40", "41", "42"})
-    CHECK(recordGroupValues(out2, "LWPOLYLINE", code)
-          == recordGroupValues(out, "LWPOLYLINE", code));
+  for (const char *code : {"10", "20", "38", "39", "40", "41", "42"}) {
+    const auto actual = recordGroupValues(out2, "LWPOLYLINE", code);
+    const auto expected = recordGroupValues(out, "LWPOLYLINE", code);
+    REQUIRE(actual.size() == expected.size());
+    for (std::size_t i = 0; i < actual.size(); ++i)
+      CHECK(std::stod(actual[i]) == Catch::Approx(std::stod(expected[i])));
+  }
   CHECK(recordGroupValues(out2, "LWPOLYLINE", "210").empty());
 
   std::filesystem::remove(src);
@@ -1111,7 +1116,7 @@ TEST_CASE("DXF filter normalizes reflected legacy POLYLINE extrusion once",
 }
 
 TEST_CASE("DXF filter preserves reflected planar curve conventions once",
-          "[dxf][roundtrip][filter][extrusion]") {
+          "[dxf][roundtrip][filter][extrusion][system-codec-extrusion]") {
   ensureSettings();
   const std::string src = tmpFile("planar_curves_reflected_src.dxf");
   const std::string out = tmpFile("planar_curves_reflected_out.dxf");
@@ -1148,8 +1153,17 @@ TEST_CASE("DXF filter preserves reflected planar curve conventions once",
   // remains on the normalized WCS path used by its existing implementation.
   CHECK(firstGroupValueAsDouble(out, "CIRCLE", "10") == 10.0);
   CHECK(firstGroupValueAsDouble(out, "ARC", "10") == 20.0);
+#ifdef LIBRECAD_SYSTEM_CODEC_TESTS
+  // ELLIPSE center and major axis are WCS. A -Z plane reverses the parameter
+  // interval when represented with the default +Z normal.
+  CHECK(firstGroupValueAsDouble(out, "ELLIPSE", "10") == 30.0);
+  CHECK(firstGroupValueAsDouble(out, "ELLIPSE", "11") == 5.0);
+  CHECK(firstGroupValueAsDouble(out, "ELLIPSE", "41") == Catch::Approx(2. * M_PI - 1.75));
+  CHECK(firstGroupValueAsDouble(out, "ELLIPSE", "42") == Catch::Approx(2. * M_PI - 0.25));
+#else
   CHECK(firstGroupValueAsDouble(out, "ELLIPSE", "10") == -30.0);
   CHECK(firstGroupValueAsDouble(out, "ELLIPSE", "11") == -5.0);
+#endif
   for (const char *record : {"CIRCLE", "ARC"}) {
     CHECK(recordGroupValues(out, record, "210") ==
           std::vector<std::string>{"0"});
@@ -1728,7 +1742,7 @@ TEST_CASE("DXF filter preserves IMAGE WCS frame Z coordinates",
 }
 
 TEST_CASE("DXF filter preserves raw TEXT OCS fields",
-          "[dxf][roundtrip][filter][extrusion]") {
+          "[dxf][roundtrip][filter][extrusion][system-codec-extrusion]") {
   ensureSettings();
   const std::string src = tmpFile("text_ocs_src.dxf");
   const std::string out = tmpFile("text_ocs_out.dxf");
@@ -1896,7 +1910,7 @@ TEST_CASE("DXF imports expand INSERTs after complete and partial reads",
 }
 
 TEST_CASE("DXF filter preserves reflected MINSERT source fields with a block definition",
-          "[dxf][roundtrip][filter][extrusion][insert]") {
+          "[dxf][roundtrip][filter][extrusion][insert][system-codec-extrusion]") {
   ensureSettings();
   const std::string src = tmpFile("minsert_source_fields_src.dxf");
   const std::string out = tmpFile("minsert_source_fields_out.dxf");
@@ -1943,7 +1957,7 @@ TEST_CASE("DXF filter preserves reflected MINSERT source fields with a block def
     if (std::string(code) == "2")
       CHECK(actual.front() == expected);
     else
-      CHECK(std::stod(actual.front()) == std::stod(expected));
+      CHECK(std::stod(actual.front()) == Catch::Approx(std::stod(expected)));
   }
 
   RS_Graphic graphic2;
@@ -6412,6 +6426,50 @@ TEST_CASE("System codec preserves unit settings across legacy DXF refusal and re
   CHECK(reopened.getUnit() == RS2::Millimeter);
   std::filesystem::remove(modern);
   std::filesystem::remove(src);
+}
+
+TEST_CASE("System codec filter reuse keeps DWG circles in the DWG callback frame",
+          "[system-codec][dxf][dwg][extrusion]") {
+  ensureSettings();
+  const std::string src = tmpFile("system_codec_reuse_circle.dxf");
+  const std::string dwg = tmpFile("system_codec_reuse_circle.dwg");
+  writeText(src, "0\nSECTION\n2\nENTITIES\n0\nCIRCLE\n8\n0\n"
+                 "10\n10\n20\n20\n40\n3\n210\n0\n220\n0\n230\n-1\n"
+                 "0\nENDSEC\n0\nEOF\n");
+  RS_FilterDXFRW reused;
+  RS_Graphic source;
+  REQUIRE(reused.fileImport(source, QString::fromStdString(src), RS2::FormatDXFRW));
+  REQUIRE(reused.fileExport(source, QString::fromStdString(dwg), RS2::FormatDWG2004));
+
+  RS_Graphic reusedResult;
+  REQUIRE(reused.fileImport(reusedResult, QString::fromStdString(dwg), RS2::FormatDWG));
+  RS_Graphic freshResult;
+  RS_FilterDXFRW fresh;
+  REQUIRE(fresh.fileImport(freshResult, QString::fromStdString(dwg), RS2::FormatDWG));
+  REQUIRE(reusedResult.count() == 1);
+  REQUIRE(freshResult.count() == 1);
+  const auto *reusedCircle = dynamic_cast<const RS_Circle *>(reusedResult.entityAt(0));
+  const auto *freshCircle = dynamic_cast<const RS_Circle *>(freshResult.entityAt(0));
+  REQUIRE(reusedCircle != nullptr);
+  REQUIRE(freshCircle != nullptr);
+  CHECK(reusedCircle->getCenter().x == Catch::Approx(freshCircle->getCenter().x));
+  CHECK(reusedCircle->getCenter().y == Catch::Approx(freshCircle->getCenter().y));
+  CHECK(freshCircle->getCenter().x == Catch::Approx(-10.0));
+  CHECK(freshCircle->getCenter().y == Catch::Approx(20.0));
+  const std::string bad = tmpFile("system_codec_reuse_bad.dxf");
+  writeText(bad, "0\nSECTION\n2\nENTITIES\n0\nCIRCLE\n10\n1\n");
+  RS_Graphic rejected;
+  CHECK_FALSE(reused.fileImport(rejected, QString::fromStdString(bad), RS2::FormatDXFRW));
+  RS_Graphic afterFailure;
+  REQUIRE(reused.fileImport(afterFailure, QString::fromStdString(dwg), RS2::FormatDWG));
+  REQUIRE(afterFailure.count() == 1);
+  const auto *afterFailureCircle = dynamic_cast<const RS_Circle *>(afterFailure.entityAt(0));
+  REQUIRE(afterFailureCircle != nullptr);
+  CHECK(afterFailureCircle->getCenter().x == Catch::Approx(freshCircle->getCenter().x));
+  CHECK(afterFailureCircle->getCenter().y == Catch::Approx(freshCircle->getCenter().y));
+  std::filesystem::remove(src);
+  std::filesystem::remove(dwg);
+  std::filesystem::remove(bad);
 }
 #endif
 

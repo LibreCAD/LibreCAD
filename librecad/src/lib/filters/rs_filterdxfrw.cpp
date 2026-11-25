@@ -4747,6 +4747,14 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic &g, const QString &file,
       m_dxfR->setDebug(DRW::DebugLevel::Debug);
     }
     bool success{false};
+#ifdef LIBRECAD_SYSTEM_LIBDXFRW
+    // The installed codec applies ext=true to additional entity families.
+    // Read native DXF coordinates and project only the families this adapter
+    // receives projected from LibreCAD's bundled codec.
+    constexpr bool applyReaderExtrusion = false;
+#else
+    constexpr bool applyReaderExtrusion = true;
+#endif
     if (file.startsWith(":")) {
       // load content from resources. It SHOULD be present in resource!
       QFile resourceFile(file);
@@ -4754,10 +4762,10 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic &g, const QString &file,
         QByteArray contentString = resourceFile.readAll();
         resourceFile.close();
         std::string content = contentString.toStdString();
-        success = m_dxfR->readAscii(this, true, content);
+        success = m_dxfR->readAscii(this, applyReaderExtrusion, content);
       }
     } else {
-      success = m_dxfR->read(this, true);
+      success = m_dxfR->read(this, applyReaderExtrusion);
     }
     RS_DEBUG->print("RS_FilterDXFRW::fileImport: reading file: OK");
     if (success) {
@@ -4779,10 +4787,12 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic &g, const QString &file,
                       (const char *)QFile::encodeName(file));
       m_errorCode = m_dxfR->getError();
       delete m_dxfR;
+      m_dxfR = nullptr;
       updateImportedInserts(*m_graphic);
       return false;
     } else {
       delete m_dxfR;
+      m_dxfR = nullptr;
     }
 #ifdef DWGSUPPORT
   }
@@ -7301,6 +7311,22 @@ void RS_FilterDXFRW::addXline(const DRW_Xline &data) {
  */
 namespace {
 template <typename T>
+const T &consumerProjectedDxf(const T &source, const dxfRW *reader,
+                              std::optional<T> &projected) {
+#ifdef LIBRECAD_SYSTEM_LIBDXFRW
+  if (reader != nullptr && source.haveExtrusion) {
+    projected.emplace(source);
+    projected->applyExtrusion();
+    return *projected;
+  }
+#else
+  (void)reader;
+  (void)projected;
+#endif
+  return source;
+}
+
+template <typename T>
 bool canCreatePlanarEntity(const T &entity, const char *typeName) {
   if (hasNormalizedAxialExtrusion(entity))
     return true;
@@ -7310,7 +7336,9 @@ bool canCreatePlanarEntity(const T &entity, const char *typeName) {
 }
 } // namespace
 
-void RS_FilterDXFRW::addCircle(const DRW_Circle &data) {
+void RS_FilterDXFRW::addCircle(const DRW_Circle &source) {
+  std::optional<DRW_Circle> projected;
+  const auto &data = consumerProjectedDxf(source, m_dxfR, projected);
   RS_DEBUG->print("RS_FilterDXF::addCircle");
   if (!canCreatePlanarEntity(data, "addCircle"))
     return;
@@ -7334,7 +7362,9 @@ void RS_FilterDXFRW::addCircle(const DRW_Circle &data) {
  *
  * @param data
  */
-void RS_FilterDXFRW::addArc(const DRW_Arc &data) {
+void RS_FilterDXFRW::addArc(const DRW_Arc &source) {
+  std::optional<DRW_Arc> projected;
+  const auto &data = consumerProjectedDxf(source, m_dxfR, projected);
   RS_DEBUG->print("RS_FilterDXF::addArc");
   if (!canCreatePlanarEntity(data, "addArc"))
     return;
@@ -7365,13 +7395,23 @@ void RS_FilterDXFRW::addEllipse(const DRW_Ellipse &data) {
 
   const RS_Vector v1(data.basePoint.x, data.basePoint.y);
   const RS_Vector v2(data.secPoint.x, data.secPoint.y);
+  double ang1 = data.staparam;
   double ang2 = data.endparam;
+#ifdef LIBRECAD_SYSTEM_LIBDXFRW
+  // DXF ELLIPSE center and major axis are WCS, even for a negative normal.
+  // Normalize the plane to +Z by reversing its parameter interval, not by
+  // reflecting those WCS vectors. The bundled reader already projects here.
+  if (m_dxfR != nullptr && data.extPoint.z < 0.0) {
+    ang1 = 2. * M_PI - data.endparam;
+    ang2 = 2. * M_PI - data.staparam;
+  }
+#endif
   if (fabs(ang2 - 2. * M_PI) < RS_TOLERANCE &&
-      fabs(data.staparam) < RS_TOLERANCE) {
+      fabs(ang1) < RS_TOLERANCE) {
     ang2 = 0.;
   }
   const auto entity = new RS_Ellipse{
-      m_currentContainer, {v1, v2, data.ratio, data.staparam, ang2, false}};
+      m_currentContainer, {v1, v2, data.ratio, ang1, ang2, false}};
   setEntityAttributes(entity, &data);
   m_currentContainer->addEntity(entity);
 }
@@ -7379,7 +7419,9 @@ void RS_FilterDXFRW::addEllipse(const DRW_Ellipse &data) {
 /**
  * Implementation of the method which handles trace entities.
  */
-void RS_FilterDXFRW::addTrace(const DRW_Trace &data) {
+void RS_FilterDXFRW::addTrace(const DRW_Trace &source) {
+  std::optional<DRW_Trace> projected;
+  const auto &data = consumerProjectedDxf(source, m_dxfR, projected);
   // Pre-R13 (AC1009) typed LINEAR/ALIGNED dimensions rebuild arrows in
   // RS_DimLinear/RS_DimAligned. ENTITIES-section SOLID/TRACE records are
   // duplicate *D-block graphics (ACEB10 and peers); importing them inflates
@@ -7732,7 +7774,9 @@ polylineXDataWithoutSidecar(const RS_Entity &entity) {
 /**
  * Implementation of the method which handles lightweight polyline entities.
  */
-void RS_FilterDXFRW::addLWPolyline(const DRW_LWPolyline &data) {
+void RS_FilterDXFRW::addLWPolyline(const DRW_LWPolyline &source) {
+  std::optional<DRW_LWPolyline> projected;
+  const auto &data = consumerProjectedDxf(source, m_dxfR, projected);
   RS_DEBUG->print("RS_FilterDXFRW::addLWPolyline");
   if (data.vertlist.empty()) {
     return;
@@ -8963,7 +9007,8 @@ void RS_FilterDXFRW::addAttDef(const DRW_Attdef &data) {
   // LibreCAD has no standalone attribute-definition model. Preserve the
   // visible BLOCK definition as text instead of silently dropping it; the
   // original DXF/DWG attribute fields remain available to libdxfrw callers.
-  addText(data);
+  std::optional<DRW_Attdef> projected;
+  addText(consumerProjectedDxf(data, m_dxfR, projected));
 }
 
 /**

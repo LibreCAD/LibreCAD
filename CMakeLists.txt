@@ -2306,6 +2306,8 @@ if (LIBRECAD_USE_SYSTEM_LIBDXFRW)
     list(REMOVE_ITEM SHARED_INCLUDES
          libraries/libdxfrw/src libraries/libdxfrw/src/intern)
     list(REMOVE_ITEM SHARED_SOURCES ${LIBDXFRW_ALL_FILES})
+    set_property(SOURCE librecad/src/lib/filters/rs_filterdxfrw.cpp APPEND
+                 PROPERTY COMPILE_DEFINITIONS LIBRECAD_SYSTEM_LIBDXFRW=1)
 endif()
 
 qt_add_library (librecad_lib STATIC
@@ -2636,7 +2638,8 @@ if (LIBRECAD_BUILD_SYSTEM_CODEC_TESTS)
         target_compile_options(librecad_system_codec_tests PRIVATE /bigobj)
     endif()
     add_test(NAME librecad_system_codec_tests
-        COMMAND librecad_system_codec_tests "[dimstyle],[system-codec]" --reporter compact)
+        COMMAND librecad_system_codec_tests
+                "[dimstyle],[system-codec],[system-codec-extrusion]" --reporter compact)
     set_tests_properties(librecad_system_codec_tests PROPERTIES
         WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
         ENVIRONMENT "QT_QPA_PLATFORM=offscreen" TIMEOUT 120)
