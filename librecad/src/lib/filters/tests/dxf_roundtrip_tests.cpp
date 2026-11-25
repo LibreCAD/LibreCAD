@@ -57,9 +57,6 @@
 #include "lc_dimarc.h"
 #include "lc_dwgadvancedmetadata.h"
 #include "lc_filtertestsupport.h"
-#ifdef LIBRECAD_SYSTEM_CODEC_TESTS
-#include "libdxfrw_json_dump.h"
-#endif
 #include "lc_linetype.h"
 #include "lc_linetypenames.h"
 #include "lc_mleader.h"
@@ -811,17 +808,16 @@ TEST_CASE("System codec refuses an incomplete raw-only material after metadata s
   writeText(source, "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1021\n0\nENDSEC\n"
                     "0\nSECTION\n2\nOBJECTS\n0\nMATERIAL\n5\nF040\n330\n72\n"
                     "100\nAcDbMaterial\n1\nRawOnly\n94\n63\n0\nENDSEC\n0\nEOF\n");
-  struct OptInReader : jsondump::JsonDumpIface, DRW_DxfSparseMaterialRawPolicy {
-    explicit OptInReader(LC_DwgAdvancedMetadata &metadata) : metadata(metadata) {}
+  struct OptInFilter : RS_FilterDXFRW, DRW_DxfSparseMaterialRawPolicy {
     bool wantsDxfSparseMaterialRawCapture() const noexcept override { return true; }
-    void addMaterial(const DRW_Material &material) override { metadata.addMaterial(material); }
-    LC_DwgAdvancedMetadata &metadata;
   };
+  // Default consumers do not implicitly accept an incomplete material.
+  RS_Graphic legacy;
+  RS_FilterDXFRW legacyFilter;
+  CHECK_FALSE(legacyFilter.fileImport(legacy, QString::fromStdString(source), RS2::FormatDXFRW));
   RS_Graphic incomplete;
-  incomplete.initForNewDocument();
-  OptInReader sink(incomplete.dwgAdvancedMetadata());
-  dxfRW importer(source.c_str());
-  REQUIRE(importer.read(&sink, false));
+  OptInFilter importer;
+  REQUIRE(importer.fileImport(incomplete, QString::fromStdString(source), RS2::FormatDXFRW));
   REQUIRE(incomplete.dwgAdvancedMetadata().materials().size() == 1u);
   CHECK(incomplete.dwgAdvancedMetadata().materials().front().requiresRawDxfReplay);
   RS_FilterDXFRW filter;

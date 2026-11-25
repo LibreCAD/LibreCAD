@@ -1964,8 +1964,10 @@ class RsFilterDxfRwExposureTestAccess;
  *
  * @author Rallaz
  */
+// The codec interface must be public for optional policy cross-casts from a
+// DRW_Interface pointer to discover an explicitly opted-in derived filter.
 class RS_FilterDXFRW : public RS_FilterInterface,
-                       DRW_Interface
+                       public DRW_Interface
 #ifdef DWGSUPPORT
     ,
                        private RS_FilterDXFRW_DwgWriteIdentityRegistry
