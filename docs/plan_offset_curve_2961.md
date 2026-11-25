@@ -63147,3 +63147,41 @@ test-only watchdog override; production deadlines were unchanged. The
 cases**. `git diff --check` passed. These checks do not close general
 near-node/corner provenance, cross-platform CI, visible GUI, or the remaining
 roadmap acceptance gates.
+
+## 2041. Certify Incompatible Nearby Node Occurrences (2026-11-25)
+
+The section 2040 proximity check still accepted a forged Trimmed-mode node
+when either source parameter was replaced with the adjacent representable
+value of the other parameter. Both mutations returned `Ok` and published
+entities in the noded-parabola regression before this slice.
+
+Commit `191d8d4d3` rejects a transverse node when conservative source-jet
+bounds certify that its two distinct parameters lie within one smooth source
+span and the corresponding regular, uniform-distance offset is strictly
+monotone on that interval. Since `Q' = (1 - d*kappa) C'`, a component of the
+source derivative and the offset-factor numerator both excluding zero, with
+strictly positive speed squared, prove that the two parameters cannot produce
+the same crossing point. The existing equal-parameter check remains. This
+certificate consumes the existing sample budget, admits no fixed parameter
+distance threshold, and does not assert a result when its bounds cannot prove
+one. Corner pieces, mixed distances, span boundaries, and uncertified intervals
+remain subject to the existing checks; general node provenance is not solved.
+
+Tests mutate either occurrence to an adjacent value and to a value `1e-6`
+away, require no partial entities, exercise sample exhaustion, and verify that
+a subsequent valid candidate can match. A genuine crossing in a compressed
+`1e-6` source domain has physically distinct source points and remains
+materializable in Trimmed mode; that control uses Direct-built geometry, not
+a full Trim pass.
+
+On the source-equivalent macOS CMake Release scratch build, the final combined
+materialized-topology and Trim action/file selection passed **115,429
+assertions / 24 cases**. The broader `[curve-offset]` selection passed
+**5,819,250 assertions / 365 cases** before the final test-only witness
+assertions and naming change. The real-worker all-family generation and
+five-lane persistence case passed **2,996,860 assertions / 1 case** with the
+existing 900-second test-only watchdog override; production deadlines were
+unchanged. The two changed source files matched the tested scratch files and
+`git diff --check` passed. Visible GUI, broader variants, deployment,
+cross-platform CI, independent review, and the remaining roadmap gates stay
+open.
