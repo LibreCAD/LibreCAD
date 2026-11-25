@@ -62875,3 +62875,27 @@ semantic CAD comparison, AutoCAD acceptance, full sanitizer/order coverage,
 and final review/integration remain open. Keep the overall roadmap open and
 continue from exact-head CI results; do not close gates by extrapolating from
 the local Darwin test environment.
+
+## 2031. qmake6 Requalification on the Roadmap Head
+
+On the exact source revision
+34b647d2992b093681bdf2b3d38b415a60be55cd, configured an out-of-tree build at
+/private/tmp/librecad-pr3193-qmake6-34b647d with /opt/homebrew/bin/qmake6 and
+completed the full recursive app, offset-worker, plugin, and resource build
+with make -j8. The produced LibreCAD.app/Contents/MacOS/LibreCAD is an arm64
+Mach-O executable. A second incremental make -j8 returned exit 0. The clean
+build emitted existing compiler/UI warnings; Homebrew Qt/Freetype binaries
+target a newer macOS SDK than the project's 14.4 minimum, so this build does
+not establish runtime compatibility on macOS 14.4.
+
+Latest exact-head diagnostics for 34b647d2992b093681bdf2b3d38b415a60be55cd
+show Headless ON and OFF passed. Sixteen other surfaced checks remain queued
+or running, and five configured/policy checks are skipped; none of those
+pending checks is treated as passed. This supersedes the earlier zero-completed
+snapshot in section 2030.
+
+This closes only the qmake6 build check for this source revision. Windows and
+Linux cross-platform mixed-bulge behavior, broad family/variant qualification,
+sanitizer/order coverage, physical GUI source-picker acceptance, independent
+CAD/AutoCAD acceptance, deployment/signing and minimum-macOS runtime checks,
+review, and final integration remain open.
