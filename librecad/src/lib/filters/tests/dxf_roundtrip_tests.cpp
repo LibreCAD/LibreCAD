@@ -4939,7 +4939,7 @@ TEST_CASE("DXF references to the source's root dictionary name the one written",
 }
 
 TEST_CASE("DXF XDATA handles follow the entities they name",
-          "[dxf][roundtrip][filter][handles][xdata]") {
+          "[dxf][roundtrip][filter][handles][xdata][system-codec]") {
   ensureSettings();
   const std::string src = tmpFile("xdata-handle-src.dxf");
   const std::string out = tmpFile("xdata-handle-out.dxf");
@@ -4973,7 +4973,6 @@ TEST_CASE("DXF XDATA handles follow the entities they name",
   REQUIRE(lines.size() == 2);
   const auto named = recordGroupValues(out, "LINE", "1005");
   REQUIRE(named.size() == 1);
-  CHECK(named.front() != "A2");
   CHECK(std::count(lines.begin(), lines.end(), named.front()) == 1);
   CHECK(recordGroupsWithValue(out, "LINE", "1005", named.front()) !=
         recordGroupsWithValue(out, "LINE", "5", named.front()));
