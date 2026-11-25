@@ -12027,6 +12027,7 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
   m_writeFailed = false;
   m_dxfLeftOutRawRecords = 0;
   m_writeLeftOut.clear();
+  m_legacyLayerLineweightsLeftOut = 0;
   m_shapeLeftOut.clear();
   m_shapeExportDirectory = QFileInfo(file).absoluteDir().canonicalPath();
   m_exportAttribScaleDataLeftOut = 0;
@@ -13309,6 +13310,7 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
   activeWriter.reset();
 
   if (!success) {
+    m_legacyLayerLineweightsLeftOut = 0;
     RS_DEBUG->print("RS_FilterDXFDW::fileExport: can't write file");
     return false;
   }
@@ -17609,6 +17611,11 @@ QString RS_FilterDXFRW::exportReport() const {
   }
   for (const auto &[what, count] : m_writeLeftOut)
     lines << QStringLiteral("%1 × %2").arg(count).arg(QString::fromStdString(what));
+  if (m_legacyLayerLineweightsLeftOut > 0) {
+    lines << QObject::tr("lineweight of %1 layer(s), unsupported by this DXF version",
+                         "RS_FilterDXFRW")
+                 .arg(m_legacyLayerLineweightsLeftOut);
+  }
   for (const auto &[what, count] : m_shapeLeftOut)
     lines << QStringLiteral("%1 × %2").arg(count).arg(QString::fromStdString(what));
   if (m_exportAttribScaleDataLeftOut > 0) {
@@ -20611,6 +20618,15 @@ void RS_FilterDXFRW::writeLayers() {
         m_dwgWriteLayerHandleByName[normalizeDwgTableName(lay.name)] =
             lay.handle;
     } else {
+#ifdef LIBRECAD_SYSTEM_LIBDXFRW
+      // R12 through R14 have no LAYER lineweight. Match the legacy consumer's
+      // export behavior while reporting the actual loss to the caller.
+      if (m_dxfExportVersion <= DRW::AC1014 &&
+          lay.lWeight != DRW_LW_Conv::widthDefault) {
+        ++m_legacyLayerLineweightsLeftOut;
+        lay.lWeight = DRW_LW_Conv::widthDefault;
+      }
+#endif
       // The plot style (390) is named only if its placeholder is written.
       lay.handlePlotS.clear();
       if (const auto *sourceLayer =

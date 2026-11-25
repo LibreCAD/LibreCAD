@@ -9645,6 +9645,59 @@ const BuiltinLTypeLength kBuiltinLTypeLengths[] = {
 
 } // namespace
 
+#ifdef LIBRECAD_SYSTEM_CODEC_TESTS
+TEST_CASE("Legacy DXF reports omitted layer lineweight and supports retry",
+          "[dxf][roundtrip][filter][system-codec][r12]") {
+  ensureSettings();
+  for (const RS2::FormatType format : {RS2::FormatDXFRW12, RS2::FormatDXFRW14}) {
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    RS_Layer *layer = graphic.findLayer(QStringLiteral("0"));
+    REQUIRE(layer != nullptr);
+    REQUIRE(layer->getPen().getWidth() == RS2::Width07);
+    auto *otherLayer = new RS_Layer(QStringLiteral("CUSTOM"));
+    RS_Pen otherPen = otherLayer->getPen();
+    otherPen.setWidth(RS2::Width20);
+    otherLayer->setPen(otherPen);
+    graphic.addLayer(otherLayer);
+    const std::string out = tmpFile("legacy_layer_width_retry.dxf");
+    writeText(out, "existing destination\n");
+    RS_FilterDXFRW filter;
+
+    // Plot-off is still an unsupported legacy property. Its refusal must not
+    // publish a partial file or poison a corrected retry on the same filter.
+    layer->setPrint(false);
+    REQUIRE_FALSE(filter.fileExport(graphic, QString::fromStdString(out), format));
+    CHECK(textWithoutCR(out) == "existing destination\n");
+    CHECK_FALSE(filter.exportReport().contains(QStringLiteral("lineweight")));
+    layer->setPrint(true);
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(out), format));
+    CHECK(filter.exportReport().contains(QStringLiteral("lineweight of 2 layer")));
+    CHECK(recordGroupValues(out, "LAYER", "370").empty());
+    CHECK(layer->getPen().getWidth() == RS2::Width07);
+    CHECK(otherLayer->getPen().getWidth() == RS2::Width20);
+
+    RS_Graphic reopened;
+    REQUIRE(filter.fileImport(reopened, QString::fromStdString(out), format));
+    const RS_Layer *reopenedLayer = reopened.findLayer(QStringLiteral("0"));
+    REQUIRE(reopenedLayer != nullptr);
+    CHECK(reopenedLayer->getPen().getWidth() == RS2::WidthDefault);
+    const RS_Layer *reopenedOther = reopened.findLayer(QStringLiteral("CUSTOM"));
+    REQUIRE(reopenedOther != nullptr);
+    CHECK(reopenedOther->getPen().getWidth() == RS2::WidthDefault);
+
+    RS_Pen pen = layer->getPen();
+    pen.setWidth(RS2::WidthDefault);
+    layer->setPen(pen);
+    otherPen.setWidth(RS2::WidthDefault);
+    otherLayer->setPen(otherPen);
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(out), format));
+    CHECK_FALSE(filter.exportReport().contains(QStringLiteral("lineweight")));
+    std::filesystem::remove(out);
+  }
+}
+#endif
+
 // The goldens are the LTYPE table this export wrote on 86d2c9325, before the
 // head of writeLTypes() was rewritten: the three records libdxfrw writes
 // itself and the 32 the filter adds, handles in allocation order. R2000 and
