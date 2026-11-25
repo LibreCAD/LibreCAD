@@ -2296,7 +2296,7 @@ TEST_CASE("DXF filter registers CLASS records for reconstructed underlays",
 }
 
 TEST_CASE("DXF filter preserves fixture-backed CLASS and raw entity",
-          "[dxf][roundtrip][filter][classes][raw]") {
+          "[system-codec][dxf][roundtrip][filter][classes][raw]") {
   ensureSettings();
   const std::string src = std::string(LIBRECAD_TEST_DIR)
                           + "/dxf/classes_raw_entity_r2007.dxf";
@@ -2345,19 +2345,23 @@ TEST_CASE("DXF filter preserves fixture-backed CLASS and raw entity",
   }
   checkMetadata(graphic, 7);
   CHECK(countRecords(out, "WEIRDENT") == 1);
-  CHECK(classRecordNames(out) == std::set<std::string>{"WEIRDENT"});
-  CHECK(recordGroupValues(out, "CLASS", "2")
-        == std::vector<std::string>{"AcDbWeirdEntity"});
-  CHECK(recordGroupValues(out, "CLASS", "3")
-        == std::vector<std::string>{"CUSTOM_APP"});
-  CHECK(recordGroupValues(out, "CLASS", "90")
-        == std::vector<std::string>{"4095"});
-  CHECK(recordGroupValues(out, "CLASS", "91")
-        == std::vector<std::string>{"1"});
-  CHECK(recordGroupValues(out, "CLASS", "280")
-        == std::vector<std::string>{"1"});
-  CHECK(recordGroupValues(out, "CLASS", "281")
-        == std::vector<std::string>{"1"});
+  const auto checkClass = [](const std::string &path) {
+    const auto classes = lc::test::dxfRecords(path, "CLASS");
+    int matches = 0;
+    for (const auto &entry : classes) {
+      if (entry.own(1) != std::vector<std::string>{"WEIRDENT"})
+        continue;
+      ++matches;
+      CHECK(entry.own(2) == std::vector<std::string>{"AcDbWeirdEntity"});
+      CHECK(entry.own(3) == std::vector<std::string>{"CUSTOM_APP"});
+      CHECK(entry.own(90) == std::vector<std::string>{"4095"});
+      CHECK(entry.own(91) == std::vector<std::string>{"1"});
+      CHECK(entry.own(280) == std::vector<std::string>{"1"});
+      CHECK(entry.own(281) == std::vector<std::string>{"1"});
+    }
+    CHECK(matches == 1);
+  };
+  checkClass(out);
 
   RS_Graphic graphic2;
   {
@@ -2369,9 +2373,7 @@ TEST_CASE("DXF filter preserves fixture-backed CLASS and raw entity",
   }
   checkMetadata(graphic2, 1);
   CHECK(countRecords(out2, "WEIRDENT") == 1);
-  CHECK(classRecordNames(out2) == std::set<std::string>{"WEIRDENT"});
-  CHECK(recordGroupValues(out2, "CLASS", "91")
-        == std::vector<std::string>{"1"});
+  checkClass(out2);
 
   std::filesystem::remove(out);
   std::filesystem::remove(out2);
