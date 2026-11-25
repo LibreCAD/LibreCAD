@@ -63244,3 +63244,28 @@ qmake6 incremental app/worker build passed; this is not clean deployment or
 minimum-macOS qualification. The changed source and test matched the scratch
 files, and `git diff --check` passed. The visible source-family switching and
 replacement workflow and the other roadmap acceptance gates remain open.
+
+## 2044. Exercise Source Guard Destruction (2026-11-25)
+
+Test commit `5dd8fc856` exercises the destruction case left open in section
+2043. It destroys the source-picker widget from the initial or worker-completion
+guard, with true, false and `std::bad_alloc` outcomes, and verifies the original
+curve remains unchanged. The initial case invokes the source combo's change
+signal directly; the later case selects a source and waits for an actual worker
+completion. This is a focused lifetime check, not a physical picker workflow
+or coverage of all asynchronous ownership paths.
+
+The source-equivalent macOS CMake Release scratch build passed the complete
+offset Properties selection (**52,332 assertions / 108 cases**). A fresh Debug
+build with `-fsanitize=address,undefined` ran this destruction case together
+with section 2043's rebinding case: **2,085 assertions / 2 cases** passed with
+`ASAN_OPTIONS=detect_leaks=0` and `UBSAN_OPTIONS=halt_on_error=1:print_stacktrace=1`.
+The first instrumented run missed the existing 3.5-second test polling
+watchdog in one late case, with no sanitizer report. The test now waits up to
+the production commit deadline plus five seconds and immediately reports an
+early worker refusal; the production deadline was not changed. The second
+instrumented run passed. Leak detection and broader sanitizer coverage remain
+open. The test file matched the scratch source and `git diff --check` passed.
+
+Visible family switching and replacement, preview/commit, cross-platform CI,
+deployment, independent review and the other roadmap gates remain open.
