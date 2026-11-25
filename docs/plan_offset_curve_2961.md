@@ -63116,3 +63116,34 @@ those directories to reproduce it; the prior section 2037 fixtures lack the
 new nonempty tails and are no longer valid inputs for this strengthened test.
 The result is limited to these values and fixtures; it does not establish
 arbitrary extension, visual rendering, AutoCAD or other open acceptance gates.
+
+## 2040. Check Trimmed Node Occurrences Before Clamping (2026-11-25)
+
+The section 900 Trimmed-mode matcher clamped a stored node parameter to an
+output piece before checking spatial agreement. In the existing noded-parabola
+fixture, replacing either original occurrence with the distant domain-start
+parameter `0.0` still returned `Ok` and published entities: the new regression
+failed four assertions against the prior code. This is distinct from the
+already-covered missing-parameter and wrong-branch cases.
+
+Commit `f0915ddaf` requires an out-of-piece stored parameter to evaluate to
+the reported node within the existing geometric slack before evaluating the
+clamped piece endpoint. The extra evaluation consumes the existing source
+sample budget; unavailable evidence or exhaustion fails closed. It retains the
+endpoint check that permits legitimate near-node trim rewrites, without adding
+a parameter-distance cutoff. Tests reject both forged occurrences with no
+entities, exercise budget exhaustion, and confirm a later valid candidate can
+still match. This is a necessary provenance check, not a general proof that
+nearby or coincident source occurrences identify the same node.
+
+On the source-equivalent macOS CMake Release scratch build, the focused
+materialized-topology selector passed **2,945 assertions / 16 cases**. The
+broader `[curve-offset]` selector passed **5,819,201 assertions / 365 cases**
+with the same product change before the final test-only budget/recovery
+assertions were added. The real-worker all-family generation and five-lane
+persistence case passed **2,930,860 assertions**, using the existing 900-second
+test-only watchdog override; production deadlines were unchanged. The
+`[lc-offsetcurve][trim]` action/file selection passed **112,444 assertions / 8
+cases**. `git diff --check` passed. These checks do not close general
+near-node/corner provenance, cross-platform CI, visible GUI, or the remaining
+roadmap acceptance gates.
