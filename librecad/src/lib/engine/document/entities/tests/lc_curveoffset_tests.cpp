@@ -4046,6 +4046,30 @@ TEST_CASE("Trimmed materialized nodes reject unavailable source occurrences",
     REQUIRE(valid.status == LC_CurveOffsetStatus::Ok);
     REQUIRE_FALSE(valid.entities.empty());
 
+    for (bool first : {false, true}) {
+        auto forged = geometry;
+        auto& node = forged.intersections.front();
+        (first ? node.parameterA : node.parameterB) = 0.0;
+        const auto invalid = LC_CurveOffset::materializeBranches(
+            parabola, forged, options, LC_CurveOffset::makeDirectSourceBudget());
+        CAPTURE(first);
+        CHECK(invalid.status == LC_CurveOffsetStatus::AmbiguousTopology);
+        CHECK(invalid.entities.empty());
+        REQUIRE(invalid.sampleUnits > geometry.exactSamples);
+        auto exhausted = options;
+        exhausted.maxSamples = invalid.sampleUnits - 1;
+        const auto limited = LC_CurveOffset::materializeBranches(
+            parabola, forged, exhausted, LC_CurveOffset::makeDirectSourceBudget());
+        CHECK(limited.status == LC_CurveOffsetStatus::LimitExceeded);
+        CHECK(limited.entities.empty());
+        CHECK(limited.sampleUnits <= exhausted.maxSamples);
+        forged.intersections.push_back(geometry.intersections.front());
+        const auto recovered = LC_CurveOffset::materializeBranches(
+            parabola, forged, options, LC_CurveOffset::makeDirectSourceBudget());
+        CHECK(recovered.status == LC_CurveOffsetStatus::Ok);
+        CHECK_FALSE(recovered.entities.empty());
+    }
+
     auto wrongBranch = geometry;
     for (LC_OffsetBranch& branch : wrongBranch.branches) {
         for (LC_OffsetCubicPiece& piece : branch.cubicPieces) {

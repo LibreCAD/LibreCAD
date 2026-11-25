@@ -8567,6 +8567,23 @@ LC_CurveOffsetMaterializationResult materializeBranches(const RS_Entity& source,
                 const double lo = std::min(provenance.sourceT0, provenance.sourceT1);
                 const double hi = std::max(provenance.sourceT0, provenance.sourceT1);
                 const double evaluationParameter = std::clamp(parameter, lo, hi);
+                // A near trimmed endpoint is not evidence for an unrelated source occurrence.
+                if (parameter != evaluationParameter) {
+                    if (samples >= options.maxSamples) {
+                        sampleLimitReached = true;
+                        return false;
+                    }
+                    ++samples;
+                    result.sampleUnits = samples;
+                    OffsetJet occurrence;
+                    const auto side = parameter < lo ? LC_CurveEvaluationSide::Right
+                                                     : LC_CurveEvaluationSide::Left;
+                    const LC_CurveOffsetStatus occurrenceStatus = computeOffsetJet(
+                        *adapter, provenance.signedDistance, scale.numericFloor / domain,
+                        parameter, side, occurrence);
+                    if (occurrenceStatus != LC_CurveOffsetStatus::Ok || !isFinite(occurrence.point) ||
+                        occurrence.point.distanceTo(point) > slack) return false;
+                }
                 if (samples >= options.maxSamples) {
                     sampleLimitReached = true;
                     return false;
