@@ -62953,3 +62953,34 @@ candidate-selection, highlight, preview, and commit checks; preserve no-save
 state unless the acceptance step explicitly uses a disposable copy. The exact
 PR head remains `5d81f3c86319d1ed9a734df326e41a5c6b717064`; its CI status must be
 polled separately and must not be inferred from this older executable.
+
+## 2034. Exact-head qmake6 Build and Visible Attach Attempt (2026-11-25)
+
+Configured a fresh out-of-tree qmake6 build from PR head
+`85652b3e42f5bbf0cb7d232fabea1e0ae1ecafe0` at
+`/private/tmp/offset-3193-qmake-85652b3`. The full recursive `make -j8`
+completed successfully, producing an arm64 `LibreCAD.app` and the bundled
+offset worker. `git status --short` and `git diff --check` on the source
+worktree remained clean. As in prior qmake6 receipts, the build links against
+Homebrew Qt/Freetype artifacts targeting macOS 27 while the project requests
+macOS 14.4; this is build evidence, not minimum-OS runtime qualification.
+
+Attempted to attach CUA to the exact-head bundle twice. Both attempts timed out
+with `Computer Use server error -10005: timeoutReached`; no visible actions or
+drawing edits occurred. The earlier visible source-resolution/highlight
+observation remains exploratory and is from a pre-head executable. Source
+family switching, candidate replacement, preview/cancel, and commit remain
+unverified in the visible current-head app.
+
+Exact-head diagnostics for `85652b3e42f5bbf0cb7d232fabea1e0ae1ecafe0` currently
+show 3 successful checks (Headless ON/OFF and Pixi Ubuntu x64), 15 in progress,
+and 5 skipped. This is a live snapshot, not terminal CI. Continue polling the
+same head; do not treat queued/running checks or skipped policy jobs as passes.
+
+The roadmap remains incomplete. Open gates include visible current-head
+source-family/candidate replacement and preview/commit acceptance; the broader
+cross-platform family/variant and sanitizer/order matrices; independent
+visual/semantic CAD and AutoCAD acceptance; signed/deployed and minimum-macOS
+runtime validation; human review; and final integration. Retry the GUI through
+an attachable test-app window or existing authorized desktop session, without
+altering/saving the user's source drawing.
