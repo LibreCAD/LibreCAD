@@ -998,6 +998,53 @@ TEST_CASE("System codec preserves a layer material link and refuses a missing ca
                    std::make_pair(std::string("347"), retryMaterial.front())) == 1);
   if (const char *copy = std::getenv("LIBRECAD_KEEP_LAYER_MATERIAL_OUTPUT"))
     std::filesystem::copy_file(retry, copy, std::filesystem::copy_options::overwrite_existing);
+
+  // Renaming the original must keep its source metadata; a new layer with
+  // the old name must not acquire that metadata by name.
+  auto *original = graphic.findLayer(QStringLiteral("RAWTEST"));
+  REQUIRE(original != nullptr);
+  original->setName(QStringLiteral("RENAMED"));
+  graphic.addLayer(new RS_Layer(QStringLiteral("RAWTEST")));
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  const auto renamed = recordGroupsWithValue(output, "LAYER", "2", "RENAMED");
+  const auto renamedMaterials = recordGroupValues(output, "MATERIAL", "5");
+  REQUIRE(renamedMaterials.size() == 1);
+  CHECK(std::count(renamed.begin(), renamed.end(),
+                   std::make_pair(std::string("347"), renamedMaterials.front())) == 1);
+  const auto replacement = recordGroupsWithValue(output, "LAYER", "2", "RAWTEST");
+  REQUIRE_FALSE(replacement.empty());
+  CHECK(std::none_of(replacement.begin(), replacement.end(),
+                     [](const auto &group) { return group.first == "347"; }));
+  if (const char *copy = std::getenv("LIBRECAD_KEEP_RENAMED_LAYER_MATERIAL_OUTPUT"))
+    std::filesystem::copy_file(output, copy, std::filesystem::copy_options::overwrite_existing);
+
+  auto *duplicate = original->clone();
+  duplicate->setName(QStringLiteral("CLONE"));
+  graphic.addLayer(duplicate);
+  REQUIRE_FALSE(duplicate->importedRecordId());
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  duplicate->setImportedRecordId(original->importedRecordId());
+  expectRefusal();
+  duplicate->setImportedRecordId({});
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  const auto clone = recordGroupsWithValue(output, "LAYER", "2", "CLONE");
+  REQUIRE_FALSE(clone.empty());
+  CHECK(std::none_of(clone.begin(), clone.end(),
+                     [](const auto &group) { return group.first == "347"; }));
+
+  // A layer copied from another document must not match this document's
+  // unrelated imported record, even if both source names were equal.
+  RS_Graphic other;
+  REQUIRE(filter.fileImport(other, QString::fromStdString(source), RS2::FormatDXFRW));
+  auto *foreign = original->clone();
+  foreign->setImportedRecordId(original->importedRecordId());
+  foreign->setName(QStringLiteral("FOREIGN"));
+  other.addLayer(foreign);
+  REQUIRE(filter.fileExport(other, QString::fromStdString(output), RS2::FormatDXFRW));
+  const auto foreignLayer = recordGroupsWithValue(output, "LAYER", "2", "FOREIGN");
+  REQUIRE_FALSE(foreignLayer.empty());
+  CHECK(std::none_of(foreignLayer.begin(), foreignLayer.end(),
+                     [](const auto &group) { return group.first == "347"; }));
   std::filesystem::remove(source);
   std::filesystem::remove(output);
   std::filesystem::remove(retry);

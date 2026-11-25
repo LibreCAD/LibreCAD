@@ -219,8 +219,13 @@ TEST_CASE("the DXF export registers the application of every XDATA it writes, on
         source.name = "WALLS";
         REQUIRE(source.addExtData(std::make_unique<DRW_Variant>(1001, std::string("LC_TEST_LAYER_APP"))));
         REQUIRE(source.addExtData(std::make_unique<DRW_Variant>(1000, std::string("on a layer"))));
-        graphic.dwgAdvancedMetadata().addLayerTableEntry(source);
+        const auto identity = std::make_shared<const char>(0);
+        graphic.findLayer(QStringLiteral("WALLS"))->setImportedRecordId(identity);
+        graphic.dwgAdvancedMetadata().addLayerTableEntry(source, identity);
     }
+
+    // The imported table metadata follows the layer through a rename.
+    graphic.findLayer(QStringLiteral("WALLS"))->setName(QStringLiteral("RENAMED_WALLS"));
 
     // Entities of the model space: a new application, the same one in
     // another case, and the case of two the export always registers.
@@ -248,6 +253,14 @@ TEST_CASE("the DXF export registers the application of every XDATA it writes, on
         CAPTURE(application);
         CHECK(written.count(application) == 1);
     }
+    // The retained XDATA must be on the renamed layer, not merely registered.
+    const auto layerRecords = lc::test::dxfRecords(out, "LAYER");
+    const auto renamed = std::find_if(layerRecords.begin(), layerRecords.end(), [](const auto& record) {
+        return record.own(2) == std::vector<std::string>{"RENAMED_WALLS"};
+    });
+    REQUIRE(renamed != layerRecords.end());
+    const auto renamedApps = renamed->own(1001);
+    CHECK(std::find(renamedApps.begin(), renamedApps.end(), "LC_TEST_LAYER_APP") != renamedApps.end());
     // ...and each application it names has a record of its own.
     checkEveryApplicationRegisteredOnce(out);
     const std::map<std::string, int> registered = registeredApplications(out);

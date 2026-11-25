@@ -5232,7 +5232,10 @@ void RS_FilterDXFRW::addLayer(const DRW_Layer &data) {
   // RS_Graphic always bootstraps a default "0" layer before this runs.
   // Re-resolve rather than trusting `layer`, which may already be freed.
   layer = m_graphic->findLayer(name);
-  m_graphic->dwgAdvancedMetadata().addLayerTableEntry(data);
+  const auto identity = std::make_shared<const char>(0);
+  if (layer != nullptr)
+    layer->setImportedRecordId(identity);
+  m_graphic->dwgAdvancedMetadata().addLayerTableEntry(data, identity);
   m_importLayerCache.insert(key, layer);
   RS_DEBUG->print("RS_FilterDXF::addLayer: OK");
 }
@@ -12269,6 +12272,20 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
   m_shapeLeftOut.clear();
   m_shapeExportDirectory = QFileInfo(file).absoluteDir().canonicalPath();
   m_exportAttribScaleDataLeftOut = 0;
+  // Copying or assignment can duplicate a source identity. Do not replay one
+  // source record twice or guess which of the live layers owns its metadata.
+  std::set<RS_Layer::ImportedRecordId, std::owner_less<RS_Layer::ImportedRecordId>> layerSources;
+  const auto *liveLayers = g.getLayerList();
+  for (unsigned int i = 0; i < liveLayers->count(); ++i) {
+    const auto &identity = liveLayers->at(i)->importedRecordId();
+    if (identity && g.dwgAdvancedMetadata().findLayerTableEntryByIdentity(identity) &&
+        !layerSources.insert(identity).second) {
+      RS_DEBUG->print(RS_Debug::D_WARNING,
+                      "RS_FilterDXFRW: ambiguous imported LAYER identity");
+      m_writeFailed = true;
+      return false;
+    }
+  }
   const auto &materials = g.dwgAdvancedMetadata().materials();
   if (std::any_of(materials.cbegin(), materials.cend(), [](const auto &material) {
         return material.requiresRawDxfReplay;
@@ -13402,8 +13419,7 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
       RS_LayerList *layers = g.getLayerList();
       for (unsigned int i = 0; i < layers->count(); ++i) {
         const RS_Layer *layer = layers->at(i);
-        const auto *source = metadata.findLayerTableEntryByName(
-            layer->getName().toUtf8().constData());
+        const auto *source = metadata.findLayerTableEntryByIdentity(layer->importedRecordId());
         if (source == nullptr)
           continue;
         std::uint32_t handle = 0;
@@ -20872,8 +20888,8 @@ void RS_FilterDXFRW::writeLayers() {
     }
     lay.plotF = l->isPrint();
     if (const auto *sourceLayer =
-            m_graphic->dwgAdvancedMetadata().findLayerTableEntryByName(
-                lay.name)) {
+            m_graphic->dwgAdvancedMetadata().findLayerTableEntryByIdentity(
+                l->importedRecordId())) {
       if (m_dwgW != nullptr &&
           hasDxfTableAppDataUnsupportedByDwg(*sourceLayer)) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
@@ -20935,8 +20951,8 @@ void RS_FilterDXFRW::writeLayers() {
       // The plot style (390) is named only if its placeholder is written.
       lay.handlePlotS.clear();
       if (const auto *sourceLayer =
-              m_graphic->dwgAdvancedMetadata().findLayerTableEntryByName(
-                  lay.name)) {
+              m_graphic->dwgAdvancedMetadata().findLayerTableEntryByIdentity(
+                  l->importedRecordId())) {
         std::uint32_t plotStyle = sourceLayer->plotStyleHandle.ref;
         if (plotStyle == 0 && !sourceLayer->handlePlotS.empty())
           plotStyle = static_cast<std::uint32_t>(
@@ -28675,8 +28691,7 @@ std::vector<std::string> RS_FilterDXFRW::dxfXDataApplications() {
     addFrom(entry.second.extData);
   const RS_LayerList *layers = m_graphic->getLayerList();
   for (unsigned i = 0; i < layers->count(); ++i) {
-    if (const auto *source = metadata.findLayerTableEntryByName(
-            layers->at(i)->getName().toUtf8().toStdString()))
+    if (const auto *source = metadata.findLayerTableEntryByIdentity(layers->at(i)->importedRecordId()))
       addFrom(source->extData);
   }
   for (const auto &entry : metadata.textStyleTableEntries())

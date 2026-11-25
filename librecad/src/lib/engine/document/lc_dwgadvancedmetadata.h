@@ -3467,6 +3467,7 @@ public:
     m_lineTypeTableEntries.clear();
     m_textStyleTableEntries.clear();
     m_layerTableEntries.clear();
+    m_layerTableIdentities.clear();
     m_dimStyleTableEntries.clear();
     m_appIdTableEntries.clear();
     m_spaceBlockRecords.clear();
@@ -3855,9 +3856,13 @@ public:
     }
   }
 
-  void addLayerTableEntry(const DRW_Layer &data) {
-    if (!data.name.empty())
+  void addLayerTableEntry(const DRW_Layer &data,
+                          const std::shared_ptr<const void> &identity = {}) {
+    if (!data.name.empty()) {
       m_layerTableEntries[data.name] = data;
+      if (identity)
+        m_layerTableIdentities[identity] = data.name;
+    }
   }
 
   void addDimStyleTableEntry(const DRW_Dimstyle &data) {
@@ -7150,6 +7155,11 @@ public:
   const DRW_Layer *findLayerTableEntryByName(const std::string &name) const {
     const auto it = m_layerTableEntries.find(name);
     return it == m_layerTableEntries.end() ? nullptr : &it->second;
+  }
+  const DRW_Layer *findLayerTableEntryByIdentity(
+      const std::shared_ptr<const void> &identity) const {
+    const auto it = m_layerTableIdentities.find(identity);
+    return it == m_layerTableIdentities.end() ? nullptr : findLayerTableEntryByName(it->second);
   }
   const DRW_Dimstyle *
   findDimStyleTableEntryByName(const std::string &name) const {
@@ -13446,6 +13456,8 @@ private:
   std::map<std::string, DRW_LType> m_lineTypeTableEntries;
   std::map<std::string, DRW_Textstyle> m_textStyleTableEntries;
   std::map<std::string, DRW_Layer> m_layerTableEntries;
+  std::map<std::shared_ptr<const void>, std::string,
+           std::owner_less<std::shared_ptr<const void>>> m_layerTableIdentities;
   std::map<std::uint32_t, std::string> m_spaceBlockRecords;
   std::map<std::string, DRW_Dimstyle> m_dimStyleTableEntries;
   std::map<std::string, DRW_AppId> m_appIdTableEntries;
