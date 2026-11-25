@@ -5457,8 +5457,10 @@ TEST_CASE("DXF proxy raw carriers preserve wide self handles",
   ensureSettings();
   const std::string src = tmpFile("proxy-wide-handle-src.dxf");
   const std::string out = tmpFile("proxy-wide-handle-out.dxf");
+  const std::string out2 = tmpFile("proxy-wide-handle-retry.dxf");
   std::filesystem::remove(src);
   std::filesystem::remove(out);
+  std::filesystem::remove(out2);
 
   // DXF code-5 handles use the same 64-bit-width lexeme space as DWG handles.
   // The typed proxy convenience field remains 32-bit, but the raw carrier must
@@ -5489,11 +5491,18 @@ TEST_CASE("DXF proxy raw carriers preserve wide self handles",
 
   CHECK(recordGroupValues(out, "ACAD_PROXY_ENTITY", "5")
         == std::vector<std::string>{"1234567890ABCDEF"});
+  RS_Graphic reread;
+  RS_FilterDXFRW retryFilter;
+  REQUIRE(retryFilter.fileImport(reread, QString::fromStdString(out), RS2::FormatDXFRW));
+  REQUIRE(retryFilter.fileExport(reread, QString::fromStdString(out2), RS2::FormatDXFRW));
+  CHECK(recordGroupValues(out2, "ACAD_PROXY_ENTITY", "5")
+        == std::vector<std::string>{"1234567890ABCDEF"});
   if (const char *copy = std::getenv("LIBRECAD_KEEP_WIDE_PROXY_OUTPUT"))
     std::filesystem::copy_file(out, copy, std::filesystem::copy_options::overwrite_existing);
 
   std::filesystem::remove(src);
   std::filesystem::remove(out);
+  std::filesystem::remove(out2);
 }
 
 // Regression for the raw-vs-fixed-structural handle collision (the bug that made
