@@ -4738,6 +4738,11 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic &g, const QString &file,
     if (m_dxfTextEncoding == RS2::DxfTextEncoding::LegacyLibreCadUtf8)
       m_graphic->setDxfRecoverySourceFile(QFileInfo(file).absoluteFilePath());
     m_dxfR = new dxfRW(QFile::encodeName(file));
+#ifdef LIBRECAD_SYSTEM_LIBDXFRW
+    // Match the bundled codec for explicitly declared UTF-8 in older DXF;
+    // other code-page declarations retain the library's compatible mapping.
+    m_dxfR->setDxfCodePagePolicy(DRW::DxfCodePagePolicy::DeclaredUtf8);
+#endif
     m_dxfR->setDxfTextEncoding(
         m_dxfTextEncoding == RS2::DxfTextEncoding::LegacyLibreCadUtf8
             ? DRW::DxfTextEncoding::LegacyLibreCadUtf8

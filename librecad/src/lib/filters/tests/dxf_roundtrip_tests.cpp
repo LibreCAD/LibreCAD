@@ -736,6 +736,43 @@ std::string singleLineTextAt(RS_Graphic &graphic, double y) {
 } // namespace
 
 #ifdef LIBRECAD_SYSTEM_CODEC_TESTS
+TEST_CASE("System codec respects declared UTF-8 in legacy DXF",
+          "[system-codec][dxf][codepage]") {
+  ensureSettings();
+  struct Case { const char *version; const char *codepage; const char *bytes; };
+  for (const Case &item : std::vector<Case>{
+           {"AC1009", "UTF-8", "\xC3\x96"},
+           {"AC1009", "ANSI_1252", "\xD6"},
+           {"AC1009", "", "\xD6"},
+           {"AC1021", "ANSI_1252", "\xC3\x96"}}) {
+    INFO("version=" << item.version << " codepage=" << item.codepage);
+    const auto source = tmpFile("system_declared_utf8_source.dxf");
+    const auto output = tmpFile("system_declared_utf8_output.dxf");
+    std::string content = std::string("0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\n") + item.version + "\n";
+    if (*item.codepage)
+      content += std::string("9\n$DWGCODEPAGE\n3\n") + item.codepage + "\n";
+    const std::string name = std::string(item.bytes) + "LTYPE";
+    content += "0\nENDSEC\n0\nSECTION\n2\nTABLES\n0\nTABLE\n2\nLTYPE\n70\n1\n"
+               "0\nLTYPE\n5\n40\n2\n" + name + "\n70\n0\n3\nCustom\n72\n65\n73\n0\n40\n0\n"
+               "0\nENDTAB\n0\nENDSEC\n0\nSECTION\n2\nENTITIES\n"
+               "0\nTEXT\n5\n41\n8\n0\n10\n1\n20\n9\n40\n2.5\n1\n" + item.bytes +
+               "\n0\nENDSEC\n0\nEOF\n";
+    writeText(source, content);
+    RS_Graphic graphic;
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(source), RS2::FormatDXFRW));
+    CHECK(graphic.findLineType(QStringLiteral("\u00D6LTYPE")) != nullptr);
+    CHECK(singleLineTextAt(graphic, 9.0) == "\xC3\x96");
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+    RS_Graphic reread;
+    REQUIRE(filter.fileImport(reread, QString::fromStdString(output), RS2::FormatDXFRW));
+    CHECK(reread.findLineType(QStringLiteral("\u00D6LTYPE")) != nullptr);
+    CHECK(singleLineTextAt(reread, 9.0) == "\xC3\x96");
+    std::filesystem::remove(source);
+    std::filesystem::remove(output);
+  }
+}
+
 TEST_CASE("System codec preserves canonical linetype metadata after retry",
           "[system-codec][dxf][linetype][transaction]") {
   ensureSettings();
@@ -9866,7 +9903,7 @@ TEST_CASE("DXF import fills the line type list from its LTYPE records only",
 }
 
 TEST_CASE("DXF LTYPE twins fill one list entry whichever comes first",
-          "[dxf][roundtrip][filter][linetype][named][table]") {
+          "[system-codec][dxf][roundtrip][filter][linetype][named][table]") {
   ensureSettings();
   const std::string out = tmpFile("table_twins_out.dxf");
   const std::string upper = ltypeRecord("VENDOR_MIXEDCASE", {30.0, -30.0});
@@ -10094,7 +10131,7 @@ std::string foldedReferenceDrawing() {
 // name folds to, where it carried none. An entry without dashes does not
 // hide the family's.
 TEST_CASE("DXF a reference spelt unlike its record takes the entry's dashes",
-          "[dxf][roundtrip][filter][linetype][named][table]") {
+          "[system-codec][dxf][roundtrip][filter][linetype][named][table]") {
   ensureSettings();
   const std::string src = tmpFile("table_folded_ref_src.dxf");
   const std::string out = tmpFile("table_folded_ref_out.dxf");
@@ -10519,7 +10556,7 @@ TEST_CASE("DXF a record that only names a line type takes the list's dashes",
 // Only an insert or a paste gives such a record dashes. One beside a twin
 // that has them, or spelt as a built-in with blanks, is written as it came.
 TEST_CASE("DXF a name-only LTYPE record beside a twin with dashes is written as it came",
-          "[dxf][roundtrip][filter][linetype][named][table]") {
+          "[system-codec][dxf][roundtrip][filter][linetype][named][table]") {
   ensureSettings();
   const std::string out = tmpFile("name_only_twins_out.dxf");
   const std::string nfdName = "O\xCC\x88" "lfarbe";
@@ -10564,7 +10601,7 @@ TEST_CASE("DXF a name-only LTYPE record beside a twin with dashes is written as 
 // whose name is not UTF-8 is still its entry's record: written once, beside
 // a record spelt as the list reads it, which stays as it came.
 TEST_CASE("DXF an LTYPE record whose name is not UTF-8 is written once",
-          "[dxf][roundtrip][filter][linetype][named][table]") {
+          "[system-codec][dxf][roundtrip][filter][linetype][named][table]") {
   ensureSettings();
   const std::string out = tmpFile("not_utf8_out.dxf");
   const std::string asRead = "VENDOR_\xEF\xBF\xBD";
