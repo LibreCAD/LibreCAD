@@ -10668,6 +10668,14 @@ void RS_FilterDXFRW::snapSplineEdgeEndpoints(RS_EntityContainer *hatchLoop) {
  */
 void RS_FilterDXFRW::addHatch(const DRW_Hatch *data) {
   RS_DEBUG->print("RS_FilterDXF::addHatch()");
+  if (m_graphic != nullptr && data->associative == 1) {
+    std::vector<std::uint32_t> boundaries;
+    for (const auto &loop : data->looplist)
+      if (loop)
+        boundaries.insert(boundaries.end(), loop->m_boundaryHandles.begin(),
+                          loop->m_boundaryHandles.end());
+    m_graphic->dwgAdvancedMetadata().addSourceHatchBoundaries(data->handle, boundaries);
+  }
   const double hatchAngle =
       importedHatchAngle(data->angle, m_legacyHatchRadians, data->solid != 0);
   const auto hatch = new RS_Hatch(
@@ -12028,6 +12036,7 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
   m_dxfLeftOutRawRecords = 0;
   m_writeLeftOut.clear();
   m_legacyLayerLineweightsLeftOut = 0;
+  m_hatchAssociativityLeftOut = 0;
   m_shapeLeftOut.clear();
   m_shapeExportDirectory = QFileInfo(file).absoluteDir().canonicalPath();
   m_exportAttribScaleDataLeftOut = 0;
@@ -12463,8 +12472,10 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
                       skips.rawObjectWrites + skips.rawSectionWrites);
     }
     activeWriter.reset();
-    if (!success)
+    if (!success) {
+      m_hatchAssociativityLeftOut = 0;
       return false;
+    }
 
     // QFile::rename() does not replace an existing destination on every
     // supported platform. Preserve the old file while committing the
@@ -12508,6 +12519,7 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
     if (!commitStagedOutput()) {
       RS_DEBUG->print(RS_Debug::D_WARNING,
                       "RS_FilterDXFRW: cannot commit staged DWG output");
+      m_hatchAssociativityLeftOut = 0;
       m_writeFailed = true;
       return false;
     }
@@ -13322,6 +13334,7 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
 
   if (!success) {
     m_legacyLayerLineweightsLeftOut = 0;
+    m_hatchAssociativityLeftOut = 0;
     RS_DEBUG->print("RS_FilterDXFDW::fileExport: can't write file");
     return false;
   }
@@ -17626,6 +17639,10 @@ QString RS_FilterDXFRW::exportReport() const {
     lines << QObject::tr("lineweight of %1 layer(s), unsupported by this DXF version",
                          "RS_FilterDXFRW")
                  .arg(m_legacyLayerLineweightsLeftOut);
+  }
+  if (m_hatchAssociativityLeftOut > 0) {
+    lines << QObject::tr("associativity of %1 hatch(es)", "RS_FilterDXFRW")
+                 .arg(m_hatchAssociativityLeftOut);
   }
   for (const auto &[what, count] : m_shapeLeftOut)
     lines << QStringLiteral("%1 × %2").arg(count).arg(QString::fromStdString(what));
@@ -33504,7 +33521,9 @@ void RS_FilterDXFRW::writeHatch(RS_Hatch *h) {
       in.angle = 0.0;
       in.colcount = in.rowcount = 1;
       in.colspace = in.rowspace = 0.0;
-      noteDxfWrite(m_dxfW->writeInsert(&in));
+      if (noteDxfWrite(m_dxfW->writeInsert(&in)) && m_graphic != nullptr &&
+          m_graphic->dwgAdvancedMetadata().hasSourceHatchAssociation(h->sourceHandle()))
+        ++m_hatchAssociativityLeftOut;
     }
     return;
   }
@@ -33571,12 +33590,20 @@ void RS_FilterDXFRW::writeHatch(RS_Hatch *h) {
     ha.appendLoop(lData);
   }
   ha.loopsnum = static_cast<int>(ha.looplist.size());
+  // The reconstructed loops do not retain source-object associations.
+  // Emit them consistently as non-associative and report the lost link.
+  ha.associative = 0;
+  bool written = false;
   if (m_dwgW) {
-    if (!m_dwgW->writeHatch(&ha))
+    written = m_dwgW->writeHatch(&ha);
+    if (!written)
       m_writeFailed = true;
-    return;
+  } else {
+    written = noteDxfWrite(m_dxfW->writeHatch(&ha));
   }
-  noteDxfWrite(m_dxfW->writeHatch(&ha));
+  if (written && m_graphic != nullptr &&
+      m_graphic->dwgAdvancedMetadata().hasSourceHatchAssociation(h->sourceHandle()))
+    ++m_hatchAssociativityLeftOut;
 }
 
 /**
@@ -34601,6 +34628,14 @@ void RS_FilterDXFRW::getEntityAttributes(DRW_Entity *ent,
       mapVisualStyle(entity->edgeVisualStyleHandle(), "edge visual-style");
   std::uint32_t reactorOrdinal = 0;
   for (quint32 source : entity->reactorHandles()) {
+    // A reconstructed hatch is emitted without boundary associations. Remove
+    // its matching reverse reactor as well, while retaining unrelated ones.
+    if (m_graphic != nullptr &&
+        m_graphic->dwgAdvancedMetadata().isSourceHatchBoundary(
+            source, entity->sourceHandle())) {
+      ++reactorOrdinal;
+      continue;
+    }
 #ifdef DWGSUPPORT
     const auto mapped =
         m_dwgW != nullptr ? remapDwgReference(source, "reactor", reactorOrdinal)

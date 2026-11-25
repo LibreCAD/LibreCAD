@@ -4260,22 +4260,29 @@ TEST_CASE("DXF export keeps a GROUP's handle for its members' reactors",
   std::filesystem::remove(out);
 }
 
-TEST_CASE("DXF export points an entity's reactors at the entities they name",
-          "[dxf][roundtrip][filter][handles][system-codec]") {
+TEST_CASE("DXF export reports hatch deassociation and retains unrelated reactors",
+          "[dxf][roundtrip][filter][handles][system-codec][hatch-assoc]") {
   ensureSettings();
   const std::string src = tmpFile("entity-reactors-src.dxf");
   const std::string out = tmpFile("entity-reactors-out.dxf");
   std::filesystem::remove(src);
   std::filesystem::remove(out);
 
-  // An associative HATCH is a reactor of its boundary, and is written
-  // after the polyline. Either preserved or remapped handles must resolve.
+  // The hatch names its boundary, which has both the hatch reactor and an
+  // unrelated reactor. Reconstructed loops cannot preserve the association.
   writeText(src,
             "0\nSECTION\n2\nENTITIES\n"
-            "0\nLWPOLYLINE\n5\nB0\n102\n{ACAD_REACTORS\n330\nB1\n102\n}\n"
+            "0\nLWPOLYLINE\n5\nB0\n102\n{ACAD_REACTORS\n330\nB1\n330\nB3\n330\nB2\n102\n}\n"
             "100\nAcDbEntity\n8\n0\n100\nAcDbPolyline\n90\n4\n70\n1\n"
             "10\n0\n20\n0\n10\n10\n20\n0\n10\n10\n20\n10\n10\n0\n20\n10\n"
+            "0\nLINE\n5\nB2\n100\nAcDbEntity\n8\n0\n100\nAcDbLine\n"
+            "10\n0\n20\n20\n30\n0\n11\n10\n21\n20\n31\n0\n"
             "0\nHATCH\n5\nB1\n100\nAcDbEntity\n8\n0\n100\nAcDbHatch\n"
+            "10\n0\n20\n0\n30\n0\n210\n0\n220\n0\n230\n1\n2\nSOLID\n70\n1\n71\n1\n"
+            "91\n1\n92\n3\n72\n0\n73\n1\n93\n4\n"
+            "10\n0\n20\n0\n10\n10\n20\n0\n10\n10\n20\n10\n10\n0\n20\n10\n"
+            "97\n1\n330\nB0\n75\n0\n76\n1\n98\n0\n"
+            "0\nHATCH\n5\nB3\n100\nAcDbEntity\n8\n0\n100\nAcDbHatch\n"
             "10\n0\n20\n0\n30\n0\n210\n0\n220\n0\n230\n1\n2\nSOLID\n70\n1\n71\n1\n"
             "91\n1\n92\n3\n72\n0\n73\n1\n93\n4\n"
             "10\n0\n20\n0\n10\n10\n20\n0\n10\n10\n20\n10\n10\n0\n20\n10\n"
@@ -4288,19 +4295,74 @@ TEST_CASE("DXF export points an entity's reactors at the entities they name",
     REQUIRE(filter.fileImport(graphic, QString::fromStdString(src),
                               RS2::FormatDXFRW));
   }
-  {
-    RS_FilterDXFRW filter;
-    REQUIRE(filter.fileExport(graphic, QString::fromStdString(out),
-                              RS2::FormatDXFRW));
-  }
-
-  const auto hatch = recordGroupValues(out, "HATCH", "5");
-  REQUIRE(hatch.size() == 1);
-  // This checks the reactor only. The filter currently reconstructs hatch
-  // loops without their source boundary associations; graph closure needs
-  // separate work and is not established by this test.
+  CHECK(graphic.dwgAdvancedMetadata().hasSourceHatchAssociation(0xB1));
+  CHECK(graphic.dwgAdvancedMetadata().isSourceHatchBoundary(0xB1, 0xB0));
+  CHECK(graphic.dwgAdvancedMetadata().isSourceHatchBoundary(0xB3, 0xB0));
+  RS_FilterDXFRW filter;
+#ifdef LIBRECAD_SYSTEM_CODEC_TESTS
+  const std::string sentinel = "preserve destination\n";
+  writeText(out, sentinel);
+  DRW_LType invalid;
+  invalid.name = "Continuous";
+  invalid.flags = -1;
+  graphic.dwgAdvancedMetadata().addLineTypeName(invalid);
+  CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(out), RS2::FormatDXFRW));
+  std::ifstream retained(out, std::ios::binary);
+  CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel);
+  retained.close();
+  CHECK_FALSE(filter.exportReport().contains(QStringLiteral("associativity")));
+  invalid.flags = 64;
+  graphic.dwgAdvancedMetadata().addLineTypeName(invalid);
+#endif
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(out), RS2::FormatDXFRW));
+  CHECK(filter.exportReport().contains(QStringLiteral("associativity of 2 hatch")));
+  CHECK(recordGroupValues(out, "HATCH", "71") == std::vector<std::string>{"0", "0"});
+  CHECK(recordGroupValues(out, "HATCH", "97") == std::vector<std::string>{"0", "0"});
+  const auto line = recordGroupValues(out, "LINE", "5");
+  REQUIRE(line.size() == 1);
   CHECK(recordReactors(out, "LWPOLYLINE")
-        == std::vector<std::vector<std::string>>{{hatch.front()}});
+        == std::vector<std::vector<std::string>>{{line.front()}});
+  if (const char *copy = std::getenv("LIBRECAD_KEEP_HATCH_ASSOC_OUTPUT"))
+    std::filesystem::copy_file(out, copy, std::filesystem::copy_options::overwrite_existing);
+
+#ifdef DWGSUPPORT
+  const std::string dwg = tmpFile("entity-reactors-out.dwg");
+  const std::string dwgOut = tmpFile("entity-reactors-dwg-out.dxf");
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(dwg), RS2::FormatDWG2004));
+  CHECK(filter.exportReport().contains(QStringLiteral("associativity of 2 hatch")));
+  RS_Graphic fromDwg;
+  RS_FilterDXFRW dwgFilter;
+  REQUIRE(dwgFilter.fileImport(fromDwg, QString::fromStdString(dwg), RS2::FormatDWG));
+  REQUIRE(dwgFilter.fileExport(fromDwg, QString::fromStdString(dwgOut), RS2::FormatDXFRW));
+  CHECK(recordGroupValues(dwgOut, "HATCH", "71") == std::vector<std::string>{"0", "0"});
+  CHECK(recordGroupValues(dwgOut, "HATCH", "97") == std::vector<std::string>{"0", "0"});
+  const auto dwgLine = recordGroupValues(dwgOut, "LINE", "5");
+  REQUIRE(dwgLine.size() == 1);
+  CHECK(recordReactors(dwgOut, "LWPOLYLINE")
+        == std::vector<std::vector<std::string>>{{dwgLine.front()}});
+  std::filesystem::remove(dwg);
+  std::filesystem::remove(dwgOut);
+#endif
+
+  RS_Entity *boundary = nullptr;
+  for (RS_Entity *entity : graphic)
+    if (entity && entity->sourceHandle() == 0xB0)
+      boundary = entity;
+  REQUIRE(boundary != nullptr);
+  boundary->move(RS_Vector(5.0, 0.0));
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(out), RS2::FormatDXFRW));
+  CHECK(filter.exportReport().contains(QStringLiteral("associativity of 2 hatch")));
+  CHECK(recordGroupValues(out, "HATCH", "71") == std::vector<std::string>{"0", "0"});
+  const auto movedLine = recordGroupValues(out, "LINE", "5");
+  REQUIRE(movedLine.size() == 1);
+  CHECK(recordReactors(out, "LWPOLYLINE")
+        == std::vector<std::vector<std::string>>{{movedLine.front()}});
+  REQUIRE(graphic.removeEntity(boundary));
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(out), RS2::FormatDXFRW));
+  CHECK(filter.exportReport().contains(QStringLiteral("associativity of 2 hatch")));
+  CHECK(recordGroupValues(out, "HATCH", "71") == std::vector<std::string>{"0", "0"});
+  CHECK(recordGroupValues(out, "HATCH", "97") == std::vector<std::string>{"0", "0"});
+  CHECK(countRecords(out, "LWPOLYLINE") == 0);
 
   std::filesystem::remove(src);
   std::filesystem::remove(out);

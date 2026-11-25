@@ -25,6 +25,7 @@
 #include <map>
 #include <memory>
 #include <optional>
+#include <set>
 #include <string>
 #include <utility>
 #include <vector>
@@ -3491,6 +3492,7 @@ public:
     m_suns.clear();
     m_backgrounds.clear();
     m_materials.clear();
+    m_sourceHatchBoundaries.clear();
     m_renderSettings.clear();
     m_sunStudies.clear();
     m_motionPaths.clear();
@@ -3792,6 +3794,30 @@ public:
   // Slice A2: lossless DXF passthrough store (group-text records captured by
   // the DXF reader's processRawObject/processRawEntity). Kept on the graphic so
   // a read filter and a later write filter share them across a DXF round-trip.
+  // Source associations are kept separately from reconstructed hatch loops:
+  // the latter can be reordered or edited and cannot yet replay these links.
+  void addSourceHatchBoundaries(std::uint32_t hatch,
+                                const std::vector<std::uint32_t> &boundaries) {
+    if (hatch == 0 || hatch == DRW::NoHandle)
+      return;
+    auto &stored = m_sourceHatchBoundaries[hatch];
+    for (const auto boundary : boundaries) {
+      if (boundary != 0 && boundary != DRW::NoHandle)
+        stored.insert(boundary);
+    }
+  }
+
+  bool hasSourceHatchAssociation(std::uint32_t hatch) const {
+    return m_sourceHatchBoundaries.count(hatch) != 0;
+  }
+
+  bool isSourceHatchBoundary(std::uint32_t hatch,
+                             std::uint32_t boundary) const {
+    const auto it = m_sourceHatchBoundaries.find(hatch);
+    return it != m_sourceHatchBoundaries.end() &&
+           it->second.count(boundary) != 0;
+  }
+
   void addRawDxfObject(const DRW_RawDxfObject &object) {
     m_rawDxfObjects.push_back(object);
   }
@@ -13447,6 +13473,7 @@ private:
   std::vector<SunRecord> m_suns;
   std::vector<BackgroundRecord> m_backgrounds;
   std::vector<MaterialRecord> m_materials;
+  std::map<std::uint32_t, std::set<std::uint32_t>> m_sourceHatchBoundaries;
   std::vector<RenderSettingsRecord> m_renderSettings;
   std::vector<SunStudyRecord> m_sunStudies;
   std::vector<MotionPathRecord> m_motionPaths;
