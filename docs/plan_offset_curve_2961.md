@@ -63185,3 +63185,37 @@ unchanged. The two changed source files matched the tested scratch files and
 `git diff --check` passed. Visible GUI, broader variants, deployment,
 cross-platform CI, independent review, and the remaining roadmap gates stay
 open.
+
+## 2042. Size Offset Properties Before First Display (2026-11-25)
+
+The section 2036 layout check resized the dialog after showing it. A visible
+macOS check of the source-bearing fixture exposed the remaining first-show
+failure: labels overlapped their editors and `Select in drawing` was clipped.
+An initial-show regression reproduced eight overlapping label/editor pairs and
+one clipped button on the prior code, despite its passing post-resize check.
+
+Commit `674dbbdab` invalidates the parent layout and applies its computed
+minimum size before showing the offset-specific properties dialog. It leaves
+other entity dialogs unchanged. The regression checks label width, sibling
+separation and containment, editor width and containment, and the source
+button on both initial show and a later attempted minimum-size resize. The
+test mouse helper now clicks a checkbox's style-provided indicator; the wider
+layout revealed that clicking the center of the entire row can miss the
+indicator and text, causing a false test failure.
+
+The source-equivalent macOS CMake Release scratch build passed the focused
+layout check (**105 assertions / 1 case**) and the complete offscreen offset
+Properties selection (**50,247 assertions / 106 cases**). The rebuilt
+application opened the native source-bearing DXF, resolved `Ellipse 9`, and
+visibly displayed the labels, editors, and source-selection button without the
+previous overlap or clipping. The Properties dialog was canceled; no manual
+Save was issued. The normal profile's autosave ran during the earlier test
+session. A source-equivalent qmake6 incremental app/worker build passed; it is
+not a clean deployment or minimum-macOS qualification. The changed product and
+test files matched the scratch sources, and `git diff --check` passed.
+
+This is a bounded layout check, not visible acceptance of source replacement:
+the family menu did not respond to the accessibility bridge during the test.
+Repeated family switching, candidate selection, highlight transfer,
+replacement, preview/commit and cancellation/refusal remain open alongside the
+other roadmap gates.
