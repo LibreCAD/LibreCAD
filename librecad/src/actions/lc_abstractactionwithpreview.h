@@ -49,6 +49,8 @@ public:
     void trigger() override;
     void updateMouseCursor() override;
     void updateMouseButtonHints() override;
+    // whether typed text may be a value (a length, an angle or a count) and not a point
+    static bool isScalarExpressionCandidate(const QString &input);
     /**
    * Mode that controls where from apply pen
    */
@@ -123,7 +125,6 @@ protected:
      */
     virtual bool doCheckMayDrawPreview([[maybe_unused]]QMouseEvent *event, int status);
     virtual bool doProcessCommand([[maybe_unused]]RS_CommandEvent *e, const QString &c);
-    static bool isScalarExpressionCandidate(const QString &input);
     /**
      * method for handling
      * @param e

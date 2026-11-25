@@ -422,6 +422,7 @@ bool LC_ActionDrawLinePoints::doProcessCommandValue(RS_CommandEvent *e, const QS
                         break;
                     }
                     default:
+                        result = false; // no direction for the distance
                         break;
                 }
             } else {
@@ -441,7 +442,7 @@ bool LC_ActionDrawLinePoints::doProcessCommandValue(RS_CommandEvent *e, const QS
             break;
         }
         case SetAngle: { // process angle value
-            processAngleValueInput(e, c);
+            result = processAngleValueInput(e, c);
             break;
         }
         default:
