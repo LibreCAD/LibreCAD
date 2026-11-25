@@ -13329,6 +13329,14 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
   //    bool success = m_dxfW->write(this, exportVersion, false); //ascii
   const bool success =
       m_dxfW->write(this, exportVersion, binary) && !m_writeFailed; // binary
+#ifdef LIBRECAD_SYSTEM_LIBDXFRW
+  if (!success) {
+    const auto diagnostic = m_dxfW->getLastDiagnostic();
+    if (diagnostic.failed())
+      RS_DEBUG->print(RS_Debug::D_WARNING, "DXF write: %s: %s",
+                      diagnostic.code.c_str(), diagnostic.message.c_str());
+  }
+#endif
   m_writeLeftOut = m_dxfW->leftOut();
   activeWriter.reset();
 
@@ -13541,6 +13549,9 @@ void RS_FilterDXFRW::prepareDxfEntityHandleMap() {
       const std::uint32_t sourceHandle = entity->sourceHandle();
       if (sourceHandle == 0)
         continue;
+      // A live entity supersedes an omitted raw carrier of the same source
+      // identity. Duplicate live identities are still marked ambiguous below.
+      m_dxfDroppedReferenceHandles.erase(sourceHandle);
       ++sourceHandleCounts[sourceHandle];
       // An ATTRIB is counted, so that a handle it shares names no entity, but
       // it takes its handle when its INSERT is written.

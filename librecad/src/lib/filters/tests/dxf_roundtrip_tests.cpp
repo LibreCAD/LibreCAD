@@ -5340,6 +5340,39 @@ TEST_CASE("DXF live identities win over left-out raw carriers with the same hand
   std::filesystem::remove(out);
 }
 
+TEST_CASE("DXF omits ambiguous live references despite an omitted raw carrier",
+          "[dxf][roundtrip][filter][handles]") {
+  ensureSettings();
+  RS_Graphic graphic;
+  graphic.initForNewDocument();
+  for (double y : {0.0, 1.0}) {
+    auto *line = new RS_Line(&graphic, RS_LineData(RS_Vector(0.0, y),
+                                                    RS_Vector(1.0, y)));
+    line->setSourceHandle(0xA0u);
+    graphic.addEntity(line);
+  }
+  auto *referer = new RS_Line(&graphic, RS_LineData(RS_Vector(0.0, 2.0),
+                                                   RS_Vector(1.0, 2.0)));
+  referer->setSourceHandle(0xA1u);
+  referer->setReactorHandles({0xA0u});
+  graphic.addEntity(referer);
+  DRW_RawDxfObject raw;
+  raw.name = "LINE";
+  raw.handle = 0xA0u;
+  raw.m_version = DRW::AC1015;
+  graphic.dwgAdvancedMetadata().addRawDxfEntity(raw);
+  const auto out = tmpFile("ambiguous_live_handle.dxf");
+  RS_FilterDXFRW filter;
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(out), RS2::FormatDXFRW));
+  const auto handles = recordGroupValues(out, "LINE", "5");
+  REQUIRE(handles.size() == 3);
+  CHECK(std::set<std::string>(handles.begin(), handles.end()).size() == 3);
+  const auto reactors = recordReactors(out, "LINE");
+  REQUIRE(reactors.size() == 3);
+  CHECK(reactors.back().empty());
+  std::filesystem::remove(out);
+}
+
 TEST_CASE("DXF export reports what it left out",
           "[dxf][roundtrip][filter][version]") {
   ensureSettings();
