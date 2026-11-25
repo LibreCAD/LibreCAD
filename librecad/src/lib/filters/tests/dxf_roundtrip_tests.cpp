@@ -6367,6 +6367,54 @@ void checkDimensionBlockLineTypes(const std::string &stem,
   std::filesystem::remove(src);
 }
 
+#ifdef LIBRECAD_SYSTEM_CODEC_TESTS
+TEST_CASE("System codec preserves unit settings across legacy DXF refusal and retry",
+          "[system-codec][dxf][units]") {
+  ensureSettings();
+  const std::string src = tmpFile("system_codec_units_source.dxf");
+  writeText(src, dimStyleLineTypeFixture({"DASHED", "HIDDEN", "CENTER"}, kVendorDim));
+  RS_Graphic graphic;
+  RS_FilterDXFRW importer;
+  REQUIRE(importer.fileImport(graphic, QString::fromStdString(src), RS2::FormatDXFRW));
+
+  for (const auto &[suffix, format] :
+       {std::make_pair("r12", RS2::FormatDXFRW12),
+        std::make_pair("r14", RS2::FormatDXFRW14)}) {
+    INFO(suffix);
+    const std::string out = tmpFile((std::string("system_codec_units_") + suffix + ".dxf").c_str());
+    writeText(out, "keep destination");
+    graphic.setUnit(RS2::Millimeter);
+    RS_FilterDXFRW filter;
+    CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(out), format));
+    std::ifstream before(out, std::ios::binary);
+    CHECK(std::string(std::istreambuf_iterator<char>(before), {}) == "keep destination");
+    before.close();
+    graphic.setUnit(RS2::None);
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(out), format));
+    std::ifstream after(out, std::ios::binary);
+    const std::string contents(std::istreambuf_iterator<char>(after), {});
+    CHECK(contents.find("$INSUNITS") == std::string::npos);
+    after.close();
+    RS_Graphic reopened;
+    RS_FilterDXFRW reader;
+    REQUIRE(reader.fileImport(reopened, QString::fromStdString(out), RS2::FormatDXFRW));
+    CHECK(reopened.getUnit() == RS2::None);
+    std::filesystem::remove(out);
+  }
+
+  const std::string modern = tmpFile("system_codec_units_r2000.dxf");
+  graphic.setUnit(RS2::Millimeter);
+  RS_FilterDXFRW modernWriter;
+  REQUIRE(modernWriter.fileExport(graphic, QString::fromStdString(modern), RS2::FormatDXFRW2000));
+  RS_Graphic reopened;
+  RS_FilterDXFRW modernReader;
+  REQUIRE(modernReader.fileImport(reopened, QString::fromStdString(modern), RS2::FormatDXFRW));
+  CHECK(reopened.getUnit() == RS2::Millimeter);
+  std::filesystem::remove(modern);
+  std::filesystem::remove(src);
+}
+#endif
+
 // The DXF text of `path` with LTYPE record `name` moved to handle `to`,
 // and its DSTYLE references with it.
 std::string withLineTypeHandle(const std::string &path, const std::string &name,

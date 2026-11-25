@@ -2595,10 +2595,51 @@ install(FILES ${PLUGIN_QM_FILES}
     DESTINATION "${LIBRECAD_DATA_INSTALL_DIR}/qm" COMPONENT Resources)
 
 option (BUILD_TESTS "Build unit tests for LibreCAD" OFF)
+option (LIBRECAD_BUILD_SYSTEM_CODEC_TESTS
+        "Build public-interface filter tests with installed libdxfrw" OFF)
+if (LIBRECAD_BUILD_SYSTEM_CODEC_TESTS AND NOT LIBRECAD_USE_SYSTEM_LIBDXFRW)
+    message(FATAL_ERROR "LIBRECAD_BUILD_SYSTEM_CODEC_TESTS requires LIBRECAD_USE_SYSTEM_LIBDXFRW=ON")
+endif()
 if (LIBRECAD_USE_SYSTEM_LIBDXFRW AND BUILD_TESTS)
     message(FATAL_ERROR
         "LibreCAD test targets require bundled libdxfrw internals; "
         "set BUILD_TESTS=OFF when using LIBRECAD_USE_SYSTEM_LIBDXFRW")
+endif()
+
+if (LIBRECAD_BUILD_SYSTEM_CODEC_TESTS)
+    enable_testing()
+    find_package(Catch2 3 QUIET)
+    if (NOT Catch2_FOUND)
+        if (EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/externals/Catch2/CMakeLists.txt")
+            add_subdirectory(externals/Catch2 EXCLUDE_FROM_ALL)
+        else()
+            message(FATAL_ERROR "System codec tests require Catch2 v3")
+        endif()
+    endif()
+    add_executable(librecad_system_codec_tests EXCLUDE_FROM_ALL
+        librecad/src/main/lc_release_label.cpp
+        librecad/src/test/lc_testsettingsisolation.cpp
+        librecad/src/test/lc_testtempdirectory.cpp
+        librecad/src/lib/filters/tests/dxf_roundtrip_tests.cpp)
+    set_target_properties(librecad_system_codec_tests PROPERTIES
+        AUTOMOC OFF AUTOUIC OFF AUTORCC OFF)
+    target_include_directories(librecad_system_codec_tests PRIVATE ${SHARED_INCLUDES})
+    target_link_libraries(librecad_system_codec_tests PRIVATE
+        librecad_lib Catch2::Catch2WithMain Qt6::Core Qt6::Gui Qt6::Network
+        Qt6::PrintSupport Qt6::Svg Qt6::Widgets)
+    target_compile_features(librecad_system_codec_tests PRIVATE cxx_std_17)
+    target_compile_definitions(librecad_system_codec_tests PRIVATE
+        BUILD_TESTS=1 DWGSUPPORT _USE_MATH_DEFINES LIBRECAD_SYSTEM_CODEC_TESTS=1
+        LIBRECAD_SOURCE_DIR="${CMAKE_CURRENT_SOURCE_DIR}"
+        LIBRECAD_TEST_DIR="${CMAKE_CURRENT_SOURCE_DIR}/librecad/src/lib/filters/tests/testdata")
+    if (MSVC)
+        target_compile_options(librecad_system_codec_tests PRIVATE /bigobj)
+    endif()
+    add_test(NAME librecad_system_codec_tests
+        COMMAND librecad_system_codec_tests "[dimstyle],[system-codec]" --reporter compact)
+    set_tests_properties(librecad_system_codec_tests PROPERTIES
+        WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
+        ENVIRONMENT "QT_QPA_PLATFORM=offscreen" TIMEOUT 120)
 endif()
 option (LIBRECAD_REGISTER_FULL_TESTS
         "Register the complete LibreCAD test executable with CTest" OFF)

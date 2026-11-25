@@ -18694,6 +18694,15 @@ void RS_FilterDXFRW::writeHeader(DRW_Header &data) {
     auto value = it.value();
     int code = value.getCode();
     auto key = it.key().toStdString();
+    // LibreCAD creates an unspecified-units default even when the source
+    // contains no INSUNITS. R12/R14 cannot store it; keep a nonzero value so
+    // the codec still refuses to silently discard an actual units setting.
+    if (m_dxfW && m_dxfExportVersion < DRW::AC1015 &&
+        key == "$INSUNITS" && value.getType() == RS2::VariableInt &&
+        code == 70 && value.getInt() == 0) {
+      ++it;
+      continue;
+    }
     switch (value.getType()) {
     case RS2::VariableInt:
       data.addInt(key, value.getInt(), code);
