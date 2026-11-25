@@ -62926,3 +62926,30 @@ broader cross-platform variant qualification; full broad sanitizer/order
 coverage; independent visual/semantic CAD and AutoCAD acceptance; signed/deployed
 and minimum-macOS runtime validation; human review; and final integration
 remain open.
+
+## 2033. Visible Native-source Properties and Highlight Retry (2026-11-25)
+
+Used the source-bearing fixture from section 1906:
+`/private/tmp/offset-source-picker-fixture/offset-source-picker-visible_source-picker-visible.dxf`.
+The visible application was `/tmp/librecad-pr3193-qmake6-34b647d/LibreCAD.app`,
+whose title identifies build `g34b647d29`; this predates the current PR head
+`5d81f3c86319d1ed9a734df326e41a5c6b717064` and is exploratory evidence only.
+
+The first double-click landed on the source ELLIPSE and correctly opened
+ordinary Ellipse Properties. After targeting the adjacent native spline carrier,
+LibreCAD opened Offset Curve Properties and showed the resolved source as
+`Ellipse 9`, source type Ellipse, distance 0.5, center (0,0), radii 10/7, and a
+Defined offset. Pressing `Select in drawing` highlighted the resolved source
+ellipse red in the canvas. The dialog was cancelled without edits and the
+drawing was not saved. This confirms the fixture is usable for visible native
+properties/source indication and corrects the prior fixture diagnosis.
+
+Visible source-family switching and candidate replacement were not completed:
+the source-type combo did not open through the available accessibility and
+keyboard navigation actions. Therefore this attempt does not close the visible
+family-change/replacement gate, nor does it prove current-head behavior. Retry
+with the exact-head packaged application and complete the type-change,
+candidate-selection, highlight, preview, and commit checks; preserve no-save
+state unless the acceptance step explicitly uses a disposable copy. The exact
+PR head remains `5d81f3c86319d1ed9a734df326e41a5c6b717064`; its CI status must be
+polled separately and must not be inferred from this older executable.
