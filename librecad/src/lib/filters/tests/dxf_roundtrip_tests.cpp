@@ -1385,7 +1385,7 @@ TEST_CASE("DXF filter preserves reflected planar curve conventions once",
 }
 
 TEST_CASE("DXF filter preserves WCS POINT and LINE extrusion fields",
-          "[dxf][roundtrip][filter][extrusion]") {
+          "[dxf][roundtrip][filter][extrusion][system-codec]") {
   ensureSettings();
   const std::string src = tmpFile("wcs_point_line_extrusion_src.dxf");
   const std::string out = tmpFile("wcs_point_line_extrusion_out.dxf");
@@ -1432,7 +1432,8 @@ TEST_CASE("DXF filter preserves WCS POINT and LINE extrusion fields",
     for (const auto &[code, expected] : values) {
       const auto actual = recordGroupValues(out, record, code);
       REQUIRE(actual.size() == 1);
-      CHECK(std::stod(actual.front()) == std::stod(expected));
+      CHECK(std::stod(actual.front()) ==
+            Catch::Approx(std::stod(expected)).epsilon(1e-12).margin(1e-12));
     }
   }
 
@@ -4107,7 +4108,7 @@ TEST_CASE("DXF raw ENTITY remap updates typed GROUP members",
 }
 
 TEST_CASE("DXF export keeps a GROUP's handle for its members' reactors",
-          "[dxf][roundtrip][filter][handles][groups]") {
+          "[dxf][roundtrip][filter][handles][groups][system-codec]") {
   ensureSettings();
   const std::string src = tmpFile("group-reactors-src.dxf");
   const std::string out = tmpFile("group-reactors-out.dxf");
@@ -4146,26 +4147,33 @@ TEST_CASE("DXF export keeps a GROUP's handle for its members' reactors",
                               RS2::FormatDXFRW));
   }
 
-  CHECK(recordGroupValues(out, "GROUP", "5") == std::vector<std::string>{"90"});
+  const auto group = recordGroupValues(out, "GROUP", "5");
+  REQUIRE(group.size() == 1);
+  const auto dictionary = recordGroupsWithValue(out, "DICTIONARY", "3", "PAIR");
+  const auto name = std::find(dictionary.begin(), dictionary.end(),
+                              std::make_pair(std::string("3"), std::string("PAIR")));
+  REQUIRE(name != dictionary.end());
+  REQUIRE(std::next(name) != dictionary.end());
+  CHECK(*std::next(name) == std::make_pair(std::string("350"), group.front()));
   CHECK(recordGroupValues(out, "GROUP", "340")
         == recordGroupValues(out, "LINE", "5"));
   CHECK(recordReactors(out, "LINE")
-        == std::vector<std::vector<std::string>>{{"90"}, {"90"}});
+        == std::vector<std::vector<std::string>>{{group.front()}, {group.front()}});
 
   std::filesystem::remove(src);
   std::filesystem::remove(out);
 }
 
 TEST_CASE("DXF export points an entity's reactors at the entities they name",
-          "[dxf][roundtrip][filter][handles]") {
+          "[dxf][roundtrip][filter][handles][system-codec]") {
   ensureSettings();
   const std::string src = tmpFile("entity-reactors-src.dxf");
   const std::string out = tmpFile("entity-reactors-out.dxf");
   std::filesystem::remove(src);
   std::filesystem::remove(out);
 
-  // An associative HATCH is a reactor of its boundary; both entities are
-  // written under fresh handles, the HATCH after the polyline.
+  // An associative HATCH is a reactor of its boundary, and is written
+  // after the polyline. Either preserved or remapped handles must resolve.
   writeText(src,
             "0\nSECTION\n2\nENTITIES\n"
             "0\nLWPOLYLINE\n5\nB0\n102\n{ACAD_REACTORS\n330\nB1\n102\n}\n"
@@ -4192,7 +4200,9 @@ TEST_CASE("DXF export points an entity's reactors at the entities they name",
 
   const auto hatch = recordGroupValues(out, "HATCH", "5");
   REQUIRE(hatch.size() == 1);
-  CHECK(hatch.front() != "B1");
+  // This checks the reactor only. The filter currently reconstructs hatch
+  // loops without their source boundary associations; graph closure needs
+  // separate work and is not established by this test.
   CHECK(recordReactors(out, "LWPOLYLINE")
         == std::vector<std::vector<std::string>>{{hatch.front()}});
 

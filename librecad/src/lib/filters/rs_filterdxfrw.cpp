@@ -12980,6 +12980,13 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
       }
     }
     std::map<std::uint32_t, std::uint32_t> handleRemap;
+#ifdef LIBRECAD_SYSTEM_LIBDXFRW
+    // The standalone writer plans GROUP identities before entities. Explicit
+    // identity mappings keep these reserved objects at their source handles,
+    // so early entity reactors and the later GROUP record agree.
+    for (const std::uint32_t handle : keptGroupHandles)
+      handleRemap.emplace(handle, handle);
+#endif
     bool remapFailed = false;
     auto remapIfColliding = [&](std::uint32_t h) {
       if (h == 0 || kFixedStructural.count(h) == 0)
