@@ -24,6 +24,7 @@
 #include <functional>
 #include <memory>
 #include <limits>
+#include <new>
 #include <sstream>
 #include <utility>
 #include <type_traits>
@@ -165,7 +166,7 @@ void checkLibreDwgSourceKinds(
     }
 }
 
-bool pollEventsUntil(const std::function<bool()>& ready) {
+bool pollEventsUntil(const std::function<bool()>& ready, int timeoutMs = preparationWatchdogMs) {
     if (ready()) return true;
     QEventLoop loop;
     QTimer poll, watchdog;
@@ -178,7 +179,7 @@ bool pollEventsUntil(const std::function<bool()>& ready) {
         loop.quit();
     });
     poll.start(1);
-    watchdog.setSingleShot(true); watchdog.start(preparationWatchdogMs);
+    watchdog.setSingleShot(true); watchdog.start(timeoutMs);
     loop.exec();
     return !expired && ready();
 }
@@ -6261,6 +6262,55 @@ TEST_CASE("Source replacement guard reentry preserves the newly bound target",
         newSnapshot.exact(*newest);
         widget.setPreparationGuard({});
         widget.setEntity(nullptr);
+    }
+}
+
+TEST_CASE("Source replacement tolerates destruction from its guard",
+          "[gui][dialog][offsetcurve][source][guard-reentry][lifetime]") {
+    for (bool late : {false, true}) for (int guardMode : {0, 1, 2}) {
+        CAPTURE(late, guardMode);
+        Fixture f; requireNativeHelper();
+        auto* line = new RS_Line(nullptr, RS_LineData{{0, 4}, {5, 4}});
+        f.graphic.addEntity(line);
+        auto original = makeArc(f.graphic);
+        const Snapshot before(*original);
+        auto widget = std::make_unique<NativeWidget>();
+        QPointer<NativeWidget> live(widget.get());
+        widget->setGraphicViewport(f.view.getViewPort());
+        widget->setEntity(original.get());
+        widget->show();
+        QApplication::processEvents();
+        auto* type = widget->findChild<QComboBox*>("cbSourceType");
+        auto* source = widget->findChild<QComboBox*>("cbSource");
+        REQUIRE(type); REQUIRE(source);
+        type->setCurrentIndex(type->findData(static_cast<int>(LC_OffsetSourceGeometry::Kind::Line)));
+        const int index = source->findData(QVariant::fromValue<qulonglong>(line->getId()));
+        REQUIRE(index >= 0);
+        unsigned calls = 0;
+        widget->setPreparationGuard([&] {
+            ++calls;
+            if (late && calls == 1) return true;
+            widget.reset();
+            if (guardMode == 2) throw std::bad_alloc{};
+            return guardMode == 1;
+        });
+        if (late) {
+            source->setCurrentIndex(index);
+            REQUIRE(live); REQUIRE(live->isPreparing());
+            const bool settled = pollEventsUntil([&] { return live.isNull() || !live->isPreparing(); },
+                static_cast<int>(LC_OffsetWorkerClient::Deadlines::commit + 5000));
+            INFO("Worker refusal: " << (live ? live->findChild<QLabel*>("lRefusal")->text().toStdString()
+                                           : std::string{}));
+            REQUIRE(settled);
+            REQUIRE(live.isNull());
+        } else {
+            REQUIRE(QMetaObject::invokeMethod(source, "currentIndexChanged", Qt::DirectConnection,
+                                              Q_ARG(int, index)));
+        }
+        CHECK(live.isNull());
+        CHECK(calls == (late ? 2u : 1u));
+        observeCancelledReplies();
+        before.exact(*original);
     }
 }
 
