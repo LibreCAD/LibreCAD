@@ -62984,3 +62984,28 @@ visual/semantic CAD and AutoCAD acceptance; signed/deployed and minimum-macOS
 runtime validation; human review; and final integration. Retry the GUI through
 an attachable test-app window or existing authorized desktop session, without
 altering/saving the user's source drawing.
+
+## 2035. qmake Worker Family and Atomic Edit Smoke (2026-11-25)
+
+Placed the CMake-built worker-client test runner from source `f943374d5ba19b2a7bddeca45e14b6740fb698d7`
+beside the qmake-built `LibreCADOffsetWorker` in the section 2034 bundle. Git
+comparison confirms only this roadmap differs between that source and current
+head `c9dc8d2ec14ffd8533626ed962eccece08178bab`; the qmake bundle itself was
+built from parent `85652b3e42f5bbf0cb7d232fabea1e0ae1ecafe0`, not `c9dc8d2`.
+
+The `Worker client joins typed source generation for every modeled source
+family` case initially reached its 150,000 ms suite watchdog after 539,245
+passing assertions and failed that watchdog; it was not a completed pass. With
+the test-only `LC_OFFSET_CLIENT_TEST_TIMEOUT_MS=900000` override, the same
+case completed with 3,002,030 passing assertions. Production worker deadlines
+were not changed. `Worker typed-source edit replaces cache and definition
+atomically` separately passed 362 assertions using the same adjacent qmake
+helper. These runs are local macOS evidence for the cases exercised, not
+visible picker acceptance, arbitrary geometry coverage, or deployment and
+minimum-OS validation.
+
+The previously attachable older GUI instance exposed a disabled main window
+without its modal dialog in the accessibility snapshot. No additional GUI
+interaction or save was performed. The open acceptance gates from section
+2034 remain open; allow current CI to finish and inspect its exact-head
+results independently.
