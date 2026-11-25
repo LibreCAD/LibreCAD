@@ -28323,7 +28323,9 @@ TEST_CASE("dwgRW preserves ordinary entity ENC side channels by version",
       {DRW::AC1015, false},
       {DRW::AC1018, true},
       {DRW::AC1021, true},
+      {DRW::AC1024, true},
       {DRW::AC1027, true},
+      {DRW::AC1032, true},
   };
 
   for (const VersionCase &versionCase : versions) {
@@ -28339,7 +28341,9 @@ TEST_CASE("dwgRW preserves ordinary entity ENC side channels by version",
     const char *versionName = versionCase.version == DRW::AC1015   ? "AC1015"
                               : versionCase.version == DRW::AC1018 ? "AC1018"
                               : versionCase.version == DRW::AC1021 ? "AC1021"
-                                                                   : "AC1027";
+                              : versionCase.version == DRW::AC1024 ? "AC1024"
+                              : versionCase.version == DRW::AC1027 ? "AC1027"
+                                                                   : "AC1032";
     maybePreserveDwgFixture(path, std::string("ordinary_enc_") + versionName +
                                       ".dwg");
 

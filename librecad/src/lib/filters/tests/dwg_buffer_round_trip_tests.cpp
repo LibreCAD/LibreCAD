@@ -590,14 +590,17 @@ TEST_CASE("dwgBufferW: putVariableText AC1021 UTF-16 code-unit round-trip",
 
 TEST_CASE("dwgBufferW: ENC orders RGB before alpha and converts CP8 names",
           "[dwg-write][primitives][enc]") {
-    {
+    for (const auto version : {DRW::AC1018, DRW::AC1021, DRW::AC1024,
+                               DRW::AC1027, DRW::AC1032}) {
         dwgBufferW w;
-        w.putEnColor(DRW::AC1027, 7, 0x112233, {}, {}, 0x03000080, false);
+        w.putEnColor(version, 7, 0x112233, {}, {}, 0x03000080, false);
         auto bytes = snapshot(w);
         dwgBuffer flags(bytes.data(), bytes.size());
-        CHECK((flags.getBitShort() & 0xFF00u) == 0xA000u);
+        CHECK(flags.getBitShort() == 0xA000u);
+        CHECK(static_cast<std::uint32_t>(flags.getBitLong()) == 0xC2112233u);
+        CHECK(static_cast<std::uint32_t>(flags.getBitLong()) == 0x03000080u);
         dwgBuffer r(bytes.data(), bytes.size());
-        CHECK(r.getEnColor(DRW::AC1027) == 7);
+        CHECK(r.getEnColor(version) == 0);
         CHECK(r.lastEnColorRgb == 0x112233);
         CHECK(r.lastEnColorAlphaRaw == 0x03000080);
     }
