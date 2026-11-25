@@ -125,13 +125,36 @@ QString LC_Formatter::formatUCSAngle(const double wcsAngle) const {
 }
 
 QString LC_Formatter::formatRawAngle(const double angle) const {
-    QString result =  RS_Units::formatAngle(angle, m_angleFormat, m_anglePrecision);
-    return result;
+    return formatRawAngle(angle, m_angleFormat);
 }
 
 QString LC_Formatter::formatRawAngle(const double angle, const RS2::AngleFormat format) const {
-    QString result =  RS_Units::formatAngle(angle, format, m_anglePrecision);
+    double value = angle;
+    if (format == RS2::Surveyors && m_viewport != nullptr) {
+        // a bearing is a direction, clockwise from north in the UCS whatever the angle base and direction
+        value = M_PI_2 - m_viewport->toUCSAbsAngle(angle, m_anglesBase, m_anglesCounterClockWise);
+    }
+    QString result =  RS_Units::formatAngle(value, format, m_anglePrecision);
     return result;
+}
+
+/**
+ * formats an angle that is an amount, such as an arc span or a rotation, not a direction.
+ * A bearing only names a direction, so with Surveyor's units the amount is shown in decimal degrees.
+ */
+QString LC_Formatter::formatAngleAmount(const double angle) const {
+    return formatRawAngle(angle, m_angleFormat == RS2::Surveyors ? RS2::DegreesDecimal : m_angleFormat);
+}
+
+/**
+ * formats an absolute angle, measured counterclockwise from the X axis and not from the angles base,
+ * such as the direction of a UCS axis in world coordinates. As a bearing it is read from world north.
+ */
+QString LC_Formatter::formatAbsoluteAngle(const double absAngle) const {
+    if (m_angleFormat == RS2::Surveyors) {
+        return RS_Units::formatAngle(M_PI_2 - absAngle, RS2::Surveyors, m_anglePrecision);
+    }
+    return formatRawAngle(absAngle);
 }
 
 /**

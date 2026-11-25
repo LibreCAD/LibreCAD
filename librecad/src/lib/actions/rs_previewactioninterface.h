@@ -242,7 +242,7 @@ protected:
     bool parseToWCSAngle(const QString &c, double &wcsAngleRad) const;
     bool parseToUCSBasisAngle(const QString &c, double& ucsBasisAngleRad) const;
     bool parseToRelativeAngle(const QString&c, double &ucsBasisAngleRad) const;
-    double evalAngleValue(const QString &c, bool *ok) const;
+    double evalAngleValue(const QString &c, bool *ok, bool direction) const;
     void initFromSettings() override;
 
     void onVisualSnapPointRegistered(LC_VisualSnapVertex* point, bool remove) override;

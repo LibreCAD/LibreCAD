@@ -140,7 +140,7 @@ void LC_LineAngleOptionsWidget::onAnglesBasisToggled(const bool val) {
 
 void LC_LineAngleOptionsWidget::setAngleToActionAndView(const QString& val){
     double angle = 0.;
-    if (toDoubleAngleDegrees(val, angle, 0.0, false)){
+    if (toDoubleDirectionDegrees(val, angle)){
         m_action->setUcsAngleDegrees(angle);
         ui->leAngle->setText(fromDouble(angle));
     }

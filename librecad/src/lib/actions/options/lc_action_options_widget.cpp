@@ -27,6 +27,8 @@
 #include <QToolButton>
 
 #include "lc_actioncontext.h"
+#include "lc_convert.h"
+#include "lc_formatter.h"
 #include "rs_actioninterface.h"
 #include "rs_settings.h"
 
@@ -119,4 +121,12 @@ void LC_ActionOptionsWidget::onInteractiveInputButtonClicked([[maybe_unused]]boo
             }
         }
     }
+}
+
+bool LC_ActionOptionsWidget::toDoubleDirectionDegrees(const QString& strValue, double& res) {
+    const LC_Formatter* formatter = m_actionContext == nullptr ? nullptr : m_actionContext->getFormatter();
+    if (formatter == nullptr) {
+        return toDoubleAngleDegrees(strValue, res, 0.0, false);
+    }
+    return LC_Convert::parseToDirectionDegrees(strValue, res, formatter->getAnglesBase(), formatter->isAnglesCounterClockWise());
 }

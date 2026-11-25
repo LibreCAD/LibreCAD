@@ -47,7 +47,8 @@ public:
 
     explicit LC_CoordinatesParser(RS_GraphicView* gview);
     RS_CoordinateEvent parseCoordinate(const QString& inputStr, bool &stringContainsCoordinate) const;
-    static Syntax parseSyntax(const QString& input);
+    // the angle base (in radians) and direction are needed to read a bearing as a direction
+    static Syntax parseSyntax(const QString& input, double anglesBase = 0.0, bool anglesCounterClockwise = true);
     /** Whether the input is a coordinate that can be read */
     static bool isCoordinate(const QString& input);
 private:

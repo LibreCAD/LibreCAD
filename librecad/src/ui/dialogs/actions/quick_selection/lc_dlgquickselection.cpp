@@ -350,7 +350,8 @@ LC_EntityMatcher* LC_DlgQuickSelection::obtainEntityMatcher() const {
             QString valText = ui->leValue->text().trimmed();
             QString toleranceText = ui->lePrecision->text().trimmed();
             double ucsAngleDeg{0};
-            if (LC_Convert::parseToToDoubleAngleDegrees(valText, ucsAngleDeg, 0.0, false)) {
+            if (LC_Convert::parseToDirectionDegrees(valText, ucsAngleDeg, m_viewport->getAnglesBaseAngle(),
+                                                    m_viewport->areAnglesCounterClockwise())) {
                 // perform conversion of angle form ui (where it's in degrees and in UCS) to WCS angle.
                 double ucsAngleBasis = RS_Math::deg2rad(ucsAngleDeg);
                 double ucsAngleAbs = m_viewport->toAbsUCSAngle(ucsAngleBasis);

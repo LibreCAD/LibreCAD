@@ -72,11 +72,11 @@ QString LC_QuickInfoBaseData::formatUCSAngle(const double wcsAngle) const {
     return m_formatter->formatUCSAngle(wcsAngle);
 }
 
-QString LC_QuickInfoBaseData::formatRawAngle(const double angle) const {
+QString LC_QuickInfoBaseData::formatAngleAmount(const double angle) const {
     if (m_formatter == nullptr) {
         return "";
     }
-    return m_formatter->formatRawAngle(angle);
+    return m_formatter->formatAngleAmount(angle);
 }
 
 /**
@@ -196,7 +196,7 @@ void LC_QuickInfoBaseData::appendWCSAngle(QString &result, const QString &label,
 }
 
 void LC_QuickInfoBaseData::appendRawAngle(QString &result, const QString &label, const double value) const {
-    createLabelValueString(result, label,formatRawAngle(value));
+    createLabelValueString(result, label,formatAngleAmount(value));
 }
 
 void LC_QuickInfoBaseData::appendValue(QString &result, const QString &label, const QString& value) const {
