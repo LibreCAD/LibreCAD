@@ -36,6 +36,7 @@
 #include <cmath>
 #include <cstddef>
 #include <cstdlib>
+#include <cstring>
 #include <filesystem>
 #include <fstream>
 #include <iterator>
@@ -705,12 +706,101 @@ std::string singleLineTextAt(RS_Graphic &graphic, double y) {
 
 } // namespace
 
+#ifdef LIBRECAD_SYSTEM_CODEC_TESTS
+TEST_CASE("System codec preserves single-line controls and literal carets",
+          "[system-codec][dxf][text]") {
+  ensureSettings();
+  for (const auto &header : {
+           std::string{},
+           std::string{"0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1021\n0\nENDSEC\n"},
+           std::string{"0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC9999\n0\nENDSEC\n"},
+           std::string{"0\nSECTION\n2\nHEADER\n9\n$DWGCODEPAGE\n3\nANSI_1252\n0\nENDSEC\n"}}) {
+    for (const auto &[wire, native] : std::vector<std::pair<std::string, std::string>>{
+             {"A^IB", "A\tB"}, {"A^JB", "A\nB"}, {"A^MB", "A\rB"},
+             {"A^ B", "A^B"}, {"A^ IB", "A^IB"}}) {
+      INFO("header=" << header << " wire=" << wire);
+      const std::string src = tmpFile("system_codec_text_source.dxf");
+      const std::string out = tmpFile("system_codec_text_output.dxf");
+      auto content = singleLineTextDxf(wire);
+      if (!header.empty()) {
+        const auto begin = content.find("0\nBLOCK\n8\n");
+        const auto end = content.find("0\nENDBLK\n8\n");
+        REQUIRE(begin != std::string::npos);
+        REQUIRE(end != std::string::npos);
+        content.replace(end, 11, "0\nENDBLK\n5\n21\n8\n");
+        content.replace(begin, 10, "0\nBLOCK\n5\n20\n8\n");
+      }
+      writeText(src, header + content);
+      RS_Graphic graphic;
+      RS_FilterDXFRW filter;
+      REQUIRE(filter.fileImport(graphic, QString::fromStdString(src), RS2::FormatDXFRW));
+      CHECK(singleLineTextAt(graphic, 4.0) == native);
+      CHECK(singleLineTextAt(graphic, 9.0) == native);
+      REQUIRE(filter.fileExport(graphic, QString::fromStdString(out), RS2::FormatDXFRW));
+      CHECK(recordGroupValues(out, "ATTRIB", "1") == std::vector<std::string>{wire});
+      CHECK(recordGroupValues(out, "TEXT", "1") == std::vector<std::string>{wire});
+      RS_Graphic reread;
+      REQUIRE(filter.fileImport(reread, QString::fromStdString(out), RS2::FormatDXFRW));
+      CHECK(singleLineTextAt(reread, 4.0) == native);
+      CHECK(singleLineTextAt(reread, 9.0) == native);
+      std::filesystem::remove(src);
+      std::filesystem::remove(out);
+    }
+  }
+}
+
+TEST_CASE("System codec treats binary DXF carets as literal bytes",
+          "[system-codec][dxf][text][binary]") {
+  ensureSettings();
+  const std::string src = tmpFile("system_codec_binary_text.dxf");
+  {
+    std::ofstream out(src, std::ios::binary);
+    const char magic[] = "AutoCAD Binary DXF\r\n\x1a";
+    out.write(magic, sizeof(magic));
+    const auto code = [&](unsigned n) {
+      out.put(static_cast<char>(n & 0xff));
+      out.put(static_cast<char>((n >> 8) & 0xff));
+    };
+    const auto text = [&](unsigned n, const std::string &value) {
+      code(n);
+      out.write(value.data(), static_cast<std::streamsize>(value.size()));
+      out.put('\0');
+    };
+    const auto real = [&](unsigned n, double value) {
+      std::uint64_t bits = 0;
+      static_assert(sizeof(bits) == sizeof(value), "binary DXF requires binary64 doubles");
+      std::memcpy(&bits, &value, sizeof(bits));
+      code(n);
+      for (unsigned i = 0; i < 8; ++i)
+        out.put(static_cast<char>((bits >> (8 * i)) & 0xff));
+    };
+    text(0, "SECTION"); text(2, "HEADER"); text(9, "$ACADVER");
+    text(1, "AC1021"); text(0, "ENDSEC"); text(0, "SECTION");
+    text(2, "ENTITIES");
+    for (const auto &[handle, y, value] :
+         std::vector<std::tuple<std::string, double, std::string>>{
+             {"20", 9.0, "A^IB"}, {"21", 4.0, "A\tB"}}) {
+      text(0, "TEXT"); text(5, handle); text(8, "0");
+      real(10, 1.0); real(20, y); real(40, 2.5); text(1, value);
+    }
+    text(0, "ENDSEC"); text(0, "EOF");
+    REQUIRE(out.good());
+  }
+  RS_Graphic graphic;
+  RS_FilterDXFRW filter;
+  REQUIRE(filter.fileImport(graphic, QString::fromStdString(src), RS2::FormatDXFRW));
+  CHECK(singleLineTextAt(graphic, 9.0) == "A^IB");
+  CHECK(singleLineTextAt(graphic, 4.0) == "A\tB");
+  std::filesystem::remove(src);
+}
+#endif
+
 // A single-line value (TEXT, ATTRIB) has no MTEXT markup: its backslashes are
 // ordinary characters, as in the path of a title block. Reading "\P" as a
 // line break left a line feed in the attribute, and the DXF writer refuses a
 // record that holds one.
 TEST_CASE("Single-line text and attribute values keep their backslashes",
-          "[dxf][dwg][roundtrip][filter][attrib][text]") {
+          "[system-codec][dxf][dwg][roundtrip][filter][attrib][text]") {
   ensureSettings();
 
   struct Case {
@@ -4946,7 +5036,7 @@ TEST_CASE("DXF export reports what it left out",
 }
 
 TEST_CASE("DXF text keeps control characters and carets as caret codes",
-          "[dxf][roundtrip][filter][text]") {
+          "[system-codec][dxf][roundtrip][filter][text]") {
   ensureSettings();
   const std::string src = tmpFile("caret-src.dxf");
   const std::string out = tmpFile("caret-out.dxf");
@@ -4980,9 +5070,19 @@ TEST_CASE("DXF text keeps control characters and carets as caret codes",
         == std::vector<std::string>{"x^Iy", "c^Md", "p^ q"});
   const auto textLayers = recordGroupValues(out, "TEXT", "8");
   REQUIRE_FALSE(textLayers.empty());
-  CHECK(textLayers.front() == "A^B");
+#ifdef LIBRECAD_SYSTEM_CODEC_TESTS
+  const std::string expectedLayer = "A^ B";
+#else
+  const std::string expectedLayer = "A^B";
+#endif
+  CHECK(textLayers.front() == expectedLayer);
   const auto layerNames = recordGroupValues(out, "LAYER", "2");
-  CHECK(std::find(layerNames.cbegin(), layerNames.cend(), "A^B") != layerNames.cend());
+  CHECK(std::find(layerNames.cbegin(), layerNames.cend(), expectedLayer) != layerNames.cend());
+
+  RS_Graphic reread;
+  RS_FilterDXFRW rereader;
+  REQUIRE(rereader.fileImport(reread, QString::fromStdString(out), RS2::FormatDXFRW));
+  CHECK(reread.findLayer(QStringLiteral("A^B")) != nullptr);
 
   std::filesystem::remove(src);
   std::filesystem::remove(out);

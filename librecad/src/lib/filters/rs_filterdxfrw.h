@@ -3321,6 +3321,9 @@ private:
   // Non-owning active-export observers; local RAII owners clear before delete.
   dxfRW *m_dxfW{nullptr};
   dxfRW *m_dxfR{nullptr};
+  static QString toNativeSingleLineString(const QString &data, bool decodeCaret);
+  bool singleLineInputNeedsCaretDecoding() const;
+  bool m_dxfHasVersionHeader{false};
 #ifdef DWGSUPPORT
   // Null outside the current fileExport() operation, including failed saves.
   dwgRW *m_dwgW{nullptr};

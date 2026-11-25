@@ -4542,6 +4542,7 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic &g, const QString &file,
 
   m_graphic = &g;
   m_currentContainer = m_graphic;
+  m_dxfHasVersionHeader = false;
   m_dummyContainer = new RS_EntityContainer(nullptr, true);
   // RAII: free the scratch container on every return path (success and the
   // BAD_VERSION / parse-failure early returns), not just the success path.
@@ -7310,6 +7311,16 @@ void RS_FilterDXFRW::addXline(const DRW_Xline &data) {
  * Implementation of the method which handles circle entities.
  */
 namespace {
+bool encodeSingleLineCaretInAdapter(bool dxfOutput) {
+#ifdef LIBRECAD_SYSTEM_LIBDXFRW
+  // The installed codec encodes semantic controls and literal carets itself.
+  (void)dxfOutput;
+  return false;
+#else
+  return dxfOutput;
+#endif
+}
+
 template <typename T>
 const T &consumerProjectedDxf(const T &source, const dxfRW *reader,
                               std::optional<T> &projected) {
@@ -8651,7 +8662,8 @@ void RS_FilterDXFRW::addInsert(const DRW_Insert &data) {
     QString sty = QString::fromUtf8(att->style.c_str());
     prepareTextStyleName(sty);
     QString text =
-        toNativeSingleLineString(QString::fromUtf8(att->text.c_str()));
+        toNativeSingleLineString(QString::fromUtf8(att->text.c_str()),
+                                 singleLineInputNeedsCaretDecoding());
 
     RS_TextData td(refPoint, secPoint, att->height, att->widthscale, valign,
                    halign, dir, text, sty, att->angle * M_PI / 180,
@@ -8976,7 +8988,8 @@ void RS_FilterDXFRW::addText(const DRW_Text &data) {
   }
 
   const QString text =
-      toNativeSingleLineString(QString::fromUtf8(data.text.c_str()));
+      toNativeSingleLineString(QString::fromUtf8(data.text.c_str()),
+                               singleLineInputNeedsCaretDecoding());
 
   prepareTextStyleName(sty);
 
@@ -11805,6 +11818,8 @@ void RS_FilterDXFRW::addHeader(const DRW_Header *data) {
     return;
   }
   RS_Graphic *container = static_cast<RS_Graphic *>(m_currentContainer);
+  if (m_dxfR != nullptr && data->vars.find("$ACADVER") != data->vars.end())
+    m_dxfHasVersionHeader = true;
 
   // initialize units vars if not are present in dxf file - they will be
   // overriden if they are present
@@ -32569,7 +32584,8 @@ void RS_FilterDXFRW::writeInsert(const RS_Insert *i) {
           shownValue = toNativeSingleLineString(
               QString::fromUtf8(sidecar.value.c_str()));
         } else {
-          attrib.text = toDxfSingleLineString(plain, m_dwgW == nullptr)
+          attrib.text = toDxfSingleLineString(
+                            plain, encodeSingleLineCaretInAdapter(m_dwgW == nullptr))
                             .toUtf8()
                             .toStdString();
         }
@@ -32615,7 +32631,8 @@ void RS_FilterDXFRW::writeInsert(const RS_Insert *i) {
         attrib.height = source->getHeight();
         attrib.widthscale = source->getWidthRel();
         attrib.text =
-            toDxfSingleLineString(source->getText(), m_dwgW == nullptr)
+            toDxfSingleLineString(source->getText(),
+                                  encodeSingleLineCaretInAdapter(m_dwgW == nullptr))
                 .toUtf8()
                 .toStdString();
         attrib.style = source->getStyle().toUtf8().toStdString();
@@ -32867,7 +32884,9 @@ void RS_FilterDXFRW::writeText(RS_Text *t) {
 
   if (!t->getText().isEmpty()) {
     text.text =
-        toDxfSingleLineString(t->getText(), m_dwgW == nullptr).toUtf8().data();
+        toDxfSingleLineString(t->getText(),
+                              encodeSingleLineCaretInAdapter(m_dwgW == nullptr))
+            .toUtf8().data();
     if (m_dwgW) {
       text.styleH.ref = dwgWriteHandleByName(m_dwgWriteTextStyleHandleByName,
                                              text.style);
@@ -34907,9 +34926,29 @@ QString RS_FilterDXFRW::toNativeString(const QString &data) {
 }
 
 QString RS_FilterDXFRW::toNativeSingleLineString(const QString &data) {
-  QString res = decodeCaretCodes(data);
+  return toNativeSingleLineString(data, true);
+}
+
+QString RS_FilterDXFRW::toNativeSingleLineString(const QString &data,
+                                                  bool decodeCaret) {
+  QString res = decodeCaret ? decodeCaretCodes(data) : data;
   decodeTextSymbols(res);
   return res;
+}
+
+bool RS_FilterDXFRW::singleLineInputNeedsCaretDecoding() const {
+#ifdef LIBRECAD_SYSTEM_LIBDXFRW
+  if (m_dxfR != nullptr) {
+    dxfRW::DxfReadContext context;
+    if (m_dxfR->getDxfReadContext(context)) {
+      // Binary DXF contains literal bytes. For ASCII the codec performs the
+      // caret decode once a version or code page has configured DXF mode.
+      return !context.binary && context.sourceVersion == DRW::UNKNOWNV &&
+             !context.hasDeclaration && !m_dxfHasVersionHeader;
+    }
+  }
+#endif
+  return true;
 }
 
 /**
