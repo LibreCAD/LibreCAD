@@ -32046,6 +32046,21 @@ void RS_FilterDXFRW::writePolyline(const RS_Polyline *p) {
       m_writeFailed = true;
     return;
   }
+#ifdef LIBRECAD_SYSTEM_LIBDXFRW
+  // These child records are synthesized from LibreCAD's polyline segments;
+  // carry the parent's presentation without copying its identity or XDATA.
+  for (const auto &vertex : pol.vertlist) {
+    vertex->layer = pol.layer;
+    vertex->lineType = pol.lineType;
+    vertex->color = pol.color;
+  }
+  if (m_dxfExportVersion == DRW::AC1009) {
+    pol.seqEndEntity = std::make_shared<DRW_SeqEnd>();
+    pol.seqEndEntity->layer = pol.layer;
+    pol.seqEndEntity->lineType = pol.lineType;
+    pol.seqEndEntity->color = pol.color;
+  }
+#endif
   noteDxfWrite(m_dxfW->writePolyline(&pol));
 }
 

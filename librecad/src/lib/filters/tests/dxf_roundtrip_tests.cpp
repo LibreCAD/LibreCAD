@@ -8566,7 +8566,7 @@ TEST_CASE("DWG round-trip keeps unregistered linetype names",
 // the two to construct.
 TEST_CASE("An open polyline's VERTEX and SEQEND carry its own layer and "
           "linetype in R12",
-          "[dxf][roundtrip][filter][polyline][linetype][named]") {
+          "[dxf][roundtrip][filter][polyline][linetype][named][system-codec]") {
   ensureSettings();
   RS_Graphic graphic;
   graphic.initForNewDocument();
@@ -8598,13 +8598,21 @@ TEST_CASE("An open polyline's VERTEX and SEQEND carry its own layer and "
         std::vector<std::string>{"PLINE_LAYER"});
   CHECK(recordGroupValues(out12, "SEQEND", "6") ==
         std::vector<std::string>{"BYBLOCK"});
+  const auto parentHandles = recordGroupValues(out12, "POLYLINE", "5");
+  const auto vertexHandles = recordGroupValues(out12, "VERTEX", "5");
+  const auto endHandles = recordGroupValues(out12, "SEQEND", "5");
+  REQUIRE(parentHandles.size() == 1);
+  REQUIRE(vertexHandles.size() == 2);
+  REQUIRE(endHandles.size() == 1);
+  CHECK(std::set<std::string>{parentHandles.front(), vertexHandles[0],
+                              vertexHandles[1], endHandles.front()}.size() == 4);
 
   std::filesystem::remove(out12);
 }
 
 TEST_CASE("An open polyline keeps every vertex on DXF re-save; a closed "
           "one is unchanged",
-          "[dxf][roundtrip][filter][polyline]") {
+          "[dxf][roundtrip][filter][polyline][system-codec]") {
   ensureSettings();
 
   RS_Graphic openGraphic;
