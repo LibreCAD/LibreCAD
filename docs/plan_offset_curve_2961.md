@@ -62833,3 +62833,45 @@ and ARM64, macOS, CodeQL, and several Pixi jobs are still queued or running.
 Do not treat pending jobs as passes. The visible packaged-app source-picker
 workflow, mixed-bulge cross-platform question, remaining family/variant
 validation, and overall roadmap remain open.
+
+## 2030. Exact-Source Worker Validation After the ODA Retry
+
+The 2029 receipt's PR-head sentence was stale: it described the earlier
+1abf55ec95d53c478bda9f761c74b65a3be4153f checkout, not the source used for
+this follow-up. The source and plan in this checkpoint are
+fec730abe1134247dbd8dd03ab3c6a2c94da0c18 (docs(offset): record fresh ODA
+audit).
+
+Configured a clean temporary CMake tree with BUILD_TESTS=ON and
+LIBRECAD_REGISTER_OFFSET_WORKER_TESTS=ON, then built the worker kernel, client,
+process test targets, and the LibreCAD application. Validation on this exact
+source passed:
+
+- Full worker kernel CTest: 1/1, 313.83 seconds.
+- All eight worker client shards, serial: 8/8, 1,502.32 seconds.
+- Worker process CTest: 1/1, 53.62 seconds.
+- Independent mixed-bulge region-membership kernel case: 5,094,768 assertions.
+- Mixed-frame positive/negative-bulge worker-client cases: 2,021 and 1,983
+  assertions, respectively.
+- Roadmap inventory parser: 5/5; refusal inventory: 94/94 from the completed
+  validation receipt recorded above.
+- git diff --check: clean before the checkpoint.
+
+The macOS qmake6 executable is available at /opt/homebrew/bin/qmake6, and the
+repository contains the root project plus the offset-worker qmake project.
+This checkpoint does not claim a fresh qmake6 build.
+
+At the time this receipt was written, exact-head diagnostics for
+fec730abe1134247dbd8dd03ab3c6a2c94da0c18 showed headless ON/OFF, Pixi Ubuntu
+x64/ARM and Windows, Pixi macOS latest, and Windows ARM64 packaging successful.
+Pixi macOS Intel, the regular macOS build, DWG/DXF fast and Windows x64/ARM64
+jobs, and CodeQL were still in progress. Skipped workflow jobs remain skipped;
+no in-progress job is counted as a pass.
+
+These local passes resolve neither the Linux mixed-bulge cross-platform
+question nor the remaining family/variant matrix. Visible packaged-app source
+replacement/highlighting/refusal/cancel acceptance, independent visual or
+semantic CAD comparison, AutoCAD acceptance, full sanitizer/order coverage,
+and final review/integration remain open. Keep the overall roadmap open and
+continue from exact-head CI results; do not close gates by extrapolating from
+the local Darwin test environment.
