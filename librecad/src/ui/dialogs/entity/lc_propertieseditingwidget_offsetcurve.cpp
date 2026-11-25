@@ -177,6 +177,15 @@ LC_PropertiesEditingWidgetOffsetCurve::LC_PropertiesEditingWidgetOffsetCurve(QWi
     : LC_EntityPropertiesEditorWidget(parent), ui(new Ui::LC_OffsetCurvePropertiesEditingWidget),
       m_limits(LC_OffsetCurveUI::sheetLimits()), m_worker(std::make_unique<LC_OffsetWorkerClient>(this)) {
     ui->setupUi(this);
+    for (auto* label : ui->gbDefinition->findChildren<QLabel*>()) {
+        if (label->buddy()) label->setMinimumWidth(label->sizeHint().width());
+    }
+    const int inputWidth = ui->leDistance->fontMetrics().horizontalAdvance(QStringLiteral("-123456.123456")) + 20;
+    for (auto* editor : ui->gbDefinition->findChildren<QLineEdit*>()) {
+        editor->setMinimumWidth(inputWidth);
+    }
+    ui->cbSource->setMinimumWidth(inputWidth);
+    ui->tbSelectSource->setMinimumWidth(ui->tbSelectSource->sizeHint().width());
     m_highlightTimer = new QTimer(this);
     m_highlightTimer->setObjectName("offsetSourceHighlightTimer");
     m_highlightTimer->setInterval(1000);
