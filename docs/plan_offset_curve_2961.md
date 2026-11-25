@@ -63031,3 +63031,42 @@ These checks do not establish a visible after-fix result, cross-family popup
 selection, candidate replacement, preview/commit, or the other open acceptance
 gates in section 2034. Retry those against the rebuilt application; do not
 claim complete GUI acceptance from the layout regression alone.
+
+## 2037. Fix ODA Rejection of True-color Offset Carriers (2026-11-25)
+
+Freshly generated all-family fixtures from the source-equivalent `f943374`
+scratch build, including the section 2036 patch, passed the native picker
+integration and LibreDWG checks (2,138 assertions). ODA File Converter with
+Audit enabled converted the R2000 DWG but rejected the R2004, R2007, R2010,
+R2013 and R2018 files at the first offset `AcDbSpline` with `Invalid input`.
+The output `.err` files are retained under
+`/private/tmp/offset-3193-oda-fresh-output`; this contradicts any inference
+that the earlier 18 simple controls qualified these richer drawings.
+
+Disposable isolation runs showed the same failure after removing foreign
+XDATA, after omitting native offset XDATA, with redundant unit weights omitted,
+and with only one offset carrier. Keeping the original geometry, typed-source
+metadata, dashed line and width while changing its color to ByLayer produced
+successful output in all six versions. The native true-color ENC writer had
+omitted the `0xC2` color-method byte from the RGB BL and retained an ACI index
+in the inline RGB form; ACadSharp writes the method byte and no ACI payload.
+Commit `42923ac32` corrects this shared entity-color encoding; the speculative
+weight change and fixture-only modifications were not retained.
+
+Validation on the source-equivalent scratch build with the product/test fix:
+the DWG primitive suite passed 370 assertions / 36 cases; the ENC entity suite
+passed 167 assertions / 4 cases with R2000 through R2018 coverage; and the
+all-family native picker integration passed 2,138 assertions. The corrected
+six full DWGs were audited and converted by ODA to R2010 ASCII DXF, with six
+nonempty outputs and nine `TYPED_SOURCE` markers in each, under
+`/private/tmp/offset-3193-oda-truecolor-fixed-output`. The ODA trial used a
+functionally equivalent scratch implementation of the same packed color and
+index logic. These results establish successful opening and marker retention
+for these fixtures, not decoded binary-payload equality, rendered geometry,
+all source variants, or AutoCAD acceptance.
+
+Next: independently compare the complete typed-source payloads, spline
+geometry, color and line attributes in each ODA output; add repeatable external
+coverage where feasible. Visible current-head Properties interaction, broader
+geometry/variant and sanitizer matrices, deployment qualification, exact-head
+CI and review remain open. Keep the roadmap and PR draft open.
