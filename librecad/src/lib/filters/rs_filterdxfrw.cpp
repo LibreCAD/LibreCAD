@@ -12031,6 +12031,17 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
   m_shapeLeftOut.clear();
   m_shapeExportDirectory = QFileInfo(file).absoluteDir().canonicalPath();
   m_exportAttribScaleDataLeftOut = 0;
+  const auto &materials = g.dwgAdvancedMetadata().materials();
+  if (std::any_of(materials.cbegin(), materials.cend(), [](const auto &material) {
+        return material.requiresRawDxfReplay;
+      })) {
+    // Do not let a partial raw-only object fall back to a typed writer.
+    // Raw graph replay needs its own checked admission before it is enabled.
+    RS_DEBUG->print(RS_Debug::D_WARNING,
+                    "RS_FilterDXFRW: cannot export an incomplete raw-only MATERIAL graph");
+    m_writeFailed = true;
+    return false;
+  }
   // What becomes of each block attribute's text is the same for every
   // callback of this export, the DWG handle pre-pass included.
   buildInsertAttribPlan();

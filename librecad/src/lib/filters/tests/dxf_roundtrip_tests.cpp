@@ -798,6 +798,45 @@ TEST_CASE("System codec preserves canonical linetype metadata after retry",
   std::filesystem::remove(output);
 }
 
+TEST_CASE("System codec refuses an incomplete raw-only material after metadata storage",
+          "[system-codec][dxf][material][transaction]") {
+  ensureSettings();
+  const auto output = tmpFile("system_raw_material_marker.dxf");
+  const std::string sentinel = "preserve material destination\n";
+  writeText(output, sentinel);
+  const auto source = tmpFile("system_raw_material_marker_source.dxf");
+  writeText(source, "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1021\n0\nENDSEC\n"
+                    "0\nSECTION\n2\nOBJECTS\n0\nMATERIAL\n5\nF040\n330\n72\n"
+                    "100\nAcDbMaterial\n1\nRawOnly\n94\n63\n0\nENDSEC\n0\nEOF\n");
+  struct OptInFilter : RS_FilterDXFRW, DRW_DxfSparseMaterialRawPolicy {
+    bool wantsDxfSparseMaterialRawCapture() const noexcept override { return true; }
+  };
+  RS_Graphic incomplete;
+  OptInFilter importer;
+  REQUIRE(importer.fileImport(incomplete, QString::fromStdString(source), RS2::FormatDXFRW));
+  REQUIRE(incomplete.dwgAdvancedMetadata().materials().size() == 1u);
+  CHECK(incomplete.dwgAdvancedMetadata().materials().front().requiresRawDxfReplay);
+  RS_FilterDXFRW filter;
+  for (const auto format : {RS2::FormatDXFRW, RS2::FormatDXFRW2010,
+                            RS2::FormatDXFRW2013, RS2::FormatDWG2010}) {
+    CHECK_FALSE(filter.fileExport(incomplete, QString::fromStdString(output), format));
+    std::ifstream retained(output, std::ios::binary);
+    CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel);
+  }
+
+  RS_Graphic complete;
+  complete.initForNewDocument();
+  DRW_Material material;
+  material.handle = 0xF040u;
+  material.m_name = "RawOnly";
+  complete.dwgAdvancedMetadata().addMaterial(material);
+  CHECK_FALSE(complete.dwgAdvancedMetadata().materials().front().requiresRawDxfReplay);
+  REQUIRE(filter.fileExport(complete, QString::fromStdString(output), RS2::FormatDXFRW2010));
+  CHECK(recordGroupValues(output, "MATERIAL", "1") == std::vector<std::string>{"RawOnly"});
+  std::filesystem::remove(source);
+  std::filesystem::remove(output);
+}
+
 TEST_CASE("System codec preserves single-line controls and literal carets",
           "[system-codec][dxf][text]") {
   ensureSettings();

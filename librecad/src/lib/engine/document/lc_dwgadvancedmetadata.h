@@ -1577,6 +1577,9 @@ public:
     std::uint32_t rawDataBitSize = 0;
     DRW::Version rawDataVersion = DRW::UNKNOWNV;
     bool rawDataValid = false;
+    // A partial DXF MATERIAL must never be reconstructed as a complete typed
+    // record when its raw carrier is unavailable or targets another version.
+    bool requiresRawDxfReplay = false;
     ReplayState replayState = ReplayState::ReplayAllowed;
   };
 
@@ -4292,8 +4295,20 @@ public:
     m_backgrounds.push_back(std::move(record));
   }
 
+  template <typename Material>
+  static auto materialRequiresRawDxfReplay(const Material &material, int)
+      -> decltype(material.requiresRawDxfMaterialReplay(), bool()) {
+    return material.requiresRawDxfMaterialReplay();
+  }
+
+  template <typename Material>
+  static bool materialRequiresRawDxfReplay(const Material &, long) {
+    return false; // Bundled codecs without the optional raw-only marker.
+  }
+
   void addMaterial(const DRW_Material &material) {
     MaterialRecord record;
+    record.requiresRawDxfReplay = materialRequiresRawDxfReplay(material, 0);
     record.handle = material.handle;
     record.parentHandle = material.parentHandle;
     record.name = material.m_name;
