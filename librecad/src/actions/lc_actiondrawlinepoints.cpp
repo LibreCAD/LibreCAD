@@ -382,9 +382,6 @@ bool LC_ActionDrawLinePoints::doProceedCommand([[maybe_unused]]RS_CommandEvent *
 bool LC_ActionDrawLinePoints::doProcessCommandValue(RS_CommandEvent *e, const QString &c){
     bool result = true;
     switch (getStatus()) {
-        case SetDirection:
-            // processed earlier
-            break;
         case SetFixDistance:{
             bool ok = false;
             double distance = RS_Math::eval(c, &ok);
@@ -422,6 +419,7 @@ bool LC_ActionDrawLinePoints::doProcessCommandValue(RS_CommandEvent *e, const QS
                         break;
                     }
                     default:
+                        result = false;
                         break;
                 }
             } else {
@@ -441,9 +439,13 @@ bool LC_ActionDrawLinePoints::doProcessCommandValue(RS_CommandEvent *e, const QS
             break;
         }
         case SetAngle: { // process angle value
-            processAngleValueInput(e, c);
+            result = processAngleValueInput(e, c);
             break;
         }
+        default:
+            // no value is expected here: a typed coordinate goes on to the event handler
+            result = false;
+            break;
     }
     return result;
 }

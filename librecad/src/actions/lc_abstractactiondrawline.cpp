@@ -20,6 +20,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 
+#include <cstddef>
 #include <rs_point.h>
 #include "rs_preview.h"
 #include "rs_math.h"
@@ -125,13 +126,48 @@ bool LC_AbstractActionDrawLine::doProcessCommand(RS_CommandEvent *e, const QStri
     else if (doProceedCommand(e, c)){ // delegate other commands to inherited actions
        // intentionally does nothing, processing is withing method call
     }
-    else if (doProcessCommandValue(e, c)){ // if we're here, it means that this is some input value - delegate it to inherited action
+    // a coordinate goes on to the event handler, which reads it after the action declines it
+    else if (isScalarExpressionCandidate(c) && doProcessCommandValue(e, c)){ // if we're here, it means that this is some input value - delegate it to inherited action
         // intentionally does nothing
     }
     else{
         accept = false;
     }
     return accept;
+}
+
+/**
+ * Whether typed text may be a value, such as a length, an angle or a count,
+ * rather than a coordinate. The expression parser would read "10,20" as 20
+ * and "10<45" as the comparison 1. A comma inside parentheses separates
+ * function arguments, as in max(3,4); a '<' is a polar coordinate anywhere.
+ * This is a structural check only; RS_Math::eval validates the expression.
+ */
+bool LC_AbstractActionDrawLine::isScalarExpressionCandidate(const QString& input){
+    std::size_t openParentheses = 0;
+    for (const auto character : input) {
+        switch (character.unicode()) {
+            case '(':
+                ++openParentheses;
+                break;
+            case ')':
+                if (openParentheses == 0) {
+                    return false;
+                }
+                --openParentheses;
+                break;
+            case ',':
+                if (openParentheses == 0) {
+                    return false;
+                }
+                break;
+            case '<':
+                return false;
+            default:
+                break;
+        }
+    }
+    return openParentheses == 0;
 }
 
 /**

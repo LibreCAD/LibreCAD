@@ -64,6 +64,8 @@ public:
     void setAngleIsRelative(bool value);
     virtual bool mayStart();
     bool doProcessCommand(RS_CommandEvent *e, const QString &c) override;
+    // whether typed text may be a value (a length, an angle or a count) and not a coordinate
+    static bool isScalarExpressionCandidate(const QString& input);
 
 protected:
     double angle = 0.0; // fixed angle for line

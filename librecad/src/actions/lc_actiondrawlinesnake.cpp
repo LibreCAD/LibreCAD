@@ -20,7 +20,6 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 
-#include <cstddef>
 #include <QMouseEvent>
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
@@ -36,35 +35,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "lc_abstractactiondrawline.h"
 #include "lc_lineoptions.h"
 #include "lc_actiondrawlinesnake.h"
-
-namespace {
-// Structural check only; RS_Math::eval validates the expression.
-bool isScalarExpressionCandidate(const QString& input) {
-    std::size_t openParentheses = 0;
-    for (const auto character : input) {
-        switch (character.unicode()) {
-            case '(':
-                ++openParentheses;
-                break;
-            case ')':
-                if (openParentheses == 0) {
-                    return false;
-                }
-                --openParentheses;
-                break;
-            case ',':
-            case '<':
-                if (openParentheses == 0) {
-                    return false;
-                }
-                break;
-            default:
-                break;
-        }
-    }
-    return openParentheses == 0;
-}
-}
 
 LC_ActionDrawLineSnake::LC_ActionDrawLineSnake(
     RS_EntityContainer &container,
@@ -350,9 +320,6 @@ bool LC_ActionDrawLineSnake::doProceedCommand([[maybe_unused]]RS_CommandEvent *e
 }
 
 bool LC_ActionDrawLineSnake::doProcessCommandValue(RS_CommandEvent *e, const QString &c){
-    if (!isScalarExpressionCandidate(c)){
-        return false;
-    }
     bool result = true;
     switch (getStatus()) {
         case SetDistance: {
