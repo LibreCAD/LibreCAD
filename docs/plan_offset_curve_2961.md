@@ -62812,3 +62812,24 @@ scripts/offset-curve-validation/test-roadmap-inventory-parser.js` (5/5) and
 `node --test scripts/offset-curve-validation/test-refusal-inventory.js`
 (94/94). The inventory reported 93 unique obligations, zero pending
 declarations, and zero production mismatches. `git diff --check` is clean.
+
+## 2029. Repeat the Bounded ODA Audit in the Active GUI Session (2026-11-25)
+
+After the user confirmed ODAFileConverter was open in the logged-in desktop,
+the GUI became controllable. Re-ran the staged 18 DWG fixtures with Audit
+enabled, output format `2010 ASCII DXF`, and a new output directory
+`/private/tmp/offsetcurve-lc-dwg-output-retry-20261125` so the prior artifacts
+were preserved. ODA reported `Done` and progress 18; the output contains
+18 nonempty DXFs, all identified as AutoCAD Drawing Exchange Format version
+2010. Twelve converted files retain the `LC_OFFSET_CURVE` marker. This is a
+bounded audit/conversion result only: it does not establish visual or geometric
+equivalence, preservation for every source version, general interoperability,
+or AutoCAD acceptance. It supersedes neither the recorded SSH-context retry
+failure nor the limitation of the earlier 18-file receipt.
+
+The exact PR head remains `1abf55ec95d53c478bda9f761c74b65a3be4153f` during
+this validation. Headless ON/OFF pass; specialized DWG/DXF fast, Windows x64
+and ARM64, macOS, CodeQL, and several Pixi jobs are still queued or running.
+Do not treat pending jobs as passes. The visible packaged-app source-picker
+workflow, mixed-bulge cross-platform question, remaining family/variant
+validation, and overall roadmap remain open.
