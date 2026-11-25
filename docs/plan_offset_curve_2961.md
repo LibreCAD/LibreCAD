@@ -63070,3 +63070,27 @@ geometry, color and line attributes in each ODA output; add repeatable external
 coverage where feasible. Visible current-head Properties interaction, broader
 geometry/variant and sanitizer matrices, deployment qualification, exact-head
 CI and review remain open. Keep the roadmap and PR draft open.
+
+## 2038. Compare ODA All-family Output (2026-11-25)
+
+Test commit `e49eacd82` adds an opt-in comparison of the six section 2037
+source DWGs and ODA-converted DXFs. It requires both
+`LIBRECAD_ALL_FAMILY_ODA_DWG_DIR` and `LIBRECAD_ALL_FAMILY_ODA_DXF_DIR`; it
+skips when neither is set, and fails when only one is set. The fixture paths
+are not checked into this slice, so CI without those variables does not run
+this comparison.
+
+Using the six corrected true-color fixture pairs in the section 2037
+directories, the comparison passed **18,631 assertions / 1 case**. It matches
+all nine typed-source definitions by canonical CBOR, reserved flags, owned-tail
+length and remaining foreign XDATA, as well as the carrier degree, knot vector,
+control points, weights, line type and R2004+ true color. Geometry comparisons
+use relative tolerance `2e-12` and absolute tolerance `1e-13`; R2000 does not
+carry the original true color. The test checks owned-tail length, not the
+individual owned-tail values. Parsing is performed by libdxfrw after ODA's
+independent DWG audit/conversion; this is not an independent rendering or
+AutoCAD result, nor a qualification of all geometry variants.
+
+The complete roadmap remains open. Continue with visible current-head source
+replacement/preview/commit validation, broader variant and sanitizer gates,
+deployed platform checks, exact-head CI and human review.
