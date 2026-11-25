@@ -37,35 +37,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "lc_lineoptions.h"
 #include "lc_actiondrawlinesnake.h"
 
-namespace {
-// Structural check only; RS_Math::eval validates the expression.
-bool isScalarExpressionCandidate(const QString& input) {
-    std::size_t openParentheses = 0;
-    for (const auto character : input) {
-        switch (character.unicode()) {
-            case '(':
-                ++openParentheses;
-                break;
-            case ')':
-                if (openParentheses == 0) {
-                    return false;
-                }
-                --openParentheses;
-                break;
-            case ',':
-            case '<':
-                if (openParentheses == 0) {
-                    return false;
-                }
-                break;
-            default:
-                break;
-        }
-    }
-    return openParentheses == 0;
-}
-}
-
 LC_ActionDrawLineSnake::LC_ActionDrawLineSnake(
     RS_EntityContainer &container,
     RS_GraphicView &graphicView,

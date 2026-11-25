@@ -160,6 +160,11 @@ bool LC_ActionDrawStar::doProcessCommand([[maybe_unused]]RS_CommandEvent *e, con
         symmetric = false;
         updateOptions();
     }
+    else if (getStatus() != SetRays || !isScalarExpressionCandidate(c)){
+        // A typed point (10,10, @10,5, 10<30, 0) is no value: it is left to the event handler. The expression
+        // parser would read 10,10 as the number 10, and the point would be lost.
+        processed = false;
+    }
     else{
         // process entered value
         bool ok = false;

@@ -123,6 +123,7 @@ protected:
      */
     virtual bool doCheckMayDrawPreview([[maybe_unused]]QMouseEvent *event, int status);
     virtual bool doProcessCommand([[maybe_unused]]RS_CommandEvent *e, const QString &c);
+    static bool isScalarExpressionCandidate(const QString &input);
     /**
      * method for handling
      * @param e

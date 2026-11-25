@@ -5,17 +5,28 @@
 // Typed numbers and coordinates (back-port of #3294): a mixed number such as
 // 1 1/2 is 1.5, a polar point on an axis is exact, and a polar coordinate
 // is not reported as an unknown command.
+// Issue #3302: the tools that read a number from the command line leave a typed
+// point (10,10) to the event handler, which the expression parser would read as 10.
 
+#include <initializer_list>
 #include <vector>
 
+#include <QScopeGuard>
 #include <QtTest>
 #include <QtWidgets>
 
+#include "lc_actiondrawlinepoints.h"
+#include "lc_actiondrawlinesnake.h"
+#include "lc_actiondrawrectangle1point.h"
+#include "lc_actiondrawrectangle2points.h"
+#include "lc_actiondrawrectangle3points.h"
+#include "lc_actiondrawstar.h"
 #include "qg_commandwidget.h"
 #include "rs_actioninterface.h"
 #include "rs_commandevent.h"
 #include "rs_coordinateevent.h"
 #include "rs_entitycontainer.h"
+#include "rs_graphic.h"
 #include "rs_graphicview.h"
 #include "rs_math.h"
 
@@ -43,6 +54,31 @@ public:
     std::vector<RS_Vector> points;
 };
 
+
+// what the tool answers to a typed text. The event handler reads a point only when the tool
+// leaves the text alone: a tool that takes it as a value never sees the point.
+template <class Tool>
+bool takesTypedText(RS_EntityContainer& container, RS_GraphicView& view, const char* text) {
+    auto* tool = new Tool(container, view);
+    view.setCurrentAction(tool);
+    RS_CommandEvent event(QString::fromLatin1(text));
+    tool->commandEvent(&event);
+    const bool taken = event.isAccepted();
+    view.killAllActions();
+    return taken;
+}
+
+// the tool, after the commands, for a look at its state
+template <class Tool>
+Tool* startedTool(RS_EntityContainer& container, RS_GraphicView& view, std::initializer_list<const char*> commands) {
+    auto* tool = new Tool(container, view);
+    view.setCurrentAction(tool);
+    for (const char* command : commands) {
+        RS_CommandEvent event(QString::fromLatin1(command));
+        view.commandEvent(&event);
+    }
+    return tool;
+}
 }
 
 class LC_TypedCoordinatesTests : public QObject {
@@ -105,6 +141,67 @@ private slots:
         const RS_Vector expected = RS_Vector::polar(100., M_PI / 6.);
         QVERIFY(probe->points.back().distanceTo(expected) < 1e-12);
         view.killAllActions();
+    }
+
+
+    void drawingToolsLeaveTypedPointsToTheEventHandler() {
+        RS_Graphic graphic;
+        graphic.newDoc();
+        TestView view;
+        view.setContainer(&graphic);
+        view.setDefaultAction(new PointProbe(graphic, view));
+
+        // The expression parser reads 10,10 as the number 10 and 10<30 as true, and 0 is a number as
+        // well: a tool that asks for a point takes none of them for a value.
+        for (const char* text : {"10,10", "-3,4.5", "@10,5", "100<90", "@100<90", "10<30", "0"}) {
+            const auto name = [text](const char* tool) { return QString("%1: %2").arg(tool, text).toLatin1(); };
+            QVERIFY2(!takesTypedText<LC_ActionDrawRectangle2Points>(graphic, view, text),
+                     name("Rectangle (2 points)").constData());
+            QVERIFY2(!takesTypedText<LC_ActionDrawRectangle3Points>(graphic, view, text),
+                     name("Rectangle (3 points)").constData());
+            QVERIFY2(!takesTypedText<LC_ActionDrawRectangle1Point>(graphic, view, text),
+                     name("Rectangle (corner, size)").constData());
+            QVERIFY2(!takesTypedText<LC_ActionDrawStar>(graphic, view, text), name("Star").constData());
+            QVERIFY2(!takesTypedText<LC_ActionDrawLinePoints>(graphic, view, text), name("Line Points").constData());
+            QVERIFY2(!takesTypedText<LC_ActionDrawLineSnake>(graphic, view, text), name("Snake").constData());
+        }
+    }
+
+    void drawingToolsStillTakeNumbersWhereANumberIsAsked() {
+        RS_Graphic graphic;
+        graphic.newDoc();
+        TestView view;
+        view.setContainer(&graphic);
+        view.setDefaultAction(new PointProbe(graphic, view));
+        const auto finish = qScopeGuard([&view] { view.killAllActions(); });
+
+        auto* rectangle = startedTool<LC_ActionDrawRectangle2Points>(graphic, view, {"angle", "30", "radius", "2.5"});
+        QCOMPARE(rectangle->getAngle(), 30.);
+        QCOMPARE(rectangle->getRadius(), 2.5);
+        view.killAllActions();
+
+        auto* star = startedTool<LC_ActionDrawStar>(graphic, view, {"number", "7"});
+        QCOMPARE(star->getRaysNumber(), 7);
+        view.killAllActions();
+
+        auto* points = startedTool<LC_ActionDrawLinePoints>(graphic, view, {"number", "4"});
+        QCOMPARE(points->getPointsCount(), 4);
+    }
+
+    void aTypedFirstCornerOfARectangleMovesTheRelativeZero() {
+        RS_Graphic graphic;
+        graphic.newDoc();
+        TestView view;
+        view.setContainer(&graphic);
+        view.setDefaultAction(new PointProbe(graphic, view));
+        const auto finish = qScopeGuard([&view] { view.killAllActions(); });
+        view.setRelativeZero(RS_Vector(0., 0.));
+
+        // as a click on the first corner does: the next @x,y is measured from the corner
+        auto* rectangle = startedTool<LC_ActionDrawRectangle2Points>(graphic, view, {"10,10"});
+        QCOMPARE(rectangle->getStatus(), static_cast<int>(LC_AbstractActionDrawRectangle::SetPoint2));
+        QCOMPARE(view.getRelativeZero().x, 10.);
+        QCOMPARE(view.getRelativeZero().y, 10.);
     }
 
     void coordinatesAreNoUnknownCommands() {
