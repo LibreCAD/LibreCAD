@@ -63009,3 +63009,25 @@ without its modal dialog in the accessibility snapshot. No additional GUI
 interaction or save was performed. The open acceptance gates from section
 2034 remain open; allow current CI to finish and inspect its exact-head
 results independently.
+
+## 2036. Offset Properties Layout Minimums (2026-11-25)
+
+The qmake build from `85652b3` opened the source-bearing DXF and its native
+Offset Curve Properties, resolving `Ellipse 9`. The dialog's narrow initial
+width visibly clipped source labels, numeric fields, and the source-selection
+button. Source-family popup interaction was not established through CUA, and
+the dialog was cancelled without saving the drawing.
+
+Product/test commit `61e13fc2c` gives offset-editor labels, numeric fields,
+source selection, and its drawing-selection button content-derived minimum
+widths. The focused minimum-size layout regression failed on the original
+implementation (19 of 27 assertions) and passes with the fix (27/27). The
+offscreen `[gui][dialog][offsetcurve]` suite passed 106 cases and 50,160
+assertions. The incremental qmake6 recursive app/worker build completed; its
+Homebrew deployment-target caveat from section 2034 still applies. Tests used
+the `f943374` source-equivalent scratch build with the same product/test patch.
+
+These checks do not establish a visible after-fix result, cross-family popup
+selection, candidate replacement, preview/commit, or the other open acceptance
+gates in section 2034. Retry those against the rebuilt application; do not
+claim complete GUI acceptance from the layout regression alone.
