@@ -4028,7 +4028,7 @@ TEST_CASE("Materialized corner-arc nodes require matching arc provenance",
     CHECK(refusedTrimmedArc.entities.empty());
 }
 
-TEST_CASE("Trimmed materialized nodes reject unavailable source occurrences",
+TEST_CASE("Trimmed materialized nodes reject inconsistent source occurrences",
           "[curve-offset][topology][materialized][trimmed]") {
     const RS_Spline parabola = makeSpline(2, {{-2, 4}, {0, -4}, {2, 4}}, {0, 0, 0, 1, 1, 1});
     LC_CurveOffsetOptions options = LC_CurveOffset::makeDirectOptions(parabola, 1.0);
@@ -4069,6 +4069,56 @@ TEST_CASE("Trimmed materialized nodes reject unavailable source occurrences",
         CHECK(recovered.status == LC_CurveOffsetStatus::Ok);
         CHECK_FALSE(recovered.entities.empty());
     }
+
+    for (bool first : {false, true}) for (bool adjacent : {false, true}) {
+        auto forged = geometry;
+        auto& node = forged.intersections.front();
+        double& changed = first ? node.parameterA : node.parameterB;
+        const double other = first ? node.parameterB : node.parameterA;
+        changed = adjacent ? std::nextafter(other, std::numeric_limits<double>::infinity()) : other + 1e-6;
+        const auto invalid = LC_CurveOffset::materializeBranches(
+            parabola, forged, options, LC_CurveOffset::makeDirectSourceBudget());
+        CAPTURE(first, adjacent);
+        CHECK(invalid.status == LC_CurveOffsetStatus::AmbiguousTopology);
+        CHECK(invalid.entities.empty());
+        auto exhausted = options;
+        REQUIRE(invalid.sampleUnits > geometry.exactSamples);
+        exhausted.maxSamples = invalid.sampleUnits - 1;
+        const auto limited = LC_CurveOffset::materializeBranches(
+            parabola, forged, exhausted, LC_CurveOffset::makeDirectSourceBudget());
+        CHECK(limited.status == LC_CurveOffsetStatus::LimitExceeded);
+        CHECK(limited.entities.empty());
+        CHECK(limited.sampleUnits <= exhausted.maxSamples);
+        forged.intersections.push_back(geometry.intersections.front());
+        const auto recovered = LC_CurveOffset::materializeBranches(
+            parabola, forged, options, LC_CurveOffset::makeDirectSourceBudget());
+        CHECK(recovered.status == LC_CurveOffsetStatus::Ok);
+        CHECK_FALSE(recovered.entities.empty());
+    }
+
+    const double compressedDomain = 1e-6;
+    const RS_Spline compressed = makeSpline(2, {{-2, 4}, {0, -4}, {2, 4}},
+        {0, 0, 0, compressedDomain, compressedDomain, compressedDomain});
+    auto compressedOptions = LC_CurveOffset::makeDirectOptions(compressed, 1.0);
+    compressedOptions.nodeIntersections = true;
+    const auto compressedGeometry = LC_CurveOffset::buildDirectBranches(
+        compressed, request, compressedOptions, LC_CurveOffset::makeDirectSourceBudget());
+    REQUIRE(compressedGeometry.status == LC_CurveOffsetStatus::Ok);
+    REQUIRE(compressedGeometry.intersections.size() == 1);
+    CHECK(std::abs(compressedGeometry.intersections.front().parameterA -
+                   compressedGeometry.intersections.front().parameterB) < compressedDomain);
+    LC_CurveJet compressedA;
+    LC_CurveJet compressedB;
+    REQUIRE(compressed.tryEvaluateJet(compressedGeometry.intersections.front().parameterA,
+                                      LC_CurveEvaluationSide::Interior, compressedA));
+    REQUIRE(compressed.tryEvaluateJet(compressedGeometry.intersections.front().parameterB,
+                                      LC_CurveEvaluationSide::Interior, compressedB));
+    CHECK(compressedA.point.distanceTo(compressedB.point) > 1.0);
+    compressedOptions.mode = LC_CurveOffsetMode::Trimmed;
+    const auto compressedValid = LC_CurveOffset::materializeBranches(
+        compressed, compressedGeometry, compressedOptions, LC_CurveOffset::makeDirectSourceBudget());
+    CHECK(compressedValid.status == LC_CurveOffsetStatus::Ok);
+    CHECK_FALSE(compressedValid.entities.empty());
 
     auto wrongBranch = geometry;
     for (LC_OffsetBranch& branch : wrongBranch.branches) {

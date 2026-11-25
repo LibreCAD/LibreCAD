@@ -8425,20 +8425,37 @@ LC_CurveOffsetMaterializationResult materializeBranches(const RS_Entity& source,
                            piece.provenance.signedDistance == geometry.signedDistance;
                 });
             });
-        // A regular source parameter at one signed distance gives only one offset occurrence.
-        const auto duplicatedRegularOccurrence = [&](const LC_ParametricIntersection& node) {
+        // A monotone regular offset interval cannot contain both occurrences of a crossing.
+        const auto incompatibleRegularOccurrences = [&](const LC_ParametricIntersection& node) {
             if (!regularUniformProvenance || node.kind != LC_ParametricIntersection::Kind::Transverse ||
-                !std::isfinite(node.parameterA) || node.parameterA != node.parameterB ||
-                node.parameterA <= adapter->breaks().front() || node.parameterA >= adapter->breaks().back() ||
-                std::binary_search(adapter->breaks().begin(), adapter->breaks().end(), node.parameterA)) {
+                !std::isfinite(node.parameterA) || !std::isfinite(node.parameterB)) {
                 return false;
             }
+            const auto& sourceBreaks = adapter->breaks();
+            const double lo = std::min(node.parameterA, node.parameterB);
+            const double hi = std::max(node.parameterA, node.parameterB);
+            if (lo <= sourceBreaks.front() || hi >= sourceBreaks.back() ||
+                std::binary_search(sourceBreaks.begin(), sourceBreaks.end(), lo) ||
+                std::binary_search(sourceBreaks.begin(), sourceBreaks.end(), hi)) {
+                return false;
+            }
+            const auto nextBreak = std::upper_bound(sourceBreaks.begin(), sourceBreaks.end(), lo);
+            if (nextBreak != sourceBreaks.end() && *nextBreak < hi) return false;
             if (samples >= options.maxSamples) {
                 sampleLimitReached = true;
                 return false;
             }
             ++samples;
             result.sampleUnits = samples;
+            if (lo < hi) {
+                LC_CurveJetBounds bounds;
+                // Q' = (1 - d*kappa) C': a fixed sign for either component
+                // of C' and for the offset factor makes Q strictly monotone.
+                return adapter->boundJetWithProducts(lo, hi, bounds) &&
+                       (bounds.dx.excludesZero() || bounds.dy.excludesZero()) &&
+                       bounds.speedSquared().isPositive() &&
+                       bounds.offsetFactorNumerator(geometry.signedDistance).excludesZero();
+            }
             LC_CurveJet jet;
             return adapter->jet(node.parameterA, LC_CurveEvaluationSide::Interior, jet) &&
                    isFinite(jet.first) && std::hypot(jet.first.x, jet.first.y) > scale.numericFloor / domain;
@@ -8624,7 +8641,7 @@ LC_CurveOffsetMaterializationResult materializeBranches(const RS_Entity& source,
                 }
                 ++result.intersectionDiagnostics.nodeMatchComparisons;
                 if (!(node.point.distanceTo(x.point) <= options.tolerance.requestedGeometry)) continue;
-                if (duplicatedRegularOccurrence(node)) continue;
+                if (incompatibleRegularOccurrences(node)) continue;
                 if (sampleLimitReached) {
                     result.status = LC_CurveOffsetStatus::LimitExceeded;
                     return result;
