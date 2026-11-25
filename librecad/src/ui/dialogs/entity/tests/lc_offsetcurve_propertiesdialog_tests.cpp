@@ -1551,6 +1551,9 @@ TEST_CASE("Native source picker filters and replaces every supported source fami
         auto* carrier = static_cast<LC_OffsetCurve*>(clone->clone());
         REQUIRE(carrier);
         carrier->setSourceHandle(0);
+        REQUIRE(carrier->setOwnedExtensions(0x10, {
+            {1000, QStringLiteral("owned")}, {1010, RS_Vector{3, 4}},
+            {1040, .125}, {1070, std::int16_t{7}}, {1071, std::int32_t{123456}}}));
         externalFixtureCarriers.emplace_back(carrier);
     }
 

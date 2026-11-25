@@ -2395,8 +2395,42 @@ TEST_CASE("ODA all-family DWG audit preserves typed sources and carrier geometry
             const auto b = values::encodeSourceDefinition(*output.definition->source);
             REQUIRE(a); REQUIRE(b);
             CHECK(QCborValue(*a).toCbor() == QCborValue(*b).toCbor());
+            CHECK(source.definition->reservedFlags == 0x10);
             CHECK(source.definition->reservedFlags == output.definition->reservedFlags);
-            CHECK(source.definition->tail.size() == output.definition->tail.size());
+            REQUIRE(source.definition->tail.size() == output.definition->tail.size());
+            REQUIRE(source.definition->tail.size() == 5);
+            const auto& tail = source.definition->tail;
+            REQUIRE(tail[0].code == 1000); REQUIRE(std::holds_alternative<QString>(tail[0].value));
+            CHECK(std::get<QString>(tail[0].value) == QStringLiteral("owned"));
+            REQUIRE(tail[1].code == 1010); REQUIRE(std::holds_alternative<RS_Vector>(tail[1].value));
+            CHECK(std::get<RS_Vector>(tail[1].value).x == 3.0);
+            CHECK(std::get<RS_Vector>(tail[1].value).y == 4.0);
+            CHECK(std::get<RS_Vector>(tail[1].value).z == 0.0);
+            REQUIRE(tail[2].code == 1040); REQUIRE(std::holds_alternative<double>(tail[2].value));
+            CHECK(std::get<double>(tail[2].value) == .125);
+            REQUIRE(tail[3].code == 1070); REQUIRE(std::holds_alternative<std::int16_t>(tail[3].value));
+            CHECK(std::get<std::int16_t>(tail[3].value) == 7);
+            REQUIRE(tail[4].code == 1071); REQUIRE(std::holds_alternative<std::int32_t>(tail[4].value));
+            CHECK(std::get<std::int32_t>(tail[4].value) == 123456);
+            for (std::size_t tailIndex = 0; tailIndex < source.definition->tail.size(); ++tailIndex) {
+                const auto& left = source.definition->tail[tailIndex];
+                const auto& right = output.definition->tail[tailIndex];
+                CHECK(left.code == right.code);
+                REQUIRE(left.value.index() == right.value.index());
+                std::visit([&](const auto& value) {
+                    using Value = std::decay_t<decltype(value)>;
+                    const auto& other = std::get<Value>(right.value);
+                    if constexpr (std::is_same_v<Value, RS_Vector>) {
+                        CHECK(f::bits(value.x) == f::bits(other.x));
+                        CHECK(f::bits(value.y) == f::bits(other.y));
+                        CHECK(f::bits(value.z) == f::bits(other.z));
+                    } else if constexpr (std::is_same_v<Value, double>) {
+                        CHECK(f::bits(value) == f::bits(other));
+                    } else {
+                        CHECK(value == other);
+                    }
+                }, left.value);
+            }
             REQUIRE(source.remaining); REQUIRE(output.remaining);
             CHECK(f::tagsState(*source.remaining) == f::tagsState(*output.remaining));
             CHECK(before[i]->degree == after[i]->degree);
