@@ -736,6 +736,31 @@ std::string singleLineTextAt(RS_Graphic &graphic, double y) {
 } // namespace
 
 #ifdef LIBRECAD_SYSTEM_CODEC_TESTS
+TEST_CASE("System codec preserves canonical linetype metadata after retry",
+          "[system-codec][dxf][linetype][transaction]") {
+  ensureSettings();
+  const auto output = tmpFile("system_canonical_linetype_retry.dxf");
+  const std::string sentinel = "preserve destination\n";
+  writeText(output, sentinel);
+  RS_Graphic graphic;
+  graphic.initForNewDocument();
+  DRW_LType source;
+  source.name = "Continuous";
+  source.flags = -1;
+  graphic.dwgAdvancedMetadata().addLineTypeName(source);
+  RS_FilterDXFRW filter;
+  CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  std::ifstream retained(output, std::ios::binary);
+  CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel);
+  retained.close();
+  source.flags = 64;
+  graphic.dwgAdvancedMetadata().addLineTypeName(source);
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  CHECK(ltypeRecordGroupValues(output, "Continuous", "70") ==
+        std::vector<std::string>{"64"});
+  std::filesystem::remove(output);
+}
+
 TEST_CASE("System codec preserves single-line controls and literal carets",
           "[system-codec][dxf][text]") {
   ensureSettings();
@@ -6914,7 +6939,7 @@ TEST_CASE("Dimension updates preserve leaders and ordinary dimension labels",
 }
 
 TEST_CASE("Opening and saving DXF or DWG keeps leader vertices and arrow flags",
-          "[dxf][dwg][roundtrip][filter][dimension][leader][regression]") {
+          "[system-codec][dxf][dwg][roundtrip][filter][dimension][leader][regression]") {
   ensureSettings();
   const lc::test::QuietLog quietLog;
   const auto format = GENERATE(RS2::FormatDXFRW, RS2::FormatDWG,
@@ -6945,6 +6970,21 @@ TEST_CASE("Opening and saving DXF or DWG keeps leader vertices and arrow flags",
   CHECK(lc::test::sameValues({"0", "10", "10"}, leaders.front().own(20)));
   CHECK(lc::test::sameValues({arrow ? "1" : "0"}, leaders.front().own(71)));
   CHECK(lc::test::sameValues({"3"}, leaders.front().own(76)));
+#ifdef LIBRECAD_SYSTEM_CODEC_TESTS
+  // The library emits these rows before the adapter's LTYPE callback. Their
+  // source flags must survive the DWG-to-DXF save, including R2007+ flags.
+  for (const char *name : {"ByBlock", "ByLayer", "Continuous"}) {
+    const auto *source =
+        graphic.dwgAdvancedMetadata().findLineTypeTableEntryByName(name);
+    INFO("canonical linetype=" << name);
+    REQUIRE(source != nullptr);
+    if (format == RS2::FormatDWG2007 || format == RS2::FormatDWG2010 ||
+        format == RS2::FormatDWG2013 || format == RS2::FormatDWG2018)
+      CHECK(source->flags == 64);
+    CHECK(ltypeRecordGroupValues(saved.string(), name, "70") ==
+          std::vector<std::string>{std::to_string(source->flags)});
+  }
+#endif
 }
 
 TEST_CASE("DXF DSTYLE linetype references resolve high handles",

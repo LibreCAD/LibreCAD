@@ -12563,6 +12563,20 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
    */
   ExportWriterScope<dxfRW> activeWriter(
       m_dxfW, std::make_unique<dxfRW>(QFile::encodeName(file).constData()));
+#ifdef LIBRECAD_SYSTEM_LIBDXFRW
+  if (exportVersion >= DRW::AC1014) {
+    // The codec emits these mandatory rows before the writeLTypes callback.
+    // Supply their imported metadata in advance so flags and references are
+    // preserved rather than rejected after the rows have already been written.
+    std::vector<DRW_LType> canonical;
+    for (const char *name : {"BYBLOCK", "BYLAYER", "CONTINUOUS"}) {
+      if (const auto *source =
+              g.dwgAdvancedMetadata().findLineTypeTableEntryByName(name))
+        canonical.push_back(*source);
+    }
+    m_dxfW->setCanonicalLineTypeMetadata(std::move(canonical));
+  }
+#endif
   prepareShapesForExport();
   if (m_writeFailed)
     return false;
