@@ -169,29 +169,58 @@ std::string dstyleDirectionVariant(const std::string &path,
 }
 
 // Returns the group-`code` values of the LTYPE table record named `ltypeName`.
-// libdxfrw writes the name (2) before the pattern groups (3/73/40/49), so the
-// name is matched first and the values are collected until the next record.
+// A record's application groups may precede its name, so buffer values until
+// the next record confirms which linetype they belong to.
 std::vector<std::string> ltypeRecordGroupValues(const std::string &path,
                                                 const std::string &ltypeName,
                                                 const std::string &code) {
   std::ifstream in(path);
   std::string codeLine, valueLine;
   std::vector<std::string> values;
+  std::vector<std::string> pending;
   bool inLtype = false;
   bool nameMatched = false;
+  int appDepth = 0;
+  const auto appendMatched = [&] {
+    if (inLtype && nameMatched)
+      values.insert(values.end(), pending.begin(), pending.end());
+  };
   while (std::getline(in, codeLine) && std::getline(in, valueLine)) {
     const std::string groupCode = trimDxfToken(codeLine);
     const std::string value = trimDxfToken(valueLine);
     if (groupCode == "0") {
+      appendMatched();
+      pending.clear();
       inLtype = value == "LTYPE";
       nameMatched = false;
-    } else if (inLtype && groupCode == "2") {
-      nameMatched = value == ltypeName;
-    } else if (inLtype && nameMatched && groupCode == code) {
-      values.push_back(value);
+      appDepth = 0;
+    } else if (inLtype) {
+      if (groupCode == "2" && appDepth == 0)
+        nameMatched = value == ltypeName;
+      if (groupCode == code)
+        pending.push_back(value);
+      if (groupCode == "102") {
+        if (!value.empty() && value.front() == '{')
+          ++appDepth;
+        else if (value == "}" && appDepth > 0)
+          --appDepth;
+      }
     }
   }
+  appendMatched();
   return values;
+}
+
+TEST_CASE("DXF linetype lookup includes application data before its name",
+          "[system-codec][dxf][linetype]") {
+  const auto path = tmpFile("ltype_lookup_order.dxf");
+  writeText(path, "0\nLTYPE\n102\n{APP\n2\nOTHER\n310\nCAFE\n102\n}\n"
+                  "2\nTARGET\n0\nLTYPE\n2\nOTHER\n310\nDEAD\n0\nEOF\n");
+  CHECK(ltypeRecordGroupValues(path, "TARGET", "310") ==
+        std::vector<std::string>{"CAFE"});
+  CHECK(ltypeRecordGroupValues(path, "OTHER", "310") ==
+        std::vector<std::string>{"DEAD"});
+  std::filesystem::remove(path);
 }
 
 // Counts occurrences of a "0\n<NAME>\n" record marker in a DXF file.
@@ -8663,7 +8692,7 @@ TEST_CASE("DXF ISO alias keeps its literal name instead of the family name",
 }
 
 TEST_CASE("DXF complex linetype record travels through export opaque",
-          "[dxf][roundtrip][filter][linetype][named]") {
+          "[system-codec][dxf][roundtrip][filter][linetype][named]") {
   ensureSettings();
   const std::string src = writeFixture("named_t8_src.dxf", kNamedR2000Fixture);
   const std::string out = tmpFile("named_t8_out.dxf");
@@ -10336,7 +10365,7 @@ TEST_CASE("DXF writes a redefined built-in from the table",
 }
 
 TEST_CASE("DXF writes a changed complex line type without its segments",
-          "[dxf][roundtrip][filter][linetype][named][table]") {
+          "[system-codec][dxf][roundtrip][filter][linetype][named][table]") {
   ensureSettings();
   const std::string src = writeFixture("named_t8_src.dxf", kNamedR2000Fixture);
   const std::string out = tmpFile("changed_complex_out.dxf");
