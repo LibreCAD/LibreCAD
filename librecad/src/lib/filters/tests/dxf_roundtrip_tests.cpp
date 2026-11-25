@@ -805,6 +805,7 @@ TEST_CASE("System codec preserves a layer material link and refuses a missing ca
   const auto output = tmpFile("system_layer_material_output.dxf");
   const auto retry = tmpFile("system_layer_material_retry.dxf");
   const auto materialHandle = GENERATE(std::uint32_t{0xA1}, std::uint32_t{0x14});
+  const bool withReactors = GENERATE(false, true);
   const std::string materialText = materialHandle == 0xA1u ? "A1" : "14";
   std::string input =
             "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1021\n0\nENDSEC\n"
@@ -821,6 +822,17 @@ TEST_CASE("System codec preserves a layer material link and refuses a missing ca
             "3\nPlainMat\n350\nA1\n"
             "0\nMATERIAL\n5\nA1\n330\nA0\n100\nAcDbMaterial\n1\nPlainMat\n"
             "0\nENDSEC\n0\nEOF\n";
+  if (withReactors) {
+    const auto insertReactors = [&](const std::string &from, const std::string &to) {
+      const auto position = input.find(from);
+      REQUIRE(position != std::string::npos);
+      input.replace(position, from.size(), to);
+    };
+    insertReactors("\n5\nA0\n330\nC\n",
+                   "\n5\nA0\n102\n{ACAD_REACTORS\n330\nC\n102\n}\n330\nC\n");
+    insertReactors("\n5\nA1\n330\nA0\n",
+                   "\n5\nA1\n102\n{ACAD_REACTORS\n330\nA0\n102\n}\n330\nA0\n");
+  }
   if (materialHandle != 0xA1u) {
     const std::string from = "\nA1\n";
     for (std::size_t pos = 0; (pos = input.find(from, pos)) != std::string::npos;) {
@@ -873,6 +885,19 @@ TEST_CASE("System codec preserves a layer material link and refuses a missing ca
   carrier.rawValues[nameIndex] = "Different";
   expectRefusal();
   carrier.rawValues[nameIndex] = oldRawName;
+  if (withReactors) {
+    auto reactor = std::find_if(carrier.groups.begin(), carrier.groups.end(),
+                                [](const auto &group) { return group.code() == 330; });
+    REQUIRE(reactor != carrier.groups.end());
+    const auto reactorIndex = static_cast<std::size_t>(std::distance(carrier.groups.begin(), reactor));
+    const DRW_Variant oldReactor = *reactor;
+    const auto oldRawReactor = carrier.rawValues.at(reactorIndex);
+    *reactor = DRW_Variant(330, std::string("A3"));
+    carrier.rawValues[reactorIndex] = "A3";
+    expectRefusal();
+    *reactor = oldReactor;
+    carrier.rawValues[reactorIndex] = oldRawReactor;
+  }
   carrier.m_version = DRW::AC1015;
   expectRefusal();
   carrier.m_version = saved.m_version;
@@ -903,6 +928,20 @@ TEST_CASE("System codec preserves a layer material link and refuses a missing ca
     return entry.name == "DICTIONARY" && entry.handle == 0xA0u;
   });
   REQUIRE(rawDictionary != raw.end());
+  if (withReactors) {
+    auto reactor = std::find_if(rawDictionary->groups.begin(), rawDictionary->groups.end(),
+                                [](const auto &group) { return group.code() == 330; });
+    REQUIRE(reactor != rawDictionary->groups.end());
+    const auto reactorIndex = static_cast<std::size_t>(
+        std::distance(rawDictionary->groups.begin(), reactor));
+    const DRW_Variant oldReactor = *reactor;
+    const auto oldRawReactor = rawDictionary->rawValues.at(reactorIndex);
+    *reactor = DRW_Variant(330, std::string("A3"));
+    rawDictionary->rawValues[reactorIndex] = "A3";
+    expectRefusal();
+    *reactor = oldReactor;
+    rawDictionary->rawValues[reactorIndex] = oldRawReactor;
+  }
   auto entryHandle = std::find_if(rawDictionary->groups.begin(), rawDictionary->groups.end(),
       [](const auto &group) { return group.code() == 350; });
   REQUIRE(entryHandle != rawDictionary->groups.end());
