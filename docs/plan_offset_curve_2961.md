@@ -63219,3 +63219,28 @@ the family menu did not respond to the accessibility bridge during the test.
 Repeated family switching, candidate selection, highlight transfer,
 replacement, preview/commit and cancellation/refusal remain open alongside the
 other roadmap gates.
+
+## 2043. Guard Source Replacement Against Reentrant Rebinding (2026-11-25)
+
+The source-replacement preparation guard can synchronously rebind the editor.
+When that guard returned false, the previous path refreshed the new target and
+displayed a stale refusal from the abandoned operation. The focused regression
+observed that refusal before this fix. Continuing to touch the widget after a
+guard had destroyed it was also unsafe; the destruction case has not been
+independently exercised by this regression.
+
+Commit `b2a7da117` checks the widget lifetime, operation generation and target
+immediately after the initial guard, before touching the widget again. It also
+limits allocation-failure handling to the still-current operation, including
+the asynchronous worker-completion guard. The regression rebinds to a new
+curve at each guard stage with true, false and `std::bad_alloc` outcomes; it
+checks that the new binding stays idle without a stale refusal and both curve
+snapshots remain unchanged. It uses the real worker for the completion stage.
+
+On the source-equivalent macOS CMake Release scratch build, the focused
+regression passed **1,362 assertions / 1 case**, and the complete offscreen
+offset Properties selection passed **51,609 assertions / 107 cases**. The
+qmake6 incremental app/worker build passed; this is not clean deployment or
+minimum-macOS qualification. The changed source and test matched the scratch
+files, and `git diff --check` passed. The visible source-family switching and
+replacement workflow and the other roadmap acceptance gates remain open.
