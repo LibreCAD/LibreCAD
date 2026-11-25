@@ -62775,5 +62775,34 @@ and the fixture above; the independent GUI acceptance gate remains open.
 Fresh CI for `b0b676a06` has passed CodeQL, headless ON/OFF, all five Pixi
 platforms, DWG/DXF fast and Windows x64/ARM64, and Windows ARM64 packaging.
 At this checkpoint the universal macOS build-and-packaging step was still
-running. PR description/comment update APIs return 403 to the connected GitHub
-integration; the committed roadmap is the current validation ledger.
+running. The PR description/comment update API was unavailable at that time;
+the PR description was subsequently refreshed through the GitHub web UI and
+its saved body verified through the connected GitHub metadata API (section
+2028).
+
+## 2028. Reconcile the Source-picker Request and PR Status (2026-11-25)
+
+Rechecked the user's source-picker clarification against PR head
+`8ced4422e845a7ea98fc06192a30166783593de3`. No additional implementation
+change is needed: `cbSourceType` is populated from the canonical nine-entry
+`LC_OffsetSourceGeometry::SupportedKinds` inventory, including a distinct
+parabola; it remains usable while browsing candidates and refreshes the
+candidate list by family. Choosing a candidate commits the replacement, while
+the matched live source can be selected/highlighted from the Properties widget.
+Changing family alone leaves the committed definition and generated cache
+untouched. This is already exercised by the source-picker regressions, including
+cross-family replacement, parabola identity, and live-source selection.
+
+The exact-head diagnostic snapshot for `8ced4422e845a7ea98fc06192a30166783593de3`
+reports Headless ON and OFF successful, Windows ARM64 build and several Pixi,
+DWG/DXF, and CodeQL jobs in progress, and macOS/Pixi jobs queued; no completed
+failure was reported in that snapshot. Treat all queued or running jobs as
+pending, not passes. The PR description was updated and read back from GitHub;
+it now states the nine-family source-picker contract, automated evidence, and
+remaining acceptance gates.
+
+No drawing was saved during the source-picker GUI attempt. Visible packaged-app
+source replacement/highlight/family-switch acceptance remains open, along with
+the other gates listed in section 2027. The picker feature itself is complete
+at the implementation and headless-regression level; do not duplicate the UI
+or imply visible acceptance from automated tests.
