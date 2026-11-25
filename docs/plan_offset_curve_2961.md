@@ -62750,3 +62750,30 @@ still draft/review-required. Visible packaged-app acceptance, the Linux
 mixed-bulge portability question, independent CAD/AutoCAD acceptance, and
 remaining family/variant validation remain open; this sanitizer completion
 does not close the overall roadmap.
+
+## 2027. Recheck the Visible Source-picker Gate (2026-11-24)
+
+The visible source-picker gate remains open. Reattached to the qmake6 build at
+`tmp/offset-2961-qmake-native/LibreCAD.app`. Its current document was an
+unsaved line/copy test, not the source-picker fixture. The first test copy
+available in the desktop showed an ordinary ellipse under double-click, so
+its generic Ellipse Properties dialog is not evidence for native offset
+editing. The established valid fixture is
+`/private/tmp/offset-oda-audit-output-20261120/offset-R2018-degree1.dxf`; its
+DXF contains `LC_OFFSET_CURVE` metadata, and prior GUI inspection recorded it
+as `Offset Curve (1)` after `selectall`.
+
+Attempted to open that fixture in the current qmake6 app without saving or
+modifying the unsaved drawing. The native Open Drawing dialog was displayed,
+but CUA then returned `noWindowsAvailable` on file-name entry; reattachment
+timed out. The previously approved packaged test copy at
+`/private/tmp/LibreCAD-PR3193-visible.app` is no longer present. No drawing
+was saved, and no source replacement, highlight, family change, cancellation,
+or refusal behavior was verified. Resume only with a live, controllable build
+and the fixture above; the independent GUI acceptance gate remains open.
+
+Fresh CI for `b0b676a06` has passed CodeQL, headless ON/OFF, all five Pixi
+platforms, DWG/DXF fast and Windows x64/ARM64, and Windows ARM64 packaging.
+At this checkpoint the universal macOS build-and-packaging step was still
+running. PR description/comment update APIs return 403 to the connected GitHub
+integration; the committed roadmap is the current validation ledger.
