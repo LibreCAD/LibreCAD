@@ -2772,6 +2772,200 @@ bool hasReplayableRawVisualStyle(const LC_DwgAdvancedMetadata &metadata,
   return false;
 }
 
+#ifdef LIBRECAD_SYSTEM_LIBDXFRW
+// Verify the retained carrier and dictionary before a layer names a material.
+bool hasDxfLayerMaterialCarrier(
+    const LC_DwgAdvancedMetadata &metadata,
+    const std::set<std::uint32_t> &emittedObjects,
+    std::uint32_t sourceRootHandle,
+    const std::map<std::uint32_t, std::string> &rootEntryName,
+    DRW::Version exportVersion, std::uint32_t handle) {
+  const auto parseMaterialHandle = [](const char *text, std::uint32_t &handle) {
+    if (text == nullptr || *text == '\0' || std::strlen(text) > 16)
+      return false;
+    for (const unsigned char *p = reinterpret_cast<const unsigned char *>(text); *p; ++p)
+      if (!((*p >= '0' && *p <= '9') || (*p >= 'A' && *p <= 'F') ||
+            (*p >= 'a' && *p <= 'f')))
+        return false;
+    char *end = nullptr;
+    errno = 0;
+    const unsigned long value = std::strtoul(text, &end, 16);
+    if (errno == ERANGE || end == text || *end != '\0' ||
+        value > std::numeric_limits<std::uint32_t>::max())
+      return false;
+    handle = static_cast<std::uint32_t>(value);
+    return true;
+  };
+  const LC_DwgAdvancedMetadata::MaterialRecord *material = nullptr;
+  for (const auto &candidate : metadata.materials()) {
+    if (candidate.handle != handle)
+      continue;
+    if (material != nullptr || candidate.requiresRawDxfReplay ||
+        candidate.replayState != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed)
+      return false;
+    material = &candidate;
+  }
+  if (material == nullptr || material->parentHandle == 0 || material->name.empty() ||
+      material->xDictHandle != 0 || !material->extData.empty() ||
+      hasCustomDxfApplicationGroups(material->appData) ||
+      std::any_of(material->reactorHandles.begin(), material->reactorHandles.end(),
+                  [&](std::uint32_t reactor) { return reactor != material->parentHandle; }) ||
+      emittedObjects.count(handle) == 0)
+    return false;
+  const LC_DwgAdvancedMetadata::DictionaryRecord *dictionary = nullptr;
+  for (const auto &candidate : metadata.dictionaries()) {
+    if (candidate.handle != material->parentHandle)
+      continue;
+    if (dictionary != nullptr || candidate.replayState !=
+        LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed)
+      return false;
+    dictionary = &candidate;
+  }
+  const auto rootName = rootEntryName.find(material->parentHandle);
+  const auto rootCount = std::count_if(metadata.dictionaries().begin(),
+      metadata.dictionaries().end(), [](const auto &entry) { return entry.parentHandle == 0; });
+  if (dictionary == nullptr || sourceRootHandle == 0 || rootCount != 1 ||
+      emittedObjects.count(dictionary->handle) == 0 ||
+      dictionary->parentHandle != sourceRootHandle || !dictionary->typedPayloadComplete ||
+      dictionary->xDictHandle != 0 || !dictionary->extData.empty() ||
+      hasCustomDxfApplicationGroups(dictionary->appData) ||
+      std::any_of(dictionary->reactorHandles.begin(), dictionary->reactorHandles.end(),
+                  [&](std::uint32_t reactor) { return reactor != sourceRootHandle; }) ||
+      rootName == rootEntryName.end() ||
+      normalizeDwgTableName(rootName->second) != "ACAD_MATERIAL")
+    return false;
+  unsigned rootMatches = 0;
+  for (const auto &root : metadata.dictionaries()) {
+    if (root.parentHandle != 0)
+      continue;
+    if (root.replayState != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed)
+      return false;
+    for (const auto &entry : root.entries) {
+      if (normalizeDwgTableName(entry.name) == "ACAD_MATERIAL") {
+        if (entry.handle != dictionary->handle || ++rootMatches != 1)
+          return false;
+      }
+    }
+  }
+  if (rootMatches != 1)
+    return false;
+  const std::string materialName = normalizeDwgTableName(material->name);
+  unsigned namedEntries = 0;
+  for (const auto &entry : dictionary->entries) {
+    const bool sameName = normalizeDwgTableName(entry.name) == materialName;
+    if (entry.handle == handle || sameName) {
+      if (entry.handle != handle || !sameName || ++namedEntries != 1)
+        return false;
+    }
+  }
+  if (namedEntries != 1)
+    return false;
+  const DRW_RawDxfObject *carrier = nullptr;
+  const DRW_RawDxfObject *rawDictionary = nullptr;
+  for (const auto &candidate : metadata.rawDxfObjects()) {
+    if (candidate.handle == handle) {
+      if (carrier != nullptr || candidate.name != "MATERIAL" ||
+          candidate.m_version != exportVersion ||
+          candidate.parentHandle != material->parentHandle)
+        return false;
+      carrier = &candidate;
+    } else if (candidate.handle == dictionary->handle) {
+      if (rawDictionary != nullptr || candidate.name != "DICTIONARY" ||
+          candidate.m_version != exportVersion ||
+          candidate.parentHandle != sourceRootHandle)
+        return false;
+      rawDictionary = &candidate;
+    }
+  }
+  if (carrier == nullptr || rawDictionary == nullptr)
+    return false;
+  // Both records use the same common self/owner framing; inspect their
+  // bodies only after the framed identity and raw spellings agree.
+  const auto visitCarrier = [&](const DRW_RawDxfObject &raw,
+                                std::uint32_t self, std::uint32_t owner,
+                                const auto &visit) {
+    if (raw.hasRawValues && raw.rawValues.size() != raw.groups.size())
+      return false;
+    unsigned selfCount = 0, ownerCount = 0;
+    int depth = 0;
+    for (std::size_t index = 0; index < raw.groups.size(); ++index) {
+      const auto &group = raw.groups[index];
+      if (group.code() == 102) {
+        if (group.type() != DRW_Variant::STRING || !group.c_str())
+          return false;
+        if (group.c_str()[0] == '{' && group.c_str()[1] != '\0')
+          ++depth;
+        else if (std::strcmp(group.c_str(), "}") == 0 && depth > 0)
+          --depth;
+        else
+          return false;
+      } else if (depth == 0 && (group.code() == 5 || group.code() == 330)) {
+        std::uint32_t value = 0, rawValue = 0;
+        if (group.type() != DRW_Variant::STRING ||
+            !parseMaterialHandle(group.c_str(), value) ||
+            (raw.hasRawValues &&
+             (!parseMaterialHandle(raw.rawValues[index].c_str(), rawValue) || rawValue != value)))
+          return false;
+        if (group.code() == 5) {
+          if (++selfCount != 1 || value != self)
+            return false;
+        } else if (++ownerCount != 1 || value != owner) {
+          return false;
+        }
+      } else if (depth == 0 && !visit(group, index)) {
+        return false;
+      }
+    }
+    return depth == 0 && selfCount == 1 && ownerCount == 1;
+  };
+  unsigned nameCount = 0, subclassCount = 0;
+  const bool materialValid = visitCarrier(*carrier, handle, material->parentHandle,
+      [&](const DRW_Variant &group, std::size_t index) {
+        if (group.code() == 1)
+          return ++nameCount == 1 && group.type() == DRW_Variant::STRING &&
+                 group.c_str() != nullptr && material->name == group.c_str() &&
+                 (!carrier->hasRawValues || carrier->rawValues[index] == material->name);
+        if (group.code() == 100 && group.type() == DRW_Variant::STRING &&
+            group.c_str() && std::strcmp(group.c_str(), "AcDbMaterial") == 0) {
+          if (carrier->hasRawValues && carrier->rawValues[index] != "AcDbMaterial")
+            return false;
+          ++subclassCount;
+        }
+        return true;
+      });
+  if (!materialValid || nameCount != 1 || subclassCount != 1)
+    return false;
+  unsigned dictionaryMatches = 0;
+  std::string entryName;
+  const bool dictionaryValid = visitCarrier(*rawDictionary, dictionary->handle,
+      sourceRootHandle, [&](const DRW_Variant &group, std::size_t index) {
+        if (group.code() == 3) {
+          if (!entryName.empty() || group.type() != DRW_Variant::STRING || !group.c_str() ||
+              (rawDictionary->hasRawValues && rawDictionary->rawValues[index] != group.c_str()))
+            return false;
+          entryName = group.c_str();
+        } else if (group.code() == 350 || group.code() == 360) {
+          std::uint32_t value = 0, rawValue = 0;
+          if (entryName.empty() || group.type() != DRW_Variant::STRING ||
+              !parseMaterialHandle(group.c_str(), value) ||
+              (rawDictionary->hasRawValues &&
+               (!parseMaterialHandle(rawDictionary->rawValues[index].c_str(), rawValue) ||
+                rawValue != value)))
+            return false;
+          const bool sameName = normalizeDwgTableName(entryName) == materialName;
+          if (value == handle || sameName) {
+            if (value != handle || !sameName)
+              return false;
+            ++dictionaryMatches;
+          }
+          entryName.clear();
+        }
+        return true;
+      });
+  return dictionaryValid && entryName.empty() && dictionaryMatches == 1;
+}
+#endif
+
 bool hasReplayableRawMaterial(const LC_DwgAdvancedMetadata &metadata,
                               std::uint32_t handle,
                               DRW::Version targetVersion) {
@@ -13167,6 +13361,37 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
     for (const std::uint32_t h : m_dxfSuppressedObjectHandles)
       m_dxfEmittedObjectHandles.erase(h);
 
+#ifdef LIBRECAD_SYSTEM_LIBDXFRW
+    if (exportVersion >= DRW::AC1021) {
+      std::map<std::uint32_t, bool> materialCarrierCache;
+      RS_LayerList *layers = g.getLayerList();
+      for (unsigned int i = 0; i < layers->count(); ++i) {
+        const RS_Layer *layer = layers->at(i);
+        const auto *source = metadata.findLayerTableEntryByName(
+            layer->getName().toUtf8().constData());
+        if (source == nullptr)
+          continue;
+        std::uint32_t handle = 0;
+        bool present = false;
+        bool valid = source->getDxfMaterialHandle(handle, present);
+        if (valid && present && handle != 0) {
+          auto cached = materialCarrierCache.find(handle);
+          if (cached == materialCarrierCache.end())
+            cached = materialCarrierCache.emplace(
+                handle, hasDxfLayerMaterialCarrier(metadata, m_dxfEmittedObjectHandles,
+                                                    sourceRootHandle, rootEntryName,
+                                                    exportVersion, handle)).first;
+          valid = cached->second;
+        }
+        if (!valid) {
+          RS_DEBUG->print(RS_Debug::D_WARNING,
+                          "RS_FilterDXFRW: cannot resolve a LAYER material carrier");
+          return false;
+        }
+      }
+    }
+#endif
+
     std::vector<DRW_Dictionary> namedDicts;
     std::set<std::uint32_t> emittedDictHandles;
     for (const auto &d : metadata.dictionaries()) {
@@ -20630,6 +20855,12 @@ void RS_FilterDXFRW::writeLayers() {
         continue;
       }
       lay.appData = sourceLayer->appData;
+#ifdef LIBRECAD_SYSTEM_LIBDXFRW
+      if (m_dxfW != nullptr && m_dxfExportVersion >= DRW::AC1021) {
+        lay.handleMaterialS = sourceLayer->handleMaterialS;
+        lay.materialHandle = sourceLayer->materialHandle;
+      }
+#endif
       lay.reactorHandles = sourceLayer->reactorHandles;
       lay.xDictHandle = sourceLayer->xDictHandle;
       lay.handle = sourceLayer->handle;

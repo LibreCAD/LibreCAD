@@ -798,6 +798,178 @@ TEST_CASE("System codec preserves canonical linetype metadata after retry",
   std::filesystem::remove(output);
 }
 
+TEST_CASE("System codec preserves a layer material link and refuses a missing carrier",
+          "[system-codec][dxf][material][layer][transaction]") {
+  ensureSettings();
+  const auto source = tmpFile("system_layer_material_source.dxf");
+  const auto output = tmpFile("system_layer_material_output.dxf");
+  const auto retry = tmpFile("system_layer_material_retry.dxf");
+  const auto materialHandle = GENERATE(std::uint32_t{0xA1}, std::uint32_t{0x14});
+  const std::string materialText = materialHandle == 0xA1u ? "A1" : "14";
+  std::string input =
+            "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1021\n0\nENDSEC\n"
+            "0\nSECTION\n2\nTABLES\n0\nTABLE\n2\nLAYER\n70\n1\n"
+            "0\nLAYER\n5\n30\n100\nAcDbSymbolTableRecord\n100\nAcDbLayerTableRecord\n"
+            "2\nRAWTEST\n70\n0\n62\n7\n6\nCONTINUOUS\n347\nA1\n"
+            "0\nENDTAB\n0\nENDSEC\n0\nSECTION\n2\nENTITIES\n"
+            "0\nLINE\n5\nA2\n100\nAcDbEntity\n8\nRAWTEST\n100\nAcDbLine\n"
+            "10\n0\n20\n0\n30\n0\n11\n10\n21\n0\n31\n0\n"
+            "0\nENDSEC\n0\nSECTION\n2\nOBJECTS\n"
+            "0\nDICTIONARY\n5\nC\n330\n0\n100\nAcDbDictionary\n281\n1\n"
+            "3\nACAD_MATERIAL\n350\nA0\n"
+            "0\nDICTIONARY\n5\nA0\n330\nC\n100\nAcDbDictionary\n281\n1\n"
+            "3\nPlainMat\n350\nA1\n"
+            "0\nMATERIAL\n5\nA1\n330\nA0\n100\nAcDbMaterial\n1\nPlainMat\n"
+            "0\nENDSEC\n0\nEOF\n";
+  if (materialHandle != 0xA1u) {
+    const std::string from = "\nA1\n";
+    for (std::size_t pos = 0; (pos = input.find(from, pos)) != std::string::npos;) {
+      input.replace(pos, from.size(), "\n14\n");
+      pos += 4;
+    }
+  }
+  writeText(source, input);
+  RS_Graphic graphic;
+  RS_FilterDXFRW filter;
+  REQUIRE(filter.fileImport(graphic, QString::fromStdString(source), RS2::FormatDXFRW));
+  const auto *layer = graphic.dwgAdvancedMetadata().findLayerTableEntryByName("RAWTEST");
+  REQUIRE(layer != nullptr);
+  CHECK(layer->handleMaterialS == materialText);
+  auto &raw = const_cast<std::vector<DRW_RawDxfObject>&>(
+      graphic.dwgAdvancedMetadata().rawDxfObjects());
+  auto found = std::find_if(raw.begin(), raw.end(), [&](const auto &entry) {
+    return entry.name == "MATERIAL" && entry.handle == materialHandle;
+  });
+  REQUIRE(found != raw.end());
+  const DRW_RawDxfObject saved = *found;
+  raw.erase(found);
+  const std::string sentinel = "preserve material destination\n";
+  writeText(output, sentinel);
+  CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  std::ifstream retained(output, std::ios::binary);
+  CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel);
+  retained.close();
+  raw.push_back(saved);
+  const auto expectRefusal = [&] {
+    writeText(output, sentinel);
+    CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+    std::ifstream existing(output, std::ios::binary);
+    CHECK(std::string(std::istreambuf_iterator<char>(existing), {}) == sentinel);
+  };
+  auto &carrier = raw.back();
+  auto self = std::find_if(carrier.groups.begin(), carrier.groups.end(),
+                           [](const auto &group) { return group.code() == 5; });
+  REQUIRE(self != carrier.groups.end());
+  const DRW_Variant oldSelf = *self;
+  *self = DRW_Variant(5, std::string("A3"));
+  expectRefusal();
+  *self = oldSelf;
+  REQUIRE(carrier.hasRawValues);
+  const auto name = std::find_if(carrier.groups.begin(), carrier.groups.end(),
+                                 [](const auto &group) { return group.code() == 1; });
+  REQUIRE(name != carrier.groups.end());
+  const auto nameIndex = static_cast<std::size_t>(std::distance(carrier.groups.begin(), name));
+  const auto oldRawName = carrier.rawValues.at(nameIndex);
+  carrier.rawValues[nameIndex] = "Different";
+  expectRefusal();
+  carrier.rawValues[nameIndex] = oldRawName;
+  carrier.m_version = DRW::AC1015;
+  expectRefusal();
+  carrier.m_version = saved.m_version;
+  auto *mutableLayer = const_cast<DRW_Layer *>(layer);
+  mutableLayer->handleMaterialS = "not-a-handle";
+  expectRefusal();
+  mutableLayer->handleMaterialS = materialText;
+  raw.push_back(saved);
+  expectRefusal();
+  raw.pop_back();
+  auto &dictionaries = const_cast<std::vector<LC_DwgAdvancedMetadata::DictionaryRecord>&>(
+      graphic.dwgAdvancedMetadata().dictionaries());
+  auto dictionary = std::find_if(dictionaries.begin(), dictionaries.end(),
+      [](const auto &entry) { return entry.handle == 0xA0u; });
+  REQUIRE(dictionary != dictionaries.end());
+  const auto entries = dictionary->entries;
+  dictionary->entries.clear();
+  expectRefusal();
+  dictionary->entries = entries;
+  auto root = std::find_if(dictionaries.begin(), dictionaries.end(),
+      [](const auto &entry) { return entry.handle == 0xCu; });
+  REQUIRE(root != dictionaries.end());
+  const auto rootEntries = root->entries;
+  root->entries.clear();
+  expectRefusal();
+  root->entries = rootEntries;
+  auto rawDictionary = std::find_if(raw.begin(), raw.end(), [](const auto &entry) {
+    return entry.name == "DICTIONARY" && entry.handle == 0xA0u;
+  });
+  REQUIRE(rawDictionary != raw.end());
+  auto entryHandle = std::find_if(rawDictionary->groups.begin(), rawDictionary->groups.end(),
+      [](const auto &group) { return group.code() == 350; });
+  REQUIRE(entryHandle != rawDictionary->groups.end());
+  const DRW_Variant oldEntryHandle = *entryHandle;
+  *entryHandle = DRW_Variant(350, std::string("A3"));
+  expectRefusal();
+  *entryHandle = oldEntryHandle;
+  REQUIRE(rawDictionary->hasRawValues);
+  const auto dictionaryName = std::find_if(rawDictionary->groups.begin(), rawDictionary->groups.end(),
+      [](const auto &group) { return group.code() == 3; });
+  REQUIRE(dictionaryName != rawDictionary->groups.end());
+  const auto dictionaryNameIndex = static_cast<std::size_t>(
+      std::distance(rawDictionary->groups.begin(), dictionaryName));
+  const auto oldRawDictionaryName = rawDictionary->rawValues.at(dictionaryNameIndex);
+  rawDictionary->rawValues[dictionaryNameIndex] = "Different";
+  expectRefusal();
+  rawDictionary->rawValues[dictionaryNameIndex] = oldRawDictionaryName;
+  writeText(output, sentinel);
+  CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+  std::ifstream crossVersion(output, std::ios::binary);
+  CHECK(std::string(std::istreambuf_iterator<char>(crossVersion), {}) == sentinel);
+  crossVersion.close();
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  const auto material = recordGroupValues(output, "MATERIAL", "5");
+  REQUIRE(material.size() == 1);
+  if (materialHandle == 0x14u)
+    CHECK(material.front() != "14");
+  const auto layerGroups = recordGroupsWithValue(output, "LAYER", "2", "RAWTEST");
+  CHECK(std::count(layerGroups.begin(), layerGroups.end(),
+                   std::make_pair(std::string("347"), material.front())) == 1);
+  RS_Graphic reread;
+  REQUIRE(filter.fileImport(reread, QString::fromStdString(output), RS2::FormatDXFRW));
+  REQUIRE(filter.fileExport(reread, QString::fromStdString(retry), RS2::FormatDXFRW));
+  const auto retryMaterial = recordGroupValues(retry, "MATERIAL", "5");
+  REQUIRE(retryMaterial.size() == 1);
+  const auto retryLayer = recordGroupsWithValue(retry, "LAYER", "2", "RAWTEST");
+  CHECK(std::count(retryLayer.begin(), retryLayer.end(),
+                   std::make_pair(std::string("347"), retryMaterial.front())) == 1);
+  if (const char *copy = std::getenv("LIBRECAD_KEEP_LAYER_MATERIAL_OUTPUT"))
+    std::filesystem::copy_file(retry, copy, std::filesystem::copy_options::overwrite_existing);
+  std::filesystem::remove(source);
+  std::filesystem::remove(output);
+  std::filesystem::remove(retry);
+}
+
+TEST_CASE("System codec preserves an explicit null layer material",
+          "[system-codec][dxf][material][layer]") {
+  ensureSettings();
+  const auto source = tmpFile("system_layer_null_material_source.dxf");
+  const auto output = tmpFile("system_layer_null_material_output.dxf");
+  writeText(source,
+            "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1021\n0\nENDSEC\n"
+            "0\nSECTION\n2\nTABLES\n0\nTABLE\n2\nLAYER\n70\n1\n"
+            "0\nLAYER\n5\n30\n100\nAcDbSymbolTableRecord\n100\nAcDbLayerTableRecord\n"
+            "2\nRAWNULL\n70\n0\n62\n7\n6\nCONTINUOUS\n347\n0\n"
+            "0\nENDTAB\n0\nENDSEC\n0\nEOF\n");
+  RS_Graphic graphic;
+  RS_FilterDXFRW filter;
+  REQUIRE(filter.fileImport(graphic, QString::fromStdString(source), RS2::FormatDXFRW));
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  const auto groups = recordGroupsWithValue(output, "LAYER", "2", "RAWNULL");
+  CHECK(std::count(groups.begin(), groups.end(),
+                   std::make_pair(std::string("347"), std::string("0"))) == 1);
+  std::filesystem::remove(source);
+  std::filesystem::remove(output);
+}
+
 TEST_CASE("System codec refuses an incomplete raw-only material after metadata storage",
           "[system-codec][dxf][material][transaction]") {
   ensureSettings();
