@@ -2643,6 +2643,35 @@ if (LIBRECAD_BUILD_SYSTEM_CODEC_TESTS)
     set_tests_properties(librecad_system_codec_tests PROPERTIES
         WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
         ENVIRONMENT "QT_QPA_PLATFORM=offscreen" TIMEOUT 120)
+
+    # GUI property tests need QApplication; keep them separate from the
+    # headless codec executable, which may have created QCoreApplication.
+    add_executable(librecad_system_named_linetype_tests EXCLUDE_FROM_ALL
+        librecad/src/main/lc_release_label.cpp
+        librecad/src/test/lc_testsettingsisolation.cpp
+        librecad/src/test/lc_testtempdirectory.cpp
+        librecad/src/ui/dock_widgets/property_sheet/tests/lc_named_linetype_properties_tests.cpp
+        librecad/src/ui/dock_widgets/property_sheet/tests/lc_propertysheetlifetime_tests.cpp
+        ${LIBRECAD_RES})
+    set_target_properties(librecad_system_named_linetype_tests PROPERTIES
+        AUTOMOC OFF AUTOUIC OFF AUTORCC ON)
+    target_include_directories(librecad_system_named_linetype_tests PRIVATE
+        ${SHARED_INCLUDES} "${CMAKE_CURRENT_BINARY_DIR}/librecad_lib_autogen/include")
+    target_link_libraries(librecad_system_named_linetype_tests PRIVATE
+        librecad_lib Catch2::Catch2WithMain Qt6::Core Qt6::Gui Qt6::Network
+        Qt6::PrintSupport Qt6::Svg Qt6::Widgets)
+    target_compile_features(librecad_system_named_linetype_tests PRIVATE cxx_std_17)
+    target_compile_definitions(librecad_system_named_linetype_tests PRIVATE
+        BUILD_TESTS=1 DWGSUPPORT _USE_MATH_DEFINES)
+    option(LIBRECAD_REGISTER_SYSTEM_GUI_TESTS
+        "Register system-codec GUI tests after their target is built" OFF)
+    if (LIBRECAD_REGISTER_SYSTEM_GUI_TESTS)
+        add_test(NAME librecad_system_named_linetype_tests
+            COMMAND librecad_system_named_linetype_tests "[named-linetype]" --reporter compact)
+        set_tests_properties(librecad_system_named_linetype_tests PROPERTIES
+            WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
+            ENVIRONMENT "QT_QPA_PLATFORM=offscreen" TIMEOUT 120)
+    endif()
 endif()
 option (LIBRECAD_REGISTER_FULL_TESTS
         "Register the complete LibreCAD test executable with CTest" OFF)
@@ -3646,7 +3675,10 @@ if (BUILD_TESTS)
     add_librecad_filter_micro_test(
         librecad_linetype_ui_tests
         librecad/src/ui/components/comboboxes/tests/qg_linetypebox_tests.cpp)
-    target_sources(librecad_linetype_ui_tests PRIVATE ${LIBRECAD_RES})
+    target_sources(librecad_linetype_ui_tests PRIVATE
+        librecad/src/ui/dock_widgets/property_sheet/tests/lc_named_linetype_properties_tests.cpp
+        librecad/src/ui/dock_widgets/property_sheet/tests/lc_propertysheetlifetime_tests.cpp
+        ${LIBRECAD_RES})
     set_target_properties(librecad_linetype_ui_tests PROPERTIES AUTORCC ON)
     # Later rungs test widgets whose headers include their uic output.
     target_include_directories(librecad_linetype_ui_tests PRIVATE

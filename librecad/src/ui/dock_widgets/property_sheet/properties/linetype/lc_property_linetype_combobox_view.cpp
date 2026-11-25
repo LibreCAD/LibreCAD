@@ -24,6 +24,7 @@
 #include "lc_property_linetype_combobox_view.h"
 
 #include "lc_peninforegistry.h"
+#include "lc_linetypenames.h"
 #include "lc_property_linetype_combobox.h"
 #include "lc_property_view_utils.h"
 
@@ -57,4 +58,31 @@ void LC_PropertyLineTypeComboboxView::doApplyAttributes(const LC_PropertyViewDes
 
 QComboBox* LC_PropertyLineTypeComboboxView::doCreateEditCombobox(QWidget* parent) {
     return new LC_PropertyLineTypeCombobox(this, parent, m_showByLayer, false);
+}
+
+const QByteArray LC_PropertyNamedLineTypeComboboxView::VIEW_NAME = QByteArrayLiteral("NamedLinetypeCombobox");
+
+void LC_PropertyNamedLineTypeComboboxView::doDrawValueDetails(
+        const QStyle* style, const LC_LineTypeIdentity& value, QPainter& painter, const QRect& rect) const {
+    QRect textRect = rect;
+    const auto* registry = LC_PenInfoRegistry::instance();
+    QString displayName = value.hasName ? value.name : registry->getLineTypeText(value.type);
+    // Unknown drawing names must not be pictured as the SolidLine fallback.
+    if (!value.hasName || LC_LineTypeNames::isKnownName(value.name)) {
+        QRect iconRect = rect;
+        iconRect.setWidth(iconRect.height());
+        iconRect.adjust(2, 2, -2, -2);
+        registry->getLineTypeIcon(value.type).paint(&painter, iconRect);
+        textRect.setLeft(iconRect.right() + 3);
+        // Preserve translated stock labels while displaying noncanonical
+        // aliases and drawing-defined names exactly as the pen stores them.
+        if (value.hasName && LC_LineTypeNames::foldName(value.name) ==
+            LC_LineTypeNames::foldName(LC_LineTypeNames::lineTypeToName(value.type)))
+            displayName = registry->getLineTypeText(value.type);
+    }
+    if (textRect.isValid()) LC_PropertyViewUtils::drawElidedText(painter, displayName, textRect, style);
+}
+
+QComboBox* LC_PropertyNamedLineTypeComboboxView::doCreateEditCombobox(QWidget* parent) {
+    return new LC_PropertyNamedLineTypeCombobox(this, parent);
 }

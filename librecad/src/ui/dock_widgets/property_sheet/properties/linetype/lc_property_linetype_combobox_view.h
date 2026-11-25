@@ -46,4 +46,16 @@ protected:
     bool m_showByLayer = true;
 };
 
+class LC_PropertyNamedLineTypeComboboxView : public LC_PropertySimpleComboboxView<LC_PropertyNamedLineType> {
+    Q_DISABLE_COPY(LC_PropertyNamedLineTypeComboboxView)
+public:
+    static const QByteArray VIEW_NAME;
+    explicit LC_PropertyNamedLineTypeComboboxView(LC_PropertyNamedLineType* property)
+        : LC_PropertySimpleComboboxView(property) {}
+protected:
+    QComboBox* doCreateEditCombobox(QWidget* parent) override;
+    void doDrawValueDetails(const QStyle* style, const LC_LineTypeIdentity& value,
+                            QPainter& painter, const QRect& rect) const override;
+};
+
 #endif
