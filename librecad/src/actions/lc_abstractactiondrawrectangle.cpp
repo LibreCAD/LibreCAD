@@ -325,6 +325,11 @@ bool LC_AbstractActionDrawRectangle::doProcessCommand(RS_CommandEvent *e, const 
     else if (processCustomCommand(e,c, toMainStatus)){ // delegate processing to inherited class
         // intentionally do nothing
     }
+    else if (!isValueStatus(getStatus()) || !isScalarExpressionCandidate(c)){
+        // A typed point (10,10, @10,5, 10<30, 0) is no value: it is left to the event handler. The expression
+        // parser would read 10,10 as the number 10, and the point would be lost.
+        processed = false;
+    }
     else{ // process entered value
         bool ok = false;
         double value = RS_Math::eval(c, &ok);
@@ -357,6 +362,25 @@ bool LC_AbstractActionDrawRectangle::doProcessCommand(RS_CommandEvent *e, const 
         stateUpdated(toMainStatus);
     }
     return processed;
+}
+
+/**
+ * States that ask for one number (the inherited actions use them in processCommandValue). In the other states
+ * a typed number can only be a point, and 0 is the origin.
+ * @param status state of action
+ * @return true if a number is expected
+ */
+bool LC_AbstractActionDrawRectangle::isValueStatus(int status){
+    switch (status) {
+        case SetAngle:
+        case SetRadius:
+        case SetWidth:
+        case SetHeight:
+        case SetInnerAngle:
+            return true;
+        default:
+            return false;
+    }
 }
 
 /**

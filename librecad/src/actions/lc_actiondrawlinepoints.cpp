@@ -380,11 +380,11 @@ bool LC_ActionDrawLinePoints::doProceedCommand([[maybe_unused]]RS_CommandEvent *
  * @return
  */
 bool LC_ActionDrawLinePoints::doProcessCommandValue(RS_CommandEvent *e, const QString &c){
+    if (!isScalarExpressionCandidate(c)){
+        return false; // a typed point (10,10, @10,5, 10<30): left to the event handler
+    }
     bool result = true;
     switch (getStatus()) {
-        case SetDirection:
-            // processed earlier
-            break;
         case SetFixDistance:{
             bool ok = false;
             double distance = RS_Math::eval(c, &ok);
@@ -422,6 +422,7 @@ bool LC_ActionDrawLinePoints::doProcessCommandValue(RS_CommandEvent *e, const QS
                         break;
                     }
                     default:
+                        result = false; // no direction for the distance
                         break;
                 }
             } else {
@@ -441,9 +442,12 @@ bool LC_ActionDrawLinePoints::doProcessCommandValue(RS_CommandEvent *e, const QS
             break;
         }
         case SetAngle: { // process angle value
-            processAngleValueInput(e, c);
+            result = processAngleValueInput(e, c);
             break;
         }
+        default:
+            result = false; // no number in this state: 0 is the origin, other text is no command
+            break;
     }
     return result;
 }

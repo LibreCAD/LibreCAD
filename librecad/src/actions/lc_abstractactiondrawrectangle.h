@@ -169,6 +169,7 @@ protected:
     virtual void doAddPolylineToListOfEntities(RS_Polyline *polyline, QList<RS_Entity *> &list, bool preview);
     void onCoordinateEvent(const RS_Vector &coord, bool isZero, int status) override;
     bool doProcessCommand(RS_CommandEvent *e, const QString &c) override;
+    static bool isValueStatus(int status);
     void doPreparePreviewEntities(QMouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status) override;
     static void normalizeCorners(RS_Vector &bottomLeftCorner, RS_Vector &bottomRightCorner, RS_Vector &topRightCorner, RS_Vector &topLeftCorner);
     void stateUpdated(bool toMainStatus);

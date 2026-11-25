@@ -235,6 +235,7 @@ void LC_ActionDrawRectangle2Points::doOnLeftMouseButtonRelease([[maybe_unused]]Q
 void LC_ActionDrawRectangle2Points::doProcessCoordinateEvent(const RS_Vector &coord, [[maybe_unused]]bool zero, int status){
     switch (status){
         case SetPoint1:
+            moveRelativeZero(coord); // as a click does: the next @x,y is measured from the first corner
             corner1Set = true;
             corner1 = coord;
             setMainStatus(SetPoint2);

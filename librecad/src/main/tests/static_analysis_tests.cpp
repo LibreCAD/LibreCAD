@@ -3,6 +3,7 @@
 // Copyright (C) 2026 Dongxu Li
 
 #include <memory>
+#include <utility>
 
 #include <QScopeGuard>
 #include <QtTest>
@@ -10,6 +11,7 @@
 
 #include "doc_plugin_interface.h"
 #include "dwgreader.h"
+#include "lc_actiondrawrectangle2points.h"
 #include "lc_actiondrawrectangle3points.h"
 #include "lc_actionmodifylinejoin.h"
 #include "lc_hyperbola.h"
@@ -20,11 +22,16 @@
 #include "lc_widgetoptionsdialog.h"
 #include "picfile.h"
 #include "qc_applicationwindow.h"
+#include "qc_mdiwindow.h"
+#include "qg_actionhandler.h"
+#include "qg_commandedit.h"
+#include "qg_commandwidget.h"
 #include "qg_dlghatch.h"
 #include "qg_dlgoptionsdrawing.h"
 #include "qg_layerwidget.h"
 #include "rs_block.h"
 #include "rs_circle.h"
+#include "rs_coordinateevent.h"
 #include "rs_commands.h"
 #include "rs_creation.h"
 #include "rs_debug.h"
@@ -140,6 +147,50 @@ private:
     }
 
     const QStringList saved;
+};
+
+// A new drawing in the application window, and its command line to type into.  The drawing is
+// closed without asking to save it.
+class CommandLineDrawing {
+public:
+    CommandLineDrawing()
+        : window(QC_ApplicationWindow::getAppWindow().get())
+        , drawing(window->slotFileNew())
+        , commands(window->findChild<QG_CommandWidget*>())
+        , handler(window->findChild<QG_ActionHandler*>())
+    {}
+    ~CommandLineDrawing()
+    {
+        if (drawing != nullptr) {
+            graphic()->setModified(false);
+        }
+        window->slotFileCloseAll();
+    }
+
+    bool ready() const { return drawing != nullptr && commands != nullptr && handler != nullptr; }
+    RS_Graphic* graphic() const { return drawing->getGraphic(); }
+
+    // typed and entered, as at the keyboard
+    void type(const char* text)
+    {
+        commands->leCommand->clear();
+        QTest::keyClicks(commands->leCommand, text);
+        QTest::keyClick(commands->leCommand, Qt::Key_Return);
+    }
+
+    RS_Vector relativeZero() const { return graphic()->getGraphicView()->getRelativeZero(); }
+
+    // the lower left and the upper right corner of what is drawn
+    std::pair<RS_Vector, RS_Vector> bounds() const
+    {
+        graphic()->calculateBorders();
+        return {graphic()->getMin(), graphic()->getMax()};
+    }
+
+    QC_ApplicationWindow* const window;
+    QC_MDIWindow* const drawing;
+    QG_CommandWidget* const commands;
+    QG_ActionHandler* const handler;
 };
 
 } // namespace
@@ -1362,6 +1413,56 @@ private slots:
         const bool listed = highlight || filter.isEmpty();
         QCOMPARE(doors->isFrozen(), listed);
         QCOMPARE(zero->isFrozen(), listed);
+    }
+
+    // Issue #3302: a point typed into the command line answers "Specify first corner" of
+    // Rectangle (2 points), and the relative point after it completes the rectangle.  The tool
+    // read 10,10 as the number 10 and left the point unanswered.
+    void rectangleTakesTypedPointsFromTheCommandLine()
+    {
+        CommandLineDrawing cad;
+        QVERIFY(cad.ready());
+        auto* rectangle = dynamic_cast<LC_ActionDrawRectangle2Points*>(
+            cad.handler->setCurrentAction(RS2::ActionDrawRectangle2Points));
+        QVERIFY(rectangle != nullptr);
+        QCOMPARE(rectangle->getStatus(), int(LC_ActionDrawRectangle2Points::SetPoint1));
+
+        cad.type("10,10");
+        QCOMPARE(rectangle->getStatus(), int(LC_ActionDrawRectangle2Points::SetPoint2));
+        // the next @x,y is measured from the corner, as after a click
+        QCOMPARE(cad.relativeZero().x, 10.);
+        QCOMPARE(cad.relativeZero().y, 10.);
+        QVERIFY(!cad.commands->teHistory->toPlainText().contains("Unknown command"));
+
+        cad.type("@100,50");
+        QVERIFY(cad.graphic()->count() > 0);
+        const auto [low, high] = cad.bounds();
+        QCOMPARE(low.x, 10.);
+        QCOMPARE(low.y, 10.);
+        QCOMPARE(high.x, 110.);
+        QCOMPARE(high.y, 60.);
+    }
+
+    // The size of a rectangle is a point too: 100,50 was read as the number 50, and dropped.
+    void rectangleTakesTypedSizeFromTheCommandLine()
+    {
+        CommandLineDrawing cad;
+        QVERIFY(cad.ready());
+        auto* rectangle = dynamic_cast<LC_ActionDrawRectangle2Points*>(
+            cad.handler->setCurrentAction(RS2::ActionDrawRectangle2Points));
+        QVERIFY(rectangle != nullptr);
+
+        RS_CoordinateEvent corner(RS_Vector(10., 10.)); // what a click on the first corner sends
+        rectangle->coordinateEvent(&corner);
+        cad.type("size");
+        QCOMPARE(rectangle->getStatus(), int(LC_ActionDrawRectangle2Points::SetSize));
+        cad.type("100,50");
+        QVERIFY(cad.graphic()->count() > 0);
+        const auto [low, high] = cad.bounds();
+        QCOMPARE(low.x, 10.);
+        QCOMPARE(low.y, 10.);
+        QCOMPARE(high.x, 110.);
+        QCOMPARE(high.y, 60.);
     }
 };
 

@@ -5,17 +5,32 @@
 // Typed numbers and coordinates (back-port of #3294): a mixed number such as
 // 1 1/2 is 1.5, a polar point on an axis is exact, and a polar coordinate
 // is not reported as an unknown command.
+// Issue #3302: the tools that read a number from the command line leave a typed
+// point (10,10) to the event handler, which the expression parser would read as 10.
+// A '<' is a polar point even inside parentheses, where it would be a comparison.
 
+#include <initializer_list>
 #include <vector>
 
+#include <QScopeGuard>
 #include <QtTest>
 #include <QtWidgets>
 
+#include "lc_abstractactiondrawline.h"
+#include "lc_abstractactionwithpreview.h"
+#include "lc_actiondrawlinepoints.h"
+#include "lc_actiondrawlinesnake.h"
+#include "lc_actiondrawrectangle1point.h"
+#include "lc_actiondrawrectangle2points.h"
+#include "lc_actiondrawrectangle3points.h"
+#include "lc_actiondrawstar.h"
 #include "qg_commandwidget.h"
 #include "rs_actioninterface.h"
+#include "rs_block.h"
 #include "rs_commandevent.h"
 #include "rs_coordinateevent.h"
 #include "rs_entitycontainer.h"
+#include "rs_graphic.h"
 #include "rs_graphicview.h"
 #include "rs_math.h"
 
@@ -43,6 +58,72 @@ public:
     std::vector<RS_Vector> points;
 };
 
+
+// what the tool answers to a typed text. The event handler reads a point only when the tool
+// leaves the text alone: a tool that takes it as a value never sees the point.
+template <class Tool>
+bool takesTypedText(RS_EntityContainer& container, RS_GraphicView& view, const char* text) {
+    auto* tool = new Tool(container, view);
+    view.setCurrentAction(tool);
+    RS_CommandEvent event(QString::fromLatin1(text));
+    tool->commandEvent(&event);
+    const bool taken = event.isAccepted();
+    view.killAllActions();
+    return taken;
+}
+
+// the tool, after the commands, for a look at its state
+template <class Tool>
+Tool* startedTool(RS_EntityContainer& container, RS_GraphicView& view, std::initializer_list<const char*> commands) {
+    auto* tool = new Tool(container, view);
+    view.setCurrentAction(tool);
+    for (const char* command : commands) {
+        RS_CommandEvent event(QString::fromLatin1(command));
+        view.commandEvent(&event);
+    }
+    return tool;
+}
+
+// sends typed text to the view, as the command line does
+bool type(RS_GraphicView& view, const char* text) {
+    RS_CommandEvent event(QString::fromLatin1(text));
+    view.commandEvent(&event);
+    return event.isAccepted();
+}
+
+// A block is a document, as the tools need, and unlike RS_Graphic writes no settings. It keeps no
+// undo here: RS_Undo::endUndoCycle() updates the undo buttons of the application window, which it
+// would make for the purpose, and that window would be deleted after the application, and crash.
+class BlockWithoutUndo final : public RS_Block {
+public:
+    using RS_Block::RS_Block;
+    void startUndoCycle() override {}
+    void addUndoable(RS_Undoable*) override {}
+    void endUndoCycle() override {}
+};
+
+// a line tool drawing into a block
+struct LineToolFixture {
+    BlockWithoutUndo block{nullptr, RS_BlockData(QStringLiteral("line tool"), RS_Vector(0., 0.), false)};
+    TestView view;
+
+    LineToolFixture() {
+        view.setContainer(&block);
+        view.setDefaultAction(new PointProbe(block, view));
+    }
+    // the actions go before the view, also when a check fails
+    ~LineToolFixture() { view.killAllActions(); }
+};
+
+int countLines(const RS_EntityContainer& container) {
+    int lines = 0;
+    for (const RS_Entity* entity : container) {
+        if (entity->rtti() == RS2::EntityLine) {
+            ++lines;
+        }
+    }
+    return lines;
+}
 }
 
 class LC_TypedCoordinatesTests : public QObject {
@@ -105,6 +186,150 @@ private slots:
         const RS_Vector expected = RS_Vector::polar(100., M_PI / 6.);
         QVERIFY(probe->points.back().distanceTo(expected) < 1e-12);
         view.killAllActions();
+    }
+
+
+    void drawingToolsLeaveTypedPointsToTheEventHandler() {
+        RS_Graphic graphic;
+        graphic.newDoc();
+        TestView view;
+        view.setContainer(&graphic);
+        view.setDefaultAction(new PointProbe(graphic, view));
+
+        // The expression parser reads 10,10 as the number 10 and 10<30 as true, and 0 is a number as
+        // well: a tool that asks for a point takes none of them for a value.
+        for (const char* text : {"10,10", "-3,4.5", "@10,5", "100<90", "@100<90", "10<30", "0"}) {
+            const auto name = [text](const char* tool) { return QString("%1: %2").arg(tool, text).toLatin1(); };
+            QVERIFY2(!takesTypedText<LC_ActionDrawRectangle2Points>(graphic, view, text),
+                     name("Rectangle (2 points)").constData());
+            QVERIFY2(!takesTypedText<LC_ActionDrawRectangle3Points>(graphic, view, text),
+                     name("Rectangle (3 points)").constData());
+            QVERIFY2(!takesTypedText<LC_ActionDrawRectangle1Point>(graphic, view, text),
+                     name("Rectangle (corner, size)").constData());
+            QVERIFY2(!takesTypedText<LC_ActionDrawStar>(graphic, view, text), name("Star").constData());
+            QVERIFY2(!takesTypedText<LC_ActionDrawLinePoints>(graphic, view, text), name("Line Points").constData());
+            QVERIFY2(!takesTypedText<LC_ActionDrawLineSnake>(graphic, view, text), name("Snake").constData());
+        }
+    }
+
+    void drawingToolsStillTakeNumbersWhereANumberIsAsked() {
+        RS_Graphic graphic;
+        graphic.newDoc();
+        TestView view;
+        view.setContainer(&graphic);
+        view.setDefaultAction(new PointProbe(graphic, view));
+        const auto finish = qScopeGuard([&view] { view.killAllActions(); });
+
+        auto* rectangle = startedTool<LC_ActionDrawRectangle2Points>(graphic, view, {"angle", "30", "radius", "2.5"});
+        QCOMPARE(rectangle->getAngle(), 30.);
+        QCOMPARE(rectangle->getRadius(), 2.5);
+        view.killAllActions();
+
+        // a comparison is no angle: the expression parser reads (10<45) as 1
+        rectangle = startedTool<LC_ActionDrawRectangle2Points>(graphic, view, {"angle", "30", "angle", "(10<45)"});
+        QCOMPARE(rectangle->getAngle(), 30.);
+        view.killAllActions();
+
+        auto* star = startedTool<LC_ActionDrawStar>(graphic, view, {"number", "7"});
+        QCOMPARE(star->getRaysNumber(), 7);
+        view.killAllActions();
+
+        auto* points = startedTool<LC_ActionDrawLinePoints>(graphic, view, {"number", "4"});
+        QCOMPARE(points->getPointsCount(), 4);
+    }
+
+    void aTypedFirstCornerOfARectangleMovesTheRelativeZero() {
+        RS_Graphic graphic;
+        graphic.newDoc();
+        TestView view;
+        view.setContainer(&graphic);
+        view.setDefaultAction(new PointProbe(graphic, view));
+        const auto finish = qScopeGuard([&view] { view.killAllActions(); });
+        view.setRelativeZero(RS_Vector(0., 0.));
+
+        // as a click on the first corner does: the next @x,y is measured from the corner
+        auto* rectangle = startedTool<LC_ActionDrawRectangle2Points>(graphic, view, {"10,10"});
+        QCOMPARE(rectangle->getStatus(), static_cast<int>(LC_AbstractActionDrawRectangle::SetPoint2));
+        QCOMPARE(view.getRelativeZero().x, 10.);
+        QCOMPARE(view.getRelativeZero().y, 10.);
+    }
+
+    void scalarCheckTellsValuesFromPoints() {
+        struct Case {
+            const char* input;
+            bool value;
+        };
+        for (const auto& [input, value] : {Case{"10", true}, Case{"10*2", true}, Case{"max(3,4)", true},
+                                           Case{"sum(1,2,3)", true}, Case{"1 1/2", true}, Case{"-5", true},
+                                           Case{"10,20", false}, Case{"@10,20", false}, Case{"10<45", false},
+                                           Case{"@10<45", false},
+                                           // '<' is a polar point even inside parentheses
+                                           Case{"(10<45)", false}, Case{"min(10<45,3)", false},
+                                           Case{"max(1,2),3", false}, Case{"(1,2", false}, Case{"3)+(4", false}}) {
+            QVERIFY2(LC_AbstractActionWithPreview::isScalarExpressionCandidate(QString::fromLatin1(input)) == value,
+                     input);
+        }
+    }
+
+    void linePointsTakeTypedPointsInEveryStep() {
+        LineToolFixture fixture;
+        RS_GraphicView& view = fixture.view;
+        view.setRelativeZero(RS_Vector(1., 2.));
+        auto* action = new LC_ActionDrawLinePoints(fixture.block, view);
+        view.setCurrentAction(action);
+        // one point between the ends, which end where they are typed
+        action->setFixedDistanceMode(false);
+        action->setPointsCount(1);
+        action->setEdgePointsMode(LC_ActionDrawLinePoints::DRAW_EDGE_BOTH);
+        action->setAngle(0.);
+        action->setAngleIsRelative(false);
+
+        // the start point
+        QVERIFY(type(view, "10,20"));
+        QCOMPARE(view.getRelativeZero(), RS_Vector(10., 20.));
+
+        // along X, a point gives the end point, not a distance of 5
+        action->setSetXDirectionState();
+        QCOMPARE(action->getStatus(), int(LC_AbstractActionDrawLine::SetDistance));
+        QVERIFY(type(view, "30,5"));
+        QCOMPARE(view.getRelativeZero(), RS_Vector(30., 20.));
+        QCOMPARE(fixture.block.count(), 3u);
+
+        // when an angle is asked for, a point still gives the end point
+        QVERIFY(type(view, "0,0"));
+        QCOMPARE(view.getRelativeZero(), RS_Vector(0., 0.));
+        action->setSetAngleDirectionState();
+        QCOMPARE(action->getStatus(), int(LC_AbstractActionDrawLine::SetAngle));
+        QVERIFY(type(view, "10,20"));
+        QCOMPARE(view.getRelativeZero(), RS_Vector(10., 0.));
+
+        // text that is neither a value nor a point is not taken
+        QVERIFY(type(view, "0,0"));
+        action->setSetAngleDirectionState();
+        QVERIFY(!type(view, "notanangle"));
+        QCOMPARE(action->getStatus(), int(LC_AbstractActionDrawLine::SetAngle));
+    }
+
+    void snakeLengthsKeepFunctionsButNotComparisons() {
+        LineToolFixture fixture;
+        RS_GraphicView& view = fixture.view;
+        const RS_EntityContainer& container = fixture.block;
+        auto* action = new LC_ActionDrawLineSnake(fixture.block, view);
+        view.setCurrentAction(action);
+
+        QVERIFY(type(view, "0,0"));
+        action->setSetXDirectionState();
+        QCOMPARE(action->getStatus(), int(LC_AbstractActionDrawLine::SetDistance));
+
+        // a function with several arguments is a length
+        QVERIFY(type(view, "max(3,4)"));
+        QCOMPARE(countLines(container), 1);
+        QCOMPARE(view.getRelativeZero(), RS_Vector(4., 0.));
+
+        // a comparison in parentheses is no length of 1: the coordinate reader rejects it
+        type(view, "(10<45)");
+        QCOMPARE(countLines(container), 1);
+        QCOMPARE(view.getRelativeZero(), RS_Vector(4., 0.));
     }
 
     void coordinatesAreNoUnknownCommands() {

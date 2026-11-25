@@ -20,6 +20,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 
+#include <cstddef>
 #include "lc_linemath.h"
 #include "rs_information.h"
 #include "rs_point.h"
@@ -349,6 +350,42 @@ void LC_AbstractActionWithPreview::commandEvent(RS_CommandEvent *e){
  */
 bool LC_AbstractActionWithPreview::doProcessCommand([[maybe_unused]]RS_CommandEvent *e, [[maybe_unused]]const QString &c){
     return false;
+}
+
+/**
+ * Structural check only; RS_Math::eval validates the expression.
+ * A typed point (10,10, 10<30, @10,5) is no scalar: the expression parser reads 10,10 as the list 10, 10 and
+ * returns the last number, so an action that evaluates a command must ask first, or the point never reaches
+ * the event handler. A comma inside parentheses separates the arguments of a function, as in max(3,4);
+ * a '<' is a polar point anywhere, so (10<30) is no comparison that reads as 1.
+ * @param input command text
+ * @return true if the text has no '<', no comma outside parentheses, and balanced parentheses
+ */
+bool LC_AbstractActionWithPreview::isScalarExpressionCandidate(const QString &input){
+    std::size_t openParentheses = 0;
+    for (const auto character : input) {
+        switch (character.unicode()) {
+            case '(':
+                ++openParentheses;
+                break;
+            case ')':
+                if (openParentheses == 0) {
+                    return false;
+                }
+                --openParentheses;
+                break;
+            case ',':
+                if (openParentheses == 0) {
+                    return false;
+                }
+                break;
+            case '<':
+                return false;
+            default:
+                break;
+        }
+    }
+    return openParentheses == 0;
 }
 
 /**

@@ -263,6 +263,12 @@ public:
     static std::unique_ptr<QC_ApplicationWindow>&  getAppWindow();
 
     /**
+     * Accepts Return, keypad Enter and Tab shortcut overrides without Ctrl, Alt or Meta.
+     * @return true when the key should be kept for the focused widget.
+     */
+    static bool acceptsShortcutOverride(QKeyEvent& keyEvent);
+
+    /**
      * @return Pointer to MdiArea.
      */
 	QMdiArea const* getMdiArea() const;
