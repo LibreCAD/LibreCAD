@@ -4782,7 +4782,7 @@ TEST_CASE("DXF references to table records follow them to their written handles"
 }
 
 TEST_CASE("DXF layers name their plot style only where it is written",
-          "[dxf][roundtrip][filter][handles]") {
+          "[system-codec][dxf][roundtrip][filter][handles]") {
   ensureSettings();
   const std::string src = tmpFile("plot-style-src.dxf");
   const std::string out = tmpFile("plot-style-out.dxf");
@@ -4845,9 +4845,38 @@ TEST_CASE("DXF layers name their plot style only where it is written",
           std::vector<std::string>{"4A"});
   CHECK(plotStyleOf("Walls") == std::vector<std::string>{"4A"});
   CHECK(plotStyleOf("0") == std::vector<std::string>{"4A"});
+#ifdef LIBRECAD_SYSTEM_CODEC_TESTS
+  CHECK(plotStyleOf("New") == std::vector<std::string>{"4A"});
+#else
   CHECK(plotStyleOf("New").empty());
+#endif
   CHECK(danglingReferences(out).empty());
 
+#ifdef LIBRECAD_SYSTEM_CODEC_TESTS
+  // A contradictory default edge must not publish a partial destination;
+  // correcting the drawing must also work through the same filter.
+  std::ifstream sourceFile(src, std::ios::binary);
+  std::string invalid((std::istreambuf_iterator<char>(sourceFile)), {});
+  sourceFile.close();
+  const auto defaultAt = invalid.find("340\n4A\n");
+  REQUIRE(defaultAt != std::string::npos);
+  invalid.replace(defaultAt, std::string("340\n4A\n").size(), "340\n4B\n");
+  const auto badSrc = tmpFile("plot-style-invalid-src.dxf");
+  writeText(badSrc, invalid);
+  RS_Graphic bad;
+  RS_FilterDXFRW retry;
+  REQUIRE(retry.fileImport(bad, QString::fromStdString(badSrc), RS2::FormatDXFRW));
+  const std::string sentinel = "preserve destination\n";
+  writeText(out, sentinel);
+  CHECK_FALSE(retry.fileExport(bad, QString::fromStdString(out), RS2::FormatDXFRW2000));
+  std::ifstream retained(out, std::ios::binary);
+  CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel);
+  retained.close();
+  REQUIRE(retry.fileExport(graphic, QString::fromStdString(out), RS2::FormatDXFRW2000));
+  CHECK(plotStyleOf("New") == std::vector<std::string>{"4A"});
+  CHECK(danglingReferences(out).empty());
+  std::filesystem::remove(badSrc);
+#endif
   std::filesystem::remove(src);
   std::filesystem::remove(out);
 }

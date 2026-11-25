@@ -13251,6 +13251,46 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
     if (!handleRemap.empty())
       m_dxfW->setHandleRemap(handleRemap);
 
+#ifdef LIBRECAD_SYSTEM_LIBDXFRW
+    if (exportVersion >= DRW::AC1015) {
+      const auto isPlotStyleName = [](const std::string &name) {
+        return normalizeDwgTableName(name) == "ACAD_PLOTSTYLENAME";
+      };
+      const auto selected = std::count_if(
+          rootEntries.cbegin(), rootEntries.cend(),
+          [&](const auto &entry) { return isPlotStyleName(entry.first); });
+      if (selected > 1)
+        return false;
+      if (selected == 1) {
+        std::uint32_t sourceDictionary = 0;
+        for (const auto &entry : rootEntryName) {
+          if (!isPlotStyleName(entry.second))
+            continue;
+          if (sourceDictionary != 0)
+            return false;
+          sourceDictionary = entry.first;
+        }
+        const LC_DwgAdvancedMetadata::DictionaryWithDefaultRecord *plot = nullptr;
+        for (const auto &candidate : metadata.dictionariesWithDefault()) {
+          if (candidate.handle != sourceDictionary || sourceDictionary == 0)
+            continue;
+          if (plot != nullptr)
+            return false;
+          plot = &candidate;
+        }
+        // The codec verifies physical object identity, owners, classes and
+        // closure before publication; admit only its bounded Normal profile.
+        if (plot == nullptr || plot->parentHandle != sourceRootHandle ||
+            plot->entries.size() != 1 ||
+            normalizeDwgTableName(plot->entries.front().name) != "NORMAL" ||
+            plot->entries.front().handle == 0 ||
+            plot->entries.front().handle != plot->defaultEntryHandle ||
+            !m_dxfW->setDxfDefaultPlotStyleSourceHandles(
+                sourceDictionary, plot->defaultEntryHandle))
+          return false;
+      }
+    }
+#endif
     if (!rootEntries.empty())
       m_dxfW->setRootDictEntries(rootEntries);
   }
