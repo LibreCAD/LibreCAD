@@ -6619,18 +6619,47 @@ TEST_CASE("DXF layer marker classification does not duplicate malformed data",
 
   {
     RS_FilterDXFRW filter;
+#ifdef LIBRECAD_SYSTEM_CODEC_TESTS
+    // The system codec refuses repeated APPID groups. It must not replace an
+    // existing destination, and the same filter must work after correction.
+    const std::string sentinel = "preserve malformed layer destination\n";
+    writeText(out, sentinel);
+    CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(out),
+                                  RS2::FormatDXFRW));
+    std::ifstream retained(out, std::ios::binary);
+    CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel);
+    retained.close();
+    auto *record = const_cast<DRW_Layer *>(
+        graphic.dwgAdvancedMetadata().findLayerTableEntryByName("BAD_DUPLICATE"));
+    REQUIRE(record != nullptr);
+    REQUIRE(record->extData.size() == 6);
+    delete record->extData.back();
+    record->extData.pop_back();
+    delete record->extData.back();
+    record->extData.pop_back();
+#endif
     REQUIRE(filter.fileExport(graphic, QString::fromStdString(out),
                               RS2::FormatDXFRW));
   }
 
+#ifdef LIBRECAD_SYSTEM_CODEC_TESTS
+  CHECK(namedRecordGroupValues(out, "LAYER", "BAD_DUPLICATE", "1001")
+        == std::vector<std::string>{"LibreCad", "ACME_APP"});
+#else
   CHECK(namedRecordGroupValues(out, "LAYER", "BAD_DUPLICATE", "1001")
         == std::vector<std::string>{"LibreCad", "ACME_APP", "LibreCad"});
+#endif
   CHECK(namedRecordGroupValues(out, "LAYER", "BAD_TYPE", "1001")
         == std::vector<std::string>{"LibreCad"});
   CHECK(namedRecordGroupValues(out, "LAYER", "VALID", "1001")
         == std::vector<std::string>{"LibreCad"});
+#ifdef LIBRECAD_SYSTEM_CODEC_TESTS
+  CHECK(namedRecordGroupValues(out, "LAYER", "BAD_DUPLICATE", "1070")
+        == std::vector<std::string>{"1"});
+#else
   CHECK(namedRecordGroupValues(out, "LAYER", "BAD_DUPLICATE", "1070")
         == std::vector<std::string>{"1", "1"});
+#endif
   CHECK(namedRecordGroupValues(out, "LAYER", "BAD_TYPE", "1070").empty());
   CHECK(namedRecordGroupValues(out, "LAYER", "VALID", "1070")
         == std::vector<std::string>{"1"});
