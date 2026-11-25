@@ -2181,7 +2181,7 @@ TEST_CASE("DXF filter preserves fixture-backed EED binary items",
 }
 
 TEST_CASE("DXF filter registers CLASS records for reconstructed underlays",
-          "[dxf][roundtrip][filter][classes][underlay]") {
+          "[system-codec][dxf][roundtrip][filter][classes][underlay]") {
   ensureSettings();
   lc::test::QuietLog quiet;
   lc::test::OutputDirectory directory("underlay_classes");
@@ -2223,6 +2223,48 @@ TEST_CASE("DXF filter registers CLASS records for reconstructed underlays",
   graphic.getEntityList().back()->setFlag(RS2::FlagDeleted);
 
   const auto output = directory.file("output.dxf");
+#ifdef LIBRECAD_SYSTEM_CODEC_TESTS
+  // The installed writer refuses versions that cannot represent the profile.
+  // Preserve the original destination, then retry the same filter with a
+  // version that supports all three underlay kinds.
+  const bool supported = format == RS2::FormatDXFRW2010 ||
+                         format == RS2::FormatDXFRW2013 ||
+                         format == RS2::FormatDXFRW2018 ||
+                         (format == RS2::FormatDXFRW && kind == "DWF");
+  if (!supported) {
+    const std::string sentinel = "preserve existing destination\n";
+    writeText(output.string(), sentinel);
+    RS_FilterDXFRW filter;
+    CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(output.string()), format));
+    std::ifstream saved(output, std::ios::binary);
+    CHECK(std::string(std::istreambuf_iterator<char>(saved), {}) == sentinel);
+    saved.close();
+    // The original source itself can claim an older DXF version while
+    // carrying a newer underlay. Reimport a corrected profile before retry.
+    std::string corrected = source;
+    const std::string oldVersion = "9\n$ACADVER\n1\n" + acadVersion;
+    const auto versionAt = corrected.find(oldVersion + "\n");
+    REQUIRE(versionAt != std::string::npos);
+    corrected.replace(versionAt, oldVersion.size(), "9\n$ACADVER\n1\nAC1024");
+    if (sourceClass && acadVersion < "AC1018") {
+      const auto classAt = corrected.find("280\n1\n281\n1\n");
+      REQUIRE(classAt != std::string::npos);
+      corrected.insert(classAt, "91\n7\n");
+    }
+    const auto correctedInput = directory.file("corrected.dxf");
+    writeText(correctedInput.string(), corrected);
+    RS_Graphic correctedGraphic;
+    REQUIRE(filter.fileImport(correctedGraphic,
+                              QString::fromStdString(correctedInput.string()),
+                              RS2::FormatDXFRW));
+    REQUIRE(correctedGraphic.getEntityList().size() == 3);
+    correctedGraphic.getEntityList().back()->setFlag(RS2::FlagDeleted);
+    REQUIRE(filter.fileExport(correctedGraphic, QString::fromStdString(output.string()),
+                              RS2::FormatDXFRW2010));
+    CHECK(countRecords(output.string(), recordName) == 2);
+    return;
+  }
+#endif
   REQUIRE(lc::test::exportDrawing(graphic, output, format));
   if (format == RS2::FormatDXFRW12) {
     CHECK_FALSE(containsLine(output.string(), "CLASSES"));
