@@ -62899,3 +62899,30 @@ Linux cross-platform mixed-bulge behavior, broad family/variant qualification,
 sanitizer/order coverage, physical GUI source-picker acceptance, independent
 CAD/AutoCAD acceptance, deployment/signing and minimum-macOS runtime checks,
 review, and final integration remain open.
+
+## 2032. Retry the ODA Audit and Recheck the Visible Fixture (2026-11-25)
+
+After the user confirmed ODAFileConverter was open in the logged-in desktop,
+reran the 18 staged DWGs with Audit enabled and 2010 ASCII DXF output. The fresh
+output directory
+`/private/tmp/offsetcurve-lc-dwg-output-pr3193-run-62779119394748` contains 18
+nonempty DXFs; all identify as AutoCAD DXF version 2010, and 12 retain the
+`LC_OFFSET_CURVE` marker. This bounded conversion/audit receipt does not
+establish visual or semantic equivalence, general interoperability, or AutoCAD
+acceptance.
+
+The visible-app attempt loaded
+`offset-source-picker-visible_source-picker-visible.dxf`. Its sampled curves
+opened ordinary Ellipse Properties on double-click, not native offset
+properties or the source-family picker. No drawing was saved. This fixture
+mismatch does not close the visible acceptance gate; use the native
+source-bearing fixture and exact PR build for the next attempt.
+
+Exact-head CI for `f943374d5ba19b2a7bddeca45e14b6740fb698d7` is terminal: 19
+checks succeeded and 7 configured/policy checks were skipped, with no failed or
+pending checks. This receipt makes no code change. Visible packaged-app source
+family switching, replacement/highlight, and preview/commit acceptance;
+broader cross-platform variant qualification; full broad sanitizer/order
+coverage; independent visual/semantic CAD and AutoCAD acceptance; signed/deployed
+and minimum-macOS runtime validation; human review; and final integration
+remain open.
