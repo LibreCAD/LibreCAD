@@ -5489,6 +5489,8 @@ TEST_CASE("DXF proxy raw carriers preserve wide self handles",
 
   CHECK(recordGroupValues(out, "ACAD_PROXY_ENTITY", "5")
         == std::vector<std::string>{"1234567890ABCDEF"});
+  if (const char *copy = std::getenv("LIBRECAD_KEEP_WIDE_PROXY_OUTPUT"))
+    std::filesystem::copy_file(out, copy, std::filesystem::copy_options::overwrite_existing);
 
   std::filesystem::remove(src);
   std::filesystem::remove(out);
