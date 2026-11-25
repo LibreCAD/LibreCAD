@@ -820,6 +820,7 @@ TEST_CASE("System codec refuses an incomplete raw-only material after metadata s
   REQUIRE(importer.fileImport(incomplete, QString::fromStdString(source), RS2::FormatDXFRW));
   REQUIRE(incomplete.dwgAdvancedMetadata().materials().size() == 1u);
   CHECK(incomplete.dwgAdvancedMetadata().materials().front().requiresRawDxfReplay);
+  REQUIRE(incomplete.dwgAdvancedMetadata().rawDxfObjects().size() == 1u);
   RS_FilterDXFRW filter;
   for (const auto format : {RS2::FormatDXFRW, RS2::FormatDXFRW2010,
                             RS2::FormatDXFRW2013, RS2::FormatDWG2010}) {
@@ -827,6 +828,15 @@ TEST_CASE("System codec refuses an incomplete raw-only material after metadata s
     std::ifstream retained(output, std::ios::binary);
     CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel);
   }
+  // Simulate a missing retained carrier. The incomplete typed record must not
+  // become an apparently successful but lossy fallback.
+  auto &rawObjects = const_cast<std::vector<DRW_RawDxfObject> &>(
+      incomplete.dwgAdvancedMetadata().rawDxfObjects());
+  rawObjects.clear();
+  CHECK_FALSE(filter.fileExport(incomplete, QString::fromStdString(output), RS2::FormatDXFRW));
+  std::ifstream retainedAfterRemoval(output, std::ios::binary);
+  CHECK(std::string(std::istreambuf_iterator<char>(retainedAfterRemoval), {}) == sentinel);
+  retainedAfterRemoval.close();
 
   RS_Graphic complete;
   complete.initForNewDocument();
