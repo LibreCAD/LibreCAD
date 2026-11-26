@@ -6237,7 +6237,10 @@ TEST_CASE("Distance guard allocation failure respects the current target",
         submitInput(widget, "leDistance", ".3");
         if (late) {
             REQUIRE(widget.isPreparing());
-            awaitPreparation(widget);
+            const bool settled = pollEventsUntil([&] { return !widget.isPreparing(); },
+                static_cast<int>(LC_OffsetWorkerClient::Deadlines::commit + 5000));
+            INFO("Worker refusal: " << widget.findChild<QLabel*>("lRefusal")->text().toStdString());
+            REQUIRE(settled);
         }
         REQUIRE(calls == (late ? 2u : 1u));
         CHECK(widget.editedEntity() == (rebind ? newest.get() : f.curve.get()));
