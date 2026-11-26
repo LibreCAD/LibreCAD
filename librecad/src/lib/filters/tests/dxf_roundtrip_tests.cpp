@@ -1329,6 +1329,52 @@ TEST_CASE("System codec gates ambiguous AC1024 default material",
   CHECK_FALSE(exporter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
   CHECK(exporter.exportReport().contains(QStringLiteral("raw source missing, changed or unverified")));
   mutableRaw.pop_back();
+  // Add a locally authored root and material dictionary to the same source;
+  // the opt-in path should retain both source frames without admitting export.
+  const auto graphSource = tmpFile("system_sparse_material_dictionary_source.dxf");
+  {
+    std::ifstream input(source, std::ios::binary);
+    std::string graph((std::istreambuf_iterator<char>(input)), {});
+    const std::string marker = "0\nSECTION\n2\nOBJECTS\n";
+    const auto at = graph.find(marker);
+    REQUIRE(at != std::string::npos);
+    graph.insert(at + marker.size(),
+        "0\nDICTIONARY\n5\nC\n330\n0\n100\nAcDbDictionary\n281\n1\n"
+        "3\nACAD_MATERIAL\n350\nE\n"
+        "0\nDICTIONARY\n5\nE\n330\nC\n100\nAcDbDictionary\n281\n1\n"
+        "3\nByBlock\n350\n1F\n");
+    writeText(graphSource, graph);
+  }
+  RS_Graphic graphGraphic;
+  OptInFilter graphImporter;
+  REQUIRE(graphImporter.fileImport(graphGraphic, QString::fromStdString(graphSource), RS2::FormatDXFRW));
+  const auto &graphMetadata = graphGraphic.dwgAdvancedMetadata();
+  REQUIRE(graphMetadata.dxfRootDictionarySource());
+  REQUIRE(graphMetadata.dxfMaterialDictionarySource());
+  CHECK(graphMetadata.dxfRootDictionarySource()->handle == 0xCu);
+  CHECK(graphMetadata.dxfMaterialDictionarySource()->handle == 0xEu);
+  REQUIRE(graphMetadata.materials().size() == 1u);
+  CHECK(graphMetadata.materials().front().rawDxfSource);
+  CHECK_FALSE(exporter.fileExport(graphGraphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+  auto &graphRaw = const_cast<std::vector<DRW_RawDxfObject> &>(graphMetadata.rawDxfObjects());
+  const auto dictionary = std::find_if(graphRaw.begin(), graphRaw.end(),
+      [](const auto &record) { return record.name == "DICTIONARY" && record.handle == 0xEu; });
+  REQUIRE(dictionary != graphRaw.end());
+  const auto entry = std::find_if(dictionary->groups.begin(), dictionary->groups.end(),
+      [](const auto &group) { return group.code() == 3; });
+  REQUIRE(entry != dictionary->groups.end());
+  entry->addString(3, "changed");
+  const auto &sourceGroups = graphMetadata.dxfMaterialDictionarySource()->groups;
+  const auto originalEntry = std::find_if(sourceGroups.begin(), sourceGroups.end(),
+      [](const auto &group) { return group.code() == 3; });
+  REQUIRE(originalEntry != sourceGroups.end());
+  CHECK(originalEntry->stringEquals("ByBlock"));
+  CHECK_FALSE(exporter.fileExport(graphGraphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+  const auto duplicateSource = *graphMetadata.dxfMaterialDictionarySource();
+  graphGraphic.dwgAdvancedMetadata().addDxfMaterialDictionarySource(duplicateSource);
+  CHECK_FALSE(graphMetadata.dxfMaterialDictionarySource());
+  CHECK_FALSE(exporter.fileExport(graphGraphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+  std::filesystem::remove(graphSource);
   // Generate the same locally authored control in Binary DXF without relying
   // on a private codec writer. Only the group kinds in this fixture are used.
   const auto binarySource = tmpFile("system_ezdxf_material_source_binary.dxf");

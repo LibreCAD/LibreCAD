@@ -11999,7 +11999,16 @@ void RS_FilterDXFRW::addDxfRootDictionarySource(
       dictionary.m_entries.begin(), dictionary.m_entries.end(), [](const auto &entry) {
         return normalizeDwgTableName(entry.m_name) == "ACAD_IMAGE_DICT";
       });
-  if (m_graphic != nullptr && hasImageDictionary && canRetainSmallDxfSource(source))
+  bool hasOptedInMaterialDictionary = false;
+#ifdef LIBRECAD_SYSTEM_LIBDXFRW
+  const auto *materialPolicy = dynamic_cast<const DRW_DxfSparseMaterialRawPolicy *>(this);
+  hasOptedInMaterialDictionary = materialPolicy && materialPolicy->wantsDxfSparseMaterialRawCapture() &&
+      std::any_of(dictionary.m_entries.begin(), dictionary.m_entries.end(), [](const auto &entry) {
+        return normalizeDwgTableName(entry.m_name) == "ACAD_MATERIAL";
+      });
+#endif
+  if (m_graphic != nullptr && (hasImageDictionary || hasOptedInMaterialDictionary) &&
+      canRetainSmallDxfSource(source))
     m_graphic->dwgAdvancedMetadata().addDxfRootDictionarySource(source);
 }
 
@@ -12007,14 +12016,21 @@ bool RS_FilterDXFRW::wantsDxfDictionarySource() const {
   if (m_graphic == nullptr)
     return false;
   const auto &metadata = m_graphic->dwgAdvancedMetadata();
-  if (metadata.dxfRootDictionarySource() == nullptr ||
-      metadata.dxfFixedGroupDictionarySource() != nullptr)
+  if (metadata.dxfRootDictionarySource() == nullptr)
     return false;
+  const bool needGroup = metadata.dxfFixedGroupDictionarySource() == nullptr;
+  bool needMaterial = false;
+#ifdef LIBRECAD_SYSTEM_LIBDXFRW
+  const auto *materialPolicy = dynamic_cast<const DRW_DxfSparseMaterialRawPolicy *>(this);
+  needMaterial = materialPolicy && materialPolicy->wantsDxfSparseMaterialRawCapture() &&
+                 metadata.dxfMaterialDictionarySource() == nullptr;
+#endif
   for (const auto &dictionary : metadata.dictionaries()) {
     if (dictionary.parentHandle != 0)
       continue;
     for (const auto &entry : dictionary.entries)
-      if (entry.handle == 0xDu && normalizeDwgTableName(entry.name) == "ACAD_GROUP")
+      if ((needGroup && entry.handle == 0xDu && normalizeDwgTableName(entry.name) == "ACAD_GROUP") ||
+          (needMaterial && entry.handle != 0 && normalizeDwgTableName(entry.name) == "ACAD_MATERIAL"))
         return true;
   }
   return false;
@@ -12022,9 +12038,31 @@ bool RS_FilterDXFRW::wantsDxfDictionarySource() const {
 
 void RS_FilterDXFRW::addDxfDictionarySource(
     const DRW_Dictionary &dictionary, const DRW_RawDxfObject &source) {
-  if (m_graphic != nullptr && dictionary.handle == 0xDu &&
-      canRetainSmallDxfSource(source))
-    m_graphic->dwgAdvancedMetadata().addDxfFixedGroupDictionarySource(source);
+  if (m_graphic == nullptr || !canRetainSmallDxfSource(source))
+    return;
+  auto &metadata = m_graphic->dwgAdvancedMetadata();
+  if (dictionary.handle == 0xDu && metadata.dxfFixedGroupDictionarySource() == nullptr) {
+    for (const auto &root : metadata.dictionaries()) {
+      if (root.parentHandle != 0)
+        continue;
+      for (const auto &entry : root.entries)
+        if (entry.handle == dictionary.handle && normalizeDwgTableName(entry.name) == "ACAD_GROUP")
+          metadata.addDxfFixedGroupDictionarySource(source);
+    }
+  }
+#ifdef LIBRECAD_SYSTEM_LIBDXFRW
+  const auto *materialPolicy = dynamic_cast<const DRW_DxfSparseMaterialRawPolicy *>(this);
+  if (!materialPolicy || !materialPolicy->wantsDxfSparseMaterialRawCapture())
+    return;
+  for (const auto &root : metadata.dictionaries()) {
+    if (root.parentHandle != 0)
+      continue;
+    for (const auto &entry : root.entries)
+      if (entry.handle != 0 && entry.handle == dictionary.handle &&
+          normalizeDwgTableName(entry.name) == "ACAD_MATERIAL")
+        metadata.addDxfMaterialDictionarySource(source);
+  }
+#endif
 }
 #endif
 

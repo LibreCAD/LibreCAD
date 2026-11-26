@@ -3480,6 +3480,8 @@ public:
     m_rawDxfObjects.clear();
     m_dxfRootDictionarySource.reset();
     m_dxfFixedGroupDictionarySource.reset();
+    m_dxfMaterialDictionarySource.reset();
+    m_dxfMaterialDictionarySourceConflict = false;
     m_dxfImageDefSource.reset();
     m_dxfImageSource.reset();
     m_dxfDictionarySourceConflict = false;
@@ -3920,6 +3922,24 @@ public:
   const DRW_RawDxfObject *dxfFixedGroupDictionarySource() const {
     return m_dxfDictionarySourceConflict || !m_dxfFixedGroupDictionarySource
                ? nullptr : &*m_dxfFixedGroupDictionarySource;
+  }
+
+  void addDxfMaterialDictionarySource(const DRW_RawDxfObject &source) {
+    if (m_dxfMaterialDictionarySource || m_dxfMaterialDictionarySourceConflict) {
+      m_dxfMaterialDictionarySource.reset();
+      m_dxfMaterialDictionarySourceConflict = true;
+      return;
+    }
+    try {
+      m_dxfMaterialDictionarySource = source;
+    } catch (...) {
+      m_dxfMaterialDictionarySourceConflict = true;
+    }
+  }
+
+  const DRW_RawDxfObject *dxfMaterialDictionarySource() const {
+    return m_dxfMaterialDictionarySourceConflict || !m_dxfMaterialDictionarySource
+               ? nullptr : &*m_dxfMaterialDictionarySource;
   }
 
   void addDxfImageDefSource(const DRW_RawDxfObject &source) {
@@ -13609,6 +13629,8 @@ private:
   std::vector<DRW_RawDxfObject> m_rawDxfObjects;
   std::optional<DRW_RawDxfObject> m_dxfRootDictionarySource;
   std::optional<DRW_RawDxfObject> m_dxfFixedGroupDictionarySource;
+  std::optional<DRW_RawDxfObject> m_dxfMaterialDictionarySource;
+  bool m_dxfMaterialDictionarySourceConflict = false;
   std::optional<DRW_RawDxfObject> m_dxfImageDefSource;
   std::optional<DRW_RawDxfObject> m_dxfImageSource;
   bool m_dxfDictionarySourceConflict = false;
