@@ -164,14 +164,14 @@ TEST_CASE("RS_MText ends a \\W with the group it is in", "[mtext][width]") {
     SourceFonts fonts;
     REQUIRE(RS_FONTLIST->requestFont("standard") != nullptr);
 
-    // the braces are drawn, as before
-    checkLetterWidths("{\\W0.5;AB}CD", {1.0, 0.5, 0.5, 1.0, 1.0, 1.0});
-    checkLetterWidths("\\W0.5;{AB}CD", {0.5, 0.5, 0.5, 0.5, 0.5, 0.5});
-    checkLetterWidths("{{\\W0.5;A}\\W2;B}C", {1.0, 1.0, 0.5, 1.0, 2.0, 1.0, 1.0});
+    // Raw braces scope formatting and do not become glyphs.
+    checkLetterWidths("{\\W0.5;AB}CD", {0.5, 0.5, 1.0, 1.0});
+    checkLetterWidths("\\W0.5;{AB}CD", {0.5, 0.5, 0.5, 0.5});
+    checkLetterWidths("{{\\W0.5;A}\\W2;B}C", {0.5, 2.0, 1.0});
     // "\}" is a brace of the text: it closes no group
-    checkLetterWidths("{\\W0.5;A\\}B}C", {1.0, 0.5, 0.5, 0.5, 1.0, 1.0});
-    // a "}" without a group ends no width, nor does a new line
-    checkLetterWidths("\\W0.5;A}B", {0.5, 0.5, 0.5});
+    checkLetterWidths("{\\W0.5;A\\}B}C", {0.5, 0.5, 0.5, 1.0});
+    // An unmatched closing brace is ignored; a new line keeps the width.
+    checkLetterWidths("\\W0.5;A}B", {0.5, 0.5});
     checkLetterWidths("\\W0.5;A\\PB", {0.5, 0.5});
 }
 

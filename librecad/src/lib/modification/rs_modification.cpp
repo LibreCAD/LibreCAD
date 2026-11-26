@@ -34,8 +34,6 @@
 #include <unordered_set>
 #include <vector>
 
-#include <QLocale>
-
 #include "lc_containertraverser.h"
 #include "lc_curveoffset.h"
 #include "lc_graphicviewport.h"
@@ -73,6 +71,17 @@
 class LC_SplinePoints;
 
 namespace {
+
+QString formatMTextWidthFactor(const double factor) {
+    QString text = QString::number(factor, 'f', std::numeric_limits<double>::max_digits10 + 324);
+    while (text.endsWith(QChar('0'))) {
+        text.chop(1);
+    }
+    if (text.endsWith(QChar('.'))) {
+        text.chop(1);
+    }
+    return text;
+}
       // fixme - sand - add option for intersection tolerance????
 
     bool acceptedInsertSourceEdit(const RS_Entity& entity) {
@@ -2913,7 +2922,7 @@ bool RS_Modification::doExplodeTextIntoLetters(const RS_MText* text, LC_Document
                     const double widthFactor = scale.x / scale.y;
                     if (std::isfinite(widthFactor) && widthFactor > RS_TOLERANCE && !RS_Math::equal(widthFactor, 1.0)) {
                         letterText.prepend(QStringLiteral("\\W%1;").arg(
-                            QString::number(widthFactor, 'f', QLocale::FloatingPointShortest)));
+                            formatMTextWidthFactor(widthFactor)));
                     }
 
                     const auto letterAsText = new RS_MText(nullptr, RS_MTextData(letter->getInsertionPoint(), text->getHeight(), 100.0,

@@ -30,8 +30,7 @@
 #include <algorithm>
 #include <cmath>
 #include <iostream>
-
-#include <QLocale>
+#include <limits>
 
 #include "rs_debug.h"
 #include "rs_font.h"
@@ -55,6 +54,19 @@ constexpr double g_rightToLeftTabSpaces = 4.0;
 constexpr qsizetype g_maxParagraphCommandLength = 256;
 // A font command or a stack that is longer than this is taken for text.
 constexpr qsizetype g_maxInlineCommandLength = 256;
+
+// Format a positive width factor as a plain decimal that round-trips through
+// QString::toDouble(). MTEXT value commands do not accept exponent notation.
+QString formatWidthFactor(const double factor) {
+    QString text = QString::number(factor, 'f', std::numeric_limits<double>::max_digits10 + 324);
+    while (text.endsWith(QChar('0'))) {
+        text.chop(1);
+    }
+    if (text.endsWith(QChar('.'))) {
+        text.chop(1);
+    }
+    return text;
+}
 
 /**
  * Skips a decimal number such as "-3", "1.5" or ".5" at @p pos.
@@ -834,14 +846,19 @@ void RS_MText::update() {
             continue;
         }
 
-        // A width set in a group ends with the group. The braces are still
-        // drawn, as before.
+        // MText groups scope formatting commands. Raw braces delimit the
+        // group and are not glyphs; escaped "\{" and "\}" are handled below
+        // as literal braces.
         if (m_data.text.at(i) == QChar('{')) {
             groupWidthFactors.push_back(widthFactor);
+            continue;
         }
-        else if (m_data.text.at(i) == QChar('}') && !groupWidthFactors.empty()) {
-            widthFactor = groupWidthFactors.back();
-            groupWidthFactors.pop_back();
+        else if (m_data.text.at(i) == QChar('}')) {
+            if (!groupWidthFactors.empty()) {
+                widthFactor = groupWidthFactors.back();
+                groupWidthFactors.pop_back();
+            }
+            continue;
         }
 
         switch (m_data.text.at(i).unicode()) {
@@ -1190,7 +1207,7 @@ double RS_MText::flushBidiLine(LC_TextLine &oneLine,
         // on, exactly and without an exponent, which "\W" does not read
         const QString widthPrefix = seg.widthFactor == 1.0
             ? QString{}
-            : QStringLiteral("\\W%1;").arg(QString::number(seg.widthFactor, 'f', QLocale::FloatingPointShortest));
+            : QStringLiteral("\\W%1;").arg(formatWidthFactor(seg.widthFactor));
         double upperWidth = 0.0;
         if (!seg.upperText.isEmpty()) {
           RS_MText *upper = createUpperLower(
