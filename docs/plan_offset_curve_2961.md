@@ -63412,6 +63412,8 @@ with the source-equivalent CMake Debug ASan/UBSan build: **54,599 assertions /
 files match this worktree except for comments and an equivalent local variable
 in `dwgbufferw.cpp`. This qualifies the selected test suite, not leak detection,
 other sanitizer targets, visible desktop interaction, or other platforms.
+The same selection in the source-equivalent macOS CMake Release build also
+passed **54,599 assertions / 112 cases** after the action-level test was added.
 
 The current PR-head CI remains in progress and the local test and documentation
 commits remain held until it reaches a terminal state. Visible source-family
