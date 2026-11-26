@@ -6500,6 +6500,27 @@ TEST_CASE("DXF FIELD XDATA survives filter DXF and DWG round trips",
 #ifdef DWGSUPPORT
   {
     RS_FilterDXFRW filter;
+#ifdef LIBRECAD_SYSTEM_CODEC_TESTS
+    // DWG EED group 1070 is signed 16-bit. Preserve the invalid-source
+    // refusal and explicitly correct the two values before retrying.
+    const std::string sentinel = "preserve FIELD EED destination\n";
+    writeText(dwgOut, sentinel);
+    CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(dwgOut),
+                                  RS2::FormatDWG2013));
+    std::ifstream retained(dwgOut, std::ios::binary);
+    CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel);
+    retained.close();
+    auto &fields = const_cast<std::vector<LC_DwgAdvancedMetadata::FieldRecord>&>(
+        graphic.dwgAdvancedMetadata().fields());
+    auto &lists = const_cast<std::vector<LC_DwgAdvancedMetadata::FieldListRecord>&>(
+        graphic.dwgAdvancedMetadata().fieldLists());
+    REQUIRE(fields.size() == 1);
+    REQUIRE(lists.size() == 1);
+    REQUIRE(fields.front().extData.size() == 3);
+    REQUIRE(lists.front().extData.size() == 3);
+    *fields.front().extData[2] = DRW_Variant(1070, -32768);
+    *lists.front().extData[2] = DRW_Variant(1070, -1);
+#endif
     REQUIRE(filter.fileExport(graphic, QString::fromStdString(dwgOut),
                               RS2::FormatDWG2013));
   }
@@ -6522,6 +6543,8 @@ TEST_CASE("DXF FIELD XDATA survives filter DXF and DWG round trips",
   CHECK(std::string(fieldListExtData[0]->c_str()) == "FIELDLIST_EED");
   CHECK(std::string(fieldListExtData[1]->c_str()) == "field list payload");
   CHECK(fieldListExtData[2]->i_val() == -1);
+  if (const char *copy = std::getenv("LIBRECAD_KEEP_FIELD_EED_DWG"))
+    std::filesystem::copy_file(dwgOut, copy, std::filesystem::copy_options::overwrite_existing);
 #endif
 
   std::filesystem::remove(src);
