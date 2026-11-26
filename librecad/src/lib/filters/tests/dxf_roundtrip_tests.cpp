@@ -2175,6 +2175,33 @@ TEST_CASE("System codec preserves two images sharing one definition",
     CHECK_FALSE(late.fileExport(reopened, QString::fromStdString(output), RS2::FormatDXFRW));
     { std::ifstream in(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(in), {}) == sentinel); }
     image->setPen(originalPen);
+    // Mutate both typed and captured source brightness together after staged
+    // output, so recomputing only typed/raw agreement would miss the edit.
+    auto &rasters = const_cast<std::vector<LC_DwgAdvancedMetadata::RasterImageRecord>&>(metadata.rasterImages());
+    auto raster = std::find_if(rasters.begin(), rasters.end(), [&](const auto &record) {
+      return record.handle == image->sourceHandle();
+    });
+    REQUIRE(raster != rasters.end());
+    auto *sourceImage = const_cast<DRW_RawDxfObject *>(metadata.dxfImageSource(raster->handle));
+    REQUIRE(sourceImage);
+    auto brightnessGroup = std::find_if(sourceImage->groups.begin(), sourceImage->groups.end(),
+        [](const auto &group) { return group.code() == 281; });
+    REQUIRE(brightnessGroup != sourceImage->groups.end());
+    const auto brightnessIndex = static_cast<std::size_t>(brightnessGroup - sourceImage->groups.begin());
+    REQUIRE((!sourceImage->hasRawValues || brightnessIndex < sourceImage->rawValues.size()));
+    const int originalBrightness = raster->brightness;
+    const std::string originalRaw = sourceImage->hasRawValues ? sourceImage->rawValues[brightnessIndex] : std::string{};
+    late.beforeFinalize = [&] {
+      raster->brightness = originalBrightness + 1;
+      brightnessGroup->addInt(281, raster->brightness);
+      if (sourceImage->hasRawValues) sourceImage->rawValues[brightnessIndex] = std::to_string(raster->brightness);
+    };
+    writeText(output, sentinel);
+    CHECK_FALSE(late.fileExport(reopened, QString::fromStdString(output), RS2::FormatDXFRW));
+    { std::ifstream in(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(in), {}) == sentinel); }
+    raster->brightness = originalBrightness;
+    brightnessGroup->addInt(281, originalBrightness);
+    if (sourceImage->hasRawValues) sourceImage->rawValues[brightnessIndex] = originalRaw;
     late.beforeFinalize = {};
     REQUIRE(late.fileExport(reopened, QString::fromStdString(output), RS2::FormatDXFRW));
   }
