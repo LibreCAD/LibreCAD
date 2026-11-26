@@ -9247,9 +9247,7 @@ TEST_CASE("Legacy DXF writes block inserts without reverse block references",
   REQUIRE(filter.fileExport(graphic, QString::fromStdString(first), version));
   RS_Graphic reread;
   REQUIRE(filter.fileImport(reread, QString::fromStdString(first), RS2::FormatDXFRW));
-  // The R14 reimport has an independent header-resave issue; exercise its
-  // handle-bearing INSERT on the original graphic until that issue is fixed.
-  RS_Graphic &retryGraphic = version == RS2::FormatDXFRW12 ? reread : graphic;
+  RS_Graphic &retryGraphic = reread;
 #ifdef LIBRECAD_SYSTEM_CODEC_TESTS
   auto *layer = retryGraphic.findLayer(QStringLiteral("L_VENDOR"));
   REQUIRE(layer != nullptr);
