@@ -1338,7 +1338,9 @@ void LC_PropertiesEditingWidgetOffsetCurve::apply(const LC_EllipseOffsetDefiniti
                     self->ui->lRefusal->setText(*self->m_lastResult ? QString{} : LC_OffsetCurveUI::refusalText(*self->m_lastResult));
                     self->setBusy(false);
                 } catch (const std::bad_alloc&) {
-                    if (alive) refuse(published ? self->tr("Offset prepared, but the editor could not be refreshed.") :
+                    if (alive && generation == self->m_generation && target == self->m_entity &&
+                        (published || (revision == self->m_sourceRevision && self->m_busy)))
+                        refuse(published ? self->tr("Offset prepared, but the editor could not be refreshed.") :
                         self->tr("Not enough memory to prepare the offset; the value was not changed."));
                 }
             });
@@ -1349,7 +1351,9 @@ void LC_PropertiesEditingWidgetOffsetCurve::apply(const LC_EllipseOffsetDefiniti
         refresh(nullptr, false, false); ui->lRefusal->setText(tr("Calculating offset..."));
         if (!wasBusy) emit preparationBusyChanged(true);
     } catch (const std::bad_alloc&) {
-        if (alive) failure(published ? tr("Offset prepared, but the editor could not be refreshed.") :
+        if (alive && generation == m_generation && target == m_entity &&
+            (published || revision == m_sourceRevision))
+            failure(published ? tr("Offset prepared, but the editor could not be refreshed.") :
             tr("Not enough memory to prepare the offset; the value was not changed."));
     }
 }

@@ -6217,6 +6217,40 @@ TEST_CASE("Native widget false busy reentry preserves its newest bound target",
     }
 }
 
+TEST_CASE("Distance guard allocation failure respects the current target",
+          "[gui][dialog][offsetcurve][guard-reentry][distance-allocation]") {
+    for (bool late : {false, true}) for (bool rebind : {false, true}) {
+        CAPTURE(late, rebind);
+        Fixture f; requireNativeHelper(); f.show();
+        auto& widget = native(*f.dialog);
+        auto newest = makeArc(f.graphic);
+        REQUIRE(newest->setDistance(.4));
+        const Snapshot oldSnapshot(*f.curve), newSnapshot(*newest);
+        const auto detachTarget = qScopeGuard([&] { widget.setEntity(nullptr); });
+        unsigned calls = 0;
+        widget.setPreparationGuard([&]() -> bool {
+            ++calls;
+            if (late && calls == 1) return true;
+            if (rebind) widget.setEntity(newest.get());
+            throw std::bad_alloc{};
+        });
+        submitInput(widget, "leDistance", ".3");
+        if (late) {
+            REQUIRE(widget.isPreparing());
+            awaitPreparation(widget);
+        }
+        REQUIRE(calls == (late ? 2u : 1u));
+        CHECK(widget.editedEntity() == (rebind ? newest.get() : f.curve.get()));
+        CHECK_FALSE(widget.isPreparing());
+        CHECK(widget.findChild<QLabel*>("lRefusal")->text().isEmpty() == rebind);
+        CHECK(widget.editAttemptCount() == (rebind ? 0u : 1u));
+        observeCancelledReplies();
+        oldSnapshot.exact(*f.curve);
+        newSnapshot.exact(*newest);
+        widget.setPreparationGuard({});
+    }
+}
+
 TEST_CASE("Source replacement guard reentry preserves the newly bound target",
           "[gui][dialog][offsetcurve][source][guard-reentry]") {
     for (bool late : {false, true}) for (int guardMode : {0, 1, 2}) {
