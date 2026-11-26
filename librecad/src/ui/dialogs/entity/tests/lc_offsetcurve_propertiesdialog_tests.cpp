@@ -855,6 +855,60 @@ TEST_CASE("Modify properties excludes its document original from source choices"
     }
 }
 
+TEST_CASE("Modify properties publishes another offset source with undo and redo",
+          "[gui][dialog][offsetcurve][source][self-source][action][undo]") {
+    ActionFixture f; requireNativeHelper();
+    auto replacement = makeArc(f.graphic);
+    auto* other = replacement.release();
+    f.graphic.addEntity(other);
+    const Snapshot before(*f.original), otherBefore(*other);
+    const auto otherGeometry = LC_OffsetSourceGeometry::capture(*other);
+    REQUIRE(otherGeometry);
+    const auto encoded = LC_OffsetWorkerRequest::Values::encodeSourceGeometry(*otherGeometry);
+    REQUIRE(encoded);
+    f.drive([&](LC_DlgEntityProperties& dialog, unsigned) {
+        auto& widget = native(dialog);
+        auto* type = widget.findChild<QComboBox*>("cbSourceType");
+        auto* source = widget.findChild<QComboBox*>("cbSource");
+        REQUIRE(type); REQUIRE(source);
+        type->setCurrentIndex(type->findData(static_cast<int>(LC_OffsetSourceGeometry::Kind::Spline)));
+        CHECK(source->findData(QVariant::fromValue<qulonglong>(f.original->getId())) < 0);
+        const int index = source->findData(QVariant::fromValue<qulonglong>(other->getId()));
+        REQUIRE(index >= 0);
+        source->setCurrentIndex(index);
+        REQUIRE(widget.isPreparing());
+        const bool settled = pollEventsUntil([&] { return !widget.isPreparing(); },
+            static_cast<int>(LC_OffsetWorkerClient::Deadlines::commit + 5000));
+        INFO("Worker refusal: " << widget.findChild<QLabel*>("lRefusal")->text().toStdString());
+        REQUIRE(settled);
+        REQUIRE(widget.lastEditResult()); REQUIRE(*widget.lastEditResult());
+        REQUIRE(widget.editedEntity()->sourceDefinition());
+        CHECK(LC_OffsetWorkerRequest::Values::encodeSourceGeometry(
+                  widget.editedEntity()->sourceDefinition()->source) == encoded);
+        before.exact(*f.original);
+        otherBefore.exact(*other);
+        button(dialog, QDialogButtonBox::Ok);
+    });
+    LC_OffsetCurve* committed = nullptr;
+    for (auto* entity : f.graphic) {
+        if (!entity->isDeleted() && entity != other && entity->rtti() == RS2::EntityOffsetCurve) {
+            REQUIRE(committed == nullptr);
+            committed = static_cast<LC_OffsetCurve*>(entity);
+        }
+    }
+    REQUIRE(committed); CHECK(committed != f.original);
+    REQUIRE(committed->sourceDefinition());
+    CHECK(LC_OffsetWorkerRequest::Values::encodeSourceGeometry(committed->sourceDefinition()->source) == encoded);
+    CHECK(f.graphic.countUndoCycles() == 1);
+    otherBefore.exact(*other);
+    REQUIRE(f.graphic.undo()); CHECK_FALSE(f.original->isDeleted()); CHECK(committed->isDeleted());
+    before.geometry(*f.original, false); otherBefore.exact(*other);
+    REQUIRE(f.graphic.redo()); CHECK(f.original->isDeleted()); CHECK_FALSE(committed->isDeleted());
+    REQUIRE(committed->sourceDefinition());
+    CHECK(LC_OffsetWorkerRequest::Values::encodeSourceGeometry(committed->sourceDefinition()->source) == encoded);
+    otherBefore.exact(*other);
+}
+
 TEST_CASE("Exported source-picker drawing reopens with resolvable source candidates",
           "[gui][dialog][offsetcurve][source][visible-fixture]") {
     REQUIRE(lc::test::application() != nullptr);
