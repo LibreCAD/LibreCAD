@@ -14483,6 +14483,11 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
           std::vector<RS_Layer::ImportedRecordId> identities;
           std::map<std::uint32_t, std::string> descriptions;
           bool tablesSeen = false, objectsSeen = false;
+#ifdef LIBDXFRW_HAS_DXF_STAGED_HEADER_MATERIAL_INSPECTOR
+          bool inspectHeader = false, headerSeen = false, headerPresent = false;
+          std::uint32_t headerTarget = 0;
+          std::string headerValue;
+#endif
         };
         auto audit = std::make_shared<StagedMaterialAudit>();
         if (selectedObjects.size() > 64u) boundedAudit = false;
@@ -14521,10 +14526,41 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
             const auto rootName = rootEntryName.find(handle);
             if (rootName != rootEntryName.end()) selectedRootNames.emplace(*rootName);
           }
+#ifdef LIBDXFRW_HAS_DXF_STAGED_HEADER_MATERIAL_INSPECTOR
+          const auto readHeader = [&g](bool &present, std::uint32_t &target, std::string &text) {
+            const auto variables = g.getVariableDict();
+            const auto current = variables.constFind(QStringLiteral("$CMATERIAL"));
+            present = current != variables.cend();
+            target = 0;
+            text.clear();
+            if (!present) return true;
+            if (current->getType() != RS2::VariableString || current->getCode() != 347) return false;
+            const auto sourceText = current->getString();
+            if (sourceText.isEmpty() || sourceText.size() > 16) return false;
+            const auto value = sourceText.toLatin1();
+            if (static_cast<std::size_t>(value.size()) != std::strlen(value.constData()) ||
+                !parseDxfCarrierHandle(value.constData(), target)) return false;
+            text.assign(value.constData(), static_cast<std::size_t>(value.size()));
+            return true;
+          };
+          audit->inspectHeader = readHeader(audit->headerPresent, audit->headerTarget, audit->headerValue) &&
+              (!audit->headerTarget || audit->descriptions.count(audit->headerTarget));
+#endif
           const auto layerCount = layers->count();
           const auto stable = [this, audit, &g, selectedMaterials, sourceRootHandle,
-                               selectedRootNames, exportVersion, layerCount]() {
+                               selectedRootNames, exportVersion, layerCount
+#ifdef LIBDXFRW_HAS_DXF_STAGED_HEADER_MATERIAL_INSPECTOR
+                               , readHeader
+#endif
+                               ]() {
             const auto &current = g.dwgAdvancedMetadata();
+#ifdef LIBDXFRW_HAS_DXF_STAGED_HEADER_MATERIAL_INSPECTOR
+            if (audit->inspectHeader) {
+              bool present = false; std::uint32_t target = 0; std::string value;
+              if (!readHeader(present, target, value) || present != audit->headerPresent ||
+                  target != audit->headerTarget || value != audit->headerValue) return false;
+            }
+#endif
             for (const auto &description : audit->descriptions) {
               const auto material = std::find_if(current.materials().begin(), current.materials().end(),
                   [&](const auto &item) { return item.handle == description.first; });
@@ -14561,6 +14597,15 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
                                               exportVersion, handle)) return false;
             return true;
           };
+#ifdef LIBDXFRW_HAS_DXF_STAGED_HEADER_MATERIAL_INSPECTOR
+          if (audit->inspectHeader &&
+              !m_dxfW->setDxfHeaderWriteInspector([this, audit, stable](const auto &view) {
+                if (audit->headerSeen || !stable()) return false;
+                audit->headerSeen = m_dxfW->inspectDxfHeaderMaterialReference(
+                    view, audit->headerPresent, audit->headerTarget);
+                return audit->headerSeen;
+              })) return false;
+#endif
           if (!m_dxfW->setDxfTablesWriteInspector([this, audit, stable](const auto &view) {
                 if (audit->tablesSeen || !stable()) return false;
                 audit->tablesSeen = m_dxfW->inspectDxfLayerMaterialReferences(view, audit->layers);
@@ -14575,7 +14620,11 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
                 return audit->objectsSeen;
               })) return false;
           m_dxfMaterialFinalCheck = [audit, stable] {
-            return audit->tablesSeen && audit->objectsSeen && stable();
+            return audit->tablesSeen && audit->objectsSeen &&
+#ifdef LIBDXFRW_HAS_DXF_STAGED_HEADER_MATERIAL_INSPECTOR
+                (!audit->inspectHeader || audit->headerSeen) &&
+#endif
+                stable();
           };
         }
       }

@@ -1014,8 +1014,13 @@ TEST_CASE("System codec preserves a layer material link and refuses a missing ca
 #if defined(LIBDXFRW_HAS_DXF_STAGED_RAW_OBJECT_INSPECTOR) && \
     defined(LIBDXFRW_HAS_DXF_STAGED_LAYER_MATERIAL_INSPECTOR)
   struct MutatingFilter : RS_FilterDXFRW {
+    std::function<void()> afterHeader;
     std::function<void()> afterObjects;
     std::function<void()> beforeFinalize;
+    void writeHeader(DRW_Header &header) override {
+      RS_FilterDXFRW::writeHeader(header);
+      if (afterHeader) afterHeader();
+    }
     void writeObjects() override {
       RS_FilterDXFRW::writeObjects();
       if (afterObjects) afterObjects();
@@ -1047,6 +1052,40 @@ TEST_CASE("System codec preserves a layer material link and refuses a missing ca
   selected->description = oldDescription;
   mutating.beforeFinalize = {};
   REQUIRE(mutating.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+#ifdef LIBDXFRW_HAS_DXF_STAGED_HEADER_MATERIAL_INSPECTOR
+  graphic.addVariable("$CMATERIAL", QString::fromStdString(materialText), 347);
+  REQUIRE(mutating.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  {
+    RS_Graphic currentGraphic;
+    RS_FilterDXFRW reader;
+    REQUIRE(reader.fileImport(currentGraphic, QString::fromStdString(output), RS2::FormatDXFRW));
+    const auto currentVariables = currentGraphic.getVariableDict();
+    const auto current = currentVariables.constFind(QStringLiteral("$CMATERIAL"));
+    const auto writtenMaterials = recordGroupValues(output, "MATERIAL", "5");
+    REQUIRE(current != currentVariables.cend());
+    REQUIRE(writtenMaterials.size() == 1u);
+    CHECK(current->getString().toStdString() == writtenMaterials.front());
+  }
+  graphic.addVariable("$CMATERIAL", QStringLiteral("0"), 347);
+  REQUIRE(mutating.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  graphic.removeVariable("$CMATERIAL");
+  mutating.afterHeader = [&] { graphic.addVariable("$CMATERIAL", QString::fromStdString(materialText), 347); };
+  writeText(output, sentinel);
+  CHECK_FALSE(mutating.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  std::ifstream afterHeaderFailure(output, std::ios::binary);
+  CHECK(std::string(std::istreambuf_iterator<char>(afterHeaderFailure), {}) == sentinel);
+  afterHeaderFailure.close();
+  graphic.removeVariable("$CMATERIAL");
+  mutating.afterHeader = {};
+  mutating.beforeFinalize = [&] { graphic.addVariable("$CMATERIAL", QString::fromStdString(materialText), 347); };
+  CHECK_FALSE(mutating.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  std::ifstream afterHeaderFinalizationFailure(output, std::ios::binary);
+  CHECK(std::string(std::istreambuf_iterator<char>(afterHeaderFinalizationFailure), {}) == sentinel);
+  afterHeaderFinalizationFailure.close();
+  graphic.removeVariable("$CMATERIAL");
+  mutating.beforeFinalize = {};
+  REQUIRE(mutating.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+#endif
 #endif
   REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
   const auto material = recordGroupValues(output, "MATERIAL", "5");
