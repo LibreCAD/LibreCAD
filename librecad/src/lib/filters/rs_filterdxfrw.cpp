@@ -12842,6 +12842,7 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
   m_writeLeftOut.clear();
   m_legacyLayerLineweightsLeftOut = 0;
   m_legacyHeaderStylesLeftOut = 0;
+  m_legacyPaperScaleLeftOut = false;
   m_hatchAssociativityLeftOut = 0;
   m_shapeLeftOut.clear();
   m_shapeExportDirectory = QFileInfo(file).absoluteDir().canonicalPath();
@@ -14226,6 +14227,7 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
   if (!success) {
     m_legacyLayerLineweightsLeftOut = 0;
     m_legacyHeaderStylesLeftOut = 0;
+    m_legacyPaperScaleLeftOut = false;
     m_hatchAssociativityLeftOut = 0;
     RS_DEBUG->print("RS_FilterDXFDW::fileExport: can't write file");
     return false;
@@ -18545,6 +18547,10 @@ QString RS_FilterDXFRW::exportReport() const {
                          "RS_FilterDXFRW")
                  .arg(m_legacyHeaderStylesLeftOut);
   }
+  if (m_legacyPaperScaleLeftOut) {
+    lines << QObject::tr("paper-space scale, unsupported by this DXF version",
+                         "RS_FilterDXFRW");
+  }
   if (m_hatchAssociativityLeftOut > 0) {
     lines << QObject::tr("associativity of %1 hatch(es)", "RS_FilterDXFRW")
                  .arg(m_hatchAssociativityLeftOut);
@@ -19769,6 +19775,15 @@ void RS_FilterDXFRW::writeHeader(DRW_Header &data) {
         value.getType() == RS2::VariableInt && code == 280 &&
         value.getInt() == 1) {
       ++m_legacyHeaderStylesLeftOut;
+      ++it;
+      continue;
+    }
+    // LibreCAD initializes paper scale to one; disclose its omission and
+    // leave non-default values to the codec's lossless refusal.
+    if (m_dxfW && m_dxfExportVersion < DRW::AC1015 &&
+        key == "$PSVPSCALE" && value.getType() == RS2::VariableDouble &&
+        code == 40 && value.getDouble() == 1.0) {
+      m_legacyPaperScaleLeftOut = true;
       ++it;
       continue;
     }

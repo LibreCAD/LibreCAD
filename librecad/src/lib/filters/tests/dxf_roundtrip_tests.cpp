@@ -10600,6 +10600,30 @@ const BuiltinLTypeLength kBuiltinLTypeLengths[] = {
 } // namespace
 
 #ifdef LIBRECAD_SYSTEM_CODEC_TESTS
+TEST_CASE("Legacy DXF reports omitted default paper scale and supports retry",
+          "[dxf][roundtrip][filter][system-codec][r12][linetype]") {
+  ensureSettings();
+  const std::string source = writeFixture("legacy_paper_scale_source.dxf", kNamedR12Fixture);
+  for (const RS2::FormatType format : {RS2::FormatDXFRW12, RS2::FormatDXFRW14}) {
+    RS_Graphic graphic;
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(source), RS2::FormatDXFRW));
+    const std::string out = tmpFile("legacy_paper_scale_out.dxf");
+    graphic.addVariable("$PSVPSCALE", 2.0, 40);
+    writeText(out, "existing destination\n");
+    REQUIRE_FALSE(filter.fileExport(graphic, QString::fromStdString(out), format));
+    CHECK(textWithoutCR(out) == "existing destination\n");
+    CHECK_FALSE(filter.exportReport().contains(QStringLiteral("paper-space scale")));
+    graphic.addVariable("$PSVPSCALE", 1.0, 40);
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(out), format));
+    CHECK(filter.exportReport().contains(QStringLiteral("paper-space scale")));
+    CHECK(graphic.getVariableDict().value("$PSVPSCALE").getDouble() == 1.0);
+    CHECK(textWithoutCR(out).find("$PSVPSCALE") == std::string::npos);
+    std::filesystem::remove(out);
+  }
+  std::filesystem::remove(source);
+}
+
 TEST_CASE("Legacy DXF reports omitted generated cap and join settings",
           "[dxf][roundtrip][filter][system-codec][r12][linetype]") {
   ensureSettings();
