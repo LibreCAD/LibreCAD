@@ -33,6 +33,7 @@
 #include "drw_classes.h"
 #include "drw_datastorage.h"
 #include "drw_entities.h"
+#include "drw_interface.h"
 #include "drw_objects.h"
 
 class LC_DwgAdvancedMetadata {
@@ -3488,6 +3489,9 @@ public:
     m_dxfMaterialHeaderSourceConflict = false;
     m_dxfMaterialHeaderSource.reset();
     m_dxfMaterialHeaderSourceVersion = DRW::UNKNOWNV;
+#ifdef LIBDXFRW_HAS_DXF_HEADER_MATERIAL_SOURCE_HANDLER
+    m_dxfMaterialHeaderPhysicalSource.reset();
+#endif
     m_dxfImageDefSource.reset();
     m_dxfImageSource.reset();
     m_dxfDictionarySourceConflict = false;
@@ -3984,6 +3988,23 @@ public:
     m_dxfMaterialHeaderSourceVersion = version;
     m_dxfMaterialHeaderSource = handle;
   }
+
+#ifdef LIBDXFRW_HAS_DXF_HEADER_MATERIAL_SOURCE_HANDLER
+  void addDxfMaterialHeaderPhysicalSource(const DRW_DxfHeaderMaterialSource &source) {
+    if (m_dxfMaterialHeaderPhysicalSource ||
+        source.status != DRW_DxfHeaderMaterialSource::Status::Complete ||
+        source.version == DRW::UNKNOWNV) {
+      m_dxfMaterialHeaderSourceConflict = true;
+      return;
+    }
+    m_dxfMaterialHeaderPhysicalSource = source;
+  }
+
+  const DRW_DxfHeaderMaterialSource *dxfMaterialHeaderPhysicalSource() const {
+    return !m_dxfMaterialHeaderSourceConflict && m_dxfMaterialHeaderPhysicalSource
+        ? &*m_dxfMaterialHeaderPhysicalSource : nullptr;
+  }
+#endif
 
   void markDxfMaterialHeaderSourceUnavailable() {
     m_dxfMaterialHeaderSourceConflict = true;
@@ -13694,6 +13715,9 @@ private:
   DRW::Version m_dxfMaterialHeaderSourceVersion = DRW::UNKNOWNV;
   bool m_dxfMaterialHeaderSourceCaptured = false;
   bool m_dxfMaterialHeaderSourceConflict = false;
+#ifdef LIBDXFRW_HAS_DXF_HEADER_MATERIAL_SOURCE_HANDLER
+  std::optional<DRW_DxfHeaderMaterialSource> m_dxfMaterialHeaderPhysicalSource;
+#endif
   std::optional<DRW_RawDxfObject> m_dxfImageDefSource;
   std::optional<DRW_RawDxfObject> m_dxfImageSource;
   bool m_dxfDictionarySourceConflict = false;

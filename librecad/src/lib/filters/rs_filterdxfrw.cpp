@@ -12181,6 +12181,19 @@ void RS_FilterDXFRW::addDxfNamespaceSource(const DRW_TableEntry &entry,
 }
 #endif
 
+#ifdef LIBDXFRW_HAS_DXF_HEADER_MATERIAL_SOURCE_HANDLER
+bool RS_FilterDXFRW::wantsDxfHeaderMaterialSource() const {
+  const auto *policy = dynamic_cast<const DRW_DxfSparseMaterialRawPolicy *>(this);
+  return m_graphic && policy && policy->wantsDxfSparseMaterialRawCapture() &&
+         canCaptureSmallDxfFile(m_file);
+}
+
+void RS_FilterDXFRW::addDxfHeaderMaterialSource(const DRW_DxfHeaderMaterialSource &source) {
+  if (m_graphic)
+    m_graphic->dwgAdvancedMetadata().addDxfMaterialHeaderPhysicalSource(source);
+}
+#endif
+
 #ifdef LIBDXFRW_HAS_DXF_DICTIONARY_SOURCE_HANDLERS
 bool RS_FilterDXFRW::wantsDxfRootDictionarySource() const {
   // Keep the optional source-copy path bounded; larger drawings retain the
@@ -12965,12 +12978,43 @@ void RS_FilterDXFRW::addHeader(const DRW_Header *data) {
     bool valid = m_dxfR->getDxfReadContext(context) &&
                  data->canWriteDxfHeaderStructure() &&
                  !(dollar != data->vars.end() && bare != data->vars.end());
+#ifdef LIBDXFRW_HAS_DXF_HEADER_MATERIAL_SOURCE_HANDLER
+    const auto *physical = metadata.dxfMaterialHeaderPhysicalSource();
+    const qint64 sourceSize = QFileInfo(m_file).size();
+    const auto validSpan = [sourceSize](const DRW_DxfPhysicalRecordSpan &span) {
+      return sourceSize >= 0 && span.ordinal != 0 && !span.ignoredComment &&
+             span.beginOffset < span.endOffset &&
+             span.endOffset <= static_cast<std::size_t>(sourceSize);
+    };
+    valid = valid && physical && physical->version == context.sourceVersion &&
+            physical->binary == context.binary &&
+            physical->present == (value != data->vars.end()) &&
+            validSpan(physical->sectionName) && validSpan(physical->endMarker) &&
+            physical->sectionName.endOffset <= physical->endMarker.beginOffset &&
+            physical->sectionName.ordinal < physical->endMarker.ordinal;
+    if (valid && physical->present) {
+      valid = physical->dollarName == (dollar != data->vars.end()) &&
+              physical->handleLength > 0 &&
+              physical->handleLength <= physical->handleLexeme.size() &&
+              validSpan(physical->variableName) && validSpan(physical->value) &&
+              physical->sectionName.endOffset <= physical->variableName.beginOffset &&
+              physical->variableName.endOffset <= physical->value.beginOffset &&
+              physical->value.endOffset <= physical->endMarker.beginOffset &&
+              physical->sectionName.ordinal < physical->variableName.ordinal &&
+              physical->variableName.ordinal < physical->value.ordinal &&
+              physical->value.ordinal < physical->endMarker.ordinal;
+    }
+#endif
     if (valid && value != data->vars.end()) {
       const auto *field = value->second;
       std::uint32_t parsed = 0;
       valid = field && field->code() == 347 && field->type() == DRW_Variant::STRING &&
               field->content.s && field->content.s->size() == std::strlen(field->content.s->c_str()) &&
               parseDxfCarrierHandle(field->content.s->c_str(), parsed);
+#ifdef LIBDXFRW_HAS_DXF_HEADER_MATERIAL_SOURCE_HANDLER
+      if (valid)
+        valid = *field->content.s == std::string(physical->handleLexeme.data(), physical->handleLength);
+#endif
       if (valid) handle = parsed;
     }
     if (valid)

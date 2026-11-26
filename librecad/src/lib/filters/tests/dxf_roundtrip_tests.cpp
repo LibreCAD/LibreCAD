@@ -1396,6 +1396,44 @@ TEST_CASE("System codec gates ambiguous AC1024 default material",
   CHECK(graphMetadata.dxfMaterialDictionarySource()->handle == 0xEu);
   REQUIRE(graphMetadata.materials().size() == 1u);
   CHECK(graphMetadata.materials().front().rawDxfSource);
+#ifdef LIBDXFRW_HAS_DXF_HEADER_MATERIAL_SOURCE_HANDLER
+  const auto *physicalHeader = graphMetadata.dxfMaterialHeaderPhysicalSource();
+  REQUIRE(physicalHeader);
+  CHECK(physicalHeader->version == DRW::AC1024);
+  CHECK_FALSE(physicalHeader->binary);
+  CHECK(physicalHeader->present);
+  CHECK(physicalHeader->dollarName);
+  CHECK(std::string(physicalHeader->handleLexeme.data(), physicalHeader->handleLength) == "1F");
+  {
+    std::ifstream file(graphSource, std::ios::binary);
+    const std::string original((std::istreambuf_iterator<char>(file)), {});
+    REQUIRE(physicalHeader->variableName.endOffset <= original.size());
+    REQUIRE(physicalHeader->value.endOffset <= original.size());
+    CHECK(original.substr(physicalHeader->variableName.beginOffset,
+                          physicalHeader->variableName.endOffset - physicalHeader->variableName.beginOffset) ==
+          "9\n$CMATERIAL\n");
+    CHECK(original.substr(physicalHeader->value.beginOffset,
+                          physicalHeader->value.endOffset - physicalHeader->value.beginOffset) ==
+          "347\n1F\n");
+  }
+  const auto bareHeaderSource = tmpFile("system_sparse_material_bare_header.dxf");
+  {
+    std::ifstream input(graphSource, std::ios::binary);
+    std::string graph((std::istreambuf_iterator<char>(input)), {});
+    const auto at = graph.find("9\n$CMATERIAL\n347\n1F\n");
+    REQUIRE(at != std::string::npos);
+    graph.erase(at + 2u, 1u);
+    writeText(bareHeaderSource, graph);
+  }
+  RS_Graphic bareHeaderGraphic;
+  OptInFilter bareHeaderImporter;
+  REQUIRE(bareHeaderImporter.fileImport(bareHeaderGraphic, QString::fromStdString(bareHeaderSource), RS2::FormatDXFRW));
+  REQUIRE(bareHeaderGraphic.dwgAdvancedMetadata().dxfMaterialHeaderPhysicalSource());
+  CHECK_FALSE(bareHeaderGraphic.dwgAdvancedMetadata().dxfMaterialHeaderPhysicalSource()->dollarName);
+  CHECK_FALSE(exporter.fileExport(bareHeaderGraphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+  CHECK(exporter.exportReport().contains(QStringLiteral("raw-only graph requires qualification")));
+  std::filesystem::remove(bareHeaderSource);
+#endif
   CHECK_FALSE(exporter.fileExport(graphGraphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
   CHECK(exporter.exportReport().contains(QStringLiteral("raw-only graph requires qualification")));
   graphGraphic.removeVariable("$CMATERIAL");
@@ -1501,6 +1539,10 @@ TEST_CASE("System codec gates ambiguous AC1024 default material",
   std::uint32_t headerHandle = 42u;
   REQUIRE(absentHeaderGraphic.dwgAdvancedMetadata().dxfMaterialHeaderSource(DRW::AC1024, headerPresent, headerHandle));
   CHECK_FALSE(headerPresent);
+#ifdef LIBDXFRW_HAS_DXF_HEADER_MATERIAL_SOURCE_HANDLER
+  REQUIRE(absentHeaderGraphic.dwgAdvancedMetadata().dxfMaterialHeaderPhysicalSource());
+  CHECK_FALSE(absentHeaderGraphic.dwgAdvancedMetadata().dxfMaterialHeaderPhysicalSource()->present);
+#endif
   CHECK_FALSE(absentHeaderGraphic.dwgAdvancedMetadata().dxfMaterialHeaderSource(DRW::AC1021, headerPresent, headerHandle));
   CHECK_FALSE(exporter.fileExport(absentHeaderGraphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
   CHECK(exporter.exportReport().contains(QStringLiteral("raw-only graph requires qualification")));
@@ -1527,6 +1569,10 @@ TEST_CASE("System codec gates ambiguous AC1024 default material",
   REQUIRE(nullHeaderGraphic.dwgAdvancedMetadata().dxfMaterialHeaderSource(DRW::AC1024, headerPresent, headerHandle));
   CHECK(headerPresent);
   CHECK(headerHandle == 0u);
+#ifdef LIBDXFRW_HAS_DXF_HEADER_MATERIAL_SOURCE_HANDLER
+  REQUIRE(nullHeaderGraphic.dwgAdvancedMetadata().dxfMaterialHeaderPhysicalSource());
+  CHECK(nullHeaderGraphic.dwgAdvancedMetadata().dxfMaterialHeaderPhysicalSource()->handleLexeme[0] == '0');
+#endif
   CHECK_FALSE(exporter.fileExport(nullHeaderGraphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
   CHECK(exporter.exportReport().contains(QStringLiteral("raw-only graph requires qualification")));
   nullHeaderGraphic.removeVariable("$CMATERIAL");
@@ -1547,11 +1593,35 @@ TEST_CASE("System codec gates ambiguous AC1024 default material",
   OptInFilter duplicateHeaderImporter;
   REQUIRE(duplicateHeaderImporter.fileImport(duplicateHeaderGraphic, QString::fromStdString(duplicateHeaderSource), RS2::FormatDXFRW));
   CHECK_FALSE(duplicateHeaderGraphic.dwgAdvancedMetadata().dxfMaterialHeaderSource(DRW::AC1024, headerPresent, headerHandle));
+#ifdef LIBDXFRW_HAS_DXF_HEADER_MATERIAL_SOURCE_HANDLER
+  CHECK_FALSE(duplicateHeaderGraphic.dwgAdvancedMetadata().dxfMaterialHeaderPhysicalSource());
+#endif
   CHECK_FALSE(exporter.fileExport(duplicateHeaderGraphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
   CHECK(exporter.exportReport().contains(QStringLiteral("raw source missing, changed or unverified")));
   std::ifstream headerRetained(output, std::ios::binary);
   CHECK(std::string(std::istreambuf_iterator<char>(headerRetained), {}) == sentinel);
   std::filesystem::remove(duplicateHeaderSource);
+#ifdef LIBDXFRW_HAS_DXF_HEADER_MATERIAL_SOURCE_HANDLER
+  const auto repeatedHeaderSource = tmpFile("system_sparse_material_repeated_header.dxf");
+  {
+    std::ifstream input(graphSource, std::ios::binary);
+    std::string graph((std::istreambuf_iterator<char>(input)), {});
+    const std::string marker = "0\nENDSEC\n0\nSECTION\n2\nOBJECTS\n";
+    const auto at = graph.find(marker);
+    REQUIRE(at != std::string::npos);
+    graph.insert(at + std::string("0\nENDSEC\n").size(),
+                 "0\nSECTION\n2\nHEADER\n9\n$CMATERIAL\n347\n1F\n0\nENDSEC\n");
+    writeText(repeatedHeaderSource, graph);
+  }
+  RS_Graphic repeatedHeaderGraphic;
+  OptInFilter repeatedHeaderImporter;
+  REQUIRE(repeatedHeaderImporter.fileImport(repeatedHeaderGraphic, QString::fromStdString(repeatedHeaderSource), RS2::FormatDXFRW));
+  CHECK_FALSE(repeatedHeaderGraphic.dwgAdvancedMetadata().dxfMaterialHeaderPhysicalSource());
+  CHECK_FALSE(repeatedHeaderGraphic.dwgAdvancedMetadata().dxfMaterialHeaderSource(DRW::AC1024, headerPresent, headerHandle));
+  CHECK_FALSE(exporter.fileExport(repeatedHeaderGraphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+  CHECK(exporter.exportReport().contains(QStringLiteral("raw source missing, changed or unverified")));
+  std::filesystem::remove(repeatedHeaderSource);
+#endif
   const auto layerSource = tmpFile("system_sparse_material_layer_reference.dxf");
   for (const auto &target : {std::string("2F"), std::string("1F")}) {
     std::ifstream input(graphSource, std::ios::binary);
@@ -1640,6 +1710,25 @@ TEST_CASE("System codec gates ambiguous AC1024 default material",
   REQUIRE(binarySnapshot);
   CHECK_FALSE(binarySnapshot->hasRawValues);
   CHECK(binarySnapshot->groups.size() == 61u);
+#ifdef LIBDXFRW_HAS_DXF_HEADER_MATERIAL_SOURCE_HANDLER
+  const auto *binaryHeader = binaryGraphic.dwgAdvancedMetadata().dxfMaterialHeaderPhysicalSource();
+  REQUIRE(binaryHeader);
+  CHECK(binaryHeader->binary);
+  CHECK(binaryHeader->present);
+  CHECK(std::string(binaryHeader->handleLexeme.data(), binaryHeader->handleLength) == "1F");
+  {
+    std::ifstream file(binarySource, std::ios::binary);
+    const std::string original((std::istreambuf_iterator<char>(file)), {});
+    REQUIRE(binaryHeader->variableName.endOffset <= original.size());
+    REQUIRE(binaryHeader->value.endOffset <= original.size());
+    CHECK(original.substr(binaryHeader->variableName.beginOffset,
+                          binaryHeader->variableName.endOffset - binaryHeader->variableName.beginOffset) ==
+          std::string("\x09\x00$CMATERIAL\x00", 13));
+    CHECK(original.substr(binaryHeader->value.beginOffset,
+                          binaryHeader->value.endOffset - binaryHeader->value.beginOffset) ==
+          std::string("\x5b\x01" "1F\x00", 5));
+  }
+#endif
   REQUIRE(binaryGraphic.dwgAdvancedMetadata().dxfRootDictionarySource());
   REQUIRE(binaryGraphic.dwgAdvancedMetadata().dxfMaterialDictionarySource());
   CHECK_FALSE(binaryGraphic.dwgAdvancedMetadata().dxfMaterialDictionarySource()->hasRawValues);

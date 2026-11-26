@@ -1978,6 +1978,9 @@ class RS_FilterDXFRW : public RS_FilterInterface,
 #ifdef LIBDXFRW_HAS_DXF_NAMESPACE_SOURCE_HANDLER
     , public DRW_DxfNamespaceSourceHandler
 #endif
+#ifdef LIBDXFRW_HAS_DXF_HEADER_MATERIAL_SOURCE_HANDLER
+    , public DRW_DxfHeaderMaterialSourceHandler
+#endif
 #ifdef DWGSUPPORT
     ,
                        private RS_FilterDXFRW_DwgWriteIdentityRegistry
@@ -2205,6 +2208,10 @@ public:
   bool wantsDxfNamespaceSource() const override;
   void addDxfNamespaceSource(const DRW_TableEntry &entry,
                              const DRW_RawDxfObject &source) override;
+#endif
+#ifdef LIBDXFRW_HAS_DXF_HEADER_MATERIAL_SOURCE_HANDLER
+  bool wantsDxfHeaderMaterialSource() const override;
+  void addDxfHeaderMaterialSource(const DRW_DxfHeaderMaterialSource &source) override;
 #endif
 #ifdef LIBDXFRW_HAS_DXF_DICTIONARY_SOURCE_HANDLERS
   bool wantsDxfRootDictionarySource() const override;
