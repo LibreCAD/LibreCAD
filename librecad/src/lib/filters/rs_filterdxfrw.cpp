@@ -14871,6 +14871,9 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
           std::uint32_t dictionary = 0;
           std::vector<DxfImageGraphPlan::ImageReference> references;
           bool blocksSeen = false, entitiesSeen = false;
+#ifdef LIBDXFRW_HAS_DXF_STAGED_IMAGE_OBJECT_INSPECTOR
+          bool objectsSeen = false;
+#endif
         };
         auto audit = std::make_shared<ImageAudit>();
         audit->dictionary = imageGraph.imageDictionary;
@@ -14917,9 +14920,39 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
               else audit->entitiesSeen = true;
               return true;
             })) return false;
+#ifdef LIBDXFRW_HAS_DXF_STAGED_IMAGE_OBJECT_INSPECTOR
+        if (!m_dxfW->setDxfObjectsWriteInspector([this, audit, stable](const auto &view) {
+              if (!audit->entitiesSeen || audit->objectsSeen || !stable()) return false;
+              const auto *context = m_dxfW->getWritingContext();
+              const auto dictionary = m_dxfW->dxfWriteImageDictionaryHandle();
+              if (!context || !dictionary) return false;
+              std::map<std::uint32_t, std::size_t> indices;
+              std::vector<dxfRW::DxfImageDefinitionOutputLinks> definitions;
+              std::vector<dxfRW::DxfImageReactorOutputLinks> reactors;
+              for (const auto &reference : audit->references) {
+                const auto image = context->sourceHandleToMintedMap.find(reference.image);
+                if (image == context->sourceHandleToMintedMap.end()) return false;
+                const dxfRW::ImageDefinitionKey key{DxfImageGraphPlan::generation, reference.definition};
+                const auto definition = m_dxfW->dxfWriteImageDefinitionHandle(key);
+                const auto reactor = m_dxfW->dxfWriteImageReactorHandle(key, reference.reactor);
+                if (!definition || !reactor) return false;
+                const auto inserted = indices.emplace(definition, definitions.size());
+                if (inserted.second) definitions.push_back({definition, dictionary, {}});
+                definitions[inserted.first->second].reactors.push_back(reactor);
+                reactors.push_back({reactor, image->second});
+              }
+              if (!m_dxfW->inspectDxfImageOutputObjects(view, definitions, reactors)) return false;
+              audit->objectsSeen = true;
+              return true;
+            })) return false;
+#endif
         const auto previousFinal = m_dxfMaterialFinalCheck;
         m_dxfMaterialFinalCheck = [audit, stable, previousFinal] {
-          return audit->blocksSeen && audit->entitiesSeen && stable() &&
+          return audit->blocksSeen && audit->entitiesSeen &&
+#ifdef LIBDXFRW_HAS_DXF_STAGED_IMAGE_OBJECT_INSPECTOR
+              audit->objectsSeen &&
+#endif
+              stable() &&
               (!previousFinal || previousFinal());
         };
       } catch (...) {
