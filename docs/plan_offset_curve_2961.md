@@ -215,8 +215,16 @@ the dependencies for **3 and 4** in parallel. **5** follows the acceptance work.
   and settings, using the `ellipse` profile runner and 180-second per-profile
   bound. Manifest and logs: `/private/tmp/offset-3193-trim-ellipse-asan.json`
   and `/private/tmp/offset-3193-trim-ellipse-asan-logs` (temporary). This is
-  isolated profile evidence; the high-origin ellipse generator, shared-process
-  order, leak detection, and other platforms remain separate gates.
+  isolated profile evidence; shared-process order, leak detection, and other
+  platforms remain separate gates. High-origin ellipse is recorded below.
+- The separately excluded high-origin ellipse generator then passed **52/52
+  profiles, 4,500 assertions** on the same source-equivalent macOS Debug
+  sanitizer build and settings, using `high-origin-ellipse` and the same
+  180-second per-profile bound. Manifest and logs:
+  `/private/tmp/offset-3193-trim-high-ellipse-asan.json` and
+  `/private/tmp/offset-3193-trim-high-ellipse-asan-logs` (temporary). This
+  qualifies these isolated rows, not leak detection, prior shared-process
+  failures or other platforms.
 
 ## Smallest Safe Fix
 
