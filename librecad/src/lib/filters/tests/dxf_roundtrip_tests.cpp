@@ -9581,12 +9581,26 @@ TEST_CASE("QCad-1 reader keeps group 6 and synthesises a marker for it",
   REQUIRE(graphic.firstEntity() != nullptr);
   CHECK(graphic.firstEntity()->getPen(false).getLineTypeName() ==
         QStringLiteral("VENDOR_TAB"));
-  const RS_Layer *layer = graphic.findLayer(QStringLiteral("L_VENDOR"));
+  RS_Layer *layer = graphic.findLayer(QStringLiteral("L_VENDOR"));
   REQUIRE(layer != nullptr);
   CHECK(layer->getPen().getLineTypeName() == QStringLiteral("VENDOR_LAY"));
+  CHECK(layer->getPen().getWidth() == RS2::WidthDefault);
 
   {
     RS_FilterDXFRW filter;
+#ifdef LIBRECAD_SYSTEM_CODEC_TESTS
+    const RS_Pen saved = layer->getPen();
+    RS_Pen invalid = saved;
+    invalid.setWidth(RS2::WidthByLayer);
+    layer->setPen(invalid);
+    const std::string sentinel = "preserve QCad layer destination\n";
+    writeText(out, sentinel);
+    CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(out), RS2::FormatDXFRW));
+    std::ifstream retained(out, std::ios::binary);
+    CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel);
+    retained.close();
+    layer->setPen(saved);
+#endif
     REQUIRE(filter.fileExport(graphic, QString::fromStdString(out),
                               RS2::FormatDXFRW));
   }
@@ -9598,6 +9612,15 @@ TEST_CASE("QCad-1 reader keeps group 6 and synthesises a marker for it",
         std::vector<std::string>{"0"});
   CHECK(namedRecordGroupValues(out, "LAYER", "L_VENDOR", "6") ==
         std::vector<std::string>{"VENDOR_LAY"});
+  CHECK(namedRecordGroupValues(out, "LAYER", "L_VENDOR", "370") ==
+        std::vector<std::string>{"-3"});
+  RS_Graphic reread;
+  RS_FilterDXFRW reader;
+  REQUIRE(reader.fileImport(reread, QString::fromStdString(out), RS2::FormatDXFRW));
+  const auto *reopenedLayer = reread.findLayer(QStringLiteral("L_VENDOR"));
+  REQUIRE(reopenedLayer != nullptr);
+  CHECK(reopenedLayer->getPen().getWidth() == RS2::WidthDefault);
+  CHECK(reopenedLayer->getPen().getLineTypeName() == QStringLiteral("VENDOR_LAY"));
 
   std::filesystem::remove(src);
   std::filesystem::remove(out);
