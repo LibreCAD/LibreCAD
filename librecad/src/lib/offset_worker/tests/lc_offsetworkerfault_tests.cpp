@@ -315,11 +315,15 @@ TEST_CASE("Worker client rejects a late fixture completion after event dispatch 
     Receipts receipts;
     Client client;
     REQUIRE(client.submit(request(1, Fault::LateComplete), Client::Mode::Preview, receipts.into(0)));
-    // Give QProcess time to send the frame, then withhold dispatch across the
-    // real preview deadline while the fixture can finish. This is a real-time
-    // lifecycle test, not a fake-clock boundary proof or a geometry hang test.
-    rt.poll(100);
+    // Wait for the fixture to receive the frame before withholding dispatch;
+    // process startup and pipe delivery need not finish within a fixed delay.
+    // This remains a real-time lifecycle test, not a geometry hang test.
+    rt.until([&] {
+        return receipts.calls[0] ||
+            LC_OffsetWorkerClientTestAccess::diagnostics(client).contains(receipt(Fault::LateComplete));
+    });
     REQUIRE(receipts.calls[0] == 0);
+    REQUIRE(LC_OffsetWorkerClientTestAccess::diagnostics(client).contains(receipt(Fault::LateComplete)));
     QThread::msleep(static_cast<unsigned long>(Client::Deadlines::preview + 150));
     rt.check();
     rt.until([&] { return receipts.calls[0] != 0; });
