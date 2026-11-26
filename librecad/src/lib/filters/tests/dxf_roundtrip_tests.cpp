@@ -10357,8 +10357,8 @@ TEST_CASE("Legacy DXF reports omitted layer lineweight and supports retry",
 // head of writeLTypes() was rewritten: the three records libdxfrw writes
 // itself and the 32 the filter adds, handles in allocation order. R2000 and
 // R2007 write the same table and share a golden. They pin names, order,
-// groups 3, 72, 73 and 49; the DXF writer re-sums group 40 on its copy
-// (DRW_LType::update), so the DWG case below pins 40.
+// groups 3, 72, 73 and 49. The bundled path retains the original byte
+// snapshot; the system path also checks the declared group-40 totals exactly.
 TEST_CASE("A new drawing writes the built-in LTYPE table as before",
           "[dxf][roundtrip][filter][linetype][ltype][named]") {
   ensureSettings();
@@ -10391,15 +10391,72 @@ TEST_CASE("A new drawing writes the built-in LTYPE table as before",
     const std::string written = ltypeTableSection(out);
     REQUIRE_FALSE(written.empty());
     INFO(firstDifference(expected, written));
+#ifdef LIBRECAD_SYSTEM_CODEC_TESTS
+    // The installed writer reports the real table count, allocates its own
+    // handles, and emits enough decimal digits to round-trip each double.
+    // Compare every other field with the legacy snapshot semantically.
+    const auto groups = [](const std::string &text) {
+      std::istringstream stream(text);
+      std::vector<std::pair<int, std::string>> result;
+      std::string code, value;
+      while (std::getline(stream, code) && std::getline(stream, value))
+        result.emplace_back(std::stoi(code), value);
+      return result;
+    };
+    const auto actualGroups = groups(written);
+    const auto expectedGroups = groups(expected);
+    REQUIRE(actualGroups.size() == expectedGroups.size());
+    bool inTableHeader = true;
+    std::set<unsigned long long> handles;
+    for (std::size_t i = 0; i < actualGroups.size(); ++i) {
+      const auto &[code, value] = actualGroups[i];
+      const auto &[expectedCode, expectedValue] = expectedGroups[i];
+      INFO("group index " << i);
+      REQUIRE(code == expectedCode);
+      if (code == 0 && value == "LTYPE")
+        inTableHeader = false;
+      if (code == 70 && inTableHeader) {
+        CHECK(std::stoi(value) == 35);
+        CHECK(std::stoi(expectedValue) == 4); // historical stale count
+      } else if (code == 5) {
+        const auto handle = std::stoull(value, nullptr, 16);
+        CHECK(handle != 0);
+        CHECK(handles.insert(handle).second);
+      } else if (code == 40) {
+        const double actual = std::stod(value);
+        const double expectedTotal = std::stod(expectedValue);
+        // The old snapshot sums the dashes; exact declared totals are
+        // checked separately below, so allow only rounding noise here.
+        CHECK(actual == Catch::Approx(expectedTotal).epsilon(1e-12).margin(0.0));
+      } else if (code == 49) {
+        CHECK(std::stod(value) == std::stod(expectedValue));
+      } else {
+        CHECK(value == expectedValue);
+      }
+    }
+    // The old snapshot re-summed these totals; the current writer must keep
+    // each built-in's declared total exactly, including its last bit.
+    for (const BuiltinLTypeLength &row : kBuiltinLTypeLengths) {
+      if (row.size == 0) continue;
+      INFO("LTYPE " << row.name);
+      const auto total = ltypeRecordGroupValues(out, row.name, "40");
+      REQUIRE(total.size() == 1);
+      CHECK(std::stod(total.front()) == row.length);
+    }
+#else
     CHECK(written == expected);
+#endif
+    if (const char *prefix = std::getenv("LIBRECAD_KEEP_BUILTIN_LTYPE_DXF"))
+      std::filesystem::copy_file(out, std::string(prefix) + "-" +
+          std::to_string(static_cast<int>(target.format)) + ".dxf",
+          std::filesystem::copy_options::overwrite_existing);
     std::filesystem::remove(out);
   }
 }
 
 #ifdef DWGSUPPORT
-// DWG carries group 40 as the double it was given (DRW_LType::encodeDwg and
-// parseDwg, no update()), and the import parks the record as read, so the
-// archived length is the literal the head passed.
+// DWG retains the declared pattern-length double through encoder
+// normalization and the subsequent import.
 TEST_CASE("A new drawing's built-in linetype lengths survive a DWG round trip",
           "[dwg][roundtrip][filter][linetype][ltype][named]") {
   ensureSettings();
@@ -10435,6 +10492,10 @@ TEST_CASE("A new drawing's built-in linetype lengths survive a DWG round trip",
       // Exact, not Approx: the same double or a changed file.
       CHECK(record->length == row.length);
     }
+    if (const char *prefix = std::getenv("LIBRECAD_KEEP_BUILTIN_LTYPE_DWG"))
+      std::filesystem::copy_file(dwg, std::string(prefix) + "-" +
+          std::to_string(static_cast<int>(format)) + ".dwg",
+          std::filesystem::copy_options::overwrite_existing);
     std::filesystem::remove(dwg);
   }
 }
