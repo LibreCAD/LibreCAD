@@ -38,6 +38,7 @@
 #include "lc_graphicviewport.h"
 #include "lc_imageexporter.h"
 #include "lc_printviewportrenderer.h"
+#include "lc_ucs.h"
 #include "rs_arc.h"
 #include "rs_color.h"
 #include "rs_ellipse.h"
@@ -641,6 +642,64 @@ TEST_CASE("a reversed elliptic arc paints as the same arc written counter-clockw
     INFO("zoom " << zoom << ", along " << along);
     REQUIRE(countPixels(expected, qRgb(0, 0, 0)) > 100);
     CHECK(actual == expected);
+}
+
+// RS_Polyline::scale() makes the arcs of a polyline elliptic arcs when it scales
+// x and y apart, as it does for the letters of a text with a width factor other
+// than 1. RS_Painter::drawEntityPolyline() started a reversed one at its end
+// angle, and turned its axis the wrong way in a rotated UCS.
+namespace {
+
+/** Draws \p entity at zoom 2 in a 300x300 view centred on \p focus, in a UCS turned by \p ucsAngle. */
+QImage paintInUcs(RS_Entity& entity, const RS_Vector& focus, const double ucsAngle) {
+    QImage image(300, 300, QImage::Format_RGB32);
+    image.fill(Qt::white);
+    LC_GraphicViewport viewport;
+    viewport.setSize(300, 300);
+    LC_UCS ucs;
+    ucs.setXAxis(RS_Vector(ucsAngle));
+    ucs.setYAxis(RS_Vector(ucsAngle + M_PI / 2.));
+    viewport.applyUCS(&ucs);
+    const double zoom = 2.;
+    const RS_Vector ucsFocus = viewport.toUCS(focus);
+    viewport.setOffsetAndFactor(150. - ucsFocus.x * zoom, 150. - ucsFocus.y * zoom, zoom);
+    RS_Painter painter(&image);
+    painter.setViewPort(&viewport);
+    // the view turned by any angle lies in this square
+    const double half = 150. * M_SQRT2 / zoom;
+    painter.setWorldBoundingRect(LC_Rect(RS_Vector(focus.x - half, focus.y - half),
+                                         RS_Vector(focus.x + half, focus.y + half)));
+    painter.setPen(testPen(RS2::SolidLine, 1.0));
+    entity.draw(&painter);
+    painter.end();
+    return image;
+}
+
+} // namespace
+
+TEST_CASE("a polyline paints an elliptic arc as the same elliptic arc drawn alone",
+          "[gui][painter][ellipse]") {
+    (void)application();
+    // a positive bulge is a counter-clockwise arc, a negative one a reversed arc
+    const double bulge = GENERATE(0.8, -0.8);
+    const RS_Vector factor = GENERATE(RS_Vector(0.5, 1.), RS_Vector(2., 1.));
+    const double ucsAngle = GENERATE(0., M_PI / 6.);
+
+    RS_Polyline polyline(nullptr);
+    polyline.addVertex(RS_Vector(0., 0.), bulge);
+    polyline.addVertex(RS_Vector(60., 0.));
+    polyline.scale(RS_Vector(0., 0.), factor);
+    REQUIRE(polyline.count() == 1);
+    REQUIRE(polyline.firstEntity()->rtti() == RS2::EntityEllipse);
+    const auto* arc = static_cast<const RS_Ellipse*>(polyline.firstEntity());
+    REQUIRE(arc->isReversed() == (bulge < 0.));
+    RS_Ellipse alone(nullptr, arc->getData());
+
+    const RS_Vector focus = (arc->getMin() + arc->getMax()) * 0.5;
+    const QImage expected = paintInUcs(alone, focus, ucsAngle);
+    INFO("bulge " << bulge << ", scale " << factor.x << ", UCS angle " << ucsAngle);
+    REQUIRE(countPixels(expected, qRgb(0, 0, 0)) > 100);
+    CHECK(paintInUcs(polyline, focus, ucsAngle) == expected);
 }
 
 TEST_CASE("an arc whose end lies on the border of the view paints no stray line",
