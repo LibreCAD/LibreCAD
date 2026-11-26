@@ -1572,7 +1572,8 @@ TEST_CASE("System codec refuses an incomplete raw-only material after metadata s
 
 #if defined(LIBDXFRW_HAS_DXF_STAGED_ENTITY_MATERIAL_INSPECTOR) && \
     defined(LIBDXFRW_HAS_DXF_HEADER_MATERIAL_SOURCE_HANDLER) && \
-    defined(LIBDXFRW_HAS_DXF_DEFAULT_PLOT_PLACEHOLDER_HANDLE)
+    defined(LIBDXFRW_HAS_DXF_DEFAULT_PLOT_PLACEHOLDER_HANDLE) && \
+    defined(LIBDXFRW_HAS_DXF_STAGED_LAYER_PLOT_STYLE_INSPECTOR)
 TEST_CASE("Opt-in system codec replays an unchanged sparse material graph",
           "[system-codec][dxf][material][transaction]") {
   ensureSettings();
@@ -1639,11 +1640,25 @@ TEST_CASE("Opt-in system codec replays an unchanged sparse material graph",
   CHECK(current->getString().toStdString() == handles.front());
   const auto resaved = tmpFile("system_sparse_graph_resave_output.dxf");
   const std::string sentinel = "preserve sparse material destination\n";
-  // The generated output has a LAYER plot-style edge. Until that edge has
-  // source and staged-output proof, a second replay must fail atomically.
+  const auto *reopenedLayer = reread.findLayer(QStringLiteral("RAWTEST"));
+  REQUIRE(reopenedLayer);
+  const auto *reopenedEntry = reread.dwgAdvancedMetadata().findLayerTableEntryByIdentity(reopenedLayer->importedRecordId());
+  REQUIRE(reopenedEntry);
+  auto *layerSource = const_cast<DRW_RawDxfObject*>(reread.dwgAdvancedMetadata().dxfMaterialLayerSource(reopenedEntry->handle));
+  REQUIRE(layerSource);
+  const auto plotStyle = std::find_if(layerSource->groups.begin(), layerSource->groups.end(),
+                                     [](const auto &group) { return group.code() == 390; });
+  REQUIRE(plotStyle != layerSource->groups.end());
+  const auto originalPlotStyle = *plotStyle;
+  plotStyle->addString(390, "FE");
   writeText(resaved, sentinel);
   CHECK_FALSE(filter.fileExport(reread, QString::fromStdString(resaved), RS2::FormatDXFRW));
   { std::ifstream retained(resaved, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+  *plotStyle = originalPlotStyle;
+  REQUIRE(filter.fileExport(reread, QString::fromStdString(resaved), RS2::FormatDXFRW));
+  CHECK(recordGroupValues(resaved, "MATERIAL", "94") == expectedFlags);
+  if (const char *copy = std::getenv("LIBRECAD_KEEP_SPARSE_MATERIAL_RESAVED"))
+    std::filesystem::copy_file(resaved, copy, std::filesystem::copy_options::overwrite_existing);
   const auto expectRefusal = [&](RS2::FormatType format) {
     writeText(output, sentinel);
     CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(output), format));
@@ -1866,16 +1881,15 @@ TEST_CASE("System codec gates ambiguous AC1024 default material",
   CHECK(graphMetadata.dxfMaterialDictionarySource()->handle == 0xEu);
   REQUIRE(graphMetadata.materials().size() == 1u);
   CHECK(graphMetadata.materials().front().rawDxfSource);
-#ifdef LIBDXFRW_HAS_DXF_DEFAULT_PLOT_PLACEHOLDER_HANDLE
+#if defined(LIBDXFRW_HAS_DXF_DEFAULT_PLOT_PLACEHOLDER_HANDLE) && defined(LIBDXFRW_HAS_DXF_STAGED_LAYER_PLOT_STYLE_INSPECTOR)
   const auto rawReplay = tmpFile("system_ezdxf_material_graph_replay.dxf");
   REQUIRE(graphImporter.fileExport(graphGraphic, QString::fromStdString(rawReplay), RS2::FormatDXFRW2010));
   CHECK(recordGroupValues(rawReplay, "MATERIAL", "94") == std::vector<std::string>{"63"});
   RS_Graphic replayed;
   OptInFilter replayFilter;
   REQUIRE(replayFilter.fileImport(replayed, QString::fromStdString(rawReplay), RS2::FormatDXFRW));
-  writeText(output, sentinel);
-  CHECK_FALSE(replayFilter.fileExport(replayed, QString::fromStdString(output), RS2::FormatDXFRW2010));
-  { std::ifstream in(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(in), {}) == sentinel); }
+  REQUIRE(replayFilter.fileExport(replayed, QString::fromStdString(rawReplay), RS2::FormatDXFRW2010));
+  CHECK(recordGroupValues(rawReplay, "MATERIAL", "94") == std::vector<std::string>{"63"});
   auto &replayedRaw = const_cast<std::vector<DRW_RawDxfObject>&>(replayed.dwgAdvancedMetadata().rawDxfObjects());
   const auto plot = std::find_if(replayedRaw.begin(), replayedRaw.end(), [](const auto &record) {
     return record.name == "ACDBDICTIONARYWDFLT";
@@ -1890,6 +1904,7 @@ TEST_CASE("System codec gates ambiguous AC1024 default material",
   CHECK_FALSE(replayFilter.fileExport(replayed, QString::fromStdString(output), RS2::FormatDXFRW2010));
   { std::ifstream in(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(in), {}) == sentinel); }
   *cloning = originalPlotCloning;
+  REQUIRE(replayFilter.fileExport(replayed, QString::fromStdString(rawReplay), RS2::FormatDXFRW2010));
   if (const char *copy = std::getenv("LIBRECAD_KEEP_SPARSE_2010_OUTPUT"))
     std::filesystem::copy_file(rawReplay, copy, std::filesystem::copy_options::overwrite_existing);
   std::filesystem::remove(rawReplay);
