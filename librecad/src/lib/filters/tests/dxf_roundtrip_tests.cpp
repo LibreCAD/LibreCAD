@@ -3366,6 +3366,21 @@ TEST_CASE("DXF filter preserves IMAGE WCS frame Z coordinates",
     auto rawReactor = std::find_if(rawObjects.begin(), rawObjects.end(),
         [&](const auto &record) { return record.handle == reactors.front().handle; });
     REQUIRE(rawReactor != rawObjects.end());
+    auto classVersion = std::find_if(rawReactor->groups.begin(), rawReactor->groups.end(),
+                                    [](const auto &group) { return group.code() == 90; });
+    REQUIRE(classVersion != rawReactor->groups.end());
+    REQUIRE(rawReactor->hasRawValues);
+    const auto versionIndex = static_cast<std::size_t>(std::distance(rawReactor->groups.begin(), classVersion));
+    const auto originalVersionGroup = *classVersion;
+    const auto originalVersionRaw = rawReactor->rawValues.at(versionIndex);
+    const auto originalVersion = reactors.front().classVersion;
+    reactors.front().classVersion = 3;
+    *classVersion = DRW_Variant(90, std::int32_t{3});
+    rawReactor->rawValues[versionIndex] = "3";
+    expectRefusal(); // the shared writer cannot preserve this source version
+    reactors.front().classVersion = originalVersion;
+    *classVersion = originalVersionGroup;
+    rawReactor->rawValues[versionIndex] = originalVersionRaw;
     auto owner = std::find_if(rawReactor->groups.begin(), rawReactor->groups.end(),
                               [](const auto &group) { return group.code() == 330; });
     REQUIRE(owner != rawReactor->groups.end());
