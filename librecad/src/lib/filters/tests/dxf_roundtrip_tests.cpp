@@ -914,6 +914,10 @@ TEST_CASE("System codec preserves a layer material link and refuses a missing ca
       [](const auto &entry) { return entry.handle == 0xA0u; });
   REQUIRE(dictionary != dictionaries.end());
   const auto entries = dictionary->entries;
+  REQUIRE_FALSE(dictionary->entries.empty());
+  dictionary->entries.front().dxfHandleCode = 360;
+  expectRefusal(); // typed edge role disagrees with its raw dictionary
+  dictionary->entries = entries;
   dictionary->entries.clear();
   expectRefusal();
   dictionary->entries = entries;
@@ -921,6 +925,10 @@ TEST_CASE("System codec preserves a layer material link and refuses a missing ca
       [](const auto &entry) { return entry.handle == 0xCu; });
   REQUIRE(root != dictionaries.end());
   const auto rootEntries = root->entries;
+  REQUIRE_FALSE(root->entries.empty());
+  root->entries.front().dxfHandleCode = 360;
+  expectRefusal(); // the generated root entry cannot retain a hard role
+  root->entries = rootEntries;
   root->entries.clear();
   expectRefusal();
   root->entries = rootEntries;

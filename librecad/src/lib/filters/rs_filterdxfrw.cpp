@@ -2842,7 +2842,10 @@ bool hasDxfLayerMaterialCarrier(
       return false;
     for (const auto &entry : root.entries) {
       if (normalizeDwgTableName(entry.name) == "ACAD_MATERIAL") {
-        if (entry.handle != dictionary->handle || ++rootMatches != 1)
+        // This export path regenerates root entries with group 350. Refuse a
+        // different source role rather than silently changing its ownership.
+        if (entry.handle != dictionary->handle || entry.dxfHandleCode != 350 ||
+            ++rootMatches != 1)
           return false;
       }
     }
@@ -2853,17 +2856,18 @@ bool hasDxfLayerMaterialCarrier(
   // Every entry of the replayed dictionary must have a retained target, not
   // just the material selected by this layer. A dangling sibling is still
   // emitted when the dictionary itself is replayed.
-  std::map<std::uint32_t, std::string> dictionaryEntries;
+  std::map<std::uint32_t, std::pair<std::string, std::uint16_t>> dictionaryEntries;
   std::set<std::string> dictionaryNames;
   for (const auto &entry : dictionary->entries) {
     const auto name = normalizeDwgTableName(entry.name);
     if (entry.handle == 0 || name.empty() || emittedObjects.count(entry.handle) == 0 ||
-        !dictionaryEntries.emplace(entry.handle, name).second ||
+        !dictionaryEntries.emplace(entry.handle,
+                                   std::make_pair(name, entry.dxfHandleCode)).second ||
         !dictionaryNames.insert(name).second)
       return false;
   }
   const auto selectedEntry = dictionaryEntries.find(handle);
-  if (selectedEntry == dictionaryEntries.end() || selectedEntry->second != materialName)
+  if (selectedEntry == dictionaryEntries.end() || selectedEntry->second.first != materialName)
     return false;
   std::map<std::uint32_t, const LC_DwgAdvancedMetadata::MaterialRecord *> typedTargets;
   for (const auto &candidate : metadata.materials()) {
@@ -2877,7 +2881,7 @@ bool hasDxfLayerMaterialCarrier(
         !candidate.extData.empty() || hasCustomDxfApplicationGroups(candidate.appData) ||
         std::any_of(candidate.reactorHandles.begin(), candidate.reactorHandles.end(),
                     [&](std::uint32_t reactor) { return reactor != candidate.parentHandle; }) ||
-        normalizeDwgTableName(candidate.name) != entry->second)
+        normalizeDwgTableName(candidate.name) != entry->second.first)
       return false;
   }
   if (typedTargets.size() != dictionaryEntries.size())
@@ -2990,7 +2994,8 @@ bool hasDxfLayerMaterialCarrier(
             return false;
           const auto expected = dictionaryEntries.find(value);
           if (expected == dictionaryEntries.end() ||
-              expected->second != normalizeDwgTableName(entryName) ||
+              expected->second.first != normalizeDwgTableName(entryName) ||
+              expected->second.second != group.code() ||
               !rawEntries.insert(value).second)
             return false;
           entryName.clear();
