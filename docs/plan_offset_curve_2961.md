@@ -63295,3 +63295,23 @@ is not visual or general interoperability qualification.
 Re-run Windows x64 CI on the new head and investigate any remaining failure.
 Visible family switching and replacement, preview/commit, deployment, broad
 cross-platform and sanitizer qualification, and independent review remain open.
+
+## 2046. Guard Distance-edit Allocation Failure After Rebinding (2026-11-25)
+
+The ordinary distance-edit path had the same stale allocation-failure reporting
+hazard addressed for source replacement in section 2043. If either the initial
+or worker-completion preparation guard rebound the widget and threw
+`std::bad_alloc`, the old operation displayed its refusal on the new target.
+The new regression reproduced both failures before product commit `04ff60ebc`.
+The exception handlers now check the operation generation and bound target,
+plus current revision/busy state for an unpublished worker result. A current
+allocation failure still reports refusal; published-result refresh errors retain
+their existing diagnostic. No geometry or worker deadline was changed.
+
+The focused macOS source-equivalent CMake Release regression passed **896
+assertions / 1 case**, covering initial and worker-completion failures both
+with and without rebinding. The complete offscreen offset Properties selection
+passed **53,228 assertions / 109 cases**. Both changed files matched the tested
+scratch sources and `git diff --check` passed. These tests do not establish
+visible packaged-app interaction, broad sanitizer coverage, or Windows CI.
+Continue with the remaining gates listed in section 2045.
