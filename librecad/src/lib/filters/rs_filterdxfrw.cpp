@@ -3197,6 +3197,10 @@ dictionaryFromMetadata(const LC_DwgAdvancedMetadata::DictionaryRecord &record) {
     DRW_Dictionary::Entry entry;
     entry.m_name = er.name;
     entry.m_handle = er.handle;
+#ifdef LIBRECAD_SYSTEM_LIBDXFRW
+    entry.m_dxfHandleCode =
+        static_cast<DRW_Dictionary::Entry::DxfHandleCode>(er.dxfHandleCode);
+#endif
     dictionary.m_entries.push_back(std::move(entry));
   }
   return dictionary;

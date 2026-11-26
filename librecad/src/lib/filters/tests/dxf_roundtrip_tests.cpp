@@ -1318,6 +1318,8 @@ TEST_CASE("System codec treats binary DXF carets as literal bytes",
   CHECK(singleLineTextAt(graphic, 4.0) == "A\tB");
   std::filesystem::remove(src);
 }
+
+
 #endif
 
 // A single-line value (TEXT, ATTRIB) has no MTEXT markup: its backslashes are
@@ -2265,6 +2267,89 @@ TEST_CASE("DXF filter preserves raw HATCH OCS elevation and extrusion",
   std::filesystem::remove(dwg);
   std::filesystem::remove(dwgOut);
 }
+
+#ifdef LIBRECAD_SYSTEM_CODEC_TESTS
+TEST_CASE("DXF dictionary metadata retains each source handle role",
+          "[dxf][filter][dictionary][system-codec-dictionary-roles]") {
+  ensureSettings();
+  const std::string src = tmpFile("dictionary_edge_roles.dxf");
+  writeText(src,
+            "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1015\n0\nENDSEC\n"
+            "0\nSECTION\n2\nENTITIES\n0\nENDSEC\n"
+            "0\nSECTION\n2\nOBJECTS\n"
+            "0\nDICTIONARY\n5\nC\n330\n0\n100\nAcDbDictionary\n"
+            "280\n0\n281\n1\n3\nSOFT\n350\nA0\n"
+            "3\nHARD\n360\nA1\n"
+            "0\nXRECORD\n5\nA0\n330\nC\n100\nAcDbXrecord\n280\n1\n1\nsoft\n"
+            "0\nXRECORD\n5\nA1\n330\nC\n100\nAcDbXrecord\n280\n1\n1\nhard\n"
+            "0\nENDSEC\n0\nEOF\n");
+  RS_Graphic graphic;
+  RS_FilterDXFRW filter;
+  REQUIRE(filter.fileImport(graphic, QString::fromStdString(src), RS2::FormatDXFRW));
+  const auto &dictionaries = graphic.dwgAdvancedMetadata().dictionaries();
+  const auto root = std::find_if(dictionaries.begin(), dictionaries.end(),
+                                 [](const auto &d) { return d.handle == 0xCu; });
+  REQUIRE(root != dictionaries.end());
+  REQUIRE(root->entries.size() == 2);
+  CHECK(root->entries[0].name == "SOFT");
+  CHECK(root->entries[0].handle == 0xA0u);
+  CHECK(root->entries[0].dxfHandleCode == 350u);
+  CHECK(root->entries[1].name == "HARD");
+  CHECK(root->entries[1].handle == 0xA1u);
+  CHECK(root->entries[1].dxfHandleCode == 360u);
+  std::filesystem::remove(src);
+}
+
+TEST_CASE("DXF typed dictionary retains handle roles and retries invalid roles",
+          "[dxf][filter][dictionary][system-codec-dictionary-roles]") {
+  ensureSettings();
+  const std::string out = tmpFile("dictionary_typed_edge_roles.dxf");
+  RS_Graphic graphic;
+  auto &metadata = graphic.dwgAdvancedMetadata();
+  DRW_Dictionary root;
+  root.handle = 0xCu;
+  root.m_entries.push_back({"CUSTOM", 0xA5u});
+  metadata.addDictionary(root);
+  DRW_Dictionary dictionary;
+  dictionary.handle = 0xA5u;
+  dictionary.parentHandle = 0xCu;
+  dictionary.m_entries.push_back({"SOFT", 0xA0u,
+      DRW_Dictionary::Entry::DxfHandleCode::SoftOwner});
+  dictionary.m_entries.push_back({"HARD", 0xA1u,
+      DRW_Dictionary::Entry::DxfHandleCode::HardOwner});
+  metadata.addDictionary(dictionary);
+  for (const auto handle : {0xA0u, 0xA1u}) {
+    DRW_Scale scale;
+    scale.handle = handle;
+    scale.parentHandle = 0xA5u;
+    scale.name = handle == 0xA0u ? "soft-scale" : "hard-scale";
+    metadata.addScale(scale);
+  }
+  auto &records = const_cast<std::vector<LC_DwgAdvancedMetadata::DictionaryRecord>&>(
+      metadata.dictionaries());
+  REQUIRE(records.size() == 2);
+  records[1].entries[0].dxfHandleCode = 351;
+  const std::string sentinel = "existing destination";
+  writeText(out, sentinel);
+  RS_FilterDXFRW filter;
+  CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(out), RS2::FormatDXFRW));
+  std::ifstream existing(out, std::ios::binary);
+  CHECK(std::string(std::istreambuf_iterator<char>(existing), {}) == sentinel);
+  existing.close();
+  records[1].entries[0].dxfHandleCode = 350;
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(out), RS2::FormatDXFRW));
+  const auto groups = recordGroupsWithValue(out, "DICTIONARY", "5", "A5");
+  const auto soft = std::find(groups.begin(), groups.end(), std::make_pair(std::string("3"), std::string("SOFT")));
+  const auto hard = std::find(groups.begin(), groups.end(), std::make_pair(std::string("3"), std::string("HARD")));
+  REQUIRE(soft != groups.end());
+  REQUIRE(hard != groups.end());
+  REQUIRE(std::next(soft) != groups.end());
+  REQUIRE(std::next(hard) != groups.end());
+  CHECK(*std::next(soft) == std::make_pair(std::string("350"), std::string("A0")));
+  CHECK(*std::next(hard) == std::make_pair(std::string("360"), std::string("A1")));
+  std::filesystem::remove(out);
+}
+#endif
 
 TEST_CASE("DXF filter preserves IMAGE WCS frame Z coordinates",
           "[dxf][roundtrip][filter][extrusion]") {

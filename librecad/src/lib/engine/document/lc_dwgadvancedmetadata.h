@@ -2705,6 +2705,8 @@ public:
   struct DictionaryEntryRecord {
     std::string name;
     std::uint32_t handle = 0;
+    // Zero means no DXF edge code was captured (for example, DWG input).
+    std::uint16_t dxfHandleCode = 0;
   };
   struct DictionaryRecord {
     std::uint32_t handle = 0;
@@ -5573,6 +5575,17 @@ public:
     m_placeholders.push_back(record);
   }
 
+  template <typename Entry>
+  static auto dictionaryDxfHandleCode(const Entry &entry, int)
+      -> decltype(entry.m_dxfHandleCode, std::uint16_t{}) {
+    return static_cast<std::uint16_t>(entry.m_dxfHandleCode);
+  }
+
+  template <typename Entry>
+  static std::uint16_t dictionaryDxfHandleCode(const Entry &, long) {
+    return 0;
+  }
+
   void addDictionary(const DRW_Dictionary &dictionary) {
     DictionaryRecord record;
     record.handle = dictionary.handle;
@@ -5594,6 +5607,7 @@ public:
       DictionaryEntryRecord er;
       er.name = entry.m_name;
       er.handle = entry.m_handle;
+      er.dxfHandleCode = dictionaryDxfHandleCode(entry, 0);
       record.entries.push_back(std::move(er));
     }
     m_dictionaries.push_back(std::move(record));
