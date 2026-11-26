@@ -2887,7 +2887,8 @@ TEST_CASE("System codec preserves modern multi-image clip modes",
   ensureSettings();
   const auto format = GENERATE(RS2::FormatDXFRW2010, RS2::FormatDXFRW2013,
                                RS2::FormatDXFRW2018);
-  CAPTURE(format);
+  const bool polygon = GENERATE(false, true);
+  CAPTURE(format, polygon);
   const auto source = tmpFile("modern_images_source.dxf");
   const auto output = tmpFile("modern_images_output.dxf");
   RS_Graphic original;
@@ -2908,12 +2909,17 @@ TEST_CASE("System codec preserves modern multi-image clip modes",
       if (group == 0) image = value == "IMAGE";
       if (image && group == 70 && changed == 0) value = "7";
       if (image && group == 280 && changed == 0) value = "1";
+      if (image && group == 71 && changed == 0 && polygon) value = "2";
+      if (image && group == 91 && changed == 0 && polygon) value = "3";
       if (image && (group == 14 || group == 24) && changed == 0) {
         const char *coordinates[] = {"2", "3", "10", "9"};
         REQUIRE(vertices < 4u);
         value = coordinates[vertices++];
       }
-      if (image && group == 290 && changed == 0) { value = "1"; ++changed; }
+      if (image && group == 290 && changed == 0) {
+        if (polygon) rewritten += "14\n8\n24\n10\n";
+        value = "1"; ++changed;
+      }
       rewritten += code + "\n" + value + "\n";
     }
     REQUIRE(changed == 1u);
@@ -2929,6 +2935,8 @@ TEST_CASE("System codec preserves modern multi-image clip modes",
   CHECK(metadata.rasterImages().front().displayProps == 7);
   CHECK(metadata.rasterImages().front().clip == 1);
   CHECK(metadata.rasterImages().front().clipMode);
+  CHECK(metadata.rasterImages().front().clipBoundaryType == (polygon ? 2 : 1));
+  REQUIRE(metadata.rasterImages().front().clipPath.size() == (polygon ? 3u : 2u));
   const std::string sentinel = "preserve modern image destination";
   writeText(output, sentinel);
   CHECK_FALSE(filter.fileExport(reopened, QString::fromStdString(output), RS2::FormatDXFRW));
@@ -2960,6 +2968,26 @@ TEST_CASE("System codec preserves modern multi-image clip modes",
   rasters.front().clipMode = true;
   mode->addInt(290, 1);
   if (sourceImage->hasRawValues) sourceImage->rawValues[index] = originalRaw;
+  if (polygon) {
+    auto point = std::find_if(sourceImage->groups.rbegin(), sourceImage->groups.rend(),
+        [](const auto &group) { return group.code() == 14; });
+    REQUIRE(point != sourceImage->groups.rend());
+    const auto pointIndex = static_cast<std::size_t>(std::prev(point.base()) - sourceImage->groups.begin());
+    REQUIRE((!sourceImage->hasRawValues || pointIndex < sourceImage->rawValues.size()));
+    const double originalX = rasters.front().clipPath.back().x;
+    const auto rawPoint = sourceImage->hasRawValues ? sourceImage->rawValues[pointIndex] : std::string{};
+    late.beforeFinalize = [&] {
+      rasters.front().clipPath.back().x = originalX + 1;
+      point->addDouble(14, originalX + 1);
+      if (sourceImage->hasRawValues) sourceImage->rawValues[pointIndex] = std::to_string(originalX + 1);
+    };
+    writeText(output, sentinel);
+    CHECK_FALSE(late.fileExport(reopened, QString::fromStdString(output), format));
+    { std::ifstream in(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(in), {}) == sentinel); }
+    rasters.front().clipPath.back().x = originalX;
+    point->addDouble(14, originalX);
+    if (sourceImage->hasRawValues) sourceImage->rawValues[pointIndex] = rawPoint;
+  }
   late.beforeFinalize = {};
   REQUIRE(late.fileExport(reopened, QString::fromStdString(output), format));
   for (const char *code : {"70", "280", "290", "71", "91", "14", "24"})
@@ -2969,7 +2997,8 @@ TEST_CASE("System codec preserves modern multi-image clip modes",
   REQUIRE(readback.dwgAdvancedMetadata().rasterImages().size() == 3u);
   CHECK(readback.dwgAdvancedMetadata().rasterImages().front().clipMode);
   if (const char *copy = std::getenv("LIBRECAD_KEEP_MODERN_IMAGE")) {
-    const auto prefix = std::string(copy) + "." + std::to_string(static_cast<int>(format));
+    const auto prefix = std::string(copy) + "." + std::to_string(static_cast<int>(format)) +
+                        (polygon ? ".polygon" : ".rectangle");
     std::filesystem::copy_file(source, prefix + ".source.dxf", std::filesystem::copy_options::overwrite_existing);
     std::filesystem::copy_file(output, prefix + ".output.dxf", std::filesystem::copy_options::overwrite_existing);
   }

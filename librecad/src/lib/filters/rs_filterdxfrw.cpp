@@ -3781,16 +3781,27 @@ bool dxfSourceHandleMatches(const DRW_RawDxfObject &raw, std::size_t index,
 
 bool dxfImageCarrierMatches(
     const DRW_RawDxfObject &raw, DRW::Version version,
-    const LC_DwgAdvancedMetadata::RasterImageRecord &image) {
+    const LC_DwgAdvancedMetadata::RasterImageRecord &image, bool multipleImages) {
+  bool validBoundary = image.clipBoundaryType == 1 && image.clipPath.size() == 2u;
+#ifdef LIBDXFRW_HAS_DXF_STAGED_IMAGE_POLYGON_INSPECTOR
+  validBoundary = validBoundary || (multipleImages && version >= DRW::AC1024 && image.clipBoundaryType == 2 &&
+      image.clipPath.size() >= 3u && image.clipPath.size() <= LIBDXFRW_DXF_STAGED_IMAGE_MAX_CLIP_VERTICES);
+#else
+  (void)multipleImages;
+#endif
+  if (!validBoundary) return false;
   std::vector<int> codes{5, 330, 100, 8, 6, 62, 370, 100, 90,
                          10, 20, 30, 11, 21, 31, 12, 22, 32, 13, 23,
-                         340, 70, 280, 281, 282, 283, 360, 71, 91,
-                         14, 24, 14, 24};
+                         340, 70, 280, 281, 282, 283, 360, 71, 91};
+  for (std::size_t i = 0; i < image.clipPath.size(); ++i) {
+    codes.push_back(14);
+    codes.push_back(24);
+  }
   if (version >= DRW::AC1024)
     codes.push_back(290);
   if (raw.name != "IMAGE" || raw.m_version != version || raw.handle != image.handle ||
       raw.parentHandle != image.parentHandle || raw.groups.size() != codes.size() ||
-      (raw.hasRawValues && raw.rawValues.size() != codes.size()) || image.clipPath.size() != 2)
+      (raw.hasRawValues && raw.rawValues.size() != codes.size()))
     return false;
   std::size_t vertex = 0;
   unsigned subclass = 0;
@@ -4116,7 +4127,7 @@ bool prepareDxfImageGraph(RS_Graphic &graphic, DRW::Version version,
         } else if (z[0] != 0.0 || z[1] != 0.0 || z[2] != 0.0) return false;
       }
       const auto *imageSource = metadata.dxfImageSource(handle);
-      if (imageSource == nullptr || !dxfImageCarrierMatches(*imageSource, version, *raster))
+      if (imageSource == nullptr || !dxfImageCarrierMatches(*imageSource, version, *raster, multipleImages))
         return false;
       auto definition = definitions.find(raster->definitionHandle);
       if (definition == definitions.end())
@@ -15616,17 +15627,21 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
               return false;
             if (audit->references.size() > 1u) {
               const auto &x = a.scalar; const auto &y = b.scalar;
-              if (x.clipPath.size() != 2u || y.clipPath.size() != 2u) return false;
-              const std::array<double, 15> ax{{x.basePoint.x,x.basePoint.y,x.basePoint.z,
+              if (x.clipPath.size() != y.clipPath.size()) return false;
+              const std::array<double, 11> ax{{x.basePoint.x,x.basePoint.y,x.basePoint.z,
                   x.secPoint.x,x.secPoint.y,x.secPoint.z,x.vVector.x,x.vVector.y,x.vVector.z,
-                  x.sizeu,x.sizev,x.clipPath[0].x,x.clipPath[0].y,x.clipPath[1].x,x.clipPath[1].y}};
-              const std::array<double, 15> ay{{y.basePoint.x,y.basePoint.y,y.basePoint.z,
+                  x.sizeu,x.sizev}};
+              const std::array<double, 11> ay{{y.basePoint.x,y.basePoint.y,y.basePoint.z,
                   y.secPoint.x,y.secPoint.y,y.secPoint.z,y.vVector.x,y.vVector.y,y.vVector.z,
-                  y.sizeu,y.sizev,y.clipPath[0].x,y.clipPath[0].y,y.clipPath[1].x,y.clipPath[1].y}};
+                  y.sizeu,y.sizev}};
               if (std::memcmp(ax.data(), ay.data(), sizeof(double) * ax.size()) != 0 || x.m_classVersion != y.m_classVersion ||
                   x.m_displayProps != y.m_displayProps || x.clip != y.clip || x.brightness != y.brightness ||
                   x.contrast != y.contrast || x.fade != y.fade || x.m_clipBoundaryType != y.m_clipBoundaryType ||
                   x.clipMode != y.clipMode) return false;
+              for (std::size_t j = 0; j < x.clipPath.size(); ++j) {
+                if (std::memcmp(&x.clipPath[j].x, &y.clipPath[j].x, sizeof(double)) != 0 ||
+                    std::memcmp(&x.clipPath[j].y, &y.clipPath[j].y, sizeof(double)) != 0) return false;
+              }
             }
           }
           return true;
