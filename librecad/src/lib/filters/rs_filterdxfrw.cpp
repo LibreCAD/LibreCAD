@@ -3968,7 +3968,9 @@ bool prepareDxfImageGraph(RS_Graphic &graphic, DRW::Version version,
       (images->entries.empty() || images->entries.size() > imageCount) ||
       metadata.imageDefinitions().size() != images->entries.size() ||
       (imageCount != 1u && !multipleImages) || metadata.imageDefinitionReactors().size() != imageCount ||
-      (multipleImages && (version != DRW::AC1021 || root->entries.size() != (materialDictionary ? 4u : 3u) || plotDictionary == 0)))
+      (multipleImages && ((version != DRW::AC1021 && version != DRW::AC1024 &&
+                           version != DRW::AC1027 && version != DRW::AC1032) ||
+                          root->entries.size() != (materialDictionary ? 4u : 3u) || plotDictionary == 0)))
     return false;
   std::set<std::uint32_t> identities{root->handle, groups->handle, images->handle};
   if (identities.size() != 3)
