@@ -918,6 +918,9 @@ TEST_CASE("System codec preserves a layer material link and refuses a missing ca
   dictionary->entries.front().dxfHandleCode = 360;
   expectRefusal(); // typed edge role disagrees with its raw dictionary
   dictionary->entries = entries;
+  dictionary->entries.front().name = "plainmat";
+  expectRefusal(); // a spelling-only edit must not replay the stale raw key
+  dictionary->entries = entries;
   dictionary->entries.clear();
   expectRefusal();
   dictionary->entries = entries;
@@ -1113,6 +1116,18 @@ TEST_CASE("System codec retains all material dictionary targets for a layer",
   CHECK(std::string(std::istreambuf_iterator<char>(stillRetained), {}) == sentinel);
   stillRetained.close();
   restoredSibling.rawValues[selfIndex] = "A2";
+  auto &dictionaries = const_cast<std::vector<LC_DwgAdvancedMetadata::DictionaryRecord>&>(
+      graphic.dwgAdvancedMetadata().dictionaries());
+  const auto dictionary = std::find_if(dictionaries.begin(), dictionaries.end(),
+      [](const auto &record) { return record.handle == 0xA0u; });
+  REQUIRE(dictionary != dictionaries.end());
+  REQUIRE(dictionary->entries.size() == 2);
+  std::swap(dictionary->entries[0], dictionary->entries[1]);
+  CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  std::ifstream reordered(output, std::ios::binary);
+  CHECK(std::string(std::istreambuf_iterator<char>(reordered), {}) == sentinel);
+  reordered.close();
+  std::swap(dictionary->entries[0], dictionary->entries[1]);
   REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
   RS_Graphic reread;
   REQUIRE(filter.fileImport(reread, QString::fromStdString(output), RS2::FormatDXFRW));
