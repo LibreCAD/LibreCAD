@@ -2041,6 +2041,149 @@ TEST_CASE("Raster source frames are bounded and selected by handle",
   std::filesystem::remove(definitionsInput);
 }
 
+TEST_CASE("System codec preserves two images sharing one definition",
+          "[system-codec][dxf][image][transaction]") {
+  ensureSettings();
+  const auto source = tmpFile("two_images_one_definition_source.dxf");
+  const auto output = tmpFile("two_images_one_definition_output.dxf");
+  RS_Graphic original;
+  original.initForNewDocument();
+  for (const double x : {1.0, 30.0}) {
+    auto *image = new RS_Image(&original, RS_ImageData(0, RS_Vector(x, 2), RS_Vector(1, 0),
+        RS_Vector(0, 1), RS_Vector(16, 12), QStringLiteral("two-image.png"), 50, 50, 0));
+    original.addEntity(image);
+  }
+  RS_FilterDXFRW filter;
+  REQUIRE(filter.fileExport(original, QString::fromStdString(source), RS2::FormatDXFRW));
+  REQUIRE(countRecords(source, "IMAGE") == 2);
+  REQUIRE(countRecords(source, "IMAGEDEF") == 1);
+  REQUIRE(countRecords(source, "IMAGEDEF_REACTOR") == 2);
+  // Give the locally generated source nonzero WCS Z coordinates in both
+  // IMAGE frames so the admitted profile also exercises the 3D sidecar.
+  {
+    std::ifstream input(source, std::ios::binary);
+    std::string code, value, rewritten;
+    bool image = false;
+    unsigned changed = 0;
+    while (std::getline(input, code) && std::getline(input, value)) {
+      const int group = std::stoi(code);
+      if (group == 0) image = value == "IMAGE";
+      if (image && (group == 30 || group == 31 || group == 32)) {
+        value = group == 30 ? "3" : group == 31 ? "4" : "5";
+        ++changed;
+      }
+      rewritten += code + "\n" + value + "\n";
+    }
+    REQUIRE(changed == 6u);
+    writeText(source, rewritten);
+  }
+  RS_Graphic reopened;
+  REQUIRE(filter.fileImport(reopened, QString::fromStdString(source), RS2::FormatDXFRW));
+  const auto &metadata = reopened.dwgAdvancedMetadata();
+  REQUIRE(metadata.rasterImages().size() == 2u);
+  REQUIRE(metadata.imageDefinitions().size() == 1u);
+  REQUIRE(metadata.imageDefinitionReactors().size() == 2u);
+  for (const auto &image : metadata.rasterImages()) REQUIRE(metadata.dxfImageSource(image.handle));
+  REQUIRE(metadata.dxfImageDefSource(metadata.imageDefinitions().front().handle));
+  const std::string sentinel = "preserve two-image destination";
+  auto &reactors = const_cast<std::vector<LC_DwgAdvancedMetadata::ImageDefinitionReactorRecord>&>(
+      metadata.imageDefinitionReactors());
+  const auto parent = reactors.front().parentHandle;
+  ++reactors.front().parentHandle;
+  writeText(output, sentinel);
+  CHECK_FALSE(filter.fileExport(reopened, QString::fromStdString(output), RS2::FormatDXFRW));
+  { std::ifstream in(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(in), {}) == sentinel); }
+  reactors.front().parentHandle = parent;
+  auto &rawObjects = const_cast<std::vector<DRW_RawDxfObject>&>(metadata.rawDxfObjects());
+  auto plot = std::find_if(rawObjects.begin(), rawObjects.end(),
+      [](const auto &record) { return record.name == "ACDBDICTIONARYWDFLT"; });
+  REQUIRE(plot != rawObjects.end());
+  plot->groups.emplace_back(70, 7);
+  if (plot->hasRawValues) plot->rawValues.push_back("7");
+  writeText(output, sentinel);
+  CHECK_FALSE(filter.fileExport(reopened, QString::fromStdString(output), RS2::FormatDXFRW));
+  { std::ifstream in(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(in), {}) == sentinel); }
+  plot->groups.pop_back();
+  if (plot->hasRawValues) plot->rawValues.pop_back();
+  REQUIRE(filter.fileExport(reopened, QString::fromStdString(output), RS2::FormatDXFRW));
+  CHECK(countRecords(output, "IMAGE") == 2);
+  CHECK(countRecords(output, "IMAGEDEF") == 1);
+  CHECK(countRecords(output, "IMAGEDEF_REACTOR") == 2);
+  for (const char *code : {"90", "10", "20", "30", "11", "21", "31", "12", "22", "32", "13", "23",
+                           "70", "280", "281", "282", "283", "71", "91", "14", "24"})
+    CHECK(recordGroupValues(output, "IMAGE", code) == recordGroupValues(source, "IMAGE", code));
+  for (const char *code : {"90", "1", "10", "20", "11", "21", "280", "281"})
+    CHECK(recordGroupValues(output, "IMAGEDEF", code) == recordGroupValues(source, "IMAGEDEF", code));
+  RS_Graphic readback;
+  REQUIRE(filter.fileImport(readback, QString::fromStdString(output), RS2::FormatDXFRW));
+  const auto &result = readback.dwgAdvancedMetadata();
+  REQUIRE(result.rasterImages().size() == 2u);
+  REQUIRE(result.imageDefinitions().size() == 1u);
+  REQUIRE(result.imageDefinitionReactors().size() == 2u);
+  CHECK(result.rasterImages()[0].definitionHandle == result.rasterImages()[1].definitionHandle);
+  CHECK(result.rasterImages()[0].reactorHandle != result.rasterImages()[1].reactorHandle);
+  {
+    struct MutatingFilter : RS_FilterDXFRW {
+      std::function<void()> beforeFinalize;
+      bool finalizeDxfWrite() override {
+        if (beforeFinalize) beforeFinalize();
+        return RS_FilterDXFRW::finalizeDxfWrite();
+      }
+    } late;
+    RS_Image *image = nullptr, *other = nullptr;
+    for (RS_Entity *entity : lc::LC_ContainerTraverser{reopened, RS2::ResolveNone}.entities())
+      if (entity->rtti() == RS2::EntityImage) {
+        if (!image) image = static_cast<RS_Image *>(entity);
+        else if (!other) other = static_cast<RS_Image *>(entity);
+      }
+    REQUIRE(image);
+    REQUIRE(other);
+    const auto firstPath = image->getFile(), secondPath = other->getFile();
+    image->setFile(QStringLiteral("unsupported^path.png"));
+    other->setFile(QStringLiteral("unsupported^path.png"));
+    writeText(output, sentinel);
+    CHECK_FALSE(late.fileExport(reopened, QString::fromStdString(output), RS2::FormatDXFRW));
+    { std::ifstream in(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(in), {}) == sentinel); }
+    image->setFile(firstPath);
+    other->setFile(secondPath);
+    const auto position = image->getInsertionPoint();
+    late.beforeFinalize = [&] { image->setInsertionPoint(position + RS_Vector(1, 0)); };
+    writeText(output, sentinel);
+    CHECK_FALSE(late.fileExport(reopened, QString::fromStdString(output), RS2::FormatDXFRW));
+    { std::ifstream in(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(in), {}) == sentinel); }
+    image->setInsertionPoint(position);
+    REQUIRE(image->hasDrwExtData());
+    const auto originalSidecar = image->getDrwExtData();
+    REQUIRE(originalSidecar.size() == 4u);
+    REQUIRE(originalSidecar[1]);
+    REQUIRE(originalSidecar[1]->coord());
+    const auto savedPoint = *originalSidecar[1]->coord();
+    late.beforeFinalize = [&] {
+      auto changed = originalSidecar;
+      changed[1] = std::make_shared<DRW_Variant>(1010, DRW_Coord(savedPoint.x, savedPoint.y, savedPoint.z + 1));
+      image->setDrwExtData(std::move(changed));
+    };
+    writeText(output, sentinel);
+    CHECK_FALSE(late.fileExport(reopened, QString::fromStdString(output), RS2::FormatDXFRW));
+    { std::ifstream in(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(in), {}) == sentinel); }
+    image->setDrwExtData(originalSidecar);
+    const auto originalPen = image->getPen(false);
+    auto changedPen = originalPen;
+    changedPen.setWidth(RS2::Width20);
+    late.beforeFinalize = [&] { image->setPen(changedPen); };
+    writeText(output, sentinel);
+    CHECK_FALSE(late.fileExport(reopened, QString::fromStdString(output), RS2::FormatDXFRW));
+    { std::ifstream in(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(in), {}) == sentinel); }
+    image->setPen(originalPen);
+    late.beforeFinalize = {};
+    REQUIRE(late.fileExport(reopened, QString::fromStdString(output), RS2::FormatDXFRW));
+  }
+  if (const char *copy = std::getenv("LIBRECAD_KEEP_TWO_IMAGE_OUTPUT"))
+    std::filesystem::copy_file(output, copy, std::filesystem::copy_options::overwrite_existing);
+  std::filesystem::remove(source);
+  std::filesystem::remove(output);
+}
+
 TEST_CASE("System codec verifies an IMAGE inside a named block",
           "[system-codec][dxf][image][transaction]") {
   ensureSettings();

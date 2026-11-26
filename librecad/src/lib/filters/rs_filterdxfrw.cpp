@@ -140,6 +140,8 @@
 #endif
 
 namespace {
+// Preserve the source WCS Z components that RS_Image does not edit directly.
+constexpr const char *kImageFrameMarker = "LibreCAD_IMAGE_FRAME";
 constexpr std::int32_t kLegacyRtlLayout = 1;
 constexpr std::int32_t kLogicalRtlLayout = 2;
 
@@ -3792,6 +3794,7 @@ struct DxfImageGraphPlan {
     std::uint32_t image = 0, definition = 0, reactor = 0;
     std::string block, path;
     bool inBlock = false;
+    DRW_Image scalar;
   };
   std::unique_ptr<DRW_Dictionary> root;
   std::unique_ptr<DRW_Dictionary> groups;
@@ -3800,6 +3803,7 @@ struct DxfImageGraphPlan {
   std::set<std::uint32_t> reactors;
   std::set<std::uint32_t> identities;
   std::vector<ImageReference> references;
+  std::vector<DRW_RawDxfObject> rawPlot;
   std::uint32_t imageDictionary = 0;
 };
 
@@ -3864,11 +3868,22 @@ bool prepareDxfImageGraph(RS_Graphic &graphic, DRW::Version version,
         dictionary->extData.empty() && dictionary->reactorHandles.empty() &&
         !dictionary->hasDsData;
   };
+  const auto imageCount = metadata.rasterImages().size();
+  const bool twoImages = imageCount == 2u;
+#if !defined(LIBDXFRW_HAS_DXF_STAGED_IMAGE_ENTITY_SCALAR_INSPECTOR) || \
+    !defined(LIBDXFRW_HAS_DXF_STAGED_IMAGE_CANONICAL_COMMON_INSPECTOR) || \
+    !defined(LIBDXFRW_HAS_DXF_STAGED_IMAGE_DEFINITION_SCALAR_INSPECTOR) || \
+    !defined(LIBDXFRW_HAS_DXF_STAGED_DICTIONARY_INSPECTOR) || \
+    !defined(LIBDXFRW_HAS_DXF_STAGED_IMAGE_OBJECT_INSPECTOR) || \
+    !defined(LIBDXFRW_HAS_DXF_STAGED_RAW_OBJECT_INSPECTOR)
+  if (twoImages) return false;
+#endif
   if (!plain(root) || !plain(groups) || !plain(images) ||
       images->parentHandle != root->handle || groups->parentHandle != root->handle ||
       !groups->entries.empty() || imageDictionary == groupDictionary ||
       images->entries.size() != 1 || metadata.imageDefinitions().size() != 1 ||
-      metadata.imageDefinitionReactors().size() != 1 || metadata.rasterImages().size() != 1)
+      (imageCount != 1u && !twoImages) || metadata.imageDefinitionReactors().size() != imageCount ||
+      (twoImages && (version != DRW::AC1021 || root->entries.size() != 3u || plotDictionary == 0)))
     return false;
   std::set<std::uint32_t> identities{root->handle, groups->handle, images->handle};
   if (identities.size() != 3)
@@ -3939,6 +3954,7 @@ bool prepareDxfImageGraph(RS_Graphic &graphic, DRW::Version version,
           otherEntityHandles.insert(entity->sourceHandle());
         continue;
       }
+      if (twoImages && block) return false;
       const auto *image = static_cast<const RS_Image *>(entity);
       const std::uint32_t handle = image->sourceHandle();
       if (handle == 0 || handle == DRW::NoHandle)
@@ -3956,6 +3972,33 @@ bool prepareDxfImageGraph(RS_Graphic &graphic, DRW::Version version,
           !liveImages.insert(handle).second || !liveReactors.insert(raster->reactorHandle).second ||
           !identities.insert(handle).second || !identities.insert(raster->reactorHandle).second)
         return false;
+      if (twoImages) {
+        const RS_Pen pen = image->getPen(false);
+        const auto *layer = image->getLayer();
+        if ((layer && layer->getName() != "0") || !pen.isColorByLayer() ||
+            !pen.isWidthByLayer() || !pen.isLineTypeByLayer() ||
+            pen.getLineTypeFoldId() != 0 || pen.getAlpha() < 1.0f ||
+            pen.getColor().hasColorName() || !image->getFlag(RS2::FlagVisible) ||
+            image->materialHandle() || image->plotStyleHandle() || image->shadowMode() ||
+            image->shadowHandle() || image->fullVisualStyleHandle() ||
+            image->faceVisualStyleHandle() || image->edgeVisualStyleHandle() ||
+            image->xDictHandle() || !image->reactorHandles().empty()) return false;
+        const auto owner = metadata.spaceBlockRecords().find(raster->parentHandle);
+        if (owner == metadata.spaceBlockRecords().end() ||
+            normalizeDwgTableName(owner->second) != "*MODEL_SPACE") return false;
+        const std::array<double, 3> z{{raster->basePoint.z, raster->uVector.z, raster->vVector.z}};
+        if (image->hasDrwExtData()) {
+          const auto &sidecar = image->getDrwExtData();
+          if (sidecar.size() != 4u || !sidecar[0] || sidecar[0]->code() != 1001 ||
+              sidecar[0]->type() != DRW_Variant::STRING || !sidecar[0]->c_str() ||
+              std::strcmp(sidecar[0]->c_str(), kImageFrameMarker) != 0) return false;
+          for (std::size_t i = 0; i < z.size(); ++i) {
+            if (!sidecar[i + 1u] || sidecar[i + 1u]->code() != 1010 + static_cast<int>(i) ||
+                sidecar[i + 1u]->type() != DRW_Variant::COORD || !sidecar[i + 1u]->coord() ||
+                std::memcmp(&sidecar[i + 1u]->coord()->z, &z[i], sizeof(double)) != 0) return false;
+          }
+        } else if (z[0] != 0.0 || z[1] != 0.0 || z[2] != 0.0) return false;
+      }
       const auto *imageSource = metadata.dxfImageSource(handle);
       if (imageSource == nullptr || !dxfImageCarrierMatches(*imageSource, version, *raster))
         return false;
@@ -4009,14 +4052,29 @@ bool prepareDxfImageGraph(RS_Graphic &graphic, DRW::Version version,
       if (static_cast<std::size_t>(pathBytes.size()) != std::strlen(pathBytes.constData()))
         return false;
       const std::string path(pathBytes.constData(), static_cast<std::size_t>(pathBytes.size()));
+      if (twoImages && (path.empty() || path.size() > 4096u ||
+          !std::all_of(path.begin(), path.end(), [](unsigned char c) {
+            return c >= 32u && c < 127u && c != '\\' && c != '^';
+          }))) return false;
       const auto inserted = livePaths.emplace(raster->definitionHandle, path);
       if (!inserted.second && inserted.first->second != path)
         return false;
       definition->second.selectedReactors.push_back(imageDefinitionReactorFromMetadata(*reactor));
       plan.references.push_back({handle, raster->definitionHandle, raster->reactorHandle,
                                  block ? block->getName().toUtf8().toStdString() : std::string{},
-                                 path,
-                                 block != nullptr});
+                                 path, block != nullptr, {}});
+      if (twoImages) {
+        auto &scalar = plan.references.back().scalar;
+        scalar.m_classVersion = raster->classVersion;
+        scalar.basePoint = {image->getInsertionPoint().x, image->getInsertionPoint().y, raster->basePoint.z};
+        scalar.secPoint = {image->getUVector().x, image->getUVector().y, raster->uVector.z};
+        scalar.vVector = {image->getVVector().x, image->getVVector().y, raster->vVector.z};
+        scalar.sizeu = image->getWidth(); scalar.sizev = image->getHeight();
+        scalar.m_displayProps = raster->displayProps; scalar.clip = raster->clip;
+        scalar.brightness = image->getBrightness(); scalar.contrast = image->getContrast(); scalar.fade = image->getFade();
+        scalar.m_clipBoundaryType = raster->clipBoundaryType; scalar.clipPath = raster->clipPath;
+        scalar.clipMode = raster->clipMode;
+      }
     }
     return true;
   };
@@ -4027,7 +4085,7 @@ bool prepareDxfImageGraph(RS_Graphic &graphic, DRW::Version version,
     if (block != nullptr && !block->isDeleted() && !collect(*block))
       return false;
   }
-  if (liveImages.size() != 1 || liveReactors.size() != 1)
+  if (liveImages.size() != imageCount || liveReactors.size() != imageCount)
     return false;
   for (auto &entry : definitions) {
     std::set<std::uint32_t> selected;
@@ -4060,6 +4118,43 @@ bool prepareDxfImageGraph(RS_Graphic &graphic, DRW::Version version,
     if (plotPlaceholder == 0 || !identities.insert(plotDictionary).second ||
         !identities.insert(plotPlaceholder).second)
       return false;
+  }
+  if (twoImages) {
+    const DRW_RawDxfObject *plot = nullptr, *placeholder = nullptr;
+    for (const auto &raw : metadata.rawDxfObjects()) {
+      if (raw.handle == plotDictionary) {
+        if (plot) return false;
+        plot = &raw;
+      } else if (raw.handle == plotPlaceholder) {
+        if (placeholder) return false;
+        placeholder = &raw;
+      }
+    }
+    if (!plot || !placeholder || plot->name != "ACDBDICTIONARYWDFLT" ||
+        placeholder->name != "ACDBPLACEHOLDER" || plot->m_version != version ||
+        placeholder->m_version != version || plot->parentHandle != root->handle ||
+        placeholder->parentHandle != plotDictionary || plot->groups.size() != 8u ||
+        placeholder->groups.size() != 2u ||
+        (plot->hasRawValues && plot->rawValues.size() != plot->groups.size()) ||
+        (placeholder->hasRawValues && placeholder->rawValues.size() != placeholder->groups.size()))
+      return false;
+    const int codes[] = {5, 330, 100, 281, 3, 350, 100, 340};
+    for (std::size_t i = 0; i < 8; ++i) {
+      if (plot->groups[i].code() != codes[i]) return false;
+      if (i == 0 || i == 1 || i == 5 || i == 7) {
+        const auto target = i == 0 ? plotDictionary : i == 1 ? root->handle : plotPlaceholder;
+        if (!dxfSourceHandleMatches(*plot, i, target)) return false;
+      } else if (i == 3) {
+        if (!dxfSourceIntMatches(*plot, i, 1)) return false;
+      } else {
+        const std::string expected = i == 2 ? "AcDbDictionary" : i == 4 ? "Normal" : "AcDbDictionaryWithDefault";
+        if (!dxfSourceTextMatches(*plot, i, expected)) return false;
+      }
+    }
+    if (placeholder->groups[0].code() != 5 || placeholder->groups[1].code() != 330 ||
+        !dxfSourceHandleMatches(*placeholder, 0, plotPlaceholder) ||
+        !dxfSourceHandleMatches(*placeholder, 1, plotDictionary)) return false;
+    plan.rawPlot = {*plot, *placeholder};
   }
   if (!metadata.rawDxfEntities().empty() || !metadata.rawDxfSections().empty())
     return false;
@@ -6503,10 +6598,6 @@ constexpr const char *k3DLineMarker = "LibreCAD_3DLINE";
 // HATCH boundary coordinates remain raw OCS in libdxfrw. Preserve the
 // accompanying elevation/normal so the writer does not relabel them as WCS.
 constexpr const char *kHatchExtrusionMarker = "LibreCAD_HATCH_EXTRUSION";
-// IMAGE has no extrusion normal. Its insertion and pixel U/V vectors are WCS,
-// while RS_Image exposes a 2D-editable frame, so retain their source Z values
-// separately for native output.
-constexpr const char *kImageFrameMarker = "LibreCAD_IMAGE_FRAME";
 constexpr const char *kTextOcsMarker = "LibreCAD_TEXT_OCS";
 constexpr const char *kMTextOcsMarker = "LibreCAD_MTEXT_OCS";
 constexpr const char *kRayMarker = "LibreCAD_RAY";
@@ -14853,6 +14944,18 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
       m_dxfW->setRootDictEntries(rootEntries);
 #ifdef LIBRECAD_SYSTEM_LIBDXFRW
     if (imageGraph.imageDictionary != 0) {
+#if defined(LIBDXFRW_HAS_DXF_STAGED_IMAGE_ENTITY_SCALAR_INSPECTOR) && \
+    defined(LIBDXFRW_HAS_DXF_STAGED_IMAGE_DEFINITION_SCALAR_INSPECTOR) && \
+    defined(LIBDXFRW_HAS_DXF_STAGED_DICTIONARY_INSPECTOR)
+      std::shared_ptr<const DRW_Dictionary> rootProof, groupProof, imageProof;
+      if (imageGraph.references.size() == 2u) {
+        try {
+          rootProof = std::make_shared<const DRW_Dictionary>(*imageGraph.root);
+          groupProof = std::make_shared<const DRW_Dictionary>(*imageGraph.groups);
+          imageProof = std::make_shared<const DRW_Dictionary>(*imageGraph.images);
+        } catch (...) { return false; }
+      }
+#endif
       for (const auto &definition : imageGraph.definitions) {
         if (!m_dxfW->reserveHandle(definition.sourceHandle))
           return false;
@@ -14870,7 +14973,16 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
         struct ImageAudit {
           std::uint32_t dictionary = 0;
           std::vector<DxfImageGraphPlan::ImageReference> references;
+          std::vector<DRW_RawDxfObject> rawPlot;
           bool blocksSeen = false, entitiesSeen = false;
+#if defined(LIBDXFRW_HAS_DXF_STAGED_IMAGE_ENTITY_SCALAR_INSPECTOR) && \
+    defined(LIBDXFRW_HAS_DXF_STAGED_IMAGE_DEFINITION_SCALAR_INSPECTOR) && \
+    defined(LIBDXFRW_HAS_DXF_STAGED_DICTIONARY_INSPECTOR)
+          std::shared_ptr<const DRW_Dictionary> root, groups, images;
+          std::vector<DRW_RawDxfObject> sourceImages;
+          std::vector<DRW_RawDxfObject> sourceReactors;
+          std::optional<DRW_RawDxfObject> sourceDefinition;
+#endif
 #ifdef LIBDXFRW_HAS_DXF_STAGED_IMAGE_OBJECT_INSPECTOR
           bool objectsSeen = false;
 #endif
@@ -14878,18 +14990,96 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
         auto audit = std::make_shared<ImageAudit>();
         audit->dictionary = imageGraph.imageDictionary;
         audit->references = imageGraph.references;
+        audit->rawPlot = imageGraph.rawPlot;
+#if defined(LIBDXFRW_HAS_DXF_STAGED_IMAGE_ENTITY_SCALAR_INSPECTOR) && \
+    defined(LIBDXFRW_HAS_DXF_STAGED_IMAGE_DEFINITION_SCALAR_INSPECTOR) && \
+    defined(LIBDXFRW_HAS_DXF_STAGED_DICTIONARY_INSPECTOR)
+        audit->root = rootProof; audit->groups = groupProof; audit->images = imageProof;
+        if (audit->references.size() == 2u) {
+          const auto &metadata = g.dwgAdvancedMetadata();
+          for (const auto &reference : audit->references) {
+            const auto *source = metadata.dxfImageSource(reference.image);
+            if (!source) return false;
+            audit->sourceImages.push_back(*source);
+            const DRW_RawDxfObject *reactor = nullptr;
+            for (const auto &raw : metadata.rawDxfObjects()) {
+              if (raw.handle != reference.reactor) continue;
+              if (reactor) return false;
+              reactor = &raw;
+            }
+            if (!reactor) return false;
+            audit->sourceReactors.push_back(*reactor);
+          }
+          const auto *definition = metadata.dxfImageDefSource(audit->references.front().definition);
+          if (!definition) return false;
+          audit->sourceDefinition = *definition;
+        }
+#endif
         const auto stable = [audit, &g, exportVersion] {
           DxfImageGraphPlan current;
           if (!prepareDxfImageGraph(g, exportVersion, current) ||
               current.imageDictionary != audit->dictionary ||
-              current.references.size() != audit->references.size())
+              current.references.size() != audit->references.size() ||
+              current.rawPlot.size() != audit->rawPlot.size())
             return false;
+          for (std::size_t i = 0; i < audit->rawPlot.size(); ++i)
+            if (!dxfCarrierMatchesSource(audit->rawPlot[i], current.rawPlot[i])) return false;
+#if defined(LIBDXFRW_HAS_DXF_STAGED_IMAGE_ENTITY_SCALAR_INSPECTOR) && \
+    defined(LIBDXFRW_HAS_DXF_STAGED_IMAGE_DEFINITION_SCALAR_INSPECTOR) && \
+    defined(LIBDXFRW_HAS_DXF_STAGED_DICTIONARY_INSPECTOR)
+          if (audit->references.size() == 2u) {
+            const auto &metadata = g.dwgAdvancedMetadata();
+            if (!audit->sourceDefinition || audit->sourceImages.size() != audit->references.size() ||
+                audit->sourceReactors.size() != audit->references.size()) return false;
+            const auto *definition = metadata.dxfImageDefSource(audit->references.front().definition);
+            if (!definition || !dxfCarrierMatchesSource(*audit->sourceDefinition, *definition)) return false;
+            for (std::size_t i = 0; i < audit->references.size(); ++i) {
+              const auto *source = metadata.dxfImageSource(audit->references[i].image);
+              if (!source || !dxfCarrierMatchesSource(audit->sourceImages[i], *source)) return false;
+              const DRW_RawDxfObject *reactor = nullptr;
+              for (const auto &raw : metadata.rawDxfObjects()) {
+                if (raw.handle != audit->references[i].reactor) continue;
+                if (reactor) return false;
+                reactor = &raw;
+              }
+              if (!reactor || !dxfCarrierMatchesSource(audit->sourceReactors[i], *reactor)) return false;
+            }
+            const auto sameDictionary = [](const DRW_Dictionary &a, const DRW_Dictionary &b) {
+              if (a.handle != b.handle || a.parentHandle != b.parentHandle ||
+                  a.hardOwner != b.hardOwner || a.cloning != b.cloning ||
+                  a.m_entries.size() != b.m_entries.size()) return false;
+              for (std::size_t i = 0; i < a.m_entries.size(); ++i)
+                if (a.m_entries[i].m_name != b.m_entries[i].m_name ||
+                    a.m_entries[i].m_handle != b.m_entries[i].m_handle ||
+                    a.m_entries[i].m_dxfHandleCode != b.m_entries[i].m_dxfHandleCode) return false;
+              return true;
+            };
+            if (!audit->root || !audit->groups || !audit->images || !current.root || !current.groups ||
+                !current.images || !sameDictionary(*audit->root, *current.root) ||
+                !sameDictionary(*audit->groups, *current.groups) ||
+                !sameDictionary(*audit->images, *current.images)) return false;
+          }
+#endif
           for (std::size_t i = 0; i < audit->references.size(); ++i) {
             const auto &a = audit->references[i];
             const auto &b = current.references[i];
             if (a.image != b.image || a.definition != b.definition ||
                 a.reactor != b.reactor || a.block != b.block || a.path != b.path || a.inBlock != b.inBlock)
               return false;
+            if (audit->references.size() == 2u) {
+              const auto &x = a.scalar; const auto &y = b.scalar;
+              if (x.clipPath.size() != 2u || y.clipPath.size() != 2u) return false;
+              const std::array<double, 15> ax{{x.basePoint.x,x.basePoint.y,x.basePoint.z,
+                  x.secPoint.x,x.secPoint.y,x.secPoint.z,x.vVector.x,x.vVector.y,x.vVector.z,
+                  x.sizeu,x.sizev,x.clipPath[0].x,x.clipPath[0].y,x.clipPath[1].x,x.clipPath[1].y}};
+              const std::array<double, 15> ay{{y.basePoint.x,y.basePoint.y,y.basePoint.z,
+                  y.secPoint.x,y.secPoint.y,y.secPoint.z,y.vVector.x,y.vVector.y,y.vVector.z,
+                  y.sizeu,y.sizev,y.clipPath[0].x,y.clipPath[0].y,y.clipPath[1].x,y.clipPath[1].y}};
+              if (std::memcmp(ax.data(), ay.data(), sizeof(double) * ax.size()) != 0 || x.m_classVersion != y.m_classVersion ||
+                  x.m_displayProps != y.m_displayProps || x.clip != y.clip || x.brightness != y.brightness ||
+                  x.contrast != y.contrast || x.fade != y.fade || x.m_clipBoundaryType != y.m_clipBoundaryType ||
+                  x.clipMode != y.clipMode) return false;
+            }
           }
           return true;
         };
@@ -14914,6 +15104,12 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
                 expected.push_back({mapped->second, owner,
                     m_dxfW->dxfWriteImageDefinitionHandle(key),
                     m_dxfW->dxfWriteImageReactorHandle(key, reference.reactor)});
+#ifdef LIBDXFRW_HAS_DXF_STAGED_IMAGE_ENTITY_SCALAR_INSPECTOR
+                if (audit->references.size() == 2u) expected.back().scalarFields = &reference.scalar;
+#endif
+#ifdef LIBDXFRW_HAS_DXF_STAGED_IMAGE_CANONICAL_COMMON_INSPECTOR
+                if (audit->references.size() == 2u) expected.back().canonicalCommon = true;
+#endif
               }
               if (!m_dxfW->inspectDxfImageOutputReferences(view, expected)) return false;
               if (blocks) audit->blocksSeen = true;
@@ -14938,10 +15134,48 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
                 if (!definition || !reactor) return false;
                 const auto inserted = indices.emplace(definition, definitions.size());
                 if (inserted.second) definitions.push_back({definition, dictionary, {}});
+#ifdef LIBDXFRW_HAS_DXF_STAGED_IMAGE_DEFINITION_SCALAR_INSPECTOR
+                if (audit->references.size() == 2u) {
+                  const auto *source = m_dxfW->dxfWriteImageSource(key);
+                  if (!source) return false;
+                  definitions[inserted.first->second].scalarFields = &source->definition;
+                }
+#endif
                 definitions[inserted.first->second].reactors.push_back(reactor);
                 reactors.push_back({reactor, image->second});
               }
               if (!m_dxfW->inspectDxfImageOutputObjects(view, definitions, reactors)) return false;
+#if defined(LIBDXFRW_HAS_DXF_STAGED_IMAGE_ENTITY_SCALAR_INSPECTOR) && \
+    defined(LIBDXFRW_HAS_DXF_STAGED_IMAGE_DEFINITION_SCALAR_INSPECTOR) && \
+    defined(LIBDXFRW_HAS_DXF_STAGED_DICTIONARY_INSPECTOR) && \
+    defined(LIBDXFRW_HAS_DXF_STAGED_RAW_OBJECT_INSPECTOR)
+              if (audit->references.size() == 2u) {
+                if (!audit->root || !audit->groups || !audit->images || definitions.size() != 1u)
+                  return false;
+                std::vector<dxfRW::DxfDictionaryOutputExpectation> rootEntries, imageEntries;
+                for (const auto &entry : audit->root->m_entries) {
+                  const auto key = normalizeDwgTableName(entry.m_name);
+                  const auto generatedPlot = m_dxfW->dxfWriteDefaultPlotStyleDictionaryHandle();
+                  const auto target = key == "ACAD_GROUP" ? 0xDu
+                      : key == "ACAD_PLOTSTYLENAME" ? (generatedPlot ? generatedPlot : m_dxfW->remapHandle(entry.m_handle))
+                      : key == "ACAD_IMAGE_DICT" ? dictionary : 0u;
+                  rootEntries.push_back({entry.m_name, target, static_cast<int>(entry.m_dxfHandleCode)});
+                }
+                for (const auto &entry : audit->images->m_entries)
+                  imageEntries.push_back({entry.m_name, definitions.front().definition,
+                                          static_cast<int>(entry.m_dxfHandleCode)});
+                const bool rootOk = m_dxfW->inspectDxfDictionaryOutput(view, 0xCu, 0u, audit->root->hardOwner,
+                                                                       audit->root->cloning, rootEntries);
+                const bool groupOk = m_dxfW->inspectDxfDictionaryOutput(view, 0xDu, 0xCu, audit->groups->hardOwner,
+                                                                        audit->groups->cloning, {});
+                const bool imageOk = m_dxfW->inspectDxfDictionaryOutput(view, dictionary, 0xCu, audit->images->hardOwner,
+                                                                        audit->images->cloning, imageEntries);
+                if (!rootOk || !groupOk || !imageOk) return false;
+                std::vector<const DRW_RawDxfObject *> rawPlot;
+                for (const auto &record : audit->rawPlot) rawPlot.push_back(&record);
+                if (rawPlot.size() != 2u || !m_dxfW->inspectDxfRawObjectRecords(view, rawPlot)) return false;
+              }
+#endif
               audit->objectsSeen = true;
               return true;
             })) return false;
