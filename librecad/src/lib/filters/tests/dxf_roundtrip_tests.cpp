@@ -2620,10 +2620,11 @@ TEST_CASE("Raster source frames are bounded and selected by handle",
 TEST_CASE("System codec preserves bounded multi-image definition graphs",
           "[system-codec][dxf][image][transaction]") {
   ensureSettings();
-  const int shape = GENERATE(0, 1, 2, 3, 4);
+  const int shape = GENERATE(0, 1, 2, 3, 4, 5, 6);
   const bool withMaterial = GENERATE(false, true);
-  const unsigned imageCount = shape < 2 ? 2u : 3u;
-  const unsigned definitionCount = shape == 0 || shape == 4 ? 1u : shape == 3 ? 3u : 2u;
+  const unsigned imageCount = shape < 2 ? 2u : shape < 5 ? 3u : shape == 5 ? 4u : 32u;
+  const unsigned definitionCount = shape == 0 || shape == 4 ? 1u :
+                                   shape == 3 || shape >= 5 ? 3u : 2u;
   const bool sharedDefinition = definitionCount == 1u;
   const auto source = tmpFile("two_images_one_definition_source.dxf");
   const auto output = tmpFile("two_images_one_definition_output.dxf");
@@ -2863,26 +2864,80 @@ TEST_CASE("System codec preserves bounded multi-image definition graphs",
   std::filesystem::remove(output);
 }
 
-TEST_CASE("System codec refuses an unqualified four-image graph",
+TEST_CASE("System codec audits larger bounded image graphs",
           "[system-codec][dxf][image][transaction]") {
   ensureSettings();
-  const auto source = tmpFile("four_image_source.dxf");
-  const auto output = tmpFile("four_image_output.dxf");
+  const unsigned shape = GENERATE(0u, 1u, 2u, 3u, 4u, 5u);
+  const unsigned imageCount = shape == 0u ? 4u : shape == 1u ? 8u : shape == 5u ? 33u : 32u;
+  const unsigned definitionCount = shape == 0u || shape == 2u ? 1u : shape == 4u ? 32u : 4u;
+  const auto source = tmpFile("many_image_source.dxf");
+  const auto output = tmpFile("many_image_output.dxf");
   RS_Graphic original;
   original.initForNewDocument();
-  for (unsigned i = 0; i < 4u; ++i)
+  for (unsigned i = 0; i < imageCount; ++i) {
+    const auto path = QStringLiteral("many-image-%1.png").arg(i % definitionCount);
     original.addEntity(new RS_Image(&original, RS_ImageData(0, RS_Vector(29.0 * i, 2),
-        RS_Vector(1, 0), RS_Vector(0, 1), RS_Vector(16, 12),
-        QStringLiteral("four-image.png"), 50, 50, 0)));
+        RS_Vector(1, 0), RS_Vector(0, 1), RS_Vector(16, 12), path, 50, 50, 0)));
+  }
   RS_FilterDXFRW filter;
   REQUIRE(filter.fileExport(original, QString::fromStdString(source), RS2::FormatDXFRW));
-  REQUIRE(countRecords(source, "IMAGE") == 4);
+  if (const char *copy = std::getenv("LIBRECAD_KEEP_MANY_IMAGE_SOURCE"))
+    std::filesystem::copy_file(source, std::string(copy) + "." + std::to_string(imageCount) + ".d" +
+                                 std::to_string(definitionCount) + ".dxf",
+                               std::filesystem::copy_options::overwrite_existing);
+  REQUIRE(countRecords(source, "IMAGE") == static_cast<int>(imageCount));
   RS_Graphic reopened;
   REQUIRE(filter.fileImport(reopened, QString::fromStdString(source), RS2::FormatDXFRW));
-  const std::string sentinel = "preserve four-image destination";
+  const auto &metadata = reopened.dwgAdvancedMetadata();
+  REQUIRE(metadata.rasterImages().size() == imageCount);
+  REQUIRE(metadata.imageDefinitions().size() == definitionCount);
+  REQUIRE(metadata.imageDefinitionReactors().size() == imageCount);
+  const std::string sentinel = "preserve many-image destination";
   writeText(output, sentinel);
-  CHECK_FALSE(filter.fileExport(reopened, QString::fromStdString(output), RS2::FormatDXFRW));
-  { std::ifstream in(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(in), {}) == sentinel); }
+  if (imageCount > 32u) {
+    CHECK_FALSE(filter.fileExport(reopened, QString::fromStdString(output), RS2::FormatDXFRW));
+    std::ifstream in(output, std::ios::binary);
+    CHECK(std::string(std::istreambuf_iterator<char>(in), {}) == sentinel);
+  } else {
+    auto &reactors = const_cast<std::vector<LC_DwgAdvancedMetadata::ImageDefinitionReactorRecord>&>(
+        metadata.imageDefinitionReactors());
+    const auto owner = reactors.back().parentHandle;
+    ++reactors.back().parentHandle;
+    CHECK_FALSE(filter.fileExport(reopened, QString::fromStdString(output), RS2::FormatDXFRW));
+    { std::ifstream in(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(in), {}) == sentinel); }
+    reactors.back().parentHandle = owner;
+    REQUIRE(filter.fileExport(reopened, QString::fromStdString(output), RS2::FormatDXFRW));
+    CHECK(countRecords(output, "IMAGE") == static_cast<int>(imageCount));
+    CHECK(countRecords(output, "IMAGEDEF") == static_cast<int>(definitionCount));
+    CHECK(countRecords(output, "IMAGEDEF_REACTOR") == static_cast<int>(imageCount));
+    RS_Graphic reread;
+    REQUIRE(filter.fileImport(reread, QString::fromStdString(output), RS2::FormatDXFRW));
+    CHECK(reread.dwgAdvancedMetadata().rasterImages().size() == imageCount);
+    CHECK(reread.dwgAdvancedMetadata().imageDefinitions().size() == definitionCount);
+    struct MutatingFilter : RS_FilterDXFRW {
+      std::function<void()> beforeFinalize;
+      bool finalizeDxfWrite() override {
+        if (beforeFinalize) beforeFinalize();
+        return RS_FilterDXFRW::finalizeDxfWrite();
+      }
+    } late;
+    RS_Image *lastImage = nullptr;
+    for (RS_Entity *entity : lc::LC_ContainerTraverser{reopened, RS2::ResolveNone}.entities())
+      if (entity->rtti() == RS2::EntityImage) lastImage = static_cast<RS_Image *>(entity);
+    REQUIRE(lastImage);
+    const auto originalPosition = lastImage->getInsertionPoint();
+    late.beforeFinalize = [&] { lastImage->setInsertionPoint(originalPosition + RS_Vector(1, 0)); };
+    writeText(output, sentinel);
+    CHECK_FALSE(late.fileExport(reopened, QString::fromStdString(output), RS2::FormatDXFRW));
+    { std::ifstream in(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(in), {}) == sentinel); }
+    lastImage->setInsertionPoint(originalPosition);
+    late.beforeFinalize = {};
+    REQUIRE(late.fileExport(reopened, QString::fromStdString(output), RS2::FormatDXFRW));
+    if (const char *copy = std::getenv("LIBRECAD_KEEP_MANY_IMAGE_OUTPUT"))
+      std::filesystem::copy_file(output, std::string(copy) + "." + std::to_string(imageCount) + ".d" +
+                                     std::to_string(definitionCount) + ".dxf",
+                                 std::filesystem::copy_options::overwrite_existing);
+  }
   std::filesystem::remove(source);
   std::filesystem::remove(output);
 }

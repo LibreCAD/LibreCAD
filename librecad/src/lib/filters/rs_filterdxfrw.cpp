@@ -3860,8 +3860,8 @@ bool dxfImageDefCarrierMatches(
   return valid && seen == std::set<int>{1, 10, 11, 20, 21, 90, 100, 280, 281};
 }
 
-// Admit one source IMAGE and its definition/reactor, with no extension data,
-// GROUP members or unrelated raw objects. Larger graphs need separate proof.
+// Admit a bounded source IMAGE graph with no extension data, GROUP members,
+// or unrelated raw objects. Every image, definition and reactor is checked.
 struct DxfImageGraphPlan {
   static constexpr std::uint64_t generation = 1;
   struct ImageReference {
@@ -3950,7 +3950,10 @@ bool prepareDxfImageGraph(RS_Graphic &graphic, DRW::Version version,
         !dictionary->hasDsData;
   };
   const auto imageCount = metadata.rasterImages().size();
-  const bool multipleImages = imageCount >= 2u && imageCount <= 3u;
+  // Per-record source and staged-output checks below apply to the whole graph.
+  // Match the existing per-kind capture bound and bound quadratic lookups.
+  constexpr std::size_t maxAuditedImages = 32u;
+  const bool multipleImages = imageCount >= 2u && imageCount <= maxAuditedImages;
 #if !defined(LIBDXFRW_HAS_DXF_STAGED_IMAGE_ENTITY_SCALAR_INSPECTOR) || \
     !defined(LIBDXFRW_HAS_DXF_STAGED_IMAGE_CANONICAL_COMMON_INSPECTOR) || \
     !defined(LIBDXFRW_HAS_DXF_STAGED_IMAGE_DEFINITION_SCALAR_INSPECTOR) || \
