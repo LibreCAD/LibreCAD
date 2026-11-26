@@ -199,6 +199,17 @@ the dependencies for **3 and 4** in parallel. **5** follows the acceptance work.
   Receipts: `/private/tmp/offset-3193-concave-release.txt` and
   `/private/tmp/offset-3193-convex-release.txt` (temporary). These passes do
   not eliminate the ASan fork failure or qualify other platforms.
+- The typed-parabola aggregate that timed out was split with
+  `run_offset_trim_profile_matrix.py`: **152/152 profiles, 19,152 assertions**
+  passed on the source-equivalent macOS CMake Debug ASan/UBSan build. The runner
+  used a 180-second per-profile bound and `--worker-timeout-ms 30000`; sanitizer
+  options were `detect_leaks=0:quarantine_size_mb=16:thread_local_quarantine_size_kb=256:malloc_context_size=5`
+  and `UBSAN_OPTIONS=halt_on_error=1:print_stacktrace=1`. Manifest and per-profile
+  logs are in `/private/tmp/offset-3193-trim-parabola-asan.json` and
+  `/private/tmp/offset-3193-trim-parabola-asan-logs` (temporary). This accounts
+  for the 152 recorded profiles in isolated processes; it does not resolve the
+  earlier aggregate timeout, shared-process order, leak detection, other timed-out
+  cases, or other platforms. Next: account for the remaining generators by ID.
 
 ## Smallest Safe Fix
 
