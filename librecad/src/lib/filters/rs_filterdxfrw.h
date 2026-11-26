@@ -3192,6 +3192,7 @@ private:
   std::size_t m_legacyLayerLineweightsLeftOut = 0;
   std::size_t m_legacyHeaderStylesLeftOut = 0;
   bool m_legacyPaperScaleLeftOut = false;
+  bool m_legacyAngularPrecisionLeftOut = false;
   std::size_t m_hatchAssociativityLeftOut = 0;
   std::map<std::string, std::size_t> m_shapeLeftOut;
   QString m_shapeExportDirectory;

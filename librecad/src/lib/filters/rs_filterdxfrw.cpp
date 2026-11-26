@@ -12843,6 +12843,7 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
   m_legacyLayerLineweightsLeftOut = 0;
   m_legacyHeaderStylesLeftOut = 0;
   m_legacyPaperScaleLeftOut = false;
+  m_legacyAngularPrecisionLeftOut = false;
   m_hatchAssociativityLeftOut = 0;
   m_shapeLeftOut.clear();
   m_shapeExportDirectory = QFileInfo(file).absoluteDir().canonicalPath();
@@ -14228,6 +14229,7 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
     m_legacyLayerLineweightsLeftOut = 0;
     m_legacyHeaderStylesLeftOut = 0;
     m_legacyPaperScaleLeftOut = false;
+    m_legacyAngularPrecisionLeftOut = false;
     m_hatchAssociativityLeftOut = 0;
     RS_DEBUG->print("RS_FilterDXFDW::fileExport: can't write file");
     return false;
@@ -18551,6 +18553,10 @@ QString RS_FilterDXFRW::exportReport() const {
     lines << QObject::tr("paper-space scale, unsupported by this DXF version",
                          "RS_FilterDXFRW");
   }
+  if (m_legacyAngularPrecisionLeftOut) {
+    lines << QObject::tr("angular dimension precision, unsupported by this DXF version",
+                         "RS_FilterDXFRW");
+  }
   if (m_hatchAssociativityLeftOut > 0) {
     lines << QObject::tr("associativity of %1 hatch(es)", "RS_FilterDXFRW")
                  .arg(m_hatchAssociativityLeftOut);
@@ -19784,6 +19790,15 @@ void RS_FilterDXFRW::writeHeader(DRW_Header &data) {
         key == "$PSVPSCALE" && value.getType() == RS2::VariableDouble &&
         code == 40 && value.getDouble() == 1.0) {
       m_legacyPaperScaleLeftOut = true;
+      ++it;
+      continue;
+    }
+    // LibreCAD can reconstruct the R2000 angular-precision default when an
+    // R14 file is imported. Disclose its omission; refuse other values.
+    if (m_dxfW && m_dxfExportVersion < DRW::AC1015 &&
+        key == "$DIMADEC" && value.getType() == RS2::VariableInt &&
+        code == 70 && value.getInt() == 0) {
+      m_legacyAngularPrecisionLeftOut = true;
       ++it;
       continue;
     }

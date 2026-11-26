@@ -10600,6 +10600,30 @@ const BuiltinLTypeLength kBuiltinLTypeLengths[] = {
 } // namespace
 
 #ifdef LIBRECAD_SYSTEM_CODEC_TESTS
+TEST_CASE("Legacy DXF reports omitted default angular precision and supports retry",
+          "[dxf][roundtrip][filter][system-codec][r12][linetype]") {
+  ensureSettings();
+  const std::string source = writeFixture("legacy_angular_precision_source.dxf", kNamedR12Fixture);
+  for (const RS2::FormatType format : {RS2::FormatDXFRW12, RS2::FormatDXFRW14}) {
+    RS_Graphic graphic;
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(source), RS2::FormatDXFRW));
+    const std::string out = tmpFile("legacy_angular_precision_out.dxf");
+    graphic.addVariable("$DIMADEC", 3, 70);
+    writeText(out, "existing destination\n");
+    REQUIRE_FALSE(filter.fileExport(graphic, QString::fromStdString(out), format));
+    CHECK(textWithoutCR(out) == "existing destination\n");
+    CHECK_FALSE(filter.exportReport().contains(QStringLiteral("angular dimension precision")));
+    graphic.addVariable("$DIMADEC", 0, 70);
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(out), format));
+    CHECK(filter.exportReport().contains(QStringLiteral("angular dimension precision")));
+    CHECK(graphic.getVariableDict().value("$DIMADEC").getInt() == 0);
+    CHECK(textWithoutCR(out).find("$DIMADEC") == std::string::npos);
+    std::filesystem::remove(out);
+  }
+  std::filesystem::remove(source);
+}
+
 TEST_CASE("Legacy DXF reports omitted default paper scale and supports retry",
           "[dxf][roundtrip][filter][system-codec][r12][linetype]") {
   ensureSettings();
