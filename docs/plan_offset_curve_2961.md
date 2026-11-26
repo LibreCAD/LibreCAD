@@ -63386,3 +63386,19 @@ test-only change and receipt are held locally while that exact head's CI runs,
 to avoid canceling its in-flight checks. Push them after the product-head CI
 reaches a terminal state, then evaluate the new head separately. Visible
 current-source GUI acceptance and the other gates remain open.
+
+## 2050. Publish an Offset Source Through the Properties Action (2026-11-26)
+
+Test commit `8a83c1734` extends section 2048 beyond clone preparation. The real
+Modify Properties action chooses a different native offset as a spline source,
+verifies the edited offset is absent from the candidate list, completes worker
+preparation, accepts the dialog, and checks the published source geometry. It
+then checks one undo cycle and redo while preserving the other offset's state.
+This is one representative source/geometry, not universal offset-of-offset
+qualification or a visible desktop interaction.
+
+The combined `[self-source]` selection passed **1,379 assertions / 3 cases**
+in source-equivalent macOS CMake Release and ASan/UBSan Debug. Leak detection
+was disabled; broader sanitizer qualification remains open. This test and its
+receipt remain local with section 2049 while exact product-head `ff35989c9`
+CI runs; push the local commits after that run reaches a terminal state.
