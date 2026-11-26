@@ -14488,6 +14488,11 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
           std::uint32_t headerTarget = 0;
           std::string headerValue;
 #endif
+#ifdef LIBDXFRW_HAS_DXF_STAGED_ROOT_ENTRY_INSPECTOR
+          bool inspectRoot = false;
+          std::uint32_t rootTarget = 0;
+          std::string rootName;
+#endif
         };
         auto audit = std::make_shared<StagedMaterialAudit>();
         if (selectedObjects.size() > 64u) boundedAudit = false;
@@ -14526,6 +14531,18 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
             const auto rootName = rootEntryName.find(handle);
             if (rootName != rootEntryName.end()) selectedRootNames.emplace(*rootName);
           }
+#ifdef LIBDXFRW_HAS_DXF_STAGED_ROOT_ENTRY_INSPECTOR
+          const auto firstMaterial = std::find_if(metadata.materials().begin(), metadata.materials().end(),
+              [&](const auto &item) { return item.handle == *selectedMaterials.begin(); });
+          if (firstMaterial != metadata.materials().end()) {
+            const auto name = selectedRootNames.find(firstMaterial->parentHandle);
+            if (name != selectedRootNames.end() && !name->second.empty() && name->second.size() <= 1024u) {
+              audit->rootTarget = firstMaterial->parentHandle;
+              audit->rootName = name->second;
+              audit->inspectRoot = true;
+            }
+          }
+#endif
 #ifdef LIBDXFRW_HAS_DXF_STAGED_HEADER_MATERIAL_INSPECTOR
           const auto readHeader = [&g](bool &present, std::uint32_t &target, std::string &text) {
             const auto variables = g.getVariableDict();
@@ -14554,6 +14571,15 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
 #endif
                                ]() {
             const auto &current = g.dwgAdvancedMetadata();
+#ifdef LIBDXFRW_HAS_DXF_STAGED_ROOT_ENTRY_INSPECTOR
+            if (audit->inspectRoot)
+              for (const auto &root : current.dictionaries())
+                if (root.parentHandle == 0)
+                  for (const auto &entry : root.entries)
+                    if (entry.handle == audit->rootTarget &&
+                        normalizeDwgTableName(entry.name) == "ACAD_MATERIAL" &&
+                        entry.name != audit->rootName) return false;
+#endif
 #ifdef LIBDXFRW_HAS_DXF_STAGED_HEADER_MATERIAL_INSPECTOR
             if (audit->inspectHeader) {
               bool present = false; std::uint32_t target = 0; std::string value;
@@ -14617,6 +14643,11 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
                 expected.reserve(audit->objects.size());
                 for (const auto &source : audit->objects) expected.push_back(&source);
                 audit->objectsSeen = m_dxfW->inspectDxfRawObjectRecords(view, expected);
+#ifdef LIBDXFRW_HAS_DXF_STAGED_ROOT_ENTRY_INSPECTOR
+                if (audit->objectsSeen && audit->inspectRoot)
+                  audit->objectsSeen = m_dxfW->inspectDxfRootDictionaryEntry(
+                      view, audit->rootName, audit->rootTarget, 350);
+#endif
                 return audit->objectsSeen;
               })) return false;
           m_dxfMaterialFinalCheck = [audit, stable] {

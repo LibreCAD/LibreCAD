@@ -1052,6 +1052,29 @@ TEST_CASE("System codec preserves a layer material link and refuses a missing ca
   selected->description = oldDescription;
   mutating.beforeFinalize = {};
   REQUIRE(mutating.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+#ifdef LIBDXFRW_HAS_DXF_STAGED_ROOT_ENTRY_INSPECTOR
+  const auto oldRootKey = root->entries.front().name;
+  mutating.afterObjects = [&] { root->entries.front().name = "acad_material"; };
+  writeText(output, sentinel);
+  CHECK_FALSE(mutating.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  std::ifstream afterRootFailure(output, std::ios::binary);
+  CHECK(std::string(std::istreambuf_iterator<char>(afterRootFailure), {}) == sentinel);
+  afterRootFailure.close();
+  root->entries.front().name = oldRootKey;
+  mutating.afterObjects = {};
+  mutating.beforeFinalize = [&] { root->entries.front().name = "acad_material"; };
+  CHECK_FALSE(mutating.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  std::ifstream afterRootFinalizationFailure(output, std::ios::binary);
+  CHECK(std::string(std::istreambuf_iterator<char>(afterRootFinalizationFailure), {}) == sentinel);
+  afterRootFinalizationFailure.close();
+  root->entries.front().name = oldRootKey;
+  mutating.beforeFinalize = {};
+  REQUIRE(mutating.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  root->entries.front().name = "acad_material";
+  REQUIRE(mutating.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  CHECK_FALSE(recordGroupsWithValue(output, "DICTIONARY", "3", "acad_material").empty());
+  root->entries.front().name = oldRootKey;
+#endif
 #ifdef LIBDXFRW_HAS_DXF_STAGED_HEADER_MATERIAL_INSPECTOR
   graphic.addVariable("$CMATERIAL", QString::fromStdString(materialText), 347);
   REQUIRE(mutating.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
