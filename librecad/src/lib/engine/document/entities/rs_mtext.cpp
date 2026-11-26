@@ -803,6 +803,9 @@ void RS_MText::update() {
   // flushBidiLine(); see the comment on LC_BidiSegment in the header.
   std::vector<LC_BidiSegment> segments;
 
+    // horizontal scale of the glyphs and their advances, set by "\W<factor>;"
+    double widthFactor{1.0};
+
   auto closeLine = [&]() {
     const double leadingAdvance = flushBidiLine(*oneLine, segments, letterSpace, letterPos);
     updateAddLine(oneLine, lineCounter++, leadingAdvance);
@@ -814,7 +817,7 @@ void RS_MText::update() {
         // Handle \F not followed by {<codePage>}
         if (remaining.startsWith(R"(\F)") && remaining.indexOf(R"(^\\[Ff]\{[\d\w]*\})") != 0) {
             segments.push_back(
-          {LC_BidiSegment::Char, m_data.text.at(i), font, 0.0, {}, {}});
+          {LC_BidiSegment::Char, m_data.text.at(i), font, 0.0, {}, {}, widthFactor});
             continue;
         }
         if (remaining.startsWith(R"(\\)")) {
@@ -823,7 +826,7 @@ void RS_MText::update() {
             // "\P" is used to start a new line
             // "\\S" and "\\P" to get literal strings "\S" and "\P"
             segments.push_back(
-          {LC_BidiSegment::Char, m_data.text.at(i++), font, 0.0, {}, {}});
+          {LC_BidiSegment::Char, m_data.text.at(i++), font, 0.0, {}, {}, widthFactor});
             continue;
         }
 
@@ -836,7 +839,7 @@ void RS_MText::update() {
             case 0x20:
                 // Space:
                 segments.push_back(
-          {LC_BidiSegment::Space, QChar(' '), nullptr, spaceWidth, {}, {}});
+          {LC_BidiSegment::Space, QChar(' '), nullptr, spaceWidth * widthFactor, {}, {}, widthFactor});
                 break;
 
             case 0x09:
@@ -878,6 +881,29 @@ void RS_MText::update() {
                         handled = true;
                         break;
                     } // inner case 'p'
+
+                    case 'W': {
+                        // width factor "\W0.8;", or relative to the current one "\W0.8x;"
+                        const qsizetype commandEnd = valueCommandEnd(m_data.text, i);
+                        if (commandEnd >= 0) {
+                            QString value = m_data.text.mid(i + 1, commandEnd - i - 1);
+                            const bool relative = value.endsWith(QChar('x'));
+                            if (relative) {
+                                value.chop(1);
+                            }
+                            bool ok = false;
+                            const double factor = value.toDouble(&ok) * (relative ? widthFactor : 1.0);
+                            if (ok && std::isfinite(factor) && factor > RS_TOLERANCE) {
+                                widthFactor = factor;
+                                i = commandEnd;
+                                handled = true;
+                                break;
+                            }
+                        }
+                        // not a usable command: drawn like any other text
+                        --i;
+                        break;
+                    } // inner case 'W'
 
                     case 'f':
                     case 'F': {
@@ -934,6 +960,7 @@ void RS_MText::update() {
         stack.kind = LC_BidiSegment::Stack;
         stack.upperText = std::move(upperText);
         stack.lowerText = std::move(lowerText);
+        stack.widthFactor = widthFactor;
         segments.push_back(std::move(stack));
         handled = true;
 
@@ -955,7 +982,7 @@ void RS_MText::update() {
             default: {
                 // One Letter:
                 segments.push_back(
-          {LC_BidiSegment::Char, m_data.text.at(i), font, 0.0, {}, {}});
+          {LC_BidiSegment::Char, m_data.text.at(i), font, 0.0, {}, {}, widthFactor});
                 break;
             } // outer default
         } // outer switch (m_data.text.at(i).unicode())
@@ -1091,9 +1118,9 @@ double RS_MText::flushBidiLine(LC_TextLine &oneLine,
           if (category == QChar::Mark_NonSpacing ||
               category == QChar::Mark_Enclosing) {
             auto markPosition = clusterOrigin;
-            addLetter(oneLine, glyph, *segFont, letterSpace, markPosition);
+            addLetter(oneLine, glyph, *segFont, letterSpace, markPosition, seg.widthFactor);
           } else {
-            addLetter(oneLine, glyph, *segFont, letterSpace, letterPosition);
+            addLetter(oneLine, glyph, *segFont, letterSpace, letterPosition, seg.widthFactor);
           }
         }
         break;
@@ -1134,10 +1161,14 @@ double RS_MText::flushBidiLine(LC_TextLine &oneLine,
       case LC_BidiSegment::Stack: {
         // The parts are measured from where they start, so that blanks in front
         // of a numerator widen the stack rather than push it into what follows.
+        // the parts of a stack are texts of their own: hand the width factor on
+        const QString widthPrefix = seg.widthFactor == 1.0
+            ? QString{}
+            : QStringLiteral("\\W%1;").arg(seg.widthFactor, 0, 'f', 6);
         double upperWidth = 0.0;
         if (!seg.upperText.isEmpty()) {
           RS_MText *upper = createUpperLower(
-              seg.upperText, m_data, letterPosition + RS_Vector{0., 9.});
+              widthPrefix + seg.upperText, m_data, letterPosition + RS_Vector{0., 9.});
           oneLine.addEntity(upper);
           upper->reparent(&oneLine);
           upperWidth = upper->getUsedTextWidth();
@@ -1145,13 +1176,13 @@ double RS_MText::flushBidiLine(LC_TextLine &oneLine,
         double lowerWidth = 0.0;
         if (!seg.lowerText.isEmpty()) {
           RS_MText *lower = createUpperLower(
-              seg.lowerText, m_data, letterPosition + RS_Vector{0., 4.});
+              widthPrefix + seg.lowerText, m_data, letterPosition + RS_Vector{0., 4.});
           oneLine.addEntity(lower);
           lower->reparent(&oneLine);
           lowerWidth = lower->getUsedTextWidth();
         }
         letterPosition.x += std::max(upperWidth, lowerWidth);
-        letterPosition += letterSpace;
+        letterPosition.x += letterSpace.x * seg.widthFactor;
         break;
       }
       }
@@ -1287,14 +1318,16 @@ void RS_MText::rotateLinesRefs() const {
  * @param letterSpace the letter width to use
  * @param letterPosition the current letter position; will be updated
  * after addition
+ * @param widthFactor horizontal scale of the letter and its advance
  *
  */
-void RS_MText::addLetter(LC_TextLine& oneLine, QString letterText, RS_Font& font, const RS_Vector& letterSpace, RS_Vector& letterPosition) {
+void RS_MText::addLetter(LC_TextLine& oneLine, QString letterText, RS_Font& font, const RS_Vector& letterSpace, RS_Vector& letterPosition,
+                         const double widthFactor) {
     RS_Font* glyphFont = RS_FONTLIST->fontForLetter(font, letterText);
 
     LC_LOG << "RS_MText::update: insert a letter at pos:(" << letterPosition.x << ", " << letterPosition.y << ")";
 
-    const RS_InsertData d(letterText, letterPosition, RS_Vector(1.0, 1.0), 0.0, 1, 1,
+    const RS_InsertData d(letterText, letterPosition, RS_Vector(widthFactor, 1.0), 0.0, 1, 1,
                     RS_Vector(0.0, 0.0), glyphFont->getLetterList(), RS2::NoUpdate);
 
     const auto letterEntity{new RS_Insert(this, d)};
@@ -1304,7 +1337,8 @@ void RS_MText::addLetter(LC_TextLine& oneLine, QString letterText, RS_Font& font
     letterEntity->forcedCalculateBorders();
 
     // Add spacing, if the font is actually wider than word spacing
-    double actualWidth = letterEntity->getMax().x - letterEntity->getMin().x;
+    // measured at normal width, so the rounding below does not depend on the factor
+    double actualWidth = (letterEntity->getMax().x - letterEntity->getMin().x) / widthFactor;
     if (actualWidth >= font.getWordSpacing() + RS_TOLERANCE) {
       const double letterSpacing = std::max(1., letterSpace.x);
       const double wordSpacing = font.getWordSpacing();
@@ -1312,12 +1346,12 @@ void RS_MText::addLetter(LC_TextLine& oneLine, QString letterText, RS_Font& font
     }
     LC_LOG << __LINE__ << ": actualWidth: " << actualWidth;
 
-    letterPosition.x += actualWidth;
+    letterPosition.x += actualWidth * widthFactor;
 
     oneLine.addEntity(letterEntity);
 
     // next letter position:
-    letterPosition += letterSpace;
+    letterPosition.x += letterSpace.x * widthFactor;
 }
 
 RS_MText* RS_MText::createUpperLower(QString text, const RS_MTextData& data, const RS_Vector& position) {
