@@ -1586,6 +1586,31 @@ TEST_CASE("System codec refuses an incomplete raw-only material after metadata s
   std::filesystem::remove(output);
 }
 
+#if defined(LIBDXFRW_HAS_DXF_VERSIONLESS_RAW_MATERIAL_CAPTURE)
+TEST_CASE("System codec retains versionless sparse material without replay",
+          "[system-codec][dxf][material][transaction]") {
+  ensureSettings();
+  const auto source = tmpFile("system_versionless_sparse_material.dxf");
+  const auto output = tmpFile("system_versionless_sparse_material_out.dxf");
+  writeText(source, "0\nSECTION\n2\nOBJECTS\n0\nMATERIAL\n5\nF040\n330\n72\n"
+                    "100\nAcDbMaterial\n1\nRawOnly\n94\n63\n0\nENDSEC\n0\nEOF\n");
+  const std::string sentinel = "preserve unversioned material destination\n";
+  writeText(output, sentinel);
+  RS_Graphic graphic;
+  RS_FilterDXFRW filter;
+  REQUIRE(filter.fileImport(graphic, QString::fromStdString(source), RS2::FormatDXFRW));
+  REQUIRE(graphic.dwgAdvancedMetadata().materials().size() == 1u);
+  CHECK(graphic.dwgAdvancedMetadata().materials().front().requiresRawDxfReplay);
+  CHECK(graphic.dwgAdvancedMetadata().materials().front().rawDxfSourceConflict);
+  REQUIRE(graphic.dwgAdvancedMetadata().rawDxfObjects().size() == 1u);
+  CHECK(graphic.dwgAdvancedMetadata().rawDxfObjects().front().m_version == DRW::UNKNOWNV);
+  CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  { std::ifstream retained(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+  std::filesystem::remove(source);
+  std::filesystem::remove(output);
+}
+#endif
+
 #if defined(LIBDXFRW_HAS_DXF_STAGED_ENTITY_MATERIAL_INSPECTOR) && \
     defined(LIBDXFRW_HAS_DXF_HEADER_MATERIAL_SOURCE_HANDLER) && \
     defined(LIBDXFRW_HAS_DXF_DEFAULT_PLOT_PLACEHOLDER_HANDLE) && \
