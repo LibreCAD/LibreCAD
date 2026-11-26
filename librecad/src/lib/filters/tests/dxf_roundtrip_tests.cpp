@@ -1258,6 +1258,87 @@ TEST_CASE("System codec retains all material dictionary targets for a layer",
 
 #if defined(LIBDXFRW_HAS_DXF_STAGED_RAW_OBJECT_INSPECTOR) && \
     defined(LIBDXFRW_HAS_DXF_STAGED_LAYER_MATERIAL_INSPECTOR)
+#ifdef LIBDXFRW_HAS_DXF_STAGED_HEADER_MATERIAL_INSPECTOR
+TEST_CASE("System codec audits a material referenced only by the header",
+          "[system-codec][dxf][material][transaction]") {
+  ensureSettings();
+  const auto source = tmpFile("system_header_only_material_source.dxf");
+  const auto output = tmpFile("system_header_only_material_output.dxf");
+  const bool withLayer = GENERATE(false, true);
+  const std::string sourceHandle = GENERATE(std::string("A1"), std::string("14"));
+  std::string input =
+      "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1021\n"
+      "9\n$CMATERIAL\n347\nA1\n0\nENDSEC\n";
+  if (withLayer) input +=
+      "0\nSECTION\n2\nTABLES\n0\nTABLE\n2\nLAYER\n70\n1\n"
+      "0\nLAYER\n5\n30\n100\nAcDbSymbolTableRecord\n100\nAcDbLayerTableRecord\n"
+      "2\nRAWTEST\n70\n0\n62\n7\n6\nCONTINUOUS\n"
+      "0\nENDTAB\n0\nENDSEC\n";
+  input += "0\nSECTION\n2\nENTITIES\n0\nENDSEC\n"
+      "0\nSECTION\n2\nOBJECTS\n0\nDICTIONARY\n5\nC\n330\n0\n"
+      "100\nAcDbDictionary\n281\n1\n3\nACAD_MATERIAL\n350\nA0\n"
+      "0\nDICTIONARY\n5\nA0\n330\nC\n100\nAcDbDictionary\n281\n1\n"
+      "3\nPlainMat\n350\nA1\n0\nMATERIAL\n5\nA1\n330\nA0\n"
+      "100\nAcDbMaterial\n1\nPlainMat\n0\nENDSEC\n0\nEOF\n";
+  if (sourceHandle != "A1") {
+    const std::string replacement = "\n" + sourceHandle + "\n";
+    for (std::size_t at = 0; (at = input.find("\nA1\n", at)) != std::string::npos;) {
+      input.replace(at, 4u, replacement);
+      at += replacement.size();
+    }
+  }
+  writeText(source, input);
+  RS_Graphic graphic;
+  struct MutatingFilter : RS_FilterDXFRW {
+    std::function<void()> afterObjects;
+    void writeObjects() override {
+      RS_FilterDXFRW::writeObjects();
+      if (afterObjects) afterObjects();
+    }
+  } filter;
+  REQUIRE(filter.fileImport(graphic, QString::fromStdString(source), RS2::FormatDXFRW));
+  auto &materials = const_cast<std::vector<LC_DwgAdvancedMetadata::MaterialRecord>&>(
+      graphic.dwgAdvancedMetadata().materials());
+  REQUIRE(materials.size() == 1u);
+  const auto description = materials.front().description;
+  const std::string sentinel = "preserve header-only material destination\n";
+  writeText(output, sentinel);
+  filter.afterObjects = [&] { materials.front().description = "late edit"; };
+  CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  std::ifstream retained(output, std::ios::binary);
+  CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel);
+  retained.close();
+  materials.front().description = description;
+  filter.afterObjects = {};
+  graphic.addVariable("$CMATERIAL", QStringLiteral("B1"), 347);
+  CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  std::ifstream missingTarget(output, std::ios::binary);
+  CHECK(std::string(std::istreambuf_iterator<char>(missingTarget), {}) == sentinel);
+  missingTarget.close();
+  graphic.addVariable("$CMATERIAL", QString::fromStdString(sourceHandle), 347);
+  filter.afterObjects = [&] { graphic.addVariable("$CMATERIAL", QStringLiteral("0"), 347); };
+  CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  std::ifstream changedHeader(output, std::ios::binary);
+  CHECK(std::string(std::istreambuf_iterator<char>(changedHeader), {}) == sentinel);
+  changedHeader.close();
+  graphic.addVariable("$CMATERIAL", QString::fromStdString(sourceHandle), 347);
+  filter.afterObjects = {};
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  const auto materialHandles = recordGroupValues(output, "MATERIAL", "5");
+  REQUIRE(materialHandles.size() == 1u);
+  if (sourceHandle == "14") CHECK(materialHandles.front() != sourceHandle);
+  if (const char *copy = std::getenv("LIBRECAD_KEEP_HEADER_MATERIAL_OUTPUT"))
+    std::filesystem::copy_file(output, copy, std::filesystem::copy_options::overwrite_existing);
+  RS_Graphic reread;
+  REQUIRE(filter.fileImport(reread, QString::fromStdString(output), RS2::FormatDXFRW));
+  const auto variables = reread.getVariableDict();
+  const auto current = variables.constFind(QStringLiteral("$CMATERIAL"));
+  REQUIRE(current != variables.cend());
+  CHECK(current->getString().toStdString() == materialHandles.front());
+  std::filesystem::remove(source);
+  std::filesystem::remove(output);
+}
+#endif
 TEST_CASE("System codec audits material graphs with more than 64 imported layers",
           "[system-codec][dxf][material][layer][transaction]") {
   ensureSettings();
