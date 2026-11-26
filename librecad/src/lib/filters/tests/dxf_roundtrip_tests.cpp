@@ -1261,8 +1261,23 @@ TEST_CASE("System codec gates ambiguous AC1024 default material",
   REQUIRE(importer.fileImport(graphic, QString::fromStdString(source), RS2::FormatDXFRW));
   REQUIRE(graphic.dwgAdvancedMetadata().materials().size() == 1u);
   CHECK(graphic.dwgAdvancedMetadata().materials().front().requiresRawDxfReplay);
+  const auto sourceSnapshot = graphic.dwgAdvancedMetadata().materials().front().rawDxfSource;
+  REQUIRE(sourceSnapshot);
+  CHECK_FALSE(graphic.dwgAdvancedMetadata().materials().front().rawDxfSourceConflict);
   REQUIRE(graphic.dwgAdvancedMetadata().rawDxfObjects().size() == 1u);
   CHECK(graphic.dwgAdvancedMetadata().rawDxfObjects().front().groups.size() == 61u);
+  REQUIRE(sourceSnapshot->groups.size() == 61u);
+  REQUIRE(sourceSnapshot->hasRawValues);
+  REQUIRE(sourceSnapshot->rawValues.size() == sourceSnapshot->groups.size());
+  auto &mutableRaw = const_cast<std::vector<DRW_RawDxfObject> &>(
+      graphic.dwgAdvancedMetadata().rawDxfObjects());
+  REQUIRE(mutableRaw.front().groups.back().type() == DRW_Variant::INTEGER);
+  const int originalTail = sourceSnapshot->groups.back().i_val();
+  const std::string originalSpelling = sourceSnapshot->rawValues.back();
+  mutableRaw.front().groups.back().addInt(94, originalTail + 1);
+  mutableRaw.front().rawValues.back() = "changed";
+  CHECK(sourceSnapshot->groups.back().i_val() == originalTail);
+  CHECK(sourceSnapshot->rawValues.back() == originalSpelling);
   const std::string sentinel = "retain AC1024 destination\n";
   writeText(output, sentinel);
   RS_FilterDXFRW exporter;
@@ -1270,8 +1285,93 @@ TEST_CASE("System codec gates ambiguous AC1024 default material",
   std::ifstream retained(output, std::ios::binary);
   CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel);
   retained.close();
+  mutableRaw.front().groups.back().addInt(94, originalTail);
+  mutableRaw.front().rawValues.back() = originalSpelling;
+  graphic.dwgAdvancedMetadata().addDxfRawMaterialSource(*sourceSnapshot);
+  CHECK_FALSE(graphic.dwgAdvancedMetadata().materials().front().rawDxfSource);
+  CHECK(graphic.dwgAdvancedMetadata().materials().front().rawDxfSourceConflict);
+  CHECK_FALSE(exporter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+  // The optional source-copy profile is bounded independently of normal
+  // import. Trailing whitespace leaves the drawing intact but crosses the
+  // existing 256 KiB file-capture limit.
+  {
+    std::ofstream append(source, std::ios::binary | std::ios::app);
+    append << std::string(256u * 1024u, ' ');
+    REQUIRE(append.good());
+  }
+  RS_Graphic oversized;
+  OptInFilter oversizedImporter;
+  REQUIRE(oversizedImporter.fileImport(oversized, QString::fromStdString(source), RS2::FormatDXFRW));
+  REQUIRE(oversized.dwgAdvancedMetadata().materials().size() == 1u);
+  CHECK(oversized.dwgAdvancedMetadata().materials().front().requiresRawDxfReplay);
+  CHECK_FALSE(oversized.dwgAdvancedMetadata().materials().front().rawDxfSource);
+  CHECK_FALSE(exporter.fileExport(oversized, QString::fromStdString(output), RS2::FormatDXFRW2010));
+  std::ifstream afterRefusals(output, std::ios::binary);
+  CHECK(std::string(std::istreambuf_iterator<char>(afterRefusals), {}) == sentinel);
+  afterRefusals.close();
   std::filesystem::remove(source);
   std::filesystem::remove(output);
+}
+
+TEST_CASE("Sparse material source snapshots have a bounded record count",
+          "[system-codec][dxf][material][transaction]") {
+  LC_DwgAdvancedMetadata metadata;
+  for (std::uint32_t handle = 1; handle <= 4; ++handle) {
+    DRW_Material material;
+    material.handle = handle;
+    metadata.addMaterial(material);
+    auto &records = const_cast<std::vector<LC_DwgAdvancedMetadata::MaterialRecord> &>(
+        metadata.materials());
+    records.back().requiresRawDxfReplay = true;
+    DRW_RawDxfObject source;
+    source.name = "MATERIAL";
+    source.handle = handle;
+    source.m_version = DRW::AC1024;
+    metadata.addDxfRawMaterialSource(source);
+    CHECK(static_cast<bool>(records.back().rawDxfSource) == (handle <= 3));
+    CHECK(records.back().rawDxfSourceConflict == (handle > 3));
+  }
+  metadata.clear();
+  for (unsigned index = 0; index != 2; ++index) {
+    DRW_Material material;
+    material.handle = 42;
+    metadata.addMaterial(material);
+    auto &records = const_cast<std::vector<LC_DwgAdvancedMetadata::MaterialRecord> &>(
+        metadata.materials());
+    records.back().requiresRawDxfReplay = true;
+    DRW_RawDxfObject source;
+    source.name = "MATERIAL";
+    source.handle = 42;
+    source.m_version = DRW::AC1024;
+    metadata.addDxfRawMaterialSource(source);
+  }
+  REQUIRE(metadata.materials().size() == 2u);
+  for (const auto &record : metadata.materials()) {
+    CHECK_FALSE(record.rawDxfSource);
+    CHECK(record.rawDxfSourceConflict);
+  }
+  for (unsigned scenario = 0; scenario != 3; ++scenario) {
+    metadata.clear();
+    DRW_Material material;
+    material.handle = 9;
+    metadata.addMaterial(material);
+    auto &record = const_cast<LC_DwgAdvancedMetadata::MaterialRecord &>(metadata.materials().back());
+    record.requiresRawDxfReplay = true;
+    DRW_RawDxfObject source;
+    source.name = "MATERIAL";
+    source.handle = 9;
+    source.m_version = scenario == 0 ? DRW::UNKNOWNV : DRW::AC1024;
+    if (scenario == 1)
+      for (unsigned i = 0; i != 65; ++i)
+        source.groups.emplace_back(70, static_cast<int>(i));
+    if (scenario == 2) {
+      source.hasRawValues = true;
+      source.groups.emplace_back(70, 0);
+    }
+    metadata.addDxfRawMaterialSource(source);
+    CHECK_FALSE(record.rawDxfSource);
+    CHECK(record.rawDxfSourceConflict);
+  }
 }
 
 TEST_CASE("System codec preserves single-line controls and literal carets",

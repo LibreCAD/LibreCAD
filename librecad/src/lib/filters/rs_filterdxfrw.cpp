@@ -11868,12 +11868,6 @@ void RS_FilterDXFRW::addCellStyleMap(const DRW_CellStyleMap &data) {
                   static_cast<int>(data.m_cellStyles.size()));
 }
 
-void RS_FilterDXFRW::addRawDxfObject(const DRW_RawDxfObject &data) {
-  if (m_graphic != nullptr) {
-    m_graphic->dwgAdvancedMetadata().addRawDxfObject(data);
-  }
-}
-
 #if defined(LIBDXFRW_HAS_DXF_DICTIONARY_SOURCE_HANDLERS) || \
     defined(LIBDXFRW_HAS_DXF_RASTER_SOURCE_HANDLER)
 static bool canCaptureSmallDxfFile(const QString &file) {
@@ -11902,6 +11896,22 @@ static bool canRetainSmallDxfSource(const DRW_RawDxfObject &source) {
   return true;
 }
 #endif
+
+void RS_FilterDXFRW::addRawDxfObject(const DRW_RawDxfObject &data) {
+  if (m_graphic == nullptr)
+    return;
+  auto &metadata = m_graphic->dwgAdvancedMetadata();
+  metadata.addRawDxfObject(data);
+#if defined(LIBDXFRW_HAS_DXF_DICTIONARY_SOURCE_HANDLERS) || \
+    defined(LIBDXFRW_HAS_DXF_RASTER_SOURCE_HANDLER)
+  if (data.name == "MATERIAL" && !metadata.materials().empty() &&
+      metadata.materials().back().requiresRawDxfReplay &&
+      metadata.materials().back().handle == data.handle &&
+      canCaptureSmallDxfFile(m_file) &&
+      canRetainSmallDxfSource(data))
+    metadata.addDxfRawMaterialSource(data);
+#endif
+}
 
 #ifdef LIBDXFRW_HAS_DXF_DICTIONARY_SOURCE_HANDLERS
 bool RS_FilterDXFRW::wantsDxfRootDictionarySource() const {

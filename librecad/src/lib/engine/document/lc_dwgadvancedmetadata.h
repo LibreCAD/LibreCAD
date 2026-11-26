@@ -1581,6 +1581,10 @@ public:
     // A partial DXF MATERIAL must never be reconstructed as a complete typed
     // record when its raw carrier is unavailable or targets another version.
     bool requiresRawDxfReplay = false;
+    // Optional immutable source copy for a bounded raw-only DXF profile.
+    // Absence or a conflict never authorizes replay.
+    std::shared_ptr<const DRW_RawDxfObject> rawDxfSource;
+    bool rawDxfSourceConflict = false;
     ReplayState replayState = ReplayState::ReplayAllowed;
   };
 
@@ -3828,6 +3832,47 @@ public:
 
   void addRawDxfObject(const DRW_RawDxfObject &object) {
     m_rawDxfObjects.push_back(object);
+  }
+
+  // The codec publishes the typed MATERIAL immediately before its raw
+  // carrier. Capture only that bounded raw-only source, and fail closed on
+  // duplicate identities or allocation failure. This does not admit replay.
+  void addDxfRawMaterialSource(const DRW_RawDxfObject &source) {
+    if (source.name != "MATERIAL" || source.handle == 0 ||
+        source.handle == DRW::NoHandle || m_materials.empty())
+      return;
+    auto &current = m_materials.back();
+    if (!current.requiresRawDxfReplay || current.handle != source.handle)
+      return;
+    // This first source profile is limited to three total materials. The
+    // bound also keeps repeated capture attempts from scanning an unbounded
+    // list; larger graphs remain outside the replay profile.
+    if (m_materials.size() > 3u || source.m_version == DRW::UNKNOWNV ||
+        source.groups.size() > 64u || source.rawValues.size() > 64u ||
+        (source.hasRawValues && source.rawValues.size() != source.groups.size())) {
+      current.rawDxfSourceConflict = true;
+      return;
+    }
+    std::size_t captured = 0;
+    for (auto &material : m_materials) {
+      if (material.rawDxfSource)
+        ++captured;
+      if (&material != &current && material.handle == source.handle) {
+        material.rawDxfSource.reset();
+        material.rawDxfSourceConflict = true;
+        current.rawDxfSourceConflict = true;
+      }
+    }
+    if (current.rawDxfSource || current.rawDxfSourceConflict || captured >= 3u) {
+      current.rawDxfSource.reset();
+      current.rawDxfSourceConflict = true;
+      return;
+    }
+    try {
+      current.rawDxfSource = std::make_shared<const DRW_RawDxfObject>(source);
+    } catch (...) {
+      current.rawDxfSourceConflict = true;
+    }
   }
 
   void addDxfRootDictionarySource(const DRW_RawDxfObject &source) {
