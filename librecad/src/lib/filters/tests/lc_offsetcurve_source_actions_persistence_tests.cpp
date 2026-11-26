@@ -3222,6 +3222,9 @@ TEST_CASE("High-origin concave polyline offsets trim and persist ordinary fragme
     const bool dumbbell = scenario == 2;
     const double signedDistance = scenario == 0 ? -.5 : (dumbbell ? .6 : .5);
     CAPTURE(static_cast<int>(format), coordinate, angle, scenario, signedDistance);
+    if (qEnvironmentVariableIsSet("LC_OFFSET_TRIM_CONCAVE_REPRO") &&
+        (format != RS2::FormatDXFRW14 || coordinate != 1e9 || angle != 0.0 || scenario != 0))
+        return;
     REQUIRE(lc::test::application());
     lc::test::QuietLog quiet;
     QTemporaryDir directory;
@@ -3274,6 +3277,17 @@ TEST_CASE("High-origin concave polyline offsets trim and persist ordinary fragme
     mouse(*update, view, sourcePick, false);
     mouse(*update, view, sourcePick, true);
     lc::test::awaitUpdate(*updateAction);
+    QStringList updateOutcomes;
+    for (const auto& outcome : updateAction->lastReport().outcomes) {
+        updateOutcomes << QStringLiteral("target=%1 refusal=%2 exactWorkerWorkKnown=%3")
+            .arg(qulonglong(outcome.targetId)).arg(outcome.refusal)
+            .arg(outcome.exactWorkerWorkKnown ? QStringLiteral("true") : QStringLiteral("false"));
+    }
+    INFO("Update from Source report: updated=" << updateAction->lastReport().updated
+         << " unchanged=" << updateAction->lastReport().unchanged
+         << " refused=" << updateAction->lastReport().refused
+         << " sourceRefusal=" << updateAction->lastReport().sourceRefusal.toStdString()
+         << " outcomes=" << updateOutcomes.join(QStringLiteral("; ")).toStdString());
     REQUIRE(updateAction->lastReport().updated == 1);
     CHECK(updateAction->lastReport().refused == 0);
     REQUIRE(target->isDeleted());
