@@ -1357,6 +1357,22 @@ TEST_CASE("System codec gates ambiguous AC1024 default material",
   CHECK(graphMetadata.materials().front().rawDxfSource);
   CHECK_FALSE(exporter.fileExport(graphGraphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
   CHECK(exporter.exportReport().contains(QStringLiteral("raw-only graph requires qualification")));
+  graphGraphic.addVariable("$CMATERIAL", QStringLiteral("1F"), 347);
+  CHECK_FALSE(exporter.fileExport(graphGraphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+  CHECK(exporter.exportReport().contains(QStringLiteral("raw-only graph requires qualification")));
+  graphGraphic.addVariable("$CMATERIAL", QStringLiteral("2F"), 347);
+  CHECK_FALSE(exporter.fileExport(graphGraphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+  CHECK(exporter.exportReport().contains(QStringLiteral("raw source missing, changed or unverified")));
+  graphGraphic.addVariable("$CMATERIAL", QStringLiteral("1F"), 5);
+  CHECK_FALSE(exporter.fileExport(graphGraphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+  CHECK(exporter.exportReport().contains(QStringLiteral("raw source missing, changed or unverified")));
+  graphGraphic.addVariable("$CMATERIAL", QStringLiteral("not-a-handle"), 347);
+  CHECK_FALSE(exporter.fileExport(graphGraphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+  CHECK(exporter.exportReport().contains(QStringLiteral("raw source missing, changed or unverified")));
+  graphGraphic.addVariable("$CMATERIAL", QStringLiteral("0"), 347);
+  CHECK_FALSE(exporter.fileExport(graphGraphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+  CHECK(exporter.exportReport().contains(QStringLiteral("raw-only graph requires qualification")));
+  graphGraphic.addVariable("$CMATERIAL", QStringLiteral("1F"), 347);
   auto &graphRaw = const_cast<std::vector<DRW_RawDxfObject> &>(graphMetadata.rawDxfObjects());
   const auto dictionary = std::find_if(graphRaw.begin(), graphRaw.end(),
       [](const auto &record) { return record.name == "DICTIONARY" && record.handle == 0xEu; });
@@ -1424,6 +1440,30 @@ TEST_CASE("System codec gates ambiguous AC1024 default material",
   CHECK_FALSE(exporter.fileExport(danglingGraphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
   CHECK(exporter.exportReport().contains(QStringLiteral("raw source missing, changed or unverified")));
   std::filesystem::remove(danglingSource);
+  const auto layerSource = tmpFile("system_sparse_material_layer_reference.dxf");
+  for (const auto &target : {std::string("1F"), std::string("2F")}) {
+    std::ifstream input(graphSource, std::ios::binary);
+    std::string graph((std::istreambuf_iterator<char>(input)), {});
+    const std::string versionMarker = "1\nAC1024\n";
+    const auto headerAt = graph.find(versionMarker);
+    REQUIRE(headerAt != std::string::npos);
+    graph.insert(headerAt + versionMarker.size(), "9\n$CMATERIAL\n347\n1F\n");
+    const auto at = graph.find("0\nSECTION\n2\nOBJECTS\n");
+    REQUIRE(at != std::string::npos);
+    graph.insert(at, "0\nSECTION\n2\nTABLES\n0\nTABLE\n2\nLAYER\n70\n1\n"
+                     "0\nLAYER\n5\n30\n100\nAcDbSymbolTableRecord\n100\nAcDbLayerTableRecord\n"
+                     "2\nRAWTEST\n70\n0\n62\n7\n6\nCONTINUOUS\n347\n" + target +
+                     "\n0\nENDTAB\n0\nENDSEC\n");
+    writeText(layerSource, graph);
+    RS_Graphic layerGraphic;
+    OptInFilter layerImporter;
+    REQUIRE(layerImporter.fileImport(layerGraphic, QString::fromStdString(layerSource), RS2::FormatDXFRW));
+    CHECK_FALSE(exporter.fileExport(layerGraphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+    CHECK(exporter.exportReport().contains(target == "1F"
+        ? QStringLiteral("raw-only graph requires qualification")
+        : QStringLiteral("raw source missing, changed or unverified")));
+  }
+  std::filesystem::remove(layerSource);
   // Generate the same locally authored control in Binary DXF without relying
   // on a private codec writer. Only the group kinds in this fixture are used.
   const auto binarySource = tmpFile("system_ezdxf_material_source_binary.dxf");

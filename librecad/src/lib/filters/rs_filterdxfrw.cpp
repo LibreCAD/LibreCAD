@@ -3081,6 +3081,52 @@ bool sparseDxfMaterialTargetsMatch(
   return foundSelected;
 }
 
+// Check live layer and current-material references against the selected
+// dictionary. Source provenance and staged-output proof are separate gates.
+bool sparseDxfMaterialReferencesMatch(RS_Graphic &graphic) {
+  const auto &metadata = graphic.dwgAdvancedMetadata();
+  const auto *source = metadata.dxfMaterialDictionarySource();
+  if (!source)
+    return false;
+  const LC_DwgAdvancedMetadata::DictionaryRecord *dictionary = nullptr;
+  for (const auto &candidate : metadata.dictionaries())
+    if (candidate.handle == source->handle) {
+      if (dictionary) return false;
+      dictionary = &candidate;
+    }
+  if (!dictionary)
+    return false;
+  const auto contains = [&](std::uint32_t handle) {
+    return handle == 0 || std::any_of(dictionary->entries.begin(), dictionary->entries.end(),
+        [&](const auto &entry) { return entry.handle == handle; });
+  };
+  const auto variables = graphic.getVariableDict();
+  const auto current = variables.constFind(QStringLiteral("$CMATERIAL"));
+  if (current != variables.cend()) {
+    if (current->getType() != RS2::VariableString || current->getCode() != 347)
+      return false;
+    const auto text = current->getString().toLatin1();
+    std::uint32_t handle = 0;
+    if (static_cast<std::size_t>(text.size()) != std::strlen(text.constData()) ||
+        !parseDxfCarrierHandle(text.constData(), handle) || !contains(handle))
+      return false;
+  }
+  const auto *layers = graphic.getLayerList();
+  for (unsigned int i = 0; i < layers->count(); ++i) {
+    const auto &identity = layers->at(i)->importedRecordId();
+    const auto *layer = metadata.findLayerTableEntryByIdentity(identity);
+    if (!layer) {
+      if (identity) return false;
+      continue;
+    }
+    std::uint32_t handle = 0;
+    bool present = false;
+    if (!layer->getDxfMaterialHandle(handle, present) || (present && !contains(handle)))
+      return false;
+  }
+  return true;
+}
+
 // Verify the retained carrier and dictionary before a layer names a material.
 bool hasDxfLayerMaterialCarrier(
     const LC_DwgAdvancedMetadata &metadata,
@@ -13102,7 +13148,8 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
              ((g.dwgAdvancedMetadata().dxfRootDictionarySource() ||
                g.dwgAdvancedMetadata().dxfMaterialDictionarySource()) &&
               (!sparseDxfMaterialDictionarySourcesMatch(g.dwgAdvancedMetadata(), material) ||
-               !sparseDxfMaterialTargetsMatch(g.dwgAdvancedMetadata(), material)))))
+               !sparseDxfMaterialTargetsMatch(g.dwgAdvancedMetadata(), material) ||
+               !sparseDxfMaterialReferencesMatch(g)))))
           ++unresolved;
       m_writeLeftOut.emplace(
           unresolved ? "MATERIAL raw source missing, changed or unverified"
