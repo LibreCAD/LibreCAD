@@ -13183,6 +13183,8 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
   m_writeFailed = false;
   m_dxfLeftOutRawRecords = 0;
   m_writeLeftOut.clear();
+  m_dxfMaterialFinalCheck = {};
+  const auto clearMaterialFinalCheck = qScopeGuard([this] { m_dxfMaterialFinalCheck = {}; });
   m_legacyLayerLineweightsLeftOut = 0;
   m_legacyHeaderStylesLeftOut = 0;
   m_legacyPaperScaleLeftOut = false;
@@ -14373,8 +14375,16 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
       m_dxfEmittedObjectHandles.erase(h);
 
 #ifdef LIBRECAD_SYSTEM_LIBDXFRW
+    try {
     if (exportVersion >= DRW::AC1021) {
       std::map<std::uint32_t, bool> materialCarrierCache;
+#if defined(LIBDXFRW_HAS_DXF_STAGED_RAW_OBJECT_INSPECTOR) && \
+    defined(LIBDXFRW_HAS_DXF_STAGED_LAYER_MATERIAL_INSPECTOR)
+      std::vector<dxfRW::DxfLayerMaterialReference> stagedLayers;
+      std::vector<RS_Layer::ImportedRecordId> stagedLayerIds;
+      std::set<std::uint32_t> selectedMaterials;
+      bool boundedAudit = true;
+#endif
       RS_LayerList *layers = g.getLayerList();
       for (unsigned int i = 0; i < layers->count(); ++i) {
         const RS_Layer *layer = layers->at(i);
@@ -14384,6 +14394,16 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
         std::uint32_t handle = 0;
         bool present = false;
         bool valid = source->getDxfMaterialHandle(handle, present);
+#if defined(LIBDXFRW_HAS_DXF_STAGED_RAW_OBJECT_INSPECTOR) && \
+    defined(LIBDXFRW_HAS_DXF_STAGED_LAYER_MATERIAL_INSPECTOR)
+        if (source->handle == 0 || source->handle == DRW::NoHandle || stagedLayers.size() >= 64u)
+          boundedAudit = false;
+        else {
+          stagedLayers.push_back({layer->getName().toUtf8().toStdString(), source->handle, handle, present});
+          stagedLayerIds.push_back(layer->importedRecordId());
+        }
+        if (present && handle != 0) selectedMaterials.insert(handle);
+#endif
         if (valid && present && handle != 0) {
           auto cached = materialCarrierCache.find(handle);
           if (cached == materialCarrierCache.end())
@@ -14399,6 +14419,127 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
           return false;
         }
       }
+#if defined(LIBDXFRW_HAS_DXF_STAGED_RAW_OBJECT_INSPECTOR) && \
+    defined(LIBDXFRW_HAS_DXF_STAGED_LAYER_MATERIAL_INSPECTOR)
+      if (boundedAudit && !selectedMaterials.empty() && !stagedLayers.empty()) {
+        std::set<std::uint32_t> selectedObjects;
+        for (const auto handle : selectedMaterials) {
+          const auto material = std::find_if(metadata.materials().begin(), metadata.materials().end(),
+              [&](const auto &item) { return item.handle == handle; });
+          if (material == metadata.materials().end()) { boundedAudit = false; break; }
+          const auto dictionary = std::find_if(metadata.dictionaries().begin(), metadata.dictionaries().end(),
+              [&](const auto &item) { return item.handle == material->parentHandle; });
+          if (dictionary == metadata.dictionaries().end()) { boundedAudit = false; break; }
+          selectedObjects.insert(dictionary->handle);
+          for (const auto &entry : dictionary->entries) selectedObjects.insert(entry.handle);
+        }
+        struct StagedMaterialAudit {
+          std::vector<DRW_RawDxfObject> objects;
+          std::vector<dxfRW::DxfLayerMaterialReference> layers;
+          std::vector<RS_Layer::ImportedRecordId> identities;
+          std::map<std::uint32_t, std::string> descriptions;
+          bool tablesSeen = false, objectsSeen = false;
+        };
+        auto audit = std::make_shared<StagedMaterialAudit>();
+        if (selectedObjects.size() > 64u) boundedAudit = false;
+        for (const auto handle : selectedObjects) {
+          const auto raw = std::find_if(metadata.rawDxfObjects().begin(), metadata.rawDxfObjects().end(),
+              [&](const auto &item) { return item.handle == handle; });
+          if (raw == metadata.rawDxfObjects().end() || !canRetainSmallDxfSource(*raw) ||
+              !dxfCarrierMatchesSource(*raw, *raw)) {
+            boundedAudit = false;
+            break;
+          }
+          for (const auto &group : raw->groups) {
+            const auto type = group.type();
+            if (type != DRW_Variant::STRING && type != DRW_Variant::INTEGER &&
+                type != DRW_Variant::DOUBLE && type != DRW_Variant::INTEGER64)
+              boundedAudit = false;
+            if (type == DRW_Variant::INTEGER64 &&
+                !(group.code() >= 160 && group.code() <= 169) &&
+                !(raw->name == "MATERIAL" && group.code() >= 90 && group.code() <= 92))
+              boundedAudit = false;
+          }
+          if (!boundedAudit) break;
+          if (raw->name == "MATERIAL") {
+            const auto material = std::find_if(metadata.materials().begin(), metadata.materials().end(),
+                [&](const auto &item) { return item.handle == handle; });
+            if (material == metadata.materials().end()) { boundedAudit = false; break; }
+            audit->descriptions.emplace(handle, material->description);
+          }
+          audit->objects.push_back(*raw);
+        }
+        if (boundedAudit) {
+          audit->layers = std::move(stagedLayers);
+          audit->identities = std::move(stagedLayerIds);
+          std::map<std::uint32_t, std::string> selectedRootNames;
+          for (const auto handle : selectedObjects) {
+            const auto rootName = rootEntryName.find(handle);
+            if (rootName != rootEntryName.end()) selectedRootNames.emplace(*rootName);
+          }
+          const auto layerCount = layers->count();
+          const auto stable = [this, audit, &g, selectedMaterials, sourceRootHandle,
+                               selectedRootNames, exportVersion, layerCount]() {
+            const auto &current = g.dwgAdvancedMetadata();
+            for (const auto &description : audit->descriptions) {
+              const auto material = std::find_if(current.materials().begin(), current.materials().end(),
+                  [&](const auto &item) { return item.handle == description.first; });
+              if (material == current.materials().end() || material->description != description.second)
+                return false;
+            }
+            for (const auto &source : audit->objects) {
+              const DRW_RawDxfObject *live = nullptr;
+              for (const auto &candidate : current.rawDxfObjects())
+                if (candidate.handle == source.handle) {
+                  if (live) return false;
+                  live = &candidate;
+                }
+              if (!live || !dxfCarrierMatchesSource(source, *live)) return false;
+            }
+            const auto *currentLayers = g.getLayerList();
+            if (currentLayers->count() != layerCount) return false;
+            for (std::size_t i = 0; i < audit->layers.size(); ++i) {
+              const RS_Layer *live = nullptr;
+              for (unsigned int j = 0; j < currentLayers->count(); ++j)
+                if (currentLayers->at(j)->importedRecordId() == audit->identities[i]) {
+                  if (live) return false;
+                  live = currentLayers->at(j);
+                }
+              if (!live || live->getName().toUtf8().toStdString() != audit->layers[i].name) return false;
+              const auto *source = current.findLayerTableEntryByIdentity(audit->identities[i]);
+              std::uint32_t handle = 0; bool present = false;
+              if (!source || source->handle != audit->layers[i].sourceLayerHandle ||
+                  !source->getDxfMaterialHandle(handle, present) || present != audit->layers[i].present ||
+                  handle != audit->layers[i].sourceMaterialHandle) return false;
+            }
+            for (const auto handle : selectedMaterials)
+              if (!hasDxfLayerMaterialCarrier(current, m_dxfEmittedObjectHandles, sourceRootHandle, selectedRootNames,
+                                              exportVersion, handle)) return false;
+            return true;
+          };
+          if (!m_dxfW->setDxfTablesWriteInspector([this, audit, stable](const auto &view) {
+                if (audit->tablesSeen || !stable()) return false;
+                audit->tablesSeen = m_dxfW->inspectDxfLayerMaterialReferences(view, audit->layers);
+                return audit->tablesSeen;
+              }) ||
+              !m_dxfW->setDxfObjectsWriteInspector([this, audit, stable](const auto &view) {
+                if (!audit->tablesSeen || audit->objectsSeen || !stable()) return false;
+                std::vector<const DRW_RawDxfObject *> expected;
+                expected.reserve(audit->objects.size());
+                for (const auto &source : audit->objects) expected.push_back(&source);
+                audit->objectsSeen = m_dxfW->inspectDxfRawObjectRecords(view, expected);
+                return audit->objectsSeen;
+              })) return false;
+          m_dxfMaterialFinalCheck = [audit, stable] {
+            return audit->tablesSeen && audit->objectsSeen && stable();
+          };
+        }
+      }
+#endif
+    }
+    } catch (...) {
+      m_writeFailed = true;
+      return false;
     }
 #endif
 
@@ -29907,7 +30048,13 @@ void RS_FilterDXFRW::writeAppId() {
 bool RS_FilterDXFRW::finalizeDxfWrite() {
   // A failure latched in any DXF write callback reaches dxfRW here, before
   // it replaces the destination.
-  return !m_writeFailed;
+  if (m_writeFailed)
+    return false;
+  try {
+    return !m_dxfMaterialFinalCheck || m_dxfMaterialFinalCheck();
+  } catch (...) {
+    return false;
+  }
 }
 
 bool RS_FilterDXFRW::finalizeDwgWrite() {

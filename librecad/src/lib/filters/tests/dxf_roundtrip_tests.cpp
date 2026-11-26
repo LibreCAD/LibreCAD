@@ -1011,6 +1011,43 @@ TEST_CASE("System codec preserves a layer material link and refuses a missing ca
   std::ifstream crossVersion(output, std::ios::binary);
   CHECK(std::string(std::istreambuf_iterator<char>(crossVersion), {}) == sentinel);
   crossVersion.close();
+#if defined(LIBDXFRW_HAS_DXF_STAGED_RAW_OBJECT_INSPECTOR) && \
+    defined(LIBDXFRW_HAS_DXF_STAGED_LAYER_MATERIAL_INSPECTOR)
+  struct MutatingFilter : RS_FilterDXFRW {
+    std::function<void()> afterObjects;
+    std::function<void()> beforeFinalize;
+    void writeObjects() override {
+      RS_FilterDXFRW::writeObjects();
+      if (afterObjects) afterObjects();
+    }
+    bool finalizeDxfWrite() override {
+      if (beforeFinalize) beforeFinalize();
+      return RS_FilterDXFRW::finalizeDxfWrite();
+    }
+  } mutating;
+  auto &materials = const_cast<std::vector<LC_DwgAdvancedMetadata::MaterialRecord>&>(
+      graphic.dwgAdvancedMetadata().materials());
+  auto selected = std::find_if(materials.begin(), materials.end(),
+      [&](const auto &entry) { return entry.handle == materialHandle; });
+  REQUIRE(selected != materials.end());
+  const auto oldDescription = selected->description;
+  mutating.afterObjects = [&] { selected->description = "late object edit"; };
+  writeText(output, sentinel);
+  CHECK_FALSE(mutating.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  std::ifstream afterObjectFailure(output, std::ios::binary);
+  CHECK(std::string(std::istreambuf_iterator<char>(afterObjectFailure), {}) == sentinel);
+  afterObjectFailure.close();
+  selected->description = oldDescription;
+  mutating.afterObjects = {};
+  mutating.beforeFinalize = [&] { selected->description = "late finalize edit"; };
+  CHECK_FALSE(mutating.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  std::ifstream afterFinalizeFailure(output, std::ios::binary);
+  CHECK(std::string(std::istreambuf_iterator<char>(afterFinalizeFailure), {}) == sentinel);
+  afterFinalizeFailure.close();
+  selected->description = oldDescription;
+  mutating.beforeFinalize = {};
+  REQUIRE(mutating.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+#endif
   REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
   const auto material = recordGroupValues(output, "MATERIAL", "5");
   REQUIRE(material.size() == 1);

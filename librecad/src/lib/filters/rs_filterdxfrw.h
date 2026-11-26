@@ -33,6 +33,7 @@
 #include <cstdint>
 #include <limits>
 #include <map>
+#include <functional>
 #include <memory>
 #include <optional>
 #include <set>
@@ -44,7 +45,6 @@
 #include "libdxfrw.h"
 #ifdef DWGSUPPORT
 #include "libdwgr.h"
-#include <functional>
 #endif
 #include "rs_color.h"
 #include "rs_dimension.h"
@@ -3358,6 +3358,7 @@ private:
   bool m_oldMText = false;
   // Non-owning active-export observers; local RAII owners clear before delete.
   dxfRW *m_dxfW{nullptr};
+  std::function<bool()> m_dxfMaterialFinalCheck;
   dxfRW *m_dxfR{nullptr};
   static QString toNativeSingleLineString(const QString &data, bool decodeCaret);
   bool singleLineInputNeedsCaretDecoding() const;
