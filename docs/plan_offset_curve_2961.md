@@ -63367,3 +63367,22 @@ session; current-head visible replacement remains open. Exact previous PR
 head `f4f2a38608e037c3bc2fe25a56631216606c6fb8` completed **19 successful
 checks and 7 skipped**, including Windows x64; the new head requires its own
 CI. Other acceptance gates in sections 2045-2047 remain open.
+
+## 2049. Instrument the Self-source Regression (2026-11-26)
+
+The first ASan/UBSan run of section 2048's self-source cases exceeded the
+shared 3.5-second GUI-test watchdog in a worker-backed clone case; it reported
+no sanitizer error. Test-only commit `e146a0319` waits for the existing commit
+deadline plus five seconds and still requires a successful result and selected
+other source. The production deadline is unchanged. The updated selection
+passed **748 assertions / 2 cases** in both CMake Release and ASan/UBSan Debug
+on macOS, using `ASAN_OPTIONS=detect_leaks=0` and
+`UBSAN_OPTIONS=halt_on_error=1:print_stacktrace=1`. This does not qualify leak
+detection or the full sanitizer matrix. Section 2048's full suite predates
+only this test-wait edit.
+
+The section 2048 product fix and roadmap are pushed at `ff35989c9`; this
+test-only change and receipt are held locally while that exact head's CI runs,
+to avoid canceling its in-flight checks. Push them after the product-head CI
+reaches a terminal state, then evaluate the new head separately. Visible
+current-source GUI acceptance and the other gates remain open.
