@@ -210,6 +210,13 @@ the dependencies for **3 and 4** in parallel. **5** follows the acceptance work.
   for the 152 recorded profiles in isolated processes; it does not resolve the
   earlier aggregate timeout, shared-process order, leak detection, other timed-out
   cases, or other platforms. Next: account for the remaining generators by ID.
+- The separately excluded typed-ellipse generator passed **76/76 profiles,
+  9,252 assertions** on the same source-equivalent macOS Debug sanitizer build
+  and settings, using the `ellipse` profile runner and 180-second per-profile
+  bound. Manifest and logs: `/private/tmp/offset-3193-trim-ellipse-asan.json`
+  and `/private/tmp/offset-3193-trim-ellipse-asan-logs` (temporary). This is
+  isolated profile evidence; the high-origin ellipse generator, shared-process
+  order, leak detection, and other platforms remain separate gates.
 
 ## Smallest Safe Fix
 
