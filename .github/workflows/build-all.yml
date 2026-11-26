@@ -3,15 +3,10 @@ on:
   push:
     branches:
       - master
-  # Check macOS and Windows ARM64 packaging before changes reach master.
+  # Run the lightweight change detector for every PR so the MSIX check is
+  # always reported; expensive Windows jobs run only for package inputs.
   pull_request:
-    paths:
-      - '.github/workflows/build-all.yml'
-      - 'scripts/*osx*'
-      - 'scripts/*macos*'
-      - 'scripts/postprocess-windows/nsis-msvc.nsi'
-      - 'scripts/build-msix*.ps1'
-      - 'scripts/msix/**'
+    branches: [master]
 
 # A newer push supersedes a build that is still running.
 concurrency:
@@ -19,6 +14,51 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  DetectMsixChanges:
+    runs-on: ubuntu-24.04
+    outputs:
+      msix_changed: ${{ steps.msix-changes.outputs.msix_changed }}
+      macos_changed: ${{ steps.msix-changes.outputs.macos_changed }}
+      arm64_changed: ${{ steps.msix-changes.outputs.arm64_changed }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@main
+        with:
+          fetch-depth: 0
+
+      - name: Detect MSIX inputs
+        id: msix-changes
+        shell: bash
+        run: |
+          if [[ "$GITHUB_EVENT_NAME" != pull_request ]]; then
+            echo 'msix_changed=true' >> "$GITHUB_OUTPUT"
+            echo 'macos_changed=true' >> "$GITHUB_OUTPUT"
+            echo 'arm64_changed=true' >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          if ! files=$(git diff --name-only HEAD^1 HEAD); then
+            echo '::warning::Could not inspect the PR diff; running the Windows package checks.'
+            echo 'msix_changed=true' >> "$GITHUB_OUTPUT"
+            echo 'macos_changed=true' >> "$GITHUB_OUTPUT"
+            echo 'arm64_changed=true' >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          if grep -Eq '^(\.github/workflows/build-all\.yml|scripts/build-msix[^/]*\.ps1|scripts/msix/|scripts/copy-vc-runtime\.ps1|scripts/postprocess-windows/nsis-msvc\.nsi|licenses/|LICENSE$)' <<< "$files"; then
+            echo 'msix_changed=true' >> "$GITHUB_OUTPUT"
+            echo 'arm64_changed=true' >> "$GITHUB_OUTPUT"
+          else
+            echo 'msix_changed=false' >> "$GITHUB_OUTPUT"
+          fi
+          if grep -Eq '^(\.github/workflows/build-all\.yml|scripts/[^/]*osx[^/]*|scripts/[^/]*macos[^/]*)' <<< "$files"; then
+            echo 'macos_changed=true' >> "$GITHUB_OUTPUT"
+            echo 'arm64_changed=true' >> "$GITHUB_OUTPUT"
+          else
+            echo 'macos_changed=false' >> "$GITHUB_OUTPUT"
+          fi
+          if ! grep -q '^arm64_changed=' "$GITHUB_OUTPUT"; then
+            echo 'arm64_changed=false' >> "$GITHUB_OUTPUT"
+          fi
+
   BuildLinux:
     if: github.event_name == 'push'
     runs-on: ubuntu-24.04
@@ -180,6 +220,8 @@ jobs:
           retention-days: 2
 
   BuildMacOS:
+    needs: [DetectMsixChanges]
+    if: github.event_name == 'push' || needs.DetectMsixChanges.outputs.macos_changed == 'true'
     runs-on: macos-15
     outputs:
       output1: ${{ steps.artifact-upload-step.outputs.artifact-id }}
@@ -263,7 +305,8 @@ jobs:
           retention-days: 2
 
   BuildWindows64:
-    if: github.event_name == 'push'
+    needs: [DetectMsixChanges]
+    if: github.event_name == 'push' || needs.DetectMsixChanges.outputs.msix_changed == 'true'
     runs-on: windows-2022
     outputs:
       output1: ${{ steps.artifact-upload-step.outputs.artifact-id }}
@@ -395,9 +438,10 @@ jobs:
 
       - name: Package MSIX
         id: package-msix
-        # A failed Store package must not hold back the installers on master;
-        # nothing is uploaded, so PackageWindowsMsix fails for want of the
-        # artifact instead.  It takes under a minute; the limit turns a hang
+        # A push's failed Store package must not hold back the installers on
+        # master; its skipped upload makes PackageWindowsMsix fail for the
+        # missing artifact instead. On PRs, failures block the MSIX check.
+        # It takes under a minute; the limit turns a hang
         # into a failure, which continue-on-error absorbs, not a cancellation.
         continue-on-error: ${{ github.event_name == 'push' }}
         timeout-minutes: 10
@@ -454,6 +498,8 @@ jobs:
           retention-days: 2
 
   BuildWindowsARM64:
+    needs: [DetectMsixChanges]
+    if: github.event_name == 'push' || needs.DetectMsixChanges.outputs.arm64_changed == 'true'
     runs-on: windows-11-vs2026-arm
     outputs:
       output1: ${{ steps.artifact-upload-step.outputs.artifact-id }}
@@ -579,26 +625,12 @@ jobs:
           path: LibreCAD*.exe
           retention-days: 2
 
-      - name: Detect MSIX changes
-        # A pull request checks the MSIX only when it changes what goes into
-        # it, so that other pull requests keep the checks they had.
-        id: msix-changes
-        if: github.event_name == 'pull_request'
-        run: |
-          # The checkout is the merge commit; its first parent is the base.
-          $files = git diff --name-only HEAD^1 HEAD
-          if ($LASTEXITCODE -ne 0 -or ($files | Select-String -Pattern '^(\.github/workflows/build-all\.yml|scripts/build-msix[^/]*\.ps1|scripts/msix/|licenses/|LICENSE$)' -Quiet)) {
-            Add-Content -LiteralPath $env:GITHUB_OUTPUT -Value 'changed=true'
-          }
-          exit 0
-        shell: pwsh
-
       - name: Package MSIX
         id: package-msix
-        if: github.event_name == 'push' || steps.msix-changes.outputs.changed == 'true'
-        # A failed Store package must not hold back the installers on master;
-        # nothing is uploaded, so PackageWindowsMsix fails for want of the
-        # artifact instead.  It takes under a minute; the limit turns a hang
+        # A push's failed Store package must not hold back the installers on
+        # master; its skipped upload makes PackageWindowsMsix fail for the
+        # missing artifact instead. On PRs, failures block the MSIX check.
+        # It takes under a minute; the limit turns a hang
         # into a failure, which continue-on-error absorbs, not a cancellation.
         continue-on-error: ${{ github.event_name == 'push' }}
         timeout-minutes: 10
@@ -644,10 +676,9 @@ jobs:
         shell: pwsh
 
       - name: Upload MSIX artifact
-        # Only pushes bundle the packages for the Store; on a pull request the
-        # package is a check and adds no artifact.
-        if: steps.package-msix.outcome == 'success' && github.event_name == 'push'
-        continue-on-error: true
+        # The PR bundle check needs this package; upload errors must fail PRs.
+        if: steps.package-msix.outcome == 'success'
+        continue-on-error: ${{ github.event_name == 'push' }}
         timeout-minutes: 10
         uses: actions/upload-artifact@main
         with:
@@ -657,8 +688,8 @@ jobs:
           retention-days: 2
 
   PackageWindowsMsix:
-    if: github.event_name == 'push'
-    needs: [BuildWindows64, BuildWindowsARM64]
+    needs: [DetectMsixChanges, BuildWindows64, BuildWindowsARM64]
+    if: github.event_name == 'push' || needs.DetectMsixChanges.outputs.msix_changed == 'true'
     # x64, because the smoke test registers and runs the x64 package.
     # MakeAppx bundles any architecture.
     runs-on: windows-2022
@@ -777,7 +808,7 @@ jobs:
         continue-on-error: true
 
       - name: Upload App Certification Kit report
-        if: always()
+        if: always() && github.event_name == 'push'
         uses: actions/upload-artifact@main
         with:
           name: winMsixWackReport
@@ -786,6 +817,7 @@ jobs:
           retention-days: 30
 
       - name: Upload MSIX bundle
+        if: github.event_name == 'push'
         uses: actions/upload-artifact@main
         with:
           name: winMsixBundle

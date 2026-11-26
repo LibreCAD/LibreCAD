@@ -378,30 +378,32 @@ through the **Submit MSIX to Microsoft Store** workflow below.
   an MSIX failure instead of holding back the installers. MakeAppx writes
   its file list to `msix-output\makeappx-*.log`, which the job prints when
   packaging fails or times out.
-- A pull request that changes `build-all.yml`, `scripts/build-msix*.ps1` or
-  `scripts/msix/` starts `build-all.yml`, which builds macOS and ARM64 as
-  for any pull request, and also packages the ARM64 MSIX as a check: a
-  packaging failure fails the job after its NSIS installer has been
-  uploaded, and nothing is uploaded for the MSIX, so the pull request's
-  artifacts are the ones it had before. Pull requests that start the
-  workflow for other files (the macOS scripts, `nsis-msvc.nsi`) skip the
-  check unless they also change `licenses/` or `LICENSE`, which the
-  package copies; those two alone do not start the workflow and are first
-  packaged on `master`. Bundling runs on pushes only.
+- Every pull request to `master` starts `build-all.yml`, so its required MSIX
+  check is present even when the Windows package jobs are skipped. Changes to
+  `build-all.yml`, `scripts/build-msix*.ps1`, `scripts/msix/`,
+  `scripts/copy-vc-runtime.ps1`, `scripts/postprocess-windows/nsis-msvc.nsi`,
+  `licenses/` or `LICENSE` build and smoke-test the x64+ARM64 bundle. The MSIX
+  inputs are also checked individually; packaging or upload failures fail the
+  PR. MacOS script changes retain the macOS and ARM64 build checks. PR builds
+  do not upload Store bundle or certification-report artifacts.
+
 - After each successful **Continuous build** push to `master`, **Submit MSIX to
   Microsoft Store** starts automatically with that run's bundle. If the overall
   build was canceled by another job, it can still submit when `PackageWindowsMsix`
-  succeeded and the run's commit is still current on `master`. A reviewer of
-  the `microsoft-store` environment must approve the job before it can use the
-  Store credentials. Manual dispatch on `master` remains available to submit a
-  selected build run. The job:
+  succeeded and the run's commit is still current on `master`. A daily scheduled
+  run retries the successful package for the current master commit when no
+  submission is pending and that package version is not yet published. It uses
+  the same `microsoft-store` environment, so a reviewer must approve each
+  submission job before it can use the Store credentials. Manual dispatch on
+  `master` remains available to submit a selected build run. The job:
   1. accepts only a same-repository push run of `build-all.yml` on `master`,
      verifies `PackageWindowsMsix` succeeded and the run is still current on
      `master`, and refuses a bundle with the placeholder identity;
   2. refuses the run if its App Certification Kit report has a failing
      required test (`ignore_wack` overrides);
-  3. refuses to start while another submission is in progress, whatever its
-     state, and links to it (`replace_pending` deletes it instead);
+  3. waits without changing the Store while another submission is in progress
+     and links to it; scheduled runs retry after it finishes. Manual dispatch
+     with `replace_pending` still explicitly replaces it;
   4. uploads the `.msixupload` to a new draft with a pinned msstore CLI;
      `no_commit` stops here and leaves the draft, which
      `msstore submission publish <product id>` sends on later (Partner

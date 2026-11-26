@@ -26,8 +26,9 @@
 # is deliberately unsigned. Successful master builds trigger a Store
 # submission. If another job cancels the overall build, the MSIX is still
 # eligible once its packaging job succeeds and the commit is still current on
-# master. Certification can take up to three business days; only one
-# submission can be in progress at a time. The first submission is made by
+# master. A daily scheduled run retries the current package after an existing
+# submission finishes. Certification can take up to three business days; only
+# one submission can be in progress at a time. The first submission is made by
 # hand in Partner Center.
 #
 # Setup, and what a run does to the product in Partner Center:
@@ -40,6 +41,9 @@ on:
     workflows: ["Continuous build"]
     types: [completed]
     branches: [master]
+  # Retry the current master package after a prior Store submission finishes.
+  schedule:
+    - cron: '17 6 * * *'
   workflow_dispatch:
     inputs:
       run_id:
@@ -75,7 +79,8 @@ jobs:
         github.event.workflow_run.event == 'push' &&
         github.event.workflow_run.head_branch == 'master' &&
         github.event.workflow_run.head_repository.full_name == github.repository) ||
-       (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/master'))
+       (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/master') ||
+       (github.event_name == 'schedule' && github.ref == 'refs/heads/master'))
     runs-on: windows-2022
     environment: microsoft-store
     # The commit can stay at CommitStarted for over an hour (msstore-cli#29).
@@ -83,8 +88,34 @@ jobs:
     env:
       MICROSOFT_STORE_PRODUCT_ID: ${{ vars.MICROSOFT_STORE_BETA_PRODUCT_ID }}
     steps:
+      - name: Select build run
+        id: select-build
+        shell: pwsh
+        run: |
+          $runId = $env:EVENT_RUN_ID
+          if ($env:EVENT_NAME -eq 'schedule') {
+            $branch = gh api "repos/$env:GITHUB_REPOSITORY/branches/master" | ConvertFrom-Json
+            if ($LASTEXITCODE -ne 0 -or -not $branch) { throw 'Could not inspect the current master commit.' }
+            $runs = gh api "repos/$env:GITHUB_REPOSITORY/actions/workflows/build-all.yml/runs?branch=master&event=push&status=success&per_page=100" | ConvertFrom-Json
+            if ($LASTEXITCODE -ne 0 -or -not $runs) { throw 'Could not inspect successful Continuous build runs.' }
+            $candidate = $runs.workflow_runs | Where-Object { $_.head_sha -eq $branch.commit.sha } | Select-Object -First 1
+            if (-not $candidate) {
+              @('### Microsoft Store retry', '', 'No successful Continuous build exists for the current master commit; nothing was submitted.') |
+                Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+              'run_id=' | Out-File -FilePath $env:GITHUB_OUTPUT -Append
+              exit 0
+            }
+            $runId = [string]$candidate.id
+          }
+          if ($runId -notmatch '^[0-9]+$') { throw "No valid build run ID was selected: '$runId'." }
+          "run_id=$runId" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
+        env:
+          GH_TOKEN: ${{ github.token }}
+          EVENT_NAME: ${{ github.event_name }}
+          EVENT_RUN_ID: ${{ github.event.workflow_run.id || inputs.run_id }}
+
       - name: Verify the completed build
-        if: ${{ github.event_name == 'workflow_run' }}
+        if: ${{ steps.select-build.outputs.run_id != '' && github.event_name != 'workflow_dispatch' }}
         run: |
           $run = gh api "repos/$env:GITHUB_REPOSITORY/actions/runs/$env:RUN_ID" | ConvertFrom-Json
           if ($LASTEXITCODE -ne 0 -or -not $run) { throw "Run $env:RUN_ID was not found." }
@@ -106,9 +137,10 @@ jobs:
         shell: pwsh
         env:
           GH_TOKEN: ${{ github.token }}
-          RUN_ID: ${{ github.event.workflow_run.id }}
+          RUN_ID: ${{ steps.select-build.outputs.run_id }}
 
       - name: Check the Store configuration
+        if: ${{ steps.select-build.outputs.run_id != '' }}
         # First, so that a missing secret fails in seconds and by name.  An
         # unset secret reaches the script as an empty string, and msstore
         # parses the tenant and client IDs as GUIDs, so it would reject an
@@ -142,6 +174,7 @@ jobs:
           SELLER_ID: ${{ secrets.SELLER_ID }}
 
       - name: Download the bundle
+        if: ${{ steps.select-build.outputs.run_id != '' }}
         run: |
           # The input reaches the script through the environment, never as
           # script text, and only a bundle built by build-all.yml for a push
@@ -165,9 +198,10 @@ jobs:
         shell: pwsh
         env:
           GH_TOKEN: ${{ github.token }}
-          RUN_ID: ${{ github.event.workflow_run.id || inputs.run_id }}
+          RUN_ID: ${{ steps.select-build.outputs.run_id }}
 
       - name: Check the App Certification Kit report
+        if: ${{ steps.select-build.outputs.run_id != '' }}
         run: |
           $report = Get-ChildItem wack -Recurse -File -Filter 'wack-report.xml' -ErrorAction SilentlyContinue |
             Select-Object -First 1
@@ -193,6 +227,7 @@ jobs:
           IGNORE_WACK: ${{ inputs.ignore_wack }}
 
       - name: Refuse placeholder identities
+        if: ${{ steps.select-build.outputs.run_id != '' }}
         run: |
           $upload = Get-ChildItem msix-bundle -File |
             Where-Object { $_.Extension -eq '.msixupload' } | Select-Object -First 1
@@ -234,6 +269,7 @@ jobs:
         shell: pwsh
 
       - name: Set up the Store CLI
+        if: ${{ steps.select-build.outputs.run_id != '' }}
         # Both pinned: with the default 'latest', msstore 0.4.0 and 0.4.1 broke
         # every upload (msstore-cli#154, #162).  Update after reading the notes.
         uses: microsoft/microsoft-store-apppublisher@cc9910a8d59f2eb55cbb83df0a3800cf3b5300e0 # v1.4
@@ -241,6 +277,7 @@ jobs:
           version: v0.4.3
 
       - name: Configure the Store CLI
+        if: ${{ steps.select-build.outputs.run_id != '' }}
         run: |
           msstore reconfigure `
             --tenantId "$env:AZURE_AD_TENANT_ID" `
@@ -258,29 +295,59 @@ jobs:
           AZURE_AD_APPLICATION_SECRET: ${{ secrets.AZURE_AD_APPLICATION_SECRET }}
           SELLER_ID: ${{ secrets.SELLER_ID }}
 
-      - name: Check for a submission in progress
+      - name: Check Store submission eligibility
+        id: store-eligibility
+        if: ${{ steps.select-build.outputs.run_id != '' }}
         run: |
           # msstore publish deletes a submission in progress without looking at
-          # it, even one in certification or held for release.
+          # it, even one in certification or held for release. Wait for it to
+          # finish; the scheduled run will retry without replacing it.
           $app = msstore apps get "$env:MICROSOFT_STORE_PRODUCT_ID" | ConvertFrom-Json
           if ($LASTEXITCODE -ne 0 -or -not $app) { throw "msstore apps get failed with exit code $LASTEXITCODE." }
           $pendingId = $app.pendingApplicationSubmission.id
-          if (-not $pendingId) {
-            Write-Host 'No submission in progress.'
+          if ($pendingId -and $env:REPLACE_PENDING -ne 'true') {
+            $pending = msstore submission get "$env:MICROSOFT_STORE_PRODUCT_ID" | ConvertFrom-Json
+            if ($LASTEXITCODE -ne 0 -or -not $pending) { throw "msstore submission get failed with exit code $LASTEXITCODE." }
+            $url = "https://partner.microsoft.com/dashboard/products/$env:MICROSOFT_STORE_PRODUCT_ID/submissions/$pendingId"
+            Write-Host "::notice::Submission $pendingId is still '$($pending.status)'; the scheduled run will retry after it finishes: $url"
+            @('### Microsoft Store submission', '', "Submission [$pendingId]($url) is still $($pending.status). This run made no Store changes; a scheduled run will retry after it finishes.") |
+              Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+            'submit=false' | Out-File -FilePath $env:GITHUB_OUTPUT -Append
             exit 0
           }
-          $pending = msstore submission get "$env:MICROSOFT_STORE_PRODUCT_ID" | ConvertFrom-Json
-          $url = "https://partner.microsoft.com/dashboard/products/$env:MICROSOFT_STORE_PRODUCT_ID/submissions/$pendingId"
-          if ($env:REPLACE_PENDING -ne 'true') {
-            throw "Submission $pendingId is in progress with status '$($pending.status)': $url. Wait until it is published or delete it in Partner Center, or re-run with replace_pending."
+          if ($pendingId) {
+            $pending = msstore submission get "$env:MICROSOFT_STORE_PRODUCT_ID" | ConvertFrom-Json
+            if ($LASTEXITCODE -ne 0 -or -not $pending) { throw "msstore submission get failed with exit code $LASTEXITCODE." }
+            Write-Host "::warning::Replacing submission $pendingId (status '$($pending.status)'), as replace_pending asks."
+          } else {
+            $publishedId = $app.lastPublishedApplicationSubmission.id
+            if ($publishedId) {
+              $published = msstore submission get "$env:MICROSOFT_STORE_PRODUCT_ID" | ConvertFrom-Json
+              if ($LASTEXITCODE -ne 0 -or -not $published) { throw "msstore submission get failed with exit code $LASTEXITCODE." }
+              if ($published.id -ne $publishedId) {
+                throw "Expected published submission $publishedId, but msstore submission get returned $($published.id); refusing to submit."
+              }
+              $publishedVersions = @($published.applicationPackages | ForEach-Object { [version]($_.version) })
+              if ($publishedVersions.Count -eq 0) { throw 'The last published submission has no package versions; refusing an automatic retry.' }
+              $targetVersion = [version]$env:PACKAGE_VERSION
+              $olderVersions = @($publishedVersions | Where-Object { $_ -lt $targetVersion })
+              if ($olderVersions.Count -eq 0) {
+                Write-Host "The current package version $targetVersion is already published."
+                @('### Microsoft Store submission', '', "Package version $targetVersion is already published; this run made no Store changes.") |
+                  Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+                'submit=false' | Out-File -FilePath $env:GITHUB_OUTPUT -Append
+                exit 0
+              }
+            }
           }
-          Write-Host "::warning::Replacing submission $pendingId (status '$($pending.status)'), as replace_pending asks."
+          'submit=true' | Out-File -FilePath $env:GITHUB_OUTPUT -Append
         shell: pwsh
         env:
           REPLACE_PENDING: ${{ inputs.replace_pending }}
 
       - name: Upload to a draft submission
         id: upload
+        if: steps.store-eligibility.outputs.submit == 'true'
         run: |
           # Never add -v: at that level msstore logs the submission's writable
           # upload URL, and this repository's logs are public.  --priceId keeps
@@ -291,7 +358,7 @@ jobs:
 
       - name: Send the submission to certification
         id: commit
-        if: ${{ !inputs.no_commit }}
+        if: ${{ steps.store-eligibility.outputs.submit == 'true' && !inputs.no_commit }}
         # A separate process from the upload: msstore never refreshes its
         # one-hour token.
         run: |
@@ -300,7 +367,7 @@ jobs:
         shell: pwsh
 
       - name: Wait for the commit
-        if: ${{ !inputs.no_commit }}
+        if: ${{ steps.store-eligibility.outputs.submit == 'true' && !inputs.no_commit }}
         # Waits for the commit only, not for certification, which takes days;
         # a commit can take over an hour, and the next step reports whatever
         # state the submission has reached.
@@ -312,7 +379,7 @@ jobs:
         shell: pwsh
 
       - name: Report the submission
-        if: ${{ !cancelled() && ((inputs.no_commit && steps.upload.outcome == 'success') || steps.commit.outcome == 'success') }}
+        if: ${{ !cancelled() && steps.store-eligibility.outputs.submit == 'true' && ((inputs.no_commit && steps.upload.outcome == 'success') || steps.commit.outcome == 'success') }}
         run: |
           $submission = msstore submission get "$env:MICROSOFT_STORE_PRODUCT_ID" | ConvertFrom-Json
           if ($LASTEXITCODE -ne 0 -or -not $submission) { throw "msstore submission get failed with exit code $LASTEXITCODE." }
@@ -346,4 +413,4 @@ jobs:
         shell: pwsh
         env:
           NO_COMMIT: ${{ inputs.no_commit }}
-          RUN_ID: ${{ github.event.workflow_run.id || inputs.run_id }}
+          RUN_ID: ${{ steps.select-build.outputs.run_id }}
