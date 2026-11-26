@@ -562,7 +562,7 @@ QString RS_Units::formatArchitectural(const double length, const RS2::Unit unit,
 
     unsigned feet = 0;
     // round the inches to the shown fraction before formatting
-    const long long stepsPerInch = 2LL << prec;
+    const long long stepsPerInch = 1LL << prec;
     const long long steps = roundInchSteps(length, unit, stepsPerInch, feet);
 
     const QString sInches = formatFractional(static_cast<double>(steps) / stepsPerInch, RS2::Inch, prec, showUnit);
@@ -636,7 +636,7 @@ QString RS_Units::formatFractional(const double length, [[maybe_unused]]RS2::Uni
     const double magnitude = std::abs(length);
     unsigned num = static_cast<unsigned>(magnitude);
 
-    unsigned denominator = 2 << prec;
+    unsigned denominator = 1 << prec;
     unsigned nominator = static_cast<unsigned>(RS_Math::round((magnitude - num) * denominator));
 
     // fraction rounds up to 1:
