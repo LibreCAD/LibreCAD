@@ -1407,6 +1407,23 @@ TEST_CASE("System codec gates ambiguous AC1024 default material",
   CHECK_FALSE(graphMetadata.dxfMaterialDictionarySource());
   CHECK_FALSE(exporter.fileExport(graphGraphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
   CHECK(exporter.exportReport().contains(QStringLiteral("raw source missing, changed or unverified")));
+  const auto danglingSource = tmpFile("system_sparse_material_dangling_target.dxf");
+  {
+    std::ifstream input(graphSource, std::ios::binary);
+    std::string graph((std::istreambuf_iterator<char>(input)), {});
+    const std::string entryMarker = "3\nByBlock\n350\n1F\n";
+    const auto at = graph.find(entryMarker);
+    REQUIRE(at != std::string::npos);
+    graph.insert(at + entryMarker.size(), "3\nMissing\n350\n2F\n");
+    writeText(danglingSource, graph);
+  }
+  RS_Graphic danglingGraphic;
+  OptInFilter danglingImporter;
+  REQUIRE(danglingImporter.fileImport(danglingGraphic, QString::fromStdString(danglingSource), RS2::FormatDXFRW));
+  REQUIRE(danglingGraphic.dwgAdvancedMetadata().dxfMaterialDictionarySource());
+  CHECK_FALSE(exporter.fileExport(danglingGraphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+  CHECK(exporter.exportReport().contains(QStringLiteral("raw source missing, changed or unverified")));
+  std::filesystem::remove(danglingSource);
   // Generate the same locally authored control in Binary DXF without relying
   // on a private codec writer. Only the group kinds in this fixture are used.
   const auto binarySource = tmpFile("system_ezdxf_material_source_binary.dxf");

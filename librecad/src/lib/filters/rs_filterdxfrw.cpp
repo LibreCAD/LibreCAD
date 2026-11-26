@@ -3036,6 +3036,51 @@ bool sparseDxfMaterialDictionarySourcesMatch(
   return matchesRoot == 1;
 }
 
+// Every entry in the selected dictionary must resolve to one unchanged
+// raw-only material, including siblings that a layer does not reference.
+bool sparseDxfMaterialTargetsMatch(
+    const LC_DwgAdvancedMetadata &metadata,
+    const LC_DwgAdvancedMetadata::MaterialRecord &selected) {
+  const auto *source = metadata.dxfMaterialDictionarySource();
+  if (!source)
+    return false;
+  const LC_DwgAdvancedMetadata::DictionaryRecord *dictionary = nullptr;
+  for (const auto &candidate : metadata.dictionaries()) {
+    if (candidate.handle == source->handle) {
+      if (dictionary) return false;
+      dictionary = &candidate;
+    }
+  }
+  if (!dictionary || dictionary->entries.empty())
+    return false;
+  std::set<std::uint32_t> handles;
+  std::set<std::string> names;
+  bool foundSelected = false;
+  for (const auto &entry : dictionary->entries) {
+    const auto name = normalizeDwgTableName(entry.name);
+    if (name.empty() || entry.handle == 0 || !handles.insert(entry.handle).second ||
+        !names.insert(name).second)
+      return false;
+    const LC_DwgAdvancedMetadata::MaterialRecord *target = nullptr;
+    for (const auto &candidate : metadata.materials()) {
+      if (candidate.handle == entry.handle) {
+        if (target) return false;
+        target = &candidate;
+      }
+    }
+    if (!target || !target->requiresRawDxfReplay || !target->rawDxfSource ||
+        target->rawDxfSource->m_version != source->m_version ||
+        target->parentHandle != dictionary->handle ||
+        normalizeDwgTableName(target->name) != name ||
+        std::any_of(target->reactorHandles.begin(), target->reactorHandles.end(),
+                    [&](std::uint32_t reactor) { return reactor != dictionary->handle; }) ||
+        !sparseDxfMaterialSourceMatches(metadata, *target))
+      return false;
+    foundSelected = foundSelected || target->handle == selected.handle;
+  }
+  return foundSelected;
+}
+
 // Verify the retained carrier and dictionary before a layer names a material.
 bool hasDxfLayerMaterialCarrier(
     const LC_DwgAdvancedMetadata &metadata,
@@ -13056,7 +13101,8 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
              !sparseDxfMaterialSourceMatches(g.dwgAdvancedMetadata(), material) ||
              ((g.dwgAdvancedMetadata().dxfRootDictionarySource() ||
                g.dwgAdvancedMetadata().dxfMaterialDictionarySource()) &&
-              !sparseDxfMaterialDictionarySourcesMatch(g.dwgAdvancedMetadata(), material))))
+              (!sparseDxfMaterialDictionarySourcesMatch(g.dwgAdvancedMetadata(), material) ||
+               !sparseDxfMaterialTargetsMatch(g.dwgAdvancedMetadata(), material)))))
           ++unresolved;
       m_writeLeftOut.emplace(
           unresolved ? "MATERIAL raw source missing, changed or unverified"
