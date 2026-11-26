@@ -193,6 +193,12 @@ the dependencies for **3 and 4** in parallel. **5** follows the acceptance work.
   configurations and reproduce both full cases in Release; keep sanitizer and
   all timed-out cases open until accounted for. Do not hide or retry away the
   original failures or change production deadlines.
+- The complete concave and closed-convex generators subsequently passed in
+  the source-equivalent macOS CMake Release build: **18,910** and **6,270**
+  assertions respectively, one case each, using the 30-second test-only wait.
+  Receipts: `/private/tmp/offset-3193-concave-release.txt` and
+  `/private/tmp/offset-3193-convex-release.txt` (temporary). These passes do
+  not eliminate the ASan fork failure or qualify other platforms.
 
 ## Smallest Safe Fix
 
