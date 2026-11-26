@@ -35,6 +35,7 @@
 #include <algorithm>
 #include <cmath>
 #include <cstddef>
+#include <cstdint>
 #include <cstdlib>
 #include <cstring>
 #include <filesystem>
@@ -1282,11 +1283,105 @@ TEST_CASE("System codec gates ambiguous AC1024 default material",
   writeText(output, sentinel);
   RS_FilterDXFRW exporter;
   CHECK_FALSE(exporter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+  CHECK(exporter.exportReport().contains(QStringLiteral("raw source missing, changed or unverified")));
   std::ifstream retained(output, std::ios::binary);
   CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel);
   retained.close();
   mutableRaw.front().groups.back().addInt(94, originalTail);
+  CHECK_FALSE(exporter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+  CHECK(exporter.exportReport().contains(QStringLiteral("raw source missing, changed or unverified")));
   mutableRaw.front().rawValues.back() = originalSpelling;
+  CHECK_FALSE(exporter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+  CHECK(exporter.exportReport().contains(QStringLiteral("raw-only graph requires qualification")));
+  mutableRaw.front().groups.back().addInt(94, originalTail + 1);
+  CHECK_FALSE(exporter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+  CHECK(exporter.exportReport().contains(QStringLiteral("raw source missing, changed or unverified")));
+  mutableRaw.front().groups.back().addInt(94, originalTail);
+  auto &material = const_cast<LC_DwgAdvancedMetadata::MaterialRecord &>(
+      graphic.dwgAdvancedMetadata().materials().front());
+  material.name = "changed";
+  CHECK_FALSE(exporter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+  CHECK(exporter.exportReport().contains(QStringLiteral("raw source missing, changed or unverified")));
+  material.name = "ByBlock";
+  const auto originalOwner = material.parentHandle;
+  material.parentHandle = originalOwner + 1;
+  CHECK_FALSE(exporter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+  CHECK(exporter.exportReport().contains(QStringLiteral("raw source missing, changed or unverified")));
+  material.parentHandle = originalOwner;
+  const auto originalReactors = material.reactorHandles;
+  material.reactorHandles.push_back(0x99u);
+  CHECK_FALSE(exporter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+  CHECK(exporter.exportReport().contains(QStringLiteral("raw source missing, changed or unverified")));
+  material.reactorHandles = originalReactors;
+  const auto nameGroup = std::find_if(mutableRaw.front().groups.begin(),
+      mutableRaw.front().groups.end(), [](const auto &group) { return group.code() == 1; });
+  REQUIRE(nameGroup != mutableRaw.front().groups.end());
+  const auto originalNameGroup = *nameGroup;
+  nameGroup->addString(1, std::string("ByBlock\0extra", 13));
+  CHECK_FALSE(exporter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+  CHECK(exporter.exportReport().contains(QStringLiteral("raw source missing, changed or unverified")));
+  *nameGroup = originalNameGroup;
+  material.requiresRawDxfReplay = false;
+  CHECK_FALSE(exporter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+  CHECK(exporter.exportReport().contains(QStringLiteral("raw source missing, changed or unverified")));
+  material.requiresRawDxfReplay = true;
+  mutableRaw.push_back(mutableRaw.front());
+  CHECK_FALSE(exporter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+  CHECK(exporter.exportReport().contains(QStringLiteral("raw source missing, changed or unverified")));
+  mutableRaw.pop_back();
+  // Generate the same locally authored control in Binary DXF without relying
+  // on a private codec writer. Only the group kinds in this fixture are used.
+  const auto binarySource = tmpFile("system_ezdxf_material_source_binary.dxf");
+  {
+    std::ifstream ascii(source, std::ios::binary);
+    std::ofstream binary(binarySource, std::ios::binary | std::ios::trunc);
+    const char magic[] = "AutoCAD Binary DXF\r\n\x1a";
+    binary.write(magic, sizeof(magic));
+    const auto littleEndian = [&](std::uint64_t value, unsigned bytes) {
+      for (unsigned i = 0; i != bytes; ++i)
+        binary.put(static_cast<char>((value >> (i * 8)) & 0xffu));
+    };
+    std::string codeText, value;
+    while (std::getline(ascii, codeText)) {
+      REQUIRE(static_cast<bool>(std::getline(ascii, value)));
+      const int code = std::stoi(codeText);
+      littleEndian(static_cast<std::uint16_t>(code), 2);
+      if (code <= 9 || code == 100 || code == 102 || code == 330) {
+        binary.write(value.data(), static_cast<std::streamsize>(value.size()));
+        binary.put('\0');
+      } else if ((code >= 40 && code <= 59) || (code >= 140 && code <= 149)) {
+        const double number = std::stod(value);
+        std::uint64_t bits = 0;
+        static_assert(sizeof(bits) == sizeof(number), "DXF doubles need 64 bits");
+        std::memcpy(&bits, &number, sizeof(bits));
+        littleEndian(bits, 8);
+      } else if (code >= 90 && code <= 99) {
+        littleEndian(static_cast<std::uint32_t>(std::stoll(value)), 4);
+      } else {
+        REQUIRE(((code >= 70 && code <= 79) || (code >= 170 && code <= 179) ||
+                 (code >= 270 && code <= 279)));
+        littleEndian(static_cast<std::uint16_t>(std::stoi(value)), 2);
+      }
+    }
+    REQUIRE(binary.good());
+  }
+  RS_Graphic binaryGraphic;
+  OptInFilter binaryImporter;
+  REQUIRE(binaryImporter.fileImport(binaryGraphic, QString::fromStdString(binarySource), RS2::FormatDXFRW));
+  REQUIRE(binaryGraphic.dwgAdvancedMetadata().materials().size() == 1u);
+  const auto binarySnapshot = binaryGraphic.dwgAdvancedMetadata().materials().front().rawDxfSource;
+  REQUIRE(binarySnapshot);
+  CHECK_FALSE(binarySnapshot->hasRawValues);
+  CHECK(binarySnapshot->groups.size() == 61u);
+  CHECK_FALSE(exporter.fileExport(binaryGraphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+  CHECK(exporter.exportReport().contains(QStringLiteral("raw-only graph requires qualification")));
+  auto &binaryRaw = const_cast<std::vector<DRW_RawDxfObject> &>(
+      binaryGraphic.dwgAdvancedMetadata().rawDxfObjects());
+  REQUIRE(binaryRaw.size() == 1u);
+  binaryRaw.front().groups.back().addInt(94, originalTail + 1);
+  CHECK_FALSE(exporter.fileExport(binaryGraphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+  CHECK(exporter.exportReport().contains(QStringLiteral("raw source missing, changed or unverified")));
+  std::filesystem::remove(binarySource);
   graphic.dwgAdvancedMetadata().addDxfRawMaterialSource(*sourceSnapshot);
   CHECK_FALSE(graphic.dwgAdvancedMetadata().materials().front().rawDxfSource);
   CHECK(graphic.dwgAdvancedMetadata().materials().front().rawDxfSourceConflict);
@@ -1305,10 +1400,20 @@ TEST_CASE("System codec gates ambiguous AC1024 default material",
   REQUIRE(oversized.dwgAdvancedMetadata().materials().size() == 1u);
   CHECK(oversized.dwgAdvancedMetadata().materials().front().requiresRawDxfReplay);
   CHECK_FALSE(oversized.dwgAdvancedMetadata().materials().front().rawDxfSource);
+  CHECK(oversized.dwgAdvancedMetadata().materials().front().rawDxfSourceConflict);
   CHECK_FALSE(exporter.fileExport(oversized, QString::fromStdString(output), RS2::FormatDXFRW2010));
+  auto &oversizedMaterial = const_cast<LC_DwgAdvancedMetadata::MaterialRecord &>(
+      oversized.dwgAdvancedMetadata().materials().front());
+  oversizedMaterial.requiresRawDxfReplay = false;
+  CHECK_FALSE(exporter.fileExport(oversized, QString::fromStdString(output), RS2::FormatDXFRW2010));
+  CHECK(exporter.exportReport().contains(QStringLiteral("raw source missing, changed or unverified")));
   std::ifstream afterRefusals(output, std::ios::binary);
   CHECK(std::string(std::istreambuf_iterator<char>(afterRefusals), {}) == sentinel);
   afterRefusals.close();
+  RS_Graphic clean;
+  clean.initForNewDocument();
+  REQUIRE(exporter.fileExport(clean, QString::fromStdString(output), RS2::FormatDXFRW2010));
+  CHECK_FALSE(exporter.exportReport().contains(QStringLiteral("MATERIAL raw")));
   std::filesystem::remove(source);
   std::filesystem::remove(output);
 }
@@ -1350,16 +1455,16 @@ TEST_CASE("Sparse material source snapshots have a bounded record count",
     CHECK_FALSE(record.rawDxfSource);
     CHECK(record.rawDxfSourceConflict);
   }
-  for (unsigned scenario = 0; scenario != 3; ++scenario) {
+  for (unsigned scenario = 0; scenario != 5; ++scenario) {
     metadata.clear();
     DRW_Material material;
-    material.handle = 9;
+    material.handle = scenario == 3 ? 0 : scenario == 4 ? DRW::NoHandle : 9;
     metadata.addMaterial(material);
     auto &record = const_cast<LC_DwgAdvancedMetadata::MaterialRecord &>(metadata.materials().back());
     record.requiresRawDxfReplay = true;
     DRW_RawDxfObject source;
     source.name = "MATERIAL";
-    source.handle = 9;
+    source.handle = material.handle;
     source.m_version = scenario == 0 ? DRW::UNKNOWNV : DRW::AC1024;
     if (scenario == 1)
       for (unsigned i = 0; i != 65; ++i)

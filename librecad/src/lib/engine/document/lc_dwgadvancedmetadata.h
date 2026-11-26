@@ -3838,9 +3838,12 @@ public:
   // carrier. Capture only that bounded raw-only source, and fail closed on
   // duplicate identities or allocation failure. This does not admit replay.
   void addDxfRawMaterialSource(const DRW_RawDxfObject &source) {
-    if (source.name != "MATERIAL" || source.handle == 0 ||
-        source.handle == DRW::NoHandle || m_materials.empty())
+    if (source.name != "MATERIAL" || m_materials.empty())
       return;
+    if (source.handle == 0 || source.handle == DRW::NoHandle) {
+      markDxfRawMaterialSourceUnavailable(source.handle);
+      return;
+    }
     auto &current = m_materials.back();
     if (!current.requiresRawDxfReplay || current.handle != source.handle)
       return;
@@ -3871,6 +3874,16 @@ public:
     try {
       current.rawDxfSource = std::make_shared<const DRW_RawDxfObject>(source);
     } catch (...) {
+      current.rawDxfSourceConflict = true;
+    }
+  }
+
+  void markDxfRawMaterialSourceUnavailable(std::uint32_t handle) noexcept {
+    if (m_materials.empty())
+      return;
+    auto &current = m_materials.back();
+    if (current.requiresRawDxfReplay && current.handle == handle) {
+      current.rawDxfSource.reset();
       current.rawDxfSourceConflict = true;
     }
   }

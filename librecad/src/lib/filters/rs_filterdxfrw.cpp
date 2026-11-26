@@ -2845,6 +2845,77 @@ bool visitDxfCarrierFrame(const DRW_RawDxfObject &raw, DRW::Version version,
          selfCount == 1 && ownerCount == 1;
 }
 
+// A retained raw-only material is eligible for further graph checks only if
+// its complete captured payload and modeled identity still match the source.
+// This check alone does not authorize replay.
+bool sparseDxfMaterialSourceMatches(
+    const LC_DwgAdvancedMetadata &metadata,
+    const LC_DwgAdvancedMetadata::MaterialRecord &material) {
+  if (!material.rawDxfSource || material.rawDxfSourceConflict ||
+      material.xDictHandle != 0 || !material.extData.empty() ||
+      hasCustomDxfApplicationGroups(material.appData))
+    return false;
+  const auto &source = *material.rawDxfSource;
+  const DRW_RawDxfObject *live = nullptr;
+  for (const auto &candidate : metadata.rawDxfObjects()) {
+    if (candidate.handle != material.handle)
+      continue;
+    if (live != nullptr)
+      return false;
+    live = &candidate;
+  }
+  if (live == nullptr || source.name != "MATERIAL" || live->name != source.name ||
+      source.handle != material.handle || live->handle != source.handle ||
+      source.parentHandle != material.parentHandle || live->parentHandle != source.parentHandle ||
+      live->m_version != source.m_version || live->hasRawValues != source.hasRawValues ||
+      live->rawValues != source.rawValues || live->groups.size() != source.groups.size())
+    return false;
+  for (std::size_t i = 0; i < source.groups.size(); ++i) {
+    const auto &expected = source.groups[i];
+    const auto &actual = live->groups[i];
+    if (expected.code() != actual.code() || expected.type() != actual.type() ||
+        expected.isLayerRef() || actual.isLayerRef() ||
+        expected.activeDwgLayerReference() || actual.activeDwgLayerReference() ||
+        expected.dwgCmColorValue() || actual.dwgCmColorValue())
+      return false;
+    switch (expected.type()) {
+    case DRW_Variant::STRING:
+      if (!expected.content.s || !actual.content.s || *expected.content.s != *actual.content.s)
+        return false;
+      break;
+    case DRW_Variant::INTEGER:
+      if (expected.i_val() != actual.i_val()) return false;
+      break;
+    case DRW_Variant::INTEGER64:
+      if (expected.i64_val() != actual.i64_val()) return false;
+      break;
+    case DRW_Variant::DOUBLE: {
+      const double a = expected.d_val(), b = actual.d_val();
+      if (std::memcmp(&a, &b, sizeof(a)) != 0) return false;
+      break;
+    }
+    case DRW_Variant::BINARY:
+      if (*expected.binary() != *actual.binary()) return false;
+      break;
+    default:
+      return false; // Coordinates and other types are outside this profile.
+    }
+  }
+  unsigned names = 0, descriptions = 0;
+  const bool frame = visitDxfCarrierFrame(*live, source.m_version, material.handle,
+      material.parentHandle, material.reactorHandles,
+      [&](const DRW_Variant &group, std::size_t) {
+        if (group.code() == 1 || group.code() == 2) {
+          unsigned &count = group.code() == 1 ? names : descriptions;
+          const auto &value = group.code() == 1 ? material.name : material.description;
+          return ++count == 1 && group.type() == DRW_Variant::STRING &&
+                 group.content.s && *group.content.s == value;
+        }
+        return group.code() < 1000;
+      });
+  return frame && names == 1 && (descriptions == 1 || material.description.empty());
+}
+
 // Compare a selected dictionary carrier with its typed fields and ordered
 // edges. Callers check entry-name and target uniqueness separately.
 bool dxfDictionaryCarrierMatches(
@@ -11906,10 +11977,12 @@ void RS_FilterDXFRW::addRawDxfObject(const DRW_RawDxfObject &data) {
     defined(LIBDXFRW_HAS_DXF_RASTER_SOURCE_HANDLER)
   if (data.name == "MATERIAL" && !metadata.materials().empty() &&
       metadata.materials().back().requiresRawDxfReplay &&
-      metadata.materials().back().handle == data.handle &&
-      canCaptureSmallDxfFile(m_file) &&
-      canRetainSmallDxfSource(data))
-    metadata.addDxfRawMaterialSource(data);
+      metadata.materials().back().handle == data.handle) {
+    if (canCaptureSmallDxfFile(m_file) && canRetainSmallDxfSource(data))
+      metadata.addDxfRawMaterialSource(data);
+    else
+      metadata.markDxfRawMaterialSourceUnavailable(data.handle);
+  }
 #endif
 }
 
@@ -12874,10 +12947,28 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
   }
   const auto &materials = g.dwgAdvancedMetadata().materials();
   if (std::any_of(materials.cbegin(), materials.cend(), [](const auto &material) {
-        return material.requiresRawDxfReplay;
+        return material.requiresRawDxfReplay || material.rawDxfSource ||
+               material.rawDxfSourceConflict;
       })) {
     // Do not let a partial raw-only object fall back to a typed writer.
     // Raw graph replay needs its own checked admission before it is enabled.
+#ifdef LIBRECAD_SYSTEM_LIBDXFRW
+    std::size_t unresolved = 0;
+    try {
+      for (const auto &material : materials)
+        if ((material.requiresRawDxfReplay || material.rawDxfSource ||
+             material.rawDxfSourceConflict) &&
+            (!material.requiresRawDxfReplay ||
+             !sparseDxfMaterialSourceMatches(g.dwgAdvancedMetadata(), material)))
+          ++unresolved;
+      m_writeLeftOut.emplace(
+          unresolved ? "MATERIAL raw source missing, changed or unverified"
+                     : "MATERIAL raw-only graph requires qualification",
+          unresolved ? unresolved : 1u);
+    } catch (...) {
+      // Comparison or reporting failure cannot authorize replay.
+    }
+#endif
     RS_DEBUG->print(RS_Debug::D_WARNING,
                     "RS_FilterDXFRW: cannot export an incomplete raw-only MATERIAL graph");
     m_writeFailed = true;
