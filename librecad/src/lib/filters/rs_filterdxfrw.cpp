@@ -13930,6 +13930,11 @@ void RS_FilterDXFRW::prepareDxfEntityHandleMap() {
     }
   }
 
+  // R12 has no BLOCK_RECORD table, and R14 cannot carry its BLKREFS
+  // references. INSERT entities are still written through the normal path.
+  if (m_version <= 1014)
+    return;
+
   auto collectInsertRefs = [&](RS_EntityContainer *container) {
     if (container == nullptr)
       return;

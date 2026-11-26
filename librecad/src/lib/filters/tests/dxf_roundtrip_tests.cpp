@@ -8924,6 +8924,61 @@ TEST_CASE("DXF round-trip of a custom linetype is stable in both DXF versions",
   std::filesystem::remove(src);
 }
 
+TEST_CASE("Legacy DXF writes block inserts without reverse block references",
+          "[dxf][roundtrip][filter][linetype][block][legacy][transaction]") {
+  ensureSettings();
+  const auto version = GENERATE(RS2::FormatDXFRW12, RS2::FormatDXFRW14);
+  const auto source = writeFixture("legacy_insert_refs_source.dxf", kNamedR12Fixture);
+  const auto first = tmpFile("legacy_insert_refs_first.dxf");
+  const auto second = tmpFile("legacy_insert_refs_second.dxf");
+  RS_Graphic graphic;
+  RS_FilterDXFRW filter;
+  REQUIRE(filter.fileImport(graphic, QString::fromStdString(source), RS2::FormatDXFRW));
+  RS_Entity *insert = nullptr;
+  for (RS_Entity *entity : graphic) {
+    if (entity != nullptr && entity->rtti() == RS2::EntityInsert) {
+      insert = entity;
+      break;
+    }
+  }
+  REQUIRE(insert != nullptr);
+  insert->setSourceHandle(0xABCu);
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(first), version));
+  RS_Graphic reread;
+  REQUIRE(filter.fileImport(reread, QString::fromStdString(first), RS2::FormatDXFRW));
+  // The R14 reimport has an independent header-resave issue; exercise its
+  // handle-bearing INSERT on the original graphic until that issue is fixed.
+  RS_Graphic &retryGraphic = version == RS2::FormatDXFRW12 ? reread : graphic;
+#ifdef LIBRECAD_SYSTEM_CODEC_TESTS
+  auto *layer = retryGraphic.findLayer(QStringLiteral("L_VENDOR"));
+  REQUIRE(layer != nullptr);
+  layer->setPrint(false);
+  const std::string sentinel = "preserve legacy insert destination\n";
+  writeText(second, sentinel);
+  CHECK_FALSE(filter.fileExport(retryGraphic, QString::fromStdString(second), version));
+  std::ifstream retained(second, std::ios::binary);
+  CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel);
+  retained.close();
+  layer->setPrint(true);
+#endif
+  REQUIRE(filter.fileExport(retryGraphic, QString::fromStdString(second), version));
+  CHECK(recordGroupValues(second, "INSERT", "2") == std::vector<std::string>{"B"});
+  CHECK(recordGroupValues(second, "BLOCK_RECORD", "331").empty());
+  const auto y = recordGroupValues(second, "INSERT", "20");
+  REQUIRE(y.size() == 1);
+  CHECK(std::stod(y.front()) == Catch::Approx(160.0));
+  if (const char *copy = std::getenv("LIBRECAD_KEEP_LEGACY_INSERT_OUTPUT"))
+    std::filesystem::copy_file(second, std::string(copy) +
+        (version == RS2::FormatDXFRW12 ? "-r12.dxf" : "-r14.dxf"),
+        std::filesystem::copy_options::overwrite_existing);
+  RS_Graphic rereadAgain;
+  REQUIRE(filter.fileImport(rereadAgain, QString::fromStdString(second), RS2::FormatDXFRW));
+  CHECK(entityOnLayer(rereadAgain, QStringLiteral("L_VENDOR")) != nullptr);
+  std::filesystem::remove(source);
+  std::filesystem::remove(first);
+  std::filesystem::remove(second);
+}
+
 TEST_CASE("DXF unregistered linetype names survive as empty marker records",
           "[dxf][roundtrip][filter][linetype][named]") {
   ensureSettings();
