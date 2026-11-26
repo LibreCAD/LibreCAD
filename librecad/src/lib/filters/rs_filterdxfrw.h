@@ -1968,6 +1968,9 @@ class RsFilterDxfRwExposureTestAccess;
 // DRW_Interface pointer to discover an explicitly opted-in derived filter.
 class RS_FilterDXFRW : public RS_FilterInterface,
                        public DRW_Interface
+#ifdef LIBDXFRW_HAS_DXF_STAGED_LAYER_PLOT_STYLE_INSPECTOR
+    , public DRW_DxfSparseMaterialRawPolicy
+#endif
 #ifdef LIBDXFRW_HAS_DXF_DICTIONARY_SOURCE_HANDLERS
     , public DRW_DxfRootDictionarySourceHandler,
       public DRW_DxfDictionarySourceHandler
@@ -1992,6 +1995,12 @@ class RS_FilterDXFRW : public RS_FilterInterface,
   friend class DwgWriteFailureTestAccess;
 #endif
 public:
+#ifdef LIBDXFRW_HAS_DXF_STAGED_LAYER_PLOT_STYLE_INSPECTOR
+  // Capture bounded raw-only materials for viewing. Replaying them remains a
+  // separate, explicit policy until the whole consumer profile is qualified.
+  bool wantsDxfSparseMaterialRawCapture() const noexcept override;
+  virtual bool wantsDxfSparseMaterialRawReplay() const noexcept { return false; }
+#endif
   /// First libdxfrw version to write DXF hatch angles in degrees (0.6.4).
   static constexpr unsigned kFirstDegreeHatchWriter = LIBDXFRW_VERSION(0, 6, 4);
   /// The standalone libdxfrw fork writes "999 dxfrw 2.0.0" with raw hatch

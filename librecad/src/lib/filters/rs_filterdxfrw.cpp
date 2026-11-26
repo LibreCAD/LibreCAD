@@ -5922,6 +5922,16 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic &g, const QString &file,
     }
     RS_DEBUG->print("RS_FilterDXFRW::fileImport: reading file: OK");
     if (success) {
+#ifdef LIBDXFRW_HAS_DXF_STAGED_LAYER_PLOT_STYLE_INSPECTOR
+      const auto &materials = m_graphic->dwgAdvancedMetadata().materials();
+      const auto rawOnly = std::count_if(materials.begin(), materials.end(),
+          [](const auto &material) { return material.requiresRawDxfReplay; });
+      if (rawOnly != 0)
+        RS_DIALOGFACTORY->commandMessage(
+            QObject::tr("DXF load: %1 material(s) have incomplete editing support; "
+                        "saving may be refused to preserve their data.")
+                .arg(static_cast<qulonglong>(rawOnly)));
+#endif
       std::cout << "DXF file version: "
                 << printDwgVersion(m_dxfR->getSourceVersion()).toStdString() << "\n";
       // Save writes the drawing back in the version it was read in, if it can
@@ -12320,13 +12330,16 @@ void RS_FilterDXFRW::addCellStyleMap(const DRW_CellStyleMap &data) {
 }
 
 #if defined(LIBDXFRW_HAS_DXF_DICTIONARY_SOURCE_HANDLERS) || \
-    defined(LIBDXFRW_HAS_DXF_RASTER_SOURCE_HANDLER)
+    defined(LIBDXFRW_HAS_DXF_RASTER_SOURCE_HANDLER) || defined(LIBDXFRW_HAS_DXF_STAGED_LAYER_PLOT_STYLE_INSPECTOR)
 static bool canCaptureSmallDxfFile(const QString &file) {
   constexpr qint64 maxSourceBytes = 256 * 1024;
   const qint64 size = QFileInfo(file).size();
   return size >= 0 && size <= maxSourceBytes;
 }
+#endif
 
+#if defined(LIBDXFRW_HAS_DXF_DICTIONARY_SOURCE_HANDLERS) || \
+    defined(LIBDXFRW_HAS_DXF_RASTER_SOURCE_HANDLER)
 static bool canRetainSmallDxfSource(const DRW_RawDxfObject &source) {
   constexpr std::size_t maxBytes = 64u * 1024u;
   if (source.groups.size() > 64 || source.rawValues.size() > 64 ||
@@ -12365,6 +12378,16 @@ void RS_FilterDXFRW::addRawDxfObject(const DRW_RawDxfObject &data) {
   }
 #endif
 }
+
+#ifdef LIBDXFRW_HAS_DXF_STAGED_LAYER_PLOT_STYLE_INSPECTOR
+bool RS_FilterDXFRW::wantsDxfSparseMaterialRawCapture() const noexcept {
+  try {
+    return m_graphic && canCaptureSmallDxfFile(m_file);
+  } catch (...) {
+    return false;
+  }
+}
+#endif
 
 #ifdef LIBDXFRW_HAS_DXF_NAMESPACE_SOURCE_HANDLER
 bool RS_FilterDXFRW::wantsDxfNamespaceSource() const {
@@ -13636,6 +13659,7 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
     defined(LIBDXFRW_HAS_DXF_STAGED_ENTITY_MATERIAL_INSPECTOR) && defined(LIBDXFRW_HAS_DXF_STAGED_DICTIONARY_INSPECTOR) && defined(LIBDXFRW_HAS_DXF_DEFAULT_PLOT_PLACEHOLDER_HANDLE) && defined(LIBDXFRW_HAS_DXF_HEADER_MATERIAL_SOURCE_HANDLER) && defined(LIBDXFRW_HAS_DXF_STAGED_LAYER_PLOT_STYLE_INSPECTOR)
       const auto *policy = dynamic_cast<const DRW_DxfSparseMaterialRawPolicy *>(this);
       admittedRawMaterials = !unresolved && policy && policy->wantsDxfSparseMaterialRawCapture() &&
+                             wantsDxfSparseMaterialRawReplay() &&
                              rawMaterialGraphMatches();
 #endif
       if (!admittedRawMaterials) m_writeLeftOut.emplace(

@@ -1527,13 +1527,29 @@ TEST_CASE("System codec refuses an incomplete raw-only material after metadata s
   writeText(source, "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1021\n0\nENDSEC\n"
                     "0\nSECTION\n2\nOBJECTS\n0\nMATERIAL\n5\nF040\n330\n72\n"
                     "100\nAcDbMaterial\n1\nRawOnly\n94\n63\n0\nENDSEC\n0\nEOF\n");
-  struct OptInFilter : RS_FilterDXFRW, DRW_DxfSparseMaterialRawPolicy {
+  struct OptInFilter : RS_FilterDXFRW
+#ifndef LIBDXFRW_HAS_DXF_STAGED_LAYER_PLOT_STYLE_INSPECTOR
+      , DRW_DxfSparseMaterialRawPolicy
+#endif
+  {
     bool wantsDxfSparseMaterialRawCapture() const noexcept override { return true; }
+#ifdef LIBDXFRW_HAS_DXF_STAGED_LAYER_PLOT_STYLE_INSPECTOR
+    bool wantsDxfSparseMaterialRawReplay() const noexcept override { return true; }
+#endif
   };
-  // Default consumers do not implicitly accept an incomplete material.
+  // Ordinary import retains incomplete materials, while ordinary export
+  // remains guarded against losing their unqualified graph.
   RS_Graphic legacy;
   RS_FilterDXFRW legacyFilter;
+#ifdef LIBDXFRW_HAS_DXF_STAGED_LAYER_PLOT_STYLE_INSPECTOR
+  REQUIRE(legacyFilter.fileImport(legacy, QString::fromStdString(source), RS2::FormatDXFRW));
+  REQUIRE(legacy.dwgAdvancedMetadata().materials().size() == 1u);
+  CHECK(legacy.dwgAdvancedMetadata().materials().front().requiresRawDxfReplay);
+  CHECK_FALSE(legacyFilter.fileExport(legacy, QString::fromStdString(output), RS2::FormatDXFRW));
+  { std::ifstream retained(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+#else
   CHECK_FALSE(legacyFilter.fileImport(legacy, QString::fromStdString(source), RS2::FormatDXFRW));
+#endif
   RS_Graphic incomplete;
   OptInFilter importer;
   REQUIRE(importer.fileImport(incomplete, QString::fromStdString(source), RS2::FormatDXFRW));
@@ -1610,9 +1626,10 @@ TEST_CASE("Opt-in system codec replays an unchanged sparse material graph",
     }
   }
   writeText(source, input);
-  struct OptInFilter : RS_FilterDXFRW, DRW_DxfSparseMaterialRawPolicy {
+  struct OptInFilter : RS_FilterDXFRW {
     std::function<void()> afterObjects;
     bool wantsDxfSparseMaterialRawCapture() const noexcept override { return true; }
+    bool wantsDxfSparseMaterialRawReplay() const noexcept override { return true; }
     void writeObjects() override {
       RS_FilterDXFRW::writeObjects();
       if (afterObjects) afterObjects();
@@ -1784,12 +1801,25 @@ TEST_CASE("System codec gates ambiguous AC1024 default material",
       "270\n1\n271\n1\n272\n1\n145\n1\n146\n1\n273\n1\n9\n\n"
       "274\n1\n275\n1\n276\n1\n42\n1\n72\n1\n3\n\n73\n1\n74\n1\n75\n1\n"
       "94\n63\n0\nENDSEC\n0\nEOF\n");
-  struct OptInFilter : RS_FilterDXFRW, DRW_DxfSparseMaterialRawPolicy {
+  struct OptInFilter : RS_FilterDXFRW
+#ifndef LIBDXFRW_HAS_DXF_STAGED_LAYER_PLOT_STYLE_INSPECTOR
+      , DRW_DxfSparseMaterialRawPolicy
+#endif
+  {
     bool wantsDxfSparseMaterialRawCapture() const noexcept override { return true; }
+#ifdef LIBDXFRW_HAS_DXF_STAGED_LAYER_PLOT_STYLE_INSPECTOR
+    bool wantsDxfSparseMaterialRawReplay() const noexcept override { return true; }
+#endif
   };
   RS_Graphic legacy;
   RS_FilterDXFRW legacyFilter;
+#ifdef LIBDXFRW_HAS_DXF_STAGED_LAYER_PLOT_STYLE_INSPECTOR
+  REQUIRE(legacyFilter.fileImport(legacy, QString::fromStdString(source), RS2::FormatDXFRW));
+  REQUIRE(legacy.dwgAdvancedMetadata().materials().size() == 1u);
+  CHECK(legacy.dwgAdvancedMetadata().materials().front().requiresRawDxfReplay);
+#else
   CHECK_FALSE(legacyFilter.fileImport(legacy, QString::fromStdString(source), RS2::FormatDXFRW));
+#endif
   RS_Graphic graphic;
   OptInFilter importer;
   REQUIRE(importer.fileImport(graphic, QString::fromStdString(source), RS2::FormatDXFRW));
@@ -2230,6 +2260,16 @@ TEST_CASE("System codec gates ambiguous AC1024 default material",
     }
     REQUIRE(binary.good());
   }
+#ifdef LIBDXFRW_HAS_DXF_STAGED_LAYER_PLOT_STYLE_INSPECTOR
+  RS_Graphic ordinaryBinary;
+  RS_FilterDXFRW ordinaryBinaryFilter;
+  REQUIRE(ordinaryBinaryFilter.fileImport(ordinaryBinary, QString::fromStdString(binarySource), RS2::FormatDXFRW));
+  REQUIRE(ordinaryBinary.dwgAdvancedMetadata().materials().size() == 1u);
+  CHECK(ordinaryBinary.dwgAdvancedMetadata().materials().front().requiresRawDxfReplay);
+  writeText(output, sentinel);
+  CHECK_FALSE(ordinaryBinaryFilter.fileExport(ordinaryBinary, QString::fromStdString(output), RS2::FormatDXFRW2010));
+  { std::ifstream retained(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+#endif
   RS_Graphic binaryGraphic;
   OptInFilter binaryImporter;
   REQUIRE(binaryImporter.fileImport(binaryGraphic, QString::fromStdString(binarySource), RS2::FormatDXFRW));
@@ -2300,6 +2340,11 @@ TEST_CASE("System codec gates ambiguous AC1024 default material",
     append << std::string(256u * 1024u, ' ');
     REQUIRE(append.good());
   }
+#ifdef LIBDXFRW_HAS_DXF_STAGED_LAYER_PLOT_STYLE_INSPECTOR
+  RS_Graphic ordinaryOversized;
+  RS_FilterDXFRW ordinaryOversizedImporter;
+  CHECK_FALSE(ordinaryOversizedImporter.fileImport(ordinaryOversized, QString::fromStdString(source), RS2::FormatDXFRW));
+#endif
   RS_Graphic oversized;
   OptInFilter oversizedImporter;
   REQUIRE(oversizedImporter.fileImport(oversized, QString::fromStdString(source), RS2::FormatDXFRW));
