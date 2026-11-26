@@ -2041,22 +2041,25 @@ TEST_CASE("Raster source frames are bounded and selected by handle",
   std::filesystem::remove(definitionsInput);
 }
 
-TEST_CASE("System codec preserves two images sharing one definition",
+TEST_CASE("System codec preserves two-image definition graphs",
           "[system-codec][dxf][image][transaction]") {
   ensureSettings();
+  const bool sharedDefinition = GENERATE(true, false);
   const auto source = tmpFile("two_images_one_definition_source.dxf");
   const auto output = tmpFile("two_images_one_definition_output.dxf");
   RS_Graphic original;
   original.initForNewDocument();
   for (const double x : {1.0, 30.0}) {
     auto *image = new RS_Image(&original, RS_ImageData(0, RS_Vector(x, 2), RS_Vector(1, 0),
-        RS_Vector(0, 1), RS_Vector(16, 12), QStringLiteral("two-image.png"), 50, 50, 0));
+        RS_Vector(0, 1), RS_Vector(16, 12),
+        sharedDefinition || x == 1.0 ? QStringLiteral("two-image.png") : QStringLiteral("second-image.png"),
+        50, 50, 0));
     original.addEntity(image);
   }
   RS_FilterDXFRW filter;
   REQUIRE(filter.fileExport(original, QString::fromStdString(source), RS2::FormatDXFRW));
   REQUIRE(countRecords(source, "IMAGE") == 2);
-  REQUIRE(countRecords(source, "IMAGEDEF") == 1);
+  REQUIRE(countRecords(source, "IMAGEDEF") == (sharedDefinition ? 1 : 2));
   REQUIRE(countRecords(source, "IMAGEDEF_REACTOR") == 2);
   // Give the locally generated source nonzero WCS Z coordinates in both
   // IMAGE frames so the admitted profile also exercises the 3D sidecar.
@@ -2081,10 +2084,11 @@ TEST_CASE("System codec preserves two images sharing one definition",
   REQUIRE(filter.fileImport(reopened, QString::fromStdString(source), RS2::FormatDXFRW));
   const auto &metadata = reopened.dwgAdvancedMetadata();
   REQUIRE(metadata.rasterImages().size() == 2u);
-  REQUIRE(metadata.imageDefinitions().size() == 1u);
+  REQUIRE(metadata.imageDefinitions().size() == (sharedDefinition ? 1u : 2u));
   REQUIRE(metadata.imageDefinitionReactors().size() == 2u);
   for (const auto &image : metadata.rasterImages()) REQUIRE(metadata.dxfImageSource(image.handle));
-  REQUIRE(metadata.dxfImageDefSource(metadata.imageDefinitions().front().handle));
+  for (const auto &definition : metadata.imageDefinitions())
+    REQUIRE(metadata.dxfImageDefSource(definition.handle));
   const std::string sentinel = "preserve two-image destination";
   auto &reactors = const_cast<std::vector<LC_DwgAdvancedMetadata::ImageDefinitionReactorRecord>&>(
       metadata.imageDefinitionReactors());
@@ -2107,7 +2111,7 @@ TEST_CASE("System codec preserves two images sharing one definition",
   if (plot->hasRawValues) plot->rawValues.pop_back();
   REQUIRE(filter.fileExport(reopened, QString::fromStdString(output), RS2::FormatDXFRW));
   CHECK(countRecords(output, "IMAGE") == 2);
-  CHECK(countRecords(output, "IMAGEDEF") == 1);
+  CHECK(countRecords(output, "IMAGEDEF") == (sharedDefinition ? 1 : 2));
   CHECK(countRecords(output, "IMAGEDEF_REACTOR") == 2);
   for (const char *code : {"90", "10", "20", "30", "11", "21", "31", "12", "22", "32", "13", "23",
                            "70", "280", "281", "282", "283", "71", "91", "14", "24"})
@@ -2118,9 +2122,9 @@ TEST_CASE("System codec preserves two images sharing one definition",
   REQUIRE(filter.fileImport(readback, QString::fromStdString(output), RS2::FormatDXFRW));
   const auto &result = readback.dwgAdvancedMetadata();
   REQUIRE(result.rasterImages().size() == 2u);
-  REQUIRE(result.imageDefinitions().size() == 1u);
+  REQUIRE(result.imageDefinitions().size() == (sharedDefinition ? 1u : 2u));
   REQUIRE(result.imageDefinitionReactors().size() == 2u);
-  CHECK(result.rasterImages()[0].definitionHandle == result.rasterImages()[1].definitionHandle);
+  CHECK((result.rasterImages()[0].definitionHandle == result.rasterImages()[1].definitionHandle) == sharedDefinition);
   CHECK(result.rasterImages()[0].reactorHandle != result.rasterImages()[1].reactorHandle);
   {
     struct MutatingFilter : RS_FilterDXFRW {
@@ -2202,11 +2206,37 @@ TEST_CASE("System codec preserves two images sharing one definition",
     raster->brightness = originalBrightness;
     brightnessGroup->addInt(281, originalBrightness);
     if (sourceImage->hasRawValues) sourceImage->rawValues[brightnessIndex] = originalRaw;
+    if (!sharedDefinition) {
+      auto &definitions = const_cast<std::vector<LC_DwgAdvancedMetadata::ImageDefinitionRecord>&>(metadata.imageDefinitions());
+      auto &definition = definitions.back();
+      auto *sourceDefinition = const_cast<DRW_RawDxfObject *>(metadata.dxfImageDefSource(definition.handle));
+      REQUIRE(sourceDefinition);
+      auto pathGroup = std::find_if(sourceDefinition->groups.begin(), sourceDefinition->groups.end(),
+          [](const auto &group) { return group.code() == 1; });
+      REQUIRE(pathGroup != sourceDefinition->groups.end());
+      const auto index = static_cast<std::size_t>(pathGroup - sourceDefinition->groups.begin());
+      REQUIRE((!sourceDefinition->hasRawValues || index < sourceDefinition->rawValues.size()));
+      const auto originalPath = definition.path;
+      const auto rawPath = sourceDefinition->hasRawValues ? sourceDefinition->rawValues[index] : std::string{};
+      late.beforeFinalize = [&] {
+        definition.path = "changed-source.png";
+        pathGroup->addString(1, definition.path);
+        if (sourceDefinition->hasRawValues) sourceDefinition->rawValues[index] = definition.path;
+      };
+      writeText(output, sentinel);
+      CHECK_FALSE(late.fileExport(reopened, QString::fromStdString(output), RS2::FormatDXFRW));
+      { std::ifstream in(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(in), {}) == sentinel); }
+      definition.path = originalPath;
+      pathGroup->addString(1, originalPath);
+      if (sourceDefinition->hasRawValues) sourceDefinition->rawValues[index] = rawPath;
+    }
     late.beforeFinalize = {};
     REQUIRE(late.fileExport(reopened, QString::fromStdString(output), RS2::FormatDXFRW));
   }
-  if (const char *copy = std::getenv("LIBRECAD_KEEP_TWO_IMAGE_OUTPUT"))
-    std::filesystem::copy_file(output, copy, std::filesystem::copy_options::overwrite_existing);
+  if (const char *copy = std::getenv("LIBRECAD_KEEP_TWO_IMAGE_OUTPUT")) {
+    const std::string path = sharedDefinition ? copy : std::string(copy) + ".distinct.dxf";
+    std::filesystem::copy_file(output, path, std::filesystem::copy_options::overwrite_existing);
+  }
   std::filesystem::remove(source);
   std::filesystem::remove(output);
 }

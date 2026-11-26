@@ -3881,7 +3881,8 @@ bool prepareDxfImageGraph(RS_Graphic &graphic, DRW::Version version,
   if (!plain(root) || !plain(groups) || !plain(images) ||
       images->parentHandle != root->handle || groups->parentHandle != root->handle ||
       !groups->entries.empty() || imageDictionary == groupDictionary ||
-      images->entries.size() != 1 || metadata.imageDefinitions().size() != 1 ||
+      (images->entries.size() != 1u && !(twoImages && images->entries.size() == 2u)) ||
+      metadata.imageDefinitions().size() != images->entries.size() ||
       (imageCount != 1u && !twoImages) || metadata.imageDefinitionReactors().size() != imageCount ||
       (twoImages && (version != DRW::AC1021 || root->entries.size() != 3u || plotDictionary == 0)))
     return false;
@@ -14981,7 +14982,7 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
           std::shared_ptr<const DRW_Dictionary> root, groups, images;
           std::vector<DRW_RawDxfObject> sourceImages;
           std::vector<DRW_RawDxfObject> sourceReactors;
-          std::optional<DRW_RawDxfObject> sourceDefinition;
+          std::map<std::uint32_t, DRW_RawDxfObject> sourceDefinitions;
 #endif
 #ifdef LIBDXFRW_HAS_DXF_STAGED_IMAGE_OBJECT_INSPECTOR
           bool objectsSeen = false;
@@ -15009,10 +15010,12 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
             }
             if (!reactor) return false;
             audit->sourceReactors.push_back(*reactor);
+            if (!audit->sourceDefinitions.count(reference.definition)) {
+              const auto *definition = metadata.dxfImageDefSource(reference.definition);
+              if (!definition) return false;
+              audit->sourceDefinitions.emplace(reference.definition, *definition);
+            }
           }
-          const auto *definition = metadata.dxfImageDefSource(audit->references.front().definition);
-          if (!definition) return false;
-          audit->sourceDefinition = *definition;
         }
 #endif
         const auto stable = [audit, &g, exportVersion] {
@@ -15029,10 +15032,12 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
     defined(LIBDXFRW_HAS_DXF_STAGED_DICTIONARY_INSPECTOR)
           if (audit->references.size() == 2u) {
             const auto &metadata = g.dwgAdvancedMetadata();
-            if (!audit->sourceDefinition || audit->sourceImages.size() != audit->references.size() ||
+            if (audit->sourceDefinitions.empty() || audit->sourceImages.size() != audit->references.size() ||
                 audit->sourceReactors.size() != audit->references.size()) return false;
-            const auto *definition = metadata.dxfImageDefSource(audit->references.front().definition);
-            if (!definition || !dxfCarrierMatchesSource(*audit->sourceDefinition, *definition)) return false;
+            for (const auto &source : audit->sourceDefinitions) {
+              const auto *definition = metadata.dxfImageDefSource(source.first);
+              if (!definition || !dxfCarrierMatchesSource(source.second, *definition)) return false;
+            }
             for (std::size_t i = 0; i < audit->references.size(); ++i) {
               const auto *source = metadata.dxfImageSource(audit->references[i].image);
               if (!source || !dxfCarrierMatchesSource(audit->sourceImages[i], *source)) return false;
@@ -15150,7 +15155,8 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
     defined(LIBDXFRW_HAS_DXF_STAGED_DICTIONARY_INSPECTOR) && \
     defined(LIBDXFRW_HAS_DXF_STAGED_RAW_OBJECT_INSPECTOR)
               if (audit->references.size() == 2u) {
-                if (!audit->root || !audit->groups || !audit->images || definitions.size() != 1u)
+                if (!audit->root || !audit->groups || !audit->images ||
+                    definitions.size() != audit->images->m_entries.size())
                   return false;
                 std::vector<dxfRW::DxfDictionaryOutputExpectation> rootEntries, imageEntries;
                 for (const auto &entry : audit->root->m_entries) {
@@ -15161,9 +15167,12 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
                       : key == "ACAD_IMAGE_DICT" ? dictionary : 0u;
                   rootEntries.push_back({entry.m_name, target, static_cast<int>(entry.m_dxfHandleCode)});
                 }
-                for (const auto &entry : audit->images->m_entries)
-                  imageEntries.push_back({entry.m_name, definitions.front().definition,
-                                          static_cast<int>(entry.m_dxfHandleCode)});
+                for (const auto &entry : audit->images->m_entries) {
+                  const dxfRW::ImageDefinitionKey key{DxfImageGraphPlan::generation, entry.m_handle};
+                  const auto target = m_dxfW->dxfWriteImageDefinitionHandle(key);
+                  if (!target) return false;
+                  imageEntries.push_back({entry.m_name, target, static_cast<int>(entry.m_dxfHandleCode)});
+                }
                 const bool rootOk = m_dxfW->inspectDxfDictionaryOutput(view, 0xCu, 0u, audit->root->hardOwner,
                                                                        audit->root->cloning, rootEntries);
                 const bool groupOk = m_dxfW->inspectDxfDictionaryOutput(view, 0xDu, 0xCu, audit->groups->hardOwner,
