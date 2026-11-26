@@ -16,14 +16,14 @@
 **
 **********************************************************************/
 
-// The linetype combo lists built-ins only, so the pen widget hands back a name
-// it was given while the combo still shows that pen's linetype.
+// Entity properties must display and preserve the drawing's named linetypes.
 
 #include <catch2/catch_test_macros.hpp>
 
 #include <QString>
 
 #include "lc_actiontestsupport.h"
+#include "lc_linetype.h"
 #include "qg_widgetpen.h"
 #include "rs_color.h"
 #include "rs_graphic.h"
@@ -42,7 +42,7 @@ RS_Pen namedPen() {
 } // namespace
 
 TEST_CASE("The pen widget keeps a linetype name its combo cannot show",
-          "[gui][pen][linetype]") {
+          "[gui][pen][linetype][named-linetype]") {
     (void)lc::test::application();
     const RS_Pen named = namedPen();
     REQUIRE(named.hasLineTypeName());
@@ -107,7 +107,7 @@ TEST_CASE("The pen widget keeps a linetype name its combo cannot show",
 }
 
 TEST_CASE("The pen widget returns a pen without a name as it was given",
-          "[gui][pen][linetype]") {
+          "[gui][pen][linetype][named-linetype]") {
     (void)lc::test::application();
     const RS_Pen plain(RS_Color(Qt::red), RS2::Width05, RS2::DashLine);
 
@@ -116,4 +116,52 @@ TEST_CASE("The pen widget returns a pen without a name as it was given",
     const RS_Pen pen = widget.getPen();
     CHECK(pen == plain);
     CHECK_FALSE(pen.hasLineTypeName());
+}
+
+TEST_CASE("Entity pen properties show drawing linetypes and allow replacing them",
+          "[gui][pen][linetype][named-linetype]") {
+    (void)lc::test::application();
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    auto* custom = new LC_LineType(QStringLiteral("VENDOR_TAB"));
+    custom->pattern = {4.0, -2.0};
+    graphic.addLineType(custom);
+    auto* other = new LC_LineType(QStringLiteral("OTHER_TAB"));
+    other->pattern = {1.0, -1.0};
+    graphic.addLineType(other);
+    RS_Line line{&graphic, RS_LineData(RS_Vector{0.0, 0.0}, RS_Vector{1.0, 0.0})};
+    line.setPen(namedPen());
+
+    QG_WidgetPen widget;
+    widget.setPen(&line, nullptr, QString());
+    CHECK(widget.cbLineType->currentText() == QStringLiteral("VENDOR_TAB"));
+    CHECK(widget.getPen().getLineTypeName() == QStringLiteral("VENDOR_TAB"));
+
+    widget.cbLineType->setLineType(RS2::SolidLine);
+    CHECK(widget.cbLineType->currentText() != QStringLiteral("VENDOR_TAB"));
+    CHECK_FALSE(widget.getPen().hasLineTypeName());
+    CHECK(widget.getPen().getLineType() == RS2::SolidLine);
+
+    widget.setPen(&line, nullptr, QString());
+    const int otherIndex = widget.cbLineType->findText(QStringLiteral("OTHER_TAB"));
+    REQUIRE(otherIndex >= 0);
+    widget.cbLineType->setCurrentIndex(otherIndex);
+    CHECK(widget.getPen().getLineTypeName() == QStringLiteral("OTHER_TAB"));
+
+    widget.setPen(&line, nullptr, QString());
+    widget.cbColor->setColor(RS_Color(Qt::blue));
+    CHECK(widget.getPen().getLineTypeName() == QStringLiteral("VENDOR_TAB"));
+
+    RS_Pen missing = namedPen();
+    missing.setLineTypeName(QStringLiteral("MISSING_TAB"));
+    line.setPen(missing);
+    widget.setPen(&line, nullptr, QString());
+    CHECK(widget.cbLineType->currentText().contains(QStringLiteral("MISSING_TAB")));
+    CHECK(widget.getPen().getLineTypeName() == QStringLiteral("MISSING_TAB"));
+    widget.cbLineType->setLineType(RS2::SolidLine);
+    CHECK_FALSE(widget.getPen().hasLineTypeName());
+
+    // Switching back to a context without a drawing drops its catalog rows.
+    widget.setPen(RS_Pen(RS_Color(Qt::red), RS2::Width05, RS2::SolidLine), false, false, QString());
+    CHECK(widget.cbLineType->findText(QStringLiteral("VENDOR_TAB")) == -1);
 }

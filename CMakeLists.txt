@@ -2652,6 +2652,7 @@ if (LIBRECAD_BUILD_SYSTEM_CODEC_TESTS)
         librecad/src/test/lc_testtempdirectory.cpp
         librecad/src/ui/dock_widgets/property_sheet/tests/lc_named_linetype_properties_tests.cpp
         librecad/src/ui/dock_widgets/property_sheet/tests/lc_propertysheetlifetime_tests.cpp
+        librecad/src/ui/components/pen/tests/qg_widgetpen_tests.cpp
         ${LIBRECAD_RES})
     set_target_properties(librecad_system_named_linetype_tests PROPERTIES
         AUTOMOC OFF AUTOUIC OFF AUTORCC ON)
