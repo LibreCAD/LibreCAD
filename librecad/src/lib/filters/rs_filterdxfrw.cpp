@@ -2773,6 +2773,78 @@ bool hasReplayableRawVisualStyle(const LC_DwgAdvancedMetadata &metadata,
 }
 
 #ifdef LIBRECAD_SYSTEM_LIBDXFRW
+bool parseDxfCarrierHandle(const char *text, std::uint32_t &handle) {
+  if (text == nullptr || *text == '\0' || std::strlen(text) > 16)
+    return false;
+  for (const unsigned char *p = reinterpret_cast<const unsigned char *>(text); *p; ++p)
+    if (!((*p >= '0' && *p <= '9') || (*p >= 'A' && *p <= 'F') ||
+          (*p >= 'a' && *p <= 'f')))
+      return false;
+  char *end = nullptr;
+  errno = 0;
+  const unsigned long value = std::strtoul(text, &end, 16);
+  if (errno == ERANGE || end == text || *end != '\0' ||
+      value > std::numeric_limits<std::uint32_t>::max())
+    return false;
+  handle = static_cast<std::uint32_t>(value);
+  return true;
+}
+
+// Validate one self handle, one owner and an optional reactor group in the
+// selected DXF version. Other application groups are outside this profile;
+// the caller validates the object type and remaining fields.
+template <typename Visitor>
+bool visitDxfCarrierFrame(const DRW_RawDxfObject &raw, DRW::Version version,
+                          std::uint32_t self, std::uint32_t owner,
+                          const std::vector<std::uint32_t> &reactors,
+                          Visitor &&visit) {
+  if (raw.m_version != version ||
+      (raw.hasRawValues && raw.rawValues.size() != raw.groups.size()))
+    return false;
+  unsigned selfCount = 0, ownerCount = 0;
+  std::size_t reactorIndex = 0;
+  bool inReactors = false, sawReactors = false;
+  for (std::size_t index = 0; index < raw.groups.size(); ++index) {
+    const auto &group = raw.groups[index];
+    if (group.code() == 102) {
+      if (group.type() != DRW_Variant::STRING || !group.c_str() ||
+          (raw.hasRawValues && raw.rawValues[index] != group.c_str()))
+        return false;
+      if (!inReactors && !sawReactors &&
+          std::strcmp(group.c_str(), "{ACAD_REACTORS") == 0) {
+        inReactors = sawReactors = true;
+      } else if (inReactors && std::strcmp(group.c_str(), "}") == 0) {
+        inReactors = false;
+      } else {
+        return false;
+      }
+    } else if (group.code() == 5 || group.code() == 330) {
+      std::uint32_t value = 0, rawValue = 0;
+      if ((inReactors && group.code() != 330) ||
+          group.type() != DRW_Variant::STRING ||
+          !parseDxfCarrierHandle(group.c_str(), value) ||
+          (raw.hasRawValues &&
+           (!parseDxfCarrierHandle(raw.rawValues[index].c_str(), rawValue) || rawValue != value)))
+        return false;
+      if (inReactors) {
+        // The DXF parser omits null reactors from the typed vector.
+        if (value != 0 &&
+            (reactorIndex >= reactors.size() || reactors[reactorIndex++] != value))
+          return false;
+      } else if (group.code() == 5) {
+        if (++selfCount != 1 || value != self)
+          return false;
+      } else if (++ownerCount != 1 || value != owner) {
+        return false;
+      }
+    } else if (inReactors || !visit(group, index)) {
+      return false;
+    }
+  }
+  return !inReactors && reactorIndex == reactors.size() &&
+         selfCount == 1 && ownerCount == 1;
+}
+
 // Verify the retained carrier and dictionary before a layer names a material.
 bool hasDxfLayerMaterialCarrier(
     const LC_DwgAdvancedMetadata &metadata,
@@ -2780,22 +2852,6 @@ bool hasDxfLayerMaterialCarrier(
     std::uint32_t sourceRootHandle,
     const std::map<std::uint32_t, std::string> &rootEntryName,
     DRW::Version exportVersion, std::uint32_t handle) {
-  const auto parseMaterialHandle = [](const char *text, std::uint32_t &handle) {
-    if (text == nullptr || *text == '\0' || std::strlen(text) > 16)
-      return false;
-    for (const unsigned char *p = reinterpret_cast<const unsigned char *>(text); *p; ++p)
-      if (!((*p >= '0' && *p <= '9') || (*p >= 'A' && *p <= 'F') ||
-            (*p >= 'a' && *p <= 'f')))
-        return false;
-    char *end = nullptr;
-    errno = 0;
-    const unsigned long value = std::strtoul(text, &end, 16);
-    if (errno == ERANGE || end == text || *end != '\0' ||
-        value > std::numeric_limits<std::uint32_t>::max())
-      return false;
-    handle = static_cast<std::uint32_t>(value);
-    return true;
-  };
   const LC_DwgAdvancedMetadata::MaterialRecord *material = nullptr;
   for (const auto &candidate : metadata.materials()) {
     if (candidate.handle != handle)
@@ -2891,11 +2947,10 @@ bool hasDxfLayerMaterialCarrier(
   for (const auto &candidate : metadata.rawDxfObjects()) {
     if (dictionaryEntries.count(candidate.handle) != 0 &&
         (!rawTargets.emplace(candidate.handle, &candidate).second || candidate.name != "MATERIAL" ||
-         candidate.m_version != exportVersion || candidate.parentHandle != dictionary->handle))
+         candidate.parentHandle != dictionary->handle))
       return false;
     if (candidate.handle == dictionary->handle) {
       if (rawDictionary != nullptr || candidate.name != "DICTIONARY" ||
-          candidate.m_version != exportVersion ||
           candidate.parentHandle != sourceRootHandle)
         return false;
       rawDictionary = &candidate;
@@ -2903,62 +2958,11 @@ bool hasDxfLayerMaterialCarrier(
   }
   if (rawDictionary == nullptr || rawTargets.size() != dictionaryEntries.size())
     return false;
-  // Both records use the same common self/owner framing; inspect their
-  // bodies only after the framed identity and raw spellings agree.
-  const auto visitCarrier = [&](const DRW_RawDxfObject &raw,
-                                std::uint32_t self, std::uint32_t owner,
-                                const std::vector<std::uint32_t> &reactors,
-                                const auto &visit) {
-    if (raw.hasRawValues && raw.rawValues.size() != raw.groups.size())
-      return false;
-    unsigned selfCount = 0, ownerCount = 0;
-    std::size_t reactorIndex = 0;
-    bool inReactors = false, sawReactors = false;
-    for (std::size_t index = 0; index < raw.groups.size(); ++index) {
-      const auto &group = raw.groups[index];
-      if (group.code() == 102) {
-        if (group.type() != DRW_Variant::STRING || !group.c_str() ||
-            (raw.hasRawValues && raw.rawValues[index] != group.c_str()))
-          return false;
-        if (!inReactors && !sawReactors &&
-            std::strcmp(group.c_str(), "{ACAD_REACTORS") == 0) {
-          inReactors = sawReactors = true;
-        } else if (inReactors && std::strcmp(group.c_str(), "}") == 0) {
-          inReactors = false;
-        } else {
-          return false;
-        }
-      } else if (group.code() == 5 || group.code() == 330) {
-        std::uint32_t value = 0, rawValue = 0;
-        if ((inReactors && group.code() != 330) ||
-            group.type() != DRW_Variant::STRING ||
-            !parseMaterialHandle(group.c_str(), value) ||
-            (raw.hasRawValues &&
-             (!parseMaterialHandle(raw.rawValues[index].c_str(), rawValue) || rawValue != value)))
-          return false;
-        if (inReactors) {
-          // The DXF parser omits null reactors from the typed vector.
-          if (value != 0 &&
-              (reactorIndex >= reactors.size() || reactors[reactorIndex++] != value))
-            return false;
-        } else if (group.code() == 5) {
-          if (++selfCount != 1 || value != self)
-            return false;
-        } else if (++ownerCount != 1 || value != owner) {
-          return false;
-        }
-      } else if (inReactors || !visit(group, index)) {
-        return false;
-      }
-    }
-    return !inReactors && reactorIndex == reactors.size() &&
-           selfCount == 1 && ownerCount == 1;
-  };
   for (const auto &entry : dictionaryEntries) {
     const auto *target = typedTargets.at(entry.first);
     const auto *rawTarget = rawTargets.at(entry.first);
     unsigned nameCount = 0, subclassCount = 0;
-    const bool materialValid = visitCarrier(*rawTarget, entry.first, target->parentHandle,
+    const bool materialValid = visitDxfCarrierFrame(*rawTarget, exportVersion, entry.first, target->parentHandle,
         target->reactorHandles, [&](const DRW_Variant &group, std::size_t index) {
           if (group.code() == 1)
             return ++nameCount == 1 && group.type() == DRW_Variant::STRING &&
@@ -2977,7 +2981,7 @@ bool hasDxfLayerMaterialCarrier(
   }
   std::set<std::uint32_t> rawEntries;
   std::string entryName;
-  const bool dictionaryValid = visitCarrier(*rawDictionary, dictionary->handle,
+  const bool dictionaryValid = visitDxfCarrierFrame(*rawDictionary, exportVersion, dictionary->handle,
       sourceRootHandle, dictionary->reactorHandles, [&](const DRW_Variant &group, std::size_t index) {
         if (group.code() == 3) {
           if (!entryName.empty() || group.type() != DRW_Variant::STRING || !group.c_str() ||
@@ -2987,9 +2991,9 @@ bool hasDxfLayerMaterialCarrier(
         } else if (group.code() == 350 || group.code() == 360) {
           std::uint32_t value = 0, rawValue = 0;
           if (entryName.empty() || group.type() != DRW_Variant::STRING ||
-              !parseMaterialHandle(group.c_str(), value) ||
+              !parseDxfCarrierHandle(group.c_str(), value) ||
               (rawDictionary->hasRawValues &&
-               (!parseMaterialHandle(rawDictionary->rawValues[index].c_str(), rawValue) ||
+               (!parseDxfCarrierHandle(rawDictionary->rawValues[index].c_str(), rawValue) ||
                 rawValue != value)))
             return false;
           const auto expected = dictionaryEntries.find(value);
