@@ -1919,6 +1919,128 @@ TEST_CASE("Sparse material source snapshots have a bounded record count",
   }
 }
 
+TEST_CASE("Raster source frames are bounded and selected by handle",
+          "[system-codec][dxf][image][transaction]") {
+  LC_DwgAdvancedMetadata metadata;
+  DRW_RawDxfObject image;
+  image.name = "IMAGE";
+  image.m_version = DRW::AC1021;
+  image.handle = 0x31;
+  metadata.addDxfImageSource(image);
+  REQUIRE(metadata.dxfImageSource());
+  CHECK(metadata.dxfImageSource(0x31)->handle == 0x31);
+  image.handle = 0x32;
+  metadata.addDxfImageSource(image);
+  CHECK_FALSE(metadata.dxfImageSource()); // no ambiguous singleton fallback
+  REQUIRE(metadata.dxfImageSource(0x32));
+  CHECK(metadata.dxfImageSource(0x31)->handle == 0x31);
+  CHECK_FALSE(metadata.dxfImageSource(0x33));
+  DRW_RawDxfObject definition;
+  definition.name = "IMAGEDEF";
+  definition.m_version = DRW::AC1021;
+  definition.handle = 0x41;
+  metadata.addDxfImageDefSource(definition);
+  definition.handle = 0x42;
+  metadata.addDxfImageDefSource(definition);
+  REQUIRE(metadata.dxfImageDefSource(0x41));
+  REQUIRE(metadata.dxfImageDefSource(0x42));
+  CHECK_FALSE(metadata.dxfImageDefSource());
+  DRW_RawDxfObject root;
+  root.name = "DICTIONARY";
+  root.handle = 0xC;
+  metadata.addDxfRootDictionarySource(root);
+  metadata.addDxfImageDefSource(definition); // duplicate identity poisons capture
+  CHECK_FALSE(metadata.dxfImageDefSource(0x41));
+  CHECK_FALSE(metadata.dxfImageSource(0x31));
+  CHECK(metadata.dxfRootDictionarySource()); // unrelated dictionary provenance survives
+  metadata.clear();
+  image.handle = 1;
+  for (std::uint32_t handle = 1; handle <= 32; ++handle) {
+    image.handle = handle;
+    metadata.addDxfImageSource(image);
+    REQUIRE(metadata.dxfImageSource(handle));
+  }
+  image.handle = 33;
+  metadata.addDxfImageSource(image);
+  CHECK_FALSE(metadata.dxfImageSource(1));
+  metadata.clear();
+  image.handle = 0;
+  metadata.addDxfImageSource(image);
+  image.handle = 1;
+  metadata.addDxfImageSource(image);
+  CHECK_FALSE(metadata.dxfImageSource(1));
+  for (unsigned scenario = 0; scenario != 4; ++scenario) {
+    metadata.clear();
+    image = DRW_RawDxfObject{};
+    image.name = scenario == 0 ? "IMAGEDEF" : "IMAGE";
+    image.handle = 1;
+    image.m_version = scenario == 1 ? DRW::UNKNOWNV : DRW::AC1021;
+    if (scenario == 2) {
+      image.hasRawValues = true;
+      image.groups.emplace_back(70, 0);
+    }
+    if (scenario == 3)
+      image.groups.emplace_back(1, std::string(64u * 1024u, 'x'));
+    metadata.addDxfImageSource(image);
+    CHECK_FALSE(metadata.dxfImageSource(1));
+  }
+  metadata.clear();
+  image = DRW_RawDxfObject{};
+  image.name = "IMAGE";
+  image.handle = 1;
+  image.m_version = DRW::AC1021;
+  metadata.addDxfImageSource(image);
+  REQUIRE(metadata.dxfImageSource(1)); // corrected retry after a capture failure
+
+  // Exercise the parser callback for more than one physical IMAGE frame.
+  ensureSettings();
+  const auto input = tmpFile("multi_image_source_capture.dxf");
+  const auto imageFrame = [](const char *handle) {
+    return std::string("0\nIMAGE\n5\n") + handle +
+        "\n8\n0\n100\nAcDbRasterImage\n90\n0\n"
+        "10\n1\n20\n2\n30\n3\n11\n1\n21\n0\n31\n0\n"
+        "12\n0\n22\n1\n32\n0\n13\n16\n23\n12\n340\n1\n"
+        "70\n3\n280\n1\n281\n50\n282\n50\n283\n0\n"
+        "71\n1\n91\n2\n14\n-0.5\n24\n-0.5\n14\n15.5\n24\n11.5\n";
+  };
+  writeText(input, "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1021\n0\nENDSEC\n"
+                   "0\nSECTION\n2\nENTITIES\n" + imageFrame("31") + imageFrame("32") +
+                   "0\nENDSEC\n0\nEOF\n");
+  RS_Graphic graphic;
+  RS_FilterDXFRW filter;
+  REQUIRE(filter.fileImport(graphic, QString::fromStdString(input), RS2::FormatDXFRW));
+  const auto &captured = graphic.dwgAdvancedMetadata();
+  REQUIRE(captured.dxfImageSource(0x31));
+  REQUIRE(captured.dxfImageSource(0x32));
+  CHECK_FALSE(captured.dxfImageSource());
+  std::filesystem::remove(input);
+
+  const auto definitionsInput = tmpFile("multi_image_definition_capture.dxf");
+  const auto definitionFrame = [](const char *handle, const char *name) {
+    return std::string("0\nIMAGEDEF\n5\n") + handle +
+        "\n330\nE\n100\nAcDbRasterImageDef\n90\n0\n1\n" + name +
+        "\n10\n16\n20\n12\n11\n1\n21\n1\n280\n1\n281\n0\n";
+  };
+  writeText(definitionsInput,
+      "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1021\n0\nENDSEC\n"
+      "0\nSECTION\n2\nOBJECTS\n"
+      "0\nDICTIONARY\n5\nC\n330\n0\n100\nAcDbDictionary\n281\n1\n"
+      "3\nACAD_IMAGE_DICT\n350\nE\n"
+      "0\nDICTIONARY\n5\nE\n330\nC\n100\nAcDbDictionary\n281\n1\n"
+      "3\nfirst\n350\n41\n3\nsecond\n350\n42\n" +
+      definitionFrame("41", "first.png") + definitionFrame("42", "second.png") +
+      "0\nENDSEC\n0\nEOF\n");
+  RS_Graphic definitionsGraphic;
+  RS_FilterDXFRW definitionsFilter;
+  REQUIRE(definitionsFilter.fileImport(definitionsGraphic, QString::fromStdString(definitionsInput),
+                                       RS2::FormatDXFRW));
+  const auto &definitionSources = definitionsGraphic.dwgAdvancedMetadata();
+  REQUIRE(definitionSources.dxfImageDefSource(0x41));
+  REQUIRE(definitionSources.dxfImageDefSource(0x42));
+  CHECK_FALSE(definitionSources.dxfImageDefSource());
+  std::filesystem::remove(definitionsInput);
+}
+
 TEST_CASE("System codec preserves single-line controls and literal carets",
           "[system-codec][dxf][text]") {
   ensureSettings();

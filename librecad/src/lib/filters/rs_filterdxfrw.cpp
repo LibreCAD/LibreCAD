@@ -3910,7 +3910,7 @@ bool prepareDxfImageGraph(RS_Graphic &graphic, DRW::Version version,
         !identities.insert(entry.handle).second ||
         !definitions.emplace(entry.handle, dxfRW::ImageDefinitionPlanEntry{}).second)
       return false;
-    const auto *definitionSource = metadata.dxfImageDefSource();
+    const auto *definitionSource = metadata.dxfImageDefSource(entry.handle);
     if (definitionSource == nullptr ||
         !dxfImageDefCarrierMatches(*definitionSource, version, *source))
       return false;
@@ -3947,7 +3947,7 @@ bool prepareDxfImageGraph(RS_Graphic &graphic, DRW::Version version,
           !liveImages.insert(handle).second || !liveReactors.insert(raster->reactorHandle).second ||
           !identities.insert(handle).second || !identities.insert(raster->reactorHandle).second)
         return false;
-      const auto *imageSource = metadata.dxfImageSource();
+      const auto *imageSource = metadata.dxfImageSource(handle);
       if (imageSource == nullptr || !dxfImageCarrierMatches(*imageSource, version, *raster))
         return false;
       auto definition = definitions.find(raster->definitionHandle);
@@ -12276,21 +12276,26 @@ void RS_FilterDXFRW::addDxfDictionarySource(
 
 #ifdef LIBDXFRW_HAS_DXF_RASTER_SOURCE_HANDLER
 bool RS_FilterDXFRW::wantsDxfImageSource() const {
-  return m_graphic != nullptr && canCaptureSmallDxfFile(m_file) &&
-         m_graphic->dwgAdvancedMetadata().dxfImageSource() == nullptr;
+  return m_graphic != nullptr && canCaptureSmallDxfFile(m_file);
 }
 
 void RS_FilterDXFRW::addDxfImageSource(
-    const DRW_Image &, const DRW_RawDxfObject &source) {
-  if (m_graphic != nullptr && canRetainSmallDxfSource(source))
-    m_graphic->dwgAdvancedMetadata().addDxfImageSource(source);
+    const DRW_Image &image, const DRW_RawDxfObject &source) {
+  if (m_graphic == nullptr)
+    return;
+  auto &metadata = m_graphic->dwgAdvancedMetadata();
+  if (image.handle != source.handle || image.parentHandle != source.parentHandle ||
+      !canRetainSmallDxfSource(source))
+    metadata.markDxfRasterSourceUnavailable();
+  else
+    metadata.addDxfImageSource(source);
 }
 
 bool RS_FilterDXFRW::wantsDxfImageDefSource() const {
   if (m_graphic == nullptr)
     return false;
   const auto &metadata = m_graphic->dwgAdvancedMetadata();
-  if (metadata.dxfRootDictionarySource() == nullptr || metadata.dxfImageDefSource() != nullptr)
+  if (metadata.dxfRootDictionarySource() == nullptr)
     return false;
   for (const auto &root : metadata.dictionaries()) {
     if (root.parentHandle != 0)
@@ -12299,7 +12304,7 @@ bool RS_FilterDXFRW::wantsDxfImageDefSource() const {
       if (normalizeDwgTableName(entry.name) != "ACAD_IMAGE_DICT")
         continue;
       for (const auto &dictionary : metadata.dictionaries())
-        if (dictionary.handle == entry.handle && dictionary.entries.size() == 1)
+        if (dictionary.handle == entry.handle && !dictionary.entries.empty())
           return true;
     }
   }
@@ -12307,9 +12312,15 @@ bool RS_FilterDXFRW::wantsDxfImageDefSource() const {
 }
 
 void RS_FilterDXFRW::addDxfImageDefSource(
-    const DRW_ImageDef &, const DRW_RawDxfObject &source) {
-  if (m_graphic != nullptr && canRetainSmallDxfSource(source))
-    m_graphic->dwgAdvancedMetadata().addDxfImageDefSource(source);
+    const DRW_ImageDef &definition, const DRW_RawDxfObject &source) {
+  if (m_graphic == nullptr)
+    return;
+  auto &metadata = m_graphic->dwgAdvancedMetadata();
+  if (definition.handle != source.handle || definition.parentHandle != source.parentHandle ||
+      !canRetainSmallDxfSource(source))
+    metadata.markDxfRasterSourceUnavailable();
+  else
+    metadata.addDxfImageDefSource(source);
 }
 #endif
 

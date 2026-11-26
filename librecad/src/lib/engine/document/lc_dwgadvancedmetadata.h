@@ -3492,8 +3492,9 @@ public:
 #ifdef LIBDXFRW_HAS_DXF_HEADER_MATERIAL_SOURCE_HANDLER
     m_dxfMaterialHeaderPhysicalSource.reset();
 #endif
-    m_dxfImageDefSource.reset();
-    m_dxfImageSource.reset();
+    m_dxfImageDefSources.clear();
+    m_dxfImageSources.clear();
+    m_dxfRasterSourceConflict = false;
     m_dxfDictionarySourceConflict = false;
     m_rawDxfEntities.clear();
     m_rawDxfSections.clear();
@@ -4020,38 +4021,70 @@ public:
     return true;
   }
 
-  void addDxfImageDefSource(const DRW_RawDxfObject &source) {
-    if (m_dxfImageDefSource) {
-      m_dxfDictionarySourceConflict = true;
-    } else {
-      try {
-        m_dxfImageDefSource = source;
-      } catch (...) {
-        m_dxfDictionarySourceConflict = true;
+  void addDxfRasterSource(std::map<std::uint32_t, DRW_RawDxfObject> &sources,
+                          const DRW_RawDxfObject &source, const char *kind) {
+    if (m_dxfRasterSourceConflict)
+      return;
+    if (source.name != kind || source.handle == 0 || source.handle == DRW::NoHandle ||
+        source.m_version == DRW::UNKNOWNV || sources.size() >= 32u ||
+        source.groups.size() > 64u || source.rawValues.size() > 64u ||
+        (source.hasRawValues && source.rawValues.size() != source.groups.size())) {
+      m_dxfRasterSourceConflict = true;
+      return;
+    }
+#ifdef LIBDXFRW_HAS_DXF_RASTER_SOURCE_HANDLER
+    std::size_t remaining = 64u * 1024u - source.name.size();
+    for (const auto &group : source.groups) {
+      std::size_t bytes = 0;
+      if (!group.estimateRetainedPayloadBytes(remaining, bytes)) {
+        m_dxfRasterSourceConflict = true;
+        return;
       }
+      remaining -= bytes;
+    }
+    for (const auto &value : source.rawValues) {
+      if (value.size() > remaining) {
+        m_dxfRasterSourceConflict = true;
+        return;
+      }
+      remaining -= value.size();
+    }
+#endif
+    try {
+      if (!sources.emplace(source.handle, source).second)
+        m_dxfRasterSourceConflict = true;
+    } catch (...) {
+      m_dxfRasterSourceConflict = true;
     }
   }
 
-  const DRW_RawDxfObject *dxfImageDefSource() const {
-    return m_dxfDictionarySourceConflict || !m_dxfImageDefSource
-               ? nullptr : &*m_dxfImageDefSource;
+  const DRW_RawDxfObject *dxfRasterSource(
+      const std::map<std::uint32_t, DRW_RawDxfObject> &sources,
+      std::uint32_t handle) const {
+    if (m_dxfDictionarySourceConflict || m_dxfRasterSourceConflict || sources.empty())
+      return nullptr;
+    if (handle == 0)
+      return sources.size() == 1u ? &sources.begin()->second : nullptr;
+    const auto found = sources.find(handle);
+    return found == sources.end() ? nullptr : &found->second;
+  }
+
+  void markDxfRasterSourceUnavailable() { m_dxfRasterSourceConflict = true; }
+
+  void addDxfImageDefSource(const DRW_RawDxfObject &source) {
+    addDxfRasterSource(m_dxfImageDefSources, source, "IMAGEDEF");
+  }
+
+  const DRW_RawDxfObject *dxfImageDefSource(std::uint32_t handle = 0) const {
+    return dxfRasterSource(m_dxfImageDefSources, handle);
   }
 
   void addDxfImageSource(const DRW_RawDxfObject &source) {
-    if (m_dxfImageSource) {
-      m_dxfDictionarySourceConflict = true;
-    } else {
-      try {
-        m_dxfImageSource = source;
-      } catch (...) {
-        m_dxfDictionarySourceConflict = true;
-      }
-    }
+    addDxfRasterSource(m_dxfImageSources, source, "IMAGE");
   }
 
-  const DRW_RawDxfObject *dxfImageSource() const {
-    return m_dxfDictionarySourceConflict || !m_dxfImageSource
-               ? nullptr : &*m_dxfImageSource;
+  const DRW_RawDxfObject *dxfImageSource(std::uint32_t handle = 0) const {
+    return dxfRasterSource(m_dxfImageSources, handle);
   }
 
   void addRawDxfEntity(const DRW_RawDxfObject &entity) {
@@ -13718,8 +13751,9 @@ private:
 #ifdef LIBDXFRW_HAS_DXF_HEADER_MATERIAL_SOURCE_HANDLER
   std::optional<DRW_DxfHeaderMaterialSource> m_dxfMaterialHeaderPhysicalSource;
 #endif
-  std::optional<DRW_RawDxfObject> m_dxfImageDefSource;
-  std::optional<DRW_RawDxfObject> m_dxfImageSource;
+  std::map<std::uint32_t, DRW_RawDxfObject> m_dxfImageDefSources;
+  std::map<std::uint32_t, DRW_RawDxfObject> m_dxfImageSources;
+  bool m_dxfRasterSourceConflict = false;
   bool m_dxfDictionarySourceConflict = false;
   std::vector<DRW_RawDxfObject> m_rawDxfEntities;
   std::vector<DRW_RawDxfSection> m_rawDxfSections;
