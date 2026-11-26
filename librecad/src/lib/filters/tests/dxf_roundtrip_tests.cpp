@@ -2942,6 +2942,93 @@ TEST_CASE("System codec audits larger bounded image graphs",
   std::filesystem::remove(output);
 }
 
+TEST_CASE("System codec verifies shared IMAGE graphs across model and block spaces",
+          "[system-codec][dxf][image][transaction]") {
+  ensureSettings();
+  const auto source = tmpFile("mixed_block_image_source.dxf");
+  const auto output = tmpFile("mixed_block_image_output.dxf");
+  RS_Graphic original;
+  original.initForNewDocument();
+  auto addImage = [](RS_EntityContainer &owner, double x, const QString &path) {
+    owner.addEntity(new RS_Image(&owner, RS_ImageData(0, RS_Vector(x, 2),
+        RS_Vector(1, 0), RS_Vector(0, 1), RS_Vector(16, 12), path, 50, 50, 0)));
+  };
+  addImage(original, 1, QStringLiteral("shared-image.png"));
+  auto *block = new RS_Block(&original, RS_BlockData(QStringLiteral("RASTER_BLOCK"), RS_Vector(0, 0), false));
+  addImage(*block, 2, QStringLiteral("shared-image.png"));
+  addImage(*block, 3, QStringLiteral("block-image.png"));
+  REQUIRE(original.addBlock(block));
+  auto *otherBlock = new RS_Block(&original, RS_BlockData(QStringLiteral("OTHER_RASTER"), RS_Vector(0, 0), false));
+  addImage(*otherBlock, 4, QStringLiteral("shared-image.png"));
+  REQUIRE(original.addBlock(otherBlock));
+  original.addEntity(new RS_Insert(&original, RS_InsertData(QStringLiteral("RASTER_BLOCK"),
+      RS_Vector(10, 0), RS_Vector(1, 1), 0.0, 1, 1, RS_Vector(0, 0))));
+  original.addEntity(new RS_Insert(&original, RS_InsertData(QStringLiteral("OTHER_RASTER"),
+      RS_Vector(20, 0), RS_Vector(1, 1), 0.0, 1, 1, RS_Vector(0, 0))));
+  RS_FilterDXFRW filter;
+  REQUIRE(filter.fileExport(original, QString::fromStdString(source), RS2::FormatDXFRW));
+  REQUIRE(countRecords(source, "IMAGE") == 4);
+  RS_Graphic reopened;
+  REQUIRE(filter.fileImport(reopened, QString::fromStdString(source), RS2::FormatDXFRW));
+  REQUIRE(reopened.dwgAdvancedMetadata().rasterImages().size() == 4u);
+  REQUIRE(reopened.dwgAdvancedMetadata().imageDefinitions().size() == 2u);
+  RS_Block *sourceBlock = nullptr, *secondBlock = nullptr;
+  for (unsigned i = 0; i < reopened.countBlocks(); ++i) {
+    auto *candidate = reopened.blockAt(i);
+    if (!candidate) continue;
+    if (candidate->getName() == QStringLiteral("RASTER_BLOCK")) sourceBlock = candidate;
+    if (candidate->getName() == QStringLiteral("OTHER_RASTER")) secondBlock = candidate;
+  }
+  REQUIRE(sourceBlock);
+  REQUIRE(secondBlock);
+  REQUIRE(sourceBlock->sourceHandle() != 0u);
+  RS_Image *blockImage = nullptr;
+  for (RS_Entity *entity : lc::LC_ContainerTraverser{*sourceBlock, RS2::ResolveNone}.entities())
+    if (entity->rtti() == RS2::EntityImage) blockImage = static_cast<RS_Image *>(entity);
+  REQUIRE(blockImage);
+  const std::string sentinel = "preserve mixed block-image destination";
+  writeText(output, sentinel);
+  const auto blockHandle = sourceBlock->sourceHandle();
+  sourceBlock->setSourceHandle(blockHandle + 1u);
+  CHECK_FALSE(filter.fileExport(reopened, QString::fromStdString(output), RS2::FormatDXFRW));
+  { std::ifstream in(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(in), {}) == sentinel); }
+  sourceBlock->setSourceHandle(blockHandle);
+  const auto secondHandle = secondBlock->sourceHandle();
+  REQUIRE(secondHandle != blockHandle);
+  secondBlock->setSourceHandle(blockHandle);
+  CHECK_FALSE(filter.fileExport(reopened, QString::fromStdString(output), RS2::FormatDXFRW));
+  { std::ifstream in(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(in), {}) == sentinel); }
+  secondBlock->setSourceHandle(secondHandle);
+  REQUIRE(filter.fileExport(reopened, QString::fromStdString(output), RS2::FormatDXFRW));
+  CHECK(countRecords(output, "IMAGE") == 4);
+  CHECK(countRecords(output, "IMAGEDEF") == 2);
+  CHECK(countRecords(output, "IMAGEDEF_REACTOR") == 4);
+  struct MutatingFilter : RS_FilterDXFRW {
+    std::function<void()> beforeFinalize;
+    bool finalizeDxfWrite() override {
+      if (beforeFinalize) beforeFinalize();
+      return RS_FilterDXFRW::finalizeDxfWrite();
+    }
+  } late;
+  const auto position = blockImage->getInsertionPoint();
+  late.beforeFinalize = [&] { blockImage->setInsertionPoint(position + RS_Vector(1, 0)); };
+  writeText(output, sentinel);
+  CHECK_FALSE(late.fileExport(reopened, QString::fromStdString(output), RS2::FormatDXFRW));
+  { std::ifstream in(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(in), {}) == sentinel); }
+  blockImage->setInsertionPoint(position);
+  late.beforeFinalize = {};
+  REQUIRE(late.fileExport(reopened, QString::fromStdString(output), RS2::FormatDXFRW));
+  RS_Graphic reread;
+  REQUIRE(filter.fileImport(reread, QString::fromStdString(output), RS2::FormatDXFRW));
+  CHECK(reread.dwgAdvancedMetadata().rasterImages().size() == 4u);
+  if (const char *copy = std::getenv("LIBRECAD_KEEP_BLOCK_IMAGE_SOURCE"))
+    std::filesystem::copy_file(source, copy, std::filesystem::copy_options::overwrite_existing);
+  if (const char *copy = std::getenv("LIBRECAD_KEEP_BLOCK_IMAGE_OUTPUT"))
+    std::filesystem::copy_file(output, copy, std::filesystem::copy_options::overwrite_existing);
+  std::filesystem::remove(source);
+  std::filesystem::remove(output);
+}
+
 TEST_CASE("System codec verifies an IMAGE inside a named block",
           "[system-codec][dxf][image][transaction]") {
   ensureSettings();

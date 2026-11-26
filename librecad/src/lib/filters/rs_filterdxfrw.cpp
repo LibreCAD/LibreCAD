@@ -4038,7 +4038,7 @@ bool prepareDxfImageGraph(RS_Graphic &graphic, DRW::Version version,
     target.definition = imageDefinitionFromMetadata(*source);
   }
   std::map<std::uint32_t, std::string> livePaths;
-  std::set<std::uint32_t> liveImages, liveReactors, otherEntityHandles;
+  std::set<std::uint32_t> liveImages, liveReactors, otherEntityHandles, blockOwners;
   const auto collect = [&](const RS_EntityContainer &container) {
     const auto *block = dynamic_cast<const RS_Block *>(&container);
     if (&container != static_cast<const RS_EntityContainer *>(&graphic) && !block)
@@ -4051,7 +4051,6 @@ bool prepareDxfImageGraph(RS_Graphic &graphic, DRW::Version version,
           otherEntityHandles.insert(entity->sourceHandle());
         continue;
       }
-      if (multipleImages && block) return false;
       const auto *image = static_cast<const RS_Image *>(entity);
       const std::uint32_t handle = image->sourceHandle();
       if (handle == 0 || handle == DRW::NoHandle)
@@ -4080,9 +4079,25 @@ bool prepareDxfImageGraph(RS_Graphic &graphic, DRW::Version version,
             image->shadowHandle() || image->fullVisualStyleHandle() ||
             image->faceVisualStyleHandle() || image->edgeVisualStyleHandle() ||
             image->xDictHandle() || !image->reactorHandles().empty()) return false;
-        const auto owner = metadata.spaceBlockRecords().find(raster->parentHandle);
-        if (owner == metadata.spaceBlockRecords().end() ||
-            normalizeDwgTableName(owner->second) != "*MODEL_SPACE") return false;
+        if (block) {
+          // Bind a named block's source identity before remapping it to its
+          // emitted BLOCK_RECORD. Duplicate source identities are ambiguous.
+          if (!block->sourceHandle() || block->sourceHandle() == DRW::NoHandle ||
+              block->sourceHandle() != raster->parentHandle ||
+              metadata.spaceBlockRecords().count(block->sourceHandle())) return false;
+          blockOwners.insert(block->sourceHandle());
+          unsigned matches = 0;
+          for (unsigned i = 0; i < graphic.countBlocks(); ++i) {
+            const auto *candidate = graphic.blockAt(i);
+            if (candidate && !candidate->isDeleted() &&
+                candidate->sourceHandle() == block->sourceHandle()) ++matches;
+          }
+          if (matches != 1u) return false;
+        } else {
+          const auto owner = metadata.spaceBlockRecords().find(raster->parentHandle);
+          if (owner == metadata.spaceBlockRecords().end() ||
+              normalizeDwgTableName(owner->second) != "*MODEL_SPACE") return false;
+        }
         const std::array<double, 3> z{{raster->basePoint.z, raster->uVector.z, raster->vVector.z}};
         if (image->hasDrwExtData()) {
           const auto &sidecar = image->getDrwExtData();
@@ -4256,7 +4271,10 @@ bool prepareDxfImageGraph(RS_Graphic &graphic, DRW::Version version,
   if (!metadata.rawDxfEntities().empty() || !metadata.rawDxfSections().empty())
     return false;
   if (std::any_of(otherEntityHandles.begin(), otherEntityHandles.end(),
-                  [&](std::uint32_t handle) { return identities.count(handle) != 0; }))
+                  [&](std::uint32_t handle) { return identities.count(handle) != 0; }) ||
+      std::any_of(blockOwners.begin(), blockOwners.end(), [&](std::uint32_t handle) {
+        return identities.count(handle) != 0 || otherEntityHandles.count(handle) != 0;
+      }))
     return false;
   for (const auto &raw : metadata.rawDxfObjects()) {
     const bool admitted =
