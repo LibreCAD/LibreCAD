@@ -3123,6 +3123,28 @@ bool sparseDxfMaterialReferencesMatch(RS_Graphic &graphic) {
     bool present = false;
     if (!layer->getDxfMaterialHandle(handle, present) || (present && !contains(handle)))
       return false;
+    const auto *layerSource = metadata.dxfMaterialLayerSource(layer->handle);
+    if (!layerSource || layerSource->name != "LAYER" ||
+        layerSource->handle != layer->handle || layerSource->parentHandle != layer->parentHandle ||
+        layerSource->m_version != source->m_version ||
+        (layerSource->hasRawValues && layerSource->rawValues.size() != layerSource->groups.size()))
+      return false;
+    unsigned count = 0;
+    for (std::size_t j = 0; j < layerSource->groups.size(); ++j) {
+      const auto &group = layerSource->groups[j];
+      if (group.code() != 347)
+        continue;
+      std::uint32_t value = 0, rawValue = 0;
+      if (++count != 1 || group.type() != DRW_Variant::STRING || !group.content.s ||
+          group.content.s->size() != std::strlen(group.content.s->c_str()) ||
+          !parseDxfCarrierHandle(group.content.s->c_str(), value) || value != handle ||
+          (layerSource->hasRawValues &&
+           (layerSource->rawValues[j].size() != std::strlen(layerSource->rawValues[j].c_str()) ||
+            !parseDxfCarrierHandle(layerSource->rawValues[j].c_str(), rawValue) || rawValue != value)))
+        return false;
+    }
+    if ((count != 0) != present)
+      return false;
   }
   return true;
 }
@@ -12132,6 +12154,27 @@ void RS_FilterDXFRW::addRawDxfObject(const DRW_RawDxfObject &data) {
   }
 #endif
 }
+
+#ifdef LIBDXFRW_HAS_DXF_NAMESPACE_SOURCE_HANDLER
+bool RS_FilterDXFRW::wantsDxfNamespaceSource() const {
+  const auto *policy = dynamic_cast<const DRW_DxfSparseMaterialRawPolicy *>(this);
+  return m_graphic && policy && policy->wantsDxfSparseMaterialRawCapture() &&
+         canCaptureSmallDxfFile(m_file);
+}
+
+void RS_FilterDXFRW::addDxfNamespaceSource(const DRW_TableEntry &entry,
+                                            const DRW_RawDxfObject &source) {
+  if (!m_graphic || source.name != "LAYER")
+    return;
+  auto &metadata = m_graphic->dwgAdvancedMetadata();
+  if (!dynamic_cast<const DRW_Layer *>(&entry) || entry.handle != source.handle ||
+      entry.parentHandle != source.parentHandle || !canRetainSmallDxfSource(source)) {
+    metadata.markDxfMaterialLayerSourceUnavailable();
+    return;
+  }
+  metadata.addDxfMaterialLayerSource(source);
+}
+#endif
 
 #ifdef LIBDXFRW_HAS_DXF_DICTIONARY_SOURCE_HANDLERS
 bool RS_FilterDXFRW::wantsDxfRootDictionarySource() const {

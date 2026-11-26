@@ -1441,7 +1441,7 @@ TEST_CASE("System codec gates ambiguous AC1024 default material",
   CHECK(exporter.exportReport().contains(QStringLiteral("raw source missing, changed or unverified")));
   std::filesystem::remove(danglingSource);
   const auto layerSource = tmpFile("system_sparse_material_layer_reference.dxf");
-  for (const auto &target : {std::string("1F"), std::string("2F")}) {
+  for (const auto &target : {std::string("2F"), std::string("1F")}) {
     std::ifstream input(graphSource, std::ios::binary);
     std::string graph((std::istreambuf_iterator<char>(input)), {});
     const std::string versionMarker = "1\nAC1024\n";
@@ -1458,17 +1458,40 @@ TEST_CASE("System codec gates ambiguous AC1024 default material",
     RS_Graphic layerGraphic;
     OptInFilter layerImporter;
     REQUIRE(layerImporter.fileImport(layerGraphic, QString::fromStdString(layerSource), RS2::FormatDXFRW));
+    const auto *layerFrame = layerGraphic.dwgAdvancedMetadata().dxfMaterialLayerSource(0x30u);
+    REQUIRE(layerFrame);
     CHECK_FALSE(exporter.fileExport(layerGraphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
     CHECK(exporter.exportReport().contains(target == "1F"
         ? QStringLiteral("raw-only graph requires qualification")
         : QStringLiteral("raw source missing, changed or unverified")));
+    if (target == "1F") {
+      auto *mutableFrame = const_cast<DRW_RawDxfObject *>(layerFrame);
+      const auto group = std::find_if(mutableFrame->groups.begin(), mutableFrame->groups.end(),
+          [](const auto &value) { return value.code() == 347; });
+      REQUIRE(group != mutableFrame->groups.end());
+      group->addString(347, "2F");
+      CHECK_FALSE(exporter.fileExport(layerGraphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+      CHECK(exporter.exportReport().contains(QStringLiteral("raw source missing, changed or unverified")));
+      group->addString(347, "1F");
+      CHECK_FALSE(exporter.fileExport(layerGraphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+      CHECK(exporter.exportReport().contains(QStringLiteral("raw-only graph requires qualification")));
+      const auto sourceVersion = mutableFrame->m_version;
+      mutableFrame->m_version = DRW::AC1021;
+      CHECK_FALSE(exporter.fileExport(layerGraphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+      CHECK(exporter.exportReport().contains(QStringLiteral("raw source missing, changed or unverified")));
+      mutableFrame->m_version = sourceVersion;
+      const auto duplicate = *layerFrame;
+      layerGraphic.dwgAdvancedMetadata().addDxfMaterialLayerSource(duplicate);
+      CHECK_FALSE(layerGraphic.dwgAdvancedMetadata().dxfMaterialLayerSource(0x30u));
+      CHECK_FALSE(exporter.fileExport(layerGraphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+      CHECK(exporter.exportReport().contains(QStringLiteral("raw source missing, changed or unverified")));
+    }
   }
-  std::filesystem::remove(layerSource);
   // Generate the same locally authored control in Binary DXF without relying
   // on a private codec writer. Only the group kinds in this fixture are used.
   const auto binarySource = tmpFile("system_ezdxf_material_source_binary.dxf");
   {
-    std::ifstream ascii(graphSource, std::ios::binary);
+    std::ifstream ascii(layerSource, std::ios::binary);
     std::ofstream binary(binarySource, std::ios::binary | std::ios::trunc);
     const char magic[] = "AutoCAD Binary DXF\r\n\x1a";
     binary.write(magic, sizeof(magic));
@@ -1481,7 +1504,7 @@ TEST_CASE("System codec gates ambiguous AC1024 default material",
       REQUIRE(static_cast<bool>(std::getline(ascii, value)));
       const int code = std::stoi(codeText);
       littleEndian(static_cast<std::uint16_t>(code), 2);
-      if (code <= 9 || code == 100 || code == 102 || code == 330 ||
+      if (code <= 9 || code == 100 || code == 102 || code == 330 || code == 347 ||
           (code >= 350 && code <= 369)) {
         binary.write(value.data(), static_cast<std::streamsize>(value.size()));
         binary.put('\0');
@@ -1494,7 +1517,7 @@ TEST_CASE("System codec gates ambiguous AC1024 default material",
       } else if (code >= 90 && code <= 99) {
         littleEndian(static_cast<std::uint32_t>(std::stoll(value)), 4);
       } else {
-        REQUIRE(((code >= 70 && code <= 79) || (code >= 170 && code <= 179) ||
+        REQUIRE(((code >= 60 && code <= 79) || (code >= 170 && code <= 179) ||
                  (code >= 270 && code <= 289)));
         littleEndian(static_cast<std::uint16_t>(std::stoi(value)), 2);
       }
@@ -1512,6 +1535,8 @@ TEST_CASE("System codec gates ambiguous AC1024 default material",
   REQUIRE(binaryGraphic.dwgAdvancedMetadata().dxfRootDictionarySource());
   REQUIRE(binaryGraphic.dwgAdvancedMetadata().dxfMaterialDictionarySource());
   CHECK_FALSE(binaryGraphic.dwgAdvancedMetadata().dxfMaterialDictionarySource()->hasRawValues);
+  REQUIRE(binaryGraphic.dwgAdvancedMetadata().dxfMaterialLayerSource(0x30u));
+  CHECK_FALSE(binaryGraphic.dwgAdvancedMetadata().dxfMaterialLayerSource(0x30u)->hasRawValues);
   CHECK_FALSE(exporter.fileExport(binaryGraphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
   CHECK(exporter.exportReport().contains(QStringLiteral("raw-only graph requires qualification")));
   auto &binaryRaw = const_cast<std::vector<DRW_RawDxfObject> &>(
@@ -1536,6 +1561,7 @@ TEST_CASE("System codec gates ambiguous AC1024 default material",
   CHECK_FALSE(exporter.fileExport(binaryGraphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
   CHECK(exporter.exportReport().contains(QStringLiteral("raw-only graph requires qualification")));
   std::filesystem::remove(binarySource);
+  std::filesystem::remove(layerSource);
   std::filesystem::remove(graphSource);
   graphic.dwgAdvancedMetadata().addDxfRawMaterialSource(*sourceSnapshot);
   CHECK_FALSE(graphic.dwgAdvancedMetadata().materials().front().rawDxfSource);

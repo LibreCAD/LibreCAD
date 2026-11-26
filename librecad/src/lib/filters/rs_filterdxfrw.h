@@ -1975,6 +1975,9 @@ class RS_FilterDXFRW : public RS_FilterInterface,
 #ifdef LIBDXFRW_HAS_DXF_RASTER_SOURCE_HANDLER
     , public DRW_DxfRasterSourceHandler
 #endif
+#ifdef LIBDXFRW_HAS_DXF_NAMESPACE_SOURCE_HANDLER
+    , public DRW_DxfNamespaceSourceHandler
+#endif
 #ifdef DWGSUPPORT
     ,
                        private RS_FilterDXFRW_DwgWriteIdentityRegistry
@@ -2198,6 +2201,11 @@ public:
   void addRawDwgSection(const DRW_RawDwgSection &data) override;
   void addDataStorage(const DRW_DataStorageSection &data) override;
   void addRawDxfObject(const DRW_RawDxfObject &data) override;
+#ifdef LIBDXFRW_HAS_DXF_NAMESPACE_SOURCE_HANDLER
+  bool wantsDxfNamespaceSource() const override;
+  void addDxfNamespaceSource(const DRW_TableEntry &entry,
+                             const DRW_RawDxfObject &source) override;
+#endif
 #ifdef LIBDXFRW_HAS_DXF_DICTIONARY_SOURCE_HANDLERS
   bool wantsDxfRootDictionarySource() const override;
   void addDxfRootDictionarySource(const DRW_Dictionary &dictionary,

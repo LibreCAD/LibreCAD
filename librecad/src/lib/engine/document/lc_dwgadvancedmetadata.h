@@ -3482,6 +3482,8 @@ public:
     m_dxfFixedGroupDictionarySource.reset();
     m_dxfMaterialDictionarySource.reset();
     m_dxfMaterialDictionarySourceConflict = false;
+    m_dxfMaterialLayerSources.clear();
+    m_dxfMaterialLayerSourceConflict = false;
     m_dxfImageDefSource.reset();
     m_dxfImageSource.reset();
     m_dxfDictionarySourceConflict = false;
@@ -3940,6 +3942,32 @@ public:
   const DRW_RawDxfObject *dxfMaterialDictionarySource() const {
     return m_dxfMaterialDictionarySourceConflict || !m_dxfMaterialDictionarySource
                ? nullptr : &*m_dxfMaterialDictionarySource;
+  }
+
+  void markDxfMaterialLayerSourceUnavailable() {
+    m_dxfMaterialLayerSources.clear();
+    m_dxfMaterialLayerSourceConflict = true;
+  }
+
+  void addDxfMaterialLayerSource(const DRW_RawDxfObject &source) {
+    if (m_dxfMaterialLayerSourceConflict || source.handle == 0 ||
+        source.handle == DRW::NoHandle || m_dxfMaterialLayerSources.size() >= 32u) {
+      markDxfMaterialLayerSourceUnavailable();
+      return;
+    }
+    try {
+      if (!m_dxfMaterialLayerSources.emplace(source.handle, source).second)
+        markDxfMaterialLayerSourceUnavailable();
+    } catch (...) {
+      markDxfMaterialLayerSourceUnavailable();
+    }
+  }
+
+  const DRW_RawDxfObject *dxfMaterialLayerSource(std::uint32_t handle) const {
+    if (m_dxfMaterialLayerSourceConflict)
+      return nullptr;
+    const auto found = m_dxfMaterialLayerSources.find(handle);
+    return found == m_dxfMaterialLayerSources.end() ? nullptr : &found->second;
   }
 
   void addDxfImageDefSource(const DRW_RawDxfObject &source) {
@@ -13631,6 +13659,8 @@ private:
   std::optional<DRW_RawDxfObject> m_dxfFixedGroupDictionarySource;
   std::optional<DRW_RawDxfObject> m_dxfMaterialDictionarySource;
   bool m_dxfMaterialDictionarySourceConflict = false;
+  std::map<std::uint32_t, DRW_RawDxfObject> m_dxfMaterialLayerSources;
+  bool m_dxfMaterialLayerSourceConflict = false;
   std::optional<DRW_RawDxfObject> m_dxfImageDefSource;
   std::optional<DRW_RawDxfObject> m_dxfImageSource;
   bool m_dxfDictionarySourceConflict = false;
