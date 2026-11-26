@@ -44,6 +44,12 @@ type changes, candidate refresh, existing-source indication, successful
 replacement, and cancellation/refusal remains open. The type selector is not
 a replacement for that gate or for external ODA/AutoCAD acceptance.
 
+The original document offset is excluded from its own source picker and source
+highlight resolution, including when the dialog edits a clone; other offsets
+remain eligible as spline sources. Section 2048 records the fix and bounded
+validation. The exploratory older-build selection of `Spline 128` was the
+offset itself, not evidence of a valid cross-family replacement.
+
 **Parabola implementation reconciliation (2026-11-15, code/test commit
 `13d006a0b`):** Rotated and reversed parabola pattern clipping now orders
 intersections in the directed local parameter and extracts exact Bezier
@@ -63328,3 +63334,36 @@ assertions / 1 case** in both macOS CMake Release and ASan/UBSan Debug, with
 `ASAN_OPTIONS=detect_leaks=0` and `UBSAN_OPTIONS=halt_on_error=1:print_stacktrace=1`.
 This focused result does not qualify leak detection or the full sanitizer
 matrix; section 2046's full Properties run predates only this test-wait edit.
+
+## 2048. Exclude the Edited Offset from Its Source Picker (2026-11-26)
+
+In the section 2036 test fixture, the older qmake build's Properties picker
+offered the edited native offset itself as `Spline 128`: `LC_OffsetCurve`
+derives from `RS_Spline`, and the dialog edits a clone while the original
+remains in the document. Selecting it replaced the clone's source with the
+previous offset geometry. The fixture contains no ordinary spline, so this
+exploratory interaction is a defect reproduction, not evidence of a valid
+cross-family replacement. The disposable drawing was modified in memory and
+not manually saved; the normal profile had autosaved during the session.
+The temporarily enabled macOS keyboard-navigation option was restored to its
+original off state.
+
+Commit `7c6a45cf0` carries the original entity ID through the guarded edit
+session and excludes that entity from synchronous/incremental candidate and
+highlight scans and from direct candidate lookup. Directly edited document
+entities are excluded by identity as well. Other native offsets remain
+selectable as spline sources; the new test completes worker preparation from
+one. Tests cover direct and clone-backed widgets, the real Modify Properties
+action, small and large documents, and injected self IDs. Before the fix, the
+direct small/large tests failed because the self candidate was present.
+
+On a source-equivalent macOS CMake Release build the full offscreen offset
+Properties suite passed **53,976 assertions / 111 cases**. Its first run
+exposed a test assertion that raced the large-document list refresh; after the
+test waited for that scan, the full rerun passed. The incremental qmake6
+app/worker build also passed, subject to the section 2034 deployment-target
+caveat. A current-source test bundle did not yield a usable desktop-control
+session; current-head visible replacement remains open. Exact previous PR
+head `f4f2a38608e037c3bc2fe25a56631216606c6fb8` completed **19 successful
+checks and 7 skipped**, including Windows x64; the new head requires its own
+CI. Other acceptance gates in sections 2045-2047 remain open.
