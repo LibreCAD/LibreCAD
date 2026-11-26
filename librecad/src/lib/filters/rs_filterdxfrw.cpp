@@ -14559,7 +14559,9 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
         bool valid = source->getDxfMaterialHandle(handle, present);
 #if defined(LIBDXFRW_HAS_DXF_STAGED_RAW_OBJECT_INSPECTOR) && \
     defined(LIBDXFRW_HAS_DXF_STAGED_LAYER_MATERIAL_INSPECTOR)
-        if (source->handle == 0 || source->handle == DRW::NoHandle || stagedLayers.size() >= 64u)
+        // Match the shared staged inspectors' documented bound. Exceeding it
+        // must not silently turn off the graph and late-mutation checks.
+        if (source->handle == 0 || source->handle == DRW::NoHandle || stagedLayers.size() >= 4096u)
           boundedAudit = false;
         else {
           stagedLayers.push_back({layer->getName().toUtf8().toStdString(), source->handle, handle, present});
@@ -14584,7 +14586,8 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
       }
 #if defined(LIBDXFRW_HAS_DXF_STAGED_RAW_OBJECT_INSPECTOR) && \
     defined(LIBDXFRW_HAS_DXF_STAGED_LAYER_MATERIAL_INSPECTOR)
-      if (boundedAudit && !selectedMaterials.empty() && !stagedLayers.empty()) {
+      if (!selectedMaterials.empty()) {
+        if (!boundedAudit || stagedLayers.empty()) return false;
         std::set<std::uint32_t> selectedObjects;
         for (const auto handle : selectedMaterials) {
           const auto material = std::find_if(metadata.materials().begin(), metadata.materials().end(),
@@ -14614,7 +14617,7 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
 #endif
         };
         auto audit = std::make_shared<StagedMaterialAudit>();
-        if (selectedObjects.size() > 64u) boundedAudit = false;
+        if (selectedObjects.size() > 4096u) boundedAudit = false;
         for (const auto handle : selectedObjects) {
           const auto raw = std::find_if(metadata.rawDxfObjects().begin(), metadata.rawDxfObjects().end(),
               [&](const auto &item) { return item.handle == handle; });
@@ -14642,7 +14645,8 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
           }
           audit->objects.push_back(*raw);
         }
-        if (boundedAudit) {
+        if (!boundedAudit) return false;
+        {
           audit->layers = std::move(stagedLayers);
           audit->identities = std::move(stagedLayerIds);
           std::map<std::uint32_t, std::string> selectedRootNames;
