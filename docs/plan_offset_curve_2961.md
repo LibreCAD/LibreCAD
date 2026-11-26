@@ -145,6 +145,19 @@ the dependencies for **3 and 4** in parallel. **5** follows the acceptance work.
    screenshot pairs, Qt/display details, input hashes, observed geometry and
    editability. An absent frame or unobservable interaction is still open.
 
+## Recent Evidence
+
+- On 2026-11-26, the source-equivalent macOS CMake Debug ASan/UBSan build
+  ran the shared-process selector `[trim-worker-preview],[trim-worker-commit],
+  [trim-worker-action-fault]` in declaration order and random order with seed
+  3193. Both passed **619 assertions / 17 cases** with
+  `ASAN_OPTIONS=detect_leaks=0` and
+  `UBSAN_OPTIONS=halt_on_error=1:print_stacktrace=1`. The scratch changes match
+  PR source except for comments and an equivalent local variable in
+  `dwgbufferw.cpp`; this is not an exact-head build. This qualifies those cases,
+  not leak detection, the broad Trim matrix, other platforms or visible GUI.
+  Next: reconcile the remaining Trim case/profile inventory by identity.
+
 ## Smallest Safe Fix
 
 Start with **no production diff**. For a failed row: pin a reproducible case,
