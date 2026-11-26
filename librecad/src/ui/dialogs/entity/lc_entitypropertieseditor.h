@@ -40,6 +40,8 @@ class QDialog;
 // Value ownership outlives an action/editor destroyed inside the modal event loop.
 struct LC_EntityPropertiesEditSession {
     std::unique_ptr<RS_Entity> entity;
+    // The dialog edits a clone; retain the document identity to exclude self-selection.
+    unsigned long long originalEntityId = 0;
     ~LC_EntityPropertiesEditSession();
 };
 

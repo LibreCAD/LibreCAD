@@ -311,6 +311,7 @@ bool LC_ActionModifyEntity::doTriggerModifications(LC_DocumentModificationBatch&
             if (m_nativeDialogSource) {
                 auto session = std::make_shared<LC_EntityPropertiesEditSession>();
                 session->entity.reset(m_entity->clone());
+                session->originalEntityId = m_entity->getId();
                 m_clonedEntity = session->entity.get();
                 m_pendingNativeClone = std::move(session);
             } else {

@@ -53,7 +53,8 @@ class LC_Dialog;
 
 LC_DlgEntityProperties::LC_DlgEntityProperties(QWidget* parent, LC_GraphicViewport* viewport, RS_Entity* entity,
                                                const LC_ActionContext::InteractiveInputInfo::InputType inputType, const QString& tag,
-                                               const double valueOne, const double valueTwo, std::function<bool()> nativeGuard)
+                                               const double valueOne, const double valueTwo, std::function<bool()> nativeGuard,
+                                               unsigned long long originalEntityId)
     : LC_Dialog(parent, ""), ui(new Ui::LC_DlgEntityProperties) {
     ui->setupUi(this);
 
@@ -67,6 +68,7 @@ LC_DlgEntityProperties::LC_DlgEntityProperties(QWidget* parent, LC_GraphicViewpo
     prepareTypeSpecificUI(primaryEditingWidget, secondaryEditingWidget, dlgName, windowTitle, entityType);
     if (m_offsetEditor) {
         m_offsetEditor->setPreparationGuard(std::move(nativeGuard));
+        m_offsetEditor->m_editedDocumentEntityId = originalEntityId;
         connect(m_offsetEditor, &LC_PropertiesEditingWidgetOffsetCurve::preparationBusyChanged, this,
             [this](bool busy) {
                 if (auto* ok = ui->buttonBox->button(QDialogButtonBox::Ok)) ok->setEnabled(!busy);

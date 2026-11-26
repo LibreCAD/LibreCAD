@@ -543,7 +543,7 @@ void LC_PropertiesEditingWidgetOffsetCurve::refreshSourceChoices(
     int preferredIndex = -1;
     bool embeddedSourceUnsupported = false;
     for (auto* entity : document->getEntityList()) {
-        if (entity == nullptr || entity->getFlag(RS2::FlagDeleted) ||
+        if (entity == nullptr || isEditedSource(*entity) || entity->getFlag(RS2::FlagDeleted) ||
             !mayMatchSourceKind(*entity, wantedKind)) continue;
         const auto geometry = LC_OffsetSourceGeometry::capture(*entity);
         if (!geometry || (wantedKind != LC_OffsetSourceGeometry::Kind::Invalid &&
@@ -724,7 +724,7 @@ void LC_PropertiesEditingWidgetOffsetCurve::processSourceChoiceScanSlice() const
                 const auto index = m_choiceScanIndex++;
                 auto* entity = entities.at(static_cast<int>(index));
                 ++processed;
-                if (!entity || entity->isDeleted() ||
+                if (!entity || isEditedSource(*entity) || entity->isDeleted() ||
                     !mayMatchSourceKind(*entity, m_choiceScanWantedKind)) continue;
                 const auto geometry = LC_OffsetSourceGeometry::capture(*entity);
                 if (!geometry || (m_choiceScanWantedKind !=
@@ -766,7 +766,7 @@ void LC_PropertiesEditingWidgetOffsetCurve::processSourceChoiceScanSlice() const
             ++processed;
             if (candidate.index >= m_choiceScanEntityCount) continue;
             auto* entity = entities.at(static_cast<int>(candidate.index));
-            if (!entity || entity->isDeleted() ||
+            if (!entity || isEditedSource(*entity) || entity->isDeleted() ||
                 static_cast<qulonglong>(entity->getId()) != candidate.id) continue;
             const auto geometry = LC_OffsetSourceGeometry::capture(*entity);
             if (!geometry) continue;
@@ -902,7 +902,8 @@ void LC_PropertiesEditingWidgetOffsetCurve::refreshSourceHighlight(bool preserve
         if (alive) alive->invalidateSourceHighlightScan();
     });
 
-    if (knownMatch && !knownMatch->isDeleted() && sourceVariantSelectable(*knownMatch)) {
+    if (knownMatch && !isEditedSource(*knownMatch) && !knownMatch->isDeleted() &&
+        sourceVariantSelectable(*knownMatch)) {
         const auto geometry = LC_OffsetSourceGeometry::capture(*knownMatch);
         const auto candidate = geometry
             ? LC_OffsetWorkerRequest::Values::encodeSourceGeometry(*geometry) : std::nullopt;
@@ -1025,7 +1026,8 @@ void LC_PropertiesEditingWidgetOffsetCurve::processSourceHighlightScanSlice() {
             const std::size_t index = m_scanIndex++;
             ++processed;
             auto* entity = entities.at(static_cast<int>(index));
-            if (!entity || entity->isDeleted() || !mayMatchSourceKind(*entity, m_scanKind)) continue;
+            if (!entity || isEditedSource(*entity) || entity->isDeleted() ||
+                !mayMatchSourceKind(*entity, m_scanKind)) continue;
             const auto geometry = LC_OffsetSourceGeometry::capture(*entity);
             const auto encoding = geometry
                 ? LC_OffsetWorkerRequest::Values::encodeSourceGeometry(*geometry) : std::nullopt;
@@ -1100,7 +1102,8 @@ void LC_PropertiesEditingWidgetOffsetCurve::completeSourceHighlightScan() {
         const auto& entities = document->getEntityList();
         if (candidateIndex < static_cast<std::size_t>(entities.size())) {
             auto* candidate = entities.at(static_cast<int>(candidateIndex));
-            if (candidate && static_cast<qulonglong>(candidate->getId()) == candidateId &&
+            if (candidate && !isEditedSource(*candidate) &&
+                static_cast<qulonglong>(candidate->getId()) == candidateId &&
                 !candidate->isDeleted() && sourceVariantSelectable(*candidate)) {
                 const auto geometry = LC_OffsetSourceGeometry::capture(*candidate);
                 const auto encoding = geometry
@@ -1159,11 +1162,17 @@ void LC_PropertiesEditingWidgetOffsetCurve::checkSourceHighlight() const {
         document->undoStateEpoch() != m_scanUndoEpoch);
 }
 
+bool LC_PropertiesEditingWidgetOffsetCurve::isEditedSource(const RS_Entity& entity) const {
+    return &entity == m_entity || (m_editedDocumentEntityId != 0 &&
+        static_cast<qulonglong>(entity.getId()) == m_editedDocumentEntityId);
+}
+
 RS_Entity* LC_PropertiesEditingWidgetOffsetCurve::findSourceEntity(qulonglong id) const {
     auto* document = m_viewport ? m_viewport->getDocument() : nullptr;
     if (document == nullptr) return nullptr;
     for (auto* entity : document->getEntityList()) {
-        if (entity == nullptr || entity->getFlag(RS2::FlagDeleted) || entity->getId() != id) continue;
+        if (entity == nullptr || isEditedSource(*entity) ||
+            entity->getFlag(RS2::FlagDeleted) || entity->getId() != id) continue;
         const auto kind = sourceKind(*entity);
         if (kind && sourceVariantSelectable(*entity) &&
             (ui->cbSourceType->currentData().toInt() ==

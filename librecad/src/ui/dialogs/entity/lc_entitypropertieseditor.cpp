@@ -139,7 +139,8 @@ void LC_EntityPropertiesEditor::showEntityPropertiesDialog() {
     // Declare before dlg: the native clone is released only AFTER all its widgets are destroyed.
     const auto session = m_guardedSession;
     auto dlg = LC_DlgEntityProperties(m_parent, m_viewport, m_entity, inputType, interactiveInputTag,
-                                           interactiveInputValueOne, interactiveInputValueTwo, m_editGuard);
+                                           interactiveInputValueOne, interactiveInputValueTwo, m_editGuard,
+                                           session ? session->originalEntityId : 0);
 
     if (guarded) m_activeGuardedDialog = &dlg;
     const int result = dlg.exec();

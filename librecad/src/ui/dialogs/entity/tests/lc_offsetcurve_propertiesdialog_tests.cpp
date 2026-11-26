@@ -769,6 +769,89 @@ TEST_CASE("Native offset properties resolve, replace, and select a source ellips
     CHECK(sourceBox->currentData().toULongLong() == replacement->getId());
 }
 
+TEST_CASE("Source picker excludes the edited offset but retains other offsets",
+          "[gui][dialog][offsetcurve][source][self-source]") {
+    for (bool incremental : {false, true}) for (bool cloneMode : {false, true}) {
+        CAPTURE(incremental, cloneMode);
+        Fixture f; requireNativeHelper();
+        auto first = makeArc(f.graphic), second = makeArc(f.graphic);
+        auto* edited = first.release();
+        auto* other = second.release();
+        f.graphic.addEntity(edited);
+        f.graphic.addEntity(other);
+        if (incremental) for (int i = 0; i < 260; ++i)
+            f.graphic.addEntity(new RS_Line(nullptr, RS_LineData{{double(i), 20}, {double(i + 1), 20}}));
+        const Snapshot before(*edited);
+        std::unique_ptr<LC_OffsetCurve> clone;
+        std::unique_ptr<NativeWidget> standalone;
+        std::unique_ptr<LC_DlgEntityProperties> dialog;
+        NativeWidget* widget = nullptr;
+        if (cloneMode) {
+            clone.reset(static_cast<LC_OffsetCurve*>(edited->clone()));
+            dialog = std::make_unique<LC_DlgEntityProperties>(nullptr, f.view.getViewPort(), clone.get(),
+                Input::NOTNEEDED, QString{}, 0, 0, std::function<bool()>{}, edited->getId());
+            widget = dialog->findChild<NativeWidget*>();
+        } else {
+            standalone = std::make_unique<NativeWidget>();
+            widget = standalone.get();
+            widget->setGraphicViewport(f.view.getViewPort());
+            widget->setEntity(edited);
+        }
+        REQUIRE(widget);
+        auto* type = widget->findChild<QComboBox*>("cbSourceType");
+        auto* source = widget->findChild<QComboBox*>("cbSource");
+        REQUIRE(type); REQUIRE(source);
+        type->setCurrentIndex(type->findData(static_cast<int>(LC_OffsetSourceGeometry::Kind::Spline)));
+        if (incremental) REQUIRE(pollEventsUntil([&] { return source->isEnabled(); }));
+        CHECK(source->findData(QVariant::fromValue<qulonglong>(edited->getId())) < 0);
+        CHECK(source->findData(QVariant::fromValue<qulonglong>(other->getId())) >= 0);
+        source->addItem(QStringLiteral("Injected self"), QVariant::fromValue<qulonglong>(edited->getId()));
+        source->setCurrentIndex(source->count() - 1);
+        CHECK(widget->editAttemptCount() == 0);
+        if (cloneMode) {
+            const int otherIndex = source->findData(QVariant::fromValue<qulonglong>(other->getId()));
+            REQUIRE(otherIndex >= 0);
+            source->setCurrentIndex(otherIndex);
+            REQUIRE(widget->isPreparing());
+            awaitPreparation(*widget);
+            REQUIRE(widget->lastEditResult()); REQUIRE(*widget->lastEditResult());
+            REQUIRE(clone->sourceDefinition());
+            CHECK(clone->sourceDefinition()->source.kind() == LC_OffsetSourceGeometry::Kind::Spline);
+            if (incremental) REQUIRE(pollEventsUntil([&] { return source->isEnabled(); }));
+            CHECK(source->currentData().toULongLong() == other->getId());
+        }
+        before.exact(*edited);
+        widget->setEntity(nullptr);
+    }
+}
+
+TEST_CASE("Modify properties excludes its document original from source choices",
+          "[gui][dialog][offsetcurve][source][self-source][action]") {
+    for (bool incremental : {false, true}) {
+        CAPTURE(incremental);
+        ActionFixture f;
+        auto other = makeArc(f.graphic);
+        auto* otherEntity = other.release();
+        f.graphic.addEntity(otherEntity);
+        if (incremental) for (int i = 0; i < 260; ++i)
+            f.graphic.addEntity(new RS_Line(nullptr, RS_LineData{{double(i), 20}, {double(i + 1), 20}}));
+        const Snapshot before(*f.original);
+        f.drive([&](LC_DlgEntityProperties& dialog, unsigned) {
+            auto& widget = native(dialog);
+            auto* type = widget.findChild<QComboBox*>("cbSourceType");
+            auto* source = widget.findChild<QComboBox*>("cbSource");
+            REQUIRE(type); REQUIRE(source);
+            type->setCurrentIndex(type->findData(static_cast<int>(LC_OffsetSourceGeometry::Kind::Spline)));
+            if (incremental) REQUIRE(pollEventsUntil([&] { return source->isEnabled(); }));
+            CHECK(source->findData(QVariant::fromValue<qulonglong>(f.original->getId())) < 0);
+            CHECK(source->findData(QVariant::fromValue<qulonglong>(otherEntity->getId())) >= 0);
+            CHECK(widget.editAttemptCount() == 0);
+            button(dialog, QDialogButtonBox::Cancel);
+        });
+        before.exact(*f.original);
+    }
+}
+
 TEST_CASE("Exported source-picker drawing reopens with resolvable source candidates",
           "[gui][dialog][offsetcurve][source][visible-fixture]") {
     REQUIRE(lc::test::application() != nullptr);

@@ -99,11 +99,13 @@ private:
     void invalidateSourceHighlightScan();
     void clearSourceWatch() const;
     void completeSourceHighlightScan();
+    bool isEditedSource(const RS_Entity& entity) const;
     RS_Entity* findSourceEntity(qulonglong id) const;
     bool sourceMatches(const SourceWitness& source) const;
     void selectCurrentSource() const;
     Ui::LC_OffsetCurvePropertiesEditingWidget* ui;
     LC_OffsetCurve* m_entity = nullptr;
+    qulonglong m_editedDocumentEntityId = 0;
     mutable QPointer<QLineEdit> m_editorFocusToRestore;
     mutable qulonglong m_preferredSourceId = 0;
     mutable std::shared_ptr<void> m_sourceHighlight;

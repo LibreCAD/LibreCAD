@@ -43,7 +43,8 @@ class LC_DlgEntityProperties : public LC_Dialog{
 public:
     LC_DlgEntityProperties(QWidget* parent, LC_GraphicViewport* viewport, RS_Entity* entity,
                            LC_ActionContext::InteractiveInputInfo::InputType inputType, const QString& tag,
-                           double valueOne, double valueTwo, std::function<bool()> nativeGuard = {});
+                           double valueOne, double valueTwo, std::function<bool()> nativeGuard = {},
+                           unsigned long long originalEntityId = 0);
     ~LC_DlgEntityProperties() override;
     LC_ActionContext::InteractiveInputInfo::InputType isInteractiveInputRequested() const {return m_interactiveInputRequested;}
     QString getInteractiveInputTag(){return m_inputTag;}
