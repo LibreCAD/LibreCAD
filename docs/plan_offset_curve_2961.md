@@ -63315,3 +63315,16 @@ passed **53,228 assertions / 109 cases**. Both changed files matched the tested
 scratch sources and `git diff --check` passed. These tests do not establish
 visible packaged-app interaction, broad sanitizer coverage, or Windows CI.
 Continue with the remaining gates listed in section 2045.
+
+## 2047. Recheck Distance Guard Under Sanitizers (2026-11-25)
+
+The first ASan/UBSan run of section 2046's focused regression exceeded the
+shared 3.5-second GUI-test watchdog during a worker-completion case; no
+sanitizer error was reported. Test commit `1392a7f81` uses a bounded polling
+wait of the production commit deadline plus five seconds, while still
+requiring the guard to run and the expected target/refusal state. It does not
+change the production worker deadline. The updated focused case passed **888
+assertions / 1 case** in both macOS CMake Release and ASan/UBSan Debug, with
+`ASAN_OPTIONS=detect_leaks=0` and `UBSAN_OPTIONS=halt_on_error=1:print_stacktrace=1`.
+This focused result does not qualify leak detection or the full sanitizer
+matrix; section 2046's full Properties run predates only this test-wait edit.
