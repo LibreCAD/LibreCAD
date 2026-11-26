@@ -2211,7 +2211,7 @@ TEST_CASE("System codec gates ambiguous AC1024 default material",
     std::string graph((std::istreambuf_iterator<char>(input)), {});
     const auto at = graph.find("0\nSECTION\n2\nOBJECTS\n");
     REQUIRE(at != std::string::npos);
-    graph.insert(at, "0\nSECTION\n2\nTABLES\n0\nTABLE\n2\nLAYER\n70\n1\n"
+    graph.insert(at, "0\nSECTION\n2\nTABLES\n0\nTABLE\n2\nLAYER\n5\n60\n70\n1\n"
                      "0\nLAYER\n5\n30\n100\nAcDbSymbolTableRecord\n100\nAcDbLayerTableRecord\n"
                      "2\nRAWTEST\n70\n0\n62\n7\n6\nCONTINUOUS\n347\n" + target +
                      "\n0\nENDTAB\n0\nENDSEC\n");
