@@ -10600,6 +10600,31 @@ const BuiltinLTypeLength kBuiltinLTypeLengths[] = {
 } // namespace
 
 #ifdef LIBRECAD_SYSTEM_CODEC_TESTS
+TEST_CASE("R12 DXF reports an omitted ellipse setting and supports retry",
+          "[dxf][roundtrip][filter][system-codec][r12][linetype]") {
+  ensureSettings();
+  const std::string source = writeFixture("legacy_pellipse_source.dxf", kNamedR12Fixture);
+  RS_Graphic graphic;
+  RS_FilterDXFRW filter;
+  REQUIRE(filter.fileImport(graphic, QString::fromStdString(source), RS2::FormatDXFRW));
+  const std::string out = tmpFile("legacy_pellipse_out.dxf");
+  graphic.addVariable("$PELLIPSE", 1, 70);
+  writeText(out, "existing destination\n");
+  REQUIRE_FALSE(filter.fileExport(graphic, QString::fromStdString(out), RS2::FormatDXFRW12));
+  CHECK(textWithoutCR(out) == "existing destination\n");
+  graphic.addVariable("$PELLIPSE", 0, 70);
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(out), RS2::FormatDXFRW12));
+  CHECK(filter.exportReport().contains(QStringLiteral("PELLIPSE")));
+  CHECK(graphic.getVariableDict().value("$PELLIPSE").getInt() == 0);
+  CHECK(textWithoutCR(out).find("$PELLIPSE") == std::string::npos);
+  graphic.addVariable("$PELLIPSE", 1, 70);
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(out), RS2::FormatDXFRW14));
+  CHECK_FALSE(filter.exportReport().contains(QStringLiteral("PELLIPSE")));
+  CHECK(textWithoutCR(out).find("$PELLIPSE") != std::string::npos);
+  std::filesystem::remove(out);
+  std::filesystem::remove(source);
+}
+
 TEST_CASE("Legacy DXF reports omitted default angular precision and supports retry",
           "[dxf][roundtrip][filter][system-codec][r12][linetype]") {
   ensureSettings();
