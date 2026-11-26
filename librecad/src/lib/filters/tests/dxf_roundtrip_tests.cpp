@@ -11235,6 +11235,25 @@ TEST_CASE("DXF a record that only names a line type takes the list's dashes",
             "102\n{ACAD_XDICTIONARY\n360\nA2\n102\n}\n"
             "0\nENDTAB\n0\nENDSEC\n"
             "0\nSECTION\n2\nENTITIES\n0\nENDSEC\n0\nEOF\n");
+#ifdef LIBRECAD_SYSTEM_CODEC_TESTS
+  // DXF LTYPE alignment is 65. Keep the invalid-value refusal covered, then
+  // exercise pattern reconstruction with a valid alignment value.
+  {
+    RS_Graphic invalidGraphic;
+    RS_FilterDXFRW invalidFilter;
+    CHECK_FALSE(invalidFilter.fileImport(invalidGraphic, QString::fromStdString(src),
+                                         RS2::FormatDXFRW));
+  }
+  {
+    std::ifstream input(src, std::ios::binary);
+    std::string content(std::istreambuf_iterator<char>(input), {});
+    const auto alignment = content.find("\n72\n66\n");
+    REQUIRE(alignment != std::string::npos);
+    content.replace(alignment, std::string("\n72\n66\n").size(), "\n72\n65\n");
+    input.close();
+    writeText(src, content);
+  }
+#endif
   RS_Graphic graphic;
   REQUIRE(importFile(graphic, src));
   LC_LineType *entry = graphic.findLineType(QStringLiteral("SAVED_LTYPE"));
@@ -11257,8 +11276,13 @@ TEST_CASE("DXF a record that only names a line type takes the list's dashes",
   CHECK(std::stod(length.front()) == 4.0);
   CHECK(ltypeRecordGroupValues(out, "SAVED_LTYPE", "3") ==
         std::vector<std::string>{"Saved linetype"});
+#ifdef LIBRECAD_SYSTEM_CODEC_TESTS
+  CHECK(ltypeRecordGroupValues(out, "SAVED_LTYPE", "72") ==
+        std::vector<std::string>{"65"});
+#else
   CHECK(ltypeRecordGroupValues(out, "SAVED_LTYPE", "72") ==
         std::vector<std::string>{"66"});
+#endif
   CHECK(recordGroupValues(out, "LTYPE", "310") ==
         std::vector<std::string>{"CAFE"});
   const auto reactors = recordGroupValues(out, "LTYPE", "330");
