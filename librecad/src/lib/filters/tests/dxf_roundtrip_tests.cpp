@@ -1717,6 +1717,17 @@ TEST_CASE("Opt-in system codec replays an unchanged sparse material graph",
   expectRefusal(RS2::FormatDXFRW);
   line->setMaterialHandle(originalReference);
   filter.afterObjects = {};
+  line->setReactorHandles({0xA0u});
+  expectRefusal(RS2::FormatDXFRW);
+  line->setReactorHandles({});
+  filter.afterObjects = [&] { line->setXDictHandle(0xA0u); };
+  expectRefusal(RS2::FormatDXFRW);
+  line->setXDictHandle(0u);
+  filter.afterObjects = {};
+  const auto originalExtData = line->getDrwExtData();
+  line->setDrwExtData({std::make_shared<DRW_Variant>(1005, std::string("A0"))});
+  expectRefusal(RS2::FormatDXFRW);
+  line->setDrwExtData(originalExtData);
   const auto savedSource = materials.front().rawDxfSource;
   materials.front().rawDxfSource.reset();
   expectRefusal(RS2::FormatDXFRW);

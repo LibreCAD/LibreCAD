@@ -5876,23 +5876,6 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic &g, const QString &file,
       updateImportedInserts(*m_graphic);
       return false;
     }
-    const auto entitiesHaveNoUnqualifiedLinks = [&](const RS_EntityContainer &container) {
-      for (const RS_Entity *entity : lc::LC_ContainerTraverser{container, RS2::ResolveNone}.entities()) {
-        if (entity->isDeleted()) continue;
-        if (entity->xDictHandle() || !entity->reactorHandles().empty() ||
-            entity->plotStyleHandle() || entity->shadowHandle() ||
-            entity->fullVisualStyleHandle() || entity->faceVisualStyleHandle() ||
-            entity->edgeVisualStyleHandle()) return false;
-        for (const auto &value : entity->getDrwExtData())
-          if (!value || value->code() == 1005) return false;
-      }
-      return true;
-    };
-    if (!entitiesHaveNoUnqualifiedLinks(g)) return false;
-    for (unsigned i = 0; i < g.countBlocks(); ++i) {
-      const auto *block = g.blockAt(i);
-      if (block && !block->isDeleted() && !entitiesHaveNoUnqualifiedLinks(*block)) return false;
-    }
     m_graphic->dwgAdvancedMetadata().markVportsImported();
   } else {
 #endif
@@ -13522,6 +13505,23 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
     // This first replay route has no proof for unrelated raw sections, raw
     // entities, or other rooted object graphs. Keep those sources guarded.
     if (!metadata.rawDxfEntities().empty() || !metadata.rawDxfSections().empty()) return false;
+    const auto entitiesHaveNoUnqualifiedLinks = [](const RS_EntityContainer &container) {
+      for (const RS_Entity *entity : lc::LC_ContainerTraverser{container, RS2::ResolveNone}.entities()) {
+        if (entity->isDeleted()) continue;
+        if (entity->xDictHandle() || !entity->reactorHandles().empty() ||
+            entity->plotStyleHandle() || entity->shadowHandle() ||
+            entity->fullVisualStyleHandle() || entity->faceVisualStyleHandle() ||
+            entity->edgeVisualStyleHandle()) return false;
+        for (const auto &value : entity->getDrwExtData())
+          if (!value || value->code() == 1005) return false;
+      }
+      return true;
+    };
+    if (!entitiesHaveNoUnqualifiedLinks(g)) return false;
+    for (unsigned i = 0; i < g.countBlocks(); ++i) {
+      const auto *block = g.blockAt(i);
+      if (block && !block->isDeleted() && !entitiesHaveNoUnqualifiedLinks(*block)) return false;
+    }
     const auto rootHandle = metadata.dxfRootDictionarySource()->handle;
     const auto dictionaryHandle = metadata.dxfMaterialDictionarySource()->handle;
     if (std::count_if(metadata.dictionaries().begin(), metadata.dictionaries().end(),
