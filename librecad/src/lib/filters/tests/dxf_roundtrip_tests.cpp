@@ -72,6 +72,7 @@
 #include "rs_filterjww.h"
 #include "rs_graphic.h"
 #include "rs_hatch.h"
+#include "rs_image.h"
 #include "rs_entity.h"
 #include "rs_block.h"
 #include "rs_layer.h"
@@ -1685,6 +1686,7 @@ TEST_CASE("DXF filter normalizes reflected LWPOLYLINE extrusion once",
     RS_FilterDXFRW filter;
     REQUIRE(filter.fileImport(graphic2, QString::fromStdString(out),
                               RS2::FormatDXFRW));
+
     REQUIRE(filter.fileExport(graphic2, QString::fromStdString(out2),
                               RS2::FormatDXFRW));
   }
@@ -2435,6 +2437,66 @@ TEST_CASE("DXF filter preserves IMAGE WCS frame Z coordinates",
   const auto xdataApps = recordGroupValues(out, "IMAGE", "1001");
   CHECK(std::find(xdataApps.begin(), xdataApps.end(), "LibreCAD_IMAGE_FRAME")
         == xdataApps.end());
+#ifdef LIBRECAD_SYSTEM_CODEC_TESTS
+  {
+    const std::string unknown = tmpFile("image_wcs_unknown_definition.dxf");
+    std::ifstream input(out, std::ios::binary);
+    std::string bytes(std::istreambuf_iterator<char>(input), {});
+    const std::string marker = "\n100\nAcDbRasterImageDef\n";
+    const auto position = bytes.find(marker);
+    REQUIRE(position != std::string::npos);
+    bytes.insert(position + marker.size(), "70\n7\n");
+    writeText(unknown, bytes);
+    RS_Graphic rejected;
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(rejected, QString::fromStdString(unknown), RS2::FormatDXFRW));
+    const std::string sentinel = "preserve destination for unknown IMAGEDEF";
+    writeText(out2, sentinel);
+    CHECK_FALSE(filter.fileExport(rejected, QString::fromStdString(out2), RS2::FormatDXFRW));
+    std::ifstream existing(out2, std::ios::binary);
+    CHECK(std::string(std::istreambuf_iterator<char>(existing), {}) == sentinel);
+    existing.close();
+    std::filesystem::remove(unknown);
+  }
+  {
+    const std::string unknown = tmpFile("image_wcs_unknown_entity_field.dxf");
+    std::ifstream input(out, std::ios::binary);
+    std::string bytes(std::istreambuf_iterator<char>(input), {});
+    const std::string marker = "\n100\nAcDbRasterImage\n";
+    const auto position = bytes.find(marker);
+    REQUIRE(position != std::string::npos);
+    bytes.insert(position + marker.size(), "39\n7\n");
+    writeText(unknown, bytes);
+    RS_Graphic rejected;
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(rejected, QString::fromStdString(unknown), RS2::FormatDXFRW));
+    const std::string sentinel = "preserve destination for unknown IMAGE field";
+    writeText(out2, sentinel);
+    CHECK_FALSE(filter.fileExport(rejected, QString::fromStdString(out2), RS2::FormatDXFRW));
+    std::ifstream existing(out2, std::ios::binary);
+    CHECK(std::string(std::istreambuf_iterator<char>(existing), {}) == sentinel);
+    existing.close();
+    std::filesystem::remove(unknown);
+  }
+  {
+    const std::string large = tmpFile("image_wcs_large_source.dxf");
+    std::ifstream input(out, std::ios::binary);
+    std::string bytes(std::istreambuf_iterator<char>(input), {});
+    bytes.append(256u * 1024u, ' '); // trailing input after EOF is ignored
+    writeText(large, bytes);
+    RS_Graphic imported;
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(imported, QString::fromStdString(large), RS2::FormatDXFRW));
+    CHECK(imported.dwgAdvancedMetadata().dxfRootDictionarySource() == nullptr);
+    const std::string sentinel = "preserve destination for uncaptured IMAGEDEF";
+    writeText(out2, sentinel);
+    CHECK_FALSE(filter.fileExport(imported, QString::fromStdString(out2), RS2::FormatDXFRW));
+    std::ifstream existing(out2, std::ios::binary);
+    CHECK(std::string(std::istreambuf_iterator<char>(existing), {}) == sentinel);
+    existing.close();
+    std::filesystem::remove(large);
+  }
+#endif
   for (const auto &[code, expected] :
        std::initializer_list<std::pair<const char *, const char *>>{
            {"10", "1"}, {"20", "2"}, {"30", "3"},
@@ -2450,12 +2512,102 @@ TEST_CASE("DXF filter preserves IMAGE WCS frame Z coordinates",
     RS_FilterDXFRW filter;
     REQUIRE(filter.fileImport(graphic2, QString::fromStdString(out),
                               RS2::FormatDXFRW));
+#ifdef LIBRECAD_SYSTEM_CODEC_TESTS
+    auto &metadata = graphic2.dwgAdvancedMetadata();
+    auto &definitions = const_cast<std::vector<LC_DwgAdvancedMetadata::ImageDefinitionRecord>&>(
+        metadata.imageDefinitions());
+    auto &reactors = const_cast<std::vector<LC_DwgAdvancedMetadata::ImageDefinitionReactorRecord>&>(
+        metadata.imageDefinitionReactors());
+    auto &dictionaries = const_cast<std::vector<LC_DwgAdvancedMetadata::DictionaryRecord>&>(
+        metadata.dictionaries());
+    REQUIRE(definitions.size() == 1);
+    REQUIRE(reactors.size() == 1);
+    const auto dictionary = std::find_if(dictionaries.begin(), dictionaries.end(),
+        [&](const auto &record) { return record.handle == definitions.front().parentHandle; });
+    REQUIRE(dictionary != dictionaries.end());
+    REQUIRE(dictionary->entries.size() == 1);
+    const std::string sentinel = "preserve existing image destination";
+    const auto expectRefusal = [&] {
+      writeText(out2, sentinel);
+      CHECK_FALSE(filter.fileExport(graphic2, QString::fromStdString(out2), RS2::FormatDXFRW));
+      std::ifstream existing(out2, std::ios::binary);
+      CHECK(std::string(std::istreambuf_iterator<char>(existing), {}) == sentinel);
+    };
+    auto *rootSource = const_cast<DRW_RawDxfObject *>(metadata.dxfRootDictionarySource());
+    REQUIRE(rootSource != nullptr);
+    REQUIRE(metadata.dxfFixedGroupDictionarySource() != nullptr);
+    rootSource->groups.emplace_back(70, std::int32_t{7});
+    if (rootSource->hasRawValues)
+      rootSource->rawValues.push_back("7");
+    expectRefusal(); // unmodeled root data must not disappear on regeneration
+    rootSource->groups.pop_back();
+    if (rootSource->hasRawValues)
+      rootSource->rawValues.pop_back();
+    auto *definitionSource = const_cast<DRW_RawDxfObject *>(metadata.dxfImageDefSource());
+    REQUIRE(definitionSource != nullptr);
+    definitionSource->groups.emplace_back(70, std::int32_t{7});
+    if (definitionSource->hasRawValues)
+      definitionSource->rawValues.push_back("7");
+    expectRefusal(); // unknown source IMAGEDEF fields must not be discarded
+    definitionSource->groups.pop_back();
+    if (definitionSource->hasRawValues)
+      definitionSource->rawValues.pop_back();
+    const auto originalParent = reactors.front().parentHandle;
+    reactors.front().parentHandle = originalParent + 1;
+    expectRefusal();
+    reactors.front().parentHandle = originalParent;
+    auto &rawObjects = const_cast<std::vector<DRW_RawDxfObject>&>(metadata.rawDxfObjects());
+    auto rawReactor = std::find_if(rawObjects.begin(), rawObjects.end(),
+        [&](const auto &record) { return record.handle == reactors.front().handle; });
+    REQUIRE(rawReactor != rawObjects.end());
+    auto owner = std::find_if(rawReactor->groups.begin(), rawReactor->groups.end(),
+                              [](const auto &group) { return group.code() == 330; });
+    REQUIRE(owner != rawReactor->groups.end());
+    REQUIRE(rawReactor->hasRawValues);
+    const auto ownerIndex = static_cast<std::size_t>(std::distance(rawReactor->groups.begin(), owner));
+    const auto originalOwner = *owner;
+    const auto originalRawOwner = rawReactor->rawValues.at(ownerIndex);
+    *owner = DRW_Variant(330, std::string("FFFF"));
+    rawReactor->rawValues[ownerIndex] = "FFFF";
+    expectRefusal();
+    *owner = originalOwner;
+    rawReactor->rawValues[ownerIndex] = originalRawOwner;
+    const auto originalRole = dictionary->entries.front().dxfHandleCode;
+    dictionary->entries.front().dxfHandleCode = originalRole == 350 ? 360 : 350;
+    expectRefusal();
+    dictionary->entries.front().dxfHandleCode = originalRole;
+    definitions.push_back(definitions.front());
+    expectRefusal();
+    definitions.pop_back();
+#endif
     REQUIRE(filter.fileExport(graphic2, QString::fromStdString(out2),
                               RS2::FormatDXFRW));
   }
+#ifdef LIBRECAD_SYSTEM_CODEC_TESTS
+  if (const char *copy = std::getenv("LIBRECAD_KEEP_IMAGE_ROUNDTRIP"))
+    std::filesystem::copy_file(out2, copy, std::filesystem::copy_options::overwrite_existing);
+#endif
   for (const char *code : {"10", "20", "30", "11", "21", "31", "12", "22", "32"})
     CHECK(recordGroupValues(out2, "IMAGE", code)
           == recordGroupValues(out, "IMAGE", code));
+
+#ifdef LIBRECAD_SYSTEM_CODEC_TESTS
+  RS_Image *image = nullptr;
+  for (RS_Entity *entity : lc::LC_ContainerTraverser{graphic2, RS2::ResolveNone}.entities()) {
+    if (entity->rtti() == RS2::EntityImage) {
+      REQUIRE(image == nullptr);
+      image = static_cast<RS_Image *>(entity);
+    }
+  }
+  REQUIRE(image != nullptr);
+  image->setFile(QStringLiteral("renamed-image.png"));
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(graphic2, QString::fromStdString(out2), RS2::FormatDXFRW));
+  }
+  CHECK(recordGroupValues(out2, "IMAGEDEF", "1") ==
+        std::vector<std::string>{"renamed-image.png"});
+#endif
 
 #ifdef DWGSUPPORT
   {

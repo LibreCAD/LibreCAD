@@ -1968,6 +1968,13 @@ class RsFilterDxfRwExposureTestAccess;
 // DRW_Interface pointer to discover an explicitly opted-in derived filter.
 class RS_FilterDXFRW : public RS_FilterInterface,
                        public DRW_Interface
+#ifdef LIBDXFRW_HAS_DXF_DICTIONARY_SOURCE_HANDLERS
+    , public DRW_DxfRootDictionarySourceHandler,
+      public DRW_DxfDictionarySourceHandler
+#endif
+#ifdef LIBDXFRW_HAS_DXF_RASTER_SOURCE_HANDLER
+    , public DRW_DxfRasterSourceHandler
+#endif
 #ifdef DWGSUPPORT
     ,
                        private RS_FilterDXFRW_DwgWriteIdentityRegistry
@@ -2191,6 +2198,22 @@ public:
   void addRawDwgSection(const DRW_RawDwgSection &data) override;
   void addDataStorage(const DRW_DataStorageSection &data) override;
   void addRawDxfObject(const DRW_RawDxfObject &data) override;
+#ifdef LIBDXFRW_HAS_DXF_DICTIONARY_SOURCE_HANDLERS
+  bool wantsDxfRootDictionarySource() const override;
+  void addDxfRootDictionarySource(const DRW_Dictionary &dictionary,
+                                  const DRW_RawDxfObject &source) override;
+  bool wantsDxfDictionarySource() const override;
+  void addDxfDictionarySource(const DRW_Dictionary &dictionary,
+                              const DRW_RawDxfObject &source) override;
+#endif
+#ifdef LIBDXFRW_HAS_DXF_RASTER_SOURCE_HANDLER
+  bool wantsDxfImageSource() const override;
+  void addDxfImageSource(const DRW_Image &image,
+                         const DRW_RawDxfObject &source) override;
+  bool wantsDxfImageDefSource() const override;
+  void addDxfImageDefSource(const DRW_ImageDef &definition,
+                            const DRW_RawDxfObject &source) override;
+#endif
   void addRawDxfEntity(const DRW_RawDxfObject &data) override;
   void addRawDxfSection(const DRW_RawDxfSection &data) override;
   void addDxfClass(const DRW_Class &data) override;

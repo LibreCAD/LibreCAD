@@ -2850,6 +2850,9 @@ bool visitDxfCarrierFrame(const DRW_RawDxfObject &raw, DRW::Version version,
 bool dxfDictionaryCarrierMatches(
     const DRW_RawDxfObject &raw, DRW::Version version,
     const LC_DwgAdvancedMetadata::DictionaryRecord &dictionary) {
+  if (raw.name != "DICTIONARY" || raw.handle != dictionary.handle ||
+      raw.parentHandle != dictionary.parentHandle)
+    return false;
   std::size_t entryIndex = 0;
   std::string entryName;
   unsigned subclasses = 0;
@@ -3407,6 +3410,420 @@ DRW_ImageDefinitionReactor imageDefinitionReactorFromMetadata(
                                   record.hasDsData);
   return reactor;
 }
+
+#ifdef LIBRECAD_SYSTEM_LIBDXFRW
+bool dxfSourceRealMatches(const DRW_RawDxfObject &raw, std::size_t index,
+                          double expected) {
+  const auto same = [](double left, double right) {
+    return std::isfinite(left) && left == right &&
+           (left != 0.0 || std::signbit(left) == std::signbit(right));
+  };
+  const auto &group = raw.groups[index];
+  if (group.type() != DRW_Variant::DOUBLE || !same(group.d_val(), expected))
+    return false;
+  if (!raw.hasRawValues)
+    return true;
+  bool ok = false;
+  const double physical = QString::fromStdString(raw.rawValues[index]).toDouble(&ok);
+  return ok && same(physical, expected);
+}
+
+bool dxfSourceIntMatches(const DRW_RawDxfObject &raw, std::size_t index,
+                         int expected) {
+  const auto &group = raw.groups[index];
+  if (group.type() != DRW_Variant::INTEGER || group.i_val() != expected)
+    return false;
+  if (!raw.hasRawValues)
+    return true;
+  bool ok = false;
+  const int physical = QString::fromStdString(raw.rawValues[index]).toInt(&ok);
+  return ok && physical == expected;
+}
+
+bool dxfSourceTextMatches(const DRW_RawDxfObject &raw, std::size_t index,
+                          const std::string &expected) {
+  const auto &group = raw.groups[index];
+  return group.type() == DRW_Variant::STRING && group.c_str() &&
+         expected == group.c_str() &&
+         (!raw.hasRawValues || raw.rawValues[index] == expected);
+}
+
+bool dxfSourceHandleMatches(const DRW_RawDxfObject &raw, std::size_t index,
+                            std::uint32_t expected) {
+  const auto &group = raw.groups[index];
+  std::uint32_t value = 0, physical = 0;
+  return group.type() == DRW_Variant::STRING &&
+         parseDxfCarrierHandle(group.c_str(), value) && value == expected &&
+         (!raw.hasRawValues ||
+          (parseDxfCarrierHandle(raw.rawValues[index].c_str(), physical) && physical == value));
+}
+
+bool dxfImageCarrierMatches(
+    const DRW_RawDxfObject &raw, DRW::Version version,
+    const LC_DwgAdvancedMetadata::RasterImageRecord &image) {
+  std::vector<int> codes{5, 330, 100, 8, 6, 62, 370, 100, 90,
+                         10, 20, 30, 11, 21, 31, 12, 22, 32, 13, 23,
+                         340, 70, 280, 281, 282, 283, 360, 71, 91,
+                         14, 24, 14, 24};
+  if (version >= DRW::AC1024)
+    codes.push_back(290);
+  if (raw.name != "IMAGE" || raw.m_version != version || raw.handle != image.handle ||
+      raw.parentHandle != image.parentHandle || raw.groups.size() != codes.size() ||
+      (raw.hasRawValues && raw.rawValues.size() != codes.size()) || image.clipPath.size() != 2)
+    return false;
+  std::size_t vertex = 0;
+  unsigned subclass = 0;
+  for (std::size_t index = 0; index < codes.size(); ++index) {
+    const int code = codes[index];
+    if (raw.groups[index].code() != code)
+      return false;
+    if (code == 5 || code == 330 || code == 340 || code == 360) {
+      const auto expected = code == 5 ? image.handle : code == 330 ? image.parentHandle
+                            : code == 340 ? image.definitionHandle : image.reactorHandle;
+      if (!dxfSourceHandleMatches(raw, index, expected)) return false;
+    } else if (code == 100 || code == 8 || code == 6) {
+      const std::string expected = code == 100 ? (++subclass == 1 ? "AcDbEntity" : "AcDbRasterImage")
+                                   : code == 8 ? "0" : "ByLayer";
+      if (!dxfSourceTextMatches(raw, index, expected)) return false;
+    } else if (code == 10 || code == 20 || code == 30 || code == 11 || code == 21 ||
+               code == 31 || code == 12 || code == 22 || code == 32 || code == 13 ||
+               code == 23 || code == 14 || code == 24) {
+      const double expected = code == 10 ? image.basePoint.x : code == 20 ? image.basePoint.y
+          : code == 30 ? image.basePoint.z : code == 11 ? image.uVector.x : code == 21 ? image.uVector.y
+          : code == 31 ? image.uVector.z : code == 12 ? image.vVector.x : code == 22 ? image.vVector.y
+          : code == 32 ? image.vVector.z : code == 13 ? image.sizeU : code == 23 ? image.sizeV
+          : code == 14 ? image.clipPath[vertex].x : image.clipPath[vertex++].y;
+      if (!dxfSourceRealMatches(raw, index, expected)) return false;
+    } else {
+      const int expected = code == 62 ? 256 : code == 370 ? -1 : code == 90 ? image.classVersion
+          : code == 70 ? image.displayProps : code == 280 ? image.clip : code == 281 ? image.brightness
+          : code == 282 ? image.contrast : code == 283 ? image.fade : code == 71 ? image.clipBoundaryType
+          : code == 91 ? static_cast<int>(image.clipPath.size()) : image.clipMode ? 1 : 0;
+      if (!dxfSourceIntMatches(raw, index, expected)) return false;
+    }
+  }
+  return vertex == image.clipPath.size();
+}
+
+bool dxfImageDefCarrierMatches(
+    const DRW_RawDxfObject &raw, DRW::Version version,
+    const LC_DwgAdvancedMetadata::ImageDefinitionRecord &definition) {
+  if (raw.name != "IMAGEDEF" || raw.handle != definition.handle ||
+      raw.parentHandle != definition.parentHandle)
+    return false;
+  std::set<int> seen;
+  const bool valid = visitDxfCarrierFrame(raw, version, definition.handle,
+      definition.parentHandle, definition.commonReactorHandles,
+      [&](const DRW_Variant &group, std::size_t index) {
+        const int code = group.code() == 12 ? 21 : group.code();
+        if (!seen.insert(code).second)
+          return false;
+        if (code == 100 || code == 1) {
+          const std::string &expected = code == 1 ? definition.path
+                                                   : std::string("AcDbRasterImageDef");
+          return dxfSourceTextMatches(raw, index, expected);
+        }
+        if (code == 90 || code == 280 || code == 281) {
+          const int expected = code == 90 ? definition.classVersion
+                              : code == 280 ? definition.loaded : definition.resolution;
+          return dxfSourceIntMatches(raw, index, expected);
+        }
+        if (code == 10 || code == 20 || code == 11 || code == 21) {
+          const double expected = code == 10 ? definition.imageSizeU
+                                : code == 20 ? definition.imageSizeV
+                                : code == 11 ? definition.pixelSizeU : definition.pixelSizeV;
+          return dxfSourceRealMatches(raw, index, expected);
+        }
+        return false;
+      });
+  return valid && seen == std::set<int>{1, 10, 11, 20, 21, 90, 100, 280, 281};
+}
+
+// Admit one source IMAGE and its definition/reactor, with no extension data,
+// GROUP members or unrelated raw objects. Larger graphs need separate proof.
+struct DxfImageGraphPlan {
+  static constexpr std::uint64_t generation = 1;
+  std::unique_ptr<DRW_Dictionary> root;
+  std::unique_ptr<DRW_Dictionary> groups;
+  std::unique_ptr<DRW_Dictionary> images;
+  std::vector<dxfRW::ImageDefinitionPlanEntry> definitions;
+  std::set<std::uint32_t> reactors;
+  std::set<std::uint32_t> identities;
+  std::uint32_t imageDictionary = 0;
+};
+
+bool prepareDxfImageGraph(RS_Graphic &graphic, DRW::Version version,
+                          DxfImageGraphPlan &plan) {
+  using Metadata = LC_DwgAdvancedMetadata;
+  const auto &metadata = graphic.dwgAdvancedMetadata();
+  const Metadata::DictionaryRecord *root = nullptr;
+  std::size_t rootCount = 0;
+  bool hasImageRoot = false;
+  for (const auto &dictionary : metadata.dictionaries()) {
+    if (dictionary.parentHandle != 0)
+      continue;
+    ++rootCount;
+    root = &dictionary;
+    for (const auto &entry : dictionary.entries)
+      hasImageRoot = hasImageRoot || normalizeDwgTableName(entry.name) == "ACAD_IMAGE_DICT";
+  }
+  if (!hasImageRoot)
+    return true;
+  if (rootCount != 1 || version < DRW::AC1015)
+    return false;
+  std::uint32_t imageDictionary = 0, groupDictionary = 0, plotDictionary = 0;
+  for (const auto &entry : root->entries) {
+    const auto key = normalizeDwgTableName(entry.name);
+    if (key == "ACAD_IMAGE_DICT") {
+      if (imageDictionary != 0 || entry.handle == 0)
+        return false;
+      imageDictionary = entry.handle;
+    } else if (key == "ACAD_GROUP") {
+      if (groupDictionary != 0 || entry.handle == 0)
+        return false;
+      groupDictionary = entry.handle;
+    } else if (key == "ACAD_PLOTSTYLENAME") {
+      if (plotDictionary != 0 || entry.handle == 0)
+        return false;
+      plotDictionary = entry.handle;
+    } else {
+      return false; // other rooted objects need their own closure proof
+    }
+  }
+  if (imageDictionary == 0)
+    return true;
+  const Metadata::DictionaryRecord *images = nullptr, *groups = nullptr;
+  for (const auto &dictionary : metadata.dictionaries()) {
+    if (dictionary.handle == imageDictionary) {
+      if (images != nullptr)
+        return false;
+      images = &dictionary;
+    }
+    if (dictionary.handle == groupDictionary) {
+      if (groups != nullptr)
+        return false;
+      groups = &dictionary;
+    }
+  }
+  const auto plain = [](const Metadata::DictionaryRecord *dictionary) {
+    return dictionary != nullptr && dictionary->handle != 0 &&
+        dictionary->typedPayloadComplete && !dictionary->countCap &&
+        dictionary->replayState == Metadata::ReplayState::ReplayAllowed &&
+        dictionary->xDictHandle == 0 && dictionary->appData.empty() &&
+        dictionary->extData.empty() && dictionary->reactorHandles.empty() &&
+        !dictionary->hasDsData;
+  };
+  if (!plain(root) || !plain(groups) || !plain(images) ||
+      images->parentHandle != root->handle || groups->parentHandle != root->handle ||
+      !groups->entries.empty() || imageDictionary == groupDictionary ||
+      images->entries.size() != 1 || metadata.imageDefinitions().size() != 1 ||
+      metadata.imageDefinitionReactors().size() != 1 || metadata.rasterImages().size() != 1)
+    return false;
+  std::set<std::uint32_t> identities{root->handle, groups->handle, images->handle};
+  if (identities.size() != 3)
+    return false;
+  const auto rawDictionary = [&](const Metadata::DictionaryRecord &dictionary) {
+    const DRW_RawDxfObject *raw = nullptr;
+    for (const auto &candidate : metadata.rawDxfObjects()) {
+      if (candidate.handle != dictionary.handle)
+        continue;
+      if (raw != nullptr || candidate.name != "DICTIONARY" ||
+          candidate.parentHandle != dictionary.parentHandle)
+        return false;
+      raw = &candidate;
+    }
+    return raw != nullptr && dxfDictionaryCarrierMatches(*raw, version, dictionary);
+  };
+  const auto *rootSource = metadata.dxfRootDictionarySource();
+  const auto *fixedGroupSource = metadata.dxfFixedGroupDictionarySource();
+  if (rootSource == nullptr ||
+      !dxfDictionaryCarrierMatches(*rootSource, version, *root) ||
+      (groups->handle == 0xDu
+           ? (fixedGroupSource == nullptr ||
+              !dxfDictionaryCarrierMatches(*fixedGroupSource, version, *groups))
+           : !rawDictionary(*groups)) ||
+      !rawDictionary(*images))
+    return false;
+  std::map<std::uint32_t, dxfRW::ImageDefinitionPlanEntry> definitions;
+  std::set<std::string> names;
+  for (const auto &entry : images->entries) {
+    if (entry.handle == 0 || entry.name.empty() ||
+        !names.insert(normalizeDwgTableName(entry.name)).second)
+      return false;
+    const Metadata::ImageDefinitionRecord *source = nullptr;
+    for (const auto &candidate : metadata.imageDefinitions()) {
+      if (candidate.handle != entry.handle)
+        continue;
+      if (source != nullptr)
+        return false;
+      source = &candidate;
+    }
+    if (source == nullptr || source->parentHandle != images->handle ||
+        source->replayState != Metadata::ReplayState::ReplayAllowed ||
+        source->hasDsData || source->xDictHandle != 0 || !source->extData.empty() ||
+        hasCustomDxfApplicationGroups(source->appData) ||
+        !identities.insert(entry.handle).second ||
+        !definitions.emplace(entry.handle, dxfRW::ImageDefinitionPlanEntry{}).second)
+      return false;
+    const auto *definitionSource = metadata.dxfImageDefSource();
+    if (definitionSource == nullptr ||
+        !dxfImageDefCarrierMatches(*definitionSource, version, *source))
+      return false;
+    auto &target = definitions.at(entry.handle);
+    target.importGeneration = DxfImageGraphPlan::generation;
+    target.sourceHandle = entry.handle;
+    target.definition = imageDefinitionFromMetadata(*source);
+  }
+  std::map<std::uint32_t, std::string> livePaths;
+  std::set<std::uint32_t> liveImages, liveReactors, otherEntityHandles;
+  const auto collect = [&](const RS_EntityContainer &container) {
+    for (RS_Entity *entity : lc::LC_ContainerTraverser{container, RS2::ResolveNone}.entities()) {
+      if (entity->getFlag(RS2::FlagDeleted))
+        continue;
+      if (entity->rtti() != RS2::EntityImage) {
+        if (entity->sourceHandle() != 0)
+          otherEntityHandles.insert(entity->sourceHandle());
+        continue;
+      }
+      const auto *image = static_cast<const RS_Image *>(entity);
+      const std::uint32_t handle = image->sourceHandle();
+      if (handle == 0 || handle == DRW::NoHandle)
+        return false;
+      const Metadata::RasterImageRecord *raster = nullptr;
+      for (const auto &candidate : metadata.rasterImages()) {
+        if (candidate.handle != handle || candidate.isWipeout)
+          continue;
+        if (raster != nullptr)
+          return false;
+        raster = &candidate;
+      }
+      if (raster == nullptr || raster->reactorHandle == 0 ||
+          raster->definitionHandle != static_cast<std::uint32_t>(image->getHandle()) ||
+          !liveImages.insert(handle).second || !liveReactors.insert(raster->reactorHandle).second ||
+          !identities.insert(handle).second || !identities.insert(raster->reactorHandle).second)
+        return false;
+      const auto *imageSource = metadata.dxfImageSource();
+      if (imageSource == nullptr || !dxfImageCarrierMatches(*imageSource, version, *raster))
+        return false;
+      auto definition = definitions.find(raster->definitionHandle);
+      if (definition == definitions.end())
+        return false;
+      const Metadata::ImageDefinitionReactorRecord *reactor = nullptr;
+      for (const auto &candidate : metadata.imageDefinitionReactors()) {
+        if (candidate.handle != raster->reactorHandle)
+          continue;
+        if (reactor != nullptr)
+          return false;
+        reactor = &candidate;
+      }
+      if (reactor == nullptr || reactor->parentHandle != handle ||
+          reactor->replayState != Metadata::ReplayState::ReplayAllowed ||
+          reactor->hasDsData || reactor->xDictHandle != 0 ||
+          !reactor->appData.empty() || !reactor->extData.empty() ||
+          !reactor->reactorHandles.empty())
+        return false;
+      const DRW_RawDxfObject *rawReactor = nullptr;
+      for (const auto &candidate : metadata.rawDxfObjects()) {
+        if (candidate.handle != reactor->handle)
+          continue;
+        if (rawReactor != nullptr || candidate.name != "IMAGEDEF_REACTOR" ||
+            candidate.m_version != version || candidate.parentHandle != handle)
+          return false;
+        rawReactor = &candidate;
+      }
+      if (rawReactor == nullptr || rawReactor->groups.size() != 5 ||
+          (rawReactor->hasRawValues && rawReactor->rawValues.size() != 5))
+        return false;
+      const int codes[] = {5, 330, 100, 90, 330};
+      for (std::size_t i = 0; i < 5; ++i) {
+        const auto &group = rawReactor->groups[i];
+        if (group.code() != codes[i])
+          return false;
+        if (group.code() == 5 || group.code() == 330) {
+          const auto expected = group.code() == 5 ? reactor->handle : handle;
+          if (!dxfSourceHandleMatches(*rawReactor, i, expected))
+            return false;
+        } else if (group.code() == 100) {
+          if (!dxfSourceTextMatches(*rawReactor, i, "AcDbRasterImageDefReactor"))
+            return false;
+        } else {
+          if (!dxfSourceIntMatches(*rawReactor, i, reactor->classVersion))
+            return false;
+        }
+      }
+      const std::string path = image->getFile().toUtf8().constData();
+      const auto inserted = livePaths.emplace(raster->definitionHandle, path);
+      if (!inserted.second && inserted.first->second != path)
+        return false;
+      definition->second.selectedReactors.push_back(imageDefinitionReactorFromMetadata(*reactor));
+    }
+    return true;
+  };
+  if (!collect(graphic))
+    return false;
+  for (unsigned i = 0; i < graphic.countBlocks(); ++i) {
+    const RS_Block *block = graphic.blockAt(i);
+    if (block != nullptr && !block->isDeleted() && !collect(*block))
+      return false;
+  }
+  if (liveImages.size() != 1 || liveReactors.size() != 1)
+    return false;
+  for (auto &entry : definitions) {
+    std::set<std::uint32_t> selected;
+    for (const auto &reactor : entry.second.selectedReactors)
+      selected.insert(reactor.handle);
+    const auto &sourceReactors = entry.second.definition.reactorHandles;
+    const std::set<std::uint32_t> sourceSet(sourceReactors.begin(), sourceReactors.end());
+    if (sourceSet.size() != sourceReactors.size() || sourceSet != selected)
+      return false;
+    const auto path = livePaths.find(entry.first);
+    if (path != livePaths.end()) {
+      if (path->second.empty())
+        return false;
+      entry.second.definition.name = path->second;
+    }
+    plan.definitions.push_back(std::move(entry.second));
+  }
+  std::uint32_t plotPlaceholder = 0;
+  if (plotDictionary != 0) {
+    for (const auto &plot : metadata.dictionariesWithDefault()) {
+      if (plot.handle != plotDictionary)
+        continue;
+      if (plotPlaceholder != 0 || plot.parentHandle != root->handle ||
+          plot.entries.size() != 1 || plot.entries.front().handle == 0 ||
+          plot.entries.front().handle != plot.defaultEntryHandle ||
+          normalizeDwgTableName(plot.entries.front().name) != "NORMAL")
+        return false;
+      plotPlaceholder = plot.defaultEntryHandle;
+    }
+    if (plotPlaceholder == 0 || !identities.insert(plotDictionary).second ||
+        !identities.insert(plotPlaceholder).second)
+      return false;
+  }
+  if (!metadata.rawDxfEntities().empty() || !metadata.rawDxfSections().empty())
+    return false;
+  if (std::any_of(otherEntityHandles.begin(), otherEntityHandles.end(),
+                  [&](std::uint32_t handle) { return identities.count(handle) != 0; }))
+    return false;
+  for (const auto &raw : metadata.rawDxfObjects()) {
+    const bool admitted =
+        (raw.handle == images->handle && raw.name == "DICTIONARY") ||
+        (raw.handle == groups->handle && raw.name == "DICTIONARY") ||
+        (raw.handle == plotDictionary && raw.name == "ACDBDICTIONARYWDFLT") ||
+        (raw.handle == plotPlaceholder && raw.name == "ACDBPLACEHOLDER") ||
+        (liveReactors.count(raw.handle) == 1 && raw.name == "IMAGEDEF_REACTOR");
+    if (!admitted)
+      return false;
+  }
+  plan.root = std::make_unique<DRW_Dictionary>(dictionaryFromMetadata(*root));
+  plan.groups = std::make_unique<DRW_Dictionary>(dictionaryFromMetadata(*groups));
+  plan.images = std::make_unique<DRW_Dictionary>(dictionaryFromMetadata(*images));
+  plan.reactors = std::move(liveReactors);
+  plan.identities = std::move(identities);
+  plan.imageDictionary = imageDictionary;
+  return true;
+}
+#endif
 
 DRW_PointCloudDef pointCloudDefinitionFromMetadata(
     const LC_DwgAdvancedMetadata::PointCloudDefinitionRecord &record) {
@@ -11457,6 +11874,116 @@ void RS_FilterDXFRW::addRawDxfObject(const DRW_RawDxfObject &data) {
   }
 }
 
+#if defined(LIBDXFRW_HAS_DXF_DICTIONARY_SOURCE_HANDLERS) || \
+    defined(LIBDXFRW_HAS_DXF_RASTER_SOURCE_HANDLER)
+static bool canCaptureSmallDxfFile(const QString &file) {
+  constexpr qint64 maxSourceBytes = 256 * 1024;
+  const qint64 size = QFileInfo(file).size();
+  return size >= 0 && size <= maxSourceBytes;
+}
+
+static bool canRetainSmallDxfSource(const DRW_RawDxfObject &source) {
+  constexpr std::size_t maxBytes = 64u * 1024u;
+  if (source.groups.size() > 64 || source.rawValues.size() > 64 ||
+      source.name.size() > maxBytes)
+    return false;
+  std::size_t remaining = maxBytes - source.name.size();
+  for (const auto &group : source.groups) {
+    std::size_t bytes = 0;
+    if (!group.estimateRetainedPayloadBytes(remaining, bytes))
+      return false;
+    remaining -= bytes;
+  }
+  for (const auto &value : source.rawValues) {
+    if (value.size() > remaining)
+      return false;
+    remaining -= value.size();
+  }
+  return true;
+}
+#endif
+
+#ifdef LIBDXFRW_HAS_DXF_DICTIONARY_SOURCE_HANDLERS
+bool RS_FilterDXFRW::wantsDxfRootDictionarySource() const {
+  // Keep the optional source-copy path bounded; larger drawings retain the
+  // normal import behavior and remain outside this image-export profile.
+  return m_graphic != nullptr && canCaptureSmallDxfFile(m_file);
+}
+
+void RS_FilterDXFRW::addDxfRootDictionarySource(
+    const DRW_Dictionary &dictionary, const DRW_RawDxfObject &source) {
+  const bool hasImageDictionary = std::any_of(
+      dictionary.m_entries.begin(), dictionary.m_entries.end(), [](const auto &entry) {
+        return normalizeDwgTableName(entry.m_name) == "ACAD_IMAGE_DICT";
+      });
+  if (m_graphic != nullptr && hasImageDictionary && canRetainSmallDxfSource(source))
+    m_graphic->dwgAdvancedMetadata().addDxfRootDictionarySource(source);
+}
+
+bool RS_FilterDXFRW::wantsDxfDictionarySource() const {
+  if (m_graphic == nullptr)
+    return false;
+  const auto &metadata = m_graphic->dwgAdvancedMetadata();
+  if (metadata.dxfRootDictionarySource() == nullptr ||
+      metadata.dxfFixedGroupDictionarySource() != nullptr)
+    return false;
+  for (const auto &dictionary : metadata.dictionaries()) {
+    if (dictionary.parentHandle != 0)
+      continue;
+    for (const auto &entry : dictionary.entries)
+      if (entry.handle == 0xDu && normalizeDwgTableName(entry.name) == "ACAD_GROUP")
+        return true;
+  }
+  return false;
+}
+
+void RS_FilterDXFRW::addDxfDictionarySource(
+    const DRW_Dictionary &dictionary, const DRW_RawDxfObject &source) {
+  if (m_graphic != nullptr && dictionary.handle == 0xDu &&
+      canRetainSmallDxfSource(source))
+    m_graphic->dwgAdvancedMetadata().addDxfFixedGroupDictionarySource(source);
+}
+#endif
+
+#ifdef LIBDXFRW_HAS_DXF_RASTER_SOURCE_HANDLER
+bool RS_FilterDXFRW::wantsDxfImageSource() const {
+  return m_graphic != nullptr && canCaptureSmallDxfFile(m_file) &&
+         m_graphic->dwgAdvancedMetadata().dxfImageSource() == nullptr;
+}
+
+void RS_FilterDXFRW::addDxfImageSource(
+    const DRW_Image &, const DRW_RawDxfObject &source) {
+  if (m_graphic != nullptr && canRetainSmallDxfSource(source))
+    m_graphic->dwgAdvancedMetadata().addDxfImageSource(source);
+}
+
+bool RS_FilterDXFRW::wantsDxfImageDefSource() const {
+  if (m_graphic == nullptr)
+    return false;
+  const auto &metadata = m_graphic->dwgAdvancedMetadata();
+  if (metadata.dxfRootDictionarySource() == nullptr || metadata.dxfImageDefSource() != nullptr)
+    return false;
+  for (const auto &root : metadata.dictionaries()) {
+    if (root.parentHandle != 0)
+      continue;
+    for (const auto &entry : root.entries) {
+      if (normalizeDwgTableName(entry.name) != "ACAD_IMAGE_DICT")
+        continue;
+      for (const auto &dictionary : metadata.dictionaries())
+        if (dictionary.handle == entry.handle && dictionary.entries.size() == 1)
+          return true;
+    }
+  }
+  return false;
+}
+
+void RS_FilterDXFRW::addDxfImageDefSource(
+    const DRW_ImageDef &, const DRW_RawDxfObject &source) {
+  if (m_graphic != nullptr && canRetainSmallDxfSource(source))
+    m_graphic->dwgAdvancedMetadata().addDxfImageDefSource(source);
+}
+#endif
+
 void RS_FilterDXFRW::addRawDxfEntity(const DRW_RawDxfObject &data) {
   if (m_graphic != nullptr) {
     m_graphic->dwgAdvancedMetadata().addRawDxfEntity(data);
@@ -13238,6 +13765,22 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
     }
     if (acadGroupHandle != 0)
       m_dxfSuppressedObjectHandles.insert(acadGroupHandle);
+#ifdef LIBRECAD_SYSTEM_LIBDXFRW
+    DxfImageGraphPlan imageGraph;
+    if (!prepareDxfImageGraph(g, exportVersion, imageGraph)) {
+      RS_DEBUG->print(RS_Debug::D_WARNING,
+                      "RS_FilterDXFRW: IMAGE source graph is outside the admitted DXF profile");
+      return false;
+    }
+    if (imageGraph.imageDictionary != 0 &&
+        std::any_of(typedHandles.begin(), typedHandles.end(), [&](std::uint32_t handle) {
+          return imageGraph.identities.count(handle) != 0;
+        }))
+      return false;
+    if (imageGraph.imageDictionary != 0)
+      m_dxfSuppressedObjectHandles.insert(imageGraph.imageDictionary);
+    m_dxfSuppressedObjectHandles.insert(imageGraph.reactors.begin(), imageGraph.reactors.end());
+#endif
 
     // (3a) Structural-collision remap. The codec emits its own table/block
     // records and root dictionaries at FIXED low handles (table heads, LAYER
@@ -13364,7 +13907,8 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
         m_dxfSuppressedObjectHandles.insert(o.handle);
         continue;
       }
-      if (o.handle == acadGroupHandle || !replaysInDxfExport(o.m_version))
+      if (m_dxfSuppressedObjectHandles.count(o.handle) != 0 ||
+          !replaysInDxfExport(o.m_version))
         continue; // already suppressed, or left out
       if (o.parentHandle != sourceRootHandle)
         continue; // only direct root children get a root entry
@@ -13646,6 +14190,22 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
 #endif
     if (!rootEntries.empty())
       m_dxfW->setRootDictEntries(rootEntries);
+#ifdef LIBRECAD_SYSTEM_LIBDXFRW
+    if (imageGraph.imageDictionary != 0) {
+      for (const auto &definition : imageGraph.definitions) {
+        if (!m_dxfW->reserveHandle(definition.sourceHandle))
+          return false;
+        for (const auto &reactor : definition.selectedReactors)
+          if (!m_dxfW->reserveHandle(reactor.handle))
+            return false;
+      }
+      if (!m_dxfW->setGeneratedDictionarySourceRecords(
+              std::move(imageGraph.root), std::move(imageGraph.groups),
+              std::move(imageGraph.images), DxfImageGraphPlan::generation) ||
+          !m_dxfW->setImageDefinitionPlan(std::move(imageGraph.definitions)))
+        return false;
+    }
+#endif
   }
 
   //    bool success = m_dxfW->write(this, exportVersion, false); //ascii
@@ -34080,8 +34640,17 @@ void RS_FilterDXFRW::writeImage(const RS_Image *i) {
   if (m_dxfW == nullptr)
     return;
 
-  DRW_ImageDef *imgDef =
-      m_dxfW->writeImage(&image, fileName);
+  DRW_ImageDef *imgDef = nullptr;
+#ifdef LIBRECAD_SYSTEM_LIBDXFRW
+  if (rasterRecord != nullptr &&
+      m_dxfW->dxfWriteImageSource({DxfImageGraphPlan::generation,
+                                   rasterRecord->definitionHandle}) != nullptr) {
+    image.m_imageDefReactorHandle = rasterRecord->reactorHandle;
+    imgDef = m_dxfW->writeImage(&image, fileName, DxfImageGraphPlan::generation,
+                                rasterRecord->definitionHandle);
+  } else
+#endif
+    imgDef = m_dxfW->writeImage(&image, fileName);
   if (imgDef == nullptr) {
     // dxfRW::writeImage() also returns nullptr, with no error, to leave
     // IMAGE out at R12 and older (counted in leftOut()); only any other
@@ -35017,11 +35586,30 @@ bool RS_FilterDXFRW::replaysInDxfExport(const DRW::Version source) const {
 std::uint32_t RS_FilterDXFRW::dxfReference(std::uint32_t source) const {
   if (m_dxfW == nullptr || source == 0)
     return source;
-  // Entities are written under fresh handles, all taken before the first
-  // entity is written; a handle several entities share names none of them.
+  // A handle several source entities share names none of them.
   const DRW_WritingContext *context = m_dxfW->getWritingContext();
   if (context->ambiguousSourceHandles.count(source) != 0)
     return 0;
+#ifdef LIBRECAD_SYSTEM_LIBDXFRW
+  std::uint32_t imageDictionary = 0;
+  const auto *imageSource = m_dxfW->dxfWriteImageDictionarySource(imageDictionary);
+  if (imageSource != nullptr && imageSource->handle == source)
+    return imageDictionary;
+  const auto definition = m_dxfW->dxfWriteImageDefinitionHandle(
+      {DxfImageGraphPlan::generation, source});
+  if (definition != 0)
+    return definition;
+  if (imageSource != nullptr && m_graphic != nullptr) {
+    for (const auto &raster : m_graphic->dwgAdvancedMetadata().rasterImages()) {
+      if (raster.reactorHandle == source &&
+          m_dxfW->dxfWriteImageSource({DxfImageGraphPlan::generation,
+                                       raster.definitionHandle}) != nullptr)
+        return m_dxfW->remapHandle(source);
+    }
+  }
+#endif
+  // Entities are written under fresh handles, all taken before the first
+  // entity is written.
   const auto entity = context->sourceHandleToMintedMap.find(source);
   if (entity != context->sourceHandleToMintedMap.end())
     return entity->second;

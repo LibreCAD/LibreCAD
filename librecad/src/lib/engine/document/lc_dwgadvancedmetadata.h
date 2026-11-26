@@ -3474,6 +3474,11 @@ public:
     m_appIdTableEntries.clear();
     m_spaceBlockRecords.clear();
     m_rawDxfObjects.clear();
+    m_dxfRootDictionarySource.reset();
+    m_dxfFixedGroupDictionarySource.reset();
+    m_dxfImageDefSource.reset();
+    m_dxfImageSource.reset();
+    m_dxfDictionarySourceConflict = false;
     m_rawDxfEntities.clear();
     m_rawDxfSections.clear();
     m_views.clear();
@@ -3823,6 +3828,74 @@ public:
 
   void addRawDxfObject(const DRW_RawDxfObject &object) {
     m_rawDxfObjects.push_back(object);
+  }
+
+  void addDxfRootDictionarySource(const DRW_RawDxfObject &source) {
+    if (m_dxfRootDictionarySource)
+      m_dxfDictionarySourceConflict = true;
+    else {
+      try {
+        m_dxfRootDictionarySource = source;
+      } catch (...) {
+        m_dxfDictionarySourceConflict = true;
+      }
+    }
+  }
+
+  void addDxfFixedGroupDictionarySource(const DRW_RawDxfObject &source) {
+    if (m_dxfFixedGroupDictionarySource)
+      m_dxfDictionarySourceConflict = true;
+    else {
+      try {
+        m_dxfFixedGroupDictionarySource = source;
+      } catch (...) {
+        m_dxfDictionarySourceConflict = true;
+      }
+    }
+  }
+
+  const DRW_RawDxfObject *dxfRootDictionarySource() const {
+    return m_dxfDictionarySourceConflict || !m_dxfRootDictionarySource
+               ? nullptr : &*m_dxfRootDictionarySource;
+  }
+
+  const DRW_RawDxfObject *dxfFixedGroupDictionarySource() const {
+    return m_dxfDictionarySourceConflict || !m_dxfFixedGroupDictionarySource
+               ? nullptr : &*m_dxfFixedGroupDictionarySource;
+  }
+
+  void addDxfImageDefSource(const DRW_RawDxfObject &source) {
+    if (m_dxfImageDefSource) {
+      m_dxfDictionarySourceConflict = true;
+    } else {
+      try {
+        m_dxfImageDefSource = source;
+      } catch (...) {
+        m_dxfDictionarySourceConflict = true;
+      }
+    }
+  }
+
+  const DRW_RawDxfObject *dxfImageDefSource() const {
+    return m_dxfDictionarySourceConflict || !m_dxfImageDefSource
+               ? nullptr : &*m_dxfImageDefSource;
+  }
+
+  void addDxfImageSource(const DRW_RawDxfObject &source) {
+    if (m_dxfImageSource) {
+      m_dxfDictionarySourceConflict = true;
+    } else {
+      try {
+        m_dxfImageSource = source;
+      } catch (...) {
+        m_dxfDictionarySourceConflict = true;
+      }
+    }
+  }
+
+  const DRW_RawDxfObject *dxfImageSource() const {
+    return m_dxfDictionarySourceConflict || !m_dxfImageSource
+               ? nullptr : &*m_dxfImageSource;
   }
 
   void addRawDxfEntity(const DRW_RawDxfObject &entity) {
@@ -13476,6 +13549,11 @@ private:
   std::map<std::string, DRW_Dimstyle> m_dimStyleTableEntries;
   std::map<std::string, DRW_AppId> m_appIdTableEntries;
   std::vector<DRW_RawDxfObject> m_rawDxfObjects;
+  std::optional<DRW_RawDxfObject> m_dxfRootDictionarySource;
+  std::optional<DRW_RawDxfObject> m_dxfFixedGroupDictionarySource;
+  std::optional<DRW_RawDxfObject> m_dxfImageDefSource;
+  std::optional<DRW_RawDxfObject> m_dxfImageSource;
+  bool m_dxfDictionarySourceConflict = false;
   std::vector<DRW_RawDxfObject> m_rawDxfEntities;
   std::vector<DRW_RawDxfSection> m_rawDxfSections;
   std::vector<ViewRecord> m_views;
