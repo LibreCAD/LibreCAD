@@ -2902,14 +2902,22 @@ TEST_CASE("System codec preserves modern multi-image clip modes",
     std::ifstream input(source, std::ios::binary);
     std::string code, value, rewritten;
     bool image = false;
-    unsigned changed = 0;
+    unsigned changed = 0, vertices = 0;
     while (std::getline(input, code) && std::getline(input, value)) {
       const int group = std::stoi(code);
       if (group == 0) image = value == "IMAGE";
+      if (image && group == 70 && changed == 0) value = "7";
+      if (image && group == 280 && changed == 0) value = "1";
+      if (image && (group == 14 || group == 24) && changed == 0) {
+        const char *coordinates[] = {"2", "3", "10", "9"};
+        REQUIRE(vertices < 4u);
+        value = coordinates[vertices++];
+      }
       if (image && group == 290 && changed == 0) { value = "1"; ++changed; }
       rewritten += code + "\n" + value + "\n";
     }
     REQUIRE(changed == 1u);
+    REQUIRE(vertices == 4u);
     writeText(source, rewritten);
   }
   RS_Graphic reopened;
@@ -2918,6 +2926,8 @@ TEST_CASE("System codec preserves modern multi-image clip modes",
   REQUIRE(metadata.rasterImages().size() == 3u);
   REQUIRE(metadata.imageDefinitions().size() == 2u);
   REQUIRE(metadata.imageDefinitionReactors().size() == 3u);
+  CHECK(metadata.rasterImages().front().displayProps == 7);
+  CHECK(metadata.rasterImages().front().clip == 1);
   CHECK(metadata.rasterImages().front().clipMode);
   const std::string sentinel = "preserve modern image destination";
   writeText(output, sentinel);
@@ -2952,7 +2962,8 @@ TEST_CASE("System codec preserves modern multi-image clip modes",
   if (sourceImage->hasRawValues) sourceImage->rawValues[index] = originalRaw;
   late.beforeFinalize = {};
   REQUIRE(late.fileExport(reopened, QString::fromStdString(output), format));
-  CHECK(recordGroupValues(output, "IMAGE", "290") == recordGroupValues(source, "IMAGE", "290"));
+  for (const char *code : {"70", "280", "290", "71", "91", "14", "24"})
+    CHECK(recordGroupValues(output, "IMAGE", code) == recordGroupValues(source, "IMAGE", code));
   RS_Graphic readback;
   REQUIRE(filter.fileImport(readback, QString::fromStdString(output), format));
   REQUIRE(readback.dwgAdvancedMetadata().rasterImages().size() == 3u);
