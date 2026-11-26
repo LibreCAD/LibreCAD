@@ -2620,11 +2620,14 @@ TEST_CASE("Raster source frames are bounded and selected by handle",
 TEST_CASE("System codec preserves bounded multi-image definition graphs",
           "[system-codec][dxf][image][transaction]") {
   ensureSettings();
-  const auto format = GENERATE(RS2::FormatDXFRW, RS2::FormatDXFRW2010,
+  const auto format = GENERATE(RS2::FormatDXFRW2000, RS2::FormatDXFRW2004,
+                               RS2::FormatDXFRW, RS2::FormatDXFRW2010,
                                RS2::FormatDXFRW2013, RS2::FormatDXFRW2018);
   CAPTURE(format);
   const int shape = GENERATE(0, 1, 2, 3, 4, 5, 6);
   const bool withMaterial = GENERATE(false, true);
+  const bool legacyMaterial = withMaterial &&
+      (format == RS2::FormatDXFRW2000 || format == RS2::FormatDXFRW2004);
   const unsigned imageCount = shape < 2 ? 2u : shape < 5 ? 3u : shape == 5 ? 4u : 32u;
   const unsigned definitionCount = shape == 0 || shape == 4 ? 1u :
                                    shape == 3 || shape >= 5 ? 3u : 2u;
@@ -2684,6 +2687,17 @@ TEST_CASE("System codec preserves bounded multi-image definition graphs",
   }
   RS_Graphic reopened;
   REQUIRE(filter.fileImport(reopened, QString::fromStdString(source), format));
+  if (legacyMaterial) {
+    const std::string sentinel = "preserve legacy material destination";
+    writeText(output, sentinel);
+    CHECK_FALSE(filter.fileExport(reopened, QString::fromStdString(output), format));
+    { std::ifstream in(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(in), {}) == sentinel); }
+    REQUIRE(filter.fileExport(original, QString::fromStdString(output), format));
+    CHECK(countRecords(output, "IMAGE") == static_cast<int>(imageCount));
+    std::filesystem::remove(source);
+    std::filesystem::remove(output);
+    return;
+  }
   const auto &metadata = reopened.dwgAdvancedMetadata();
   REQUIRE(metadata.rasterImages().size() == imageCount);
   REQUIRE(metadata.imageDefinitions().size() == definitionCount);
@@ -3033,7 +3047,8 @@ TEST_CASE("System codec audits larger bounded image graphs",
 TEST_CASE("System codec verifies shared IMAGE graphs across model and block spaces",
           "[system-codec][dxf][image][transaction]") {
   ensureSettings();
-  const auto format = GENERATE(RS2::FormatDXFRW, RS2::FormatDXFRW2010,
+  const auto format = GENERATE(RS2::FormatDXFRW2000, RS2::FormatDXFRW2004,
+                               RS2::FormatDXFRW, RS2::FormatDXFRW2010,
                                RS2::FormatDXFRW2013, RS2::FormatDXFRW2018);
   CAPTURE(format);
   const auto source = tmpFile("mixed_block_image_source.dxf");
