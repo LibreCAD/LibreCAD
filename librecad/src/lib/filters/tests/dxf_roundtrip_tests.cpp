@@ -2041,27 +2041,33 @@ TEST_CASE("Raster source frames are bounded and selected by handle",
   std::filesystem::remove(definitionsInput);
 }
 
-TEST_CASE("System codec preserves two-image definition graphs",
+TEST_CASE("System codec preserves bounded multi-image definition graphs",
           "[system-codec][dxf][image][transaction]") {
   ensureSettings();
-  const bool sharedDefinition = GENERATE(true, false);
+  const int shape = GENERATE(0, 1, 2, 3, 4);
+  const unsigned imageCount = shape < 2 ? 2u : 3u;
+  const unsigned definitionCount = shape == 0 || shape == 4 ? 1u : shape == 3 ? 3u : 2u;
+  const bool sharedDefinition = definitionCount == 1u;
   const auto source = tmpFile("two_images_one_definition_source.dxf");
   const auto output = tmpFile("two_images_one_definition_output.dxf");
   RS_Graphic original;
   original.initForNewDocument();
-  for (const double x : {1.0, 30.0}) {
+  for (unsigned i = 0; i < imageCount; ++i) {
+    const double x = 1.0 + 29.0 * i;
+    const auto path = i == 0 || shape == 4 || (i == 1 && shape == 0) || (i == 2 && shape == 2)
+        ? QStringLiteral("two-image.png")
+        : i == 1 ? QStringLiteral("second-image.png") : QStringLiteral("third-image.png");
     auto *image = new RS_Image(&original, RS_ImageData(0, RS_Vector(x, 2), RS_Vector(1, 0),
-        RS_Vector(0, 1), RS_Vector(16, 12),
-        sharedDefinition || x == 1.0 ? QStringLiteral("two-image.png") : QStringLiteral("second-image.png"),
+        RS_Vector(0, 1), RS_Vector(16, 12), path,
         50, 50, 0));
     original.addEntity(image);
   }
   RS_FilterDXFRW filter;
   REQUIRE(filter.fileExport(original, QString::fromStdString(source), RS2::FormatDXFRW));
-  REQUIRE(countRecords(source, "IMAGE") == 2);
-  REQUIRE(countRecords(source, "IMAGEDEF") == (sharedDefinition ? 1 : 2));
-  REQUIRE(countRecords(source, "IMAGEDEF_REACTOR") == 2);
-  // Give the locally generated source nonzero WCS Z coordinates in both
+  REQUIRE(countRecords(source, "IMAGE") == static_cast<int>(imageCount));
+  REQUIRE(countRecords(source, "IMAGEDEF") == static_cast<int>(definitionCount));
+  REQUIRE(countRecords(source, "IMAGEDEF_REACTOR") == static_cast<int>(imageCount));
+  // Give the locally generated source nonzero WCS Z coordinates in all
   // IMAGE frames so the admitted profile also exercises the 3D sidecar.
   {
     std::ifstream input(source, std::ios::binary);
@@ -2077,15 +2083,15 @@ TEST_CASE("System codec preserves two-image definition graphs",
       }
       rewritten += code + "\n" + value + "\n";
     }
-    REQUIRE(changed == 6u);
+    REQUIRE(changed == 3u * imageCount);
     writeText(source, rewritten);
   }
   RS_Graphic reopened;
   REQUIRE(filter.fileImport(reopened, QString::fromStdString(source), RS2::FormatDXFRW));
   const auto &metadata = reopened.dwgAdvancedMetadata();
-  REQUIRE(metadata.rasterImages().size() == 2u);
-  REQUIRE(metadata.imageDefinitions().size() == (sharedDefinition ? 1u : 2u));
-  REQUIRE(metadata.imageDefinitionReactors().size() == 2u);
+  REQUIRE(metadata.rasterImages().size() == imageCount);
+  REQUIRE(metadata.imageDefinitions().size() == definitionCount);
+  REQUIRE(metadata.imageDefinitionReactors().size() == imageCount);
   for (const auto &image : metadata.rasterImages()) REQUIRE(metadata.dxfImageSource(image.handle));
   for (const auto &definition : metadata.imageDefinitions())
     REQUIRE(metadata.dxfImageDefSource(definition.handle));
@@ -2110,9 +2116,9 @@ TEST_CASE("System codec preserves two-image definition graphs",
   plot->groups.pop_back();
   if (plot->hasRawValues) plot->rawValues.pop_back();
   REQUIRE(filter.fileExport(reopened, QString::fromStdString(output), RS2::FormatDXFRW));
-  CHECK(countRecords(output, "IMAGE") == 2);
-  CHECK(countRecords(output, "IMAGEDEF") == (sharedDefinition ? 1 : 2));
-  CHECK(countRecords(output, "IMAGEDEF_REACTOR") == 2);
+  CHECK(countRecords(output, "IMAGE") == static_cast<int>(imageCount));
+  CHECK(countRecords(output, "IMAGEDEF") == static_cast<int>(definitionCount));
+  CHECK(countRecords(output, "IMAGEDEF_REACTOR") == static_cast<int>(imageCount));
   for (const char *code : {"90", "10", "20", "30", "11", "21", "31", "12", "22", "32", "13", "23",
                            "70", "280", "281", "282", "283", "71", "91", "14", "24"})
     CHECK(recordGroupValues(output, "IMAGE", code) == recordGroupValues(source, "IMAGE", code));
@@ -2121,11 +2127,16 @@ TEST_CASE("System codec preserves two-image definition graphs",
   RS_Graphic readback;
   REQUIRE(filter.fileImport(readback, QString::fromStdString(output), RS2::FormatDXFRW));
   const auto &result = readback.dwgAdvancedMetadata();
-  REQUIRE(result.rasterImages().size() == 2u);
-  REQUIRE(result.imageDefinitions().size() == (sharedDefinition ? 1u : 2u));
-  REQUIRE(result.imageDefinitionReactors().size() == 2u);
-  CHECK((result.rasterImages()[0].definitionHandle == result.rasterImages()[1].definitionHandle) == sharedDefinition);
-  CHECK(result.rasterImages()[0].reactorHandle != result.rasterImages()[1].reactorHandle);
+  REQUIRE(result.rasterImages().size() == imageCount);
+  REQUIRE(result.imageDefinitions().size() == definitionCount);
+  REQUIRE(result.imageDefinitionReactors().size() == imageCount);
+  std::set<std::uint32_t> resultDefinitions, resultReactors;
+  for (const auto &image : result.rasterImages()) {
+    resultDefinitions.insert(image.definitionHandle);
+    resultReactors.insert(image.reactorHandle);
+  }
+  CHECK(resultDefinitions.size() == definitionCount);
+  CHECK(resultReactors.size() == imageCount);
   {
     struct MutatingFilter : RS_FilterDXFRW {
       std::function<void()> beforeFinalize;
@@ -2234,9 +2245,33 @@ TEST_CASE("System codec preserves two-image definition graphs",
     REQUIRE(late.fileExport(reopened, QString::fromStdString(output), RS2::FormatDXFRW));
   }
   if (const char *copy = std::getenv("LIBRECAD_KEEP_TWO_IMAGE_OUTPUT")) {
-    const std::string path = sharedDefinition ? copy : std::string(copy) + ".distinct.dxf";
+    const std::string path = std::string(copy) + ".shape" + std::to_string(shape) + ".dxf";
     std::filesystem::copy_file(output, path, std::filesystem::copy_options::overwrite_existing);
   }
+  std::filesystem::remove(source);
+  std::filesystem::remove(output);
+}
+
+TEST_CASE("System codec refuses an unqualified four-image graph",
+          "[system-codec][dxf][image][transaction]") {
+  ensureSettings();
+  const auto source = tmpFile("four_image_source.dxf");
+  const auto output = tmpFile("four_image_output.dxf");
+  RS_Graphic original;
+  original.initForNewDocument();
+  for (unsigned i = 0; i < 4u; ++i)
+    original.addEntity(new RS_Image(&original, RS_ImageData(0, RS_Vector(29.0 * i, 2),
+        RS_Vector(1, 0), RS_Vector(0, 1), RS_Vector(16, 12),
+        QStringLiteral("four-image.png"), 50, 50, 0)));
+  RS_FilterDXFRW filter;
+  REQUIRE(filter.fileExport(original, QString::fromStdString(source), RS2::FormatDXFRW));
+  REQUIRE(countRecords(source, "IMAGE") == 4);
+  RS_Graphic reopened;
+  REQUIRE(filter.fileImport(reopened, QString::fromStdString(source), RS2::FormatDXFRW));
+  const std::string sentinel = "preserve four-image destination";
+  writeText(output, sentinel);
+  CHECK_FALSE(filter.fileExport(reopened, QString::fromStdString(output), RS2::FormatDXFRW));
+  { std::ifstream in(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(in), {}) == sentinel); }
   std::filesystem::remove(source);
   std::filesystem::remove(output);
 }
