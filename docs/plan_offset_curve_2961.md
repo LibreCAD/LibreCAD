@@ -63269,3 +63269,29 @@ open. The test file matched the scratch source and `git diff --check` passed.
 
 Visible family switching and replacement, preview/commit, cross-platform CI,
 deployment, independent review and the other roadmap gates remain open.
+
+## 2045. Synchronize the Late Worker Fault Test (2026-11-25)
+
+On PR head `2f4daa9237630ac0aa0a7108c02379b9113a627a`, Windows x64
+`VerifyDwgDxfWindows` failed the late-completion fixture test because the
+timeout outcome lacked the fixture receipt; 57 of 58 CTest tests passed. The
+test had allowed only 100 ms for process startup and input delivery before
+blocking event dispatch. Commit `ef5edfff1` instead waits for the existing
+fixture receipt (or an early outcome) before withholding dispatch across the
+unchanged preview deadline. It still requires that the received request time
+out, and does not weaken the late-reply or queue-recovery checks. This removes
+the identified startup timing assumption; it does not establish why the
+Windows runner missed the receipt or prove the new head passes Windows CI.
+
+The macOS source-equivalent CMake Release build passed the entire isolated
+worker fault suite five consecutive times. With ODA File Converter's Audit
+enabled, the existing six R2000-R2018 all-family DWGs were reconverted into
+`/private/tmp/offset-3193-oda-head-2f4daa9-output`; all six nonempty R2010 DXF
+outputs were produced without error files. The opt-in comparison against the
+original inputs passed **20,575 assertions / 1 case**. These fixtures predate
+the test-only commit, and this repeats the bounded section 2039 evidence; it
+is not visual or general interoperability qualification.
+
+Re-run Windows x64 CI on the new head and investigate any remaining failure.
+Visible family switching and replacement, preview/commit, deployment, broad
+cross-platform and sanitizer qualification, and independent review remain open.
