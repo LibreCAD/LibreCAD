@@ -248,14 +248,17 @@ changes:
 - **The packaging and upload steps stop after 10 minutes**, so a hang counts as
   an MSIX failure. MakeAppx writes its file list to `msix-output\makeappx-*.log`,
   which the job prints when packaging fails or times out.
-- **A pull request into `2.2.1` that changes a packaging file** starts
-  `build-all.yml`: `build-all.yml`, `scripts/build-msix*.ps1`, `scripts/msix/`,
+- **Every pull request into `2.2.1` starts `build-all.yml`**, so the required
+  `PackageWindowsMsix` status is present even when its job is skipped. For
+  changes to `build-all.yml`, `scripts/build-msix*.ps1`, `scripts/msix/`,
   `scripts/copy-vc-runtime.ps1`, `scripts/build-windows.bat`,
-  `scripts/postprocess-windows/nsis-msvc.nsi`, `licenses/` or `LICENSE`.
-  - It builds the two Windows jobs and `PackageWindowsMsix` and skips the
-    others.
-  - A packaging failure fails the pull request.
-  - Nothing is published: `UpdateAssets` and `ReleaseAssets` run on pushes only.
+  `scripts/postprocess-windows/nsis-msvc.nsi`, `licenses/` or `LICENSE`, it
+  builds the Windows jobs and `PackageWindowsMsix` bundle/smoke test. A
+  packaging failure fails the pull request.
+  - Unrelated changes skip the Windows package jobs.
+  - The pull request does not publish assets or upload Store bundle or
+    certification-report artifacts;
+    `UpdateAssets` and `ReleaseAssets` run on pushes only.
 
 ## Package version
 

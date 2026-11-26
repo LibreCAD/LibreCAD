@@ -8,20 +8,11 @@ on:
       - 'v*'
       - '*_rc[0-9]*'
       - '*-rc[0-9]*'
-  # Check the Windows installers and the MSIX before packaging changes reach
-  # 2.2.1. A pull request builds the Windows jobs only and publishes nothing.
+  # Run the lightweight change detector for every PR so the MSIX check is
+  # always reported; expensive Windows jobs run only for package inputs.
   pull_request:
     branches:
       - 2.2.1
-    paths:
-      - '.github/workflows/build-all.yml'
-      - 'scripts/build-msix*.ps1'
-      - 'scripts/msix/**'
-      - 'scripts/copy-vc-runtime.ps1'
-      - 'scripts/build-windows.bat'
-      - 'scripts/postprocess-windows/nsis-msvc.nsi'
-      - 'licenses/**'
-      - 'LICENSE'
 
 # A release pushes branch+tag atomically and GitHub fires two workflow runs
 # (refs/heads/<branch> and refs/tags/<tag>) on the same SHA. We let both run
@@ -34,6 +25,33 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  DetectMsixChanges:
+    runs-on: ubuntu-24.04
+    outputs:
+      changed: ${{ steps.msix-changes.outputs.changed }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@main
+        with:
+          fetch-depth: 0
+
+      - name: Detect MSIX inputs
+        id: msix-changes
+        shell: bash
+        run: |
+          if [[ "$GITHUB_EVENT_NAME" != pull_request ]]; then
+            echo 'changed=true' >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          if ! files=$(git diff --name-only HEAD^1 HEAD); then
+            echo '::warning::Could not inspect the PR diff; running the MSIX check.'
+            echo 'changed=true' >> "$GITHUB_OUTPUT"
+          elif grep -Eq '^(\.github/workflows/build-all\.yml|scripts/build-msix[^/]*\.ps1|scripts/msix/|scripts/copy-vc-runtime\.ps1|scripts/build-windows\.bat|scripts/postprocess-windows/nsis-msvc\.nsi|licenses/|LICENSE$)' <<< "$files"; then
+            echo 'changed=true' >> "$GITHUB_OUTPUT"
+          else
+            echo 'changed=false' >> "$GITHUB_OUTPUT"
+          fi
+
   BuildLinux:
     if: github.event_name == 'push'
     runs-on: ubuntu-22.04
@@ -253,6 +271,8 @@ jobs:
           retention-days: 2
 
   BuildWindows:
+    needs: [DetectMsixChanges]
+    if: github.event_name == 'push' || needs.DetectMsixChanges.outputs.changed == 'true'
     runs-on: windows-2022
     steps:
       - name: Checkout code
@@ -315,6 +335,8 @@ jobs:
           retention-days: 2
 
   BuildWindows64:
+    needs: [DetectMsixChanges]
+    if: github.event_name == 'push' || needs.DetectMsixChanges.outputs.changed == 'true'
     runs-on: windows-2022
     steps:
       - name: Checkout code
@@ -452,7 +474,8 @@ jobs:
           retention-days: 2
 
   PackageWindowsMsix:
-    needs: [BuildWindows64]
+    needs: [DetectMsixChanges, BuildWindows64]
+    if: github.event_name == 'push' || needs.DetectMsixChanges.outputs.changed == 'true'
     # The bundle holds the x64 package only: 2.2.1 has no arm64 build.
     runs-on: windows-2022
     steps:
@@ -563,7 +586,7 @@ jobs:
         continue-on-error: true
 
       - name: Upload App Certification Kit report
-        if: always()
+        if: always() && github.event_name == 'push'
         uses: actions/upload-artifact@v5
         with:
           name: winMsixWackReport
@@ -572,6 +595,7 @@ jobs:
           retention-days: 30
 
       - name: Upload MSIX bundle
+        if: github.event_name == 'push'
         uses: actions/upload-artifact@v5
         with:
           name: winMsixBundle
