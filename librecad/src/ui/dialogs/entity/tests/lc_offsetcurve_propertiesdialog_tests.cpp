@@ -813,7 +813,10 @@ TEST_CASE("Source picker excludes the edited offset but retains other offsets",
             REQUIRE(otherIndex >= 0);
             source->setCurrentIndex(otherIndex);
             REQUIRE(widget->isPreparing());
-            awaitPreparation(*widget);
+            const bool settled = pollEventsUntil([&] { return !widget->isPreparing(); },
+                static_cast<int>(LC_OffsetWorkerClient::Deadlines::commit + 5000));
+            INFO("Worker refusal: " << widget->findChild<QLabel*>("lRefusal")->text().toStdString());
+            REQUIRE(settled);
             REQUIRE(widget->lastEditResult()); REQUIRE(*widget->lastEditResult());
             REQUIRE(clone->sourceDefinition());
             CHECK(clone->sourceDefinition()->source.kind() == LC_OffsetSourceGeometry::Kind::Spline);
