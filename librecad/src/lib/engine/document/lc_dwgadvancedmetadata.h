@@ -3484,6 +3484,10 @@ public:
     m_dxfMaterialDictionarySourceConflict = false;
     m_dxfMaterialLayerSources.clear();
     m_dxfMaterialLayerSourceConflict = false;
+    m_dxfMaterialHeaderSourceCaptured = false;
+    m_dxfMaterialHeaderSourceConflict = false;
+    m_dxfMaterialHeaderSource.reset();
+    m_dxfMaterialHeaderSourceVersion = DRW::UNKNOWNV;
     m_dxfImageDefSource.reset();
     m_dxfImageSource.reset();
     m_dxfDictionarySourceConflict = false;
@@ -3968,6 +3972,31 @@ public:
       return nullptr;
     const auto found = m_dxfMaterialLayerSources.find(handle);
     return found == m_dxfMaterialLayerSources.end() ? nullptr : &found->second;
+  }
+
+  void addDxfMaterialHeaderSource(DRW::Version version,
+                                  std::optional<std::uint32_t> handle) {
+    if (m_dxfMaterialHeaderSourceCaptured || version == DRW::UNKNOWNV) {
+      m_dxfMaterialHeaderSourceConflict = true;
+      return;
+    }
+    m_dxfMaterialHeaderSourceCaptured = true;
+    m_dxfMaterialHeaderSourceVersion = version;
+    m_dxfMaterialHeaderSource = handle;
+  }
+
+  void markDxfMaterialHeaderSourceUnavailable() {
+    m_dxfMaterialHeaderSourceConflict = true;
+  }
+
+  bool dxfMaterialHeaderSource(DRW::Version version, bool &present,
+                               std::uint32_t &handle) const {
+    if (!m_dxfMaterialHeaderSourceCaptured || m_dxfMaterialHeaderSourceConflict ||
+        m_dxfMaterialHeaderSourceVersion != version)
+      return false;
+    present = m_dxfMaterialHeaderSource.has_value();
+    handle = m_dxfMaterialHeaderSource.value_or(0);
+    return true;
   }
 
   void addDxfImageDefSource(const DRW_RawDxfObject &source) {
@@ -13661,6 +13690,10 @@ private:
   bool m_dxfMaterialDictionarySourceConflict = false;
   std::map<std::uint32_t, DRW_RawDxfObject> m_dxfMaterialLayerSources;
   bool m_dxfMaterialLayerSourceConflict = false;
+  std::optional<std::uint32_t> m_dxfMaterialHeaderSource;
+  DRW::Version m_dxfMaterialHeaderSourceVersion = DRW::UNKNOWNV;
+  bool m_dxfMaterialHeaderSourceCaptured = false;
+  bool m_dxfMaterialHeaderSourceConflict = false;
   std::optional<DRW_RawDxfObject> m_dxfImageDefSource;
   std::optional<DRW_RawDxfObject> m_dxfImageSource;
   bool m_dxfDictionarySourceConflict = false;

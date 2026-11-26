@@ -3102,13 +3102,18 @@ bool sparseDxfMaterialReferencesMatch(RS_Graphic &graphic) {
   };
   const auto variables = graphic.getVariableDict();
   const auto current = variables.constFind(QStringLiteral("$CMATERIAL"));
+  bool sourcePresent = false;
+  std::uint32_t sourceHandle = 0;
+  if (!metadata.dxfMaterialHeaderSource(source->m_version, sourcePresent, sourceHandle) ||
+      sourcePresent != (current != variables.cend()))
+    return false;
   if (current != variables.cend()) {
     if (current->getType() != RS2::VariableString || current->getCode() != 347)
       return false;
     const auto text = current->getString().toLatin1();
     std::uint32_t handle = 0;
     if (static_cast<std::size_t>(text.size()) != std::strlen(text.constData()) ||
-        !parseDxfCarrierHandle(text.constData(), handle) || !contains(handle))
+        !parseDxfCarrierHandle(text.constData(), handle) || handle != sourceHandle || !contains(handle))
       return false;
   }
   const auto *layers = graphic.getLayerList();
@@ -12947,6 +12952,33 @@ void RS_FilterDXFRW::addHeader(const DRW_Header *data) {
     return;
   }
   RS_Graphic *container = static_cast<RS_Graphic *>(m_currentContainer);
+#ifdef LIBRECAD_SYSTEM_LIBDXFRW
+  const auto *materialPolicy = dynamic_cast<const DRW_DxfSparseMaterialRawPolicy *>(this);
+  if (m_dxfR && materialPolicy && materialPolicy->wantsDxfSparseMaterialRawCapture() &&
+      canCaptureSmallDxfFile(m_file)) {
+    auto &metadata = container->dwgAdvancedMetadata();
+    dxfRW::DxfReadContext context;
+    const auto dollar = data->vars.find("$CMATERIAL");
+    const auto bare = data->vars.find("CMATERIAL");
+    const auto value = dollar != data->vars.end() ? dollar : bare;
+    std::optional<std::uint32_t> handle;
+    bool valid = m_dxfR->getDxfReadContext(context) &&
+                 data->canWriteDxfHeaderStructure() &&
+                 !(dollar != data->vars.end() && bare != data->vars.end());
+    if (valid && value != data->vars.end()) {
+      const auto *field = value->second;
+      std::uint32_t parsed = 0;
+      valid = field && field->code() == 347 && field->type() == DRW_Variant::STRING &&
+              field->content.s && field->content.s->size() == std::strlen(field->content.s->c_str()) &&
+              parseDxfCarrierHandle(field->content.s->c_str(), parsed);
+      if (valid) handle = parsed;
+    }
+    if (valid)
+      metadata.addDxfMaterialHeaderSource(context.sourceVersion, handle);
+    else
+      metadata.markDxfMaterialHeaderSourceUnavailable();
+  }
+#endif
   if (m_dxfR != nullptr && data->vars.find("$ACADVER") != data->vars.end())
     m_dxfHasVersionHeader = true;
 

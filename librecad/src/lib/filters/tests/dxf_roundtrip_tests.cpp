@@ -1343,6 +1343,10 @@ TEST_CASE("System codec gates ambiguous AC1024 default material",
         "3\nACAD_MATERIAL\n350\nE\n"
         "0\nDICTIONARY\n5\nE\n330\nC\n100\nAcDbDictionary\n281\n1\n"
         "3\nByBlock\n350\n1F\n");
+    const std::string versionMarker = "1\nAC1024\n";
+    const auto headerAt = graph.find(versionMarker);
+    REQUIRE(headerAt != std::string::npos);
+    graph.insert(headerAt + versionMarker.size(), "9\n$CMATERIAL\n347\n1F\n");
     writeText(graphSource, graph);
   }
   RS_Graphic graphGraphic;
@@ -1357,6 +1361,9 @@ TEST_CASE("System codec gates ambiguous AC1024 default material",
   CHECK(graphMetadata.materials().front().rawDxfSource);
   CHECK_FALSE(exporter.fileExport(graphGraphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
   CHECK(exporter.exportReport().contains(QStringLiteral("raw-only graph requires qualification")));
+  graphGraphic.removeVariable("$CMATERIAL");
+  CHECK_FALSE(exporter.fileExport(graphGraphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+  CHECK(exporter.exportReport().contains(QStringLiteral("raw source missing, changed or unverified")));
   graphGraphic.addVariable("$CMATERIAL", QStringLiteral("1F"), 347);
   CHECK_FALSE(exporter.fileExport(graphGraphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
   CHECK(exporter.exportReport().contains(QStringLiteral("raw-only graph requires qualification")));
@@ -1371,7 +1378,7 @@ TEST_CASE("System codec gates ambiguous AC1024 default material",
   CHECK(exporter.exportReport().contains(QStringLiteral("raw source missing, changed or unverified")));
   graphGraphic.addVariable("$CMATERIAL", QStringLiteral("0"), 347);
   CHECK_FALSE(exporter.fileExport(graphGraphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
-  CHECK(exporter.exportReport().contains(QStringLiteral("raw-only graph requires qualification")));
+  CHECK(exporter.exportReport().contains(QStringLiteral("raw source missing, changed or unverified")));
   graphGraphic.addVariable("$CMATERIAL", QStringLiteral("1F"), 347);
   auto &graphRaw = const_cast<std::vector<DRW_RawDxfObject> &>(graphMetadata.rawDxfObjects());
   const auto dictionary = std::find_if(graphRaw.begin(), graphRaw.end(),
@@ -1440,14 +1447,78 @@ TEST_CASE("System codec gates ambiguous AC1024 default material",
   CHECK_FALSE(exporter.fileExport(danglingGraphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
   CHECK(exporter.exportReport().contains(QStringLiteral("raw source missing, changed or unverified")));
   std::filesystem::remove(danglingSource);
+  const auto absentHeaderSource = tmpFile("system_sparse_material_absent_header.dxf");
+  {
+    std::ifstream input(graphSource, std::ios::binary);
+    std::string graph((std::istreambuf_iterator<char>(input)), {});
+    const std::string field = "9\n$CMATERIAL\n347\n1F\n";
+    const auto at = graph.find(field);
+    REQUIRE(at != std::string::npos);
+    graph.erase(at, field.size());
+    writeText(absentHeaderSource, graph);
+  }
+  RS_Graphic absentHeaderGraphic;
+  OptInFilter absentHeaderImporter;
+  REQUIRE(absentHeaderImporter.fileImport(absentHeaderGraphic, QString::fromStdString(absentHeaderSource), RS2::FormatDXFRW));
+  bool headerPresent = true;
+  std::uint32_t headerHandle = 42u;
+  REQUIRE(absentHeaderGraphic.dwgAdvancedMetadata().dxfMaterialHeaderSource(DRW::AC1024, headerPresent, headerHandle));
+  CHECK_FALSE(headerPresent);
+  CHECK_FALSE(absentHeaderGraphic.dwgAdvancedMetadata().dxfMaterialHeaderSource(DRW::AC1021, headerPresent, headerHandle));
+  CHECK_FALSE(exporter.fileExport(absentHeaderGraphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+  CHECK(exporter.exportReport().contains(QStringLiteral("raw-only graph requires qualification")));
+  absentHeaderGraphic.addVariable("$CMATERIAL", QStringLiteral("1F"), 347);
+  CHECK_FALSE(exporter.fileExport(absentHeaderGraphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+  CHECK(exporter.exportReport().contains(QStringLiteral("raw source missing, changed or unverified")));
+  absentHeaderGraphic.removeVariable("$CMATERIAL");
+  CHECK_FALSE(exporter.fileExport(absentHeaderGraphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+  CHECK(exporter.exportReport().contains(QStringLiteral("raw-only graph requires qualification")));
+  std::filesystem::remove(absentHeaderSource);
+  const auto nullHeaderSource = tmpFile("system_sparse_material_null_header.dxf");
+  {
+    std::ifstream input(graphSource, std::ios::binary);
+    std::string graph((std::istreambuf_iterator<char>(input)), {});
+    const std::string field = "9\n$CMATERIAL\n347\n1F\n";
+    const auto at = graph.find(field);
+    REQUIRE(at != std::string::npos);
+    graph.replace(at, field.size(), "9\n$CMATERIAL\n347\n0\n");
+    writeText(nullHeaderSource, graph);
+  }
+  RS_Graphic nullHeaderGraphic;
+  OptInFilter nullHeaderImporter;
+  REQUIRE(nullHeaderImporter.fileImport(nullHeaderGraphic, QString::fromStdString(nullHeaderSource), RS2::FormatDXFRW));
+  REQUIRE(nullHeaderGraphic.dwgAdvancedMetadata().dxfMaterialHeaderSource(DRW::AC1024, headerPresent, headerHandle));
+  CHECK(headerPresent);
+  CHECK(headerHandle == 0u);
+  CHECK_FALSE(exporter.fileExport(nullHeaderGraphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+  CHECK(exporter.exportReport().contains(QStringLiteral("raw-only graph requires qualification")));
+  nullHeaderGraphic.removeVariable("$CMATERIAL");
+  CHECK_FALSE(exporter.fileExport(nullHeaderGraphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+  CHECK(exporter.exportReport().contains(QStringLiteral("raw source missing, changed or unverified")));
+  std::filesystem::remove(nullHeaderSource);
+  const auto duplicateHeaderSource = tmpFile("system_sparse_material_duplicate_header.dxf");
+  {
+    std::ifstream input(graphSource, std::ios::binary);
+    std::string graph((std::istreambuf_iterator<char>(input)), {});
+    const std::string field = "9\n$CMATERIAL\n347\n1F\n";
+    const auto at = graph.find(field);
+    REQUIRE(at != std::string::npos);
+    graph.insert(at + field.size(), field);
+    writeText(duplicateHeaderSource, graph);
+  }
+  RS_Graphic duplicateHeaderGraphic;
+  OptInFilter duplicateHeaderImporter;
+  REQUIRE(duplicateHeaderImporter.fileImport(duplicateHeaderGraphic, QString::fromStdString(duplicateHeaderSource), RS2::FormatDXFRW));
+  CHECK_FALSE(duplicateHeaderGraphic.dwgAdvancedMetadata().dxfMaterialHeaderSource(DRW::AC1024, headerPresent, headerHandle));
+  CHECK_FALSE(exporter.fileExport(duplicateHeaderGraphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+  CHECK(exporter.exportReport().contains(QStringLiteral("raw source missing, changed or unverified")));
+  std::ifstream headerRetained(output, std::ios::binary);
+  CHECK(std::string(std::istreambuf_iterator<char>(headerRetained), {}) == sentinel);
+  std::filesystem::remove(duplicateHeaderSource);
   const auto layerSource = tmpFile("system_sparse_material_layer_reference.dxf");
   for (const auto &target : {std::string("2F"), std::string("1F")}) {
     std::ifstream input(graphSource, std::ios::binary);
     std::string graph((std::istreambuf_iterator<char>(input)), {});
-    const std::string versionMarker = "1\nAC1024\n";
-    const auto headerAt = graph.find(versionMarker);
-    REQUIRE(headerAt != std::string::npos);
-    graph.insert(headerAt + versionMarker.size(), "9\n$CMATERIAL\n347\n1F\n");
     const auto at = graph.find("0\nSECTION\n2\nOBJECTS\n");
     REQUIRE(at != std::string::npos);
     graph.insert(at, "0\nSECTION\n2\nTABLES\n0\nTABLE\n2\nLAYER\n70\n1\n"
