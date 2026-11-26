@@ -34,6 +34,8 @@
 #include <unordered_set>
 #include <vector>
 
+#include <QLocale>
+
 #include "lc_containertraverser.h"
 #include "lc_curveoffset.h"
 #include "lc_graphicviewport.h"
@@ -2905,11 +2907,19 @@ bool RS_Modification::doExplodeTextIntoLetters(const RS_MText* text, LC_Document
                 else if (e3->rtti() == RS2::EntityInsert) {
                     // normal letters:
                     const auto letter = static_cast<RS_Insert*>(e3);
+                    // a letter of "\W" text is scaled wider or narrower than high
+                    QString letterText = letter->getName();
+                    const RS_Vector scale = letter->getScale();
+                    const double widthFactor = scale.x / scale.y;
+                    if (std::isfinite(widthFactor) && widthFactor > RS_TOLERANCE && !RS_Math::equal(widthFactor, 1.0)) {
+                        letterText.prepend(QStringLiteral("\\W%1;").arg(
+                            QString::number(widthFactor, 'f', QLocale::FloatingPointShortest)));
+                    }
 
                     const auto letterAsText = new RS_MText(nullptr, RS_MTextData(letter->getInsertionPoint(), text->getHeight(), 100.0,
                                                                                  RS_MTextData::VABottom, RS_MTextData::HALeft,
                                                                                  RS_MTextData::LeftToRight, RS_MTextData::Exact, 1.0,
-                                                                                 letter->getName(), text->getStyle(), letter->getAngle(),
+                                                                                 letterText, text->getStyle(), letter->getAngle(),
                                                                                  RS2::Update));
 
                     letterAsText->setLayer(text->getLayer());

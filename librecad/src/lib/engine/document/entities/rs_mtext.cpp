@@ -31,6 +31,8 @@
 #include <cmath>
 #include <iostream>
 
+#include <QLocale>
+
 #include "rs_debug.h"
 #include "rs_font.h"
 #include "rs_fontlist.h"
@@ -805,6 +807,8 @@ void RS_MText::update() {
 
     // horizontal scale of the glyphs and their advances, set by "\W<factor>;"
     double widthFactor{1.0};
+    // the width factor in front of each group "{...}" that is open
+    std::vector<double> groupWidthFactors;
 
   auto closeLine = [&]() {
     const double leadingAdvance = flushBidiLine(*oneLine, segments, letterSpace, letterPos);
@@ -828,6 +832,16 @@ void RS_MText::update() {
             segments.push_back(
           {LC_BidiSegment::Char, m_data.text.at(i++), font, 0.0, {}, {}, widthFactor});
             continue;
+        }
+
+        // A width set in a group ends with the group. The braces are still
+        // drawn, as before.
+        if (m_data.text.at(i) == QChar('{')) {
+            groupWidthFactors.push_back(widthFactor);
+        }
+        else if (m_data.text.at(i) == QChar('}') && !groupWidthFactors.empty()) {
+            widthFactor = groupWidthFactors.back();
+            groupWidthFactors.pop_back();
         }
 
         switch (m_data.text.at(i).unicode()) {
@@ -885,25 +899,36 @@ void RS_MText::update() {
                     case 'W': {
                         // width factor "\W0.8;", or relative to the current one "\W0.8x;"
                         const qsizetype commandEnd = valueCommandEnd(m_data.text, i);
-                        if (commandEnd >= 0) {
-                            QString value = m_data.text.mid(i + 1, commandEnd - i - 1);
-                            const bool relative = value.endsWith(QChar('x'));
-                            if (relative) {
-                                value.chop(1);
-                            }
-                            bool ok = false;
-                            const double factor = value.toDouble(&ok) * (relative ? widthFactor : 1.0);
-                            if (ok && std::isfinite(factor) && factor > RS_TOLERANCE) {
-                                widthFactor = factor;
-                                i = commandEnd;
-                                handled = true;
-                                break;
-                            }
+                        if (commandEnd < 0) {
+                            // not a command: drawn like any other text
+                            --i;
+                            break;
                         }
-                        // not a usable command: drawn like any other text
-                        --i;
+                        QString value = m_data.text.mid(i + 1, commandEnd - i - 1);
+                        const bool relative = value.endsWith(QChar('x'));
+                        if (relative) {
+                            value.chop(1);
+                        }
+                        bool ok = false;
+                        const double factor = value.toDouble(&ok) * (relative ? widthFactor : 1.0);
+                        // A command that sets no width, such as "\W0;", is not
+                        // drawn either, as in toPlainLine().
+                        if (ok && std::isfinite(factor) && factor > RS_TOLERANCE) {
+                            widthFactor = factor;
+                        }
+                        i = commandEnd;
+                        handled = true;
                         break;
                     } // inner case 'W'
+
+                    case '{':
+                    case '}':
+                        // "\{" and "\}": a brace of the text, which opens or
+                        // closes no group
+                        segments.push_back(
+          {LC_BidiSegment::Char, m_data.text.at(i), font, 0.0, {}, {}, widthFactor});
+                        handled = true;
+                        break;
 
                     case 'f':
                     case 'F': {
@@ -1161,10 +1186,11 @@ double RS_MText::flushBidiLine(LC_TextLine &oneLine,
       case LC_BidiSegment::Stack: {
         // The parts are measured from where they start, so that blanks in front
         // of a numerator widen the stack rather than push it into what follows.
-        // the parts of a stack are texts of their own: hand the width factor on
+        // the parts of a stack are texts of their own: hand the width factor
+        // on, exactly and without an exponent, which "\W" does not read
         const QString widthPrefix = seg.widthFactor == 1.0
             ? QString{}
-            : QStringLiteral("\\W%1;").arg(seg.widthFactor, 0, 'f', 6);
+            : QStringLiteral("\\W%1;").arg(QString::number(seg.widthFactor, 'f', QLocale::FloatingPointShortest));
         double upperWidth = 0.0;
         if (!seg.upperText.isEmpty()) {
           RS_MText *upper = createUpperLower(
