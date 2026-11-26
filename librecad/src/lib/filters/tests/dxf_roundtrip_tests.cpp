@@ -2969,6 +2969,10 @@ TEST_CASE("System codec preserves modern multi-image clip modes",
 TEST_CASE("System codec audits larger bounded image graphs",
           "[system-codec][dxf][image][transaction]") {
   ensureSettings();
+  const auto format = GENERATE(RS2::FormatDXFRW2000, RS2::FormatDXFRW2004,
+                               RS2::FormatDXFRW, RS2::FormatDXFRW2010,
+                               RS2::FormatDXFRW2013, RS2::FormatDXFRW2018);
+  CAPTURE(format);
   const unsigned shape = GENERATE(0u, 1u, 2u, 3u, 4u, 5u);
   const unsigned imageCount = shape == 0u ? 4u : shape == 1u ? 8u : shape == 5u ? 33u : 32u;
   const unsigned definitionCount = shape == 0u || shape == 2u ? 1u : shape == 4u ? 32u : 4u;
@@ -2982,14 +2986,15 @@ TEST_CASE("System codec audits larger bounded image graphs",
         RS_Vector(1, 0), RS_Vector(0, 1), RS_Vector(16, 12), path, 50, 50, 0)));
   }
   RS_FilterDXFRW filter;
-  REQUIRE(filter.fileExport(original, QString::fromStdString(source), RS2::FormatDXFRW));
+  REQUIRE(filter.fileExport(original, QString::fromStdString(source), format));
   if (const char *copy = std::getenv("LIBRECAD_KEEP_MANY_IMAGE_SOURCE"))
     std::filesystem::copy_file(source, std::string(copy) + "." + std::to_string(imageCount) + ".d" +
-                                 std::to_string(definitionCount) + ".dxf",
+                                 std::to_string(definitionCount) +
+                                 (format == RS2::FormatDXFRW ? "" : ".v" + std::to_string(static_cast<int>(format))) + ".dxf",
                                std::filesystem::copy_options::overwrite_existing);
   REQUIRE(countRecords(source, "IMAGE") == static_cast<int>(imageCount));
   RS_Graphic reopened;
-  REQUIRE(filter.fileImport(reopened, QString::fromStdString(source), RS2::FormatDXFRW));
+  REQUIRE(filter.fileImport(reopened, QString::fromStdString(source), format));
   const auto &metadata = reopened.dwgAdvancedMetadata();
   REQUIRE(metadata.rasterImages().size() == imageCount);
   REQUIRE(metadata.imageDefinitions().size() == definitionCount);
@@ -2997,7 +3002,7 @@ TEST_CASE("System codec audits larger bounded image graphs",
   const std::string sentinel = "preserve many-image destination";
   writeText(output, sentinel);
   if (imageCount > 32u) {
-    CHECK_FALSE(filter.fileExport(reopened, QString::fromStdString(output), RS2::FormatDXFRW));
+    CHECK_FALSE(filter.fileExport(reopened, QString::fromStdString(output), format));
     std::ifstream in(output, std::ios::binary);
     CHECK(std::string(std::istreambuf_iterator<char>(in), {}) == sentinel);
   } else {
@@ -3005,15 +3010,15 @@ TEST_CASE("System codec audits larger bounded image graphs",
         metadata.imageDefinitionReactors());
     const auto owner = reactors.back().parentHandle;
     ++reactors.back().parentHandle;
-    CHECK_FALSE(filter.fileExport(reopened, QString::fromStdString(output), RS2::FormatDXFRW));
+    CHECK_FALSE(filter.fileExport(reopened, QString::fromStdString(output), format));
     { std::ifstream in(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(in), {}) == sentinel); }
     reactors.back().parentHandle = owner;
-    REQUIRE(filter.fileExport(reopened, QString::fromStdString(output), RS2::FormatDXFRW));
+    REQUIRE(filter.fileExport(reopened, QString::fromStdString(output), format));
     CHECK(countRecords(output, "IMAGE") == static_cast<int>(imageCount));
     CHECK(countRecords(output, "IMAGEDEF") == static_cast<int>(definitionCount));
     CHECK(countRecords(output, "IMAGEDEF_REACTOR") == static_cast<int>(imageCount));
     RS_Graphic reread;
-    REQUIRE(filter.fileImport(reread, QString::fromStdString(output), RS2::FormatDXFRW));
+    REQUIRE(filter.fileImport(reread, QString::fromStdString(output), format));
     CHECK(reread.dwgAdvancedMetadata().rasterImages().size() == imageCount);
     CHECK(reread.dwgAdvancedMetadata().imageDefinitions().size() == definitionCount);
     struct MutatingFilter : RS_FilterDXFRW {
@@ -3030,14 +3035,15 @@ TEST_CASE("System codec audits larger bounded image graphs",
     const auto originalPosition = lastImage->getInsertionPoint();
     late.beforeFinalize = [&] { lastImage->setInsertionPoint(originalPosition + RS_Vector(1, 0)); };
     writeText(output, sentinel);
-    CHECK_FALSE(late.fileExport(reopened, QString::fromStdString(output), RS2::FormatDXFRW));
+    CHECK_FALSE(late.fileExport(reopened, QString::fromStdString(output), format));
     { std::ifstream in(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(in), {}) == sentinel); }
     lastImage->setInsertionPoint(originalPosition);
     late.beforeFinalize = {};
-    REQUIRE(late.fileExport(reopened, QString::fromStdString(output), RS2::FormatDXFRW));
+    REQUIRE(late.fileExport(reopened, QString::fromStdString(output), format));
     if (const char *copy = std::getenv("LIBRECAD_KEEP_MANY_IMAGE_OUTPUT"))
       std::filesystem::copy_file(output, std::string(copy) + "." + std::to_string(imageCount) + ".d" +
-                                     std::to_string(definitionCount) + ".dxf",
+                                     std::to_string(definitionCount) +
+                                 (format == RS2::FormatDXFRW ? "" : ".v" + std::to_string(static_cast<int>(format))) + ".dxf",
                                  std::filesystem::copy_options::overwrite_existing);
   }
   std::filesystem::remove(source);
