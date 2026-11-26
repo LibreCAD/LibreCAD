@@ -3006,6 +3006,106 @@ TEST_CASE("System codec preserves modern multi-image clip modes",
   std::filesystem::remove(output);
 }
 
+TEST_CASE("System codec preserves legacy polygonal image boundaries",
+          "[system-codec][dxf][image][transaction]") {
+  ensureSettings();
+  const auto format = GENERATE(RS2::FormatDXFRW2000, RS2::FormatDXFRW2004,
+                               RS2::FormatDXFRW);
+  CAPTURE(format);
+  const auto source = tmpFile("legacy_polygon_images_source.dxf");
+  const auto output = tmpFile("legacy_polygon_images_output.dxf");
+  RS_Graphic original;
+  original.initForNewDocument();
+  for (unsigned i = 0; i < 2; ++i)
+    original.addEntity(new RS_Image(&original, RS_ImageData(0, RS_Vector(29.0 * i, 2),
+        RS_Vector(1, 0), RS_Vector(0, 1), RS_Vector(16, 12),
+        QStringLiteral("legacy-polygon.png"), 50, 50, 0)));
+  RS_FilterDXFRW filter;
+  REQUIRE(filter.fileExport(original, QString::fromStdString(source), format));
+  {
+    std::ifstream input(source, std::ios::binary);
+    std::string code, value, rewritten;
+    bool image = false, changed = false;
+    unsigned vertices = 0;
+    while (std::getline(input, code) && std::getline(input, value)) {
+      const int group = std::stoi(code);
+      if (group == 0) image = value == "IMAGE";
+      if (image && !changed) {
+        if (group == 70) value = "7";
+        if (group == 280) value = "1";
+        if (group == 71) value = "2";
+        if (group == 91) value = "3";
+        if (group == 14 || group == 24) {
+          const char *coordinates[] = {"2", "3", "10", "9"};
+          REQUIRE(vertices < 4u);
+          value = coordinates[vertices++];
+        }
+      }
+      rewritten += code + "\n" + value + "\n";
+      if (image && !changed && vertices == 4u) {
+        rewritten += "14\n8\n24\n10\n";
+        changed = true;
+      }
+    }
+    REQUIRE(changed);
+    writeText(source, rewritten);
+  }
+  RS_Graphic reopened;
+  REQUIRE(filter.fileImport(reopened, QString::fromStdString(source), format));
+  const auto &metadata = reopened.dwgAdvancedMetadata();
+  REQUIRE(metadata.rasterImages().size() == 2u);
+  REQUIRE(metadata.rasterImages().front().clipPath.size() == 3u);
+  CHECK(metadata.rasterImages().front().clipBoundaryType == 2);
+  CHECK(metadata.rasterImages().front().clip == 1);
+  auto &rasters = const_cast<std::vector<LC_DwgAdvancedMetadata::RasterImageRecord>&>(metadata.rasterImages());
+  auto *sourceImage = const_cast<DRW_RawDxfObject *>(metadata.dxfImageSource(rasters.front().handle));
+  REQUIRE(sourceImage);
+  auto point = std::find_if(sourceImage->groups.rbegin(), sourceImage->groups.rend(),
+      [](const auto &group) { return group.code() == 14; });
+  REQUIRE(point != sourceImage->groups.rend());
+  const auto index = static_cast<std::size_t>(std::prev(point.base()) - sourceImage->groups.begin());
+  REQUIRE((!sourceImage->hasRawValues || index < sourceImage->rawValues.size()));
+  const double originalX = rasters.front().clipPath.back().x;
+  const auto rawPoint = sourceImage->hasRawValues ? sourceImage->rawValues[index] : std::string{};
+  struct MutatingFilter : RS_FilterDXFRW {
+    std::function<void()> beforeFinalize;
+    bool finalizeDxfWrite() override {
+      if (beforeFinalize) beforeFinalize();
+      return RS_FilterDXFRW::finalizeDxfWrite();
+    }
+  } late;
+  const std::string sentinel = "preserve legacy polygon destination";
+  writeText(output, sentinel);
+  CHECK_FALSE(filter.fileExport(reopened, QString::fromStdString(output), RS2::FormatDXFRW2018));
+  { std::ifstream in(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(in), {}) == sentinel); }
+  late.beforeFinalize = [&] {
+    rasters.front().clipPath.back().x = originalX + 1;
+    point->addDouble(14, originalX + 1);
+    if (sourceImage->hasRawValues) sourceImage->rawValues[index] = std::to_string(originalX + 1);
+  };
+  writeText(output, sentinel);
+  CHECK_FALSE(late.fileExport(reopened, QString::fromStdString(output), format));
+  { std::ifstream in(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(in), {}) == sentinel); }
+  rasters.front().clipPath.back().x = originalX;
+  point->addDouble(14, originalX);
+  if (sourceImage->hasRawValues) sourceImage->rawValues[index] = rawPoint;
+  late.beforeFinalize = {};
+  REQUIRE(late.fileExport(reopened, QString::fromStdString(output), format));
+  for (const char *group : {"70", "280", "71", "91", "14", "24"})
+    CHECK(recordGroupValues(output, "IMAGE", group) == recordGroupValues(source, "IMAGE", group));
+  RS_Graphic readback;
+  REQUIRE(filter.fileImport(readback, QString::fromStdString(output), format));
+  REQUIRE(readback.dwgAdvancedMetadata().rasterImages().size() == 2u);
+  CHECK(readback.dwgAdvancedMetadata().rasterImages().front().clipPath.size() == 3u);
+  if (const char *copy = std::getenv("LIBRECAD_KEEP_LEGACY_POLYGON")) {
+    const auto prefix = std::string(copy) + "." + std::to_string(static_cast<int>(format));
+    std::filesystem::copy_file(source, prefix + ".source.dxf", std::filesystem::copy_options::overwrite_existing);
+    std::filesystem::copy_file(output, prefix + ".output.dxf", std::filesystem::copy_options::overwrite_existing);
+  }
+  std::filesystem::remove(source);
+  std::filesystem::remove(output);
+}
+
 TEST_CASE("System codec audits larger bounded image graphs",
           "[system-codec][dxf][image][transaction]") {
   ensureSettings();

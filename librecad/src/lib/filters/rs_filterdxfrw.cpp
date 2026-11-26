@@ -3784,7 +3784,7 @@ bool dxfImageCarrierMatches(
     const LC_DwgAdvancedMetadata::RasterImageRecord &image, bool multipleImages) {
   bool validBoundary = image.clipBoundaryType == 1 && image.clipPath.size() == 2u;
 #ifdef LIBDXFRW_HAS_DXF_STAGED_IMAGE_POLYGON_INSPECTOR
-  validBoundary = validBoundary || (multipleImages && version >= DRW::AC1024 && image.clipBoundaryType == 2 &&
+  validBoundary = validBoundary || (multipleImages && version >= DRW::AC1015 && image.clipBoundaryType == 2 &&
       image.clipPath.size() >= 3u && image.clipPath.size() <= LIBDXFRW_DXF_STAGED_IMAGE_MAX_CLIP_VERTICES);
 #else
   (void)multipleImages;
