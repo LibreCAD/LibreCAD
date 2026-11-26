@@ -13514,7 +13514,7 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
     bool headerPresent = false;
     std::uint32_t headerHandle = 0;
     if (!header || !materialSource || header->status != DRW_DxfHeaderMaterialSource::Status::Complete ||
-        header->version != materialSource->m_version || header->binary ||
+        header->version != materialSource->m_version ||
         !metadata.dxfMaterialHeaderSource(header->version, headerPresent, headerHandle) ||
         header->present != headerPresent ||
         (headerPresent && (!header->dollarName || !header->handleLength ||
@@ -14189,9 +14189,17 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
   }
   m_dxfExportVersion = exportVersion;
   if (admittedRawMaterials) {
+#ifdef LIBDXFRW_HAS_DXF_HEADER_MATERIAL_SOURCE_HANDLER
+    const auto *physical = g.dwgAdvancedMetadata().dxfMaterialHeaderPhysicalSource();
+    if (!physical) return false;
+    // ASCII sources retain physical text; binary sources retain typed groups.
+    // The staged object inspector checks every emitted scalar and mapped handle.
     for (const auto &material : materials)
       if (!material.rawDxfSource || material.rawDxfSource->m_version != exportVersion ||
-          !material.rawDxfSource->hasRawValues) return false;
+          material.rawDxfSource->hasRawValues == physical->binary) return false;
+#else
+    return false;
+#endif
   }
   // A modeled tolerance group must not be emitted beside an ambiguous
   // retained group. Reject before the DXF writer opens the destination; the

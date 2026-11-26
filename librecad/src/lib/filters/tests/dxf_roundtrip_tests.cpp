@@ -2270,7 +2270,8 @@ TEST_CASE("System codec gates ambiguous AC1024 default material",
         binary.write(value.data(), static_cast<std::streamsize>(value.size()));
         binary.put('\0');
       } else if ((code >= 40 && code <= 59) || (code >= 140 && code <= 149)) {
-        const double number = std::stod(value);
+        // Exercise binary64 values that need full precision in ASCII DXF.
+        const double number = code == 44 ? std::nextafter(1.0, 2.0) : std::stod(value);
         std::uint64_t bits = 0;
         static_assert(sizeof(bits) == sizeof(number), "DXF doubles need 64 bits");
         std::memcpy(&bits, &number, sizeof(bits));
@@ -2285,6 +2286,8 @@ TEST_CASE("System codec gates ambiguous AC1024 default material",
     }
     REQUIRE(binary.good());
   }
+  if (const char *copy = std::getenv("LIBRECAD_KEEP_SPARSE_BINARY_SOURCE"))
+    std::filesystem::copy_file(binarySource, copy, std::filesystem::copy_options::overwrite_existing);
 #ifdef LIBDXFRW_HAS_DXF_STAGED_LAYER_PLOT_STYLE_INSPECTOR
   RS_Graphic ordinaryBinary;
   RS_FilterDXFRW ordinaryBinaryFilter;
@@ -2327,16 +2330,51 @@ TEST_CASE("System codec gates ambiguous AC1024 default material",
   CHECK_FALSE(binaryGraphic.dwgAdvancedMetadata().dxfMaterialDictionarySource()->hasRawValues);
   REQUIRE(binaryGraphic.dwgAdvancedMetadata().dxfMaterialLayerSource(0x30u));
   CHECK_FALSE(binaryGraphic.dwgAdvancedMetadata().dxfMaterialLayerSource(0x30u)->hasRawValues);
-  CHECK_FALSE(exporter.fileExport(binaryGraphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
-  CHECK(exporter.exportReport().contains(QStringLiteral("raw-only graph requires qualification")));
+  const auto binaryReplay = tmpFile("system_sparse_material_binary_to_ascii.dxf");
+  const bool binaryWritten = binaryImporter.fileExport(binaryGraphic, QString::fromStdString(binaryReplay), RS2::FormatDXFRW2010);
+  INFO(binaryImporter.exportReport().toStdString());
+  REQUIRE(binaryWritten);
+  RS_Graphic binaryReopened;
+  OptInFilter binaryReopener;
+  REQUIRE(binaryReopener.fileImport(binaryReopened, QString::fromStdString(binaryReplay), RS2::FormatDXFRW));
+  REQUIRE(binaryReopened.dwgAdvancedMetadata().materials().size() == 1u);
+  CHECK(binaryReopened.dwgAdvancedMetadata().materials().front().requiresRawDxfReplay);
+  const auto replaySnapshot = binaryReopened.dwgAdvancedMetadata().materials().front().rawDxfSource;
+  REQUIRE(replaySnapshot);
+  REQUIRE(replaySnapshot->groups.size() == binarySnapshot->groups.size());
+  for (std::size_t i = 0; i < binarySnapshot->groups.size(); ++i) {
+    const auto &before = binarySnapshot->groups[i];
+    const auto &after = replaySnapshot->groups[i];
+    REQUIRE(before.code() == after.code());
+    REQUIRE(before.type() == after.type());
+    // Identity and ownership are checked through the staged reference graph.
+    if (before.code() == 5 || before.code() == 330) continue;
+    if (before.type() == DRW_Variant::STRING) {
+      REQUIRE(before.content.s);
+      REQUIRE(after.content.s);
+      CHECK(*before.content.s == *after.content.s);
+    } else if (before.type() == DRW_Variant::INTEGER) {
+      CHECK(before.i_val() == after.i_val());
+    } else if (before.type() == DRW_Variant::INTEGER64) {
+      CHECK(before.i64_val() == after.i64_val());
+    } else if (before.type() == DRW_Variant::DOUBLE) {
+      const double a = before.d_val(), b = after.d_val();
+      CHECK(std::memcmp(&a, &b, sizeof(a)) == 0);
+    } else {
+      FAIL("unexpected material group type");
+    }
+  }
+  if (const char *copy = std::getenv("LIBRECAD_KEEP_SPARSE_BINARY_REPLAY"))
+    std::filesystem::copy_file(binaryReplay, copy, std::filesystem::copy_options::overwrite_existing);
+  writeText(output, sentinel);
   auto &binaryRaw = const_cast<std::vector<DRW_RawDxfObject> &>(
       binaryGraphic.dwgAdvancedMetadata().rawDxfObjects());
   const auto binaryMaterial = std::find_if(binaryRaw.begin(), binaryRaw.end(),
       [](const auto &record) { return record.name == "MATERIAL" && record.handle == 0x1Fu; });
   REQUIRE(binaryMaterial != binaryRaw.end());
   binaryMaterial->groups.back().addInt(94, originalTail + 1);
-  CHECK_FALSE(exporter.fileExport(binaryGraphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
-  CHECK(exporter.exportReport().contains(QStringLiteral("raw source missing, changed or unverified")));
+  CHECK_FALSE(binaryImporter.fileExport(binaryGraphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+  CHECK(binaryImporter.exportReport().contains(QStringLiteral("raw source missing, changed or unverified")));
   binaryMaterial->groups.back().addInt(94, originalTail);
   const auto binaryDictionary = std::find_if(binaryRaw.begin(), binaryRaw.end(),
       [](const auto &record) { return record.name == "DICTIONARY" && record.handle == 0xEu; });
@@ -2345,11 +2383,13 @@ TEST_CASE("System codec gates ambiguous AC1024 default material",
       [](const auto &group) { return group.code() == 3; });
   REQUIRE(binaryEntry != binaryDictionary->groups.end());
   binaryEntry->addString(3, "changed");
-  CHECK_FALSE(exporter.fileExport(binaryGraphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
-  CHECK(exporter.exportReport().contains(QStringLiteral("raw source missing, changed or unverified")));
+  CHECK_FALSE(binaryImporter.fileExport(binaryGraphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+  CHECK(binaryImporter.exportReport().contains(QStringLiteral("raw source missing, changed or unverified")));
   binaryEntry->addString(3, "ByBlock");
-  CHECK_FALSE(exporter.fileExport(binaryGraphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
-  CHECK(exporter.exportReport().contains(QStringLiteral("raw-only graph requires qualification")));
+  CHECK_FALSE(binaryImporter.fileExport(binaryGraphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  { std::ifstream retained(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+  REQUIRE(binaryImporter.fileExport(binaryGraphic, QString::fromStdString(binaryReplay), RS2::FormatDXFRW2010));
+  std::filesystem::remove(binaryReplay);
   std::filesystem::remove(binarySource);
   std::filesystem::remove(layerSource);
   std::filesystem::remove(graphSource);
