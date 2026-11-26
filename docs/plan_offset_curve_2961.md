@@ -63381,11 +63381,11 @@ on macOS, using `ASAN_OPTIONS=detect_leaks=0` and
 detection or the full sanitizer matrix. Section 2048's full suite predates
 only this test-wait edit.
 
-The section 2048 product fix and roadmap are pushed at `ff35989c9`; this
-test-only change and receipt are held locally while that exact head's CI runs,
-to avoid canceling its in-flight checks. Push them after the product-head CI
-reaches a terminal state, then evaluate the new head separately. Visible
-current-source GUI acceptance and the other gates remain open.
+The section 2048 product fix and roadmap were pushed at `ff35989c9`; this
+test-only change and receipt were initially held locally to avoid canceling
+that head's in-flight checks. They were subsequently pushed with section 2050
+after the product-head CI completed; see section 2052. Visible current-source
+GUI acceptance and the other gates remain open.
 
 ## 2050. Publish an Offset Source Through the Properties Action (2026-11-26)
 
@@ -63400,8 +63400,8 @@ qualification or a visible desktop interaction.
 The combined `[self-source]` selection passed **1,379 assertions / 3 cases**
 in source-equivalent macOS CMake Release and ASan/UBSan Debug. Leak detection
 was disabled; broader sanitizer qualification remains open. This test and its
-receipt remain local with section 2049 while exact product-head `ff35989c9`
-CI runs; push the local commits after that run reaches a terminal state.
+receipt were initially held locally with section 2049 while exact product-head
+`ff35989c9` CI ran; they have since been pushed.
 
 ## 2051. Run the Properties Suite Under Sanitizers (2026-11-26)
 
@@ -63415,7 +63415,17 @@ other sanitizer targets, visible desktop interaction, or other platforms.
 The same selection in the source-equivalent macOS CMake Release build also
 passed **54,599 assertions / 112 cases** after the action-level test was added.
 
-The current PR-head CI remains in progress and the local test and documentation
-commits remain held until it reaches a terminal state. Visible source-family
-switching, replacement and preview/commit, deployment, independent review,
-and the remaining acceptance gates are still open.
+The product-head CI subsequently completed; see section 2052. Visible
+source-family switching, replacement and preview/commit, deployment,
+independent review, and the remaining acceptance gates are still open.
+
+## 2052. Publish the Properties Follow-up (2026-11-26)
+
+Exact product head `ff35989c9ba1175b62b71527bc07acac2038c4ee` completed
+**19 successful checks and 7 skipped**, including Linux fast verification and
+Windows x64 and ARM64 DWG/DXF verification; no checks failed. The test and
+documentation follow-up through `c941ee1dc` was then pushed to PR #3193 and
+the PR description updated. Its newly started CI is separate from the completed
+product-head run; do not treat the earlier result as current-head acceptance.
+The fixed test bundle was not running in the desktop session, so the visible
+source-picker gate remains open.
