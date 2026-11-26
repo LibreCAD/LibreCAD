@@ -2845,34 +2845,17 @@ bool visitDxfCarrierFrame(const DRW_RawDxfObject &raw, DRW::Version version,
          selfCount == 1 && ownerCount == 1;
 }
 
-// A retained raw-only material is eligible for further graph checks only if
-// its complete captured payload and modeled identity still match the source.
-// This check alone does not authorize replay.
-bool sparseDxfMaterialSourceMatches(
-    const LC_DwgAdvancedMetadata &metadata,
-    const LC_DwgAdvancedMetadata::MaterialRecord &material) {
-  if (!material.rawDxfSource || material.rawDxfSourceConflict ||
-      material.xDictHandle != 0 || !material.extData.empty() ||
-      hasCustomDxfApplicationGroups(material.appData))
-    return false;
-  const auto &source = *material.rawDxfSource;
-  const DRW_RawDxfObject *live = nullptr;
-  for (const auto &candidate : metadata.rawDxfObjects()) {
-    if (candidate.handle != material.handle)
-      continue;
-    if (live != nullptr)
-      return false;
-    live = &candidate;
-  }
-  if (live == nullptr || source.name != "MATERIAL" || live->name != source.name ||
-      source.handle != material.handle || live->handle != source.handle ||
-      source.parentHandle != material.parentHandle || live->parentHandle != source.parentHandle ||
-      live->m_version != source.m_version || live->hasRawValues != source.hasRawValues ||
-      live->rawValues != source.rawValues || live->groups.size() != source.groups.size())
+// Exact payload comparison is shared by material and dictionary source checks.
+bool dxfCarrierMatchesSource(const DRW_RawDxfObject &source,
+                             const DRW_RawDxfObject &live) {
+  if (live.name != source.name || live.handle != source.handle ||
+      live.parentHandle != source.parentHandle || live.m_version != source.m_version ||
+      live.hasRawValues != source.hasRawValues || live.rawValues != source.rawValues ||
+      live.groups.size() != source.groups.size())
     return false;
   for (std::size_t i = 0; i < source.groups.size(); ++i) {
     const auto &expected = source.groups[i];
-    const auto &actual = live->groups[i];
+    const auto &actual = live.groups[i];
     if (expected.code() != actual.code() || expected.type() != actual.type() ||
         expected.isLayerRef() || actual.isLayerRef() ||
         expected.activeDwgLayerReference() || actual.activeDwgLayerReference() ||
@@ -2901,6 +2884,32 @@ bool sparseDxfMaterialSourceMatches(
       return false; // Coordinates and other types are outside this profile.
     }
   }
+  return true;
+}
+
+// A retained raw-only material is eligible for further graph checks only if
+// its complete captured payload and modeled identity still match the source.
+// This check alone does not authorize replay.
+bool sparseDxfMaterialSourceMatches(
+    const LC_DwgAdvancedMetadata &metadata,
+    const LC_DwgAdvancedMetadata::MaterialRecord &material) {
+  if (!material.rawDxfSource || material.rawDxfSourceConflict ||
+      material.xDictHandle != 0 || !material.extData.empty() ||
+      hasCustomDxfApplicationGroups(material.appData))
+    return false;
+  const auto &source = *material.rawDxfSource;
+  const DRW_RawDxfObject *live = nullptr;
+  for (const auto &candidate : metadata.rawDxfObjects()) {
+    if (candidate.handle != material.handle)
+      continue;
+    if (live != nullptr)
+      return false;
+    live = &candidate;
+  }
+  if (live == nullptr || source.name != "MATERIAL" ||
+      source.handle != material.handle || source.parentHandle != material.parentHandle ||
+      !dxfCarrierMatchesSource(source, *live))
+    return false;
   unsigned names = 0, descriptions = 0;
   const bool frame = visitDxfCarrierFrame(*live, source.m_version, material.handle,
       material.parentHandle, material.reactorHandles,
@@ -2978,6 +2987,53 @@ bool dxfDictionaryCarrierMatches(
       });
   return valid && subclasses == 1 && hardOwner == dictionary.hardOwner &&
          cloning == dictionary.cloning && entryName.empty() && entryIndex == entries.size();
+}
+
+// This verifies retained frames and their immediate relationship only. It
+// does not establish the full target graph or authorize raw replay.
+bool sparseDxfMaterialDictionarySourcesMatch(
+    const LC_DwgAdvancedMetadata &metadata,
+    const LC_DwgAdvancedMetadata::MaterialRecord &material) {
+  const auto *rootSource = metadata.dxfRootDictionarySource();
+  const auto *materialSource = metadata.dxfMaterialDictionarySource();
+  if (!rootSource || !materialSource || !material.rawDxfSource ||
+      rootSource->parentHandle != 0 || rootSource->handle == 0 ||
+      materialSource->handle == 0 || materialSource->handle == rootSource->handle ||
+      materialSource->parentHandle != rootSource->handle ||
+      material.parentHandle != materialSource->handle ||
+      rootSource->m_version != material.rawDxfSource->m_version ||
+      materialSource->m_version != rootSource->m_version)
+    return false;
+  const auto matches = [&](const DRW_RawDxfObject &source, bool retainedRaw) {
+    const DRW_RawDxfObject *raw = nullptr;
+    const LC_DwgAdvancedMetadata::DictionaryRecord *typed = nullptr;
+    for (const auto &record : metadata.rawDxfObjects())
+      if (record.handle == source.handle) {
+        if (raw) return false;
+        raw = &record;
+      }
+    for (const auto &record : metadata.dictionaries())
+      if (record.handle == source.handle) {
+        if (typed) return false;
+        typed = &record;
+      }
+    // The parser deliberately suppresses the root from the raw-object list;
+    // it is regenerated separately. A non-root dictionary has a raw carrier.
+    return typed && (retainedRaw ? raw && dxfCarrierMatchesSource(source, *raw) : !raw) &&
+           dxfDictionaryCarrierMatches(source, source.m_version, *typed);
+  };
+  if (!matches(*rootSource, false) || !matches(*materialSource, true))
+    return false;
+  unsigned matchesRoot = 0;
+  for (const auto &dictionary : metadata.dictionaries()) {
+    if (dictionary.handle != rootSource->handle)
+      continue;
+    for (const auto &entry : dictionary.entries)
+      if (normalizeDwgTableName(entry.name) == "ACAD_MATERIAL" &&
+          (entry.handle != materialSource->handle || ++matchesRoot != 1))
+        return false;
+  }
+  return matchesRoot == 1;
 }
 
 // Verify the retained carrier and dictionary before a layer names a material.
@@ -12997,7 +13053,10 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
         if ((material.requiresRawDxfReplay || material.rawDxfSource ||
              material.rawDxfSourceConflict) &&
             (!material.requiresRawDxfReplay ||
-             !sparseDxfMaterialSourceMatches(g.dwgAdvancedMetadata(), material)))
+             !sparseDxfMaterialSourceMatches(g.dwgAdvancedMetadata(), material) ||
+             ((g.dwgAdvancedMetadata().dxfRootDictionarySource() ||
+               g.dwgAdvancedMetadata().dxfMaterialDictionarySource()) &&
+              !sparseDxfMaterialDictionarySourcesMatch(g.dwgAdvancedMetadata(), material))))
           ++unresolved;
       m_writeLeftOut.emplace(
           unresolved ? "MATERIAL raw source missing, changed or unverified"
