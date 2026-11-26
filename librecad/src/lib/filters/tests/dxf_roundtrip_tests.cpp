@@ -2041,6 +2041,45 @@ TEST_CASE("Raster source frames are bounded and selected by handle",
   std::filesystem::remove(definitionsInput);
 }
 
+TEST_CASE("System codec verifies an IMAGE inside a named block",
+          "[system-codec][dxf][image][transaction]") {
+  ensureSettings();
+  const auto input = tmpFile("block_image_source.dxf");
+  const auto generated = tmpFile("block_image_generated.dxf");
+  const auto output = tmpFile("block_image_verified.dxf");
+  writeText(input,
+      "0\nSECTION\n2\nBLOCKS\n0\nBLOCK\n2\nRASTER_BLOCK\n70\n0\n"
+      "10\n0\n20\n0\n30\n0\n3\nRASTER_BLOCK\n1\n\n"
+      "0\nIMAGE\n8\n0\n100\nAcDbRasterImage\n90\n0\n"
+      "10\n1\n20\n2\n30\n3\n11\n1\n21\n0\n31\n0\n"
+      "12\n0\n22\n1\n32\n0\n13\n16\n23\n12\n340\n1\n"
+      "70\n3\n280\n1\n281\n50\n282\n50\n283\n0\n"
+      "71\n1\n91\n2\n14\n-0.5\n24\n-0.5\n14\n15.5\n24\n11.5\n"
+      "0\nENDBLK\n0\nENDSEC\n0\nSECTION\n2\nENTITIES\n"
+      "0\nINSERT\n8\n0\n2\nRASTER_BLOCK\n10\n0\n20\n0\n30\n0\n"
+      "0\nENDSEC\n0\nEOF\n");
+  RS_Graphic initial;
+  RS_FilterDXFRW filter;
+  REQUIRE(filter.fileImport(initial, QString::fromStdString(input), RS2::FormatDXFRW));
+  REQUIRE(filter.fileExport(initial, QString::fromStdString(generated), RS2::FormatDXFRW));
+  RS_Graphic reopened;
+  REQUIRE(filter.fileImport(reopened, QString::fromStdString(generated), RS2::FormatDXFRW));
+  REQUIRE(filter.fileExport(reopened, QString::fromStdString(output), RS2::FormatDXFRW));
+  CHECK(countRecords(output, "IMAGE") == 1);
+  const auto block = recordGroupsWithValue(output, "BLOCK_RECORD", "2", "RASTER_BLOCK");
+  const auto image = recordGroupsWithValue(output, "IMAGE", "8", "0");
+  const auto value = [](const auto &groups, const std::string &code) {
+    const auto found = std::find_if(groups.begin(), groups.end(),
+        [&](const auto &group) { return group.first == code; });
+    return found == groups.end() ? std::string{} : found->second;
+  };
+  REQUIRE_FALSE(value(block, "5").empty());
+  CHECK(value(image, "330") == value(block, "5"));
+  std::filesystem::remove(input);
+  std::filesystem::remove(generated);
+  std::filesystem::remove(output);
+}
+
 TEST_CASE("System codec preserves single-line controls and literal carets",
           "[system-codec][dxf][text]") {
   ensureSettings();
@@ -3350,6 +3389,51 @@ TEST_CASE("DXF filter preserves IMAGE WCS frame Z coordinates",
     REQUIRE(filter.fileExport(graphic2, QString::fromStdString(out2),
                               RS2::FormatDXFRW));
   }
+#if defined(LIBRECAD_SYSTEM_CODEC_TESTS) && defined(LIBDXFRW_HAS_DXF_STAGED_IMAGE_REFERENCE_INSPECTOR)
+  {
+    struct MutatingImageFilter : RS_FilterDXFRW {
+      std::function<void()> afterObjects, beforeFinalize;
+      void writeObjects() override {
+        RS_FilterDXFRW::writeObjects();
+        if (afterObjects) afterObjects();
+      }
+      bool finalizeDxfWrite() override {
+        if (beforeFinalize) beforeFinalize();
+        return RS_FilterDXFRW::finalizeDxfWrite();
+      }
+    } filter;
+    auto &reactors = const_cast<std::vector<LC_DwgAdvancedMetadata::ImageDefinitionReactorRecord>&>(
+        graphic2.dwgAdvancedMetadata().imageDefinitionReactors());
+    REQUIRE(reactors.size() == 1u);
+    const auto originalParent = reactors.front().parentHandle;
+    const std::string sentinel = "preserve late IMAGE graph failure";
+    const auto rejectMutation = [&] {
+      writeText(out2, sentinel);
+      CHECK_FALSE(filter.fileExport(graphic2, QString::fromStdString(out2), RS2::FormatDXFRW));
+      std::ifstream input(out2, std::ios::binary);
+      CHECK(std::string(std::istreambuf_iterator<char>(input), {}) == sentinel);
+      reactors.front().parentHandle = originalParent;
+    };
+    filter.afterObjects = [&] { ++reactors.front().parentHandle; };
+    rejectMutation();
+    filter.afterObjects = {};
+    filter.beforeFinalize = [&] { ++reactors.front().parentHandle; };
+    rejectMutation();
+    RS_Image *liveImage = nullptr;
+    for (RS_Entity *entity : lc::LC_ContainerTraverser{graphic2, RS2::ResolveNone}.entities())
+      if (entity->rtti() == RS2::EntityImage) liveImage = static_cast<RS_Image *>(entity);
+    REQUIRE(liveImage);
+    const auto originalPath = liveImage->getFile();
+    filter.beforeFinalize = [&] { liveImage->setFile(QStringLiteral("late-image-change.png")); };
+    rejectMutation();
+    liveImage->setFile(originalPath);
+    filter.beforeFinalize = [&] { liveImage->setFile(originalPath + QChar(0) + QStringLiteral("hidden")); };
+    rejectMutation();
+    liveImage->setFile(originalPath);
+    filter.beforeFinalize = {};
+    REQUIRE(filter.fileExport(graphic2, QString::fromStdString(out2), RS2::FormatDXFRW));
+  }
+#endif
 #ifdef LIBRECAD_SYSTEM_CODEC_TESTS
   if (const char *copy = std::getenv("LIBRECAD_KEEP_IMAGE_ROUNDTRIP"))
     std::filesystem::copy_file(out2, copy, std::filesystem::copy_options::overwrite_existing);

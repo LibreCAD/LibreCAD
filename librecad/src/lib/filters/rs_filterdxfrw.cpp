@@ -3788,12 +3788,18 @@ bool dxfImageDefCarrierMatches(
 // GROUP members or unrelated raw objects. Larger graphs need separate proof.
 struct DxfImageGraphPlan {
   static constexpr std::uint64_t generation = 1;
+  struct ImageReference {
+    std::uint32_t image = 0, definition = 0, reactor = 0;
+    std::string block, path;
+    bool inBlock = false;
+  };
   std::unique_ptr<DRW_Dictionary> root;
   std::unique_ptr<DRW_Dictionary> groups;
   std::unique_ptr<DRW_Dictionary> images;
   std::vector<dxfRW::ImageDefinitionPlanEntry> definitions;
   std::set<std::uint32_t> reactors;
   std::set<std::uint32_t> identities;
+  std::vector<ImageReference> references;
   std::uint32_t imageDictionary = 0;
 };
 
@@ -3922,6 +3928,9 @@ bool prepareDxfImageGraph(RS_Graphic &graphic, DRW::Version version,
   std::map<std::uint32_t, std::string> livePaths;
   std::set<std::uint32_t> liveImages, liveReactors, otherEntityHandles;
   const auto collect = [&](const RS_EntityContainer &container) {
+    const auto *block = dynamic_cast<const RS_Block *>(&container);
+    if (&container != static_cast<const RS_EntityContainer *>(&graphic) && !block)
+      return false;
     for (RS_Entity *entity : lc::LC_ContainerTraverser{container, RS2::ResolveNone}.entities()) {
       if (entity->getFlag(RS2::FlagDeleted))
         continue;
@@ -3996,11 +4005,18 @@ bool prepareDxfImageGraph(RS_Graphic &graphic, DRW::Version version,
             return false;
         }
       }
-      const std::string path = image->getFile().toUtf8().constData();
+      const auto pathBytes = image->getFile().toUtf8();
+      if (static_cast<std::size_t>(pathBytes.size()) != std::strlen(pathBytes.constData()))
+        return false;
+      const std::string path(pathBytes.constData(), static_cast<std::size_t>(pathBytes.size()));
       const auto inserted = livePaths.emplace(raster->definitionHandle, path);
       if (!inserted.second && inserted.first->second != path)
         return false;
       definition->second.selectedReactors.push_back(imageDefinitionReactorFromMetadata(*reactor));
+      plan.references.push_back({handle, raster->definitionHandle, raster->reactorHandle,
+                                 block ? block->getName().toUtf8().toStdString() : std::string{},
+                                 path,
+                                 block != nullptr});
     }
     return true;
   };
@@ -14849,6 +14865,67 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
               std::move(imageGraph.images), DxfImageGraphPlan::generation) ||
           !m_dxfW->setImageDefinitionPlan(std::move(imageGraph.definitions)))
         return false;
+#ifdef LIBDXFRW_HAS_DXF_STAGED_IMAGE_REFERENCE_INSPECTOR
+      try {
+        struct ImageAudit {
+          std::uint32_t dictionary = 0;
+          std::vector<DxfImageGraphPlan::ImageReference> references;
+          bool blocksSeen = false, entitiesSeen = false;
+        };
+        auto audit = std::make_shared<ImageAudit>();
+        audit->dictionary = imageGraph.imageDictionary;
+        audit->references = imageGraph.references;
+        const auto stable = [audit, &g, exportVersion] {
+          DxfImageGraphPlan current;
+          if (!prepareDxfImageGraph(g, exportVersion, current) ||
+              current.imageDictionary != audit->dictionary ||
+              current.references.size() != audit->references.size())
+            return false;
+          for (std::size_t i = 0; i < audit->references.size(); ++i) {
+            const auto &a = audit->references[i];
+            const auto &b = current.references[i];
+            if (a.image != b.image || a.definition != b.definition ||
+                a.reactor != b.reactor || a.block != b.block || a.path != b.path || a.inBlock != b.inBlock)
+              return false;
+          }
+          return true;
+        };
+        if (!m_dxfW->setDxfEntitySectionsWriteInspector([this, audit, stable](const auto &view,
+                                                                            std::string_view section) {
+              const bool blocks = section == "BLOCKS";
+              if ((!blocks && section != "ENTITIES") ||
+                  (blocks ? audit->blocksSeen : (!audit->blocksSeen || audit->entitiesSeen)) ||
+                  !stable()) return false;
+              const auto *context = m_dxfW->getWritingContext();
+              if (!context) return false;
+              std::vector<dxfRW::DxfImageOutputReferences> expected;
+              for (const auto &reference : audit->references) {
+                if (reference.inBlock != blocks) continue;
+                const auto mapped = context->sourceHandleToMintedMap.find(reference.image);
+                if (mapped == context->sourceHandleToMintedMap.end() ||
+                    !context->writtenSourceEntityHandles.count(reference.image)) return false;
+                const dxfRW::ImageDefinitionKey key{DxfImageGraphPlan::generation, reference.definition};
+                const auto owner = reference.inBlock
+                    ? m_dxfW->getBlockRecordHandleToWrite(reference.block)
+                    : DRW::DxfModelSpaceBlockRecordHandle;
+                expected.push_back({mapped->second, owner,
+                    m_dxfW->dxfWriteImageDefinitionHandle(key),
+                    m_dxfW->dxfWriteImageReactorHandle(key, reference.reactor)});
+              }
+              if (!m_dxfW->inspectDxfImageOutputReferences(view, expected)) return false;
+              if (blocks) audit->blocksSeen = true;
+              else audit->entitiesSeen = true;
+              return true;
+            })) return false;
+        const auto previousFinal = m_dxfMaterialFinalCheck;
+        m_dxfMaterialFinalCheck = [audit, stable, previousFinal] {
+          return audit->blocksSeen && audit->entitiesSeen && stable() &&
+              (!previousFinal || previousFinal());
+        };
+      } catch (...) {
+        return false;
+      }
+#endif
     }
 #endif
   }
