@@ -63402,3 +63402,18 @@ in source-equivalent macOS CMake Release and ASan/UBSan Debug. Leak detection
 was disabled; broader sanitizer qualification remains open. This test and its
 receipt remain local with section 2049 while exact product-head `ff35989c9`
 CI runs; push the local commits after that run reaches a terminal state.
+
+## 2051. Run the Properties Suite Under Sanitizers (2026-11-26)
+
+The complete offscreen `[gui][dialog][offsetcurve]` selection passed on macOS
+with the source-equivalent CMake Debug ASan/UBSan build: **54,599 assertions /
+112 cases**, with `ASAN_OPTIONS=detect_leaks=0` and
+`UBSAN_OPTIONS=halt_on_error=1:print_stacktrace=1`. The scratch build's changed
+files match this worktree except for comments and an equivalent local variable
+in `dwgbufferw.cpp`. This qualifies the selected test suite, not leak detection,
+other sanitizer targets, visible desktop interaction, or other platforms.
+
+The current PR-head CI remains in progress and the local test and documentation
+commits remain held until it reaches a terminal state. Visible source-family
+switching, replacement and preview/commit, deployment, independent review,
+and the remaining acceptance gates are still open.
