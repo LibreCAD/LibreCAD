@@ -921,6 +921,14 @@ TEST_CASE("System codec preserves a layer material link and refuses a missing ca
   dictionary->entries.front().name = "plainmat";
   expectRefusal(); // a spelling-only edit must not replay the stale raw key
   dictionary->entries = entries;
+  const int cloning = dictionary->cloning;
+  dictionary->cloning = 2;
+  expectRefusal(); // typed cloning semantics disagree with the raw dictionary
+  dictionary->cloning = cloning;
+  const int hardOwner = dictionary->hardOwner;
+  dictionary->hardOwner = 1;
+  expectRefusal(); // typed ownership semantics disagree with the raw dictionary
+  dictionary->hardOwner = hardOwner;
   dictionary->entries.clear();
   expectRefusal();
   dictionary->entries = entries;
@@ -939,6 +947,16 @@ TEST_CASE("System codec preserves a layer material link and refuses a missing ca
     return entry.name == "DICTIONARY" && entry.handle == 0xA0u;
   });
   REQUIRE(rawDictionary != raw.end());
+  auto rawCloning = std::find_if(rawDictionary->groups.begin(), rawDictionary->groups.end(),
+                                 [](const auto &group) { return group.code() == 281; });
+  REQUIRE(rawCloning != rawDictionary->groups.end());
+  REQUIRE(rawDictionary->hasRawValues);
+  const auto rawCloningIndex = static_cast<std::size_t>(
+      std::distance(rawDictionary->groups.begin(), rawCloning));
+  const auto savedRawCloning = rawDictionary->rawValues.at(rawCloningIndex);
+  rawDictionary->rawValues[rawCloningIndex] = "2";
+  expectRefusal(); // physical numeric spelling must agree with typed group data
+  rawDictionary->rawValues[rawCloningIndex] = savedRawCloning;
   if (withReactors) {
     auto reactor = std::find_if(rawDictionary->groups.begin(), rawDictionary->groups.end(),
                                 [](const auto &group) { return group.code() == 330; });

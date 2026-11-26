@@ -2845,19 +2845,38 @@ bool visitDxfCarrierFrame(const DRW_RawDxfObject &raw, DRW::Version version,
          selfCount == 1 && ownerCount == 1;
 }
 
-// Compare every retained dictionary edge with its typed order, name, target
-// and role. Callers check entry-name and target uniqueness separately.
-// This does not validate dictionary-specific non-edge fields.
-bool dxfDictionaryEdgesMatch(
+// Compare a selected dictionary carrier with its typed fields and ordered
+// edges. Callers check entry-name and target uniqueness separately.
+bool dxfDictionaryCarrierMatches(
     const DRW_RawDxfObject &raw, DRW::Version version,
-    std::uint32_t self, std::uint32_t owner,
-    const std::vector<std::uint32_t> &reactors,
-    const std::vector<LC_DwgAdvancedMetadata::DictionaryEntryRecord> &entries) {
+    const LC_DwgAdvancedMetadata::DictionaryRecord &dictionary) {
   std::size_t entryIndex = 0;
   std::string entryName;
-  const bool valid = visitDxfCarrierFrame(raw, version, self, owner, reactors,
+  unsigned subclasses = 0;
+  bool sawHardOwner = false, sawCloning = false;
+  int hardOwner = 0, cloning = 0;
+  const auto &entries = dictionary.entries;
+  const bool valid = visitDxfCarrierFrame(raw, version, dictionary.handle,
+      dictionary.parentHandle, dictionary.reactorHandles,
       [&](const DRW_Variant &group, std::size_t index) {
-        if (group.code() == 3) {
+        if (group.code() == 100) {
+          return ++subclasses == 1 && group.type() == DRW_Variant::STRING &&
+                 group.c_str() && std::strcmp(group.c_str(), "AcDbDictionary") == 0 &&
+                 (!raw.hasRawValues || raw.rawValues[index] == "AcDbDictionary");
+        } else if (group.code() == 280 || group.code() == 281) {
+          bool &seen = group.code() == 280 ? sawHardOwner : sawCloning;
+          int &value = group.code() == 280 ? hardOwner : cloning;
+          if (seen || group.type() != DRW_Variant::INTEGER)
+            return false;
+          seen = true;
+          value = group.i_val();
+          if (raw.hasRawValues) {
+            bool ok = false;
+            const int physical = QString::fromStdString(raw.rawValues[index]).toInt(&ok);
+            if (!ok || physical != value)
+              return false;
+          }
+        } else if (group.code() == 3) {
           if (!entryName.empty() || group.type() != DRW_Variant::STRING || !group.c_str() ||
               (raw.hasRawValues && raw.rawValues[index] != group.c_str()))
             return false;
@@ -2878,10 +2897,13 @@ bool dxfDictionaryEdgesMatch(
               expected.dxfHandleCode != group.code())
             return false;
           entryName.clear();
+        } else {
+          return false;
         }
         return true;
       });
-  return valid && entryName.empty() && entryIndex == entries.size();
+  return valid && subclasses == 1 && hardOwner == dictionary.hardOwner &&
+         cloning == dictionary.cloning && entryName.empty() && entryIndex == entries.size();
 }
 
 // Verify the retained carrier and dictionary before a layer names a material.
@@ -3017,9 +3039,7 @@ bool hasDxfLayerMaterialCarrier(
     if (!materialValid || nameCount != 1 || subclassCount != 1)
       return false;
   }
-  return dxfDictionaryEdgesMatch(*rawDictionary, exportVersion, dictionary->handle,
-                                 sourceRootHandle, dictionary->reactorHandles,
-                                 dictionary->entries);
+  return dxfDictionaryCarrierMatches(*rawDictionary, exportVersion, *dictionary);
 }
 #endif
 
