@@ -3805,6 +3805,7 @@ struct DxfImageGraphPlan {
   std::vector<ImageReference> references;
   std::vector<DRW_RawDxfObject> rawPlot;
   std::uint32_t imageDictionary = 0;
+  std::uint32_t materialDictionary = 0;
 };
 
 bool prepareDxfImageGraph(RS_Graphic &graphic, DRW::Version version,
@@ -3826,7 +3827,7 @@ bool prepareDxfImageGraph(RS_Graphic &graphic, DRW::Version version,
     return true;
   if (rootCount != 1 || version < DRW::AC1015)
     return false;
-  std::uint32_t imageDictionary = 0, groupDictionary = 0, plotDictionary = 0;
+  std::uint32_t imageDictionary = 0, groupDictionary = 0, plotDictionary = 0, materialDictionary = 0;
   for (const auto &entry : root->entries) {
     const auto key = normalizeDwgTableName(entry.name);
     if (key == "ACAD_IMAGE_DICT") {
@@ -3841,6 +3842,12 @@ bool prepareDxfImageGraph(RS_Graphic &graphic, DRW::Version version,
       if (plotDictionary != 0 || entry.handle == 0)
         return false;
       plotDictionary = entry.handle;
+#if defined(LIBDXFRW_HAS_DXF_STAGED_RAW_OBJECT_INSPECTOR) && defined(LIBDXFRW_HAS_DXF_STAGED_LAYER_MATERIAL_INSPECTOR) && defined(LIBDXFRW_HAS_DXF_STAGED_ENTITY_MATERIAL_INSPECTOR)
+    } else if (key == "ACAD_MATERIAL") {
+      if (materialDictionary != 0 || entry.handle == 0 || entry.dxfHandleCode != 350)
+        return false;
+      materialDictionary = entry.handle;
+#endif
     } else {
       return false; // other rooted objects need their own closure proof
     }
@@ -3884,11 +3891,12 @@ bool prepareDxfImageGraph(RS_Graphic &graphic, DRW::Version version,
       (images->entries.empty() || images->entries.size() > imageCount) ||
       metadata.imageDefinitions().size() != images->entries.size() ||
       (imageCount != 1u && !multipleImages) || metadata.imageDefinitionReactors().size() != imageCount ||
-      (multipleImages && (version != DRW::AC1021 || root->entries.size() != 3u || plotDictionary == 0)))
+      (multipleImages && (version != DRW::AC1021 || root->entries.size() != (materialDictionary ? 4u : 3u) || plotDictionary == 0)))
     return false;
   std::set<std::uint32_t> identities{root->handle, groups->handle, images->handle};
   if (identities.size() != 3)
     return false;
+  if (materialDictionary && !identities.insert(materialDictionary).second) return false;
   const auto rawDictionary = [&](const Metadata::DictionaryRecord &dictionary) {
     const DRW_RawDxfObject *raw = nullptr;
     for (const auto &candidate : metadata.rawDxfObjects()) {
@@ -3901,6 +3909,17 @@ bool prepareDxfImageGraph(RS_Graphic &graphic, DRW::Version version,
     }
     return raw != nullptr && dxfDictionaryCarrierMatches(*raw, version, dictionary);
   };
+  const Metadata::DictionaryRecord *materials = nullptr;
+  if (materialDictionary) {
+    for (const auto &candidate : metadata.dictionaries()) {
+      if (candidate.handle != materialDictionary) continue;
+      if (materials) return false;
+      materials = &candidate;
+    }
+    if (!materials || materials->parentHandle != root->handle || !rawDictionary(*materials)) return false;
+    for (const auto &entry : materials->entries)
+      if (!entry.handle || !identities.insert(entry.handle).second) return false;
+  }
   const auto *rootSource = metadata.dxfRootDictionarySource();
   const auto *fixedGroupSource = metadata.dxfFixedGroupDictionarySource();
   if (rootSource == nullptr ||
@@ -4168,6 +4187,10 @@ bool prepareDxfImageGraph(RS_Graphic &graphic, DRW::Version version,
         (raw.handle == groups->handle && raw.name == "DICTIONARY") ||
         (raw.handle == plotDictionary && raw.name == "ACDBDICTIONARYWDFLT") ||
         (raw.handle == plotPlaceholder && raw.name == "ACDBPLACEHOLDER") ||
+        (materials && raw.handle == materialDictionary && raw.name == "DICTIONARY") ||
+        (materials && raw.name == "MATERIAL" && raw.parentHandle == materialDictionary &&
+         std::any_of(materials->entries.begin(), materials->entries.end(),
+                     [&](const auto &entry) { return entry.handle == raw.handle; })) ||
         (liveReactors.count(raw.handle) == 1 && raw.name == "IMAGEDEF_REACTOR");
     if (!admitted)
       return false;
@@ -4178,6 +4201,7 @@ bool prepareDxfImageGraph(RS_Graphic &graphic, DRW::Version version,
   plan.reactors = std::move(liveReactors);
   plan.identities = std::move(identities);
   plan.imageDictionary = imageDictionary;
+  plan.materialDictionary = materialDictionary;
   return true;
 }
 #endif
@@ -13348,6 +13372,13 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
   m_writeLeftOut.clear();
   m_dxfMaterialFinalCheck = {};
   const auto clearMaterialFinalCheck = qScopeGuard([this] { m_dxfMaterialFinalCheck = {}; });
+#if defined(LIBRECAD_SYSTEM_LIBDXFRW) && defined(LIBDXFRW_HAS_DXF_STAGED_RAW_OBJECT_INSPECTOR) && \
+    defined(LIBDXFRW_HAS_DXF_STAGED_LAYER_MATERIAL_INSPECTOR)
+  dxfRW::DxfObjectsWriteInspector materialObjectsInspector;
+#ifdef LIBDXFRW_HAS_DXF_STAGED_ENTITY_MATERIAL_INSPECTOR
+  dxfRW::DxfEntitySectionsWriteInspector materialEntityInspector;
+#endif
+#endif
   m_legacyLayerLineweightsLeftOut = 0;
   m_legacyHeaderStylesLeftOut = 0;
   m_legacyPaperScaleLeftOut = false;
@@ -14545,8 +14576,49 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
     defined(LIBDXFRW_HAS_DXF_STAGED_LAYER_MATERIAL_INSPECTOR)
       std::vector<dxfRW::DxfLayerMaterialReference> stagedLayers;
       std::vector<RS_Layer::ImportedRecordId> stagedLayerIds;
+#ifdef LIBDXFRW_HAS_DXF_STAGED_ENTITY_MATERIAL_INSPECTOR
+      struct ImplicitLayerReference {
+        RS_Layer::ImportedRecordId identity;
+        std::string name;
+        bool present;
+      };
+      std::vector<ImplicitLayerReference> implicitLayers;
+#endif
       std::set<std::uint32_t> selectedMaterials;
       bool boundedAudit = true;
+#ifdef LIBDXFRW_HAS_DXF_STAGED_ENTITY_MATERIAL_INSPECTOR
+      struct MaterialEntityReference {
+        std::uint32_t source, target;
+        bool block;
+      };
+      const auto collectMaterialEntities = [&g](std::vector<MaterialEntityReference> &out) {
+        out.clear();
+        std::set<std::uint32_t> identities;
+        const auto collect = [&](const RS_EntityContainer &container, bool block) {
+          for (const RS_Entity *entity : lc::LC_ContainerTraverser{container, RS2::ResolveNone}.entities()) {
+            if (entity->isDeleted() || !entity->materialHandle()) continue;
+            if (!entity->sourceHandle() || entity->sourceHandle() == DRW::NoHandle ||
+                !identities.insert(entity->sourceHandle()).second || out.size() >= 4096u) return false;
+            out.push_back({entity->sourceHandle(), entity->materialHandle(), block});
+          }
+          return true;
+        };
+        if (!collect(g, false)) return false;
+        for (unsigned i = 0; i < g.countBlocks(); ++i) {
+          const auto *block = g.blockAt(i);
+          if (block && !block->isDeleted() && !collect(*block, true)) return false;
+        }
+        return true;
+      };
+      std::vector<MaterialEntityReference> materialEntities;
+      if (!collectMaterialEntities(materialEntities)) return false;
+      for (const auto &reference : materialEntities) {
+        if (!hasDxfLayerMaterialCarrier(metadata, m_dxfEmittedObjectHandles,
+                                       sourceRootHandle, rootEntryName,
+                                       exportVersion, reference.target)) return false;
+        selectedMaterials.insert(reference.target);
+      }
+#endif
 #ifdef LIBDXFRW_HAS_DXF_STAGED_HEADER_MATERIAL_INSPECTOR
       const auto readHeader = [&g](bool &present, std::uint32_t &target, std::string &text) {
         const auto variables = g.getVariableDict();
@@ -14589,7 +14661,23 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
     defined(LIBDXFRW_HAS_DXF_STAGED_LAYER_MATERIAL_INSPECTOR)
         // Match the shared staged inspectors' documented bound. Exceeding it
         // must not silently turn off the graph and late-mutation checks.
-        if (source->handle == 0 || source->handle == DRW::NoHandle || stagedLayers.size() >= 4096u)
+        if (source->handle == 0 || source->handle == DRW::NoHandle) {
+#ifdef LIBDXFRW_HAS_DXF_STAGED_ENTITY_MATERIAL_INSPECTOR
+          if (valid && (!present || !handle)) {
+            if (stagedLayers.size() + implicitLayers.size() >= 4096u) {
+              boundedAudit = false;
+              continue;
+            }
+            implicitLayers.push_back({layer->importedRecordId(), layer->getName().toUtf8().toStdString(), present});
+            continue;
+          }
+#endif
+          boundedAudit = false;
+        } else if (stagedLayers.size()
+#ifdef LIBDXFRW_HAS_DXF_STAGED_ENTITY_MATERIAL_INSPECTOR
+                   + implicitLayers.size()
+#endif
+                   >= 4096u)
           boundedAudit = false;
         else {
           stagedLayers.push_back({layer->getName().toUtf8().toStdString(), source->handle, handle, present});
@@ -14633,6 +14721,11 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
           std::vector<RS_Layer::ImportedRecordId> identities;
           std::map<std::uint32_t, std::string> descriptions;
           bool tablesSeen = false, objectsSeen = false;
+#ifdef LIBDXFRW_HAS_DXF_STAGED_ENTITY_MATERIAL_INSPECTOR
+          std::vector<MaterialEntityReference> entities;
+          std::vector<ImplicitLayerReference> implicitLayers;
+          bool blocksSeen = false, entitiesSeen = false;
+#endif
 #ifdef LIBDXFRW_HAS_DXF_STAGED_HEADER_MATERIAL_INSPECTOR
           bool inspectHeader = false, headerSeen = false, headerPresent = false;
           std::uint32_t headerTarget = 0;
@@ -14677,6 +14770,10 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
         {
           audit->layers = std::move(stagedLayers);
           audit->identities = std::move(stagedLayerIds);
+#ifdef LIBDXFRW_HAS_DXF_STAGED_ENTITY_MATERIAL_INSPECTOR
+          audit->entities = materialEntities;
+          audit->implicitLayers = std::move(implicitLayers);
+#endif
           std::map<std::uint32_t, std::string> selectedRootNames;
           for (const auto handle : selectedObjects) {
             const auto rootName = rootEntryName.find(handle);
@@ -14704,11 +14801,22 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
           const auto layerCount = layers->count();
           const auto stable = [this, audit, &g, selectedMaterials, sourceRootHandle,
                                selectedRootNames, exportVersion, layerCount
+#ifdef LIBDXFRW_HAS_DXF_STAGED_ENTITY_MATERIAL_INSPECTOR
+                               , collectMaterialEntities
+#endif
 #ifdef LIBDXFRW_HAS_DXF_STAGED_HEADER_MATERIAL_INSPECTOR
                                , readHeader
 #endif
                                ]() {
             const auto &current = g.dwgAdvancedMetadata();
+#ifdef LIBDXFRW_HAS_DXF_STAGED_ENTITY_MATERIAL_INSPECTOR
+            std::vector<MaterialEntityReference> entities;
+            if (!collectMaterialEntities(entities) || entities.size() != audit->entities.size()) return false;
+            for (std::size_t i = 0; i < entities.size(); ++i)
+              if (entities[i].source != audit->entities[i].source ||
+                  entities[i].target != audit->entities[i].target ||
+                  entities[i].block != audit->entities[i].block) return false;
+#endif
 #ifdef LIBDXFRW_HAS_DXF_STAGED_ROOT_ENTRY_INSPECTOR
             if (audit->inspectRoot)
               for (const auto &root : current.dictionaries())
@@ -14742,6 +14850,21 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
             }
             const auto *currentLayers = g.getLayerList();
             if (currentLayers->count() != layerCount) return false;
+#ifdef LIBDXFRW_HAS_DXF_STAGED_ENTITY_MATERIAL_INSPECTOR
+            for (const auto &layer : audit->implicitLayers) {
+              const RS_Layer *live = nullptr;
+              for (unsigned int j = 0; j < currentLayers->count(); ++j)
+                if (currentLayers->at(j)->importedRecordId() == layer.identity) {
+                  if (live) return false;
+                  live = currentLayers->at(j);
+                }
+              if (!live || live->getName().toUtf8().toStdString() != layer.name) return false;
+              const auto *source = current.findLayerTableEntryByIdentity(layer.identity);
+              std::uint32_t handle = 0; bool present = false;
+              if (!source || !source->getDxfMaterialHandle(handle, present) || present != layer.present ||
+                  (present && handle)) return false;
+            }
+#endif
             for (std::size_t i = 0; i < audit->layers.size(); ++i) {
               const RS_Layer *live = nullptr;
               for (unsigned int j = 0; j < currentLayers->count(); ++j)
@@ -14770,13 +14893,36 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
                 return audit->headerSeen;
               })) return false;
 #endif
+          audit->tablesSeen = false;
+#ifndef LIBDXFRW_HAS_DXF_STAGED_ENTITY_MATERIAL_INSPECTOR
           audit->tablesSeen = audit->layers.empty();
-          if ((!audit->layers.empty() && !m_dxfW->setDxfTablesWriteInspector([this, audit, stable](const auto &view) {
+#endif
+          if (!audit->tablesSeen && !m_dxfW->setDxfTablesWriteInspector([this, audit, stable](const auto &view) {
                 if (audit->tablesSeen || !stable()) return false;
                 audit->tablesSeen = m_dxfW->inspectDxfLayerMaterialReferences(view, audit->layers);
                 return audit->tablesSeen;
-              })) ||
-              !m_dxfW->setDxfObjectsWriteInspector([this, audit, stable](const auto &view) {
+              })) return false;
+#ifdef LIBDXFRW_HAS_DXF_STAGED_ENTITY_MATERIAL_INSPECTOR
+          materialEntityInspector = [this, audit, stable](const auto &view, std::string_view section) {
+            const bool blocks = section == "BLOCKS";
+            if ((!blocks && section != "ENTITIES") ||
+                (blocks ? audit->blocksSeen : (!audit->blocksSeen || audit->entitiesSeen)) || !stable()) return false;
+            const auto *context = m_dxfW->getWritingContext();
+            if (!context) return false;
+            std::vector<dxfRW::DxfEntityMaterialReference> expected;
+            for (const auto &reference : audit->entities) {
+              if (reference.block != blocks) continue;
+              const auto mapped = context->sourceHandleToMintedMap.find(reference.source);
+              if (mapped == context->sourceHandleToMintedMap.end() ||
+                  !context->writtenSourceEntityHandles.count(reference.source)) return false;
+              expected.push_back({mapped->second, m_dxfW->remapHandle(reference.target)});
+            }
+            if (!m_dxfW->inspectDxfEntityMaterialReferences(view, expected)) return false;
+            if (blocks) audit->blocksSeen = true; else audit->entitiesSeen = true;
+            return true;
+          };
+#endif
+          materialObjectsInspector = [this, audit, stable](const auto &view) {
                 if (!audit->tablesSeen || audit->objectsSeen || !stable()) return false;
                 std::vector<const DRW_RawDxfObject *> expected;
                 expected.reserve(audit->objects.size());
@@ -14788,9 +14934,12 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
                       view, audit->rootName, audit->rootTarget, 350);
 #endif
                 return audit->objectsSeen;
-              })) return false;
+              };
           m_dxfMaterialFinalCheck = [audit, stable] {
             return audit->tablesSeen && audit->objectsSeen &&
+#ifdef LIBDXFRW_HAS_DXF_STAGED_ENTITY_MATERIAL_INSPECTOR
+                audit->blocksSeen && audit->entitiesSeen &&
+#endif
 #ifdef LIBDXFRW_HAS_DXF_STAGED_HEADER_MATERIAL_INSPECTOR
                 (!audit->inspectHeader || audit->headerSeen) &&
 #endif
@@ -14965,6 +15114,11 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
       m_dxfW->setRootDictEntries(rootEntries);
 #ifdef LIBRECAD_SYSTEM_LIBDXFRW
     if (imageGraph.imageDictionary != 0) {
+#if defined(LIBDXFRW_HAS_DXF_STAGED_RAW_OBJECT_INSPECTOR) && defined(LIBDXFRW_HAS_DXF_STAGED_LAYER_MATERIAL_INSPECTOR) && defined(LIBDXFRW_HAS_DXF_STAGED_ENTITY_MATERIAL_INSPECTOR)
+      // The IMAGE profile may admit this root only when the separate MATERIAL
+      // graph audit is also installed and will be composed below.
+      if (imageGraph.materialDictionary && !materialObjectsInspector) return false;
+#endif
 #if defined(LIBDXFRW_HAS_DXF_STAGED_IMAGE_ENTITY_SCALAR_INSPECTOR) && \
     defined(LIBDXFRW_HAS_DXF_STAGED_IMAGE_DEFINITION_SCALAR_INSPECTOR) && \
     defined(LIBDXFRW_HAS_DXF_STAGED_DICTIONARY_INSPECTOR)
@@ -15108,8 +15262,15 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
           }
           return true;
         };
-        if (!m_dxfW->setDxfEntitySectionsWriteInspector([this, audit, stable](const auto &view,
+        if (!m_dxfW->setDxfEntitySectionsWriteInspector([this, audit, stable
+#if defined(LIBDXFRW_HAS_DXF_STAGED_RAW_OBJECT_INSPECTOR) && defined(LIBDXFRW_HAS_DXF_STAGED_LAYER_MATERIAL_INSPECTOR) && defined(LIBDXFRW_HAS_DXF_STAGED_ENTITY_MATERIAL_INSPECTOR)
+                                                        , previous = std::exchange(materialEntityInspector, {})
+#endif
+                                                        ](const auto &view,
                                                                             std::string_view section) {
+#if defined(LIBDXFRW_HAS_DXF_STAGED_RAW_OBJECT_INSPECTOR) && defined(LIBDXFRW_HAS_DXF_STAGED_LAYER_MATERIAL_INSPECTOR) && defined(LIBDXFRW_HAS_DXF_STAGED_ENTITY_MATERIAL_INSPECTOR)
+              if (previous && !previous(view, section)) return false;
+#endif
               const bool blocks = section == "BLOCKS";
               if ((!blocks && section != "ENTITIES") ||
                   (blocks ? audit->blocksSeen : (!audit->blocksSeen || audit->entitiesSeen)) ||
@@ -15142,7 +15303,14 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
               return true;
             })) return false;
 #ifdef LIBDXFRW_HAS_DXF_STAGED_IMAGE_OBJECT_INSPECTOR
-        if (!m_dxfW->setDxfObjectsWriteInspector([this, audit, stable](const auto &view) {
+        if (!m_dxfW->setDxfObjectsWriteInspector([this, audit, stable
+#if defined(LIBDXFRW_HAS_DXF_STAGED_RAW_OBJECT_INSPECTOR) && defined(LIBDXFRW_HAS_DXF_STAGED_LAYER_MATERIAL_INSPECTOR)
+                                                  , previous = std::exchange(materialObjectsInspector, {})
+#endif
+                                                  ](const auto &view) {
+#if defined(LIBDXFRW_HAS_DXF_STAGED_RAW_OBJECT_INSPECTOR) && defined(LIBDXFRW_HAS_DXF_STAGED_LAYER_MATERIAL_INSPECTOR)
+              if (previous && !previous(view)) return false;
+#endif
               if (!audit->entitiesSeen || audit->objectsSeen || !stable()) return false;
               const auto *context = m_dxfW->getWritingContext();
               const auto dictionary = m_dxfW->dxfWriteImageDictionaryHandle();
@@ -15184,7 +15352,8 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
                   const auto generatedPlot = m_dxfW->dxfWriteDefaultPlotStyleDictionaryHandle();
                   const auto target = key == "ACAD_GROUP" ? 0xDu
                       : key == "ACAD_PLOTSTYLENAME" ? (generatedPlot ? generatedPlot : m_dxfW->remapHandle(entry.m_handle))
-                      : key == "ACAD_IMAGE_DICT" ? dictionary : 0u;
+                      : key == "ACAD_IMAGE_DICT" ? dictionary
+                      : key == "ACAD_MATERIAL" ? m_dxfW->remapHandle(entry.m_handle) : 0u;
                   rootEntries.push_back({entry.m_name, target, static_cast<int>(entry.m_dxfHandleCode)});
                 }
                 for (const auto &entry : audit->images->m_entries) {
@@ -15225,6 +15394,14 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
     }
 #endif
   }
+
+#if defined(LIBRECAD_SYSTEM_LIBDXFRW) && defined(LIBDXFRW_HAS_DXF_STAGED_RAW_OBJECT_INSPECTOR) && \
+    defined(LIBDXFRW_HAS_DXF_STAGED_LAYER_MATERIAL_INSPECTOR)
+#ifdef LIBDXFRW_HAS_DXF_STAGED_ENTITY_MATERIAL_INSPECTOR
+  if (materialEntityInspector && !m_dxfW->setDxfEntitySectionsWriteInspector(materialEntityInspector)) return false;
+#endif
+  if (materialObjectsInspector && !m_dxfW->setDxfObjectsWriteInspector(materialObjectsInspector)) return false;
+#endif
 
   //    bool success = m_dxfW->write(this, exportVersion, false); //ascii
   const bool success =

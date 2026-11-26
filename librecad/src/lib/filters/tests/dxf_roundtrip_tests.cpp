@@ -1258,6 +1258,101 @@ TEST_CASE("System codec retains all material dictionary targets for a layer",
 
 #if defined(LIBDXFRW_HAS_DXF_STAGED_RAW_OBJECT_INSPECTOR) && \
     defined(LIBDXFRW_HAS_DXF_STAGED_LAYER_MATERIAL_INSPECTOR)
+#ifdef LIBDXFRW_HAS_DXF_STAGED_ENTITY_MATERIAL_INSPECTOR
+TEST_CASE("System codec audits a material referenced only by an entity",
+          "[system-codec][dxf][material][transaction]") {
+  ensureSettings();
+  const auto source = tmpFile("system_entity_only_material_source.dxf");
+  const auto output = tmpFile("system_entity_only_material_output.dxf");
+  const std::string sourceHandle = GENERATE(std::string("A1"), std::string("14"));
+  const bool inBlock = GENERATE(false, true);
+  std::string input =
+      "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1021\n0\nENDSEC\n";
+  input += inBlock
+      ? "0\nSECTION\n2\nBLOCKS\n0\nBLOCK\n5\nB0\n8\n0\n2\nTESTBLOCK\n70\n0\n10\n0\n20\n0\n30\n0\n"
+      : "0\nSECTION\n2\nENTITIES\n";
+  input += "0\nLINE\n5\nA2\n100\nAcDbEntity\n"
+      "8\n0\n347\nA1\n100\nAcDbLine\n10\n0\n20\n0\n30\n0\n"
+      "11\n10\n21\n0\n31\n0\n";
+  if (inBlock) input += "0\nENDBLK\n5\nB1\n8\n0\n";
+  input += "0\nENDSEC\n"
+      "0\nSECTION\n2\nOBJECTS\n0\nDICTIONARY\n5\nC\n330\n0\n"
+      "100\nAcDbDictionary\n281\n1\n3\nACAD_MATERIAL\n350\nA0\n"
+      "0\nDICTIONARY\n5\nA0\n330\nC\n100\nAcDbDictionary\n281\n1\n"
+      "3\nPlainMat\n350\nA1\n0\nMATERIAL\n5\nA1\n330\nA0\n"
+      "100\nAcDbMaterial\n1\nPlainMat\n0\nENDSEC\n0\nEOF\n";
+  if (sourceHandle != "A1") {
+    const std::string replacement = "\n" + sourceHandle + "\n";
+    for (std::size_t at = 0; (at = input.find("\nA1\n", at)) != std::string::npos;) {
+      input.replace(at, 4u, replacement);
+      at += replacement.size();
+    }
+  }
+  writeText(source, input);
+  RS_Graphic graphic;
+  struct MutatingFilter : RS_FilterDXFRW {
+    std::function<void()> afterObjects;
+    void writeObjects() override {
+      RS_FilterDXFRW::writeObjects();
+      if (afterObjects) afterObjects();
+    }
+  } filter;
+  REQUIRE(filter.fileImport(graphic, QString::fromStdString(source), RS2::FormatDXFRW));
+  auto &materials = const_cast<std::vector<LC_DwgAdvancedMetadata::MaterialRecord>&>(
+      graphic.dwgAdvancedMetadata().materials());
+  REQUIRE(materials.size() == 1u);
+  const auto description = materials.front().description;
+  const std::string sentinel = "preserve entity material destination\n";
+  writeText(output, sentinel);
+  filter.afterObjects = [&] { materials.front().description = "late edit"; };
+  CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  std::ifstream retained(output, std::ios::binary);
+  CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel);
+  retained.close();
+  materials.front().description = description;
+  filter.afterObjects = {};
+  auto *block = inBlock ? graphic.findBlock(QStringLiteral("TESTBLOCK")) : nullptr;
+  if (inBlock) REQUIRE(block != nullptr);
+  auto *line = inBlock ? block->firstEntity() : graphic.firstEntity();
+  REQUIRE(line != nullptr);
+  const auto materialHandle = line->materialHandle();
+  REQUIRE(materialHandle != 0u);
+  filter.afterObjects = [&] { line->setMaterialHandle(0u); };
+  CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  std::ifstream changedEntity(output, std::ios::binary);
+  CHECK(std::string(std::istreambuf_iterator<char>(changedEntity), {}) == sentinel);
+  changedEntity.close();
+  line->setMaterialHandle(materialHandle);
+  filter.afterObjects = {};
+  auto *implicitLayer = graphic.findLayer(QStringLiteral("0"));
+  REQUIRE(implicitLayer != nullptr);
+  filter.afterObjects = [&] { implicitLayer->setName(QStringLiteral("LATE_LAYER")); };
+  CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  std::ifstream renamedLayer(output, std::ios::binary);
+  CHECK(std::string(std::istreambuf_iterator<char>(renamedLayer), {}) == sentinel);
+  renamedLayer.close();
+  implicitLayer->setName(QStringLiteral("0"));
+  filter.afterObjects = {};
+  line->setMaterialHandle(0xB1u);
+  CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  line->setMaterialHandle(materialHandle);
+  const auto entityHandle = line->sourceHandle();
+  line->setSourceHandle(0u);
+  CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  line->setSourceHandle(entityHandle);
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  const auto materialHandles = recordGroupValues(output, "MATERIAL", "5");
+  REQUIRE(materialHandles.size() == 1u);
+  if (sourceHandle == "14") CHECK(materialHandles.front() != sourceHandle);
+  const auto lines = recordGroupValues(output, "LINE", "347");
+  REQUIRE(lines.size() == 1u);
+  CHECK(lines.front() == materialHandles.front());
+  if (const char *copy = std::getenv("LIBRECAD_KEEP_ENTITY_MATERIAL_OUTPUT"))
+    std::filesystem::copy_file(output, copy, std::filesystem::copy_options::overwrite_existing);
+  std::filesystem::remove(source);
+  std::filesystem::remove(output);
+}
+#endif
 #ifdef LIBDXFRW_HAS_DXF_STAGED_HEADER_MATERIAL_INSPECTOR
 TEST_CASE("System codec audits a material referenced only by the header",
           "[system-codec][dxf][material][transaction]") {
@@ -2189,6 +2284,7 @@ TEST_CASE("System codec preserves bounded multi-image definition graphs",
           "[system-codec][dxf][image][transaction]") {
   ensureSettings();
   const int shape = GENERATE(0, 1, 2, 3, 4);
+  const bool withMaterial = GENERATE(false, true);
   const unsigned imageCount = shape < 2 ? 2u : 3u;
   const unsigned definitionCount = shape == 0 || shape == 4 ? 1u : shape == 3 ? 3u : 2u;
   const bool sharedDefinition = definitionCount == 1u;
@@ -2216,10 +2312,25 @@ TEST_CASE("System codec preserves bounded multi-image definition graphs",
   {
     std::ifstream input(source, std::ios::binary);
     std::string code, value, rewritten;
-    bool image = false;
+    bool image = false, sectionStart = false, root = false;
+    std::string section;
     unsigned changed = 0;
     while (std::getline(input, code) && std::getline(input, value)) {
       const int group = std::stoi(code);
+      if (withMaterial && group == 0 && root) {
+        rewritten += "3\nACAD_MATERIAL\n350\nF700\n";
+        root = false;
+      }
+      if (group == 0 && value == "SECTION") sectionStart = true;
+      else if (sectionStart && group == 2) { section = value; sectionStart = false; }
+      if (withMaterial && group == 0 && value == "ENDSEC" && section == "ENTITIES")
+        rewritten += "0\nLINE\n5\nF701\n100\nAcDbEntity\n8\n0\n347\nF702\n"
+                     "100\nAcDbLine\n10\n0\n20\n0\n30\n0\n11\n1\n21\n0\n31\n0\n";
+      if (withMaterial && group == 0 && value == "ENDSEC" && section == "OBJECTS")
+        rewritten += "0\nDICTIONARY\n5\nF700\n330\nC\n100\nAcDbDictionary\n281\n1\n"
+                     "3\nPlainMat\n350\nF702\n0\nMATERIAL\n5\nF702\n330\nF700\n"
+                     "100\nAcDbMaterial\n1\nPlainMat\n";
+      if (withMaterial && section == "OBJECTS" && group == 5 && value == "C") root = true;
       if (group == 0) image = value == "IMAGE";
       if (image && (group == 30 || group == 31 || group == 32)) {
         value = group == 30 ? "3" : group == 31 ? "4" : "5";
@@ -2260,6 +2371,12 @@ TEST_CASE("System codec preserves bounded multi-image definition graphs",
   plot->groups.pop_back();
   if (plot->hasRawValues) plot->rawValues.pop_back();
   REQUIRE(filter.fileExport(reopened, QString::fromStdString(output), RS2::FormatDXFRW));
+  if (withMaterial) {
+    const auto material = recordGroupValues(output, "MATERIAL", "5");
+    const auto lineMaterial = recordGroupValues(output, "LINE", "347");
+    REQUIRE(material.size() == 1u);
+    CHECK(lineMaterial == material);
+  }
   CHECK(countRecords(output, "IMAGE") == static_cast<int>(imageCount));
   CHECK(countRecords(output, "IMAGEDEF") == static_cast<int>(definitionCount));
   CHECK(countRecords(output, "IMAGEDEF_REACTOR") == static_cast<int>(imageCount));
@@ -2297,6 +2414,18 @@ TEST_CASE("System codec preserves bounded multi-image definition graphs",
       }
     REQUIRE(image);
     REQUIRE(other);
+    if (withMaterial) {
+      auto &materials = const_cast<std::vector<LC_DwgAdvancedMetadata::MaterialRecord>&>(metadata.materials());
+      REQUIRE(materials.size() == 1u);
+      const auto description = materials.front().description;
+      late.beforeFinalize = [&] { materials.front().description = "late mixed-graph edit"; };
+      writeText(output, sentinel);
+      CHECK_FALSE(late.fileExport(reopened, QString::fromStdString(output), RS2::FormatDXFRW));
+      { std::ifstream in(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(in), {}) == sentinel); }
+      materials.front().description = description;
+      late.beforeFinalize = {};
+      REQUIRE(late.fileExport(reopened, QString::fromStdString(output), RS2::FormatDXFRW));
+    }
     const auto firstPath = image->getFile(), secondPath = other->getFile();
     image->setFile(QStringLiteral("unsupported^path.png"));
     other->setFile(QStringLiteral("unsupported^path.png"));
@@ -2389,7 +2518,8 @@ TEST_CASE("System codec preserves bounded multi-image definition graphs",
     REQUIRE(late.fileExport(reopened, QString::fromStdString(output), RS2::FormatDXFRW));
   }
   if (const char *copy = std::getenv("LIBRECAD_KEEP_TWO_IMAGE_OUTPUT")) {
-    const std::string path = std::string(copy) + ".shape" + std::to_string(shape) + ".dxf";
+    const std::string path = std::string(copy) + ".shape" + std::to_string(shape) +
+                             (withMaterial ? ".material" : "") + ".dxf";
     std::filesystem::copy_file(output, path, std::filesystem::copy_options::overwrite_existing);
   }
   std::filesystem::remove(source);
