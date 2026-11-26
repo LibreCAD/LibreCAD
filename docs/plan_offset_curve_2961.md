@@ -157,6 +157,28 @@ the dependencies for **3 and 4** in parallel. **5** follows the acceptance work.
   `dwgbufferw.cpp`; this is not an exact-head build. This qualifies those cases,
   not leak detection, the broad Trim matrix, other platforms or visible GUI.
   Next: reconcile the remaining Trim case/profile inventory by identity.
+- Source-equivalent macOS Debug ASan/UBSan per-case Trim run: **92/100
+  passed**, six aggregate timeouts at 300 seconds, and two cases reported one
+  assertion failure each. Four separately profiled cases were excluded. Manifest:
+  `/private/tmp/offset-3193-trim-asan-current.json`; case logs:
+  `/private/tmp/offset-3193-trim-asan-current-logs` (temporary, not durable).
+  Timeouts: bounded hyperbola file lanes, typed parabola against conic cutters,
+  transformed beyond-cusp parabola, high-origin closed-polyline seam, rational
+  high-degree spline file lanes, and reconstructed parabola transformed frames.
+  No sanitizer diagnostic was reported by the completed cases; do not call
+  timed-out generators passed or raise production deadlines.
+- The concave-polyline high-origin case failed once in the case matrix on an
+  Update from Source assertion (R14, origin 1e9, angle 0, scenario 0). Test-only
+  commit `fdaee7ac0` adds `LC_OFFSET_TRIM_CONCAVE_REPRO=1` and refusal context.
+  That pinned tuple passed twice under ASan/UBSan and once in Release (68
+  assertions each). The full generator failed on one diagnostic rerun and
+  passed another (18,910 assertions); the truncated failed rerun did not retain
+  its tuple. This is intermittent, not a proven fix. The closed convex-polyline
+  matrix also failed an Update assertion for rounded profile 1 and format 8;
+  its existing profile/format pin passed in isolation (228 assertions, ASan).
+  Preserve both failures and investigate with diagnostic logs and stable worker
+  status/PID before classifying cause. Next: reproduce both full generators,
+  then account for the timeouts with bounded profiles and the four exclusions.
 
 ## Smallest Safe Fix
 
