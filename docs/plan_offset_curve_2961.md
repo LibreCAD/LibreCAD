@@ -179,6 +179,20 @@ the dependencies for **3 and 4** in parallel. **5** follows the acceptance work.
   Preserve both failures and investigate with diagnostic logs and stable worker
   status/PID before classifying cause. Next: reproduce both full generators,
   then account for the timeouts with bounded profiles and the four exclusions.
+- A disposable scratch-only diagnostic rerun reproduced the closed rounded
+  profile failure and the concave tuple failure. Both returned `ProcessFailed`,
+  exit code 9, reaped, at 128 ms and 123 ms respectively; neither reported a
+  worker deadline. The macOS crash report for PID 87124 identifies an ASan
+  allocator unfair-lock corruption in the child-side fork hook before exec,
+  reached through QtCore `forkfd_fork_fallback` / `QProcessPrivate::startProcess`.
+  This identifies the observed concave failure's launch path, not its ultimate
+  trigger or whether a non-sanitized build can exhibit it. PID 77890's crash
+  report was not located, so do not assert the same stack for the convex case.
+  The temporary diagnostic was removed and the sanitizer target rebuilt. Next:
+  preserve the crash evidence, compare launch behavior on the supported Qt/macOS
+  configurations and reproduce both full cases in Release; keep sanitizer and
+  all timed-out cases open until accounted for. Do not hide or retry away the
+  original failures or change production deadlines.
 
 ## Smallest Safe Fix
 
