@@ -3190,6 +3190,7 @@ private:
   // What the codec left out of the last export (DXF or DWG leftOut()).
   std::map<std::string, std::size_t> m_writeLeftOut;
   std::size_t m_legacyLayerLineweightsLeftOut = 0;
+  std::size_t m_legacyHeaderStylesLeftOut = 0;
   std::size_t m_hatchAssociativityLeftOut = 0;
   std::map<std::string, std::size_t> m_shapeLeftOut;
   QString m_shapeExportDirectory;

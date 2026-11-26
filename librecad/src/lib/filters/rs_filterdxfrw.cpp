@@ -12841,6 +12841,7 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
   m_dxfLeftOutRawRecords = 0;
   m_writeLeftOut.clear();
   m_legacyLayerLineweightsLeftOut = 0;
+  m_legacyHeaderStylesLeftOut = 0;
   m_hatchAssociativityLeftOut = 0;
   m_shapeLeftOut.clear();
   m_shapeExportDirectory = QFileInfo(file).absoluteDir().canonicalPath();
@@ -14224,6 +14225,7 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
 
   if (!success) {
     m_legacyLayerLineweightsLeftOut = 0;
+    m_legacyHeaderStylesLeftOut = 0;
     m_hatchAssociativityLeftOut = 0;
     RS_DEBUG->print("RS_FilterDXFDW::fileExport: can't write file");
     return false;
@@ -18538,6 +18540,11 @@ QString RS_FilterDXFRW::exportReport() const {
                          "RS_FilterDXFRW")
                  .arg(m_legacyLayerLineweightsLeftOut);
   }
+  if (m_legacyHeaderStylesLeftOut > 0) {
+    lines << QObject::tr("%1 line cap or join header setting(s), unsupported by this DXF version",
+                         "RS_FilterDXFRW")
+                 .arg(m_legacyHeaderStylesLeftOut);
+  }
   if (m_hatchAssociativityLeftOut > 0) {
     lines << QObject::tr("associativity of %1 hatch(es)", "RS_FilterDXFRW")
                  .arg(m_hatchAssociativityLeftOut);
@@ -19753,6 +19760,19 @@ void RS_FilterDXFRW::writeHeader(DRW_Header &data) {
     auto value = it.value();
     int code = value.getCode();
     auto key = it.key().toStdString();
+#ifdef LIBRECAD_SYSTEM_LIBDXFRW
+    // LibreCAD supplies these defaults even when the source did not contain
+    // them. Legacy DXF cannot store the settings; report the omission, and
+    // let the codec refuse other values rather than discard them silently.
+    if (m_dxfW && m_dxfExportVersion < DRW::AC1015 &&
+        (key == "$ENDCAPS" || key == "$JOINSTYLE") &&
+        value.getType() == RS2::VariableInt && code == 280 &&
+        value.getInt() == 1) {
+      ++m_legacyHeaderStylesLeftOut;
+      ++it;
+      continue;
+    }
+#endif
     // LibreCAD creates an unspecified-units default even when the source
     // contains no INSUNITS. R12/R14 cannot store it; keep a nonzero value so
     // the codec still refuses to silently discard an actual units setting.
