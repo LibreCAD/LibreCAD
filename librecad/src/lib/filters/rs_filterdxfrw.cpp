@@ -2897,6 +2897,8 @@ bool sparseDxfMaterialSourceMatches(
     const LC_DwgAdvancedMetadata::MaterialRecord &material) {
   if (!material.rawDxfSource || material.rawDxfSourceConflict ||
       material.xDictHandle != 0 || !material.extData.empty() ||
+      material.hasDsData || material.rawDataValid ||
+      material.replayState != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed ||
       hasCustomDxfApplicationGroups(material.appData))
     return false;
   const auto &source = *material.rawDxfSource;
@@ -2922,7 +2924,11 @@ bool sparseDxfMaterialSourceMatches(
           return ++count == 1 && group.type() == DRW_Variant::STRING &&
                  group.content.s && *group.content.s == value;
         }
-        return group.code() < 1000;
+        // Additional handle-bearing fields need dependency proof before they
+        // can be transported; the frame handles the known owner/reactors.
+        const int code = group.code();
+        return code < 1000 && !(code >= 320 && code <= 369) &&
+               !(code >= 390 && code <= 399) && code != 480 && code != 481 && code != 105;
       });
   return frame && names == 1 && (descriptions == 1 || material.description.empty());
 }
@@ -3026,16 +3032,20 @@ bool sparseDxfMaterialDictionarySourcesMatch(
   };
   if (!matches(*rootSource, false) || !matches(*materialSource, true))
     return false;
-  unsigned matchesRoot = 0;
+  unsigned matchesRoot = 0, targetCount = 0;
+  std::set<std::string> names;
   for (const auto &dictionary : metadata.dictionaries()) {
     if (dictionary.handle != rootSource->handle)
       continue;
-    for (const auto &entry : dictionary.entries)
+    for (const auto &entry : dictionary.entries) {
+      if (!names.insert(normalizeDwgTableName(entry.name)).second) return false;
+      if (entry.handle == materialSource->handle) ++targetCount;
       if (normalizeDwgTableName(entry.name) == "ACAD_MATERIAL" &&
           (entry.handle != materialSource->handle || ++matchesRoot != 1))
         return false;
+    }
   }
-  return matchesRoot == 1;
+  return matchesRoot == 1 && targetCount == 1;
 }
 
 // Every entry in the selected dictionary must resolve to one unchanged
@@ -3053,7 +3063,8 @@ bool sparseDxfMaterialTargetsMatch(
       dictionary = &candidate;
     }
   }
-  if (!dictionary || dictionary->entries.empty())
+  if (!dictionary || dictionary->entries.empty() ||
+      dictionary->entries.size() != metadata.materials().size())
     return false;
   std::set<std::uint32_t> handles;
   std::set<std::string> names;
@@ -3137,8 +3148,31 @@ bool sparseDxfMaterialReferencesMatch(RS_Graphic &graphic) {
         (layerSource->hasRawValues && layerSource->rawValues.size() != layerSource->groups.size()))
       return false;
     unsigned count = 0;
+    std::set<int> layerFields;
+    std::set<std::string> subclasses;
     for (std::size_t j = 0; j < layerSource->groups.size(); ++j) {
       const auto &group = layerSource->groups[j];
+      // This profile proves only the material edge. Do not silently replace
+      // another source relationship, including a plot-style placeholder,
+      // with the writer's default when replaying the graph.
+      const int code = group.code();
+      if (code != 5 && code != 330 && code != 100 && code != 2 && code != 70 &&
+          code != 62 && code != 6 && code != 290 && code != 370 && code != 420 &&
+          code != 430 && code != 347)
+        return false;
+      if (code == 100) {
+        if (group.type() != DRW_Variant::STRING || !group.content.s ||
+            (*group.content.s != "AcDbSymbolTableRecord" &&
+             *group.content.s != "AcDbLayerTableRecord") ||
+            !subclasses.insert(*group.content.s).second) return false;
+      } else if (!layerFields.insert(code).second) return false;
+      if (code == 5 || code == 330) {
+        std::uint32_t value = 0;
+        if (group.type() != DRW_Variant::STRING || !group.content.s ||
+            group.content.s->size() != std::strlen(group.content.s->c_str()) ||
+            !parseDxfCarrierHandle(group.content.s->c_str(), value) ||
+            value != (code == 5 ? layer->handle : layer->parentHandle)) return false;
+      }
       if (group.code() != 347)
         continue;
       std::uint32_t value = 0, rawValue = 0;
@@ -3150,7 +3184,7 @@ bool sparseDxfMaterialReferencesMatch(RS_Graphic &graphic) {
             !parseDxfCarrierHandle(layerSource->rawValues[j].c_str(), rawValue) || rawValue != value)))
         return false;
     }
-    if ((count != 0) != present)
+    if (!layerFields.count(5) || !layerFields.count(2) || (count != 0) != present)
       return false;
   }
   return true;
@@ -3167,10 +3201,31 @@ bool hasDxfLayerMaterialCarrier(
   for (const auto &candidate : metadata.materials()) {
     if (candidate.handle != handle)
       continue;
-    if (material != nullptr || candidate.requiresRawDxfReplay ||
+    if (material != nullptr ||
         candidate.replayState != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed)
       return false;
     material = &candidate;
+  }
+  if (material && material->requiresRawDxfReplay) {
+    if (!material->rawDxfSource || material->rawDxfSource->m_version != exportVersion ||
+        !sparseDxfMaterialSourceMatches(metadata, *material) ||
+        !sparseDxfMaterialDictionarySourcesMatch(metadata, *material) ||
+        !sparseDxfMaterialTargetsMatch(metadata, *material) ||
+        emittedObjects.count(handle) == 0 || emittedObjects.count(material->parentHandle) == 0)
+      return false;
+    const auto rootName = rootEntryName.find(material->parentHandle);
+    if (!sourceRootHandle || rootName == rootEntryName.end() ||
+        normalizeDwgTableName(rootName->second) != "ACAD_MATERIAL") return false;
+    for (const auto &dictionary : metadata.dictionaries()) {
+      if (dictionary.handle == sourceRootHandle) {
+        for (const auto &entry : dictionary.entries)
+          if (entry.handle == material->parentHandle && entry.dxfHandleCode != 350) return false;
+      }
+      if (dictionary.handle == material->parentHandle)
+        for (const auto &entry : dictionary.entries)
+          if (!emittedObjects.count(entry.handle)) return false;
+    }
+    return true;
   }
   if (material == nullptr || material->parentHandle == 0 || material->name.empty() ||
       material->xDictHandle != 0 || !material->extData.empty() ||
@@ -5801,6 +5856,23 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic &g, const QString &file,
       m_errorCode = dwgr.getError();
       updateImportedInserts(*m_graphic);
       return false;
+    }
+    const auto entitiesHaveNoUnqualifiedLinks = [&](const RS_EntityContainer &container) {
+      for (const RS_Entity *entity : lc::LC_ContainerTraverser{container, RS2::ResolveNone}.entities()) {
+        if (entity->isDeleted()) continue;
+        if (entity->xDictHandle() || !entity->reactorHandles().empty() ||
+            entity->plotStyleHandle() || entity->shadowHandle() ||
+            entity->fullVisualStyleHandle() || entity->faceVisualStyleHandle() ||
+            entity->edgeVisualStyleHandle()) return false;
+        for (const auto &value : entity->getDrwExtData())
+          if (!value || value->code() == 1005) return false;
+      }
+      return true;
+    };
+    if (!entitiesHaveNoUnqualifiedLinks(g)) return false;
+    for (unsigned i = 0; i < g.countBlocks(); ++i) {
+      const auto *block = g.blockAt(i);
+      if (block && !block->isDeleted() && !entitiesHaveNoUnqualifiedLinks(*block)) return false;
     }
     m_graphic->dwgAdvancedMetadata().markVportsImported();
   } else {
@@ -13402,12 +13474,130 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
     }
   }
   const auto &materials = g.dwgAdvancedMetadata().materials();
+  bool admittedRawMaterials = false;
+#if defined(LIBRECAD_SYSTEM_LIBDXFRW) && defined(LIBDXFRW_HAS_DXF_STAGED_RAW_OBJECT_INSPECTOR) && \
+    defined(LIBDXFRW_HAS_DXF_STAGED_LAYER_MATERIAL_INSPECTOR) && \
+    defined(LIBDXFRW_HAS_DXF_STAGED_HEADER_MATERIAL_INSPECTOR) && \
+    defined(LIBDXFRW_HAS_DXF_STAGED_ROOT_ENTRY_INSPECTOR) && \
+    defined(LIBDXFRW_HAS_DXF_STAGED_ENTITY_MATERIAL_INSPECTOR) && defined(LIBDXFRW_HAS_DXF_STAGED_DICTIONARY_INSPECTOR) && defined(LIBDXFRW_HAS_DXF_DEFAULT_PLOT_PLACEHOLDER_HANDLE) && defined(LIBDXFRW_HAS_DXF_HEADER_MATERIAL_SOURCE_HANDLER)
+  const auto rawMaterialGraphMatches = [&g]() {
+    const auto &metadata = g.dwgAdvancedMetadata();
+    if (metadata.materials().empty() || !metadata.dxfRootDictionarySource() ||
+        !metadata.dxfMaterialDictionarySource() || !sparseDxfMaterialReferencesMatch(g)) return false;
+    const auto *header = metadata.dxfMaterialHeaderPhysicalSource();
+    const auto *materialSource = metadata.materials().front().rawDxfSource.get();
+    bool headerPresent = false;
+    std::uint32_t headerHandle = 0;
+    if (!header || !materialSource || header->status != DRW_DxfHeaderMaterialSource::Status::Complete ||
+        header->version != materialSource->m_version || header->binary ||
+        !metadata.dxfMaterialHeaderSource(header->version, headerPresent, headerHandle) ||
+        header->present != headerPresent ||
+        (headerPresent && (!header->dollarName || !header->handleLength ||
+                           header->handleLength > header->handleLexeme.size()))) return false;
+    if (headerPresent) {
+      const std::string text(header->handleLexeme.data(), header->handleLength);
+      std::uint32_t physicalHandle = 0;
+      if (text.size() != std::strlen(text.c_str()) ||
+          !parseDxfCarrierHandle(text.c_str(), physicalHandle) || physicalHandle != headerHandle) return false;
+    }
+    // This first replay route has no proof for unrelated raw sections, raw
+    // entities, or other rooted object graphs. Keep those sources guarded.
+    if (!metadata.rawDxfEntities().empty() || !metadata.rawDxfSections().empty()) return false;
+    const auto rootHandle = metadata.dxfRootDictionarySource()->handle;
+    const auto dictionaryHandle = metadata.dxfMaterialDictionarySource()->handle;
+    if (std::count_if(metadata.dictionaries().begin(), metadata.dictionaries().end(),
+                      [](const auto &dictionary) { return dictionary.parentHandle == 0; }) != 1) return false;
+    const LC_DwgAdvancedMetadata::DictionaryRecord *root = nullptr, *group = nullptr;
+    for (const auto &dictionary : metadata.dictionaries()) {
+      if (dictionary.handle == rootHandle) root = &dictionary;
+      if (dictionary.handle == 0xDu) group = &dictionary;
+    }
+    if (!root || root->hardOwner != 0 || root->cloning != 1 ||
+        !root->typedPayloadComplete || root->countCap || root->hasDsData || root->xDictHandle ||
+        !root->appData.empty() || !root->extData.empty() || !root->reactorHandles.empty() ||
+        root->replayState != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed ||
+        (root->entries.size() != 1u && root->entries.size() != 3u)) return false;
+    bool hasMaterial = false, hasGroup = false, hasPlot = false;
+    std::uint32_t plotHandle = 0;
+    for (const auto &entry : root->entries) {
+      if (entry.dxfHandleCode != 350) return false;
+      const auto name = normalizeDwgTableName(entry.name);
+      if (name == "ACAD_MATERIAL" && entry.handle == dictionaryHandle && !hasMaterial) hasMaterial = true;
+      else if (name == "ACAD_GROUP" && entry.handle == 0xDu && !hasGroup) hasGroup = true;
+      else if (name == "ACAD_PLOTSTYLENAME" && entry.handle && !hasPlot) {
+        hasPlot = true; plotHandle = entry.handle;
+      }
+      else return false;
+    }
+    if (!hasMaterial || hasGroup != hasPlot || (hasGroup && rootHandle != 0xCu)) return false;
+    if (hasGroup && (normalizeDwgTableName(root->entries[0].name) != "ACAD_GROUP" ||
+                     normalizeDwgTableName(root->entries[1].name) != "ACAD_PLOTSTYLENAME" ||
+                     normalizeDwgTableName(root->entries[2].name) != "ACAD_MATERIAL")) return false;
+    const DRW_RawDxfObject *groupRaw = nullptr, *plotRaw = nullptr, *placeholderRaw = nullptr;
+    for (const auto &raw : metadata.rawDxfObjects()) {
+      if (raw.name == "DICTIONARY" && raw.handle == dictionaryHandle) continue;
+      if (raw.name == "MATERIAL" && raw.parentHandle == dictionaryHandle &&
+          std::any_of(metadata.materials().begin(), metadata.materials().end(),
+                      [&](const auto &material) { return material.handle == raw.handle; })) continue;
+      if (hasGroup && raw.name == "DICTIONARY" && raw.handle == 0xDu && !groupRaw) groupRaw = &raw;
+      else if (hasPlot && raw.name == "ACDBDICTIONARYWDFLT" && raw.handle == plotHandle && !plotRaw) plotRaw = &raw;
+      else if (hasPlot && raw.name == "ACDBPLACEHOLDER" && raw.parentHandle == plotHandle && !placeholderRaw) placeholderRaw = &raw;
+      else return false;
+    }
+    if (hasGroup) {
+      const auto *groupSource = metadata.dxfFixedGroupDictionarySource();
+      if (!group || group->parentHandle != rootHandle || !group->entries.empty() ||
+          !group->typedPayloadComplete || group->countCap || group->hasDsData || group->xDictHandle ||
+          !group->appData.empty() || !group->extData.empty() || !group->reactorHandles.empty() ||
+          group->replayState != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed ||
+          !groupSource || (groupRaw && !dxfCarrierMatchesSource(*groupSource, *groupRaw)) ||
+          !dxfDictionaryCarrierMatches(*groupSource, groupSource->m_version, *group) ||
+          group->hardOwner != 0 || group->cloning != 1 || !metadata.groups().empty() ||
+          !plotRaw || !placeholderRaw || plotRaw->parentHandle != rootHandle ||
+          placeholderRaw->parentHandle != plotHandle || plotRaw->m_version != groupSource->m_version ||
+          placeholderRaw->m_version != groupSource->m_version || plotRaw->groups.size() != 8u ||
+          placeholderRaw->groups.size() != 2u ||
+          (plotRaw->hasRawValues && plotRaw->rawValues.size() != 8u) ||
+          (placeholderRaw->hasRawValues && placeholderRaw->rawValues.size() != 2u)) return false;
+      const LC_DwgAdvancedMetadata::DictionaryWithDefaultRecord *plot = nullptr;
+      for (const auto &candidate : metadata.dictionariesWithDefault())
+        if (candidate.handle == plotHandle) { if (plot) return false; plot = &candidate; }
+      if (!plot || plot->parentHandle != rootHandle || plot->hardOwner != 0 || plot->cloning != 1 ||
+          plot->xDictHandle || !plot->reactorHandles.empty() || !plot->appData.empty() ||
+          !plot->extData.empty() || plot->hasDsData || !plot->typedPayloadComplete || plot->countCap ||
+          plot->replayState != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed ||
+          plot->entries.size() != 1u || plot->entries.front().name != "Normal" ||
+          !placeholderRaw->handle || plot->entries.front().handle != placeholderRaw->handle ||
+          plot->defaultEntryHandle != placeholderRaw->handle) return false;
+      const int codes[] = {5, 330, 100, 281, 3, 350, 100, 340};
+      for (std::size_t i = 0; i < 8; ++i) {
+        if (plotRaw->groups[i].code() != codes[i]) return false;
+        if (i == 0 || i == 1 || i == 5 || i == 7) {
+          const auto target = i == 0 ? plotHandle : i == 1 ? rootHandle : placeholderRaw->handle;
+          if (!dxfSourceHandleMatches(*plotRaw, i, target)) return false;
+        } else if (i == 3) {
+          if (!dxfSourceIntMatches(*plotRaw, i, 1)) return false;
+        } else {
+          const std::string value = i == 2 ? "AcDbDictionary" : i == 4 ? "Normal" : "AcDbDictionaryWithDefault";
+          if (!dxfSourceTextMatches(*plotRaw, i, value)) return false;
+        }
+      }
+      if (placeholderRaw->groups[0].code() != 5 || placeholderRaw->groups[1].code() != 330 ||
+          !dxfSourceHandleMatches(*placeholderRaw, 0, placeholderRaw->handle) ||
+          !dxfSourceHandleMatches(*placeholderRaw, 1, plotHandle)) return false;
+    }
+    for (const auto &material : metadata.materials())
+      if (!material.requiresRawDxfReplay || !sparseDxfMaterialSourceMatches(metadata, material) ||
+          !sparseDxfMaterialDictionarySourcesMatch(metadata, material) ||
+          !sparseDxfMaterialTargetsMatch(metadata, material)) return false;
+    return true;
+  };
+#endif
   if (std::any_of(materials.cbegin(), materials.cend(), [](const auto &material) {
         return material.requiresRawDxfReplay || material.rawDxfSource ||
                material.rawDxfSourceConflict;
       })) {
-    // Do not let a partial raw-only object fall back to a typed writer.
-    // Raw graph replay needs its own checked admission before it is enabled.
+    // Raw-only objects may only use the retained graph under explicit opt-in.
 #ifdef LIBRECAD_SYSTEM_LIBDXFRW
     std::size_t unresolved = 0;
     try {
@@ -13422,7 +13612,14 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
                !sparseDxfMaterialTargetsMatch(g.dwgAdvancedMetadata(), material) ||
                !sparseDxfMaterialReferencesMatch(g)))))
           ++unresolved;
-      m_writeLeftOut.emplace(
+#if defined(LIBDXFRW_HAS_DXF_STAGED_RAW_OBJECT_INSPECTOR) && defined(LIBDXFRW_HAS_DXF_STAGED_LAYER_MATERIAL_INSPECTOR) && \
+    defined(LIBDXFRW_HAS_DXF_STAGED_HEADER_MATERIAL_INSPECTOR) && defined(LIBDXFRW_HAS_DXF_STAGED_ROOT_ENTRY_INSPECTOR) && \
+    defined(LIBDXFRW_HAS_DXF_STAGED_ENTITY_MATERIAL_INSPECTOR) && defined(LIBDXFRW_HAS_DXF_STAGED_DICTIONARY_INSPECTOR) && defined(LIBDXFRW_HAS_DXF_DEFAULT_PLOT_PLACEHOLDER_HANDLE) && defined(LIBDXFRW_HAS_DXF_HEADER_MATERIAL_SOURCE_HANDLER)
+      const auto *policy = dynamic_cast<const DRW_DxfSparseMaterialRawPolicy *>(this);
+      admittedRawMaterials = !unresolved && policy && policy->wantsDxfSparseMaterialRawCapture() &&
+                             rawMaterialGraphMatches();
+#endif
+      if (!admittedRawMaterials) m_writeLeftOut.emplace(
           unresolved ? "MATERIAL raw source missing, changed or unverified"
                      : "MATERIAL raw-only graph requires qualification",
           unresolved ? unresolved : 1u);
@@ -13430,10 +13627,12 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
       // Comparison or reporting failure cannot authorize replay.
     }
 #endif
+    if (!admittedRawMaterials) {
     RS_DEBUG->print(RS_Debug::D_WARNING,
                     "RS_FilterDXFRW: cannot export an incomplete raw-only MATERIAL graph");
     m_writeFailed = true;
     return false;
+    }
   }
   // What becomes of each block attribute's text is the same for every
   // callback of this export, the DWG handle pre-pass included.
@@ -13476,6 +13675,7 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
   };
   DRW::Version dwgVer = dwgVersionForFormat(type);
   if (dwgVer != DRW::UNKNOWNV) {
+    if (admittedRawMaterials) return false;
     switch (dwgVer) {
     case DRW::AC1015:
       m_version = 1015;
@@ -13945,6 +14145,11 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
     m_exactColor = true;
   }
   m_dxfExportVersion = exportVersion;
+  if (admittedRawMaterials) {
+    for (const auto &material : materials)
+      if (!material.rawDxfSource || material.rawDxfSource->m_version != exportVersion ||
+          !material.rawDxfSource->hasRawValues) return false;
+  }
   // A modeled tolerance group must not be emitted beside an ambiguous
   // retained group. Reject before the DXF writer opens the destination; the
   // bundled codec does not enforce this group uniqueness itself.
@@ -14586,6 +14791,17 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
 #endif
       std::set<std::uint32_t> selectedMaterials;
       bool boundedAudit = true;
+#if defined(LIBDXFRW_HAS_DXF_STAGED_HEADER_MATERIAL_INSPECTOR) && defined(LIBDXFRW_HAS_DXF_STAGED_ROOT_ENTRY_INSPECTOR) && defined(LIBDXFRW_HAS_DXF_STAGED_ENTITY_MATERIAL_INSPECTOR) && defined(LIBDXFRW_HAS_DXF_STAGED_DICTIONARY_INSPECTOR) && defined(LIBDXFRW_HAS_DXF_DEFAULT_PLOT_PLACEHOLDER_HANDLE) && defined(LIBDXFRW_HAS_DXF_HEADER_MATERIAL_SOURCE_HANDLER)
+      if (admittedRawMaterials) {
+        if (metadata.materials().size() > 4096u) return false;
+        for (const auto &material : metadata.materials()) {
+          if (!hasDxfLayerMaterialCarrier(metadata, m_dxfEmittedObjectHandles,
+                                          sourceRootHandle, rootEntryName,
+                                          exportVersion, material.handle)) return false;
+          selectedMaterials.insert(material.handle);
+        }
+      }
+#endif
 #ifdef LIBDXFRW_HAS_DXF_STAGED_ENTITY_MATERIAL_INSPECTOR
       struct MaterialEntityReference {
         std::uint32_t source, target;
@@ -14715,12 +14931,34 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
           selectedObjects.insert(dictionary->handle);
           for (const auto &entry : dictionary->entries) selectedObjects.insert(entry.handle);
         }
+#if defined(LIBDXFRW_HAS_DXF_STAGED_HEADER_MATERIAL_INSPECTOR) && defined(LIBDXFRW_HAS_DXF_STAGED_ROOT_ENTRY_INSPECTOR) && defined(LIBDXFRW_HAS_DXF_STAGED_ENTITY_MATERIAL_INSPECTOR) && defined(LIBDXFRW_HAS_DXF_STAGED_DICTIONARY_INSPECTOR) && defined(LIBDXFRW_HAS_DXF_DEFAULT_PLOT_PLACEHOLDER_HANDLE) && defined(LIBDXFRW_HAS_DXF_HEADER_MATERIAL_SOURCE_HANDLER)
+        const bool sourceHasCompanions = admittedRawMaterials &&
+            std::any_of(metadata.dictionaries().begin(), metadata.dictionaries().end(),
+              [&](const auto &dictionary) { return dictionary.handle == sourceRootHandle && dictionary.entries.size() == 3u; });
+        std::uint32_t sourcePlot = 0u, sourcePlaceholder = 0u;
+        if (sourceHasCompanions) {
+          for (const auto &dictionary : metadata.dictionaries())
+            if (dictionary.handle == sourceRootHandle)
+              for (const auto &entry : dictionary.entries)
+                if (normalizeDwgTableName(entry.name) == "ACAD_PLOTSTYLENAME") sourcePlot = entry.handle;
+          for (const auto &plot : metadata.dictionariesWithDefault())
+            if (plot.handle == sourcePlot) sourcePlaceholder = plot.defaultEntryHandle;
+          if (!sourcePlot || !sourcePlaceholder) return false;
+          selectedObjects.insert(sourcePlot);
+          selectedObjects.insert(sourcePlaceholder);
+        }
+#endif
         struct StagedMaterialAudit {
           std::vector<DRW_RawDxfObject> objects;
           std::vector<dxfRW::DxfLayerMaterialReference> layers;
           std::vector<RS_Layer::ImportedRecordId> identities;
           std::map<std::uint32_t, std::string> descriptions;
           bool tablesSeen = false, objectsSeen = false;
+#if defined(LIBDXFRW_HAS_DXF_STAGED_HEADER_MATERIAL_INSPECTOR) && defined(LIBDXFRW_HAS_DXF_STAGED_ROOT_ENTRY_INSPECTOR) && defined(LIBDXFRW_HAS_DXF_STAGED_ENTITY_MATERIAL_INSPECTOR) && defined(LIBDXFRW_HAS_DXF_STAGED_DICTIONARY_INSPECTOR) && defined(LIBDXFRW_HAS_DXF_DEFAULT_PLOT_PLACEHOLDER_HANDLE) && defined(LIBDXFRW_HAS_DXF_HEADER_MATERIAL_SOURCE_HANDLER)
+          bool generatedCompanions = false;
+          bool rawPath = false;
+          std::uint32_t sourcePlot = 0u, sourcePlaceholder = 0u;
+#endif
 #ifdef LIBDXFRW_HAS_DXF_STAGED_ENTITY_MATERIAL_INSPECTOR
           std::vector<MaterialEntityReference> entities;
           std::vector<ImplicitLayerReference> implicitLayers;
@@ -14770,6 +15008,12 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
         {
           audit->layers = std::move(stagedLayers);
           audit->identities = std::move(stagedLayerIds);
+#if defined(LIBDXFRW_HAS_DXF_STAGED_HEADER_MATERIAL_INSPECTOR) && defined(LIBDXFRW_HAS_DXF_STAGED_ROOT_ENTRY_INSPECTOR) && defined(LIBDXFRW_HAS_DXF_STAGED_ENTITY_MATERIAL_INSPECTOR) && defined(LIBDXFRW_HAS_DXF_STAGED_DICTIONARY_INSPECTOR) && defined(LIBDXFRW_HAS_DXF_DEFAULT_PLOT_PLACEHOLDER_HANDLE) && defined(LIBDXFRW_HAS_DXF_HEADER_MATERIAL_SOURCE_HANDLER)
+          audit->generatedCompanions = sourceHasCompanions;
+          audit->rawPath = admittedRawMaterials;
+          audit->sourcePlot = sourcePlot;
+          audit->sourcePlaceholder = sourcePlaceholder;
+#endif
 #ifdef LIBDXFRW_HAS_DXF_STAGED_ENTITY_MATERIAL_INSPECTOR
           audit->entities = materialEntities;
           audit->implicitLayers = std::move(implicitLayers);
@@ -14801,6 +15045,9 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
           const auto layerCount = layers->count();
           const auto stable = [this, audit, &g, selectedMaterials, sourceRootHandle,
                                selectedRootNames, exportVersion, layerCount
+#if defined(LIBDXFRW_HAS_DXF_STAGED_HEADER_MATERIAL_INSPECTOR) && defined(LIBDXFRW_HAS_DXF_STAGED_ROOT_ENTRY_INSPECTOR) && defined(LIBDXFRW_HAS_DXF_STAGED_ENTITY_MATERIAL_INSPECTOR) && defined(LIBDXFRW_HAS_DXF_STAGED_DICTIONARY_INSPECTOR) && defined(LIBDXFRW_HAS_DXF_DEFAULT_PLOT_PLACEHOLDER_HANDLE) && defined(LIBDXFRW_HAS_DXF_HEADER_MATERIAL_SOURCE_HANDLER)
+                               , admittedRawMaterials, rawMaterialGraphMatches
+#endif
 #ifdef LIBDXFRW_HAS_DXF_STAGED_ENTITY_MATERIAL_INSPECTOR
                                , collectMaterialEntities
 #endif
@@ -14809,6 +15056,9 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
 #endif
                                ]() {
             const auto &current = g.dwgAdvancedMetadata();
+#if defined(LIBDXFRW_HAS_DXF_STAGED_HEADER_MATERIAL_INSPECTOR) && defined(LIBDXFRW_HAS_DXF_STAGED_ROOT_ENTRY_INSPECTOR) && defined(LIBDXFRW_HAS_DXF_STAGED_ENTITY_MATERIAL_INSPECTOR) && defined(LIBDXFRW_HAS_DXF_STAGED_DICTIONARY_INSPECTOR) && defined(LIBDXFRW_HAS_DXF_DEFAULT_PLOT_PLACEHOLDER_HANDLE) && defined(LIBDXFRW_HAS_DXF_HEADER_MATERIAL_SOURCE_HANDLER)
+            if (admittedRawMaterials && !rawMaterialGraphMatches()) return false;
+#endif
 #ifdef LIBDXFRW_HAS_DXF_STAGED_ENTITY_MATERIAL_INSPECTOR
             std::vector<MaterialEntityReference> entities;
             if (!collectMaterialEntities(entities) || entities.size() != audit->entities.size()) return false;
@@ -14925,13 +15175,48 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
           materialObjectsInspector = [this, audit, stable](const auto &view) {
                 if (!audit->tablesSeen || audit->objectsSeen || !stable()) return false;
                 std::vector<const DRW_RawDxfObject *> expected;
-                expected.reserve(audit->objects.size());
+                expected.reserve(audit->objects.size() + 2u);
                 for (const auto &source : audit->objects) expected.push_back(&source);
+#if defined(LIBDXFRW_HAS_DXF_STAGED_HEADER_MATERIAL_INSPECTOR) && defined(LIBDXFRW_HAS_DXF_STAGED_ROOT_ENTRY_INSPECTOR) && defined(LIBDXFRW_HAS_DXF_STAGED_ENTITY_MATERIAL_INSPECTOR) && defined(LIBDXFRW_HAS_DXF_STAGED_DICTIONARY_INSPECTOR) && defined(LIBDXFRW_HAS_DXF_DEFAULT_PLOT_PLACEHOLDER_HANDLE) && defined(LIBDXFRW_HAS_DXF_HEADER_MATERIAL_SOURCE_HANDLER)
+                DRW_RawDxfObject generatedPlot, generatedPlaceholder;
+                if (audit->rawPath && !audit->generatedCompanions) {
+                  const auto plot = m_dxfW->dxfWriteDefaultPlotStyleDictionaryHandle();
+                  const auto placeholder = m_dxfW->dxfWriteDefaultPlotStylePlaceholderHandle();
+                  if (!plot || !placeholder || plot == placeholder) return false;
+                  const auto plotText = m_dxfW->toHexStrHandle(plot);
+                  const auto placeholderText = m_dxfW->toHexStrHandle(placeholder);
+                  generatedPlot.name = "ACDBDICTIONARYWDFLT"; generatedPlot.handle = plot;
+                  generatedPlot.parentHandle = 0xCu; generatedPlot.m_version = view.version;
+                  generatedPlot.groups = {DRW_Variant(5, plotText), DRW_Variant(330, "C"),
+                    DRW_Variant(100, "AcDbDictionary"), DRW_Variant(281, 1),
+                    DRW_Variant(3, "Normal"), DRW_Variant(350, placeholderText),
+                    DRW_Variant(100, "AcDbDictionaryWithDefault"), DRW_Variant(340, placeholderText)};
+                  generatedPlaceholder.name = "ACDBPLACEHOLDER"; generatedPlaceholder.handle = placeholder;
+                  generatedPlaceholder.parentHandle = plot; generatedPlaceholder.m_version = view.version;
+                  generatedPlaceholder.groups = {DRW_Variant(5, placeholderText), DRW_Variant(330, plotText)};
+                  expected.push_back(&generatedPlot);
+                  expected.push_back(&generatedPlaceholder);
+                }
+#endif
                 audit->objectsSeen = m_dxfW->inspectDxfRawObjectRecords(view, expected);
 #ifdef LIBDXFRW_HAS_DXF_STAGED_ROOT_ENTRY_INSPECTOR
                 if (audit->objectsSeen && audit->inspectRoot)
                   audit->objectsSeen = m_dxfW->inspectDxfRootDictionaryEntry(
                       view, audit->rootName, audit->rootTarget, 350);
+#endif
+#if defined(LIBDXFRW_HAS_DXF_STAGED_HEADER_MATERIAL_INSPECTOR) && defined(LIBDXFRW_HAS_DXF_STAGED_ROOT_ENTRY_INSPECTOR) && defined(LIBDXFRW_HAS_DXF_STAGED_ENTITY_MATERIAL_INSPECTOR) && defined(LIBDXFRW_HAS_DXF_STAGED_DICTIONARY_INSPECTOR) && defined(LIBDXFRW_HAS_DXF_DEFAULT_PLOT_PLACEHOLDER_HANDLE) && defined(LIBDXFRW_HAS_DXF_HEADER_MATERIAL_SOURCE_HANDLER)
+                if (audit->objectsSeen && audit->rawPath) {
+                  const auto plot = audit->generatedCompanions
+                      ? m_dxfW->remapHandle(audit->sourcePlot)
+                      : m_dxfW->dxfWriteDefaultPlotStyleDictionaryHandle();
+                  if (!plot) return false;
+                  const std::vector<dxfRW::DxfDictionaryOutputExpectation> rootEntries{
+                      {"ACAD_GROUP", 0xDu, 350}, {"ACAD_PLOTSTYLENAME", plot, 350},
+                      {audit->rootName, m_dxfW->remapHandle(audit->rootTarget), 350}};
+                  audit->objectsSeen = audit->inspectRoot &&
+                      m_dxfW->inspectDxfDictionaryOutput(view, 0xCu, 0u, 0, 1, rootEntries) &&
+                      m_dxfW->inspectDxfDictionaryOutput(view, 0xDu, 0xCu, 0, 1, {});
+                }
 #endif
                 return audit->objectsSeen;
               };

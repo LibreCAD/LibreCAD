@@ -1570,6 +1570,175 @@ TEST_CASE("System codec refuses an incomplete raw-only material after metadata s
   std::filesystem::remove(output);
 }
 
+#if defined(LIBDXFRW_HAS_DXF_STAGED_ENTITY_MATERIAL_INSPECTOR) && \
+    defined(LIBDXFRW_HAS_DXF_HEADER_MATERIAL_SOURCE_HANDLER) && \
+    defined(LIBDXFRW_HAS_DXF_DEFAULT_PLOT_PLACEHOLDER_HANDLE)
+TEST_CASE("Opt-in system codec replays an unchanged sparse material graph",
+          "[system-codec][dxf][material][transaction]") {
+  ensureSettings();
+  const auto source = tmpFile("system_sparse_graph_replay_source.dxf");
+  const auto output = tmpFile("system_sparse_graph_replay_output.dxf");
+  const std::string sourceHandle = GENERATE(std::string("A1"), std::string("14"));
+  const bool withSibling = GENERATE(false, true);
+  std::string input =
+      "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1021\n9\n$CMATERIAL\n347\nA1\n0\nENDSEC\n"
+      "0\nSECTION\n2\nTABLES\n0\nTABLE\n2\nLAYER\n70\n1\n"
+      "0\nLAYER\n5\n30\n100\nAcDbSymbolTableRecord\n100\nAcDbLayerTableRecord\n"
+      "2\nRAWTEST\n70\n0\n62\n7\n6\nCONTINUOUS\n347\nA1\n0\nENDTAB\n0\nENDSEC\n"
+      "0\nSECTION\n2\nENTITIES\n0\nLINE\n5\nA2\n100\nAcDbEntity\n8\nRAWTEST\n347\nA1\n"
+      "100\nAcDbLine\n10\n0\n20\n0\n30\n0\n11\n10\n21\n0\n31\n0\n0\nENDSEC\n"
+      "0\nSECTION\n2\nOBJECTS\n0\nDICTIONARY\n5\nC\n330\n0\n"
+      "100\nAcDbDictionary\n281\n1\n3\nACAD_MATERIAL\n350\nA0\n"
+      "0\nDICTIONARY\n5\nA0\n330\nC\n100\nAcDbDictionary\n281\n1\n"
+      "3\nPlainMat\n350\nA1\n0\nMATERIAL\n5\nA1\n330\nA0\n"
+      "100\nAcDbMaterial\n1\nPlainMat\n94\n63\n0\nENDSEC\n0\nEOF\n";
+  if (withSibling) {
+    const std::string entry = "3\nPlainMat\n350\nA1\n";
+    const auto at = input.find(entry);
+    REQUIRE(at != std::string::npos);
+    input.insert(at + entry.size(), "3\nSibling\n350\nA3\n");
+    const auto end = input.rfind("0\nENDSEC\n0\nEOF\n");
+    REQUIRE(end != std::string::npos);
+    input.insert(end, "0\nMATERIAL\n5\nA3\n330\nA0\n100\nAcDbMaterial\n1\nSibling\n94\n127\n");
+  }
+  if (sourceHandle != "A1") {
+    const std::string replacement = "\n" + sourceHandle + "\n";
+    for (std::size_t at = 0; (at = input.find("\nA1\n", at)) != std::string::npos;) {
+      input.replace(at, 4u, replacement);
+      at += replacement.size();
+    }
+  }
+  writeText(source, input);
+  struct OptInFilter : RS_FilterDXFRW, DRW_DxfSparseMaterialRawPolicy {
+    std::function<void()> afterObjects;
+    bool wantsDxfSparseMaterialRawCapture() const noexcept override { return true; }
+    void writeObjects() override {
+      RS_FilterDXFRW::writeObjects();
+      if (afterObjects) afterObjects();
+    }
+  } filter;
+  RS_Graphic graphic;
+  REQUIRE(filter.fileImport(graphic, QString::fromStdString(source), RS2::FormatDXFRW));
+  REQUIRE(graphic.dwgAdvancedMetadata().materials().size() == (withSibling ? 2u : 1u));
+  REQUIRE(graphic.dwgAdvancedMetadata().materials().front().requiresRawDxfReplay);
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  const std::vector<std::string> expectedFlags = withSibling ? std::vector<std::string>{"63", "127"}
+                                                              : std::vector<std::string>{"63"};
+  CHECK(recordGroupValues(output, "MATERIAL", "94") == expectedFlags);
+  const auto handles = recordGroupValues(output, "MATERIAL", "5");
+  REQUIRE(handles.size() == (withSibling ? 2u : 1u));
+  if (sourceHandle == "14") CHECK(handles.front() != sourceHandle);
+  CHECK(recordGroupValues(output, "LINE", "347") == std::vector<std::string>{handles.front()});
+  const auto layer = recordGroupsWithValue(output, "LAYER", "2", "RAWTEST");
+  CHECK(std::count(layer.begin(), layer.end(), std::make_pair(std::string("347"), handles.front())) == 1);
+  RS_Graphic reread;
+  REQUIRE(filter.fileImport(reread, QString::fromStdString(output), RS2::FormatDXFRW));
+  const auto variables = reread.getVariableDict();
+  const auto current = variables.constFind(QStringLiteral("$CMATERIAL"));
+  REQUIRE(current != variables.cend());
+  CHECK(current->getString().toStdString() == handles.front());
+  const auto resaved = tmpFile("system_sparse_graph_resave_output.dxf");
+  const std::string sentinel = "preserve sparse material destination\n";
+  // The generated output has a LAYER plot-style edge. Until that edge has
+  // source and staged-output proof, a second replay must fail atomically.
+  writeText(resaved, sentinel);
+  CHECK_FALSE(filter.fileExport(reread, QString::fromStdString(resaved), RS2::FormatDXFRW));
+  { std::ifstream retained(resaved, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+  const auto expectRefusal = [&](RS2::FormatType format) {
+    writeText(output, sentinel);
+    CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(output), format));
+    std::ifstream retained(output, std::ios::binary);
+    CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel);
+  };
+  {
+    std::string unsafe = input;
+    const auto at = unsafe.find("6\nCONTINUOUS\n347\n");
+    REQUIRE(at != std::string::npos);
+    unsafe.insert(at, "390\nFE\n");
+    const auto unsafeSource = tmpFile("system_sparse_graph_unqualified_plot_style.dxf");
+    writeText(unsafeSource, unsafe);
+    RS_Graphic unsafeGraphic;
+    OptInFilter unsafeFilter;
+    REQUIRE(unsafeFilter.fileImport(unsafeGraphic, QString::fromStdString(unsafeSource), RS2::FormatDXFRW));
+    writeText(output, sentinel);
+    CHECK_FALSE(unsafeFilter.fileExport(unsafeGraphic, QString::fromStdString(output), RS2::FormatDXFRW));
+    { std::ifstream retained(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+    std::filesystem::remove(unsafeSource);
+  }
+  expectRefusal(RS2::FormatDXFRW2010);
+  expectRefusal(RS2::FormatDWG2010);
+  {
+    RS_FilterDXFRW defaultFilter;
+    writeText(output, sentinel);
+    CHECK_FALSE(defaultFilter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+    std::ifstream retained(output, std::ios::binary);
+    CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel);
+  }
+  auto &materials = const_cast<std::vector<LC_DwgAdvancedMetadata::MaterialRecord>&>(
+      graphic.dwgAdvancedMetadata().materials());
+  const auto description = materials.front().description;
+  filter.afterObjects = [&] { materials.front().description = "late edit"; };
+  expectRefusal(RS2::FormatDXFRW);
+  materials.front().description = description;
+  filter.afterObjects = {};
+  auto &raw = const_cast<std::vector<DRW_RawDxfObject>&>(graphic.dwgAdvancedMetadata().rawDxfObjects());
+  const auto carrier = std::find_if(raw.begin(), raw.end(), [](const auto &record) { return record.name == "MATERIAL"; });
+  REQUIRE(carrier != raw.end());
+  const auto tail = std::find_if(carrier->groups.begin(), carrier->groups.end(),
+                                 [](const auto &group) { return group.code() == 94; });
+  REQUIRE(tail != carrier->groups.end());
+  const auto savedTail = *tail;
+  tail->addInt(94, 64);
+  expectRefusal(RS2::FormatDXFRW);
+  *tail = savedTail;
+  filter.afterObjects = [&] { tail->addInt(94, 64); };
+  expectRefusal(RS2::FormatDXFRW);
+  *tail = savedTail;
+  filter.afterObjects = {};
+  auto *line = graphic.firstEntity();
+  REQUIRE(line != nullptr);
+  const auto originalReference = line->materialHandle();
+  filter.afterObjects = [&] { line->setMaterialHandle(0u); };
+  expectRefusal(RS2::FormatDXFRW);
+  line->setMaterialHandle(originalReference);
+  filter.afterObjects = {};
+  const auto savedSource = materials.front().rawDxfSource;
+  materials.front().rawDxfSource.reset();
+  expectRefusal(RS2::FormatDXFRW);
+  materials.front().rawDxfSource = savedSource;
+  if (withSibling) {
+    const auto sibling = std::find_if(raw.begin(), raw.end(), [](const auto &record) {
+      return record.name == "MATERIAL" && record.handle == 0xA3u;
+    });
+    REQUIRE(sibling != raw.end());
+    const auto saved = *sibling;
+    raw.erase(sibling);
+    expectRefusal(RS2::FormatDXFRW);
+    raw.push_back(saved);
+  }
+  DRW_RawDxfObject unrelated;
+  unrelated.name = "XRECORD";
+  unrelated.handle = 0xF200u;
+  unrelated.parentHandle = 0xA0u;
+  unrelated.m_version = DRW::AC1021;
+  raw.push_back(unrelated);
+  expectRefusal(RS2::FormatDXFRW);
+  raw.pop_back();
+  DRW_Material orphan;
+  orphan.handle = 0xF100u;
+  orphan.m_name = "Orphan";
+  graphic.dwgAdvancedMetadata().addMaterial(orphan);
+  expectRefusal(RS2::FormatDXFRW);
+  materials.pop_back();
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  if (const char *copy = std::getenv("LIBRECAD_KEEP_SPARSE_MATERIAL_OUTPUT"))
+    std::filesystem::copy_file(output, copy, std::filesystem::copy_options::overwrite_existing);
+  std::filesystem::remove(source);
+  std::filesystem::remove(output);
+  std::filesystem::remove(resaved);
+}
+#endif
+
 TEST_CASE("System codec gates ambiguous AC1024 default material",
           "[system-codec][dxf][material][transaction]") {
   ensureSettings();
@@ -1697,6 +1866,35 @@ TEST_CASE("System codec gates ambiguous AC1024 default material",
   CHECK(graphMetadata.dxfMaterialDictionarySource()->handle == 0xEu);
   REQUIRE(graphMetadata.materials().size() == 1u);
   CHECK(graphMetadata.materials().front().rawDxfSource);
+#ifdef LIBDXFRW_HAS_DXF_DEFAULT_PLOT_PLACEHOLDER_HANDLE
+  const auto rawReplay = tmpFile("system_ezdxf_material_graph_replay.dxf");
+  REQUIRE(graphImporter.fileExport(graphGraphic, QString::fromStdString(rawReplay), RS2::FormatDXFRW2010));
+  CHECK(recordGroupValues(rawReplay, "MATERIAL", "94") == std::vector<std::string>{"63"});
+  RS_Graphic replayed;
+  OptInFilter replayFilter;
+  REQUIRE(replayFilter.fileImport(replayed, QString::fromStdString(rawReplay), RS2::FormatDXFRW));
+  writeText(output, sentinel);
+  CHECK_FALSE(replayFilter.fileExport(replayed, QString::fromStdString(output), RS2::FormatDXFRW2010));
+  { std::ifstream in(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(in), {}) == sentinel); }
+  auto &replayedRaw = const_cast<std::vector<DRW_RawDxfObject>&>(replayed.dwgAdvancedMetadata().rawDxfObjects());
+  const auto plot = std::find_if(replayedRaw.begin(), replayedRaw.end(), [](const auto &record) {
+    return record.name == "ACDBDICTIONARYWDFLT";
+  });
+  REQUIRE(plot != replayedRaw.end());
+  const auto cloning = std::find_if(plot->groups.begin(), plot->groups.end(),
+                                    [](const auto &group) { return group.code() == 281; });
+  REQUIRE(cloning != plot->groups.end());
+  const auto originalPlotCloning = *cloning;
+  cloning->addInt(281, 2);
+  writeText(output, sentinel);
+  CHECK_FALSE(replayFilter.fileExport(replayed, QString::fromStdString(output), RS2::FormatDXFRW2010));
+  { std::ifstream in(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(in), {}) == sentinel); }
+  *cloning = originalPlotCloning;
+  if (const char *copy = std::getenv("LIBRECAD_KEEP_SPARSE_2010_OUTPUT"))
+    std::filesystem::copy_file(rawReplay, copy, std::filesystem::copy_options::overwrite_existing);
+  std::filesystem::remove(rawReplay);
+  writeText(output, sentinel);
+#endif
 #ifdef LIBDXFRW_HAS_DXF_HEADER_MATERIAL_SOURCE_HANDLER
   const auto *physicalHeader = graphMetadata.dxfMaterialHeaderPhysicalSource();
   REQUIRE(physicalHeader);
@@ -1733,6 +1931,9 @@ TEST_CASE("System codec gates ambiguous AC1024 default material",
   CHECK_FALSE(bareHeaderGraphic.dwgAdvancedMetadata().dxfMaterialHeaderPhysicalSource()->dollarName);
   CHECK_FALSE(exporter.fileExport(bareHeaderGraphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
   CHECK(exporter.exportReport().contains(QStringLiteral("raw-only graph requires qualification")));
+  writeText(output, sentinel);
+  CHECK_FALSE(bareHeaderImporter.fileExport(bareHeaderGraphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+  { std::ifstream retained(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
   std::filesystem::remove(bareHeaderSource);
 #endif
   CHECK_FALSE(exporter.fileExport(graphGraphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
