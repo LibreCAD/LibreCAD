@@ -2323,6 +2323,145 @@ TEST_CASE("Ordinary sparse material saves simple points", "[system-codec][dxf][m
   std::filesystem::remove(source); std::filesystem::remove(output); std::filesystem::remove(resaved);
 }
 
+TEST_CASE("Ordinary sparse material saves straight lightweight polylines",
+          "[system-codec][dxf][material][transaction][polyline]") {
+  ensureSettings();
+  const auto source = tmpFile("system_sparse_lwpolyline_source.dxf");
+  const auto output = tmpFile("system_sparse_lwpolyline_output.dxf");
+  const std::string input =
+      "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1021\n9\n$CMATERIAL\n347\nA1\n0\nENDSEC\n"
+      "0\nSECTION\n2\nTABLES\n0\nTABLE\n2\nLAYER\n70\n1\n"
+      "0\nLAYER\n5\n30\n100\nAcDbSymbolTableRecord\n100\nAcDbLayerTableRecord\n"
+      "2\nRAWTEST\n70\n0\n62\n7\n6\nCONTINUOUS\n347\nA1\n0\nENDTAB\n0\nENDSEC\n"
+      "0\nSECTION\n2\nENTITIES\n0\nLWPOLYLINE\n5\nA5\n100\nAcDbEntity\n8\nRAWTEST\n347\nA1\n"
+      "100\nAcDbPolyline\n90\n3\n70\n0\n10\n1\n20\n2\n10\n4\n20\n6\n10\n8\n20\n3\n"
+      "0\nENDSEC\n0\nSECTION\n2\nOBJECTS\n0\nDICTIONARY\n5\nC\n330\n0\n"
+      "100\nAcDbDictionary\n281\n1\n3\nACAD_MATERIAL\n350\nA0\n"
+      "0\nDICTIONARY\n5\nA0\n330\nC\n100\nAcDbDictionary\n281\n1\n"
+      "3\nPlainMat\n350\nA1\n0\nMATERIAL\n5\nA1\n330\nA0\n"
+      "100\nAcDbMaterial\n1\nPlainMat\n94\n63\n0\nENDSEC\n0\nEOF\n";
+  writeText(source, input);
+  RS_FilterDXFRW filter; RS_Graphic graphic;
+  REQUIRE(filter.fileImport(graphic, QString::fromStdString(source), RS2::FormatDXFRW));
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  CHECK(countRecords(output, "LWPOLYLINE") == 1);
+  CHECK(recordGroupValues(output, "LWPOLYLINE", "10") == std::vector<std::string>{"1", "4", "8"});
+  CHECK(recordGroupValues(output, "LWPOLYLINE", "20") == std::vector<std::string>{"2", "6", "3"});
+  const auto material = recordGroupValues(output, "MATERIAL", "5"); REQUIRE(material.size() == 1u);
+  CHECK(recordGroupValues(output, "LWPOLYLINE", "347") == std::vector<std::string>{material.front()});
+  RS_Polyline *polyline = nullptr;
+  for (RS_Entity *entity : graphic)
+    if (entity && entity->sourceHandle() == 0xA5u && entity->rtti() == RS2::EntityPolyline)
+      polyline = static_cast<RS_Polyline *>(entity);
+  REQUIRE(polyline);
+  polyline->move(RS_Vector(10, 20));
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  CHECK(recordGroupValues(output, "LWPOLYLINE", "10") == std::vector<std::string>{"11", "14", "18"});
+  CHECK(recordGroupValues(output, "LWPOLYLINE", "20") == std::vector<std::string>{"22", "26", "23"});
+  RS_Graphic reopened;
+  REQUIRE(filter.fileImport(reopened, QString::fromStdString(output), RS2::FormatDXFRW));
+  const auto resaved = tmpFile("system_sparse_lwpolyline_resaved.dxf");
+  REQUIRE(filter.fileExport(reopened, QString::fromStdString(resaved), RS2::FormatDXFRW));
+  CHECK(recordGroupValues(resaved, "LWPOLYLINE", "10") == std::vector<std::string>{"11", "14", "18"});
+  if (const char *copy = std::getenv("LIBRECAD_KEEP_ORDINARY_SPARSE_LWPOLYLINE"))
+    std::filesystem::copy_file(resaved, copy, std::filesystem::copy_options::overwrite_existing);
+
+  const std::string sentinel = "preserve sparse polyline destination\n";
+  RS_Entity *segment = polyline->entityAt(0); REQUIRE(segment);
+  segment->setMaterialHandle(0xA1u);
+  writeText(output, sentinel);
+  CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  { std::ifstream retained(output, std::ios::binary);
+    CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+  segment->setMaterialHandle(0);
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  const std::vector<std::pair<std::string, std::string>> unsupported = {
+      {"90\n3\n70\n0\n", "90\n3\n70\n1\n"},
+      {"20\n2\n10\n4\n", "20\n2\n42\n0.5\n10\n4\n"},
+      {"90\n3\n70\n0\n", "90\n3\n70\n0\n38\n2\n"},
+      {"90\n3\n70\n0\n", "90\n3\n70\n0\n43\n1\n"},
+      {"20\n2\n10\n4\n", "20\n2\n40\n1\n10\n4\n"},
+      {"90\n3\n70\n0\n", "90\n4\n70\n0\n"}};
+  for (const auto &change : unsupported) {
+    auto bad = input;
+    const auto at = bad.find(change.first); REQUIRE(at != std::string::npos);
+    bad.replace(at, change.first.size(), change.second);
+    writeText(source, bad); writeText(output, sentinel);
+    RS_Graphic rejected;
+    if (filter.fileImport(rejected, QString::fromStdString(source), RS2::FormatDXFRW))
+      CHECK_FALSE(filter.fileExport(rejected, QString::fromStdString(output), RS2::FormatDXFRW));
+    { std::ifstream retained(output, std::ios::binary);
+      CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  }
+
+  const std::string originalVertices = "90\n3\n70\n0\n10\n1\n20\n2\n10\n4\n20\n6\n10\n8\n20\n3\n";
+  for (const int count : {128, 129}) {
+    std::string geometry = "90\n" + std::to_string(count) + "\n70\n0\n";
+    for (int i = 0; i < count; ++i)
+      geometry += "10\n" + std::to_string(i) + "\n20\n" + std::to_string(i % 7) + "\n";
+    auto bounded = input;
+    const auto at = bounded.find(originalVertices); REQUIRE(at != std::string::npos);
+    bounded.replace(at, originalVertices.size(), geometry);
+    writeText(source, bounded); writeText(output, sentinel);
+    RS_Graphic candidate;
+    REQUIRE(filter.fileImport(candidate, QString::fromStdString(source), RS2::FormatDXFRW));
+    if (count == 128) {
+      REQUIRE(filter.fileExport(candidate, QString::fromStdString(output), RS2::FormatDXFRW));
+      CHECK(recordGroupValues(output, "LWPOLYLINE", "10").size() == 128u);
+    } else {
+      CHECK_FALSE(filter.fileExport(candidate, QString::fromStdString(output), RS2::FormatDXFRW));
+      { std::ifstream retained(output, std::ios::binary);
+        CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+      REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+    }
+  }
+
+  auto two = input;
+  const auto boundary = two.find("0\nENDSEC\n0\nSECTION\n2\nOBJECTS\n");
+  REQUIRE(boundary != std::string::npos);
+  two.insert(boundary, "0\nLWPOLYLINE\n5\nA6\n100\nAcDbEntity\n8\nRAWTEST\n"
+                       "100\nAcDbPolyline\n90\n2\n70\n0\n10\n2\n20\n4\n10\n3\n20\n5\n");
+  struct PolylineDeliveryProbe : RS_FilterDXFRW {
+    std::uint32_t suppress = 0;
+    bool alterTyped = false, alterPhysical = false;
+    void addLWPolyline(const DRW_LWPolyline &data) override {
+      if (data.handle == suppress) return;
+      DRW_LWPolyline changed = data;
+      if (alterTyped && data.handle == 0xA5u && !changed.vertlist.empty()) {
+        changed.vertlist[0] = std::make_shared<DRW_Vertex2D>(*changed.vertlist[0]);
+        changed.vertlist[0]->x += 1.0;
+      }
+      RS_FilterDXFRW::addLWPolyline(changed);
+    }
+    void addDxfEntitiesSource(const DRW_DxfEntitiesSource &data) override {
+      auto copy = data;
+      if (alterPhysical) for (auto &record : copy.records)
+        if (record.name == "LWPOLYLINE") for (std::size_t i = 0; i < record.groups.size(); ++i)
+          if (record.groups[i].code() == 10) { record.rawValues[i] = "999"; break; }
+      RS_FilterDXFRW::addDxfEntitiesSource(copy);
+    }
+  } probe;
+  writeText(source, two);
+  for (int mode = 0; mode != 4; ++mode) {
+    probe.suppress = mode == 0 ? 0xA5u : mode == 1 ? 0xA6u : 0;
+    probe.alterTyped = mode == 2; probe.alterPhysical = mode == 3;
+    RS_Graphic rejected;
+    REQUIRE(probe.fileImport(rejected, QString::fromStdString(source), RS2::FormatDXFRW));
+    writeText(output, sentinel);
+    CHECK_FALSE(probe.fileExport(rejected, QString::fromStdString(output), RS2::FormatDXFRW));
+    { std::ifstream retained(output, std::ios::binary);
+      CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+    probe.suppress = 0; probe.alterTyped = probe.alterPhysical = false;
+    RS_Graphic retry;
+    REQUIRE(probe.fileImport(retry, QString::fromStdString(source), RS2::FormatDXFRW));
+    REQUIRE(probe.fileExport(retry, QString::fromStdString(output), RS2::FormatDXFRW));
+    CHECK(countRecords(output, "LWPOLYLINE") == 2);
+  }
+  std::filesystem::remove(resaved);
+  std::filesystem::remove(source); std::filesystem::remove(output);
+}
+
 TEST_CASE("Ordinary sparse material saves simple circles arcs and lines",
           "[system-codec][dxf][material][transaction][circle][arc]") {
   ensureSettings();
