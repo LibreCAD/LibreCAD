@@ -3778,6 +3778,8 @@ bool dxfRW::writePolyline(DRW_Polyline *ent) {
                 writer->writeInt32(91, v->identifier);
             }
         }
+        if (!v->extData.empty() && !writeExtData(v->extData))
+            return false;
     }
     if (!writeSequenceEnd(*ent))
         return false;
