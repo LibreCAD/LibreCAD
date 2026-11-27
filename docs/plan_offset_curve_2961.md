@@ -23,7 +23,7 @@ USA.
 -->
 # Editable Offset Curves: Closeout Plan (#2961)
 
-Updated: 2026-11-26. Scope: **LibreCAD** and [PR #3193](https://github.com/LibreCAD/LibreCAD/pull/3193).
+Updated: 2026-11-27. Scope: **LibreCAD** and [PR #3193](https://github.com/LibreCAD/LibreCAD/pull/3193).
 
 ## Baseline and Completeness
 
@@ -136,8 +136,8 @@ the dependencies for **3 and 4** in parallel. **5** follows the acceptance work.
    profiles do not replace the shared-process run.
 2. The six timed-out generators now have complete isolated profile and
    unpinned single-case receipts below. The eight affected cases also passed
-   together in declaration and seeded random order. Run the broader 104-case
-   order lane; these eight cases alone do not qualify it.
+   together in declaration and seeded random order. The broader 104-case lane
+   passed in declaration order; run it again in seeded random order.
 3. Where an existing selector cannot isolate every tuple, add a test-only
    profile selector to that case and register it in the existing profile
    runner. Preserve the unpinned test, use stable complete tuple identities,
@@ -477,6 +477,18 @@ the dependencies for **3 and 4** in parallel. **5** follows the acceptance work.
   `/private/tmp/offset-3193-trim-eight-rand-output.log`. These two orderings
   do not erase the intermittent failures or qualify the other 96 cases, leak
   detection or non-macOS behavior.
+- The full `[lc-offsetcurve][trim-action]` selector subsequently passed in
+  **declaration order: 594,788 assertions / 104 cases** on the same
+  source-equivalent macOS Debug ASan/UBSan binary and options, with all profile
+  and reproduction pins unset, a 30-second test-only worker wait, seed 3193,
+  stop-on-first-failure and an eight-hour test-only process bound. All 104
+  discovered case names appear in the duration report; eight additional names
+  are nested sections, not extra cases. The test and worker hashes match the
+  seam receipt, and neither retained output contains sanitizer diagnostics.
+  Temporary artifacts: `/private/tmp/offset-3193-trim-full-decl-report.txt` and
+  `/private/tmp/offset-3193-trim-full-decl-output.log`. This does not erase the
+  earlier intermittent failures or qualify full random order, leak detection,
+  other platforms or visible acceptance.
 - Test-only commit `ddad0c653` makes profile timeouts use the case runner's
   process-group cleanup and records test-binary SHA-256, change detection,
   bounds and hyperbola mode in new manifests. Three focused Python tests and
