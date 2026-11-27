@@ -173,6 +173,12 @@ the dependencies for **3 and 4** in parallel. **5** follows the acceptance work.
 
 ## Recent Evidence
 
+- PR head `217abd5e277ae7aecbb3a5d2b38b4a077f7c0644` completed CI with
+  **19 successful checks, 7 skipped, 0 failed**. The successful checks include
+  [Linux fast and Windows x64/ARM64 DWG/DXF verification](https://github.com/LibreCAD/LibreCAD/actions/runs/45943934164)
+  and [macOS packaging](https://github.com/LibreCAD/LibreCAD/actions/runs/45943934161/job/140324331776).
+  Later roadmap-only commits require their own exact-head CI; skipped jobs are
+  not passes and these results do not qualify signed or visible deployment.
 - On 2026-11-26, the source-equivalent macOS CMake Debug ASan/UBSan build
   ran the shared-process selector `[trim-worker-preview],[trim-worker-commit],
   [trim-worker-action-fault]` in declaration order and random order with seed
