@@ -1668,6 +1668,11 @@ TEST_CASE("Opt-in system codec replays an unchanged sparse material graph",
   writeText(source, input);
   struct OptInFilter : RS_FilterDXFRW {
     std::function<void()> afterObjects;
+    bool suppressUnmaterializedLine = false;
+    void addLine(const DRW_Line &line) override {
+      if (!suppressUnmaterializedLine || line.handle != 0xA5u)
+        RS_FilterDXFRW::addLine(line);
+    }
 #ifdef LIBDXFRW_HAS_DXF_PHYSICAL_IDENTITY_SOURCE_HANDLER
     std::function<void(DRW_DxfIdentitySource &)> mutateIdentity;
     void addDxfIdentitySource(const DRW_DxfIdentitySource &source) override {
@@ -1688,6 +1693,31 @@ TEST_CASE("Opt-in system codec replays an unchanged sparse material graph",
   REQUIRE(graphic.dwgAdvancedMetadata().materials().size() == (withSibling ? 2u : 1u));
   REQUIRE(graphic.dwgAdvancedMetadata().materials().front().requiresRawDxfReplay);
   REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  {
+    auto withSecondLine = input;
+    const auto end = withSecondLine.find("0\nENDSEC\n0\nSECTION\n2\nOBJECTS\n");
+    REQUIRE(end != std::string::npos);
+    withSecondLine.insert(end, "0\nLINE\n5\nA5\n100\nAcDbEntity\n8\nRAWTEST\n"
+                               "100\nAcDbLine\n10\n0\n20\n1\n11\n10\n21\n1\n");
+    writeText(source, withSecondLine);
+    OptInFilter deliveryFilter;
+    deliveryFilter.suppressUnmaterializedLine = true;
+    RS_Graphic missing;
+    REQUIRE(deliveryFilter.fileImport(missing, QString::fromStdString(source), RS2::FormatDXFRW));
+    const std::string unchanged = "preserve undelivered line destination\n";
+    writeText(output, unchanged);
+    CHECK_FALSE(deliveryFilter.fileExport(missing, QString::fromStdString(output), RS2::FormatDXFRW));
+    { std::ifstream retained(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == unchanged); }
+    deliveryFilter.suppressUnmaterializedLine = false;
+    RS_Graphic delivered;
+    REQUIRE(deliveryFilter.fileImport(delivered, QString::fromStdString(source), RS2::FormatDXFRW));
+    REQUIRE(deliveryFilter.fileExport(delivered, QString::fromStdString(output), RS2::FormatDXFRW));
+    CHECK(countRecords(output, "LINE") == 2);
+    if (const char *copy = std::getenv("LIBRECAD_KEEP_DELIVERED_MATERIAL_LINES"))
+      std::filesystem::copy_file(output, copy, std::filesystem::copy_options::overwrite_existing);
+    writeText(source, input);
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  }
   const std::vector<std::string> expectedFlags = withSibling ? std::vector<std::string>{"63", "127"}
                                                               : std::vector<std::string>{"63"};
   CHECK(recordGroupValues(output, "MATERIAL", "94") == expectedFlags);
@@ -1989,6 +2019,11 @@ TEST_CASE("Opt-in sparse material binds block entity source ownership",
       "3\nPlainMat\n350\nA1\n0\nMATERIAL\n5\nA1\n330\nA0\n100\nAcDbMaterial\n1\nPlainMat\n94\n63\n"
       "0\nENDSEC\n0\nEOF\n");
   struct OptInFilter : RS_FilterDXFRW {
+    bool suppressUnmaterializedLine = false;
+    void addLine(const DRW_Line &line) override {
+      if (!suppressUnmaterializedLine || line.handle != 0xA5u)
+        RS_FilterDXFRW::addLine(line);
+    }
 #ifdef LIBDXFRW_HAS_DXF_PHYSICAL_IDENTITY_SOURCE_HANDLER
     std::function<void(DRW_DxfIdentitySource &)> mutateIdentity;
     void addDxfIdentitySource(const DRW_DxfIdentitySource &source) override {
@@ -2029,6 +2064,29 @@ TEST_CASE("Opt-in sparse material binds block entity source ownership",
     REQUIRE(alteredFilter.fileExport(corrected, QString::fromStdString(output), RS2::FormatDXFRW));
   }
 #endif
+  {
+    std::ifstream file(source, std::ios::binary);
+    const std::string original((std::istreambuf_iterator<char>(file)), {});
+    auto withSecondLine = original;
+    const auto end = withSecondLine.find("0\nENDBLK\n");
+    REQUIRE(end != std::string::npos);
+    withSecondLine.insert(end, "0\nLINE\n5\nA5\n100\nAcDbEntity\n8\n0\n"
+                               "100\nAcDbLine\n10\n0\n20\n1\n11\n10\n21\n1\n");
+    writeText(source, withSecondLine);
+    OptInFilter deliveryFilter;
+    deliveryFilter.suppressUnmaterializedLine = true;
+    RS_Graphic missing;
+    REQUIRE(deliveryFilter.fileImport(missing, QString::fromStdString(source), RS2::FormatDXFRW));
+    writeText(output, sentinel);
+    CHECK_FALSE(deliveryFilter.fileExport(missing, QString::fromStdString(output), RS2::FormatDXFRW));
+    { std::ifstream retained(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+    deliveryFilter.suppressUnmaterializedLine = false;
+    RS_Graphic delivered;
+    REQUIRE(deliveryFilter.fileImport(delivered, QString::fromStdString(source), RS2::FormatDXFRW));
+    REQUIRE(deliveryFilter.fileExport(delivered, QString::fromStdString(output), RS2::FormatDXFRW));
+    CHECK(countRecords(output, "LINE") == 2);
+    writeText(source, original);
+  }
   block->setName(QStringLiteral("CHANGED")); writeText(output, sentinel);
   CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
   { std::ifstream retained(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }

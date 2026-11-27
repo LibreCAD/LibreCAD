@@ -7309,6 +7309,16 @@ void RS_FilterDXFRW::addLine(const DRW_Line &data) {
 
   if (m_currentContainer) {
     m_currentContainer->addEntity(entity);
+#if defined(LIBRECAD_SYSTEM_LIBDXFRW) && defined(LIBDXFRW_HAS_DXF_PHYSICAL_ENTITY_SOURCE_HANDLERS) && defined(LIBDXFRW_HAS_DXF_STAGED_ENTITY_MATERIAL_INSPECTOR)
+    if (m_dxfR && m_graphic && m_graphic->dwgAdvancedMetadata().dxfMaterialPhysicalRequested()) {
+      auto &metadata = m_graphic->dwgAdvancedMetadata();
+      const auto *block = dynamic_cast<const RS_Block *>(m_currentContainer);
+      if ((m_currentContainer != m_graphic && !block) || entity->sourceHandle() != data.handle)
+        metadata.markDxfMaterialEntitySourcesUnavailable();
+      else
+        metadata.addDxfMaterialLineDelivery(data.handle, block != nullptr, false);
+    }
+#endif
   }
 
   RS_DEBUG->print("RS_FilterDXF::addLine: OK");
@@ -12517,7 +12527,7 @@ void RS_FilterDXFRW::addDxfNamespaceSource(const DRW_TableEntry &entry,
 namespace {
 bool capturePhysicalMaterialReferences(LC_DwgAdvancedMetadata &metadata,
                                        const std::vector<DRW_DxfPhysicalEntitySource> &records,
-                                       bool binary) {
+                                       bool binary, bool block) {
   for (const auto &record : records) {
     if (record.groups.size() != record.rawValues.size() || record.groups.size() != record.spans.size()) return false;
     metadata.addDxfMaterialPhysicalRecord(record.marker.ordinal, record.endOrdinal);
@@ -12537,6 +12547,10 @@ bool capturePhysicalMaterialReferences(LC_DwgAdvancedMetadata &metadata,
         common = *group.content.s == "AcDbEntity";
       } else if (!depth && group.code() == 5) {
         if (++selfCount != 1u || !parseDxfCarrierHandle(group, handle)) return false;
+        if (!binary && normalizeDwgTableName(record.name) == "LINE") {
+          std::uint32_t physical = 0;
+          if (!parseDxfCarrierHandle(record.rawValues[i], physical) || physical != handle) return false;
+        }
       } else if (group.code() == 347) {
         if (depth || !common || ++materialCount != 1u || !parseDxfCarrierHandle(group, target) ||
             !target || target == DRW::NoHandle) return false;
@@ -12547,6 +12561,10 @@ bool capturePhysicalMaterialReferences(LC_DwgAdvancedMetadata &metadata,
       }
     }
     if (depth) return false;
+    if (normalizeDwgTableName(record.name) == "LINE") {
+      if (selfCount != 1u) return false;
+      metadata.addDxfMaterialLineDelivery(handle, block, true);
+    }
     if (materialCount) {
       if (selfCount != 1u) return false;
       metadata.addDxfMaterialPhysicalReference(handle, target);
@@ -12564,7 +12582,7 @@ void RS_FilterDXFRW::addDxfEntitiesSource(const DRW_DxfEntitiesSource &source) {
   auto &metadata = m_graphic->dwgAdvancedMetadata();
   metadata.addDxfMaterialPhysicalScope(false);
   if (source.status != DRW_DxfEntitiesSource::Status::Complete || source.version < DRW::AC1021 ||
-      !capturePhysicalMaterialReferences(metadata, source.records, source.binary))
+      !capturePhysicalMaterialReferences(metadata, source.records, source.binary, false))
     metadata.markDxfMaterialEntitySourcesUnavailable();
 }
 void RS_FilterDXFRW::addDxfBlockChildrenSource(const DRW_DxfBlockChildrenSource &source) {
@@ -12572,7 +12590,7 @@ void RS_FilterDXFRW::addDxfBlockChildrenSource(const DRW_DxfBlockChildrenSource 
   auto &metadata = m_graphic->dwgAdvancedMetadata();
   metadata.addDxfMaterialPhysicalScope(true);
   if (source.status != DRW_DxfBlockChildrenSource::Status::Complete || source.version < DRW::AC1021 ||
-      !capturePhysicalMaterialReferences(metadata, source.records, source.binary))
+      !capturePhysicalMaterialReferences(metadata, source.records, source.binary, true))
     metadata.markDxfMaterialEntitySourcesUnavailable();
 }
 #endif
