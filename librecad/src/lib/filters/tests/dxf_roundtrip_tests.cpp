@@ -1796,6 +1796,22 @@ TEST_CASE("Opt-in system codec replays an unchanged sparse material graph",
   auto *line = graphic.firstEntity();
   REQUIRE(line != nullptr);
   const auto originalReference = line->materialHandle();
+  // Source graph identity must be checked before output, not just compared
+  // with a fresh snapshot taken after a prior edit.
+  line->setMaterialHandle(0u);
+  expectRefusal(RS2::FormatDXFRW);
+  line->setMaterialHandle(originalReference);
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  if (withSibling) {
+    line->setMaterialHandle(0xA3u);
+    expectRefusal(RS2::FormatDXFRW);
+    line->setMaterialHandle(originalReference);
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  }
+  line->setFlag(RS2::FlagDeleted);
+  expectRefusal(RS2::FormatDXFRW);
+  line->delFlag(RS2::FlagDeleted);
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
   filter.afterObjects = [&] { line->setMaterialHandle(0u); };
   expectRefusal(RS2::FormatDXFRW);
   line->setMaterialHandle(originalReference);
@@ -1845,6 +1861,58 @@ TEST_CASE("Opt-in system codec replays an unchanged sparse material graph",
   std::filesystem::remove(source);
   std::filesystem::remove(output);
   std::filesystem::remove(resaved);
+}
+
+TEST_CASE("Opt-in sparse material binds block entity source ownership",
+          "[system-codec][dxf][material][transaction]") {
+  ensureSettings();
+  const auto source = tmpFile("system_sparse_material_block_source.dxf");
+  const auto output = tmpFile("system_sparse_material_block_output.dxf");
+  const std::string sentinel = "preserve block material destination\n";
+  writeText(source,
+      "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1021\n0\nENDSEC\n"
+      "0\nSECTION\n2\nTABLES\n0\nTABLE\n2\nLAYER\n70\n1\n"
+      "0\nLAYER\n5\n30\n100\nAcDbSymbolTableRecord\n100\nAcDbLayerTableRecord\n"
+      "2\n0\n70\n0\n62\n7\n6\nCONTINUOUS\n0\nENDTAB\n0\nENDSEC\n"
+      "0\nSECTION\n2\nBLOCKS\n0\nBLOCK\n5\nB0\n8\n0\n2\nTESTBLOCK\n70\n0\n10\n0\n20\n0\n30\n0\n"
+      "0\nLINE\n5\nA2\n100\nAcDbEntity\n8\n0\n347\nA1\n"
+      "100\nAcDbLine\n10\n0\n20\n0\n30\n0\n11\n10\n21\n0\n31\n0\n"
+      "0\nENDBLK\n5\nB1\n8\n0\n0\nENDSEC\n"
+      "0\nSECTION\n2\nOBJECTS\n0\nDICTIONARY\n5\nC\n330\n0\n100\nAcDbDictionary\n281\n1\n"
+      "3\nACAD_MATERIAL\n350\nA0\n0\nDICTIONARY\n5\nA0\n330\nC\n100\nAcDbDictionary\n281\n1\n"
+      "3\nPlainMat\n350\nA1\n0\nMATERIAL\n5\nA1\n330\nA0\n100\nAcDbMaterial\n1\nPlainMat\n94\n63\n"
+      "0\nENDSEC\n0\nEOF\n");
+  struct OptInFilter : RS_FilterDXFRW {
+    bool wantsDxfSparseMaterialRawCapture() const noexcept override { return true; }
+    bool wantsDxfSparseMaterialRawReplay() const noexcept override { return true; }
+  } filter;
+  RS_Graphic graphic;
+  REQUIRE(filter.fileImport(graphic, QString::fromStdString(source), RS2::FormatDXFRW));
+  auto *block = graphic.findBlock(QStringLiteral("TESTBLOCK")); REQUIRE(block);
+  auto *line = block->firstEntity(); REQUIRE(line); REQUIRE(line->materialHandle() == 0xA1u);
+  const auto *captured = graphic.dwgAdvancedMetadata().dxfMaterialEntitySources();
+  REQUIRE(captured); REQUIRE(captured->size() == 1u);
+  CHECK(captured->front().source == line->sourceHandle());
+  CHECK(captured->front().lineage == line->lineage());
+  CHECK(captured->front().block); CHECK(captured->front().blockName == "TESTBLOCK");
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  block->setName(QStringLiteral("CHANGED")); writeText(output, sentinel);
+  CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  { std::ifstream retained(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+  block->setName(QStringLiteral("TESTBLOCK"));
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  const auto originalLineage = line->lineage();
+  line->setLineage(RS_Entity::newLineage()); writeText(output, sentinel);
+  CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  { std::ifstream retained(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+  line->setLineage(originalLineage);
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  line->setMaterialHandle(0u); writeText(output, sentinel);
+  CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  { std::ifstream retained(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+  line->setMaterialHandle(0xA1u);
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  std::filesystem::remove(source); std::filesystem::remove(output);
 }
 #endif
 

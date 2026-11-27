@@ -3104,6 +3104,32 @@ bool sparseDxfMaterialTargetsMatch(
   return foundSelected;
 }
 
+#ifdef LIBDXFRW_HAS_DXF_STAGED_ENTITY_MATERIAL_INSPECTOR
+using MaterialEntityReference = LC_DwgAdvancedMetadata::DxfMaterialEntityReference;
+
+// Share the current-reference collector across source and staged-output checks.
+bool collectDxfMaterialEntities(RS_Graphic &graphic, std::vector<MaterialEntityReference> &out) {
+  out.clear();
+  std::set<std::uint32_t> identities;
+  const auto collect = [&](const RS_EntityContainer &container, bool block, const std::string &blockName) {
+    for (const RS_Entity *entity : lc::LC_ContainerTraverser{container, RS2::ResolveNone}.entities()) {
+      if (entity->isDeleted() || !entity->materialHandle()) continue;
+      if (!entity->sourceHandle() || entity->sourceHandle() == DRW::NoHandle ||
+          !identities.insert(entity->sourceHandle()).second || out.size() >= 4096u) return false;
+      out.push_back({entity->sourceHandle(), entity->materialHandle(), block, blockName, entity->lineage()});
+    }
+    return true;
+  };
+  if (!collect(graphic, false, {})) return false;
+  for (unsigned i = 0; i < graphic.countBlocks(); ++i) {
+    const auto *block = graphic.blockAt(i);
+    if (block && !block->isDeleted() && !collect(*block, true, block->getName().toUtf8().toStdString())) return false;
+  }
+  std::sort(out.begin(), out.end(), [](const auto &a, const auto &b) { return a.source < b.source; });
+  return true;
+}
+#endif
+
 // Check live layer and current-material references against the selected
 // dictionary. Source provenance and staged-output proof are separate gates.
 bool sparseDxfMaterialReferencesMatch(RS_Graphic &graphic) {
@@ -5931,6 +5957,9 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic &g, const QString &file,
     if (m_dxfTextEncoding == RS2::DxfTextEncoding::LegacyLibreCadUtf8)
       m_graphic->setDxfRecoverySourceFile(QFileInfo(file).absoluteFilePath());
     m_dxfR = new dxfRW(QFile::encodeName(file));
+#if defined(LIBRECAD_SYSTEM_LIBDXFRW) && defined(LIBDXFRW_HAS_DXF_STAGED_ENTITY_MATERIAL_INSPECTOR)
+    m_graphic->dwgAdvancedMetadata().beginDxfMaterialEntitySources();
+#endif
 #ifdef LIBRECAD_SYSTEM_LIBDXFRW
     // Match the bundled codec for explicitly declared UTF-8 in older DXF;
     // other code-page declarations retain the library's compatible mapping.
@@ -6096,6 +6125,9 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic &g, const QString &file,
         LC_HatchDensityText::importSummary(tooDenseCount));
   }
 
+#if defined(LIBRECAD_SYSTEM_LIBDXFRW) && defined(LIBDXFRW_HAS_DXF_STAGED_ENTITY_MATERIAL_INSPECTOR)
+  m_graphic->dwgAdvancedMetadata().finishDxfMaterialEntitySources();
+#endif
   RS_DEBUG->print("RS_FilterDXFRW::fileImport OK");
   return true;
 }
@@ -13553,6 +13585,10 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
     defined(LIBDXFRW_HAS_DXF_STAGED_ENTITY_MATERIAL_INSPECTOR) && defined(LIBDXFRW_HAS_DXF_STAGED_DICTIONARY_INSPECTOR) && defined(LIBDXFRW_HAS_DXF_DEFAULT_PLOT_PLACEHOLDER_HANDLE) && defined(LIBDXFRW_HAS_DXF_HEADER_MATERIAL_SOURCE_HANDLER) && defined(LIBDXFRW_HAS_DXF_STAGED_LAYER_PLOT_STYLE_INSPECTOR)
   const auto rawMaterialGraphMatches = [&g]() {
     const auto &metadata = g.dwgAdvancedMetadata();
+    const auto *sourceEntities = metadata.dxfMaterialEntitySources();
+    std::vector<MaterialEntityReference> currentEntities;
+    if (!sourceEntities || !collectDxfMaterialEntities(g, currentEntities) ||
+        *sourceEntities != currentEntities) return false;
     if (metadata.materials().empty() || !metadata.dxfRootDictionarySource() ||
         !metadata.dxfMaterialDictionarySource() || !sparseDxfMaterialReferencesMatch(g)) return false;
     const auto *header = metadata.dxfMaterialHeaderPhysicalSource();
@@ -14900,28 +14936,8 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
       }
 #endif
 #ifdef LIBDXFRW_HAS_DXF_STAGED_ENTITY_MATERIAL_INSPECTOR
-      struct MaterialEntityReference {
-        std::uint32_t source, target;
-        bool block;
-      };
       const auto collectMaterialEntities = [&g](std::vector<MaterialEntityReference> &out) {
-        out.clear();
-        std::set<std::uint32_t> identities;
-        const auto collect = [&](const RS_EntityContainer &container, bool block) {
-          for (const RS_Entity *entity : lc::LC_ContainerTraverser{container, RS2::ResolveNone}.entities()) {
-            if (entity->isDeleted() || !entity->materialHandle()) continue;
-            if (!entity->sourceHandle() || entity->sourceHandle() == DRW::NoHandle ||
-                !identities.insert(entity->sourceHandle()).second || out.size() >= 4096u) return false;
-            out.push_back({entity->sourceHandle(), entity->materialHandle(), block});
-          }
-          return true;
-        };
-        if (!collect(g, false)) return false;
-        for (unsigned i = 0; i < g.countBlocks(); ++i) {
-          const auto *block = g.blockAt(i);
-          if (block && !block->isDeleted() && !collect(*block, true)) return false;
-        }
-        return true;
+        return collectDxfMaterialEntities(g, out);
       };
       std::vector<MaterialEntityReference> materialEntities;
       if (!collectMaterialEntities(materialEntities)) return false;
@@ -15158,11 +15174,7 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
 #endif
 #ifdef LIBDXFRW_HAS_DXF_STAGED_ENTITY_MATERIAL_INSPECTOR
             std::vector<MaterialEntityReference> entities;
-            if (!collectMaterialEntities(entities) || entities.size() != audit->entities.size()) return false;
-            for (std::size_t i = 0; i < entities.size(); ++i)
-              if (entities[i].source != audit->entities[i].source ||
-                  entities[i].target != audit->entities[i].target ||
-                  entities[i].block != audit->entities[i].block) return false;
+            if (!collectMaterialEntities(entities) || entities != audit->entities) return false;
 #endif
 #ifdef LIBDXFRW_HAS_DXF_STAGED_ROOT_ENTRY_INSPECTOR
             if (audit->inspectRoot)
@@ -36938,6 +36950,23 @@ void RS_FilterDXFRW::setEntityAttributes(RS_Entity *entity,
   // default sentinels so unset entities stay unchanged.
   if (attrib->material != DRW::MaterialByLayer)
     entity->setMaterialHandle(attrib->material);
+#if defined(LIBRECAD_SYSTEM_LIBDXFRW) && defined(LIBDXFRW_HAS_DXF_STAGED_ENTITY_MATERIAL_INSPECTOR)
+  if (m_dxfR && attrib->material != DRW::MaterialByLayer) {
+    auto &metadata = m_graphic->dwgAdvancedMetadata();
+    try {
+      const auto *block = dynamic_cast<const RS_Block *>(m_currentContainer);
+      if (m_currentContainer != m_graphic && !block) {
+        metadata.markDxfMaterialEntitySourcesUnavailable();
+      } else {
+        metadata.addDxfMaterialEntitySource({attrib->handle, attrib->material, block != nullptr,
+                                             block ? block->getName().toUtf8().toStdString() : std::string{},
+                                             entity->lineage()});
+      }
+    } catch (...) {
+      metadata.markDxfMaterialEntitySourcesUnavailable();
+    }
+  }
+#endif
   if (attrib->plotStyle != DRW::DefaultPlotStyle)
     entity->setPlotStyleHandle(static_cast<quint32>(attrib->plotStyle));
   if (attrib->shadow != DRW::CastAndReceieveShadows)

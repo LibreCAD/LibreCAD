@@ -40,6 +40,17 @@ class LC_DwgAdvancedMetadata {
 public:
   enum class ReplayState { ReplayAllowed, ReplayInvalidated, ReplayReplaced };
 
+  struct DxfMaterialEntityReference {
+    std::uint32_t source = 0, target = 0;
+    bool block = false;
+    std::string blockName;
+    unsigned long long lineage = 0;
+    bool operator==(const DxfMaterialEntityReference &other) const {
+      return source == other.source && target == other.target &&
+             block == other.block && blockName == other.blockName && lineage == other.lineage;
+    }
+  };
+
   enum class ReplayBlocker {
     None,
     Invalidated,
@@ -3488,6 +3499,9 @@ public:
     m_dxfMaterialHeaderSourceCaptured = false;
     m_dxfMaterialHeaderSourceConflict = false;
     m_dxfMaterialHeaderSource.reset();
+    m_dxfMaterialEntitySources.reset();
+    m_dxfMaterialEntitySourcesConflict = false;
+    m_dxfMaterialEntitySourcesComplete = false;
     m_dxfMaterialHeaderSourceVersion = DRW::UNKNOWNV;
 #ifdef LIBDXFRW_HAS_DXF_HEADER_MATERIAL_SOURCE_HANDLER
     m_dxfMaterialHeaderPhysicalSource.reset();
@@ -3977,6 +3991,42 @@ public:
       return nullptr;
     const auto found = m_dxfMaterialLayerSources.find(handle);
     return found == m_dxfMaterialLayerSources.end() ? nullptr : &found->second;
+  }
+
+  void beginDxfMaterialEntitySources() {
+    m_dxfMaterialEntitySources.emplace();
+    m_dxfMaterialEntitySourcesConflict = false;
+    m_dxfMaterialEntitySourcesComplete = false;
+  }
+
+  void markDxfMaterialEntitySourcesUnavailable() {
+    m_dxfMaterialEntitySourcesConflict = true;
+  }
+
+  void addDxfMaterialEntitySource(DxfMaterialEntityReference source) {
+    if (!m_dxfMaterialEntitySources || m_dxfMaterialEntitySourcesConflict ||
+        !source.source || source.source == DRW::NoHandle || !source.target || !source.lineage ||
+        source.target == DRW::NoHandle || source.blockName.size() > 1024u ||
+        m_dxfMaterialEntitySources->size() >= 4096u) {
+      markDxfMaterialEntitySourcesUnavailable();
+      return;
+    }
+    try { m_dxfMaterialEntitySources->push_back(std::move(source)); }
+    catch (...) { markDxfMaterialEntitySourcesUnavailable(); }
+  }
+
+  void finishDxfMaterialEntitySources() {
+    if (!m_dxfMaterialEntitySources || m_dxfMaterialEntitySourcesConflict) return;
+    auto &sources = *m_dxfMaterialEntitySources;
+    std::sort(sources.begin(), sources.end(), [](const auto &a, const auto &b) { return a.source < b.source; });
+    for (std::size_t i = 1; i < sources.size(); ++i)
+      if (sources[i - 1].source == sources[i].source) { markDxfMaterialEntitySourcesUnavailable(); return; }
+    m_dxfMaterialEntitySourcesComplete = true;
+  }
+
+  const std::vector<DxfMaterialEntityReference> *dxfMaterialEntitySources() const {
+    return m_dxfMaterialEntitySourcesComplete && !m_dxfMaterialEntitySourcesConflict && m_dxfMaterialEntitySources
+        ? &*m_dxfMaterialEntitySources : nullptr;
   }
 
   void addDxfMaterialHeaderSource(DRW::Version version,
@@ -13745,6 +13795,9 @@ private:
   std::map<std::uint32_t, DRW_RawDxfObject> m_dxfMaterialLayerSources;
   bool m_dxfMaterialLayerSourceConflict = false;
   std::optional<std::uint32_t> m_dxfMaterialHeaderSource;
+  std::optional<std::vector<DxfMaterialEntityReference>> m_dxfMaterialEntitySources;
+  bool m_dxfMaterialEntitySourcesConflict = false;
+  bool m_dxfMaterialEntitySourcesComplete = false;
   DRW::Version m_dxfMaterialHeaderSourceVersion = DRW::UNKNOWNV;
   bool m_dxfMaterialHeaderSourceCaptured = false;
   bool m_dxfMaterialHeaderSourceConflict = false;
