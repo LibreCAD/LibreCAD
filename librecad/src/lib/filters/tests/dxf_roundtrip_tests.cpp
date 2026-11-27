@@ -8528,6 +8528,87 @@ TEST_CASE("DXF typed stand-in does not hide a different omitted raw object",
   }
 }
 
+TEST_CASE("DXF typed entity stand-ins bind only unambiguous raw identities",
+          "[dxf][roundtrip][filter][version][handles]") {
+  ensureSettings();
+  for (const std::string scenario : {"MATCH", "OTHER", "DUPLICATE", "NONE", "LIVE"}) {
+    INFO(scenario);
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    auto &metadata = graphic.dwgAdvancedMetadata();
+    DRW_NavisworksModel model;
+    model.handle = 0xE0u; model.parentHandle = DRW::DwgModelSpaceBlockRecordHandle;
+    metadata.addNavisworksModel(model);
+    DRW_RawDxfObject raw;
+    raw.handle = 0xE0u;
+    raw.name = scenario == "OTHER" ? "LINE" : "NAVISWORKSMODEL";
+    raw.m_version = DRW::AC1015;
+    if (scenario != "NONE" && scenario != "LIVE")
+      metadata.addRawDxfEntity(raw);
+    if (scenario == "DUPLICATE") {
+      raw.name = "FIELD";
+      metadata.addRawDxfObject(raw);
+    }
+    auto *line = new RS_Line(&graphic, RS_LineData(RS_Vector(0, 0), RS_Vector(1, 0)));
+    if (scenario == "LIVE") line->setSourceHandle(0xE0u);
+    line->setReactorHandles({0xE0u});
+    graphic.addEntity(line);
+    const auto out = tmpFile("typed_entity_standin_collision_r2007.dxf");
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(out), RS2::FormatDXFRW));
+    const auto emitted = recordGroupValues(out, "NAVISWORKSMODEL", "5");
+    REQUIRE(emitted.size() == 1u);
+    const auto report = filter.exportReport();
+    CHECK(report.contains(QStringLiteral("1 raw record(s)")) == (scenario == "OTHER"));
+    CHECK(report.contains(QStringLiteral("2 raw record(s)")) == (scenario == "DUPLICATE"));
+    const auto references = recordGroupValues(out, "LINE", "330");
+    CHECK((std::find(references.begin(), references.end(), emitted.front()) != references.end()) ==
+          (scenario == "MATCH" || scenario == "NONE"));
+    CHECK(danglingReferences(out).empty());
+    if (scenario == "MATCH")
+      if (const char *copy = std::getenv("LIBRECAD_KEEP_NAVIS_STANDIN_OUTPUT"))
+        std::filesystem::copy_file(out, copy, std::filesystem::copy_options::overwrite_existing);
+    std::filesystem::remove(out);
+  }
+}
+
+TEST_CASE("DXF typed entity handle planning retries after an invalid write",
+          "[dxf][roundtrip][filter][version][handles]") {
+  ensureSettings();
+  RS_Graphic graphic;
+  graphic.initForNewDocument();
+  auto &metadata = graphic.dwgAdvancedMetadata();
+  DRW_NavisworksModel model;
+  model.handle = 0xE0u; model.parentHandle = DRW::DwgModelSpaceBlockRecordHandle;
+  model.unitFactor = std::numeric_limits<double>::quiet_NaN();
+  metadata.addNavisworksModel(model);
+  DRW_RawDxfObject raw;
+  raw.handle = model.handle; raw.name = "NAVISWORKSMODEL"; raw.m_version = DRW::AC1015;
+  metadata.addRawDxfEntity(raw);
+  auto *line = new RS_Line(&graphic, RS_LineData(RS_Vector(0, 0), RS_Vector(1, 0)));
+  line->setReactorHandles({model.handle});
+  graphic.addEntity(line);
+  const auto out = tmpFile("typed_entity_standin_retry_r2007.dxf");
+  const std::string sentinel = "preserve destination";
+  writeText(out, sentinel);
+  RS_FilterDXFRW filter;
+  CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(out), RS2::FormatDXFRW));
+  std::ifstream existing(out, std::ios::binary);
+  CHECK(std::string(std::istreambuf_iterator<char>(existing), {}) == sentinel);
+  existing.close();
+  auto &records = const_cast<std::vector<LC_DwgAdvancedMetadata::NavisworksModelRecord> &>(
+      metadata.navisworksModels());
+  REQUIRE(records.size() == 1u);
+  records.front().unitFactor = 1.0;
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(out), RS2::FormatDXFRW));
+  const auto emitted = recordGroupValues(out, "NAVISWORKSMODEL", "5");
+  REQUIRE(emitted.size() == 1u);
+  const auto refs = recordGroupValues(out, "LINE", "330");
+  CHECK(std::find(refs.begin(), refs.end(), emitted.front()) != refs.end());
+  CHECK(danglingReferences(out).empty());
+  std::filesystem::remove(out);
+}
+
 #ifdef LIBRECAD_SYSTEM_CODEC_TESTS
 TEST_CASE("DXF version-gated typed write preserves destination and retries",
           "[dxf][roundtrip][filter][version]") {

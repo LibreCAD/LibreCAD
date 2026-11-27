@@ -14532,6 +14532,7 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
     std::set<std::uint32_t> rawObjectHandles;
     std::set<std::uint32_t> leftOutRawHandles;
     std::set<std::pair<std::uint32_t, std::string>> leftOutRawObjectCarriers;
+    std::set<std::pair<std::uint32_t, std::string>> leftOutRawEntityCarriers;
     std::map<std::uint32_t, std::size_t> leftOutRawHandleCounts;
     for (const DRW_RawDxfObject &o : metadata.rawDxfObjects()) {
       if (!replaysInDxfExport(o.m_version)) {
@@ -14554,6 +14555,7 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
         ++m_dxfLeftOutRawRecords;
         if (e.handle != 0) {
           leftOutRawHandles.insert(e.handle);
+          leftOutRawEntityCarriers.emplace(e.handle, normalizeDwgTableName(e.name));
           ++leftOutRawHandleCounts[e.handle];
         }
         continue;
@@ -14636,15 +14638,15 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
     // minted handle can't collide, and register the same CLASS the raw-net
     // objects use (else AutoCAD/ezdxf drop the instance). Dedup matches
     // writeObjects' emitTyped; minVersion matches the codec writer's gate.
-    // A typed record written in place of a raw one left out keeps its handle,
-    // and references to it stay: it is not left out.
+    // A qualified typed stand-in preserves the source identity; entity
+    // handles are mapped to their separately planned output identities.
     const auto standsInForLeftOut = [&](std::uint32_t handle,
                                         const char *recordName, bool isObject) {
-      if (isObject) {
+      if (recordName != nullptr) {
         const auto skipped = leftOutRawHandleCounts.find(handle);
+        const auto &carriers = isObject ? leftOutRawObjectCarriers : leftOutRawEntityCarriers;
         if (skipped == leftOutRawHandleCounts.end() || skipped->second != 1 ||
-            leftOutRawObjectCarriers.count(
-                {handle, normalizeDwgTableName(recordName)}) == 0)
+            carriers.count({handle, normalizeDwgTableName(recordName)}) == 0)
           return;
       }
       if (leftOutRawHandles.erase(handle) != 0 && m_dxfLeftOutRawRecords > 0)
@@ -14755,7 +14757,7 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
       m_dxfW->reserveHandle(handle);
       if (isObject)
         typedHandles.push_back(handle);
-      standsInForLeftOut(handle, recordName, isObject);
+      standsInForLeftOut(handle, isObject ? recordName : nullptr, isObject);
     };
     for (const auto &record : metadata.mlineStyles())
       reserveFixedTyped(record.handle, record.replayState, "MLINESTYLE");
@@ -16258,6 +16260,21 @@ void RS_FilterDXFRW::prepareDxfEntityHandleMap() {
       continue;
     ++sourceHandleCounts[raw.handle];
     rawObjectHandles.insert(raw.handle);
+  }
+
+  // NAVISWORKSMODEL is a typed metadata entity, so it is not in the live
+  // RS_Entity scan. Plan its minted handle before any earlier entity can
+  // reference it. A skipped, non-equivalent raw identity stays ambiguous.
+  if (m_dxfW->getVersion() >= DRW::AC1015) {
+    for (const auto &model : metadata.navisworksModels()) {
+      if (!model.handle || model.replayState !=
+              LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed)
+        continue;
+      if (m_dxfDroppedReferenceHandles.count(model.handle) != 0)
+        m_dxfW->markSourceHandleAmbiguous(model.handle);
+      else
+        ++sourceHandleCounts[model.handle];
+    }
   }
 
   // Only a unique source handle can safely be used as a lookup key. A
