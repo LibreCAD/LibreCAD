@@ -78,7 +78,7 @@ the dependencies for **3 and 4** in parallel. **5** follows the acceptance work.
 
 | Step | Readiness | Acceptance |
 | --- | --- | --- |
-| **1. Complete the automated matrix** | **Ready locally** with the existing CMake/Qt6 toolchain and real sibling worker. Missing nonlocal rows need their corresponding runner. | Match receipts by source, case/profile, platform and configuration. Run missing portable family/variant rows first, including thin-ellipse cusp and mixed-bulge regressions where the broad variants were not exercised. Finish broad Trim sanitizer and shared-process order checks. Require integrated-suite evidence on the final candidate. |
+| **1. Complete the automated matrix** | **Ready locally** with the existing CMake/Qt6 toolchain and real sibling worker. Exact-source Release integration is 20/20; worker entries remain. Missing nonlocal rows need their corresponding runner. | Match receipts by source, case/profile, platform and configuration. Run missing portable family/variant rows first, including thin-ellipse cusp and mixed-bulge regressions where the broad variants were not exercised. Finish broad Trim sanitizer and shared-process order checks. Refresh integrated-suite evidence if the final candidate changes affected code. |
 | **2. Run the packaged-app walkthrough** | **Blocked** on observable desktop control or a human operator. The fixed copy launched and sampled in the normal event loop, but desktop control could not attach. | Use the candidate artifact, disposable fixtures and an isolated or approved profile. Complete the walkthrough below; an older build, app launch or offscreen test does not close it. Do not re-sign a working artifact just to retry access. |
 | **3. Validate independent CAD** | **Partial**: bounded ODA and LibreDWG evidence exists; independent native DWG viewing and AutoCAD acceptance need an appropriate app/operator. | Compare the generated corpus, including degree 1/3 carriers and LINE controls. Verify geometry, layer/pen and metadata across the applicable round trips. Observe native DWG geometry in an independent CAD viewport and record AutoCAD open/audit, sampled geometry and save/reopen; check retained offset metadata and native adoption back in LibreCAD. Do not expect AutoCAD to edit LibreCAD's native offset definition. |
 | **4. Qualify deployed macOS** | **Blocked** on an authorized release owner, Developer ID/notarization and macOS 14.4 access. | CI uses an ad-hoc universal DMG on `macos-15-intel` with deployment target 14.4; that is not runtime on 14.4. Reuse `scripts/build-osx.sh` and `scripts/test-osx-{package,dmg-runtime}.sh`; retain artifact hash, architecture, signature/notarization/staple verification and actual OS. Check app/worker launch, a worker-backed edit and save/reopen on 14.4. Retain Linux/Windows relocation evidence separately. |
@@ -173,6 +173,20 @@ the dependencies for **3 and 4** in parallel. **5** follows the acceptance work.
 
 ## Recent Evidence
 
+- On 2026-11-27, a macOS 27.2.1 arm64 CMake Release build from clean PR
+  head `971c0699f28db22062f45523a594b4f8fa3376d9`, using Qt 6.12.0 and
+  `BUILD_TESTS=ON`, `LIBRECAD_REGISTER_INTEGRATION_TESTS=ON`,
+  `LIBRECAD_REGISTER_OFFSET_WORKER_TESTS=ON`, and OpenType disabled, passed
+  **20/20 non-worker CTest entries** with `ctest --output-on-failure -E
+  '^offset_worker_'`. Discovery found 58 entries and their executables after
+  building the required targets. The worker wire/request/result tests also
+  passed **3/3**, and fault/geometry-timeout passed **2/2** separately; those
+  five do not establish the remaining 33 worker entries. The consolidated
+  integration log is `/private/tmp/offset-3193-exact-release-integration.log`
+  (temporary). This is exact-source head evidence, not signed deployment,
+  visible GUI or other-platform acceptance. CMake emitted translation install
+  developer warnings; the initial build command also named a CTest entry as a
+  target, then the corrected target build succeeded.
 - PR head `217abd5e277ae7aecbb3a5d2b38b4a077f7c0644` completed CI with
   **19 successful checks, 7 skipped, 0 failed**. The successful checks include
   [Linux fast and Windows x64/ARM64 DWG/DXF verification](https://github.com/LibreCAD/LibreCAD/actions/runs/45943934164)
@@ -221,9 +235,15 @@ the dependencies for **3 and 4** in parallel. **5** follows the acceptance work.
   trigger or whether a non-sanitized build can exhibit it. PID 77890's crash
   report was not located, so do not assert the same stack for the convex case.
   The temporary diagnostic was removed and the sanitizer target rebuilt.
-  Subsequent Release and sanitizer reruns are recorded below. Next: preserve the
-  crash evidence and compare launch behavior on supported Qt/macOS configurations.
+  Subsequent Release and sanitizer reruns are recorded below. Next: compare
+  launch behavior on supported Qt/macOS configurations using that evidence.
   Do not hide or retry away the original failures or change production deadlines.
+- A local copy of the concave-case PID 87124 crash report is retained at
+  `/private/tmp/offset-3193-concave-pid87124.ips` (temporary), SHA-256
+  `2e15ae5625d9227dd6b92ebfc8f2e6e5d3bdbb53d6c0d75e1a92db7ce50a5061`.
+  It records macOS 27.2.1; the raw report contains machine details and is not
+  published. This preserves evidence, not a diagnosis for macOS 14.4 or the
+  separate convex failure.
 - The complete concave and closed-convex generators subsequently passed in
   the source-equivalent macOS CMake Release build: **18,910** and **6,270**
   assertions respectively, one case each, using the 30-second test-only wait.
