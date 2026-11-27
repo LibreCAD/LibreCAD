@@ -106,7 +106,7 @@ the dependencies for **3 and 4** in parallel. **5** follows the acceptance work.
    targets and Qt6 qmake instructions. Verify discovery before counting passes.
 3. Run `scripts/run_offset_trim_case_matrix.py` and
    `scripts/run_offset_trim_profile_matrix.py` with the current test binary,
-   `--log-dir` and `--summary-json`. Derive the eight profile ranges from
+   `--log-dir` and `--summary-json`. Derive the profile ranges from
    the profile runner. Exclude an exact case from the case runner only when its
    full profile range is accounted for; compare the union by identity, not by
    count. Reuse applicable exhaustive parabola-tangent/periodic-spline receipts
@@ -131,13 +131,13 @@ the dependencies for **3 and 4** in parallel. **5** follows the acceptance work.
 1. Finish the running periodic-spline profile manifest. Verify requested IDs,
    results, assertion counts and sanitizer logs, then record the receipt. A
    successful isolated profile does not replace the shared-process run.
-2. Partition only the five remaining timed-out generators, in this order:
-   high-origin closed-polyline seam; reconstructed parabola frames;
+2. Run the new high-origin closed-polyline seam profiles under ASan/UBSan after
+   the periodic run finishes and the sanitizer binary can be rebuilt. Partition
+   the four other timed-out generators, in this order: reconstructed parabola frames;
    transformed beyond-cusp parabola; bounded hyperbola file lanes; rational
    high-degree spline file lanes. The typed-parabola timeout is already
    accounted for by its 152 isolated profiles, but its aggregate remains open.
-   The first has a single-tuple reproduction hook, not a complete partition;
-   the reconstructed case has an 86-frame table, and the other cases combine
+   The reconstructed case has an 86-frame table, and the other cases combine
    geometry and file-format dimensions. Inspect each loop before defining IDs.
 3. Where an existing selector cannot isolate every tuple, add a test-only
    profile selector to that case and register it in the existing profile
@@ -259,6 +259,17 @@ the dependencies for **3 and 4** in parallel. **5** follows the acceptance work.
   and `/private/tmp/offset-3193-trim-tangent-asan-logs` (temporary). The
   separate periodic-spline matrix, six timed-out aggregate cases, prior
   shared-process failures, leak detection and non-macOS validation remain open.
+- Test-only commit `19bafe101` adds a `closed-seam` profile selector for the
+  high-origin closed-polyline Trim Two case. The 38 original rows, including
+  one duplicate tuple, were compared in order against the prior source.
+  Source-equivalent macOS CMake Release passed **38/38 isolated profiles and
+  8,102 assertions**, and the unpinned aggregate passed **8,102 assertions**.
+  Invalid, out-of-range and conflicting reproduction selectors were rejected;
+  the existing unpinned reproduction passed. Receipts:
+  `/private/tmp/offset-3193-closed-seam-release.json` and
+  `/private/tmp/offset-3193-closed-seam-aggregate-release.json` (temporary).
+  This accounts for the Release rows, not the earlier sanitizer timeout,
+  leak detection or other platforms.
 
 ## Smallest Safe Fix
 
