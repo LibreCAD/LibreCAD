@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import os
 from pathlib import Path
@@ -11,6 +12,9 @@ import re
 import subprocess
 import sys
 import time
+
+sys.dont_write_bytecode = True
+from run_offset_trim_case_matrix import run as run_isolated
 
 
 FAMILIES = {
@@ -125,6 +129,7 @@ def main() -> int:
     if args.worker_timeout_ms is not None and args.worker_timeout_ms <= 0:
         print("--worker-timeout-ms must be positive", file=sys.stderr)
         return 2
+    binary_sha256 = hashlib.sha256(binary.read_bytes()).hexdigest()
 
     family = FAMILIES[args.family]
     profiles = args.profile if args.profile is not None else list(family["profiles"])
@@ -149,15 +154,7 @@ def main() -> int:
         command = [str(binary), family["test_spec"], "--reporter", "compact"]
         case_started = time.monotonic()
         try:
-            completed = subprocess.run(
-                command,
-                env=env,
-                stdout=subprocess.PIPE,
-                stderr=subprocess.STDOUT,
-                text=True,
-                timeout=args.timeout_seconds,
-                check=False,
-            )
+            completed = run_isolated(command, env, args.timeout_seconds)
             output = completed.stdout
             match = SUMMARY.search(output)
             assertions = int(match.group(1)) if match else 0
@@ -196,9 +193,19 @@ def main() -> int:
 
     passed_profiles = [r["profile"] for r in results if r["passed"]]
     failed_profiles = [r["profile"] for r in results if not r["passed"]]
+    binary_unchanged = hashlib.sha256(binary.read_bytes()).hexdigest() == binary_sha256
     manifest = {
         "binary": str(binary),
+        "binary_sha256": binary_sha256,
+        "binary_unchanged": binary_unchanged,
         "family": args.family,
+        "mode_environment": {
+            name: os.environ.get(name)
+            for name in ("LC_OFFSET_HYPERBOLA_HIGH_ORIGIN",
+                         "LC_OFFSET_HYPERBOLA_VERY_HIGH_ORIGIN")
+        } if args.family == "hyperbola" else {},
+        "worker_timeout_ms": args.worker_timeout_ms,
+        "profile_timeout_seconds": args.timeout_seconds,
         "requested_profiles": profiles,
         "passed_profiles": passed_profiles,
         "failed_profiles": failed_profiles,
@@ -211,10 +218,10 @@ def main() -> int:
 
     print(
         f"{args.family}: {len(passed_profiles)}/{len(profiles)} profiles passed; "
-        f"failed={failed_profiles}",
+        f"failed={failed_profiles}; binary_unchanged={binary_unchanged}",
         flush=True,
     )
-    return 0 if not failed_profiles else 1
+    return 0 if not failed_profiles and binary_unchanged else 1
 
 
 if __name__ == "__main__":
