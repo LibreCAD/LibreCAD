@@ -6109,18 +6109,53 @@ TEST_CASE("DXF filter preserves fixture-backed CLASS and raw entity",
   std::filesystem::remove(out2);
 }
 
-TEST_CASE("DXF filter preserves fixture-backed raw control groups and remaps 481",
+TEST_CASE("DXF filter preserves fixture-derived raw control groups and remaps 481",
           "[dxf][roundtrip][filter][application-groups][handles]") {
   ensureSettings();
-  const std::string src = std::string(LIBRECAD_TEST_DIR)
-                          + "/dxf/raw_control_groups_r2007.dxf";
+  const std::string fixture = std::string(LIBRECAD_TEST_DIR)
+                              + "/dxf/raw_control_groups_r2007.dxf";
+  const std::string src = tmpFile("raw_control_groups_neutral.dxf");
   const std::string out = tmpFile("raw_control_groups_out.dxf");
   const std::string out2 = tmpFile("raw_control_groups_out2.dxf");
   std::filesystem::remove(out);
   std::filesystem::remove(out2);
-  if (!std::filesystem::is_regular_file(src)) {
+  if (!std::filesystem::is_regular_file(fixture)) {
     SKIP("raw_control_groups_r2007.dxf fixture absent; skipping");
   }
+
+#ifdef LIBDXFRW_HAS_DXF_STAGED_LAYER_PLOT_STYLE_INSPECTOR
+  // The original fixture contains incomplete MATERIAL objects. Preserve the
+  // guard for that graph independently of the generic handle-remapping test.
+  {
+    RS_Graphic materialGraphic;
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileImport(materialGraphic, QString::fromStdString(fixture),
+                              RS2::FormatDXFRW));
+    writeText(out, "preserve destination\n");
+    CHECK_FALSE(filter.fileExport(materialGraphic, QString::fromStdString(out),
+                                  RS2::FormatDXFRW));
+    std::ifstream retained(out, std::ios::binary);
+    CHECK(std::string(std::istreambuf_iterator<char>(retained), {})
+          == "preserve destination\n");
+  }
+#endif
+  // Reuse the fixture's exact control groups with neutral raw object types;
+  // this test exercises handle transport, not MATERIAL graph semantics.
+  std::ifstream input(fixture, std::ios::binary);
+  std::string contents((std::istreambuf_iterator<char>(input)), {});
+  input.close();
+  const auto replaceAll = [&](const std::string& from, const std::string& to) {
+    std::size_t count = 0;
+    for (std::size_t pos = 0; (pos = contents.find(from, pos)) != std::string::npos;
+         pos += to.size()) {
+      contents.replace(pos, from.size(), to);
+      ++count;
+    }
+    return count;
+  };
+  REQUIRE(replaceAll("\nMATERIAL\n", "\nTEST_RAW_OBJECT\n") == 2);
+  REQUIRE(replaceAll("\nAcDbMaterial\n", "\nTestRawObject\n") == 2);
+  writeText(src, contents);
 
   const auto values = [](const DxfRecordGroups& groups, const char* code) {
     std::vector<std::string> result;
@@ -6185,7 +6220,7 @@ TEST_CASE("DXF filter preserves fixture-backed raw control groups and remaps 481
   const auto raw = std::find_if(
       graphic.dwgAdvancedMetadata().rawDxfObjects().cbegin(),
       graphic.dwgAdvancedMetadata().rawDxfObjects().cend(),
-      [](const auto& entry) { return entry.name == "MATERIAL" && entry.handle == 0x90u; });
+      [](const auto& entry) { return entry.name == "TEST_RAW_OBJECT" && entry.handle == 0x90u; });
   REQUIRE(raw != graphic.dwgAdvancedMetadata().rawDxfObjects().cend());
   CHECK(raw->parentHandle == 0xCu);
   CHECK(rawValues(raw->groups, 481) == std::vector<std::string>{"14"});
@@ -6195,9 +6230,9 @@ TEST_CASE("DXF filter preserves fixture-backed raw control groups and remaps 481
                                     "{ACAD_XDICTIONARY", "}"});
 
   const DxfRecordGroups sourceOut =
-      recordGroupsWithValue(out, "MATERIAL", "1", "SOURCE");
+      recordGroupsWithValue(out, "TEST_RAW_OBJECT", "1", "SOURCE");
   const DxfRecordGroups targetOut =
-      recordGroupsWithValue(out, "MATERIAL", "1", "TARGET");
+      recordGroupsWithValue(out, "TEST_RAW_OBJECT", "1", "TARGET");
   verifySourceRecord(sourceOut, targetOut);
   const std::vector<std::string> handles = collectHandles(out);
   std::set<std::string> uniqueHandles;
@@ -6214,9 +6249,10 @@ TEST_CASE("DXF filter preserves fixture-backed raw control groups and remaps 481
     REQUIRE(filter.fileExport(graphic2, QString::fromStdString(out2),
                               RS2::FormatDXFRW));
   }
-  verifySourceRecord(recordGroupsWithValue(out2, "MATERIAL", "1", "SOURCE"),
-                     recordGroupsWithValue(out2, "MATERIAL", "1", "TARGET"));
+  verifySourceRecord(recordGroupsWithValue(out2, "TEST_RAW_OBJECT", "1", "SOURCE"),
+                     recordGroupsWithValue(out2, "TEST_RAW_OBJECT", "1", "TARGET"));
 
+  std::filesystem::remove(src);
   std::filesystem::remove(out);
   std::filesystem::remove(out2);
 }
@@ -7287,7 +7323,7 @@ TEST_CASE("DXF export reserves handle space so preserved raw handles do not "
       "0\nWEIRDENT\n8\n0\n5\n33\n62\n3\n10\n1.0\n20\n2.0\n"
       "0\nENDSEC\n"
       "0\nSECTION\n2\nOBJECTS\n"
-      "0\nMATERIAL\n5\n34\n330\nC\n100\nAcDbMaterial\n1\nMyMaterial\n94\n7\n"
+      "0\nTEST_RAW_OBJECT\n5\n34\n330\nC\n100\nTestRawObject\n1\nRawObject\n94\n7\n"
       "0\nENDSEC\n0\nEOF\n";
   writeText(src, dxf);
 
@@ -9641,8 +9677,8 @@ TEST_CASE("DXF export remaps raw objects colliding with fixed structural handles
   std::filesystem::remove(src);
   std::filesystem::remove(out);
 
-  // Root dict C points at a material dict (0x10) and a group dict (0x12); the
-  // material dict owns a MATERIAL (0x21), the group dict owns XRECORDs (0x14,
+  // Root dict C points at a raw-object dict (0x10) and a group dict (0x12); the
+  // raw-object dict owns a raw object (0x21), the group dict owns XRECORDs (0x14,
   // 0x1F). Every one of 0x10/0x12/0x14/0x1F/0x21 is a codec-fixed structural
   // handle, so all must be remapped (and the C entries + 330 owners rewritten).
   const std::string dxf =
@@ -9651,10 +9687,10 @@ TEST_CASE("DXF export remaps raw objects colliding with fixed structural handles
       "0\nENDSEC\n"
       "0\nSECTION\n2\nOBJECTS\n"
       "0\nDICTIONARY\n5\nC\n330\n0\n100\nAcDbDictionary\n281\n1\n"
-      "3\nACAD_GROUP\n350\nD\n3\nACAD_MATERIAL\n350\n10\n3\nMYGROUPS\n350\n12\n"
+      "3\nACAD_GROUP\n350\nD\n3\nRAW_OBJECTS\n350\n10\n3\nMYGROUPS\n350\n12\n"
       "0\nDICTIONARY\n5\nD\n330\nC\n100\nAcDbDictionary\n281\n1\n"
       "0\nDICTIONARY\n5\n10\n330\nC\n100\nAcDbDictionary\n281\n1\n3\nMyMat\n350\n21\n"
-      "0\nMATERIAL\n5\n21\n330\n10\n100\nAcDbMaterial\n1\nMyMat\n94\n7\n"
+      "0\nTEST_RAW_OBJECT\n5\n21\n330\n10\n100\nTestRawObject\n1\nMyMat\n94\n7\n"
       "0\nDICTIONARY\n5\n12\n330\nC\n100\nAcDbDictionary\n281\n1\n"
       "3\nREC_A\n350\n14\n3\nREC_B\n350\n1F\n"
       "0\nXRECORD\n5\n14\n330\n12\n100\nAcDbXrecord\n280\n1\n1\nhello\n"
@@ -9688,21 +9724,21 @@ TEST_CASE("DXF export remaps raw objects colliding with fixed structural handles
   for (const char *fixed : {"C", "D", "10", "12", "14", "1F", "21"})
     CHECK(handleSet.count(fixed) == 1);  // emitted exactly once, by the codec
 
-  // (c) referential integrity: the root dict's ACAD_MATERIAL / MYGROUPS targets
+  // (c) referential integrity: the root dict's RAW_OBJECTS / MYGROUPS targets
   // were remapped to fresh handles that ARE emitted (not the old 0x10/0x12).
   const std::map<std::string, std::string> rootEntries = rootDictEntries(out);
-  REQUIRE(rootEntries.count("ACAD_MATERIAL") == 1);
+  REQUIRE(rootEntries.count("RAW_OBJECTS") == 1);
   REQUIRE(rootEntries.count("MYGROUPS") == 1);
-  CHECK(rootEntries.at("ACAD_MATERIAL") != "10");  // remapped off the collision
+  CHECK(rootEntries.at("RAW_OBJECTS") != "10");  // remapped off the collision
   CHECK(rootEntries.at("MYGROUPS") != "12");
-  CHECK(handleSet.count(rootEntries.at("ACAD_MATERIAL")) == 1);  // resolves
+  CHECK(handleSet.count(rootEntries.at("RAW_OBJECTS")) == 1);  // resolves
   CHECK(handleSet.count(rootEntries.at("MYGROUPS")) == 1);
 
   // (d) $HANDSEED is strictly above every body handle.
   CHECK(handseedValue(out) > maxHandle(out));
 
-  // (e) the data survives a full DXF->DXF re-import (MATERIAL + both XRECORDs).
-  CHECK(countRecords(out, "MATERIAL") >= 1);
+  // (e) the raw object and both XRECORDs remain in the exported DXF.
+  CHECK(countRecords(out, "TEST_RAW_OBJECT") >= 1);
   CHECK(countRecords(out, "XRECORD") >= 2);
 
   std::filesystem::remove(src);
@@ -9762,10 +9798,10 @@ TEST_CASE("DXF export rewrites 390/480/481 hard-pointer refs to remapped raw obj
       "0\nDICTIONARY\n5\n12\n330\nC\n100\nAcDbDictionary\n281\n1\n"
       "3\nTGT\n350\n14\n3\nREF\n350\n40\n"
       // target raw object collides with codec LTYPE 0x14 -> remapped to fresh handle
-      "0\nMATERIAL\n5\n14\n330\n12\n100\nAcDbMaterial\n1\nTgtMat\n94\n7\n"
+      "0\nTEST_RAW_OBJECT\n5\n14\n330\n12\n100\nTestRawObject\n1\nTgtMat\n94\n7\n"
       // Referencing raw object (no collision) points at 0x14 via 390, 480, and
       // 481. All three must follow the target's structural-collision remap.
-      "0\nMATERIAL\n5\n40\n330\n12\n100\nAcDbMaterial\n1\nRefMat\n390\n14\n480\n14\n481\n14\n"
+      "0\nTEST_RAW_OBJECT\n5\n40\n330\n12\n100\nTestRawObject\n1\nRefMat\n390\n14\n480\n14\n481\n14\n"
       "0\nENDSEC\n0\nEOF\n";
   writeText(src, dxf);
 
@@ -9782,7 +9818,7 @@ TEST_CASE("DXF export rewrites 390/480/481 hard-pointer refs to remapped raw obj
   }
 
   // Parse the output into ordered (code,value) pairs and pull out the two
-  // MATERIAL records' fields (handle 5, name 1, refs 390/480/481).
+  // raw object records' fields (handle 5, name 1, refs 390/480/481).
   std::ifstream in(out);
   std::string codeLine, valueLine;
   auto trim = [](std::string s) {
@@ -9794,7 +9830,7 @@ TEST_CASE("DXF export rewrites 390/480/481 hard-pointer refs to remapped raw obj
   std::string targetHandle, ref390, ref480, ref481;
   std::string curType, curHandle, curName, cur390, cur480, cur481;
   auto flush = [&]() {
-    if (curType == "MATERIAL") {
+    if (curType == "TEST_RAW_OBJECT") {
       if (curName == "TgtMat")
         targetHandle = curHandle;
       if (curName == "RefMat") {
