@@ -14222,6 +14222,24 @@ double RS_FilterDXFRW::importedHatchAngle(double drwAngle, bool legacyRadians,
  * @param file Full path to the DXF file that will be written.
  * @param type
  */
+static bool canExportPolylineEllipses(const RS_EntityContainer &container) {
+  for (const RS_Entity *entity : container) {
+    if (!entity || entity->isDeleted() || entity->rtti() != RS2::EntityPolyline)
+      continue;
+    const auto *polyline = static_cast<const RS_Polyline *>(entity);
+    for (const RS_Entity *segment : polyline->getEntityList()) {
+      if (!segment || segment->isDeleted() || segment->rtti() != RS2::EntityEllipse)
+        continue;
+      const auto pair = RS_Polyline::convertToArcPair(static_cast<const RS_Ellipse *>(segment));
+      const std::unique_ptr<RS_Arc> arc{pair.first};
+      if (!arc || !std::isfinite(arc->getRadius()) || arc->getRadius() <= RS_TOLERANCE ||
+          !std::isfinite(pair.second) || pair.second <= 0.0)
+        return false;
+    }
+  }
+  return true;
+}
+
 bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
                                 const RS2::FormatType type) {
   // Also protect callers using the filter directly rather than RS_FileIO.
@@ -14243,6 +14261,18 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
 #endif
   ) {
     LC_ERR << "Cannot start a reentrant export on an active DXF/DWG filter";
+    return false;
+  }
+
+  // Legacy polyline output can carry only axis-aligned elliptic sidecars.
+  // Refuse an unsupported ellipse before opening or replacing the target.
+  try {
+    if (!canExportPolylineEllipses(g)) return false;
+    for (unsigned i = 0; i < g.countBlocks(); ++i) {
+      const auto *block = g.blockAt(i);
+      if (block && !block->isDeleted() && !canExportPolylineEllipses(*block)) return false;
+    }
+  } catch (...) {
     return false;
   }
 
@@ -35311,11 +35341,8 @@ void RS_FilterDXFRW::writeLWPolyline(RS_Polyline *l) {
     pol.flags = 1;
   } else {
     ae = static_cast<RS_AtomicEntity *>(currEntity);
-    if (ae->rtti() == RS2::EntityArc) {
-      bulge = static_cast<RS_Arc *>(ae)->getBulge();
-    }
     pol.addVertex(
-        DRW_Vertex2D(ae->getEndpoint().x, ae->getEndpoint().y, bulge));
+        DRW_Vertex2D(ae->getEndpoint().x, ae->getEndpoint().y, l->getNextBulge()));
   }
   pol.vertexnum = pol.vertlist.size();
   getEntityAttributes(&pol, l);
@@ -35372,6 +35399,7 @@ void RS_FilterDXFRW::writePolyline(const RS_Polyline *p) {
     double bulge = 0.0;
     bool isElliptic = false;
     double yRadius = 0.0;
+    double xRadius = 0.0;
     switch (e->rtti()) {
     case RS2::EntityLine:
       break;
@@ -35383,8 +35411,13 @@ void RS_FilterDXFRW::writePolyline(const RS_Polyline *p) {
       RS_Ellipse *ellipse = static_cast<RS_Ellipse *>(e);
       auto pair = RS_Polyline::convertToArcPair(ellipse);
       std::unique_ptr<RS_Arc> arc{pair.first};
+      if (!arc) {
+        m_writeFailed = true;
+        return;
+      }
       bulge = arc->getBulge();
-      yRadius = arc->getRadius() * pair.second;
+      xRadius = arc->getRadius();
+      yRadius = xRadius * pair.second;
       isElliptic = true;
     } break;
     default:
@@ -35400,6 +35433,8 @@ void RS_FilterDXFRW::writePolyline(const RS_Polyline *p) {
       // Keep to ellipse minor radius to allow elliptic creation at loading
       pol.vertlist.back()->extData.push_back(
           std::make_shared<DRW_Variant>(1040, yRadius));
+      pol.vertlist.back()->extData.push_back(
+          std::make_shared<DRW_Variant>(1041, xRadius));
     }
   }
   // Each vertex above is a segment's FROM point (its bulge, when set,
@@ -35411,7 +35446,7 @@ void RS_FilterDXFRW::writePolyline(const RS_Polyline *p) {
   // point.
   if (!p->isClosed() && lastSegment != nullptr) {
     pol.addVertex(DRW_Vertex(lastSegment->getEndpoint().x,
-                             lastSegment->getEndpoint().y, 0.0, 0.0));
+                             lastSegment->getEndpoint().y, 0.0, p->getNextBulge()));
   }
   getEntityAttributes(&pol, p);
   if (auto lwMeta = extractLWPolylineMeta(const_cast<RS_Polyline *>(p))) {
@@ -38669,6 +38704,9 @@ void RS_FilterDXFRW::addPolylineSegment(
     const std::vector<std::shared_ptr<DRW_Variant>> &extData) {
   bool isLcData = false;
   double yRadius = 0.0;
+  double xRadius = 0.0;
+  bool hasXRadius = false;
+  bool invalidXRadius = false;
 
   // Issue #1946: LibreCAD may use elliptic arcs internally, but dxf file saving
   // uses arcs only. Minor radius of elliptic is saved as DRW_Variant::content
@@ -38687,24 +38725,55 @@ void RS_FilterDXFRW::addPolylineSegment(
       } else {
         isLcData = false;
       }
+    } else if (isLcData && var->code() == 1041) {
+      double radius = 0.0;
+      if (!hasXRadius && readXDataDouble(var.get(), 1041, radius) == XDataReadResult::Valid &&
+          radius > RS_TOLERANCE) {
+        xRadius = radius;
+        hasXRadius = true;
+      } else {
+        invalidXRadius = true;
+      }
     }
   }
-  bool isElliptic = yRadius > RS_TOLERANCE;
+  bool isElliptic = yRadius > RS_TOLERANCE && !invalidXRadius;
 
   if (isElliptic) {
-    std::unique_ptr<RS_Arc> arc{
-        RS_Polyline::arcFromBulge(prev_pos, curr_pos, segmentBulge)};
-    if (arc != nullptr && arc->getRadius() >= RS_TOLERANCE) {
+    // Newer sidecars retain both axial radii. Reconstruct the circular
+    // parameter-space chord before applying the Y scale; using the elliptical
+    // chord directly moves the center when the two radii differ. Older
+    // sidecars have only Y radius and retain their previous interpretation.
+    const double ratio = hasXRadius ? yRadius / xRadius : 1.0;
+    RS_Vector arcEnd = curr_pos;
+    if (hasXRadius && std::isfinite(ratio) && ratio > 0.0) {
+      arcEnd.y = prev_pos.y + (curr_pos.y - prev_pos.y) / ratio;
+    }
+    const bool validChord = std::isfinite(ratio) && ratio > 0.0 &&
+                            std::isfinite(arcEnd.x) && std::isfinite(arcEnd.y);
+    std::unique_ptr<RS_Arc> arc{validChord
+        ? RS_Polyline::arcFromBulge(prev_pos, arcEnd, segmentBulge) : nullptr};
+    if (arc != nullptr && std::isfinite(arc->getRadius()) && arc->getRadius() >= RS_TOLERANCE) {
       double radius = arc->getRadius();
       double scaleRatio = yRadius / radius;
-      RS_Ellipse *ellipse =
-          RS_Polyline::convertToEllipse(std::make_pair(arc.get(), scaleRatio));
-      if (ellipse != nullptr) {
+      const auto center = arc->getCenter();
+      const double offsetY = hasXRadius ? (center.y - prev_pos.y) * (scaleRatio - 1.0) : 0.0;
+      if (!center.valid || !std::isfinite(center.x) || !std::isfinite(center.y) ||
+          !std::isfinite(offsetY) || !std::isfinite(scaleRatio) || scaleRatio <= 0.0 ||
+          (hasXRadius && std::abs(radius - xRadius) > 1.0e-8 * std::max(1.0, xRadius))) {
+        polyline.addVertex(curr_pos, nextBulge, false);
+        return;
+      }
+      std::unique_ptr<RS_Ellipse> ellipse{
+          RS_Polyline::convertToEllipse(std::make_pair(arc.get(), scaleRatio))};
+      if (ellipse) {
+        if (hasXRadius)
+          ellipse->move(RS_Vector(0.0, offsetY));
         ellipse->setParent(&polyline);
         // ellipse->setSelected(polyline.isSelected());
         ellipse->setPen(RS_Pen(RS2::FlagInvalid));
         ellipse->setLayer(nullptr);
-        polyline.addEntity(ellipse);
+        polyline.RS_EntityContainer::addEntity(ellipse.get());
+        ellipse.release();
         polyline.getData().endpoint = curr_pos;
         polyline.setNextBulge(nextBulge);
         return;

@@ -65,6 +65,7 @@
 #include "rs_arc.h"
 #include "rs_dimaligned.h"
 #include "rs_circle.h"
+#include "rs_ellipse.h"
 #include "rs_dimension.h"
 #include "rs_insert.h"
 #include "rs_text.h"
@@ -5123,6 +5124,7 @@ TEST_CASE("DXF filter normalizes reflected LWPOLYLINE extrusion once",
   CHECK(std::stod(firstElevation[0]) == -7.0);
   CHECK(std::stod(firstBulges[0]) < -0.499);
   CHECK(std::stod(firstBulges[0]) > -0.501);
+  CHECK(std::stod(firstBulges[1]) == Catch::Approx(0.5));
   CHECK(recordGroupValues(out, "LWPOLYLINE", "210").empty());
 
   RS_Graphic graphic2;
@@ -5193,6 +5195,7 @@ TEST_CASE("DXF filter normalizes reflected legacy POLYLINE extrusion once",
   CHECK(std::stod(firstElevation[0]) == -7.0);
   CHECK(std::stod(firstThickness[0]) == -0.25);
   CHECK(std::abs(std::stod(firstBulges[0]) + 0.5) < 1.0e-12);
+  CHECK(std::stod(firstBulges[1]) == Catch::Approx(0.5));
   CHECK(std::stod(firstStartWidths[0]) == 0.1);
   CHECK(std::stod(firstEndWidths[0]) == 0.2);
   CHECK(recordGroupValues(out, "LWPOLYLINE", "210").empty());
@@ -13647,6 +13650,331 @@ TEST_CASE("An open polyline's VERTEX and SEQEND carry its own layer and "
                               vertexHandles[1], endHandles.front()}.size() == 4);
 
   std::filesystem::remove(out12);
+}
+
+static std::vector<double> polylineBulges(const std::string &path, bool legacy) {
+  std::ifstream stream(path);
+  std::string codeLine, valueLine;
+  std::vector<double> bulges;
+  bool inRecord = false;
+  while (std::getline(stream, codeLine) && std::getline(stream, valueLine)) {
+    const auto code = trimDxfToken(codeLine), value = trimDxfToken(valueLine);
+    if (code == "0") {
+      inRecord = value == (legacy ? "VERTEX" : "LWPOLYLINE");
+      if (inRecord && legacy) bulges.push_back(0.0);
+    } else if (inRecord && code == "10" && !legacy) {
+      bulges.push_back(0.0);
+    } else if (inRecord && code == "42") {
+      if (bulges.empty()) return {};
+      bulges.back() = std::stod(value);
+    }
+  }
+  return bulges;
+}
+
+TEST_CASE("An open polyline preserves its terminal bulge through DXF saves",
+          "[dxf][roundtrip][filter][polyline][bulge][system-codec]") {
+  ensureSettings();
+  for (const double terminalBulge : {0.0, -0.25}) {
+    for (const RS2::FormatType format : {RS2::FormatDXFRW12, RS2::FormatDXFRW}) {
+      RS_Graphic graphic;
+      graphic.initForNewDocument();
+      auto *polyline = new RS_Polyline(&graphic);
+      polyline->addVertex(RS_Vector(0, 0), 0.0);
+      polyline->addVertex(RS_Vector(5, 0), 0.5);
+      polyline->addVertex(RS_Vector(10, 5), terminalBulge);
+      graphic.addEntity(polyline);
+      const auto out = tmpFile("polyline_terminal_bulge.dxf");
+      const auto resaved = tmpFile("polyline_terminal_bulge_resaved.dxf");
+      RS_FilterDXFRW filter;
+      REQUIRE(filter.fileExport(graphic, QString::fromStdString(out), format));
+      const auto verify = [&](const std::string &path) {
+        const auto bulges = polylineBulges(path, format == RS2::FormatDXFRW12);
+        REQUIRE(bulges.size() == 3u);
+        CHECK(bulges[0] == Catch::Approx(0.0));
+        CHECK(bulges[1] == Catch::Approx(0.5));
+        CHECK(bulges[2] == Catch::Approx(terminalBulge));
+      };
+      verify(out);
+      RS_Graphic reopened;
+      REQUIRE(filter.fileImport(reopened, QString::fromStdString(out), RS2::FormatDXFRW));
+      REQUIRE(filter.fileExport(reopened, QString::fromStdString(resaved), format));
+      verify(resaved);
+      if (terminalBulge != 0.0) {
+        if (const char *copy = std::getenv("LIBRECAD_KEEP_TERMINAL_BULGE")) {
+          const std::string prefix = std::string(copy) + (format == RS2::FormatDXFRW12 ? "-r12" : "-modern");
+          std::filesystem::copy_file(out, prefix + ".dxf", std::filesystem::copy_options::overwrite_existing);
+          std::filesystem::copy_file(resaved, prefix + "-resaved.dxf", std::filesystem::copy_options::overwrite_existing);
+        }
+      }
+      RS_Polyline *reopenedPolyline = nullptr;
+      for (RS_Entity *entity : reopened)
+        if (entity && entity->rtti() == RS2::EntityPolyline)
+          reopenedPolyline = static_cast<RS_Polyline *>(entity);
+      REQUIRE(reopenedPolyline);
+      reopenedPolyline->setClosed(true, 0.0);
+      const auto *closing = reopenedPolyline->entityAt(reopenedPolyline->count() - 1u);
+      REQUIRE(closing);
+      CHECK(closing->rtti() == (terminalBulge == 0.0 ? RS2::EntityLine : RS2::EntityArc));
+      if (terminalBulge != 0.0)
+        CHECK(static_cast<const RS_Arc *>(closing)->getBulge() == Catch::Approx(terminalBulge));
+      const auto closedCount = reopenedPolyline->count();
+      reopenedPolyline->setClosed(false, 0.0);
+      CHECK(reopenedPolyline->count() + 1u == closedCount);
+      reopenedPolyline->setClosed(true, 0.0);
+      REQUIRE(reopenedPolyline->count() == closedCount);
+      closing = reopenedPolyline->entityAt(reopenedPolyline->count() - 1u);
+      REQUIRE(closing);
+      CHECK(closing->rtti() == (terminalBulge == 0.0 ? RS2::EntityLine : RS2::EntityArc));
+      if (terminalBulge != 0.0)
+        CHECK(static_cast<const RS_Arc *>(closing)->getBulge() == Catch::Approx(terminalBulge));
+      std::filesystem::remove(out);
+      std::filesystem::remove(resaved);
+    }
+  }
+}
+
+TEST_CASE("Open polyline edits update the terminal bulge before DXF export",
+          "[dxf][roundtrip][filter][polyline][bulge][system-codec]") {
+  ensureSettings();
+  for (int edit = 0; edit != 8; ++edit) {
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    auto *polyline = new RS_Polyline(&graphic);
+    polyline->addVertex(RS_Vector(0, 0), 0.0);
+    polyline->addVertex(RS_Vector(5, 0), 0.5);
+    polyline->addVertex(RS_Vector(10, 5), -0.25);
+    graphic.addEntity(polyline);
+    if (edit == 0) polyline->mirror(RS_Vector(0, 0), RS_Vector(0, 1));
+    if (edit == 1) polyline->revertDirection();
+    if (edit == 2) polyline->scale(RS_Vector(0, 0), RS_Vector(-1, 1));
+    if (edit == 3) polyline->removeLastVertex();
+    if (edit == 4) polyline->move(RS_Vector(2, 3));
+    if (edit == 5) polyline->mirror(RS_Vector(0, 0), RS_Vector(0, 0));
+    if (edit == 6) { polyline->mirror(RS_Vector(0, 0), RS_Vector(0, 1));
+                     polyline->mirror(RS_Vector(0, 0), RS_Vector(0, 1)); }
+    if (edit == 7) { polyline->revertDirection(); polyline->revertDirection(); }
+    const double expected = edit == 3 ? 0.5 : edit >= 4 ? -0.25 : 0.25;
+    const auto output = tmpFile("polyline_edited_terminal_bulge.dxf");
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+    const auto bulges = polylineBulges(output, countRecords(output, "POLYLINE") != 0);
+    REQUIRE(bulges.size() == (edit == 3 ? 2u : 3u));
+    CHECK(bulges.back() == Catch::Approx(expected));
+    if (const char *copy = std::getenv("LIBRECAD_KEEP_TERMINAL_BULGE_EDITS"))
+      std::filesystem::copy_file(output, std::string(copy) + "-" + std::to_string(edit) + ".dxf",
+                                 std::filesystem::copy_options::overwrite_existing);
+    RS_Graphic reopened;
+    REQUIRE(filter.fileImport(reopened, QString::fromStdString(output), RS2::FormatDXFRW));
+    RS_Polyline *restored = nullptr;
+    for (RS_Entity *entity : reopened)
+      if (entity && entity->rtti() == RS2::EntityPolyline)
+        restored = static_cast<RS_Polyline *>(entity);
+    REQUIRE(restored);
+    restored->setClosed(true, 0.0);
+    const auto *closing = restored->entityAt(restored->count() - 1u);
+    REQUIRE(closing); REQUIRE(closing->rtti() == RS2::EntityArc);
+    CHECK(static_cast<const RS_Arc *>(closing)->getBulge() == Catch::Approx(expected));
+    std::filesystem::remove(output);
+  }
+}
+
+TEST_CASE("Closed polylines retain their closing segment across edits and reopening",
+          "[dxf][roundtrip][filter][polyline][bulge][system-codec]") {
+  ensureSettings();
+  for (int edit = 0; edit != 2; ++edit) {
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    auto *polyline = new RS_Polyline(&graphic);
+    polyline->addVertex(RS_Vector(0, 0), 0.5);
+    polyline->addVertex(RS_Vector(5, 0), 0.0);
+    polyline->addVertex(RS_Vector(10, 5), -0.25);
+    polyline->setClosed(true, 0.0);
+    graphic.addEntity(polyline);
+    REQUIRE(polyline->count() == 3u);
+    if (edit == 0) polyline->revertDirection();
+    else polyline->scale(RS_Vector(0, 0), RS_Vector(-1, 1));
+    const auto *originalClosing = polyline->entityAt(polyline->count() - 1u);
+    REQUIRE(originalClosing);
+    const auto start = originalClosing->getStartpoint(), end = originalClosing->getEndpoint();
+    polyline->setClosed(false, 0.0);
+    REQUIRE(polyline->count() == 2u);
+    polyline->setClosed(true, 0.0);
+    REQUIRE(polyline->count() == 3u);
+    const auto *closing = polyline->entityAt(polyline->count() - 1u);
+    REQUIRE(closing); REQUIRE(closing->rtti() == RS2::EntityArc);
+    CHECK(static_cast<const RS_Arc *>(closing)->getBulge() == Catch::Approx(edit == 0 ? -0.5 : 0.25));
+    CHECK(closing->getStartpoint().distanceTo(start) < 1.0e-8);
+    CHECK(closing->getEndpoint().distanceTo(end) < 1.0e-8);
+    const auto output = tmpFile("polyline_closed_edited.dxf");
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+    const auto bulges = polylineBulges(output, countRecords(output, "POLYLINE") != 0);
+    REQUIRE(bulges.size() == 3u);
+    CHECK(bulges.back() == Catch::Approx(edit == 0 ? -0.5 : 0.25));
+    if (const char *copy = std::getenv("LIBRECAD_KEEP_CLOSED_BULGE_EDITS"))
+      std::filesystem::copy_file(output, std::string(copy) + "-" + std::to_string(edit) + ".dxf",
+                                 std::filesystem::copy_options::overwrite_existing);
+    RS_Graphic restored;
+    REQUIRE(filter.fileImport(restored, QString::fromStdString(output), RS2::FormatDXFRW));
+    RS_Polyline *reopened = nullptr;
+    for (RS_Entity *entity : restored)
+      if (entity && entity->rtti() == RS2::EntityPolyline)
+        reopened = static_cast<RS_Polyline *>(entity);
+    REQUIRE(reopened); CHECK(reopened->isClosed()); CHECK(reopened->count() == 3u);
+    if (edit == 1) {
+      // Older LibreCAD sidecars stored only group 1040. A circular case can
+      // still be reconstructed without the new explicit X radius.
+      std::ifstream stream(output);
+      std::string codeLine, valueLine, legacy;
+      unsigned removed = 0;
+      while (std::getline(stream, codeLine) && std::getline(stream, valueLine)) {
+        if (trimDxfToken(codeLine) == "1041") { ++removed; continue; }
+        legacy += codeLine + "\n" + valueLine + "\n";
+      }
+      REQUIRE(removed == 1u);
+      const auto oldOutput = tmpFile("polyline_closed_legacy_sidecar.dxf");
+      writeText(oldOutput, legacy);
+      RS_Graphic oldGraphic;
+      REQUIRE(filter.fileImport(oldGraphic, QString::fromStdString(oldOutput), RS2::FormatDXFRW));
+      RS_Polyline *oldPolyline = nullptr;
+      for (RS_Entity *entity : oldGraphic)
+        if (entity && entity->rtti() == RS2::EntityPolyline)
+          oldPolyline = static_cast<RS_Polyline *>(entity);
+      REQUIRE(oldPolyline); CHECK(oldPolyline->isClosed()); CHECK(oldPolyline->count() == 3u);
+      std::filesystem::remove(oldOutput);
+    }
+    std::filesystem::remove(output);
+  }
+}
+
+TEST_CASE("A scaled polyline retains its elliptic segment on DXF reopen",
+          "[dxf][roundtrip][filter][polyline][bulge][system-codec]") {
+  ensureSettings();
+  for (const auto scale : {RS_Vector(2, 1), RS_Vector(1, 2)}) {
+    for (const double sourceBulge : {0.5, -0.5}) {
+      for (const RS2::FormatType format : {RS2::FormatDXFRW12, RS2::FormatDXFRW}) {
+        CAPTURE(scale.x, scale.y, sourceBulge, format);
+        RS_Graphic graphic;
+        graphic.initForNewDocument();
+        auto *polyline = new RS_Polyline(&graphic);
+        polyline->addVertex(RS_Vector(0, 0), sourceBulge);
+        polyline->addVertex(RS_Vector(6, 0), 0.0);
+        polyline->addVertex(RS_Vector(9, 3), 0.0);
+        graphic.addEntity(polyline);
+        polyline->scale(RS_Vector(0, 0), scale);
+        REQUIRE(polyline->count() == 2u);
+        REQUIRE(polyline->entityAt(0)->rtti() == RS2::EntityEllipse);
+        const auto *original = static_cast<const RS_Ellipse *>(polyline->entityAt(0));
+        const auto output = tmpFile("polyline_scaled_ellipse.dxf");
+        RS_FilterDXFRW filter;
+        REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), format));
+        if (const char *copy = std::getenv("LIBRECAD_KEEP_SCALED_POLYLINE")) {
+          const std::string suffix = std::string(scale.x > scale.y ? "-x" : "-y") +
+              (sourceBulge > 0 ? "-ccw" : "-cw") +
+              (format == RS2::FormatDXFRW12 ? "-r12.dxf" : "-modern.dxf");
+          std::filesystem::copy_file(output, std::string(copy) + suffix,
+                                     std::filesystem::copy_options::overwrite_existing);
+        }
+        RS_Graphic restored;
+        REQUIRE(filter.fileImport(restored, QString::fromStdString(output), RS2::FormatDXFRW));
+        RS_Polyline *reopened = nullptr;
+        for (RS_Entity *entity : restored)
+          if (entity && entity->rtti() == RS2::EntityPolyline)
+            reopened = static_cast<RS_Polyline *>(entity);
+        REQUIRE(reopened); REQUIRE(reopened->count() == 2u);
+        REQUIRE(reopened->entityAt(0)->rtti() == RS2::EntityEllipse);
+        const auto *roundtrip = static_cast<const RS_Ellipse *>(reopened->entityAt(0));
+        CHECK(roundtrip->getCenter().distanceTo(original->getCenter()) < 1.0e-8);
+        CHECK(roundtrip->getStartpoint().distanceTo(original->getStartpoint()) < 1.0e-8);
+        CHECK(roundtrip->getEndpoint().distanceTo(original->getEndpoint()) < 1.0e-8);
+        CHECK(roundtrip->getRatio() == Catch::Approx(original->getRatio()));
+        CHECK(roundtrip->isReversed() == original->isReversed());
+        const auto resaved = tmpFile("polyline_scaled_ellipse_resaved.dxf");
+        REQUIRE(filter.fileExport(restored, QString::fromStdString(resaved), format));
+        RS_Graphic second;
+        REQUIRE(filter.fileImport(second, QString::fromStdString(resaved), RS2::FormatDXFRW));
+        RS_Polyline *secondPolyline = nullptr;
+        for (RS_Entity *entity : second)
+          if (entity && entity->rtti() == RS2::EntityPolyline)
+            secondPolyline = static_cast<RS_Polyline *>(entity);
+        REQUIRE(secondPolyline); REQUIRE(secondPolyline->count() == 2u);
+        REQUIRE(secondPolyline->entityAt(0)->rtti() == RS2::EntityEllipse);
+        const auto *secondEllipse = static_cast<const RS_Ellipse *>(secondPolyline->entityAt(0));
+        CHECK(secondEllipse->getCenter().distanceTo(original->getCenter()) < 1.0e-8);
+        CHECK(secondEllipse->getStartpoint().distanceTo(original->getStartpoint()) < 1.0e-8);
+        CHECK(secondEllipse->getEndpoint().distanceTo(original->getEndpoint()) < 1.0e-8);
+        CHECK(secondEllipse->getRatio() == Catch::Approx(original->getRatio()));
+        CHECK(secondEllipse->isReversed() == original->isReversed());
+        std::filesystem::remove(resaved);
+        std::filesystem::remove(output);
+      }
+    }
+  }
+}
+
+TEST_CASE("A rotated elliptic polyline refuses DXF output without replacing it",
+          "[dxf][roundtrip][filter][polyline][bulge][transaction][system-codec]") {
+  ensureSettings();
+  for (const bool inBlock : {false, true}) {
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    RS_EntityContainer *owner = &graphic;
+    if (inBlock) {
+      auto *block = new RS_Block(&graphic, RS_BlockData("ELLIPSE_BLOCK", RS_Vector(0, 0), false));
+      REQUIRE(graphic.addBlock(block));
+      owner = block;
+    }
+    auto *polyline = new RS_Polyline(owner);
+    polyline->addVertex(RS_Vector(0, 0), 0.5);
+    polyline->addVertex(RS_Vector(6, 0), 0.0);
+    owner->addEntity(polyline);
+    polyline->scale(RS_Vector(0, 0), RS_Vector(2, 1));
+    polyline->rotate(RS_Vector(0, 0), 0.3);
+    const auto output = tmpFile("polyline_rotated_ellipse_refusal.dxf");
+    const std::string sentinel = "preserve rotated ellipse destination\n";
+    writeText(output, sentinel);
+    RS_FilterDXFRW filter;
+    CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+    { std::ifstream retained(output, std::ios::binary);
+      CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+    polyline->rotate(RS_Vector(0, 0), -0.3);
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+    CHECK(countRecords(output, "POLYLINE") == 1);
+    std::filesystem::remove(output);
+  }
+}
+
+TEST_CASE("A late rotated elliptic polyline refuses and retries DXF output",
+          "[dxf][roundtrip][filter][polyline][bulge][transaction][system-codec]") {
+  ensureSettings();
+  RS_Graphic graphic;
+  graphic.initForNewDocument();
+  auto *polyline = new RS_Polyline(&graphic);
+  polyline->addVertex(RS_Vector(0, 0), 0.5);
+  polyline->addVertex(RS_Vector(6, 0), 0.0);
+  graphic.addEntity(polyline);
+  polyline->scale(RS_Vector(0, 0), RS_Vector(2, 1));
+  struct LateRotationFilter : RS_FilterDXFRW {
+    RS_Polyline *target = nullptr;
+    bool rotateOnWrite = true;
+    void writeEntities() override {
+      if (rotateOnWrite) target->rotate(RS_Vector(0, 0), 0.3);
+      RS_FilterDXFRW::writeEntities();
+    }
+  } filter;
+  filter.target = polyline;
+  const auto output = tmpFile("polyline_late_rotated_ellipse_refusal.dxf");
+  const std::string sentinel = "preserve late rotated ellipse destination\n";
+  writeText(output, sentinel);
+  CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  { std::ifstream retained(output, std::ios::binary);
+    CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+  polyline->rotate(RS_Vector(0, 0), -0.3);
+  filter.rotateOnWrite = false;
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  CHECK(countRecords(output, "POLYLINE") == 1);
+  std::filesystem::remove(output);
 }
 
 TEST_CASE("An open polyline keeps every vertex on DXF re-save; a closed "

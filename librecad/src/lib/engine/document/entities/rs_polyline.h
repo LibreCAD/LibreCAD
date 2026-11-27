@@ -102,6 +102,7 @@ public:
     void setNextBulge(const double bulge) {
         m_nextBulge = bulge;
     }
+    double getNextBulge() const { return m_nextBulge; }
 
     void addEntity(const RS_Entity* entity) override;
     //void addSegment(RS_Entity* entity) override;
