@@ -3998,6 +3998,7 @@ public:
     m_dxfMaterialEntitySourcesConflict = false;
     m_dxfMaterialEntitySourcesComplete = false;
     m_dxfMaterialPhysicalRequested = physical;
+    m_dxfMaterialAutomaticReplayCandidate = physical;
     m_dxfMaterialPhysicalEntities = m_dxfMaterialPhysicalBlocks = m_dxfMaterialExpectedBlocks = 0;
     m_dxfMaterialInventoryEntities = m_dxfMaterialInventoryBlocks = 0;
     m_dxfMaterialInventoryVerified = false;
@@ -4009,6 +4010,13 @@ public:
 
   void expectDxfMaterialPhysicalBlock() { ++m_dxfMaterialExpectedBlocks; }
   bool dxfMaterialPhysicalRequested() const { return m_dxfMaterialPhysicalRequested; }
+  void rejectDxfMaterialAutomaticReplay() { m_dxfMaterialAutomaticReplayCandidate = false; }
+  bool dxfMaterialAutomaticReplayEligible() const {
+    return m_dxfMaterialAutomaticReplayCandidate && m_dxfMaterialEntitySourcesComplete &&
+           !m_dxfMaterialEntitySourcesConflict && m_dxfMaterialPhysicalEntities == 1u &&
+           !m_dxfMaterialPhysicalLines.empty() &&
+           m_dxfMaterialPhysicalLines.size() == m_dxfMaterialPhysicalRecords.size();
+  }
   void addDxfMaterialPhysicalScope(bool block) {
     if (block) ++m_dxfMaterialPhysicalBlocks;
     else ++m_dxfMaterialPhysicalEntities;
@@ -13871,6 +13879,7 @@ private:
   bool m_dxfMaterialEntitySourcesConflict = false;
   bool m_dxfMaterialEntitySourcesComplete = false;
   bool m_dxfMaterialPhysicalRequested = false;
+  bool m_dxfMaterialAutomaticReplayCandidate = false;
   std::size_t m_dxfMaterialPhysicalEntities = 0, m_dxfMaterialPhysicalBlocks = 0, m_dxfMaterialExpectedBlocks = 0;
   std::vector<std::pair<std::uint32_t, std::uint32_t>> m_dxfMaterialPhysicalReferences;
   std::vector<std::pair<std::uint32_t, bool>> m_dxfMaterialPhysicalLines, m_dxfMaterialDeliveredLines;

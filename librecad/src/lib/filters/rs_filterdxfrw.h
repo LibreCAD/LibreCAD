@@ -39,6 +39,7 @@
 #include <set>
 #include <string>
 #include <vector>
+#include <QByteArray>
 
 #include "drw_interface.h"
 #include "lc_extentitydata.h"
@@ -1987,6 +1988,9 @@ class RS_FilterDXFRW : public RS_FilterInterface,
 #ifdef LIBDXFRW_HAS_DXF_PHYSICAL_ENTITY_SOURCE_HANDLERS
     , public DRW_DxfEntitiesSourceHandler, public DRW_DxfBlockChildrenSourceHandler
 #endif
+#if defined(LIBDXFRW_HAS_DXF_PHYSICAL_ENTITY_SOURCE_HANDLERS) && defined(LIBDXFRW_HAS_DXF_BLOCK_RECORD_SOURCE_SELECTOR)
+    , public DRW_DxfBlockRecordSourceHandler, public DRW_DxfBlockSourceHandler
+#endif
 #ifdef LIBDXFRW_HAS_DXF_PHYSICAL_IDENTITY_SOURCE_HANDLER
     , public DRW_DxfIdentitySourceHandler
 #endif
@@ -2002,8 +2006,8 @@ class RS_FilterDXFRW : public RS_FilterInterface,
 #endif
 public:
 #ifdef LIBDXFRW_HAS_DXF_STAGED_LAYER_PLOT_STYLE_INSPECTOR
-  // Capture bounded raw-only materials for viewing. Replaying them remains a
-  // separate, explicit policy until the whole consumer profile is qualified.
+  // Capture bounded raw-only materials. A narrow verified profile can replay
+  // automatically; this policy opts into the separately guarded wider path.
   bool wantsDxfSparseMaterialRawCapture() const noexcept override;
   virtual bool wantsDxfSparseMaterialRawReplay() const noexcept { return false; }
 #endif
@@ -2233,6 +2237,13 @@ public:
   bool wantsDxfBlockChildrenSource() const override;
   void addDxfEntitiesSource(const DRW_DxfEntitiesSource &source) override;
   void addDxfBlockChildrenSource(const DRW_DxfBlockChildrenSource &source) override;
+#endif
+#if defined(LIBDXFRW_HAS_DXF_PHYSICAL_ENTITY_SOURCE_HANDLERS) && defined(LIBDXFRW_HAS_DXF_BLOCK_RECORD_SOURCE_SELECTOR)
+  bool wantsDxfBlockRecordSource() const override;
+  void addDxfBlockRecordSource(const DRW_Block_Record &row, const DRW_RawDxfObject &source) override;
+  bool wantsDxfBlockSource() const override;
+  void addDxfBlockBeginSource(const DRW_Block &block, const DRW_RawDxfObject &source) override;
+  void addDxfBlockEndSource(const DRW_Block &block, const DRW_RawDxfObject &source) override;
 #endif
 #ifdef LIBDXFRW_HAS_DXF_PHYSICAL_IDENTITY_SOURCE_HANDLER
   bool wantsDxfIdentitySource() const override;
@@ -3392,6 +3403,19 @@ private:
   dxfRW *m_dxfW{nullptr};
   std::function<bool()> m_dxfMaterialFinalCheck;
   dxfRW *m_dxfR{nullptr};
+#ifdef LIBDXFRW_HAS_DXF_PHYSICAL_ENTITY_SOURCE_HANDLERS
+  bool m_dxfAutomaticMaterialCapture{false};
+  QByteArray m_dxfAutomaticMaterialBytes;
+#endif
+#if defined(LIBDXFRW_HAS_DXF_PHYSICAL_ENTITY_SOURCE_HANDLERS) && defined(LIBDXFRW_HAS_DXF_BLOCK_RECORD_SOURCE_SELECTOR)
+  struct AutomaticMaterialSpace {
+    std::string name;
+    std::uint32_t begin{0};
+    bool ended{false}, children{false};
+  };
+  std::map<std::uint32_t, std::string> m_automaticMaterialSpaceRows;
+  std::map<std::uint32_t, AutomaticMaterialSpace> m_automaticMaterialSpaces;
+#endif
   static QString toNativeSingleLineString(const QString &data, bool decodeCaret);
   bool singleLineInputNeedsCaretDecoding() const;
   bool m_dxfHasVersionHeader{false};

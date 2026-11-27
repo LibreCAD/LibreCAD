@@ -1629,7 +1629,10 @@ TEST_CASE("System codec retains versionless sparse material without replay",
 #if defined(LIBDXFRW_HAS_DXF_STAGED_ENTITY_MATERIAL_INSPECTOR) && \
     defined(LIBDXFRW_HAS_DXF_HEADER_MATERIAL_SOURCE_HANDLER) && \
     defined(LIBDXFRW_HAS_DXF_DEFAULT_PLOT_PLACEHOLDER_HANDLE) && \
-    defined(LIBDXFRW_HAS_DXF_STAGED_LAYER_PLOT_STYLE_INSPECTOR)
+    defined(LIBDXFRW_HAS_DXF_STAGED_LAYER_PLOT_STYLE_INSPECTOR) && \
+    defined(LIBDXFRW_HAS_DXF_PHYSICAL_ENTITY_SOURCE_HANDLERS) && \
+    defined(LIBDXFRW_HAS_DXF_PHYSICAL_IDENTITY_SOURCE_HANDLER) && \
+    defined(LIBDXFRW_HAS_DXF_BLOCK_RECORD_SOURCE_SELECTOR)
 TEST_CASE("Opt-in system codec replays an unchanged sparse material graph",
           "[system-codec][dxf][material][transaction]") {
   ensureSettings();
@@ -1792,7 +1795,7 @@ TEST_CASE("Opt-in system codec replays an unchanged sparse material graph",
     CHECK(recordGroupValues(output, "LINE", "347").empty());
     if (const char *copy = std::getenv("LIBRECAD_KEEP_SPARSE_NO_ENTITIES_OUTPUT"))
       std::filesystem::copy_file(output, copy, std::filesystem::copy_options::overwrite_existing);
-    for (int mode = 0; mode != 4; ++mode) {
+    for (int mode = 0; mode != 5; ++mode) {
       OptInFilter alteredFilter;
       alteredFilter.mutateIdentity = [mode](DRW_DxfIdentitySource &identity) {
         const auto found = std::find_if(identity.records.begin(), identity.records.end(),
@@ -1851,10 +1854,238 @@ TEST_CASE("Opt-in system codec replays an unchanged sparse material graph",
   expectRefusal(RS2::FormatDWG2010);
   {
     RS_FilterDXFRW defaultFilter;
+    RS_Graphic ordinary;
+    REQUIRE(defaultFilter.fileImport(ordinary, QString::fromStdString(source), RS2::FormatDXFRW));
     writeText(output, sentinel);
-    CHECK_FALSE(defaultFilter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
-    std::ifstream retained(output, std::ios::binary);
-    CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel);
+    REQUIRE(defaultFilter.fileExport(ordinary, QString::fromStdString(output), RS2::FormatDXFRW));
+    const auto ordinaryMaterials = recordGroupValues(output, "MATERIAL", "5");
+    REQUIRE(ordinaryMaterials.size() == (withSibling ? 2u : 1u));
+    CHECK(recordGroupValues(output, "LINE", "347") == std::vector<std::string>{ordinaryMaterials.front()});
+    if (const char *copy = std::getenv("LIBRECAD_KEEP_ORDINARY_SPARSE_OUTPUT"))
+      std::filesystem::copy_file(output, copy, std::filesystem::copy_options::overwrite_existing);
+    RS_Graphic reopenedOrdinary;
+    RS_FilterDXFRW reopenFilter;
+    REQUIRE(reopenFilter.fileImport(reopenedOrdinary, QString::fromStdString(output), RS2::FormatDXFRW));
+    const auto ordinaryResave = tmpFile("system_sparse_ordinary_resave.dxf");
+    REQUIRE(reopenFilter.fileExport(reopenedOrdinary, QString::fromStdString(ordinaryResave), RS2::FormatDXFRW));
+    CHECK(recordGroupValues(ordinaryResave, "LINE", "347").size() == 1u);
+    if (const char *copy = std::getenv("LIBRECAD_KEEP_ORDINARY_SPARSE_RESAVE"))
+      std::filesystem::copy_file(ordinaryResave, copy, std::filesystem::copy_options::overwrite_existing);
+    {
+      std::ifstream saved(output, std::ios::binary);
+      const std::string original((std::istreambuf_iterator<char>(saved)), {});
+      const auto unusual = tmpFile("system_sparse_ordinary_unusual_space.dxf");
+      for (const std::string marker : {"AcDbBlockTableRecord\n", "AcDbBlockBegin\n", "AcDbBlockEnd\n", "AcDbPlotSettings\n"}) {
+        INFO("source marker: " << marker);
+        auto altered = original;
+        const auto at = altered.find(marker); REQUIRE(at != std::string::npos);
+        altered.insert(at + marker.size(), "  4\nCUSTOM\n");
+        writeText(unusual, altered);
+        RS_Graphic unusualGraphic;
+        writeText(ordinaryResave, sentinel);
+        const bool imported = reopenFilter.fileImport(unusualGraphic, QString::fromStdString(unusual), RS2::FormatDXFRW);
+        if (marker != "AcDbBlockEnd\n") REQUIRE(imported);
+        if (imported)
+          CHECK_FALSE(reopenFilter.fileExport(unusualGraphic, QString::fromStdString(ordinaryResave), RS2::FormatDXFRW));
+        { std::ifstream retained(ordinaryResave, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+        RS_Graphic retry;
+        REQUIRE(reopenFilter.fileImport(retry, QString::fromStdString(output), RS2::FormatDXFRW));
+        REQUIRE(reopenFilter.fileExport(retry, QString::fromStdString(ordinaryResave), RS2::FormatDXFRW));
+      }
+      auto noPlotHandle = original;
+      const auto plotAt = noPlotHandle.find("\nPLOTSETTINGS\n"); REQUIRE(plotAt != std::string::npos);
+      const auto handleAt = noPlotHandle.find("  5\n", plotAt); REQUIRE(handleAt != std::string::npos);
+      const auto handleEnd = noPlotHandle.find('\n', handleAt + 4u); REQUIRE(handleEnd != std::string::npos);
+      noPlotHandle.erase(handleAt, handleEnd + 1u - handleAt);
+      writeText(unusual, noPlotHandle);
+      RS_Graphic withoutHandle;
+      writeText(ordinaryResave, sentinel);
+      if (reopenFilter.fileImport(withoutHandle, QString::fromStdString(unusual), RS2::FormatDXFRW))
+        CHECK_FALSE(reopenFilter.fileExport(withoutHandle, QString::fromStdString(ordinaryResave), RS2::FormatDXFRW));
+      { std::ifstream retained(ordinaryResave, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+      std::filesystem::remove(unusual);
+    }
+    std::filesystem::remove(ordinaryResave);
+    RS_FilterDXFRW anotherWriter;
+    REQUIRE(anotherWriter.fileExport(ordinary, QString::fromStdString(output), RS2::FormatDXFRW));
+    auto *activePlot = ordinary.getPlotSettings();
+    REQUIRE(activePlot);
+    activePlot->setMarginsInMm(1.0, 0.0, 0.0, 0.0);
+    writeText(output, sentinel);
+    CHECK_FALSE(anotherWriter.fileExport(ordinary, QString::fromStdString(output), RS2::FormatDXFRW));
+    { std::ifstream retained(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+    activePlot->setMarginsInMm(0.0, 0.0, 0.0, 0.0);
+    REQUIRE(anotherWriter.fileExport(ordinary, QString::fromStdString(output), RS2::FormatDXFRW));
+    auto *newCircle = new RS_Circle(&ordinary, RS_CircleData(RS_Vector(2.0, 3.0), 1.0));
+    ordinary.addEntity(newCircle);
+    writeText(output, sentinel);
+    CHECK_FALSE(anotherWriter.fileExport(ordinary, QString::fromStdString(output), RS2::FormatDXFRW));
+    { std::ifstream retained(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+    REQUIRE(ordinary.removeEntity(newCircle));
+    REQUIRE(anotherWriter.fileExport(ordinary, QString::fromStdString(output), RS2::FormatDXFRW));
+    struct OrdinaryLateWriter : RS_FilterDXFRW {
+      std::function<void()> afterObjects;
+      void writeObjects() override {
+        RS_FilterDXFRW::writeObjects();
+        if (afterObjects) afterObjects();
+      }
+    } lateWriter;
+    auto &ordinaryMetadata = const_cast<std::vector<LC_DwgAdvancedMetadata::MaterialRecord>&>(
+        ordinary.dwgAdvancedMetadata().materials());
+    REQUIRE_FALSE(ordinaryMetadata.empty());
+    const auto description = ordinaryMetadata.front().description;
+    bool reachedObjects = false;
+    lateWriter.afterObjects = [&] { reachedObjects = true; ordinaryMetadata.front().description = "late edit"; };
+    writeText(output, sentinel);
+    CHECK_FALSE(lateWriter.fileExport(ordinary, QString::fromStdString(output), RS2::FormatDXFRW));
+    CHECK(reachedObjects);
+    { std::ifstream retained(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+    ordinaryMetadata.front().description = description;
+    lateWriter.afterObjects = {};
+    REQUIRE(lateWriter.fileExport(ordinary, QString::fromStdString(output), RS2::FormatDXFRW));
+    writeText(output, sentinel);
+    CHECK_FALSE(anotherWriter.fileExport(ordinary, QString::fromStdString(output), RS2::FormatDXFRW2010));
+    { std::ifstream retained(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+    const auto unqualifiedSource = tmpFile("system_sparse_ordinary_unqualified.dxf");
+    for (int mode = 0; mode != 4; ++mode) {
+      auto altered = input;
+      if (mode == 0) {
+        const auto at = altered.find("100\nAcDbLine\n"); REQUIRE(at != std::string::npos);
+        altered.insert(at + std::string("100\nAcDbLine\n").size(), "39\n1\n");
+      } else if (mode == 1) {
+        const auto at = altered.find("0\nENDSEC\n0\nSECTION\n2\nOBJECTS\n"); REQUIRE(at != std::string::npos);
+        altered.insert(at, "0\nCIRCLE\n5\nA5\n100\nAcDbEntity\n8\nRAWTEST\n"
+                           "100\nAcDbCircle\n10\n0\n20\n0\n40\n1\n");
+      } else if (mode == 2) {
+        const auto at = altered.find("0\nSECTION\n2\nENTITIES\n"); REQUIRE(at != std::string::npos);
+        altered.insert(at, "0\nSECTION\n2\nBLOCKS\n0\nBLOCK\n5\nB0\n8\n0\n2\nB\n70\n0\n"
+                           "10\n0\n20\n0\n30\n0\n0\nENDBLK\n5\nB1\n8\n0\n0\nENDSEC\n");
+      } else if (mode == 3) {
+        const auto at = altered.find("30\n0\n11\n10\n"); REQUIRE(at != std::string::npos);
+        altered.replace(at, std::string("30\n0\n").size(), "30\n1\n");
+      } else {
+        const std::string from = "0\nLINE\n5\nA2\n";
+        const auto at = altered.find(from); REQUIRE(at != std::string::npos);
+        altered.replace(at, from.size(), "0\nLINE\n5\n" + sourceHandle + "\n");
+      }
+      writeText(unqualifiedSource, altered);
+      RS_Graphic unqualified;
+      const bool imported = defaultFilter.fileImport(unqualified, QString::fromStdString(unqualifiedSource), RS2::FormatDXFRW);
+      if (mode != 4) REQUIRE(imported);
+      writeText(output, sentinel);
+      if (imported) CHECK_FALSE(defaultFilter.fileExport(unqualified, QString::fromStdString(output), RS2::FormatDXFRW));
+      { std::ifstream retained(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+      RS_Graphic corrected;
+      REQUIRE(defaultFilter.fileImport(corrected, QString::fromStdString(source), RS2::FormatDXFRW));
+      REQUIRE(defaultFilter.fileExport(corrected, QString::fromStdString(output), RS2::FormatDXFRW));
+    }
+    std::filesystem::remove(unqualifiedSource);
+    struct DifferentLineFilter : RS_FilterDXFRW {
+      bool change = true;
+      bool suppressSecond = false;
+      bool changeColor = false;
+      bool duplicatePhysicalIdentity = false;
+      bool alterPhysicalCoordinate = false;
+      void addDxfEntitiesSource(const DRW_DxfEntitiesSource &source) override {
+        auto copy = source;
+        if (alterPhysicalCoordinate && !copy.records.empty()) {
+          auto &record = copy.records.front();
+          for (std::size_t i = 0; i < record.groups.size(); ++i)
+            if (record.groups[i].code() == 10) { record.rawValues[i] = "999"; break; }
+        }
+        RS_FilterDXFRW::addDxfEntitiesSource(copy);
+      }
+      void addDxfIdentitySource(const DRW_DxfIdentitySource &source) override {
+        auto copy = source;
+        if (duplicatePhysicalIdentity) {
+          const auto candidate = std::find_if(copy.candidates.begin(), copy.candidates.end(),
+              [](const auto &item) { return item.scope == DRW_DxfIdentitySource::Scope::Outer; });
+          if (candidate != copy.candidates.end()) {
+            const auto duplicate = *candidate;
+            copy.candidates.push_back(duplicate);
+          }
+        }
+        RS_FilterDXFRW::addDxfIdentitySource(copy);
+      }
+      void addLine(const DRW_Line &data) override {
+        if (suppressSecond && data.handle == 0xA5u) return;
+        DRW_Line changed = data;
+        if (change) changed.basePoint.x += 1.0;
+        if (changeColor) changed.color = 1;
+        RS_FilterDXFRW::addLine(changed);
+      }
+    } different;
+    RS_Graphic changed;
+    REQUIRE(different.fileImport(changed, QString::fromStdString(source), RS2::FormatDXFRW));
+    writeText(output, sentinel);
+    CHECK_FALSE(different.fileExport(changed, QString::fromStdString(output), RS2::FormatDXFRW));
+    { std::ifstream retained(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+    different.change = false;
+    RS_Graphic corrected;
+    REQUIRE(different.fileImport(corrected, QString::fromStdString(source), RS2::FormatDXFRW));
+    REQUIRE(different.fileExport(corrected, QString::fromStdString(output), RS2::FormatDXFRW));
+    different.changeColor = true;
+    RS_Graphic recolored;
+    REQUIRE(different.fileImport(recolored, QString::fromStdString(source), RS2::FormatDXFRW));
+    writeText(output, sentinel);
+    CHECK_FALSE(different.fileExport(recolored, QString::fromStdString(output), RS2::FormatDXFRW));
+    { std::ifstream retained(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+    different.changeColor = false;
+    different.duplicatePhysicalIdentity = true;
+    RS_Graphic collision;
+    REQUIRE(different.fileImport(collision, QString::fromStdString(source), RS2::FormatDXFRW));
+    writeText(output, sentinel);
+    CHECK_FALSE(different.fileExport(collision, QString::fromStdString(output), RS2::FormatDXFRW));
+    { std::ifstream retained(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+    different.duplicatePhysicalIdentity = false;
+    RS_Graphic noCollision;
+    REQUIRE(different.fileImport(noCollision, QString::fromStdString(source), RS2::FormatDXFRW));
+    REQUIRE(different.fileExport(noCollision, QString::fromStdString(output), RS2::FormatDXFRW));
+    different.alterPhysicalCoordinate = true;
+    RS_Graphic changedPhysical;
+    REQUIRE(different.fileImport(changedPhysical, QString::fromStdString(source), RS2::FormatDXFRW));
+    writeText(output, sentinel);
+    CHECK_FALSE(different.fileExport(changedPhysical, QString::fromStdString(output), RS2::FormatDXFRW));
+    { std::ifstream retained(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+    different.alterPhysicalCoordinate = false;
+    RS_Graphic validPhysical;
+    REQUIRE(different.fileImport(validPhysical, QString::fromStdString(source), RS2::FormatDXFRW));
+    REQUIRE(different.fileExport(validPhysical, QString::fromStdString(output), RS2::FormatDXFRW));
+    auto twoLines = input;
+    const auto end = twoLines.find("0\nENDSEC\n0\nSECTION\n2\nOBJECTS\n");
+    REQUIRE(end != std::string::npos);
+    twoLines.insert(end, "0\nLINE\n5\nA5\n100\nAcDbEntity\n8\nRAWTEST\n"
+                         "100\nAcDbLine\n10\n0\n20\n1\n11\n10\n21\n1\n");
+    writeText(unqualifiedSource, twoLines);
+    different.suppressSecond = true;
+    RS_Graphic missing;
+    REQUIRE(different.fileImport(missing, QString::fromStdString(unqualifiedSource), RS2::FormatDXFRW));
+    writeText(output, sentinel);
+    CHECK_FALSE(different.fileExport(missing, QString::fromStdString(output), RS2::FormatDXFRW));
+    { std::ifstream retained(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+    different.suppressSecond = false;
+    RS_Graphic complete;
+    REQUIRE(different.fileImport(complete, QString::fromStdString(unqualifiedSource), RS2::FormatDXFRW));
+    RS_Line *editable = nullptr, *linked = nullptr;
+    for (RS_Entity *entity : complete)
+      if (entity && entity->rtti() == RS2::EntityLine) {
+        if (entity->sourceHandle() == 0xA5u) editable = static_cast<RS_Line *>(entity);
+        if (entity->sourceHandle() == 0xA2u) linked = static_cast<RS_Line *>(entity);
+      }
+    REQUIRE(editable); REQUIRE(linked);
+    editable->setEndpoint(RS_Vector(20.0, 1.0));
+    linked->setEndpoint(RS_Vector(12.0, 0.0));
+    REQUIRE(different.fileExport(complete, QString::fromStdString(output), RS2::FormatDXFRW));
+    CHECK(countRecords(output, "LINE") == 2);
+    CHECK(recordGroupValues(output, "LINE", "11") == std::vector<std::string>{"12", "20"});
+    RS_Graphic editedReopen;
+    REQUIRE(different.fileImport(editedReopen, QString::fromStdString(output), RS2::FormatDXFRW));
+    REQUIRE(different.fileExport(editedReopen, QString::fromStdString(ordinaryResave), RS2::FormatDXFRW));
+    CHECK(recordGroupValues(ordinaryResave, "LINE", "11") == std::vector<std::string>{"12", "20"});
+    if (const char *copy = std::getenv("LIBRECAD_KEEP_ORDINARY_EDITED_RESAVE"))
+      std::filesystem::copy_file(ordinaryResave, copy, std::filesystem::copy_options::overwrite_existing);
+    std::filesystem::remove(ordinaryResave);
+    std::filesystem::remove(unqualifiedSource);
   }
   // A handle's complete byte sequence must be validated, not just the C
   // string prefix before an embedded NUL. Mutate both retained copies to
