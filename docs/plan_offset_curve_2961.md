@@ -132,11 +132,10 @@ the dependencies for **3 and 4** in parallel. **5** follows the acceptance work.
    results, assertion counts and sanitizer logs, then record the receipt. A
    successful isolated profile does not replace the shared-process run.
 2. Run the new high-origin closed-polyline seam, reconstructed-parabola,
-   beyond-cusp and hyperbola profiles under ASan/UBSan after the periodic run
-   finishes and the sanitizer binary can be rebuilt, including the hyperbola
-   high-origin modes with their recorded environment settings. Partition the
-   remaining rational high-degree spline
-   file-lane generator. The typed-parabola timeout is already
+   beyond-cusp, hyperbola and high-degree spline profiles under ASan/UBSan
+   after the periodic run finishes and the sanitizer binary can be rebuilt,
+   including the hyperbola high-origin modes with their recorded environment
+   settings. The typed-parabola timeout is already
    accounted for by its 152 isolated profiles, but its aggregate remains open.
    These cases combine geometry and file-format dimensions. Inspect each loop
    before defining IDs.
@@ -305,6 +304,14 @@ the dependencies for **3 and 4** in parallel. **5** follows the acceptance work.
   wait. Temporary manifests: `/private/tmp/offset-3193-hyperbola-high-release.json`
   and `/private/tmp/offset-3193-hyperbola-very-high-release.json`. These are
   isolated Release profiles, not aggregate, sanitizer or non-macOS evidence.
+- Test-only commit `63632a8d1` adds the `high-degree-spline` selector for 45
+  degree/multiplicity/format groups, retaining transform, distance, knot and
+  weight variants. Source-equivalent macOS CMake Release passed **45/45
+  profiles and 27,312 assertions**; the unpinned aggregate passed the same
+  **27,312 assertions**. Invalid and out-of-range IDs were rejected. Temporary
+  receipts: `/private/tmp/offset-3193-high-degree-release.json` and
+  `/private/tmp/offset-3193-high-degree-aggregate-release.json`. Sanitizer,
+  shared-process ordering and non-macOS rows remain open.
 
 ## Smallest Safe Fix
 
