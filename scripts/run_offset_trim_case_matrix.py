@@ -51,7 +51,10 @@ def run(command: list[str], env: dict[str, str], timeout: float) -> subprocess.C
         output, _ = process.communicate(timeout=timeout)
     except subprocess.TimeoutExpired as error:
         if os.name != "nt":
-            os.killpg(process.pid, signal.SIGKILL)
+            try:
+                os.killpg(process.pid, signal.SIGKILL)
+            except ProcessLookupError:
+                pass
         else:
             try:
                 killed = subprocess.run(

@@ -5,17 +5,33 @@ import hashlib
 import json
 import os
 from pathlib import Path
+import signal
 import subprocess
 import sys
 import tempfile
 import time
 import unittest
+from unittest import mock
 
 from run_offset_trim_case_matrix import run as run_isolated
 from run_offset_trim_profile_matrix import file_sha256
 
 
 class ProfileRunnerTests(unittest.TestCase):
+    @unittest.skipIf(os.name == "nt", "POSIX process-group cleanup test")
+    def test_timeout_reaps_when_process_group_already_exited(self):
+        process = mock.Mock(pid=12345)
+        process.communicate.side_effect = [
+            subprocess.TimeoutExpired(["test"], 0.1), ("last output", None)
+        ]
+        with mock.patch("run_offset_trim_case_matrix.subprocess.Popen", return_value=process), \
+             mock.patch("run_offset_trim_case_matrix.os.killpg", side_effect=ProcessLookupError) as killpg:
+            with self.assertRaises(subprocess.TimeoutExpired) as result:
+                run_isolated(["test"], {}, 0.1)
+        killpg.assert_called_once_with(process.pid, signal.SIGKILL)
+        self.assertEqual(result.exception.output, "last output")
+        self.assertEqual(process.communicate.call_count, 2)
+
     def test_streaming_digest_spans_multiple_blocks(self):
         with tempfile.TemporaryDirectory() as directory:
             binary = Path(directory) / "binary"
