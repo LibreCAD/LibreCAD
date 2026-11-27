@@ -135,10 +135,10 @@ the dependencies for **3 and 4** in parallel. **5** follows the acceptance work.
 1. The periodic-spline profile manifest is reconciled below. Its isolated
    profiles do not replace the shared-process run.
 2. The six timed-out generators now have complete isolated profile receipts,
-   including the typed-parabola profiles. The reconstructed-parabola and default
-   hyperbola aggregates also passed separately below; rerun the other four as
-   bounded single-process cases. Multi-case shared-process behavior remains open;
-   do not infer it from isolated manifests.
+   including the typed-parabola profiles. The reconstructed-parabola, default
+   hyperbola and typed-parabola aggregates also passed separately below; rerun
+   the other three as bounded single-process cases. Multi-case shared-process
+   behavior remains open; do not infer it from isolated manifests.
 3. Where an existing selector cannot isolate every tuple, add a test-only
    profile selector to that case and register it in the existing profile
    runner. Preserve the unpinned test, use stable complete tuple identities,
@@ -244,8 +244,18 @@ the dependencies for **3 and 4** in parallel. **5** follows the acceptance work.
   logs are in `/private/tmp/offset-3193-trim-parabola-asan.json` and
   `/private/tmp/offset-3193-trim-parabola-asan-logs` (temporary). This accounts
   for the 152 recorded profiles in isolated processes; it does not resolve the
-  earlier aggregate timeout, shared-process order, leak detection, other timed-out
-  cases, or other platforms. Next: account for the remaining generators by ID.
+  multi-case order, leak detection, other timed-out cases, or other platforms.
+  The aggregate is recorded below.
+- The unpinned typed-parabola aggregate subsequently passed in one
+  source-equivalent macOS Debug ASan/UBSan test process with **19,001 assertions**
+  in 325.549 seconds, using the same sanitizer options and 30-second test-only
+  worker wait, with a 900-second test-only case bound. This matches the 19,152
+  isolated assertions after removing one repeated guard for each extra process.
+  The retained log has no sanitizer diagnostic; temporary receipt and log:
+  `/private/tmp/offset-3193-typed-parabola-aggregate-asan.json` and
+  `/private/tmp/offset-3193-typed-parabola-aggregate-asan-logs`. The prior
+  300-second timeout remains historical evidence; multi-case order, leak
+  detection and non-macOS behavior remain open.
 - The separately excluded typed-ellipse generator passed **76/76 profiles,
   9,252 assertions** on the same source-equivalent macOS Debug sanitizer build
   and settings, using the `ellipse` profile runner and 180-second per-profile
@@ -266,9 +276,10 @@ the dependencies for **3 and 4** in parallel. **5** follows the acceptance work.
   build and options, using `parabola-tangent` with the 180-second per-profile
   bound. Manifest and logs: `/private/tmp/offset-3193-trim-tangent-asan.json`
   and `/private/tmp/offset-3193-trim-tangent-asan-logs` (temporary). The
-  four other timed-out aggregate cases, prior shared-process failures, leak
+  three other timed-out aggregate cases, prior shared-process failures, leak
   detection and non-macOS validation remain open. The periodic matrix and
-  reconstructed and hyperbola aggregates are recorded below.
+  reconstructed, hyperbola and typed-parabola aggregates are recorded above
+  or below.
 - The periodic-spline matrix passed **1,080/1,080 profiles and 145,371
   assertions** under the same source-equivalent macOS Debug ASan/UBSan build
   and options, with 180-second per-profile and 30-second test-only worker
