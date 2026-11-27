@@ -85,7 +85,7 @@ TEST_CASE("formatArchitectural keeps the sign of lengths below one foot", "[rs_u
     };
     CHECK(arch(-6.0, RS2::Inch, 1) == "-6\"");
     CHECK(arch(-0.5, RS2::Foot, 1) == "-6\"");
-    CHECK(arch(-0.25, RS2::Inch, 1) == "-1/4\"");
+    CHECK(arch(-0.25, RS2::Inch, 2) == "-1/4\"");
     CHECK(arch(6.0, RS2::Inch, 1) == "6\"");
     CHECK(arch(-18.0, RS2::Inch, 1) == "-1'-6\"");
     // rounds to zero, so no sign
@@ -104,7 +104,7 @@ TEST_CASE("formatEngineering and formatFractional drop the sign of lengths that 
     CHECK(eng(-0.4) == "-0.40\"");
     CHECK(eng(-18.0) == "-1'-6.00\"");
     CHECK(frac(-0.001) == "0");
-    CHECK(frac(-0.4) == "- 3/8");
+    CHECK(frac(-0.4) == "- 1/2");
     CHECK(frac(-1.5) == "- 1 1/2");
 }
 
@@ -116,6 +116,29 @@ TEST_CASE("formatEngineering carries inches that round up to 12 into the feet", 
     CHECK(eng(-23.999, 2) == "-2'-0.00\"");
     CHECK(eng(11.9999, 2) == "1'-0.00\"");
     CHECK(eng(23.999, 0) == "2'-0\"");
+}
+
+TEST_CASE("Fractional and architectural lengths use the selected precision", "[rs_units]") {
+    const auto frac = [](double length, int prec) {
+        return RS_Units::formatLinear(length, RS2::Inch, RS2::Fractional, prec).toStdString();
+    };
+    const auto arch = [](double length, int prec) {
+        return RS_Units::formatLinear(length, RS2::Inch, RS2::Architectural, prec).toStdString();
+    };
+    // Precision 0 is whole inches, 1 is halves, 2 is quarters, and 7 is 1/128.
+    CHECK(frac(6.3, 0) == "6");
+    CHECK(frac(6.3, 1) == "6 1/2");
+    CHECK(frac(18.1, 2) == "18");
+    CHECK(frac(6.003, 7) == "6");
+    CHECK(frac(-6.3, 1) == "- 6 1/2");
+    CHECK(arch(6.3, 0) == "6\"");
+    CHECK(arch(6.3, 1) == "6 1/2\"");
+    CHECK(arch(18.1, 2) == "1'-6\"");
+    CHECK(arch(6.003, 7) == "6\"");
+    CHECK(arch(-6.3, 1) == "-6 1/2\"");
+    CHECK(frac(11.6, 0) == "12");
+    CHECK(arch(11.6, 0) == "1'-0\"");
+    CHECK(arch(-11.6, 0) == "-1'-0\"");
 }
 
 TEST_CASE("Negative lengths get a sign exactly when the text is not zero", "[rs_units]") {
@@ -131,7 +154,7 @@ TEST_CASE("Negative lengths get a sign exactly when the text is not zero", "[rs_
     for (const auto& [name, format] : formats) {
         for (int prec = 0; prec <= 8; ++prec) {
             // half of the smallest shown step: the rounding boundary next to zero
-            const double step = (format == &RS_Units::formatEngineering) ? std::pow(10., -prec) : 1. / (2 << prec);
+            const double step = (format == &RS_Units::formatEngineering) ? std::pow(10., -prec) : 1. / (1 << prec);
             std::vector<double> lengths{-0., -std::numeric_limits<double>::denorm_min()};
             for (const double base : {0.5 * step, step, 1.5 * step, 12. - 0.5 * step, 12., 24. - 0.5 * step}) {
                 for (const double eps : {0., 1e-12, -1e-12}) {
