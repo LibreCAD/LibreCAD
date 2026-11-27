@@ -8772,6 +8772,36 @@ TEST_CASE("DXF fixed entity version gates retain loss reporting and retry",
   }
 }
 
+TEST_CASE("DXF refuses an unknown point-cloud definition kind and retries",
+          "[dxf][roundtrip][filter][version][handles]") {
+  ensureSettings();
+  RS_Graphic graphic;
+  graphic.initForNewDocument();
+  auto &metadata = graphic.dwgAdvancedMetadata();
+  DRW_PointCloudDef definition; definition.handle = 0xE0u;
+  definition.m_sourceFilename = "test.rcp";
+  metadata.addPointCloudDef(definition);
+  auto &records = const_cast<std::vector<LC_DwgAdvancedMetadata::PointCloudDefinitionRecord> &>(
+      metadata.pointCloudDefinitions());
+  REQUIRE(records.size() == 1u);
+  records.front().kind = 99;
+  const auto out = tmpFile("unknown_pointcloud_kind_retry.dxf");
+  const std::string sentinel = "preserve destination";
+  writeText(out, sentinel);
+  RS_FilterDXFRW filter;
+  CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(out), RS2::FormatDXFRW));
+  CHECK(filter.exportReport().contains(QStringLiteral("invalid typed DXF record kind")));
+  std::ifstream existing(out, std::ios::binary);
+  CHECK(std::string(std::istreambuf_iterator<char>(existing), {}) == sentinel);
+  existing.close();
+  records.front().kind = static_cast<int>(DRW_PointCloudDef::Definition);
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(out), RS2::FormatDXFRW));
+  CHECK_FALSE(filter.exportReport().contains(QStringLiteral("invalid typed DXF record kind")));
+  CHECK(recordGroupValues(out, "POINTCLOUDDEFINITION", "5") == std::vector<std::string>{"E0"});
+  CHECK(danglingReferences(out).empty());
+  std::filesystem::remove(out);
+}
+
 #ifdef LIBRECAD_SYSTEM_CODEC_TESTS
 TEST_CASE("DXF version-gated typed write preserves destination and retries",
           "[dxf][roundtrip][filter][version]") {

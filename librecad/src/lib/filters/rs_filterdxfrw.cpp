@@ -2609,7 +2609,7 @@ bool hasReplayableSectionObject(const LC_DwgAdvancedMetadata &metadata,
 }
 
 const char *pointCloudDefinitionRecordName(int kind) {
-  switch (static_cast<DRW_PointCloudDef::Kind>(kind)) {
+  switch (kind) {
   case DRW_PointCloudDef::Definition:
     return "POINTCLOUDDEFINITION";
   case DRW_PointCloudDef::DefinitionEx:
@@ -14663,6 +14663,7 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
     // Handles of the typed objects writeObjects emits, for the
     // structural-collision remap; typed entities are written elsewhere.
     std::vector<std::uint32_t> typedHandles;
+    bool invalidTypedRecordName = false;
     auto reserveTyped = [&](std::uint32_t handle,
                             LC_DwgAdvancedMetadata::ReplayState state,
                             const char *recordName,
@@ -14672,6 +14673,10 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
           state != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed ||
           rawObjectHandles.count(handle) != 0)
         return;
+      if (recordName == nullptr) {
+        invalidTypedRecordName = true;
+        return;
+      }
       m_dxfW->reserveHandle(handle);
       if (isObject)
         typedHandles.push_back(handle);
@@ -14776,6 +14781,12 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
       reserveFixedTyped(record.handle, record.replayState, "GEOPOSITIONMARKER", false, DRW::AC1027);
     for (const auto &record : metadata.sectionObjects())
       reserveFixedTyped(record.handle, record.replayState, "SECTIONOBJECT", false, DRW::AC1021);
+
+    if (invalidTypedRecordName) {
+      m_writeLeftOut["invalid typed DXF record kind"]++;
+      m_writeFailed = true;
+      return false;
+    }
 
     // R12 has no CLASSES section, and none of the objects a CLASS describes.
     if (exportVersion <= DRW::AC1009)
