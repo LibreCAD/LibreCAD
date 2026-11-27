@@ -134,8 +134,8 @@ the dependencies for **3 and 4** in parallel. **5** follows the acceptance work.
 
 1. The periodic-spline profile manifest is reconciled below. Its isolated
    profiles do not replace the shared-process run.
-2. Run the reconstructed-parabola, beyond-cusp, hyperbola and high-degree
-   spline profiles under ASan/UBSan with the rebuilt sanitizer binary,
+2. Run the beyond-cusp, hyperbola and high-degree spline profiles under
+   ASan/UBSan with the rebuilt sanitizer binary,
    including the hyperbola high-origin modes with their recorded environment
    settings. The typed-parabola timeout is already
    accounted for by its 152 isolated profiles, but its aggregate remains open.
@@ -309,6 +309,14 @@ the dependencies for **3 and 4** in parallel. **5** follows the acceptance work.
   `/private/tmp/offset-3193-reconstructed-release.json` and
   `/private/tmp/offset-3193-reconstructed-aggregate-release.json` (temporary).
   The earlier sanitizer aggregate timeout and non-macOS rows remain open.
+- The `reconstructed-parabola` selector subsequently passed **86/86 isolated
+  profiles and 7,790 assertions** under the same source-equivalent macOS
+  Debug ASan/UBSan settings and bounds as the seam run. Requested, passed and
+  result IDs match 0-85, the test-binary hash remained unchanged, and all 86
+  logs were free of sanitizer diagnostics. Temporary receipt and logs:
+  `/private/tmp/offset-3193-reconstructed-asan.json` and
+  `/private/tmp/offset-3193-reconstructed-asan-logs`. Aggregate timeout,
+  shared-process behavior, leak detection and other platforms remain open.
 - Test-only commit `03d32a2ec` adds the `beyond-cusp` selector over the 144
   existing nested combinations, retaining their format loops. Source-equivalent
   macOS CMake Release passed **144/144 profiles, 13,596 assertions**, and the
