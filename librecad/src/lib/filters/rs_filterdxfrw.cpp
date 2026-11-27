@@ -14638,7 +14638,15 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
     // writeObjects' emitTyped; minVersion matches the codec writer's gate.
     // A typed record written in place of a raw one left out keeps its handle,
     // and references to it stay: it is not left out.
-    const auto standsInForLeftOut = [&](std::uint32_t handle) {
+    const auto standsInForLeftOut = [&](std::uint32_t handle,
+                                        const char *recordName, bool isObject) {
+      if (isObject) {
+        const auto skipped = leftOutRawHandleCounts.find(handle);
+        if (skipped == leftOutRawHandleCounts.end() || skipped->second != 1 ||
+            leftOutRawObjectCarriers.count(
+                {handle, normalizeDwgTableName(recordName)}) == 0)
+          return;
+      }
       if (leftOutRawHandles.erase(handle) != 0 && m_dxfLeftOutRawRecords > 0)
         --m_dxfLeftOutRawRecords;
     };
@@ -14658,13 +14666,8 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
       if (isObject)
         typedHandles.push_back(handle);
       registerClassFor(recordName);
-      // Only a unique, same-type raw object can be treated as this stand-in.
-      // Leave ambiguous handles in the dropped-reference set and report.
-      const auto skipped = leftOutRawHandleCounts.find(handle);
-      if (!isObject || (skipped != leftOutRawHandleCounts.end() && skipped->second == 1 &&
-                        leftOutRawObjectCarriers.count(
-                            {handle, normalizeDwgTableName(recordName)}) != 0))
-        standsInForLeftOut(handle);
+      // Ambiguous raw object handles stay in the dropped-reference set and report.
+      standsInForLeftOut(handle, recordName, isObject);
     };
     for (const auto &record : metadata.suns())
       reserveTyped(record.handle, record.replayState, "SUN");
@@ -14743,6 +14746,7 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
     // SLICE 1: fixed built-ins -> reserve handles but register NO CLASS.
     auto reserveFixedTyped = [&](std::uint32_t handle,
                                  LC_DwgAdvancedMetadata::ReplayState state,
+                                 const char *recordName,
                                  bool isObject = true) {
       if (handle == 0 ||
           state != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed ||
@@ -14751,16 +14755,16 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
       m_dxfW->reserveHandle(handle);
       if (isObject)
         typedHandles.push_back(handle);
-      standsInForLeftOut(handle);
+      standsInForLeftOut(handle, recordName, isObject);
     };
     for (const auto &record : metadata.mlineStyles())
-      reserveFixedTyped(record.handle, record.replayState);
+      reserveFixedTyped(record.handle, record.replayState, "MLINESTYLE");
     for (const auto &record : metadata.layouts())
-      reserveFixedTyped(record.handle, record.replayState);
+      reserveFixedTyped(record.handle, record.replayState, "LAYOUT");
     for (const auto &record : metadata.geoPositionMarkers())
-      reserveFixedTyped(record.handle, record.replayState, false);
+      reserveFixedTyped(record.handle, record.replayState, "GEOPOSITIONMARKER", false);
     for (const auto &record : metadata.sectionObjects())
-      reserveFixedTyped(record.handle, record.replayState, false);
+      reserveFixedTyped(record.handle, record.replayState, "SECTIONOBJECT", false);
 
     // R12 has no CLASSES section, and none of the objects a CLASS describes.
     if (exportVersion <= DRW::AC1009)
