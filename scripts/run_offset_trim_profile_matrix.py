@@ -14,6 +14,11 @@ import time
 
 
 FAMILIES = {
+    "beyond-cusp": {
+        "environment": "LC_OFFSET_TRIM_BEYOND_CUSP_PROFILE",
+        "profiles": range(144),
+        "test_spec": "[offset-trim-profile-beyond-cusp]",
+    },
     "reconstructed-parabola": {
         "environment": "LC_OFFSET_TRIM_RECONSTRUCTED_PARABOLA_PROFILE",
         "profiles": range(86),

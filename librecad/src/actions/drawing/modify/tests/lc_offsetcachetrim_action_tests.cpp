@@ -3909,7 +3909,8 @@ TEST_CASE("T Trim Two trims exact-stall and multi-branch cusp caches",
 }
 
 TEST_CASE("T Trim Two preserves transformed beyond-cusp parabola branches",
-          "[gui][lc-offsetcurve][trim-action][typed-source][parabola][cusp][transform]") {
+          "[gui][lc-offsetcurve][trim-action][typed-source][parabola][cusp][transform]"
+          "[offset-trim-profile-beyond-cusp]") {
     constexpr double angle = .37;
     const double cosine = std::cos(angle), sine = std::sin(angle);
     QTemporaryDir directory;
@@ -3954,6 +3955,14 @@ TEST_CASE("T Trim Two preserves transformed beyond-cusp parabola branches",
         }
         return false;
     };
+    const bool pinProfile = qEnvironmentVariableIsSet("LC_OFFSET_TRIM_BEYOND_CUSP_PROFILE");
+    bool profileValid = true;
+    const int requestedProfile = pinProfile
+        ? qEnvironmentVariableIntValue("LC_OFFSET_TRIM_BEYOND_CUSP_PROFILE", &profileValid)
+        : 0;
+    REQUIRE(profileValid);
+    REQUIRE((!pinProfile || (requestedProfile >= 0 && requestedProfile < 144)));
+    int profileIndex = 0;
     std::size_t fileIndex = 0;
     for (const unsigned profileKind : {0u, 1u})
     for (const bool reflected : {false, true})
@@ -3961,6 +3970,9 @@ TEST_CASE("T Trim Two preserves transformed beyond-cusp parabola branches",
     for (const double scale : {.1, 1.0, 10.0})
     for (const unsigned cutterKind : {0u, 1u, 2u})
     for (const bool parabolaFirst : {false, true}) {
+        const int currentProfile = profileIndex++;
+        if (pinProfile && currentProfile != requestedProfile) continue;
+        CAPTURE(currentProfile);
         CAPTURE(profileKind, reflected, affineFrame, scale, cutterKind, parabolaFirst);
         const RS_Vector translation{2 * scale, -scale};
         const auto mapPoint = [&](RS_Vector point) {
@@ -4130,6 +4142,7 @@ TEST_CASE("T Trim Two preserves transformed beyond-cusp parabola branches",
             }
         }
     }
+    CHECK(profileIndex == 144);
 }
 
 TEST_CASE("T Trim Two trims exact and beyond-cusp asymmetric branches",
