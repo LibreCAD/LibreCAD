@@ -14,6 +14,11 @@ import time
 
 
 FAMILIES = {
+    "reconstructed-parabola": {
+        "environment": "LC_OFFSET_TRIM_RECONSTRUCTED_PARABOLA_PROFILE",
+        "profiles": range(86),
+        "test_spec": "[offset-trim-profile-reconstructed-parabola]",
+    },
     "closed-seam": {
         "environment": "LC_OFFSET_TRIM_CLOSED_SEAM_PROFILE",
         "profiles": range(38),

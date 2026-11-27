@@ -2236,7 +2236,7 @@ TEST_CASE("T Source update preserves opposite-side cusp topology for an asymmetr
 TEST_CASE("T Trim Two trims reconstructed parabolas across transformed frames "
           "with undo and redo",
           "[gui][lc-offsetcurve][trim-action][typed-source][parabola][from-"
-          "four-points][trim-two]") {
+          "four-points][trim-two][offset-trim-profile-reconstructed-parabola]") {
   struct Frame {
     double scale;
     double angle;
@@ -2339,7 +2339,18 @@ TEST_CASE("T Trim Two trims reconstructed parabolas across transformed frames "
       {1.0, 0.6435011087932844, {1e9, -2e9}, true, false, 2, false, true, false, false, true},
       {1.0, 0.6435011087932844, {1e9, -2e9}, true, false, 2, false, true, false, false, true, true},
   }};
+  const bool pinProfile = qEnvironmentVariableIsSet("LC_OFFSET_TRIM_RECONSTRUCTED_PARABOLA_PROFILE");
+  bool profileValid = true;
+  const int requestedProfile = pinProfile
+      ? qEnvironmentVariableIntValue("LC_OFFSET_TRIM_RECONSTRUCTED_PARABOLA_PROFILE", &profileValid)
+      : 0;
+  REQUIRE(profileValid);
+  REQUIRE((!pinProfile || (requestedProfile >= 0 &&
+                           requestedProfile < static_cast<int>(frames.size()))));
   for (const Frame &frame : frames) {
+    const auto profileIndex = static_cast<int>(&frame - frames.data());
+    if (pinProfile && profileIndex != requestedProfile) continue;
+    CAPTURE(profileIndex);
     CAPTURE(frame.scale, frame.angle, frame.translation.x,
             frame.translation.y, frame.reversed, frame.denseEnd,
             frame.profile, frame.expectLimitRefusal,
