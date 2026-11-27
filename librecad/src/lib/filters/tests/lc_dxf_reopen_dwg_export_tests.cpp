@@ -712,6 +712,16 @@ TEST_CASE("ownerless plot records replay unchanged and reject edits safely",
     REQUIRE(raw != raws.end());
     if (raw->parentHandle != 0u)
         SKIP("The selected codec generated a rooted plot record; supply an ownerless witness to exercise this path.");
+    // Allow the bundled-codec witness to be checked by a separate codec build.
+    // QFile::copy refuses an existing destination, so a rerun cannot replace
+    // evidence from an earlier run.
+    const char *captureDirectory = std::getenv("LIBRECAD_TEST_CAPTURE_OWNERLESS_DWG_DIR");
+    if (captureDirectory && *captureDirectory) {
+        REQUIRE((!witnessDirectory || !*witnessDirectory));
+        const QString captured = QDir(QString::fromLocal8Bit(captureDirectory))
+            .filePath(QString("lc-viewport-before-%1.dwg").arg(QString::fromLatin1(dwg.m_name)));
+        REQUIRE(QFile::copy(QString::fromStdString(initial), captured));
+    }
     const auto originalBytes = raw->rawBytes;
     const auto originalHandle = raw->handle;
     auto &plots = const_cast<std::vector<DRW_PlotSettings>&>(metadata.plotSettings());
