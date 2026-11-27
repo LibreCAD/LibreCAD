@@ -12,9 +12,17 @@ import time
 import unittest
 
 from run_offset_trim_case_matrix import run as run_isolated
+from run_offset_trim_profile_matrix import file_sha256
 
 
 class ProfileRunnerTests(unittest.TestCase):
+    def test_streaming_digest_spans_multiple_blocks(self):
+        with tempfile.TemporaryDirectory() as directory:
+            binary = Path(directory) / "binary"
+            content = b"offset" * 400000
+            binary.write_bytes(content)
+            self.assertEqual(file_sha256(binary), hashlib.sha256(content).hexdigest())
+
     @unittest.skipIf(os.name == "nt", "POSIX executable fixture")
     def test_manifest_records_binary_and_mode(self):
         with tempfile.TemporaryDirectory() as directory:

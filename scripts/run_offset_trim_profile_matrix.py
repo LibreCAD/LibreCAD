@@ -88,6 +88,14 @@ FAMILIES = {
 SUMMARY = re.compile(r"\((\d+) assertions? in (\d+) test cases?\)")
 
 
+def file_sha256(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as source:
+        for block in iter(lambda: source.read(1024 * 1024), b""):
+            digest.update(block)
+    return digest.hexdigest()
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("binary", type=Path, help="path to librecad_tests")
@@ -129,7 +137,7 @@ def main() -> int:
     if args.worker_timeout_ms is not None and args.worker_timeout_ms <= 0:
         print("--worker-timeout-ms must be positive", file=sys.stderr)
         return 2
-    binary_sha256 = hashlib.sha256(binary.read_bytes()).hexdigest()
+    binary_sha256 = file_sha256(binary)
 
     family = FAMILIES[args.family]
     profiles = args.profile if args.profile is not None else list(family["profiles"])
@@ -193,7 +201,7 @@ def main() -> int:
 
     passed_profiles = [r["profile"] for r in results if r["passed"]]
     failed_profiles = [r["profile"] for r in results if not r["passed"]]
-    binary_unchanged = hashlib.sha256(binary.read_bytes()).hexdigest() == binary_sha256
+    binary_unchanged = file_sha256(binary) == binary_sha256
     manifest = {
         "binary": str(binary),
         "binary_sha256": binary_sha256,
