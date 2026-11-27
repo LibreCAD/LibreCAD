@@ -136,8 +136,8 @@ the dependencies for **3 and 4** in parallel. **5** follows the acceptance work.
    profiles do not replace the shared-process run.
 2. The six timed-out generators now have complete isolated profile and
    unpinned single-case receipts below. The eight affected cases also passed
-   together in declaration order; run the same selection in seeded random
-   order. This selection does not replace the broader 104-case order lane.
+   together in declaration and seeded random order. Run the broader 104-case
+   order lane; these eight cases alone do not qualify it.
 3. Where an existing selector cannot isolate every tuple, add a test-only
    profile selector to that case and register it in the existing profile
    runner. Preserve the unpinned test, use stable complete tuple identities,
@@ -467,6 +467,16 @@ the dependencies for **3 and 4** in parallel. **5** follows the acceptance work.
   `/private/tmp/offset-3193-trim-eight-decl-output.log`. This does not erase
   the earlier intermittent failures or qualify random order, the other 96
   cases, leak detection or other platforms.
+- The same eight affected cases subsequently passed together in **random order
+  with seed 3193: 115,095 assertions / 8 cases**, with the same source-equivalent
+  macOS Debug ASan/UBSan binary, options, unset pins and test-only bounds as the
+  declaration-order run. The report contains all expected generator iteration
+  counts and the same assertion total; the test and worker hashes match, and
+  neither retained output contains sanitizer diagnostics. Temporary artifacts:
+  `/private/tmp/offset-3193-trim-eight-rand-report.txt` and
+  `/private/tmp/offset-3193-trim-eight-rand-output.log`. These two orderings
+  do not erase the intermittent failures or qualify the other 96 cases, leak
+  detection or non-macOS behavior.
 - Test-only commit `ddad0c653` makes profile timeouts use the case runner's
   process-group cleanup and records test-binary SHA-256, change detection,
   bounds and hyperbola mode in new manifests. Three focused Python tests and
