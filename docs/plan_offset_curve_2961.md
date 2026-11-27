@@ -191,8 +191,8 @@ the dependencies for **3 and 4** in parallel. **5** follows the acceptance work.
   Timeouts: bounded hyperbola file lanes, typed parabola against conic cutters,
   transformed beyond-cusp parabola, high-origin closed-polyline seam, rational
   high-degree spline file lanes, and reconstructed parabola transformed frames.
-  No sanitizer diagnostic was reported by the completed cases; do not call
-  timed-out generators passed or raise production deadlines.
+  No sanitizer diagnostic was reported by the completed cases. The timed-out
+  runs themselves are not passes; subsequent bounded reruns are recorded below.
 - The concave-polyline high-origin case failed once in the case matrix on an
   Update from Source assertion (R14, origin 1e9, angle 0, scenario 0). Test-only
   commit `fdaee7ac0` adds `LC_OFFSET_TRIM_CONCAVE_REPRO=1` and refusal context.
@@ -214,11 +214,10 @@ the dependencies for **3 and 4** in parallel. **5** follows the acceptance work.
   This identifies the observed concave failure's launch path, not its ultimate
   trigger or whether a non-sanitized build can exhibit it. PID 77890's crash
   report was not located, so do not assert the same stack for the convex case.
-  The temporary diagnostic was removed and the sanitizer target rebuilt. Next:
-  preserve the crash evidence, compare launch behavior on the supported Qt/macOS
-  configurations and reproduce both full cases in Release; keep sanitizer and
-  all timed-out cases open until accounted for. Do not hide or retry away the
-  original failures or change production deadlines.
+  The temporary diagnostic was removed and the sanitizer target rebuilt.
+  Subsequent Release and sanitizer reruns are recorded below. Next: preserve the
+  crash evidence and compare launch behavior on supported Qt/macOS configurations.
+  Do not hide or retry away the original failures or change production deadlines.
 - The complete concave and closed-convex generators subsequently passed in
   the source-equivalent macOS CMake Release build: **18,910** and **6,270**
   assertions respectively, one case each, using the 30-second test-only wait.
