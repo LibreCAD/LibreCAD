@@ -4288,12 +4288,12 @@ TEST_CASE("Raster source frames are bounded and selected by handle",
   CHECK(metadata.dxfRootDictionarySource()); // unrelated dictionary provenance survives
   metadata.clear();
   image.handle = 1;
-  for (std::uint32_t handle = 1; handle <= 64; ++handle) {
+  for (std::uint32_t handle = 1; handle <= 256; ++handle) {
     image.handle = handle;
     metadata.addDxfImageSource(image);
     REQUIRE(metadata.dxfImageSource(handle));
   }
-  image.handle = 65;
+  image.handle = 257;
   metadata.addDxfImageSource(image);
   CHECK_FALSE(metadata.dxfImageSource(1));
   metadata.clear();

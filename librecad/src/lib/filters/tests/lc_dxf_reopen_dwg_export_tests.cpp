@@ -682,7 +682,7 @@ TEST_CASE("a DXF that declares its viewports is saved as DWG",
 }
 
 TEST_CASE("ownerless plot records replay unchanged and reject edits safely",
-          "[dxf][dwg][filter][plotsettings][regression]") {
+          "[dxf][dwg][filter][plotsettings][regression][system-codec-cross]") {
     ensureSettings();
     const Format dwg = GENERATE(from_range(std::begin(kDwgFormats), std::end(kDwgFormats)));
     CAPTURE(dwg.m_name);
@@ -712,16 +712,6 @@ TEST_CASE("ownerless plot records replay unchanged and reject edits safely",
     REQUIRE(raw != raws.end());
     if (raw->parentHandle != 0u)
         SKIP("The selected codec generated a rooted plot record; supply an ownerless witness to exercise this path.");
-    // Allow the bundled-codec witness to be checked by a separate codec build.
-    // QFile::copy refuses an existing destination, so a rerun cannot replace
-    // evidence from an earlier run.
-    const char *captureDirectory = std::getenv("LIBRECAD_TEST_CAPTURE_OWNERLESS_DWG_DIR");
-    if (captureDirectory && *captureDirectory) {
-        REQUIRE((!witnessDirectory || !*witnessDirectory));
-        const QString captured = QDir(QString::fromLocal8Bit(captureDirectory))
-            .filePath(QString("lc-viewport-before-%1.dwg").arg(QString::fromLatin1(dwg.m_name)));
-        REQUIRE(QFile::copy(QString::fromStdString(initial), captured));
-    }
     const auto originalBytes = raw->rawBytes;
     const auto originalHandle = raw->handle;
     auto &plots = const_cast<std::vector<DRW_PlotSettings>&>(metadata.plotSettings());
@@ -732,6 +722,19 @@ TEST_CASE("ownerless plot records replay unchanged and reject edits safely",
         return row.handle == DRW::DwgNamedObjectsDictionaryHandle;
     });
     REQUIRE(nod != dictionaries.end());
+    if (nod->entries.size() != 1u || nod->entries.front().name != "ACAD_GROUP") {
+        if (witnessDirectory && *witnessDirectory)
+            FAIL("The supplied witness does not have the selected simple root graph.");
+        SKIP("The selected codec generated a different root graph; supply a simple-root ownerless witness.");
+    }
+    // QFile::copy refuses an existing destination, protecting earlier evidence.
+    const char *captureDirectory = std::getenv("LIBRECAD_TEST_CAPTURE_OWNERLESS_DWG_DIR");
+    if (captureDirectory && *captureDirectory) {
+        REQUIRE((!witnessDirectory || !*witnessDirectory));
+        const QString captured = QDir(QString::fromLocal8Bit(captureDirectory))
+            .filePath(QString("lc-viewport-before-%1.dwg").arg(QString::fromLatin1(dwg.m_name)));
+        REQUIRE(QFile::copy(QString::fromStdString(initial), captured));
+    }
     auto *active = reopened.getPlotSettings();
     REQUIRE(active != nullptr);
     RS_FilterDXFRW writer;

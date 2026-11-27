@@ -2622,7 +2622,8 @@ if (LIBRECAD_BUILD_SYSTEM_CODEC_TESTS)
         librecad/src/main/lc_release_label.cpp
         librecad/src/test/lc_testsettingsisolation.cpp
         librecad/src/test/lc_testtempdirectory.cpp
-        librecad/src/lib/filters/tests/dxf_roundtrip_tests.cpp)
+        librecad/src/lib/filters/tests/dxf_roundtrip_tests.cpp
+        librecad/src/lib/filters/tests/lc_dxf_reopen_dwg_export_tests.cpp)
     set_target_properties(librecad_system_codec_tests PROPERTIES
         AUTOMOC OFF AUTOUIC OFF AUTORCC OFF)
     target_include_directories(librecad_system_codec_tests PRIVATE ${SHARED_INCLUDES})
@@ -2639,7 +2640,7 @@ if (LIBRECAD_BUILD_SYSTEM_CODEC_TESTS)
     endif()
     add_test(NAME librecad_system_codec_tests
         COMMAND librecad_system_codec_tests
-                "[dimstyle],[system-codec],[system-codec-extrusion]" --reporter compact)
+                "[dimstyle],[system-codec],[system-codec-extrusion],[system-codec-cross]" --reporter compact)
     set_tests_properties(librecad_system_codec_tests PROPERTIES
         WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
         ENVIRONMENT "QT_QPA_PLATFORM=offscreen" TIMEOUT 120)
