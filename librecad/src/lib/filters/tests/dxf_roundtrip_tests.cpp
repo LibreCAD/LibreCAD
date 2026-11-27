@@ -8479,6 +8479,47 @@ TEST_CASE("DXF omission report distinguishes a different raw object at the same 
   }
 }
 
+TEST_CASE("DXF typed stand-in does not hide a different omitted raw object",
+          "[dxf][roundtrip][filter][version]") {
+  ensureSettings();
+  for (const std::string rawName : {"SCALE", "scale", "FIELD", "DUPLICATE", "RAWENTITY"}) {
+    INFO(rawName);
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    auto &metadata = graphic.dwgAdvancedMetadata();
+    DRW_Scale scale; scale.handle = 0xE0u; scale.name = "test scale";
+    metadata.addScale(scale);
+    DRW_RawDxfObject raw;
+    raw.handle = scale.handle;
+    raw.name = (rawName == "DUPLICATE" || rawName == "RAWENTITY") ? "SCALE" : rawName;
+    raw.m_version = DRW::AC1015;
+    metadata.addRawDxfObject(raw);
+    if (rawName == "DUPLICATE") {
+      raw.name = "FIELD";
+      metadata.addRawDxfObject(raw);
+    } else if (rawName == "RAWENTITY") {
+      raw.name = "LINE";
+      metadata.addRawDxfEntity(raw);
+    }
+    auto *line = new RS_Line(&graphic, RS_LineData(RS_Vector(0, 0), RS_Vector(1, 0)));
+    line->setReactorHandles({0xE0u});
+    graphic.addEntity(line);
+    const auto out = tmpFile("typed_standin_collision_report_r2007.dxf");
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(out), RS2::FormatDXFRW));
+    CHECK(recordGroupValues(out, "SCALE", "5") == std::vector<std::string>{"E0"});
+    const auto report = filter.exportReport();
+    CHECK(report.contains(QStringLiteral("1 raw record(s)")) == (rawName == "FIELD"));
+    CHECK(report.contains(QStringLiteral("2 raw record(s)")) ==
+          (rawName == "DUPLICATE" || rawName == "RAWENTITY"));
+    const auto references = recordGroupValues(out, "LINE", "330");
+    CHECK((std::find(references.begin(), references.end(), "E0") != references.end()) ==
+          (rawName != "FIELD" && rawName != "DUPLICATE" && rawName != "RAWENTITY"));
+    CHECK(danglingReferences(out).empty());
+    std::filesystem::remove(out);
+  }
+}
+
 #ifdef LIBRECAD_SYSTEM_CODEC_TESTS
 TEST_CASE("DXF version-gated typed write preserves destination and retries",
           "[dxf][roundtrip][filter][version]") {

@@ -14531,11 +14531,16 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
     // read from another is left out of this file, with every reference to it.
     std::set<std::uint32_t> rawObjectHandles;
     std::set<std::uint32_t> leftOutRawHandles;
+    std::set<std::pair<std::uint32_t, std::string>> leftOutRawObjectCarriers;
+    std::map<std::uint32_t, std::size_t> leftOutRawHandleCounts;
     for (const DRW_RawDxfObject &o : metadata.rawDxfObjects()) {
       if (!replaysInDxfExport(o.m_version)) {
         ++m_dxfLeftOutRawRecords;
-        if (o.handle != 0)
+        if (o.handle != 0) {
           leftOutRawHandles.insert(o.handle);
+          leftOutRawObjectCarriers.emplace(o.handle, normalizeDwgTableName(o.name));
+          ++leftOutRawHandleCounts[o.handle];
+        }
         continue;
       }
       if (o.handle != 0) {
@@ -14547,8 +14552,10 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
     for (const DRW_RawDxfObject &e : metadata.rawDxfEntities()) {
       if (!replaysInDxfExport(e.m_version)) {
         ++m_dxfLeftOutRawRecords;
-        if (e.handle != 0)
+        if (e.handle != 0) {
           leftOutRawHandles.insert(e.handle);
+          ++leftOutRawHandleCounts[e.handle];
+        }
         continue;
       }
       if (e.handle != 0)
@@ -14651,7 +14658,13 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
       if (isObject)
         typedHandles.push_back(handle);
       registerClassFor(recordName);
-      standsInForLeftOut(handle);
+      // Only a unique, same-type raw object can be treated as this stand-in.
+      // Leave ambiguous handles in the dropped-reference set and report.
+      const auto skipped = leftOutRawHandleCounts.find(handle);
+      if (!isObject || (skipped != leftOutRawHandleCounts.end() && skipped->second == 1 &&
+                        leftOutRawObjectCarriers.count(
+                            {handle, normalizeDwgTableName(recordName)}) != 0))
+        standsInForLeftOut(handle);
     };
     for (const auto &record : metadata.suns())
       reserveTyped(record.handle, record.replayState, "SUN");
