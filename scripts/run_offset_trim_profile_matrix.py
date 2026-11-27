@@ -14,6 +14,11 @@ import time
 
 
 FAMILIES = {
+    "closed-seam": {
+        "environment": "LC_OFFSET_TRIM_CLOSED_SEAM_PROFILE",
+        "profiles": range(38),
+        "test_spec": "[offset-trim-profile-closed-seam]",
+    },
     "high-origin-ellipse": {
         "environment": "LC_OFFSET_TRIM_HIGH_ORIGIN_ELLIPSE_PROFILE",
         "profiles": range(52),

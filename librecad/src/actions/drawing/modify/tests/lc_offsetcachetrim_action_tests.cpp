@@ -9496,12 +9496,21 @@ TEST_CASE("T Trim trims a high-origin closed polyline cache on both offset sides
 }
 
 TEST_CASE("T Trim Two trims a high-origin closed polyline cache across its cutter seam",
-          "[gui][lc-offsetcurve][trim-action][typed-source][polyline][closed][high-origin][trim-two]") {
+          "[gui][lc-offsetcurve][trim-action][typed-source][polyline][closed][high-origin][trim-two]"
+          "[offset-trim-profile-closed-seam]") {
     REQUIRE(lc::test::ensureSettings());
     const double baseRadius = 1e5;
     constexpr double distance = 2500.0;
     const bool isolateFailure = qEnvironmentVariableIsSet("LC_OFFSET_TRIM_CLOSED_SEAM_REPRO");
-    const auto profiles = GENERATE(Catch::Generators::table<double, double, bool, int, double, double>({
+    const bool pinProfile = qEnvironmentVariableIsSet("LC_OFFSET_TRIM_CLOSED_SEAM_PROFILE");
+    bool profileValid = true;
+    const int requestedProfile = pinProfile
+        ? qEnvironmentVariableIntValue("LC_OFFSET_TRIM_CLOSED_SEAM_PROFILE", &profileValid)
+        : 0;
+    REQUIRE(profileValid);
+    REQUIRE_FALSE((pinProfile && isolateFailure));
+    using Profile = std::tuple<double, double, bool, int, double, double>;
+    const std::array<Profile, 38> profileRows{{
         {0.0, 1.0, false, 0, 1.0, 1.0}, {.37, 1.0, false, 0, 1.0, 1.0},
         {0.0, .7, false, 0, 1.0, 1.0}, {.37, .7, false, 0, 1.0, 1.0},
         {0.0, 1.0, true, 0, 1.0, 1.0}, {.37, .7, true, 0, 1.0, 10.0},
@@ -9533,7 +9542,12 @@ TEST_CASE("T Trim Two trims a high-origin closed polyline cache across its cutte
         {.9, .7, false, 8, 1.7, 1.0},
         {.9, .7, false, 8, 1.7, 10.0},
         {.37, 1.0, false, 8, .6, 1.0},
-        {.37, 1.0, false, 8, 1.7, 1.0}}));
+        {.37, 1.0, false, 8, 1.7, 1.0}}};
+    const int profileIndex = pinProfile ? requestedProfile : GENERATE(range(0, 38));
+    REQUIRE(profileIndex >= 0);
+    REQUIRE(profileIndex < static_cast<int>(profileRows.size()));
+    const auto& profiles = profileRows.at(static_cast<std::size_t>(profileIndex));
+    CAPTURE(profileIndex);
     const double rotation = std::get<0>(profiles);
     const double verticalRatio = std::get<1>(profiles);
     const bool bulged = std::get<2>(profiles);
