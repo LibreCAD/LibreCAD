@@ -135,9 +135,9 @@ the dependencies for **3 and 4** in parallel. **5** follows the acceptance work.
 1. The periodic-spline profile manifest is reconciled below. Its isolated
    profiles do not replace the shared-process run.
 2. The six timed-out generators now have complete isolated profile and
-   unpinned single-case receipts below. Run the affected cases together in
-   declaration and seeded random order; multi-case behavior is not established
-   by separate single-process cases.
+   unpinned single-case receipts below. The eight affected cases also passed
+   together in declaration order; run the same selection in seeded random
+   order. This selection does not replace the broader 104-case order lane.
 3. Where an existing selector cannot isolate every tuple, add a test-only
    profile selector to that case and register it in the existing profile
    runner. Preserve the unpinned test, use stable complete tuple identities,
@@ -452,6 +452,21 @@ the dependencies for **3 and 4** in parallel. **5** follows the acceptance work.
   `/private/tmp/offset-3193-high-degree-aggregate-asan-logs`. The prior
   300-second timeout remains historical evidence; multi-case order, leak
   detection and non-macOS behavior remain open.
+- The six formerly timed-out cases and the two intermittently failing polyline
+  cases subsequently passed together in **declaration order: 115,095 assertions
+  / 8 cases** on the source-equivalent macOS Debug ASan/UBSan build, with the
+  same options and 30-second test-only worker wait. All profile/reproduction
+  pins and hyperbola high-origin flags were unset; Catch used seed 3193,
+  stop-on-first-failure and a 5,400-second test-only process bound. The report
+  contains the expected 38 seam, 240 hyperbola, 360 spline, 95 convex and 60
+  concave generator iterations, plus the three non-generator cases; its
+  assertion count equals the eight individual-case totals. The test and worker
+  hashes match the seam receipt; report and output contain no sanitizer
+  diagnostic. Temporary artifacts:
+  `/private/tmp/offset-3193-trim-eight-decl-report.txt` and
+  `/private/tmp/offset-3193-trim-eight-decl-output.log`. This does not erase
+  the earlier intermittent failures or qualify random order, the other 96
+  cases, leak detection or other platforms.
 - Test-only commit `ddad0c653` makes profile timeouts use the case runner's
   process-group cleanup and records test-binary SHA-256, change detection,
   bounds and hyperbola mode in new manifests. Three focused Python tests and
