@@ -16070,7 +16070,15 @@ void RS_FilterDXFRW::prepareBlocks() {
       }
       case RS2::EntityHatch: {
         if (m_version == 1009) {
-          if (!static_cast<RS_Hatch *>(e)->isSolid()) {
+          const auto *hatch = static_cast<RS_Hatch *>(e);
+          bool hasPatternPiece = false;
+          for (const RS_Entity *child : *hatch)
+            if (child && child->isAlive() && !child->isContainer() &&
+                child->getFlag(RS2::FlagHatchChild)) {
+              hasPatternPiece = true;
+              break;
+            }
+          if (!hatch->isSolid() && hasPatternPiece) {
             const QString prefix = "*U" + QString::number(++hatchNum);
             m_noNameBlock[e] = prefix;
           }
@@ -36301,7 +36309,8 @@ void RS_FilterDXFRW::writeHatch(RS_Hatch *h) {
       if (noteDxfWrite(m_dxfW->writeInsert(&in)) && m_graphic != nullptr &&
           m_graphic->dwgAdvancedMetadata().hasSourceHatchAssociation(h->sourceHandle()))
         ++m_hatchAssociativityLeftOut;
-    }
+    } else
+      ++m_writeLeftOut["HATCH"];
     return;
   }
 
@@ -36313,6 +36322,10 @@ void RS_FilterDXFRW::writeHatch(RS_Hatch *h) {
   if (loops.empty()) {
     RS_DEBUG->print(RS_Debug::D_WARNING,
                     "RS_FilterDXF::writeHatch: Dropping Hatch");
+    if (m_dwgW != nullptr)
+      m_writeFailed = true;
+    else
+      ++m_writeLeftOut["HATCH"];
     return;
   }
 

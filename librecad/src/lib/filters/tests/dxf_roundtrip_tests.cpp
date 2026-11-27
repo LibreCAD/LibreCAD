@@ -7397,6 +7397,77 @@ TEST_CASE("DXF export reports hatch deassociation and retains unrelated reactors
   std::filesystem::remove(out);
 }
 
+TEST_CASE("DXF reports an unexportable hatch and removes its boundary reactor",
+          "[dxf][roundtrip][filter][handles][hatch-assoc]") {
+  ensureSettings();
+  RS_Graphic graphic;
+  graphic.initForNewDocument();
+  auto *hatch = new RS_Hatch(&graphic, RS_HatchData(true, 1.0, 0.0, "SOLID"));
+  hatch->setSourceHandle(0xB1u);
+  graphic.addEntity(hatch);
+  auto *boundary = new RS_Line(&graphic, RS_LineData(RS_Vector(0, 0), RS_Vector(1, 0)));
+  boundary->setSourceHandle(0xB0u);
+  boundary->setReactorHandles({0xB1u, 0xB2u});
+  graphic.addEntity(boundary);
+  auto *unrelated = new RS_Line(&graphic, RS_LineData(RS_Vector(0, 1), RS_Vector(1, 1)));
+  unrelated->setSourceHandle(0xB2u);
+  graphic.addEntity(unrelated);
+  graphic.dwgAdvancedMetadata().addSourceHatchBoundaries(0xB1u, {0xB0u});
+  const auto out = tmpFile("unexportable_hatch_report.dxf");
+  RS_FilterDXFRW filter;
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(out), RS2::FormatDXFRW));
+  CHECK(countRecords(out, "HATCH") == 0);
+  CHECK(filter.exportReport().contains(QStringLiteral("1 × HATCH")));
+  const auto lines = recordGroupValues(out, "LINE", "5");
+  REQUIRE(lines.size() == 2u);
+  const auto reactors = recordReactors(out, "LINE");
+  REQUIRE(reactors.size() == 2u);
+  CHECK(reactors[0] == std::vector<std::string>{lines[1]});
+  CHECK(danglingReferences(out).empty());
+  if (const char *copy = std::getenv("LIBRECAD_KEEP_EMPTY_HATCH_OUTPUT"))
+    std::filesystem::copy_file(out, copy, std::filesystem::copy_options::overwrite_existing);
+  auto *emptyPattern = new RS_Hatch(&graphic, RS_HatchData(false, 1.0, 0.0, "ANSI31"));
+  graphic.addEntity(emptyPattern);
+  const auto r12 = tmpFile("unexportable_hatch_report_r12.dxf");
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(r12), RS2::FormatDXFRW12));
+  CHECK(filter.exportReport().contains(QStringLiteral("2 × HATCH")));
+  CHECK(countRecords(r12, "INSERT") == 0);
+  CHECK(danglingReferences(r12).empty());
+  REQUIRE(graphic.removeEntity(emptyPattern));
+  std::filesystem::remove(r12);
+#ifdef DWGSUPPORT
+  const auto dwg = tmpFile("unexportable_hatch_report.dwg");
+  const std::string sentinel = "preserve DWG destination";
+  writeText(dwg, sentinel);
+  CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(dwg), RS2::FormatDWG2004));
+  std::ifstream retained(dwg, std::ios::binary);
+  CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel);
+  retained.close();
+#endif
+  REQUIRE(graphic.removeEntity(hatch));
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(out), RS2::FormatDXFRW));
+  CHECK_FALSE(filter.exportReport().contains(QStringLiteral("HATCH")));
+#ifdef DWGSUPPORT
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(dwg), RS2::FormatDWG2004));
+  CHECK_FALSE(filter.exportReport().contains(QStringLiteral("HATCH")));
+  RS_Graphic reopened;
+  RS_FilterDXFRW reader;
+  REQUIRE(reader.fileImport(reopened, QString::fromStdString(dwg), RS2::FormatDWG));
+  const auto readback = tmpFile("unexportable_hatch_readback.dxf");
+  REQUIRE(reader.fileExport(reopened, QString::fromStdString(readback), RS2::FormatDXFRW));
+  CHECK(countRecords(readback, "HATCH") == 0);
+  const auto dwgLines = recordGroupValues(readback, "LINE", "5");
+  const auto dwgReactors = recordReactors(readback, "LINE");
+  REQUIRE(dwgLines.size() == 2u);
+  REQUIRE(dwgReactors.size() == 2u);
+  CHECK(dwgReactors[0] == std::vector<std::string>{dwgLines[1]});
+  CHECK(danglingReferences(readback).empty());
+  std::filesystem::remove(readback);
+  std::filesystem::remove(dwg);
+#endif
+  std::filesystem::remove(out);
+}
+
 TEST_CASE("DXF export resolves reactors a table record keeps as application data",
           "[dxf][roundtrip][filter][handles]") {
   ensureSettings();
@@ -13331,6 +13402,7 @@ TEST_CASE("Linetype names on hatch pattern lines get a record in R12",
     RS_FilterDXFRW filter;
     REQUIRE(filter.fileExport(graphic, QString::fromStdString(out12),
                               RS2::FormatDXFRW12));
+    CHECK_FALSE(filter.exportReport().contains(QStringLiteral("HATCH")));
   }
   CHECK(countValues(recordGroupValues(out12, "LINE", "6"), "VENDOR_HCH") ==
         1);
