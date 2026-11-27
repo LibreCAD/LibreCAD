@@ -3537,12 +3537,12 @@ TEST_CASE("Raster source frames are bounded and selected by handle",
   CHECK(metadata.dxfRootDictionarySource()); // unrelated dictionary provenance survives
   metadata.clear();
   image.handle = 1;
-  for (std::uint32_t handle = 1; handle <= 32; ++handle) {
+  for (std::uint32_t handle = 1; handle <= 64; ++handle) {
     image.handle = handle;
     metadata.addDxfImageSource(image);
     REQUIRE(metadata.dxfImageSource(handle));
   }
-  image.handle = 33;
+  image.handle = 65;
   metadata.addDxfImageSource(image);
   CHECK_FALSE(metadata.dxfImageSource(1));
   metadata.clear();
@@ -3630,11 +3630,11 @@ TEST_CASE("System codec preserves bounded multi-image definition graphs",
                                RS2::FormatDXFRW, RS2::FormatDXFRW2010,
                                RS2::FormatDXFRW2013, RS2::FormatDXFRW2018);
   CAPTURE(format);
-  const int shape = GENERATE(0, 1, 2, 3, 4, 5, 6);
+  const int shape = GENERATE(0, 1, 2, 3, 4, 5, 6, 7);
   const bool withMaterial = GENERATE(false, true);
   const bool legacyMaterial = withMaterial &&
       (format == RS2::FormatDXFRW2000 || format == RS2::FormatDXFRW2004);
-  const unsigned imageCount = shape < 2 ? 2u : shape < 5 ? 3u : shape == 5 ? 4u : 32u;
+  const unsigned imageCount = shape < 2 ? 2u : shape < 5 ? 3u : shape == 5 ? 4u : shape == 6 ? 32u : 64u;
   const unsigned definitionCount = shape == 0 || shape == 4 ? 1u :
                                    shape == 3 || shape >= 5 ? 3u : 2u;
   const bool sharedDefinition = definitionCount == 1u;
@@ -3690,6 +3690,12 @@ TEST_CASE("System codec preserves bounded multi-image definition graphs",
     }
     REQUIRE(changed == 3u * imageCount);
     writeText(source, rewritten);
+  }
+  if (const char *copy = std::getenv("LIBRECAD_KEEP_TWO_IMAGE_SOURCE")) {
+    const std::string path = std::string(copy) + ".shape" + std::to_string(shape) +
+                             (withMaterial ? ".material" : "") +
+                             (format == RS2::FormatDXFRW ? "" : ".v" + std::to_string(static_cast<int>(format))) + ".dxf";
+    std::filesystem::copy_file(source, path, std::filesystem::copy_options::overwrite_existing);
   }
   RS_Graphic reopened;
   REQUIRE(filter.fileImport(reopened, QString::fromStdString(source), format));
@@ -4112,6 +4118,75 @@ TEST_CASE("System codec preserves legacy polygonal image boundaries",
   std::filesystem::remove(output);
 }
 
+TEST_CASE("System codec round trips 33 image graphs", "[system-codec][dxf][image][transaction]") {
+  ensureSettings();
+  const auto source = tmpFile("thirty_three_image_source.dxf");
+  const auto output = tmpFile("thirty_three_image_output.dxf");
+  RS_Graphic original; original.initForNewDocument();
+  for (unsigned i = 0; i < 33u; ++i) {
+    const auto path = QStringLiteral("bounded-image-%1.png").arg(i % 4u);
+    original.addEntity(new RS_Image(&original, RS_ImageData(0, RS_Vector(29.0 * i, 2),
+        RS_Vector(1, 0), RS_Vector(0, 1), RS_Vector(16, 12), path, 50, 50, 0)));
+  }
+  RS_FilterDXFRW filter;
+  REQUIRE(filter.fileExport(original, QString::fromStdString(source), RS2::FormatDXFRW));
+  RS_Graphic reopened;
+  REQUIRE(filter.fileImport(reopened, QString::fromStdString(source), RS2::FormatDXFRW));
+  REQUIRE(reopened.dwgAdvancedMetadata().rasterImages().size() == 33u);
+  REQUIRE(filter.fileExport(reopened, QString::fromStdString(output), RS2::FormatDXFRW));
+  CHECK(countRecords(output, "IMAGE") == 33);
+  CHECK(countRecords(output, "IMAGEDEF") == 4);
+  CHECK(countRecords(output, "IMAGEDEF_REACTOR") == 33);
+  RS_Graphic reread;
+  REQUIRE(filter.fileImport(reread, QString::fromStdString(output), RS2::FormatDXFRW));
+  CHECK(reread.dwgAdvancedMetadata().rasterImages().size() == 33u);
+  std::filesystem::remove(source); std::filesystem::remove(output);
+}
+
+TEST_CASE("Raster source capture applies a shared logical budget", "[system-codec][dxf][image][budget]") {
+  LC_DwgAdvancedMetadata metadata;
+  DRW_RawDxfObject source;
+  source.m_version = DRW::AC1027; source.hasRawValues = true;
+  source.groups.emplace_back(1, std::string(30000u, 'a'));
+  source.rawValues.emplace_back(30000u, 'b');
+  unsigned completePairs = 0; bool rejected = false;
+  for (unsigned i = 0; i < 40u; ++i) {
+    source.name = "IMAGE"; source.handle = 100u + i;
+    metadata.addDxfImageSource(source);
+    if (!metadata.dxfImageSource(source.handle)) { rejected = true; break; }
+    source.name = "IMAGEDEF"; source.handle = 1000u + i;
+    metadata.addDxfImageDefSource(source);
+    if (!metadata.dxfImageDefSource(source.handle)) { rejected = true; break; }
+    ++completePairs;
+  }
+  CHECK(rejected); CHECK(completePairs > 32u); CHECK(completePairs < 40u);
+  CHECK(metadata.dxfImageSource(100u) == nullptr);
+  CHECK(metadata.dxfImageDefSource(1000u) == nullptr);
+  metadata.clear();
+  source.groups.clear(); source.rawValues.clear();
+  source.groups.emplace_back(1, std::string("small")); source.rawValues.emplace_back("small");
+  for (unsigned i = 0; i < 64u; ++i) {
+    source.name = "IMAGE"; source.handle = 100u + i; metadata.addDxfImageSource(source);
+    source.name = "IMAGEDEF"; source.handle = 1000u + i; metadata.addDxfImageDefSource(source);
+    REQUIRE(metadata.dxfImageSource(100u + i)); REQUIRE(metadata.dxfImageDefSource(1000u + i));
+  }
+  source.name = "IMAGE"; source.handle = 164u; metadata.addDxfImageSource(source);
+  CHECK(metadata.dxfImageSource(100u) == nullptr);
+  CHECK(metadata.dxfImageDefSource(1000u) == nullptr);
+  metadata.clear();
+  source.handle = 100u; metadata.addDxfImageSource(source);
+  CHECK(metadata.dxfImageSource(100u) != nullptr);
+  metadata.clear();
+  source.name = "IMAGEDEF"; source.handle = 1000u;
+  source.groups.assign(128u, DRW_Variant(90, 0)); source.rawValues.assign(128u, "0");
+  metadata.addDxfImageDefSource(source); REQUIRE(metadata.dxfImageDefSource(1000u));
+  source.handle = 1001u; source.groups.emplace_back(90, 0); source.rawValues.emplace_back("0");
+  metadata.addDxfImageDefSource(source); CHECK_FALSE(metadata.dxfImageDefSource(1000u));
+  metadata.clear(); source.name = "IMAGE"; source.handle = 100u;
+  source.groups.resize(65u); source.rawValues.resize(65u);
+  metadata.addDxfImageSource(source); CHECK_FALSE(metadata.dxfImageSource(100u));
+}
+
 TEST_CASE("System codec audits larger bounded image graphs",
           "[system-codec][dxf][image][transaction]") {
   ensureSettings();
@@ -4119,9 +4194,11 @@ TEST_CASE("System codec audits larger bounded image graphs",
                                RS2::FormatDXFRW, RS2::FormatDXFRW2010,
                                RS2::FormatDXFRW2013, RS2::FormatDXFRW2018);
   CAPTURE(format);
-  const unsigned shape = GENERATE(0u, 1u, 2u, 3u, 4u, 5u);
-  const unsigned imageCount = shape == 0u ? 4u : shape == 1u ? 8u : shape == 5u ? 33u : 32u;
-  const unsigned definitionCount = shape == 0u || shape == 2u ? 1u : shape == 4u ? 32u : 4u;
+  const unsigned shape = GENERATE(0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u, 8u, 9u);
+  const unsigned imageCount = shape == 0u ? 4u : shape == 1u ? 8u : shape == 5u ? 33u :
+                              shape == 6u || shape == 7u || shape == 9u ? 64u : shape == 8u ? 65u : 32u;
+  const unsigned definitionCount = shape == 0u || shape == 2u || shape == 9u ? 1u : shape == 4u ? 32u :
+                                   shape == 7u ? 64u : 4u;
   const auto source = tmpFile("many_image_source.dxf");
   const auto output = tmpFile("many_image_output.dxf");
   RS_Graphic original;
@@ -4147,10 +4224,17 @@ TEST_CASE("System codec audits larger bounded image graphs",
   REQUIRE(metadata.imageDefinitionReactors().size() == imageCount);
   const std::string sentinel = "preserve many-image destination";
   writeText(output, sentinel);
-  if (imageCount > 32u) {
+  if (imageCount > 64u) {
     CHECK_FALSE(filter.fileExport(reopened, QString::fromStdString(output), format));
-    std::ifstream in(output, std::ios::binary);
-    CHECK(std::string(std::istreambuf_iterator<char>(in), {}) == sentinel);
+    { std::ifstream in(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(in), {}) == sentinel); }
+    RS_Entity *last = nullptr;
+    for (RS_Entity *entity : original)
+      if (entity && entity->rtti() == RS2::EntityImage) last = entity;
+    REQUIRE(last); REQUIRE(original.removeEntity(last));
+    REQUIRE(filter.fileExport(original, QString::fromStdString(source), format));
+    RS_Graphic corrected; REQUIRE(filter.fileImport(corrected, QString::fromStdString(source), format));
+    REQUIRE(filter.fileExport(corrected, QString::fromStdString(output), format));
+    CHECK(countRecords(output, "IMAGE") == 64);
   } else {
     auto &reactors = const_cast<std::vector<LC_DwgAdvancedMetadata::ImageDefinitionReactorRecord>&>(
         metadata.imageDefinitionReactors());
@@ -4194,6 +4278,59 @@ TEST_CASE("System codec audits larger bounded image graphs",
   }
   std::filesystem::remove(source);
   std::filesystem::remove(output);
+}
+
+TEST_CASE("System codec preserves 64 images across model and block spaces", "[system-codec][dxf][image][transaction]") {
+  ensureSettings();
+  const auto format = GENERATE(RS2::FormatDXFRW, RS2::FormatDXFRW2018);
+  CAPTURE(format);
+  const auto source = tmpFile("sixty_four_mixed_images_source.dxf");
+  const auto output = tmpFile("sixty_four_mixed_images_output.dxf");
+  RS_Graphic original; original.initForNewDocument();
+  auto *block = new RS_Block(&original, RS_BlockData(QStringLiteral("MANY_RASTERS"), RS_Vector(0, 0), false));
+  for (unsigned i = 0; i < 64u; ++i) {
+    RS_EntityContainer *owner = i < 32u ? static_cast<RS_EntityContainer *>(&original) : block;
+    owner->addEntity(new RS_Image(owner, RS_ImageData(0, RS_Vector(29.0 * i, 2), RS_Vector(1, 0),
+        RS_Vector(0, 1), RS_Vector(16, 12), QStringLiteral("mixed-%1.png").arg(i % 2u), 50, 50, 0)));
+  }
+  REQUIRE(original.addBlock(block));
+  original.addEntity(new RS_Insert(&original, RS_InsertData(QStringLiteral("MANY_RASTERS"),
+      RS_Vector(20, 0), RS_Vector(1, 1), 0.0, 1, 1, RS_Vector(0, 0))));
+  RS_FilterDXFRW filter;
+  REQUIRE(filter.fileExport(original, QString::fromStdString(source), format));
+  RS_Graphic reopened;
+  REQUIRE(filter.fileImport(reopened, QString::fromStdString(source), format));
+  REQUIRE(reopened.dwgAdvancedMetadata().rasterImages().size() == 64u);
+  REQUIRE(filter.fileExport(reopened, QString::fromStdString(output), format));
+  CHECK(countRecords(output, "IMAGE") == 64); CHECK(countRecords(output, "IMAGEDEF") == 2);
+  CHECK(countRecords(output, "IMAGEDEF_REACTOR") == 64);
+  RS_Block *savedBlock = nullptr;
+  for (unsigned i = 0; i < reopened.countBlocks(); ++i)
+    if (reopened.blockAt(i) && reopened.blockAt(i)->getName() == "MANY_RASTERS") savedBlock = reopened.blockAt(i);
+  REQUIRE(savedBlock);
+  RS_Image *blockImage = nullptr;
+  for (RS_Entity *entity : lc::LC_ContainerTraverser{*savedBlock, RS2::ResolveNone}.entities())
+    if (entity->rtti() == RS2::EntityImage) { blockImage = static_cast<RS_Image *>(entity); break; }
+  REQUIRE(blockImage);
+  struct LateImageFilter : RS_FilterDXFRW {
+    std::function<void()> beforeFinalize;
+    bool finalizeDxfWrite() override { if (beforeFinalize) beforeFinalize(); return RS_FilterDXFRW::finalizeDxfWrite(); }
+  } late;
+  const auto oldPosition = blockImage->getInsertionPoint();
+  late.beforeFinalize = [&] { blockImage->setInsertionPoint(oldPosition + RS_Vector(1, 0)); };
+  const std::string sentinel = "preserve 64-image block destination";
+  writeText(output, sentinel); CHECK_FALSE(late.fileExport(reopened, QString::fromStdString(output), format));
+  { std::ifstream in(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(in), {}) == sentinel); }
+  blockImage->setInsertionPoint(oldPosition); late.beforeFinalize = {};
+  REQUIRE(late.fileExport(reopened, QString::fromStdString(output), format));
+  RS_Graphic reread; REQUIRE(filter.fileImport(reread, QString::fromStdString(output), format));
+  CHECK(reread.dwgAdvancedMetadata().rasterImages().size() == 64u);
+  if (const char *prefix = std::getenv("LIBRECAD_KEEP_64_BLOCK_IMAGES")) {
+    const auto suffix = format == RS2::FormatDXFRW ? std::string{} : ".v" + std::to_string(static_cast<int>(format));
+    std::filesystem::copy_file(source, std::string(prefix) + ".source" + suffix + ".dxf", std::filesystem::copy_options::overwrite_existing);
+    std::filesystem::copy_file(output, std::string(prefix) + ".output" + suffix + ".dxf", std::filesystem::copy_options::overwrite_existing);
+  }
+  std::filesystem::remove(source); std::filesystem::remove(output);
 }
 
 TEST_CASE("System codec verifies shared IMAGE graphs across model and block spaces",

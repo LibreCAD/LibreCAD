@@ -4085,7 +4085,7 @@ bool prepareDxfImageGraph(RS_Graphic &graphic, DRW::Version version,
   const auto imageCount = metadata.rasterImages().size();
   // Per-record source and staged-output checks below apply to the whole graph.
   // Match the existing per-kind capture bound and bound quadratic lookups.
-  constexpr std::size_t maxAuditedImages = 32u;
+  constexpr std::size_t maxAuditedImages = Metadata::MaxDxfRasterSourcesPerKind;
   const bool multipleImages = imageCount >= 2u && imageCount <= maxAuditedImages;
 #if !defined(LIBDXFRW_HAS_DXF_STAGED_IMAGE_ENTITY_SCALAR_INSPECTOR) || \
     !defined(LIBDXFRW_HAS_DXF_STAGED_IMAGE_CANONICAL_COMMON_INSPECTOR) || \
@@ -12575,9 +12575,9 @@ static bool canCaptureSmallDxfFile(const QString &file) {
 
 #if defined(LIBDXFRW_HAS_DXF_DICTIONARY_SOURCE_HANDLERS) || \
     defined(LIBDXFRW_HAS_DXF_RASTER_SOURCE_HANDLER)
-static bool canRetainSmallDxfSource(const DRW_RawDxfObject &source) {
+static bool canRetainSmallDxfSource(const DRW_RawDxfObject &source, std::size_t maxGroups = 64u) {
   constexpr std::size_t maxBytes = 64u * 1024u;
-  if (source.groups.size() > 64 || source.rawValues.size() > 64 ||
+  if (source.groups.size() > maxGroups || source.rawValues.size() > maxGroups ||
       source.name.size() > maxBytes)
     return false;
   std::size_t remaining = maxBytes - source.name.size();
@@ -13231,7 +13231,7 @@ void RS_FilterDXFRW::addDxfImageDefSource(
     return;
   auto &metadata = m_graphic->dwgAdvancedMetadata();
   if (definition.handle != source.handle || definition.parentHandle != source.parentHandle ||
-      !canRetainSmallDxfSource(source))
+      !canRetainSmallDxfSource(source, LC_DwgAdvancedMetadata::MaxDxfImageDefSourceGroups))
     metadata.markDxfRasterSourceUnavailable();
   else
     metadata.addDxfImageDefSource(source);

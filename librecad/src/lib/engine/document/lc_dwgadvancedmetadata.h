@@ -40,6 +40,14 @@
 class LC_DwgAdvancedMetadata {
 public:
   enum class ReplayState { ReplayAllowed, ReplayInvalidated, ReplayReplaced };
+#ifdef LIBDXFRW_HAS_DXF_RASTER_SOURCE_HANDLER
+  static constexpr std::size_t MaxDxfRasterSourcesPerKind = 64u;
+  static constexpr std::size_t MaxDxfImageDefSourceGroups = 128u;
+  static constexpr std::size_t MaxDxfRasterSourceBytes = 4u * 1024u * 1024u;
+#else
+  static constexpr std::size_t MaxDxfRasterSourcesPerKind = 32u;
+  static constexpr std::size_t MaxDxfImageDefSourceGroups = 64u;
+#endif
 
   struct DxfMaterialEntityReference {
     std::uint32_t source = 0, target = 0;
@@ -3510,6 +3518,7 @@ public:
 #endif
     m_dxfImageDefSources.clear();
     m_dxfImageSources.clear();
+    m_dxfRasterSourceBytes = 0;
     m_dxfRasterSourceConflict = false;
     m_dxfDictionarySourceConflict = false;
     m_rawDxfEntities.clear();
@@ -4159,14 +4168,33 @@ public:
     if (m_dxfRasterSourceConflict)
       return;
     if (source.name != kind || source.handle == 0 || source.handle == DRW::NoHandle ||
-        source.m_version == DRW::UNKNOWNV || sources.size() >= 32u ||
-        source.groups.size() > 64u || source.rawValues.size() > 64u ||
+        source.m_version == DRW::UNKNOWNV || sources.size() >= MaxDxfRasterSourcesPerKind ||
+        source.groups.size() > (source.name == "IMAGEDEF" ? MaxDxfImageDefSourceGroups : 64u) ||
+        source.rawValues.size() > (source.name == "IMAGEDEF" ? MaxDxfImageDefSourceGroups : 64u) ||
         (source.hasRawValues && source.rawValues.size() != source.groups.size())) {
       m_dxfRasterSourceConflict = true;
       return;
     }
+    std::size_t charge = 0;
 #ifdef LIBDXFRW_HAS_DXF_RASTER_SOURCE_HANDLER
-    std::size_t remaining = 64u * 1024u - source.name.size();
+    // Bound both maps together, including copied vector elements and payloads.
+    // This is logical retained storage, not allocator-capacity or RSS accounting.
+    const std::size_t fixed = sizeof(std::pair<const std::uint32_t, DRW_RawDxfObject>) +
+        4u * sizeof(void *) + source.groups.size() * sizeof(DRW_Variant) +
+        source.rawValues.size() * sizeof(std::string);
+    if (m_dxfRasterSourceBytes > MaxDxfRasterSourceBytes ||
+        fixed > MaxDxfRasterSourceBytes - m_dxfRasterSourceBytes) {
+      m_dxfRasterSourceConflict = true;
+      return;
+    }
+    const std::size_t allowance = std::min<std::size_t>(64u * 1024u,
+        MaxDxfRasterSourceBytes - m_dxfRasterSourceBytes - fixed);
+    std::size_t remaining = allowance;
+    if (source.name.size() >= remaining) {
+      m_dxfRasterSourceConflict = true;
+      return;
+    }
+    remaining -= source.name.size() + 1u;
     for (const auto &group : source.groups) {
       std::size_t bytes = 0;
       if (!group.estimateRetainedPayloadBytes(remaining, bytes)) {
@@ -4176,16 +4204,19 @@ public:
       remaining -= bytes;
     }
     for (const auto &value : source.rawValues) {
-      if (value.size() > remaining) {
+      if (value.size() >= remaining) {
         m_dxfRasterSourceConflict = true;
         return;
       }
-      remaining -= value.size();
+      remaining -= value.size() + 1u;
     }
+    charge = fixed + allowance - remaining;
 #endif
     try {
       if (!sources.emplace(source.handle, source).second)
         m_dxfRasterSourceConflict = true;
+      else
+        m_dxfRasterSourceBytes += charge;
     } catch (...) {
       m_dxfRasterSourceConflict = true;
     }
@@ -13898,6 +13929,7 @@ private:
 #endif
   std::map<std::uint32_t, DRW_RawDxfObject> m_dxfImageDefSources;
   std::map<std::uint32_t, DRW_RawDxfObject> m_dxfImageSources;
+  std::size_t m_dxfRasterSourceBytes = 0;
   bool m_dxfRasterSourceConflict = false;
   bool m_dxfDictionarySourceConflict = false;
   std::vector<DRW_RawDxfObject> m_rawDxfEntities;
