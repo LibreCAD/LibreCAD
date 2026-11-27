@@ -12778,6 +12778,8 @@ bool hasSimpleMaterialEntities(const RS_Graphic &graphic, const DRW_DxfEntitiesS
     int vertexCount = 0;
     bool closed = false;
     bool awaitingY = false;
+    bool hasVertexWidth = false;
+    unsigned vertexFields = 0;
     int subclass = 0, colorIndex = 256;
     for (std::size_t index = 0; index < record.groups.size(); ++index) {
       const auto &group = record.groups[index];
@@ -12801,12 +12803,24 @@ bool hasSimpleMaterialEntities(const RS_Graphic &graphic, const DRW_DxfEntitiesS
         if (code == 10) {
           if (awaitingY || vertices.size() >= 128u) return false;
           vertices.emplace_back(value, 0.0);
+          vertexFields = 0;
           awaitingY = true;
         } else {
           if (!awaitingY) return false;
           vertices.back().y = value;
           awaitingY = false;
         }
+        continue;
+      }
+      if (polyline && (code == 40 || code == 41 || code == 42)) {
+        bool validRaw = false;
+        const double value = QString::fromStdString(raw).toDouble(&validRaw);
+        const unsigned bit = 1u << static_cast<unsigned>(code - 40);
+        if (subclass != 2 || vertices.empty() || awaitingY || (vertexFields & bit) ||
+            group.type() != DRW_Variant::DOUBLE || !validRaw || value != 0.0 ||
+            group.content.d != value) return false;
+        vertexFields |= bit;
+        if (code != 42) hasVertexWidth = true;
         continue;
       }
       if (!seen.insert(code).second) return false;
@@ -12837,7 +12851,7 @@ bool hasSimpleMaterialEntities(const RS_Graphic &graphic, const DRW_DxfEntitiesS
             value != group.content.i || (code == 70 && value != 0 && value != 1)) return false;
         if (code == 90) vertexCount = value;
         else closed = value == 1;
-      } else if (polyline && code == 43) {
+      } else if (polyline && (code == 38 || code == 39 || code == 43)) {
         bool validRaw = false;
         const double value = QString::fromStdString(raw).toDouble(&validRaw);
         if (subclass != 2 || group.type() != DRW_Variant::DOUBLE || !validRaw ||
@@ -12874,7 +12888,8 @@ bool hasSimpleMaterialEntities(const RS_Graphic &graphic, const DRW_DxfEntitiesS
       } else return false;
     }
     if (subclass != (arc ? 3 : 2) || !seen.count(5) || !seen.count(8) ||
-        (polyline ? (!seen.count(90) || !seen.count(70) || awaitingY || vertexCount < (closed ? 3 : 2) ||
+        (polyline ? (!seen.count(90) || !seen.count(70) || awaitingY || (hasVertexWidth && seen.count(43)) ||
+                     vertexCount < (closed ? 3 : 2) ||
                      static_cast<std::size_t>(vertexCount) != vertices.size()) :
                     (!seen.count(10) || !seen.count(20))) || z1 != 0 || z2 != 0 ||
         (line && (!seen.count(11) || !seen.count(21))) ||

@@ -2392,6 +2392,64 @@ TEST_CASE("Ordinary sparse material saves straight lightweight polylines",
     std::filesystem::copy_file(resaved, copy, std::filesystem::copy_options::overwrite_existing);
 
   const std::string sentinel = "preserve sparse polyline destination\n";
+  auto explicitZeros = input;
+  const std::string firstVertex = "20\n2\n10\n4\n";
+  const auto zeroVertex = explicitZeros.find(firstVertex); REQUIRE(zeroVertex != std::string::npos);
+  explicitZeros.replace(zeroVertex, firstVertex.size(), "20\n2\n40\n0\n41\n0\n42\n0\n10\n4\n");
+  const auto zeroHeader = explicitZeros.find("90\n3\n70\n0\n"); REQUIRE(zeroHeader != std::string::npos);
+  explicitZeros.insert(zeroHeader + std::string("90\n3\n70\n0\n").size(), "38\n0\n39\n0\n");
+  writeText(source, explicitZeros);
+  if (const char *copy = std::getenv("LIBRECAD_KEEP_ZERO_SPARSE_LWPOLYLINE"))
+    std::filesystem::copy_file(source, std::string(copy) + ".source.dxf", std::filesystem::copy_options::overwrite_existing);
+  RS_Graphic zeros;
+  REQUIRE(filter.fileImport(zeros, QString::fromStdString(source), RS2::FormatDXFRW));
+  REQUIRE(filter.fileExport(zeros, QString::fromStdString(output), RS2::FormatDXFRW));
+  CHECK(recordGroupValues(output, "LWPOLYLINE", "10") == std::vector<std::string>{"1", "4", "8"});
+  RS_Graphic zerosReopened;
+  REQUIRE(filter.fileImport(zerosReopened, QString::fromStdString(output), RS2::FormatDXFRW));
+  REQUIRE(filter.fileExport(zerosReopened, QString::fromStdString(resaved), RS2::FormatDXFRW));
+  if (const char *copy = std::getenv("LIBRECAD_KEEP_ZERO_SPARSE_LWPOLYLINE"))
+    std::filesystem::copy_file(resaved, copy, std::filesystem::copy_options::overwrite_existing);
+  auto closedZeros = explicitZeros;
+  const auto zeroClosedFlag = closedZeros.find("90\n3\n70\n0\n"); REQUIRE(zeroClosedFlag != std::string::npos);
+  closedZeros.replace(zeroClosedFlag, std::string("90\n3\n70\n0\n").size(), "90\n3\n70\n1\n");
+  writeText(source, closedZeros);
+  RS_Graphic zerosClosed;
+  REQUIRE(filter.fileImport(zerosClosed, QString::fromStdString(source), RS2::FormatDXFRW));
+  REQUIRE(filter.fileExport(zerosClosed, QString::fromStdString(output), RS2::FormatDXFRW));
+  CHECK(recordGroupValues(output, "LWPOLYLINE", "70") == std::vector<std::string>{"1"});
+  RS_Graphic zerosClosedReopened;
+  REQUIRE(filter.fileImport(zerosClosedReopened, QString::fromStdString(output), RS2::FormatDXFRW));
+  REQUIRE(filter.fileExport(zerosClosedReopened, QString::fromStdString(resaved), RS2::FormatDXFRW));
+
+  for (const std::string addition : {"43\n0\n", "42\n0\n"}) {
+    auto conflict = explicitZeros;
+    const auto at = conflict.find(addition == "43\n0\n" ? "38\n0\n" : "42\n0\n");
+    REQUIRE(at != std::string::npos);
+    conflict.insert(at, addition);
+    writeText(source, conflict); writeText(output, sentinel);
+    RS_Graphic rejected;
+    if (filter.fileImport(rejected, QString::fromStdString(source), RS2::FormatDXFRW))
+      CHECK_FALSE(filter.fileExport(rejected, QString::fromStdString(output), RS2::FormatDXFRW));
+    { std::ifstream retained(output, std::ios::binary);
+      CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+    REQUIRE(filter.fileExport(zeros, QString::fromStdString(output), RS2::FormatDXFRW));
+  }
+  for (int mode = 0; mode != 5; ++mode) {
+    if (mode == 0) polyline->setPlotStyleHandle(0xFAu);
+    if (mode == 1) polyline->setShadowHandle(0xFAu);
+    if (mode == 2) polyline->setVisualStyleHandles(0xFAu, 0, 0);
+    if (mode == 3) polyline->setXDictHandle(0xFAu);
+    if (mode == 4) polyline->setReactorHandles({0xFAu});
+    writeText(output, sentinel);
+    CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+    { std::ifstream retained(output, std::ios::binary);
+      CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+    polyline->setPlotStyleHandle(0); polyline->setShadowHandle(0);
+    polyline->setVisualStyleHandles(0, 0, 0); polyline->setXDictHandle(0);
+    polyline->setReactorHandles({});
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  }
   RS_Entity *closingSegment = closedPolyline->entityAt(closedPolyline->count() - 1u); REQUIRE(closingSegment);
   closingSegment->move(RS_Vector(1, 1));
   writeText(output, sentinel);
