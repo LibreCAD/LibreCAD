@@ -106,7 +106,11 @@ the dependencies for **3 and 4** in parallel. **5** follows the acceptance work.
    targets and Qt6 qmake instructions. Verify discovery before counting passes.
 3. Run `scripts/run_offset_trim_case_matrix.py` and
    `scripts/run_offset_trim_profile_matrix.py` with the current test binary,
-   `--log-dir` and `--summary-json`. Derive the profile ranges from
+   `--log-dir` and `--summary-json`. First run
+   `PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s scripts -p test_run_offset_trim_profile_matrix.py -v`.
+   The profile manifest hashes the test binary, checks it stayed unchanged and
+   records bounds and hyperbola mode; also retain the worker identity and
+   sanitizer options separately. Derive the profile ranges from
    the profile runner. Exclude an exact case from the case runner only when its
    full profile range is accounted for; compare the union by identity, not by
    count. Reuse applicable exhaustive parabola-tangent/periodic-spline receipts
@@ -312,6 +316,13 @@ the dependencies for **3 and 4** in parallel. **5** follows the acceptance work.
   receipts: `/private/tmp/offset-3193-high-degree-release.json` and
   `/private/tmp/offset-3193-high-degree-aggregate-release.json`. Sanitizer,
   shared-process ordering and non-macOS rows remain open.
+- Test-only commit `ddad0c653` makes profile timeouts use the case runner's
+  process-group cleanup and records test-binary SHA-256, change detection,
+  bounds and hyperbola mode in new manifests. Three focused Python tests and
+  a real reconstructed-parabola profile passed on macOS. The process-group
+  test is POSIX-only; it does not qualify Windows cleanup. Existing
+  receipts, including the in-flight periodic run, predate this manifest format
+  and must not be attributed its additional guarantees.
 
 ## Smallest Safe Fix
 
