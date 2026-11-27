@@ -135,10 +135,10 @@ the dependencies for **3 and 4** in parallel. **5** follows the acceptance work.
 1. The periodic-spline profile manifest is reconciled below. Its isolated
    profiles do not replace the shared-process run.
 2. The six timed-out generators now have complete isolated profile receipts,
-   including the typed-parabola profiles. The reconstructed-parabola aggregate
-   also passed separately below; rerun the other five as bounded single-process
-   cases. Multi-case shared-process behavior remains open; do not infer it from
-   isolated manifests.
+   including the typed-parabola profiles. The reconstructed-parabola and default
+   hyperbola aggregates also passed separately below; rerun the other four as
+   bounded single-process cases. Multi-case shared-process behavior remains open;
+   do not infer it from isolated manifests.
 3. Where an existing selector cannot isolate every tuple, add a test-only
    profile selector to that case and register it in the existing profile
    runner. Preserve the unpinned test, use stable complete tuple identities,
@@ -266,9 +266,9 @@ the dependencies for **3 and 4** in parallel. **5** follows the acceptance work.
   build and options, using `parabola-tangent` with the 180-second per-profile
   bound. Manifest and logs: `/private/tmp/offset-3193-trim-tangent-asan.json`
   and `/private/tmp/offset-3193-trim-tangent-asan-logs` (temporary). The
-  five other timed-out aggregate cases, prior shared-process failures, leak
+  four other timed-out aggregate cases, prior shared-process failures, leak
   detection and non-macOS validation remain open. The periodic matrix and
-  reconstructed aggregate are recorded below.
+  reconstructed and hyperbola aggregates are recorded below.
 - The periodic-spline matrix passed **1,080/1,080 profiles and 145,371
   assertions** under the same source-equivalent macOS Debug ASan/UBSan build
   and options, with 180-second per-profile and 30-second test-only worker
@@ -316,7 +316,7 @@ the dependencies for **3 and 4** in parallel. **5** follows the acceptance work.
   each profile exercised at least 38 assertions. Receipts:
   `/private/tmp/offset-3193-reconstructed-release.json` and
   `/private/tmp/offset-3193-reconstructed-aggregate-release.json` (temporary).
-  The earlier sanitizer aggregate timeout and non-macOS rows remain open.
+  The sanitizer aggregate is assessed below; non-macOS rows remain open.
 - The `reconstructed-parabola` selector subsequently passed **86/86 isolated
   profiles and 7,790 assertions** under the same source-equivalent macOS
   Debug ASan/UBSan settings and bounds as the seam run. Requested, passed and
@@ -358,15 +358,24 @@ the dependencies for **3 and 4** in parallel. **5** follows the acceptance work.
   aggregate passed the same **14,856 assertions**. Invalid and out-of-range
   IDs were rejected. Receipts: `/private/tmp/offset-3193-hyperbola-release.json`
   and `/private/tmp/offset-3193-hyperbola-aggregate-release.json` (temporary).
-  The sanitizer timeout and non-macOS rows remain open.
+  The sanitizer aggregate is assessed below; non-macOS rows remain open.
 - The default `hyperbola` selector subsequently passed **20/20 isolated
   groups and 14,856 assertions** under the same source-equivalent macOS Debug
   ASan/UBSan settings and bounds as the seam run. Both high-origin flags were
   unset; requested, passed and result IDs match 0-19, the test-binary hash
   remained unchanged, and all 20 logs were free of sanitizer diagnostics.
   Temporary receipt and logs: `/private/tmp/offset-3193-hyperbola-asan.json`
-  and `/private/tmp/offset-3193-hyperbola-asan-logs`. Aggregate timeout,
-  shared-process behavior, leak detection and other platforms remain open.
+  and `/private/tmp/offset-3193-hyperbola-asan-logs`. The aggregate is recorded
+  below; multi-case behavior, leak detection and other platforms remain open.
+- The unpinned default hyperbola aggregate subsequently passed in one
+  source-equivalent macOS Debug ASan/UBSan test process with **14,856 assertions**
+  in 308.937 seconds, with both high-origin flags unset, the same sanitizer
+  options and 30-second test-only worker wait, and a 900-second test-only case
+  bound. The retained log has no sanitizer diagnostic; receipt and log:
+  `/private/tmp/offset-3193-hyperbola-aggregate-asan.json` and
+  `/private/tmp/offset-3193-hyperbola-aggregate-asan-logs` (temporary). The
+  prior 300-second timeout remains historical evidence; multi-case order,
+  leak detection and non-macOS behavior remain open.
 - The same hyperbola selector passed **20/20 profiles and 4,952 assertions**
   with `LC_OFFSET_HYPERBOLA_HIGH_ORIGIN=1` and the very-high flag unset; it
   passed **20/20 and 7,608 assertions** with
