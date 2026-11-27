@@ -2651,6 +2651,7 @@ if (LIBRECAD_BUILD_SYSTEM_CODEC_TESTS)
         librecad/src/test/lc_testsettingsisolation.cpp
         librecad/src/test/lc_testtempdirectory.cpp
         librecad/src/ui/dock_widgets/property_sheet/tests/lc_named_linetype_properties_tests.cpp
+        librecad/src/ui/dock_widgets/property_sheet/tests/lc_image_refresh_tests.cpp
         librecad/src/ui/dock_widgets/property_sheet/tests/lc_propertysheetlifetime_tests.cpp
         librecad/src/ui/components/pen/tests/qg_widgetpen_tests.cpp
         ${LIBRECAD_RES})
@@ -2668,7 +2669,7 @@ if (LIBRECAD_BUILD_SYSTEM_CODEC_TESTS)
         "Register system-codec GUI tests after their target is built" OFF)
     if (LIBRECAD_REGISTER_SYSTEM_GUI_TESTS)
         add_test(NAME librecad_system_named_linetype_tests
-            COMMAND librecad_system_named_linetype_tests "[named-linetype]" --reporter compact)
+            COMMAND librecad_system_named_linetype_tests "[named-linetype],[image]" --reporter compact)
         set_tests_properties(librecad_system_named_linetype_tests PROPERTIES
             WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
             ENVIRONMENT "QT_QPA_PLATFORM=offscreen" TIMEOUT 120)

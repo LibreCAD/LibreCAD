@@ -25,7 +25,6 @@
 **********************************************************************/
 #include "rs_image.h"
 
-#include <QDir>
 #include <QFileInfo>
 #include <QCoreApplication>
 #include <QApplication>
@@ -43,10 +42,8 @@
 namespace {
     // fixme - sand - files - move to utility for relative paths calculations
 
-    // Return the file path name to use relative to the folder of the image's drawing.
-    // The drawing, not the application window: console tools have no window, and
-    // creating one here crashed them at exit.
-    QString imageRelativePathName(const RS_Entity& image, QString& imageFile) {
+    // Resolve against the image's drawing, without changing its stored path.
+    QString resolvedImagePathName(const RS_Entity& image, const QString& imageFile) {
         const RS_Graphic* graphic = image.getGraphic();
         const QString documentFileName = graphic != nullptr ? graphic->getFilename() : QString();
         if (documentFileName.isEmpty() || imageFile.isEmpty()) {
@@ -57,8 +54,6 @@ namespace {
         QFileInfo fileInfo(imageFile);
         if (fileInfo.exists()) {
             // file exists as input file path
-            const QDir dxfDir(dxfFileInfo.canonicalPath());
-            imageFile = dxfDir.relativeFilePath(imageFile);
             return fileInfo.canonicalFilePath();
         }
         // test a relative file path from the dxf file folder
@@ -121,7 +116,11 @@ void RS_Image::update() {
     }
 
     // the whole image:
-    QString filePathName = imageRelativePathName(*this, m_data.file);
+    // Resolving a raster for display must not change its stored path. Images
+    // sharing an IMAGEDEF can be refreshed independently (for example when a
+    // properties editor clones one image); rewriting only that image's path
+    // makes an otherwise unchanged definition appear inconsistent on save.
+    const QString filePathName = resolvedImagePathName(*this, m_data.file);
 
     //QImage image = QImage(data.file);
     m_img = std::make_shared<QImage>(filePathName);
