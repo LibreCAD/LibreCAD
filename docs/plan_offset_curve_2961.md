@@ -323,6 +323,9 @@ the dependencies for **3 and 4** in parallel. **5** follows the acceptance work.
   test is POSIX-only; it does not qualify Windows cleanup. Existing
   receipts, including the in-flight periodic run, predate this manifest format
   and must not be attributed its additional guarantees.
+- Test-only commit `1259e2499` strengthens the cleanup check with a child-started
+  marker before verifying that the timed-out descendant cannot finish. All
+  three focused Python tests passed again on macOS; Windows remains unqualified.
 
 ## Smallest Safe Fix
 
