@@ -8539,7 +8539,7 @@ TEST_CASE("DXF export reports what it left out",
   std::filesystem::remove(other);
 }
 
-TEST_CASE("DXF cross-version report distinguishes raw replay from regenerated defaults",
+TEST_CASE("DXF cross-version report covers skipped raw default records",
           "[dxf][roundtrip][filter][version]") {
   ensureSettings();
   const auto src = tmpFile("report-regenerated-src.dxf");
@@ -8563,9 +8563,15 @@ TEST_CASE("DXF cross-version report distinguishes raw replay from regenerated de
   REQUIRE(exporter.fileExport(graphic, QString::fromStdString(out), RS2::FormatDXFRW));
   CHECK(exporter.exportReport() == QStringLiteral(
       "2 raw record(s) from another DXF version were not replayed; some may have been regenerated"));
+#ifdef LIBRECAD_SYSTEM_CODEC_TESTS
   CHECK(recordGroupValues(out, "ACDBDICTIONARYWDFLT", "5") == std::vector<std::string>{"E"});
   CHECK(recordGroupValues(out, "ACDBPLACEHOLDER", "5") == std::vector<std::string>{"F"});
   CHECK(rootDictEntries(out).count("ACAD_PLOTSTYLENAME") == 1u);
+#else
+  CHECK(recordGroupValues(out, "ACDBDICTIONARYWDFLT", "5").empty());
+  CHECK(recordGroupValues(out, "ACDBPLACEHOLDER", "5").empty());
+  CHECK(rootDictEntries(out).count("ACAD_PLOTSTYLENAME") == 0u);
+#endif
   CHECK(danglingReferences(out).empty());
   std::filesystem::remove(src);
   std::filesystem::remove(out);
