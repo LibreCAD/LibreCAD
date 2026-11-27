@@ -2689,6 +2689,7 @@ if (BUILD_TESTS)
         librecad/src/lib/engine/document/entities/tests/rs_text_bidi_tests.cpp
         librecad/src/lib/engine/document/entities/tests/text_bidi_regression_tests.cpp
         librecad/src/lib/engine/document/entities/tests/rs_text_alignment_tests.cpp
+        librecad/src/lib/engine/document/entities/tests/lc_mtext_width_factor_tests.cpp
         librecad/src/lib/engine/document/container/tests/lc_container_ownership_tests.cpp
         librecad/src/lib/engine/document/container/tests/lc_copy_semantics_tests.cpp
         librecad/src/lib/engine/document/container/tests/lc_loopclassifier_tests.cpp

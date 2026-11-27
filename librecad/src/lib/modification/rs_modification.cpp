@@ -71,6 +71,17 @@
 class LC_SplinePoints;
 
 namespace {
+
+QString formatMTextWidthFactor(const double factor) {
+    QString text = QString::number(factor, 'f', std::numeric_limits<double>::max_digits10 + 324);
+    while (text.endsWith(QChar('0'))) {
+        text.chop(1);
+    }
+    if (text.endsWith(QChar('.'))) {
+        text.chop(1);
+    }
+    return text;
+}
       // fixme - sand - add option for intersection tolerance????
 
     bool acceptedInsertSourceEdit(const RS_Entity& entity) {
@@ -2905,11 +2916,19 @@ bool RS_Modification::doExplodeTextIntoLetters(const RS_MText* text, LC_Document
                 else if (e3->rtti() == RS2::EntityInsert) {
                     // normal letters:
                     const auto letter = static_cast<RS_Insert*>(e3);
+                    // a letter of "\W" text is scaled wider or narrower than high
+                    QString letterText = letter->getName();
+                    const RS_Vector scale = letter->getScale();
+                    const double widthFactor = scale.x / scale.y;
+                    if (std::isfinite(widthFactor) && widthFactor > RS_TOLERANCE && !RS_Math::equal(widthFactor, 1.0)) {
+                        letterText.prepend(QStringLiteral("\\W%1;").arg(
+                            formatMTextWidthFactor(widthFactor)));
+                    }
 
                     const auto letterAsText = new RS_MText(nullptr, RS_MTextData(letter->getInsertionPoint(), text->getHeight(), 100.0,
                                                                                  RS_MTextData::VABottom, RS_MTextData::HALeft,
                                                                                  RS_MTextData::LeftToRight, RS_MTextData::Exact, 1.0,
-                                                                                 letter->getName(), text->getStyle(), letter->getAngle(),
+                                                                                 letterText, text->getStyle(), letter->getAngle(),
                                                                                  RS2::Update));
 
                     letterAsText->setLayer(text->getLayer());

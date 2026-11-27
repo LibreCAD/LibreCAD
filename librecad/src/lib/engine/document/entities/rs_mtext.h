@@ -375,10 +375,12 @@ protected:
       double width = 0.0;      ///< for Space: advance width; for Tab: advance in a right-to-left line
       QString upperText;       ///< for Stack: upper text (super-/numerator)
       QString lowerText;       ///< for Stack: lower text (sub-/denominator)
+      double widthFactor = 1.0; ///< horizontal scale set by "\W<factor>;"
     };
 
     double updateAddLine(LC_TextLine* textLine, int lineCounter, double leadingAdvance);
-    void addLetter(LC_TextLine& oneLine, QString letter, RS_Font& font, const RS_Vector& letterSpace, RS_Vector& letterPosition);
+    void addLetter(LC_TextLine& oneLine, QString letter, RS_Font& font, const RS_Vector& letterSpace, RS_Vector& letterPosition,
+                   double widthFactor = 1.0);
     double flushBidiLine(LC_TextLine &oneLine,
                          std::vector<LC_BidiSegment> &segments,
                          const RS_Vector &letterSpace, RS_Vector &letterPosition);
