@@ -134,9 +134,8 @@ the dependencies for **3 and 4** in parallel. **5** follows the acceptance work.
 
 1. The periodic-spline profile manifest is reconciled below. Its isolated
    profiles do not replace the shared-process run.
-2. Run the hyperbola and high-degree spline profiles under ASan/UBSan with
-   the rebuilt sanitizer binary,
-   including the hyperbola high-origin modes with their recorded environment
+2. Run the hyperbola high-origin and high-degree spline profiles under
+   ASan/UBSan with the rebuilt sanitizer binary, retaining their recorded environment
    settings. The typed-parabola timeout is already
    accounted for by its 152 isolated profiles, but its aggregate remains open.
    These cases combine geometry and file-format dimensions. Inspect each loop
@@ -342,6 +341,14 @@ the dependencies for **3 and 4** in parallel. **5** follows the acceptance work.
   IDs were rejected. Receipts: `/private/tmp/offset-3193-hyperbola-release.json`
   and `/private/tmp/offset-3193-hyperbola-aggregate-release.json` (temporary).
   The sanitizer timeout and non-macOS rows remain open.
+- The default `hyperbola` selector subsequently passed **20/20 isolated
+  groups and 14,856 assertions** under the same source-equivalent macOS Debug
+  ASan/UBSan settings and bounds as the seam run. Both high-origin flags were
+  unset; requested, passed and result IDs match 0-19, the test-binary hash
+  remained unchanged, and all 20 logs were free of sanitizer diagnostics.
+  Temporary receipt and logs: `/private/tmp/offset-3193-hyperbola-asan.json`
+  and `/private/tmp/offset-3193-hyperbola-asan-logs`. Aggregate timeout,
+  shared-process behavior, leak detection and other platforms remain open.
 - The same hyperbola selector passed **20/20 profiles and 4,952 assertions**
   with `LC_OFFSET_HYPERBOLA_HIGH_ORIGIN=1` and the very-high flag unset; it
   passed **20/20 and 7,608 assertions** with
