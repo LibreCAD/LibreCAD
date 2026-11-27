@@ -1006,6 +1006,19 @@ bool sameRetainedPlotSettings(const DRW_PlotSettings &a, const DRW_PlotSettings 
          pen.getWidth() == RS2::WidthByLayer && pen.isFullyOpaque();
 }
 
+[[maybe_unused]] bool hasSimpleMaterialEllipse(const RS_Ellipse &ellipse) {
+  const auto &center = ellipse.getCenter(), &major = ellipse.getMajorP();
+  const double ratio = ellipse.getRatio(), start = ellipse.getAngle1(), end = ellipse.getAngle2();
+  const double radius = std::hypot(major.x, major.y);
+  return center.valid && major.valid && std::isfinite(center.x) && std::isfinite(center.y) &&
+      center.z == 0.0 && std::isfinite(major.x) && std::isfinite(major.y) && major.z == 0.0 &&
+      std::isfinite(radius) && radius > RS_TOLERANCE && std::isfinite(ratio) && ratio > 0.0 && ratio <= 1.0 &&
+      std::isfinite(start) && std::isfinite(end) && !ellipse.isReversed() &&
+      !(std::abs(start) < RS_TOLERANCE && std::abs(end - 2.0 * M_PI) < RS_TOLERANCE) &&
+      ((start == 0.0 && end == 0.0) ||
+       (start >= 0.0 && start < 2.0 * M_PI && end > 0.0 && end <= 2.0 * M_PI && start != end));
+}
+
 [[maybe_unused]] bool hasSimpleMaterialPolyline(const RS_Polyline &polyline) {
   const auto &segments = polyline.getEntityList();
   const bool closed = polyline.isClosed();
@@ -1123,6 +1136,8 @@ bool sameRetainedPlotSettings(const DRW_PlotSettings &a, const DRW_PlotSettings 
           arc->getAngle2() < 0.0 || arc->getAngle2() >= 2 * M_PI || arc->getAngle1() == arc->getAngle2()) return false;
     } else if (entity->rtti() == RS2::EntityPolyline) {
       if (!hasSimpleMaterialPolyline(*static_cast<const RS_Polyline *>(entity))) return false;
+    } else if (entity->rtti() == RS2::EntityEllipse) {
+      if (!hasSimpleMaterialEllipse(*static_cast<const RS_Ellipse *>(entity))) return false;
     } else return false;
     ++count;
   }
@@ -8915,6 +8930,10 @@ void RS_FilterDXFRW::addEllipse(const DRW_Ellipse &data) {
       m_currentContainer, {v1, v2, data.ratio, ang1, ang2, false}};
   setEntityAttributes(entity, &data);
   m_currentContainer->addEntity(entity);
+#if defined(LIBRECAD_SYSTEM_LIBDXFRW) && defined(LIBDXFRW_HAS_DXF_PHYSICAL_ENTITY_SOURCE_HANDLERS) && defined(LIBDXFRW_HAS_DXF_STAGED_ENTITY_MATERIAL_INSPECTOR)
+  recordMaterialSimpleDelivery(m_graphic, m_dxfR, m_currentContainer, entity, data.handle,
+      LC_DwgAdvancedMetadata::DxfMaterialSimpleKind::Ellipse);
+#endif
 }
 
 /**
@@ -12813,7 +12832,7 @@ bool isDefaultMaterialPlotSource(const QByteArray &bytes, const DRW_DxfIdentityS
 #endif
 
 // The ordinary-save route initially admits only a physically complete,
-// ASCII AC1021 model-space POINT/LINE/CIRCLE/ARC/LWPOLYLINE profile. Other source shapes may still use
+// ASCII AC1021 model-space POINT/LINE/CIRCLE/ARC/ELLIPSE/LWPOLYLINE profile. Other source shapes may still use
 // the separate explicitly opted-in replay path.
 bool hasSimpleMaterialEntities(const RS_Graphic &graphic, const DRW_DxfEntitiesSource &source) {
   if (source.status != DRW_DxfEntitiesSource::Status::Complete ||
@@ -12828,8 +12847,8 @@ bool hasSimpleMaterialEntities(const RS_Graphic &graphic, const DRW_DxfEntitiesS
   for (const auto &record : source.records) {
     const auto name = normalizeDwgTableName(record.name);
     const bool point = name == "POINT", line = name == "LINE", circle = name == "CIRCLE", arc = name == "ARC";
-    const bool polyline = name == "LWPOLYLINE";
-    if ((!point && !line && !circle && !arc && !polyline) || record.groups.size() != record.rawValues.size()) return false;
+    const bool polyline = name == "LWPOLYLINE", ellipse = name == "ELLIPSE";
+    if ((!point && !line && !circle && !arc && !polyline && !ellipse) || record.groups.size() != record.rawValues.size()) return false;
     std::set<int> seen;
     std::uint32_t handle = 0;
     std::string layer;
@@ -12851,7 +12870,7 @@ bool hasSimpleMaterialEntities(const RS_Graphic &graphic, const DRW_DxfEntitiesS
         if (group.type() != DRW_Variant::STRING || !group.content.s ||
             raw != *group.content.s ||
             (subclass == 0 && *group.content.s != "AcDbEntity") ||
-            (subclass == 1 && *group.content.s != (point ? "AcDbPoint" : line ? "AcDbLine" : polyline ? "AcDbPolyline" : "AcDbCircle")) ||
+            (subclass == 1 && *group.content.s != (point ? "AcDbPoint" : line ? "AcDbLine" : polyline ? "AcDbPolyline" : ellipse ? "AcDbEllipse" : "AcDbCircle")) ||
             (subclass == 2 && (!arc || *group.content.s != "AcDbArc")) || subclass >= 3)
           return false;
         ++subclass;
@@ -12931,11 +12950,12 @@ bool hasSimpleMaterialEntities(const RS_Graphic &graphic, const DRW_DxfEntitiesS
           colorIndex = value;
         } else if (value != -1) return false;
       } else if (code == 10 || code == 20 || code == 30 || code == 11 || code == 21 || code == 31 ||
-                 code == 40 || code == 50 || code == 51) {
+                 code == 40 || code == 41 || code == 42 || code == 50 || code == 51) {
         bool validRaw = false;
         const double value = QString::fromStdString(raw).toDouble(&validRaw);
         const bool geometry = (subclass == 2 && (code == 10 || code == 20 || code == 30 ||
-             (line && (code == 11 || code == 21 || code == 31)) || ((circle || arc) && code == 40))) ||
+             ((line || ellipse) && (code == 11 || code == 21 || code == 31)) ||
+             ((circle || arc || ellipse) && code == 40) || (ellipse && (code == 41 || code == 42)))) ||
              (arc && subclass == 3 && (code == 50 || code == 51));
         if (!geometry || group.type() != DRW_Variant::DOUBLE || !validRaw ||
             !std::isfinite(value) || !std::isfinite(group.content.d) || value != group.content.d) return false;
@@ -12947,8 +12967,8 @@ bool hasSimpleMaterialEntities(const RS_Graphic &graphic, const DRW_DxfEntitiesS
         case 21: y2 = group.content.d; break;
         case 31: z2 = group.content.d; break;
         case 40: radius = group.content.d; break;
-        case 50: angle1 = group.content.d; break;
-        case 51: angle2 = group.content.d; break;
+        case 41: case 50: angle1 = group.content.d; break;
+        case 42: case 51: angle2 = group.content.d; break;
         }
       } else return false;
     }
@@ -12957,14 +12977,18 @@ bool hasSimpleMaterialEntities(const RS_Graphic &graphic, const DRW_DxfEntitiesS
                      vertexCount < (closed ? 3 : 2) ||
                      static_cast<std::size_t>(vertexCount) != vertices.size()) :
                     (!seen.count(10) || !seen.count(20))) || z1 != 0 || z2 != 0 ||
-        (line && (!seen.count(11) || !seen.count(21))) ||
-        ((circle || arc) && (!seen.count(40) || radius <= 0)) ||
+        ((line || ellipse) && (!seen.count(11) || !seen.count(21))) ||
+        ((circle || arc || ellipse) && (!seen.count(40) || radius <= 0)) ||
+        (ellipse && (!seen.count(41) || !seen.count(42) || radius > 1.0 ||
+                     !std::isfinite(std::hypot(x2, y2)) || std::hypot(x2, y2) <= RS_TOLERANCE ||
+                     angle1 < 0.0 || angle1 >= 2.0 * M_PI || angle2 <= 0.0 ||
+                     angle2 > 2.0 * M_PI || angle1 == angle2)) ||
         (arc && (!seen.count(50) || !seen.count(51) || angle1 < 0 || angle1 >= 360 ||
                  angle2 < 0 || angle2 >= 360 || angle1 == angle2)))
       return false;
     const auto found = delivered.find(handle);
     if (found == delivered.end() ||
-        found->second->rtti() != (point ? RS2::EntityPoint : line ? RS2::EntityLine : circle ? RS2::EntityCircle : polyline ? RS2::EntityPolyline : RS2::EntityArc) ||
+        found->second->rtti() != (point ? RS2::EntityPoint : line ? RS2::EntityLine : circle ? RS2::EntityCircle : polyline ? RS2::EntityPolyline : ellipse ? RS2::EntityEllipse : RS2::EntityArc) ||
         !found->second->getLayer(false) ||
         found->second->getLayer(false)->getName().toUtf8().toStdString() != layer ||
         !hasSimpleMaterialAppearance(*found->second) ||
@@ -12973,6 +12997,13 @@ bool hasSimpleMaterialEntities(const RS_Graphic &graphic, const DRW_DxfEntitiesS
     if (polyline) {
       const auto *value = static_cast<const RS_Polyline *>(found->second);
       if (!hasSimpleMaterialPolyline(*value) || !matchesMaterialPolylineSource(*value, vertices, bulges, closed)) return false;
+    } else if (ellipse) {
+      const auto *value = static_cast<const RS_Ellipse *>(found->second);
+      const auto center = value->getCenter(), major = value->getMajorP();
+      const bool full = angle1 == 0.0 && angle2 == 2.0 * M_PI;
+      if (!hasSimpleMaterialEllipse(*value) || center.x != x1 || center.y != y1 ||
+          major.x != x2 || major.y != y2 || value->getRatio() != radius ||
+          value->getAngle1() != angle1 || value->getAngle2() != (full ? 0.0 : angle2)) return false;
     } else if (point) {
       const auto *value = static_cast<const RS_Point *>(found->second);
       const auto position = value->getPos();
@@ -13002,7 +13033,7 @@ bool capturePhysicalMaterialReferences(LC_DwgAdvancedMetadata &metadata,
     if (record.groups.size() != record.rawValues.size() || record.groups.size() != record.spans.size()) return false;
     metadata.addDxfMaterialPhysicalRecord(record.marker.ordinal, record.endOrdinal);
     const auto name = normalizeDwgTableName(record.name);
-    const bool simple = name == "POINT" || name == "LINE" || name == "CIRCLE" || name == "ARC" || name == "LWPOLYLINE";
+    const bool simple = name == "POINT" || name == "LINE" || name == "CIRCLE" || name == "ARC" || name == "LWPOLYLINE" || name == "ELLIPSE";
     std::uint32_t handle = 0, target = 0;
     unsigned selfCount = 0, materialCount = 0, depth = 0;
     bool common = false;
@@ -13036,7 +13067,7 @@ bool capturePhysicalMaterialReferences(LC_DwgAdvancedMetadata &metadata,
     if (simple) {
       if (selfCount != 1u) return false;
       using Kind = LC_DwgAdvancedMetadata::DxfMaterialSimpleKind;
-      const auto kind = name == "POINT" ? Kind::Point : name == "LINE" ? Kind::Line : name == "CIRCLE" ? Kind::Circle : name == "ARC" ? Kind::Arc : Kind::LWPolyline;
+      const auto kind = name == "POINT" ? Kind::Point : name == "LINE" ? Kind::Line : name == "CIRCLE" ? Kind::Circle : name == "ARC" ? Kind::Arc : name == "ELLIPSE" ? Kind::Ellipse : Kind::LWPolyline;
       metadata.addDxfMaterialSimpleDelivery(handle, block, kind, true);
     }
     if (materialCount) {

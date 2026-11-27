@@ -59,7 +59,7 @@ public:
              block == other.block && blockName == other.blockName && lineage == other.lineage;
     }
   };
-  enum class DxfMaterialSimpleKind : std::uint8_t { Line, Circle, Arc, Point, LWPolyline };
+  enum class DxfMaterialSimpleKind : std::uint8_t { Line, Circle, Arc, Point, LWPolyline, Ellipse };
 
   enum class ReplayBlocker {
     None,

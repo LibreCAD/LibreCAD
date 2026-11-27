@@ -2339,6 +2339,138 @@ static std::string sparseMaterialPolylineSource() {
       "100\nAcDbMaterial\n1\nPlainMat\n94\n63\n0\nENDSEC\n0\nEOF\n";
 }
 
+static std::string sparseMaterialEllipseSource(bool full) {
+    auto input = sparseMaterialPolylineSource();
+    const std::string old = "0\nLWPOLYLINE\n5\nA5\n100\nAcDbEntity\n8\nRAWTEST\n347\nA1\n"
+        "100\nAcDbPolyline\n90\n3\n70\n0\n10\n1\n20\n2\n10\n4\n20\n6\n10\n8\n20\n3\n";
+    const std::string replacement = "0\nELLIPSE\n5\nA5\n100\nAcDbEntity\n8\nRAWTEST\n347\nA1\n"
+        "100\nAcDbEllipse\n10\n1\n20\n2\n30\n0\n11\n4\n21\n3\n31\n0\n40\n0.5\n41\n" +
+        std::string(full ? "0\n42\n6.283185307179586\n" : "0.25\n42\n2.5\n");
+    const auto at = input.find(old); REQUIRE(at != std::string::npos);
+    input.replace(at, old.size(), replacement);
+    return input;
+}
+
+TEST_CASE("Ordinary sparse material saves planar ellipses",
+          "[system-codec][dxf][material][transaction][ellipse]") {
+  ensureSettings();
+  const auto source = tmpFile("system_sparse_ellipse_source.dxf");
+  const auto output = tmpFile("system_sparse_ellipse_output.dxf");
+  const auto resaved = tmpFile("system_sparse_ellipse_resaved.dxf");
+  for (const int shape : {0, 1, 2}) {
+    const bool full = shape == 1;
+    auto input = sparseMaterialEllipseSource(full);
+    if (shape == 2) {
+      const auto at = input.find("41\n0.25\n42\n2.5\n"); REQUIRE(at != std::string::npos);
+      input.replace(at, std::string("41\n0.25\n42\n2.5\n").size(), "41\n5\n42\n1\n");
+    }
+    writeText(source, input);
+    RS_FilterDXFRW filter; RS_Graphic graphic;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(source), RS2::FormatDXFRW));
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+    RS_Ellipse *ellipse = nullptr;
+    for (RS_Entity *entity : graphic)
+      if (entity && entity->sourceHandle() == 0xA5u && entity->rtti() == RS2::EntityEllipse)
+        ellipse = static_cast<RS_Ellipse *>(entity);
+    REQUIRE(ellipse); ellipse->move(RS_Vector(10, 20));
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+    RS_Graphic reread;
+    REQUIRE(filter.fileImport(reread, QString::fromStdString(output), RS2::FormatDXFRW));
+    REQUIRE(filter.fileExport(reread, QString::fromStdString(resaved), RS2::FormatDXFRW));
+    CHECK(recordGroupValues(resaved, "ELLIPSE", "10") == std::vector<std::string>{"11"});
+    CHECK(recordGroupValues(resaved, "ELLIPSE", "20") == std::vector<std::string>{"22"});
+    CHECK(recordGroupValues(resaved, "ELLIPSE", "11") == std::vector<std::string>{"4"});
+    CHECK(recordGroupValues(resaved, "ELLIPSE", "21") == std::vector<std::string>{"3"});
+    CHECK(std::stod(recordGroupValues(resaved, "ELLIPSE", "40").at(0)) == Catch::Approx(0.5));
+    CHECK(std::stod(recordGroupValues(resaved, "ELLIPSE", "41").at(0)) == Catch::Approx(full ? 0.0 : shape == 2 ? 5.0 : 0.25));
+    CHECK(std::stod(recordGroupValues(resaved, "ELLIPSE", "42").at(0)) == Catch::Approx(full ? 2.0 * M_PI : shape == 2 ? 1.0 : 2.5));
+    const auto material = recordGroupValues(resaved, "MATERIAL", "5"); REQUIRE(material.size() == 1u);
+    CHECK(recordGroupValues(resaved, "ELLIPSE", "347") == material);
+    if (const char *copy = std::getenv("LIBRECAD_KEEP_SPARSE_ELLIPSE"))
+      std::filesystem::copy_file(resaved, std::string(copy) + (full ? "-full.dxf" : shape == 2 ? "-wrapped.dxf" : "-partial.dxf"),
+                                 std::filesystem::copy_options::overwrite_existing);
+  }
+  std::filesystem::remove(source); std::filesystem::remove(output); std::filesystem::remove(resaved);
+}
+
+TEST_CASE("Sparse material ellipse rejects incomplete or altered delivery and retries",
+          "[system-codec][dxf][material][transaction][ellipse]") {
+  ensureSettings();
+  const auto source = tmpFile("system_sparse_ellipse_reject_source.dxf");
+  const auto output = tmpFile("system_sparse_ellipse_reject_output.dxf");
+  const auto input = sparseMaterialEllipseSource(false);
+  const std::string sentinel = "preserve sparse ellipse destination\n";
+  struct EllipseProbe : RS_FilterDXFRW {
+    int mode = 0;
+    void addEllipse(const DRW_Ellipse &data) override {
+      if (mode == 1) return;
+      DRW_Ellipse changed = data;
+      if (mode == 2) changed.secPoint.x += 1.0;
+      RS_FilterDXFRW::addEllipse(changed);
+    }
+    void addDxfEntitiesSource(const DRW_DxfEntitiesSource &data) override {
+      auto copy = data;
+      if (mode == 3) for (auto &record : copy.records)
+        if (record.name == "ELLIPSE") for (std::size_t i = 0; i < record.groups.size(); ++i)
+          if (record.groups[i].code() == 11) { record.rawValues[i] = "5"; break; }
+      RS_FilterDXFRW::addDxfEntitiesSource(copy);
+    }
+  } filter;
+  writeText(source, input);
+  for (int mode = 1; mode <= 3; ++mode) {
+    filter.mode = mode;
+    RS_Graphic bad;
+    REQUIRE(filter.fileImport(bad, QString::fromStdString(source), RS2::FormatDXFRW));
+    writeText(output, sentinel);
+    CHECK_FALSE(filter.fileExport(bad, QString::fromStdString(output), RS2::FormatDXFRW));
+    { std::ifstream retained(output, std::ios::binary);
+      CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+    filter.mode = 0;
+    RS_Graphic retry;
+    REQUIRE(filter.fileImport(retry, QString::fromStdString(source), RS2::FormatDXFRW));
+    REQUIRE(filter.fileExport(retry, QString::fromStdString(output), RS2::FormatDXFRW));
+  }
+  for (const auto &change : std::vector<std::pair<std::string, std::string>>{
+           {"31\n0\n", "31\n1\n"}, {"40\n0.5\n", "40\n2\n"},
+           {"42\n2.5\n", "42\n0.25\n"}, {"40\n0.5\n", "210\n0\n220\n1\n230\n0\n40\n0.5\n"}}) {
+    auto badInput = input;
+    const auto at = badInput.find(change.first); REQUIRE(at != std::string::npos);
+    badInput.replace(at, change.first.size(), change.second);
+    writeText(source, badInput); writeText(output, sentinel);
+    RS_Graphic bad;
+    if (filter.fileImport(bad, QString::fromStdString(source), RS2::FormatDXFRW))
+      CHECK_FALSE(filter.fileExport(bad, QString::fromStdString(output), RS2::FormatDXFRW));
+    { std::ifstream retained(output, std::ios::binary);
+      CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+    writeText(source, input);
+    RS_Graphic retry;
+    REQUIRE(filter.fileImport(retry, QString::fromStdString(source), RS2::FormatDXFRW));
+    REQUIRE(filter.fileExport(retry, QString::fromStdString(output), RS2::FormatDXFRW));
+  }
+  writeText(source, input);
+  RS_Graphic live;
+  REQUIRE(filter.fileImport(live, QString::fromStdString(source), RS2::FormatDXFRW));
+  RS_Ellipse *ellipse = nullptr;
+  for (RS_Entity *entity : live)
+    if (entity && entity->sourceHandle() == 0xA5u && entity->rtti() == RS2::EntityEllipse)
+      ellipse = static_cast<RS_Ellipse *>(entity);
+  REQUIRE(ellipse);
+  for (const int mode : {0, 1, 2}) {
+    if (mode == 0) ellipse->setRatio(2.0);
+    else if (mode == 1) ellipse->setReversed(true);
+    else { ellipse->setAngle1(1.0e-11); ellipse->setAngle2(2.0 * M_PI - 1.0e-11); }
+    writeText(output, sentinel);
+    CHECK_FALSE(filter.fileExport(live, QString::fromStdString(output), RS2::FormatDXFRW));
+    { std::ifstream retained(output, std::ios::binary);
+      CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+    if (mode == 0) ellipse->setRatio(0.5);
+    else if (mode == 1) ellipse->setReversed(false);
+    else { ellipse->setAngle1(0.25); ellipse->setAngle2(2.5); }
+    REQUIRE(filter.fileExport(live, QString::fromStdString(output), RS2::FormatDXFRW));
+  }
+  std::filesystem::remove(source); std::filesystem::remove(output);
+}
+
 TEST_CASE("Ordinary sparse material saves straight lightweight polylines",
           "[system-codec][dxf][material][transaction][polyline]") {
   ensureSettings();
