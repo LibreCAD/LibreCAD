@@ -225,6 +225,13 @@ the dependencies for **3 and 4** in parallel. **5** follows the acceptance work.
   `/private/tmp/offset-3193-trim-high-ellipse-asan-logs` (temporary). This
   qualifies these isolated rows, not leak detection, prior shared-process
   failures or other platforms.
+- The excluded endpoint-tangent parabola family also passed **223/223 profiles,
+  269,518 assertions** on the same source-equivalent macOS Debug ASan/UBSan
+  build and options, using `parabola-tangent` with the 180-second per-profile
+  bound. Manifest and logs: `/private/tmp/offset-3193-trim-tangent-asan.json`
+  and `/private/tmp/offset-3193-trim-tangent-asan-logs` (temporary). The
+  separate periodic-spline matrix, six timed-out aggregate cases, prior
+  shared-process failures, leak detection and non-macOS validation remain open.
 
 ## Smallest Safe Fix
 
