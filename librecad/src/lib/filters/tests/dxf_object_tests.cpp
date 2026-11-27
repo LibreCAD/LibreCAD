@@ -10408,6 +10408,67 @@ TEST_CASE("DXF POLYLINE writer rejects invalid child payloads",
   write(std::move(nonFiniteChild), "lc_dxf_polyline_nonfinite_child.dxf");
 }
 
+TEST_CASE("DXF POLYLINE vertex XDATA survives write and retry",
+          "[dxf][polyline][xdata][writer][safety]") {
+  class PolylineEmitter : public StubInterface {
+  public:
+    dxfRW *writer = nullptr;
+    DRW_Polyline polyline;
+    bool result = false;
+    void writeAppId() override {
+      DRW_AppId app;
+      app.name = "VERTEX_TEST";
+      REQUIRE(writer->writeAppId(&app));
+    }
+    void writeEntities() override { result = writer->writePolyline(&polyline); }
+  };
+  class PolylineCapture : public StubInterface {
+  public:
+    unsigned count = 0;
+    bool matches = false;
+    void addPolyline(const DRW_Polyline &polyline) override {
+      ++count;
+      if (polyline.vertlist.size() != 2 || !polyline.vertlist[0] ||
+          !polyline.vertlist[1]) return;
+      const auto &data = polyline.vertlist[0]->extData;
+      matches = data.size() == 2 && data[0] && data[1] &&
+          data[0]->code() == 1001 && data[0]->type() == DRW_Variant::STRING &&
+          std::string(data[0]->c_str()) == "VERTEX_TEST" &&
+          data[1]->code() == 1041 && data[1]->type() == DRW_Variant::DOUBLE &&
+          data[1]->content.d == 7.25 && polyline.vertlist[1]->extData.empty();
+    }
+  };
+
+  for (const auto version : {DRW::AC1009, DRW::AC1021}) {
+    for (const bool binary : {false, true}) {
+      CAPTURE(version, binary);
+      const auto path = std::filesystem::temp_directory_path() /
+                        "lc_dxf_polyline_vertex_xdata_retry.dxf";
+      { std::ofstream file(path, std::ios::binary); file << "sentinel"; }
+      PolylineEmitter emitter;
+      auto vertex = std::make_shared<DRW_Vertex>();
+      vertex->extData.push_back(std::make_shared<DRW_Variant>(1001, std::string{"VERTEX_TEST"}));
+      vertex->extData.push_back(std::make_shared<DRW_Variant>(1041, std::string{"invalid"}));
+      emitter.polyline.vertlist.push_back(vertex);
+      emitter.polyline.vertlist.push_back(std::make_shared<DRW_Vertex>());
+      dxfRW writer(path.string().c_str());
+      emitter.writer = &writer;
+      CHECK_FALSE(writer.write(&emitter, version, binary));
+      CHECK_FALSE(emitter.result);
+      CHECK(slurp(path) == "sentinel");
+      vertex->extData.back() = std::make_shared<DRW_Variant>(1041, 7.25);
+      REQUIRE(writer.write(&emitter, version, binary));
+      REQUIRE(emitter.result);
+      PolylineCapture capture;
+      dxfRW reader(path.string().c_str());
+      REQUIRE(reader.read(&capture, false));
+      CHECK(capture.count == 1);
+      CHECK(capture.matches);
+      std::filesystem::remove(path);
+    }
+  }
+}
+
 TEST_CASE("DXF INSERT writer rejects invalid attribute children",
           "[dxf][insert][writer][safety]") {
   class InsertEmitter : public StubInterface {
