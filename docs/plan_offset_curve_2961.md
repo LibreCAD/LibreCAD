@@ -326,6 +326,9 @@ the dependencies for **3 and 4** in parallel. **5** follows the acceptance work.
 - Test-only commit `1259e2499` strengthens the cleanup check with a child-started
   marker before verifying that the timed-out descendant cannot finish. All
   three focused Python tests passed again on macOS; Windows remains unqualified.
+- Test-only commit `6717ab3fa` streams the binary digest in 1 MiB blocks so a
+  large sanitizer executable is not loaded into memory just to hash it. Four
+  focused Python tests and a real Release profile smoke passed on macOS.
 
 ## Smallest Safe Fix
 
