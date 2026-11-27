@@ -78,7 +78,7 @@ the dependencies for **3 and 4** in parallel. **5** follows the acceptance work.
 
 | Step | Readiness | Acceptance |
 | --- | --- | --- |
-| **1. Complete the automated matrix** | **Ready locally** with the existing CMake/Qt6 toolchain and real sibling worker. Exact-source Release integration is 20/20; worker entries remain. Missing nonlocal rows need their corresponding runner. | Match receipts by source, case/profile, platform and configuration. Run missing portable family/variant rows first, including thin-ellipse cusp and mixed-bulge regressions where the broad variants were not exercised. Finish broad Trim sanitizer and shared-process order checks. Refresh integrated-suite evidence if the final candidate changes affected code. |
+| **1. Complete the automated matrix** | **Ready locally** with the existing CMake/Qt6 toolchain and real sibling worker. Exact-source macOS Release integration is 20/20 and worker entries are 38/38; missing nonlocal rows need their corresponding runner. | Match receipts by source, case/profile, platform and configuration. Run missing portable family/variant rows first, including thin-ellipse cusp and mixed-bulge regressions where the broad variants were not exercised. Investigate the intermittent Trim sanitizer launch failures and remaining supported configurations. Refresh integrated-suite evidence if the final candidate changes affected code. |
 | **2. Run the packaged-app walkthrough** | **Blocked** on observable desktop control or a human operator. The fixed copy launched and sampled in the normal event loop, but desktop control could not attach. | Use the candidate artifact, disposable fixtures and an isolated or approved profile. Complete the walkthrough below; an older build, app launch or offscreen test does not close it. Do not re-sign a working artifact just to retry access. |
 | **3. Validate independent CAD** | **Partial**: bounded ODA and LibreDWG evidence exists; independent native DWG viewing and AutoCAD acceptance need an appropriate app/operator. | Compare the generated corpus, including degree 1/3 carriers and LINE controls. Verify geometry, layer/pen and metadata across the applicable round trips. Observe native DWG geometry in an independent CAD viewport and record AutoCAD open/audit, sampled geometry and save/reopen; check retained offset metadata and native adoption back in LibreCAD. Do not expect AutoCAD to edit LibreCAD's native offset definition. |
 | **4. Qualify deployed macOS** | **Blocked** on an authorized release owner, Developer ID/notarization and macOS 14.4 access. | CI uses an ad-hoc universal DMG on `macos-15-intel` with deployment target 14.4; that is not runtime on 14.4. Reuse `scripts/build-osx.sh` and `scripts/test-osx-{package,dmg-runtime}.sh`; retain artifact hash, architecture, signature/notarization/staple verification and actual OS. Check app/worker launch, a worker-backed edit and save/reopen on 14.4. Retain Linux/Windows relocation evidence separately. |
@@ -194,6 +194,26 @@ the dependencies for **3 and 4** in parallel. **5** follows the acceptance work.
   visible GUI or other-platform acceptance. CMake emitted translation install
   developer warnings; the initial build command also named a CTest entry as a
   target, then the corrected target build succeeded.
+- That same Release build subsequently passed **38/38 distinct registered
+  worker CTest entries**, as a 33-entry run and a separate five-entry run;
+  their names were reconciled against CTest discovery with no missing or
+  unexpected entries. All 33 detailed outputs contain Catch success summaries,
+  with no unmatched or skipped-test messages found. The full kernel selector
+  includes all three `[ellipse][cusp]` and both
+  `[mixed-bulge][region-boundary][topology]` cases. The 33-entry run took
+  4,045.94 seconds and overlapped part of the randomized sanitizer run. The
+  client used a 900-second test-only watchdog and its matrix entries had a
+  960-second CTest limit; production limits were unchanged. Worker, kernel and
+  client binary SHA-256 values were respectively
+  `94c5baf75931f8e5e731b834ae152ef32266aaa0213e683163615ef575e06ba4`,
+  `2bf45c980b43d30ddf0879d97cc231c3adb88f91898daba0cd92396d6b422407` and
+  `c6c89b25586f95e2da8750ba862e129fa867a96fce267f1f2819b96915940651`.
+  Temporary logs: `/private/tmp/offset-3193-exact-release-worker-remaining.log`,
+  `/private/tmp/offset-3193-exact-release-worker-short.log` and
+  `/private/tmp/offset-3193-exact-release-worker-detail.log`. The build was
+  made at head `971c0699f28db22062f45523a594b4f8fa3376d9`; later changes are
+  roadmap and Python test-runner only. This does not qualify GUI, signed
+  deployment, independent CAD, or arbitrary geometry variants.
 - PR head `217abd5e277ae7aecbb3a5d2b38b4a077f7c0644` completed CI with
   **19 successful checks, 7 skipped, 0 failed**. The successful checks include
   [Linux fast and Windows x64/ARM64 DWG/DXF verification](https://github.com/LibreCAD/LibreCAD/actions/runs/45943934164)
