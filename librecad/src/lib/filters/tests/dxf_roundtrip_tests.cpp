@@ -1917,7 +1917,7 @@ TEST_CASE("Opt-in system codec replays an unchanged sparse material graph",
     { std::ifstream retained(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
     activePlot->setMarginsInMm(0.0, 0.0, 0.0, 0.0);
     REQUIRE(anotherWriter.fileExport(ordinary, QString::fromStdString(output), RS2::FormatDXFRW));
-    auto *newPoint = new RS_Point(&ordinary, RS_Vector(2.0, 3.0));
+    auto *newPoint = new RS_Point(&ordinary, RS_Vector(2.0, 3.0, 1.0));
     ordinary.addEntity(newPoint);
     writeText(output, sentinel);
     CHECK_FALSE(anotherWriter.fileExport(ordinary, QString::fromStdString(output), RS2::FormatDXFRW));
@@ -1956,7 +1956,7 @@ TEST_CASE("Opt-in system codec replays an unchanged sparse material graph",
       } else if (mode == 1) {
         const auto at = altered.find("0\nENDSEC\n0\nSECTION\n2\nOBJECTS\n"); REQUIRE(at != std::string::npos);
         altered.insert(at, "0\nPOINT\n5\nA5\n100\nAcDbEntity\n8\nRAWTEST\n"
-                           "100\nAcDbPoint\n10\n0\n20\n0\n");
+                           "100\nAcDbPoint\n10\n0\n20\n0\n30\n1\n");
       } else if (mode == 2) {
         const auto at = altered.find("0\nSECTION\n2\nENTITIES\n"); REQUIRE(at != std::string::npos);
         altered.insert(at, "0\nSECTION\n2\nBLOCKS\n0\nBLOCK\n5\nB0\n8\n0\n2\nB\n70\n0\n"
@@ -2228,6 +2228,99 @@ TEST_CASE("Opt-in system codec replays an unchanged sparse material graph",
   std::filesystem::remove(source);
   std::filesystem::remove(output);
   std::filesystem::remove(resaved);
+}
+
+TEST_CASE("Ordinary sparse material saves simple points", "[system-codec][dxf][material][transaction][point]") {
+  ensureSettings();
+  const auto source = tmpFile("system_sparse_point_source.dxf");
+  const auto output = tmpFile("system_sparse_point_output.dxf");
+  const auto resaved = tmpFile("system_sparse_point_resave.dxf");
+  const std::string input =
+      "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1021\n9\n$CMATERIAL\n347\nA1\n0\nENDSEC\n"
+      "0\nSECTION\n2\nTABLES\n0\nTABLE\n2\nLAYER\n70\n1\n"
+      "0\nLAYER\n5\n30\n100\nAcDbSymbolTableRecord\n100\nAcDbLayerTableRecord\n"
+      "2\nRAWTEST\n70\n0\n62\n7\n6\nCONTINUOUS\n347\nA1\n0\nENDTAB\n0\nENDSEC\n"
+      "0\nSECTION\n2\nENTITIES\n0\nPOINT\n5\nA5\n100\nAcDbEntity\n8\nRAWTEST\n62\n2\n347\nA1\n"
+      "100\nAcDbPoint\n10\n2\n20\n3\n30\n0\n"
+      "0\nPOINT\n5\nA6\n100\nAcDbEntity\n8\nRAWTEST\n100\nAcDbPoint\n10\n4\n20\n5\n"
+      "0\nENDSEC\n0\nSECTION\n2\nOBJECTS\n0\nDICTIONARY\n5\nC\n330\n0\n"
+      "100\nAcDbDictionary\n281\n1\n3\nACAD_MATERIAL\n350\nA0\n"
+      "0\nDICTIONARY\n5\nA0\n330\nC\n100\nAcDbDictionary\n281\n1\n"
+      "3\nPlainMat\n350\nA1\n0\nMATERIAL\n5\nA1\n330\nA0\n"
+      "100\nAcDbMaterial\n1\nPlainMat\n94\n63\n0\nENDSEC\n0\nEOF\n";
+  writeText(source, input);
+  RS_FilterDXFRW filter; RS_Graphic graphic;
+  REQUIRE(filter.fileImport(graphic, QString::fromStdString(source), RS2::FormatDXFRW));
+  RS_Point *point = nullptr;
+  for (RS_Entity *entity : graphic)
+    if (entity && entity->sourceHandle() == 0xA5u && entity->rtti() == RS2::EntityPoint)
+      point = static_cast<RS_Point *>(entity);
+  REQUIRE(point); CHECK(point->materialHandle() == 0xA1u);
+  point->setPos(RS_Vector(6.0, 7.0));
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  CHECK(recordGroupValues(output, "POINT", "10") == std::vector<std::string>{"6", "4"});
+  CHECK(recordGroupValues(output, "POINT", "20") == std::vector<std::string>{"7", "5"});
+  const auto material = recordGroupValues(output, "MATERIAL", "5"); REQUIRE(material.size() == 1u);
+  CHECK(recordGroupValues(output, "POINT", "347") == std::vector<std::string>{material.front()});
+  RS_Graphic reopened;
+  REQUIRE(filter.fileImport(reopened, QString::fromStdString(output), RS2::FormatDXFRW));
+  REQUIRE(filter.fileExport(reopened, QString::fromStdString(resaved), RS2::FormatDXFRW));
+  CHECK(recordGroupValues(resaved, "POINT", "10") == std::vector<std::string>{"6", "4"});
+  auto *layer = graphic.findLayer(QStringLiteral("RAWTEST")); REQUIRE(layer);
+  auto *added = new RS_Point(&graphic, RS_Vector(8.0, 9.0));
+  added->setLayer(layer); added->setPen(point->getPen(false)); graphic.addEntity(added);
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  RS_Graphic additions;
+  REQUIRE(filter.fileImport(additions, QString::fromStdString(output), RS2::FormatDXFRW));
+  REQUIRE(filter.fileExport(additions, QString::fromStdString(resaved), RS2::FormatDXFRW));
+  CHECK(recordGroupValues(resaved, "POINT", "10") == std::vector<std::string>{"6", "4", "8"});
+  if (const char *copy = std::getenv("LIBRECAD_KEEP_ORDINARY_SPARSE_POINT"))
+    std::filesystem::copy_file(resaved, copy, std::filesystem::copy_options::overwrite_existing);
+  REQUIRE(graphic.removeEntity(added));
+  const std::string sentinel = "preserve sparse point destination\n";
+  for (const std::string extra : {"30\n2\n", "39\n1\n", "50\n30\n", "210\n0\n220\n1\n230\n0\n"}) {
+    auto unsupported = input;
+    const auto at = unsupported.find("100\nAcDbPoint\n10\n2\n20\n3\n30\n0\n"); REQUIRE(at != std::string::npos);
+    unsupported.replace(at, std::string("100\nAcDbPoint\n10\n2\n20\n3\n30\n0\n").size(),
+                        "100\nAcDbPoint\n10\n2\n20\n3\n" + extra);
+    writeText(source, unsupported); RS_Graphic rejected; writeText(output, sentinel);
+    if (filter.fileImport(rejected, QString::fromStdString(source), RS2::FormatDXFRW))
+      CHECK_FALSE(filter.fileExport(rejected, QString::fromStdString(output), RS2::FormatDXFRW));
+    { std::ifstream retained(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  }
+  struct PointDeliveryProbe : RS_FilterDXFRW {
+    std::uint32_t suppress = 0;
+    bool alterTyped = false, alterPhysical = false;
+    void addPoint(const DRW_Point &data) override {
+      if (data.handle == suppress) return;
+      DRW_Point changed = data;
+      if (alterTyped && data.handle == 0xA5u) changed.basePoint.x += 1.0;
+      RS_FilterDXFRW::addPoint(changed);
+    }
+    void addDxfEntitiesSource(const DRW_DxfEntitiesSource &data) override {
+      auto copy = data;
+      if (alterPhysical) for (auto &record : copy.records)
+        if (record.name == "POINT") for (std::size_t i = 0; i < record.groups.size(); ++i)
+          if (record.groups[i].code() == 10) { record.rawValues[i] = "999"; break; }
+      RS_FilterDXFRW::addDxfEntitiesSource(copy);
+    }
+  } probe;
+  writeText(source, input);
+  for (int mode = 0; mode != 4; ++mode) {
+    probe.suppress = mode == 0 ? 0xA5u : mode == 1 ? 0xA6u : 0;
+    probe.alterTyped = mode == 2; probe.alterPhysical = mode == 3;
+    RS_Graphic rejected;
+    REQUIRE(probe.fileImport(rejected, QString::fromStdString(source), RS2::FormatDXFRW));
+    writeText(output, sentinel);
+    CHECK_FALSE(probe.fileExport(rejected, QString::fromStdString(output), RS2::FormatDXFRW));
+    { std::ifstream retained(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+    probe.suppress = 0; probe.alterTyped = probe.alterPhysical = false;
+    RS_Graphic retry;
+    REQUIRE(probe.fileImport(retry, QString::fromStdString(source), RS2::FormatDXFRW));
+    REQUIRE(probe.fileExport(retry, QString::fromStdString(output), RS2::FormatDXFRW));
+  }
+  std::filesystem::remove(source); std::filesystem::remove(output); std::filesystem::remove(resaved);
 }
 
 TEST_CASE("Ordinary sparse material saves simple circles arcs and lines",

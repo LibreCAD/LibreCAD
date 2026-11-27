@@ -1014,7 +1014,10 @@ bool sameRetainedPlotSettings(const DRW_PlotSettings &a, const DRW_PlotSettings 
   for (const RS_Entity *entity : graphic) {
     if (!entity || entity->isDeleted()) continue;
     if (!hasSimpleMaterialAppearance(*entity)) return false;
-    if (entity->rtti() == RS2::EntityLine) {
+    if (entity->rtti() == RS2::EntityPoint) {
+      const auto *point = static_cast<const RS_Point *>(entity);
+      if (!validPoint(point->getPos())) return false;
+    } else if (entity->rtti() == RS2::EntityLine) {
       const auto *line = static_cast<const RS_Line *>(entity);
       if (!validPoint(line->getStartpoint()) || !validPoint(line->getEndpoint())) return false;
     } else if (entity->rtti() == RS2::EntityCircle) {
@@ -7352,6 +7355,22 @@ struct InsertAttribSidecar {
 };
 } // namespace
 
+#if defined(LIBRECAD_SYSTEM_LIBDXFRW) && defined(LIBDXFRW_HAS_DXF_PHYSICAL_ENTITY_SOURCE_HANDLERS) && defined(LIBDXFRW_HAS_DXF_STAGED_ENTITY_MATERIAL_INSPECTOR)
+namespace {
+void recordMaterialSimpleDelivery(RS_Graphic *graphic, dxfRW *reader, RS_EntityContainer *container,
+                                  const RS_Entity *entity, std::uint32_t source,
+                                  LC_DwgAdvancedMetadata::DxfMaterialSimpleKind kind) {
+  if (!reader || !graphic || !graphic->dwgAdvancedMetadata().dxfMaterialPhysicalRequested()) return;
+  auto &metadata = graphic->dwgAdvancedMetadata();
+  const auto *block = dynamic_cast<const RS_Block *>(container);
+  if ((container != graphic && !block) || !entity || entity->sourceHandle() != source)
+    metadata.markDxfMaterialEntitySourcesUnavailable();
+  else
+    metadata.addDxfMaterialSimpleDelivery(source, block != nullptr, kind, false);
+}
+}
+#endif
+
 /**
  * Implementation of the method which handles point entities.
  */
@@ -7370,23 +7389,11 @@ void RS_FilterDXFRW::addPoint(const DRW_Point &data) {
     appendTypeSidecar(entity, kPointExtrusionMarker, std::move(payload));
   }
   m_currentContainer->addEntity(entity);
-}
-
 #if defined(LIBRECAD_SYSTEM_LIBDXFRW) && defined(LIBDXFRW_HAS_DXF_PHYSICAL_ENTITY_SOURCE_HANDLERS) && defined(LIBDXFRW_HAS_DXF_STAGED_ENTITY_MATERIAL_INSPECTOR)
-namespace {
-void recordMaterialSimpleDelivery(RS_Graphic *graphic, dxfRW *reader, RS_EntityContainer *container,
-                                  const RS_Entity *entity, std::uint32_t source,
-                                  LC_DwgAdvancedMetadata::DxfMaterialSimpleKind kind) {
-  if (!reader || !graphic || !graphic->dwgAdvancedMetadata().dxfMaterialPhysicalRequested()) return;
-  auto &metadata = graphic->dwgAdvancedMetadata();
-  const auto *block = dynamic_cast<const RS_Block *>(container);
-  if ((container != graphic && !block) || !entity || entity->sourceHandle() != source)
-    metadata.markDxfMaterialEntitySourcesUnavailable();
-  else
-    metadata.addDxfMaterialSimpleDelivery(source, block != nullptr, kind, false);
-}
-}
+  recordMaterialSimpleDelivery(m_graphic, m_dxfR, m_currentContainer, entity, data.handle,
+      LC_DwgAdvancedMetadata::DxfMaterialSimpleKind::Point);
 #endif
+}
 
 /**
  * Implementation of the method which handles line entities.
@@ -12705,7 +12712,7 @@ bool isDefaultMaterialPlotSource(const QByteArray &bytes, const DRW_DxfIdentityS
 #endif
 
 // The ordinary-save route initially admits only a physically complete,
-// ASCII AC1021 model-space LINE/CIRCLE/ARC profile. Other source shapes may still use
+// ASCII AC1021 model-space POINT/LINE/CIRCLE/ARC profile. Other source shapes may still use
 // the separate explicitly opted-in replay path.
 bool hasSimpleMaterialEntities(const RS_Graphic &graphic, const DRW_DxfEntitiesSource &source) {
   if (source.status != DRW_DxfEntitiesSource::Status::Complete ||
@@ -12719,8 +12726,8 @@ bool hasSimpleMaterialEntities(const RS_Graphic &graphic, const DRW_DxfEntitiesS
   }
   for (const auto &record : source.records) {
     const auto name = normalizeDwgTableName(record.name);
-    const bool line = name == "LINE", circle = name == "CIRCLE", arc = name == "ARC";
-    if ((!line && !circle && !arc) || record.groups.size() != record.rawValues.size()) return false;
+    const bool point = name == "POINT", line = name == "LINE", circle = name == "CIRCLE", arc = name == "ARC";
+    if ((!point && !line && !circle && !arc) || record.groups.size() != record.rawValues.size()) return false;
     std::set<int> seen;
     std::uint32_t handle = 0;
     std::string layer;
@@ -12735,7 +12742,7 @@ bool hasSimpleMaterialEntities(const RS_Graphic &graphic, const DRW_DxfEntitiesS
         if (group.type() != DRW_Variant::STRING || !group.content.s ||
             raw != *group.content.s ||
             (subclass == 0 && *group.content.s != "AcDbEntity") ||
-            (subclass == 1 && *group.content.s != (line ? "AcDbLine" : "AcDbCircle")) ||
+            (subclass == 1 && *group.content.s != (point ? "AcDbPoint" : line ? "AcDbLine" : "AcDbCircle")) ||
             (subclass == 2 && (!arc || *group.content.s != "AcDbArc")) || subclass >= 3)
           return false;
         ++subclass;
@@ -12776,7 +12783,7 @@ bool hasSimpleMaterialEntities(const RS_Graphic &graphic, const DRW_DxfEntitiesS
         bool validRaw = false;
         const double value = QString::fromStdString(raw).toDouble(&validRaw);
         const bool geometry = (subclass == 2 && (code == 10 || code == 20 || code == 30 ||
-             (line && (code == 11 || code == 21 || code == 31)) || (!line && code == 40))) ||
+             (line && (code == 11 || code == 21 || code == 31)) || ((circle || arc) && code == 40))) ||
              (arc && subclass == 3 && (code == 50 || code == 51));
         if (!geometry || group.type() != DRW_Variant::DOUBLE || !validRaw ||
             !std::isfinite(value) || !std::isfinite(group.content.d) || value != group.content.d) return false;
@@ -12796,19 +12803,23 @@ bool hasSimpleMaterialEntities(const RS_Graphic &graphic, const DRW_DxfEntitiesS
     if (subclass != (arc ? 3 : 2) || !seen.count(5) || !seen.count(8) || !seen.count(10) ||
         !seen.count(20) || z1 != 0 || z2 != 0 ||
         (line && (!seen.count(11) || !seen.count(21))) ||
-        (!line && (!seen.count(40) || radius <= 0)) ||
+        ((circle || arc) && (!seen.count(40) || radius <= 0)) ||
         (arc && (!seen.count(50) || !seen.count(51) || angle1 < 0 || angle1 >= 360 ||
                  angle2 < 0 || angle2 >= 360 || angle1 == angle2)))
       return false;
     const auto found = delivered.find(handle);
     if (found == delivered.end() ||
-        found->second->rtti() != (line ? RS2::EntityLine : circle ? RS2::EntityCircle : RS2::EntityArc) ||
+        found->second->rtti() != (point ? RS2::EntityPoint : line ? RS2::EntityLine : circle ? RS2::EntityCircle : RS2::EntityArc) ||
         !found->second->getLayer(false) ||
         found->second->getLayer(false)->getName().toUtf8().toStdString() != layer ||
         !hasSimpleMaterialAppearance(*found->second) ||
         simpleMaterialColor(found->second->getPen(false).getColor()) != colorIndex)
       return false;
-    if (line) {
+    if (point) {
+      const auto *value = static_cast<const RS_Point *>(found->second);
+      const auto position = value->getPos();
+      if (!position.valid || position.x != x1 || position.y != y1) return false;
+    } else if (line) {
       const auto *value = static_cast<const RS_Line *>(found->second);
       const auto start = value->getStartpoint(), end = value->getEndpoint();
       if (!start.valid || !end.valid || start.x != x1 || start.y != y1 || end.x != x2 || end.y != y2) return false;
@@ -12833,7 +12844,7 @@ bool capturePhysicalMaterialReferences(LC_DwgAdvancedMetadata &metadata,
     if (record.groups.size() != record.rawValues.size() || record.groups.size() != record.spans.size()) return false;
     metadata.addDxfMaterialPhysicalRecord(record.marker.ordinal, record.endOrdinal);
     const auto name = normalizeDwgTableName(record.name);
-    const bool simple = name == "LINE" || name == "CIRCLE" || name == "ARC";
+    const bool simple = name == "POINT" || name == "LINE" || name == "CIRCLE" || name == "ARC";
     std::uint32_t handle = 0, target = 0;
     unsigned selfCount = 0, materialCount = 0, depth = 0;
     bool common = false;
@@ -12867,7 +12878,7 @@ bool capturePhysicalMaterialReferences(LC_DwgAdvancedMetadata &metadata,
     if (simple) {
       if (selfCount != 1u) return false;
       using Kind = LC_DwgAdvancedMetadata::DxfMaterialSimpleKind;
-      const auto kind = name == "LINE" ? Kind::Line : name == "CIRCLE" ? Kind::Circle : Kind::Arc;
+      const auto kind = name == "POINT" ? Kind::Point : name == "LINE" ? Kind::Line : name == "CIRCLE" ? Kind::Circle : Kind::Arc;
       metadata.addDxfMaterialSimpleDelivery(handle, block, kind, true);
     }
     if (materialCount) {
