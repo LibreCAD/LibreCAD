@@ -2393,6 +2393,120 @@ TEST_CASE("Ordinary sparse material saves planar ellipses",
   std::filesystem::remove(source); std::filesystem::remove(output); std::filesystem::remove(resaved);
 }
 
+TEST_CASE("Nearly full material ellipses preserve their interval",
+          "[system-codec][dxf][material][transaction][ellipse][near-full]") {
+  ensureSettings();
+  auto input = sparseMaterialEllipseSource(false);
+  const std::string old = "41\n0.25\n42\n2.5\n";
+  const auto at = input.find(old); REQUIRE(at != std::string::npos);
+  input.replace(at, old.size(), "41\n0.00000000001\n42\n6.283185307169586\n");
+  const auto source = tmpFile("system_sparse_ellipse_near_full_source.dxf");
+  const auto output = tmpFile("system_sparse_ellipse_near_full_output.dxf");
+  const auto resaved = tmpFile("system_sparse_ellipse_near_full_resaved.dxf");
+  writeText(source, input);
+  RS_FilterDXFRW filter; RS_Graphic graphic;
+  REQUIRE(filter.fileImport(graphic, QString::fromStdString(source), RS2::FormatDXFRW));
+  RS_Ellipse *ellipse = nullptr;
+  for (RS_Entity *entity : graphic)
+    if (entity && entity->sourceHandle() == 0xA5u && entity->rtti() == RS2::EntityEllipse)
+      ellipse = static_cast<RS_Ellipse *>(entity);
+  REQUIRE(ellipse);
+  REQUIRE(ellipse->isEllipticArc());
+  CHECK(ellipse->getAngle1() == 1.0e-11);
+  CHECK(ellipse->getAngle2() == 2.0 * M_PI - 1.0e-11);
+  CHECK(ellipse->getAngleLength() < 2.0 * M_PI);
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  RS_Graphic reopened;
+  REQUIRE(filter.fileImport(reopened, QString::fromStdString(output), RS2::FormatDXFRW));
+  REQUIRE(filter.fileExport(reopened, QString::fromStdString(resaved), RS2::FormatDXFRW));
+  CHECK(std::stod(recordGroupValues(resaved, "ELLIPSE", "41").at(0)) == 1.0e-11);
+  CHECK(std::stod(recordGroupValues(resaved, "ELLIPSE", "42").at(0)) == 2.0 * M_PI - 1.0e-11);
+  ellipse->setAngle1(2.0e-11);
+  ellipse->setAngle2(2.0 * M_PI - 2.0e-11);
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  RS_Graphic edited;
+  REQUIRE(filter.fileImport(edited, QString::fromStdString(output), RS2::FormatDXFRW));
+  REQUIRE(filter.fileExport(edited, QString::fromStdString(resaved), RS2::FormatDXFRW));
+  CHECK(std::stod(recordGroupValues(resaved, "ELLIPSE", "41").at(0)) == 2.0e-11);
+  CHECK(std::stod(recordGroupValues(resaved, "ELLIPSE", "42").at(0)) == 2.0 * M_PI - 2.0e-11);
+  if (const char *copy = std::getenv("LIBRECAD_KEEP_NEAR_FULL_ELLIPSE"))
+    std::filesystem::copy_file(resaved, copy, std::filesystem::copy_options::overwrite_existing);
+  const std::string nearlyFull = "41\n0.00000000001\n42\n6.283185307169586\n";
+  const auto tinyAt = input.find(nearlyFull); REQUIRE(tinyAt != std::string::npos);
+  input.replace(tinyAt, nearlyFull.size(), "41\n0\n42\n0.00000000001\n");
+  writeText(source, input);
+  RS_Graphic tiny;
+  REQUIRE(filter.fileImport(tiny, QString::fromStdString(source), RS2::FormatDXFRW));
+  REQUIRE(filter.fileExport(tiny, QString::fromStdString(output), RS2::FormatDXFRW));
+  RS_Graphic tinyReopened;
+  REQUIRE(filter.fileImport(tinyReopened, QString::fromStdString(output), RS2::FormatDXFRW));
+  REQUIRE(filter.fileExport(tinyReopened, QString::fromStdString(resaved), RS2::FormatDXFRW));
+  CHECK(std::stod(recordGroupValues(resaved, "ELLIPSE", "41").at(0)) == 0.0);
+  CHECK(std::stod(recordGroupValues(resaved, "ELLIPSE", "42").at(0)) == 1.0e-11);
+  if (const char *copy = std::getenv("LIBRECAD_KEEP_TINY_ELLIPSE"))
+    std::filesystem::copy_file(resaved, copy, std::filesystem::copy_options::overwrite_existing);
+  std::filesystem::remove(source); std::filesystem::remove(output); std::filesystem::remove(resaved);
+}
+
+TEST_CASE("Ellipse sweep distinguishes tiny gaps and tiny arcs from full turns",
+          "[system-codec][dxf][ellipse][near-full]") {
+  ensureSettings();
+  const RS_Vector center(1, 2), major(4, 3);
+  const RS_Ellipse full(nullptr, {center, major, 0.5, 0.0, 0.0, false});
+  const RS_Ellipse nearFull(nullptr, {center, major, 0.5, 1.0e-11, 2.0 * M_PI - 1.0e-11, false});
+  const RS_Ellipse tiny(nullptr, {center, major, 0.5, 1.0, 1.0 + 1.0e-9, false});
+  const RS_Ellipse tinyAtZero(nullptr, {center, major, 0.5, 0.0, 1.0e-11, false});
+  const RS_Ellipse reversedTiny(nullptr, {center, major, 0.5, 1.0e-11, 0.0, true});
+  const RS_Ellipse wrapped(nullptr, {center, major, 0.5, 5.0, 1.0, false});
+  CHECK(full.getAngleLength() == 2.0 * M_PI);
+  CHECK(nearFull.getAngleLength() < 2.0 * M_PI);
+  CHECK(nearFull.getAngleLength() > 2.0 * M_PI - 1.0e-9);
+  CHECK(tiny.getAngleLength() > 0.0);
+  CHECK(tiny.getAngleLength() < 2.0e-9);
+  CHECK(tinyAtZero.isEllipticArc());
+  CHECK(tinyAtZero.getAngleLength() > 0.0);
+  CHECK(tinyAtZero.getAngleLength() < 2.0e-11);
+  CHECK(tinyAtZero.getLength() > 0.0);
+  CHECK(tinyAtZero.getLength() < 1.0e-9);
+  CHECK(tinyAtZero.getLength() == Catch::Approx(2.5e-11).epsilon(1.0e-4).margin(1.0e-14));
+  CHECK(tinyAtZero.getData().angularLength < 1.0e-6);
+  CHECK(tinyAtZero.getMax().x - tinyAtZero.getMin().x < 1.0e-8);
+  CHECK(tinyAtZero.getMax().y - tinyAtZero.getMin().y < 1.0e-8);
+  const auto nearest = tinyAtZero.getNearestPointOnEntity(center - major, true);
+  CHECK(nearest.distanceTo(tinyAtZero.getStartpoint()) < 1.0e-8);
+  CHECK_FALSE(tinyAtZero.isPointOnEntity(center - major));
+  CHECK(tinyAtZero.isPointOnEntity(tinyAtZero.getStartpoint()));
+  CHECK(tinyAtZero.isPointOnEntity(tinyAtZero.getEndpoint()));
+  CHECK(reversedTiny.getLength() < 1.0e-9);
+  CHECK(reversedTiny.getMax().x - reversedTiny.getMin().x < 1.0e-8);
+  CHECK(reversedTiny.getNearestPointOnEntity(center - major, true).distanceTo(reversedTiny.getStartpoint()) < 1.0e-8);
+  CHECK(wrapped.getAngleLength() == Catch::Approx(2.0 * M_PI - 4.0));
+}
+
+TEST_CASE("Nearly full ellipse round trips without material metadata",
+          "[system-codec][dxf][ellipse][near-full]") {
+  ensureSettings();
+  const auto source = tmpFile("plain_near_full_ellipse_source.dxf");
+  const auto output = tmpFile("plain_near_full_ellipse_output.dxf");
+  writeText(source, "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1021\n0\nENDSEC\n"
+      "0\nSECTION\n2\nENTITIES\n0\nELLIPSE\n5\nA5\n100\nAcDbEntity\n8\n0\n"
+      "100\nAcDbEllipse\n10\n1\n20\n2\n30\n0\n11\n4\n21\n3\n31\n0\n40\n0.5\n"
+      "41\n0.00000000001\n42\n6.283185307169586\n0\nENDSEC\n0\nEOF\n");
+  RS_FilterDXFRW filter; RS_Graphic graphic;
+  REQUIRE(filter.fileImport(graphic, QString::fromStdString(source), RS2::FormatDXFRW));
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  CHECK(std::stod(recordGroupValues(output, "ELLIPSE", "41").at(0)) == 1.0e-11);
+  CHECK(std::stod(recordGroupValues(output, "ELLIPSE", "42").at(0)) == 2.0 * M_PI - 1.0e-11);
+  RS_Graphic reopened;
+  REQUIRE(filter.fileImport(reopened, QString::fromStdString(output), RS2::FormatDXFRW));
+  const auto *entity = reopened.firstEntity();
+  REQUIRE(entity); REQUIRE(entity->rtti() == RS2::EntityEllipse);
+  const auto *ellipse = static_cast<const RS_Ellipse *>(entity);
+  CHECK(ellipse->isEllipticArc());
+  CHECK(ellipse->getAngleLength() < 2.0 * M_PI);
+  std::filesystem::remove(source); std::filesystem::remove(output);
+}
+
 TEST_CASE("Sparse material ellipse rejects incomplete or altered delivery and retries",
           "[system-codec][dxf][material][transaction][ellipse]") {
   ensureSettings();
@@ -2455,17 +2569,15 @@ TEST_CASE("Sparse material ellipse rejects incomplete or altered delivery and re
     if (entity && entity->sourceHandle() == 0xA5u && entity->rtti() == RS2::EntityEllipse)
       ellipse = static_cast<RS_Ellipse *>(entity);
   REQUIRE(ellipse);
-  for (const int mode : {0, 1, 2}) {
+  for (const int mode : {0, 1}) {
     if (mode == 0) ellipse->setRatio(2.0);
-    else if (mode == 1) ellipse->setReversed(true);
-    else { ellipse->setAngle1(1.0e-11); ellipse->setAngle2(2.0 * M_PI - 1.0e-11); }
+    else ellipse->setReversed(true);
     writeText(output, sentinel);
     CHECK_FALSE(filter.fileExport(live, QString::fromStdString(output), RS2::FormatDXFRW));
     { std::ifstream retained(output, std::ios::binary);
       CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
     if (mode == 0) ellipse->setRatio(0.5);
-    else if (mode == 1) ellipse->setReversed(false);
-    else { ellipse->setAngle1(0.25); ellipse->setAngle2(2.5); }
+    else ellipse->setReversed(false);
     REQUIRE(filter.fileExport(live, QString::fromStdString(output), RS2::FormatDXFRW));
   }
   std::filesystem::remove(source); std::filesystem::remove(output);

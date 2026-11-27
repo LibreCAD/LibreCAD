@@ -1014,7 +1014,6 @@ bool sameRetainedPlotSettings(const DRW_PlotSettings &a, const DRW_PlotSettings 
       center.z == 0.0 && std::isfinite(major.x) && std::isfinite(major.y) && major.z == 0.0 &&
       std::isfinite(radius) && radius > RS_TOLERANCE && std::isfinite(ratio) && ratio > 0.0 && ratio <= 1.0 &&
       std::isfinite(start) && std::isfinite(end) && !ellipse.isReversed() &&
-      !(std::abs(start) < RS_TOLERANCE && std::abs(end - 2.0 * M_PI) < RS_TOLERANCE) &&
       ((start == 0.0 && end == 0.0) ||
        (start >= 0.0 && start < 2.0 * M_PI && end > 0.0 && end <= 2.0 * M_PI && start != end));
 }
@@ -8922,8 +8921,9 @@ void RS_FilterDXFRW::addEllipse(const DRW_Ellipse &data) {
     ang2 = 2. * M_PI - data.staparam;
   }
 #endif
-  if (fabs(ang2 - 2. * M_PI) < RS_TOLERANCE &&
-      fabs(ang1) < RS_TOLERANCE) {
+  // Only the canonical interval represents a full ellipse. Rounding a nearby
+  // interval to a full turn discards a real (if small) gap in the source.
+  if (ang1 == 0.0 && ang2 == 2.0 * M_PI) {
     ang2 = 0.;
   }
   const auto entity = new RS_Ellipse{
