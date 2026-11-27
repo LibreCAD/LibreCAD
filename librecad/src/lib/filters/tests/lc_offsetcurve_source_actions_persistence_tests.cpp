@@ -1611,7 +1611,8 @@ TEST_CASE("translated rounded polyline action matches an independent worker requ
 }
 
 TEST_CASE("bounded hyperbola source trims through document actions and file lanes",
-          "[lc-offsetcurve][source-action][hyperbola][trim-action][persistence]") {
+          "[lc-offsetcurve][source-action][hyperbola][trim-action][persistence]"
+          "[offset-trim-profile-hyperbola]") {
     const bool leftBranch = GENERATE(false, true);
     const bool reversedParameters = GENERATE(false, true);
     const bool veryHighOrigin = qEnvironmentVariableIsSet("LC_OFFSET_HYPERBOLA_VERY_HIGH_ORIGIN");
@@ -1623,6 +1624,22 @@ TEST_CASE("bounded hyperbola source trims through document actions and file lane
     const double signedDistance = GENERATE(-0.25, 0.25) * sourceScale;
     const auto format = GENERATE(RS2::FormatDXFRW14, RS2::FormatDXFRW2000,
         RS2::FormatDWG, RS2::FormatDXFRW2018, RS2::FormatDWG2018);
+    const std::array formats{RS2::FormatDXFRW14, RS2::FormatDXFRW2000,
+        RS2::FormatDWG, RS2::FormatDXFRW2018, RS2::FormatDWG2018};
+    const int formatIndex = static_cast<int>(
+        std::find(formats.begin(), formats.end(), format) - formats.begin());
+    const int profileIndex = (leftBranch ? 10 : 0) +
+        (reversedParameters ? 5 : 0) + formatIndex;
+    const bool pinProfile = qEnvironmentVariableIsSet("LC_OFFSET_TRIM_HYPERBOLA_PROFILE");
+    bool profileValid = true;
+    const int requestedProfile = pinProfile
+        ? qEnvironmentVariableIntValue("LC_OFFSET_TRIM_HYPERBOLA_PROFILE", &profileValid)
+        : 0;
+    if (pinProfile && profileValid && requestedProfile >= 0 && requestedProfile < 20 &&
+        profileIndex != requestedProfile) return;
+    REQUIRE(profileValid);
+    REQUIRE((!pinProfile || (requestedProfile >= 0 && requestedProfile < 20)));
+    CAPTURE(profileIndex);
     const bool dwg = format == RS2::FormatDWG || format == RS2::FormatDWG2018;
     const RS_Vector origin = veryHighOrigin ? RS_Vector{1e13, -2e13}
         : highOrigin ? RS_Vector{1e12, -2e12} : RS_Vector{0, 0};

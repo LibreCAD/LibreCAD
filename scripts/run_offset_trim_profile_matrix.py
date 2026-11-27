@@ -14,6 +14,11 @@ import time
 
 
 FAMILIES = {
+    "hyperbola": {
+        "environment": "LC_OFFSET_TRIM_HYPERBOLA_PROFILE",
+        "profiles": range(20),
+        "test_spec": "[offset-trim-profile-hyperbola]",
+    },
     "beyond-cusp": {
         "environment": "LC_OFFSET_TRIM_BEYOND_CUSP_PROFILE",
         "profiles": range(144),
