@@ -134,12 +134,10 @@ the dependencies for **3 and 4** in parallel. **5** follows the acceptance work.
 
 1. The periodic-spline profile manifest is reconciled below. Its isolated
    profiles do not replace the shared-process run.
-2. The six timed-out generators now have complete isolated profile receipts,
-   including the typed-parabola profiles. The reconstructed-parabola, default
-   hyperbola, typed-parabola, beyond-cusp and seam aggregates also passed
-   separately below; rerun the high-degree spline as a bounded single-process
-   case. Multi-case
-   shared-process behavior remains open; do not infer it from isolated manifests.
+2. The six timed-out generators now have complete isolated profile and
+   unpinned single-case receipts below. Run the affected cases together in
+   declaration and seeded random order; multi-case behavior is not established
+   by separate single-process cases.
 3. Where an existing selector cannot isolate every tuple, add a test-only
    profile selector to that case and register it in the existing profile
    runner. Preserve the unpinned test, use stable complete tuple identities,
@@ -245,7 +243,7 @@ the dependencies for **3 and 4** in parallel. **5** follows the acceptance work.
   logs are in `/private/tmp/offset-3193-trim-parabola-asan.json` and
   `/private/tmp/offset-3193-trim-parabola-asan-logs` (temporary). This accounts
   for the 152 recorded profiles in isolated processes; it does not resolve the
-  multi-case order, leak detection, other timed-out cases, or other platforms.
+  multi-case order, leak detection or other platforms.
   The aggregate is recorded below.
 - The unpinned typed-parabola aggregate subsequently passed in one
   source-equivalent macOS Debug ASan/UBSan test process with **19,001 assertions**
@@ -277,10 +275,8 @@ the dependencies for **3 and 4** in parallel. **5** follows the acceptance work.
   build and options, using `parabola-tangent` with the 180-second per-profile
   bound. Manifest and logs: `/private/tmp/offset-3193-trim-tangent-asan.json`
   and `/private/tmp/offset-3193-trim-tangent-asan-logs` (temporary). The
-  one other timed-out aggregate case, prior shared-process failures, leak
-  detection and non-macOS validation remain open. The periodic matrix and
-  reconstructed, hyperbola, typed-parabola, beyond-cusp and seam aggregates are
-  recorded above or below.
+  prior shared-process failures, leak detection and non-macOS validation remain
+  open. The periodic matrix and six aggregate reruns are recorded above or below.
 - The periodic-spline matrix passed **1,080/1,080 profiles and 145,371
   assertions** under the same source-equivalent macOS Debug ASan/UBSan build
   and options, with 180-second per-profile and 30-second test-only worker
@@ -446,8 +442,17 @@ the dependencies for **3 and 4** in parallel. **5** follows the acceptance work.
   IDs match 0-44, the test-binary hash remained unchanged, and all 45 logs
   were free of sanitizer diagnostics. Temporary receipt and logs:
   `/private/tmp/offset-3193-high-degree-asan.json` and
-  `/private/tmp/offset-3193-high-degree-asan-logs`. Aggregate timeout,
-  shared-process behavior, leak detection and other platforms remain open.
+  `/private/tmp/offset-3193-high-degree-asan-logs`. The aggregate is recorded
+  below; multi-case behavior, leak detection and other platforms remain open.
+- The unpinned high-degree spline aggregate subsequently passed in one
+  source-equivalent macOS Debug ASan/UBSan test process with **27,312 assertions**
+  in 547.489 seconds, using the same sanitizer options and 30-second test-only
+  worker wait, with a 900-second test-only case bound. The retained log has no
+  sanitizer diagnostic; temporary receipt and log:
+  `/private/tmp/offset-3193-high-degree-aggregate-asan.json` and
+  `/private/tmp/offset-3193-high-degree-aggregate-asan-logs`. The prior
+  300-second timeout remains historical evidence; multi-case order, leak
+  detection and non-macOS behavior remain open.
 - Test-only commit `ddad0c653` makes profile timeouts use the case runner's
   process-group cleanup and records test-binary SHA-256, change detection,
   bounds and hyperbola mode in new manifests. Three focused Python tests and
