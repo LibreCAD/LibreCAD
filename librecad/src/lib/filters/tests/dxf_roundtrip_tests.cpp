@@ -54,6 +54,7 @@
 #include <QCoreApplication>
 
 #include "drw_base.h"
+#include "lc_colornumbers.h"
 #include "lc_dimstyle.h"
 #include "lc_dimarc.h"
 #include "lc_dwgadvancedmetadata.h"
@@ -2339,6 +2340,136 @@ static std::string sparseMaterialPolylineSource() {
       "100\nAcDbMaterial\n1\nPlainMat\n94\n63\n0\nENDSEC\n0\nEOF\n";
 }
 
+TEST_CASE("Ordinary sparse material preserves exact true colors",
+          "[system-codec][dxf][material][transaction][truecolor]") {
+  ensureSettings();
+  const auto source = tmpFile("system_sparse_truecolor_source.dxf");
+  const auto output = tmpFile("system_sparse_truecolor_output.dxf");
+  const auto resaved = tmpFile("system_sparse_truecolor_resaved.dxf");
+  const std::string sentinel = "preserve true color destination\n";
+  const std::vector<std::pair<std::string, std::string>> entities = {
+      {"POINT", "100\nAcDbPoint\n10\n1\n20\n2\n"},
+      {"LINE", "100\nAcDbLine\n10\n1\n20\n2\n11\n4\n21\n6\n"},
+      {"CIRCLE", "100\nAcDbCircle\n10\n1\n20\n2\n40\n3\n"},
+      {"ARC", "100\nAcDbCircle\n10\n1\n20\n2\n40\n3\n100\nAcDbArc\n50\n30\n51\n120\n"},
+      {"ELLIPSE", "100\nAcDbEllipse\n10\n1\n20\n2\n11\n4\n21\n3\n40\n0.5\n41\n0.25\n42\n2.5\n"},
+      {"LWPOLYLINE", "100\nAcDbPolyline\n90\n3\n70\n0\n10\n1\n20\n2\n10\n4\n20\n6\n10\n8\n20\n3\n"},
+  };
+  for (const auto &entry : entities) for (const RS_Color color : {RS_Color(10, 20, 30), RS_Color(18, 52, 86)}) {
+    CAPTURE(entry.first, color.red(), color.green(), color.blue());
+    int rgb = -1; const int index = LC_ColorNumbers::colorToNumber(color, &rgb);
+    REQUIRE(rgb == ((color.red() << 16) | (color.green() << 8) | color.blue()));
+    auto input = sparseMaterialPolylineSource();
+    const std::string table = "0\nTABLE\n2\nLAYER\n70\n1\n0\nLAYER\n5\n30\n";
+    const auto tablePos = input.find(table); REQUIRE(tablePos != std::string::npos);
+    input.replace(tablePos, table.size(), "0\nTABLE\n2\nLAYER\n5\n2\n330\n0\n"
+                  "100\nAcDbSymbolTable\n70\n1\n0\nLAYER\n5\n30\n330\n2\n");
+    const auto begin = input.find("0\nLWPOLYLINE\n5\nA5\n");
+    const auto end = input.find("0\nENDSEC\n", begin);
+    REQUIRE(begin != std::string::npos); REQUIRE(end != std::string::npos);
+    const auto record = "0\n" + entry.first + "\n5\nA5\n100\nAcDbEntity\n8\nRAWTEST\n62\n" +
+        std::to_string(index) + "\n420\n" + std::to_string(rgb) + "\n347\nA1\n" + entry.second;
+    input.replace(begin, end - begin, record);
+    writeText(source, input);
+    RS_FilterDXFRW filter; RS_Graphic graphic;
+    REQUIRE(filter.fileImport(graphic, QString::fromStdString(source), RS2::FormatDXFRW));
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+    const auto verify = [&](const std::string &path) {
+      CHECK(recordGroupValues(path, entry.first, "62") == std::vector<std::string>{std::to_string(index)});
+      CHECK(recordGroupValues(path, entry.first, "420") == std::vector<std::string>{std::to_string(rgb)});
+      const auto materials = recordGroupValues(path, "MATERIAL", "5"); REQUIRE(materials.size() == 1u);
+      CHECK(recordGroupValues(path, entry.first, "347") == std::vector<std::string>{materials.front()});
+    };
+    verify(output);
+    RS_Graphic reopened;
+    REQUIRE(filter.fileImport(reopened, QString::fromStdString(output), RS2::FormatDXFRW));
+    REQUIRE(filter.fileExport(reopened, QString::fromStdString(resaved), RS2::FormatDXFRW));
+    verify(resaved);
+    if (const char *prefix = std::getenv("LIBRECAD_KEEP_SPARSE_TRUECOLOR"))
+      std::filesystem::copy_file(resaved, std::string(prefix) + entry.first + "-" + std::to_string(rgb) + ".dxf",
+                                 std::filesystem::copy_options::overwrite_existing);
+    RS_Entity *entity = nullptr;
+    for (RS_Entity *candidate : graphic)
+      if (candidate && candidate->sourceHandle() == 0xA5u) entity = candidate;
+    REQUIRE(entity);
+    const auto savedPen = entity->getPen(false);
+    auto editedPen = savedPen;
+    const RS_Color editedColor(21, 33, 44);
+    int editedRgb = -1; const int editedIndex = LC_ColorNumbers::colorToNumber(editedColor, &editedRgb);
+    REQUIRE(editedRgb == ((21 << 16) | (33 << 8) | 44));
+    editedPen.setColor(editedColor); entity->setPen(editedPen);
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+    CHECK(recordGroupValues(output, entry.first, "62") == std::vector<std::string>{std::to_string(editedIndex)});
+    CHECK(recordGroupValues(output, entry.first, "420") == std::vector<std::string>{std::to_string(editedRgb)});
+    RS_Graphic editedReopened;
+    REQUIRE(filter.fileImport(editedReopened, QString::fromStdString(output), RS2::FormatDXFRW));
+    REQUIRE(filter.fileExport(editedReopened, QString::fromStdString(resaved), RS2::FormatDXFRW));
+    CHECK(recordGroupValues(resaved, entry.first, "62") == std::vector<std::string>{std::to_string(editedIndex)});
+    CHECK(recordGroupValues(resaved, entry.first, "420") == std::vector<std::string>{std::to_string(editedRgb)});
+    { const auto materials = recordGroupValues(resaved, "MATERIAL", "5"); REQUIRE(materials.size() == 1u);
+      CHECK(recordGroupValues(resaved, entry.first, "347") == std::vector<std::string>{materials.front()}); }
+    if (const char *prefix = std::getenv("LIBRECAD_KEEP_SPARSE_TRUECOLOR_EDITED"))
+      std::filesystem::copy_file(resaved, std::string(prefix) + entry.first + "-" + std::to_string(rgb) + ".dxf",
+                                 std::filesystem::copy_options::overwrite_existing);
+    entity->setPen(savedPen);
+    auto invalid = input;
+    const auto pos = invalid.find("62\n" + std::to_string(index) + "\n420\n"); REQUIRE(pos != std::string::npos);
+    invalid.replace(pos, std::string("62\n" + std::to_string(index) + "\n").size(),
+                    "62\n" + std::to_string(index == 1 ? 2 : 1) + "\n");
+    writeText(source, invalid); writeText(output, sentinel);
+    RS_Graphic rejected;
+    if (filter.fileImport(rejected, QString::fromStdString(source), RS2::FormatDXFRW))
+      CHECK_FALSE(filter.fileExport(rejected, QString::fromStdString(output), RS2::FormatDXFRW));
+    { std::ifstream retained(output, std::ios::binary);
+      CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+    if (entry.first == "POINT" && color.red() == 10) {
+      const auto colorFields = "62\n" + std::to_string(index) + "\n420\n" + std::to_string(rgb) + "\n";
+      for (const std::string &replacement : {std::string("420\n") + std::to_string(rgb) + "\n",
+             colorFields + "420\n" + std::to_string(rgb) + "\n",
+             std::string("62\n1\n420\n16711680\n"),
+             std::string("62\n1\n420\n-1\n"), std::string("62\n1\n420\n16777216\n"),
+             std::string("62\n1\n420\n123junk\n"), colorFields + "430\nNamedColor\n"}) {
+        auto bad = input; const auto where = bad.find(colorFields); REQUIRE(where != std::string::npos);
+        bad.replace(where, colorFields.size(), replacement); writeText(source, bad); writeText(output, sentinel);
+        RS_Graphic refused;
+        if (filter.fileImport(refused, QString::fromStdString(source), RS2::FormatDXFRW))
+          CHECK_FALSE(filter.fileExport(refused, QString::fromStdString(output), RS2::FormatDXFRW));
+        { std::ifstream retained(output, std::ios::binary);
+          CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+        REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+      }
+      struct ColorProbe : RS_FilterDXFRW {
+        bool alterTyped = false, alterPhysical = false;
+        void addPoint(const DRW_Point &value) override {
+          auto changed = value; if (alterTyped) changed.color24 ^= 1;
+          RS_FilterDXFRW::addPoint(changed);
+        }
+        void addDxfEntitiesSource(const DRW_DxfEntitiesSource &value) override {
+          auto changed = value;
+          if (alterPhysical) for (auto &record : changed.records)
+            if (record.name == "POINT") for (std::size_t i = 0; i < record.groups.size(); ++i)
+              if (record.groups[i].code() == 420) record.rawValues[i] = "12345";
+          RS_FilterDXFRW::addDxfEntitiesSource(changed);
+        }
+      } probe;
+      writeText(source, input);
+      for (int mode = 0; mode != 2; ++mode) {
+        probe.alterTyped = mode == 0; probe.alterPhysical = mode == 1;
+        RS_Graphic refused; REQUIRE(probe.fileImport(refused, QString::fromStdString(source), RS2::FormatDXFRW));
+        writeText(output, sentinel);
+        CHECK_FALSE(probe.fileExport(refused, QString::fromStdString(output), RS2::FormatDXFRW));
+        { std::ifstream retained(output, std::ios::binary);
+          CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+        probe.alterTyped = probe.alterPhysical = false;
+        RS_Graphic retry; REQUIRE(probe.fileImport(retry, QString::fromStdString(source), RS2::FormatDXFRW));
+        REQUIRE(probe.fileExport(retry, QString::fromStdString(output), RS2::FormatDXFRW));
+      }
+    }
+  }
+  std::filesystem::remove(source); std::filesystem::remove(output); std::filesystem::remove(resaved);
+}
+
 static std::string sparseMaterialEllipseSource(bool full) {
     auto input = sparseMaterialPolylineSource();
     const std::string old = "0\nLWPOLYLINE\n5\nA5\n100\nAcDbEntity\n8\nRAWTEST\n347\nA1\n"
@@ -3087,7 +3218,9 @@ TEST_CASE("Ordinary sparse material saves simple circles arcs and lines",
   CHECK(recordGroupValues(resaved, "CIRCLE", "62") == std::vector<std::string>{"4"});
   if (const char *copy = std::getenv("LIBRECAD_KEEP_ORDINARY_SPARSE_EDITED_COLOR"))
     std::filesystem::copy_file(resaved, copy, std::filesystem::copy_options::overwrite_existing);
-  for (const RS_Color &color : {RS_Color(0, 0, 0), RS_Color(10, 20, 30)}) {
+  RS_Color namedColor(10, 20, 30);
+  namedColor.setColorName(QStringLiteral("unqualified named color"));
+  for (const RS_Color &color : {RS_Color(0, 0, 0), namedColor}) {
     changedPen.setColor(color);
     circle->setPen(changedPen);
     writeText(output, colorSentinel);

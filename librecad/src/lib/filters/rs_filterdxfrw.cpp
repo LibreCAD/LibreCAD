@@ -986,16 +986,18 @@ bool sameRetainedPlotSettings(const DRW_PlotSettings &a, const DRW_PlotSettings 
   return sameRetainedPlotSettings(generated, expected);
 }
 
-[[maybe_unused]] int simpleMaterialColor(const RS_Color &color) {
+[[maybe_unused]] int simpleMaterialColor(const RS_Color &color, int *exactRgb = nullptr) {
+  if (exactRgb) *exactRgb = -1;
   if (color.hasColorName()) return -1;
   if (color.isByLayer()) return 256;
   if (color.isByBlock()) return -1;
   int rgb = -1;
   const int index = LC_ColorNumbers::colorToNumber(color, &rgb);
-  // Index 7 conflates black with background-dependent white. The caller
-  // compares this canonical output index to the source index, so palette
-  // aliases that LibreCAD would rewrite are refused on import.
-  return rgb == -1 && index >= 1 && index <= 255 && index != 7 ? index : -1;
+  if (exactRgb) *exactRgb = rgb;
+  // An exact RGB output carries its own color; otherwise index 7 conflates
+  // black with background-dependent white. Source validation separately
+  // compares both the emitted fallback index and any exact RGB value.
+  return index >= 1 && index <= 255 && (rgb >= 0 || index != 7) ? index : -1;
 }
 
 [[maybe_unused]] bool hasSimpleMaterialAppearance(const RS_Entity &entity) {
@@ -12861,7 +12863,7 @@ bool hasSimpleMaterialEntities(const RS_Graphic &graphic, const DRW_DxfEntitiesS
     bool awaitingY = false;
     bool hasVertexWidth = false;
     unsigned vertexFields = 0;
-    int subclass = 0, colorIndex = 256;
+    int subclass = 0, colorIndex = 256, trueColor = -1;
     for (std::size_t index = 0; index < record.groups.size(); ++index) {
       const auto &group = record.groups[index];
       const auto &raw = record.rawValues[index];
@@ -12940,14 +12942,17 @@ bool hasSimpleMaterialEntities(const RS_Graphic &graphic, const DRW_DxfEntitiesS
         const double value = QString::fromStdString(raw).toDouble(&validRaw);
         if (subclass != 2 || group.type() != DRW_Variant::DOUBLE || !validRaw ||
             value != 0.0 || group.content.d != value) return false;
-      } else if (code == 62 || code == 370) {
+      } else if (code == 62 || code == 370 || code == 420) {
         bool validRaw = false;
         const int value = QString::fromStdString(raw).toInt(&validRaw);
         if (subclass != 1 || group.type() != DRW_Variant::INTEGER || !validRaw || value != group.content.i)
           return false;
         if (code == 62) {
-          if (value != 256 && (value < 1 || value > 255 || value == 7)) return false;
+          if (value != 256 && (value < 1 || value > 255)) return false;
           colorIndex = value;
+        } else if (code == 420) {
+          if (value < 0 || value > 0xFFFFFF) return false;
+          trueColor = value;
         } else if (value != -1) return false;
       } else if (code == 10 || code == 20 || code == 30 || code == 11 || code == 21 || code == 31 ||
                  code == 40 || code == 41 || code == 42 || code == 50 || code == 51) {
@@ -12973,6 +12978,7 @@ bool hasSimpleMaterialEntities(const RS_Graphic &graphic, const DRW_DxfEntitiesS
       } else return false;
     }
     if (subclass != (arc ? 3 : 2) || !seen.count(5) || !seen.count(8) ||
+        (trueColor >= 0 && !seen.count(62)) || (trueColor < 0 && colorIndex == 7) ||
         (polyline ? (!seen.count(90) || !seen.count(70) || awaitingY || (hasVertexWidth && seen.count(43)) ||
                      vertexCount < (closed ? 3 : 2) ||
                      static_cast<std::size_t>(vertexCount) != vertices.size()) :
@@ -12987,12 +12993,14 @@ bool hasSimpleMaterialEntities(const RS_Graphic &graphic, const DRW_DxfEntitiesS
                  angle2 < 0 || angle2 >= 360 || angle1 == angle2)))
       return false;
     const auto found = delivered.find(handle);
+    int emittedRgb = -1;
     if (found == delivered.end() ||
         found->second->rtti() != (point ? RS2::EntityPoint : line ? RS2::EntityLine : circle ? RS2::EntityCircle : polyline ? RS2::EntityPolyline : ellipse ? RS2::EntityEllipse : RS2::EntityArc) ||
         !found->second->getLayer(false) ||
         found->second->getLayer(false)->getName().toUtf8().toStdString() != layer ||
         !hasSimpleMaterialAppearance(*found->second) ||
-        simpleMaterialColor(found->second->getPen(false).getColor()) != colorIndex)
+        simpleMaterialColor(found->second->getPen(false).getColor(), &emittedRgb) != colorIndex ||
+        emittedRgb != trueColor)
       return false;
     if (polyline) {
       const auto *value = static_cast<const RS_Polyline *>(found->second);
