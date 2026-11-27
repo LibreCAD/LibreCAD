@@ -126,6 +126,33 @@ the dependencies for **3 and 4** in parallel. **5** follows the acceptance work.
    six pairs; it is not visual or AutoCAD acceptance. Use the pinned §5.2
    corpus for version/degree/control rows not covered by this fixture.
 
+#### Remaining Trim Matrix
+
+1. Finish the running periodic-spline profile manifest. Verify requested IDs,
+   results, assertion counts and sanitizer logs, then record the receipt. A
+   successful isolated profile does not replace the shared-process run.
+2. Partition only the five remaining timed-out generators, in this order:
+   high-origin closed-polyline seam; reconstructed parabola frames;
+   transformed beyond-cusp parabola; bounded hyperbola file lanes; rational
+   high-degree spline file lanes. The typed-parabola timeout is already
+   accounted for by its 152 isolated profiles, but its aggregate remains open.
+   The first has a single-tuple reproduction hook, not a complete partition;
+   the reconstructed case has an 86-frame table, and the other cases combine
+   geometry and file-format dimensions. Inspect each loop before defining IDs.
+3. Where an existing selector cannot isolate every tuple, add a test-only
+   profile selector to that case and register it in the existing profile
+   runner. Preserve the unpinned test, use stable complete tuple identities,
+   reject invalid IDs, and test first/last IDs and invalid input. Do not count
+   a skipped tuple or a process with no exercised assertions as a pass. Compare
+   the union against the original generator including nested format loops;
+   document any intentionally conditional rows and retain failing logs.
+4. Run each partition under the recorded sanitizer settings with bounded
+   per-profile processes and retain manifests. Then investigate the two
+   intermittent Update failures and the aggregate/shared-process behavior on
+   supported configurations; isolated passes and Release passes do not close
+   either issue. Add a regression and fix the responsible owner only when a
+   product defect is reproduced. Keep production deadlines unchanged.
+
 ### Visible Walkthrough
 
 1. Open generated native DXF and DWG copies in the candidate app. Open offset
@@ -177,8 +204,8 @@ the dependencies for **3 and 4** in parallel. **5** follows the acceptance work.
   matrix also failed an Update assertion for rounded profile 1 and format 8;
   its existing profile/format pin passed in isolation (228 assertions, ASan).
   Preserve both failures and investigate with diagnostic logs and stable worker
-  status/PID before classifying cause. Next: reproduce both full generators,
-  then account for the timeouts with bounded profiles and the four exclusions.
+  status/PID before classifying cause. Subsequent diagnostic and Release runs
+  are recorded below; the sanitizer failures remain open.
 - A disposable scratch-only diagnostic rerun reproduced the closed rounded
   profile failure and the concave tuple failure. Both returned `ProcessFailed`,
   exit code 9, reaped, at 128 ms and 123 ms respectively; neither reported a
