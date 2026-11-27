@@ -4376,11 +4376,11 @@ TEST_CASE("System codec preserves bounded multi-image definition graphs",
                                RS2::FormatDXFRW, RS2::FormatDXFRW2010,
                                RS2::FormatDXFRW2013, RS2::FormatDXFRW2018);
   CAPTURE(format);
-  const int shape = GENERATE(0, 1, 2, 3, 4, 5, 6, 7);
+  const int shape = GENERATE(0, 1, 2, 3, 4, 5, 6, 7, 8);
   const bool withMaterial = GENERATE(false, true);
   const bool legacyMaterial = withMaterial &&
       (format == RS2::FormatDXFRW2000 || format == RS2::FormatDXFRW2004);
-  const unsigned imageCount = shape < 2 ? 2u : shape < 5 ? 3u : shape == 5 ? 4u : shape == 6 ? 32u : 64u;
+  const unsigned imageCount = shape < 2 ? 2u : shape < 5 ? 3u : shape == 5 ? 4u : shape == 6 ? 32u : shape == 7 ? 64u : 256u;
   const unsigned definitionCount = shape == 0 || shape == 4 ? 1u :
                                    shape == 3 || shape >= 5 ? 3u : 2u;
   const bool sharedDefinition = definitionCount == 1u;
