@@ -135,9 +135,10 @@ the dependencies for **3 and 4** in parallel. **5** follows the acceptance work.
 1. The periodic-spline profile manifest is reconciled below. Its isolated
    profiles do not replace the shared-process run.
 2. The six timed-out generators now have complete isolated profile and
-   unpinned single-case receipts below. The eight affected cases also passed
-   together in declaration and seeded random order. The broader 104-case lane
-   passed in declaration order; run it again in seeded random order.
+   unpinned single-case receipts below. The eight affected cases and the broader
+   104-case lane passed in both declaration and seeded random order on the
+   recorded source-equivalent macOS sanitizer build. Do not generalize these
+   receipts to other configurations or erase the intermittent failures.
 3. Where an existing selector cannot isolate every tuple, add a test-only
    profile selector to that case and register it in the existing profile
    runner. Preserve the unpinned test, use stable complete tuple identities,
@@ -145,12 +146,12 @@ the dependencies for **3 and 4** in parallel. **5** follows the acceptance work.
    a skipped tuple or a process with no exercised assertions as a pass. Compare
    the union against the original generator including nested format loops;
    document any intentionally conditional rows and retain failing logs.
-4. Run each partition under the recorded sanitizer settings with bounded
-   per-profile processes and retain manifests. Then investigate the two
-   intermittent Update failures and the aggregate/shared-process behavior on
-   supported configurations; isolated passes and Release passes do not close
-   either issue. Add a regression and fix the responsible owner only when a
-   product defect is reproduced. Keep production deadlines unchanged.
+4. Run any remaining partitions under the recorded sanitizer settings with
+   bounded per-profile processes and retain manifests. Investigate the two
+   intermittent Update failures and compare supported configurations; the
+   successful shared-process and Release runs do not explain those failures.
+   Add a regression and fix the responsible owner only when a product defect
+   is reproduced. Keep production deadlines unchanged.
 
 ### Visible Walkthrough
 
@@ -513,8 +514,27 @@ the dependencies for **3 and 4** in parallel. **5** follows the acceptance work.
   seam receipt, and neither retained output contains sanitizer diagnostics.
   Temporary artifacts: `/private/tmp/offset-3193-trim-full-decl-report.txt` and
   `/private/tmp/offset-3193-trim-full-decl-output.log`. This does not erase the
-  earlier intermittent failures or qualify full random order, leak detection,
+  earlier intermittent failures or alone qualify random order, leak detection,
   other platforms or visible acceptance.
+- The same full selector passed in **random order, seed 3193: 594,788
+  assertions / 104 cases**, with the same source-equivalent macOS Debug
+  ASan/UBSan binary, `ASAN_OPTIONS=detect_leaks=0:quarantine_size_mb=16:thread_local_quarantine_size_kb=256:malloc_context_size=5` and
+  `UBSAN_OPTIONS=halt_on_error=1:print_stacktrace=1`, unset
+  `LC_OFFSET_TRIM_*` pins and both hyperbola high-origin flags, a 30-second
+  test-only worker wait, stop-on-first-failure and eight-hour test-only
+  process bound. Discovery found 104 unique case names and every one appears
+  in the report; eight additional duration labels are nested sections. The
+  periodic-spline, tangent, seam, hyperbola, high-degree spline, convex,
+  concave and high-origin ellipse counts are respectively 1,080, 1,188, 38,
+  240, 360, 95, 60 and 52. The test and worker SHA-256 hashes remained
+  `070a3128c904c57a276bce9623d60ffd9cd62c87593edad52e5a10c614e5d126`
+  and `50a0140d656600d0e844b0251d9fac3d82045f7dd969aff0550c1411dd3e3eb2`;
+  neither log contains sanitizer diagnostics. Temporary artifacts:
+  `/private/tmp/offset-3193-trim-full-rand-report.txt` and
+  `/private/tmp/offset-3193-trim-full-rand-output.log`. A separate Release
+  build and CTest run overlapped part of this run. Leak detection was disabled;
+  the earlier intermittent failures, other platforms and visible acceptance
+  remain open.
 - Test-only commit `ddad0c653` makes profile timeouts use the case runner's
   process-group cleanup and records test-binary SHA-256, change detection,
   bounds and hyperbola mode in new manifests. Three focused Python tests and
