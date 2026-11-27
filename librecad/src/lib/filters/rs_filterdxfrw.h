@@ -1987,6 +1987,9 @@ class RS_FilterDXFRW : public RS_FilterInterface,
 #ifdef LIBDXFRW_HAS_DXF_PHYSICAL_ENTITY_SOURCE_HANDLERS
     , public DRW_DxfEntitiesSourceHandler, public DRW_DxfBlockChildrenSourceHandler
 #endif
+#ifdef LIBDXFRW_HAS_DXF_PHYSICAL_IDENTITY_SOURCE_HANDLER
+    , public DRW_DxfIdentitySourceHandler
+#endif
 #ifdef DWGSUPPORT
     ,
                        private RS_FilterDXFRW_DwgWriteIdentityRegistry
@@ -2230,6 +2233,10 @@ public:
   bool wantsDxfBlockChildrenSource() const override;
   void addDxfEntitiesSource(const DRW_DxfEntitiesSource &source) override;
   void addDxfBlockChildrenSource(const DRW_DxfBlockChildrenSource &source) override;
+#endif
+#ifdef LIBDXFRW_HAS_DXF_PHYSICAL_IDENTITY_SOURCE_HANDLER
+  bool wantsDxfIdentitySource() const override;
+  void addDxfIdentitySource(const DRW_DxfIdentitySource &source) override;
 #endif
 #ifdef LIBDXFRW_HAS_DXF_DICTIONARY_SOURCE_HANDLERS
   bool wantsDxfRootDictionarySource() const override;

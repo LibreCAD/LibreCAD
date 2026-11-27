@@ -3999,13 +3999,39 @@ public:
     m_dxfMaterialEntitySourcesComplete = false;
     m_dxfMaterialPhysicalRequested = physical;
     m_dxfMaterialPhysicalEntities = m_dxfMaterialPhysicalBlocks = m_dxfMaterialExpectedBlocks = 0;
+    m_dxfMaterialInventoryEntities = m_dxfMaterialInventoryBlocks = 0;
+    m_dxfMaterialInventoryVerified = false;
     m_dxfMaterialPhysicalReferences.clear();
+    m_dxfMaterialPhysicalRecords.clear();
   }
 
   void expectDxfMaterialPhysicalBlock() { ++m_dxfMaterialExpectedBlocks; }
   void addDxfMaterialPhysicalScope(bool block) {
     if (block) ++m_dxfMaterialPhysicalBlocks;
     else ++m_dxfMaterialPhysicalEntities;
+  }
+  void addDxfMaterialPhysicalRecord(std::size_t begin, std::size_t end) {
+    if (!begin || end <= begin || m_dxfMaterialPhysicalRecords.size() >= 65536u) {
+      markDxfMaterialEntitySourcesUnavailable(); return;
+    }
+    try { m_dxfMaterialPhysicalRecords.emplace_back(begin, end); }
+    catch (...) { markDxfMaterialEntitySourcesUnavailable(); }
+  }
+  void verifyDxfMaterialPhysicalInventory(std::size_t entities, std::size_t blocks,
+      std::vector<std::pair<std::size_t, std::size_t>> records) {
+    if (m_dxfMaterialInventoryVerified || entities > 1u ||
+        records.size() != m_dxfMaterialPhysicalRecords.size()) {
+      markDxfMaterialEntitySourcesUnavailable(); return;
+    }
+    std::sort(records.begin(), records.end());
+    std::sort(m_dxfMaterialPhysicalRecords.begin(), m_dxfMaterialPhysicalRecords.end());
+    if (records != m_dxfMaterialPhysicalRecords ||
+        std::adjacent_find(records.begin(), records.end()) != records.end()) {
+      markDxfMaterialEntitySourcesUnavailable(); return;
+    }
+    m_dxfMaterialInventoryEntities = entities;
+    m_dxfMaterialInventoryBlocks = blocks;
+    m_dxfMaterialInventoryVerified = true;
   }
   void addDxfMaterialPhysicalReference(std::uint32_t source, std::uint32_t target) {
     if (!source || source == DRW::NoHandle || !target || target == DRW::NoHandle ||
@@ -4037,7 +4063,9 @@ public:
     auto &sources = *m_dxfMaterialEntitySources;
     std::sort(sources.begin(), sources.end(), [](const auto &a, const auto &b) { return a.source < b.source; });
     std::sort(m_dxfMaterialPhysicalReferences.begin(), m_dxfMaterialPhysicalReferences.end());
-    if (!m_dxfMaterialPhysicalRequested || m_dxfMaterialPhysicalEntities != 1u ||
+    if (!m_dxfMaterialPhysicalRequested || !m_dxfMaterialInventoryVerified ||
+        m_dxfMaterialPhysicalEntities != m_dxfMaterialInventoryEntities ||
+        m_dxfMaterialPhysicalBlocks != m_dxfMaterialInventoryBlocks ||
         m_dxfMaterialPhysicalBlocks != m_dxfMaterialExpectedBlocks ||
         m_dxfMaterialPhysicalReferences.size() != sources.size()) {
       markDxfMaterialEntitySourcesUnavailable(); return;
@@ -13827,6 +13855,9 @@ private:
   bool m_dxfMaterialPhysicalRequested = false;
   std::size_t m_dxfMaterialPhysicalEntities = 0, m_dxfMaterialPhysicalBlocks = 0, m_dxfMaterialExpectedBlocks = 0;
   std::vector<std::pair<std::uint32_t, std::uint32_t>> m_dxfMaterialPhysicalReferences;
+  std::size_t m_dxfMaterialInventoryEntities = 0, m_dxfMaterialInventoryBlocks = 0;
+  bool m_dxfMaterialInventoryVerified = false;
+  std::vector<std::pair<std::size_t, std::size_t>> m_dxfMaterialPhysicalRecords;
   DRW::Version m_dxfMaterialHeaderSourceVersion = DRW::UNKNOWNV;
   bool m_dxfMaterialHeaderSourceCaptured = false;
   bool m_dxfMaterialHeaderSourceConflict = false;

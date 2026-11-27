@@ -1653,6 +1653,14 @@ TEST_CASE("Opt-in system codec replays an unchanged sparse material graph",
   writeText(source, input);
   struct OptInFilter : RS_FilterDXFRW {
     std::function<void()> afterObjects;
+#ifdef LIBDXFRW_HAS_DXF_PHYSICAL_IDENTITY_SOURCE_HANDLER
+    std::function<void(DRW_DxfIdentitySource &)> mutateIdentity;
+    void addDxfIdentitySource(const DRW_DxfIdentitySource &source) override {
+      auto copy = source;
+      if (mutateIdentity) mutateIdentity(copy);
+      RS_FilterDXFRW::addDxfIdentitySource(copy);
+    }
+#endif
     bool wantsDxfSparseMaterialRawCapture() const noexcept override { return true; }
     bool wantsDxfSparseMaterialRawReplay() const noexcept override { return true; }
     void writeObjects() override {
@@ -1722,6 +1730,48 @@ TEST_CASE("Opt-in system codec replays an unchanged sparse material graph",
     { std::ifstream retained(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
     std::filesystem::remove(unsafeSource);
   }
+#ifdef LIBDXFRW_HAS_DXF_PHYSICAL_IDENTITY_SOURCE_HANDLER
+  {
+    const auto noEntitiesSource = tmpFile("system_sparse_material_no_entities.dxf");
+    auto noEntities = input;
+    const auto begin = noEntities.find("0\nSECTION\n2\nENTITIES\n");
+    REQUIRE(begin != std::string::npos);
+    const auto end = noEntities.find("0\nENDSEC\n", begin);
+    REQUIRE(end != std::string::npos);
+    noEntities.erase(begin, end + std::string("0\nENDSEC\n").size() - begin);
+    writeText(noEntitiesSource, noEntities);
+    RS_Graphic emptyGraphic;
+    OptInFilter emptyFilter;
+    REQUIRE(emptyFilter.fileImport(emptyGraphic, QString::fromStdString(noEntitiesSource), RS2::FormatDXFRW));
+    REQUIRE(emptyFilter.fileExport(emptyGraphic, QString::fromStdString(output), RS2::FormatDXFRW));
+    CHECK(recordGroupValues(output, "LINE", "347").empty());
+    if (const char *copy = std::getenv("LIBRECAD_KEEP_SPARSE_NO_ENTITIES_OUTPUT"))
+      std::filesystem::copy_file(output, copy, std::filesystem::copy_options::overwrite_existing);
+    for (int mode = 0; mode != 4; ++mode) {
+      OptInFilter alteredFilter;
+      alteredFilter.mutateIdentity = [mode](DRW_DxfIdentitySource &identity) {
+        const auto found = std::find_if(identity.records.begin(), identity.records.end(),
+            [](const auto &record) { return record.name == "LINE"; });
+        if (mode == 2) identity.status = DRW_DxfIdentitySource::Status::Quota;
+        else if (found != identity.records.end()) {
+          if (mode == 0) identity.records.erase(found);
+          else if (mode == 1) { const auto duplicate = *found; identity.records.push_back(duplicate); }
+          else ++found->endMarker.ordinal;
+        }
+      };
+      RS_Graphic alteredGraphic;
+      REQUIRE(alteredFilter.fileImport(alteredGraphic, QString::fromStdString(source), RS2::FormatDXFRW));
+      writeText(output, sentinel);
+      CHECK_FALSE(alteredFilter.fileExport(alteredGraphic, QString::fromStdString(output), RS2::FormatDXFRW));
+      { std::ifstream retained(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+      alteredFilter.mutateIdentity = {};
+      RS_Graphic corrected;
+      REQUIRE(alteredFilter.fileImport(corrected, QString::fromStdString(source), RS2::FormatDXFRW));
+      REQUIRE(alteredFilter.fileExport(corrected, QString::fromStdString(output), RS2::FormatDXFRW));
+    }
+    std::filesystem::remove(noEntitiesSource);
+  }
+#endif
   {
     const auto duplicateSource = tmpFile("system_sparse_material_duplicate_group.dxf");
     for (int mode = 0; mode != 3; ++mode) {
@@ -1924,6 +1974,14 @@ TEST_CASE("Opt-in sparse material binds block entity source ownership",
       "3\nPlainMat\n350\nA1\n0\nMATERIAL\n5\nA1\n330\nA0\n100\nAcDbMaterial\n1\nPlainMat\n94\n63\n"
       "0\nENDSEC\n0\nEOF\n");
   struct OptInFilter : RS_FilterDXFRW {
+#ifdef LIBDXFRW_HAS_DXF_PHYSICAL_IDENTITY_SOURCE_HANDLER
+    std::function<void(DRW_DxfIdentitySource &)> mutateIdentity;
+    void addDxfIdentitySource(const DRW_DxfIdentitySource &source) override {
+      auto copy = source;
+      if (mutateIdentity) mutateIdentity(copy);
+      RS_FilterDXFRW::addDxfIdentitySource(copy);
+    }
+#endif
     bool wantsDxfSparseMaterialRawCapture() const noexcept override { return true; }
     bool wantsDxfSparseMaterialRawReplay() const noexcept override { return true; }
   } filter;
@@ -1937,6 +1995,25 @@ TEST_CASE("Opt-in sparse material binds block entity source ownership",
   CHECK(captured->front().lineage == line->lineage());
   CHECK(captured->front().block); CHECK(captured->front().blockName == "TESTBLOCK");
   REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+#ifdef LIBDXFRW_HAS_DXF_PHYSICAL_IDENTITY_SOURCE_HANDLER
+  for (const std::string name : {"BLOCK", "LINE", "ENDBLK"}) {
+    OptInFilter alteredFilter;
+    alteredFilter.mutateIdentity = [name](DRW_DxfIdentitySource &identity) {
+      const auto found = std::find_if(identity.records.begin(), identity.records.end(),
+          [&](const auto &record) { return record.name == name; });
+      if (found != identity.records.end()) identity.records.erase(found);
+    };
+    RS_Graphic alteredGraphic;
+    REQUIRE(alteredFilter.fileImport(alteredGraphic, QString::fromStdString(source), RS2::FormatDXFRW));
+    writeText(output, sentinel);
+    CHECK_FALSE(alteredFilter.fileExport(alteredGraphic, QString::fromStdString(output), RS2::FormatDXFRW));
+    { std::ifstream retained(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+    alteredFilter.mutateIdentity = {};
+    RS_Graphic corrected;
+    REQUIRE(alteredFilter.fileImport(corrected, QString::fromStdString(source), RS2::FormatDXFRW));
+    REQUIRE(alteredFilter.fileExport(corrected, QString::fromStdString(output), RS2::FormatDXFRW));
+  }
+#endif
   block->setName(QStringLiteral("CHANGED")); writeText(output, sentinel);
   CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
   { std::ifstream retained(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }

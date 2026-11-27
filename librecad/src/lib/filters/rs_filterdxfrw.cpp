@@ -12503,6 +12503,7 @@ bool capturePhysicalMaterialReferences(LC_DwgAdvancedMetadata &metadata,
                                        bool binary) {
   for (const auto &record : records) {
     if (record.groups.size() != record.rawValues.size() || record.groups.size() != record.spans.size()) return false;
+    metadata.addDxfMaterialPhysicalRecord(record.marker.ordinal, record.endOrdinal);
     std::uint32_t handle = 0, target = 0;
     unsigned selfCount = 0, materialCount = 0, depth = 0;
     bool common = false;
@@ -12556,6 +12557,54 @@ void RS_FilterDXFRW::addDxfBlockChildrenSource(const DRW_DxfBlockChildrenSource 
   if (source.status != DRW_DxfBlockChildrenSource::Status::Complete || source.version < DRW::AC1021 ||
       !capturePhysicalMaterialReferences(metadata, source.records, source.binary))
     metadata.markDxfMaterialEntitySourcesUnavailable();
+}
+#endif
+
+#ifdef LIBDXFRW_HAS_DXF_PHYSICAL_IDENTITY_SOURCE_HANDLER
+bool RS_FilterDXFRW::wantsDxfIdentitySource() const {
+#ifdef LIBDXFRW_HAS_DXF_PHYSICAL_ENTITY_SOURCE_HANDLERS
+  return wantsDxfEntitiesSource();
+#else
+  return false;
+#endif
+}
+void RS_FilterDXFRW::addDxfIdentitySource(const DRW_DxfIdentitySource &source) {
+  if (!m_graphic) return;
+  auto &metadata = m_graphic->dwgAdvancedMetadata();
+  if (source.status != DRW_DxfIdentitySource::Status::Complete || source.version < DRW::AC1021) {
+    metadata.markDxfMaterialEntitySourcesUnavailable(); return;
+  }
+  try {
+    using Section = DRW_DxfIdentitySource::Section;
+    std::size_t entities = 0, blockSections = 0, blocks = 0, blockEnds = 0;
+    for (const auto &section : source.sections) {
+      if (section.kind == Section::Entities) ++entities;
+      if (section.kind == Section::Blocks) ++blockSections;
+    }
+    if (entities > 1u || blockSections > 1u) {
+      metadata.markDxfMaterialEntitySourcesUnavailable(); return;
+    }
+    std::vector<std::pair<std::size_t, std::size_t>> records;
+    records.reserve(source.records.size());
+    for (const auto &record : source.records) {
+      if (record.section >= source.sections.size()) {
+        metadata.markDxfMaterialEntitySourcesUnavailable(); return;
+      }
+      const auto section = source.sections[record.section].kind;
+      if (section != Section::Blocks && section != Section::Entities) continue;
+      const auto name = normalizeDwgTableName(record.name);
+      if (section == Section::Blocks && name == "BLOCK") { ++blocks; continue; }
+      if (section == Section::Blocks && name == "ENDBLK") { ++blockEnds; continue; }
+      if (!record.marker.ordinal || record.endMarker.ordinal <= record.marker.ordinal || records.size() >= 65536u) {
+        metadata.markDxfMaterialEntitySourcesUnavailable(); return;
+      }
+      records.emplace_back(record.marker.ordinal, record.endMarker.ordinal);
+    }
+    if (blocks != blockEnds) { metadata.markDxfMaterialEntitySourcesUnavailable(); return; }
+    metadata.verifyDxfMaterialPhysicalInventory(entities, blocks, std::move(records));
+  } catch (...) {
+    metadata.markDxfMaterialEntitySourcesUnavailable();
+  }
 }
 #endif
 
