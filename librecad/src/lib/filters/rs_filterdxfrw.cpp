@@ -986,21 +986,35 @@ bool sameRetainedPlotSettings(const DRW_PlotSettings &a, const DRW_PlotSettings 
   return sameRetainedPlotSettings(generated, expected);
 }
 
+[[maybe_unused]] bool hasDefaultMaterialAppearance(const RS_Entity &entity) {
+  const auto pen = entity.getPen(false);
+  return entity.getLayer(false) && entity.getFlag(RS2::FlagVisible) && entity.shadowMode() == 0 &&
+         entity.getDrwExtData().empty() && pen.getLineType() == RS2::LineByLayer &&
+         pen.getColor().isByLayer() && !pen.getColor().hasColorName() &&
+         pen.getWidth() == RS2::WidthByLayer && pen.isFullyOpaque();
+}
+
 [[maybe_unused]] bool hasSimpleAutomaticMaterialEntities(RS_Graphic &graphic) {
   std::size_t count = 0;
+  const auto validPoint = [](const RS_Vector &point) {
+    return point.valid && std::isfinite(point.x) && std::isfinite(point.y) && point.z == 0.0;
+  };
   for (const RS_Entity *entity : graphic) {
     if (!entity || entity->isDeleted()) continue;
-    if (entity->rtti() != RS2::EntityLine || !entity->getLayer(false) ||
-        !entity->getFlag(RS2::FlagVisible) || entity->shadowMode() != 0 ||
-        !entity->getDrwExtData().empty()) return false;
-    const auto *line = static_cast<const RS_Line *>(entity);
-    const auto start = line->getStartpoint(), end = line->getEndpoint();
-    const auto pen = line->getPen(false);
-    if (!start.valid || !end.valid || !std::isfinite(start.x) || !std::isfinite(start.y) ||
-        !std::isfinite(end.x) || !std::isfinite(end.y) || start.z != 0.0 || end.z != 0.0 ||
-        pen.getLineType() != RS2::LineByLayer || !pen.getColor().isByLayer() ||
-        pen.getColor().hasColorName() || pen.getWidth() != RS2::WidthByLayer || !pen.isFullyOpaque())
-      return false;
+    if (!hasDefaultMaterialAppearance(*entity)) return false;
+    if (entity->rtti() == RS2::EntityLine) {
+      const auto *line = static_cast<const RS_Line *>(entity);
+      if (!validPoint(line->getStartpoint()) || !validPoint(line->getEndpoint())) return false;
+    } else if (entity->rtti() == RS2::EntityCircle) {
+      const auto *circle = static_cast<const RS_Circle *>(entity);
+      if (!circle->getData().isValid() || !validPoint(circle->getCenter()) || !std::isfinite(circle->getRadius())) return false;
+    } else if (entity->rtti() == RS2::EntityArc) {
+      const auto *arc = static_cast<const RS_Arc *>(entity);
+      if (!arc->getData().isValid() || !validPoint(arc->getCenter()) || !std::isfinite(arc->getRadius()) ||
+          arc->isReversed() || !std::isfinite(arc->getAngle1()) || !std::isfinite(arc->getAngle2()) ||
+          arc->getAngle1() < 0.0 || arc->getAngle1() >= 2 * M_PI ||
+          arc->getAngle2() < 0.0 || arc->getAngle2() >= 2 * M_PI || arc->getAngle1() == arc->getAngle2()) return false;
+    } else return false;
     ++count;
   }
   if (!count || count > 4096u) return false;
@@ -7346,6 +7360,22 @@ void RS_FilterDXFRW::addPoint(const DRW_Point &data) {
   m_currentContainer->addEntity(entity);
 }
 
+#if defined(LIBRECAD_SYSTEM_LIBDXFRW) && defined(LIBDXFRW_HAS_DXF_PHYSICAL_ENTITY_SOURCE_HANDLERS) && defined(LIBDXFRW_HAS_DXF_STAGED_ENTITY_MATERIAL_INSPECTOR)
+namespace {
+void recordMaterialSimpleDelivery(RS_Graphic *graphic, dxfRW *reader, RS_EntityContainer *container,
+                                  const RS_Entity *entity, std::uint32_t source,
+                                  LC_DwgAdvancedMetadata::DxfMaterialSimpleKind kind) {
+  if (!reader || !graphic || !graphic->dwgAdvancedMetadata().dxfMaterialPhysicalRequested()) return;
+  auto &metadata = graphic->dwgAdvancedMetadata();
+  const auto *block = dynamic_cast<const RS_Block *>(container);
+  if ((container != graphic && !block) || !entity || entity->sourceHandle() != source)
+    metadata.markDxfMaterialEntitySourcesUnavailable();
+  else
+    metadata.addDxfMaterialSimpleDelivery(source, block != nullptr, kind, false);
+}
+}
+#endif
+
 /**
  * Implementation of the method which handles line entities.
  */
@@ -7381,14 +7411,8 @@ void RS_FilterDXFRW::addLine(const DRW_Line &data) {
   if (m_currentContainer) {
     m_currentContainer->addEntity(entity);
 #if defined(LIBRECAD_SYSTEM_LIBDXFRW) && defined(LIBDXFRW_HAS_DXF_PHYSICAL_ENTITY_SOURCE_HANDLERS) && defined(LIBDXFRW_HAS_DXF_STAGED_ENTITY_MATERIAL_INSPECTOR)
-    if (m_dxfR && m_graphic && m_graphic->dwgAdvancedMetadata().dxfMaterialPhysicalRequested()) {
-      auto &metadata = m_graphic->dwgAdvancedMetadata();
-      const auto *block = dynamic_cast<const RS_Block *>(m_currentContainer);
-      if ((m_currentContainer != m_graphic && !block) || entity->sourceHandle() != data.handle)
-        metadata.markDxfMaterialEntitySourcesUnavailable();
-      else
-        metadata.addDxfMaterialLineDelivery(data.handle, block != nullptr, false);
-    }
+    recordMaterialSimpleDelivery(m_graphic, m_dxfR, m_currentContainer, entity, data.handle,
+        LC_DwgAdvancedMetadata::DxfMaterialSimpleKind::Line);
 #endif
   }
 
@@ -8711,6 +8735,10 @@ void RS_FilterDXFRW::addCircle(const DRW_Circle &source) {
     appendTypeSidecar(entity, kCircleOcsMarker, std::move(payload));
   }
   m_currentContainer->addEntity(entity);
+#if defined(LIBRECAD_SYSTEM_LIBDXFRW) && defined(LIBDXFRW_HAS_DXF_PHYSICAL_ENTITY_SOURCE_HANDLERS) && defined(LIBDXFRW_HAS_DXF_STAGED_ENTITY_MATERIAL_INSPECTOR)
+  recordMaterialSimpleDelivery(m_graphic, m_dxfR, m_currentContainer, entity, data.handle,
+      LC_DwgAdvancedMetadata::DxfMaterialSimpleKind::Circle);
+#endif
 }
 
 /**
@@ -8737,6 +8765,10 @@ void RS_FilterDXFRW::addArc(const DRW_Arc &source) {
     appendTypeSidecar(entity, kArcOcsMarker, std::move(payload));
   }
   m_currentContainer->addEntity(entity);
+#if defined(LIBRECAD_SYSTEM_LIBDXFRW) && defined(LIBDXFRW_HAS_DXF_PHYSICAL_ENTITY_SOURCE_HANDLERS) && defined(LIBDXFRW_HAS_DXF_STAGED_ENTITY_MATERIAL_INSPECTOR)
+  recordMaterialSimpleDelivery(m_graphic, m_dxfR, m_currentContainer, entity, data.handle,
+      LC_DwgAdvancedMetadata::DxfMaterialSimpleKind::Arc);
+#endif
 }
 
 /**
@@ -12661,9 +12693,9 @@ bool isDefaultMaterialPlotSource(const QByteArray &bytes, const DRW_DxfIdentityS
 #endif
 
 // The ordinary-save route initially admits only a physically complete,
-// ASCII AC1021 model-space LINE profile. Other source shapes may still use
+// ASCII AC1021 model-space LINE/CIRCLE/ARC profile. Other source shapes may still use
 // the separate explicitly opted-in replay path.
-bool hasSimpleMaterialLines(const RS_Graphic &graphic, const DRW_DxfEntitiesSource &source) {
+bool hasSimpleMaterialEntities(const RS_Graphic &graphic, const DRW_DxfEntitiesSource &source) {
   if (source.status != DRW_DxfEntitiesSource::Status::Complete ||
       source.version != DRW::AC1021 || source.binary || source.records.empty() ||
       source.records.size() > 4096u)
@@ -12674,12 +12706,14 @@ bool hasSimpleMaterialLines(const RS_Graphic &graphic, const DRW_DxfEntitiesSour
     if (!delivered.emplace(entity->sourceHandle(), entity).second) return false;
   }
   for (const auto &record : source.records) {
-    if (normalizeDwgTableName(record.name) != "LINE" ||
-        record.groups.size() != record.rawValues.size()) return false;
+    const auto name = normalizeDwgTableName(record.name);
+    const bool line = name == "LINE", circle = name == "CIRCLE", arc = name == "ARC";
+    if ((!line && !circle && !arc) || record.groups.size() != record.rawValues.size()) return false;
     std::set<int> seen;
     std::uint32_t handle = 0;
     std::string layer;
     double x1 = 0, y1 = 0, z1 = 0, x2 = 0, y2 = 0, z2 = 0;
+    double radius = 0, angle1 = 0, angle2 = 0;
     int subclass = 0;
     for (std::size_t index = 0; index < record.groups.size(); ++index) {
       const auto &group = record.groups[index];
@@ -12689,7 +12723,8 @@ bool hasSimpleMaterialLines(const RS_Graphic &graphic, const DRW_DxfEntitiesSour
         if (group.type() != DRW_Variant::STRING || !group.content.s ||
             raw != *group.content.s ||
             (subclass == 0 && *group.content.s != "AcDbEntity") ||
-            (subclass == 1 && *group.content.s != "AcDbLine") || subclass >= 2)
+            (subclass == 1 && *group.content.s != (line ? "AcDbLine" : "AcDbCircle")) ||
+            (subclass == 2 && (!arc || *group.content.s != "AcDbArc")) || subclass >= 3)
           return false;
         ++subclass;
         continue;
@@ -12720,10 +12755,14 @@ bool hasSimpleMaterialLines(const RS_Graphic &graphic, const DRW_DxfEntitiesSour
         const int value = QString::fromStdString(raw).toInt(&validRaw);
         if (subclass != 1 || group.type() != DRW_Variant::INTEGER ||
             !validRaw || value != group.content.i || group.content.i != (code == 62 ? 256 : -1)) return false;
-      } else if (code == 10 || code == 20 || code == 30 || code == 11 || code == 21 || code == 31) {
+      } else if (code == 10 || code == 20 || code == 30 || code == 11 || code == 21 || code == 31 ||
+                 code == 40 || code == 50 || code == 51) {
         bool validRaw = false;
         const double value = QString::fromStdString(raw).toDouble(&validRaw);
-        if (subclass != 2 || group.type() != DRW_Variant::DOUBLE || !validRaw ||
+        const bool geometry = (subclass == 2 && (code == 10 || code == 20 || code == 30 ||
+             (line && (code == 11 || code == 21 || code == 31)) || (!line && code == 40))) ||
+             (arc && subclass == 3 && (code == 50 || code == 51));
+        if (!geometry || group.type() != DRW_Variant::DOUBLE || !validRaw ||
             !std::isfinite(value) || !std::isfinite(group.content.d) || value != group.content.d) return false;
         switch (code) {
         case 10: x1 = group.content.d; break;
@@ -12732,24 +12771,40 @@ bool hasSimpleMaterialLines(const RS_Graphic &graphic, const DRW_DxfEntitiesSour
         case 11: x2 = group.content.d; break;
         case 21: y2 = group.content.d; break;
         case 31: z2 = group.content.d; break;
+        case 40: radius = group.content.d; break;
+        case 50: angle1 = group.content.d; break;
+        case 51: angle2 = group.content.d; break;
         }
       } else return false;
     }
-    if (subclass != 2 || !seen.count(5) || !seen.count(8) || !seen.count(10) ||
-        !seen.count(20) || !seen.count(11) || !seen.count(21) || z1 != 0 || z2 != 0)
+    if (subclass != (arc ? 3 : 2) || !seen.count(5) || !seen.count(8) || !seen.count(10) ||
+        !seen.count(20) || z1 != 0 || z2 != 0 ||
+        (line && (!seen.count(11) || !seen.count(21))) ||
+        (!line && (!seen.count(40) || radius <= 0)) ||
+        (arc && (!seen.count(50) || !seen.count(51) || angle1 < 0 || angle1 >= 360 ||
+                 angle2 < 0 || angle2 >= 360 || angle1 == angle2)))
       return false;
     const auto found = delivered.find(handle);
-    if (found == delivered.end() || found->second->rtti() != RS2::EntityLine ||
+    if (found == delivered.end() ||
+        found->second->rtti() != (line ? RS2::EntityLine : circle ? RS2::EntityCircle : RS2::EntityArc) ||
         !found->second->getLayer(false) ||
-        found->second->getLayer(false)->getName().toUtf8().toStdString() != layer)
+        found->second->getLayer(false)->getName().toUtf8().toStdString() != layer ||
+        !hasDefaultMaterialAppearance(*found->second))
       return false;
-    const auto *line = static_cast<const RS_Line *>(found->second);
-    const auto start = line->getStartpoint(), end = line->getEndpoint();
-    const auto pen = line->getPen(false);
-    if (!start.valid || !end.valid || start.x != x1 || start.y != y1 || end.x != x2 || end.y != y2)
-      return false;
-    if (pen.getLineType() != RS2::LineByLayer || !pen.getColor().isByLayer() ||
-        pen.getWidth() != RS2::WidthByLayer || !pen.isFullyOpaque()) return false;
+    if (line) {
+      const auto *value = static_cast<const RS_Line *>(found->second);
+      const auto start = value->getStartpoint(), end = value->getEndpoint();
+      if (!start.valid || !end.valid || start.x != x1 || start.y != y1 || end.x != x2 || end.y != y2) return false;
+    } else if (circle) {
+      const auto *value = static_cast<const RS_Circle *>(found->second);
+      const auto center = value->getCenter();
+      if (!value->getData().isValid() || !center.valid || center.x != x1 || center.y != y1 || value->getRadius() != radius) return false;
+    } else {
+      const auto *value = static_cast<const RS_Arc *>(found->second);
+      const auto center = value->getCenter();
+      if (!value->getData().isValid() || !center.valid || center.x != x1 || center.y != y1 || value->getRadius() != radius ||
+          value->isReversed() || value->getAngle1() != angle1 / ARAD || value->getAngle2() != angle2 / ARAD) return false;
+    }
   }
   return true;
 }
@@ -12760,6 +12815,8 @@ bool capturePhysicalMaterialReferences(LC_DwgAdvancedMetadata &metadata,
   for (const auto &record : records) {
     if (record.groups.size() != record.rawValues.size() || record.groups.size() != record.spans.size()) return false;
     metadata.addDxfMaterialPhysicalRecord(record.marker.ordinal, record.endOrdinal);
+    const auto name = normalizeDwgTableName(record.name);
+    const bool simple = name == "LINE" || name == "CIRCLE" || name == "ARC";
     std::uint32_t handle = 0, target = 0;
     unsigned selfCount = 0, materialCount = 0, depth = 0;
     bool common = false;
@@ -12776,7 +12833,7 @@ bool capturePhysicalMaterialReferences(LC_DwgAdvancedMetadata &metadata,
         common = *group.content.s == "AcDbEntity";
       } else if (!depth && group.code() == 5) {
         if (++selfCount != 1u || !parseDxfCarrierHandle(group, handle)) return false;
-        if (!binary && normalizeDwgTableName(record.name) == "LINE") {
+        if (!binary && simple) {
           std::uint32_t physical = 0;
           if (!parseDxfCarrierHandle(record.rawValues[i], physical) || physical != handle) return false;
         }
@@ -12790,9 +12847,11 @@ bool capturePhysicalMaterialReferences(LC_DwgAdvancedMetadata &metadata,
       }
     }
     if (depth) return false;
-    if (normalizeDwgTableName(record.name) == "LINE") {
+    if (simple) {
       if (selfCount != 1u) return false;
-      metadata.addDxfMaterialLineDelivery(handle, block, true);
+      using Kind = LC_DwgAdvancedMetadata::DxfMaterialSimpleKind;
+      const auto kind = name == "LINE" ? Kind::Line : name == "CIRCLE" ? Kind::Circle : Kind::Arc;
+      metadata.addDxfMaterialSimpleDelivery(handle, block, kind, true);
     }
     if (materialCount) {
       if (selfCount != 1u) return false;
@@ -12880,7 +12939,7 @@ void RS_FilterDXFRW::addDxfEntitiesSource(const DRW_DxfEntitiesSource &source) {
   auto &metadata = m_graphic->dwgAdvancedMetadata();
   metadata.addDxfMaterialPhysicalScope(false);
   try {
-    if (!hasSimpleMaterialLines(*m_graphic, source)) {
+    if (!hasSimpleMaterialEntities(*m_graphic, source)) {
       metadata.rejectDxfMaterialAutomaticReplay();
     }
   } catch (...) {

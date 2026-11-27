@@ -62,6 +62,7 @@
 #include "lc_linetypenames.h"
 #include "lc_mleader.h"
 #include "lc_containertraverser.h"
+#include "rs_arc.h"
 #include "rs_dimaligned.h"
 #include "rs_circle.h"
 #include "rs_dimension.h"
@@ -1916,12 +1917,12 @@ TEST_CASE("Opt-in system codec replays an unchanged sparse material graph",
     { std::ifstream retained(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
     activePlot->setMarginsInMm(0.0, 0.0, 0.0, 0.0);
     REQUIRE(anotherWriter.fileExport(ordinary, QString::fromStdString(output), RS2::FormatDXFRW));
-    auto *newCircle = new RS_Circle(&ordinary, RS_CircleData(RS_Vector(2.0, 3.0), 1.0));
-    ordinary.addEntity(newCircle);
+    auto *newPoint = new RS_Point(&ordinary, RS_Vector(2.0, 3.0));
+    ordinary.addEntity(newPoint);
     writeText(output, sentinel);
     CHECK_FALSE(anotherWriter.fileExport(ordinary, QString::fromStdString(output), RS2::FormatDXFRW));
     { std::ifstream retained(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
-    REQUIRE(ordinary.removeEntity(newCircle));
+    REQUIRE(ordinary.removeEntity(newPoint));
     REQUIRE(anotherWriter.fileExport(ordinary, QString::fromStdString(output), RS2::FormatDXFRW));
     struct OrdinaryLateWriter : RS_FilterDXFRW {
       std::function<void()> afterObjects;
@@ -1954,8 +1955,8 @@ TEST_CASE("Opt-in system codec replays an unchanged sparse material graph",
         altered.insert(at + std::string("100\nAcDbLine\n").size(), "39\n1\n");
       } else if (mode == 1) {
         const auto at = altered.find("0\nENDSEC\n0\nSECTION\n2\nOBJECTS\n"); REQUIRE(at != std::string::npos);
-        altered.insert(at, "0\nCIRCLE\n5\nA5\n100\nAcDbEntity\n8\nRAWTEST\n"
-                           "100\nAcDbCircle\n10\n0\n20\n0\n40\n1\n");
+        altered.insert(at, "0\nPOINT\n5\nA5\n100\nAcDbEntity\n8\nRAWTEST\n"
+                           "100\nAcDbPoint\n10\n0\n20\n0\n");
       } else if (mode == 2) {
         const auto at = altered.find("0\nSECTION\n2\nENTITIES\n"); REQUIRE(at != std::string::npos);
         altered.insert(at, "0\nSECTION\n2\nBLOCKS\n0\nBLOCK\n5\nB0\n8\n0\n2\nB\n70\n0\n"
@@ -2227,6 +2228,214 @@ TEST_CASE("Opt-in system codec replays an unchanged sparse material graph",
   std::filesystem::remove(source);
   std::filesystem::remove(output);
   std::filesystem::remove(resaved);
+}
+
+TEST_CASE("Ordinary sparse material saves simple circles arcs and lines",
+          "[system-codec][dxf][material][transaction][circle][arc]") {
+  ensureSettings();
+  const auto source = tmpFile("system_sparse_circle_source.dxf");
+  const auto output = tmpFile("system_sparse_circle_output.dxf");
+  const auto resaved = tmpFile("system_sparse_circle_resave.dxf");
+  const std::string input =
+      "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1021\n9\n$CMATERIAL\n347\nA1\n0\nENDSEC\n"
+      "0\nSECTION\n2\nTABLES\n0\nTABLE\n2\nLAYER\n70\n1\n"
+      "0\nLAYER\n5\n30\n100\nAcDbSymbolTableRecord\n100\nAcDbLayerTableRecord\n"
+      "2\nRAWTEST\n70\n0\n62\n7\n6\nCONTINUOUS\n347\nA1\n0\nENDTAB\n0\nENDSEC\n"
+      "0\nSECTION\n2\nENTITIES\n0\nLINE\n5\nA2\n100\nAcDbEntity\n8\nRAWTEST\n347\nA1\n"
+      "100\nAcDbLine\n10\n0\n20\n0\n11\n10\n21\n0\n"
+      "0\nCIRCLE\n5\nA5\n100\nAcDbEntity\n8\nRAWTEST\n347\nA1\n"
+      "100\nAcDbCircle\n10\n2\n20\n3\n30\n0\n40\n4\n"
+      "0\nARC\n5\nA6\n100\nAcDbEntity\n8\nRAWTEST\n347\nA1\n"
+      "100\nAcDbCircle\n10\n4\n20\n5\n40\n2\n100\nAcDbArc\n50\n30\n51\n120\n0\nENDSEC\n"
+      "0\nSECTION\n2\nOBJECTS\n0\nDICTIONARY\n5\nC\n330\n0\n"
+      "100\nAcDbDictionary\n281\n1\n3\nACAD_MATERIAL\n350\nA0\n"
+      "0\nDICTIONARY\n5\nA0\n330\nC\n100\nAcDbDictionary\n281\n1\n"
+      "3\nPlainMat\n350\nA1\n0\nMATERIAL\n5\nA1\n330\nA0\n"
+      "100\nAcDbMaterial\n1\nPlainMat\n94\n63\n0\nENDSEC\n0\nEOF\n";
+  writeText(source, input);
+  RS_FilterDXFRW filter;
+  RS_Graphic graphic;
+  REQUIRE(filter.fileImport(graphic, QString::fromStdString(source), RS2::FormatDXFRW));
+  RS_Circle *circle = nullptr;
+  RS_Arc *arc = nullptr;
+  for (RS_Entity *entity : graphic) {
+    if (entity && entity->sourceHandle() == 0xA5u && entity->rtti() == RS2::EntityCircle)
+      circle = static_cast<RS_Circle *>(entity);
+    if (entity && entity->sourceHandle() == 0xA6u && entity->rtti() == RS2::EntityArc)
+      arc = static_cast<RS_Arc *>(entity);
+  }
+  REQUIRE(circle); REQUIRE(arc);
+  CHECK(circle->materialHandle() == 0xA1u);
+  CHECK(arc->materialHandle() == 0xA1u);
+  circle->setCenter(RS_Vector(5.0, 6.0));
+  circle->setRadius(7.0);
+  arc->setCenter(RS_Vector(8.0, 9.0));
+  arc->setRadius(3.5);
+  arc->setAngle1(M_PI / 4.0);
+  arc->setAngle2(M_PI);
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  CHECK(recordGroupValues(output, "CIRCLE", "10") == std::vector<std::string>{"5"});
+  CHECK(recordGroupValues(output, "CIRCLE", "20") == std::vector<std::string>{"6"});
+  CHECK(recordGroupValues(output, "CIRCLE", "40") == std::vector<std::string>{"7"});
+  CHECK(recordGroupValues(output, "ARC", "10") == std::vector<std::string>{"8"});
+  CHECK(recordGroupValues(output, "ARC", "20") == std::vector<std::string>{"9"});
+  CHECK(recordGroupValues(output, "ARC", "40") == std::vector<std::string>{"3.5"});
+  const auto start = recordGroupValues(output, "ARC", "50");
+  const auto end = recordGroupValues(output, "ARC", "51");
+  REQUIRE(start.size() == 1u); REQUIRE(end.size() == 1u);
+  CHECK(std::abs(std::stod(start.front()) - 45.0) < 1e-10);
+  CHECK(std::abs(std::stod(end.front()) - 180.0) < 1e-10);
+  const auto material = recordGroupValues(output, "MATERIAL", "5");
+  REQUIRE(material.size() == 1u);
+  CHECK(recordGroupValues(output, "CIRCLE", "347") == std::vector<std::string>{material.front()});
+  CHECK(recordGroupValues(output, "ARC", "347") == std::vector<std::string>{material.front()});
+  RS_Graphic reopened;
+  REQUIRE(filter.fileImport(reopened, QString::fromStdString(output), RS2::FormatDXFRW));
+  REQUIRE(filter.fileExport(reopened, QString::fromStdString(resaved), RS2::FormatDXFRW));
+  CHECK(recordGroupValues(resaved, "CIRCLE", "40") == std::vector<std::string>{"7"});
+  CHECK(recordGroupValues(resaved, "ARC", "40") == std::vector<std::string>{"3.5"});
+  if (const char *copy = std::getenv("LIBRECAD_KEEP_ORDINARY_SPARSE_CIRCLE"))
+    std::filesystem::copy_file(resaved, copy, std::filesystem::copy_options::overwrite_existing);
+  const auto curveOnlySource = tmpFile("system_sparse_curves_only_source.dxf");
+  for (int mode = 0; mode != 3; ++mode) {
+    auto curveOnly = input;
+    const auto first = curveOnly.find("0\nLINE\n"); REQUIRE(first != std::string::npos);
+    const auto last = curveOnly.find(mode == 1 ? "0\nARC\n" : "0\nCIRCLE\n", first);
+    REQUIRE(last != std::string::npos);
+    curveOnly.erase(first, last - first);
+    if (mode == 2) {
+      const auto arcStart = curveOnly.find("0\nARC\n"); REQUIRE(arcStart != std::string::npos);
+      const auto arcEnd = curveOnly.find("0\nENDSEC\n", arcStart); REQUIRE(arcEnd != std::string::npos);
+      curveOnly.erase(arcStart, arcEnd - arcStart);
+    }
+    writeText(curveOnlySource, curveOnly);
+    RS_Graphic onlyCurves;
+    REQUIRE(filter.fileImport(onlyCurves, QString::fromStdString(curveOnlySource), RS2::FormatDXFRW));
+    REQUIRE(filter.fileExport(onlyCurves, QString::fromStdString(output), RS2::FormatDXFRW));
+    CHECK(countRecords(output, "LINE") == 0);
+    CHECK(countRecords(output, "CIRCLE") == (mode == 1 ? 0 : 1));
+    CHECK(countRecords(output, "ARC") == (mode == 2 ? 0 : 1));
+    RS_Graphic rereadCurves;
+    REQUIRE(filter.fileImport(rereadCurves, QString::fromStdString(output), RS2::FormatDXFRW));
+    REQUIRE(filter.fileExport(rereadCurves, QString::fromStdString(resaved), RS2::FormatDXFRW));
+  }
+  std::filesystem::remove(curveOnlySource);
+  auto *addedCircle = new RS_Circle(&graphic, RS_CircleData(RS_Vector(11.0, 12.0), 2.0));
+  auto *addedArc = new RS_Arc(&graphic, RS_ArcData(RS_Vector(13.0, 14.0), 3.0, 0.0, M_PI / 2.0, false));
+  auto *targetLayer = graphic.findLayer(QStringLiteral("RAWTEST")); REQUIRE(targetLayer);
+  addedCircle->setLayer(targetLayer); addedArc->setLayer(targetLayer);
+  addedCircle->setPen(circle->getPen(false)); addedArc->setPen(arc->getPen(false));
+  graphic.addEntity(addedCircle); graphic.addEntity(addedArc);
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  CHECK(countRecords(output, "CIRCLE") == 2); CHECK(countRecords(output, "ARC") == 2);
+  RS_Graphic additions;
+  REQUIRE(filter.fileImport(additions, QString::fromStdString(output), RS2::FormatDXFRW));
+  REQUIRE(filter.fileExport(additions, QString::fromStdString(resaved), RS2::FormatDXFRW));
+  CHECK(countRecords(resaved, "CIRCLE") == 2); CHECK(countRecords(resaved, "ARC") == 2);
+  if (const char *copy = std::getenv("LIBRECAD_KEEP_ORDINARY_SPARSE_ADDED"))
+    std::filesystem::copy_file(resaved, copy, std::filesystem::copy_options::overwrite_existing);
+  REQUIRE(graphic.removeEntity(addedCircle)); REQUIRE(graphic.removeEntity(addedArc));
+  const std::string sentinel = "preserve circle material destination\n";
+  circle->setRadius(-1.0);
+  writeText(output, sentinel);
+  CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  { std::ifstream retained(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+  circle->setRadius(7.0);
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  arc->setReversed(true);
+  writeText(output, sentinel);
+  CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  { std::ifstream retained(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+  arc->setReversed(false);
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  const auto alteredSource = tmpFile("system_sparse_circle_unqualified.dxf");
+  for (int mode = 0; mode != 4; ++mode) {
+    auto altered = input;
+    if (mode == 0) {
+      const auto at = altered.find("100\nAcDbCircle\n10\n2\n"); REQUIRE(at != std::string::npos);
+      altered.insert(at + std::string("100\nAcDbCircle\n").size(), "39\n1\n");
+    } else if (mode == 1) {
+      const auto at = altered.find("30\n0\n40\n4\n"); REQUIRE(at != std::string::npos);
+      altered.replace(at, std::string("30\n0\n").size(), "30\n1\n");
+    } else if (mode == 2) {
+      const auto at = altered.find("50\n30\n51\n120\n"); REQUIRE(at != std::string::npos);
+      altered.replace(at, std::string("50\n30\n").size(), "50\n360\n");
+    } else {
+      const auto at = altered.find("0\nCIRCLE\n5\nA5\n"); REQUIRE(at != std::string::npos);
+      altered.replace(at, std::string("0\nCIRCLE\n5\nA5\n").size(), "0\nCIRCLE\n5\nA2\n");
+    }
+    writeText(alteredSource, altered);
+    RS_Graphic unqualified;
+    writeText(output, sentinel);
+    const bool imported = filter.fileImport(unqualified, QString::fromStdString(alteredSource), RS2::FormatDXFRW);
+    if (mode < 3) REQUIRE(imported);
+    if (imported) CHECK_FALSE(filter.fileExport(unqualified, QString::fromStdString(output), RS2::FormatDXFRW));
+    { std::ifstream retained(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+    RS_Graphic retry;
+    REQUIRE(filter.fileImport(retry, QString::fromStdString(source), RS2::FormatDXFRW));
+    REQUIRE(filter.fileExport(retry, QString::fromStdString(output), RS2::FormatDXFRW));
+  }
+  struct DeliveryProbe : RS_FilterDXFRW {
+    std::uint32_t suppress = 0;
+    bool alterRadius = false, alterArc = false, alterPhysicalRadius = false;
+    void addCircle(const DRW_Circle &data) override {
+      if (data.handle == suppress) return;
+      DRW_Circle changed = data;
+      if (alterRadius) changed.radious += 1.0;
+      RS_FilterDXFRW::addCircle(changed);
+    }
+    void addArc(const DRW_Arc &data) override {
+      if (data.handle == suppress) return;
+      DRW_Arc changed = data;
+      if (alterArc) changed.staangle += 0.1;
+      RS_FilterDXFRW::addArc(changed);
+    }
+    void addDxfEntitiesSource(const DRW_DxfEntitiesSource &source) override {
+      auto copy = source;
+      if (alterPhysicalRadius) for (auto &record : copy.records)
+        if (record.name == "CIRCLE") for (std::size_t i = 0; i < record.groups.size(); ++i)
+          if (record.groups[i].code() == 40) { record.rawValues[i] = "999"; break; }
+      RS_FilterDXFRW::addDxfEntitiesSource(copy);
+    }
+  } probe;
+  for (int mode = 0; mode != 5; ++mode) {
+    auto altered = input;
+    if (mode < 2) {
+      const auto at = altered.find("0\nENDSEC\n0\nSECTION\n2\nOBJECTS\n"); REQUIRE(at != std::string::npos);
+      altered.insert(at, mode == 0
+          ? "0\nCIRCLE\n5\nA7\n100\nAcDbEntity\n8\nRAWTEST\n100\nAcDbCircle\n10\n1\n20\n1\n40\n1\n"
+          : "0\nARC\n5\nA8\n100\nAcDbEntity\n8\nRAWTEST\n100\nAcDbCircle\n10\n1\n20\n1\n40\n1\n100\nAcDbArc\n50\n300\n51\n20\n");
+      probe.suppress = mode == 0 ? 0xA7u : 0xA8u;
+    } else if (mode == 2) probe.alterRadius = true;
+    else if (mode == 3) probe.alterArc = true;
+    else probe.alterPhysicalRadius = true;
+    writeText(alteredSource, altered);
+    RS_Graphic incomplete;
+    REQUIRE(probe.fileImport(incomplete, QString::fromStdString(alteredSource), RS2::FormatDXFRW));
+    writeText(output, sentinel);
+    CHECK_FALSE(probe.fileExport(incomplete, QString::fromStdString(output), RS2::FormatDXFRW));
+    { std::ifstream retained(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+    probe.suppress = 0; probe.alterRadius = probe.alterArc = probe.alterPhysicalRadius = false;
+    RS_Graphic retry;
+    REQUIRE(probe.fileImport(retry, QString::fromStdString(mode < 2 ? alteredSource : source), RS2::FormatDXFRW));
+    REQUIRE(probe.fileExport(retry, QString::fromStdString(output), RS2::FormatDXFRW));
+    if (mode == 0) CHECK(countRecords(output, "CIRCLE") == 2);
+    if (mode == 1) {
+      CHECK(countRecords(output, "ARC") == 2);
+      const auto starts = recordGroupValues(output, "ARC", "50");
+      const auto ends = recordGroupValues(output, "ARC", "51");
+      REQUIRE(starts.size() == 2u); REQUIRE(ends.size() == 2u);
+      CHECK(std::abs(std::stod(starts.back()) - 300.0) < 1e-10);
+      CHECK(std::abs(std::stod(ends.back()) - 20.0) < 1e-10);
+      RS_Graphic wrapped;
+      REQUIRE(probe.fileImport(wrapped, QString::fromStdString(output), RS2::FormatDXFRW));
+      REQUIRE(probe.fileExport(wrapped, QString::fromStdString(resaved), RS2::FormatDXFRW));
+      if (const char *copy = std::getenv("LIBRECAD_KEEP_ORDINARY_SPARSE_WRAP"))
+        std::filesystem::copy_file(resaved, copy, std::filesystem::copy_options::overwrite_existing);
+    }
+  }
+  std::filesystem::remove(alteredSource);
+  std::filesystem::remove(source); std::filesystem::remove(output); std::filesystem::remove(resaved);
 }
 
 TEST_CASE("Opt-in sparse material binds block entity source ownership",
