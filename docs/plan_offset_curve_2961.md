@@ -134,11 +134,10 @@ the dependencies for **3 and 4** in parallel. **5** follows the acceptance work.
 
 1. The periodic-spline profile manifest is reconciled below. Its isolated
    profiles do not replace the shared-process run.
-2. Run the high-degree spline profiles under ASan/UBSan with the rebuilt
-   sanitizer binary. The typed-parabola timeout is already
-   accounted for by its 152 isolated profiles, but its aggregate remains open.
-   These cases combine geometry and file-format dimensions. Inspect each loop
-   before defining IDs.
+2. The six timed-out generators now have complete isolated profile receipts,
+   including the typed-parabola profiles. Their original aggregate timeouts
+   and shared-process behavior remain open; do not infer aggregate success
+   from the isolated manifests.
 3. Where an existing selector cannot isolate every tuple, add a test-only
    profile selector to that case and register it in the existing profile
    runner. Preserve the unpinned test, use stable complete tuple identities,
@@ -380,8 +379,16 @@ the dependencies for **3 and 4** in parallel. **5** follows the acceptance work.
   profiles and 27,312 assertions**; the unpinned aggregate passed the same
   **27,312 assertions**. Invalid and out-of-range IDs were rejected. Temporary
   receipts: `/private/tmp/offset-3193-high-degree-release.json` and
-  `/private/tmp/offset-3193-high-degree-aggregate-release.json`. Sanitizer,
-  shared-process ordering and non-macOS rows remain open.
+  `/private/tmp/offset-3193-high-degree-aggregate-release.json`. Aggregate
+  sanitizer, shared-process ordering and non-macOS rows remain open.
+- The `high-degree-spline` selector subsequently passed **45/45 isolated
+  groups and 27,312 assertions** under the same source-equivalent macOS Debug
+  ASan/UBSan settings and bounds as the seam run. Requested, passed and result
+  IDs match 0-44, the test-binary hash remained unchanged, and all 45 logs
+  were free of sanitizer diagnostics. Temporary receipt and logs:
+  `/private/tmp/offset-3193-high-degree-asan.json` and
+  `/private/tmp/offset-3193-high-degree-asan-logs`. Aggregate timeout,
+  shared-process behavior, leak detection and other platforms remain open.
 - Test-only commit `ddad0c653` makes profile timeouts use the case runner's
   process-group cleanup and records test-binary SHA-256, change detection,
   bounds and hyperbola mode in new manifests. Three focused Python tests and
