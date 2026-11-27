@@ -131,11 +131,11 @@ the dependencies for **3 and 4** in parallel. **5** follows the acceptance work.
 1. Finish the running periodic-spline profile manifest. Verify requested IDs,
    results, assertion counts and sanitizer logs, then record the receipt. A
    successful isolated profile does not replace the shared-process run.
-2. Run the new high-origin closed-polyline seam and reconstructed-parabola
-   profiles under ASan/UBSan after the periodic run finishes and the sanitizer
-   binary can be rebuilt. Partition the three other timed-out generators, in
-   this order: transformed beyond-cusp parabola; bounded hyperbola file lanes;
-   rational high-degree spline file lanes. The typed-parabola timeout is already
+2. Run the new high-origin closed-polyline seam, reconstructed-parabola and
+   beyond-cusp profiles under ASan/UBSan after the periodic run finishes and
+   the sanitizer binary can be rebuilt. Partition the two other timed-out
+   generators: bounded hyperbola file lanes, then rational high-degree spline
+   file lanes. The typed-parabola timeout is already
    accounted for by its 152 isolated profiles, but its aggregate remains open.
    These cases combine geometry and file-format dimensions. Inspect each loop
    before defining IDs.
@@ -279,6 +279,15 @@ the dependencies for **3 and 4** in parallel. **5** follows the acceptance work.
   `/private/tmp/offset-3193-reconstructed-release.json` and
   `/private/tmp/offset-3193-reconstructed-aggregate-release.json` (temporary).
   The earlier sanitizer aggregate timeout and non-macOS rows remain open.
+- Test-only commit `03d32a2ec` adds the `beyond-cusp` selector over the 144
+  existing nested combinations, retaining their format loops. Source-equivalent
+  macOS CMake Release passed **144/144 profiles, 13,596 assertions**, and the
+  unpinned aggregate passed **13,024 assertions**; the difference is four
+  per-process setup/count assertions repeated in isolated profiles. Invalid and
+  out-of-range IDs were rejected, and each profile exercised at least 89
+  assertions. Receipts: `/private/tmp/offset-3193-cusp-release.json` and
+  `/private/tmp/offset-3193-cusp-aggregate-release.json` (temporary). This is
+  not sanitizer, leak-detection or non-macOS evidence.
 
 ## Smallest Safe Fix
 
