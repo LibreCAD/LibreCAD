@@ -66,6 +66,9 @@
 #include <QStringList>
 
 #include "drw_acis.h"
+#if defined(LIBRECAD_SYSTEM_LIBDXFRW) && __has_include("drw_dxf_capabilities.h")
+#include "drw_dxf_capabilities.h"
+#endif
 #include "intern/dwg_fixed_handles.h"
 #include "dxf_format.h"
 #include "intern/dwgbufferw.h"
@@ -140,6 +143,13 @@
 #endif
 
 namespace {
+#ifdef LIBDXFRW_DXF_FIELD_MINIMUM_VERSION
+constexpr DRW::Version kDxfFieldMinimumVersion = LIBDXFRW_DXF_FIELD_MINIMUM_VERSION;
+#elif defined(LIBRECAD_SYSTEM_LIBDXFRW)
+constexpr DRW::Version kDxfFieldMinimumVersion = DRW::AC1018;
+#else
+constexpr DRW::Version kDxfFieldMinimumVersion = DRW::AC1015;
+#endif
 // Preserve the source WCS Z components that RS_Image does not edit directly.
 constexpr const char *kImageFrameMarker = "LibreCAD_IMAGE_FRAME";
 constexpr std::int32_t kLegacyRtlLayout = 1;
@@ -14661,11 +14671,11 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
     for (const auto &record : metadata.sortEntsTables())
       reserveTyped(record.handle, record.replayState, "SORTENTSTABLE");
     for (const auto &record : metadata.fields())
-      reserveTyped(record.handle, record.replayState, "FIELD", DRW::AC1015);
+      reserveTyped(record.handle, record.replayState, "FIELD", kDxfFieldMinimumVersion);
     for (const auto &record : metadata.partialViewingIndexes())
       reserveTyped(record.handle, record.replayState, "PARTIALVIEWINGINDEX");
     for (const auto &record : metadata.fieldLists())
-      reserveTyped(record.handle, record.replayState, "FIELDLIST", DRW::AC1015);
+      reserveTyped(record.handle, record.replayState, "FIELDLIST", kDxfFieldMinimumVersion);
     // SLICE 2: WIPEOUTVARIABLES is a CUSTOM class -> reserve + register CLASS.
     for (const auto &record : metadata.wipeoutVariables())
       reserveTyped(record.handle, record.replayState, "WIPEOUTVARIABLES");
@@ -14999,9 +15009,12 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
     for (const auto &r : metadata.sortEntsTables())
       noteDataOnly(r.handle, r.parentHandle, r.replayState);
     for (const auto &r : metadata.fields())
-      noteDataOnly(r.handle, r.parentHandle, r.replayState, DRW::AC1015);
+      noteDataOnly(r.handle, r.parentHandle, r.replayState, kDxfFieldMinimumVersion);
     for (const auto &r : metadata.fieldLists())
-      noteDataOnly(r.handle, r.parentHandle, r.replayState, DRW::AC1015);
+      noteDataOnly(r.handle, r.parentHandle, r.replayState, kDxfFieldMinimumVersion);
+    for (const auto &r : metadata.evaluationGraphs())
+      if (canWriteNativeEvaluationGraph(evaluationGraphFromMetadata(r)))
+        noteDataOnly(r.handle, r.parentHandle, r.replayState, DRW::AC1021);
     for (const auto &r : metadata.mlineStyles())
       noteDataOnly(r.handle, r.parentHandle, r.replayState);
     for (const auto &r : metadata.layouts())
@@ -15940,7 +15953,8 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
                       diagnostic.code.c_str(), diagnostic.message.c_str());
   }
 #endif
-  m_writeLeftOut = m_dxfW->leftOut();
+  for (const auto &[name, count] : m_dxfW->leftOut())
+    m_writeLeftOut[name] += count;
   activeWriter.reset();
 
   if (!success) {
@@ -20251,8 +20265,8 @@ RS2::FormatType RS_FilterDXFRW::formatForDwgVersion(const DRW::Version version) 
 QString RS_FilterDXFRW::exportReport() const {
   QStringList lines;
   if (m_dxfLeftOutRawRecords > 0) {
-    lines << QObject::tr("%1 object(s) read from another DXF version, which "
-                         "this version cannot hold", "RS_FilterDXFRW")
+    lines << QObject::tr("%1 raw record(s) from another DXF version were not "
+                         "replayed; some may have been regenerated", "RS_FilterDXFRW")
                  .arg(m_dxfLeftOutRawRecords);
   }
   for (const auto &[what, count] : m_writeLeftOut)
@@ -30353,14 +30367,24 @@ void RS_FilterDXFRW::writeObjects() {
     // record is registered in fileExport's pre-write pass.
     const auto &metadata = m_graphic->dwgAdvancedMetadata();
     std::set<std::uint32_t> rawHandles;
-    for (const DRW_RawDxfObject &o : metadata.rawDxfObjects())
-      if (o.handle != 0 && replaysInDxfExport(o.m_version))
-        rawHandles.insert(o.handle);
+    std::set<std::uint32_t> leftOutRawHandles;
+    for (const DRW_RawDxfObject &o : metadata.rawDxfObjects()) {
+      if (o.handle == 0) continue;
+      if (replaysInDxfExport(o.m_version)) rawHandles.insert(o.handle);
+      else leftOutRawHandles.insert(o.handle);
+    }
     auto emitTyped = [&](std::uint32_t handle,
                          LC_DwgAdvancedMetadata::ReplayState state) {
       return handle != 0 &&
              state == LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed &&
              rawHandles.count(handle) == 0;
+    };
+    const auto supportsTypedVersion = [&](const char *name, std::uint32_t handle,
+                                          DRW::Version minimum) {
+      if (m_dxfW->getVersion() >= minimum) return true;
+      // A cross-version raw carrier is already counted in the raw report.
+      if (leftOutRawHandles.count(handle) == 0) ++m_writeLeftOut[name];
+      return false;
     };
     // F4f-3: owner fallback. A data-only OBJECT's 330 parent must resolve to
     // an object that actually exists in the output, else ezdxf deletes the
@@ -30410,7 +30434,8 @@ void RS_FilterDXFRW::writeObjects() {
     // load-bearing for later MLEADER DXF completion, since MLEADER entities
     // reference these styles by handle.
     for (const auto &record : metadata.mleaderStyles()) {
-      if (!emitTyped(record.handle, record.replayState))
+      if (!emitTyped(record.handle, record.replayState)
+          || !supportsTypedVersion("MLEADERSTYLE", record.handle, DRW::AC1021))
         continue;
       DRW_MLeaderStyle style = mleaderStyleFromMetadata(record);
       style.handle = m_dxfW->remapHandle(style.handle);
@@ -30475,7 +30500,8 @@ void RS_FilterDXFRW::writeObjects() {
     // FIELD/FIELDLIST are custom objects. Emit FIELD first so FIELDLIST 330
     // references point at an object that already exists in OBJECTS.
     for (const auto &record : metadata.fields()) {
-      if (!emitTyped(record.handle, record.replayState))
+      if (!emitTyped(record.handle, record.replayState)
+          || !supportsTypedVersion("FIELD", record.handle, kDxfFieldMinimumVersion))
         continue;
       DRW_Field field = fieldFromMetadata(record);
       field.handle = m_dxfW->remapHandle(field.handle);
@@ -30483,7 +30509,8 @@ void RS_FilterDXFRW::writeObjects() {
       noteDxfWrite(m_dxfW->writeField(&field));
     }
     for (const auto &record : metadata.fieldLists()) {
-      if (!emitTyped(record.handle, record.replayState))
+      if (!emitTyped(record.handle, record.replayState)
+          || !supportsTypedVersion("FIELDLIST", record.handle, kDxfFieldMinimumVersion))
         continue;
       DRW_FieldList fieldList = fieldListFromMetadata(record);
       fieldList.handle = m_dxfW->remapHandle(fieldList.handle);
@@ -30621,7 +30648,8 @@ void RS_FilterDXFRW::writeObjects() {
       DRW_EvaluationGraph graph = evaluationGraphFromMetadata(record);
       graph.handle = m_dxfW->remapHandle(graph.handle);
       if (!canWriteNativeEvaluationGraph(graph) ||
-          !emitTyped(record.handle, record.replayState))
+          !emitTyped(record.handle, record.replayState) ||
+          !supportsTypedVersion("EVALUATION_GRAPH", record.handle, DRW::AC1021))
         continue;
       graph.parentHandle = resolveOwner(record.parentHandle);
       noteDxfWrite(m_dxfW->writeEvaluationGraph(&graph));

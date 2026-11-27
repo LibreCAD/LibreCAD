@@ -8257,9 +8257,11 @@ TEST_CASE("DXF write planning excludes typed objects below their version gate",
 
   const std::string oldOut = tmpFile("typed_gates_r14.dxf");
   const std::string fieldOut = tmpFile("typed_gates_r2000.dxf");
+  const std::string field2004Out = tmpFile("typed_gates_r2004.dxf");
   const std::string newOut = tmpFile("typed_gates_r2007.dxf");
   std::filesystem::remove(oldOut);
   std::filesystem::remove(fieldOut);
+  std::filesystem::remove(field2004Out);
   std::filesystem::remove(newOut);
   {
     RS_FilterDXFRW filter;
@@ -8286,6 +8288,12 @@ TEST_CASE("DXF write planning excludes typed objects below their version gate",
   }
   CHECK(recordGroupValues(fieldOut, "MLEADERSTYLE", "5").empty());
   CHECK(recordGroupValues(fieldOut, "EVALUATION_GRAPH", "5").empty());
+#ifdef LIBRECAD_SYSTEM_CODEC_TESTS
+  CHECK(recordGroupValues(fieldOut, "FIELD", "5").empty());
+  CHECK(recordGroupValues(fieldOut, "FIELDLIST", "5").empty());
+  CHECK(rootDictEntries(fieldOut).count("ACAD_TYPED") == 0);
+  CHECK_FALSE(containsLine(fieldOut, "{ACAD_REACTORS"));
+#else
   CHECK(recordGroupValues(fieldOut, "FIELD", "5") ==
         std::vector<std::string>{"E1"});
   CHECK(recordGroupValues(fieldOut, "FIELDLIST", "5") ==
@@ -8302,6 +8310,19 @@ TEST_CASE("DXF write planning excludes typed objects below their version gate",
         references.end());
   CHECK(std::find(references.begin(), references.end(), "E3") ==
         references.end());
+#endif
+
+  {
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(field2004Out),
+                              RS2::FormatDXFRW2004));
+  }
+  CHECK(recordGroupValues(field2004Out, "FIELD", "5") ==
+        std::vector<std::string>{"E1"});
+  CHECK(recordGroupValues(field2004Out, "FIELDLIST", "5") ==
+        std::vector<std::string>{"E2"});
+  CHECK(rootDictEntries(field2004Out).count("ACAD_TYPED") == 1);
+  CHECK(danglingReferences(field2004Out).empty());
 
   {
     RS_FilterDXFRW filter;
@@ -8315,9 +8336,17 @@ TEST_CASE("DXF write planning excludes typed objects below their version gate",
     CHECK(recordGroupValues(newOut, name, "5") ==
           std::vector<std::string>{handle});
   CHECK(rootDictEntries(newOut).count("ACAD_TYPED") == 1);
+  const auto parentGroups = recordGroupsWithValue(newOut, "DICTIONARY", "5", "70");
+  const auto graphKey = std::find(parentGroups.begin(), parentGroups.end(),
+                                  std::make_pair(std::string("3"), std::string("GRAPH")));
+  REQUIRE(graphKey != parentGroups.end());
+  REQUIRE(std::next(graphKey) != parentGroups.end());
+  CHECK(*std::next(graphKey) == std::make_pair(std::string("350"), std::string("E3")));
+  CHECK(danglingReferences(newOut).empty());
 
   std::filesystem::remove(oldOut);
   std::filesystem::remove(fieldOut);
+  std::filesystem::remove(field2004Out);
   std::filesystem::remove(newOut);
 }
 
@@ -8368,6 +8397,87 @@ TEST_CASE("DXF live identities win over left-out raw carriers with the same hand
   CHECK(std::count(references.begin(), references.end(), "B0") == 1);
   std::filesystem::remove(out);
 }
+
+TEST_CASE("DXF reports typed records omitted by the target version",
+          "[dxf][roundtrip][filter][version]") {
+  ensureSettings();
+  RS_Graphic graphic;
+  graphic.initForNewDocument();
+  auto &metadata = graphic.dwgAdvancedMetadata();
+  DRW_MLeaderStyle style; style.handle = 0xE0u; metadata.addMLeaderStyle(style);
+  DRW_Field field; field.handle = 0xE1u; metadata.addField(field);
+  DRW_FieldList list; list.handle = 0xE2u; metadata.addFieldList(list);
+  const auto out = tmpFile("typed_gates_report_r14.dxf");
+  RS_FilterDXFRW filter;
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(out), RS2::FormatDXFRW14));
+  const auto report = filter.exportReport();
+  CHECK(report.contains(QStringLiteral("1 × MLEADERSTYLE")));
+  CHECK(report.contains(QStringLiteral("1 × FIELD")));
+  CHECK(report.contains(QStringLiteral("1 × FIELDLIST")));
+  CHECK(recordGroupValues(out, "MLEADERSTYLE", "5").empty());
+  CHECK(recordGroupValues(out, "FIELD", "5").empty());
+  CHECK(recordGroupValues(out, "FIELDLIST", "5").empty());
+  CHECK(danglingReferences(out).empty());
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(out), RS2::FormatDXFRW));
+  CHECK_FALSE(filter.exportReport().contains(QStringLiteral("MLEADERSTYLE")));
+  CHECK_FALSE(filter.exportReport().contains(QStringLiteral("FIELD")));
+  CHECK(recordGroupValues(out, "MLEADERSTYLE", "5") == std::vector<std::string>{"E0"});
+  CHECK(recordGroupValues(out, "FIELD", "5") == std::vector<std::string>{"E1"});
+  CHECK(recordGroupValues(out, "FIELDLIST", "5") == std::vector<std::string>{"E2"});
+  std::filesystem::remove(out);
+}
+
+TEST_CASE("DXF evaluation graph keeps its parent dictionary when emitted alone",
+          "[dxf][roundtrip][filter][version]") {
+  ensureSettings();
+  RS_Graphic graphic;
+  graphic.initForNewDocument();
+  auto &metadata = graphic.dwgAdvancedMetadata();
+  DRW_EvaluationGraph graph; graph.handle = 0xE3u; graph.parentHandle = 0x70u;
+  metadata.addEvaluationGraph(graph);
+  DRW_Dictionary parent; parent.handle = 0x70u; parent.parentHandle = 0xCu;
+  parent.name = "ACAD_GRAPH"; parent.m_entries.push_back({"GRAPH", 0xE3u});
+  metadata.addDictionary(parent);
+  const auto out = tmpFile("typed_graph_only.dxf");
+  RS_FilterDXFRW filter;
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(out), RS2::FormatDXFRW));
+  CHECK(rootDictEntries(out).count("ACAD_GRAPH") == 1u);
+  const auto groups = recordGroupsWithValue(out, "DICTIONARY", "5", "70");
+  const auto entry = std::find(groups.begin(), groups.end(),
+                               std::make_pair(std::string("3"), std::string("GRAPH")));
+  REQUIRE(entry != groups.end());
+  REQUIRE(std::next(entry) != groups.end());
+  CHECK(*std::next(entry) == std::make_pair(std::string("350"), std::string("E3")));
+  CHECK(recordGroupValues(out, "EVALUATION_GRAPH", "5") == std::vector<std::string>{"E3"});
+  CHECK(danglingReferences(out).empty());
+  std::filesystem::remove(out);
+}
+
+#ifdef LIBRECAD_SYSTEM_CODEC_TESTS
+TEST_CASE("DXF version-gated typed write preserves destination and retries",
+          "[dxf][roundtrip][filter][version]") {
+  ensureSettings();
+  RS_Graphic graphic;
+  graphic.initForNewDocument();
+  DRW_MLeaderStyle style; style.handle = 0xE0u; style.styleVersion = 1u;
+  auto &metadata = graphic.dwgAdvancedMetadata();
+  metadata.addMLeaderStyle(style);
+  auto &records = const_cast<std::vector<LC_DwgAdvancedMetadata::MLeaderStyleRecord>&>(metadata.mleaderStyles());
+  REQUIRE(records.size() == 1u);
+  const auto out = tmpFile("typed_gates_retry.dxf");
+  const std::string sentinel = "preserve destination\n";
+  writeText(out, sentinel);
+  RS_FilterDXFRW filter;
+  CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(out), RS2::FormatDXFRW));
+  std::ifstream retained(out);
+  CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel);
+  retained.close();
+  records.front().styleVersion = 2u;
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(out), RS2::FormatDXFRW));
+  CHECK(recordGroupValues(out, "MLEADERSTYLE", "5") == std::vector<std::string>{"E0"});
+  std::filesystem::remove(out);
+}
+#endif
 
 TEST_CASE("DXF omits ambiguous live references despite an omitted raw carrier",
           "[dxf][roundtrip][filter][handles]") {
@@ -8421,11 +8531,44 @@ TEST_CASE("DXF export reports what it left out",
   CHECK(io->lastExportReport().isEmpty());
   // R2007 cannot hold the raw ACME_THING and its dictionary read from R2000
   REQUIRE(io->fileExport(graphic, QString::fromStdString(other), RS2::FormatDXFRW));
-  CHECK(io->lastExportReport().startsWith(QStringLiteral("2 object(s)")));
+  CHECK(io->lastExportReport() == QStringLiteral(
+      "2 raw record(s) from another DXF version were not replayed; some may have been regenerated"));
 
   std::filesystem::remove(src);
   std::filesystem::remove(same);
   std::filesystem::remove(other);
+}
+
+TEST_CASE("DXF cross-version report distinguishes raw replay from regenerated defaults",
+          "[dxf][roundtrip][filter][version]") {
+  ensureSettings();
+  const auto src = tmpFile("report-regenerated-src.dxf");
+  const auto out = tmpFile("report-regenerated-out.dxf");
+  writeText(src,
+            "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1032\n0\nENDSEC\n"
+            "0\nSECTION\n2\nENTITIES\n"
+            "0\nLINE\n8\n0\n10\n0\n20\n0\n30\n0\n11\n1\n21\n0\n31\n0\n"
+            "0\nENDSEC\n0\nSECTION\n2\nOBJECTS\n"
+            "0\nDICTIONARY\n5\nC\n330\n0\n100\nAcDbDictionary\n281\n1\n"
+            "3\nACAD_GROUP\n350\nD\n3\nACAD_PLOTSTYLENAME\n350\nE\n"
+            "0\nDICTIONARY\n5\nD\n330\nC\n100\nAcDbDictionary\n281\n1\n"
+            "0\nACDBDICTIONARYWDFLT\n5\nE\n330\nC\n100\nAcDbDictionary\n281\n1\n"
+            "3\nNormal\n350\nF\n100\nAcDbDictionaryWithDefault\n340\nF\n"
+            "0\nACDBPLACEHOLDER\n5\nF\n330\nE\n"
+            "0\nENDSEC\n0\nEOF\n");
+  RS_Graphic graphic;
+  RS_FilterDXFRW importer;
+  REQUIRE(importer.fileImport(graphic, QString::fromStdString(src), RS2::FormatDXFRW));
+  RS_FilterDXFRW exporter;
+  REQUIRE(exporter.fileExport(graphic, QString::fromStdString(out), RS2::FormatDXFRW));
+  CHECK(exporter.exportReport() == QStringLiteral(
+      "2 raw record(s) from another DXF version were not replayed; some may have been regenerated"));
+  CHECK(recordGroupValues(out, "ACDBDICTIONARYWDFLT", "5") == std::vector<std::string>{"E"});
+  CHECK(recordGroupValues(out, "ACDBPLACEHOLDER", "5") == std::vector<std::string>{"F"});
+  CHECK(rootDictEntries(out).count("ACAD_PLOTSTYLENAME") == 1u);
+  CHECK(danglingReferences(out).empty());
+  std::filesystem::remove(src);
+  std::filesystem::remove(out);
 }
 
 TEST_CASE("DXF text keeps control characters and carets as caret codes",
