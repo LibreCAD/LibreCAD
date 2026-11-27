@@ -1731,6 +1731,47 @@ TEST_CASE("Opt-in system codec replays an unchanged sparse material graph",
     std::ifstream retained(output, std::ios::binary);
     CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel);
   }
+  // A handle's complete byte sequence must be validated, not just the C
+  // string prefix before an embedded NUL. Mutate both retained copies to
+  // model a malformed source consistently, then require preflight refusal.
+  {
+    auto *dictionarySource = const_cast<DRW_RawDxfObject *>(
+        graphic.dwgAdvancedMetadata().dxfMaterialDictionarySource());
+    REQUIRE(dictionarySource);
+    auto &objects = const_cast<std::vector<DRW_RawDxfObject> &>(
+        graphic.dwgAdvancedMetadata().rawDxfObjects());
+    const auto found = std::find_if(objects.begin(), objects.end(), [&](const auto &object) {
+      return object.name == "DICTIONARY" && object.handle == dictionarySource->handle;
+    });
+    REQUIRE(found != objects.end());
+    auto &dictionaryRaw = *found;
+    REQUIRE(dictionarySource->hasRawValues); REQUIRE(dictionaryRaw.hasRawValues);
+    const std::vector<std::pair<int, std::string>> probes = {{5, "A0"}, {330, "C"}, {350, sourceHandle}};
+    for (const auto &probe : probes) {
+      auto sourceGroup = std::find_if(dictionarySource->groups.begin(), dictionarySource->groups.end(),
+          [&](const auto &group) { return group.code() == probe.first && group.c_str() && probe.second == group.c_str(); });
+      auto rawGroup = std::find_if(dictionaryRaw.groups.begin(), dictionaryRaw.groups.end(),
+          [&](const auto &group) { return group.code() == probe.first && group.c_str() && probe.second == group.c_str(); });
+      REQUIRE(sourceGroup != dictionarySource->groups.end()); REQUIRE(rawGroup != dictionaryRaw.groups.end());
+      const auto sourceIndex = static_cast<std::size_t>(sourceGroup - dictionarySource->groups.begin());
+      const auto rawIndex = static_cast<std::size_t>(rawGroup - dictionaryRaw.groups.begin());
+      const auto savedSourceGroup = *sourceGroup, savedRawGroup = *rawGroup;
+      const auto savedSourceValue = dictionarySource->rawValues[sourceIndex], savedRawValue = dictionaryRaw.rawValues[rawIndex];
+      const std::string malformed = probe.second + std::string("\0BAD", 4);
+      for (int mode = 0; mode != 3; ++mode) {
+        if (mode != 1) { sourceGroup->addString(probe.first, malformed); rawGroup->addString(probe.first, malformed); }
+        if (mode != 2) { dictionarySource->rawValues[sourceIndex] = malformed; dictionaryRaw.rawValues[rawIndex] = malformed; }
+        bool reachedObjects = false;
+        filter.afterObjects = [&] { reachedObjects = true; };
+        expectRefusal(RS2::FormatDXFRW);
+        CHECK_FALSE(reachedObjects);
+        *sourceGroup = savedSourceGroup; *rawGroup = savedRawGroup;
+        dictionarySource->rawValues[sourceIndex] = savedSourceValue; dictionaryRaw.rawValues[rawIndex] = savedRawValue;
+        filter.afterObjects = {};
+        REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+      }
+    }
+  }
   auto &materials = const_cast<std::vector<LC_DwgAdvancedMetadata::MaterialRecord>&>(
       graphic.dwgAdvancedMetadata().materials());
   const auto description = materials.front().description;
@@ -2386,6 +2427,28 @@ TEST_CASE("System codec gates ambiguous AC1024 default material",
   CHECK_FALSE(binaryImporter.fileExport(binaryGraphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
   CHECK(binaryImporter.exportReport().contains(QStringLiteral("raw source missing, changed or unverified")));
   binaryEntry->addString(3, "ByBlock");
+  // Binary input has no raw lexeme array. A mutated typed string must still
+  // be checked in full before the staged writer sees it.
+  auto *binarySourceDictionary = const_cast<DRW_RawDxfObject *>(
+      binaryGraphic.dwgAdvancedMetadata().dxfMaterialDictionarySource());
+  REQUIRE(binarySourceDictionary); CHECK_FALSE(binarySourceDictionary->hasRawValues);
+  const std::vector<std::pair<int, std::string>> binaryProbes = {
+      {100, "AcDbDictionary"}, {3, "ByBlock"}, {350, "1F"}};
+  for (const auto &probe : binaryProbes) {
+    auto sourceGroup = std::find_if(binarySourceDictionary->groups.begin(), binarySourceDictionary->groups.end(),
+        [&](const auto &group) { return group.code() == probe.first && group.c_str() && probe.second == group.c_str(); });
+    auto liveGroup = std::find_if(binaryDictionary->groups.begin(), binaryDictionary->groups.end(),
+        [&](const auto &group) { return group.code() == probe.first && group.c_str() && probe.second == group.c_str(); });
+    REQUIRE(sourceGroup != binarySourceDictionary->groups.end()); REQUIRE(liveGroup != binaryDictionary->groups.end());
+    const auto savedSource = *sourceGroup, savedLive = *liveGroup;
+    const std::string malformed = probe.second + std::string("\0BAD", 4);
+    sourceGroup->addString(probe.first, malformed); liveGroup->addString(probe.first, malformed);
+    CHECK_FALSE(binaryImporter.fileExport(binaryGraphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+    CHECK(binaryImporter.exportReport().contains(QStringLiteral("raw source missing, changed or unverified")));
+    { std::ifstream retained(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+    *sourceGroup = savedSource; *liveGroup = savedLive;
+    REQUIRE(binaryImporter.fileExport(binaryGraphic, QString::fromStdString(binaryReplay), RS2::FormatDXFRW2010));
+  }
   CHECK_FALSE(binaryImporter.fileExport(binaryGraphic, QString::fromStdString(output), RS2::FormatDXFRW));
   { std::ifstream retained(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
   REQUIRE(binaryImporter.fileExport(binaryGraphic, QString::fromStdString(binaryReplay), RS2::FormatDXFRW2010));

@@ -2792,6 +2792,16 @@ bool parseDxfCarrierHandle(const char *text, std::uint32_t &handle) {
   return true;
 }
 
+bool parseDxfCarrierHandle(const std::string &text, std::uint32_t &handle) {
+  return text.find('\0') == std::string::npos &&
+         parseDxfCarrierHandle(text.c_str(), handle);
+}
+
+bool parseDxfCarrierHandle(const DRW_Variant &group, std::uint32_t &handle) {
+  return group.type() == DRW_Variant::STRING && group.content.s &&
+         parseDxfCarrierHandle(*group.content.s, handle);
+}
+
 // Validate one self handle, one owner and an optional reactor group in the
 // selected DXF version. Other application groups are outside this profile;
 // the caller validates the object type and remaining fields.
@@ -2813,9 +2823,9 @@ bool visitDxfCarrierFrame(const DRW_RawDxfObject &raw, DRW::Version version,
           (raw.hasRawValues && raw.rawValues[index] != group.c_str()))
         return false;
       if (!inReactors && !sawReactors &&
-          std::strcmp(group.c_str(), "{ACAD_REACTORS") == 0) {
+          *group.content.s == "{ACAD_REACTORS") {
         inReactors = sawReactors = true;
-      } else if (inReactors && std::strcmp(group.c_str(), "}") == 0) {
+      } else if (inReactors && *group.content.s == "}") {
         inReactors = false;
       } else {
         return false;
@@ -2824,9 +2834,9 @@ bool visitDxfCarrierFrame(const DRW_RawDxfObject &raw, DRW::Version version,
       std::uint32_t value = 0, rawValue = 0;
       if ((inReactors && group.code() != 330) ||
           group.type() != DRW_Variant::STRING ||
-          !parseDxfCarrierHandle(group.c_str(), value) ||
+          !parseDxfCarrierHandle(group, value) ||
           (raw.hasRawValues &&
-           (!parseDxfCarrierHandle(raw.rawValues[index].c_str(), rawValue) || rawValue != value)))
+           (!parseDxfCarrierHandle(raw.rawValues[index], rawValue) || rawValue != value)))
         return false;
       if (inReactors) {
         // The DXF parser omits null reactors from the typed vector.
@@ -2952,7 +2962,7 @@ bool dxfDictionaryCarrierMatches(
       [&](const DRW_Variant &group, std::size_t index) {
         if (group.code() == 100) {
           return ++subclasses == 1 && group.type() == DRW_Variant::STRING &&
-                 group.c_str() && std::strcmp(group.c_str(), "AcDbDictionary") == 0 &&
+                 group.content.s && *group.content.s == "AcDbDictionary" &&
                  (!raw.hasRawValues || raw.rawValues[index] == "AcDbDictionary");
         } else if (group.code() == 280 || group.code() == 281) {
           bool &seen = group.code() == 280 ? sawHardOwner : sawCloning;
@@ -2971,13 +2981,13 @@ bool dxfDictionaryCarrierMatches(
           if (!entryName.empty() || group.type() != DRW_Variant::STRING || !group.c_str() ||
               (raw.hasRawValues && raw.rawValues[index] != group.c_str()))
             return false;
-          entryName = group.c_str();
+          entryName = *group.content.s;
         } else if (group.code() == 350 || group.code() == 360) {
           std::uint32_t value = 0, rawValue = 0;
           if (entryName.empty() || group.type() != DRW_Variant::STRING ||
-              !parseDxfCarrierHandle(group.c_str(), value) ||
+              !parseDxfCarrierHandle(group, value) ||
               (raw.hasRawValues &&
-               (!parseDxfCarrierHandle(raw.rawValues[index].c_str(), rawValue) ||
+               (!parseDxfCarrierHandle(raw.rawValues[index], rawValue) ||
                 rawValue != value)))
             return false;
           if (entryIndex >= entries.size())
@@ -3170,7 +3180,7 @@ bool sparseDxfMaterialReferencesMatch(RS_Graphic &graphic) {
         std::uint32_t value = 0;
         if (group.type() != DRW_Variant::STRING || !group.content.s ||
             group.content.s->size() != std::strlen(group.content.s->c_str()) ||
-            !parseDxfCarrierHandle(group.content.s->c_str(), value) ||
+            !parseDxfCarrierHandle(*group.content.s, value) ||
             value != (code == 5 ? layer->handle : layer->parentHandle)) return false;
       }
       if (code == 390) {
@@ -3186,10 +3196,10 @@ bool sparseDxfMaterialReferencesMatch(RS_Graphic &graphic) {
         if (!placeholder || !placeholder->handle || placeholder->m_version != source->m_version ||
             group.type() != DRW_Variant::STRING || !group.content.s ||
             group.content.s->size() != std::strlen(group.content.s->c_str()) ||
-            !parseDxfCarrierHandle(group.content.s->c_str(), value) || value != placeholder->handle ||
+            !parseDxfCarrierHandle(*group.content.s, value) || value != placeholder->handle ||
             (layerSource->hasRawValues &&
              (layerSource->rawValues[j].size() != std::strlen(layerSource->rawValues[j].c_str()) ||
-              !parseDxfCarrierHandle(layerSource->rawValues[j].c_str(), rawValue) || rawValue != value)))
+              !parseDxfCarrierHandle(layerSource->rawValues[j], rawValue) || rawValue != value)))
           return false;
       }
       if (group.code() != 347)
@@ -3197,10 +3207,10 @@ bool sparseDxfMaterialReferencesMatch(RS_Graphic &graphic) {
       std::uint32_t value = 0, rawValue = 0;
       if (++count != 1 || group.type() != DRW_Variant::STRING || !group.content.s ||
           group.content.s->size() != std::strlen(group.content.s->c_str()) ||
-          !parseDxfCarrierHandle(group.content.s->c_str(), value) || value != handle ||
+          !parseDxfCarrierHandle(*group.content.s, value) || value != handle ||
           (layerSource->hasRawValues &&
            (layerSource->rawValues[j].size() != std::strlen(layerSource->rawValues[j].c_str()) ||
-            !parseDxfCarrierHandle(layerSource->rawValues[j].c_str(), rawValue) || rawValue != value)))
+            !parseDxfCarrierHandle(layerSource->rawValues[j], rawValue) || rawValue != value)))
         return false;
     }
     if (!layerFields.count(5) || !layerFields.count(2) || (count != 0) != present)
@@ -3764,8 +3774,8 @@ bool dxfSourceIntMatches(const DRW_RawDxfObject &raw, std::size_t index,
 bool dxfSourceTextMatches(const DRW_RawDxfObject &raw, std::size_t index,
                           const std::string &expected) {
   const auto &group = raw.groups[index];
-  return group.type() == DRW_Variant::STRING && group.c_str() &&
-         expected == group.c_str() &&
+  return group.type() == DRW_Variant::STRING && group.content.s &&
+         expected == *group.content.s &&
          (!raw.hasRawValues || raw.rawValues[index] == expected);
 }
 
@@ -3774,9 +3784,9 @@ bool dxfSourceHandleMatches(const DRW_RawDxfObject &raw, std::size_t index,
   const auto &group = raw.groups[index];
   std::uint32_t value = 0, physical = 0;
   return group.type() == DRW_Variant::STRING &&
-         parseDxfCarrierHandle(group.c_str(), value) && value == expected &&
+         parseDxfCarrierHandle(group, value) && value == expected &&
          (!raw.hasRawValues ||
-          (parseDxfCarrierHandle(raw.rawValues[index].c_str(), physical) && physical == value));
+          (parseDxfCarrierHandle(raw.rawValues[index], physical) && physical == value));
 }
 
 bool dxfImageCarrierMatches(
