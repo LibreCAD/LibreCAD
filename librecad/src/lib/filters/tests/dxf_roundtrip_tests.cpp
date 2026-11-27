@@ -1722,6 +1722,36 @@ TEST_CASE("Opt-in system codec replays an unchanged sparse material graph",
     { std::ifstream retained(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
     std::filesystem::remove(unsafeSource);
   }
+  {
+    const auto duplicateSource = tmpFile("system_sparse_material_duplicate_group.dxf");
+    for (int mode = 0; mode != 3; ++mode) {
+      auto altered = input;
+      const std::string reference = "8\nRAWTEST\n347\n" + sourceHandle + "\n";
+      const auto at = altered.find(reference);
+      REQUIRE(at != std::string::npos);
+      if (mode < 2) {
+        altered.insert(at + std::string("8\nRAWTEST\n").size(),
+                       "347\n" + (mode == 0 ? std::string("0") : sourceHandle) + "\n");
+      } else {
+        const auto end = altered.find("0\nENDSEC\n0\nSECTION\n2\nOBJECTS\n", at);
+        REQUIRE(end != std::string::npos);
+        altered.insert(end, "0\nLINE\n5\nA5\n100\nAcDbEntity\n8\nRAWTEST\n347\n0\n"
+                            "100\nAcDbLine\n10\n0\n20\n0\n11\n1\n21\n1\n");
+      }
+      writeText(duplicateSource, altered);
+      RS_Graphic duplicateGraphic;
+      OptInFilter duplicateFilter;
+      REQUIRE(duplicateFilter.fileImport(duplicateGraphic, QString::fromStdString(duplicateSource), RS2::FormatDXFRW));
+      writeText(output, sentinel);
+      CHECK_FALSE(duplicateFilter.fileExport(duplicateGraphic, QString::fromStdString(output), RS2::FormatDXFRW));
+      { std::ifstream retained(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+      writeText(duplicateSource, input);
+      RS_Graphic corrected;
+      REQUIRE(duplicateFilter.fileImport(corrected, QString::fromStdString(duplicateSource), RS2::FormatDXFRW));
+      REQUIRE(duplicateFilter.fileExport(corrected, QString::fromStdString(output), RS2::FormatDXFRW));
+    }
+    std::filesystem::remove(duplicateSource);
+  }
   expectRefusal(RS2::FormatDXFRW2010);
   expectRefusal(RS2::FormatDWG2010);
   {
@@ -1888,6 +1918,7 @@ TEST_CASE("Opt-in sparse material binds block entity source ownership",
       "0\nLINE\n5\nA2\n100\nAcDbEntity\n8\n0\n347\nA1\n"
       "100\nAcDbLine\n10\n0\n20\n0\n30\n0\n11\n10\n21\n0\n31\n0\n"
       "0\nENDBLK\n5\nB1\n8\n0\n0\nENDSEC\n"
+      "0\nSECTION\n2\nENTITIES\n0\nENDSEC\n"
       "0\nSECTION\n2\nOBJECTS\n0\nDICTIONARY\n5\nC\n330\n0\n100\nAcDbDictionary\n281\n1\n"
       "3\nACAD_MATERIAL\n350\nA0\n0\nDICTIONARY\n5\nA0\n330\nC\n100\nAcDbDictionary\n281\n1\n"
       "3\nPlainMat\n350\nA1\n0\nMATERIAL\n5\nA1\n330\nA0\n100\nAcDbMaterial\n1\nPlainMat\n94\n63\n"
@@ -1922,6 +1953,24 @@ TEST_CASE("Opt-in sparse material binds block entity source ownership",
   { std::ifstream retained(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
   line->setMaterialHandle(0xA1u);
   REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  {
+    std::ifstream file(source, std::ios::binary);
+    const std::string original((std::istreambuf_iterator<char>(file)), {});
+    auto altered = original;
+    const auto at = altered.find("8\n0\n347\nA1\n");
+    REQUIRE(at != std::string::npos);
+    altered.insert(at + std::string("8\n0\n").size(), "347\n0\n");
+    writeText(source, altered);
+    RS_Graphic duplicate;
+    REQUIRE(filter.fileImport(duplicate, QString::fromStdString(source), RS2::FormatDXFRW));
+    writeText(output, sentinel);
+    CHECK_FALSE(filter.fileExport(duplicate, QString::fromStdString(output), RS2::FormatDXFRW));
+    { std::ifstream retained(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+    writeText(source, original);
+    RS_Graphic corrected;
+    REQUIRE(filter.fileImport(corrected, QString::fromStdString(source), RS2::FormatDXFRW));
+    REQUIRE(filter.fileExport(corrected, QString::fromStdString(output), RS2::FormatDXFRW));
+  }
   std::filesystem::remove(source); std::filesystem::remove(output);
 }
 #endif
@@ -2054,6 +2103,7 @@ TEST_CASE("System codec gates ambiguous AC1024 default material",
     const auto headerAt = graph.find(versionMarker);
     REQUIRE(headerAt != std::string::npos);
     graph.insert(headerAt + versionMarker.size(), "9\n$CMATERIAL\n347\n1F\n");
+    graph.insert(graph.find(marker), "0\nSECTION\n2\nENTITIES\n0\nENDSEC\n");
     writeText(graphSource, graph);
   }
   RS_Graphic graphGraphic;
@@ -2404,6 +2454,43 @@ TEST_CASE("System codec gates ambiguous AC1024 default material",
       }
     }
     REQUIRE(binary.good());
+  }
+  {
+    std::ifstream file(binarySource, std::ios::binary);
+    std::string altered((std::istreambuf_iterator<char>(file)), {});
+    const auto entities = altered.find(std::string("ENTITIES\0", 9));
+    REQUIRE(entities != std::string::npos);
+    const auto end = altered.find(std::string("\0\0ENDSEC\0", 9), entities + 9u);
+    REQUIRE(end != std::string::npos);
+    std::string entity;
+    const auto textGroup = [&](unsigned code, const std::string &value) {
+      entity.push_back(static_cast<char>(code & 255u));
+      entity.push_back(static_cast<char>((code >> 8) & 255u));
+      entity += value; entity.push_back('\0');
+    };
+    textGroup(0, "LINE"); textGroup(5, "A5"); textGroup(100, "AcDbEntity");
+    textGroup(8, "0"); textGroup(347, "0"); textGroup(100, "AcDbLine");
+    const auto doubleGroup = [&](unsigned code, double value) {
+      entity.push_back(static_cast<char>(code & 255u));
+      entity.push_back(static_cast<char>((code >> 8) & 255u));
+      std::uint64_t bits = 0; std::memcpy(&bits, &value, sizeof(bits));
+      for (unsigned i = 0; i != 8; ++i) entity.push_back(static_cast<char>((bits >> (8u * i)) & 255u));
+    };
+    doubleGroup(10, 0.0); doubleGroup(20, 0.0); doubleGroup(30, 0.0);
+    doubleGroup(11, 1.0); doubleGroup(21, 1.0); doubleGroup(31, 0.0);
+    altered.insert(end, entity);
+    const auto invalidBinary = tmpFile("system_sparse_material_binary_zero_entity.dxf");
+    writeText(invalidBinary, altered);
+    RS_Graphic invalidGraphic;
+    OptInFilter invalidImporter;
+    REQUIRE(invalidImporter.fileImport(invalidGraphic, QString::fromStdString(invalidBinary), RS2::FormatDXFRW));
+    writeText(output, sentinel);
+    CHECK_FALSE(invalidImporter.fileExport(invalidGraphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+    { std::ifstream retained(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+    RS_Graphic corrected;
+    REQUIRE(invalidImporter.fileImport(corrected, QString::fromStdString(binarySource), RS2::FormatDXFRW));
+    REQUIRE(invalidImporter.fileExport(corrected, QString::fromStdString(output), RS2::FormatDXFRW2010));
+    std::filesystem::remove(invalidBinary);
   }
   if (const char *copy = std::getenv("LIBRECAD_KEEP_SPARSE_BINARY_SOURCE"))
     std::filesystem::copy_file(binarySource, copy, std::filesystem::copy_options::overwrite_existing);

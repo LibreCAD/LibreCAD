@@ -1984,6 +1984,9 @@ class RS_FilterDXFRW : public RS_FilterInterface,
 #ifdef LIBDXFRW_HAS_DXF_HEADER_MATERIAL_SOURCE_HANDLER
     , public DRW_DxfHeaderMaterialSourceHandler
 #endif
+#ifdef LIBDXFRW_HAS_DXF_PHYSICAL_ENTITY_SOURCE_HANDLERS
+    , public DRW_DxfEntitiesSourceHandler, public DRW_DxfBlockChildrenSourceHandler
+#endif
 #ifdef DWGSUPPORT
     ,
                        private RS_FilterDXFRW_DwgWriteIdentityRegistry
@@ -2221,6 +2224,12 @@ public:
 #ifdef LIBDXFRW_HAS_DXF_HEADER_MATERIAL_SOURCE_HANDLER
   bool wantsDxfHeaderMaterialSource() const override;
   void addDxfHeaderMaterialSource(const DRW_DxfHeaderMaterialSource &source) override;
+#endif
+#ifdef LIBDXFRW_HAS_DXF_PHYSICAL_ENTITY_SOURCE_HANDLERS
+  bool wantsDxfEntitiesSource() const override;
+  bool wantsDxfBlockChildrenSource() const override;
+  void addDxfEntitiesSource(const DRW_DxfEntitiesSource &source) override;
+  void addDxfBlockChildrenSource(const DRW_DxfBlockChildrenSource &source) override;
 #endif
 #ifdef LIBDXFRW_HAS_DXF_DICTIONARY_SOURCE_HANDLERS
   bool wantsDxfRootDictionarySource() const override;

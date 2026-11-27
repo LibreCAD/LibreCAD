@@ -5958,7 +5958,11 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic &g, const QString &file,
       m_graphic->setDxfRecoverySourceFile(QFileInfo(file).absoluteFilePath());
     m_dxfR = new dxfRW(QFile::encodeName(file));
 #if defined(LIBRECAD_SYSTEM_LIBDXFRW) && defined(LIBDXFRW_HAS_DXF_STAGED_ENTITY_MATERIAL_INSPECTOR)
-    m_graphic->dwgAdvancedMetadata().beginDxfMaterialEntitySources();
+#ifdef LIBDXFRW_HAS_DXF_PHYSICAL_ENTITY_SOURCE_HANDLERS
+    m_graphic->dwgAdvancedMetadata().beginDxfMaterialEntitySources(wantsDxfEntitiesSource());
+#else
+    m_graphic->dwgAdvancedMetadata().beginDxfMaterialEntitySources(false);
+#endif
 #endif
 #ifdef LIBRECAD_SYSTEM_LIBDXFRW
     // Match the bundled codec for explicitly declared UTF-8 in older DXF;
@@ -6454,6 +6458,10 @@ void RS_FilterDXFRW::addVisualStyle(const DRW_VisualStyle &data) {
  * @todo Adding blocks to blocks (stack for m_currentContainer)
  */
 void RS_FilterDXFRW::addBlock(const DRW_Block &data) {
+#ifdef LIBDXFRW_HAS_DXF_PHYSICAL_ENTITY_SOURCE_HANDLERS
+  if (wantsDxfBlockChildrenSource())
+    m_graphic->dwgAdvancedMetadata().expectDxfMaterialPhysicalBlock();
+#endif
   RS_DEBUG->print("RS_FilterDXF::addBlock");
   RS_DEBUG->print("  adding block: %s", data.name.c_str());
   /*TODO correct handle of model-space*/
@@ -12485,6 +12493,69 @@ void RS_FilterDXFRW::addDxfNamespaceSource(const DRW_TableEntry &entry,
     return;
   }
   metadata.addDxfMaterialLayerSource(source);
+}
+#endif
+
+#ifdef LIBDXFRW_HAS_DXF_PHYSICAL_ENTITY_SOURCE_HANDLERS
+namespace {
+bool capturePhysicalMaterialReferences(LC_DwgAdvancedMetadata &metadata,
+                                       const std::vector<DRW_DxfPhysicalEntitySource> &records,
+                                       bool binary) {
+  for (const auto &record : records) {
+    if (record.groups.size() != record.rawValues.size() || record.groups.size() != record.spans.size()) return false;
+    std::uint32_t handle = 0, target = 0;
+    unsigned selfCount = 0, materialCount = 0, depth = 0;
+    bool common = false;
+    for (std::size_t i = 0; i < record.groups.size(); ++i) {
+      const auto &group = record.groups[i];
+      if (group.code() == 102) {
+        if (group.type() != DRW_Variant::STRING || !group.content.s) return false;
+        const auto &value = *group.content.s;
+        if (!value.empty() && value.front() == '{') { if (++depth > 64u) return false; }
+        else if (value == "}" && depth) --depth;
+        else return false;
+      } else if (!depth && group.code() == 100) {
+        if (group.type() != DRW_Variant::STRING || !group.content.s) return false;
+        common = *group.content.s == "AcDbEntity";
+      } else if (!depth && group.code() == 5) {
+        if (++selfCount != 1u || !parseDxfCarrierHandle(group, handle)) return false;
+      } else if (group.code() == 347) {
+        if (depth || !common || ++materialCount != 1u || !parseDxfCarrierHandle(group, target) ||
+            !target || target == DRW::NoHandle) return false;
+        if (!binary) {
+          std::uint32_t physical = 0;
+          if (!parseDxfCarrierHandle(record.rawValues[i], physical) || physical != target) return false;
+        }
+      }
+    }
+    if (depth) return false;
+    if (materialCount) {
+      if (selfCount != 1u) return false;
+      metadata.addDxfMaterialPhysicalReference(handle, target);
+    }
+  }
+  return true;
+}
+}
+bool RS_FilterDXFRW::wantsDxfEntitiesSource() const {
+  return m_graphic && m_dxfR && wantsDxfSparseMaterialRawReplay() && canCaptureSmallDxfFile(m_file);
+}
+bool RS_FilterDXFRW::wantsDxfBlockChildrenSource() const { return wantsDxfEntitiesSource(); }
+void RS_FilterDXFRW::addDxfEntitiesSource(const DRW_DxfEntitiesSource &source) {
+  if (!m_graphic) return;
+  auto &metadata = m_graphic->dwgAdvancedMetadata();
+  metadata.addDxfMaterialPhysicalScope(false);
+  if (source.status != DRW_DxfEntitiesSource::Status::Complete || source.version < DRW::AC1021 ||
+      !capturePhysicalMaterialReferences(metadata, source.records, source.binary))
+    metadata.markDxfMaterialEntitySourcesUnavailable();
+}
+void RS_FilterDXFRW::addDxfBlockChildrenSource(const DRW_DxfBlockChildrenSource &source) {
+  if (!m_graphic) return;
+  auto &metadata = m_graphic->dwgAdvancedMetadata();
+  metadata.addDxfMaterialPhysicalScope(true);
+  if (source.status != DRW_DxfBlockChildrenSource::Status::Complete || source.version < DRW::AC1021 ||
+      !capturePhysicalMaterialReferences(metadata, source.records, source.binary))
+    metadata.markDxfMaterialEntitySourcesUnavailable();
 }
 #endif
 
