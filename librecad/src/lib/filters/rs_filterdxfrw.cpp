@@ -30367,11 +30367,11 @@ void RS_FilterDXFRW::writeObjects() {
     // record is registered in fileExport's pre-write pass.
     const auto &metadata = m_graphic->dwgAdvancedMetadata();
     std::set<std::uint32_t> rawHandles;
-    std::set<std::uint32_t> leftOutRawHandles;
+    std::set<std::pair<std::uint32_t, std::string>> leftOutRawCarriers;
     for (const DRW_RawDxfObject &o : metadata.rawDxfObjects()) {
       if (o.handle == 0) continue;
       if (replaysInDxfExport(o.m_version)) rawHandles.insert(o.handle);
-      else leftOutRawHandles.insert(o.handle);
+      else leftOutRawCarriers.emplace(o.handle, normalizeDwgTableName(o.name));
     }
     auto emitTyped = [&](std::uint32_t handle,
                          LC_DwgAdvancedMetadata::ReplayState state) {
@@ -30382,8 +30382,9 @@ void RS_FilterDXFRW::writeObjects() {
     const auto supportsTypedVersion = [&](const char *name, std::uint32_t handle,
                                           DRW::Version minimum) {
       if (m_dxfW->getVersion() >= minimum) return true;
-      // A cross-version raw carrier is already counted in the raw report.
-      if (leftOutRawHandles.count(handle) == 0) ++m_writeLeftOut[name];
+      // Only a same-type carrier can account for this typed omission.
+      if (leftOutRawCarriers.count({handle, normalizeDwgTableName(name)}) == 0)
+        ++m_writeLeftOut[name];
       return false;
     };
     // F4f-3: owner fallback. A data-only OBJECT's 330 parent must resolve to

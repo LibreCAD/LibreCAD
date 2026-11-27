@@ -8453,6 +8453,32 @@ TEST_CASE("DXF evaluation graph keeps its parent dictionary when emitted alone",
   std::filesystem::remove(out);
 }
 
+TEST_CASE("DXF omission report distinguishes a different raw object at the same handle",
+          "[dxf][roundtrip][filter][version]") {
+  ensureSettings();
+  for (const std::string rawName : {"MLEADERSTYLE", "mleaderstyle", "FIELD"}) {
+    const bool sameType = rawName != "FIELD";
+    INFO(rawName);
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    auto &metadata = graphic.dwgAdvancedMetadata();
+    DRW_MLeaderStyle style; style.handle = 0xE0u; metadata.addMLeaderStyle(style);
+    DRW_RawDxfObject raw;
+    raw.handle = style.handle;
+    raw.name = rawName;
+    raw.m_version = DRW::AC1021;
+    metadata.addRawDxfObject(raw);
+    const auto out = tmpFile("typed_raw_collision_report_r14.dxf");
+    RS_FilterDXFRW filter;
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(out), RS2::FormatDXFRW14));
+    const auto report = filter.exportReport();
+    CHECK(report.contains(QStringLiteral("1 raw record(s)")));
+    CHECK(report.contains(QStringLiteral("1 × MLEADERSTYLE")) == !sameType);
+    CHECK(danglingReferences(out).empty());
+    std::filesystem::remove(out);
+  }
+}
+
 #ifdef LIBRECAD_SYSTEM_CODEC_TESTS
 TEST_CASE("DXF version-gated typed write preserves destination and retries",
           "[dxf][roundtrip][filter][version]") {
