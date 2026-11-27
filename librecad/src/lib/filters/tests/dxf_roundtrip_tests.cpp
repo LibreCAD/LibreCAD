@@ -5029,16 +5029,17 @@ TEST_CASE("System codec audits larger bounded image graphs",
   std::filesystem::remove(output);
 }
 
-TEST_CASE("System codec preserves 64 images across model and block spaces", "[system-codec][dxf][image][transaction]") {
+TEST_CASE("System codec preserves larger image graphs across model and block spaces", "[system-codec][dxf][image][transaction]") {
   ensureSettings();
   const auto format = GENERATE(RS2::FormatDXFRW, RS2::FormatDXFRW2018);
-  CAPTURE(format);
+  const unsigned imageCount = GENERATE(64u, 256u);
+  CAPTURE(format, imageCount);
   const auto source = tmpFile("sixty_four_mixed_images_source.dxf");
   const auto output = tmpFile("sixty_four_mixed_images_output.dxf");
   RS_Graphic original; original.initForNewDocument();
   auto *block = new RS_Block(&original, RS_BlockData(QStringLiteral("MANY_RASTERS"), RS_Vector(0, 0), false));
-  for (unsigned i = 0; i < 64u; ++i) {
-    RS_EntityContainer *owner = i < 32u ? static_cast<RS_EntityContainer *>(&original) : block;
+  for (unsigned i = 0; i < imageCount; ++i) {
+    RS_EntityContainer *owner = i < imageCount / 2u ? static_cast<RS_EntityContainer *>(&original) : block;
     owner->addEntity(new RS_Image(owner, RS_ImageData(0, RS_Vector(29.0 * i, 2), RS_Vector(1, 0),
         RS_Vector(0, 1), RS_Vector(16, 12), QStringLiteral("mixed-%1.png").arg(i % 2u), 50, 50, 0)));
   }
@@ -5049,10 +5050,10 @@ TEST_CASE("System codec preserves 64 images across model and block spaces", "[sy
   REQUIRE(filter.fileExport(original, QString::fromStdString(source), format));
   RS_Graphic reopened;
   REQUIRE(filter.fileImport(reopened, QString::fromStdString(source), format));
-  REQUIRE(reopened.dwgAdvancedMetadata().rasterImages().size() == 64u);
+  REQUIRE(reopened.dwgAdvancedMetadata().rasterImages().size() == imageCount);
   REQUIRE(filter.fileExport(reopened, QString::fromStdString(output), format));
-  CHECK(countRecords(output, "IMAGE") == 64); CHECK(countRecords(output, "IMAGEDEF") == 2);
-  CHECK(countRecords(output, "IMAGEDEF_REACTOR") == 64);
+  CHECK(countRecords(output, "IMAGE") == static_cast<int>(imageCount)); CHECK(countRecords(output, "IMAGEDEF") == 2);
+  CHECK(countRecords(output, "IMAGEDEF_REACTOR") == static_cast<int>(imageCount));
   RS_Block *savedBlock = nullptr;
   for (unsigned i = 0; i < reopened.countBlocks(); ++i)
     if (reopened.blockAt(i) && reopened.blockAt(i)->getName() == "MANY_RASTERS") savedBlock = reopened.blockAt(i);
@@ -5067,17 +5068,17 @@ TEST_CASE("System codec preserves 64 images across model and block spaces", "[sy
   } late;
   const auto oldPosition = blockImage->getInsertionPoint();
   late.beforeFinalize = [&] { blockImage->setInsertionPoint(oldPosition + RS_Vector(1, 0)); };
-  const std::string sentinel = "preserve 64-image block destination";
+  const std::string sentinel = "preserve mixed-image block destination";
   writeText(output, sentinel); CHECK_FALSE(late.fileExport(reopened, QString::fromStdString(output), format));
   { std::ifstream in(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(in), {}) == sentinel); }
   blockImage->setInsertionPoint(oldPosition); late.beforeFinalize = {};
   REQUIRE(late.fileExport(reopened, QString::fromStdString(output), format));
   RS_Graphic reread; REQUIRE(filter.fileImport(reread, QString::fromStdString(output), format));
-  CHECK(reread.dwgAdvancedMetadata().rasterImages().size() == 64u);
-  if (const char *prefix = std::getenv("LIBRECAD_KEEP_64_BLOCK_IMAGES")) {
+  CHECK(reread.dwgAdvancedMetadata().rasterImages().size() == imageCount);
+  if (const char *prefix = std::getenv("LIBRECAD_KEEP_LARGE_BLOCK_IMAGES")) {
     const auto suffix = format == RS2::FormatDXFRW ? std::string{} : ".v" + std::to_string(static_cast<int>(format));
-    std::filesystem::copy_file(source, std::string(prefix) + ".source" + suffix + ".dxf", std::filesystem::copy_options::overwrite_existing);
-    std::filesystem::copy_file(output, std::string(prefix) + ".output" + suffix + ".dxf", std::filesystem::copy_options::overwrite_existing);
+    std::filesystem::copy_file(source, std::string(prefix) + "." + std::to_string(imageCount) + ".source" + suffix + ".dxf", std::filesystem::copy_options::overwrite_existing);
+    std::filesystem::copy_file(output, std::string(prefix) + "." + std::to_string(imageCount) + ".output" + suffix + ".dxf", std::filesystem::copy_options::overwrite_existing);
   }
   std::filesystem::remove(source); std::filesystem::remove(output);
 }
