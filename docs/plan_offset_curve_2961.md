@@ -136,8 +136,9 @@ the dependencies for **3 and 4** in parallel. **5** follows the acceptance work.
    profiles do not replace the shared-process run.
 2. The six timed-out generators now have complete isolated profile receipts,
    including the typed-parabola profiles. The reconstructed-parabola, default
-   hyperbola, typed-parabola and beyond-cusp aggregates also passed separately
-   below; rerun the other two as bounded single-process cases. Multi-case
+   hyperbola, typed-parabola, beyond-cusp and seam aggregates also passed
+   separately below; rerun the high-degree spline as a bounded single-process
+   case. Multi-case
    shared-process behavior remains open; do not infer it from isolated manifests.
 3. Where an existing selector cannot isolate every tuple, add a test-only
    profile selector to that case and register it in the existing profile
@@ -276,9 +277,9 @@ the dependencies for **3 and 4** in parallel. **5** follows the acceptance work.
   build and options, using `parabola-tangent` with the 180-second per-profile
   bound. Manifest and logs: `/private/tmp/offset-3193-trim-tangent-asan.json`
   and `/private/tmp/offset-3193-trim-tangent-asan-logs` (temporary). The
-  two other timed-out aggregate cases, prior shared-process failures, leak
+  one other timed-out aggregate case, prior shared-process failures, leak
   detection and non-macOS validation remain open. The periodic matrix and
-  reconstructed, hyperbola, typed-parabola and beyond-cusp aggregates are
+  reconstructed, hyperbola, typed-parabola, beyond-cusp and seam aggregates are
   recorded above or below.
 - The periodic-spline matrix passed **1,080/1,080 profiles and 145,371
   assertions** under the same source-equivalent macOS Debug ASan/UBSan build
@@ -317,8 +318,17 @@ the dependencies for **3 and 4** in parallel. **5** follows the acceptance work.
   `070a3128c904c57a276bce9623d60ffd9cd62c87593edad52e5a10c614e5d126`;
   worker SHA-256 was
   `50a0140d656600d0e844b0251d9fac3d82045f7dd969aff0550c1411dd3e3eb2`.
-  This does not resolve the aggregate timeout, shared-process behavior, leak
-  detection, earlier worker-launch failures or other platforms.
+  The aggregate is recorded below; multi-case behavior, leak detection,
+  earlier worker-launch failures and other platforms remain open.
+- The unpinned closed-seam aggregate subsequently passed in one
+  source-equivalent macOS Debug ASan/UBSan test process with **8,102 assertions**
+  in 484.776 seconds, using the same sanitizer options and 30-second test-only
+  worker wait, with a 900-second test-only case bound. The retained log has no
+  sanitizer diagnostic; temporary receipt and log:
+  `/private/tmp/offset-3193-closed-seam-aggregate-asan.json` and
+  `/private/tmp/offset-3193-closed-seam-aggregate-asan-logs`. The prior
+  300-second timeout remains historical evidence; multi-case order, leak
+  detection and non-macOS behavior remain open.
 - Test-only commit `eacd80642` adds the `reconstructed-parabola` frame
   selector, retaining each frame's format lanes. Source-equivalent macOS CMake
   Release passed **86/86 profiles, 7,790 assertions**, and the unpinned aggregate
