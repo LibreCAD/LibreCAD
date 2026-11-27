@@ -797,6 +797,21 @@ TEST_CASE("System codec preserves canonical linetype metadata after retry",
   REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
   CHECK(ltypeRecordGroupValues(output, "Continuous", "70") ==
         std::vector<std::string>{"64"});
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW12));
+  CHECK(ltypeRecordGroupValues(output, "CONTINUOUS", "70") ==
+        std::vector<std::string>{"64"});
+  writeText(output, sentinel);
+  source.xDictHandle = 0x20;
+  graphic.dwgAdvancedMetadata().addLineTypeName(source);
+  CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW12));
+  std::ifstream retainedR12(output, std::ios::binary);
+  CHECK(std::string(std::istreambuf_iterator<char>(retainedR12), {}) == sentinel);
+  retainedR12.close();
+  source.xDictHandle = 0;
+  graphic.dwgAdvancedMetadata().addLineTypeName(source);
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW12));
+  CHECK(ltypeRecordGroupValues(output, "CONTINUOUS", "70") ==
+        std::vector<std::string>{"64"});
   std::filesystem::remove(output);
 }
 
@@ -7353,6 +7368,13 @@ TEST_CASE("DXF export reports hatch deassociation and retains unrelated reactors
         == std::vector<std::vector<std::string>>{{line.front()}});
   if (const char *copy = std::getenv("LIBRECAD_KEEP_HATCH_ASSOC_OUTPUT"))
     std::filesystem::copy_file(out, copy, std::filesystem::copy_options::overwrite_existing);
+
+  const auto r12 = tmpFile("entity-reactors-r12.dxf");
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(r12), RS2::FormatDXFRW12));
+  CHECK(filter.exportReport().contains(QStringLiteral("2 × HATCH")));
+  CHECK(countRecords(r12, "HATCH") == 0);
+  CHECK(danglingReferences(r12).empty());
+  std::filesystem::remove(r12);
 
 #ifdef DWGSUPPORT
   const std::string dwg = tmpFile("entity-reactors-out.dwg");
