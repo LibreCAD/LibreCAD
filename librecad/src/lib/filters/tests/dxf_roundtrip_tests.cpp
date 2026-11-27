@@ -8609,6 +8609,169 @@ TEST_CASE("DXF typed entity handle planning retries after an invalid write",
   std::filesystem::remove(out);
 }
 
+TEST_CASE("DXF fixed entity stand-ins retain only unambiguous identities",
+          "[dxf][roundtrip][filter][version][handles]") {
+  ensureSettings();
+  for (const std::string type : {"GEOPOSITIONMARKER", "SECTIONOBJECT"}) {
+    for (const std::string scenario : {"MATCH", "ALIAS", "OTHER", "DUPLICATE", "NONE", "LIVE"}) {
+      INFO(type << ' ' << scenario);
+      RS_Graphic graphic;
+      graphic.initForNewDocument();
+      auto &metadata = graphic.dwgAdvancedMetadata();
+      if (type == "GEOPOSITIONMARKER") {
+        DRW_GeoPositionMarker marker; marker.handle = 0xE0u;
+        marker.parentHandle = DRW::DwgModelSpaceBlockRecordHandle;
+        marker.m_radius = 2.0;
+        metadata.addGeoPositionMarker(marker);
+      } else {
+        DRW_SectionObject section; section.handle = 0xE0u;
+        section.parentHandle = DRW::DwgModelSpaceBlockRecordHandle;
+        section.m_name = "test section"; section.m_vertDir = {0.0, 0.0, 1.0};
+        section.m_verts = {{1.0, 2.0, 0.0}, {3.0, 4.0, 0.0}};
+        metadata.addSectionObject(section);
+      }
+      DRW_RawDxfObject raw;
+      raw.handle = 0xE0u; raw.m_version = DRW::AC1015;
+      raw.name = scenario == "OTHER" ? "LINE" :
+          scenario == "ALIAS" ? (type == "GEOPOSITIONMARKER" ? "POSITIONMARKER" : "SECTION_OBJECT") : type;
+      if (scenario != "NONE" && scenario != "LIVE") metadata.addRawDxfEntity(raw);
+      if (scenario == "DUPLICATE") { raw.name = "FIELD"; metadata.addRawDxfObject(raw); }
+      auto *line = new RS_Line(&graphic, RS_LineData(RS_Vector(0, 0), RS_Vector(1, 0)));
+      if (scenario == "LIVE") line->setSourceHandle(0xE0u);
+      line->setReactorHandles({0xE0u});
+      graphic.addEntity(line);
+      const auto out = tmpFile("fixed_entity_standin_r2013.dxf");
+      RS_FilterDXFRW filter;
+      REQUIRE(filter.fileExport(graphic, QString::fromStdString(out), RS2::FormatDXFRW2013));
+      const auto emitted = recordGroupValues(out, type, "5");
+      REQUIRE(emitted.size() == 1u);
+      const auto report = filter.exportReport();
+      CHECK(report.contains(QStringLiteral("1 raw record(s)")) == (scenario == "OTHER"));
+      CHECK(report.contains(QStringLiteral("2 raw record(s)")) == (scenario == "DUPLICATE"));
+      const auto references = recordGroupValues(out, "LINE", "330");
+      CHECK((std::find(references.begin(), references.end(), emitted.front()) != references.end()) ==
+            (scenario == "MATCH" || scenario == "ALIAS" || scenario == "NONE"));
+      CHECK(danglingReferences(out).empty());
+      if (scenario == "ALIAS")
+        if (const char *prefix = std::getenv("LIBRECAD_KEEP_FIXED_STANDIN_PREFIX"))
+          std::filesystem::copy_file(out, std::string(prefix) + type + ".dxf",
+                                     std::filesystem::copy_options::overwrite_existing);
+      std::filesystem::remove(out);
+    }
+  }
+}
+
+TEST_CASE("DXF same-version fixed entity replay binds or drops its references",
+          "[dxf][roundtrip][filter][version][handles]") {
+  ensureSettings();
+  for (const std::string type : {"GEOPOSITIONMARKER", "SECTIONOBJECT"}) {
+    for (const std::string scenario : {"NORMAL", "ALIAS", "COLLISION"}) {
+      INFO(type << ' ' << scenario);
+      const bool collision = scenario == "COLLISION";
+      const auto src = tmpFile("fixed_entity_same_version_source.dxf");
+      const auto out = tmpFile("fixed_entity_same_version_output.dxf");
+      RS_Graphic seed;
+      seed.initForNewDocument();
+      if (type == "GEOPOSITIONMARKER") {
+        DRW_GeoPositionMarker marker; marker.handle = 0xE0u;
+        marker.parentHandle = DRW::DwgModelSpaceBlockRecordHandle; marker.m_radius = 2.0;
+        seed.dwgAdvancedMetadata().addGeoPositionMarker(marker);
+      } else {
+        DRW_SectionObject section; section.handle = 0xE0u;
+        section.parentHandle = DRW::DwgModelSpaceBlockRecordHandle;
+        section.m_name = "test section"; section.m_vertDir = {0.0, 0.0, 1.0};
+        section.m_verts = {{1.0, 2.0, 0.0}, {3.0, 4.0, 0.0}};
+        seed.dwgAdvancedMetadata().addSectionObject(section);
+      }
+      RS_FilterDXFRW writer;
+      REQUIRE(writer.fileExport(seed, QString::fromStdString(src), RS2::FormatDXFRW2013));
+      RS_Graphic loaded;
+      RS_FilterDXFRW reader;
+      REQUIRE(reader.fileImport(loaded, QString::fromStdString(src), RS2::FormatDXFRW));
+      const auto &metadata = loaded.dwgAdvancedMetadata();
+      REQUIRE((type == "GEOPOSITIONMARKER" ? metadata.geoPositionMarkers().size()
+                                          : metadata.sectionObjects().size()) == 1u);
+      const auto handle = type == "GEOPOSITIONMARKER" ?
+          metadata.geoPositionMarkers().at(0).handle : metadata.sectionObjects().at(0).handle;
+      REQUIRE(handle != 0u);
+      const std::string outputKind = scenario == "ALIAS" ?
+          (type == "GEOPOSITIONMARKER" ? "POSITIONMARKER" : "SECTION_OBJECT") : type;
+      if (scenario == "ALIAS") {
+        auto &raw = const_cast<std::vector<DRW_RawDxfObject> &>(metadata.rawDxfEntities());
+        auto carrier = std::find_if(raw.begin(), raw.end(),
+                                    [handle](const auto &entry) { return entry.handle == handle; });
+        REQUIRE(carrier != raw.end());
+        carrier->name = outputKind;
+      }
+      if (collision) {
+        DRW_RawDxfObject other; other.handle = handle; other.name = "FIELD";
+        other.m_version = DRW::AC1015;
+        loaded.dwgAdvancedMetadata().addRawDxfObject(other);
+      }
+      auto *line = new RS_Line(&loaded, RS_LineData(RS_Vector(0, 0), RS_Vector(1, 0)));
+      line->setReactorHandles({handle}); loaded.addEntity(line);
+      RS_FilterDXFRW exporter;
+      REQUIRE(exporter.fileExport(loaded, QString::fromStdString(out), RS2::FormatDXFRW2013));
+      const auto emitted = recordGroupValues(out, outputKind, "5");
+      REQUIRE(emitted.size() == 1u);
+      if (scenario == "ALIAS") CHECK(recordGroupValues(out, type, "5").empty());
+      const auto refs = recordGroupValues(out, "LINE", "330");
+      CHECK((std::find(refs.begin(), refs.end(), emitted.front()) != refs.end()) == !collision);
+      CHECK(exporter.exportReport().contains(QStringLiteral("1 raw record(s)")) == collision);
+      CHECK(danglingReferences(out).empty());
+      std::filesystem::remove(src); std::filesystem::remove(out);
+    }
+  }
+}
+
+TEST_CASE("DXF fixed entity version gates retain loss reporting and retry",
+          "[dxf][roundtrip][filter][version][handles]") {
+  ensureSettings();
+  for (const std::string type : {"GEOPOSITIONMARKER", "SECTIONOBJECT"}) {
+    INFO(type);
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    auto &metadata = graphic.dwgAdvancedMetadata();
+    if (type == "GEOPOSITIONMARKER") {
+      DRW_GeoPositionMarker marker; marker.handle = 0xE0u;
+      marker.parentHandle = DRW::DwgModelSpaceBlockRecordHandle; marker.m_radius = 2.0;
+      metadata.addGeoPositionMarker(marker);
+    } else {
+      DRW_SectionObject section; section.handle = 0xE0u;
+      section.parentHandle = DRW::DwgModelSpaceBlockRecordHandle;
+      section.m_name = "test section"; section.m_vertDir = {0.0, 0.0, 1.0};
+      section.m_verts = {{1.0, 2.0, 0.0}, {3.0, 4.0, 0.0}};
+      metadata.addSectionObject(section);
+    }
+    DRW_RawDxfObject raw; raw.name = type; raw.handle = 0xE0u; raw.m_version = DRW::AC1032;
+    metadata.addRawDxfEntity(raw);
+    auto *line = new RS_Line(&graphic, RS_LineData(RS_Vector(0, 0), RS_Vector(1, 0)));
+    line->setReactorHandles({0xE0u}); graphic.addEntity(line);
+    const auto out = tmpFile("fixed_entity_version_retry.dxf");
+    const std::string sentinel = "preserve destination";
+    writeText(out, sentinel);
+    RS_FilterDXFRW filter;
+    const auto oldFormat = type == "GEOPOSITIONMARKER" ? RS2::FormatDXFRW2010 : RS2::FormatDXFRW2004;
+#ifdef LIBRECAD_SYSTEM_CODEC_TESTS
+    CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(out), oldFormat));
+    std::ifstream existing(out, std::ios::binary);
+    CHECK(std::string(std::istreambuf_iterator<char>(existing), {}) == sentinel);
+    existing.close();
+#else
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(out), oldFormat));
+#endif
+    CHECK(filter.exportReport().contains(QStringLiteral("1 raw record(s)")));
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(out), RS2::FormatDXFRW2013));
+    CHECK(filter.exportReport().isEmpty());
+    const auto emitted = recordGroupValues(out, type, "5");
+    REQUIRE(emitted.size() == 1u);
+    const auto refs = recordGroupValues(out, "LINE", "330");
+    CHECK(std::find(refs.begin(), refs.end(), emitted.front()) != refs.end());
+    CHECK(danglingReferences(out).empty());
+    std::filesystem::remove(out);
+  }
+}
+
 #ifdef LIBRECAD_SYSTEM_CODEC_TESTS
 TEST_CASE("DXF version-gated typed write preserves destination and retries",
           "[dxf][roundtrip][filter][version]") {

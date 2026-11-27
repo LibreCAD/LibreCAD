@@ -302,6 +302,13 @@ std::string normalizeDwgTableName(const std::string &name) {
   return normalized;
 }
 
+std::string normalizedDxfEntityKind(const std::string &name) {
+  const std::string normalized = normalizeDwgTableName(name);
+  if (normalized == "POSITIONMARKER") return "GEOPOSITIONMARKER";
+  if (normalized == "SECTION_OBJECT") return "SECTIONOBJECT";
+  return normalized;
+}
+
 // The handle the DWG being written has for the table record of a name, 0 if
 // it has none: a DWG names a layer or a text style by the handle of its
 // record, and the codec writes the handle of "0" or STANDARD for none.
@@ -14555,7 +14562,7 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
         ++m_dxfLeftOutRawRecords;
         if (e.handle != 0) {
           leftOutRawHandles.insert(e.handle);
-          leftOutRawEntityCarriers.emplace(e.handle, normalizeDwgTableName(e.name));
+          leftOutRawEntityCarriers.emplace(e.handle, normalizedDxfEntityKind(e.name));
           ++leftOutRawHandleCounts[e.handle];
         }
         continue;
@@ -14642,13 +14649,14 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
     // handles are mapped to their separately planned output identities.
     const auto standsInForLeftOut = [&](std::uint32_t handle,
                                         const char *recordName, bool isObject) {
-      if (recordName != nullptr) {
-        const auto skipped = leftOutRawHandleCounts.find(handle);
-        const auto &carriers = isObject ? leftOutRawObjectCarriers : leftOutRawEntityCarriers;
-        if (skipped == leftOutRawHandleCounts.end() || skipped->second != 1 ||
-            carriers.count({handle, normalizeDwgTableName(recordName)}) == 0)
-          return;
-      }
+      if (recordName == nullptr) return;
+      const auto skipped = leftOutRawHandleCounts.find(handle);
+      const auto &carriers = isObject ? leftOutRawObjectCarriers : leftOutRawEntityCarriers;
+      const std::string kind = isObject ? normalizeDwgTableName(recordName)
+                                        : normalizedDxfEntityKind(recordName);
+      if (skipped == leftOutRawHandleCounts.end() || skipped->second != 1 ||
+          carriers.count({handle, kind}) == 0)
+        return;
       if (leftOutRawHandles.erase(handle) != 0 && m_dxfLeftOutRawRecords > 0)
         --m_dxfLeftOutRawRecords;
     };
@@ -14749,24 +14757,25 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
     auto reserveFixedTyped = [&](std::uint32_t handle,
                                  LC_DwgAdvancedMetadata::ReplayState state,
                                  const char *recordName,
-                                 bool isObject = true) {
-      if (handle == 0 ||
+                                 bool isObject = true,
+                                 DRW::Version minimum = DRW::UNKNOWNV) {
+      if (exportVersion < minimum || handle == 0 ||
           state != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed ||
           rawObjectHandles.count(handle) != 0)
         return;
       m_dxfW->reserveHandle(handle);
       if (isObject)
         typedHandles.push_back(handle);
-      standsInForLeftOut(handle, isObject ? recordName : nullptr, isObject);
+      standsInForLeftOut(handle, recordName, isObject);
     };
     for (const auto &record : metadata.mlineStyles())
       reserveFixedTyped(record.handle, record.replayState, "MLINESTYLE");
     for (const auto &record : metadata.layouts())
       reserveFixedTyped(record.handle, record.replayState, "LAYOUT");
     for (const auto &record : metadata.geoPositionMarkers())
-      reserveFixedTyped(record.handle, record.replayState, "GEOPOSITIONMARKER", false);
+      reserveFixedTyped(record.handle, record.replayState, "GEOPOSITIONMARKER", false, DRW::AC1027);
     for (const auto &record : metadata.sectionObjects())
-      reserveFixedTyped(record.handle, record.replayState, "SECTIONOBJECT", false);
+      reserveFixedTyped(record.handle, record.replayState, "SECTIONOBJECT", false, DRW::AC1021);
 
     // R12 has no CLASSES section, and none of the objects a CLASS describes.
     if (exportVersion <= DRW::AC1009)
@@ -16176,6 +16185,7 @@ void RS_FilterDXFRW::prepareDxfEntityHandleMap() {
   std::set<std::uint32_t> attribChildHandles;
   std::set<std::uint32_t> rawEntityHandles;
   std::set<std::uint32_t> rawObjectHandles;
+  std::set<std::pair<std::uint32_t, std::string>> rawEntityKinds;
   auto scanEntities = [&](RS_EntityContainer *container) {
     if (container == nullptr)
       return;
@@ -16252,6 +16262,7 @@ void RS_FilterDXFRW::prepareDxfEntityHandleMap() {
     if (raw.handle != 0 && replaysInDxfExport(raw.m_version)) {
       ++sourceHandleCounts[raw.handle];
       rawEntityHandles.insert(raw.handle);
+      rawEntityKinds.emplace(raw.handle, normalizedDxfEntityKind(raw.name));
     }
   }
   for (const DRW_RawDxfObject &raw : metadata.rawDxfObjects()) {
@@ -16262,20 +16273,34 @@ void RS_FilterDXFRW::prepareDxfEntityHandleMap() {
     rawObjectHandles.insert(raw.handle);
   }
 
-  // NAVISWORKSMODEL is a typed metadata entity, so it is not in the live
-  // RS_Entity scan. Plan its minted handle before any earlier entity can
-  // reference it. A skipped, non-equivalent raw identity stays ambiguous.
-  if (m_dxfW->getVersion() >= DRW::AC1015) {
-    for (const auto &model : metadata.navisworksModels()) {
-      if (!model.handle || model.replayState !=
-              LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed)
-        continue;
-      if (m_dxfDroppedReferenceHandles.count(model.handle) != 0)
-        m_dxfW->markSourceHandleAmbiguous(model.handle);
-      else
-        ++sourceHandleCounts[model.handle];
+  // These metadata-only entities are absent from the live RS_Entity scan.
+  // Plan their minted identities before earlier records can reference them.
+  const auto noteMetadataEntity = [&](std::uint32_t handle,
+                                      LC_DwgAdvancedMetadata::ReplayState state,
+                                      const char *kind, bool rawTakesPrecedence) {
+    if (!handle || state != LC_DwgAdvancedMetadata::ReplayState::ReplayAllowed)
+      return;
+    if (rawTakesPrecedence && rawEntityKinds.count({handle, kind}) != 0) {
+      // A different skipped carrier makes this otherwise retained raw
+      // identity ambiguous; force the shared duplicate-source handling.
+      if (m_dxfDroppedReferenceHandles.count(handle) != 0)
+        ++sourceHandleCounts[handle];
+      return; // this type's emitter defers to the same-version raw carrier
     }
-  }
+    if (m_dxfDroppedReferenceHandles.count(handle) != 0)
+      m_dxfW->markSourceHandleAmbiguous(handle);
+    else
+      ++sourceHandleCounts[handle];
+  };
+  if (m_dxfW->getVersion() >= DRW::AC1015)
+    for (const auto &model : metadata.navisworksModels())
+      noteMetadataEntity(model.handle, model.replayState, "NAVISWORKSMODEL", false);
+  if (m_dxfW->getVersion() >= DRW::AC1027)
+    for (const auto &marker : metadata.geoPositionMarkers())
+      noteMetadataEntity(marker.handle, marker.replayState, "GEOPOSITIONMARKER", true);
+  if (m_dxfW->getVersion() >= DRW::AC1021)
+    for (const auto &section : metadata.sectionObjects())
+      noteMetadataEntity(section.handle, section.replayState, "SECTIONOBJECT", true);
 
   // Only a unique source handle can safely be used as a lookup key. A
   // duplicate source handle is still written with the legacy minted-handle
@@ -32075,9 +32100,10 @@ void RS_FilterDXFRW::writeEntities() {
     for (const auto &raw : m_graphic->dwgAdvancedMetadata().rawDxfEntities()) {
       if (!replaysInDxfExport(raw.m_version))
         continue;
-      if (raw.name == "GEOPOSITIONMARKER" || raw.name == "POSITIONMARKER")
+      const auto kind = normalizedDxfEntityKind(raw.name);
+      if (kind == "GEOPOSITIONMARKER")
         rawGeoPositionMarkerHandles.insert(raw.handle);
-      if (raw.name == "SECTIONOBJECT" || raw.name == "SECTION_OBJECT")
+      if (kind == "SECTIONOBJECT")
         rawSectionObjectHandles.insert(raw.handle);
     }
   }
