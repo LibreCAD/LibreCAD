@@ -554,6 +554,14 @@ the dependencies for **3 and 4** in parallel. **5** follows the acceptance work.
 - Test-only commit `6717ab3fa` streams the binary digest in 1 MiB blocks so a
   large sanitizer executable is not loaded into memory just to hash it. Four
   focused Python tests and a real Release profile smoke passed on macOS.
+- Test-runner commit `1dd730e2a` handles a process group disappearing between
+  timeout detection and POSIX `killpg`, still reaping the process and retaining
+  the timeout output. Its mocked race regression failed before the fix and the
+  focused suite passed **5/5** afterward, including real descendant cleanup; an
+  `arc` profile-0 smoke passed **223 assertions** using the source-equivalent
+  macOS Release binary. Temporary smoke receipt:
+  `/private/tmp/offset-3193-racefix-smoke.json`. This changes developer test
+  infrastructure only; Windows process-tree cleanup remains unqualified.
 
 ## Smallest Safe Fix
 
