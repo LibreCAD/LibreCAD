@@ -2303,7 +2303,7 @@ TEST_CASE("Ordinary sparse material saves simple circles arcs and lines",
   if (const char *copy = std::getenv("LIBRECAD_KEEP_ORDINARY_SPARSE_CIRCLE"))
     std::filesystem::copy_file(resaved, copy, std::filesystem::copy_options::overwrite_existing);
   const auto colorSource = tmpFile("system_sparse_circle_colors.dxf");
-  for (int color = 1; color <= 6; ++color) {
+  for (int color : {1, 2, 3, 4, 5, 6, 8, 9, 11, 20, 40, 89, 120, 149, 199, 249, 250, 254, 255}) {
     auto colored = input;
     const auto at = colored.find("62\n2\n347\nA1\n100\nAcDbCircle\n");
     REQUIRE(at != std::string::npos);
@@ -2317,9 +2317,14 @@ TEST_CASE("Ordinary sparse material saves simple circles arcs and lines",
     REQUIRE(filter.fileImport(colorReopened, QString::fromStdString(output), RS2::FormatDXFRW));
     REQUIRE(filter.fileExport(colorReopened, QString::fromStdString(resaved), RS2::FormatDXFRW));
     CHECK(recordGroupValues(resaved, "CIRCLE", "62") == std::vector<std::string>{std::to_string(color)});
+    if (const char *prefix = std::getenv("LIBRECAD_KEEP_ORDINARY_SPARSE_PALETTE"))
+      std::filesystem::copy_file(resaved, std::string(prefix) + std::to_string(color) + ".dxf",
+                                 std::filesystem::copy_options::overwrite_existing);
   }
   const std::string colorSentinel = "preserve unsupported color destination\n";
-  for (const std::string extra : {"62\n7\n", "62\n-1\n", "62\n2\n62\n2\n", "62\n2\n420\n16711680\n"}) {
+  for (const std::string extra : {"62\n7\n", "62\n-1\n", "62\n10\n", "62\n50\n", "62\n90\n",
+                                  "62\n130\n", "62\n170\n", "62\n210\n", "62\n2\n62\n2\n",
+                                  "62\n2\n420\n16711680\n"}) {
     auto unsupported = input;
     const auto at = unsupported.find("62\n2\n347\nA1\n100\nAcDbCircle\n");
     REQUIRE(at != std::string::npos);
@@ -2331,6 +2336,38 @@ TEST_CASE("Ordinary sparse material saves simple circles arcs and lines",
       CHECK_FALSE(filter.fileExport(rejected, QString::fromStdString(output), RS2::FormatDXFRW));
     { std::ifstream retained(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == colorSentinel); }
     REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  }
+  {
+    // Exercise the complete canonical palette together without hundreds of
+    // individual file conversions. The six aliases and contextual ACI 7 are
+    // tested as refusals above.
+    const std::set<int> excluded{7, 10, 50, 90, 130, 170, 210};
+    std::vector<std::string> expected;
+    std::string circles;
+    for (int color = 1; color <= 255; ++color) {
+      if (excluded.count(color)) continue;
+      expected.push_back(std::to_string(color));
+      circles += "0\nCIRCLE\n5\n" + QString::number(0x100 + color, 16).toUpper().toStdString() +
+          "\n100\nAcDbEntity\n8\nRAWTEST\n62\n" + std::to_string(color) +
+          "\n347\nA1\n100\nAcDbCircle\n10\n" + std::to_string(color) + "\n20\n3\n40\n4\n";
+    }
+    REQUIRE(expected.size() == 248u);
+    auto palette = input;
+    const auto first = palette.find("0\nCIRCLE\n5\nA5\n");
+    const auto last = palette.find("0\nARC\n5\nA6\n", first);
+    REQUIRE(first != std::string::npos); REQUIRE(last != std::string::npos);
+    palette.replace(first, last - first, circles);
+    writeText(colorSource, palette);
+    RS_Graphic paletteGraphic;
+    REQUIRE(filter.fileImport(paletteGraphic, QString::fromStdString(colorSource), RS2::FormatDXFRW));
+    REQUIRE(filter.fileExport(paletteGraphic, QString::fromStdString(output), RS2::FormatDXFRW));
+    CHECK(recordGroupValues(output, "CIRCLE", "62") == expected);
+    RS_Graphic paletteReopened;
+    REQUIRE(filter.fileImport(paletteReopened, QString::fromStdString(output), RS2::FormatDXFRW));
+    REQUIRE(filter.fileExport(paletteReopened, QString::fromStdString(resaved), RS2::FormatDXFRW));
+    CHECK(recordGroupValues(resaved, "CIRCLE", "62") == expected);
+    if (const char *copy = std::getenv("LIBRECAD_KEEP_ORDINARY_SPARSE_FULL_PALETTE"))
+      std::filesystem::copy_file(resaved, copy, std::filesystem::copy_options::overwrite_existing);
   }
   auto savedPen = circle->getPen(false);
   auto changedPen = savedPen;

@@ -992,9 +992,10 @@ bool sameRetainedPlotSettings(const DRW_PlotSettings &a, const DRW_PlotSettings 
   if (color.isByBlock()) return -1;
   int rgb = -1;
   const int index = LC_ColorNumbers::colorToNumber(color, &rgb);
-  // Restrict the profile to the unambiguous primary ACI colors. In
-  // particular, index 7 conflates black with the background-dependent white.
-  return rgb == -1 && index >= 1 && index <= 6 ? index : -1;
+  // Index 7 conflates black with background-dependent white. The caller
+  // compares this canonical output index to the source index, so palette
+  // aliases that LibreCAD would rewrite are refused on import.
+  return rgb == -1 && index >= 1 && index <= 255 && index != 7 ? index : -1;
 }
 
 [[maybe_unused]] bool hasSimpleMaterialAppearance(const RS_Entity &entity) {
@@ -12767,7 +12768,7 @@ bool hasSimpleMaterialEntities(const RS_Graphic &graphic, const DRW_DxfEntitiesS
         if (subclass != 1 || group.type() != DRW_Variant::INTEGER || !validRaw || value != group.content.i)
           return false;
         if (code == 62) {
-          if (value != 256 && (value < 1 || value > 6)) return false;
+          if (value != 256 && (value < 1 || value > 255 || value == 7)) return false;
           colorIndex = value;
         } else if (value != -1) return false;
       } else if (code == 10 || code == 20 || code == 30 || code == 11 || code == 21 || code == 31 ||
