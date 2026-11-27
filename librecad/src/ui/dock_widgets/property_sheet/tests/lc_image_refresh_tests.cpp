@@ -17,7 +17,7 @@
 
 TEST_CASE("Raster refresh preserves shared image definition paths", "[image][transaction]") {
     (void)lc::test::application();
-    const int imageCount = GENERATE(2, 64);
+    const int imageCount = GENERATE(2, 64, 128);
     QTemporaryDir temp;
     REQUIRE(temp.isValid());
     const QString imagePath = temp.filePath(QStringLiteral("image.png"));
