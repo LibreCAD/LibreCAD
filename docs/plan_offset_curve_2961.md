@@ -134,9 +134,8 @@ the dependencies for **3 and 4** in parallel. **5** follows the acceptance work.
 
 1. The periodic-spline profile manifest is reconciled below. Its isolated
    profiles do not replace the shared-process run.
-2. Run the new high-origin closed-polyline seam, reconstructed-parabola,
-   beyond-cusp, hyperbola and high-degree spline profiles under ASan/UBSan
-   after the sanitizer binary is rebuilt,
+2. Run the reconstructed-parabola, beyond-cusp, hyperbola and high-degree
+   spline profiles under ASan/UBSan with the rebuilt sanitizer binary,
    including the hyperbola high-origin modes with their recorded environment
    settings. The typed-parabola timeout is already
    accounted for by its 152 isolated profiles, but its aggregate remains open.
@@ -287,6 +286,20 @@ the dependencies for **3 and 4** in parallel. **5** follows the acceptance work.
   `/private/tmp/offset-3193-closed-seam-aggregate-release.json` (temporary).
   This accounts for the Release rows, not the earlier sanitizer timeout,
   leak detection or other platforms.
+- The `closed-seam` selector subsequently passed **38/38 isolated profiles
+  and 8,102 assertions** under source-equivalent macOS CMake Debug ASan/UBSan
+  with `detect_leaks=0:quarantine_size_mb=16:thread_local_quarantine_size_kb=256:malloc_context_size=5`,
+  `UBSAN_OPTIONS=halt_on_error=1:print_stacktrace=1`, a 180-second profile
+  bound and 30-second test-only worker wait. Requested, passed and result IDs
+  match 0-37; all 38 logs are free of sanitizer diagnostics. Manifest and logs:
+  `/private/tmp/offset-3193-closed-seam-asan.json` and
+  `/private/tmp/offset-3193-closed-seam-asan-logs` (temporary). The manifest
+  records an unchanged test binary SHA-256
+  `070a3128c904c57a276bce9623d60ffd9cd62c87593edad52e5a10c614e5d126`;
+  worker SHA-256 was
+  `50a0140d656600d0e844b0251d9fac3d82045f7dd969aff0550c1411dd3e3eb2`.
+  This does not resolve the aggregate timeout, shared-process behavior, leak
+  detection, earlier worker-launch failures or other platforms.
 - Test-only commit `eacd80642` adds the `reconstructed-parabola` frame
   selector, retaining each frame's format lanes. Source-equivalent macOS CMake
   Release passed **86/86 profiles, 7,790 assertions**, and the unpinned aggregate
