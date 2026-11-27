@@ -132,12 +132,11 @@ the dependencies for **3 and 4** in parallel. **5** follows the acceptance work.
 
 #### Remaining Trim Matrix
 
-1. Finish the running periodic-spline profile manifest. Verify requested IDs,
-   results, assertion counts and sanitizer logs, then record the receipt. A
-   successful isolated profile does not replace the shared-process run.
+1. The periodic-spline profile manifest is reconciled below. Its isolated
+   profiles do not replace the shared-process run.
 2. Run the new high-origin closed-polyline seam, reconstructed-parabola,
    beyond-cusp, hyperbola and high-degree spline profiles under ASan/UBSan
-   after the periodic run finishes and the sanitizer binary can be rebuilt,
+   after the sanitizer binary is rebuilt,
    including the hyperbola high-origin modes with their recorded environment
    settings. The typed-parabola timeout is already
    accounted for by its 152 isolated profiles, but its aggregate remains open.
@@ -261,8 +260,22 @@ the dependencies for **3 and 4** in parallel. **5** follows the acceptance work.
   build and options, using `parabola-tangent` with the 180-second per-profile
   bound. Manifest and logs: `/private/tmp/offset-3193-trim-tangent-asan.json`
   and `/private/tmp/offset-3193-trim-tangent-asan-logs` (temporary). The
-  separate periodic-spline matrix, six timed-out aggregate cases, prior
-  shared-process failures, leak detection and non-macOS validation remain open.
+  six timed-out aggregate cases, prior shared-process failures, leak detection
+  and non-macOS validation remain open. The periodic matrix is recorded below.
+- The periodic-spline matrix passed **1,080/1,080 profiles and 145,371
+  assertions** under the same source-equivalent macOS Debug ASan/UBSan build
+  and options, with 180-second per-profile and 30-second test-only worker
+  bounds. All IDs 0-1079 occur exactly once in requested, passed and result
+  lists; all 1,080 logs were checked for sanitizer diagnostics. Temporary
+  manifest and logs: `/private/tmp/offset-3193-trim-periodic-asan.json` and
+  `/private/tmp/offset-3193-trim-periodic-asan-logs`. During and after the
+  run, test binary SHA-256 was
+  `00a025386467ebf513dd150b9811dc962d3aeb017e7989f7762665f01e7ea8b9`
+  and worker SHA-256 was
+  `50a0140d656600d0e844b0251d9fac3d82045f7dd969aff0550c1411dd3e3eb2`.
+  The pre-rebuild binary predates the new test-only selectors; the periodic
+  test body and relevant product source are equivalent, not exact-head.
+  This does not qualify shared-process order, leak detection or other platforms.
 - Test-only commit `19bafe101` adds a `closed-seam` profile selector for the
   high-origin closed-polyline Trim Two case. The 38 original rows, including
   one duplicate tuple, were compared in order against the prior source.
