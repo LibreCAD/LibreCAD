@@ -134,8 +134,8 @@ the dependencies for **3 and 4** in parallel. **5** follows the acceptance work.
 
 1. The periodic-spline profile manifest is reconciled below. Its isolated
    profiles do not replace the shared-process run.
-2. Run the beyond-cusp, hyperbola and high-degree spline profiles under
-   ASan/UBSan with the rebuilt sanitizer binary,
+2. Run the hyperbola and high-degree spline profiles under ASan/UBSan with
+   the rebuilt sanitizer binary,
    including the hyperbola high-origin modes with their recorded environment
    settings. The typed-parabola timeout is already
    accounted for by its 152 isolated profiles, but its aggregate remains open.
@@ -326,6 +326,14 @@ the dependencies for **3 and 4** in parallel. **5** follows the acceptance work.
   assertions. Receipts: `/private/tmp/offset-3193-cusp-release.json` and
   `/private/tmp/offset-3193-cusp-aggregate-release.json` (temporary). This is
   not sanitizer, leak-detection or non-macOS evidence.
+- The `beyond-cusp` selector subsequently passed **144/144 isolated profiles
+  and 13,596 assertions** under the same source-equivalent macOS Debug
+  ASan/UBSan settings and bounds as the seam run. Requested, passed and result
+  IDs match 0-143, the test-binary hash remained unchanged, and all 144 logs
+  were free of sanitizer diagnostics. Temporary receipt and logs:
+  `/private/tmp/offset-3193-cusp-asan.json` and
+  `/private/tmp/offset-3193-cusp-asan-logs`. Aggregate timeout, shared-process
+  behavior, leak detection and other platforms remain open.
 - Test-only commit `b93601b3b` adds the `hyperbola` selector for 20
   branch/orientation/format groups while retaining the other Catch generators.
   With both high-origin environment flags unset, source-equivalent macOS CMake
