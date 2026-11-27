@@ -1812,6 +1812,16 @@ TEST_CASE("Opt-in system codec replays an unchanged sparse material graph",
   expectRefusal(RS2::FormatDXFRW);
   line->delFlag(RS2::FlagDeleted);
   REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  auto *duplicate = new RS_Line(&graphic, RS_LineData(RS_Vector(0.0, 1.0), RS_Vector(1.0, 1.0)));
+  duplicate->setSourceHandle(line->sourceHandle());
+  graphic.addEntity(duplicate);
+  bool reachedDuplicateObjects = false;
+  filter.afterObjects = [&] { reachedDuplicateObjects = true; };
+  expectRefusal(RS2::FormatDXFRW);
+  CHECK_FALSE(reachedDuplicateObjects);
+  duplicate->setFlag(RS2::FlagDeleted);
+  filter.afterObjects = {};
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
   filter.afterObjects = [&] { line->setMaterialHandle(0u); };
   expectRefusal(RS2::FormatDXFRW);
   line->setMaterialHandle(originalReference);
