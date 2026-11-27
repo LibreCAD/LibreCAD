@@ -131,14 +131,14 @@ the dependencies for **3 and 4** in parallel. **5** follows the acceptance work.
 1. Finish the running periodic-spline profile manifest. Verify requested IDs,
    results, assertion counts and sanitizer logs, then record the receipt. A
    successful isolated profile does not replace the shared-process run.
-2. Run the new high-origin closed-polyline seam profiles under ASan/UBSan after
-   the periodic run finishes and the sanitizer binary can be rebuilt. Partition
-   the four other timed-out generators, in this order: reconstructed parabola frames;
-   transformed beyond-cusp parabola; bounded hyperbola file lanes; rational
-   high-degree spline file lanes. The typed-parabola timeout is already
+2. Run the new high-origin closed-polyline seam and reconstructed-parabola
+   profiles under ASan/UBSan after the periodic run finishes and the sanitizer
+   binary can be rebuilt. Partition the three other timed-out generators, in
+   this order: transformed beyond-cusp parabola; bounded hyperbola file lanes;
+   rational high-degree spline file lanes. The typed-parabola timeout is already
    accounted for by its 152 isolated profiles, but its aggregate remains open.
-   The reconstructed case has an 86-frame table, and the other cases combine
-   geometry and file-format dimensions. Inspect each loop before defining IDs.
+   These cases combine geometry and file-format dimensions. Inspect each loop
+   before defining IDs.
 3. Where an existing selector cannot isolate every tuple, add a test-only
    profile selector to that case and register it in the existing profile
    runner. Preserve the unpinned test, use stable complete tuple identities,
@@ -270,6 +270,15 @@ the dependencies for **3 and 4** in parallel. **5** follows the acceptance work.
   `/private/tmp/offset-3193-closed-seam-aggregate-release.json` (temporary).
   This accounts for the Release rows, not the earlier sanitizer timeout,
   leak detection or other platforms.
+- Test-only commit `eacd80642` adds the `reconstructed-parabola` frame
+  selector, retaining each frame's format lanes. Source-equivalent macOS CMake
+  Release passed **86/86 profiles, 7,790 assertions**, and the unpinned aggregate
+  passed **7,620 assertions**. The difference is the two selector guards
+  repeated in each isolated process. Invalid and out-of-range IDs were rejected;
+  each profile exercised at least 38 assertions. Receipts:
+  `/private/tmp/offset-3193-reconstructed-release.json` and
+  `/private/tmp/offset-3193-reconstructed-aggregate-release.json` (temporary).
+  The earlier sanitizer aggregate timeout and non-macOS rows remain open.
 
 ## Smallest Safe Fix
 
