@@ -134,9 +134,8 @@ the dependencies for **3 and 4** in parallel. **5** follows the acceptance work.
 
 1. The periodic-spline profile manifest is reconciled below. Its isolated
    profiles do not replace the shared-process run.
-2. Run the hyperbola very-high-origin and high-degree spline profiles under
-   ASan/UBSan with the rebuilt sanitizer binary, retaining their recorded environment
-   settings. The typed-parabola timeout is already
+2. Run the high-degree spline profiles under ASan/UBSan with the rebuilt
+   sanitizer binary. The typed-parabola timeout is already
    accounted for by its 152 isolated profiles, but its aggregate remains open.
    These cases combine geometry and file-format dimensions. Inspect each loop
    before defining IDs.
@@ -366,6 +365,15 @@ the dependencies for **3 and 4** in parallel. **5** follows the acceptance work.
   `/private/tmp/offset-3193-hyperbola-high-asan.json` and
   `/private/tmp/offset-3193-hyperbola-high-asan-logs`. This does not qualify
   aggregate, shared-process, leak-detection or non-macOS coverage.
+- The hyperbola very-high-origin mode subsequently passed **20/20 isolated
+  groups and 7,608 assertions** under the same source-equivalent macOS Debug
+  ASan/UBSan settings and bounds as the seam run. Its manifest records
+  `LC_OFFSET_HYPERBOLA_VERY_HIGH_ORIGIN=1` and the high flag unset; IDs 0-19
+  are complete, the binary hash was unchanged, and all 20 logs were free of
+  sanitizer diagnostics. Temporary receipt and logs:
+  `/private/tmp/offset-3193-hyperbola-very-high-asan.json` and
+  `/private/tmp/offset-3193-hyperbola-very-high-asan-logs`. Aggregate,
+  shared-process, leak-detection and non-macOS coverage remain open.
 - Test-only commit `63632a8d1` adds the `high-degree-spline` selector for 45
   degree/multiplicity/format groups, retaining transform, distance, knot and
   weight variants. Source-equivalent macOS CMake Release passed **45/45
