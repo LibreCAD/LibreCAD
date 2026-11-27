@@ -65,16 +65,22 @@ class ProfileRunnerTests(unittest.TestCase):
     @unittest.skipIf(os.name == "nt", "POSIX process-group cleanup test")
     def test_timeout_kills_descendant(self):
         with tempfile.TemporaryDirectory() as directory:
+            ready = Path(directory) / "ready"
             marker = Path(directory) / "survived"
-            child = "import pathlib,sys,time; time.sleep(1); pathlib.Path(sys.argv[1]).touch()"
+            child = (
+                "import pathlib,sys,time; pathlib.Path(sys.argv[1]).touch(); "
+                "time.sleep(2); pathlib.Path(sys.argv[2]).touch()"
+            )
             parent = (
                 "import subprocess,sys,time; "
-                "subprocess.Popen([sys.executable, '-c', sys.argv[1], sys.argv[2]]); "
+                "subprocess.Popen([sys.executable, '-c', sys.argv[1], sys.argv[2], sys.argv[3]]); "
                 "time.sleep(10)"
             )
             with self.assertRaises(subprocess.TimeoutExpired):
-                run_isolated([sys.executable, "-c", parent, child, str(marker)], os.environ.copy(), 0.2)
+                run_isolated([sys.executable, "-c", parent, child, str(ready), str(marker)],
+                             os.environ.copy(), 1.0)
             time.sleep(1.2)
+            self.assertTrue(ready.exists(), "descendant did not start before timeout")
             self.assertFalse(marker.exists(), "timed-out descendant survived")
 
 
