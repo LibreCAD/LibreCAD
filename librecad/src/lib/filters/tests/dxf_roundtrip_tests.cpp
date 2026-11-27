@@ -2241,11 +2241,11 @@ TEST_CASE("Ordinary sparse material saves simple circles arcs and lines",
       "0\nSECTION\n2\nTABLES\n0\nTABLE\n2\nLAYER\n70\n1\n"
       "0\nLAYER\n5\n30\n100\nAcDbSymbolTableRecord\n100\nAcDbLayerTableRecord\n"
       "2\nRAWTEST\n70\n0\n62\n7\n6\nCONTINUOUS\n347\nA1\n0\nENDTAB\n0\nENDSEC\n"
-      "0\nSECTION\n2\nENTITIES\n0\nLINE\n5\nA2\n100\nAcDbEntity\n8\nRAWTEST\n347\nA1\n"
+      "0\nSECTION\n2\nENTITIES\n0\nLINE\n5\nA2\n100\nAcDbEntity\n8\nRAWTEST\n62\n1\n347\nA1\n"
       "100\nAcDbLine\n10\n0\n20\n0\n11\n10\n21\n0\n"
-      "0\nCIRCLE\n5\nA5\n100\nAcDbEntity\n8\nRAWTEST\n347\nA1\n"
+      "0\nCIRCLE\n5\nA5\n100\nAcDbEntity\n8\nRAWTEST\n62\n2\n347\nA1\n"
       "100\nAcDbCircle\n10\n2\n20\n3\n30\n0\n40\n4\n"
-      "0\nARC\n5\nA6\n100\nAcDbEntity\n8\nRAWTEST\n347\nA1\n"
+      "0\nARC\n5\nA6\n100\nAcDbEntity\n8\nRAWTEST\n62\n3\n347\nA1\n"
       "100\nAcDbCircle\n10\n4\n20\n5\n40\n2\n100\nAcDbArc\n50\n30\n51\n120\n0\nENDSEC\n"
       "0\nSECTION\n2\nOBJECTS\n0\nDICTIONARY\n5\nC\n330\n0\n"
       "100\nAcDbDictionary\n281\n1\n3\nACAD_MATERIAL\n350\nA0\n"
@@ -2280,6 +2280,9 @@ TEST_CASE("Ordinary sparse material saves simple circles arcs and lines",
   CHECK(recordGroupValues(output, "ARC", "10") == std::vector<std::string>{"8"});
   CHECK(recordGroupValues(output, "ARC", "20") == std::vector<std::string>{"9"});
   CHECK(recordGroupValues(output, "ARC", "40") == std::vector<std::string>{"3.5"});
+  CHECK(recordGroupValues(output, "LINE", "62") == std::vector<std::string>{"1"});
+  CHECK(recordGroupValues(output, "CIRCLE", "62") == std::vector<std::string>{"2"});
+  CHECK(recordGroupValues(output, "ARC", "62") == std::vector<std::string>{"3"});
   const auto start = recordGroupValues(output, "ARC", "50");
   const auto end = recordGroupValues(output, "ARC", "51");
   REQUIRE(start.size() == 1u); REQUIRE(end.size() == 1u);
@@ -2294,8 +2297,63 @@ TEST_CASE("Ordinary sparse material saves simple circles arcs and lines",
   REQUIRE(filter.fileExport(reopened, QString::fromStdString(resaved), RS2::FormatDXFRW));
   CHECK(recordGroupValues(resaved, "CIRCLE", "40") == std::vector<std::string>{"7"});
   CHECK(recordGroupValues(resaved, "ARC", "40") == std::vector<std::string>{"3.5"});
+  CHECK(recordGroupValues(resaved, "LINE", "62") == std::vector<std::string>{"1"});
+  CHECK(recordGroupValues(resaved, "CIRCLE", "62") == std::vector<std::string>{"2"});
+  CHECK(recordGroupValues(resaved, "ARC", "62") == std::vector<std::string>{"3"});
   if (const char *copy = std::getenv("LIBRECAD_KEEP_ORDINARY_SPARSE_CIRCLE"))
     std::filesystem::copy_file(resaved, copy, std::filesystem::copy_options::overwrite_existing);
+  const auto colorSource = tmpFile("system_sparse_circle_colors.dxf");
+  for (int color = 1; color <= 6; ++color) {
+    auto colored = input;
+    const auto at = colored.find("62\n2\n347\nA1\n100\nAcDbCircle\n");
+    REQUIRE(at != std::string::npos);
+    colored.replace(at, std::string("62\n2\n").size(), "62\n" + std::to_string(color) + "\n");
+    writeText(colorSource, colored);
+    RS_Graphic colorGraphic;
+    REQUIRE(filter.fileImport(colorGraphic, QString::fromStdString(colorSource), RS2::FormatDXFRW));
+    REQUIRE(filter.fileExport(colorGraphic, QString::fromStdString(output), RS2::FormatDXFRW));
+    CHECK(recordGroupValues(output, "CIRCLE", "62") == std::vector<std::string>{std::to_string(color)});
+    RS_Graphic colorReopened;
+    REQUIRE(filter.fileImport(colorReopened, QString::fromStdString(output), RS2::FormatDXFRW));
+    REQUIRE(filter.fileExport(colorReopened, QString::fromStdString(resaved), RS2::FormatDXFRW));
+    CHECK(recordGroupValues(resaved, "CIRCLE", "62") == std::vector<std::string>{std::to_string(color)});
+  }
+  const std::string colorSentinel = "preserve unsupported color destination\n";
+  for (const std::string extra : {"62\n7\n", "62\n-1\n", "62\n2\n62\n2\n", "62\n2\n420\n16711680\n"}) {
+    auto unsupported = input;
+    const auto at = unsupported.find("62\n2\n347\nA1\n100\nAcDbCircle\n");
+    REQUIRE(at != std::string::npos);
+    unsupported.replace(at, std::string("62\n2\n").size(), extra);
+    writeText(colorSource, unsupported);
+    RS_Graphic rejected;
+    writeText(output, colorSentinel);
+    if (filter.fileImport(rejected, QString::fromStdString(colorSource), RS2::FormatDXFRW))
+      CHECK_FALSE(filter.fileExport(rejected, QString::fromStdString(output), RS2::FormatDXFRW));
+    { std::ifstream retained(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == colorSentinel); }
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  }
+  auto savedPen = circle->getPen(false);
+  auto changedPen = savedPen;
+  changedPen.setColor(RS_Color(0, 255, 255));
+  circle->setPen(changedPen);
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  CHECK(recordGroupValues(output, "CIRCLE", "62") == std::vector<std::string>{"4"});
+  RS_Graphic changedColor;
+  REQUIRE(filter.fileImport(changedColor, QString::fromStdString(output), RS2::FormatDXFRW));
+  REQUIRE(filter.fileExport(changedColor, QString::fromStdString(resaved), RS2::FormatDXFRW));
+  CHECK(recordGroupValues(resaved, "CIRCLE", "62") == std::vector<std::string>{"4"});
+  if (const char *copy = std::getenv("LIBRECAD_KEEP_ORDINARY_SPARSE_EDITED_COLOR"))
+    std::filesystem::copy_file(resaved, copy, std::filesystem::copy_options::overwrite_existing);
+  for (const RS_Color &color : {RS_Color(0, 0, 0), RS_Color(10, 20, 30)}) {
+    changedPen.setColor(color);
+    circle->setPen(changedPen);
+    writeText(output, colorSentinel);
+    CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+    { std::ifstream retained(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == colorSentinel); }
+  }
+  circle->setPen(savedPen);
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+  std::filesystem::remove(colorSource);
   const auto curveOnlySource = tmpFile("system_sparse_curves_only_source.dxf");
   for (int mode = 0; mode != 3; ++mode) {
     auto curveOnly = input;

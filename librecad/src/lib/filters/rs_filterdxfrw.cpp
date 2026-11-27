@@ -986,11 +986,22 @@ bool sameRetainedPlotSettings(const DRW_PlotSettings &a, const DRW_PlotSettings 
   return sameRetainedPlotSettings(generated, expected);
 }
 
-[[maybe_unused]] bool hasDefaultMaterialAppearance(const RS_Entity &entity) {
+[[maybe_unused]] int simpleMaterialColor(const RS_Color &color) {
+  if (color.hasColorName()) return -1;
+  if (color.isByLayer()) return 256;
+  if (color.isByBlock()) return -1;
+  int rgb = -1;
+  const int index = LC_ColorNumbers::colorToNumber(color, &rgb);
+  // Restrict the profile to the unambiguous primary ACI colors. In
+  // particular, index 7 conflates black with the background-dependent white.
+  return rgb == -1 && index >= 1 && index <= 6 ? index : -1;
+}
+
+[[maybe_unused]] bool hasSimpleMaterialAppearance(const RS_Entity &entity) {
   const auto pen = entity.getPen(false);
   return entity.getLayer(false) && entity.getFlag(RS2::FlagVisible) && entity.shadowMode() == 0 &&
          entity.getDrwExtData().empty() && pen.getLineType() == RS2::LineByLayer &&
-         pen.getColor().isByLayer() && !pen.getColor().hasColorName() &&
+         simpleMaterialColor(pen.getColor()) != -1 &&
          pen.getWidth() == RS2::WidthByLayer && pen.isFullyOpaque();
 }
 
@@ -1001,7 +1012,7 @@ bool sameRetainedPlotSettings(const DRW_PlotSettings &a, const DRW_PlotSettings 
   };
   for (const RS_Entity *entity : graphic) {
     if (!entity || entity->isDeleted()) continue;
-    if (!hasDefaultMaterialAppearance(*entity)) return false;
+    if (!hasSimpleMaterialAppearance(*entity)) return false;
     if (entity->rtti() == RS2::EntityLine) {
       const auto *line = static_cast<const RS_Line *>(entity);
       if (!validPoint(line->getStartpoint()) || !validPoint(line->getEndpoint())) return false;
@@ -12714,7 +12725,7 @@ bool hasSimpleMaterialEntities(const RS_Graphic &graphic, const DRW_DxfEntitiesS
     std::string layer;
     double x1 = 0, y1 = 0, z1 = 0, x2 = 0, y2 = 0, z2 = 0;
     double radius = 0, angle1 = 0, angle2 = 0;
-    int subclass = 0;
+    int subclass = 0, colorIndex = 256;
     for (std::size_t index = 0; index < record.groups.size(); ++index) {
       const auto &group = record.groups[index];
       const auto &raw = record.rawValues[index];
@@ -12753,8 +12764,12 @@ bool hasSimpleMaterialEntities(const RS_Graphic &graphic, const DRW_DxfEntitiesS
       } else if (code == 62 || code == 370) {
         bool validRaw = false;
         const int value = QString::fromStdString(raw).toInt(&validRaw);
-        if (subclass != 1 || group.type() != DRW_Variant::INTEGER ||
-            !validRaw || value != group.content.i || group.content.i != (code == 62 ? 256 : -1)) return false;
+        if (subclass != 1 || group.type() != DRW_Variant::INTEGER || !validRaw || value != group.content.i)
+          return false;
+        if (code == 62) {
+          if (value != 256 && (value < 1 || value > 6)) return false;
+          colorIndex = value;
+        } else if (value != -1) return false;
       } else if (code == 10 || code == 20 || code == 30 || code == 11 || code == 21 || code == 31 ||
                  code == 40 || code == 50 || code == 51) {
         bool validRaw = false;
@@ -12789,7 +12804,8 @@ bool hasSimpleMaterialEntities(const RS_Graphic &graphic, const DRW_DxfEntitiesS
         found->second->rtti() != (line ? RS2::EntityLine : circle ? RS2::EntityCircle : RS2::EntityArc) ||
         !found->second->getLayer(false) ||
         found->second->getLayer(false)->getName().toUtf8().toStdString() != layer ||
-        !hasDefaultMaterialAppearance(*found->second))
+        !hasSimpleMaterialAppearance(*found->second) ||
+        simpleMaterialColor(found->second->getPen(false).getColor()) != colorIndex)
       return false;
     if (line) {
       const auto *value = static_cast<const RS_Line *>(found->second);
