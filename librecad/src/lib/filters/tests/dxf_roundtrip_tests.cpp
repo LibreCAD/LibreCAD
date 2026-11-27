@@ -115,8 +115,13 @@ std::string tmpFile(const char *suffix) {
 }
 
 void writeText(const std::string &path, const std::string &content) {
-  std::ofstream out(path);
+  std::ofstream out(path, std::ios::binary);
   out << content;
+}
+
+void normalizeDxfLineEndings(std::string &text) {
+  for (std::size_t pos = 0; (pos = text.find("\r\n", pos)) != std::string::npos; ++pos)
+    text.erase(pos, 1);
 }
 
 std::string trimDxfToken(std::string value) {
@@ -7221,6 +7226,12 @@ TEST_CASE("DXF filter preserves fixture-derived raw control groups and remaps 48
   std::ifstream input(fixture, std::ios::binary);
   std::string contents((std::istreambuf_iterator<char>(input)), {});
   input.close();
+  // Git may check out the fixture with CRLF on Windows. Preserve any isolated
+  // carriage returns while making the record boundaries platform-independent.
+  std::string lineEndingControl = "0\r\nMATERIAL\r\ntext\rvalue\n";
+  normalizeDxfLineEndings(lineEndingControl);
+  CHECK(lineEndingControl == "0\nMATERIAL\ntext\rvalue\n");
+  normalizeDxfLineEndings(contents);
   const auto replaceAll = [&](const std::string& from, const std::string& to) {
     std::size_t count = 0;
     for (std::size_t pos = 0; (pos = contents.find(from, pos)) != std::string::npos;
