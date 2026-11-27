@@ -14,6 +14,11 @@ import time
 
 
 FAMILIES = {
+    "high-degree-spline": {
+        "environment": "LC_OFFSET_TRIM_HIGH_DEGREE_SPLINE_PROFILE",
+        "profiles": range(45),
+        "test_spec": "[offset-trim-profile-high-degree-spline]",
+    },
     "hyperbola": {
         "environment": "LC_OFFSET_TRIM_HYPERBOLA_PROFILE",
         "profiles": range(20),

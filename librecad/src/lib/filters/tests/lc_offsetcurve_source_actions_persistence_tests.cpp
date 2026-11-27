@@ -1938,7 +1938,8 @@ TEST_CASE("partial eccentric ellipse source trims through document actions and f
 }
 
 TEST_CASE("rational high-degree splines trim through document actions and file lanes",
-          "[lc-offsetcurve][source-action][spline][high-degree][interior-knot][trim-action][persistence]") {
+          "[lc-offsetcurve][source-action][spline][high-degree][interior-knot][trim-action][persistence]"
+          "[offset-trim-profile-high-degree-spline]") {
     const std::size_t degree = GENERATE(std::size_t{4}, std::size_t{5}, std::size_t{6});
     const std::size_t multiplicityCase = GENERATE(std::size_t{1}, std::size_t{2}, std::size_t{3});
     const std::size_t interiorMultiplicity = multiplicityCase == 3 ? degree - 1 : multiplicityCase;
@@ -1957,6 +1958,22 @@ TEST_CASE("rational high-degree splines trim through document actions and file l
     };
     const auto format = GENERATE(RS2::FormatDXFRW14, RS2::FormatDXFRW2000,
         RS2::FormatDWG, RS2::FormatDXFRW2018, RS2::FormatDWG2018);
+    const std::array formats{RS2::FormatDXFRW14, RS2::FormatDXFRW2000,
+        RS2::FormatDWG, RS2::FormatDXFRW2018, RS2::FormatDWG2018};
+    const int formatIndex = static_cast<int>(
+        std::find(formats.begin(), formats.end(), format) - formats.begin());
+    const int profileIndex = (static_cast<int>(degree) - 4) * 15 +
+        (static_cast<int>(multiplicityCase) - 1) * 5 + formatIndex;
+    const bool pinProfile = qEnvironmentVariableIsSet("LC_OFFSET_TRIM_HIGH_DEGREE_SPLINE_PROFILE");
+    bool profileValid = true;
+    const int requestedProfile = pinProfile
+        ? qEnvironmentVariableIntValue("LC_OFFSET_TRIM_HIGH_DEGREE_SPLINE_PROFILE", &profileValid)
+        : 0;
+    if (pinProfile && profileValid && requestedProfile >= 0 && requestedProfile < 45 &&
+        profileIndex != requestedProfile) return;
+    REQUIRE(profileValid);
+    REQUIRE((!pinProfile || (requestedProfile >= 0 && requestedProfile < 45)));
+    CAPTURE(profileIndex);
     const bool dwg = format == RS2::FormatDWG || format == RS2::FormatDWG2018;
     CAPTURE(degree, interiorMultiplicity, transformed, signedDistance, interiorKnot,
             static_cast<int>(format));
