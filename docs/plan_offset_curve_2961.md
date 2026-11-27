@@ -174,6 +174,12 @@ the dependencies for **3 and 4** in parallel. **5** follows the acceptance work.
 
 ## Recent Evidence
 
+- PR head `971c0699f28db22062f45523a594b4f8fa3376d9` completed CI with
+  **19 successful checks, 7 skipped, 0 failed**, including
+  [Linux fast and Windows x64/ARM64 DWG/DXF verification](https://github.com/LibreCAD/LibreCAD/actions/runs/45973985875)
+  and [macOS packaging](https://github.com/LibreCAD/LibreCAD/actions/runs/45973985801/job/140421040353).
+  Later roadmap-only commits require their own exact-head CI; skipped jobs are
+  not passes, and packaging is not signed or visible deployment acceptance.
 - On 2026-11-27, a macOS 27.2.1 arm64 CMake Release build from clean PR
   head `971c0699f28db22062f45523a594b4f8fa3376d9`, using Qt 6.12.0 and
   `BUILD_TESTS=ON`, `LIBRECAD_REGISTER_INTEGRATION_TESTS=ON`,
