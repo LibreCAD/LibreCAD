@@ -2366,7 +2366,53 @@ TEST_CASE("Ordinary sparse material saves straight lightweight polylines",
   if (const char *copy = std::getenv("LIBRECAD_KEEP_ORDINARY_SPARSE_LWPOLYLINE"))
     std::filesystem::copy_file(resaved, copy, std::filesystem::copy_options::overwrite_existing);
 
+  auto closedInput = input;
+  const auto closedFlag = closedInput.find("90\n3\n70\n0\n"); REQUIRE(closedFlag != std::string::npos);
+  closedInput.replace(closedFlag, std::string("90\n3\n70\n0\n").size(), "90\n3\n70\n1\n");
+  writeText(source, closedInput);
+  RS_Graphic closed;
+  REQUIRE(filter.fileImport(closed, QString::fromStdString(source), RS2::FormatDXFRW));
+  REQUIRE(filter.fileExport(closed, QString::fromStdString(output), RS2::FormatDXFRW));
+  CHECK(recordGroupValues(output, "LWPOLYLINE", "70") == std::vector<std::string>{"1"});
+  CHECK(recordGroupValues(output, "LWPOLYLINE", "10") == std::vector<std::string>{"1", "4", "8"});
+  RS_Polyline *closedPolyline = nullptr;
+  for (RS_Entity *entity : closed)
+    if (entity && entity->sourceHandle() == 0xA5u && entity->rtti() == RS2::EntityPolyline)
+      closedPolyline = static_cast<RS_Polyline *>(entity);
+  REQUIRE(closedPolyline); REQUIRE(closedPolyline->isClosed()); REQUIRE(closedPolyline->count() == 3u);
+  closedPolyline->move(RS_Vector(10, 20));
+  REQUIRE(filter.fileExport(closed, QString::fromStdString(output), RS2::FormatDXFRW));
+  CHECK(recordGroupValues(output, "LWPOLYLINE", "10") == std::vector<std::string>{"11", "14", "18"});
+  CHECK(recordGroupValues(output, "LWPOLYLINE", "20") == std::vector<std::string>{"22", "26", "23"});
+  RS_Graphic closedReopened;
+  REQUIRE(filter.fileImport(closedReopened, QString::fromStdString(output), RS2::FormatDXFRW));
+  REQUIRE(filter.fileExport(closedReopened, QString::fromStdString(resaved), RS2::FormatDXFRW));
+  CHECK(recordGroupValues(resaved, "LWPOLYLINE", "70") == std::vector<std::string>{"1"});
+  if (const char *copy = std::getenv("LIBRECAD_KEEP_CLOSED_SPARSE_LWPOLYLINE"))
+    std::filesystem::copy_file(resaved, copy, std::filesystem::copy_options::overwrite_existing);
+
   const std::string sentinel = "preserve sparse polyline destination\n";
+  RS_Entity *closingSegment = closedPolyline->entityAt(closedPolyline->count() - 1u); REQUIRE(closingSegment);
+  closingSegment->move(RS_Vector(1, 1));
+  writeText(output, sentinel);
+  CHECK_FALSE(filter.fileExport(closed, QString::fromStdString(output), RS2::FormatDXFRW));
+  { std::ifstream retained(output, std::ios::binary);
+    CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+  closingSegment->move(RS_Vector(-1, -1));
+  REQUIRE(filter.fileExport(closed, QString::fromStdString(output), RS2::FormatDXFRW));
+  for (const std::string last : {"10\n1\n20\n2\n", "10\n1.000001\n20\n2\n"}) {
+    auto badClosed = closedInput;
+    const std::string original = "10\n8\n20\n3\n";
+    const auto at = badClosed.find(original); REQUIRE(at != std::string::npos);
+    badClosed.replace(at, original.size(), last);
+    writeText(source, badClosed); writeText(output, sentinel);
+    RS_Graphic rejected;
+    if (filter.fileImport(rejected, QString::fromStdString(source), RS2::FormatDXFRW))
+      CHECK_FALSE(filter.fileExport(rejected, QString::fromStdString(output), RS2::FormatDXFRW));
+    { std::ifstream retained(output, std::ios::binary);
+      CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+    REQUIRE(filter.fileExport(closed, QString::fromStdString(output), RS2::FormatDXFRW));
+  }
   RS_Entity *segment = polyline->entityAt(0); REQUIRE(segment);
   segment->setMaterialHandle(0xA1u);
   writeText(output, sentinel);
@@ -2376,7 +2422,7 @@ TEST_CASE("Ordinary sparse material saves straight lightweight polylines",
   segment->setMaterialHandle(0);
   REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
   const std::vector<std::pair<std::string, std::string>> unsupported = {
-      {"90\n3\n70\n0\n", "90\n3\n70\n1\n"},
+      {"90\n3\n70\n0\n", "90\n3\n70\n128\n"},
       {"20\n2\n10\n4\n", "20\n2\n42\n0.5\n10\n4\n"},
       {"90\n3\n70\n0\n", "90\n3\n70\n0\n38\n2\n"},
       {"90\n3\n70\n0\n", "90\n3\n70\n0\n43\n1\n"},
@@ -2396,8 +2442,8 @@ TEST_CASE("Ordinary sparse material saves straight lightweight polylines",
   }
 
   const std::string originalVertices = "90\n3\n70\n0\n10\n1\n20\n2\n10\n4\n20\n6\n10\n8\n20\n3\n";
-  for (const int count : {128, 129}) {
-    std::string geometry = "90\n" + std::to_string(count) + "\n70\n0\n";
+  for (const int flag : {0, 1}) for (const int count : {128, 129}) {
+    std::string geometry = "90\n" + std::to_string(count) + "\n70\n" + std::to_string(flag) + "\n";
     for (int i = 0; i < count; ++i)
       geometry += "10\n" + std::to_string(i) + "\n20\n" + std::to_string(i % 7) + "\n";
     auto bounded = input;
@@ -2409,6 +2455,15 @@ TEST_CASE("Ordinary sparse material saves straight lightweight polylines",
     if (count == 128) {
       REQUIRE(filter.fileExport(candidate, QString::fromStdString(output), RS2::FormatDXFRW));
       CHECK(recordGroupValues(output, "LWPOLYLINE", "10").size() == 128u);
+      if (flag == 1) {
+        RS_Graphic reread;
+        REQUIRE(filter.fileImport(reread, QString::fromStdString(output), RS2::FormatDXFRW));
+        REQUIRE(filter.fileExport(reread, QString::fromStdString(resaved), RS2::FormatDXFRW));
+        CHECK(recordGroupValues(resaved, "LWPOLYLINE", "70") == std::vector<std::string>{"1"});
+        CHECK(recordGroupValues(resaved, "LWPOLYLINE", "10").size() == 128u);
+        if (const char *copy = std::getenv("LIBRECAD_KEEP_CLOSED_SPARSE_LWPOLYLINE_128"))
+          std::filesystem::copy_file(resaved, copy, std::filesystem::copy_options::overwrite_existing);
+      }
     } else {
       CHECK_FALSE(filter.fileExport(candidate, QString::fromStdString(output), RS2::FormatDXFRW));
       { std::ifstream retained(output, std::ios::binary);

@@ -1008,11 +1008,13 @@ bool sameRetainedPlotSettings(const DRW_PlotSettings &a, const DRW_PlotSettings 
 
 [[maybe_unused]] bool hasSimpleMaterialPolyline(const RS_Polyline &polyline) {
   const auto &segments = polyline.getEntityList();
-  if (polyline.isClosed() || segments.empty() || segments.size() > 127) return false;
+  const bool closed = polyline.isClosed();
+  if (segments.empty() || (closed ? segments.size() < 3 || segments.size() > 128
+                                  : segments.size() > 127)) return false;
   const auto valid = [](const RS_Vector &p) {
     return p.valid && std::isfinite(p.x) && std::isfinite(p.y) && p.z == 0.0;
   };
-  RS_Vector previous;
+  RS_Vector previous, firstStart;
   bool first = true;
   for (const auto *segment : segments) {
     if (!segment || segment->rtti() != RS2::EntityLine || segment->isDeleted() ||
@@ -1028,10 +1030,11 @@ bool sameRetainedPlotSettings(const DRW_PlotSettings &a, const DRW_PlotSettings 
     const auto start = segment->getStartpoint(), end = segment->getEndpoint();
     if (!valid(start) || !valid(end) || (start.x == end.x && start.y == end.y) ||
         (!first && (start.x != previous.x || start.y != previous.y))) return false;
+    if (first) firstStart = start;
     previous = end;
     first = false;
   }
-  return true;
+  return !closed || (previous.x == firstStart.x && previous.y == firstStart.y);
 }
 
 [[maybe_unused]] bool hasSimpleAutomaticMaterialEntities(RS_Graphic &graphic) {
@@ -12773,6 +12776,7 @@ bool hasSimpleMaterialEntities(const RS_Graphic &graphic, const DRW_DxfEntitiesS
     double radius = 0, angle1 = 0, angle2 = 0;
     std::vector<RS_Vector> vertices;
     int vertexCount = 0;
+    bool closed = false;
     bool awaitingY = false;
     int subclass = 0, colorIndex = 256;
     for (std::size_t index = 0; index < record.groups.size(); ++index) {
@@ -12830,8 +12834,9 @@ bool hasSimpleMaterialEntities(const RS_Graphic &graphic, const DRW_DxfEntitiesS
         bool validRaw = false;
         const int value = QString::fromStdString(raw).toInt(&validRaw);
         if (subclass != 2 || group.type() != DRW_Variant::INTEGER || !validRaw ||
-            value != group.content.i || (code == 70 && value != 0)) return false;
+            value != group.content.i || (code == 70 && value != 0 && value != 1)) return false;
         if (code == 90) vertexCount = value;
+        else closed = value == 1;
       } else if (polyline && code == 43) {
         bool validRaw = false;
         const double value = QString::fromStdString(raw).toDouble(&validRaw);
@@ -12869,7 +12874,7 @@ bool hasSimpleMaterialEntities(const RS_Graphic &graphic, const DRW_DxfEntitiesS
       } else return false;
     }
     if (subclass != (arc ? 3 : 2) || !seen.count(5) || !seen.count(8) ||
-        (polyline ? (!seen.count(90) || !seen.count(70) || awaitingY || vertexCount < 2 ||
+        (polyline ? (!seen.count(90) || !seen.count(70) || awaitingY || vertexCount < (closed ? 3 : 2) ||
                      static_cast<std::size_t>(vertexCount) != vertices.size()) :
                     (!seen.count(10) || !seen.count(20))) || z1 != 0 || z2 != 0 ||
         (line && (!seen.count(11) || !seen.count(21))) ||
@@ -12887,9 +12892,9 @@ bool hasSimpleMaterialEntities(const RS_Graphic &graphic, const DRW_DxfEntitiesS
       return false;
     if (polyline) {
       const auto *value = static_cast<const RS_Polyline *>(found->second);
-      if (!hasSimpleMaterialPolyline(*value)) return false;
+      if (value->isClosed() != closed || !hasSimpleMaterialPolyline(*value)) return false;
       const auto deliveredVertices = value->getVertexes();
-      if (static_cast<std::size_t>(deliveredVertices.size()) != vertices.size()) return false;
+      if (static_cast<std::size_t>(deliveredVertices.size()) != vertices.size() + (closed ? 1u : 0u)) return false;
       for (std::size_t i = 0; i < vertices.size(); ++i)
         if (deliveredVertices[static_cast<int>(i)].x != vertices[i].x ||
             deliveredVertices[static_cast<int>(i)].y != vertices[i].y) return false;
