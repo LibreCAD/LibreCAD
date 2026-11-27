@@ -132,10 +132,10 @@ the dependencies for **3 and 4** in parallel. **5** follows the acceptance work.
    results, assertion counts and sanitizer logs, then record the receipt. A
    successful isolated profile does not replace the shared-process run.
 2. Run the new high-origin closed-polyline seam, reconstructed-parabola,
-   beyond-cusp and default hyperbola profiles under ASan/UBSan after the
-   periodic run finishes and the sanitizer binary can be rebuilt. Run the
-   hyperbola high-origin and very-high-origin modes separately and retain their
-   environment settings. Partition the remaining rational high-degree spline
+   beyond-cusp and hyperbola profiles under ASan/UBSan after the periodic run
+   finishes and the sanitizer binary can be rebuilt, including the hyperbola
+   high-origin modes with their recorded environment settings. Partition the
+   remaining rational high-degree spline
    file-lane generator. The typed-parabola timeout is already
    accounted for by its 152 isolated profiles, but its aggregate remains open.
    These cases combine geometry and file-format dimensions. Inspect each loop
@@ -296,7 +296,15 @@ the dependencies for **3 and 4** in parallel. **5** follows the acceptance work.
   aggregate passed the same **14,856 assertions**. Invalid and out-of-range
   IDs were rejected. Receipts: `/private/tmp/offset-3193-hyperbola-release.json`
   and `/private/tmp/offset-3193-hyperbola-aggregate-release.json` (temporary).
-  The high-origin modes, sanitizer timeout and non-macOS rows remain open.
+  The sanitizer timeout and non-macOS rows remain open.
+- The same hyperbola selector passed **20/20 profiles and 4,952 assertions**
+  with `LC_OFFSET_HYPERBOLA_HIGH_ORIGIN=1` and the very-high flag unset; it
+  passed **20/20 and 7,608 assertions** with
+  `LC_OFFSET_HYPERBOLA_VERY_HIGH_ORIGIN=1` and the high flag unset. Both used
+  the same source-equivalent macOS Release build and test-only 30-second worker
+  wait. Temporary manifests: `/private/tmp/offset-3193-hyperbola-high-release.json`
+  and `/private/tmp/offset-3193-hyperbola-very-high-release.json`. These are
+  isolated Release profiles, not aggregate, sanitizer or non-macOS evidence.
 
 ## Smallest Safe Fix
 
