@@ -135,9 +135,10 @@ the dependencies for **3 and 4** in parallel. **5** follows the acceptance work.
 1. The periodic-spline profile manifest is reconciled below. Its isolated
    profiles do not replace the shared-process run.
 2. The six timed-out generators now have complete isolated profile receipts,
-   including the typed-parabola profiles. Their original aggregate timeouts
-   and shared-process behavior remain open; do not infer aggregate success
-   from the isolated manifests.
+   including the typed-parabola profiles. The reconstructed-parabola aggregate
+   also passed separately below; rerun the other five as bounded single-process
+   cases. Multi-case shared-process behavior remains open; do not infer it from
+   isolated manifests.
 3. Where an existing selector cannot isolate every tuple, add a test-only
    profile selector to that case and register it in the existing profile
    runner. Preserve the unpinned test, use stable complete tuple identities,
@@ -265,8 +266,9 @@ the dependencies for **3 and 4** in parallel. **5** follows the acceptance work.
   build and options, using `parabola-tangent` with the 180-second per-profile
   bound. Manifest and logs: `/private/tmp/offset-3193-trim-tangent-asan.json`
   and `/private/tmp/offset-3193-trim-tangent-asan-logs` (temporary). The
-  six timed-out aggregate cases, prior shared-process failures, leak detection
-  and non-macOS validation remain open. The periodic matrix is recorded below.
+  five other timed-out aggregate cases, prior shared-process failures, leak
+  detection and non-macOS validation remain open. The periodic matrix and
+  reconstructed aggregate are recorded below.
 - The periodic-spline matrix passed **1,080/1,080 profiles and 145,371
   assertions** under the same source-equivalent macOS Debug ASan/UBSan build
   and options, with 180-second per-profile and 30-second test-only worker
@@ -321,8 +323,17 @@ the dependencies for **3 and 4** in parallel. **5** follows the acceptance work.
   result IDs match 0-85, the test-binary hash remained unchanged, and all 86
   logs were free of sanitizer diagnostics. Temporary receipt and logs:
   `/private/tmp/offset-3193-reconstructed-asan.json` and
-  `/private/tmp/offset-3193-reconstructed-asan-logs`. Aggregate timeout,
-  shared-process behavior, leak detection and other platforms remain open.
+  `/private/tmp/offset-3193-reconstructed-asan-logs`. The aggregate is recorded
+  below; multi-case behavior, leak detection and other platforms remain open.
+- The unpinned reconstructed-parabola aggregate subsequently passed in one
+  source-equivalent macOS Debug ASan/UBSan test process with **7,620 assertions**
+  in 311.625 seconds, using the same sanitizer options and 30-second test-only
+  worker wait, with a 900-second test-only case bound. The retained log has no
+  sanitizer diagnostic; receipt and log:
+  `/private/tmp/offset-3193-reconstructed-aggregate-asan.json` and
+  `/private/tmp/offset-3193-reconstructed-aggregate-asan-logs` (temporary).
+  The prior 300-second timeout remains historical evidence; this result does
+  not qualify multi-case order, leak detection or non-macOS behavior.
 - Test-only commit `03d32a2ec` adds the `beyond-cusp` selector over the 144
   existing nested combinations, retaining their format loops. Source-equivalent
   macOS CMake Release passed **144/144 profiles, 13,596 assertions**, and the
