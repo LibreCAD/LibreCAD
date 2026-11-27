@@ -225,6 +225,15 @@ the dependencies for **3 and 4** in parallel. **5** follows the acceptance work.
   Receipts: `/private/tmp/offset-3193-concave-release.txt` and
   `/private/tmp/offset-3193-convex-release.txt` (temporary). These passes do
   not eliminate the ASan fork failure or qualify other platforms.
+- With the reproduction/profile pins unset, both full generators also passed
+  a later source-equivalent macOS Debug ASan/UBSan rerun with the same options
+  and 30-second test-only worker wait: **18,910 concave assertions** and
+  **6,270 convex assertions**, one case each, under a 600-second per-case
+  bound. Temporary manifest and logs:
+  `/private/tmp/offset-3193-flaky-generators-asan.json` and
+  `/private/tmp/offset-3193-flaky-generators-asan-logs`. The two retained logs
+  contain no sanitizer diagnostics. This is another intermittent observation,
+  not a fix or a reclassification of the previously recorded failures.
 - The typed-parabola aggregate that timed out was split with
   `run_offset_trim_profile_matrix.py`: **152/152 profiles, 19,152 assertions**
   passed on the source-equivalent macOS CMake Debug ASan/UBSan build. The runner
