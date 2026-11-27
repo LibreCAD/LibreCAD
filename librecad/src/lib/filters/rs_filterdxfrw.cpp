@@ -1010,14 +1010,23 @@ bool sameRetainedPlotSettings(const DRW_PlotSettings &a, const DRW_PlotSettings 
   const auto &segments = polyline.getEntityList();
   const bool closed = polyline.isClosed();
   if (segments.empty() || (closed ? segments.size() < 3 || segments.size() > 128
-                                  : segments.size() > 127)) return false;
+                                  : segments.size() > 127) ||
+      !std::isfinite(polyline.getNextBulge())) return false;
   const auto valid = [](const RS_Vector &p) {
     return p.valid && std::isfinite(p.x) && std::isfinite(p.y) && p.z == 0.0;
   };
+  const auto joined = [](const RS_Vector &a, const RS_Vector &b, bool curved) {
+    if (!curved) return a.x == b.x && a.y == b.y;
+    const auto close = [](double x, double y) {
+      return std::abs(x - y) <= 64.0 * std::numeric_limits<double>::epsilon() *
+             std::max({1.0, std::abs(x), std::abs(y)});
+    };
+    return close(a.x, b.x) && close(a.y, b.y);
+  };
   RS_Vector previous, firstStart;
-  bool first = true;
+  bool first = true, previousArc = false, firstArc = false;
   for (const auto *segment : segments) {
-    if (!segment || segment->rtti() != RS2::EntityLine || segment->isDeleted() ||
+    if (!segment || (segment->rtti() != RS2::EntityLine && segment->rtti() != RS2::EntityArc) || segment->isDeleted() ||
         !segment->getFlag(RS2::FlagVisible) || segment->getLayer(false) ||
         segment->sourceHandle() || segment->materialHandle() || segment->plotStyleHandle() ||
         segment->shadowMode() || segment->shadowHandle() || segment->fullVisualStyleHandle() ||
@@ -1027,14 +1036,66 @@ bool sameRetainedPlotSettings(const DRW_PlotSettings &a, const DRW_PlotSettings 
     if (pen.isValid() && (!pen.isColorByLayer() || !pen.isWidthByLayer() ||
         !pen.isLineTypeByLayer() || pen.getLineTypeFoldId() != 0 ||
         pen.getColor().hasColorName() || !pen.isFullyOpaque())) return false;
+    const bool isArc = segment->rtti() == RS2::EntityArc;
+    if (isArc) {
+      const auto *arc = static_cast<const RS_Arc *>(segment);
+      const double bulge = arc->getBulge();
+      const double sweep = arc->getData().getAngleLength();
+      if (!arc->getData().isValid() || !valid(arc->getCenter()) ||
+          !std::isfinite(arc->getRadius()) || arc->getRadius() <= 0.0 ||
+          !std::isfinite(bulge) || !std::isfinite(sweep) ||
+          std::abs(bulge) < RS_TOLERANCE || std::abs(bulge) >= RS_MAXDOUBLE ||
+          sweep < RS_TOLERANCE_ANGLE || sweep >= 2.0 * M_PI - RS_TOLERANCE_ANGLE)
+        return false;
+    }
     const auto start = segment->getStartpoint(), end = segment->getEndpoint();
     if (!valid(start) || !valid(end) || (start.x == end.x && start.y == end.y) ||
-        (!first && (start.x != previous.x || start.y != previous.y))) return false;
-    if (first) firstStart = start;
+        (!first && !joined(start, previous, previousArc || isArc))) return false;
+    if (first) { firstStart = start; firstArc = isArc; }
     previous = end;
+    previousArc = isArc;
     first = false;
   }
-  return !closed || (previous.x == firstStart.x && previous.y == firstStart.y);
+  return !closed || joined(previous, firstStart, previousArc || firstArc);
+}
+
+[[maybe_unused]] bool matchesMaterialPolylineSource(const RS_Polyline &delivered,
+    const std::vector<RS_Vector> &vertices, const std::vector<double> &bulges, bool closed) {
+  if (vertices.size() != bulges.size() || vertices.size() < (closed ? 3u : 2u) ||
+      delivered.isClosed() != closed || delivered.getNextBulge() != bulges.back()) return false;
+  std::vector<std::pair<RS_Vector, double>> source;
+  source.reserve(vertices.size());
+  for (std::size_t i = 0; i < vertices.size(); ++i) source.emplace_back(vertices[i], bulges[i]);
+  RS_Polyline expected(nullptr, RS_PolylineData(RS_Vector{}, RS_Vector{}, closed));
+  expected.appendVertexs(source);
+  const auto &actualSegments = delivered.getEntityList();
+  const auto &expectedSegments = expected.getEntityList();
+  if (actualSegments.size() != expectedSegments.size() ||
+      static_cast<std::size_t>(actualSegments.size()) != vertices.size() - (closed ? 0u : 1u)) return false;
+  const auto samePoint = [](const RS_Vector &a, const RS_Vector &b) {
+    return a.valid == b.valid && a.x == b.x && a.y == b.y && a.z == b.z;
+  };
+  for (int i = 0; i < actualSegments.size(); ++i) {
+    const auto *actual = actualSegments[i], *want = expectedSegments[i];
+    if (!actual || !want || actual->rtti() != want->rtti() ||
+        !samePoint(actual->getStartpoint(), want->getStartpoint()) ||
+        !samePoint(actual->getEndpoint(), want->getEndpoint())) return false;
+    const double sourceBulge = bulges[static_cast<std::size_t>(i)];
+    if (actual->rtti() == RS2::EntityLine) {
+      if (sourceBulge != 0.0) return false; // importer flattened a nonzero arc
+    } else if (actual->rtti() == RS2::EntityArc) {
+      const auto *arc = static_cast<const RS_Arc *>(actual);
+      const auto *reference = static_cast<const RS_Arc *>(want);
+      const double emittedBulge = arc->getBulge();
+      if (!samePoint(arc->getCenter(), reference->getCenter()) ||
+          arc->getRadius() != reference->getRadius() || arc->getAngle1() != reference->getAngle1() ||
+          arc->getAngle2() != reference->getAngle2() || arc->isReversed() != reference->isReversed() ||
+          !std::isfinite(emittedBulge) ||
+          std::abs(emittedBulge - sourceBulge) > 64.0 * std::numeric_limits<double>::epsilon() *
+              std::max({1.0, std::abs(emittedBulge), std::abs(sourceBulge)})) return false;
+    } else return false;
+  }
+  return true;
 }
 
 [[maybe_unused]] bool hasSimpleAutomaticMaterialEntities(RS_Graphic &graphic) {
@@ -12752,7 +12813,7 @@ bool isDefaultMaterialPlotSource(const QByteArray &bytes, const DRW_DxfIdentityS
 #endif
 
 // The ordinary-save route initially admits only a physically complete,
-// ASCII AC1021 model-space POINT/LINE/CIRCLE/ARC/straight LWPOLYLINE profile. Other source shapes may still use
+// ASCII AC1021 model-space POINT/LINE/CIRCLE/ARC/LWPOLYLINE profile. Other source shapes may still use
 // the separate explicitly opted-in replay path.
 bool hasSimpleMaterialEntities(const RS_Graphic &graphic, const DRW_DxfEntitiesSource &source) {
   if (source.status != DRW_DxfEntitiesSource::Status::Complete ||
@@ -12775,6 +12836,7 @@ bool hasSimpleMaterialEntities(const RS_Graphic &graphic, const DRW_DxfEntitiesS
     double x1 = 0, y1 = 0, z1 = 0, x2 = 0, y2 = 0, z2 = 0;
     double radius = 0, angle1 = 0, angle2 = 0;
     std::vector<RS_Vector> vertices;
+    std::vector<double> bulges;
     int vertexCount = 0;
     bool closed = false;
     bool awaitingY = false;
@@ -12803,6 +12865,7 @@ bool hasSimpleMaterialEntities(const RS_Graphic &graphic, const DRW_DxfEntitiesS
         if (code == 10) {
           if (awaitingY || vertices.size() >= 128u) return false;
           vertices.emplace_back(value, 0.0);
+          bulges.push_back(0.0);
           vertexFields = 0;
           awaitingY = true;
         } else {
@@ -12817,10 +12880,12 @@ bool hasSimpleMaterialEntities(const RS_Graphic &graphic, const DRW_DxfEntitiesS
         const double value = QString::fromStdString(raw).toDouble(&validRaw);
         const unsigned bit = 1u << static_cast<unsigned>(code - 40);
         if (subclass != 2 || vertices.empty() || awaitingY || (vertexFields & bit) ||
-            group.type() != DRW_Variant::DOUBLE || !validRaw || value != 0.0 ||
+            group.type() != DRW_Variant::DOUBLE || !validRaw || !std::isfinite(value) ||
+            (code != 42 && value != 0.0) ||
             group.content.d != value) return false;
         vertexFields |= bit;
         if (code != 42) hasVertexWidth = true;
+        else bulges.back() = value;
         continue;
       }
       if (!seen.insert(code).second) return false;
@@ -12907,12 +12972,7 @@ bool hasSimpleMaterialEntities(const RS_Graphic &graphic, const DRW_DxfEntitiesS
       return false;
     if (polyline) {
       const auto *value = static_cast<const RS_Polyline *>(found->second);
-      if (value->isClosed() != closed || !hasSimpleMaterialPolyline(*value)) return false;
-      const auto deliveredVertices = value->getVertexes();
-      if (static_cast<std::size_t>(deliveredVertices.size()) != vertices.size() + (closed ? 1u : 0u)) return false;
-      for (std::size_t i = 0; i < vertices.size(); ++i)
-        if (deliveredVertices[static_cast<int>(i)].x != vertices[i].x ||
-            deliveredVertices[static_cast<int>(i)].y != vertices[i].y) return false;
+      if (!hasSimpleMaterialPolyline(*value) || !matchesMaterialPolylineSource(*value, vertices, bulges, closed)) return false;
     } else if (point) {
       const auto *value = static_cast<const RS_Point *>(found->second);
       const auto position = value->getPos();
