@@ -41,7 +41,7 @@ class LC_DwgAdvancedMetadata {
 public:
   enum class ReplayState { ReplayAllowed, ReplayInvalidated, ReplayReplaced };
 #ifdef LIBDXFRW_HAS_DXF_RASTER_SOURCE_HANDLER
-  static constexpr std::size_t MaxDxfRasterSourcesPerKind = 256u;
+  static constexpr std::size_t MaxDxfRasterSourcesPerKind = 384u;
   static constexpr std::size_t MaxDxfImageDefSourceGroups = 512u;
   static constexpr std::size_t MaxDxfRasterSourceBytes = 4u * 1024u * 1024u;
 #else

@@ -4599,11 +4599,11 @@ TEST_CASE("System codec preserves bounded multi-image definition graphs",
                                RS2::FormatDXFRW, RS2::FormatDXFRW2010,
                                RS2::FormatDXFRW2013, RS2::FormatDXFRW2018);
   CAPTURE(format);
-  const int shape = GENERATE(0, 1, 2, 3, 4, 5, 6, 7, 8);
+  const int shape = GENERATE(0, 1, 2, 3, 4, 5, 6, 7, 8, 9);
   const bool withMaterial = GENERATE(false, true);
   const bool legacyMaterial = withMaterial &&
       (format == RS2::FormatDXFRW2000 || format == RS2::FormatDXFRW2004);
-  const unsigned imageCount = shape < 2 ? 2u : shape < 5 ? 3u : shape == 5 ? 4u : shape == 6 ? 32u : shape == 7 ? 64u : 256u;
+  const unsigned imageCount = shape < 2 ? 2u : shape < 5 ? 3u : shape == 5 ? 4u : shape == 6 ? 32u : shape == 7 ? 64u : shape == 8 ? 256u : 384u;
   const unsigned definitionCount = shape == 0 || shape == 4 ? 1u :
                                    shape == 3 || shape >= 5 ? 3u : 2u;
   const bool sharedDefinition = definitionCount == 1u;
@@ -5134,12 +5134,12 @@ TEST_CASE("Raster source capture applies a shared logical budget", "[system-code
   metadata.clear();
   source.groups.clear(); source.rawValues.clear();
   source.groups.emplace_back(1, std::string("small")); source.rawValues.emplace_back("small");
-  for (unsigned i = 0; i < 256u; ++i) {
+  for (unsigned i = 0; i < 384u; ++i) {
     source.name = "IMAGE"; source.handle = 100u + i; metadata.addDxfImageSource(source);
     source.name = "IMAGEDEF"; source.handle = 1000u + i; metadata.addDxfImageDefSource(source);
     REQUIRE(metadata.dxfImageSource(100u + i)); REQUIRE(metadata.dxfImageDefSource(1000u + i));
   }
-  source.name = "IMAGE"; source.handle = 356u; metadata.addDxfImageSource(source);
+  source.name = "IMAGE"; source.handle = 484u; metadata.addDxfImageSource(source);
   CHECK(metadata.dxfImageSource(100u) == nullptr);
   CHECK(metadata.dxfImageDefSource(1000u) == nullptr);
   metadata.clear();
@@ -5163,14 +5163,15 @@ TEST_CASE("System codec audits larger bounded image graphs",
                                RS2::FormatDXFRW, RS2::FormatDXFRW2010,
                                RS2::FormatDXFRW2013, RS2::FormatDXFRW2018);
   CAPTURE(format);
-  const unsigned shape = GENERATE(0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u, 8u, 9u, 10u, 11u, 12u, 13u, 14u, 15u);
+  const unsigned shape = GENERATE(0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u, 8u, 9u, 10u, 11u, 12u, 13u, 14u, 15u, 16u, 17u, 18u, 19u);
   const unsigned imageCount = shape == 0u ? 4u : shape == 1u ? 8u : shape == 5u ? 33u :
                               shape == 6u || shape == 7u || shape == 9u ? 64u : shape == 8u ? 257u :
-                              shape == 10u ? 65u : shape == 13u ? 129u :
+                              shape == 10u ? 65u : shape == 13u ? 129u : shape == 16u ? 385u :
+                              shape >= 17u ? 384u :
                               shape >= 14u ? 256u : shape >= 11u ? 128u : 32u;
   const unsigned definitionCount = shape == 0u || shape == 2u || shape == 9u || shape == 11u || shape == 14u ? 1u :
                                    shape == 4u ? 32u : shape == 7u ? 64u : shape == 12u ? 128u :
-                                   shape == 15u ? 256u : 4u;
+                                   shape == 15u ? 256u : shape == 18u ? 1u : shape == 19u ? 384u : 4u;
   const auto source = tmpFile("many_image_source.dxf");
   const auto output = tmpFile("many_image_output.dxf");
   RS_Graphic original;
@@ -5196,7 +5197,7 @@ TEST_CASE("System codec audits larger bounded image graphs",
   REQUIRE(metadata.imageDefinitionReactors().size() == imageCount);
   const std::string sentinel = "preserve many-image destination";
   writeText(output, sentinel);
-  if (imageCount > 256u) {
+  if (imageCount > 384u) {
     CHECK_FALSE(filter.fileExport(reopened, QString::fromStdString(output), format));
     { std::ifstream in(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(in), {}) == sentinel); }
     RS_Entity *last = nullptr;
@@ -5206,7 +5207,7 @@ TEST_CASE("System codec audits larger bounded image graphs",
     REQUIRE(filter.fileExport(original, QString::fromStdString(source), format));
     RS_Graphic corrected; REQUIRE(filter.fileImport(corrected, QString::fromStdString(source), format));
     REQUIRE(filter.fileExport(corrected, QString::fromStdString(output), format));
-    CHECK(countRecords(output, "IMAGE") == 256);
+    CHECK(countRecords(output, "IMAGE") == 384);
   } else {
     auto &reactors = const_cast<std::vector<LC_DwgAdvancedMetadata::ImageDefinitionReactorRecord>&>(
         metadata.imageDefinitionReactors());
@@ -5255,7 +5256,7 @@ TEST_CASE("System codec audits larger bounded image graphs",
 TEST_CASE("System codec preserves larger image graphs across model and block spaces", "[system-codec][dxf][image][transaction]") {
   ensureSettings();
   const auto format = GENERATE(RS2::FormatDXFRW, RS2::FormatDXFRW2018);
-  const unsigned imageCount = GENERATE(64u, 256u);
+  const unsigned imageCount = GENERATE(64u, 256u, 384u);
   CAPTURE(format, imageCount);
   const auto source = tmpFile("sixty_four_mixed_images_source.dxf");
   const auto output = tmpFile("sixty_four_mixed_images_output.dxf");
