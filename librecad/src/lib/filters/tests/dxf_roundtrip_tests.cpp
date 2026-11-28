@@ -10201,6 +10201,93 @@ TEST_CASE("DXF physical hatch source roles reject conflicting records",
     REQUIRE(filter.fileExport(original, QString::fromStdString(output), RS2::FormatDXFRW2010));
     std::filesystem::remove(output);
   }
+  {
+    auto withLine = structured;
+    const auto entityStart = withLine.find("0\nLWPOLYLINE\n5\nB0\n");
+    REQUIRE(entityStart != std::string::npos);
+    const std::string lineRecord = "0\nLINE\n5\nC0\n330\nA0\n100\nAcDbEntity\n8\n0\n"
+                                   "100\nAcDbLine\n10\n20\n20\n0\n30\n0\n"
+                                   "11\n25\n21\n0\n31\n0\n";
+    withLine.insert(entityStart, lineRecord);
+    CHECK(readRoles(withLine, 0).sourceHandleIsolation);
+    auto linkedLine = withLine;
+    const auto lineSubclass = linkedLine.find("100\nAcDbLine\n");
+    REQUIRE(lineSubclass != std::string::npos);
+    linkedLine.insert(lineSubclass, "102\n{ACAD_REACTORS\n330\nB1\n102\n}\n");
+    CHECK_FALSE(readRoles(linkedLine, 0).sourceHandleIsolation);
+    writeText(src, withLine);
+    ReplayProbe filter;
+    RS_Graphic original;
+    REQUIRE(filter.fileImport(original, QString::fromStdString(src), RS2::FormatDXFRW));
+    RS_Hatch *hatch = nullptr;
+    for (RS_Entity *entity : original)
+      if (entity && entity->rtti() == RS2::EntityHatch) hatch = static_cast<RS_Hatch *>(entity);
+    REQUIRE(hatch);
+    auto *added = new RS_Line(&original, RS_LineData(RS_Vector(30, 1), RS_Vector(35, 1)));
+    original.addEntity(added);
+    const auto output = tmpFile("checked-hatch-independent-lines.dxf");
+    const std::string sentinel = "preserve independent-line destination\n";
+    writeText(output, sentinel);
+    filter.beforeFinalize = [&] { added->setReactorHandles({hatch->sourceHandle()}); };
+    CHECK_FALSE(filter.fileExport(original, QString::fromStdString(output), RS2::FormatDXFRW2010));
+    std::ifstream retained(output, std::ios::binary);
+    CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel);
+    retained.close();
+    added->setReactorHandles({});
+    filter.beforeFinalize = {};
+    REQUIRE(filter.fileExport(original, QString::fromStdString(output), RS2::FormatDXFRW2010));
+    for (int pass = 0; pass < 2; ++pass) {
+      RS_Graphic result;
+      REQUIRE(filter.fileImport(result, QString::fromStdString(output), RS2::FormatDXFRW));
+      const RS_Hatch *resultHatch = nullptr;
+      const RS_Polyline *resultBoundary = nullptr;
+      unsigned lines = 0;
+      for (const RS_Entity *entity : result) {
+        if (entity && entity->rtti() == RS2::EntityHatch) resultHatch = static_cast<const RS_Hatch *>(entity);
+        if (entity && entity->rtti() == RS2::EntityPolyline) resultBoundary = static_cast<const RS_Polyline *>(entity);
+        if (entity && entity->rtti() == RS2::EntityLine) ++lines;
+      }
+      REQUIRE(resultHatch);
+      REQUIRE(resultBoundary);
+      CHECK(lines == 2u);
+      CHECK(resultHatch->sourceAssociative());
+      CHECK(resultHatch->physicalSourceRoles().sourceHandleIsolation);
+      CHECK(resultHatch->sourceLoopBoundaries() == std::vector<std::vector<quint32>>{{resultBoundary->sourceHandle()}});
+      CHECK(resultBoundary->reactorHandles() == std::vector<quint32>{resultHatch->sourceHandle()});
+      REQUIRE(filter.fileExport(result, QString::fromStdString(output), RS2::FormatDXFRW2010));
+    }
+    if (const char *copy = std::getenv("LIBRECAD_KEEP_CHECKED_HATCH_LINES"))
+      std::filesystem::copy_file(output, copy, std::filesystem::copy_options::overwrite_existing);
+    for (unsigned i = 0; i < 30u; ++i)
+      original.addEntity(new RS_Line(&original, RS_LineData(RS_Vector(40, i), RS_Vector(45, i))));
+    REQUIRE(filter.fileExport(original, QString::fromStdString(output), RS2::FormatDXFRW2010));
+    RS_Graphic limit;
+    REQUIRE(filter.fileImport(limit, QString::fromStdString(output), RS2::FormatDXFRW));
+    unsigned limitLines = 0;
+    bool limitAssociated = false;
+    for (const RS_Entity *entity : limit) {
+      if (entity && entity->rtti() == RS2::EntityLine) ++limitLines;
+      if (entity && entity->rtti() == RS2::EntityHatch) {
+        const auto *h = static_cast<const RS_Hatch *>(entity);
+        limitAssociated = h->sourceAssociative() && h->physicalSourceRoles().sourceHandleIsolation;
+      }
+    }
+    CHECK(limitLines == 32u);
+    CHECK(limitAssociated);
+    REQUIRE(filter.fileExport(limit, QString::fromStdString(output), RS2::FormatDXFRW2010));
+    original.addEntity(new RS_Line(&original, RS_LineData(RS_Vector(50, 0), RS_Vector(55, 0))));
+    REQUIRE(filter.fileExport(original, QString::fromStdString(output), RS2::FormatDXFRW2010));
+    RS_Graphic overLimit;
+    REQUIRE(filter.fileImport(overLimit, QString::fromStdString(output), RS2::FormatDXFRW));
+    bool sawOverLimitHatch = false;
+    for (const RS_Entity *entity : overLimit)
+      if (entity && entity->rtti() == RS2::EntityHatch) {
+        CHECK_FALSE(static_cast<const RS_Hatch *>(entity)->sourceAssociative());
+        sawOverLimitHatch = true;
+      }
+    CHECK(sawOverLimitHatch);
+    std::filesystem::remove(output);
+  }
   auto fractional = structured;
   const std::string integralVertices = "10\n0\n20\n0\n10\n10\n20\n0\n10\n10\n20\n10\n10\n0\n20\n10\n";
   const std::string fractionalVertices = "10\n0\n20\n0\n10\n10.5\n20\n0\n10\n10.5\n20\n10\n10\n0\n20\n10\n";

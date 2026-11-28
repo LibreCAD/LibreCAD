@@ -139,7 +139,8 @@
 #include "rs_debug.h"
 #endif // DWGSUPPORT
 
-#if defined(LIBRECAD_SYSTEM_LIBDXFRW) && defined(LIBDXFRW_HAS_DXF_STAGED_HATCH_ISOLATION_INSPECTOR) && \
+#if defined(LIBRECAD_SYSTEM_LIBDXFRW) && defined(LIBDXFRW_HAS_DXF_PHYSICAL_ENTITY_SOURCE_HANDLERS) && \
+    defined(LIBDXFRW_HAS_DXF_STAGED_HATCH_ISOLATION_INSPECTOR) && \
     defined(LIBDXFRW_HAS_DXF_STAGED_FOREIGN_HANDLE_ISOLATION_INSPECTOR) && \
     defined(LIBDXFRW_HAS_DXF_STAGED_RAW_OBJECT_INSPECTOR) && defined(LIBDXFRW_HAS_DXF_STAGED_LAYER_MATERIAL_INSPECTOR) && \
     defined(LIBDXFRW_HAS_DXF_STAGED_HEADER_MATERIAL_INSPECTOR) && defined(LIBDXFRW_HAS_DXF_STAGED_ENTITY_MATERIAL_INSPECTOR)
@@ -156,6 +157,7 @@
 namespace {
 #ifdef LIBDXFRW_HAS_DXF_PHYSICAL_ENTITY_SOURCE_HANDLERS
 constexpr int kDxfHatchSourceByteLimit = 64 * 1024;
+constexpr std::size_t kDxfHatchIndependentLineLimit = 32u;
 #endif
 #if defined(LIBRECAD_SYSTEM_LIBDXFRW) && defined(LIBDXFRW_HAS_DXF_PHYSICAL_ENTITY_SOURCE_HANDLERS)
 bool verifyHatchModelSpaceSource(const QByteArray &input, std::uint32_t owner, std::uint32_t hatch,
@@ -13224,7 +13226,8 @@ bool capturePhysicalHatchRoles(RS_Graphic &graphic, const DRW_DxfEntitiesSource 
   sourceGeometry.clear();
   if (source.status != DRW_DxfEntitiesSource::Status::Complete || source.binary ||
       source.version < DRW::AC1015 || source.version > DRW::AC1032 || !source.scopeId ||
-      source.records.size() != 2u || source.ignoredComments || input.isEmpty() || input.size() > kDxfHatchSourceByteLimit)
+      source.records.size() < 2u || source.records.size() > kDxfHatchIndependentLineLimit + 2u || source.ignoredComments ||
+      input.isEmpty() || input.size() > kDxfHatchSourceByteLimit)
     return false;
   const auto matchesBytes = [&](const DRW_DxfPhysicalRecordSpan &span, int expectedCode,
                                 const std::string &expectedValue) {
@@ -13245,19 +13248,21 @@ bool capturePhysicalHatchRoles(RS_Graphic &graphic, const DRW_DxfEntitiesSource 
   if (!matchesBytes(source.endMarker, 0, "ENDSEC")) return false;
   if (source.records.front().marker.ordinal != source.beginMarker.ordinal ||
       source.records.front().marker.beginOffset != source.beginMarker.beginOffset ||
-      source.records.front().endOrdinal != source.records.back().marker.ordinal ||
-      source.records.front().endOffset != source.records.back().marker.beginOffset ||
       source.records.back().endOrdinal != source.endMarker.ordinal ||
       source.records.back().endOffset != source.endMarker.beginOffset)
     return false;
   const RS_Hatch *hatch = nullptr;
   const RS_Polyline *boundary = nullptr;
+  std::set<std::uint32_t> lines;
   for (const RS_Entity *entity : graphic) {
     if (!entity || entity->isDeleted()) continue;
     if (entity->rtti() == RS2::EntityHatch && !hatch)
       hatch = static_cast<const RS_Hatch *>(entity);
     else if (entity->rtti() == RS2::EntityPolyline && !boundary)
       boundary = static_cast<const RS_Polyline *>(entity);
+    else if (entity->rtti() == RS2::EntityLine && entity->sourceHandle() &&
+             entity->sourceHandle() != DRW::NoHandle && lines.size() < kDxfHatchIndependentLineLimit &&
+             lines.insert(entity->sourceHandle()).second) {}
     else return false;
   }
   if (!hatch || !boundary || !hatch->sourceAssociative() ||
@@ -13275,10 +13280,15 @@ bool capturePhysicalHatchRoles(RS_Graphic &graphic, const DRW_DxfEntitiesSource 
       !hOwner || hOwner != bOwner || hOwner == h || hOwner == b)
     return false;
   const DRW_DxfPhysicalEntitySource *hRecord = nullptr, *bRecord = nullptr;
+  std::vector<const DRW_DxfPhysicalEntitySource *> lineRecords;
   std::size_t groupCount = 0;
-  for (const auto &record : source.records) {
+  for (std::size_t recordIndex = 0; recordIndex < source.records.size(); ++recordIndex) {
+    const auto &record = source.records[recordIndex];
+    if (recordIndex && (source.records[recordIndex - 1u].endOrdinal != record.marker.ordinal ||
+                        source.records[recordIndex - 1u].endOffset != record.marker.beginOffset)) return false;
     if (record.name == "HATCH" && !hRecord) hRecord = &record;
     else if (record.name == "LWPOLYLINE" && !bRecord) bRecord = &record;
+    else if (record.name == "LINE") lineRecords.push_back(&record);
     else return false;
     if (!matchesBytes(record.marker, 0, record.name) ||
         record.groups.size() != record.rawValues.size() || record.groups.size() != record.spans.size() ||
@@ -13298,7 +13308,7 @@ bool capturePhysicalHatchRoles(RS_Graphic &graphic, const DRW_DxfEntitiesSource 
     }
     if (lastOrdinal + 1u != record.endOrdinal || lastEnd != record.endOffset) return false;
   }
-  if (!hRecord || !bRecord || groupCount != source.groups) return false;
+  if (!hRecord || !bRecord || lineRecords.size() != lines.size() || groupCount != source.groups) return false;
   const auto integer = [](const DRW_DxfPhysicalEntitySource &record, std::size_t i, int value) {
     const auto &group = record.groups[i];
     if (group.type() != DRW_Variant::INTEGER || group.i_val() != value) return false;
@@ -13346,6 +13356,31 @@ bool capturePhysicalHatchRoles(RS_Graphic &graphic, const DRW_DxfEntitiesSource 
   std::size_t hBody = 0, bBody = 0;
   if (!frame(*hRecord, "AcDbHatch", h, {}, hBody) ||
       !frame(*bRecord, "AcDbPolyline", b, {h}, bBody)) return false;
+  std::set<std::uint32_t> seenLines;
+  for (const auto *record : lineRecords) {
+    std::uint32_t self = 0, lineOwner = 0;
+    unsigned selfCount = 0;
+    for (std::size_t i = 0; i < record->groups.size(); ++i)
+      if (record->groups[i].code() == 5) {
+        std::uint32_t raw = 0;
+        if (++selfCount != 1u || !parseDxfCarrierHandle(record->groups[i], self) ||
+            !parseDxfCarrierHandle(record->rawValues[i], raw) || self != raw) return false;
+      }
+    std::size_t body = 0;
+    if (selfCount != 1u || !lines.count(self) || !seenLines.insert(self).second ||
+        !metadata.dxfEntitySourceOwner(self, lineOwner) || lineOwner != hOwner ||
+        !frame(*record, "AcDbLine", self, {}, body)) return false;
+    std::set<int> fields;
+    for (std::size_t i = body; i < record->groups.size(); ++i) {
+      const auto &group = record->groups[i];
+      const int code = group.code();
+      if ((code != 10 && code != 20 && code != 30 && code != 11 && code != 21 && code != 31 &&
+           code != 39 && code != 210 && code != 220 && code != 230) ||
+          !fields.insert(code).second || group.type() != DRW_Variant::DOUBLE || !std::isfinite(group.d_val()))
+        return false;
+    }
+    for (int code : {10, 20, 11, 21}) if (!fields.count(code)) return false;
+  }
   unsigned assoc = 0, loops = 0, path = 0, count = 0, target = 0;
   int pathType = 0;
   for (std::size_t i = hBody; i < hRecord->groups.size(); ++i) {
@@ -13531,6 +13566,7 @@ bool verifyHatchModelSpaceSource(const QByteArray &input, std::uint32_t owner, s
                    43,44,50,51,60,61,63,65,70,71,72,73,74,75,76,77,78,79,100,110,111,112,
                    120,121,122,130,131,132,141,142,146,281,282,292,330}},
         {"HATCH", {2,5,6,8,10,11,20,21,30,62,70,71,72,73,75,76,78,91,92,93,97,98,100,210,220,230,330,370}},
+        {"LINE", {5,6,8,10,11,20,21,30,31,39,62,100,210,220,230,330,370}},
         {"LWPOLYLINE", {5,6,8,10,20,43,62,70,90,100,102,330,370}},
         {"DICTIONARY", {3,5,100,280,281,330,350}},
         {"ACDBDICTIONARYWDFLT", {3,5,100,280,281,330,340,350}},
@@ -15091,6 +15127,7 @@ namespace {
 struct CheckedHatchReplay {
   const RS_Hatch *hatch = nullptr;
   const RS_Polyline *boundary = nullptr;
+  std::vector<std::pair<const RS_Entity *, std::uint32_t>> lines;
   std::uint32_t sourceHatch = 0, sourceBoundary = 0, sourceOwner = 0;
   std::vector<LC_HatchAssociation::Edge> sourceGeometry, geometry;
   std::uint32_t emittedHatch = 0, emittedBoundary = 0;
@@ -15103,14 +15140,18 @@ bool checkedHatchReplayStable(RS_Graphic &graphic, const CheckedHatchReplay &aud
       !metadata.rawDxfEntities().empty() || !metadata.materials().empty() ||
       !metadata.groups().empty() || !metadata.xrecords().empty() ||
       !metadata.rasterImages().empty()) return false;
-  unsigned hatches = 0, boundaries = 0;
+  unsigned hatches = 0, boundaries = 0, lines = 0;
   for (const RS_Entity *entity : graphic) {
     if (!entity || entity->isDeleted()) continue;
     if (entity == audit.hatch && entity->rtti() == RS2::EntityHatch) ++hatches;
     else if (entity == audit.boundary && entity->rtti() == RS2::EntityPolyline) ++boundaries;
+    else if (entity->rtti() == RS2::EntityLine && !entity->materialHandle() && !entity->plotStyleHandle() &&
+             !entity->xDictHandle() && entity->reactorHandles().empty() && !entity->hasDrwExtData() &&
+             std::find(audit.lines.begin(), audit.lines.end(),
+                       std::make_pair(entity, entity->sourceHandle())) != audit.lines.end()) ++lines;
     else return false;
   }
-  if (hatches != 1u || boundaries != 1u) return false;
+  if (hatches != 1u || boundaries != 1u || lines != audit.lines.size()) return false;
   for (unsigned i = 0; i < graphic.countBlocks(); ++i) {
     const auto *block = graphic.blockAt(i);
     if (!block || block->isDeleted()) continue;
@@ -15149,6 +15190,8 @@ std::shared_ptr<CheckedHatchReplay> planCheckedHatchReplay(RS_Graphic &graphic) 
     if (entity->rtti() == RS2::EntityHatch && !audit->hatch) audit->hatch = static_cast<const RS_Hatch *>(entity);
     else if (entity->rtti() == RS2::EntityPolyline && !audit->boundary)
       audit->boundary = static_cast<const RS_Polyline *>(entity);
+    else if (entity->rtti() == RS2::EntityLine && audit->lines.size() < kDxfHatchIndependentLineLimit)
+      audit->lines.emplace_back(entity, entity->sourceHandle());
     else return {};
   }
   if (!audit->hatch || !audit->boundary) return {};
