@@ -9522,7 +9522,10 @@ TEST_CASE("DXF import retains hatch source boundary identities per loop",
   const auto src = tmpFile("hatch-source-loop-identities.dxf");
   writeText(src,
             "0\nSECTION\n2\nENTITIES\n"
-            "0\nHATCH\n5\nB1\n100\nAcDbEntity\n8\n0\n100\nAcDbHatch\n"
+            "0\nLWPOLYLINE\n5\nB0\n102\n{ACAD_REACTORS\n330\nB1\n102\n}\n330\nA0\n"
+            "100\nAcDbEntity\n8\n0\n100\nAcDbPolyline\n90\n4\n70\n1\n"
+            "10\n0\n20\n0\n10\n10\n20\n0\n10\n10\n20\n10\n10\n0\n20\n10\n"
+            "0\nHATCH\n5\nB1\n330\nA0\n100\nAcDbEntity\n8\n0\n100\nAcDbHatch\n"
             "10\n0\n20\n0\n30\n0\n210\n0\n220\n0\n230\n1\n2\nSOLID\n70\n1\n71\n1\n"
             "91\n2\n92\n3\n72\n0\n73\n1\n93\n4\n"
             "10\n0\n20\n0\n10\n10\n20\n0\n10\n10\n20\n10\n10\n0\n20\n10\n"
@@ -9541,12 +9544,32 @@ TEST_CASE("DXF import retains hatch source boundary identities per loop",
   REQUIRE(hatch);
   const std::vector<std::vector<quint32>> expected{{0xB0u}, {0xB2u, 0xB3u}};
   CHECK(hatch->sourceLoopBoundaries() == expected);
+  std::uint32_t sourceOwner = 0u;
+  REQUIRE(graphic.dwgAdvancedMetadata().dxfEntitySourceOwner(0xB1u, sourceOwner));
+  CHECK(sourceOwner == 0xA0u);
+  REQUIRE(graphic.dwgAdvancedMetadata().dxfEntitySourceOwner(0xB0u, sourceOwner));
+  CHECK(sourceOwner == 0xA0u);
   std::unique_ptr<RS_Entity> copy(hatch->clone());
   REQUIRE(copy);
   auto *copiedHatch = static_cast<RS_Hatch *>(copy.get());
   CHECK(copiedHatch->sourceLoopBoundaries() == expected);
+  CHECK(copiedHatch->sourceHandle() == hatch->sourceHandle());
   copiedHatch->setSourceLoopBoundaries({{0xB4u}});
   CHECK(hatch->sourceLoopBoundaries() == expected);
+  graphic.dwgAdvancedMetadata().addDxfEntitySourceOwner(0xB1u, 0xA0u);
+  sourceOwner = 0x55u;
+  CHECK_FALSE(graphic.dwgAdvancedMetadata().dxfEntitySourceOwner(0xB1u, sourceOwner));
+  CHECK(sourceOwner == 0x55u);
+  CHECK_FALSE(graphic.dwgAdvancedMetadata().dxfEntitySourceOwner(0xB2u, sourceOwner));
+  LC_DwgAdvancedMetadata bounded;
+  for (std::uint32_t id = 1; id <= 65536u; ++id)
+    bounded.addDxfEntitySourceOwner(id, 0xA0u);
+  REQUIRE(bounded.dxfEntitySourceOwner(1u, sourceOwner));
+  bounded.addDxfEntitySourceOwner(65537u, 0xA0u);
+  CHECK_FALSE(bounded.dxfEntitySourceOwner(1u, sourceOwner));
+  bounded.clear();
+  bounded.addDxfEntitySourceOwner(1u, 0xA0u);
+  CHECK(bounded.dxfEntitySourceOwner(1u, sourceOwner));
   std::filesystem::remove(src);
 }
 

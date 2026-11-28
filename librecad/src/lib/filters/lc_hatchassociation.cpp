@@ -19,7 +19,7 @@
 
 namespace {
 using Point = std::pair<double, double>;
-using Edge = std::array<double, 4>;
+using Edge = LC_HatchAssociation::Edge;
 
 bool straightCycle(const RS_EntityContainer& container, std::vector<Edge>& edges) {
     constexpr std::size_t maxEdges = 4096;
@@ -27,7 +27,7 @@ bool straightCycle(const RS_EntityContainer& container, std::vector<Edge>& edges
     Point first, previous;
     lc::LC_ContainerTraverser traverser{container, RS2::ResolveNone};
     for (const RS_Entity* entity = traverser.first(); entity; entity = traverser.next()) {
-        if (entity->rtti() != RS2::EntityLine || edges.size() == maxEdges)
+        if (entity->isDeleted() || entity->rtti() != RS2::EntityLine || edges.size() == maxEdges)
             return false;
         const auto* line = static_cast<const RS_Line*>(entity);
         const RS_Vector a = line->getStartpoint(), b = line->getEndpoint();
@@ -47,7 +47,8 @@ bool straightCycle(const RS_EntityContainer& container, std::vector<Edge>& edges
 }
 
 bool LC_HatchAssociation::matchesClosedStraightBoundary(const RS_Hatch& hatch,
-                                                         const RS_Polyline& boundary) {
+                                                         const RS_Polyline& boundary,
+                                                         std::vector<Edge>* geometry) {
     if (!hatch.isSolid() || !boundary.isClosed() || hatch.isDeleted() || boundary.isDeleted())
         return false;
     const RS_EntityContainer* source = nullptr;
@@ -69,5 +70,7 @@ bool LC_HatchAssociation::matchesClosedStraightBoundary(const RS_Hatch& hatch,
     std::sort(sourceEdges.begin(), sourceEdges.end());
     std::sort(hatchEdges.begin(), hatchEdges.end());
     std::sort(boundaryEdges.begin(), boundaryEdges.end());
-    return sourceEdges == hatchEdges && hatchEdges == boundaryEdges;
+    if (sourceEdges != hatchEdges || hatchEdges != boundaryEdges) return false;
+    if (geometry) *geometry = std::move(hatchEdges);
+    return true;
 }

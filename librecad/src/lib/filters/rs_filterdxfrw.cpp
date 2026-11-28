@@ -38145,6 +38145,8 @@ void RS_FilterDXFRW::setEntityAttributes(RS_Entity *entity,
   // handle map for refs that target model entities (F3a; GROUP code-340).
   if (attrib->handle != DRW::NoHandle)
     entity->setSourceHandle(attrib->handle);
+  if (m_dxfR != nullptr && m_graphic != nullptr)
+    m_graphic->dwgAdvancedMetadata().addDxfEntitySourceOwner(attrib->handle, attrib->parentHandle);
 
   // Preserve any XDATA / EED that came in with the entity. Stored
   // verbatim on RS_Entity so a later getEntityAttributes() can spit

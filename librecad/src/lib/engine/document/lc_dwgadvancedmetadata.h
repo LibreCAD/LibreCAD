@@ -3547,6 +3547,8 @@ public:
     m_backgrounds.clear();
     m_materials.clear();
     m_sourceHatchBoundaries.clear();
+    m_dxfEntitySourceOwners.clear();
+    m_dxfEntitySourceOwnersAvailable = true;
     m_unidentifiedHatchBoundaries.clear();
     m_renderSettings.clear();
     m_sunStudies.clear();
@@ -3851,6 +3853,35 @@ public:
   // a read filter and a later write filter share them across a DXF round-trip.
   // Source associations are kept separately from reconstructed hatch loops:
   // the latter can be reordered or edited and cannot yet replay these links.
+  // An imported owner is a decoded candidate, not proof of an unambiguous
+  // physical record. Duplicate identities and capture overflow fail closed.
+  void addDxfEntitySourceOwner(std::uint32_t handle, std::uint32_t owner) {
+    if (!m_dxfEntitySourceOwnersAvailable || handle == 0 || handle == DRW::NoHandle)
+      return;
+    try {
+      const auto found = m_dxfEntitySourceOwners.find(handle);
+      if (found != m_dxfEntitySourceOwners.end()) {
+        found->second = 0;
+      } else if (m_dxfEntitySourceOwners.size() == 65536u) {
+        m_dxfEntitySourceOwners.clear();
+        m_dxfEntitySourceOwnersAvailable = false;
+      } else {
+        m_dxfEntitySourceOwners.emplace(handle, owner == DRW::NoHandle ? 0u : owner);
+      }
+    } catch (...) {
+      m_dxfEntitySourceOwners.clear();
+      m_dxfEntitySourceOwnersAvailable = false;
+    }
+  }
+
+  bool dxfEntitySourceOwner(std::uint32_t handle, std::uint32_t &owner) const {
+    const auto found = m_dxfEntitySourceOwners.find(handle);
+    if (!m_dxfEntitySourceOwnersAvailable || found == m_dxfEntitySourceOwners.end() ||
+        found->second == 0 || found->second == DRW::NoHandle) return false;
+    owner = found->second;
+    return true;
+  }
+
   void addSourceHatchBoundaries(std::uint32_t hatch,
                                 const std::vector<std::uint32_t> &boundaries) {
     if (hatch == 0 || hatch == DRW::NoHandle) {
@@ -13968,6 +13999,8 @@ private:
   std::vector<BackgroundRecord> m_backgrounds;
   std::vector<MaterialRecord> m_materials;
   std::map<std::uint32_t, std::set<std::uint32_t>> m_sourceHatchBoundaries;
+  std::map<std::uint32_t, std::uint32_t> m_dxfEntitySourceOwners;
+  bool m_dxfEntitySourceOwnersAvailable = true;
   std::set<std::uint32_t> m_unidentifiedHatchBoundaries;
   std::vector<RenderSettingsRecord> m_renderSettings;
   std::vector<SunStudyRecord> m_sunStudies;
