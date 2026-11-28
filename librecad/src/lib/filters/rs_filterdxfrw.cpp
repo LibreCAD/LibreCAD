@@ -12863,7 +12863,7 @@ bool hasSimpleMaterialEntities(const RS_Graphic &graphic, const DRW_DxfEntitiesS
     bool awaitingY = false;
     bool hasVertexWidth = false;
     unsigned vertexFields = 0;
-    int subclass = 0, colorIndex = 256, trueColor = -1;
+    int subclass = 0, normalSubclass = 0, colorIndex = 256, trueColor = -1;
     for (std::size_t index = 0; index < record.groups.size(); ++index) {
       const auto &group = record.groups[index];
       const auto &raw = record.rawValues[index];
@@ -12937,12 +12937,16 @@ bool hasSimpleMaterialEntities(const RS_Graphic &graphic, const DRW_DxfEntitiesS
             value != group.content.i || (code == 70 && value != 0 && value != 1)) return false;
         if (code == 90) vertexCount = value;
         else closed = value == 1;
-      } else if ((point || line) && (code == 39 || (point && code == 50) ||
-                                      code == 210 || code == 220 || code == 230)) {
+      } else if ((point || line || circle || arc) &&
+                 (code == 39 || (point && code == 50) || code == 210 || code == 220 || code == 230)) {
         bool validRaw = false;
         const double value = QString::fromStdString(raw).toDouble(&validRaw);
         const double expected = code == 230 ? 1.0 : 0.0;
-        if (subclass != 2 || group.type() != DRW_Variant::DOUBLE || !validRaw ||
+        const bool normal = code == 210 || code == 220 || code == 230;
+        if (normal && normalSubclass != 0 && normalSubclass != subclass) return false;
+        if (normal) normalSubclass = subclass;
+        if ((subclass != 2 && !(arc && normal && subclass == 3)) ||
+            group.type() != DRW_Variant::DOUBLE || !validRaw ||
             !std::isfinite(value) || value != expected || group.content.d != value) return false;
       } else if (polyline && (code == 38 || code == 39 || code == 43)) {
         bool validRaw = false;
@@ -12984,7 +12988,8 @@ bool hasSimpleMaterialEntities(const RS_Graphic &graphic, const DRW_DxfEntitiesS
         }
       } else return false;
     }
-    const bool hasExplicitExtrusion = (point || line) && (seen.count(210) || seen.count(220) || seen.count(230));
+    const bool hasExplicitExtrusion = (point || line || circle || arc) &&
+        (seen.count(210) || seen.count(220) || seen.count(230));
     if (subclass != (arc ? 3 : 2) || !seen.count(5) || !seen.count(8) ||
         (hasExplicitExtrusion && (!seen.count(210) || !seen.count(220) || !seen.count(230))) ||
         (trueColor >= 0 && !seen.count(62)) || (trueColor < 0 && colorIndex == 7) ||
