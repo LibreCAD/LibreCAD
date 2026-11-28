@@ -59,6 +59,7 @@
 #include "lc_dimarc.h"
 #include "lc_dwgadvancedmetadata.h"
 #include "lc_filtertestsupport.h"
+#include "lc_hatchassociation.h"
 #include "lc_linetype.h"
 #include "lc_linetypenames.h"
 #include "lc_mleader.h"
@@ -9517,6 +9518,30 @@ TEST_CASE("DXF export keeps a GROUP's handle for its members' reactors",
 }
 
 #if defined(LIBRECAD_SYSTEM_CODEC_TESTS) && defined(LIBDXFRW_HAS_DXF_PHYSICAL_ENTITY_SOURCE_HANDLERS)
+TEST_CASE("ODA compact-material hatch drawing imports without claiming replay",
+          "[.external][hatch-oda-peer]") {
+  ensureSettings();
+  const char *path = std::getenv("LIBRECAD_HATCH_ODA_PEER");
+  REQUIRE(path);
+  RS_Graphic graphic;
+  RS_FilterDXFRW filter;
+  REQUIRE(filter.fileImport(graphic, QString::fromLocal8Bit(path), RS2::FormatDXFRW));
+  const RS_Hatch *hatch = nullptr;
+  const RS_Polyline *boundary = nullptr;
+  for (const RS_Entity *entity : graphic) {
+    if (entity && entity->rtti() == RS2::EntityHatch)
+      hatch = static_cast<const RS_Hatch *>(entity);
+    if (entity && entity->rtti() == RS2::EntityPolyline)
+      boundary = static_cast<const RS_Polyline *>(entity);
+  }
+  REQUIRE(hatch);
+  REQUIRE(boundary);
+  CHECK(hatch->sourceAssociative());
+  CHECK(LC_HatchAssociation::matchesClosedStraightBoundary(*hatch, *boundary));
+  CHECK(graphic.dwgAdvancedMetadata().materials().size() == 3u);
+  CHECK(hatch->physicalSourceRoles().hatch == 0u); // source exceeds the bounded capture
+}
+
 TEST_CASE("DXF physical hatch source roles reject conflicting records",
           "[dxf][roundtrip][filter][system-codec][hatch-source-roles]") {
   ensureSettings();
@@ -9584,6 +9609,7 @@ TEST_CASE("DXF physical hatch source roles reject conflicting records",
   CHECK(roles.hatch == 0xB1u);
   CHECK(roles.boundary == 0xB0u);
   CHECK(roles.owner == 0xA0u);
+  CHECK_FALSE(roles.modelSpace);
   CHECK(readRoles(input, 1).hatch == 0u);
   CHECK(readRoles(input, 2).hatch == 0u);
   CHECK(readRoles(input, 3).hatch == 0u);
@@ -9606,6 +9632,45 @@ TEST_CASE("DXF physical hatch source roles reject conflicting records",
   REQUIRE(subclass != std::string::npos);
   nondefaultColor.insert(subclass, "62\n7\n");
   CHECK(readRoles(nondefaultColor, 0).hatch == 0u);
+  const std::string spaceSections =
+      "0\nSECTION\n2\nTABLES\n0\nTABLE\n2\nBLOCK_RECORD\n5\nD0\n70\n1\n"
+      "0\nBLOCK_RECORD\n5\nA0\n330\nD0\n100\nAcDbSymbolTableRecord\n"
+      "100\nAcDbBlockTableRecord\n2\n*Model_Space\n70\n0\n280\n1\n281\n0\n"
+      "0\nENDTAB\n0\nENDSEC\n0\nSECTION\n2\nBLOCKS\n"
+      "0\nBLOCK\n5\nD1\n330\nA0\n100\nAcDbEntity\n8\n0\n100\nAcDbBlockBegin\n"
+      "2\n*Model_Space\n70\n0\n10\n0\n20\n0\n30\n0\n3\n*Model_Space\n1\n\n"
+      "0\nENDBLK\n5\nD2\n330\nA0\n100\nAcDbEntity\n8\n0\n100\nAcDbBlockEnd\n"
+      "0\nENDSEC\n";
+  auto structured = input;
+  const auto entitiesPosition = structured.find("0\nSECTION\n2\nENTITIES\n");
+  REQUIRE(entitiesPosition != std::string::npos);
+  structured.insert(entitiesPosition, spaceSections);
+  CHECK(readRoles(structured, 0).modelSpace);
+  auto wrongSpace = structured;
+  const auto modelName = wrongSpace.find("2\n*Model_Space\n70\n0\n280\n1");
+  REQUIRE(modelName != std::string::npos);
+  wrongSpace.replace(modelName, std::string("2\n*Model_Space").size(), "2\n*Model_SpacX");
+  CHECK_FALSE(readRoles(wrongSpace, 0).modelSpace);
+  auto wrongBlockOwner = structured;
+  const auto blockOwner = wrongBlockOwner.find("0\nBLOCK\n5\nD1\n330\nA0\n");
+  REQUIRE(blockOwner != std::string::npos);
+  wrongBlockOwner.replace(blockOwner, std::string("0\nBLOCK\n5\nD1\n330\nA0\n").size(),
+                          "0\nBLOCK\n5\nD1\n330\nA2\n");
+  CHECK_FALSE(readRoles(wrongBlockOwner, 0).modelSpace);
+  auto duplicateVersion = structured;
+  const auto version = duplicateVersion.find("9\n$ACADVER\n1\nAC1024\n");
+  REQUIRE(version != std::string::npos);
+  duplicateVersion.insert(version, "9\n$ACADVER\n1\nAC1024\n");
+  CHECK_FALSE(readRoles(duplicateVersion, 0).modelSpace);
+  auto nonemptyBlock = structured;
+  const auto endBlock = nonemptyBlock.find("0\nENDBLK\n5\nD2\n");
+  REQUIRE(endBlock != std::string::npos);
+  nonemptyBlock.insert(endBlock, "0\nPOINT\n5\nD3\n330\nA0\n100\nAcDbEntity\n8\n0\n"
+                               "100\nAcDbPoint\n10\n0\n20\n0\n30\n0\n");
+  CHECK_FALSE(readRoles(nonemptyBlock, 0).modelSpace);
+  auto wrongVersion = structured;
+  wrongVersion.replace(wrongVersion.find("AC1024"), 6u, "AC1015");
+  CHECK_FALSE(readRoles(wrongVersion, 0).modelSpace);
   writeText(src, input);
   SourceProbe retry;
   retry.fault = 1;
@@ -9646,6 +9711,7 @@ TEST_CASE("DXF physical hatch source roles reject conflicting records",
         CHECK(roles.hatch == 0xA1u);
         CHECK(roles.boundary == 0xB1u);
         CHECK(roles.owner == 0x1Fu);
+        CHECK(roles.modelSpace);
         found = true;
       }
     CHECK(found);

@@ -145,6 +145,9 @@
 #endif
 
 namespace {
+#if defined(LIBRECAD_SYSTEM_LIBDXFRW) && defined(LIBDXFRW_HAS_DXF_PHYSICAL_ENTITY_SOURCE_HANDLERS)
+bool verifyHatchModelSpaceSource(const QByteArray &input, std::uint32_t owner, DRW::Version version);
+#endif
 #ifdef LIBDXFRW_DXF_FIELD_MINIMUM_VERSION
 constexpr DRW::Version kDxfFieldMinimumVersion = LIBDXFRW_DXF_FIELD_MINIMUM_VERSION;
 #elif defined(LIBRECAD_SYSTEM_LIBDXFRW)
@@ -6256,8 +6259,18 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic &g, const QString &file,
           if (selected || entity->rtti() != RS2::EntityHatch) { selected = nullptr; break; }
           selected = static_cast<RS_Hatch *>(entity);
         }
-        if (selected) selected->setPhysicalSourceRoles(
-            {m_dxfHatchSourceHandle, m_dxfHatchSourceBoundary, m_dxfHatchSourceOwner});
+        if (selected) {
+          bool modelSpace = false;
+#ifdef LIBRECAD_SYSTEM_LIBDXFRW
+          const auto &spaces = m_graphic->dwgAdvancedMetadata().spaceBlockRecords();
+          const auto space = spaces.find(m_dxfHatchSourceOwner);
+          modelSpace = space != spaces.end() && normalizeDwgTableName(space->second) == "*MODEL_SPACE" &&
+              verifyHatchModelSpaceSource(m_dxfAutomaticHatchBytes, m_dxfHatchSourceOwner,
+                                          m_dxfR->getSourceVersion());
+#endif
+          selected->setPhysicalSourceRoles(
+              {m_dxfHatchSourceHandle, m_dxfHatchSourceBoundary, m_dxfHatchSourceOwner, modelSpace});
+        }
       }
 #endif
 #ifdef LIBDXFRW_HAS_DXF_STAGED_LAYER_PLOT_STYLE_INSPECTOR
@@ -13337,6 +13350,142 @@ bool capturePhysicalHatchRoles(RS_Graphic &graphic, const DRW_DxfEntitiesSource 
   if (assoc != 1u || loops != 1u || path != 1u || count != 1u || target != 1u) return false;
   hatchHandle = h; boundaryHandle = b; ownerHandle = hOwner;
   return true;
+}
+
+// Bind a narrow AC1024 model-space owner profile to the same source snapshot.
+// Other sections and their references still need a separate graph audit.
+bool verifyHatchModelSpaceSource(const QByteArray &input, std::uint32_t owner, DRW::Version version) {
+  if (version != DRW::AC1024 || !owner || owner == DRW::NoHandle || input.isEmpty() ||
+      input.size() > 16 * 1024 || input.contains('\0')) return false;
+  auto lines = input.split('\n');
+  if (!lines.empty() && lines.back().isEmpty()) lines.removeLast();
+  if (lines.size() % 2 != 0) return false;
+  using Group = std::pair<int, QByteArray>;
+  struct Record { QByteArray name; std::vector<Group> groups; };
+  std::vector<Record> records;
+  for (int i = 0; i < lines.size(); i += 2) {
+    auto codeText = lines[i].trimmed();
+    auto value = lines[i + 1];
+    if (value.endsWith('\r')) value.chop(1);
+    bool ok = false; const int code = codeText.toInt(&ok, 10);
+    if (!ok || code < 0 || code > 1071) return false;
+    if (code == 0) records.push_back({value, {}});
+    else if (records.empty()) { if (code != 999) return false; }
+    else records.back().groups.emplace_back(code, value);
+  }
+  const auto one = [](const Record &record, int code, QByteArray &value) {
+    unsigned count = 0;
+    for (const auto &group : record.groups)
+      if (group.first == code) { value = group.second; ++count; }
+    return count == 1u;
+  };
+  const auto handle = [&](const Record &record, int code, std::uint32_t &value) {
+    QByteArray raw;
+    return one(record, code, raw) && parseDxfCarrierHandle(raw.toStdString(), value) &&
+           value != 0 && value != DRW::NoHandle;
+  };
+  const auto codes = [](const Record &record, std::initializer_list<int> expected) {
+    if (record.groups.size() != expected.size()) return false;
+    return std::equal(expected.begin(), expected.end(), record.groups.begin(),
+                      [](int code, const Group &group) { return code == group.first; });
+  };
+  QByteArray section;
+  unsigned header = 0, tables = 0, blocks = 0, entities = 0, versionCount = 0;
+  unsigned modelTable = 0, modelRow = 0, modelBegin = 0, modelEnd = 0, ownerSelf = 0;
+  bool inTable = false, blockTable = false, inBlock = false, modelBlock = false, sawEof = false;
+  std::uint32_t tableHandle = 0, blockHandle = 0;
+  for (std::size_t index = 0; index < records.size(); ++index) {
+    const auto &record = records[index];
+    if (record.name == "SECTION") {
+      if (!section.isEmpty() || sawEof || record.groups.empty() || record.groups.front().first != 2)
+        return false;
+      section = record.groups.front().second;
+      if (section == "HEADER") {
+        if (++header != 1u) return false;
+        for (std::size_t i = 1; i < record.groups.size(); ++i)
+          if (record.groups[i].first == 9 && record.groups[i].second == "$ACADVER") {
+            if (++versionCount != 1u || i + 1u >= record.groups.size() ||
+                record.groups[i + 1u].first != 1 || record.groups[i + 1u].second != "AC1024") return false;
+          }
+      } else if (section == "TABLES") { if (++tables != 1u) return false; }
+      else if (section == "BLOCKS") { if (++blocks != 1u) return false; }
+      else if (section == "ENTITIES") { if (++entities != 1u) return false; }
+      continue;
+    }
+    if (record.name == "ENDSEC") {
+      if (section.isEmpty() || inTable || inBlock || !record.groups.empty()) return false;
+      section.clear(); continue;
+    }
+    if (record.name == "EOF") {
+      if (!section.isEmpty() || sawEof || !record.groups.empty() || index + 1u != records.size()) return false;
+      sawEof = true; continue;
+    }
+    if (section.isEmpty() || sawEof) return false;
+    if (section != "HEADER") {
+      for (const auto &group : record.groups) if (group.first == 5) {
+        std::uint32_t self = 0;
+        if (!parseDxfCarrierHandle(group.second.toStdString(), self)) return false;
+        if (self == owner) ++ownerSelf;
+      }
+    }
+    if (section == "TABLES") {
+      if (record.name == "TABLE") {
+        if (inTable) return false;
+        QByteArray name;
+        if (!one(record, 2, name)) return false;
+        inTable = true; blockTable = name == "BLOCK_RECORD";
+        if (blockTable && (++modelTable != 1u || !handle(record, 5, tableHandle))) return false;
+      } else if (record.name == "ENDTAB") {
+        if (!inTable) return false;
+        inTable = blockTable = false;
+      } else if (record.name == "BLOCK_RECORD" && inTable && blockTable) {
+        QByteArray name; std::uint32_t self = 0, parent = 0;
+        if (!one(record, 2, name) || !handle(record, 5, self)) return false;
+        if (name.toUpper() == "*MODEL_SPACE" || self == owner) {
+          if (++modelRow != 1u || name != "*Model_Space" || self != owner ||
+              !handle(record, 330, parent) || parent != tableHandle ||
+              !codes(record, {5, 330, 100, 100, 2, 70, 280, 281}) ||
+              record.groups[2].second != "AcDbSymbolTableRecord" ||
+              record.groups[3].second != "AcDbBlockTableRecord" ||
+              record.groups[5].second.trimmed() != "0" ||
+              record.groups[6].second.trimmed() != "1" || record.groups[7].second.trimmed() != "0")
+            return false;
+        }
+      } else if (!inTable) return false;
+    } else if (section == "BLOCKS") {
+      if (record.name == "BLOCK") {
+        if (inBlock) return false;
+        QByteArray name; std::uint32_t parent = 0, self = 0;
+        if (!one(record, 2, name) || !handle(record, 330, parent) || !handle(record, 5, self)) return false;
+        inBlock = true; modelBlock = name.toUpper() == "*MODEL_SPACE" || parent == owner;
+        if (modelBlock) {
+          if (++modelBegin != 1u || name != "*Model_Space" || parent != owner || self == owner ||
+              !codes(record, {5, 330, 100, 8, 100, 2, 70, 10, 20, 30, 3, 1}) ||
+              record.groups[2].second != "AcDbEntity" || record.groups[3].second != "0" ||
+              record.groups[4].second != "AcDbBlockBegin" || record.groups[6].second.trimmed() != "0" ||
+              record.groups[10].second != name || !record.groups[11].second.isEmpty()) return false;
+          for (std::size_t i = 7; i <= 9; ++i) {
+            bool ok = false; const double value = record.groups[i].second.toDouble(&ok);
+            if (!ok || value != 0.0) return false;
+          }
+          blockHandle = self;
+        }
+      } else if (record.name == "ENDBLK") {
+        if (!inBlock) return false;
+        if (modelBlock) {
+          std::uint32_t parent = 0, self = 0;
+          if (++modelEnd != 1u || !handle(record, 330, parent) || parent != owner ||
+              !handle(record, 5, self) || self == owner || self == blockHandle ||
+              !codes(record, {5, 330, 100, 8, 100}) || record.groups[2].second != "AcDbEntity" ||
+              record.groups[3].second != "0" || record.groups[4].second != "AcDbBlockEnd") return false;
+        }
+        inBlock = modelBlock = false;
+      } else if (!inBlock || modelBlock) return false;
+    }
+  }
+  return sawEof && header == 1u && tables == 1u && blocks == 1u && entities == 1u &&
+      versionCount == 1u && modelTable == 1u && modelRow == 1u && modelBegin == 1u &&
+      modelEnd == 1u && ownerSelf == 1u;
 }
 }
 #ifdef LIBDXFRW_HAS_DXF_BLOCK_RECORD_SOURCE_SELECTOR
