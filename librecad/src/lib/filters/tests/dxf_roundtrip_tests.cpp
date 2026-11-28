@@ -2345,8 +2345,10 @@ static std::string sparseMaterialPolylineSource() {
       "100\nAcDbMaterial\n1\nPlainMat\n94\n63\n0\nENDSEC\n0\nEOF\n";
 }
 
-TEST_CASE("Ordinary sparse material accepts explicit point defaults", "[system-codec][dxf][material][transaction][point]") {
+TEST_CASE("Ordinary sparse material accepts explicit planar defaults", "[system-codec][dxf][material][transaction][point]") {
   ensureSettings();
+  const bool isPoint = GENERATE(true, false);
+  const std::string kind = isPoint ? "POINT" : "LINE";
   const auto source = tmpFile("system_sparse_point_defaults_source.dxf");
   const auto output = tmpFile("system_sparse_point_defaults_output.dxf");
   const auto resaved = tmpFile("system_sparse_point_defaults_resave.dxf");
@@ -2355,8 +2357,9 @@ TEST_CASE("Ordinary sparse material accepts explicit point defaults", "[system-c
       "0\nSECTION\n2\nTABLES\n0\nTABLE\n2\nLAYER\n70\n1\n"
       "0\nLAYER\n5\n30\n100\nAcDbSymbolTableRecord\n100\nAcDbLayerTableRecord\n"
       "2\nRAWTEST\n70\n0\n62\n7\n6\nCONTINUOUS\n347\nA1\n0\nENDTAB\n0\nENDSEC\n"
-      "0\nSECTION\n2\nENTITIES\n0\nPOINT\n5\nA5\n100\nAcDbEntity\n8\nRAWTEST\n62\n2\n347\nA1\n"
-      "100\nAcDbPoint\n10\n2\n20\n3\n30\n0\n";
+      "0\nSECTION\n2\nENTITIES\n0\n" + kind + "\n5\nA5\n100\nAcDbEntity\n8\nRAWTEST\n62\n2\n347\nA1\n" +
+      (isPoint ? "100\nAcDbPoint\n10\n2\n20\n3\n30\n0\n"
+               : "100\nAcDbLine\n10\n2\n20\n3\n30\n0\n11\n4\n21\n5\n31\n0\n");
   const std::string suffix =
       "0\nENDSEC\n0\nSECTION\n2\nOBJECTS\n0\nDICTIONARY\n5\nC\n330\n0\n"
       "100\nAcDbDictionary\n281\n1\n3\nACAD_MATERIAL\n350\nA0\n"
@@ -2364,25 +2367,29 @@ TEST_CASE("Ordinary sparse material accepts explicit point defaults", "[system-c
       "3\nPlainMat\n350\nA1\n0\nMATERIAL\n5\nA1\n330\nA0\n"
       "100\nAcDbMaterial\n1\nPlainMat\n94\n63\n0\nENDSEC\n0\nEOF\n";
   RS_FilterDXFRW filter;
-  for (const std::string defaults : {"39\n0\n", "50\n0\n", "210\n0\n220\n0\n230\n1\n",
-                                     "39\n0\n50\n0\n210\n0\n220\n0\n230\n1\n"}) {
+  std::vector<std::string> defaultCases{"39\n0\n", "210\n0\n220\n0\n230\n1\n",
+                                        "39\n0\n210\n0\n220\n0\n230\n1\n"};
+  if (isPoint) { defaultCases.push_back("50\n0\n"); defaultCases.push_back("39\n0\n50\n0\n210\n0\n220\n0\n230\n1\n"); }
+  for (const auto &defaults : defaultCases) {
     writeText(source, prefix + defaults + suffix);
     RS_Graphic graphic;
     REQUIRE(filter.fileImport(graphic, QString::fromStdString(source), RS2::FormatDXFRW));
-    RS_Point *point = nullptr;
+    RS_Entity *selected = nullptr;
     for (RS_Entity *entity : graphic)
-      if (entity && entity->sourceHandle() == 0xA5u && entity->rtti() == RS2::EntityPoint)
-        point = static_cast<RS_Point *>(entity);
-    REQUIRE(point); point->setPos(RS_Vector(6.0, 7.0));
+      if (entity && entity->sourceHandle() == 0xA5u &&
+          entity->rtti() == (isPoint ? RS2::EntityPoint : RS2::EntityLine)) selected = entity;
+    REQUIRE(selected);
+    if (isPoint) static_cast<RS_Point *>(selected)->setPos(RS_Vector(6.0, 7.0));
+    else static_cast<RS_Line *>(selected)->move(RS_Vector(4.0, 4.0));
     REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
-    CHECK(recordGroupValues(output, "POINT", "10") == std::vector<std::string>{"6"});
-    CHECK(recordGroupValues(output, "POINT", "20") == std::vector<std::string>{"7"});
+    CHECK(recordGroupValues(output, kind, "10") == std::vector<std::string>{"6"});
+    CHECK(recordGroupValues(output, kind, "20") == std::vector<std::string>{"7"});
     const auto material = recordGroupValues(output, "MATERIAL", "5"); REQUIRE(material.size() == 1u);
-    CHECK(recordGroupValues(output, "POINT", "347") == material);
+    CHECK(recordGroupValues(output, kind, "347") == material);
     RS_Graphic reopened;
     REQUIRE(filter.fileImport(reopened, QString::fromStdString(output), RS2::FormatDXFRW));
     REQUIRE(filter.fileExport(reopened, QString::fromStdString(resaved), RS2::FormatDXFRW));
-    if (const char *copy = std::getenv("LIBRECAD_KEEP_SPARSE_POINT_DEFAULTS"))
+    if (const char *copy = std::getenv(isPoint ? "LIBRECAD_KEEP_SPARSE_POINT_DEFAULTS" : "LIBRECAD_KEEP_SPARSE_LINE_DEFAULTS"))
       std::filesystem::copy_file(resaved, copy, std::filesystem::copy_options::overwrite_existing);
   }
   const std::string sentinel = "preserve destination on unsupported point\n";
@@ -2394,10 +2401,15 @@ TEST_CASE("Ordinary sparse material accepts explicit point defaults", "[system-c
       if (alterTyped && data.handle == 0xA5u) changed.thickness = 1.0;
       RS_FilterDXFRW::addPoint(changed);
     }
+    void addLine(const DRW_Line &data) override {
+      DRW_Line changed = data;
+      if (alterTyped && data.handle == 0xA5u) changed.thickness = 1.0;
+      RS_FilterDXFRW::addLine(changed);
+    }
     void addDxfEntitiesSource(const DRW_DxfEntitiesSource &data) override {
       auto copy = data;
       if (alterPhysical) for (auto &record : copy.records)
-        if (record.name == "POINT") for (std::size_t i = 0; i < record.groups.size(); ++i)
+        if (record.name == "POINT" || record.name == "LINE") for (std::size_t i = 0; i < record.groups.size(); ++i)
           if (record.groups[i].code() == 39) record.rawValues[i] = "1";
       RS_FilterDXFRW::addDxfEntitiesSource(copy);
     }
