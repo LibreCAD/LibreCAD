@@ -5047,8 +5047,24 @@ TEST_CASE("System codec preserves larger polygon image boundaries", "[system-cod
     auto &metadata = graphic.dwgAdvancedMetadata();
     auto &rasters = const_cast<std::vector<LC_DwgAdvancedMetadata::RasterImageRecord>&>(metadata.rasterImages());
     REQUIRE(rasters.size() == imageCount); REQUIRE(rasters.front().clipPath.size() == count);
+    auto *liveImage = dynamic_cast<RS_Image *>(graphic.firstEntity());
+    REQUIRE(liveImage); REQUIRE(liveImage->clipData().present);
+    CHECK(liveImage->clipData().clipping == 1);
+    CHECK(liveImage->clipData().boundaryType == 2);
+    REQUIRE(liveImage->clipData().vertices.size() == count);
+    for (unsigned i = 0; i < count; ++i) {
+      CHECK(liveImage->clipData().vertices[i].x == rasters.front().clipPath[i].x);
+      CHECK(liveImage->clipData().vertices[i].y == rasters.front().clipPath[i].y);
+    }
     auto *raw = const_cast<DRW_RawDxfObject *>(metadata.dxfImageSource(rasters.front().handle)); REQUIRE(raw);
     if (imageCount == 1u) {
+      auto changedClip = liveImage->clipData();
+      changedClip.vertices.back().x += 1.0;
+      liveImage->setClipData(changedClip);
+      CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+      { std::ifstream retained(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+      changedClip.vertices.back().x -= 1.0;
+      liveImage->setClipData(changedClip);
       auto &reactors = const_cast<std::vector<LC_DwgAdvancedMetadata::ImageDefinitionReactorRecord>&>(metadata.imageDefinitionReactors());
       auto reactor = std::find_if(reactors.begin(), reactors.end(), [&](const auto &value) {
         return value.handle == rasters.front().reactorHandle;
@@ -5542,6 +5558,7 @@ TEST_CASE("System codec verifies an IMAGE inside a named block",
     while (std::getline(stream, code) && std::getline(stream, value)) {
       const int group = std::stoi(code);
       if (group == 0) image = value == "IMAGE";
+      if (image && group == 70) value = "7";
       if (image && group == 71) value = "2";
       if (image && group == 91) value = "3";
       if (image && (group == 14 || group == 24)) {

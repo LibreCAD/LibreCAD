@@ -26,8 +26,10 @@
 #include "rs_image.h"
 
 #include <QFileInfo>
+#include <QPainterPath>
 #include <QCoreApplication>
 #include <QApplication>
+#include <cmath>
 #include<iostream>
 
 #include "rs_debug.h"
@@ -63,6 +65,33 @@ namespace {
         }
         // search the current folder of the dxf for the dxf file name
         return dxfFileInfo.canonicalPath() + "/" + fileInfo.fileName();
+    }
+
+    // The image painter uses a bottom-origin pixel frame with image edges at
+    // integral coordinates; DXF clip vertices are relative to pixel centers.
+    bool imageClipPath(const RS_ImageClipData &clip, int width, int height, QPainterPath &path) {
+        const auto &vertices = clip.vertices;
+        const bool validCount = (clip.boundaryType == 1 && vertices.size() == 2u) ||
+                                (clip.boundaryType == 2 && vertices.size() >= 3u &&
+                                 vertices.size() <= RS_ImageClipData::MaxVertices);
+        if (!clip.present || clip.clipping != 1 || !(clip.displayProperties & 4) || !validCount)
+            return false;
+        for (const auto &vertex : vertices)
+            if (!std::isfinite(vertex.x) || !std::isfinite(vertex.y)) return false;
+        const auto point = [](const RS_Vector &v) { return QPointF(v.x + 0.5, -v.y - 0.5); };
+        if (clip.boundaryType == 1) {
+            path.addRect(QRectF(point(vertices.front()), point(vertices.back())).normalized());
+        } else {
+            path.moveTo(point(vertices.front()));
+            for (std::size_t i = 1; i < vertices.size(); ++i) path.lineTo(point(vertices[i]));
+            path.closeSubpath();
+        }
+        if (clip.inverted) {
+            QPainterPath bounds;
+            bounds.addRect(QRectF(0, -height, width, height));
+            path = bounds.subtracted(path);
+        }
+        return true;
     }
 }
 
@@ -205,7 +234,15 @@ bool RS_Image::containsPoint(const RS_Vector& coord) const {
         paf.push_back(QPointF(vp.x, vp.y));
     }
     paf.push_back(paf.at(0));
-    return paf.containsPoint(QPointF(coord.x, coord.y), Qt::OddEvenFill);
+    if (!paf.containsPoint(QPointF(coord.x, coord.y), Qt::OddEvenFill)) return false;
+    QPainterPath clip;
+    if (!imageClipPath(m_clip, getWidth(), getHeight(), clip)) return true;
+    const RS_Vector delta = coord - m_data.insertionPoint;
+    const double determinant = m_data.uVector.x * m_data.vVector.y - m_data.uVector.y * m_data.vVector.x;
+    if (!std::isfinite(determinant) || determinant == 0.0) return true;
+    const double x = (delta.x * m_data.vVector.y - delta.y * m_data.vVector.x) / determinant;
+    const double y = (m_data.uVector.x * delta.y - m_data.uVector.y * delta.x) / determinant;
+    return std::isfinite(x) && std::isfinite(y) && clip.contains(QPointF(x, -y));
 }
 
 RS_Vector RS_Image::doGetNearestEndpoint(const RS_Vector& coord, double* dist, RS_Entity** entity) const {
@@ -356,7 +393,10 @@ void RS_Image::draw(RS_Painter* painter) {
     if ((m_img.get() == nullptr) || m_img->isNull()) {
         return;
     }
-    painter->drawImgWCS(*m_img, m_data.insertionPoint, m_data.uVector, m_data.vVector);
+    QPainterPath clipping;
+    const bool useClip = imageClipPath(m_clip, m_img->width(), m_img->height(), clipping);
+    painter->drawImgWCS(*m_img, m_data.insertionPoint, m_data.uVector, m_data.vVector,
+                        useClip ? &clipping : nullptr);
 
     if (isSelected() && !(painter->isPrinting() || painter->isPrintPreview())) {
         const RS_VectorSolutions sol = getCorners();

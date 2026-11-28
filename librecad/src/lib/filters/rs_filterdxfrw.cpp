@@ -4361,6 +4361,15 @@ bool prepareDxfImageGraph(RS_Graphic &graphic, DRW::Version version,
           }
         } else if (z[0] != 0.0 || z[1] != 0.0 || z[2] != 0.0) return false;
       }
+      const auto &liveClip = image->clipData();
+      if (liveClip.present) {
+        if (liveClip.displayProperties != raster->displayProps || liveClip.clipping != raster->clip ||
+            liveClip.boundaryType != raster->clipBoundaryType || liveClip.inverted != raster->clipMode ||
+            liveClip.vertices.size() != raster->clipPath.size()) return false;
+        for (std::size_t i = 0; i < liveClip.vertices.size(); ++i)
+          if (std::memcmp(&liveClip.vertices[i].x, &raster->clipPath[i].x, sizeof(double)) != 0 ||
+              std::memcmp(&liveClip.vertices[i].y, &raster->clipPath[i].y, sizeof(double)) != 0) return false;
+      }
       const auto *imageSource = metadata.dxfImageSource(handle);
       if (imageSource == nullptr || !dxfImageCarrierMatches(*imageSource, version, *raster, auditedGraph))
         return false;
@@ -12385,6 +12394,17 @@ void RS_FilterDXFRW::addImage(const DRW_Image *data) {
                                 data->brightness, data->contrast, data->fade));
 
   setEntityAttributes(image, data);
+  if (data->clipPath.size() <= RS_ImageClipData::MaxVertices) {
+    RS_ImageClipData clip;
+    clip.present = true;
+    clip.displayProperties = data->m_displayProps;
+    clip.clipping = data->clip;
+    clip.boundaryType = data->m_clipBoundaryType;
+    clip.inverted = data->clipMode;
+    clip.vertices.reserve(data->clipPath.size());
+    for (const auto &vertex : data->clipPath) clip.vertices.emplace_back(vertex.x, vertex.y);
+    image->setClipData(std::move(clip));
+  }
   if (data->basePoint.z != 0.0 || data->secPoint.z != 0.0 ||
       data->vVector.z != 0.0) {
     std::vector<std::shared_ptr<DRW_Variant>> payload;
@@ -37237,6 +37257,16 @@ void RS_FilterDXFRW::writeImage(const RS_Image *i) {
       if (reactorRecord != nullptr)
         reactorTemplate = imageDefinitionReactorFromMetadata(*reactorRecord);
     }
+  }
+
+  const auto &clip = i->clipData();
+  if (clip.present) {
+    image.m_displayProps = clip.displayProperties;
+    image.clip = clip.clipping;
+    image.clipMode = clip.inverted;
+    image.m_clipBoundaryType = clip.boundaryType;
+    image.clipPath.clear();
+    for (const auto &vertex : clip.vertices) image.clipPath.emplace_back(vertex.x, vertex.y, 0.0);
   }
 
   std::string fileName = i->getFile().toUtf8().constData();

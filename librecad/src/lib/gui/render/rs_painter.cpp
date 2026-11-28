@@ -1532,7 +1532,7 @@ void RS_Painter::drawSplineWCS(const RS_Spline& spline) {
     QPainter::drawPath(path);
 }
 
-void RS_Painter::drawImgWCS(const QImage& img, const RS_Vector& wcsInsertionPoint, const RS_Vector& uVector, const RS_Vector& vVector) {
+void RS_Painter::drawImgWCS(const QImage& img, const RS_Vector& wcsInsertionPoint, const RS_Vector& uVector, const RS_Vector& vVector, const QPainterPath *clip) {
     //    if (viewport->hasUCS()) {
     const double wcsAngle = uVector.angle();
     const double ucsAngle = toUCSAngle(wcsAngle);
@@ -1550,11 +1550,11 @@ void RS_Painter::drawImgWCS(const QImage& img, const RS_Vector& wcsInsertionPoin
     const double magnitudeV = vVector.magnitude(); // fixme - sand - render - cache?
     const RS_Vector scale{toGuiDX(magnitudeU), toGuiDY(magnitudeV)};
     const RS_Vector uiInsert = toGui(wcsInsertionPoint);
-    drawImgUI(img, uiInsert, ucsUVector, ucsVVector, scale);
+    drawImgUI(img, uiInsert, ucsUVector, ucsVVector, scale, clip);
 }
 
 void RS_Painter::drawImgUI(const QImage& img, const RS_Vector& uiInsert, const RS_Vector& uVector, const RS_Vector& vVector,
-                           const RS_Vector& factor) {
+                           const RS_Vector& factor, const QPainterPath *clip) {
     PainterGuard painterGuard(*this);
 
     //    LC_ERR << "IMG FACTOR " << factor;
@@ -1583,6 +1583,7 @@ void RS_Painter::drawImgUI(const QImage& img, const RS_Vector& uiInsert, const R
 
     wm->scale(factor.x, factor.y);
     setWorldTransform(*wm);
+    if (clip) setClipPath(*clip, Qt::IntersectClip);
 
     drawImage(0, -img.height(), img);
 }
