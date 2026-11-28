@@ -9614,6 +9614,14 @@ TEST_CASE("DXF physical hatch source roles reject conflicting records",
       if (fault == 3) RS_FilterDXFRW::addDxfEntitiesSource(altered);
     }
   };
+  class ReplayProbe : public SourceProbe {
+  public:
+    std::function<void()> beforeFinalize;
+    bool finalizeDxfWrite() override {
+      if (beforeFinalize) beforeFinalize();
+      return RS_FilterDXFRW::finalizeDxfWrite();
+    }
+  };
   const auto readRoles = [&](const std::string &text, int fault) {
     writeText(src, text);
     RS_Graphic graphic;
@@ -9834,14 +9842,7 @@ TEST_CASE("DXF physical hatch source roles reject conflicting records",
     defined(LIBDXFRW_HAS_DXF_STAGED_RAW_OBJECT_INSPECTOR) && defined(LIBDXFRW_HAS_DXF_STAGED_LAYER_MATERIAL_INSPECTOR) && \
     defined(LIBDXFRW_HAS_DXF_STAGED_HEADER_MATERIAL_INSPECTOR) && defined(LIBDXFRW_HAS_DXF_STAGED_ENTITY_MATERIAL_INSPECTOR)
   {
-    class ReplayProbe : public SourceProbe {
-    public:
-      std::function<void()> beforeFinalize;
-      bool finalizeDxfWrite() override {
-        if (beforeFinalize) beforeFinalize();
-        return RS_FilterDXFRW::finalizeDxfWrite();
-      }
-    } replay;
+    ReplayProbe replay;
     writeText(src, structured);
     RS_Graphic graphic;
     REQUIRE(replay.fileImport(graphic, QString::fromStdString(src), RS2::FormatDXFRW));
@@ -9933,7 +9934,7 @@ TEST_CASE("DXF physical hatch source roles reject conflicting records",
     // failing the whole save when the output inspector sees that GROUP.
     writeText(src, structured);
     RS_Graphic graphic;
-    SourceProbe filter;
+    ReplayProbe filter;
     REQUIRE(filter.fileImport(graphic, QString::fromStdString(src), RS2::FormatDXFRW));
     DRW_Group group;
     group.handle = 0xD0;
@@ -9955,20 +9956,51 @@ TEST_CASE("DXF physical hatch source roles reject conflicting records",
   const auto checkFallback = [&](const std::string &source, bool fixedCollision) {
     writeText(src, source);
     RS_Graphic original;
-    SourceProbe filter;
+    ReplayProbe filter;
     REQUIRE(filter.fileImport(original, QString::fromStdString(src), RS2::FormatDXFRW));
     const auto output = tmpFile("checked-hatch-fallback.dxf");
     if (fixedCollision) {
+      RS_Hatch *originalHatch = nullptr;
+      RS_Polyline *originalBoundary = nullptr;
+      for (const RS_Entity *entity : original)
+        if (entity && entity->rtti() == RS2::EntityHatch) {
+          const auto &roles = static_cast<const RS_Hatch *>(entity)->physicalSourceRoles();
+          REQUIRE(roles.sourceHandleIsolation);
+          REQUIRE(roles.boundary == 0x14u);
+        }
+      for (RS_Entity *entity : original) {
+        if (entity && entity->rtti() == RS2::EntityHatch) originalHatch = static_cast<RS_Hatch *>(entity);
+        if (entity && entity->rtti() == RS2::EntityPolyline) originalBoundary = static_cast<RS_Polyline *>(entity);
+      }
+      REQUIRE(originalHatch);
+      REQUIRE(originalBoundary);
       const std::string sentinel = "preserve fixed-handle destination\n";
       writeText(output, sentinel);
+      filter.beforeFinalize = [&] { originalHatch->move(RS_Vector(1, 0)); originalBoundary->move(RS_Vector(1, 0)); };
       CHECK_FALSE(filter.fileExport(original, QString::fromStdString(output), RS2::FormatDXFRW2010));
       std::ifstream retained(output, std::ios::binary);
       CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel);
       retained.close();
-      writeText(src, structured);
-      RS_Graphic corrected;
-      REQUIRE(filter.fileImport(corrected, QString::fromStdString(src), RS2::FormatDXFRW));
-      REQUIRE(filter.fileExport(corrected, QString::fromStdString(output), RS2::FormatDXFRW2010));
+      originalHatch->move(RS_Vector(-1, 0));
+      originalBoundary->move(RS_Vector(-1, 0));
+      filter.beforeFinalize = {};
+      REQUIRE(filter.fileExport(original, QString::fromStdString(output), RS2::FormatDXFRW2010));
+      RS_Graphic result;
+      REQUIRE(filter.fileImport(result, QString::fromStdString(output), RS2::FormatDXFRW));
+      const RS_Hatch *hatch = nullptr;
+      const RS_Polyline *boundary = nullptr;
+      for (const RS_Entity *entity : result) {
+        if (entity && entity->rtti() == RS2::EntityHatch) hatch = static_cast<const RS_Hatch *>(entity);
+        if (entity && entity->rtti() == RS2::EntityPolyline) boundary = static_cast<const RS_Polyline *>(entity);
+      }
+      REQUIRE(hatch);
+      REQUIRE(boundary);
+      CHECK(boundary->sourceHandle() != 0x14u);
+      CHECK(hatch->sourceAssociative());
+      CHECK(hatch->sourceLoopBoundaries() == std::vector<std::vector<quint32>>{{boundary->sourceHandle()}});
+      CHECK(boundary->reactorHandles() == std::vector<quint32>{hatch->sourceHandle()});
+      if (const char *copy = std::getenv("LIBRECAD_KEEP_CHECKED_HATCH_FIXED14"))
+        std::filesystem::copy_file(output, copy, std::filesystem::copy_options::overwrite_existing);
       std::filesystem::remove(output);
       return;
     }
@@ -9988,6 +10020,32 @@ TEST_CASE("DXF physical hatch source roles reject conflicting records",
   for (std::size_t pos = 0; (pos = fixedHandle.find("B0", pos)) != std::string::npos; pos += 2u)
     fixedHandle.replace(pos, 2u, "14");
   checkFallback(fixedHandle, true);
+  auto duplicateFixedHandle = fixedHandle;
+  const auto blockBeginHandle = duplicateFixedHandle.find("5\nD1\n330\nA0");
+  REQUIRE(blockBeginHandle != std::string::npos);
+  duplicateFixedHandle.replace(blockBeginHandle, std::string("5\nD1\n330\nA0").size(), "5\n14\n330\nA0");
+  CHECK_FALSE(readRoles(duplicateFixedHandle, 0).sourceHandleIsolation);
+  {
+    auto unqualified = structured;
+    for (std::size_t pos = 0; (pos = unqualified.find("B1", pos)) != std::string::npos; pos += 2u)
+      unqualified.replace(pos, 2u, "14");
+    writeText(src, unqualified);
+    ReplayProbe filter;
+    RS_Graphic original;
+    REQUIRE(filter.fileImport(original, QString::fromStdString(src), RS2::FormatDXFRW));
+    const auto output = tmpFile("checked-hatch-unqualified-fixed.dxf");
+    const std::string sentinel = "preserve unqualified fixed-handle destination\n";
+    writeText(output, sentinel);
+    CHECK_FALSE(filter.fileExport(original, QString::fromStdString(output), RS2::FormatDXFRW2010));
+    std::ifstream retained(output, std::ios::binary);
+    CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel);
+    retained.close();
+    writeText(src, structured);
+    RS_Graphic corrected;
+    REQUIRE(filter.fileImport(corrected, QString::fromStdString(src), RS2::FormatDXFRW));
+    REQUIRE(filter.fileExport(corrected, QString::fromStdString(output), RS2::FormatDXFRW2010));
+    std::filesystem::remove(output);
+  }
   auto fractional = structured;
   const std::string integralVertices = "10\n0\n20\n0\n10\n10\n20\n0\n10\n10\n20\n10\n10\n0\n20\n10\n";
   const std::string fractionalVertices = "10\n0\n20\n0\n10\n10.5\n20\n0\n10\n10.5\n20\n10\n10\n0\n20\n10\n";

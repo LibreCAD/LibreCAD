@@ -17536,11 +17536,12 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
   try {
     if (exportVersion == DRW::AC1024) {
       const auto audit = planCheckedHatchReplay(g);
-      const auto safeEarlyHandle = [this](std::uint32_t source) {
+      const auto safeEarlyHandle = [this, audit](std::uint32_t source) {
         const auto output = dxfReference(source);
-        // Low structural identities and explicitly reserved carriers need the
-        // ordinary mapping path; do not turn an otherwise valid save into an
-        // early-preallocation failure merely to preserve this association.
+        // The isolated profile below also admits the observed 0x14 source
+        // collision: the entity planner binds it to a newly allocated identity.
+        if (audit && source == 0x14u && source == audit->sourceBoundary &&
+            output == source && !m_dxfW->isReservedHandle(output)) return true;
         return source > 0x21u && output > 0x21u && output != DRW::NoHandle && !m_dxfW->isReservedHandle(output);
       };
       if (audit && safeEarlyHandle(audit->sourceHatch) && safeEarlyHandle(audit->sourceBoundary) &&
@@ -17987,8 +17988,23 @@ void RS_FilterDXFRW::prepareDxfEntityHandleMap() {
       if (!m_dxfW->bindSourceEntityHandle(sourceHandle,
                                           m_dxfW->remapHandle(sourceHandle)))
         m_writeFailed = true;
-    } else if (m_dxfW->preallocateEntityHandle(sourceHandle) == 0) {
-      m_writeFailed = true;
+    } else {
+#ifdef LIBRECAD_HAS_CHECKED_DXF_HATCH_REPLAY
+      if (sourceHandle == 0x14u && m_dxfAssociationHatch && m_dxfAssociationBoundary &&
+          m_dxfAssociationBoundary->sourceHandle() == sourceHandle) {
+        // The checked source has no other claim on this identity. The output
+        // uses 0x14 structurally, so allocate a separate entity handle before
+        // HEADER or any other output section can refer to it.
+        const auto fresh = m_dxfW->allocHandle();
+        if (fresh <= 0x21u || fresh == DRW::NoHandle ||
+            !m_dxfW->bindSourceEntityHandle(sourceHandle, fresh)) {
+          m_writeFailed = true;
+          continue;
+        }
+      }
+#endif
+      if (m_dxfW->preallocateEntityHandle(sourceHandle) == 0)
+        m_writeFailed = true;
     }
   }
 
