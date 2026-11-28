@@ -13479,11 +13479,32 @@ bool verifyHatchModelSpaceSource(const QByteArray &input, std::uint32_t owner, s
   const auto scanHandles = [&](const Record &record, const QByteArray &recordSection) {
     // Do not treat a handle-group scan as evidence in the presence of opaque
     // application payloads or an object class outside this small profile.
-    static const std::set<QByteArray> knownRecords{
-        "SECTION", "TABLE", "ENDTAB", "BLOCK_RECORD", "BLOCK", "ENDBLK", "CLASS",
-        "APPID", "DIMSTYLE", "LAYER", "LTYPE", "STYLE", "VPORT", "HATCH", "LWPOLYLINE",
-        "DICTIONARY", "ACDBDICTIONARYWDFLT", "ACDBPLACEHOLDER"};
-    if (!knownRecords.count(record.name)) isolated = false;
+    static const std::map<QByteArray, std::set<int>> knownFields{
+        {"SECTION", {1,2,3,5,6,7,8,9,10,20,30,40,50,62,70,280,290,370,380}},
+        {"TABLE", {2,5,70,71,100,330,340}}, {"ENDTAB", {}},
+        {"BLOCK_RECORD", {2,5,70,100,280,281,330}},
+        {"BLOCK", {1,2,3,5,8,10,20,30,70,100,330}},
+        {"ENDBLK", {5,8,100,330}}, {"CLASS", {1,2,3,90,91,280,281}},
+        {"APPID", {2,5,70,100,330}},
+        {"DIMSTYLE", {2,40,41,42,43,44,45,46,47,48,49,69,70,71,72,73,74,75,76,77,78,79,
+                      90,100,105,140,141,142,143,144,145,146,147,148,170,171,172,173,174,
+                      175,176,177,178,179,271,272,273,274,275,276,277,278,279,280,281,282,
+                      283,284,285,286,288,289,295,330,340,371,372}},
+        {"LAYER", {2,5,6,62,70,100,290,330,370,390}},
+        {"LTYPE", {2,3,5,40,70,72,73,100,330}},
+        {"STYLE", {2,3,4,5,40,41,42,50,70,71,100,330}},
+        {"VPORT", {2,5,10,11,12,13,14,15,16,17,20,21,22,23,24,25,26,27,36,37,40,41,42,
+                   43,44,50,51,60,61,63,65,70,71,72,73,74,75,76,77,78,79,100,110,111,112,
+                   120,121,122,130,131,132,141,142,146,281,282,292,330}},
+        {"HATCH", {2,5,6,8,10,20,30,62,70,71,72,73,75,76,78,91,92,93,97,98,100,210,220,230,330,370}},
+        {"LWPOLYLINE", {5,6,8,10,20,43,62,70,90,100,102,330,370}},
+        {"DICTIONARY", {3,5,100,280,281,330,350}},
+        {"ACDBDICTIONARYWDFLT", {3,5,100,280,281,330,340,350}},
+        {"ACDBPLACEHOLDER", {5,100,330}}};
+    const auto known = knownFields.find(record.name);
+    if (known == knownFields.end() ||
+        (record.name == "SECTION" && recordSection != "HEADER" && record.groups.size() != 1u))
+      isolated = false;
     if (record.name == "CLASS") {
       QByteArray className;
       if (!one(record, 1, className) ||
@@ -13491,6 +13512,15 @@ bool verifyHatchModelSpaceSource(const QByteArray &input, std::uint32_t owner, s
     }
     for (const auto &group : record.groups) {
       const int code = group.first;
+      if (known == knownFields.end() || !known->second.count(code)) isolated = false;
+      if (recordSection == "HEADER" && code == 9 &&
+          (group.second == "$CUSTOMPROPERTY" || group.second == "$CUSTOMPROPERTYTAG")) isolated = false;
+#ifdef LIBDXFRW_HAS_DXF_CANONICAL_HEADER_VARIABLE_QUERY
+      if (recordSection == "HEADER" && code == 9 &&
+          !DRW_Header::isDxfCanonicalVariableName(group.second.toStdString())) isolated = false;
+#else
+      if (recordSection == "HEADER" && code == 9) isolated = false;
+#endif
       if ((code >= 310 && code <= 319) || (code >= 1000 && code <= 1071) ||
           (code == 102 && !(recordSection == "ENTITIES" && record.name == "LWPOLYLINE")))
         isolated = false;

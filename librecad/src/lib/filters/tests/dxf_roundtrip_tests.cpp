@@ -9676,12 +9676,16 @@ TEST_CASE("DXF physical hatch source roles reject conflicting records",
   structured.insert(entitiesPosition, spaceSections);
   const auto structuredRoles = readRoles(structured, 0);
   CHECK(structuredRoles.modelSpace);
+#ifdef LIBDXFRW_HAS_DXF_CANONICAL_HEADER_VARIABLE_QUERY
   CHECK(structuredRoles.sourceHandleIsolation);
+#else
+  CHECK_FALSE(structuredRoles.sourceHandleIsolation);
+#endif
   for (const int code : {5, 330, 340, 481, 1005}) {
     auto externalReference = structured;
     const auto headerEnd = externalReference.find("0\nENDSEC\n");
     REQUIRE(headerEnd != std::string::npos);
-    externalReference.insert(headerEnd, "9\n$TEST_HANDLE\n" + std::to_string(code) + "\nB0\n");
+    externalReference.insert(headerEnd, "9\n$DIMBLK\n" + std::to_string(code) + "\nB0\n");
     const auto externallyReferenced = readRoles(externalReference, 0);
     CHECK(externallyReferenced.modelSpace);
     CHECK_FALSE(externallyReferenced.sourceHandleIsolation);
@@ -9690,11 +9694,32 @@ TEST_CASE("DXF physical hatch source roles reject conflicting records",
     auto opaqueSource = structured;
     const auto headerEnd = opaqueSource.find("0\nENDSEC\n");
     REQUIRE(headerEnd != std::string::npos);
-    opaqueSource.insert(headerEnd, "9\n$TEST_OPAQUE\n" + std::to_string(code) + "\nABCD\n");
+    opaqueSource.insert(headerEnd, "9\n$DIMBLK\n" + std::to_string(code) + "\nABCD\n");
     const auto opaqueRoles = readRoles(opaqueSource, 0);
     CHECK(opaqueRoles.modelSpace);
     CHECK_FALSE(opaqueRoles.sourceHandleIsolation);
   }
+  auto unknownHeader = structured;
+  const auto unknownHeaderEnd = unknownHeader.find("0\nENDSEC\n");
+  REQUIRE(unknownHeaderEnd != std::string::npos);
+  unknownHeader.insert(unknownHeaderEnd, "9\n$VENDOR_DATA\n1\nopaque\n");
+  const auto unknownHeaderRoles = readRoles(unknownHeader, 0);
+  CHECK(unknownHeaderRoles.modelSpace);
+  CHECK_FALSE(unknownHeaderRoles.sourceHandleIsolation);
+  auto customProperty = structured;
+  const auto propertyEnd = customProperty.find("0\nENDSEC\n");
+  REQUIRE(propertyEnd != std::string::npos);
+  customProperty.insert(propertyEnd, "9\n$CUSTOMPROPERTYTAG\n1\nKEY\n9\n$CUSTOMPROPERTY\n1\nVALUE\n");
+  const auto propertyRoles = readRoles(customProperty, 0);
+  CHECK(propertyRoles.modelSpace);
+  CHECK_FALSE(propertyRoles.sourceHandleIsolation);
+  auto unknownHeaderField = structured;
+  const auto unknownFieldEnd = unknownHeaderField.find("0\nENDSEC\n");
+  REQUIRE(unknownFieldEnd != std::string::npos);
+  unknownHeaderField.insert(unknownFieldEnd, "9\n$DIMBLK\n300\nopaque\n");
+  const auto unknownFieldRoles = readRoles(unknownHeaderField, 0);
+  CHECK(unknownFieldRoles.modelSpace);
+  CHECK_FALSE(unknownFieldRoles.sourceHandleIsolation);
   auto unknownClass = structured;
   const auto headerEndForClass = unknownClass.find("0\nENDSEC\n");
   REQUIRE(headerEndForClass != std::string::npos);
@@ -9773,7 +9798,11 @@ TEST_CASE("DXF physical hatch source roles reject conflicting records",
         CHECK(roles.boundary == 0xB1u);
         CHECK(roles.owner == 0x1Fu);
         CHECK(roles.modelSpace);
+#ifdef LIBDXFRW_HAS_DXF_CANONICAL_HEADER_VARIABLE_QUERY
         CHECK(roles.sourceHandleIsolation);
+#else
+        CHECK_FALSE(roles.sourceHandleIsolation);
+#endif
         CHECK(roles.sourceGeometry.size() == 4u);
       } else if (entity && entity->rtti() == RS2::EntityPolyline)
         selectedBoundary = static_cast<RS_Polyline *>(entity);
