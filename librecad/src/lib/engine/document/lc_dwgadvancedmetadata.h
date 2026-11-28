@@ -46,7 +46,9 @@ public:
   static constexpr std::size_t MaxDxfImageDefSourceGroups = MaxDxfRasterSourcesPerKind + 128u;
   // 30 fixed IMAGE groups plus two coordinates for each of 256 clip vertices.
   static constexpr std::size_t MaxDxfImageSourceGroups = 542u;
-  static constexpr std::size_t MaxDxfRasterSourceBytes = 4u * 1024u * 1024u;
+  // 512 images with distinct definitions require more than 4 MiB of
+  // accounted source records. Both maps share this bounded logical budget.
+  static constexpr std::size_t MaxDxfRasterSourceBytes = 6u * 1024u * 1024u;
 #else
   static constexpr std::size_t MaxDxfRasterSourcesPerKind = 32u;
   static constexpr std::size_t MaxDxfImageDefSourceGroups = 64u;

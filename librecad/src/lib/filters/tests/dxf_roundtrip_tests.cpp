@@ -5250,7 +5250,7 @@ TEST_CASE("Raster source capture applies a shared logical budget", "[system-code
   source.groups.emplace_back(1, std::string(30000u, 'a'));
   source.rawValues.emplace_back(30000u, 'b');
   unsigned completePairs = 0; bool rejected = false;
-  for (unsigned i = 0; i < 40u; ++i) {
+  for (unsigned i = 0; i < 64u; ++i) {
     source.name = "IMAGE"; source.handle = 100u + i;
     metadata.addDxfImageSource(source);
     if (!metadata.dxfImageSource(source.handle)) { rejected = true; break; }
@@ -5259,7 +5259,7 @@ TEST_CASE("Raster source capture applies a shared logical budget", "[system-code
     if (!metadata.dxfImageDefSource(source.handle)) { rejected = true; break; }
     ++completePairs;
   }
-  CHECK(rejected); CHECK(completePairs > 32u); CHECK(completePairs < 40u);
+  CHECK(rejected); CHECK(completePairs > 40u); CHECK(completePairs < 64u);
   CHECK(metadata.dxfImageSource(100u) == nullptr);
   CHECK(metadata.dxfImageDefSource(1000u) == nullptr);
   metadata.clear();
@@ -5383,7 +5383,7 @@ TEST_CASE("System codec retains the image source file-size guard", "[system-code
   const std::string sentinel = "preserve source-size destination";
   RS_FilterDXFRW filter;
 
-  // The retained-record budget remains independent of the input-size limit.
+  // A bounded graph with 512 distinct definitions is retained and replayed.
   RS_Graphic distinct; distinct.initForNewDocument();
   for (unsigned i = 0; i < 512u; ++i)
     distinct.addEntity(new RS_Image(&distinct, RS_ImageData(0, RS_Vector(29.0 * i, 2),
@@ -5391,13 +5391,49 @@ TEST_CASE("System codec retains the image source file-size guard", "[system-code
         QStringLiteral("distinct-image-%1.png").arg(i), 50, 50, 0)));
   REQUIRE(filter.fileExport(distinct, QString::fromStdString(source), format));
   REQUIRE(std::filesystem::file_size(source) > 256u * 1024u);
-  RS_Graphic tooManySources;
-  REQUIRE(filter.fileImport(tooManySources, QString::fromStdString(source), format));
-  REQUIRE(tooManySources.dwgAdvancedMetadata().rasterImages().size() == 512u);
-  CHECK(tooManySources.dwgAdvancedMetadata().dxfImageDefSource() == nullptr);
+  RS_Graphic distinctRead;
+  REQUIRE(filter.fileImport(distinctRead, QString::fromStdString(source), format));
+  const auto &distinctMetadata = distinctRead.dwgAdvancedMetadata();
+  REQUIRE(distinctMetadata.rasterImages().size() == 512u);
+  REQUIRE(distinctMetadata.imageDefinitions().size() == 512u);
+  REQUIRE(distinctMetadata.imageDefinitionReactors().size() == 512u);
+  for (const auto &definition : distinctMetadata.imageDefinitions())
+    REQUIRE(distinctMetadata.dxfImageDefSource(definition.handle));
+  class LateDistinctImageProbe : public RS_FilterDXFRW {
+  public:
+    std::function<void()> beforeFinalize;
+    bool finalizeDxfWrite() override {
+      if (beforeFinalize) beforeFinalize();
+      return RS_FilterDXFRW::finalizeDxfWrite();
+    }
+  } late;
+  RS_Image *lastImage = nullptr;
+  for (RS_Entity *entity : distinctRead)
+    if (entity && entity->rtti() == RS2::EntityImage) lastImage = static_cast<RS_Image *>(entity);
+  REQUIRE(lastImage);
+  const auto oldPosition = lastImage->getInsertionPoint();
+  late.beforeFinalize = [&] { lastImage->setInsertionPoint(oldPosition + RS_Vector(1, 0)); };
   writeText(output, sentinel);
-  CHECK_FALSE(filter.fileExport(tooManySources, QString::fromStdString(output), format));
+  CHECK_FALSE(late.fileExport(distinctRead, QString::fromStdString(output), format));
   { std::ifstream in(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(in), {}) == sentinel); }
+  lastImage->setInsertionPoint(oldPosition);
+  late.beforeFinalize = {};
+  REQUIRE(late.fileExport(distinctRead, QString::fromStdString(output), format));
+  CHECK(countRecords(output, "IMAGE") == 512);
+  CHECK(countRecords(output, "IMAGEDEF") == 512);
+  CHECK(countRecords(output, "IMAGEDEF_REACTOR") == 512);
+  RS_Graphic distinctReopened;
+  REQUIRE(filter.fileImport(distinctReopened, QString::fromStdString(output), format));
+  CHECK(distinctReopened.dwgAdvancedMetadata().rasterImages().size() == 512u);
+  CHECK(distinctReopened.dwgAdvancedMetadata().imageDefinitions().size() == 512u);
+  CHECK(distinctReopened.dwgAdvancedMetadata().imageDefinitionReactors().size() == 512u);
+  if (const char *prefix = std::getenv("LIBRECAD_KEEP_512_DISTINCT")) {
+    std::filesystem::copy_file(source, std::string(prefix) + ".source.dxf",
+                               std::filesystem::copy_options::overwrite_existing);
+    std::filesystem::copy_file(output, std::string(prefix) + ".output.dxf",
+                               std::filesystem::copy_options::overwrite_existing);
+  }
+  REQUIRE(filter.fileExport(distinctReopened, QString::fromStdString(output), format));
 
   RS_Graphic original; original.initForNewDocument();
   for (unsigned i = 0; i < 512u; ++i)
