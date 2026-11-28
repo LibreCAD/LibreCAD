@@ -12930,11 +12930,16 @@ bool hasSimpleMaterialEntities(const RS_Graphic &graphic, const DRW_DxfEntitiesS
       } else if (code == 6) {
         if (subclass != 1 || group.type() != DRW_Variant::STRING || !group.content.s ||
             raw != *group.content.s || normalizeDwgTableName(*group.content.s) != "BYLAYER") return false;
-      } else if (code == 67) {
+      } else if (code == 67 || code == 60) {
         bool validRaw = false;
         const int value = QString::fromStdString(raw).toInt(&validRaw);
         if (subclass != 1 || group.type() != DRW_Variant::INTEGER || !validRaw ||
             value != 0 || group.content.i != value) return false;
+      } else if (code == 48) {
+        bool validRaw = false;
+        const double value = QString::fromStdString(raw).toDouble(&validRaw);
+        if (subclass != 1 || group.type() != DRW_Variant::DOUBLE || !validRaw ||
+            value != 1.0 || group.content.d != value) return false;
       } else if (polyline && (code == 90 || code == 70)) {
         bool validRaw = false;
         const int value = QString::fromStdString(raw).toInt(&validRaw);

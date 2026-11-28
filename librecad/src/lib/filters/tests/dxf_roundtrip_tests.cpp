@@ -2478,7 +2478,7 @@ TEST_CASE("Ordinary sparse material accepts explicit planar defaults", "[system-
   }
 }
 
-TEST_CASE("Ordinary sparse material accepts explicit model space", "[system-codec][dxf][material][transaction]") {
+TEST_CASE("Ordinary sparse material accepts explicit common defaults", "[system-codec][dxf][material][transaction]") {
   ensureSettings();
   const auto source = tmpFile("system_sparse_material_model_space_source.dxf");
   const auto output = tmpFile("system_sparse_material_model_space_output.dxf");
@@ -2493,11 +2493,11 @@ TEST_CASE("Ordinary sparse material accepts explicit model space", "[system-code
       {"LWPOLYLINE", "100\nAcDbPolyline\n90\n3\n70\n0\n10\n1\n20\n2\n10\n4\n20\n6\n10\n8\n20\n3\n"},
   };
   struct SpaceProbe : RS_FilterDXFRW {
-    bool alter = false;
+    int alter = 0;
     void addDxfEntitiesSource(const DRW_DxfEntitiesSource &data) override {
       auto copy = data;
       if (alter) for (auto &record : copy.records) for (std::size_t i = 0; i < record.groups.size(); ++i)
-        if (record.groups[i].code() == 67) record.rawValues[i] = "1";
+        if (record.groups[i].code() == alter) record.rawValues[i] = alter == 48 ? "2" : "1";
       RS_FilterDXFRW::addDxfEntitiesSource(copy);
     }
   } filter;
@@ -2507,7 +2507,7 @@ TEST_CASE("Ordinary sparse material accepts explicit model space", "[system-code
     const auto begin = base.find("0\nLWPOLYLINE\n5\nA5\n"), end = base.find("0\nENDSEC\n", begin);
     REQUIRE(begin != std::string::npos); REQUIRE(end != std::string::npos);
     const std::string common = "0\n" + entry.first + "\n5\nA5\n100\nAcDbEntity\n8\nRAWTEST\n62\n2\n347\nA1\n";
-    base.replace(begin, end - begin, common + "67\n0\n" + entry.second);
+    base.replace(begin, end - begin, common + "67\n0\n48\n1\n60\n0\n" + entry.second);
     writeText(source, base); RS_Graphic graphic;
     REQUIRE(filter.fileImport(graphic, QString::fromStdString(source), RS2::FormatDXFRW));
     RS_Entity *selected = nullptr;
@@ -2522,9 +2522,17 @@ TEST_CASE("Ordinary sparse material accepts explicit model space", "[system-code
     REQUIRE(filter.fileExport(reopened, QString::fromStdString(resaved), RS2::FormatDXFRW));
     if (const char *prefix = std::getenv("LIBRECAD_KEEP_SPARSE_MODEL_SPACE"))
       std::filesystem::copy_file(resaved, std::string(prefix) + entry.first + ".dxf", std::filesystem::copy_options::overwrite_existing);
-    for (const std::string bad : {"67\n1\n", "67\n2\n", "67\n-1\n", "67\n0\n67\n0\n", "67\n0junk\n"}) {
-      auto invalid = base; const auto pos = invalid.find("67\n0\n", begin); REQUIRE(pos != std::string::npos);
-      invalid.replace(pos, 5, bad); writeText(source, invalid); writeText(output, sentinel);
+    selected->setVisible(false); writeText(output, sentinel);
+    CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+    { std::ifstream retained(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+    selected->setVisible(true); REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+    for (const auto &bad : std::vector<std::pair<std::string, std::string>>{
+             {"67\n0\n", "67\n1\n"}, {"67\n0\n", "67\n2\n"}, {"67\n0\n", "67\n-1\n"},
+             {"67\n0\n", "67\n0\n67\n0\n"}, {"67\n0\n", "67\n0junk\n"},
+             {"48\n1\n", "48\n2\n"}, {"48\n1\n", "48\nnan\n"}, {"48\n1\n", "48\n1\n48\n1\n"},
+             {"60\n0\n", "60\n1\n"}, {"60\n0\n", "60\n2\n"}, {"60\n0\n", "60\n0\n60\n0\n"}}) {
+      auto invalid = base; const auto pos = invalid.find(bad.first, begin); REQUIRE(pos != std::string::npos);
+      invalid.replace(pos, bad.first.size(), bad.second); writeText(source, invalid); writeText(output, sentinel);
       RS_Graphic rejected;
       if (filter.fileImport(rejected, QString::fromStdString(source), RS2::FormatDXFRW))
         CHECK_FALSE(filter.fileExport(rejected, QString::fromStdString(output), RS2::FormatDXFRW));
@@ -2532,22 +2540,26 @@ TEST_CASE("Ordinary sparse material accepts explicit model space", "[system-code
       CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel);
       REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
     }
-    auto misplaced = base; const auto pos = misplaced.find("67\n0\n", begin); REQUIRE(pos != std::string::npos);
-    misplaced.erase(pos, 5); const auto geometry = misplaced.find(entry.second, begin); REQUIRE(geometry != std::string::npos);
-    const auto markerEnd = misplaced.find('\n', misplaced.find('\n', geometry) + 1); REQUIRE(markerEnd != std::string::npos);
-    misplaced.insert(markerEnd + 1, "67\n0\n"); writeText(source, misplaced); writeText(output, sentinel);
-    RS_Graphic misplacedGraphic;
-    if (filter.fileImport(misplacedGraphic, QString::fromStdString(source), RS2::FormatDXFRW))
-      CHECK_FALSE(filter.fileExport(misplacedGraphic, QString::fromStdString(output), RS2::FormatDXFRW));
-    { std::ifstream retained(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
-    REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
-    writeText(source, base); filter.alter = true; RS_Graphic rejected;
-    REQUIRE(filter.fileImport(rejected, QString::fromStdString(source), RS2::FormatDXFRW)); writeText(output, sentinel);
-    CHECK_FALSE(filter.fileExport(rejected, QString::fromStdString(output), RS2::FormatDXFRW));
-    { std::ifstream retained(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
-    filter.alter = false; RS_Graphic retry;
-    REQUIRE(filter.fileImport(retry, QString::fromStdString(source), RS2::FormatDXFRW));
-    REQUIRE(filter.fileExport(retry, QString::fromStdString(output), RS2::FormatDXFRW));
+    for (const std::string field : {"67\n0\n", "48\n1\n", "60\n0\n"}) {
+      auto misplaced = base; const auto pos = misplaced.find(field, begin); REQUIRE(pos != std::string::npos);
+      misplaced.erase(pos, field.size()); const auto geometry = misplaced.find(entry.second, begin); REQUIRE(geometry != std::string::npos);
+      const auto markerEnd = misplaced.find('\n', misplaced.find('\n', geometry) + 1); REQUIRE(markerEnd != std::string::npos);
+      misplaced.insert(markerEnd + 1, field); writeText(source, misplaced); writeText(output, sentinel);
+      RS_Graphic misplacedGraphic;
+      if (filter.fileImport(misplacedGraphic, QString::fromStdString(source), RS2::FormatDXFRW))
+        CHECK_FALSE(filter.fileExport(misplacedGraphic, QString::fromStdString(output), RS2::FormatDXFRW));
+      { std::ifstream retained(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+      REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
+    }
+    for (int code : {67, 48, 60}) {
+      writeText(source, base); filter.alter = code; RS_Graphic rejected;
+      REQUIRE(filter.fileImport(rejected, QString::fromStdString(source), RS2::FormatDXFRW)); writeText(output, sentinel);
+      CHECK_FALSE(filter.fileExport(rejected, QString::fromStdString(output), RS2::FormatDXFRW));
+      { std::ifstream retained(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+      filter.alter = 0; RS_Graphic retry;
+      REQUIRE(filter.fileImport(retry, QString::fromStdString(source), RS2::FormatDXFRW));
+      REQUIRE(filter.fileExport(retry, QString::fromStdString(output), RS2::FormatDXFRW));
+    }
   }
 }
 
