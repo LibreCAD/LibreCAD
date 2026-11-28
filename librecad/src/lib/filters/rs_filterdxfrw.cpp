@@ -1134,16 +1134,14 @@ bool sameRetainedPlotSettings(const DRW_PlotSettings &a, const DRW_PlotSettings 
   return version >= DRW::AC1021 && version <= DRW::AC1032;
 }
 
-[[maybe_unused]] bool hasSimpleAutomaticMaterialEntities(RS_Graphic &graphic, bool pointsAndLinesOnly) {
+[[maybe_unused]] bool hasSimpleAutomaticMaterialEntities(RS_Graphic &graphic) {
   std::size_t count = 0;
   const auto validPoint = [](const RS_Vector &point) {
     return point.valid && std::isfinite(point.x) && std::isfinite(point.y) && point.z == 0.0;
   };
   for (const RS_Entity *entity : graphic) {
     if (!entity || entity->isDeleted()) continue;
-    if (!hasSimpleMaterialAppearance(*entity) ||
-        (pointsAndLinesOnly && entity->rtti() != RS2::EntityPoint &&
-         entity->rtti() != RS2::EntityLine)) return false;
+    if (!hasSimpleMaterialAppearance(*entity)) return false;
     if (entity->rtti() == RS2::EntityPoint) {
       const auto *point = static_cast<const RS_Point *>(entity);
       if (!validPoint(point->getPos())) return false;
@@ -12945,9 +12943,8 @@ bool isDefaultMaterialPlotSource(const QByteArray &bytes, const DRW_DxfIdentityS
 #endif
 
 // The ordinary-save route initially admits only a physically complete,
-// ASCII AC1021 model-space POINT/LINE/CIRCLE/ARC/ELLIPSE/LWPOLYLINE profile,
-// or selected AC1024/AC1027/AC1032 POINT and LINE profiles. Other source
-// shapes may still use the separate explicitly opted-in replay path.
+// ASCII AC1021-AC1032 model-space POINT/LINE/CIRCLE/ARC/ELLIPSE/LWPOLYLINE
+// profile. Other source shapes may use the explicitly opted-in replay path.
 bool hasSimpleMaterialEntities(const RS_Graphic &graphic, const DRW_DxfEntitiesSource &source) {
   if (source.status != DRW_DxfEntitiesSource::Status::Complete ||
       !supportsAutomaticMaterialVersion(source.version) || source.binary || source.records.empty() ||
@@ -12963,7 +12960,7 @@ bool hasSimpleMaterialEntities(const RS_Graphic &graphic, const DRW_DxfEntitiesS
     const bool point = name == "POINT", line = name == "LINE", circle = name == "CIRCLE", arc = name == "ARC";
     const bool polyline = name == "LWPOLYLINE", ellipse = name == "ELLIPSE";
     if ((!point && !line && !circle && !arc && !polyline && !ellipse) ||
-        (source.version != DRW::AC1021 && !point && !line) || record.groups.size() != record.rawValues.size()) return false;
+        record.groups.size() != record.rawValues.size()) return false;
     std::set<int> seen;
     std::uint32_t handle = 0;
     std::string layer;
@@ -15337,7 +15334,7 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
     const auto *materialSource = metadata.materials().empty() ? nullptr : metadata.materials().front().rawDxfSource.get();
     if (metadata.dxfMaterialAutomaticReplayEligible() && !explicitReplay &&
         (!materialSource || !isDefaultAutomaticMaterialPlot(g) ||
-         !hasSimpleAutomaticMaterialEntities(g, materialSource->m_version != DRW::AC1021))) return false;
+         !hasSimpleAutomaticMaterialEntities(g))) return false;
     const auto *sourceEntities = metadata.dxfMaterialEntitySources();
     std::vector<MaterialEntityReference> currentEntities;
     if (!sourceEntities || !collectDxfMaterialEntities(g, currentEntities) ||
