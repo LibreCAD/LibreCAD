@@ -76,18 +76,30 @@ bool LC_HatchAssociation::matchesClosedStraightBoundary(const RS_Hatch& hatch,
     return true;
 }
 
-// Exact integer predicates avoid rounding a near-intersection into a false
-// simple-polygon witness. Other coordinates keep the deassociation path.
-bool LC_HatchAssociation::isSimpleIntegerContour(const std::vector<Edge> &edges) {
+// Scale bounded binary fractions exactly to integers before intersection
+// predicates; coordinates outside this profile retain the deassociation path.
+bool LC_HatchAssociation::isSimpleBoundedDyadicContour(const std::vector<Edge> &edges) {
   using Point = std::pair<std::int64_t, std::int64_t>;
   using Segment = std::pair<Point, Point>;
   if (edges.size() < 3u || edges.size() > 4096u) return false;
+  int shift = 0;
+  for (const auto &edge : edges) {
+    for (const double value : edge) {
+      if (!std::isfinite(value) || std::abs(value) > 1000000.0) return false;
+      while (std::trunc(std::ldexp(value, shift)) != std::ldexp(value, shift)) {
+        if (++shift > 20) return false;
+      }
+    }
+  }
   std::vector<Segment> segments;
   for (const auto &edge : edges) {
-    for (const double value : edge)
-      if (!std::isfinite(value) || std::abs(value) > 1000000.0 || std::trunc(value) != value) return false;
-    segments.push_back({{static_cast<std::int64_t>(edge[0]), static_cast<std::int64_t>(edge[1])},
-                        {static_cast<std::int64_t>(edge[2]), static_cast<std::int64_t>(edge[3])}});
+    std::array<std::int64_t, 4> scaled{};
+    for (std::size_t i = 0; i < edge.size(); ++i) {
+      const double value = std::ldexp(edge[i], shift);
+      if (std::abs(value) > 1000000.0) return false;
+      scaled[i] = static_cast<std::int64_t>(value);
+    }
+    segments.push_back({{scaled[0], scaled[1]}, {scaled[2], scaled[3]}});
   }
   const auto cross = [](Point a, Point b, Point c) {
     return (b.first - a.first) * (c.second - a.second) - (b.second - a.second) * (c.first - a.first);

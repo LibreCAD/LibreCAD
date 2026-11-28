@@ -16,6 +16,7 @@
 #include <cmath>
 #include <filesystem>
 #include <fstream>
+#include <limits>
 #include <map>
 #include <memory>
 #include <set>
@@ -217,15 +218,33 @@ TEST_CASE("Checked hatch contour rejects crossings and overlapping edges", "[hat
     const std::vector<Edge> square{{{0,0,10,0}}, {{10,0,10,10}}, {{10,10,0,10}}, {{0,10,0,0}}};
     const std::vector<Edge> crossed{{{0,0,10,10}}, {{10,10,0,10}}, {{0,10,10,0}}, {{10,0,0,0}}};
     const std::vector<Edge> overlap{{{0,0,10,0}}, {{10,0,5,0}}, {{5,0,5,10}}, {{5,10,0,0}}};
-    auto fractional = square;
-    fractional[0][0] = 0.5;
+    const std::vector<Edge> fractional{{{0,0,10.5,0}}, {{10.5,0,10.5,10}},
+                                       {{10.5,10,0,10}}, {{0,10,0,0}}};
+    auto crossedFractional = crossed;
+    for (auto &edge : crossedFractional) for (auto &value : edge) value = value / 2.0 + 0.5;
+    auto precise = square;
+    for (auto &edge : precise) for (auto &value : edge) value = std::ldexp(value / 10.0, -20);
+    auto beyondPrecision = square;
+    for (auto &edge : beyondPrecision) for (auto &value : edge) value = std::ldexp(value / 10.0, -21);
+    auto almostHalf = square;
+    almostHalf[0][0] = std::nextafter(0.5, 1.0);
+    auto excessiveScale = fractional;
+    excessiveScale[0][0] = 600000;
     auto large = square;
     large[0][0] = 1000001;
-    CHECK(LC_HatchAssociation::isSimpleIntegerContour(square));
-    CHECK_FALSE(LC_HatchAssociation::isSimpleIntegerContour(crossed));
-    CHECK_FALSE(LC_HatchAssociation::isSimpleIntegerContour(overlap));
-    CHECK_FALSE(LC_HatchAssociation::isSimpleIntegerContour(fractional));
-    CHECK_FALSE(LC_HatchAssociation::isSimpleIntegerContour(large));
+    auto nonfinite = square;
+    nonfinite[0][0] = std::numeric_limits<double>::infinity();
+    CHECK(LC_HatchAssociation::isSimpleBoundedDyadicContour(square));
+    CHECK(LC_HatchAssociation::isSimpleBoundedDyadicContour(fractional));
+    CHECK(LC_HatchAssociation::isSimpleBoundedDyadicContour(precise));
+    CHECK_FALSE(LC_HatchAssociation::isSimpleBoundedDyadicContour(crossed));
+    CHECK_FALSE(LC_HatchAssociation::isSimpleBoundedDyadicContour(crossedFractional));
+    CHECK_FALSE(LC_HatchAssociation::isSimpleBoundedDyadicContour(overlap));
+    CHECK_FALSE(LC_HatchAssociation::isSimpleBoundedDyadicContour(beyondPrecision));
+    CHECK_FALSE(LC_HatchAssociation::isSimpleBoundedDyadicContour(almostHalf));
+    CHECK_FALSE(LC_HatchAssociation::isSimpleBoundedDyadicContour(excessiveScale));
+    CHECK_FALSE(LC_HatchAssociation::isSimpleBoundedDyadicContour(large));
+    CHECK_FALSE(LC_HatchAssociation::isSimpleBoundedDyadicContour(nonfinite));
 }
 
 // NOLINTNEXTLINE(readability-identifier-naming)

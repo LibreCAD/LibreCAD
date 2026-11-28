@@ -15158,7 +15158,7 @@ std::shared_ptr<CheckedHatchReplay> planCheckedHatchReplay(RS_Graphic &graphic) 
   if (!audit->sourceHatch || !audit->sourceBoundary || !audit->sourceOwner ||
       audit->sourceHatch == DRW::NoHandle || audit->sourceBoundary == DRW::NoHandle || audit->sourceOwner == DRW::NoHandle ||
       audit->sourceHatch == audit->sourceBoundary || audit->sourceOwner == audit->sourceHatch ||
-      audit->sourceOwner == audit->sourceBoundary || !LC_HatchAssociation::isSimpleIntegerContour(audit->geometry) ||
+      audit->sourceOwner == audit->sourceBoundary || !LC_HatchAssociation::isSimpleBoundedDyadicContour(audit->geometry) ||
       !checkedHatchReplayStable(graphic, *audit)) return {};
   return audit;
 }

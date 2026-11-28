@@ -9953,37 +9953,42 @@ TEST_CASE("DXF physical hatch source roles reject conflicting records",
     CHECK(sawHatch);
     std::filesystem::remove(output);
   }
-  const auto checkFallback = [&](const std::string &source, bool fixedCollision) {
+  const auto checkLateMutation = [&](RS_Graphic &graphic, ReplayProbe &filter, const std::string &output) {
+    RS_Hatch *hatch = nullptr;
+    RS_Polyline *boundary = nullptr;
+    for (RS_Entity *entity : graphic) {
+      if (entity && entity->rtti() == RS2::EntityHatch) hatch = static_cast<RS_Hatch *>(entity);
+      if (entity && entity->rtti() == RS2::EntityPolyline) boundary = static_cast<RS_Polyline *>(entity);
+    }
+    REQUIRE(hatch);
+    REQUIRE(boundary);
+    const std::string sentinel = "preserve checked hatch destination\n";
+    writeText(output, sentinel);
+    bool moved = false;
+    filter.beforeFinalize = [&] { moved = true; hatch->move(RS_Vector(1, 0)); boundary->move(RS_Vector(1, 0)); };
+    CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+    CHECK(moved);
+    std::ifstream retained(output, std::ios::binary);
+    CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel);
+    retained.close();
+    if (moved) { hatch->move(RS_Vector(-1, 0)); boundary->move(RS_Vector(-1, 0)); }
+    filter.beforeFinalize = {};
+  };
+  const auto checkSelectedContour = [&](const std::string &source, bool fixedCollision, bool expectedAssociated,
+                                 const char *copyVariable) {
     writeText(src, source);
     RS_Graphic original;
     ReplayProbe filter;
     REQUIRE(filter.fileImport(original, QString::fromStdString(src), RS2::FormatDXFRW));
     const auto output = tmpFile("checked-hatch-fallback.dxf");
     if (fixedCollision) {
-      RS_Hatch *originalHatch = nullptr;
-      RS_Polyline *originalBoundary = nullptr;
       for (const RS_Entity *entity : original)
         if (entity && entity->rtti() == RS2::EntityHatch) {
           const auto &roles = static_cast<const RS_Hatch *>(entity)->physicalSourceRoles();
           REQUIRE(roles.sourceHandleIsolation);
           REQUIRE(roles.boundary == 0x14u);
         }
-      for (RS_Entity *entity : original) {
-        if (entity && entity->rtti() == RS2::EntityHatch) originalHatch = static_cast<RS_Hatch *>(entity);
-        if (entity && entity->rtti() == RS2::EntityPolyline) originalBoundary = static_cast<RS_Polyline *>(entity);
-      }
-      REQUIRE(originalHatch);
-      REQUIRE(originalBoundary);
-      const std::string sentinel = "preserve fixed-handle destination\n";
-      writeText(output, sentinel);
-      filter.beforeFinalize = [&] { originalHatch->move(RS_Vector(1, 0)); originalBoundary->move(RS_Vector(1, 0)); };
-      CHECK_FALSE(filter.fileExport(original, QString::fromStdString(output), RS2::FormatDXFRW2010));
-      std::ifstream retained(output, std::ios::binary);
-      CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel);
-      retained.close();
-      originalHatch->move(RS_Vector(-1, 0));
-      originalBoundary->move(RS_Vector(-1, 0));
-      filter.beforeFinalize = {};
+      checkLateMutation(original, filter, output);
       REQUIRE(filter.fileExport(original, QString::fromStdString(output), RS2::FormatDXFRW2010));
       RS_Graphic result;
       REQUIRE(filter.fileImport(result, QString::fromStdString(output), RS2::FormatDXFRW));
@@ -10004,22 +10009,52 @@ TEST_CASE("DXF physical hatch source roles reject conflicting records",
       std::filesystem::remove(output);
       return;
     }
+    if (expectedAssociated) checkLateMutation(original, filter, output);
     REQUIRE(filter.fileExport(original, QString::fromStdString(output), RS2::FormatDXFRW2010));
     RS_Graphic result;
     REQUIRE(filter.fileImport(result, QString::fromStdString(output), RS2::FormatDXFRW));
-    bool found = false;
-    for (const RS_Entity *entity : result)
-      if (entity && entity->rtti() == RS2::EntityHatch) {
-        CHECK_FALSE(static_cast<const RS_Hatch *>(entity)->sourceAssociative());
-        found = true;
+    const RS_Hatch *hatch = nullptr;
+    const RS_Polyline *boundary = nullptr;
+    for (const RS_Entity *entity : result) {
+      if (entity && entity->rtti() == RS2::EntityHatch) hatch = static_cast<const RS_Hatch *>(entity);
+      if (entity && entity->rtti() == RS2::EntityPolyline) boundary = static_cast<const RS_Polyline *>(entity);
+    }
+    REQUIRE(hatch);
+    REQUIRE(boundary);
+    CHECK(hatch->sourceAssociative() == expectedAssociated);
+    if (expectedAssociated) {
+      CHECK(hatch->sourceLoopBoundaries() == std::vector<std::vector<quint32>>{{boundary->sourceHandle()}});
+      CHECK(boundary->reactorHandles() == std::vector<quint32>{hatch->sourceHandle()});
+      CHECK(LC_HatchAssociation::matchesClosedStraightBoundary(*hatch, *boundary));
+      CHECK(hatch->physicalSourceRoles().sourceHandleIsolation);
+      if (copyVariable) {
+        if (const char *copy = std::getenv(copyVariable))
+          std::filesystem::copy_file(output, copy, std::filesystem::copy_options::overwrite_existing);
       }
-    CHECK(found);
+      const auto secondOutput = tmpFile("checked-hatch-dyadic-repeat.dxf");
+      REQUIRE(filter.fileExport(result, QString::fromStdString(secondOutput), RS2::FormatDXFRW2010));
+      RS_Graphic repeated;
+      REQUIRE(filter.fileImport(repeated, QString::fromStdString(secondOutput), RS2::FormatDXFRW));
+      const RS_Hatch *secondHatch = nullptr;
+      const RS_Polyline *secondBoundary = nullptr;
+      for (const RS_Entity *entity : repeated) {
+        if (entity && entity->rtti() == RS2::EntityHatch) secondHatch = static_cast<const RS_Hatch *>(entity);
+        if (entity && entity->rtti() == RS2::EntityPolyline) secondBoundary = static_cast<const RS_Polyline *>(entity);
+      }
+      REQUIRE(secondHatch);
+      REQUIRE(secondBoundary);
+      CHECK(secondHatch->sourceAssociative());
+      CHECK(secondHatch->sourceLoopBoundaries() == std::vector<std::vector<quint32>>{{secondBoundary->sourceHandle()}});
+      CHECK(secondBoundary->reactorHandles() == std::vector<quint32>{secondHatch->sourceHandle()});
+      CHECK(LC_HatchAssociation::matchesClosedStraightBoundary(*secondHatch, *secondBoundary));
+      std::filesystem::remove(secondOutput);
+    }
     std::filesystem::remove(output);
   };
   auto fixedHandle = structured;
   for (std::size_t pos = 0; (pos = fixedHandle.find("B0", pos)) != std::string::npos; pos += 2u)
     fixedHandle.replace(pos, 2u, "14");
-  checkFallback(fixedHandle, true);
+  checkSelectedContour(fixedHandle, true, true, nullptr);
   auto duplicateFixedHandle = fixedHandle;
   const auto blockBeginHandle = duplicateFixedHandle.find("5\nD1\n330\nA0");
   REQUIRE(blockBeginHandle != std::string::npos);
@@ -10056,7 +10091,23 @@ TEST_CASE("DXF physical hatch source roles reject conflicting records",
     ++replacements;
   }
   REQUIRE(replacements == 2u);
-  checkFallback(fractional, false);
+  checkSelectedContour(fractional, false, true, "LIBRECAD_KEEP_CHECKED_HATCH_HALF");
+  auto fine = structured;
+  const std::string fineVertices =
+      "10\n0.00000095367431640625\n20\n0\n10\n0.5\n20\n0\n"
+      "10\n0.5\n20\n0.5\n10\n0.00000095367431640625\n20\n0.5\n";
+  replacements = 0;
+  for (std::size_t pos = 0; (pos = fine.find(integralVertices, pos)) != std::string::npos;
+       pos += fineVertices.size()) {
+    fine.replace(pos, integralVertices.size(), fineVertices);
+    ++replacements;
+  }
+  REQUIRE(replacements == 2u);
+  checkSelectedContour(fine, false, true, "LIBRECAD_KEEP_CHECKED_HATCH_FINE");
+  auto decimal = fractional;
+  for (std::size_t pos = 0; (pos = decimal.find("10.5", pos)) != std::string::npos; pos += 4u)
+    decimal.replace(pos, 4u, "10.1");
+  checkSelectedContour(decimal, false, false, nullptr);
 #endif
   writeText(src, input);
   SourceProbe retry;
