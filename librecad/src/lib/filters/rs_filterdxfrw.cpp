@@ -16731,12 +16731,13 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
           }
           return true;
         };
-        if (!m_dxfW->setDxfEntitySectionsWriteInspector([this, audit, stable
 #if defined(LIBDXFRW_HAS_DXF_STAGED_RAW_OBJECT_INSPECTOR) && defined(LIBDXFRW_HAS_DXF_STAGED_LAYER_MATERIAL_INSPECTOR) && defined(LIBDXFRW_HAS_DXF_STAGED_ENTITY_MATERIAL_INSPECTOR)
-                                                        , previous = std::exchange(materialEntityInspector, {})
+        auto imageEntityInspector = [this, audit, stable,
+                                     previous = std::exchange(materialEntityInspector, {})]
+#else
+        auto imageEntityInspector = [this, audit, stable]
 #endif
-                                                        ](const auto &view,
-                                                                            std::string_view section) {
+            (const auto &view, std::string_view section) {
 #if defined(LIBDXFRW_HAS_DXF_STAGED_RAW_OBJECT_INSPECTOR) && defined(LIBDXFRW_HAS_DXF_STAGED_LAYER_MATERIAL_INSPECTOR) && defined(LIBDXFRW_HAS_DXF_STAGED_ENTITY_MATERIAL_INSPECTOR)
               if (previous && !previous(view, section)) return false;
 #endif
@@ -16770,7 +16771,12 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
               if (blocks) audit->blocksSeen = true;
               else audit->entitiesSeen = true;
               return true;
-            })) return false;
+            };
+#if defined(LIBDXFRW_HAS_DXF_STAGED_RAW_OBJECT_INSPECTOR) && defined(LIBDXFRW_HAS_DXF_STAGED_LAYER_MATERIAL_INSPECTOR) && defined(LIBDXFRW_HAS_DXF_STAGED_ENTITY_MATERIAL_INSPECTOR)
+        materialEntityInspector = std::move(imageEntityInspector);
+#else
+        if (!m_dxfW->setDxfEntitySectionsWriteInspector(std::move(imageEntityInspector))) return false;
+#endif
 #ifdef LIBDXFRW_HAS_DXF_STAGED_IMAGE_OBJECT_INSPECTOR
         if (!m_dxfW->setDxfObjectsWriteInspector([this, audit, stable
 #if defined(LIBDXFRW_HAS_DXF_STAGED_RAW_OBJECT_INSPECTOR) && defined(LIBDXFRW_HAS_DXF_STAGED_LAYER_MATERIAL_INSPECTOR)

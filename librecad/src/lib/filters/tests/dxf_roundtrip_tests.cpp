@@ -4601,6 +4601,11 @@ TEST_CASE("System codec preserves bounded multi-image definition graphs",
   CAPTURE(format);
   const int shape = GENERATE(0, 1, 2, 3, 4, 5, 6, 7, 8, 9);
   const bool withMaterial = GENERATE(false, true);
+  // A small mixed graph exercises the composed IMAGE/MATERIAL inspectors
+  // without running the full size/version matrix during focused development.
+  if (std::getenv("LIBRECAD_FAST_MIXED_IMAGE_MATERIAL") &&
+      (format != RS2::FormatDXFRW2010 || shape != 1 || !withMaterial))
+    return;
   const bool legacyMaterial = withMaterial &&
       (format == RS2::FormatDXFRW2000 || format == RS2::FormatDXFRW2004);
   const unsigned imageCount = shape < 2 ? 2u : shape < 5 ? 3u : shape == 5 ? 4u : shape == 6 ? 32u : shape == 7 ? 64u : shape == 8 ? 256u : 384u;
