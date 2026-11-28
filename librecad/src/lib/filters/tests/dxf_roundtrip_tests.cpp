@@ -2331,6 +2331,114 @@ TEST_CASE("Ordinary sparse material saves simple points", "[system-codec][dxf][m
   std::filesystem::remove(source); std::filesystem::remove(output); std::filesystem::remove(resaved);
 }
 
+TEST_CASE("Ordinary sparse material saves planar points across versions",
+          "[system-codec][dxf][material][transaction][point]") {
+  ensureSettings();
+  const auto format = GENERATE(RS2::FormatDXFRW, RS2::FormatDXFRW2010,
+                               RS2::FormatDXFRW2013, RS2::FormatDXFRW2018);
+  const char *version = format == RS2::FormatDXFRW ? "AC1021" :
+                        format == RS2::FormatDXFRW2010 ? "AC1024" :
+                        format == RS2::FormatDXFRW2013 ? "AC1027" : "AC1032";
+  const auto source = tmpFile("material_point_version_source.dxf");
+  const auto output = tmpFile("material_point_version_output.dxf");
+  const auto resaved = tmpFile("material_point_version_resaved.dxf");
+  const std::string input = std::string(
+      "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\n") + version + "\n9\n$CMATERIAL\n347\nA1\n0\nENDSEC\n"
+      "0\nSECTION\n2\nTABLES\n0\nTABLE\n2\nLAYER\n5\n31\n100\nAcDbSymbolTable\n70\n1\n"
+      "0\nLAYER\n5\n30\n330\n31\n100\nAcDbSymbolTableRecord\n100\nAcDbLayerTableRecord\n"
+      "2\nRAWTEST\n70\n0\n62\n7\n6\nCONTINUOUS\n347\nA1\n0\nENDTAB\n0\nENDSEC\n"
+      "0\nSECTION\n2\nENTITIES\n0\nPOINT\n5\nA5\n100\nAcDbEntity\n8\nRAWTEST\n62\n2\n347\nA1\n"
+      "100\nAcDbPoint\n10\n2\n20\n3\n30\n0\n"
+      "0\nENDSEC\n0\nSECTION\n2\nOBJECTS\n0\nDICTIONARY\n5\nC\n330\n0\n"
+      "100\nAcDbDictionary\n281\n1\n3\nACAD_MATERIAL\n350\nA0\n"
+      "0\nDICTIONARY\n5\nA0\n330\nC\n100\nAcDbDictionary\n281\n1\n"
+      "3\nPlainMat\n350\nA1\n0\nMATERIAL\n5\nA1\n330\nA0\n"
+      "100\nAcDbMaterial\n1\nPlainMat\n94\n63\n0\nENDSEC\n0\nEOF\n";
+  writeText(source, input);
+  RS_FilterDXFRW filter; RS_Graphic graphic;
+  if (format == RS2::FormatDXFRW2010 || format == RS2::FormatDXFRW2013) {
+    CHECK_FALSE(filter.fileImport(graphic, QString::fromStdString(source), format));
+    std::filesystem::remove(source);
+    return;
+  }
+  REQUIRE(filter.fileImport(graphic, QString::fromStdString(source), format));
+  RS_Point *point = nullptr;
+  for (RS_Entity *entity : graphic)
+    if (entity && entity->sourceHandle() == 0xA5u && entity->rtti() == RS2::EntityPoint)
+      point = static_cast<RS_Point *>(entity);
+  REQUIRE(point); REQUIRE(point->materialHandle() == 0xA1u);
+  point->setPos(RS_Vector(6, 7));
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), format));
+  const auto material = recordGroupValues(output, "MATERIAL", "5"); REQUIRE(material.size() == 1u);
+  CHECK(recordGroupValues(output, "POINT", "347") == material);
+  CHECK(recordGroupValues(output, "POINT", "10") == std::vector<std::string>{"6"});
+  CHECK(recordGroupValues(output, "POINT", "20") == std::vector<std::string>{"7"});
+  RS_Graphic reopened;
+  REQUIRE(filter.fileImport(reopened, QString::fromStdString(output), format));
+  REQUIRE(filter.fileExport(reopened, QString::fromStdString(resaved), format));
+  CHECK(recordGroupValues(resaved, "POINT", "347") == recordGroupValues(resaved, "MATERIAL", "5"));
+  const std::string sentinel = "preserve cross-version material destination";
+  writeText(output, sentinel);
+  const auto other = format == RS2::FormatDXFRW ? RS2::FormatDXFRW2010 : RS2::FormatDXFRW;
+  CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(output), other));
+  { std::ifstream in(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(in), {}) == sentinel); }
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), format));
+  if (format != RS2::FormatDXFRW) {
+    auto *line = new RS_Line(&graphic, RS_LineData(RS_Vector(1, 2), RS_Vector(3, 4)));
+    line->setLayer(point->getLayer(false)); line->setPen(point->getPen(false)); graphic.addEntity(line);
+    writeText(output, sentinel);
+    CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(output), format));
+    { std::ifstream in(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(in), {}) == sentinel); }
+    REQUIRE(graphic.removeEntity(line));
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), format));
+    auto elevated = input;
+    const auto at = elevated.find("100\nAcDbPoint\n10\n2\n20\n3\n30\n0\n");
+    REQUIRE(at != std::string::npos);
+    elevated.replace(at, std::string("100\nAcDbPoint\n10\n2\n20\n3\n30\n0\n").size(),
+                     "100\nAcDbPoint\n10\n2\n20\n3\n30\n1\n");
+    writeText(source, elevated); RS_Graphic rejected;
+    REQUIRE(filter.fileImport(rejected, QString::fromStdString(source), format));
+    writeText(output, sentinel);
+    CHECK_FALSE(filter.fileExport(rejected, QString::fromStdString(output), format));
+    { std::ifstream in(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(in), {}) == sentinel); }
+    writeText(source, input);
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), format));
+    struct PointDeliveryProbe : RS_FilterDXFRW {
+      bool alterTyped = false, alterPhysical = false;
+      void addPoint(const DRW_Point &data) override {
+        DRW_Point changed = data;
+        if (alterTyped) changed.basePoint.x += 1.0;
+        RS_FilterDXFRW::addPoint(changed);
+      }
+      void addDxfEntitiesSource(const DRW_DxfEntitiesSource &data) override {
+        auto changed = data;
+        if (alterPhysical) for (auto &record : changed.records)
+          if (record.name == "POINT") for (std::size_t i = 0; i < record.groups.size(); ++i)
+            if (record.groups[i].code() == 10) { record.rawValues[i] = "999"; break; }
+        RS_FilterDXFRW::addDxfEntitiesSource(changed);
+      }
+    } probe;
+    for (int mode = 0; mode != 2; ++mode) {
+      probe.alterTyped = mode == 0; probe.alterPhysical = mode == 1;
+      RS_Graphic mismatched;
+      REQUIRE(probe.fileImport(mismatched, QString::fromStdString(source), format));
+      writeText(output, sentinel);
+      CHECK_FALSE(probe.fileExport(mismatched, QString::fromStdString(output), format));
+      { std::ifstream in(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(in), {}) == sentinel); }
+      probe.alterTyped = probe.alterPhysical = false;
+      RS_Graphic retry;
+      REQUIRE(probe.fileImport(retry, QString::fromStdString(source), format));
+      REQUIRE(probe.fileExport(retry, QString::fromStdString(output), format));
+    }
+    REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), format));
+  }
+  if (const char *prefix = std::getenv("LIBRECAD_KEEP_VERSIONED_MATERIAL")) {
+    std::filesystem::copy_file(source, std::string(prefix) + "." + version + ".source.dxf", std::filesystem::copy_options::overwrite_existing);
+    std::filesystem::copy_file(output, std::string(prefix) + "." + version + ".output.dxf", std::filesystem::copy_options::overwrite_existing);
+  }
+  std::filesystem::remove(source); std::filesystem::remove(output); std::filesystem::remove(resaved);
+}
+
 static std::string sparseMaterialPolylineSource() {
   return
       "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1021\n9\n$CMATERIAL\n347\nA1\n0\nENDSEC\n"
@@ -5375,15 +5483,15 @@ TEST_CASE("System codec audits 512-image source graphs", "[system-codec][dxf][im
   std::filesystem::remove(source); std::filesystem::remove(output);
 }
 
-TEST_CASE("System codec retains the image source file-size guard", "[system-codec][dxf][image][transaction]") {
+TEST_CASE("System codec retains 512 distinct image definitions across versions", "[system-codec][dxf][image][transaction]") {
   ensureSettings();
-  const auto source = tmpFile("image_file_guard_source.dxf");
-  const auto output = tmpFile("image_file_guard_output.dxf");
-  const auto format = RS2::FormatDXFRW2010;
-  const std::string sentinel = "preserve source-size destination";
+  const auto source = tmpFile("image_distinct_versions_source.dxf");
+  const auto output = tmpFile("image_distinct_versions_output.dxf");
+  const auto format = GENERATE(RS2::FormatDXFRW, RS2::FormatDXFRW2010,
+                               RS2::FormatDXFRW2013, RS2::FormatDXFRW2018);
+  const std::string sentinel = "preserve distinct-image destination";
   RS_FilterDXFRW filter;
 
-  // A bounded graph with 512 distinct definitions is retained and replayed.
   RS_Graphic distinct; distinct.initForNewDocument();
   for (unsigned i = 0; i < 512u; ++i)
     distinct.addEntity(new RS_Image(&distinct, RS_ImageData(0, RS_Vector(29.0 * i, 2),
@@ -5428,12 +5536,23 @@ TEST_CASE("System codec retains the image source file-size guard", "[system-code
   CHECK(distinctReopened.dwgAdvancedMetadata().imageDefinitions().size() == 512u);
   CHECK(distinctReopened.dwgAdvancedMetadata().imageDefinitionReactors().size() == 512u);
   if (const char *prefix = std::getenv("LIBRECAD_KEEP_512_DISTINCT")) {
-    std::filesystem::copy_file(source, std::string(prefix) + ".source.dxf",
+    std::filesystem::copy_file(source, std::string(prefix) + ".v" + std::to_string(static_cast<int>(format)) + ".source.dxf",
                                std::filesystem::copy_options::overwrite_existing);
-    std::filesystem::copy_file(output, std::string(prefix) + ".output.dxf",
+    std::filesystem::copy_file(output, std::string(prefix) + ".v" + std::to_string(static_cast<int>(format)) + ".output.dxf",
                                std::filesystem::copy_options::overwrite_existing);
   }
   REQUIRE(filter.fileExport(distinctReopened, QString::fromStdString(output), format));
+
+  std::filesystem::remove(source); std::filesystem::remove(output);
+}
+
+TEST_CASE("System codec retains the image source file-size guard", "[system-codec][dxf][image][transaction]") {
+  ensureSettings();
+  const auto source = tmpFile("image_file_guard_source.dxf");
+  const auto output = tmpFile("image_file_guard_output.dxf");
+  const auto format = RS2::FormatDXFRW2010;
+  const std::string sentinel = "preserve source-size destination";
+  RS_FilterDXFRW filter;
 
   RS_Graphic original; original.initForNewDocument();
   for (unsigned i = 0; i < 512u; ++i)

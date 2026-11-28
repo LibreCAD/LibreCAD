@@ -1130,14 +1130,18 @@ bool sameRetainedPlotSettings(const DRW_PlotSettings &a, const DRW_PlotSettings 
   return true;
 }
 
-[[maybe_unused]] bool hasSimpleAutomaticMaterialEntities(RS_Graphic &graphic) {
+[[maybe_unused]] bool supportsAutomaticMaterialVersion(DRW::Version version) {
+  return version == DRW::AC1021 || version == DRW::AC1032;
+}
+
+[[maybe_unused]] bool hasSimpleAutomaticMaterialEntities(RS_Graphic &graphic, bool pointsOnly) {
   std::size_t count = 0;
   const auto validPoint = [](const RS_Vector &point) {
     return point.valid && std::isfinite(point.x) && std::isfinite(point.y) && point.z == 0.0;
   };
   for (const RS_Entity *entity : graphic) {
     if (!entity || entity->isDeleted()) continue;
-    if (!hasSimpleMaterialAppearance(*entity)) return false;
+    if (!hasSimpleMaterialAppearance(*entity) || (pointsOnly && entity->rtti() != RS2::EntityPoint)) return false;
     if (entity->rtti() == RS2::EntityPoint) {
       const auto *point = static_cast<const RS_Point *>(entity);
       if (!validPoint(point->getPos())) return false;
@@ -12877,7 +12881,7 @@ namespace {
 #ifdef LIBDXFRW_HAS_DXF_BLOCK_RECORD_SOURCE_SELECTOR
 bool hasExactMaterialSpaceCodes(const DRW_RawDxfObject &source, const char *name,
                                 std::initializer_list<int> codes) {
-  if (source.name != name || source.m_version != DRW::AC1021 || !source.hasRawValues ||
+  if (source.name != name || !supportsAutomaticMaterialVersion(source.m_version) || !source.hasRawValues ||
       source.groups.size() != codes.size() || source.rawValues.size() != codes.size())
     return false;
   return std::equal(codes.begin(), codes.end(), source.groups.begin(),
@@ -12939,11 +12943,12 @@ bool isDefaultMaterialPlotSource(const QByteArray &bytes, const DRW_DxfIdentityS
 #endif
 
 // The ordinary-save route initially admits only a physically complete,
-// ASCII AC1021 model-space POINT/LINE/CIRCLE/ARC/ELLIPSE/LWPOLYLINE profile. Other source shapes may still use
+// ASCII AC1021 model-space POINT/LINE/CIRCLE/ARC/ELLIPSE/LWPOLYLINE profile,
+// or the selected AC1032 POINT profile. Other source shapes may still use
 // the separate explicitly opted-in replay path.
 bool hasSimpleMaterialEntities(const RS_Graphic &graphic, const DRW_DxfEntitiesSource &source) {
   if (source.status != DRW_DxfEntitiesSource::Status::Complete ||
-      source.version != DRW::AC1021 || source.binary || source.records.empty() ||
+      !supportsAutomaticMaterialVersion(source.version) || source.binary || source.records.empty() ||
       source.records.size() > 4096u)
     return false;
   std::map<std::uint32_t, const RS_Entity *> delivered;
@@ -12955,7 +12960,8 @@ bool hasSimpleMaterialEntities(const RS_Graphic &graphic, const DRW_DxfEntitiesS
     const auto name = normalizeDwgTableName(record.name);
     const bool point = name == "POINT", line = name == "LINE", circle = name == "CIRCLE", arc = name == "ARC";
     const bool polyline = name == "LWPOLYLINE", ellipse = name == "ELLIPSE";
-    if ((!point && !line && !circle && !arc && !polyline && !ellipse) || record.groups.size() != record.rawValues.size()) return false;
+    if ((!point && !line && !circle && !arc && !polyline && !ellipse) ||
+        (source.version != DRW::AC1021 && !point) || record.groups.size() != record.rawValues.size()) return false;
     std::set<int> seen;
     std::uint32_t handle = 0;
     std::string layer;
@@ -13901,7 +13907,7 @@ void RS_FilterDXFRW::addDxfIdentitySource(const DRW_DxfIdentitySource &source) {
     using Section = DRW_DxfIdentitySource::Section;
     using Scope = DRW_DxfIdentitySource::Scope;
     using Admission = DRW_DxfIdentitySource::Admission;
-    bool automaticIdentity = source.version == DRW::AC1021 && !source.binary &&
+    bool automaticIdentity = supportsAutomaticMaterialVersion(source.version) && !source.binary &&
                              source.unmatchedAdmissions == 0;
     // A source scalar can be admitted again by typed and raw readers. Its
     // repeated-admission count is not a second physical identity.
@@ -15326,8 +15332,10 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
     const auto *policy = dynamic_cast<const DRW_DxfSparseMaterialRawPolicy *>(this);
     const bool explicitReplay = policy && policy->wantsDxfSparseMaterialRawCapture() &&
                                 wantsDxfSparseMaterialRawReplay();
+    const auto *materialSource = metadata.materials().empty() ? nullptr : metadata.materials().front().rawDxfSource.get();
     if (metadata.dxfMaterialAutomaticReplayEligible() && !explicitReplay &&
-        (!isDefaultAutomaticMaterialPlot(g) || !hasSimpleAutomaticMaterialEntities(g))) return false;
+        (!materialSource || !isDefaultAutomaticMaterialPlot(g) ||
+         !hasSimpleAutomaticMaterialEntities(g, materialSource->m_version != DRW::AC1021))) return false;
     const auto *sourceEntities = metadata.dxfMaterialEntitySources();
     std::vector<MaterialEntityReference> currentEntities;
     if (!sourceEntities || !collectDxfMaterialEntities(g, currentEntities) ||
@@ -15335,7 +15343,6 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
     if (metadata.materials().empty() || !metadata.dxfRootDictionarySource() ||
         !metadata.dxfMaterialDictionarySource() || !sparseDxfMaterialReferencesMatch(g)) return false;
     const auto *header = metadata.dxfMaterialHeaderPhysicalSource();
-    const auto *materialSource = metadata.materials().front().rawDxfSource.get();
     bool headerPresent = false;
     std::uint32_t headerHandle = 0;
     if (!header || !materialSource || header->status != DRW_DxfHeaderMaterialSource::Status::Complete ||
