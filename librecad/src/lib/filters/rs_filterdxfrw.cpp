@@ -12937,6 +12937,12 @@ bool hasSimpleMaterialEntities(const RS_Graphic &graphic, const DRW_DxfEntitiesS
             value != group.content.i || (code == 70 && value != 0 && value != 1)) return false;
         if (code == 90) vertexCount = value;
         else closed = value == 1;
+      } else if (point && (code == 39 || code == 50 || code == 210 || code == 220 || code == 230)) {
+        bool validRaw = false;
+        const double value = QString::fromStdString(raw).toDouble(&validRaw);
+        const double expected = code == 230 ? 1.0 : 0.0;
+        if (subclass != 2 || group.type() != DRW_Variant::DOUBLE || !validRaw ||
+            !std::isfinite(value) || value != expected || group.content.d != value) return false;
       } else if (polyline && (code == 38 || code == 39 || code == 43)) {
         bool validRaw = false;
         const double value = QString::fromStdString(raw).toDouble(&validRaw);
@@ -12977,7 +12983,9 @@ bool hasSimpleMaterialEntities(const RS_Graphic &graphic, const DRW_DxfEntitiesS
         }
       } else return false;
     }
+    const bool hasPointExtrusion = point && (seen.count(210) || seen.count(220) || seen.count(230));
     if (subclass != (arc ? 3 : 2) || !seen.count(5) || !seen.count(8) ||
+        (hasPointExtrusion && (!seen.count(210) || !seen.count(220) || !seen.count(230))) ||
         (trueColor >= 0 && !seen.count(62)) || (trueColor < 0 && colorIndex == 7) ||
         (polyline ? (!seen.count(90) || !seen.count(70) || awaitingY || (hasVertexWidth && seen.count(43)) ||
                      vertexCount < (closed ? 3 : 2) ||
