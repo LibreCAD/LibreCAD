@@ -1131,7 +1131,7 @@ bool sameRetainedPlotSettings(const DRW_PlotSettings &a, const DRW_PlotSettings 
 }
 
 [[maybe_unused]] bool supportsAutomaticMaterialVersion(DRW::Version version) {
-  return version == DRW::AC1021 || version == DRW::AC1032;
+  return version >= DRW::AC1021 && version <= DRW::AC1032;
 }
 
 [[maybe_unused]] bool hasSimpleAutomaticMaterialEntities(RS_Graphic &graphic, bool pointsOnly) {
@@ -12944,7 +12944,7 @@ bool isDefaultMaterialPlotSource(const QByteArray &bytes, const DRW_DxfIdentityS
 
 // The ordinary-save route initially admits only a physically complete,
 // ASCII AC1021 model-space POINT/LINE/CIRCLE/ARC/ELLIPSE/LWPOLYLINE profile,
-// or the selected AC1032 POINT profile. Other source shapes may still use
+// or selected AC1024/AC1027/AC1032 POINT profiles. Other source shapes may still use
 // the separate explicitly opted-in replay path.
 bool hasSimpleMaterialEntities(const RS_Graphic &graphic, const DRW_DxfEntitiesSource &source) {
   if (source.status != DRW_DxfEntitiesSource::Status::Complete ||

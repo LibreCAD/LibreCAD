@@ -2356,11 +2356,6 @@ TEST_CASE("Ordinary sparse material saves planar points across versions",
       "100\nAcDbMaterial\n1\nPlainMat\n94\n63\n0\nENDSEC\n0\nEOF\n";
   writeText(source, input);
   RS_FilterDXFRW filter; RS_Graphic graphic;
-  if (format == RS2::FormatDXFRW2010 || format == RS2::FormatDXFRW2013) {
-    CHECK_FALSE(filter.fileImport(graphic, QString::fromStdString(source), format));
-    std::filesystem::remove(source);
-    return;
-  }
   REQUIRE(filter.fileImport(graphic, QString::fromStdString(source), format));
   RS_Point *point = nullptr;
   for (RS_Entity *entity : graphic)
