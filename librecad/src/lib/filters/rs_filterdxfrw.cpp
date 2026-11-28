@@ -15092,7 +15092,7 @@ struct CheckedHatchReplay {
   const RS_Hatch *hatch = nullptr;
   const RS_Polyline *boundary = nullptr;
   std::uint32_t sourceHatch = 0, sourceBoundary = 0, sourceOwner = 0;
-  std::vector<LC_HatchAssociation::Edge> geometry;
+  std::vector<LC_HatchAssociation::Edge> sourceGeometry, geometry;
   std::uint32_t emittedHatch = 0, emittedBoundary = 0;
   bool header = false, tables = false, blocks = false, entities = false, objects = false;
 };
@@ -15129,7 +15129,7 @@ bool checkedHatchReplayStable(RS_Graphic &graphic, const CheckedHatchReplay &aud
   std::uint32_t hOwner = 0, bOwner = 0;
   if (audit.hatch->sourceHandle() != audit.sourceHatch || audit.boundary->sourceHandle() != audit.sourceBoundary ||
       !audit.hatch->sourceAssociative() || roles.hatch != audit.sourceHatch || roles.boundary != audit.sourceBoundary ||
-      roles.owner != audit.sourceOwner || !roles.modelSpace || !roles.sourceHandleIsolation || roles.sourceGeometry != audit.geometry ||
+      roles.owner != audit.sourceOwner || !roles.modelSpace || !roles.sourceHandleIsolation || roles.sourceGeometry != audit.sourceGeometry ||
       audit.hatch->sourceLoopBoundaries() != std::vector<std::vector<quint32>>{{audit.sourceBoundary}} ||
       !audit.hatch->reactorHandles().empty() || audit.boundary->reactorHandles() != std::vector<quint32>{audit.sourceHatch} ||
       audit.hatch->xDictHandle() || audit.boundary->xDictHandle() ||
@@ -15154,11 +15154,13 @@ std::shared_ptr<CheckedHatchReplay> planCheckedHatchReplay(RS_Graphic &graphic) 
   if (!audit->hatch || !audit->boundary) return {};
   const auto &roles = audit->hatch->physicalSourceRoles();
   audit->sourceHatch = roles.hatch; audit->sourceBoundary = roles.boundary; audit->sourceOwner = roles.owner;
-  audit->geometry = roles.sourceGeometry;
+  audit->sourceGeometry = roles.sourceGeometry;
   if (!audit->sourceHatch || !audit->sourceBoundary || !audit->sourceOwner ||
       audit->sourceHatch == DRW::NoHandle || audit->sourceBoundary == DRW::NoHandle || audit->sourceOwner == DRW::NoHandle ||
       audit->sourceHatch == audit->sourceBoundary || audit->sourceOwner == audit->sourceHatch ||
-      audit->sourceOwner == audit->sourceBoundary || !LC_HatchAssociation::isSimpleBoundedDyadicContour(audit->geometry) ||
+      audit->sourceOwner == audit->sourceBoundary || !LC_HatchAssociation::isSimpleBoundedDyadicContour(audit->sourceGeometry) ||
+      !LC_HatchAssociation::matchesClosedStraightBoundary(*audit->hatch, *audit->boundary, &audit->geometry) ||
+      !LC_HatchAssociation::isSimpleBoundedDyadicContour(audit->geometry) ||
       !checkedHatchReplayStable(graphic, *audit)) return {};
   return audit;
 }

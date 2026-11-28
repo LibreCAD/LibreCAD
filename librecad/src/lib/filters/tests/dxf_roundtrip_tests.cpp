@@ -9911,11 +9911,106 @@ TEST_CASE("DXF physical hatch source roles reject conflicting records",
     CHECK(repeatHatch->sourceLoopBoundaries() == std::vector<std::vector<quint32>>{{repeatBoundary->sourceHandle()}});
     CHECK(repeatBoundary->reactorHandles() == std::vector<quint32>{repeatHatch->sourceHandle()});
     CHECK(LC_HatchAssociation::matchesClosedStraightBoundary(*repeatHatch, *repeatBoundary));
+    // Matched edits are planned from the current geometry, while the
+    // independently captured physical-source roles remain immutable.
+    const auto sourceGeometry = hatch->physicalSourceRoles().sourceGeometry;
+    hatch->move(RS_Vector(1, 2));
+    boundary->move(RS_Vector(1, 2));
+    std::vector<LC_HatchAssociation::Edge> editedGeometry;
+    REQUIRE(LC_HatchAssociation::matchesClosedStraightBoundary(*hatch, *boundary, &editedGeometry));
+    REQUIRE(editedGeometry != sourceGeometry);
+    CHECK(hatch->physicalSourceRoles().sourceGeometry == sourceGeometry);
+    writeText(output, sentinel);
+    replay.beforeFinalize = [&] { hatch->move(RS_Vector(1, 0)); boundary->move(RS_Vector(1, 0)); };
+    CHECK_FALSE(replay.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+    std::ifstream editedRetained(output, std::ios::binary);
+    CHECK(std::string(std::istreambuf_iterator<char>(editedRetained), {}) == sentinel);
+    editedRetained.close();
+    hatch->move(RS_Vector(-1, 0));
+    boundary->move(RS_Vector(-1, 0));
+    replay.beforeFinalize = {};
+    REQUIRE(replay.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+    RS_Graphic editedReadback;
+    REQUIRE(reread.fileImport(editedReadback, QString::fromStdString(output), RS2::FormatDXFRW));
+    const RS_Hatch *editedHatch = nullptr;
+    const RS_Polyline *editedBoundary = nullptr;
+    for (const RS_Entity *entity : editedReadback) {
+      if (entity && entity->rtti() == RS2::EntityHatch) editedHatch = static_cast<const RS_Hatch *>(entity);
+      if (entity && entity->rtti() == RS2::EntityPolyline) editedBoundary = static_cast<const RS_Polyline *>(entity);
+    }
+    REQUIRE(editedHatch);
+    REQUIRE(editedBoundary);
+    CHECK(editedHatch->sourceAssociative());
+    CHECK(editedHatch->sourceLoopBoundaries() == std::vector<std::vector<quint32>>{{editedBoundary->sourceHandle()}});
+    CHECK(editedBoundary->reactorHandles() == std::vector<quint32>{editedHatch->sourceHandle()});
+    std::vector<LC_HatchAssociation::Edge> readGeometry;
+    CHECK(LC_HatchAssociation::matchesClosedStraightBoundary(*editedHatch, *editedBoundary, &readGeometry));
+    CHECK(readGeometry == editedGeometry);
+    if (const char *copy = std::getenv("LIBRECAD_KEEP_CHECKED_HATCH_EDITED"))
+      std::filesystem::copy_file(output, copy, std::filesystem::copy_options::overwrite_existing);
+    REQUIRE(reread.fileExport(editedReadback, QString::fromStdString(output), RS2::FormatDXFRW2010));
+    RS_Graphic editedRepeat;
+    REQUIRE(reread.fileImport(editedRepeat, QString::fromStdString(output), RS2::FormatDXFRW));
+    bool sawEditedRepeat = false;
+    for (const RS_Entity *entity : editedRepeat)
+      if (entity && entity->rtti() == RS2::EntityHatch) {
+        CHECK(static_cast<const RS_Hatch *>(entity)->sourceAssociative());
+        sawEditedRepeat = true;
+      }
+    CHECK(sawEditedRepeat);
+    hatch->scale(RS_Vector(0, 0), RS_Vector(2, 1));
+    boundary->scale(RS_Vector(0, 0), RS_Vector(2, 1));
+    std::vector<LC_HatchAssociation::Edge> scaledGeometry;
+    REQUIRE(LC_HatchAssociation::matchesClosedStraightBoundary(*hatch, *boundary, &scaledGeometry));
+    REQUIRE(scaledGeometry != editedGeometry);
+    REQUIRE(replay.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+    RS_Graphic scaledReadback;
+    REQUIRE(reread.fileImport(scaledReadback, QString::fromStdString(output), RS2::FormatDXFRW));
+    const RS_Hatch *scaledHatch = nullptr;
+    const RS_Polyline *scaledBoundary = nullptr;
+    for (const RS_Entity *entity : scaledReadback) {
+      if (entity && entity->rtti() == RS2::EntityHatch) scaledHatch = static_cast<const RS_Hatch *>(entity);
+      if (entity && entity->rtti() == RS2::EntityPolyline) scaledBoundary = static_cast<const RS_Polyline *>(entity);
+    }
+    REQUIRE(scaledHatch);
+    REQUIRE(scaledBoundary);
+    CHECK(scaledHatch->sourceAssociative());
+    CHECK(scaledHatch->sourceLoopBoundaries() == std::vector<std::vector<quint32>>{{scaledBoundary->sourceHandle()}});
+    CHECK(scaledBoundary->reactorHandles() == std::vector<quint32>{scaledHatch->sourceHandle()});
+    std::vector<LC_HatchAssociation::Edge> scaledReadGeometry;
+    CHECK(LC_HatchAssociation::matchesClosedStraightBoundary(*scaledHatch, *scaledBoundary, &scaledReadGeometry));
+    CHECK(scaledReadGeometry == scaledGeometry);
+    hatch->scale(RS_Vector(0, 0), RS_Vector(0.5, 1));
+    boundary->scale(RS_Vector(0, 0), RS_Vector(0.5, 1));
+    const auto checkEditedFallback = [&] {
+      REQUIRE(replay.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
+      RS_Graphic fallback;
+      REQUIRE(reread.fileImport(fallback, QString::fromStdString(output), RS2::FormatDXFRW));
+      bool sawHatch = false;
+      for (const RS_Entity *entity : fallback)
+        if (entity && entity->rtti() == RS2::EntityHatch) {
+          CHECK_FALSE(static_cast<const RS_Hatch *>(entity)->sourceAssociative());
+          sawHatch = true;
+        }
+      CHECK(sawHatch);
+    };
+    boundary->move(RS_Vector(1, 0));
+    checkEditedFallback(); // A changed boundary alone cannot retain the association.
+    boundary->move(RS_Vector(-1, 0));
+    hatch->move(RS_Vector(0.1, 0));
+    boundary->move(RS_Vector(0.1, 0));
+    checkEditedFallback(); // Matching coordinates outside the bounded grid are excluded.
+    hatch->move(RS_Vector(-0.1, 0));
+    boundary->move(RS_Vector(-0.1, 0));
+    hatch->move(RS_Vector(-1, -2));
+    boundary->move(RS_Vector(-1, -2));
     if (const char *copy = std::getenv("LIBRECAD_KEEP_CHECKED_HATCH_REPEAT"))
       std::filesystem::copy_file(secondOutput, copy, std::filesystem::copy_options::overwrite_existing);
     std::filesystem::remove(secondOutput);
-    if (const char *copy = std::getenv("LIBRECAD_KEEP_CHECKED_HATCH_REPLAY"))
+    if (const char *copy = std::getenv("LIBRECAD_KEEP_CHECKED_HATCH_REPLAY")) {
+      REQUIRE(replay.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW2010));
       std::filesystem::copy_file(output, copy, std::filesystem::copy_options::overwrite_existing);
+    }
     REQUIRE(replay.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
     RS_Graphic crossVersion;
     REQUIRE(reread.fileImport(crossVersion, QString::fromStdString(output), RS2::FormatDXFRW));
