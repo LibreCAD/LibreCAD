@@ -1146,6 +1146,8 @@ set (SHARED_SOURCES
      librecad/src/lib/filters/lc_embeddedtextmodel.h
      librecad/src/lib/filters/lc_hatchdefinitionlines.cpp
      librecad/src/lib/filters/lc_hatchdefinitionlines.h
+     librecad/src/lib/filters/lc_hatchassociation.cpp
+     librecad/src/lib/filters/lc_hatchassociation.h
      librecad/src/lib/filters/lc_hyperbolaspline.cpp
      librecad/src/lib/filters/lc_hyperbolaspline.h
         librecad/src/lib/filters/lc_parabolaspline.cpp

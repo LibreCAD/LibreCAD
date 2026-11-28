@@ -34,6 +34,7 @@
 #include "lc_drwnullinterface.h"
 #include "lc_filtertestsupport.h"
 #include "lc_hatchdefinitionlines.h"
+#include "lc_hatchassociation.h"
 #include "lc_settingguard.h"
 #include "libdwgr.h"
 #include "libdxfrw.h"
@@ -45,6 +46,7 @@
 #include "rs_hatch.h"
 #include "rs_line.h"
 #include "rs_math.h"
+#include "rs_polyline.h"
 #include "rs_settings.h"
 #include "rs_spline.h"
 
@@ -143,6 +145,63 @@ DxfRecord firstHatchRecord(const std::filesystem::path& file) {
 }
 
 } // namespace
+
+TEST_CASE("Live hatch loop matches only a closed straight polyline",
+          "[hatch-assoc-geometry][hatch-export]") {
+    lc::test::QuietLog quiet;
+    REQUIRE(lc::test::ensureSettings());
+    auto graphic = makeOneHatchGraphic(QStringLiteral("SOLID"), 0.0, 1.0, true);
+    RS_Hatch* hatch = nullptr;
+    for (RS_Entity* entity : *graphic)
+        if (entity && entity->rtti() == RS2::EntityHatch)
+            hatch = static_cast<RS_Hatch*>(entity);
+    REQUIRE(hatch);
+    const auto polyline = [](const std::vector<RS_Vector>& vertices, bool closed, bool curved = false) {
+        auto result = std::make_unique<RS_Polyline>();
+        for (std::size_t i = 0; i < vertices.size(); ++i)
+            result->addVertex(vertices[i], curved && i == 0u ? 0.5 : 0.0);
+        if (closed) result->setClosed(true, 0.0);
+        return result;
+    };
+    auto normal = polyline({{0, 0}, {100, 0}, {100, 60}, {0, 60}}, true);
+    auto rotated = polyline({{100, 60}, {0, 60}, {0, 0}, {100, 0}}, true);
+    auto reverse = polyline({{0, 0}, {0, 60}, {100, 60}, {100, 0}}, true);
+    CHECK(LC_HatchAssociation::matchesClosedStraightBoundary(*hatch, *normal));
+    CHECK(LC_HatchAssociation::matchesClosedStraightBoundary(*hatch, *rotated));
+    CHECK(LC_HatchAssociation::matchesClosedStraightBoundary(*hatch, *reverse));
+    normal->move(RS_Vector(1, 0));
+    CHECK_FALSE(LC_HatchAssociation::matchesClosedStraightBoundary(*hatch, *normal));
+    hatch->move(RS_Vector(1, 0));
+    CHECK(LC_HatchAssociation::matchesClosedStraightBoundary(*hatch, *normal));
+    auto open = polyline({{1, 0}, {101, 0}, {101, 60}, {1, 60}}, false);
+    auto curved = polyline({{1, 0}, {101, 0}, {101, 60}, {1, 60}}, true, true);
+    auto changed = polyline({{1, 0}, {101, 0}, {101, 61}, {1, 60}}, true);
+    CHECK_FALSE(LC_HatchAssociation::matchesClosedStraightBoundary(*hatch, *open));
+    CHECK_FALSE(LC_HatchAssociation::matchesClosedStraightBoundary(*hatch, *curved));
+    CHECK_FALSE(LC_HatchAssociation::matchesClosedStraightBoundary(*hatch, *changed));
+    RS_EntityContainer* sourceLoop = nullptr;
+    for (RS_Entity* entity : *hatch)
+        if (entity && entity->isContainer() && !entity->getFlag(RS2::FlagTemp))
+            sourceLoop = static_cast<RS_EntityContainer*>(entity);
+    REQUIRE(sourceLoop);
+    RS_Entity* sourceEntity = sourceLoop->firstEntity(RS2::ResolveNone);
+    REQUIRE(sourceEntity);
+    REQUIRE(sourceEntity->rtti() == RS2::EntityLine);
+    auto* sourceLine = static_cast<RS_Line*>(sourceEntity);
+    const auto originalEnd = sourceLine->getEndpoint();
+    sourceLine->setEndpoint(originalEnd + RS_Vector(1, 1));
+    CHECK_FALSE(LC_HatchAssociation::matchesClosedStraightBoundary(*hatch, *normal));
+    sourceLine->setEndpoint(originalEnd);
+    CHECK(LC_HatchAssociation::matchesClosedStraightBoundary(*hatch, *normal));
+    hatch->setSolid(false);
+    hatch->setPattern(QStringLiteral("ANSI31"));
+    CHECK_FALSE(LC_HatchAssociation::matchesClosedStraightBoundary(*hatch, *normal));
+    hatch->setSolid(true);
+    hatch->setPattern(QStringLiteral("SOLID"));
+    addRectBoundary(*hatch, 20, 10, 30, 20);
+    hatch->update();
+    CHECK_FALSE(LC_HatchAssociation::matchesClosedStraightBoundary(*hatch, *normal));
+}
 
 // NOLINTNEXTLINE(readability-identifier-naming)
 TEST_CASE("Realized definition lines match ezdxf's ISO patterns",
