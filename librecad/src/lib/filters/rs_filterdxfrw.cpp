@@ -17540,9 +17540,9 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
       const auto audit = planCheckedHatchReplay(g);
       const auto safeEarlyHandle = [this, audit](std::uint32_t source) {
         const auto output = dxfReference(source);
-        // The isolated profile below also admits the observed 0x14 source
-        // collision: the entity planner binds it to a newly allocated identity.
-        if (audit && source == 0x14u && source == audit->sourceBoundary &&
+        // The isolated profile also admits a 0x14 source collision: the
+        // entity planner binds the selected entity to a newly allocated identity.
+        if (audit && source == 0x14u && (source == audit->sourceBoundary || source == audit->sourceHatch) &&
             output == source && !m_dxfW->isReservedHandle(output)) return true;
         return source > 0x21u && output > 0x21u && output != DRW::NoHandle && !m_dxfW->isReservedHandle(output);
       };
@@ -17993,7 +17993,8 @@ void RS_FilterDXFRW::prepareDxfEntityHandleMap() {
     } else {
 #ifdef LIBRECAD_HAS_CHECKED_DXF_HATCH_REPLAY
       if (sourceHandle == 0x14u && m_dxfAssociationHatch && m_dxfAssociationBoundary &&
-          m_dxfAssociationBoundary->sourceHandle() == sourceHandle) {
+          (m_dxfAssociationBoundary->sourceHandle() == sourceHandle ||
+           m_dxfAssociationHatch->sourceHandle() == sourceHandle)) {
         // The checked source has no other claim on this identity. The output
         // uses 0x14 structurally, so allocate a separate entity handle before
         // HEADER or any other output section can refer to it.

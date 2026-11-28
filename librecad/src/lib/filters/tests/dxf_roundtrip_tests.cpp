@@ -10156,24 +10156,49 @@ TEST_CASE("DXF physical hatch source roles reject conflicting records",
   duplicateFixedHandle.replace(blockBeginHandle, std::string("5\nD1\n330\nA0").size(), "5\n14\n330\nA0");
   CHECK_FALSE(readRoles(duplicateFixedHandle, 0).sourceHandleIsolation);
   {
-    auto unqualified = structured;
-    for (std::size_t pos = 0; (pos = unqualified.find("B1", pos)) != std::string::npos; pos += 2u)
-      unqualified.replace(pos, 2u, "14");
-    writeText(src, unqualified);
+    auto fixedHatch = structured;
+    for (std::size_t pos = 0; (pos = fixedHatch.find("B1", pos)) != std::string::npos; pos += 2u)
+      fixedHatch.replace(pos, 2u, "14");
+    CHECK(readRoles(fixedHatch, 0).sourceHandleIsolation);
+    writeText(src, fixedHatch);
     ReplayProbe filter;
     RS_Graphic original;
     REQUIRE(filter.fileImport(original, QString::fromStdString(src), RS2::FormatDXFRW));
-    const auto output = tmpFile("checked-hatch-unqualified-fixed.dxf");
-    const std::string sentinel = "preserve unqualified fixed-handle destination\n";
+    const auto output = tmpFile("checked-hatch-fixed-self.dxf");
+    checkLateMutation(original, filter, output);
+    REQUIRE(filter.fileExport(original, QString::fromStdString(output), RS2::FormatDXFRW2010));
+    RS_Graphic result;
+    REQUIRE(filter.fileImport(result, QString::fromStdString(output), RS2::FormatDXFRW));
+    const RS_Hatch *hatch = nullptr;
+    const RS_Polyline *boundary = nullptr;
+    for (const RS_Entity *entity : result) {
+      if (entity && entity->rtti() == RS2::EntityHatch) hatch = static_cast<const RS_Hatch *>(entity);
+      if (entity && entity->rtti() == RS2::EntityPolyline) boundary = static_cast<const RS_Polyline *>(entity);
+    }
+    REQUIRE(hatch);
+    REQUIRE(boundary);
+    CHECK(hatch->sourceHandle() != 0x14u);
+    CHECK(hatch->sourceAssociative());
+    CHECK(hatch->sourceLoopBoundaries() == std::vector<std::vector<quint32>>{{boundary->sourceHandle()}});
+    CHECK(boundary->reactorHandles() == std::vector<quint32>{hatch->sourceHandle()});
+    CHECK(LC_HatchAssociation::matchesClosedStraightBoundary(*hatch, *boundary));
+    if (const char *copy = std::getenv("LIBRECAD_KEEP_CHECKED_HATCH_SELF14"))
+      std::filesystem::copy_file(output, copy, std::filesystem::copy_options::overwrite_existing);
+    auto duplicate = fixedHatch;
+    const auto duplicateAt = duplicate.find("5\nD1\n330\nA0");
+    REQUIRE(duplicateAt != std::string::npos);
+    duplicate.replace(duplicateAt, std::string("5\nD1\n330\nA0").size(), "5\n14\n330\nA0");
+    CHECK_FALSE(readRoles(duplicate, 0).sourceHandleIsolation);
+    writeText(src, duplicate);
+    RS_Graphic ambiguous;
+    REQUIRE(filter.fileImport(ambiguous, QString::fromStdString(src), RS2::FormatDXFRW));
+    const std::string sentinel = "preserve ambiguous fixed-hatch destination\n";
     writeText(output, sentinel);
-    CHECK_FALSE(filter.fileExport(original, QString::fromStdString(output), RS2::FormatDXFRW2010));
+    CHECK_FALSE(filter.fileExport(ambiguous, QString::fromStdString(output), RS2::FormatDXFRW2010));
     std::ifstream retained(output, std::ios::binary);
     CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel);
     retained.close();
-    writeText(src, structured);
-    RS_Graphic corrected;
-    REQUIRE(filter.fileImport(corrected, QString::fromStdString(src), RS2::FormatDXFRW));
-    REQUIRE(filter.fileExport(corrected, QString::fromStdString(output), RS2::FormatDXFRW2010));
+    REQUIRE(filter.fileExport(original, QString::fromStdString(output), RS2::FormatDXFRW2010));
     std::filesystem::remove(output);
   }
   auto fractional = structured;
