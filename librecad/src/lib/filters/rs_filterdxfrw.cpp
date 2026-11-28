@@ -12711,11 +12711,19 @@ void RS_FilterDXFRW::addCellStyleMap(const DRW_CellStyleMap &data) {
 
 #if defined(LIBDXFRW_HAS_DXF_DICTIONARY_SOURCE_HANDLERS) || \
     defined(LIBDXFRW_HAS_DXF_RASTER_SOURCE_HANDLER) || defined(LIBDXFRW_HAS_DXF_STAGED_LAYER_PLOT_STYLE_INSPECTOR)
-static bool canCaptureSmallDxfFile(const QString &file) {
-  constexpr qint64 maxSourceBytes = 256 * 1024;
+static bool canCaptureDxfFileWithin(const QString &file, qint64 maxSourceBytes) {
   const qint64 size = QFileInfo(file).size();
   return size >= 0 && size <= maxSourceBytes;
 }
+
+static bool canCaptureSmallDxfFile(const QString &file) {
+  return canCaptureDxfFileWithin(file, 256 * 1024);
+}
+#ifdef LIBDXFRW_HAS_DXF_RASTER_SOURCE_HANDLER
+static bool canCaptureRasterDxfFile(const QString &file) {
+  return canCaptureDxfFileWithin(file, 512 * 1024);
+}
+#endif
 #endif
 
 #if defined(LIBDXFRW_HAS_DXF_DICTIONARY_SOURCE_HANDLERS) || \
@@ -13355,9 +13363,12 @@ void RS_FilterDXFRW::addDxfHeaderMaterialSource(const DRW_DxfHeaderMaterialSourc
 
 #ifdef LIBDXFRW_HAS_DXF_DICTIONARY_SOURCE_HANDLERS
 bool RS_FilterDXFRW::wantsDxfRootDictionarySource() const {
-  // Keep the optional source-copy path bounded; larger drawings retain the
-  // normal import behavior and remain outside this image-export profile.
+  // Raster source records have separate count and aggregate retained-byte limits.
+#ifdef LIBDXFRW_HAS_DXF_RASTER_SOURCE_HANDLER
+  return m_graphic != nullptr && canCaptureRasterDxfFile(m_file);
+#else
   return m_graphic != nullptr && canCaptureSmallDxfFile(m_file);
+#endif
 }
 
 void RS_FilterDXFRW::addDxfRootDictionarySource(
@@ -13366,16 +13377,20 @@ void RS_FilterDXFRW::addDxfRootDictionarySource(
       dictionary.m_entries.begin(), dictionary.m_entries.end(), [](const auto &entry) {
         return normalizeDwgTableName(entry.m_name) == "ACAD_IMAGE_DICT";
       });
+  const bool hasMaterialDictionary = std::any_of(
+      dictionary.m_entries.begin(), dictionary.m_entries.end(), [](const auto &entry) {
+        return normalizeDwgTableName(entry.m_name) == "ACAD_MATERIAL";
+      });
+  const bool smallFile = canCaptureSmallDxfFile(m_file);
   bool hasOptedInMaterialDictionary = false;
 #ifdef LIBRECAD_SYSTEM_LIBDXFRW
   const auto *materialPolicy = dynamic_cast<const DRW_DxfSparseMaterialRawPolicy *>(this);
-  hasOptedInMaterialDictionary = materialPolicy && materialPolicy->wantsDxfSparseMaterialRawCapture() &&
-      std::any_of(dictionary.m_entries.begin(), dictionary.m_entries.end(), [](const auto &entry) {
-        return normalizeDwgTableName(entry.m_name) == "ACAD_MATERIAL";
-      });
+  hasOptedInMaterialDictionary = hasMaterialDictionary && smallFile && materialPolicy &&
+      materialPolicy->wantsDxfSparseMaterialRawCapture();
 #endif
-  if (m_graphic != nullptr && (hasImageDictionary || hasOptedInMaterialDictionary) &&
-      canRetainSmallDxfSource(source))
+  // A mixed raster/material graph still requires the material capture limit.
+  if (m_graphic != nullptr && (!hasMaterialDictionary || smallFile) &&
+      (hasImageDictionary || hasOptedInMaterialDictionary) && canRetainSmallDxfSource(source))
     m_graphic->dwgAdvancedMetadata().addDxfRootDictionarySource(source);
 }
 
@@ -13390,7 +13405,7 @@ bool RS_FilterDXFRW::wantsDxfDictionarySource() const {
 #ifdef LIBRECAD_SYSTEM_LIBDXFRW
   const auto *materialPolicy = dynamic_cast<const DRW_DxfSparseMaterialRawPolicy *>(this);
   needMaterial = materialPolicy && materialPolicy->wantsDxfSparseMaterialRawCapture() &&
-                 metadata.dxfMaterialDictionarySource() == nullptr;
+                 canCaptureSmallDxfFile(m_file) && metadata.dxfMaterialDictionarySource() == nullptr;
 #endif
   for (const auto &dictionary : metadata.dictionaries()) {
     if (dictionary.parentHandle != 0)
@@ -13419,7 +13434,8 @@ void RS_FilterDXFRW::addDxfDictionarySource(
   }
 #ifdef LIBRECAD_SYSTEM_LIBDXFRW
   const auto *materialPolicy = dynamic_cast<const DRW_DxfSparseMaterialRawPolicy *>(this);
-  if (!materialPolicy || !materialPolicy->wantsDxfSparseMaterialRawCapture())
+  if (!materialPolicy || !materialPolicy->wantsDxfSparseMaterialRawCapture() ||
+      !canCaptureSmallDxfFile(m_file))
     return;
   for (const auto &root : metadata.dictionaries()) {
     if (root.parentHandle != 0)
@@ -13440,7 +13456,7 @@ static_assert(LC_DwgAdvancedMetadata::MaxDxfImageSourceGroups ==
               "IMAGE source bound must match the staged polygon limit");
 #endif
 bool RS_FilterDXFRW::wantsDxfImageSource() const {
-  return m_graphic != nullptr && canCaptureSmallDxfFile(m_file);
+  return m_graphic != nullptr && canCaptureRasterDxfFile(m_file);
 }
 
 void RS_FilterDXFRW::addDxfImageSource(

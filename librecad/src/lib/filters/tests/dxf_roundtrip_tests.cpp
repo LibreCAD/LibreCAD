@@ -5373,35 +5373,121 @@ TEST_CASE("System codec retains the image source file-size guard", "[system-code
   ensureSettings();
   const auto source = tmpFile("image_file_guard_source.dxf");
   const auto output = tmpFile("image_file_guard_output.dxf");
+  const auto format = RS2::FormatDXFRW2010;
+  const std::string sentinel = "preserve source-size destination";
+  RS_FilterDXFRW filter;
+
+  // The retained-record budget remains independent of the input-size limit.
+  RS_Graphic distinct; distinct.initForNewDocument();
+  for (unsigned i = 0; i < 512u; ++i)
+    distinct.addEntity(new RS_Image(&distinct, RS_ImageData(0, RS_Vector(29.0 * i, 2),
+        RS_Vector(1, 0), RS_Vector(0, 1), RS_Vector(16, 12),
+        QStringLiteral("distinct-image-%1.png").arg(i), 50, 50, 0)));
+  REQUIRE(filter.fileExport(distinct, QString::fromStdString(source), format));
+  REQUIRE(std::filesystem::file_size(source) > 256u * 1024u);
+  RS_Graphic tooManySources;
+  REQUIRE(filter.fileImport(tooManySources, QString::fromStdString(source), format));
+  REQUIRE(tooManySources.dwgAdvancedMetadata().rasterImages().size() == 512u);
+  CHECK(tooManySources.dwgAdvancedMetadata().dxfImageDefSource() == nullptr);
+  writeText(output, sentinel);
+  CHECK_FALSE(filter.fileExport(tooManySources, QString::fromStdString(output), format));
+  { std::ifstream in(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(in), {}) == sentinel); }
+
   RS_Graphic original; original.initForNewDocument();
   for (unsigned i = 0; i < 512u; ++i)
     original.addEntity(new RS_Image(&original, RS_ImageData(0, RS_Vector(29.0 * i, 2),
         RS_Vector(1, 0), RS_Vector(0, 1), RS_Vector(16, 12),
-        QStringLiteral("distinct-image-%1.png").arg(i), 50, 50, 0)));
-  RS_FilterDXFRW filter;
-  REQUIRE(filter.fileExport(original, QString::fromStdString(source), RS2::FormatDXFRW2010));
-  REQUIRE(std::filesystem::file_size(source) > 256u * 1024u);
-  RS_Graphic large;
-  REQUIRE(filter.fileImport(large, QString::fromStdString(source), RS2::FormatDXFRW2010));
-  REQUIRE(large.dwgAdvancedMetadata().rasterImages().size() == 512u);
-  const std::string sentinel = "preserve source-size destination";
-  writeText(output, sentinel);
-  CHECK_FALSE(filter.fileExport(large, QString::fromStdString(output), RS2::FormatDXFRW2010));
-  { std::ifstream in(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(in), {}) == sentinel); }
-  for (unsigned i = 0; i < 128u; ++i) {
-    RS_Entity *last = nullptr;
-    for (RS_Entity *entity : original)
-      if (entity && entity->rtti() == RS2::EntityImage) last = entity;
-    REQUIRE(last); REQUIRE(original.removeEntity(last));
+        QStringLiteral("shared-image-%1.png").arg(i % 256u), 50, 50, 0)));
+  REQUIRE(filter.fileExport(original, QString::fromStdString(source), format));
+  auto bytes = std::filesystem::file_size(source);
+  REQUIRE(bytes < 512u * 1024u);
+  // Whitespace after EOF changes only the size gate, not the image graph.
+  if (bytes <= 256u * 1024u) {
+    std::ofstream append(source, std::ios::binary | std::ios::app);
+    append << std::string(256u * 1024u + 1u - bytes, ' ');
+    REQUIRE(append.good());
   }
-  REQUIRE(filter.fileExport(original, QString::fromStdString(source), RS2::FormatDXFRW2010));
-  REQUIRE(std::filesystem::file_size(source) <= 256u * 1024u);
+  bytes = std::filesystem::file_size(source);
+  REQUIRE(bytes > 256u * 1024u);
+  std::ifstream input(source, std::ios::binary);
+  const std::string originalBytes(std::istreambuf_iterator<char>(input), {});
+  input.close();
+  REQUIRE(originalBytes.size() == bytes);
+  if (const char *prefix = std::getenv("LIBRECAD_KEEP_LARGE_IMAGE_PREFIX"))
+    std::filesystem::copy_file(source, std::string(prefix) + ".source.dxf",
+                               std::filesystem::copy_options::overwrite_existing);
+  RS_Graphic large;
+  REQUIRE(filter.fileImport(large, QString::fromStdString(source), format));
+  REQUIRE(large.dwgAdvancedMetadata().rasterImages().size() == 512u);
+  REQUIRE(filter.fileExport(large, QString::fromStdString(output), format));
+  CHECK(countRecords(output, "IMAGE") == 512);
+  CHECK(countRecords(output, "IMAGEDEF") == 256);
+  CHECK(countRecords(output, "IMAGEDEF_REACTOR") == 512);
+  RS_Graphic reread;
+  REQUIRE(filter.fileImport(reread, QString::fromStdString(output), format));
+  CHECK(reread.dwgAdvancedMetadata().rasterImages().size() == 512u);
+  CHECK(reread.dwgAdvancedMetadata().imageDefinitions().size() == 256u);
+  CHECK(reread.dwgAdvancedMetadata().imageDefinitionReactors().size() == 512u);
+  if (const char *prefix = std::getenv("LIBRECAD_KEEP_LARGE_IMAGE_PREFIX"))
+    std::filesystem::copy_file(output, std::string(prefix) + ".output.dxf",
+                               std::filesystem::copy_options::overwrite_existing);
+
+  writeText(source, originalBytes + std::string(512u * 1024u - bytes, ' '));
+  REQUIRE(std::filesystem::file_size(source) == 512u * 1024u);
+  RS_Graphic boundary;
+  REQUIRE(filter.fileImport(boundary, QString::fromStdString(source), format));
+  REQUIRE(filter.fileExport(boundary, QString::fromStdString(output), format));
+  { std::ofstream append(source, std::ios::binary | std::ios::app); append.put(' '); }
+  REQUIRE(std::filesystem::file_size(source) == 512u * 1024u + 1u);
+  RS_Graphic oversized;
+  REQUIRE(filter.fileImport(oversized, QString::fromStdString(source), format));
+  writeText(output, sentinel);
+  CHECK_FALSE(filter.fileExport(oversized, QString::fromStdString(output), format));
+  { std::ifstream in(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(in), {}) == sentinel); }
+  writeText(source, originalBytes);
   RS_Graphic corrected;
-  REQUIRE(filter.fileImport(corrected, QString::fromStdString(source), RS2::FormatDXFRW2010));
-  REQUIRE(filter.fileExport(corrected, QString::fromStdString(output), RS2::FormatDXFRW2010));
-  CHECK(countRecords(output, "IMAGE") == 384);
-  CHECK(countRecords(output, "IMAGEDEF") == 384);
-  CHECK(countRecords(output, "IMAGEDEF_REACTOR") == 384);
+  REQUIRE(filter.fileImport(corrected, QString::fromStdString(source), format));
+  REQUIRE(filter.fileExport(corrected, QString::fromStdString(output), format));
+  CHECK(countRecords(output, "IMAGE") == 512);
+  CHECK(countRecords(output, "IMAGEDEF") == 256);
+  CHECK(countRecords(output, "IMAGEDEF_REACTOR") == 512);
+
+  // A larger raster file must not opt an accompanying MATERIAL into capture.
+  std::istringstream materialInput(originalBytes);
+  std::string code, value, materialBytes, section;
+  bool sectionStart = false, root = false;
+  while (std::getline(materialInput, code) && std::getline(materialInput, value)) {
+    const int group = std::stoi(code);
+    if (group == 0 && root) {
+      materialBytes += "3\nACAD_MATERIAL\n350\nF700\n";
+      root = false;
+    }
+    if (group == 0 && value == "SECTION") sectionStart = true;
+    else if (sectionStart && group == 2) { section = value; sectionStart = false; }
+    if (group == 0 && value == "ENDSEC" && section == "ENTITIES")
+      materialBytes += "0\nLINE\n5\nF701\n100\nAcDbEntity\n8\n0\n347\nF702\n"
+                       "100\nAcDbLine\n10\n0\n20\n0\n30\n0\n11\n1\n21\n0\n31\n0\n";
+    if (group == 0 && value == "ENDSEC" && section == "OBJECTS")
+      materialBytes += "0\nDICTIONARY\n5\nF700\n330\nC\n100\nAcDbDictionary\n281\n1\n"
+                       "3\nPlainMat\n350\nF702\n0\nMATERIAL\n5\nF702\n330\nF700\n"
+                       "100\nAcDbMaterial\n1\nPlainMat\n";
+    if (section == "OBJECTS" && group == 5 && value == "C") root = true;
+    materialBytes += code + "\n" + value + "\n";
+  }
+  REQUIRE(materialBytes.size() > 256u * 1024u);
+  REQUIRE(materialBytes.size() <= 512u * 1024u);
+  writeText(source, materialBytes);
+  writeText(output, sentinel);
+  RS_Graphic mixed;
+  REQUIRE(filter.fileImport(mixed, QString::fromStdString(source), format));
+  REQUIRE(mixed.dwgAdvancedMetadata().materials().size() == 1u);
+  CHECK_FALSE(filter.fileExport(mixed, QString::fromStdString(output), format));
+  { std::ifstream in(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(in), {}) == sentinel); }
+  writeText(source, originalBytes);
+  RS_Graphic retry;
+  REQUIRE(filter.fileImport(retry, QString::fromStdString(source), format));
+  REQUIRE(filter.fileExport(retry, QString::fromStdString(output), format));
+  CHECK(countRecords(output, "IMAGE") == 512);
   std::filesystem::remove(source); std::filesystem::remove(output);
 }
 
