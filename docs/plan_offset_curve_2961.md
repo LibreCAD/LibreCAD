@@ -23,12 +23,16 @@ USA.
 -->
 # Editable Offset Curves: Closeout Plan (#2961)
 
-Updated: 2026-11-27. Scope: **LibreCAD** and [PR #3193](https://github.com/LibreCAD/LibreCAD/pull/3193).
+Updated: 2026-11-28. Scope: **LibreCAD** and [PR #3193](https://github.com/LibreCAD/LibreCAD/pull/3193).
 
 ## Baseline and Completeness
 
 Audited PR head `6a5e702ec643173a715b6f39a4d33169b1b5b90e` against its `master` base
 `954217a719f7fff1f54bdf4ee894a0e462e21934`, an ancestor of the head.
+Merge `de72cb7313b69acf65fed3c79c8451536e6ed756` subsequently integrates
+upstream `master` `7fb90e338687619dcde4de33b8d8f5aae96d0eea`; its focused
+merged-source checks are recorded below. Earlier exhaustive sanitizer and
+worker receipts remain pinned to their pre-merge source.
 Exact-head CI finished **19 passed, 7 skipped, 0 failed**, including the
 [Linux fast and both Windows DWG/DXF lanes](https://github.com/LibreCAD/LibreCAD/actions/runs/45802689061)
 and [macOS packaging](https://github.com/LibreCAD/LibreCAD/actions/runs/45802689210/job/139849781506).
@@ -78,7 +82,7 @@ the dependencies for **3 and 4** in parallel. **5** follows the acceptance work.
 
 | Step | Readiness | Acceptance |
 | --- | --- | --- |
-| **1. Complete the automated matrix** | **Ready locally** with the existing CMake/Qt6 toolchain and real sibling worker. Exact-source macOS Release integration is 20/20 and worker entries are 38/38; missing nonlocal rows need their corresponding runner. | Match receipts by source, case/profile, platform and configuration. Run missing portable family/variant rows first, including thin-ellipse cusp and mixed-bulge regressions where the broad variants were not exercised. Investigate the intermittent Trim sanitizer launch failures and remaining supported configurations. Refresh integrated-suite evidence if the final candidate changes affected code. |
+| **1. Complete the automated matrix** | **Ready locally** with the existing CMake/Qt6 toolchain and real sibling worker. Merged-source macOS Release integration is 20/20 with a passing kernel and focused worker/UI checks; the earlier 38/38 worker and broad sanitizer runs predate the merge. Missing nonlocal rows need their corresponding runner. | Match receipts by source, case/profile, platform and configuration. Reconcile the merge's shared angle/preview/Properties changes against the remaining worker and sanitizer lanes; rerun affected rows or explicitly justify unaffected receipts. Run missing portable family/variant rows, investigate intermittent Trim sanitizer launch failures and refresh integration evidence when affected code changes. |
 | **2. Run the packaged-app walkthrough** | **Blocked** on observable desktop control or a human operator. The fixed copy launched and sampled in the normal event loop, but desktop control could not attach. | Use the candidate artifact, disposable fixtures and an isolated or approved profile. Complete the walkthrough below; an older build, app launch or offscreen test does not close it. Do not re-sign a working artifact just to retry access. |
 | **3. Validate independent CAD** | **Partial**: bounded ODA and LibreDWG evidence exists; independent native DWG viewing and AutoCAD acceptance need an appropriate app/operator. | Compare the generated corpus, including degree 1/3 carriers and LINE controls. Verify geometry, layer/pen and metadata across the applicable round trips. Observe native DWG geometry in an independent CAD viewport and record AutoCAD open/audit, sampled geometry and save/reopen; check retained offset metadata and native adoption back in LibreCAD. Do not expect AutoCAD to edit LibreCAD's native offset definition. |
 | **4. Qualify deployed macOS** | **Blocked** on an authorized release owner, Developer ID/notarization and macOS 14.4 access. | CI uses an ad-hoc universal DMG on `macos-15-intel` with deployment target 14.4; that is not runtime on 14.4. Reuse `scripts/build-osx.sh` and `scripts/test-osx-{package,dmg-runtime}.sh`; retain artifact hash, architecture, signature/notarization/staple verification and actual OS. Check app/worker launch, a worker-backed edit and save/reopen on 14.4. Retain Linux/Windows relocation evidence separately. |
@@ -174,6 +178,22 @@ the dependencies for **3 and 4** in parallel. **5** follows the acceptance work.
 
 ## Recent Evidence
 
+- Merge `de72cb7313b69acf65fed3c79c8451536e6ed756` brings in upstream master
+  `7fb90e338687619dcde4de33b8d8f5aae96d0eea` after a conflict-free merge check.
+  On macOS 27.2.1 arm64, Qt 6.12.0, the merged CMake Release build passed:
+  angle/unit parsing **204,483 assertions / 27 cases**; the complete offscreen
+  Properties selector **54,599 / 112**; creation/preview **398 / 14**;
+  Trim worker preview/commit/fault selectors **619 / 17** in both declaration
+  and seeded-random order (seed 3193); all **20/20** registered non-worker
+  CTests; the complete worker-kernel CTest; and worker-client modeled-family
+  plus atomic typed-edit cases **2,967,616 / 2**. The qmake6 recursive build
+  produced arm64 app and worker artifacts; a staged CMake client using that
+  qmake-built worker passed **1,870 assertions / 2 cases** with matching
+  staged/worker hashes. Test-only worker waits were 30 seconds for Properties,
+  creation and Trim and 900 seconds for the client; production limits were
+  unchanged. Temporary logs use the `/private/tmp/offset-3193-merge-*` prefix.
+  This does not rerun the full 104-case sanitizer lane or all 38 worker entries
+  on the merge, establish visible GUI behavior, or qualify signed deployment.
 - PR head `971c0699f28db22062f45523a594b4f8fa3376d9` completed CI with
   **19 successful checks, 7 skipped, 0 failed**, including
   [Linux fast and Windows x64/ARM64 DWG/DXF verification](https://github.com/LibreCAD/LibreCAD/actions/runs/45973985875)
