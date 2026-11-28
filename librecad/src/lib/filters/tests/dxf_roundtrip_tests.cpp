@@ -9601,6 +9601,11 @@ TEST_CASE("DXF physical hatch source roles reject conflicting records",
   REQUIRE(reactorPosition != std::string::npos);
   extraReactor.insert(reactorPosition, "330\n0\n");
   CHECK(readRoles(extraReactor, 0).hatch == 0u);
+  auto nondefaultColor = input;
+  const auto subclass = nondefaultColor.find("100\nAcDbHatch\n");
+  REQUIRE(subclass != std::string::npos);
+  nondefaultColor.insert(subclass, "62\n7\n");
+  CHECK(readRoles(nondefaultColor, 0).hatch == 0u);
   writeText(src, input);
   SourceProbe retry;
   retry.fault = 1;
@@ -9630,6 +9635,21 @@ TEST_CASE("DXF physical hatch source roles reject conflicting records",
   for (const RS_Entity *entity : afterFailure)
     if (entity && entity->rtti() == RS2::EntityHatch)
       CHECK(static_cast<const RS_Hatch *>(entity)->physicalSourceRoles().hatch == 0xB1u);
+  if (const char *local = std::getenv("LIBRECAD_HATCH_MODEL_SOURCE")) {
+    RS_Graphic full;
+    SourceProbe fullFilter;
+    REQUIRE(fullFilter.fileImport(full, QString::fromLocal8Bit(local), RS2::FormatDXFRW));
+    bool found = false;
+    for (const RS_Entity *entity : full)
+      if (entity && entity->rtti() == RS2::EntityHatch) {
+        const auto roles = static_cast<const RS_Hatch *>(entity)->physicalSourceRoles();
+        CHECK(roles.hatch == 0xA1u);
+        CHECK(roles.boundary == 0xB1u);
+        CHECK(roles.owner == 0x1Fu);
+        found = true;
+      }
+    CHECK(found);
+  }
   std::filesystem::remove(src);
 }
 #endif

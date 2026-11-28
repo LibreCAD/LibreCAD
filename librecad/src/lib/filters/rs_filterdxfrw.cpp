@@ -13267,6 +13267,14 @@ bool capturePhysicalHatchRoles(RS_Graphic &graphic, const DRW_DxfEntitiesSource 
     if (lastOrdinal + 1u != record.endOrdinal || lastEnd != record.endOffset) return false;
   }
   if (!hRecord || !bRecord || groupCount != source.groups) return false;
+  const auto integer = [](const DRW_DxfPhysicalEntitySource &record, std::size_t i, int value) {
+    const auto &group = record.groups[i];
+    if (group.type() != DRW_Variant::INTEGER || group.i_val() != value) return false;
+    char *end = nullptr; errno = 0;
+    const auto &raw = record.rawValues[i];
+    const long parsed = std::strtol(raw.c_str(), &end, 10);
+    return !raw.empty() && errno != ERANGE && end == raw.c_str() + raw.size() && parsed == value;
+  };
   const auto frame = [&](const DRW_DxfPhysicalEntitySource &record, const char *subclass,
                          std::uint32_t self, const std::vector<std::uint32_t> &reactors,
                          std::size_t &body) {
@@ -13288,12 +13296,15 @@ bool capturePhysicalHatchRoles(RS_Graphic &graphic, const DRW_DxfEntitiesSource 
     if (std::count_if(prefix.groups.begin(), prefix.groups.end(),
                       [](const DRW_Variant &group) { return group.code() == 330; }) !=
         static_cast<std::ptrdiff_t>(reactors.size() + 1u)) return false;
-    unsigned common = 0, layer = 0, kind = 0;
+    unsigned common = 0, layer = 0, kind = 0, lineType = 0, color = 0, lineWeight = 0;
     const bool valid = visitDxfCarrierFrame(prefix, source.version, self, hOwner, reactors,
       [&](const DRW_Variant &group, std::size_t index) {
+        if (group.code() == 62) return ++color == 1u && integer(record, index, 256);
+        if (group.code() == 370) return ++lineWeight == 1u && integer(record, index, -1);
         if (group.type() != DRW_Variant::STRING || !group.content.s ||
             prefix.rawValues[index] != *group.content.s) return false;
         if (group.code() == 8) return ++layer == 1u && !group.content.s->empty();
+        if (group.code() == 6) return ++lineType == 1u && *group.content.s == "BYLAYER";
         if (group.code() != 100) return false;
         if (*group.content.s == "AcDbEntity") return ++common == 1u && kind == 0u;
         return *group.content.s == subclass && common == 1u && ++kind == 1u;
@@ -13303,14 +13314,6 @@ bool capturePhysicalHatchRoles(RS_Graphic &graphic, const DRW_DxfEntitiesSource 
   std::size_t hBody = 0, bBody = 0;
   if (!frame(*hRecord, "AcDbHatch", h, {}, hBody) ||
       !frame(*bRecord, "AcDbPolyline", b, {h}, bBody)) return false;
-  const auto integer = [](const DRW_DxfPhysicalEntitySource &record, std::size_t i, int value) {
-    const auto &group = record.groups[i];
-    if (group.type() != DRW_Variant::INTEGER || group.i_val() != value) return false;
-    char *end = nullptr; errno = 0;
-    const auto &raw = record.rawValues[i];
-    const long parsed = std::strtol(raw.c_str(), &end, 10);
-    return !raw.empty() && errno != ERANGE && end == raw.c_str() + raw.size() && parsed == value;
-  };
   unsigned assoc = 0, loops = 0, path = 0, count = 0, target = 0;
   for (std::size_t i = hBody; i < hRecord->groups.size(); ++i) {
     const auto code = hRecord->groups[i].code();
