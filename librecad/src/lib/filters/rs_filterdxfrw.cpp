@@ -13378,6 +13378,16 @@ bool capturePhysicalHatchRoles(RS_Graphic &graphic, const DRW_DxfEntitiesSource 
            code != 39 && code != 210 && code != 220 && code != 230) ||
           !fields.insert(code).second || group.type() != DRW_Variant::DOUBLE || !std::isfinite(group.d_val()))
         return false;
+      const auto &raw = record->rawValues[i];
+      char *end = nullptr; errno = 0;
+      const double parsed = std::strtod(raw.c_str(), &end);
+      if (raw.empty() || errno == ERANGE || end != raw.c_str() + raw.size() || parsed != group.d_val())
+        return false;
+      // LibreCAD stores LINE geometry in 2D. Keep non-default elevation,
+      // thickness and extrusion outside this association replay profile.
+      if ((code == 30 || code == 31 || code == 39 || code == 210 || code == 220) && group.d_val() != 0.0)
+        return false;
+      if (code == 230 && group.d_val() != 1.0) return false;
     }
     for (int code : {10, 20, 11, 21}) if (!fields.count(code)) return false;
   }
@@ -15145,7 +15155,10 @@ bool checkedHatchReplayStable(RS_Graphic &graphic, const CheckedHatchReplay &aud
     if (!entity || entity->isDeleted()) continue;
     if (entity == audit.hatch && entity->rtti() == RS2::EntityHatch) ++hatches;
     else if (entity == audit.boundary && entity->rtti() == RS2::EntityPolyline) ++boundaries;
-    else if (entity->rtti() == RS2::EntityLine && !entity->materialHandle() && !entity->plotStyleHandle() &&
+    else if (entity->rtti() == RS2::EntityLine &&
+             static_cast<const RS_Line *>(entity)->getStartpoint().z == 0.0 &&
+             static_cast<const RS_Line *>(entity)->getEndpoint().z == 0.0 &&
+             !entity->materialHandle() && !entity->plotStyleHandle() &&
              !entity->xDictHandle() && entity->reactorHandles().empty() && !entity->hasDrwExtData() &&
              std::find(audit.lines.begin(), audit.lines.end(),
                        std::make_pair(entity, entity->sourceHandle())) != audit.lines.end()) ++lines;

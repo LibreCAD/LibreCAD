@@ -10210,6 +10210,16 @@ TEST_CASE("DXF physical hatch source roles reject conflicting records",
                                    "11\n25\n21\n0\n31\n0\n";
     withLine.insert(entityStart, lineRecord);
     CHECK(readRoles(withLine, 0).sourceHandleIsolation);
+    auto elevatedLine = withLine;
+    const auto lineZ = elevatedLine.find("30\n0\n11\n25\n21\n0\n31\n0\n");
+    REQUIRE(lineZ != std::string::npos);
+    elevatedLine.replace(lineZ, std::string("30\n0\n").size(), "30\n3\n");
+    CHECK(readRoles(elevatedLine, 0).hatch == 0u);
+    auto thickLine = withLine;
+    const auto lineEnd = thickLine.find("31\n0\n0\nLWPOLYLINE\n");
+    REQUIRE(lineEnd != std::string::npos);
+    thickLine.insert(lineEnd + std::string("31\n0\n").size(), "39\n2\n");
+    CHECK(readRoles(thickLine, 0).hatch == 0u);
     auto linkedLine = withLine;
     const auto lineSubclass = linkedLine.find("100\nAcDbLine\n");
     REQUIRE(lineSubclass != std::string::npos);
