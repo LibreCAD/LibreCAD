@@ -2348,8 +2348,10 @@ static std::string sparseMaterialPolylineSource() {
 TEST_CASE("Ordinary sparse material accepts explicit planar defaults", "[system-codec][dxf][material][transaction][point]") {
   ensureSettings();
   const std::string kind = GENERATE(std::string("POINT"), std::string("LINE"),
-                                    std::string("CIRCLE"), std::string("ARC"));
+                                    std::string("CIRCLE"), std::string("ARC"),
+                                    std::string("ELLIPSE"), std::string("LWPOLYLINE"));
   const bool isPoint = kind == "POINT", isLine = kind == "LINE", isArc = kind == "ARC";
+  const bool isEllipse = kind == "ELLIPSE", isPolyline = kind == "LWPOLYLINE";
   const auto source = tmpFile("system_sparse_point_defaults_source.dxf");
   const auto output = tmpFile("system_sparse_point_defaults_output.dxf");
   const auto resaved = tmpFile("system_sparse_point_defaults_resave.dxf");
@@ -2361,6 +2363,8 @@ TEST_CASE("Ordinary sparse material accepts explicit planar defaults", "[system-
       "0\nSECTION\n2\nENTITIES\n0\n" + kind + "\n5\nA5\n100\nAcDbEntity\n8\nRAWTEST\n62\n2\n347\nA1\n" +
       (isPoint ? "100\nAcDbPoint\n10\n2\n20\n3\n30\n0\n" :
        isLine ? "100\nAcDbLine\n10\n2\n20\n3\n30\n0\n11\n4\n21\n5\n31\n0\n" :
+       isEllipse ? "100\nAcDbEllipse\n10\n2\n20\n3\n30\n0\n11\n4\n21\n0\n31\n0\n40\n0.5\n41\n0\n42\n6.283185307179586\n" :
+       isPolyline ? "100\nAcDbPolyline\n90\n3\n70\n0\n10\n2\n20\n3\n10\n4\n20\n5\n10\n6\n20\n3\n" :
                 "100\nAcDbCircle\n10\n2\n20\n3\n30\n0\n40\n2\n");
   const std::string arcSubclass = isArc ? "100\nAcDbArc\n50\n30\n51\n120\n" : "";
   const std::string suffix =
@@ -2372,6 +2376,7 @@ TEST_CASE("Ordinary sparse material accepts explicit planar defaults", "[system-
   RS_FilterDXFRW filter;
   std::vector<std::pair<std::string, bool>> defaultCases{{"39\n0\n", false}, {"210\n0\n220\n0\n230\n1\n", false},
       {"39\n0\n210\n0\n220\n0\n230\n1\n", false}};
+  if (isEllipse) defaultCases = {{"210\n0\n220\n0\n230\n1\n", false}};
   if (isPoint) { defaultCases.push_back({"50\n0\n", false}); defaultCases.push_back({"39\n0\n50\n0\n210\n0\n220\n0\n230\n1\n", false}); }
   if (isArc) defaultCases.push_back({"210\n0\n220\n0\n230\n1\n", true});
   for (const auto &entry : defaultCases) {
@@ -2381,19 +2386,22 @@ TEST_CASE("Ordinary sparse material accepts explicit planar defaults", "[system-
     RS_Entity *selected = nullptr;
     for (RS_Entity *entity : graphic)
       if (entity && entity->sourceHandle() == 0xA5u &&
-          entity->rtti() == (isPoint ? RS2::EntityPoint : isLine ? RS2::EntityLine : isArc ? RS2::EntityArc : RS2::EntityCircle)) selected = entity;
+          entity->rtti() == (isPoint ? RS2::EntityPoint : isLine ? RS2::EntityLine : isArc ? RS2::EntityArc :
+                             isEllipse ? RS2::EntityEllipse : isPolyline ? RS2::EntityPolyline : RS2::EntityCircle)) selected = entity;
     REQUIRE(selected);
     selected->move(RS_Vector(4.0, 4.0));
     REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), RS2::FormatDXFRW));
-    CHECK(recordGroupValues(output, kind, "10") == std::vector<std::string>{"6"});
-    CHECK(recordGroupValues(output, kind, "20") == std::vector<std::string>{"7"});
+    const auto xs = recordGroupValues(output, kind, "10"), ys = recordGroupValues(output, kind, "20");
+    REQUIRE(xs.size() == (isPolyline ? 3u : 1u)); REQUIRE(ys.size() == xs.size());
+    CHECK(xs.front() == "6"); CHECK(ys.front() == "7");
     const auto material = recordGroupValues(output, "MATERIAL", "5"); REQUIRE(material.size() == 1u);
     CHECK(recordGroupValues(output, kind, "347") == material);
     RS_Graphic reopened;
     REQUIRE(filter.fileImport(reopened, QString::fromStdString(output), RS2::FormatDXFRW));
     REQUIRE(filter.fileExport(reopened, QString::fromStdString(resaved), RS2::FormatDXFRW));
     const char *key = isPoint ? "LIBRECAD_KEEP_SPARSE_POINT_DEFAULTS" : isLine ? "LIBRECAD_KEEP_SPARSE_LINE_DEFAULTS" :
-        isArc ? "LIBRECAD_KEEP_SPARSE_ARC_DEFAULTS" : "LIBRECAD_KEEP_SPARSE_CIRCLE_DEFAULTS";
+        isArc ? "LIBRECAD_KEEP_SPARSE_ARC_DEFAULTS" : isEllipse ? "LIBRECAD_KEEP_SPARSE_ELLIPSE_DEFAULTS" :
+        isPolyline ? "LIBRECAD_KEEP_SPARSE_POLYLINE_DEFAULTS" : "LIBRECAD_KEEP_SPARSE_CIRCLE_DEFAULTS";
     if (const char *copy = std::getenv(key))
       std::filesystem::copy_file(resaved, copy, std::filesystem::copy_options::overwrite_existing);
   }
@@ -2421,16 +2429,26 @@ TEST_CASE("Ordinary sparse material accepts explicit planar defaults", "[system-
       if (alterTyped && data.handle == 0xA5u) changed.thickness = 1.0;
       RS_FilterDXFRW::addArc(changed);
     }
+    void addEllipse(const DRW_Ellipse &data) override {
+      DRW_Ellipse changed = data;
+      if (alterTyped && data.handle == 0xA5u) changed.extPoint.x = 1.0;
+      RS_FilterDXFRW::addEllipse(changed);
+    }
+    void addLWPolyline(const DRW_LWPolyline &data) override {
+      DRW_LWPolyline changed = data;
+      if (alterTyped && data.handle == 0xA5u) changed.extPoint.x = 1.0;
+      RS_FilterDXFRW::addLWPolyline(changed);
+    }
     void addDxfEntitiesSource(const DRW_DxfEntitiesSource &data) override {
       auto copy = data;
       if (alterPhysical) for (auto &record : copy.records)
-        if (record.name == "POINT" || record.name == "LINE" || record.name == "CIRCLE" || record.name == "ARC") for (std::size_t i = 0; i < record.groups.size(); ++i)
-          if (record.groups[i].code() == 39) record.rawValues[i] = "1";
+        if (record.name == "POINT" || record.name == "LINE" || record.name == "CIRCLE" || record.name == "ARC" || record.name == "ELLIPSE" || record.name == "LWPOLYLINE") for (std::size_t i = 0; i < record.groups.size(); ++i)
+          if (record.groups[i].code() == 210) record.rawValues[i] = "1";
       RS_FilterDXFRW::addDxfEntitiesSource(copy);
     }
   } probe;
   for (int mode = 0; mode < 2; ++mode) {
-    writeText(source, prefix + "39\n0\n" + arcSubclass + suffix);
+    writeText(source, prefix + "210\n0\n220\n0\n230\n1\n" + arcSubclass + suffix);
     probe.alterPhysical = mode == 0; probe.alterTyped = mode == 1;
     RS_Graphic rejected; REQUIRE(probe.fileImport(rejected, QString::fromStdString(source), RS2::FormatDXFRW));
     writeText(output, sentinel);
