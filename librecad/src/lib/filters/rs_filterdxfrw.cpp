@@ -12193,13 +12193,14 @@ void RS_FilterDXFRW::snapSplineEdgeEndpoints(RS_EntityContainer *hatchLoop) {
  */
 void RS_FilterDXFRW::addHatch(const DRW_Hatch *data) {
   RS_DEBUG->print("RS_FilterDXF::addHatch()");
-  if (m_graphic != nullptr && data->associative == 1) {
-    std::vector<std::uint32_t> boundaries;
+  std::vector<std::uint32_t> sourceBoundaries;
+  if (data->associative == 1) {
     for (const auto &loop : data->looplist)
       if (loop)
-        boundaries.insert(boundaries.end(), loop->m_boundaryHandles.begin(),
-                          loop->m_boundaryHandles.end());
-    m_graphic->dwgAdvancedMetadata().addSourceHatchBoundaries(data->handle, boundaries);
+        sourceBoundaries.insert(sourceBoundaries.end(), loop->m_boundaryHandles.begin(),
+                                loop->m_boundaryHandles.end());
+    if (m_graphic != nullptr)
+      m_graphic->dwgAdvancedMetadata().addSourceHatchBoundaries(data->handle, sourceBoundaries);
   }
   const double hatchAngle =
       importedHatchAngle(data->angle, m_legacyHatchRadians, data->solid != 0);
@@ -12207,6 +12208,9 @@ void RS_FilterDXFRW::addHatch(const DRW_Hatch *data) {
       m_currentContainer, RS_HatchData(data->solid, data->scale, hatchAngle,
                                        QString::fromUtf8(data->name.c_str())));
   setEntityAttributes(hatch, data);
+  hatch->setSourceAssociative(data->associative == 1);
+  if (data->handle == 0 || data->handle == DRW::NoHandle)
+    hatch->setUnidentifiedSourceBoundaries(std::move(sourceBoundaries));
   // Strip the approximate definition-line tag the writer may have added so
   // a round-trip through LibreCAD never duplicates it: the re-export rebuilds
   // the tag from forExport()'s own approximate flag. The strip is case-
@@ -14408,6 +14412,99 @@ static bool canExportPolylineEllipses(const RS_EntityContainer &container) {
   return true;
 }
 
+// A hatch with no source identity cannot identify its reverse reactors. Do
+// not guess at a missing target or publish a dangling edge. Other reference
+// kinds remain outside this narrow recovery profile.
+static bool unidentifiedHatchReactorsAreSafe(RS_Graphic &graphic) {
+  const auto &metadata = graphic.dwgAdvancedMetadata();
+  if (metadata.unidentifiedHatchBoundaries().empty()) {
+    const auto hasUnidentifiedHatch = [](RS_EntityContainer &container) {
+      for (const RS_Entity *entity : lc::LC_ContainerTraverser{container, RS2::ResolveNone}.entities())
+        if (entity && !entity->isDeleted() && entity->rtti() == RS2::EntityHatch &&
+            !static_cast<const RS_Hatch *>(entity)->unidentifiedSourceBoundaries().empty())
+          return true;
+      return false;
+    };
+    bool found = hasUnidentifiedHatch(graphic);
+    for (unsigned i = 0; !found && i < graphic.countBlocks(); ++i) {
+      RS_Block *block = graphic.blockAt(i);
+      if (block && !block->isDeleted()) found = hasUnidentifiedHatch(*block);
+    }
+    if (!found) return true;
+  }
+  std::vector<const RS_Entity *> entities;
+  std::set<quint32> boundaries(metadata.unidentifiedHatchBoundaries().begin(),
+                               metadata.unidentifiedHatchBoundaries().end());
+  const auto scan = [&](RS_EntityContainer &container) {
+    for (const RS_Entity *entity : lc::LC_ContainerTraverser{container, RS2::ResolveNone}.entities()) {
+      if (!entity || entity->isDeleted()) continue;
+      entities.push_back(entity);
+      if (entity->rtti() == RS2::EntityHatch) {
+        const auto *hatch = static_cast<const RS_Hatch *>(entity);
+        boundaries.insert(hatch->unidentifiedSourceBoundaries().begin(),
+                          hatch->unidentifiedSourceBoundaries().end());
+      }
+    }
+  };
+  scan(graphic);
+  for (unsigned i = 0; i < graphic.countBlocks(); ++i) {
+    RS_Block *block = graphic.blockAt(i);
+    if (block && !block->isDeleted()) scan(*block);
+  }
+  if (boundaries.empty()) return true;
+  if (boundaries.count(0) || boundaries.count(DRW::NoHandle)) return false;
+  std::map<quint32, std::pair<std::size_t, const RS_Entity *>> sources;
+  for (const RS_Entity *entity : entities) {
+    if (entity->sourceHandle() == 0 || entity->sourceHandle() == DRW::NoHandle) continue;
+    auto &entry = sources[entity->sourceHandle()];
+    ++entry.first;
+    entry.second = entity;
+  }
+  for (const auto &raw : metadata.rawDxfObjects())
+    if (raw.handle != 0 && raw.handle != DRW::NoHandle) ++sources[raw.handle].first;
+  for (const auto &raw : metadata.rawDxfEntities())
+    if (raw.handle != 0 && raw.handle != DRW::NoHandle) ++sources[raw.handle].first;
+  for (const auto &raw : metadata.rawObjects())
+    if (raw.handle != 0 && raw.handle != DRW::NoHandle) ++sources[raw.handle].first;
+  for (const auto &record : metadata.dictionaries())
+    if (record.handle != 0 && record.handle != DRW::NoHandle) ++sources[record.handle].first;
+  for (const auto &record : metadata.xrecords())
+    if (record.handle != 0 && record.handle != DRW::NoHandle) ++sources[record.handle].first;
+  for (const auto &record : metadata.familyExposures())
+    if (record.handle != 0 && record.handle != DRW::NoHandle) ++sources[record.handle].first;
+  for (const RS_Entity *entity : entities) {
+    if (!boundaries.count(entity->sourceHandle())) continue;
+    for (quint32 reactor : entity->reactorHandles()) {
+      if (metadata.isSourceHatchBoundary(reactor, entity->sourceHandle())) continue;
+      // Advanced objects need their own identity/output closure before a
+      // missing hatch identity can be reconciled with an unrelated target.
+      if (metadata.semanticOnlyRecordCount() != 0) return false;
+      const auto it = sources.find(reactor);
+      // These primitive records are written directly; other target kinds
+      // require their own graph/output proof before they can be retained.
+      if (it == sources.end() || it->second.first != 1 || !it->second.second)
+        return false;
+      switch (it->second.second->rtti()) {
+      case RS2::EntityPoint:
+      case RS2::EntityLine:
+      case RS2::EntityCircle:
+      case RS2::EntityArc:
+        break;
+      default:
+        return false;
+      }
+    }
+  }
+  return true;
+}
+
+static void reportUnidentifiedHatchReactor() {
+  RS_DEBUG->print(RS_Debug::D_WARNING,
+                  "RS_FilterDXFRW: unidentified HATCH boundary has an unresolved reactor");
+  RS_DIALOGFACTORY->commandMessage(QObject::tr(
+      "Cannot save: an imported hatch boundary has an unresolved or ambiguous object reference. Repair the drawing and retry."));
+}
+
 bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
                                 const RS2::FormatType type) {
   // Also protect callers using the filter directly rather than RS_FileIO.
@@ -14465,6 +14562,16 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
   m_shapeLeftOut.clear();
   m_shapeExportDirectory = QFileInfo(file).absoluteDir().canonicalPath();
   m_exportAttribScaleDataLeftOut = 0;
+  try {
+    if (!unidentifiedHatchReactorsAreSafe(g)) {
+      reportUnidentifiedHatchReactor();
+      m_writeFailed = true;
+      return false;
+    }
+  } catch (...) {
+    m_writeFailed = true;
+    return false;
+  }
   // Copying or assignment can duplicate a source identity. Do not replay one
   // source record twice or guess which of the live layers owns its metadata.
   std::set<RS_Layer::ImportedRecordId, std::owner_less<RS_Layer::ImportedRecordId>> layerSources;
@@ -32145,6 +32252,10 @@ bool RS_FilterDXFRW::finalizeDxfWrite() {
   if (m_writeFailed)
     return false;
   try {
+    if (m_graphic && !unidentifiedHatchReactorsAreSafe(*m_graphic)) {
+      reportUnidentifiedHatchReactor();
+      return false;
+    }
     return !m_dxfMaterialFinalCheck || m_dxfMaterialFinalCheck();
   } catch (...) {
     return false;
@@ -32159,6 +32270,14 @@ bool RS_FilterDXFRW::finalizeDwgWrite() {
     // output transaction.
     if (m_writeFailed)
       return false;
+    try {
+      if (m_graphic && !unidentifiedHatchReactorsAreSafe(*m_graphic)) {
+        reportUnidentifiedHatchReactor();
+        return false;
+      }
+    } catch (...) {
+      return false;
+    }
     if (!m_dwgExportAdmissionPlan.ownerlessPlotSettings.empty()) {
       if (!validateDwgExportAdmissionPlan(DwgOpaqueTableFailurePhase::Finalized))
         return false;
@@ -37074,6 +37193,9 @@ void appendHatchLoopEdges(DRW_HatchLoop& loop,
  * Writes the given hatch entity to the file.
  */
 void RS_FilterDXFRW::writeHatch(RS_Hatch *h) {
+  const bool sourceAssociative = h->sourceAssociative() ||
+      (m_graphic != nullptr &&
+       m_graphic->dwgAdvancedMetadata().hasSourceHatchAssociation(h->sourceHandle()));
   // version 12 are inserts of *U blocks
   if (m_version == 1009) {
     if (m_noNameBlock.contains(h)) {
@@ -37087,8 +37209,7 @@ void RS_FilterDXFRW::writeHatch(RS_Hatch *h) {
       in.angle = 0.0;
       in.colcount = in.rowcount = 1;
       in.colspace = in.rowspace = 0.0;
-      if (noteDxfWrite(m_dxfW->writeInsert(&in)) && m_graphic != nullptr &&
-          m_graphic->dwgAdvancedMetadata().hasSourceHatchAssociation(h->sourceHandle()))
+      if (noteDxfWrite(m_dxfW->writeInsert(&in)) && sourceAssociative)
         ++m_hatchAssociativityLeftOut;
     } else
       ++m_writeLeftOut["HATCH"];
@@ -37172,8 +37293,7 @@ void RS_FilterDXFRW::writeHatch(RS_Hatch *h) {
   } else {
     written = noteDxfWrite(m_dxfW->writeHatch(&ha));
   }
-  if (written && m_graphic != nullptr &&
-      m_graphic->dwgAdvancedMetadata().hasSourceHatchAssociation(h->sourceHandle()))
+  if (written && sourceAssociative)
     ++m_hatchAssociativityLeftOut;
 }
 

@@ -9607,6 +9607,66 @@ TEST_CASE("DXF export reports hatch deassociation and retains unrelated reactors
     if (entity && entity->sourceHandle() == 0xB0)
       boundary = entity;
   REQUIRE(boundary != nullptr);
+  RS_Entity *sourceHatch = nullptr;
+  for (RS_Entity *entity : graphic)
+    if (entity && entity->sourceHandle() == 0xB1)
+      sourceHatch = entity;
+  REQUIRE(sourceHatch != nullptr);
+  RS_Entity *boundaryCopy = boundary->clone();
+  RS_Entity *hatchCopy = sourceHatch->clone();
+  REQUIRE(boundaryCopy != nullptr); REQUIRE(hatchCopy != nullptr);
+  REQUIRE(boundaryCopy->sourceHandle() == boundary->sourceHandle());
+  REQUIRE(hatchCopy->sourceHandle() == sourceHatch->sourceHandle());
+  boundaryCopy->move(RS_Vector(20.0, 0.0));
+  hatchCopy->move(RS_Vector(20.0, 0.0));
+  graphic.addEntity(boundaryCopy);
+  graphic.addEntity(hatchCopy);
+#ifdef LIBRECAD_SYSTEM_CODEC_TESTS
+  writeText(out, sentinel);
+  invalid.flags = -1;
+  graphic.dwgAdvancedMetadata().addLineTypeName(invalid);
+  CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(out), RS2::FormatDXFRW));
+  { std::ifstream retained(out, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(retained), {}) == sentinel); }
+  invalid.flags = 64;
+  graphic.dwgAdvancedMetadata().addLineTypeName(invalid);
+#endif
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(out), RS2::FormatDXFRW));
+  CHECK(filter.exportReport().contains(QStringLiteral("associativity of 3 hatch")));
+  CHECK(countRecords(out, "HATCH") == 3);
+  CHECK(countRecords(out, "LWPOLYLINE") == 2);
+  CHECK(recordGroupValues(out, "HATCH", "71") == std::vector<std::string>{"0", "0", "0"});
+  CHECK(recordGroupValues(out, "HATCH", "97") == std::vector<std::string>{"0", "0", "0"});
+  const auto copyLine = recordGroupValues(out, "LINE", "5");
+  REQUIRE(copyLine.size() == 1u);
+  CHECK(recordReactors(out, "LWPOLYLINE") ==
+        std::vector<std::vector<std::string>>{{copyLine.front()}, {copyLine.front()}});
+  CHECK(danglingReferences(out).empty());
+  if (const char *copy = std::getenv("LIBRECAD_KEEP_HATCH_COPIES_OUTPUT"))
+    std::filesystem::copy_file(out, copy, std::filesystem::copy_options::overwrite_existing);
+#ifdef DWGSUPPORT
+  const auto copiedDwg = tmpFile("entity-reactors-copies.dwg");
+  const auto copiedDxf = tmpFile("entity-reactors-copies-readback.dxf");
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(copiedDwg), RS2::FormatDWG2004));
+  CHECK(filter.exportReport().contains(QStringLiteral("associativity of 3 hatch")));
+  RS_Graphic copiedReadback;
+  RS_FilterDXFRW copiedReader;
+  REQUIRE(copiedReader.fileImport(copiedReadback, QString::fromStdString(copiedDwg), RS2::FormatDWG));
+  REQUIRE(copiedReader.fileExport(copiedReadback, QString::fromStdString(copiedDxf), RS2::FormatDXFRW));
+  CHECK(countRecords(copiedDxf, "HATCH") == 3);
+  CHECK(countRecords(copiedDxf, "LWPOLYLINE") == 2);
+  CHECK(recordGroupValues(copiedDxf, "HATCH", "71") == std::vector<std::string>{"0", "0", "0"});
+  const auto readbackLines = recordGroupValues(copiedDxf, "LINE", "5");
+  REQUIRE(readbackLines.size() == 1u);
+  CHECK(recordReactors(copiedDxf, "LWPOLYLINE") ==
+        std::vector<std::vector<std::string>>{{readbackLines.front()}, {readbackLines.front()}});
+  CHECK(danglingReferences(copiedDxf).empty());
+  if (const char *copy = std::getenv("LIBRECAD_KEEP_HATCH_COPIES_DWG_OUTPUT"))
+    std::filesystem::copy_file(copiedDxf, copy, std::filesystem::copy_options::overwrite_existing);
+  std::filesystem::remove(copiedDwg);
+  std::filesystem::remove(copiedDxf);
+#endif
+  REQUIRE(graphic.removeEntity(boundaryCopy));
+  REQUIRE(graphic.removeEntity(hatchCopy));
   boundary->move(RS_Vector(5.0, 0.0));
   REQUIRE(filter.fileExport(graphic, QString::fromStdString(out), RS2::FormatDXFRW));
   CHECK(filter.exportReport().contains(QStringLiteral("associativity of 2 hatch")));
@@ -9622,6 +9682,230 @@ TEST_CASE("DXF export reports hatch deassociation and retains unrelated reactors
   CHECK(recordGroupValues(out, "HATCH", "97") == std::vector<std::string>{"0", "0"});
   CHECK(countRecords(out, "LWPOLYLINE") == 0);
 
+  // An associative hatch can be imported even if its source handle is absent.
+  // Its loss report must follow the hatch itself, including copies.
+  std::ifstream sourceStream(src, std::ios::binary);
+  std::string anonymousSource(std::istreambuf_iterator<char>(sourceStream), {});
+  sourceStream.close();
+  const std::string namedHatch = "0\nHATCH\n5\nB1\n";
+  const auto position = anonymousSource.find(namedHatch);
+  REQUIRE(position != std::string::npos);
+  anonymousSource.replace(position, namedHatch.size(), "0\nHATCH\n");
+  const auto noHandleSource = tmpFile("hatch-no-handle-source.dxf");
+  writeText(noHandleSource, anonymousSource);
+  RS_Graphic noHandleGraphic;
+  RS_FilterDXFRW noHandleFilter;
+  REQUIRE(noHandleFilter.fileImport(noHandleGraphic, QString::fromStdString(noHandleSource), RS2::FormatDXFRW));
+  RS_Entity *noHandleHatch = nullptr;
+  for (RS_Entity *entity : noHandleGraphic)
+    if (entity && entity->rtti() == RS2::EntityHatch && entity->sourceHandle() == 0)
+      noHandleHatch = entity;
+  REQUIRE(noHandleHatch);
+  RS_Entity *noHandleBoundary = nullptr;
+  for (RS_Entity *entity : noHandleGraphic)
+    if (entity && entity->sourceHandle() == 0xB0u) noHandleBoundary = entity;
+  REQUIRE(noHandleBoundary);
+  const std::string missingTargetSentinel = "preserve unidentified hatch destination";
+  writeText(out, missingTargetSentinel);
+  CHECK_FALSE(noHandleFilter.fileExport(noHandleGraphic, QString::fromStdString(out), RS2::FormatDXFRW));
+  { std::ifstream kept(out, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(kept), {}) == missingTargetSentinel); }
+  CHECK_FALSE(noHandleFilter.exportReport().contains(QStringLiteral("associativity")));
+  const auto noHandleR12 = tmpFile("hatch-no-handle-r12.dxf");
+  writeText(noHandleR12, missingTargetSentinel);
+  CHECK_FALSE(noHandleFilter.fileExport(noHandleGraphic, QString::fromStdString(noHandleR12), RS2::FormatDXFRW12));
+  { std::ifstream kept(noHandleR12, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(kept), {}) == missingTargetSentinel); }
+#ifdef DWGSUPPORT
+  const auto noHandleDwg = tmpFile("hatch-no-handle.dwg");
+  writeText(noHandleDwg, missingTargetSentinel);
+  CHECK_FALSE(noHandleFilter.fileExport(noHandleGraphic, QString::fromStdString(noHandleDwg), RS2::FormatDWG2004));
+  { std::ifstream kept(noHandleDwg, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(kept), {}) == missingTargetSentinel); }
+#endif
+  // The remaining named hatch reactor is removed by the established path;
+  // B2 names a unique, retained LINE. B1 has no identifiable target.
+  noHandleBoundary->setReactorHandles({0xB3u, 0xB2u});
+  RS_Entity *unrelatedLine = nullptr;
+  for (RS_Entity *entity : noHandleGraphic)
+    if (entity && entity->sourceHandle() == 0xB2u) unrelatedLine = entity;
+  REQUIRE(unrelatedLine);
+  RS_Entity *ambiguousLine = unrelatedLine->clone();
+  REQUIRE(ambiguousLine); noHandleGraphic.addEntity(ambiguousLine);
+  writeText(out, missingTargetSentinel);
+  CHECK_FALSE(noHandleFilter.fileExport(noHandleGraphic, QString::fromStdString(out), RS2::FormatDXFRW));
+  { std::ifstream kept(out, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(kept), {}) == missingTargetSentinel); }
+  REQUIRE(noHandleGraphic.removeEntity(ambiguousLine));
+  DRW_Dictionary collidingDictionary;
+  collidingDictionary.handle = 0xB2u;
+  noHandleGraphic.dwgAdvancedMetadata().addDictionary(collidingDictionary);
+  writeText(out, missingTargetSentinel);
+  CHECK_FALSE(noHandleFilter.fileExport(noHandleGraphic, QString::fromStdString(out), RS2::FormatDXFRW));
+  { std::ifstream kept(out, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(kept), {}) == missingTargetSentinel); }
+  auto &dictionaries = const_cast<std::vector<LC_DwgAdvancedMetadata::DictionaryRecord> &>(
+      noHandleGraphic.dwgAdvancedMetadata().dictionaries());
+  REQUIRE_FALSE(dictionaries.empty());
+  dictionaries.pop_back();
+  DRW_Group unrelatedGroup;
+  unrelatedGroup.handle = 0xC0u;
+  noHandleGraphic.dwgAdvancedMetadata().addGroup(unrelatedGroup);
+  writeText(out, missingTargetSentinel);
+  CHECK_FALSE(noHandleFilter.fileExport(noHandleGraphic, QString::fromStdString(out), RS2::FormatDXFRW));
+  { std::ifstream kept(out, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(kept), {}) == missingTargetSentinel); }
+  auto &groups = const_cast<std::vector<LC_DwgAdvancedMetadata::GroupRecord> &>(
+      noHandleGraphic.dwgAdvancedMetadata().groups());
+  REQUIRE_FALSE(groups.empty());
+  groups.pop_back();
+  // A source boundary is not an admitted target kind for an unidentified
+  // hatch edge; do not guess at self-referential or unsupported graphs.
+  noHandleBoundary->setReactorHandles({0xB3u, 0xB0u});
+  writeText(out, missingTargetSentinel);
+  CHECK_FALSE(noHandleFilter.fileExport(noHandleGraphic, QString::fromStdString(out), RS2::FormatDXFRW));
+  { std::ifstream kept(out, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(kept), {}) == missingTargetSentinel); }
+  auto *targetPoint = new RS_Point(&noHandleGraphic, RS_Vector(2, 30));
+  auto *targetCircle = new RS_Circle(&noHandleGraphic, RS_CircleData(RS_Vector(4, 30), 1));
+  auto *targetArc = new RS_Arc(&noHandleGraphic, RS_ArcData(RS_Vector(7, 30), 1, 0, M_PI / 2, false));
+  const std::vector<std::pair<RS_Entity *, std::string>> extraTargets = {
+      {targetPoint, "POINT"}, {targetCircle, "CIRCLE"}, {targetArc, "ARC"}};
+  quint32 targetHandle = 0xB4u;
+  for (const auto &target : extraTargets) {
+    target.first->setSourceHandle(targetHandle++);
+    noHandleGraphic.addEntity(target.first);
+  }
+  for (const auto &target : extraTargets) {
+    noHandleBoundary->setReactorHandles({0xB3u, target.first->sourceHandle()});
+    REQUIRE(noHandleFilter.fileExport(noHandleGraphic, QString::fromStdString(out), RS2::FormatDXFRW));
+    const auto targetIds = recordGroupValues(out, target.second, "5");
+    REQUIRE(targetIds.size() == 1u);
+    CHECK(recordReactors(out, "LWPOLYLINE") == std::vector<std::vector<std::string>>{{targetIds.front()}});
+    CHECK(danglingReferences(out).empty());
+    if (const char *prefix = std::getenv("LIBRECAD_KEEP_HANDLELESS_PRIMITIVE_PREFIX"))
+      std::filesystem::copy_file(out, std::string(prefix) + "." + target.second + ".dxf",
+                                 std::filesystem::copy_options::overwrite_existing);
+#ifdef DWGSUPPORT
+    const auto primitiveDwg = tmpFile("hatch-no-handle-primitive.dwg");
+    const auto primitiveDxf = tmpFile("hatch-no-handle-primitive-readback.dxf");
+    REQUIRE(noHandleFilter.fileExport(noHandleGraphic, QString::fromStdString(primitiveDwg), RS2::FormatDWG2004));
+    RS_Graphic primitiveGraphic;
+    RS_FilterDXFRW primitiveReader;
+    REQUIRE(primitiveReader.fileImport(primitiveGraphic, QString::fromStdString(primitiveDwg), RS2::FormatDWG));
+    REQUIRE(primitiveReader.fileExport(primitiveGraphic, QString::fromStdString(primitiveDxf), RS2::FormatDXFRW));
+    const auto readbackIds = recordGroupValues(primitiveDxf, target.second, "5");
+    REQUIRE(readbackIds.size() == 1u);
+    CHECK(recordReactors(primitiveDxf, "LWPOLYLINE") == std::vector<std::vector<std::string>>{{readbackIds.front()}});
+    CHECK(danglingReferences(primitiveDxf).empty());
+    if (const char *prefix = std::getenv("LIBRECAD_KEEP_HANDLELESS_PRIMITIVE_PREFIX"))
+      std::filesystem::copy_file(primitiveDxf, std::string(prefix) + "." + target.second + ".dwg-readback.dxf",
+                                 std::filesystem::copy_options::overwrite_existing);
+    std::filesystem::remove(primitiveDwg); std::filesystem::remove(primitiveDxf);
+#endif
+  }
+  for (const auto &target : extraTargets) REQUIRE(noHandleGraphic.removeEntity(target.first));
+  noHandleBoundary->setReactorHandles({0xB3u, 0xB2u});
+  REQUIRE(noHandleFilter.fileExport(noHandleGraphic, QString::fromStdString(out), RS2::FormatDXFRW));
+  CHECK(noHandleFilter.exportReport().contains(QStringLiteral("associativity of 2 hatch")));
+  REQUIRE(noHandleFilter.fileExport(noHandleGraphic, QString::fromStdString(noHandleR12), RS2::FormatDXFRW12));
+  CHECK(danglingReferences(noHandleR12).empty());
+  std::filesystem::remove(noHandleR12);
+#ifdef DWGSUPPORT
+  REQUIRE(noHandleFilter.fileExport(noHandleGraphic, QString::fromStdString(noHandleDwg), RS2::FormatDWG2004));
+  CHECK(noHandleFilter.exportReport().contains(QStringLiteral("associativity of 2 hatch")));
+  RS_Graphic noHandleDwgGraphic;
+  RS_FilterDXFRW noHandleDwgFilter;
+  REQUIRE(noHandleDwgFilter.fileImport(noHandleDwgGraphic, QString::fromStdString(noHandleDwg), RS2::FormatDWG));
+  const auto noHandleDwgDxf = tmpFile("hatch-no-handle-dwg-readback.dxf");
+  REQUIRE(noHandleDwgFilter.fileExport(noHandleDwgGraphic, QString::fromStdString(noHandleDwgDxf), RS2::FormatDXFRW));
+  CHECK(danglingReferences(noHandleDwgDxf).empty());
+  std::filesystem::remove(noHandleDwgDxf);
+  std::filesystem::remove(noHandleDwg);
+#endif
+  struct LateHatchMutationFilter : RS_FilterDXFRW {
+    std::function<void()> beforeFinal;
+    bool finalizeDxfWrite() override {
+      if (beforeFinal) beforeFinal();
+      return RS_FilterDXFRW::finalizeDxfWrite();
+    }
+    bool finalizeDwgWrite() override {
+      if (beforeFinal) beforeFinal();
+      return RS_FilterDXFRW::finalizeDwgWrite();
+    }
+  } lateHatch;
+  writeText(out, missingTargetSentinel);
+  lateHatch.beforeFinal = [&] { noHandleBoundary->setReactorHandles({0xB1u, 0xB3u, 0xB2u}); };
+  CHECK_FALSE(lateHatch.fileExport(noHandleGraphic, QString::fromStdString(out), RS2::FormatDXFRW));
+  { std::ifstream kept(out, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(kept), {}) == missingTargetSentinel); }
+  noHandleBoundary->setReactorHandles({0xB3u, 0xB2u});
+  lateHatch.beforeFinal = {};
+  REQUIRE(lateHatch.fileExport(noHandleGraphic, QString::fromStdString(out), RS2::FormatDXFRW));
+#ifdef DWGSUPPORT
+  const auto lateDwg = tmpFile("hatch-no-handle-late.dwg");
+  writeText(lateDwg, missingTargetSentinel);
+  lateHatch.beforeFinal = [&] { noHandleBoundary->setReactorHandles({0xB1u, 0xB3u, 0xB2u}); };
+  CHECK_FALSE(lateHatch.fileExport(noHandleGraphic, QString::fromStdString(lateDwg), RS2::FormatDWG2004));
+  { std::ifstream kept(lateDwg, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(kept), {}) == missingTargetSentinel); }
+  noHandleBoundary->setReactorHandles({0xB3u, 0xB2u});
+  lateHatch.beforeFinal = {};
+  REQUIRE(lateHatch.fileExport(noHandleGraphic, QString::fromStdString(lateDwg), RS2::FormatDWG2004));
+  std::filesystem::remove(lateDwg);
+#endif
+  RS_Entity *noHandleCopy = noHandleHatch->clone();
+  REQUIRE(noHandleCopy); noHandleCopy->move(RS_Vector(20.0, 0.0));
+  noHandleGraphic.addEntity(noHandleCopy);
+  REQUIRE(noHandleFilter.fileExport(noHandleGraphic, QString::fromStdString(out), RS2::FormatDXFRW));
+  CHECK(noHandleFilter.exportReport().contains(QStringLiteral("associativity of 3 hatch")));
+  CHECK(recordGroupValues(out, "HATCH", "71") == std::vector<std::string>{"0", "0", "0"});
+  const auto noHandleLine = recordGroupValues(out, "LINE", "5");
+  REQUIRE(noHandleLine.size() == 1u);
+  CHECK(recordReactors(out, "LWPOLYLINE") == std::vector<std::vector<std::string>>{{noHandleLine.front()}});
+  CHECK(danglingReferences(out).empty());
+  if (const char *copy = std::getenv("LIBRECAD_KEEP_HANDLELESS_HATCH_OUTPUT"))
+    std::filesystem::copy_file(out, copy, std::filesystem::copy_options::overwrite_existing);
+
+  // A pasted hatch carries its own boundary evidence even if the receiving
+  // document has no source metadata for the original drawing.
+  RS_Graphic receiving; receiving.initForNewDocument();
+  RS_Entity *pastedHatch = noHandleHatch->clone();
+  RS_Entity *pastedBoundary = noHandleBoundary->clone();
+  RS_Entity *pastedLine = unrelatedLine->clone();
+  REQUIRE(pastedHatch); REQUIRE(pastedBoundary); REQUIRE(pastedLine);
+  for (RS_Entity *entity : {pastedHatch, pastedBoundary, pastedLine}) {
+    entity->reparent(&receiving); receiving.addEntity(entity);
+  }
+  RS_FilterDXFRW receivingFilter;
+  writeText(out, missingTargetSentinel);
+  CHECK_FALSE(receivingFilter.fileExport(receiving, QString::fromStdString(out), RS2::FormatDXFRW));
+  { std::ifstream kept(out, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(kept), {}) == missingTargetSentinel); }
+  pastedBoundary->setReactorHandles({0xB2u});
+  REQUIRE(receivingFilter.fileExport(receiving, QString::fromStdString(out), RS2::FormatDXFRW));
+  CHECK(receivingFilter.exportReport().contains(QStringLiteral("associativity of 1 hatch")));
+  CHECK(danglingReferences(out).empty());
+  const auto pastedLineIds = recordGroupValues(out, "LINE", "5");
+  REQUIRE(pastedLineIds.size() == 1u);
+  CHECK(recordReactors(out, "LWPOLYLINE") == std::vector<std::vector<std::string>>{{pastedLineIds.front()}});
+  if (const char *copy = std::getenv("LIBRECAD_KEEP_PASTED_HATCH_OUTPUT"))
+    std::filesystem::copy_file(out, copy, std::filesystem::copy_options::overwrite_existing);
+
+  // Deleting both anonymous hatches must not erase the boundary's source
+  // history while an unidentified reverse reference still remains.
+  noHandleBoundary->setReactorHandles({0xB1u, 0xB3u, 0xB2u});
+  REQUIRE(noHandleGraphic.removeEntity(noHandleCopy));
+  REQUIRE(noHandleGraphic.removeEntity(noHandleHatch));
+  writeText(out, missingTargetSentinel);
+  CHECK_FALSE(noHandleFilter.fileExport(noHandleGraphic, QString::fromStdString(out), RS2::FormatDXFRW));
+  { std::ifstream kept(out, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(kept), {}) == missingTargetSentinel); }
+  noHandleBoundary->setReactorHandles({0xB3u, 0xB2u});
+  REQUIRE(noHandleFilter.fileExport(noHandleGraphic, QString::fromStdString(out), RS2::FormatDXFRW));
+  CHECK(noHandleFilter.exportReport().contains(QStringLiteral("associativity of 1 hatch")));
+
+  const auto assocFlag = anonymousSource.find("71\n1\n91\n");
+  REQUIRE(assocFlag != std::string::npos);
+  anonymousSource.replace(assocFlag, std::string("71\n1\n91\n").size(), "71\n0\n91\n");
+  const auto boundaryLink = anonymousSource.find("97\n1\n330\nB0\n");
+  REQUIRE(boundaryLink != std::string::npos);
+  anonymousSource.replace(boundaryLink, std::string("97\n1\n330\nB0\n").size(), "97\n0\n");
+  writeText(noHandleSource, anonymousSource);
+  RS_Graphic nonAssociative;
+  REQUIRE(noHandleFilter.fileImport(nonAssociative, QString::fromStdString(noHandleSource), RS2::FormatDXFRW));
+  REQUIRE(noHandleFilter.fileExport(nonAssociative, QString::fromStdString(out), RS2::FormatDXFRW));
+  CHECK(noHandleFilter.exportReport().contains(QStringLiteral("associativity of 1 hatch")));
+  std::filesystem::remove(noHandleSource);
   std::filesystem::remove(src);
   std::filesystem::remove(out);
 }

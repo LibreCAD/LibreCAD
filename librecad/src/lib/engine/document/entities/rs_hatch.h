@@ -129,6 +129,14 @@ public:
     /** @return Copy of data that defines the hatch. */
     RS_HatchData getData() const { return m_data; }
 
+    // Import provenance for reporting associations that cannot be replayed.
+    bool sourceAssociative() const { return m_sourceAssociative; }
+    void setSourceAssociative(bool associative) { m_sourceAssociative = associative; }
+    const std::vector<quint32>& unidentifiedSourceBoundaries() const { return m_unidentifiedSourceBoundaries; }
+    void setUnidentifiedSourceBoundaries(std::vector<quint32> boundaries) {
+        m_unidentifiedSourceBoundaries = std::move(boundaries);
+    }
+
     /**
      * Validates and optimizes boundary loops into subcontainers.
      * @return true on success.
@@ -270,6 +278,8 @@ public:
 
 protected:
     RS_HatchData m_data;
+    bool m_sourceAssociative = false;
+    std::vector<quint32> m_unidentifiedSourceBoundaries;
     /**
      * Distance from `coord` (in WCS) to the hatch region. For a pattern hatch
      * the cached loops live in the frame rotated by -m_loopAngle about

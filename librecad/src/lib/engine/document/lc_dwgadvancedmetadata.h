@@ -3547,6 +3547,7 @@ public:
     m_backgrounds.clear();
     m_materials.clear();
     m_sourceHatchBoundaries.clear();
+    m_unidentifiedHatchBoundaries.clear();
     m_renderSettings.clear();
     m_sunStudies.clear();
     m_motionPaths.clear();
@@ -3852,13 +3853,19 @@ public:
   // the latter can be reordered or edited and cannot yet replay these links.
   void addSourceHatchBoundaries(std::uint32_t hatch,
                                 const std::vector<std::uint32_t> &boundaries) {
-    if (hatch == 0 || hatch == DRW::NoHandle)
+    if (hatch == 0 || hatch == DRW::NoHandle) {
+      m_unidentifiedHatchBoundaries.insert(boundaries.begin(), boundaries.end());
       return;
+    }
     auto &stored = m_sourceHatchBoundaries[hatch];
     for (const auto boundary : boundaries) {
       if (boundary != 0 && boundary != DRW::NoHandle)
         stored.insert(boundary);
     }
+  }
+
+  const std::set<std::uint32_t> &unidentifiedHatchBoundaries() const {
+    return m_unidentifiedHatchBoundaries;
   }
 
   bool hasSourceHatchAssociation(std::uint32_t hatch) const {
@@ -13961,6 +13968,7 @@ private:
   std::vector<BackgroundRecord> m_backgrounds;
   std::vector<MaterialRecord> m_materials;
   std::map<std::uint32_t, std::set<std::uint32_t>> m_sourceHatchBoundaries;
+  std::set<std::uint32_t> m_unidentifiedHatchBoundaries;
   std::vector<RenderSettingsRecord> m_renderSettings;
   std::vector<SunStudyRecord> m_sunStudies;
   std::vector<MotionPathRecord> m_motionPaths;
