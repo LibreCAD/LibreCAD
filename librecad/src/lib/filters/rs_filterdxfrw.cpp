@@ -147,7 +147,8 @@
 
 namespace {
 #if defined(LIBRECAD_SYSTEM_LIBDXFRW) && defined(LIBDXFRW_HAS_DXF_PHYSICAL_ENTITY_SOURCE_HANDLERS)
-bool verifyHatchModelSpaceSource(const QByteArray &input, std::uint32_t owner, DRW::Version version);
+bool verifyHatchModelSpaceSource(const QByteArray &input, std::uint32_t owner, std::uint32_t hatch,
+                                 std::uint32_t boundary, DRW::Version version, bool &handleIsolation);
 #endif
 #ifdef LIBDXFRW_DXF_FIELD_MINIMUM_VERSION
 constexpr DRW::Version kDxfFieldMinimumVersion = LIBDXFRW_DXF_FIELD_MINIMUM_VERSION;
@@ -6263,15 +6264,17 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic &g, const QString &file,
         }
         if (selected) {
           bool modelSpace = false;
+          bool handleIsolation = false;
 #ifdef LIBRECAD_SYSTEM_LIBDXFRW
           const auto &spaces = m_graphic->dwgAdvancedMetadata().spaceBlockRecords();
           const auto space = spaces.find(m_dxfHatchSourceOwner);
           modelSpace = space != spaces.end() && normalizeDwgTableName(space->second) == "*MODEL_SPACE" &&
               verifyHatchModelSpaceSource(m_dxfAutomaticHatchBytes, m_dxfHatchSourceOwner,
-                                          m_dxfR->getSourceVersion());
+                                          m_dxfHatchSourceHandle, m_dxfHatchSourceBoundary,
+                                          m_dxfR->getSourceVersion(), handleIsolation);
 #endif
           selected->setPhysicalSourceRoles(
-              {m_dxfHatchSourceHandle, m_dxfHatchSourceBoundary, m_dxfHatchSourceOwner, modelSpace,
+              {m_dxfHatchSourceHandle, m_dxfHatchSourceBoundary, m_dxfHatchSourceOwner, modelSpace, handleIsolation,
                m_dxfHatchSourceGeometry});
         }
       }
@@ -13430,9 +13433,11 @@ bool capturePhysicalHatchRoles(RS_Graphic &graphic, const DRW_DxfEntitiesSource 
 
 // Bind a narrow AC1024 model-space owner profile to the same source snapshot.
 // Other sections and their references still need a separate graph audit.
-bool verifyHatchModelSpaceSource(const QByteArray &input, std::uint32_t owner, DRW::Version version) {
+bool verifyHatchModelSpaceSource(const QByteArray &input, std::uint32_t owner, std::uint32_t hatch,
+                                 std::uint32_t boundary, DRW::Version version, bool &handleIsolation) {
+  handleIsolation = false;
   if (version != DRW::AC1024 || !owner || owner == DRW::NoHandle || input.isEmpty() ||
-      input.size() > 16 * 1024 || input.contains('\0')) return false;
+      !hatch || !boundary || hatch == boundary || input.size() > 16 * 1024 || input.contains('\0')) return false;
   auto lines = input.split('\n');
   if (!lines.empty() && lines.back().isEmpty()) lines.removeLast();
   if (lines.size() % 2 != 0) return false;
@@ -13469,13 +13474,29 @@ bool verifyHatchModelSpaceSource(const QByteArray &input, std::uint32_t owner, D
   unsigned header = 0, tables = 0, blocks = 0, entities = 0, versionCount = 0;
   unsigned modelTable = 0, modelRow = 0, modelBegin = 0, modelEnd = 0, ownerSelf = 0;
   bool inTable = false, blockTable = false, inBlock = false, modelBlock = false, sawEof = false;
+  bool isolated = true;
   std::uint32_t tableHandle = 0, blockHandle = 0;
+  const auto scanHandles = [&](const Record &record, const QByteArray &recordSection) {
+    for (const auto &group : record.groups) {
+      const int code = group.first;
+      if (code != 5 && code != 105 && code != 1005 && (code < 320 || code > 369) &&
+          code != 390 && code != 480 && code != 481) continue;
+      std::uint32_t value = 0;
+      if (!parseDxfCarrierHandle(group.second.trimmed().toStdString(), value)) { isolated = false; continue; }
+      if (value != hatch && value != boundary) continue;
+      const bool expected = recordSection == "ENTITIES" &&
+          ((record.name == "HATCH" && ((code == 5 && value == hatch) || (code == 330 && value == boundary))) ||
+           (record.name == "LWPOLYLINE" && ((code == 5 && value == boundary) || (code == 330 && value == hatch))));
+      if (!expected) isolated = false;
+    }
+  };
   for (std::size_t index = 0; index < records.size(); ++index) {
     const auto &record = records[index];
     if (record.name == "SECTION") {
       if (!section.isEmpty() || sawEof || record.groups.empty() || record.groups.front().first != 2)
         return false;
       section = record.groups.front().second;
+      scanHandles(record, section);
       if (section == "HEADER") {
         if (++header != 1u) return false;
         for (std::size_t i = 1; i < record.groups.size(); ++i)
@@ -13497,6 +13518,7 @@ bool verifyHatchModelSpaceSource(const QByteArray &input, std::uint32_t owner, D
       sawEof = true; continue;
     }
     if (section.isEmpty() || sawEof) return false;
+    scanHandles(record, section);
     if (section != "HEADER") {
       for (const auto &group : record.groups) if (group.first == 5) {
         std::uint32_t self = 0;
@@ -13559,9 +13581,11 @@ bool verifyHatchModelSpaceSource(const QByteArray &input, std::uint32_t owner, D
       } else if (!inBlock || modelBlock) return false;
     }
   }
-  return sawEof && header == 1u && tables == 1u && blocks == 1u && entities == 1u &&
+  const bool valid = sawEof && header == 1u && tables == 1u && blocks == 1u && entities == 1u &&
       versionCount == 1u && modelTable == 1u && modelRow == 1u && modelBegin == 1u &&
       modelEnd == 1u && ownerSelf == 1u;
+  handleIsolation = valid && isolated;
+  return valid;
 }
 }
 #ifdef LIBDXFRW_HAS_DXF_BLOCK_RECORD_SOURCE_SELECTOR

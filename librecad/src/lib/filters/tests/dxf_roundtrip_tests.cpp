@@ -9623,6 +9623,7 @@ TEST_CASE("DXF physical hatch source roles reject conflicting records",
   CHECK(roles.boundary == 0xB0u);
   CHECK(roles.owner == 0xA0u);
   CHECK_FALSE(roles.modelSpace);
+  CHECK_FALSE(roles.sourceHandleIsolation);
   CHECK(roles.sourceGeometry.size() == 4u);
   const std::vector<LC_HatchAssociation::Edge> expectedGeometry{
       {{0, 0, 0, 10}}, {{0, 0, 10, 0}}, {{0, 10, 10, 10}}, {{10, 0, 10, 10}}};
@@ -9673,7 +9674,18 @@ TEST_CASE("DXF physical hatch source roles reject conflicting records",
   const auto entitiesPosition = structured.find("0\nSECTION\n2\nENTITIES\n");
   REQUIRE(entitiesPosition != std::string::npos);
   structured.insert(entitiesPosition, spaceSections);
-  CHECK(readRoles(structured, 0).modelSpace);
+  const auto structuredRoles = readRoles(structured, 0);
+  CHECK(structuredRoles.modelSpace);
+  CHECK(structuredRoles.sourceHandleIsolation);
+  for (const int code : {5, 330, 340, 481, 1005}) {
+    auto externalReference = structured;
+    const auto headerEnd = externalReference.find("0\nENDSEC\n");
+    REQUIRE(headerEnd != std::string::npos);
+    externalReference.insert(headerEnd, "9\n$TEST_HANDLE\n" + std::to_string(code) + "\nB0\n");
+    const auto externallyReferenced = readRoles(externalReference, 0);
+    CHECK(externallyReferenced.modelSpace);
+    CHECK_FALSE(externallyReferenced.sourceHandleIsolation);
+  }
   auto wrongSpace = structured;
   const auto modelName = wrongSpace.find("2\n*Model_Space\n70\n0\n280\n1");
   REQUIRE(modelName != std::string::npos);
@@ -9742,6 +9754,7 @@ TEST_CASE("DXF physical hatch source roles reject conflicting records",
         CHECK(roles.boundary == 0xB1u);
         CHECK(roles.owner == 0x1Fu);
         CHECK(roles.modelSpace);
+        CHECK(roles.sourceHandleIsolation);
         CHECK(roles.sourceGeometry.size() == 4u);
       } else if (entity && entity->rtti() == RS2::EntityPolyline)
         selectedBoundary = static_cast<RS_Polyline *>(entity);

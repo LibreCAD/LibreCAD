@@ -141,7 +141,7 @@ public:
     }
     struct PhysicalSourceRoles {
         quint32 hatch = 0, boundary = 0, owner = 0;
-        bool modelSpace = false;
+        bool modelSpace = false, sourceHandleIsolation = false;
         std::vector<std::array<double, 4>> sourceGeometry;
     };
     const PhysicalSourceRoles& physicalSourceRoles() const { return m_physicalSourceRoles; }
