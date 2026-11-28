@@ -33,6 +33,7 @@
 #include <filesystem>
 #include <fstream>
 #include <limits>
+#include <sstream>
 #include <stdexcept>
 #include <string>
 #include <vector>
@@ -54,6 +55,21 @@ std::vector<std::uint8_t> snapshot(const dwgBufferW& w) {
 }
 
 } // namespace
+
+TEST_CASE("DWG stream buffer honors a nonzero origin and independent cursors", "[dwg-read][buffer][stream]") {
+    const std::string prefix = "prefix";
+    const std::string data("\x11\x22\x33\x44", 4);
+    std::istringstream input(prefix + data, std::ios::in | std::ios::binary);
+    input.seekg(static_cast<std::streamoff>(prefix.size())); REQUIRE(input.good());
+    dwgBuffer original(&input); REQUIRE(original.isGood()); CHECK(original.size() == data.size());
+    CHECK(original.getRawChar8() == 0x11);
+    auto fork = original.forkIndependent();
+    CHECK(original.getRawChar8() == 0x22); CHECK(original.getRawChar8() == 0x33);
+    CHECK(fork.getRawChar8() == 0x22); CHECK(fork.getRawChar8() == 0x33);
+    CHECK(original.getRawChar8() == 0x44); CHECK(fork.getRawChar8() == 0x44);
+    CHECK_FALSE(fork.setPosition(5)); CHECK_FALSE(fork.isGood()); CHECK(original.isGood());
+    REQUIRE(original.setPosition(0)); CHECK(original.getRawChar8() == 0x11);
+}
 
 TEST_CASE("dwgBufferW: putBit round-trips", "[dwg-write][primitives]") {
     dwgBufferW w;
@@ -574,14 +590,17 @@ TEST_CASE("dwgBufferW: putVariableText AC1021 UTF-16 code-unit round-trip",
 
 TEST_CASE("dwgBufferW: ENC orders RGB before alpha and converts CP8 names",
           "[dwg-write][primitives][enc]") {
-    {
+    for (const auto version : {DRW::AC1018, DRW::AC1021, DRW::AC1024,
+                               DRW::AC1027, DRW::AC1032}) {
         dwgBufferW w;
-        w.putEnColor(DRW::AC1027, 7, 0x112233, {}, {}, 0x03000080, false);
+        w.putEnColor(version, 7, 0x112233, {}, {}, 0x03000080, false);
         auto bytes = snapshot(w);
         dwgBuffer flags(bytes.data(), bytes.size());
-        CHECK((flags.getBitShort() & 0xFF00u) == 0xA000u);
+        CHECK(flags.getBitShort() == 0xA000u);
+        CHECK(static_cast<std::uint32_t>(flags.getBitLong()) == 0xC2112233u);
+        CHECK(static_cast<std::uint32_t>(flags.getBitLong()) == 0x03000080u);
         dwgBuffer r(bytes.data(), bytes.size());
-        CHECK(r.getEnColor(DRW::AC1027) == 7);
+        CHECK(r.getEnColor(version) == 0);
         CHECK(r.lastEnColorRgb == 0x112233);
         CHECK(r.lastEnColorAlphaRaw == 0x03000080);
     }

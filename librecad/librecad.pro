@@ -8,4 +8,5 @@ TEMPLATE = subdirs
 
 TARGET = librecad
 
-SUBDIRS = src
+SUBDIRS = offset_worker src
+src.depends = offset_worker

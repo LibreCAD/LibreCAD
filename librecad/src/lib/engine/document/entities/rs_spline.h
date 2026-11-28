@@ -33,6 +33,7 @@
 #include <iosfwd>
 #include <cstdint>
 #include <vector>
+#include <optional>
 
 #include "lc_curvejet.h"
 #include "rs_entitycontainer.h"
@@ -77,6 +78,22 @@ struct RS_SplineData {
   /** Fit points for interpolation */
   std::vector<RS_Vector> fitPoints;
 
+  /** Fit-point tolerance from the source SPLINE, when available. */
+  double fitTolerance = 1.0e-7;
+
+  /** True when source endpoint tangents cannot be represented by this spline. */
+  bool fitTangentsConstrained = false;
+
+  /** Source endpoint tangent vectors; zero means that endpoint is unconstrained. */
+  RS_Vector fitStartTangent{0.0, 0.0, 0.0};
+  RS_Vector fitEndTangent{0.0, 0.0, 0.0};
+
+  void clearFitTangents() {
+    fitTangentsConstrained = false;
+    fitStartTangent = {0.0, 0.0, 0.0};
+    fitEndTangent = {0.0, 0.0, 0.0};
+  }
+
   /** Degree (1-3) */
   size_t degree = 3;
 
@@ -106,6 +123,8 @@ struct RS_SplineData {
  */
 class RS_Spline : public RS_EntityContainer {
 public:
+  static constexpr int MaxSupportedDegree = 6;
+
   /** Constructor with parent and data */
   RS_Spline(RS_EntityContainer *parent, const RS_SplineData &d);
 
@@ -123,6 +142,12 @@ public:
 
   /** Get const spline data reference */
   const RS_SplineData &getData() const;
+
+  /** Mutation detector for the complete representation, not a geometric certificate. */
+  static std::uint64_t geometryFingerprint(const RS_SplineData &data) noexcept;
+
+  /** Data-only bound for constructor/update display allocation, including fallbacks. */
+  static std::optional<std::size_t> displayEntityUpperBound(const RS_SplineData &data) noexcept;
 
   /** Get unwrapped size (control points without wrapping) */
   size_t getUnwrappedSize() const;
@@ -151,7 +176,7 @@ public:
   /** Calculate bounding box from control points */
   void calculateBorders() override;
 
-  /** Set degree (1-3), throws if invalid */
+  /** Set degree (1-MaxSupportedDegree), throws if invalid */
   void setDegree(int degree);
 
   /** Get degree */
@@ -262,7 +287,7 @@ public:
   /** Get knot vector (unwrapped) */
   std::vector<double> getKnotVector() const;
 
-  /** Set knot vector, validate size and monotonicity */
+  /** Set a finite nondecreasing knot vector; valid repeated knots are preserved. */
   void setKnotVector(const std::vector<double> &knots);
 
   /** Generate open knot vector */
@@ -293,6 +318,12 @@ public:
   /** Set fit points and generate spline via interpolation */
   void setFitPoints(const std::vector<RS_Vector> &fitPoints,
                     bool useCentripetal = true);
+
+  /** Interpolate cubic fit points with exact non-zero endpoint derivatives. */
+  bool setFitPointsWithTangents(const std::vector<RS_Vector> &fitPoints,
+                                const RS_Vector &startTangent,
+                                const RS_Vector &endTangent,
+                                bool useCentripetal = true);
 
   /** Change spline type (Standard, ClampedOpen, WrappedClosed) */
   void changeType(RS_SplineData::SplineType newType);
@@ -342,6 +373,13 @@ public:
   bool tryEvaluateJet(double t, LC_CurveEvaluationSide side, LC_CurveJet &jet) const;
 
   /**
+   * Whether retained constrained fit metadata agrees with this exact curve.
+   * Only open, unweighted cubic splines with finite fit points and at least one
+   * verifiable endpoint direction are admitted.
+   */
+  bool fitTangentsMatchCurve() const;
+
+  /**
    * Conservative enclosures of the point and its first and second derivatives
    * over the parameter box [a, b], which must lie inside one knot span (between
    * consecutive break parameters). The span's homogeneous Bezier net over the
@@ -356,6 +394,10 @@ public:
    */
   bool tryBoundJet(double a, double b, LC_CurveJetBounds &bounds, bool products = false) const;
 
+  /** Add a signed-distance-specific no-root certificate for rational cusp isolation. */
+  bool tryBoundJetForCusp(double a, double b, LC_CurveJetBounds &bounds,
+                          double signedDistance) const;
+
   /**
    * The vertices of a polyline within @p tolerance of the curve, independent
    * of the segments it is drawn with. Each chord lies in one knot span, and a
@@ -367,7 +409,10 @@ public:
   bool tryStroke(double tolerance, size_t maxVertices, std::vector<RS_Vector> &vertices) const;
 
   friend class RS_FilterDXFRW;
+  friend class LC_OffsetCreationSources;
 protected:
+    /** Publish staged data/display children without invoking update() or listeners midcommit. */
+    OwnedReplacement replacePreparedSpline(RS_Spline &prepared);
     /** Nearest endpoint or control point */
     RS_Vector doGetNearestEndpoint(const RS_Vector &coord, double *dist, RS_Entity** entity) const override;
     /** Nearest reference point (overrides container method) */
@@ -391,6 +436,9 @@ public:
   };
 
 private:
+  bool tryBoundJetImpl(double a, double b, LC_CurveJetBounds &bounds, bool products,
+                       bool cuspPolynomial, double signedDistance) const;
+
   /**
    * The table above for the spline's current data, tabulated on the first
    * call and kept until the data change: it costs 40 evaluations of the

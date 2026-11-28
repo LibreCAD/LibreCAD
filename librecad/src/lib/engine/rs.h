@@ -211,7 +211,8 @@ namespace RS2 {
         EntitySnapArc,
         EntitySnapCircle,
         EntitySnapConstructionLine,
-        EntityDimArrowBlock
+        EntityDimArrowBlock,
+        EntityOffsetCurve /**< Certified ellipse-offset spline cache */
     };
 
     inline bool isDimensionalEntity(EntityType type)  {
@@ -558,6 +559,9 @@ namespace RS2 {
         ActionInteractivePickPoint_Y,
         ActionInteractivePickLength,
         ActionInteractivePickAngle,
+        // Native source actions for context-menu and property-sheet entry points.
+        ActionOffsetCurveUpdateSource,
+        ActionOffsetCurveRestoreOriginal,
         /** Needed to loop through all actions */
         ActionLast
     };
@@ -1030,7 +1034,8 @@ namespace RS2 {
         Snapper             = 2, // Snapper
         InfoCursor          = 3, // Info Cursor
         PermanentHighlights = 4,
-        LAST                = 5
+        OffsetSourceHighlights = 5,
+        LAST                = 6
     };
 
     //Different re-draw methods to speed up rendering of the screen

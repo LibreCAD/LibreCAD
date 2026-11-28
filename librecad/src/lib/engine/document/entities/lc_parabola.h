@@ -43,6 +43,7 @@ struct LC_ParabolaData{
     */
     // fixme - sand - move outside of entity to creation utility
     static std::vector<LC_ParabolaData> From4Points(const std::vector<RS_Vector>& points);
+    // Endpoint tangents are directed along increasing curve parameter.
     static LC_ParabolaData FromEndPointsTangents(
             const std::array<RS_Vector, 2>& endPoints,
             const std::array<RS_Vector, 2>& endTangents);

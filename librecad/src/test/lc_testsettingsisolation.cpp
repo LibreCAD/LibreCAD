@@ -65,6 +65,13 @@ void SettingsIsolation::begin() {
         QSettings::setPath(format, QSettings::UserScope, root + QStringLiteral("/user"));
         QSettings::setPath(format, QSettings::SystemScope, root + QStringLiteral("/system"));
     }
+    QSettings settings(QSettings::defaultFormat(), QSettings::UserScope,
+                       QStringLiteral("LibreCAD"), QStringLiteral("LibreCAD-tests"));
+    settings.setValue(QStringLiteral("Paths/OtherSettingsDir"), root);
+    settings.sync();
+    if (settings.status() != QSettings::NoError) {
+        qFatal("Cannot initialize isolated application data directory");
+    }
     settingsDirectory = std::move(directory);
 
     // The directory is removed by this handler, when the process exits, and by

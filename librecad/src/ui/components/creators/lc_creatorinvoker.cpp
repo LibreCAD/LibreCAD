@@ -36,6 +36,7 @@
 #include "lc_dlg_widget_creator.h"
 #include "qc_applicationwindow.h"
 #include "qg_graphicview.h"
+#include "rs_entitycontainer.h"
 #include "rs_settings.h"
 
 LC_CreatorInvoker::LC_CreatorInvoker(QC_ApplicationWindow *appWin, LC_ActionGroupManager *actionGroupManager)
@@ -224,6 +225,8 @@ void LC_CreatorInvoker::invokeMenuCreator() {
 }
 
 bool LC_CreatorInvoker::getMenuActionsForMouseEvent(const QMouseEvent* event, const RS_Entity* entity, QStringList& actions) {
+    if (entity && entity->getParent() && entity->getParent()->rtti() == RS2::EntityOffsetCurve)
+        entity = entity->getParent();
     const LC_MenuActivator* activatorForEntityType {nullptr};
     const LC_MenuActivator* activatorForAnyEntity{nullptr};
     const LC_MenuActivator* activatorForEitherEntity{nullptr};

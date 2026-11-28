@@ -52,6 +52,11 @@ namespace {
         "Drawing Exchange DXF R12 (*.dxf)",
 
 #ifdef DWGSUPPORT
+        "DWG Drawing 2018 (*.dwg)",
+        "DWG Drawing 2013 (*.dwg)",
+        "DWG Drawing 2010 (*.dwg)",
+        "DWG Drawing 2007 (*.dwg)",
+        "DWG Drawing 2004 (*.dwg)",
         "DWG Drawing (*.dwg)",
 #endif
 
@@ -76,6 +81,11 @@ namespace {
         RS2::FormatDXFRW12,
 
 #ifdef DWGSUPPORT
+        RS2::FormatDWG2018,
+        RS2::FormatDWG2013,
+        RS2::FormatDWG2010,
+        RS2::FormatDWG2007,
+        RS2::FormatDWG2004,
         RS2::FormatDWG,
 #endif
 
@@ -95,16 +105,16 @@ namespace {
 
     const QStringList FILTER_SETTINGS_PATHS =
     {
-        "/SaveDrawingFilter", /* SaveDrawing mode           */
-        "/SaveDrawingFilter", /* ExportLayersSelected mode  */
-        "/SaveDrawingFilter" /* ExportLayersVisible mode   */
+        "SaveDrawingFilter", /* SaveDrawing mode           */
+        "SaveDrawingFilter", /* ExportLayersSelected mode  */
+        "SaveDrawingFilter" /* ExportLayersVisible mode   */
     };
 
     const QStringList FILE_IO_SETTINGS_PATHS =
     {
-        "/Save", /* SaveDrawing mode           */
-        "/Save", /* ExportLayersSelected mode  */
-        "/Save" /* ExportLayersVisible mode   */
+        "Save", /* SaveDrawing mode           */
+        "Save", /* ExportLayersSelected mode  */
+        "Save" /* ExportLayersVisible mode   */
     };
 
     const QStringList FILE_DIALOG_TITLES =

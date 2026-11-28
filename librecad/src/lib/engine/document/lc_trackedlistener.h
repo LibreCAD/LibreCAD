@@ -118,8 +118,14 @@ public:
         Tracked& tracked = static_cast<Tracked&>(*listener);
         tracked.m_self = listener;
         tracked.m_registrations.push_back({m_owner, &removeFrom});
-        m_listeners.push_back(listener);
-        m_tracked.push_back(&tracked);
+        try {
+            m_listeners.push_back(listener);
+            try { m_tracked.push_back(&tracked); }
+            catch (...) { m_listeners.pop_back(); throw; }
+        } catch (...) {
+            tracked.m_registrations.pop_back();
+            throw;
+        }
     }
 
     /// Unlists \p listener. \return whether it was listed.

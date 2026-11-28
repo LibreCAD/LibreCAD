@@ -27,6 +27,7 @@
 #define QC_MDIWINDOW_H
 #include <QMdiSubWindow>
 #include <QPointer>
+#include <memory>
 
 #include "rs_graphic.h"
 
@@ -44,6 +45,7 @@ class QC_MDIWindow:public QMdiSubWindow,
     Q_OBJECT
 public:
     QC_MDIWindow(RS_Document *doc,QWidget *parent,bool printPreview, LC_ActionContext* actionContext);
+    QC_MDIWindow(std::unique_ptr<RS_Graphic> doc, QWidget* parent, bool printPreview, LC_ActionContext* actionContext);
     ~QC_MDIWindow() override;
 public slots:
     void slotPenChanged(const RS_Pen &pen) const;
@@ -68,6 +70,7 @@ public:
     RS_Document *getDocument() const;
     /** @return Pointer to graphic or NULL */
     RS_Graphic *getGraphic() const;
+    void initializeLoadedDocument(const QString& fileName);
 
     void addChildWindow(QC_MDIWindow *w);
     void removeChildWindow(QC_MDIWindow *w);

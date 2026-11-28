@@ -116,13 +116,13 @@ union typeCast  {
 };
 
 bool dwgFileStream::setPos(std::uint64_t p){
-    if (stream == nullptr || p > sz) {
+    if (stream == nullptr || p > sz || p > static_cast<std::uint64_t>(std::numeric_limits<std::streamoff>::max())) {
         isOk = false;
         return false;
     }
 
     stream->clear();
-    stream->seekg(p);
+    stream->seekg(base + static_cast<std::streamoff>(p));
     if (!stream->good()) {
         isOk = false;
         return false;
@@ -142,7 +142,7 @@ bool dwgFileStream::read(std::uint8_t* s, std::uint64_t n){
     }
 
     stream->clear();
-    stream->seekg(static_cast<std::streamoff>(pos), std::ios::beg);
+    stream->seekg(base + static_cast<std::streamoff>(pos));
     if (!stream->good()) {
         isOk = false;
         return false;
@@ -186,7 +186,7 @@ dwgBuffer::dwgBuffer(std::uint8_t *buf, std::uint64_t size, DRW_TextCodec *dc)
     ,maxSize{size}
 {}
 
-dwgBuffer::dwgBuffer(std::ifstream *stream, DRW_TextCodec *dc)
+dwgBuffer::dwgBuffer(std::istream *stream, DRW_TextCodec *dc)
     :decoder{dc}
     ,filestr{new dwgFileStream(stream)}
     ,maxSize{filestr->size()}

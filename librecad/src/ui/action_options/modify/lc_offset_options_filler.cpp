@@ -55,6 +55,11 @@ void LC_OffsetOptionsFiller::fillToolOptionsContainer(LC_PropertyContainer* cont
                    action->setKeepOriginals(val);
                }, container);
 
+    addBoolean({"a_editableOffsetCurve", tr("Editable Offset Curve"),
+                tr("Keep eligible ellipse offsets editable; other results remain plain.")},
+               [action] { return action->isEditableOffsetCurve(); },
+               [action](bool enabled) { action->setEditableOffsetCurve(enabled); }, container);
+
     addBoolean({"a_multiCopy", tr("Multiple"), tr("If checked, multiple copies will be created")}, [action]()-> bool {
                    return action->isUseMultipleCopies();
                }, [action](bool val)-> void {

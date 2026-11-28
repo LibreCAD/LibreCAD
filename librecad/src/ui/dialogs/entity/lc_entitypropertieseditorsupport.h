@@ -26,6 +26,7 @@
 #include <QPair>
 #include <QString>
 #include <QWidget>
+#include <memory>
 
 #include "rs_vector.h"
 
@@ -44,6 +45,7 @@ protected:
     };
 
     LC_GraphicViewport* m_viewport;
+    std::weak_ptr<void> m_viewportLifetime;
 
     double toUCSAngle(double wcsAngle) const;
     RS_Vector toUCSVector(const RS_Vector& vect) const;

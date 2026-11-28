@@ -583,6 +583,19 @@ TEST_CASE("LC_Hyperbola getLength() accuracy", "[hyperbola][length]") {
 
     REQUIRE(doublesApproxEqual(length_rot, expected_ref, TOL));
   }
+
+  SECTION("Descending bounded interval still has positive length and a midpoint") {
+    const LC_HyperbolaData data{RS_Vector{0.0, 0.0}, RS_Vector{-3.0, 0.0},
+                                1.0, 1.5, -1.5, false};
+    LC_Hyperbola hyperbola{nullptr, data};
+    REQUIRE(hyperbola.isValid());
+    CHECK(hyperbola.getLength() == Catch::Approx(
+        std::abs(hyperbola.getArcLength(data.angle1, data.angle2))).margin(TOL));
+    const RS_Vector midpoint = hyperbola.getMiddlePoint();
+    REQUIRE(midpoint.valid);
+    CHECK(midpoint.x == Catch::Approx(-3.0).margin(TOL));
+    CHECK(midpoint.y == Catch::Approx(0.0).margin(TOL));
+  }
 }
 TEST_CASE("LC_Hyperbola getNearestDist() accuracy",
           "[hyperbola][nearestdist]") {
@@ -747,6 +760,28 @@ TEST_CASE("LC_Hyperbola getNearestDist() accuracy",
 
     RS_Vector point = hb.getNearestDist(10.0, RS_Vector(0, 0));
     REQUIRE(!point.valid);
+  }
+
+  SECTION("Descending interval measures from either endpoint in traversal order") {
+    const LC_HyperbolaData data{RS_Vector{0.0, 0.0}, RS_Vector{-3.0, 0.0},
+                                1.0, 1.5, -1.5, false};
+    LC_Hyperbola hyperbola{nullptr, data};
+    REQUIRE(hyperbola.isValid());
+    const double totalLength = hyperbola.getLength();
+    REQUIRE(totalLength > 0.0);
+    const double requested = totalLength * 0.3;
+
+    const RS_Vector fromStart = hyperbola.getNearestDist(requested, hyperbola.getStartpoint());
+    REQUIRE(fromStart.valid);
+    const double startParameter = hyperbola.getParamFromPoint(fromStart, data.reversed);
+    CHECK(std::abs(hyperbola.getArcLength(data.angle1, startParameter)) ==
+          Catch::Approx(requested).margin(DIST_TOL));
+
+    const RS_Vector fromEnd = hyperbola.getNearestDist(requested, hyperbola.getEndpoint());
+    REQUIRE(fromEnd.valid);
+    const double endParameter = hyperbola.getParamFromPoint(fromEnd, data.reversed);
+    CHECK(std::abs(hyperbola.getArcLength(endParameter, data.angle2)) ==
+          Catch::Approx(requested).margin(DIST_TOL));
   }
 }
 

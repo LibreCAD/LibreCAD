@@ -40,6 +40,7 @@ LC_EntityPropertiesEditorSupport::LC_EntityPropertiesEditorSupport(QWidget* pare
 
 void LC_EntityPropertiesEditorSupport::setGraphicViewport(LC_GraphicViewport* viewport) {
     m_viewport= viewport;
+    m_viewportLifetime = viewport ? viewport->watchLifetime() : std::weak_ptr<void>{};
 }
 
 double LC_EntityPropertiesEditorSupport::toUCSAngle(const double wcsAngle) const {

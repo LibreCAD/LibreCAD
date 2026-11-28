@@ -93,6 +93,23 @@ TEST_CASE("takeEntities hands a container's children over without deleting them"
     }
 }
 
+TEST_CASE("Entity-list revision detects same-count membership replacement", "[container][revision]") {
+    lc::test::application();
+    RS_EntityContainer container(nullptr, true);
+    auto* original = new RS_Line(&container, RS_LineData(RS_Vector{0, 0}, RS_Vector{1, 0}));
+    container.addEntity(original);
+    const auto afterInsert = container.entityListRevision();
+    REQUIRE(container.size() == 1);
+
+    REQUIRE(container.removeEntity(original));
+    auto* replacement = new RS_Line(&container, RS_LineData(RS_Vector{2, 0}, RS_Vector{3, 0}));
+    container.addEntity(replacement);
+
+    CHECK(container.size() == 1);
+    CHECK(container.entityAt(0) == replacement);
+    CHECK(container.entityListRevision() > afterInsert);
+}
+
 TEST_CASE("Draw Dual of a circle about an outside point adds both hyperbola branches", "[container][ownership][dual]") {
     DrawingFixture f;
     auto* circle = new RS_Circle(&f.m_graphic, RS_CircleData(RS_Vector{0, 0}, 5.0));

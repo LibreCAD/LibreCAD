@@ -24,7 +24,7 @@
 /// deltas such as MTEXT and MLINESTYLE.
 class dwgWriter32 : public dwgWriter27 {
 public:
-    dwgWriter32(std::ofstream *stream, DRW_Header *header)
+    dwgWriter32(std::ostream *stream, DRW_Header *header)
         : dwgWriter27(stream, header)
     {
         m_version = DRW::AC1032;

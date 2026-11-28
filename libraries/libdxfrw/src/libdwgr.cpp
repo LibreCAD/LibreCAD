@@ -606,6 +606,7 @@ void dwgRW::setDebug(DRW::DebugLevel lvl){
 
 /*reads metadata and loads image preview*/
 bool dwgRW::getPreview(){
+    if (m_invokingReadVersionObserver) return false;
     bool isOk = false;
     error = DRW::BAD_NONE;
 
@@ -628,6 +629,7 @@ bool dwgRW::getPreview(){
 }
 
 bool dwgRW::testReader(){
+    if (m_invokingReadVersionObserver) return false;
     bool isOk = false;
 
     std::ifstream filestr;
@@ -691,6 +693,7 @@ bool dwgRW::testReader(){
 
 /*start reading dwg file header and, if can read it, continue reading all*/
 bool dwgRW::read(DRW_Interface *interface_, bool ext){
+    if (m_invokingReadVersionObserver) return false;
     bool isOk = false;
     error = DRW::BAD_NONE;
     applyExt = ext;
@@ -710,8 +713,29 @@ bool dwgRW::read(DRW_Interface *interface_, bool ext){
     return isOk;
 }
 
+bool dwgRW::readStream(std::istream& input, DRW_Interface *interface_, bool ext) {
+    if (m_invokingReadVersionObserver) return false;
+    error = DRW::BAD_NONE;
+    applyExt = ext;
+    iface = interface_;
+    resetReadDiagnostics();
+
+    if (!input.good() || input.tellg() == std::streampos(-1)) {
+        error = DRW::BAD_OPEN;
+        return false;
+    }
+    auto buffer = std::make_unique<dwgBuffer>(&input);
+    if (!buffer->isGood()) {
+        error = DRW::BAD_OPEN;
+        return false;
+    }
+    if (!openBuffer(std::move(buffer))) return false;
+    return readInstalledReader();
+}
+
 bool dwgRW::readBuffer(const std::uint8_t *data, std::uint64_t size,
                        DRW_Interface *interface_, bool ext) {
+    if (m_invokingReadVersionObserver) return false;
     error = DRW::BAD_NONE;
     applyExt = ext;
     iface = interface_;
@@ -731,8 +755,9 @@ bool dwgRW::readBuffer(const std::uint8_t *data, std::uint64_t size,
 }
 
 bool dwgRW::readInstalledReader() {
-    if (!reader) {
+    if (!reader || !iface) {
         error = DRW::BAD_OPEN;
+        reader.reset();
         return false;
     }
 
@@ -740,7 +765,22 @@ bool dwgRW::readInstalledReader() {
     if (isOk) {
         isOk = reader->readFileHeader();
         if (isOk) {
-            isOk = processDwg();
+            try {
+                if (m_readVersionObserver) {
+                    m_invokingReadVersionObserver = true;
+                    try {
+                        m_readVersionObserver(version, m_readVersionContext);
+                    } catch (...) {
+                        m_invokingReadVersionObserver = false;
+                        throw;
+                    }
+                    m_invokingReadVersionObserver = false;
+                }
+            } catch (...) {
+                error = DRW::BAD_READ_HEADER;
+                isOk = false;
+            }
+            if (isOk) isOk = processDwg();
         } else {
             error = DRW::BAD_READ_FILE_HEADER;
         }
@@ -1208,20 +1248,43 @@ bool dwgRW::encodeEntityForWrite(DRW_Entity *ent,
 }
 
 bool dwgRW::write(DRW_Interface *interface_, DRW::Version ver, bool bin) {
-    return writeImpl(interface_, ver, bin, nullptr, nullptr);
+    if (m_invokingReadVersionObserver) return false;
+    return writeImpl(interface_, ver, bin, nullptr, nullptr, nullptr, nullptr);
+}
+
+bool dwgRW::writeGuarded(DRW_Interface *interface_, DRW::Version ver, bool bin,
+                         DRW_OutputPublishGuard guard, void* guardContext) {
+    if (m_invokingReadVersionObserver || !guard) {
+        error = DRW::BAD_OPEN;
+        return false;
+    }
+    return writeImpl(interface_, ver, bin, nullptr, nullptr, guard, guardContext);
 }
 
 bool dwgRW::writeVerified(DRW_Interface *interface_, DRW::Version ver, bool bin,
                          DRW_StagedFileVerifier verifier, void* context) {
+    if (m_invokingReadVersionObserver) return false;
     if (!verifier) {
         error = DRW::BAD_OPEN;
         return false;
     }
-    return writeImpl(interface_, ver, bin, verifier, context);
+    return writeVerified(interface_, ver, bin, verifier, context, nullptr, nullptr);
+}
+
+bool dwgRW::writeVerified(DRW_Interface *interface_, DRW::Version ver, bool bin,
+                         DRW_StagedFileVerifier verifier, void* context,
+                         DRW_OutputPublishGuard guard, void* guardContext) {
+    if (m_invokingReadVersionObserver) return false;
+    if (!verifier) {
+        error = DRW::BAD_OPEN;
+        return false;
+    }
+    return writeImpl(interface_, ver, bin, verifier, context, guard, guardContext);
 }
 
 bool dwgRW::writeImpl(DRW_Interface *interface_, DRW::Version ver, bool bin,
-                     DRW_StagedFileVerifier verifier, void* context) try {
+                     DRW_StagedFileVerifier verifier, void* context,
+                     DRW_OutputPublishGuard guard, void* guardContext) try {
     // The 'bin' parameter is accepted only for signature symmetry with
     // dxfRW::write — DWG is always binary on disk.
     (void)bin;
@@ -1249,7 +1312,7 @@ bool dwgRW::writeImpl(DRW_Interface *interface_, DRW::Version ver, bool bin,
         error = DRW::BAD_OPEN;
         return false;
     }
-    std::ofstream& filestr = output.stream();
+    std::ostream& filestr = output.stream();
 
     // Let the caller populate the header vars first.  Mirror of
     // dxfRW::write at libdxfrw.cpp:152-153.  The iface is allowed to
@@ -1377,7 +1440,9 @@ bool dwgRW::writeImpl(DRW_Interface *interface_, DRW::Version ver, bool bin,
     m_leftOut = writer->leftOut();
     writer.reset();
     if (ok && !filestr.fail())
-        ok = verifier ? output.commitVerified(verifier, context) : output.commit();
+        ok = verifier
+            ? output.commitVerified(verifier, context, guard, guardContext)
+            : output.commit(guard, guardContext);
     else
         output.abort();
     if (!ok)
@@ -3330,6 +3395,10 @@ bool dwgRW::processDwg() {
 
     if (ret) {
     try {
+    // The byte codec is file metadata, not a DWG header-variable field.
+    // Consumers need it before entity callbacks to admit and reencode EED.
+    if (version >= DRW::AC1012 && version <= DRW::AC1018)
+        hdr.addStr("$DWGCODEPAGE", reader->getCodePage(), 3);
     iface->addHeader(&hdr);
     } catch (...) {
         error = DRW::BAD_READ_HEADER;

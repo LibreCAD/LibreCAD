@@ -16,9 +16,22 @@ public:
     ~DRW_TextCodec();
     std::string fromUtf8(std::string_view s);
     std::string toUtf8(std::string_view s);
+    /// Use the declared source codec, never the typed-text UTF-8 recovery policy.
+    /// XDATA code 1000 payloads must have policy-independent interpretation.
+    std::string toUtf8Declared(std::string_view s);
+    /// ASCII DXF XDATA code 1000 only: controls become ^@..^_, a literal
+    /// caret becomes ^Space. Apply before the output codepage conversion.
+    static std::string encodeDxfXDataString(std::string_view s);
+    /// Inverse canonical caret decoding after source-codepage conversion.
+    /// Other caret pairs and MTEXT/font/percent syntax remain literal.
+    /// Binary DXF must bypass both caret functions.
+    static std::string decodeDxfXDataString(std::string_view s);
     /// Convert byte-oriented DWG TV fields using the file codepage while the
     /// primary codec may remain UTF-16 for R2007+ fields.
     std::string fromUtf8CP8(std::string_view s);
+    // EED/DataStorage byte areas use the selected file codepage. Preserve the
+    // primary-codec fallback of standalone buffers without a byte-codepage setup.
+    std::string fromUtf8TextArea(std::string_view s);
     std::string toUtf8CP8(std::string_view s);
     int getVersion(){return version;}
     DRW::Version getSourceVersion() const { return sourceVersion; }

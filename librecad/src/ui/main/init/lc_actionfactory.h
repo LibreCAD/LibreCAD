@@ -59,6 +59,8 @@ public:
     QList<QAction*> penActions;
     QList<QAction*> entityLayerActions;
 
+protected:
+    void createOffsetCurveActions(LC_ActionGroupManager* manager) const;
 private:
     void initActionGroupManager(LC_ActionGroupManager* agm);
     void createEntityLayerActions(QMap<QString, QAction*>& map, LC_ActionGroup* group) const;

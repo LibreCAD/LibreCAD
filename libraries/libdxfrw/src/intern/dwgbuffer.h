@@ -45,23 +45,28 @@ public:
 
 class dwgFileStream: public dwgBasicStream{
 public:
-    explicit dwgFileStream(std::ifstream *s)
+    explicit dwgFileStream(std::istream *s)
         :stream{s}
     {
         if (stream == nullptr) {
             isOk = false;
             return;
         }
-        stream->clear();
+        const std::streampos start = stream->tellg();
+        if (start == std::streampos(-1) || start < std::streampos(0)) {
+            isOk = false;
+            return;
+        }
         stream->seekg(0, std::ios::end);
         const std::streampos end = stream->tellg();
-        if (end < 0) {
+        if (end == std::streampos(-1) || end < start) {
             stream->clear();
             isOk = false;
             return;
         }
-        sz = static_cast<std::uint64_t>(end);
-        stream->seekg(0, std::ios_base::beg);
+        base = start;
+        sz = static_cast<std::uint64_t>(end - start);
+        stream->seekg(start);
         isOk = stream->good();
     }
     bool read(std::uint8_t* s, std::uint64_t n) override;
@@ -70,14 +75,11 @@ public:
     bool setPos(std::uint64_t p) override;
     bool good() const override{return isOk;}
     dwgBasicStream* clone() const override {
-        auto *copy = new dwgFileStream(stream);
-        copy->sz = sz;
-        copy->pos = pos;
-        copy->isOk = isOk;
-        return copy;
+        return new dwgFileStream(*this);
     }
 private:
-    std::ifstream *stream{nullptr};
+    std::istream *stream{nullptr};
+    std::streampos base{0};
     std::uint64_t sz{0};
     std::uint64_t pos{0};
     bool isOk{true};
@@ -113,7 +115,7 @@ private:
 
 class dwgBuffer {
 public:
-    dwgBuffer(std::ifstream *stream, DRW_TextCodec *decoder = nullptr);
+    dwgBuffer(std::istream *stream, DRW_TextCodec *decoder = nullptr);
     dwgBuffer(std::uint8_t *buf, std::uint64_t size, DRW_TextCodec *decoder= nullptr);
     dwgBuffer( const dwgBuffer& org );
     dwgBuffer& operator=( const dwgBuffer& org );

@@ -37,7 +37,9 @@
 namespace {
     /** A spline is drawn as lines, one of which ResolveAll catches: the parallel is the spline's. */
     RS_Entity* splineOrSelf(RS_Entity* entity) {
-        if (entity != nullptr && entity->getParent() != nullptr && entity->getParent()->rtti() == RS2::EntitySpline) {
+        if (entity != nullptr && entity->getParent() != nullptr &&
+            (entity->getParent()->rtti() == RS2::EntitySpline ||
+             entity->getParent()->rtti() == RS2::EntityOffsetCurve)) {
             return entity->getParent();
         }
         return entity;
@@ -45,7 +47,8 @@ namespace {
 
     //this holds a list of entity types which supports tangent
     const auto g_supportedEntityTypes = EntityTypeList{
-                {RS2::EntityArc, RS2::EntityCircle, RS2::EntityLine,  RS2::EntityParabola, RS2::EntityHyperbola, RS2::EntitySpline/*, RS2::EntitySplinePoints*/}
+                {RS2::EntityArc, RS2::EntityCircle, RS2::EntityLine, RS2::EntityParabola, RS2::EntityHyperbola,
+                 RS2::EntitySpline, RS2::EntityOffsetCurve/*, RS2::EntitySplinePoints*/}
     };
 }
 
@@ -85,6 +88,8 @@ void LC_ActionDrawLineParallelThrough::doInitWithContextEntity(RS_Entity* contex
         const auto polyline = static_cast<RS_Polyline*>(contextEntity);
         entity = polyline->getNearestEntity(clickPos);
     }
+    if (entity != nullptr && entity->getParent() != nullptr &&
+        entity->getParent()->rtti() == RS2::EntityOffsetCurve) entity = entity->getParent();
     if (entity != nullptr && g_supportedEntityTypes.contains(entity->rtti())) {
         m_entity = entity;
         setStatus(SetPos);
@@ -93,8 +98,9 @@ void LC_ActionDrawLineParallelThrough::doInitWithContextEntity(RS_Entity* contex
 
 bool LC_ActionDrawLineParallelThrough::doTriggerModifications(LC_DocumentModificationBatch& ctx) {
     if (m_entity != nullptr) {
+        const auto before = ctx.entitiesToAdd.size();
         RS_Creation::createParallelThrough(*m_coord, m_numberToCreate, m_entity, m_symmetric, m_distributeWithin, ctx.entitiesToAdd);
-        return true;
+        return m_entity->rtti() != RS2::EntityOffsetCurve || ctx.entitiesToAdd.size() > before;
     }
     return false;
 }

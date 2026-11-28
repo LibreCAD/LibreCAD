@@ -43,6 +43,7 @@ class RS_Hatch;
 class LC_Parabola;
 class LC_SplinePoints;
 class RS_Spline;
+class LC_OffsetCurve;
 class RS_Image;
 class RS_Text;
 class RS_MText;
@@ -151,6 +152,7 @@ protected:
     void collectTextProperties(const RS_Text *text);
     void collectImageProperties(const RS_Image *image);
     void collectSplineProperties(const RS_Spline* spline);
+    void collectOffsetCurveProperties(const LC_OffsetCurve* curve);
     void collectSplinePointsProperties(const LC_SplinePoints* spline);
     void collectParabolaProperties(const LC_Parabola* parabola);
     void collectHatchProperties(const RS_Hatch *hatch);
@@ -197,6 +199,7 @@ protected:
     QString prepareTextDescription(const RS_Text *text, RS2::EntityDescriptionLevel level);
     QString prepareImageDescription(const RS_Image *image, RS2::EntityDescriptionLevel level);
     QString prepareSplineDescription(const RS_Spline* spline, RS2::EntityDescriptionLevel level);
+    QString prepareOffsetCurveDescription(const LC_OffsetCurve* curve, RS2::EntityDescriptionLevel level);
     QString prepareSplinePointsDescription(const LC_SplinePoints* spline, RS2::EntityDescriptionLevel level);
     QString prepareParabolaDescription(const LC_Parabola* parabola, RS2::EntityDescriptionLevel level);
     QString prepareHatchDescription(const RS_Hatch *hatch, RS2::EntityDescriptionLevel level);

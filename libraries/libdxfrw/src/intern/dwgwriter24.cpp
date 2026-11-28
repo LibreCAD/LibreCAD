@@ -39,22 +39,22 @@ bool dwgWriter24::appendR2007StringStream(dwgBufferW& data,
         return true;
 
     if (stringBytes == 0) {
-        for (int bit = 0; bit < 7; ++bit)
+        for (unsigned bit = 0; bit < 7; ++bit)
             data.putBit(0);
         data.putRawShort16(0);
         data.putBit(0);
-        return true;
+        return data.isGood();
     }
 
-    // The extended trailer stores a 31-bit bit count split as 16 + 15 bits.
+    // The R2007+ string footer is preceded by seven zero alignment bits.
+    // Callers byte-align the data and string streams before appending it.
     const std::uint64_t stringBitSize =
         static_cast<std::uint64_t>(stringBytes) * 8u + 7u;
     if (stringBitSize > 0x7FFFFFFFULL)
         return false;
 
-    if (stringBytes != 0)
-        data.putBytes(strings.data().data(), stringBytes);
-    for (int bit = 0; bit < 7; ++bit)
+    data.putBytes(strings.data().data(), stringBytes);
+    for (unsigned bit = 0; bit < 7; ++bit)
         data.putBit(0);
     if (stringBitSize <= 0x7FFFU) {
         data.putRawShort16(static_cast<std::uint16_t>(stringBitSize));
@@ -64,7 +64,7 @@ bool dwgWriter24::appendR2007StringStream(dwgBufferW& data,
             0x8000U | (stringBitSize & 0x7FFFU)));
     }
     data.putBit(stringBytes != 0 ? 1 : 0);
-    return true;
+    return data.isGood();
 }
 
 // --- dwgWriter24::writeDwgHeader --------------------------------------------
@@ -315,7 +315,7 @@ bool dwgWriter24::encodeEntity(DRW_Entity *ent) {
 // AC1024 object wire format:
 //   [MS totalBodyBytes][UMC handleBits][data section bytes][handle section bytes][RS CRC16]
 //
-// data section = m_objectBody bytes + string section tail (RS strBitCount + B flag) + pad
+// data section = bit-packed m_objectBody + string stream/footer + final pad
 // handle section = m_objectHandles bytes (byte-aligned)
 //
 // objSize (used by reader to locate handle section) = dataSectionBytes * 8.
@@ -338,8 +338,8 @@ void dwgWriter24::finishObject() {
         m_writeError = true;
         return;
     }
-    // The footer stores strBytes * 8 + 7 bits. Its low size word carries
-    // 0x8000 when the preceding word supplies the upper 16 bits.
+    // The R2007+ string stream starts at a byte boundary, followed by seven
+    // alignment bits and its size/presence footer.
     m_objectBody.alignToByte();
     const std::uint64_t mergedStringBaseBit = m_objectBody.bitCount();
     if (!appendR2007StringStream(m_objectBody, m_objectStrings, true)) {

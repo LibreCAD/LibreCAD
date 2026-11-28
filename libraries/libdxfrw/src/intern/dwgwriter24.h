@@ -20,8 +20,8 @@
 ///
 /// Inherits all section structure from dwgWriter18 (R2004 page-based container).
 /// Differences from AC1018:
-///   - Object bodies use the R2010 three-stream format: numeric DATA + string
-///     section + handle section (each byte-aligned); wire format is
+///   - Object bodies use the R2010 three-stream format: bit-packed numeric
+///     DATA and strings followed by a byte-aligned handle section; wire format is
 ///     [MS totalBodyBytes][UMC handleBits][dataSectionBytes][handleSectionBytes][RS CRC16]
 ///   - CLASSES section adds an RL bitSize field after RL size, and eight
 ///     ODA-defined unknown zero bytes before the end sentinel.
@@ -31,7 +31,7 @@
 ///   - String fields (TV) are encoded as UTF-16LE (TU form) for R2007+.
 class dwgWriter24 : public dwgWriter18 {
 public:
-    dwgWriter24(std::ofstream *stream, DRW_Header *header)
+    dwgWriter24(std::ostream *stream, DRW_Header *header)
         : dwgWriter18(stream, header)
     {
         m_version = DRW::AC1024;

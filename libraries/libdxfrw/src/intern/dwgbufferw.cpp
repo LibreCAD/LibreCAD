@@ -502,7 +502,7 @@ void dwgBufferW::putUCSText(const std::string& utf8) {
 std::string dwgBufferW::encodeTextAreaString(const std::string& utf8,
                                              bool unicode) const {
     if (!unicode)
-        return m_decoder ? m_decoder->fromUtf8(utf8) : utf8;
+        return m_decoder ? m_decoder->fromUtf8TextArea(utf8) : utf8;
 
     std::string encoded;
     for (size_t i = 0; i < utf8.size();) {
@@ -682,16 +682,20 @@ void dwgBufferW::putEnColor(DRW::Version v, std::uint16_t colorIndex,
         | (hasComplexColor ? 0x80u : 0u)
         | (hasDbColorHandle && !colorName.empty() ? 0x01u : 0u)
         | (hasDbColorHandle && !bookName.empty() ? 0x02u : 0u));
-    // With no name bits, ACI 256 would alias ENC flag bit 0 in the shared
-    // 16-bit field.  ACadSharp writes the DBCOLOR form with no index payload.
+    // Inline RGB carries its own color method; like ACadSharp, omit the ACI
+    // index in that form. A nameless DBCOLOR reference also has no index.
     const std::uint16_t wireColorIndex =
-        (hasDbColorHandle && colorName.empty() && bookName.empty())
+        (hasRgb || (hasDbColorHandle && colorName.empty() && bookName.empty()))
             ? 0u : static_cast<std::uint16_t>(colorIndex & 0x1FFu);
     const std::uint16_t raw = static_cast<std::uint16_t>(
         (static_cast<std::uint16_t>(flags) << 8u) | wireColorIndex);
     putBitShort(raw);
-    if (hasRgb)
-        putBitLong(rgb24 & 0x00FFFFFF);
+    if (hasRgb) {
+        // The high byte identifies an RGB color (AcCmEntityColor::kByColor).
+        const std::uint32_t packedRgb = 0xC2000000u
+            | (static_cast<std::uint32_t>(rgb24) & 0x00FFFFFFu);
+        putBitLong(static_cast<std::int32_t>(packedRgb));
+    }
     if (alphaRaw != 0)
         putBitLong(static_cast<std::int32_t>(alphaRaw));
     if (flags & 0x01u)

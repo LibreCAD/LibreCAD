@@ -33,7 +33,7 @@
 /// dwgWriter24.  No method overrides are needed.
 class dwgWriter27 : public dwgWriter24 {
 public:
-    dwgWriter27(std::ofstream *stream, DRW_Header *header)
+    dwgWriter27(std::ostream *stream, DRW_Header *header)
         : dwgWriter24(stream, header)
     {
         m_version = DRW::AC1027;

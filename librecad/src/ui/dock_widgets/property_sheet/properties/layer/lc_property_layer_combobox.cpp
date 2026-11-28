@@ -46,9 +46,10 @@ void LC_PropertyLayerComboBox::hidePopup() {
 void LC_PropertyLayerComboBox::updateByProperty() {
     m_updating++;
     const auto stateProperty = m_view->getStateProperty();
-    setEnabled(stateProperty->isEditableByUser());
     RS_Layer* layer = m_property->value();
-    setLayer(*layer);
+    setEnabled(layer != nullptr && stateProperty->isEditableByUser());
+    if (layer != nullptr) setLayer(*layer);
+    else setCurrentIndex(-1);
     m_updating--;
 }
 

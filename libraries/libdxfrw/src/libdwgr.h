@@ -242,8 +242,23 @@ public:
     ~dwgRW();
     //read: return true if all ok
     [[nodiscard]] bool read(DRW_Interface *interface_, bool ext);
+    /// Reads from the current position of a caller-owned, seekable binary
+    /// stream through its end. The stream must outlive this synchronous call.
+    [[nodiscard]] bool readStream(std::istream& input, DRW_Interface *interface_, bool ext);
     [[nodiscard]] bool readBuffer(const std::uint8_t *data, std::uint64_t size,
                     DRW_Interface *interface_, bool ext);
+
+    /// Called after the opened DWG header is accepted, before model callbacks.
+    /// The observer and context are caller-owned and used synchronously by
+    /// both read() and readBuffer(). Reentrant top-level read, write, preview
+    /// or testReader operations from the observer are refused without changing
+    /// the outer read's state. The observer must not otherwise mutate the
+    /// reader. Passing nullptr clears the observer.
+    using ReadVersionObserver = void (*)(DRW::Version, void*);
+    void setReadVersionObserver(ReadVersionObserver observer, void* context) noexcept {
+        m_readVersionObserver = observer;
+        m_readVersionContext = context;
+    }
 
     /// Write the in-memory model (driven via DRW_Interface callbacks)
     /// out to the file named at construction.
@@ -251,10 +266,18 @@ public:
     /// kept for API symmetry with `dxfRW::write`.  Returns true on
     /// success, false on error; error code accessible via `getError()`.
     [[nodiscard]] bool write(DRW_Interface *interface_, DRW::Version ver, bool bin);
+    /** Revalidate caller-owned destination policy immediately before publish. */
+    [[nodiscard]] bool writeGuarded(DRW_Interface *interface_, DRW::Version ver,
+                                    bool bin, DRW_OutputPublishGuard guard,
+                                    void* guardContext);
     /// Requires a nonnull per-call verifier; ordinary write remains unchecked.
     [[nodiscard]] bool writeVerified(DRW_Interface *interface_, DRW::Version ver,
                                     bool bin, DRW_StagedFileVerifier verifier,
                                     void* context);
+    [[nodiscard]] bool writeVerified(DRW_Interface *interface_, DRW::Version ver,
+                                    bool bin, DRW_StagedFileVerifier verifier,
+                                    void* context, DRW_OutputPublishGuard guard,
+                                    void* guardContext);
 
     struct WriteSkipCounters {
         std::size_t entityWrites { 0 };
@@ -696,7 +719,8 @@ bool testReader();
 
 private:
     bool writeImpl(DRW_Interface *interface_, DRW::Version ver, bool bin,
-                   DRW_StagedFileVerifier verifier, void* context);
+                   DRW_StagedFileVerifier verifier, void* context,
+                   DRW_OutputPublishGuard guard, void* guardContext);
     friend class DwgCompoundWriteTestAccess;
     friend class DwgWriteFailureTestAccess;
 
@@ -775,6 +799,9 @@ private:
     bool applyExt { false }; /*apply extrusion in entities to conv in 2D?*/
     std::string codePage;
     DRW_Interface *iface { nullptr };
+    ReadVersionObserver m_readVersionObserver { nullptr };
+    void* m_readVersionContext { nullptr };
+    bool m_invokingReadVersionObserver { false };
     std::unique_ptr< dwgReader > reader;
     std::unique_ptr< dwgWriter > writer;
     /// Handles reserved by the caller via reserveHandle() before write();

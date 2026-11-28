@@ -20,6 +20,7 @@
 #include <cstdlib>
 #include <cstring>
 #include <limits>
+#include <new>
 #include <vector>
 #include "drw_entities.h"
 #include "intern/dxfreader.h"
@@ -3296,8 +3297,16 @@ bool DRW_Entity::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
         break;
     case 1000:
     case 1001:
-    case 1002:
     case 1003:
+        // Decode textual XDATA with the actual source codec, not as raw UTF-8.
+        // The wire bound precedes conversion; handles and binary stay opaque.
+        if (extData.size() >= DRW_TableEntry::kMaxExtendedDataItems
+            || reader->getRawString().size() > 255)
+            return false;
+        extData.push_back(std::make_shared<DRW_Variant>(code,
+                                                        reader->getUtf8XDataString(code)));
+        break;
+    case 1002:
     case 1004:
     case 1005:
         if (extData.size() >= DRW_TableEntry::kMaxExtendedDataItems)
@@ -3530,18 +3539,42 @@ bool DRW_Entity::parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer* strBu
     std::vector<PendingHandleRef> parsedAppIdResolutions;
     std::vector<PendingHandleRef> parsedLayerRefResolutions;
     try {
+        const auto cap = DRW_TableEntry::kMaxExtendedDataItems;
+        if (extData.size() > cap) return false;
+        std::size_t itemCount = 0, appCount = 0, layerCount = 0;
+        std::uint32_t lastApp = 0;
         for (const DwgEedChunk& chunk : eedChunks) {
-            const std::size_t appIndex =
-                extData.size() + parsedExtData.size();
-            parsedExtData.push_back(
-                std::make_shared<DRW_Variant>(1001, std::string{}));
-            parsedAppIdResolutions.push_back({appIndex, chunk.appHandle});
+            if (!appCount || lastApp != chunk.appHandle) {
+                if (itemCount == cap - extData.size()) return false;
+                ++itemCount;
+                ++appCount;
+            }
+            if (chunk.items.size() > cap - extData.size() - itemCount) return false;
+            itemCount += chunk.items.size();
+            layerCount += chunk.layerRefs.size();
+            lastApp = chunk.appHandle;
+        }
+        parsedExtData.reserve(itemCount);
+        parsedAppIdResolutions.reserve(appCount);
+        parsedLayerRefResolutions.reserve(layerCount);
+        std::uint32_t previousAppHandle = 0;
+        for (const DwgEedChunk& chunk : eedChunks) {
+            // Packet headers are transport, not payload delimiters. A scalar
+            // marker may precede a braced unit in the next packet of this app.
+            if (parsedExtData.empty() || previousAppHandle != chunk.appHandle) {
+                const auto appIndex = extData.size() + parsedExtData.size();
+                parsedExtData.push_back(
+                    std::make_shared<DRW_Variant>(1001, std::string{}));
+                parsedAppIdResolutions.push_back({appIndex, chunk.appHandle});
+            }
+            const auto itemBase = extData.size() + parsedExtData.size();
             for (const DRW_Variant& item : chunk.items)
                 parsedExtData.push_back(std::make_shared<DRW_Variant>(item));
             for (const DwgEedHandleRef& ref : chunk.layerRefs) {
                 parsedLayerRefResolutions.push_back(
-                    {appIndex + 1 + ref.itemIndex, ref.handleRef});
+                    {itemBase + ref.itemIndex, ref.handleRef});
             }
+            previousAppHandle = chunk.appHandle;
         }
     } catch (...) {
         return false;
@@ -4320,16 +4353,50 @@ bool DRW_Point::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
 
 namespace {
 
-const DRW_Entity::PendingHandleRef* findEedWriteRef(
+bool indexEedWriteRefs(
     const std::vector<DRW_Entity::PendingHandleRef>& refs,
-    std::size_t index) {
-    const auto it = std::find_if(refs.cbegin(), refs.cend(),
-                                 [index](const auto& ref) {
-                                     return ref.indexInExtData == index;
-                                 });
-    if (it == refs.cend())
-        return nullptr;
-    return &*it;
+    const std::vector<DRW_Variant*>& values, int code,
+    std::vector<const DRW_Entity::PendingHandleRef*>& indexed) {
+    if (refs.size() > values.size())
+        return false;
+    indexed.assign(values.size(), nullptr);
+    for (const auto& ref : refs) {
+        const auto i = ref.indexInExtData;
+        if (i >= values.size() || !values[i] || values[i]->code() != code
+            || indexed[i] != nullptr)
+            return false;
+        indexed[i] = &ref;
+    }
+    return true;
+}
+
+bool boundedEedText(std::string_view text, bool unicode) {
+    constexpr std::size_t maxUnicodeUnits = (65535u - 3u) / 2u;
+    if (text.size() > 4u * (unicode ? maxUnicodeUnits : 255u))
+        return false;
+    std::size_t units = 0;
+    for (std::size_t i = 0; i < text.size();) {
+        const auto lead = static_cast<unsigned char>(text[i]);
+        std::uint32_t point = 0, minimum = 0;
+        std::size_t count = 0;
+        if (lead < 0x80) { point = lead; count = 1; }
+        else if (lead >= 0xc2 && lead <= 0xdf) { point = lead & 0x1f; count = 2; minimum = 0x80; }
+        else if (lead >= 0xe0 && lead <= 0xef) { point = lead & 0x0f; count = 3; minimum = 0x800; }
+        else if (lead >= 0xf0 && lead <= 0xf4) { point = lead & 7; count = 4; minimum = 0x10000; }
+        else return false;
+        if (count > text.size() - i) return false;
+        for (std::size_t n = 1; n < count; ++n) {
+            const auto next = static_cast<unsigned char>(text[i + n]);
+            if ((next & 0xc0) != 0x80) return false;
+            point = (point << 6) | (next & 0x3f);
+        }
+        if (point < minimum || point > 0x10ffff || (point >= 0xd800 && point <= 0xdfff))
+            return false;
+        units += point > 0xffff ? 2 : 1;
+        if (unicode && units > maxUnicodeUnits) return false;
+        i += count;
+    }
+    return true;
 }
 
 bool parseEedHexHandle(const std::string& text, std::uint64_t& handle) {
@@ -4380,6 +4447,8 @@ bool encodeEedItem(DRW::Version version, const DRW_Variant& value,
     case 1000: {
         if (value.type() != DRW_Variant::STRING || value.content.s == nullptr)
             return false;
+        if (!boundedEedText(*value.content.s, version > DRW::AC1018))
+            return false;
         const std::string encoded = textEncoder.encodeTextAreaString(
             *value.content.s, version > DRW::AC1018);
         if (version > DRW::AC1018) {
@@ -4411,7 +4480,8 @@ bool encodeEedItem(DRW::Version version, const DRW_Variant& value,
     }
     case 1003:
         // Most significant byte first, as AutoCAD writes the layer handle.
-        if (value.type() != DRW_Variant::STRING || resolvedLayerHandle == 0)
+        if (value.type() != DRW_Variant::STRING || value.content.s == nullptr
+            || resolvedLayerHandle == 0)
             return false;
         output.putRawChar8(3);
         putEedRawHandleBE(output, resolvedLayerHandle);
@@ -4517,97 +4587,100 @@ bool DRW_Entity::encodeDwgEed(
     if (extData.size() > dwgSafety::MaxEedTotalItems)
         return false;
 
-    std::size_t currentAppStart = 0;
-    std::uint32_t appHandle = 0;
-    std::uint32_t groupDepth = 0;
-    std::uint32_t chunkCount = 0;
-    // The current application's data is left out of the object.
-    bool leavingOut = false;
-    dwgBufferW payload;
-    const auto flush = [&]() {
-        if (payload.data().empty() || payload.data().size()
-                > std::numeric_limits<std::uint16_t>::max()
-            || appHandle == 0 || ++chunkCount > dwgSafety::MaxEedChunks) {
+    try {
+        // Source and resolution counts are admitted before allocating lookup
+        // storage. Direct callers may supply unordered refs, never duplicates.
+        std::vector<const PendingHandleRef*> applications, layers;
+        if (!indexEedWriteRefs(appIdRefs, extData, 1001, applications)
+            || !indexEedWriteRefs(layerRefs, extData, 1003, layers))
             return false;
+        constexpr std::size_t capacity = std::numeric_limits<std::uint16_t>::max();
+        std::uint32_t appHandle = 0, chunkCount = 0;
+        bool haveApplication = false, leavingOut = false;
+        dwgBufferW payload;
+        const auto flush = [&]() {
+            if (payload.data().empty() || payload.data().size() > capacity
+                || appHandle == 0 || chunkCount >= dwgSafety::MaxEedChunks)
+                return false;
+            ++chunkCount;
+            output.putBitShort(static_cast<std::uint16_t>(payload.data().size()));
+            dwgHandle appId;
+            appId.code = 5;
+            appId.ref = appHandle;
+            output.putHandle(appId);
+            output.putBytes(payload.data().data(), payload.data().size());
+            payload.reset();
+            return output.isGood();
+        };
+
+        for (std::size_t index = 0; index < extData.size();) {
+            const auto* value = extData[index];
+            if (!value) return false;
+            if (value->code() == 1001) {
+                if (value->type() != DRW_Variant::STRING || !value->content.s
+                    || value->content.s->empty()) return false;
+                if (haveApplication && !leavingOut && !flush()) return false;
+                const auto* ref = applications[index];
+                if (!ref || (ref->handleRef == 0 && !ref->leftOut)) return false;
+                appHandle = ref->handleRef;
+                haveApplication = true;
+                leavingOut = ref->leftOut;
+                ++index;
+                continue;
+            }
+            if (!haveApplication) return false;
+
+            // A complete top-level braced unit is indivisible. Inspect its
+            // boundary before encoding so neither opening nor closing braces
+            // can cause a flush from the interior of the unit.
+            std::size_t end = index + 1;
+            if (value->code() == 1002) {
+                std::size_t depth = 0;
+                for (end = index; end < extData.size(); ++end) {
+                    const auto* part = extData[end];
+                    if (!part || part->code() == 1001) return false;
+                    if (part->code() != 1002) continue;
+                    if (part->type() != DRW_Variant::STRING || !part->content.s) return false;
+                    if (*part->content.s == "{") ++depth;
+                    else if (*part->content.s == "}") {
+                        if (!depth) return false;
+                        if (--depth == 0) { ++end; break; }
+                    } else return false;
+                }
+                if (depth || end > extData.size()) return false;
+            }
+            if (leavingOut) { index = end; continue; }
+
+            dwgBufferW unit;
+            for (std::size_t part = index; part < end; ++part) {
+                const auto* itemValue = extData[part];
+                if (!itemValue || itemValue->code() == 1001) return false;
+                std::uint64_t layerHandle = 0;
+                if (itemValue->code() == 1003) {
+                    const auto* ref = layers[part];
+                    if (!ref || ref->leftOut) return false;
+                    layerHandle = ref->useRawHandleRef ? ref->rawHandleRef : ref->handleRef;
+                    if (!layerHandle) return false;
+                }
+                dwgBufferW item;
+                if (!encodeEedItem(version, *itemValue, output, item, layerHandle, codePage)
+                    || !item.isGood() || item.data().empty()
+                    || item.data().size() > capacity - unit.data().size()) return false;
+                unit.putBytes(item.data().data(), item.data().size());
+                if (!unit.isGood()) return false;
+            }
+            if (unit.data().empty()) return false;
+            if (payload.data().size() > capacity - unit.data().size() && !flush()) return false;
+            payload.putBytes(unit.data().data(), unit.data().size());
+            if (!payload.isGood()) return false;
+            index = end;
         }
-        output.putBitShort(static_cast<std::uint16_t>(payload.data().size()));
-        dwgHandle appId;
-        appId.code = 5;
-        appId.ref = appHandle;
-        output.putHandle(appId);
-        output.putBytes(payload.data().data(), payload.data().size());
-        payload.reset();
+        if (!haveApplication || (!leavingOut && !flush())) return false;
+        output.putBitShort(0);
         return output.isGood();
-    };
-
-    for (std::size_t index = 0; index < extData.size(); ++index) {
-        const DRW_Variant* value = extData[index];
-        if (value == nullptr)
-            return false;
-        if (value->code() == 1001) {
-            if (index != currentAppStart && !leavingOut) {
-                if (groupDepth != 0 || !flush())
-                    return false;
-            }
-            const PendingHandleRef* appIdRef = findEedWriteRef(appIdRefs, index);
-            if (appIdRef == nullptr
-                || (appIdRef->handleRef == 0 && !appIdRef->leftOut)) {
-                return false;
-            }
-            appHandle = appIdRef->handleRef;
-            currentAppStart = index + 1;
-            groupDepth = 0;
-            leavingOut = appIdRef->leftOut;
-            continue;
-        }
-        if (index < currentAppStart)
-            return false;
-        if (leavingOut)
-            continue;
-        if (value->code() == 1002) {
-            if (value->type() != DRW_Variant::STRING || value->content.s == nullptr)
-                return false;
-            if (*value->content.s == "{") {
-                ++groupDepth;
-            } else if (*value->content.s == "}") {
-                if (groupDepth == 0)
-                    return false;
-                --groupDepth;
-            } else {
-                return false;
-            }
-        }
-
-        std::uint64_t layerHandle = 0;
-        if (value->code() == 1003) {
-            const PendingHandleRef* layerRef = findEedWriteRef(layerRefs, index);
-            if (layerRef == nullptr)
-                return false;
-            layerHandle = layerRef->useRawHandleRef
-                ? layerRef->rawHandleRef : layerRef->handleRef;
-            if (layerHandle == 0)
-                return false;
-        }
-        dwgBufferW item;
-        if (!encodeEedItem(version, *value, output, item, layerHandle,
-                           codePage))
-            return false;
-        if (item.data().size() > std::numeric_limits<std::uint16_t>::max())
-            return false;
-        if (!payload.data().empty()
-            && payload.data().size() + item.data().size()
-                > std::numeric_limits<std::uint16_t>::max()) {
-            if (groupDepth != 0 || !flush())
-                return false;
-        }
-        payload.putBytes(item.data().data(), item.data().size());
+    } catch (const std::bad_alloc&) {
+        return false;
     }
-    if (currentAppStart == 0)
-        return false;
-    if (!leavingOut && (groupDepth != 0 || !flush()))
-        return false;
-    output.putBitShort(0);
-    return output.isGood();
 }
 
 bool DRW_Entity::encodeDwgCommon(DRW::Version version, dwgBufferW *buf,

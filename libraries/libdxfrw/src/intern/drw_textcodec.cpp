@@ -180,8 +180,48 @@ std::string DRW_TextCodec::fromUtf8(std::string_view s) {
     return conv->fromUtf8(s);
 }
 
+std::string DRW_TextCodec::toUtf8Declared(std::string_view s) {
+    return conv->toUtf8(s);
+}
+
+std::string DRW_TextCodec::encodeDxfXDataString(std::string_view s) {
+    std::string result;
+    result.reserve(s.size());
+    for (const unsigned char c : s) {
+        if (c < 0x20 || c == '^') {
+            result.push_back('^');
+            result.push_back(c == '^' ? ' ' : static_cast<char>(c + 0x40));
+        } else {
+            result.push_back(static_cast<char>(c));
+        }
+    }
+    return result;
+}
+
+std::string DRW_TextCodec::decodeDxfXDataString(std::string_view s) {
+    std::string result;
+    result.reserve(s.size());
+    for (std::size_t i = 0; i < s.size(); ++i) {
+        const unsigned char c = static_cast<unsigned char>(s[i]);
+        if (c == '^' && i + 1 < s.size()) {
+            const unsigned char next = static_cast<unsigned char>(s[i + 1]);
+            if (next == ' ' || (next >= 0x40 && next <= 0x5f)) {
+                result.push_back(next == ' ' ? '^' : static_cast<char>(next - 0x40));
+                ++i;
+                continue;
+            }
+        }
+        result.push_back(static_cast<char>(c));
+    }
+    return result;
+}
+
 std::string DRW_TextCodec::fromUtf8CP8(std::string_view s) {
     return cp8Conv ? cp8Conv->fromUtf8(s) : std::string{s};
+}
+
+std::string DRW_TextCodec::fromUtf8TextArea(std::string_view s) {
+    return cp8Conv ? cp8Conv->fromUtf8(s) : fromUtf8(s);
 }
 
 std::string DRW_TextCodec::toUtf8CP8(std::string_view s) {

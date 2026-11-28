@@ -209,7 +209,7 @@ TEST_CASE("LC_SplinePoints offsets a two-point spline to the requested side",
     CHECK(line.getEndpoint().y == Approx(8.0));
 }
 
-TEST_CASE("LC_SplinePoints keeps its control points when fit points cannot be solved",
+TEST_CASE("LC_SplinePoints normalizes duplicate fit points after edits",
           "[spline][LC_SplinePoints]") {
     auto allFinite = [](const LC_SplinePoints& spline) {
         for (const RS_Vector& v : spline.getControlPoints()) {
@@ -226,19 +226,126 @@ TEST_CASE("LC_SplinePoints keeps its control points when fit points cannot be so
     const LC_SplinePoints fromDuplicates(nullptr, duplicate);
     CHECK(allFinite(fromDuplicates));
 
-    // A solvable spline keeps its control points when an edit makes it unsolvable.
+    // Editing to repeated fit points normalizes the derived geometry while
+    // retaining the original fit-point metadata.
     LC_SplinePointsData good(false, false);
     good.splinePoints = {{0, 0}, {1, 2}, {3, 2}, {4, 0}, {6, 1}};
     LC_SplinePoints spline(nullptr, good);
-    const std::vector<RS_Vector> before = spline.getControlPoints();
-    REQUIRE(before.size() == 5);
-    REQUIRE(allFinite(spline));
     spline.getData().splinePoints = {{0, 0}, {2, 2}, {2, 2}, {2, 2}, {6, 1}};
     spline.update();
-    REQUIRE(spline.getControlPoints().size() == before.size());
-    for (size_t i = 0; i < before.size(); ++i) {
-        CHECK(near(spline.getControlPoints()[i], before[i]));
+    REQUIRE(spline.getData().splinePoints.size() == 5);
+    CHECK(spline.getData().splinePoints[1].x == 2.0);
+    CHECK(spline.getData().splinePoints[2].x == 2.0);
+    CHECK(spline.getData().splinePoints[3].x == 2.0);
+    CHECK(allFinite(spline));
+
+    LC_SplinePointsData normalized(false, false);
+    normalized.splinePoints = {{0, 0}, {2, 2}, {6, 1}};
+    const LC_SplinePoints equivalent(nullptr, normalized);
+    REQUIRE(spline.getControlPoints().size() == equivalent.getControlPoints().size());
+    for (size_t i = 0; i < spline.getControlPoints().size(); ++i) {
+        CHECK(near(spline.getControlPoints()[i], equivalent.getControlPoints()[i]));
     }
+}
+
+TEST_CASE("LC_SplinePoints transforms fit tangent vectors as directions",
+          "[spline][LC_SplinePoints][fit-tangents]") {
+    LC_SplinePointsData data{false, false};
+    data.splinePoints = {{0.0, 0.0}, {2.0, 1.0}, {4.0, 0.0}};
+    data.fitTangentsConstrained = true;
+    data.fitStartTangent = {1.0, 2.0, 0.0};
+    data.fitEndTangent = {-2.0, 3.0, 0.0};
+    LC_SplinePoints spline{nullptr, data};
+
+    spline.move({10.0, -7.0});
+    CHECK(spline.getData().fitStartTangent.x == 1.0);
+    CHECK(spline.getData().fitStartTangent.y == 2.0);
+
+    spline.rotate({3.0, 4.0}, M_PI_2);
+    CHECK(std::abs(spline.getData().fitStartTangent.x + 2.0) < 1e-12);
+    CHECK(std::abs(spline.getData().fitStartTangent.y - 1.0) < 1e-12);
+    spline.scale({100.0, 100.0}, {2.0, 3.0});
+    CHECK(std::abs(spline.getData().fitStartTangent.x + 4.0) < 1e-12);
+    CHECK(std::abs(spline.getData().fitStartTangent.y - 3.0) < 1e-12);
+    spline.mirror({0.0, 0.0}, {1.0, 0.0});
+    CHECK(std::abs(spline.getData().fitStartTangent.x + 4.0) < 1e-12);
+    CHECK(std::abs(spline.getData().fitStartTangent.y + 3.0) < 1e-12);
+    spline.shear(0.5);
+    CHECK(std::abs(spline.getData().fitStartTangent.x + 5.5) < 1e-12);
+    spline.revertDirection();
+    CHECK(std::abs(spline.getData().fitStartTangent.x - 3.0) < 1e-12);
+    CHECK(std::abs(spline.getData().fitStartTangent.y + 6.0) < 1e-12);
+    CHECK(spline.getData().fitTangentsConstrained);
+
+    const RS_Vector firstPoint = spline.getData().splinePoints.front();
+    spline.moveRef(firstPoint, {1.0, 0.0});
+    CHECK_FALSE(spline.getData().fitTangentsConstrained);
+    CHECK(spline.getData().fitStartTangent.magnitude() == 0.0);
+    CHECK(spline.getData().fitEndTangent.magnitude() == 0.0);
+}
+
+TEST_CASE("LC_SplinePoints admits only tangent metadata matching its represented fit curve",
+          "[spline][LC_SplinePoints][fit-tangents][consistency]") {
+    LC_SplinePointsData data{false, false};
+    data.splinePoints = {{0.0, 0.0}, {2.0, 1.0}, {4.0, 0.0}, {6.0, 2.0}};
+    LC_SplinePoints spline{nullptr, data};
+    const double endParameter = static_cast<double>(spline.getSegmentCount());
+    LC_CurveJet startJet;
+    LC_CurveJet endJet;
+    REQUIRE(spline.tryEvaluateJet(0.0, LC_CurveEvaluationSide::Right, startJet));
+    REQUIRE(spline.tryEvaluateJet(endParameter, LC_CurveEvaluationSide::Left, endJet));
+    spline.getData().fitTangentsConstrained = true;
+    spline.getData().fitTolerance = 1e-7;
+    spline.getData().fitStartTangent = startJet.first;
+    spline.getData().fitEndTangent = endJet.first;
+    CHECK(spline.fitTangentsMatchCurve());
+
+    spline.getData().fitStartTangent *= -1.0;
+    CHECK_FALSE(spline.fitTangentsMatchCurve());
+
+    spline.getData().fitStartTangent = startJet.first;
+    spline.getData().fitEndTangent = {0.0, 0.0};
+    CHECK(spline.fitTangentsMatchCurve());
+
+    spline.getData().cut = true;
+    CHECK_FALSE(spline.fitTangentsMatchCurve());
+}
+
+TEST_CASE("LC_SplinePoints transforms keep constrained fit tangents consistent",
+          "[spline][LC_SplinePoints][fit-tangents][transform]") {
+    LC_SplinePointsData data{false, false};
+    data.splinePoints = {{0.0, 0.0}, {1.0, 2.0}, {3.0, 1.5}, {4.0, 0.0}};
+    LC_SplinePoints source{nullptr, data};
+    LC_CurveJet startJet;
+    LC_CurveJet endJet;
+    REQUIRE(source.tryEvaluateJet(0.0, LC_CurveEvaluationSide::Right, startJet));
+    REQUIRE(source.tryEvaluateJet(static_cast<double>(source.getSegmentCount()),
+                                  LC_CurveEvaluationSide::Left, endJet));
+    source.getData().fitTangentsConstrained = true;
+    source.getData().fitTolerance = 1e-10;
+    source.getData().fitStartTangent = startJet.first;
+    source.getData().fitEndTangent = endJet.first;
+    REQUIRE(source.fitTangentsMatchCurve());
+
+    LC_SplinePoints scaled{nullptr, source.getData()};
+    scaled.scale({0.0, 0.0}, {1.5, 0.75});
+    CHECK(scaled.fitTangentsMatchCurve());
+
+    LC_SplinePoints sheared{nullptr, source.getData()};
+    sheared.shear(0.4);
+    CHECK(sheared.fitTangentsMatchCurve());
+
+    LC_SplinePoints startOnly{nullptr, source.getData()};
+    startOnly.getData().fitEndTangent = {0.0, 0.0};
+    startOnly.scale({0.0, 0.0}, {1.5, 0.75});
+    CHECK(startOnly.fitTangentsMatchCurve());
+    CHECK(startOnly.getData().fitEndTangent.magnitude() == 0.0);
+
+    LC_SplinePoints endOnly{nullptr, source.getData()};
+    endOnly.getData().fitStartTangent = {0.0, 0.0};
+    endOnly.shear(0.4);
+    CHECK(endOnly.fitTangentsMatchCurve());
+    CHECK(endOnly.getData().fitStartTangent.magnitude() == 0.0);
 }
 
 TEST_CASE("LC_SplinePoints: open control-net spline ends at its first and last control points",
