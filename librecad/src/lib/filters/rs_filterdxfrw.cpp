@@ -15057,6 +15057,10 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
 #if defined(LIBRECAD_SYSTEM_LIBDXFRW) && defined(LIBDXFRW_HAS_DXF_STAGED_RAW_OBJECT_INSPECTOR) && \
     defined(LIBDXFRW_HAS_DXF_STAGED_LAYER_MATERIAL_INSPECTOR)
   dxfRW::DxfObjectsWriteInspector materialObjectsInspector;
+  dxfRW::DxfTablesWriteInspector materialTablesInspector;
+#ifdef LIBDXFRW_HAS_DXF_STAGED_HEADER_MATERIAL_INSPECTOR
+  dxfRW::DxfHeaderWriteInspector materialHeaderInspector;
+#endif
 #ifdef LIBDXFRW_HAS_DXF_STAGED_ENTITY_MATERIAL_INSPECTOR
   dxfRW::DxfEntitySectionsWriteInspector materialEntityInspector;
 #endif
@@ -16803,19 +16807,19 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
             return true;
           };
 #ifdef LIBDXFRW_HAS_DXF_STAGED_HEADER_MATERIAL_INSPECTOR
-          if (audit->inspectHeader &&
-              !m_dxfW->setDxfHeaderWriteInspector([this, audit, stable](const auto &view) {
+          if (audit->inspectHeader)
+              materialHeaderInspector = [this, audit, stable](const auto &view) {
                 if (audit->headerSeen || !stable()) return false;
                 audit->headerSeen = m_dxfW->inspectDxfHeaderMaterialReference(
                     view, audit->headerPresent, audit->headerTarget);
                 return audit->headerSeen;
-              })) return false;
+              };
 #endif
           audit->tablesSeen = false;
 #ifndef LIBDXFRW_HAS_DXF_STAGED_ENTITY_MATERIAL_INSPECTOR
           audit->tablesSeen = audit->layers.empty();
 #endif
-          if (!audit->tablesSeen && !m_dxfW->setDxfTablesWriteInspector([this, audit, stable](const auto &view) {
+          if (!audit->tablesSeen) materialTablesInspector = [this, audit, stable](const auto &view) {
                 if (audit->tablesSeen || !stable()) return false;
                 audit->tablesSeen = m_dxfW->inspectDxfLayerMaterialReferences(view, audit->layers);
 #if defined(LIBDXFRW_HAS_DXF_STAGED_HEADER_MATERIAL_INSPECTOR) && defined(LIBDXFRW_HAS_DXF_STAGED_ROOT_ENTRY_INSPECTOR) && defined(LIBDXFRW_HAS_DXF_STAGED_ENTITY_MATERIAL_INSPECTOR) && defined(LIBDXFRW_HAS_DXF_STAGED_DICTIONARY_INSPECTOR) && defined(LIBDXFRW_HAS_DXF_DEFAULT_PLOT_PLACEHOLDER_HANDLE) && defined(LIBDXFRW_HAS_DXF_HEADER_MATERIAL_SOURCE_HANDLER) && defined(LIBDXFRW_HAS_DXF_STAGED_LAYER_PLOT_STYLE_INSPECTOR)
@@ -16827,7 +16831,7 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
                 }
 #endif
                 return audit->tablesSeen;
-              })) return false;
+              };
 #ifdef LIBDXFRW_HAS_DXF_STAGED_ENTITY_MATERIAL_INSPECTOR
           materialEntityInspector = [this, audit, stable](const auto &view, std::string_view section) {
             const bool blocks = section == "BLOCKS";
@@ -17371,6 +17375,10 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic &g, const QString &file,
 
 #if defined(LIBRECAD_SYSTEM_LIBDXFRW) && defined(LIBDXFRW_HAS_DXF_STAGED_RAW_OBJECT_INSPECTOR) && \
     defined(LIBDXFRW_HAS_DXF_STAGED_LAYER_MATERIAL_INSPECTOR)
+#ifdef LIBDXFRW_HAS_DXF_STAGED_HEADER_MATERIAL_INSPECTOR
+  if (materialHeaderInspector && !m_dxfW->setDxfHeaderWriteInspector(materialHeaderInspector)) return false;
+#endif
+  if (materialTablesInspector && !m_dxfW->setDxfTablesWriteInspector(materialTablesInspector)) return false;
 #ifdef LIBDXFRW_HAS_DXF_STAGED_ENTITY_MATERIAL_INSPECTOR
   if (materialEntityInspector && !m_dxfW->setDxfEntitySectionsWriteInspector(materialEntityInspector)) return false;
 #endif
