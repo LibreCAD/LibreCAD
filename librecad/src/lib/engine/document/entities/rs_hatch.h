@@ -132,6 +132,12 @@ public:
     // Import provenance for reporting associations that cannot be replayed.
     bool sourceAssociative() const { return m_sourceAssociative; }
     void setSourceAssociative(bool associative) { m_sourceAssociative = associative; }
+    // Raw import order only: validation can reorder, merge or drop loops.
+    // These identities do not by themselves authorize association replay.
+    const std::vector<std::vector<quint32>>& sourceLoopBoundaries() const { return m_sourceLoopBoundaries; }
+    void setSourceLoopBoundaries(std::vector<std::vector<quint32>> boundaries) {
+        m_sourceLoopBoundaries = std::move(boundaries);
+    }
     const std::vector<quint32>& unidentifiedSourceBoundaries() const { return m_unidentifiedSourceBoundaries; }
     void setUnidentifiedSourceBoundaries(std::vector<quint32> boundaries) {
         m_unidentifiedSourceBoundaries = std::move(boundaries);
@@ -279,6 +285,7 @@ public:
 protected:
     RS_HatchData m_data;
     bool m_sourceAssociative = false;
+    std::vector<std::vector<quint32>> m_sourceLoopBoundaries;
     std::vector<quint32> m_unidentifiedSourceBoundaries;
     /**
      * Distance from `coord` (in WCS) to the hatch region. For a pattern hatch

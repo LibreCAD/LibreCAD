@@ -9511,6 +9511,40 @@ TEST_CASE("DXF export keeps a GROUP's handle for its members' reactors",
   std::filesystem::remove(out);
 }
 
+TEST_CASE("DXF import retains hatch source boundary identities per loop",
+          "[dxf][roundtrip][filter][handles][hatch-assoc]") {
+  ensureSettings();
+  const auto src = tmpFile("hatch-source-loop-identities.dxf");
+  writeText(src,
+            "0\nSECTION\n2\nENTITIES\n"
+            "0\nHATCH\n5\nB1\n100\nAcDbEntity\n8\n0\n100\nAcDbHatch\n"
+            "10\n0\n20\n0\n30\n0\n210\n0\n220\n0\n230\n1\n2\nSOLID\n70\n1\n71\n1\n"
+            "91\n2\n92\n3\n72\n0\n73\n1\n93\n4\n"
+            "10\n0\n20\n0\n10\n10\n20\n0\n10\n10\n20\n10\n10\n0\n20\n10\n"
+            "97\n1\n330\nB0\n"
+            "92\n2\n72\n0\n73\n1\n93\n4\n"
+            "10\n2\n20\n2\n10\n4\n20\n2\n10\n4\n20\n4\n10\n2\n20\n4\n"
+            "97\n2\n330\nB2\n330\nB3\n75\n0\n76\n1\n98\n0\n"
+            "0\nENDSEC\n0\nEOF\n");
+  RS_Graphic graphic;
+  RS_FilterDXFRW filter;
+  REQUIRE(filter.fileImport(graphic, QString::fromStdString(src), RS2::FormatDXFRW));
+  RS_Hatch *hatch = nullptr;
+  for (auto *entity : graphic)
+    if (entity && entity->rtti() == RS2::EntityHatch)
+      hatch = static_cast<RS_Hatch *>(entity);
+  REQUIRE(hatch);
+  const std::vector<std::vector<quint32>> expected{{0xB0u}, {0xB2u, 0xB3u}};
+  CHECK(hatch->sourceLoopBoundaries() == expected);
+  std::unique_ptr<RS_Entity> copy(hatch->clone());
+  REQUIRE(copy);
+  auto *copiedHatch = static_cast<RS_Hatch *>(copy.get());
+  CHECK(copiedHatch->sourceLoopBoundaries() == expected);
+  copiedHatch->setSourceLoopBoundaries({{0xB4u}});
+  CHECK(hatch->sourceLoopBoundaries() == expected);
+  std::filesystem::remove(src);
+}
+
 TEST_CASE("DXF export reports hatch deassociation and retains unrelated reactors",
           "[dxf][roundtrip][filter][handles][system-codec][hatch-assoc]") {
   ensureSettings();

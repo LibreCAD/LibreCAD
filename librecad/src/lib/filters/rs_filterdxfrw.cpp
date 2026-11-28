@@ -12194,11 +12194,18 @@ void RS_FilterDXFRW::snapSplineEdgeEndpoints(RS_EntityContainer *hatchLoop) {
 void RS_FilterDXFRW::addHatch(const DRW_Hatch *data) {
   RS_DEBUG->print("RS_FilterDXF::addHatch()");
   std::vector<std::uint32_t> sourceBoundaries;
+  std::vector<std::vector<quint32>> sourceLoopBoundaries;
   if (data->associative == 1) {
-    for (const auto &loop : data->looplist)
-      if (loop)
+    sourceLoopBoundaries.reserve(data->looplist.size());
+    for (const auto &loop : data->looplist) {
+      if (loop) {
+        sourceLoopBoundaries.emplace_back(loop->m_boundaryHandles.begin(), loop->m_boundaryHandles.end());
         sourceBoundaries.insert(sourceBoundaries.end(), loop->m_boundaryHandles.begin(),
                                 loop->m_boundaryHandles.end());
+      } else {
+        sourceLoopBoundaries.emplace_back();
+      }
+    }
     if (m_graphic != nullptr)
       m_graphic->dwgAdvancedMetadata().addSourceHatchBoundaries(data->handle, sourceBoundaries);
   }
@@ -12209,6 +12216,7 @@ void RS_FilterDXFRW::addHatch(const DRW_Hatch *data) {
                                        QString::fromUtf8(data->name.c_str())));
   setEntityAttributes(hatch, data);
   hatch->setSourceAssociative(data->associative == 1);
+  hatch->setSourceLoopBoundaries(std::move(sourceLoopBoundaries));
   if (data->handle == 0 || data->handle == DRW::NoHandle)
     hatch->setUnidentifiedSourceBoundaries(std::move(sourceBoundaries));
   // Strip the approximate definition-line tag the writer may have added so
