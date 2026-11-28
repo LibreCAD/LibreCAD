@@ -9588,6 +9588,19 @@ TEST_CASE("DXF physical hatch source roles reject conflicting records",
             break;
           }
       }
+      if (fault == 8 && !altered.records.empty()) {
+        for (auto &group : altered.records.front().groups)
+          if (group.code() == 10 && group.type() == DRW_Variant::DOUBLE) {
+            group = DRW_Variant(10, group.d_val() + 1.0);
+            break;
+          }
+      }
+      if (fault == 9) {
+        for (auto &record : altered.records)
+          if (record.name == "HATCH")
+            for (auto &group : record.groups)
+              if (group.code() == 73) { group = DRW_Variant(73, 0); break; }
+      }
       RS_FilterDXFRW::addDxfEntitiesSource(altered);
       if (fault == 3) RS_FilterDXFRW::addDxfEntitiesSource(altered);
     }
@@ -9610,6 +9623,13 @@ TEST_CASE("DXF physical hatch source roles reject conflicting records",
   CHECK(roles.boundary == 0xB0u);
   CHECK(roles.owner == 0xA0u);
   CHECK_FALSE(roles.modelSpace);
+  CHECK(roles.sourceGeometry.size() == 4u);
+  const std::vector<LC_HatchAssociation::Edge> expectedGeometry{
+      {{0, 0, 0, 10}}, {{0, 0, 10, 0}}, {{0, 10, 10, 10}}, {{10, 0, 10, 10}}};
+  CHECK(roles.sourceGeometry == expectedGeometry);
+  const auto changedTypedGeometry = readRoles(input, 8);
+  CHECK(changedTypedGeometry.hatch == 0xB1u);
+  CHECK(changedTypedGeometry.sourceGeometry.empty());
   CHECK(readRoles(input, 1).hatch == 0u);
   CHECK(readRoles(input, 2).hatch == 0u);
   CHECK(readRoles(input, 3).hatch == 0u);
@@ -9632,6 +9652,14 @@ TEST_CASE("DXF physical hatch source roles reject conflicting records",
   REQUIRE(subclass != std::string::npos);
   nondefaultColor.insert(subclass, "62\n7\n");
   CHECK(readRoles(nondefaultColor, 0).hatch == 0u);
+  auto changedBoundaryGeometry = input;
+  const auto vertex = changedBoundaryGeometry.find("10\n10\n20\n0\n");
+  REQUIRE(vertex != std::string::npos);
+  changedBoundaryGeometry.replace(vertex, std::string("10\n10\n20\n0\n").size(), "10\n11\n20\n0\n");
+  const auto unmatched = readRoles(changedBoundaryGeometry, 0);
+  CHECK(unmatched.hatch == 0xB1u);
+  CHECK(unmatched.sourceGeometry.empty());
+  CHECK(readRoles(input, 9).sourceGeometry.empty());
   const std::string spaceSections =
       "0\nSECTION\n2\nTABLES\n0\nTABLE\n2\nBLOCK_RECORD\n5\nD0\n70\n1\n"
       "0\nBLOCK_RECORD\n5\nA0\n330\nD0\n100\nAcDbSymbolTableRecord\n"
@@ -9704,17 +9732,30 @@ TEST_CASE("DXF physical hatch source roles reject conflicting records",
     RS_Graphic full;
     SourceProbe fullFilter;
     REQUIRE(fullFilter.fileImport(full, QString::fromLocal8Bit(local), RS2::FormatDXFRW));
-    bool found = false;
-    for (const RS_Entity *entity : full)
+    RS_Hatch *selectedHatch = nullptr;
+    RS_Polyline *selectedBoundary = nullptr;
+    for (RS_Entity *entity : full)
       if (entity && entity->rtti() == RS2::EntityHatch) {
-        const auto roles = static_cast<const RS_Hatch *>(entity)->physicalSourceRoles();
+        selectedHatch = static_cast<RS_Hatch *>(entity);
+        const auto roles = selectedHatch->physicalSourceRoles();
         CHECK(roles.hatch == 0xA1u);
         CHECK(roles.boundary == 0xB1u);
         CHECK(roles.owner == 0x1Fu);
         CHECK(roles.modelSpace);
-        found = true;
-      }
-    CHECK(found);
+        CHECK(roles.sourceGeometry.size() == 4u);
+      } else if (entity && entity->rtti() == RS2::EntityPolyline)
+        selectedBoundary = static_cast<RS_Polyline *>(entity);
+    REQUIRE(selectedHatch);
+    REQUIRE(selectedBoundary);
+    const auto original = selectedHatch->physicalSourceRoles().sourceGeometry;
+    std::vector<LC_HatchAssociation::Edge> live;
+    REQUIRE(LC_HatchAssociation::matchesClosedStraightBoundary(*selectedHatch, *selectedBoundary, &live));
+    CHECK(live == original);
+    selectedHatch->move(RS_Vector(1, 0));
+    selectedBoundary->move(RS_Vector(1, 0));
+    REQUIRE(LC_HatchAssociation::matchesClosedStraightBoundary(*selectedHatch, *selectedBoundary, &live));
+    CHECK(live != original);
+    CHECK(selectedHatch->physicalSourceRoles().sourceGeometry == original);
   }
   std::filesystem::remove(src);
 }

@@ -85,6 +85,7 @@
 #include "lc_dimstyle.h"
 #include "lc_dwgadvancedmetadata.h"
 #include "lc_extentitydata.h"
+#include "lc_hatchassociation.h"
 #include "lc_hyperbola.h"
 #include "lc_hyperbolaspline.h"
 #include "lc_linetype.h"
@@ -6174,6 +6175,7 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic &g, const QString &file,
     m_dxfAutomaticHatchCapture = false;
     m_dxfAutomaticHatchBytes.clear();
     m_dxfHatchSourceScopeSeen = false;
+    m_dxfHatchSourceGeometry.clear();
     m_dxfHatchSourceHandle = m_dxfHatchSourceBoundary = m_dxfHatchSourceOwner = 0;
     m_dxfAutomaticMaterialBytes.clear();
     const auto clearMaterialSourceBytes = qScopeGuard([this] { m_dxfAutomaticMaterialBytes.clear(); });
@@ -6269,7 +6271,8 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic &g, const QString &file,
                                           m_dxfR->getSourceVersion());
 #endif
           selected->setPhysicalSourceRoles(
-              {m_dxfHatchSourceHandle, m_dxfHatchSourceBoundary, m_dxfHatchSourceOwner, modelSpace});
+              {m_dxfHatchSourceHandle, m_dxfHatchSourceBoundary, m_dxfHatchSourceOwner, modelSpace,
+               m_dxfHatchSourceGeometry});
         }
       }
 #endif
@@ -13202,7 +13205,9 @@ bool capturePhysicalMaterialReferences(LC_DwgAdvancedMetadata &metadata,
 bool capturePhysicalHatchRoles(RS_Graphic &graphic, const DRW_DxfEntitiesSource &source,
                                const QByteArray &input,
                                std::uint32_t &hatchHandle, std::uint32_t &boundaryHandle,
-                               std::uint32_t &ownerHandle) {
+                               std::uint32_t &ownerHandle,
+                               std::vector<LC_HatchAssociation::Edge> &sourceGeometry) {
+  sourceGeometry.clear();
   if (source.status != DRW_DxfEntitiesSource::Status::Complete || source.binary ||
       source.version < DRW::AC1015 || source.version > DRW::AC1032 || !source.scopeId ||
       source.records.size() != 2u || source.ignoredComments || input.isEmpty() || input.size() > 16 * 1024)
@@ -13348,6 +13353,77 @@ bool capturePhysicalHatchRoles(RS_Graphic &graphic, const DRW_DxfEntitiesSource 
         code == 390 || code == 480 || code == 481) return false;
   }
   if (assoc != 1u || loops != 1u || path != 1u || count != 1u || target != 1u) return false;
+  // Record a separate, strictly shaped geometry witness. Source-role evidence
+  // remains useful even when a different valid geometric profile is present.
+  const auto geometryMatches = [&] {
+    using Record = DRW_DxfPhysicalEntitySource;
+    using Edge = LC_HatchAssociation::Edge;
+    using Point = std::pair<double, double>;
+    const auto code = [](const Record &record, std::size_t i, int expected) {
+      return i < record.groups.size() && record.groups[i].code() == expected;
+    };
+    const auto real = [&](const Record &record, std::size_t &i, int expected, double &value) {
+      if (!code(record, i, expected) || record.groups[i].type() != DRW_Variant::DOUBLE) return false;
+      const auto &raw = record.rawValues[i];
+      char *end = nullptr; errno = 0;
+      value = std::strtod(raw.c_str(), &end);
+      if (raw.empty() || errno == ERANGE || end != raw.c_str() + raw.size() ||
+          !std::isfinite(value) || value != record.groups[i].d_val()) return false;
+      ++i; return true;
+    };
+    const auto number = [&](const Record &record, std::size_t &i, int expected, int value) {
+      if (!code(record, i, expected) || !integer(record, i, value)) return false;
+      ++i; return true;
+    };
+    const auto zero = [&](const Record &record, std::size_t &i, int expected, double wanted) {
+      double value = 0; return real(record, i, expected, value) && value == wanted;
+    };
+    const auto cycle = [&](const Record &record, std::size_t &i, std::size_t n, std::vector<Edge> &edges) {
+      if (n < 3u || n > 4096u) return false;
+      std::vector<Point> points; std::set<Point> unique;
+      for (std::size_t j = 0; j < n; ++j) {
+        Point p;
+        if (!real(record, i, 10, p.first) || !real(record, i, 20, p.second) || !unique.insert(p).second)
+          return false;
+        points.push_back(p);
+      }
+      for (std::size_t j = 0; j < n; ++j) {
+        auto a = points[j], b = points[(j + 1u) % n];
+        if (b < a) std::swap(a, b);
+        edges.push_back({{a.first, a.second, b.first, b.second}});
+      }
+      std::sort(edges.begin(), edges.end()); return true;
+    };
+    std::size_t hi = hBody, bi = bBody;
+    if (!zero(*hRecord, hi, 10, 0) || !zero(*hRecord, hi, 20, 0) || !zero(*hRecord, hi, 30, 0) ||
+        !zero(*hRecord, hi, 210, 0) || !zero(*hRecord, hi, 220, 0) || !zero(*hRecord, hi, 230, 1) ||
+        !code(*hRecord, hi, 2) || hRecord->groups[hi].type() != DRW_Variant::STRING ||
+        !hRecord->groups[hi].content.s || *hRecord->groups[hi].content.s != "SOLID" ||
+        hRecord->rawValues[hi] != "SOLID") return false;
+    ++hi;
+    if (!number(*hRecord, hi, 70, 1) || !number(*hRecord, hi, 71, 1) ||
+        !number(*hRecord, hi, 91, 1) || !number(*hRecord, hi, 92, 3) ||
+        !number(*hRecord, hi, 72, 0) || !number(*hRecord, hi, 73, 1) ||
+        !code(*hRecord, hi, 93) || hRecord->groups[hi].type() != DRW_Variant::INTEGER) return false;
+    const int n = hRecord->groups[hi].i_val();
+    if (n < 3 || n > 4096 || !number(*hRecord, hi, 93, n)) return false;
+    std::vector<Edge> hatchEdges, boundaryEdges, liveEdges;
+    if (!cycle(*hRecord, hi, static_cast<std::size_t>(n), hatchEdges) ||
+        !number(*hRecord, hi, 97, 1) || !code(*hRecord, hi, 330)) return false;
+    ++hi; // The role and original bytes of this handle were checked above.
+    if (!number(*hRecord, hi, 75, 0) || !number(*hRecord, hi, 76, 1)) return false;
+    if (code(*hRecord, hi, 78) && !number(*hRecord, hi, 78, 0)) return false;
+    if (!number(*hRecord, hi, 98, 0) || hi != hRecord->groups.size() ||
+        !number(*bRecord, bi, 90, n) || !number(*bRecord, bi, 70, 1)) return false;
+    if (code(*bRecord, bi, 43) && !zero(*bRecord, bi, 43, 0)) return false;
+    if (!cycle(*bRecord, bi, static_cast<std::size_t>(n), boundaryEdges) ||
+        bi != bRecord->groups.size() || hatchEdges != boundaryEdges ||
+        !LC_HatchAssociation::matchesClosedStraightBoundary(*hatch, *boundary, &liveEdges) ||
+        hatchEdges != liveEdges) return false;
+    sourceGeometry = std::move(hatchEdges);
+    return true;
+  };
+  geometryMatches();
   hatchHandle = h; boundaryHandle = b; ownerHandle = hOwner;
   return true;
 }
@@ -13568,12 +13644,14 @@ void RS_FilterDXFRW::addDxfEntitiesSource(const DRW_DxfEntitiesSource &source) {
   auto &metadata = m_graphic->dwgAdvancedMetadata();
   if (m_dxfAutomaticHatchCapture) {
     m_dxfHatchSourceHandle = m_dxfHatchSourceBoundary = m_dxfHatchSourceOwner = 0;
+    m_dxfHatchSourceGeometry.clear();
     if (!m_dxfHatchSourceScopeSeen) {
       try {
         capturePhysicalHatchRoles(*m_graphic, source, m_dxfAutomaticHatchBytes, m_dxfHatchSourceHandle,
-                                  m_dxfHatchSourceBoundary, m_dxfHatchSourceOwner);
+                                  m_dxfHatchSourceBoundary, m_dxfHatchSourceOwner, m_dxfHatchSourceGeometry);
       } catch (...) {
         m_dxfHatchSourceHandle = m_dxfHatchSourceBoundary = m_dxfHatchSourceOwner = 0;
+        m_dxfHatchSourceGeometry.clear();
       }
     }
     m_dxfHatchSourceScopeSeen = true;

@@ -27,6 +27,7 @@
 #ifndef RS_HATCH_H
 #define RS_HATCH_H
 
+#include <array>
 #include <memory>
 #include <vector>
 
@@ -138,7 +139,11 @@ public:
     void setSourceLoopBoundaries(std::vector<std::vector<quint32>> boundaries) {
         m_sourceLoopBoundaries = std::move(boundaries);
     }
-    struct PhysicalSourceRoles { quint32 hatch = 0, boundary = 0, owner = 0; bool modelSpace = false; };
+    struct PhysicalSourceRoles {
+        quint32 hatch = 0, boundary = 0, owner = 0;
+        bool modelSpace = false;
+        std::vector<std::array<double, 4>> sourceGeometry;
+    };
     const PhysicalSourceRoles& physicalSourceRoles() const { return m_physicalSourceRoles; }
     void setPhysicalSourceRoles(PhysicalSourceRoles roles) { m_physicalSourceRoles = roles; }
     const std::vector<quint32>& unidentifiedSourceBoundaries() const { return m_unidentifiedSourceBoundaries; }
