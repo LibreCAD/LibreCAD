@@ -1723,7 +1723,7 @@ void LC_QuickInfoEntityData::addAngleProperty(const QString& name, const double 
 }
 
 void LC_QuickInfoEntityData::addRawAngleProperty(const QString& name, const double value) {
-    addDoubleProperty(name, formatRawAngle(value), value, PROPERTY_TYPE_ANGLE);
+    addDoubleProperty(name, formatAngleAmount(value), value, PROPERTY_TYPE_ANGLE);
 }
 
 /**

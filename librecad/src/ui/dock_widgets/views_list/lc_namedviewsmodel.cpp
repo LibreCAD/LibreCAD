@@ -120,7 +120,7 @@ int LC_NamedViewsModel::translateColumn(const int column) const {
 QString LC_NamedViewsModel::getUCSInfo(const LC_UCS* ucs) const {
     QString originX = m_formatter->formatLinear(ucs->getOrigin().x);
     const QString originY = m_formatter->formatLinear(ucs->getOrigin().y);
-    const QString angle = m_formatter->formatRawAngle(ucs->getXAxis().angle());
+    const QString angle = m_formatter->formatAbsoluteAngle(ucs->getXAxis().angle());
     QString origin = originX.append(", ").append(originY).append(" < ").append(angle);
     return origin;
 }
@@ -393,7 +393,7 @@ void LC_NamedViewsModel::setupViewItem(LC_View* view, ViewItem* result) {
     else {
         const QString ucsOriginX = m_formatter->formatLinear(ucs->getOrigin().x);
         const QString ucsOriginY = m_formatter->formatLinear(ucs->getOrigin().y);
-        const QString ucsAngle = m_formatter->formatRawAngle(ucs->getXAxis().angle());
+        const QString ucsAngle = m_formatter->formatAbsoluteAngle(ucs->getXAxis().angle());
 
         const QString viewGridType = getGridViewType(orthoType);
 

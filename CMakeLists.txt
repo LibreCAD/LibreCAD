@@ -3011,6 +3011,7 @@ if (BUILD_TESTS)
         librecad/src/ui/dock_widgets/property_sheet/tests/lc_propertysheet_polyline_closed_tests.cpp
         librecad/src/ui/dock_widgets/property_sheet/tests/lc_property_copy_tests.cpp
         librecad/src/ui/dock_widgets/property_sheet/tests/lc_propertysheetarctests.cpp
+        librecad/src/ui/dock_widgets/property_sheet/tests/lc_propertysheetinserttests.cpp
         librecad/src/actions/dock_widgets/block/tests/lc_actionblockssave_tests.cpp
         librecad/src/ui/dock_widgets/ucs_list/tests/lc_ucslistmodel_tests.cpp
         librecad/src/ui/dock_widgets/views_list/tests/lc_namedviewsmodel_tests.cpp
@@ -3027,6 +3028,7 @@ if (BUILD_TESTS)
         librecad/src/ui/dialogs/tests/lc_language_selection_tests.cpp
         librecad/src/ui/dialogs/tests/lc_translation_catalog_tests.cpp
         librecad/src/ui/dialogs/tests/lc_infocursor_colors_tests.cpp
+        librecad/src/ui/dialogs/entity/tests/lc_propertieseditingwidgetinserttests.cpp
         librecad/src/ui/dock_widgets/block_widget/tests/lc_blockwidget_filter_tests.cpp
         librecad/src/ui/dialogs/settings/options_drawing/tests/lc_dlgoptionsdrawingtests.cpp
         librecad/src/ui/dialogs/settings/options_widget/tests/lc_stylesheetoptiontests.cpp

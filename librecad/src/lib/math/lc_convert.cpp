@@ -93,29 +93,46 @@ bool LC_Convert::toDoubleAngleRad(const QString& strValue, double &res, const do
 }
 
 
-bool LC_Convert::parseToToDoubleAngleDegrees(const QString& strValue, double &res, const double notMeaningful, const bool positiveOnly){
-    bool ok = false;
-    const bool doNotAllowNonDecimalAnglesInput = LC_GET_ONE_BOOL("CADPreferences", "InputAnglesAsDecimalsOnly", false);
-    double angleDegrees;
-    // cleanup degree size, if any
-    if (doNotAllowNonDecimalAnglesInput){
+namespace {
+    bool parseAngleDegrees(const QString& strValue, double &res, const double notMeaningful, const bool positiveOnly,
+                           const bool direction, const double anglesBase, const bool anglesCounterClockwise){
+        bool ok = false;
+        const bool doNotAllowNonDecimalAnglesInput = LC_GET_ONE_BOOL("CADPreferences", "InputAnglesAsDecimalsOnly", false);
+        double angleDegrees;
+        // cleanup degree size, if any
         QString stringToEval = strValue;
         stringToEval = stringToEval.remove( QChar(0xB0));
-        angleDegrees = RS_Math::eval(stringToEval, &ok);
-    }
-    else{
-        QString stringToEval = strValue;
-        stringToEval = stringToEval.remove( QChar(0xB0));
-        stringToEval = RS_Units::replaceAllPotentialAnglesByDecimalDegrees(stringToEval, &ok);
-        angleDegrees = RS_Math::eval(stringToEval, &ok);
-    }
-    if(ok){
-        res = LC_LineMath::getMeaningfulAngle(angleDegrees, notMeaningful);
-        if (positiveOnly){
-            res = std::abs(res);
+        if (doNotAllowNonDecimalAnglesInput){
+            angleDegrees = RS_Math::eval(stringToEval, &ok);
         }
+        else{
+            if (RS_Units::containsDirectionAngle(stringToEval)) {
+                // a bearing is a direction: it is not an amount, and a minus in front of it has no meaning
+                if (!direction || stringToEval.trimmed().startsWith('-')) {
+                    return false;
+                }
+            }
+            stringToEval = RS_Units::replaceAllPotentialAnglesByDecimalDegrees(stringToEval, &ok, RS_Math::rad2deg(anglesBase),
+                                                                               anglesCounterClockwise);
+            angleDegrees = RS_Math::eval(stringToEval, &ok);
+        }
+        if(ok){
+            res = LC_LineMath::getMeaningfulAngle(angleDegrees, notMeaningful);
+            if (positiveOnly){
+                res = std::abs(res);
+            }
+        }
+        return ok;
     }
-    return ok;
+}
+
+bool LC_Convert::parseToDirectionDegrees(const QString& strValue, double &res, const double anglesBase,
+                                         const bool anglesCounterClockwise){
+    return parseAngleDegrees(strValue, res, 0.0, false, true, anglesBase, anglesCounterClockwise);
+}
+
+bool LC_Convert::parseToToDoubleAngleDegrees(const QString& strValue, double &res, const double notMeaningful, const bool positiveOnly){
+    return parseAngleDegrees(strValue, res, notMeaningful, positiveOnly, false, 0.0, true);
 }
 
 /**
@@ -175,13 +192,6 @@ QString LC_Convert::evaluateFraction(QString input, const QRegularExpression& rx
     }
     return input;
 }
-[[deprecated]] // fixme - garbase value if doNotAllow is true and ok is valse?
-double LC_Convert::evalAngleValue(const QString& angleStr, bool& ok2) {
-    double angleDegrees;
-    ok2 = parseToToDoubleAngleDegrees(angleStr, angleDegrees, 0.0, false);
-    return angleDegrees;
-}
-
 bool LC_Convert::toInt(const QString& strVal, int& res) {
     bool ok;
     res = strVal.toInt(&ok);

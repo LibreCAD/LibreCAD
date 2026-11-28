@@ -337,8 +337,8 @@ double LC_CoordinatesMapper::toUCSBasisAngle(const double ucsAbsAngle, const dou
  * @return
  */
 double LC_CoordinatesMapper::toUCSAbsAngle(const double ucsBasisAngle, const double baseAngle, const bool counterclockwise) {
-    const double ucsAbsAngle = ucsBasisAngle + baseAngle;
-    return counterclockwise ? ucsAbsAngle : M_PI * 2 - ucsAbsAngle;
+    // the inverse of toUCSBasisAngle(): a clockwise angle is measured back from the base
+    return counterclockwise ? baseAngle + ucsBasisAngle : baseAngle - ucsBasisAngle;
 }
 
 void LC_CoordinatesMapper::apply(const LC_CoordinatesMapper* other) {

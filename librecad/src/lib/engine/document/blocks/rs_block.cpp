@@ -224,7 +224,7 @@ QStringList RS_Block::findNestedInsert(const QString& bName) const {
             return {};
         const RS_Entity* entity = frame.block->entityAt(
             static_cast<int>(frame.nextEntityIndex++));
-        if (entity == nullptr || entity->rtti() != RS2::EntityInsert)
+        if (entity == nullptr || entity->isDeleted() || entity->rtti() != RS2::EntityInsert)
             continue;
 
         const auto& insert = static_cast<const RS_Insert&>(*entity);

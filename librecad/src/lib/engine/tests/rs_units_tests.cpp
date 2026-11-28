@@ -22,8 +22,10 @@
 // Tests for the degrees/minutes/seconds format of RS_Units::formatAngle() and
 // the architectural length format.
 
+#include <catch2/catch_approx.hpp>
 #include <catch2/catch_test_macros.hpp>
 
+#include <cmath>
 #include <string>
 
 #include <QString>
@@ -83,7 +85,7 @@ TEST_CASE("formatArchitectural keeps the sign of lengths below one foot", "[rs_u
     };
     CHECK(arch(-6.0, RS2::Inch, 1) == "-6\"");
     CHECK(arch(-0.5, RS2::Foot, 1) == "-6\"");
-    CHECK(arch(-0.25, RS2::Inch, 1) == "-1/4\"");
+    CHECK(arch(-0.25, RS2::Inch, 2) == "-1/4\"");
     CHECK(arch(6.0, RS2::Inch, 1) == "6\"");
     CHECK(arch(-18.0, RS2::Inch, 1) == "-1'-6\"");
     // rounds to zero, so no sign
@@ -102,7 +104,7 @@ TEST_CASE("formatEngineering and formatFractional drop the sign of lengths that 
     CHECK(eng(-0.4) == "-0.40\"");
     CHECK(eng(-18.0) == "-1'-6.00\"");
     CHECK(frac(-0.001) == "0");
-    CHECK(frac(-0.4) == "- 3/8");
+    CHECK(frac(-0.4) == "- 1/2");
     CHECK(frac(-1.5) == "- 1 1/2");
 }
 
@@ -114,6 +116,29 @@ TEST_CASE("formatEngineering carries inches that round up to 12 into the feet", 
     CHECK(eng(-23.999, 2) == "-2'-0.00\"");
     CHECK(eng(11.9999, 2) == "1'-0.00\"");
     CHECK(eng(23.999, 0) == "2'-0\"");
+}
+
+TEST_CASE("Fractional and architectural lengths use the selected precision", "[rs_units]") {
+    const auto frac = [](double length, int prec) {
+        return RS_Units::formatLinear(length, RS2::Inch, RS2::Fractional, prec).toStdString();
+    };
+    const auto arch = [](double length, int prec) {
+        return RS_Units::formatLinear(length, RS2::Inch, RS2::Architectural, prec).toStdString();
+    };
+    // Precision 0 is whole inches, 1 is halves, 2 is quarters, and 7 is 1/128.
+    CHECK(frac(6.3, 0) == "6");
+    CHECK(frac(6.3, 1) == "6 1/2");
+    CHECK(frac(18.1, 2) == "18");
+    CHECK(frac(6.003, 7) == "6");
+    CHECK(frac(-6.3, 1) == "- 6 1/2");
+    CHECK(arch(6.3, 0) == "6\"");
+    CHECK(arch(6.3, 1) == "6 1/2\"");
+    CHECK(arch(18.1, 2) == "1'-6\"");
+    CHECK(arch(6.003, 7) == "6\"");
+    CHECK(arch(-6.3, 1) == "-6 1/2\"");
+    CHECK(frac(11.6, 0) == "12");
+    CHECK(arch(11.6, 0) == "1'-0\"");
+    CHECK(arch(-11.6, 0) == "-1'-0\"");
 }
 
 TEST_CASE("Negative lengths get a sign exactly when the text is not zero", "[rs_units]") {
@@ -129,7 +154,7 @@ TEST_CASE("Negative lengths get a sign exactly when the text is not zero", "[rs_
     for (const auto& [name, format] : formats) {
         for (int prec = 0; prec <= 8; ++prec) {
             // half of the smallest shown step: the rounding boundary next to zero
-            const double step = (format == &RS_Units::formatEngineering) ? std::pow(10., -prec) : 1. / (2 << prec);
+            const double step = (format == &RS_Units::formatEngineering) ? std::pow(10., -prec) : 1. / (1 << prec);
             std::vector<double> lengths{-0., -std::numeric_limits<double>::denorm_min()};
             for (const double base : {0.5 * step, step, 1.5 * step, 12. - 0.5 * step, 12., 24. - 0.5 * step}) {
                 for (const double eps : {0., 1e-12, -1e-12}) {
@@ -162,5 +187,61 @@ TEST_CASE("Negative lengths get a sign exactly when the text is not zero", "[rs_
                 }
             }
         }
+    }
+}
+
+TEST_CASE("RS_Units::replaceAllPotentialAnglesByDecimalDegrees converts angle notations", "[rs_units]") {
+    const auto convert = [](const QString& input) {
+        bool ok = false;
+        const QString result = RS_Units::replaceAllPotentialAnglesByDecimalDegrees(input, &ok);
+        REQUIRE(ok);
+        return result;
+    };
+
+    CHECK(convert("45") == "45");
+    CHECK(convert("2*45") == "2*45");
+    CHECK(convert("85d30'") == "85.5");
+    CHECK(convert("-85d30'") == "-85.5");
+    CHECK(convert("85d") == "85");
+    CHECK(convert("10+5d30'") == "10+5.5");
+    CHECK(convert("100g") == "90");
+    CHECK(convert("N45dE") == "45");
+    CHECK(convert("N45d30'W") == "135.5");
+    CHECK(convert("S10E") == "280");
+    CHECK(convert("W") == "180");
+    CHECK(std::abs(convert("83b24'30\"").toDouble() - (90.0 - (83.0 + 24.0 / 60.0 + 30.0 / 3600.0))) < 1e-9);
+}
+
+TEST_CASE("RS_Units reads bearings and surveyor's angles as directions in the angle basis", "[rs_units]") {
+    const auto convert = [](const QString& input, const double baseDeg, const bool counterClockwise) {
+        bool ok = false;
+        const QString result = RS_Units::replaceAllPotentialAnglesByDecimalDegrees(input, &ok, baseDeg, counterClockwise);
+        REQUIRE(ok);
+        return result.toDouble();
+    };
+
+    SECTION("base at north and clockwise, as in surveying") {
+        CHECK(convert("N10d0'0\"E", 90., false) == Catch::Approx(10.));
+        CHECK(convert("S80d0'0\"E", 90., false) == Catch::Approx(100.));
+        CHECK(convert("N45dW", 90., false) == Catch::Approx(315.));
+        CHECK(convert("83b24'30\"", 90., false) == Catch::Approx(83. + 24. / 60. + 30. / 3600.));
+    }
+    SECTION("a base of 30 degrees, counterclockwise") {
+        CHECK(convert("N10dE", 30., true) == Catch::Approx(50.));
+        CHECK(convert("E", 30., true) == Catch::Approx(330.));
+        CHECK(convert("100b", 30., true) == Catch::Approx(320.));
+    }
+    SECTION("amounts do not depend on the basis") {
+        CHECK(convert("85d30'", 90., false) == Catch::Approx(85.5));
+        CHECK(convert("100g", 30., true) == Catch::Approx(90.));
+    }
+}
+
+TEST_CASE("RS_Units tells directions from amounts", "[rs_units]") {
+    for (const char* direction : {"N45dE", "S10E", "W", "83b24'30\"", "10+N45dE"}) {
+        CHECK(RS_Units::containsDirectionAngle(direction));
+    }
+    for (const char* amount : {"45", "85d30'", "-85d30'", "100g", "1.5r", "2*45", "sin(30)"}) {
+        CHECK_FALSE(RS_Units::containsDirectionAngle(amount));
     }
 }

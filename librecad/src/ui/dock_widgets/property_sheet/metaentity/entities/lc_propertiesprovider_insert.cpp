@@ -23,7 +23,6 @@
 
 #include "lc_propertiesprovider_insert.h"
 
-#include "lc_property_double_interactivepick_view.h"
 #include "rs_block.h"
 #include "rs_document.h"
 #include "rs_graphic.h"
@@ -36,13 +35,24 @@ void LC_PropertiesProviderInsert::doCreateEntitySpecificProperties(LC_PropertyCo
                                  return e->getName();
                              }, [](const QString& v, RS_Insert* l) -> void {
                                  l->setName(v);
-                             }, [this]([[maybe_unused]] RS_Insert* h, LC_PropertyViewDescriptor& descriptor)-> bool {
-                                 const auto graphic = this->m_actionContext->getDocument()->getGraphic();
+                             }, [this](RS_Insert* h, LC_PropertyViewDescriptor& descriptor)-> bool {
+                                 const auto document = this->m_actionContext->getDocument();
+                                 const auto graphic = document->getGraphic();
                                  if (graphic != nullptr) {
+                                     // Only blocks the reference can expand: not removed ones (kept for undo), not
+                                     // layout pseudo-blocks, and in a block's editor none that contain that block.
+                                     const QString edited = document->is(RS2::EntityBlock)
+                                                                ? static_cast<RS_Block*>(document)->getName()
+                                                                : QString();
                                      QStringList values;
                                      const auto blockList = graphic->getBlockList();
                                      for (const auto& b : *blockList) {
-                                         values.append(b->getName());
+                                         const QString name = b->getName();
+                                         if (name != h->getName() && (b->isDeleted() || name.startsWith('*') || (!edited.isEmpty()
+                                                 && (name == edited || !b->findNestedInsert(edited).isEmpty())))) {
+                                             continue;
+                                         }
+                                         values.append(name);
                                      }
                                      values.sort();
                                      descriptor[LC_PropertyQStringListComboBoxView::ATTR_ITEMS] = values;
@@ -57,27 +67,23 @@ void LC_PropertiesProviderInsert::doCreateEntitySpecificProperties(LC_PropertyCo
                              e->setInsertionPoint(v);
                          }, list, contGeometry);
 
-    addLinearDistance<RS_Insert>({"scaleX", tr("Scale X"), tr("Scale factor of block by X")}, [](const RS_Insert* e) -> double {
-                                     return e->getScale().x;
-                                 }, [](const double& v, RS_Insert* l) -> void {
-                                     RS_Vector scale = l->getScale();
-                                     scale.setX(v);
-                                     l->setScale(scale);
-                                 }, list, contGeometry, [](LC_PropertyViewDescriptor* desc) -> void {
-                                     desc->attributes[LC_PropertyDoubleInteractivePickView::ATTR_POSITIVIE_VALUES_ONLY] = true;
-                                     desc->attributes[LC_PropertyDoubleInteractivePickView::ATTR_NON_MEANINGFUL_DISTANCE] = 1.0;
-                                 });
+    // A factor, not a length: a plain number of any sign (zero is turned away by RS_Insert::setScale).
+    addDouble<RS_Insert>({"scaleX", tr("Scale X"), tr("Scale factor of block by X")}, [](const RS_Insert* e) -> double {
+                             return e->getScale().x;
+                         }, [](const double& v, RS_Insert* l) -> void {
+                             RS_Vector scale = l->getScale();
+                             scale.setX(v);
+                             l->setScale(scale);
+                         }, list, contGeometry);
 
-    addLinearDistance<RS_Insert>({"scaleY", tr("Scale Y"), tr("Scale factor of block by Y")}, [](const RS_Insert* e) -> double {
-                                     return e->getScale().y;
-                                 }, [](const double& v, RS_Insert* l) -> void {
-                                     RS_Vector scale = l->getScale();
-                                     scale.setY(v);
-                                     l->setScale(scale);
-                                 }, list, contGeometry, [](LC_PropertyViewDescriptor* desc) -> void {
-                                     desc->attributes[LC_PropertyDoubleInteractivePickView::ATTR_POSITIVIE_VALUES_ONLY] = true;
-                                     desc->attributes[LC_PropertyDoubleInteractivePickView::ATTR_NON_MEANINGFUL_DISTANCE] = 1.0;
-                                 });
+    // A factor, not a length: a plain number of any sign (zero is turned away by RS_Insert::setScale).
+    addDouble<RS_Insert>({"scaleY", tr("Scale Y"), tr("Scale factor of block by Y")}, [](const RS_Insert* e) -> double {
+                             return e->getScale().y;
+                         }, [](const double& v, RS_Insert* l) -> void {
+                             RS_Vector scale = l->getScale();
+                             scale.setY(v);
+                             l->setScale(scale);
+                         }, list, contGeometry);
 
     addWCSAngle<RS_Insert>({"angle", tr("Angle"), tr("Block rotation angle")}, [](const RS_Insert* e) -> double {
                                return e->getAngle();
@@ -90,14 +96,14 @@ void LC_PropertiesProviderInsert::doCreateEntitySpecificProperties(LC_PropertyCo
                                  return value;
                              }, [](const int& value, RS_Insert* e) -> void {
                                  e->setCols(value);
-                             }, list, contGeometry);
+                             }, list, contGeometry, 1, RS_InsertData::MaxArrayCount);
 
-    addIntSpinbox<RS_Insert>({"cols", tr("Rows"), tr("Amount of array rows")}, [](const RS_Insert* e) -> int {
+    addIntSpinbox<RS_Insert>({"rows", tr("Rows"), tr("Amount of array rows")}, [](const RS_Insert* e) -> int {
                                  const int value = e->getRows();
                                  return value;
                              }, [](const int& value, RS_Insert* e) -> void {
                                  e->setRows(value);
-                             }, list, contGeometry);
+                             }, list, contGeometry, 1, RS_InsertData::MaxArrayCount);
 
     addLinearDistance<RS_Insert>({"spacingX", tr("Spacing X"), tr("Spacing between columns of array (by X)")},
                                  [](const RS_Insert* e) -> double {

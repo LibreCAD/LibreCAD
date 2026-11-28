@@ -1099,7 +1099,7 @@ RS_Entity* RS_PreviewActionInterface::catchEntityByEvent(const LC_MouseEvent* e,
 
 bool RS_PreviewActionInterface::parseToWCSAngle(const QString& c, double& wcsAngleRad) const {
     bool ok = false;
-    double ucsBasisAngleDeg = evalAngleValue(c, &ok);
+    double ucsBasisAngleDeg = evalAngleValue(c, &ok, true);
     if (ok) {
         ucsBasisAngleDeg = LC_LineMath::getMeaningfulAngle(ucsBasisAngleDeg);
         const double ucsBasisAngleRad = RS_Math::deg2rad(ucsBasisAngleDeg);
@@ -1111,7 +1111,7 @@ bool RS_PreviewActionInterface::parseToWCSAngle(const QString& c, double& wcsAng
 
 bool RS_PreviewActionInterface::parseToUCSBasisAngle(const QString& c, double& ucsBasisAngleRad) const {
     bool ok = false;
-    double ucsBasisAngleDeg = evalAngleValue(c, &ok);
+    double ucsBasisAngleDeg = evalAngleValue(c, &ok, true);
     if (ok) {
         ucsBasisAngleDeg = LC_LineMath::getMeaningfulAngle(ucsBasisAngleDeg);
         ucsBasisAngleRad = RS_Math::deg2rad(ucsBasisAngleDeg);
@@ -1121,7 +1121,7 @@ bool RS_PreviewActionInterface::parseToUCSBasisAngle(const QString& c, double& u
 
 bool RS_PreviewActionInterface::parseToRelativeAngle(const QString& c, double& ucsBasisAngleRad) const {
     bool ok = false;
-    double ucsBasisAngleDeg = evalAngleValue(c, &ok);
+    double ucsBasisAngleDeg = evalAngleValue(c, &ok, false);
     if (ok) {
         ucsBasisAngleDeg = LC_LineMath::getMeaningfulAngle(ucsBasisAngleDeg);
         ucsBasisAngleRad = adjustRelativeAngleSignByBasis(RS_Math::deg2rad(ucsBasisAngleDeg));
@@ -1129,13 +1129,21 @@ bool RS_PreviewActionInterface::parseToRelativeAngle(const QString& c, double& u
     return ok;
 }
 [[deprecated]] // fixme - sand - why not to use LC_Convert?
-double RS_PreviewActionInterface::evalAngleValue(const QString& c, bool* ok) const {
+double RS_PreviewActionInterface::evalAngleValue(const QString& c, bool* ok, const bool direction) const {
     QString stringToEval;
     if (m_doNotAllowNonDecimalAnglesInput) {
         stringToEval = c;
     }
+    else if (!direction && RS_Units::containsDirectionAngle(c)) {
+        // a bearing is a direction and means nothing as a relative angle
+        if (ok != nullptr) {
+            *ok = false;
+        }
+        return 0.0;
+    }
     else {
-        stringToEval = RS_Units::replaceAllPotentialAnglesByDecimalDegrees(c, ok);
+        stringToEval = RS_Units::replaceAllPotentialAnglesByDecimalDegrees(c, ok, RS_Math::rad2deg(m_formatter->getAnglesBase()),
+                                                                           m_formatter->isAnglesCounterClockWise());
     }
     double result = 0.0;
     if (ok != nullptr) {

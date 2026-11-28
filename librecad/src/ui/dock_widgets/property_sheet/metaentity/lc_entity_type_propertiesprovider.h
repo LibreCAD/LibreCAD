@@ -420,6 +420,7 @@ void LC_EntityTypePropertiesProvider::addWCSAngle(const LC_Property::Names& name
                                                    QList<LC_PropertyAtomic*>* props) -> void {
         auto property = createDoubleProperty(n, props, container, LC_ActionContext::InteractiveInputInfo::InputType::ANGLE, m_actionContext,
                                              m_widget);
+        property->setAngleDirection(true);
         auto valueStorage = new LC_EntityPropertyValueDelegate<double, EntityClass>();
         valueStorage->setup(entity, m_widget, [this, funGet](EntityClass* e) -> double {
                                 const double wcsAngle = funGet(e);

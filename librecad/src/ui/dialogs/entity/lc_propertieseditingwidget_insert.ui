@@ -241,12 +241,12 @@
          <bool>false</bool>
         </property>
         <property name="buddy">
-         <cstring>leRows</cstring>
+         <cstring>sbRows</cstring>
         </property>
        </widget>
       </item>
       <item row="5" column="1">
-       <widget class="QLineEdit" name="leRows">
+       <widget class="QSpinBox" name="sbRows">
         <property name="minimumSize">
          <size>
           <width>64</width>
@@ -255,6 +255,12 @@
         </property>
         <property name="toolTip">
          <string>Amount of rows for copies</string>
+        </property>
+        <property name="minimum">
+         <number>1</number>
+        </property>
+        <property name="maximum">
+         <number>32767</number>
         </property>
        </widget>
       </item>
@@ -267,12 +273,12 @@
          <bool>false</bool>
         </property>
         <property name="buddy">
-         <cstring>leCols</cstring>
+         <cstring>sbCols</cstring>
         </property>
        </widget>
       </item>
       <item row="6" column="1">
-       <widget class="QLineEdit" name="leCols">
+       <widget class="QSpinBox" name="sbCols">
         <property name="minimumSize">
          <size>
           <width>64</width>
@@ -281,6 +287,12 @@
         </property>
         <property name="toolTip">
          <string>Amount of columns for copies</string>
+        </property>
+        <property name="minimum">
+         <number>1</number>
+        </property>
+        <property name="maximum">
+         <number>32767</number>
         </property>
        </widget>
       </item>
@@ -402,8 +414,8 @@
   <tabstop>tbPIckScaleY</tabstop>
   <tabstop>leAngle</tabstop>
   <tabstop>tbPickAngle</tabstop>
-  <tabstop>leRows</tabstop>
-  <tabstop>leCols</tabstop>
+  <tabstop>sbRows</tabstop>
+  <tabstop>sbCols</tabstop>
   <tabstop>leRowSpacing</tabstop>
   <tabstop>tbPickRowSpacing</tabstop>
   <tabstop>leColSpacing</tabstop>
