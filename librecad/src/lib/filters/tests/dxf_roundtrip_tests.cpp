@@ -2331,18 +2331,8 @@ TEST_CASE("Ordinary sparse material saves simple points", "[system-codec][dxf][m
   std::filesystem::remove(source); std::filesystem::remove(output); std::filesystem::remove(resaved);
 }
 
-TEST_CASE("Ordinary sparse material saves planar points across versions",
-          "[system-codec][dxf][material][transaction][point]") {
-  ensureSettings();
-  const auto format = GENERATE(RS2::FormatDXFRW, RS2::FormatDXFRW2010,
-                               RS2::FormatDXFRW2013, RS2::FormatDXFRW2018);
-  const char *version = format == RS2::FormatDXFRW ? "AC1021" :
-                        format == RS2::FormatDXFRW2010 ? "AC1024" :
-                        format == RS2::FormatDXFRW2013 ? "AC1027" : "AC1032";
-  const auto source = tmpFile("material_point_version_source.dxf");
-  const auto output = tmpFile("material_point_version_output.dxf");
-  const auto resaved = tmpFile("material_point_version_resaved.dxf");
-  const std::string input = std::string(
+static std::string sparseMaterialPointSource(const char *version) {
+  return std::string(
       "0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\n") + version + "\n9\n$CMATERIAL\n347\nA1\n0\nENDSEC\n"
       "0\nSECTION\n2\nTABLES\n0\nTABLE\n2\nLAYER\n5\n31\n100\nAcDbSymbolTable\n70\n1\n"
       "0\nLAYER\n5\n30\n330\n31\n100\nAcDbSymbolTableRecord\n100\nAcDbLayerTableRecord\n"
@@ -2354,6 +2344,20 @@ TEST_CASE("Ordinary sparse material saves planar points across versions",
       "0\nDICTIONARY\n5\nA0\n330\nC\n100\nAcDbDictionary\n281\n1\n"
       "3\nPlainMat\n350\nA1\n0\nMATERIAL\n5\nA1\n330\nA0\n"
       "100\nAcDbMaterial\n1\nPlainMat\n94\n63\n0\nENDSEC\n0\nEOF\n";
+}
+
+TEST_CASE("Ordinary sparse material saves planar points across versions",
+          "[system-codec][dxf][material][transaction][point]") {
+  ensureSettings();
+  const auto format = GENERATE(RS2::FormatDXFRW, RS2::FormatDXFRW2010,
+                               RS2::FormatDXFRW2013, RS2::FormatDXFRW2018);
+  const char *version = format == RS2::FormatDXFRW ? "AC1021" :
+                        format == RS2::FormatDXFRW2010 ? "AC1024" :
+                        format == RS2::FormatDXFRW2013 ? "AC1027" : "AC1032";
+  const auto source = tmpFile("material_point_version_source.dxf");
+  const auto output = tmpFile("material_point_version_output.dxf");
+  const auto resaved = tmpFile("material_point_version_resaved.dxf");
+  const std::string input = sparseMaterialPointSource(version);
   writeText(source, input);
   RS_FilterDXFRW filter; RS_Graphic graphic;
   REQUIRE(filter.fileImport(graphic, QString::fromStdString(source), format));
@@ -2379,12 +2383,12 @@ TEST_CASE("Ordinary sparse material saves planar points across versions",
   { std::ifstream in(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(in), {}) == sentinel); }
   REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), format));
   if (format != RS2::FormatDXFRW) {
-    auto *line = new RS_Line(&graphic, RS_LineData(RS_Vector(1, 2), RS_Vector(3, 4)));
-    line->setLayer(point->getLayer(false)); line->setPen(point->getPen(false)); graphic.addEntity(line);
+    auto *circle = new RS_Circle(&graphic, RS_CircleData(RS_Vector(1, 2), 3));
+    circle->setLayer(point->getLayer(false)); circle->setPen(point->getPen(false)); graphic.addEntity(circle);
     writeText(output, sentinel);
     CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(output), format));
     { std::ifstream in(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(in), {}) == sentinel); }
-    REQUIRE(graphic.removeEntity(line));
+    REQUIRE(graphic.removeEntity(circle));
     REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), format));
     auto elevated = input;
     const auto at = elevated.find("100\nAcDbPoint\n10\n2\n20\n3\n30\n0\n");
@@ -2428,6 +2432,59 @@ TEST_CASE("Ordinary sparse material saves planar points across versions",
     REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), format));
   }
   if (const char *prefix = std::getenv("LIBRECAD_KEEP_VERSIONED_MATERIAL")) {
+    std::filesystem::copy_file(source, std::string(prefix) + "." + version + ".source.dxf", std::filesystem::copy_options::overwrite_existing);
+    std::filesystem::copy_file(output, std::string(prefix) + "." + version + ".output.dxf", std::filesystem::copy_options::overwrite_existing);
+  }
+  std::filesystem::remove(source); std::filesystem::remove(output); std::filesystem::remove(resaved);
+}
+
+TEST_CASE("Ordinary sparse material saves planar lines across versions",
+          "[system-codec][dxf][material][transaction][line]") {
+  ensureSettings();
+  const auto format = GENERATE(RS2::FormatDXFRW2010, RS2::FormatDXFRW2013, RS2::FormatDXFRW2018);
+  const char *version = format == RS2::FormatDXFRW2010 ? "AC1024" :
+                        format == RS2::FormatDXFRW2013 ? "AC1027" : "AC1032";
+  const auto source = tmpFile("material_line_version_source.dxf");
+  const auto output = tmpFile("material_line_version_output.dxf");
+  const auto resaved = tmpFile("material_line_version_resaved.dxf");
+  auto input = sparseMaterialPointSource(version);
+  const auto at = input.find("0\nENDSEC\n0\nSECTION\n2\nOBJECTS\n"); REQUIRE(at != std::string::npos);
+  input.insert(at, "0\nLINE\n5\nA6\n100\nAcDbEntity\n8\nRAWTEST\n62\n2\n347\nA1\n"
+                   "100\nAcDbLine\n10\n1\n20\n2\n30\n0\n11\n8\n21\n9\n31\n0\n");
+  writeText(source, input);
+  RS_FilterDXFRW filter; RS_Graphic graphic;
+  REQUIRE(filter.fileImport(graphic, QString::fromStdString(source), format));
+  RS_Line *line = nullptr;
+  for (RS_Entity *entity : graphic)
+    if (entity && entity->sourceHandle() == 0xA6u && entity->rtti() == RS2::EntityLine)
+      line = static_cast<RS_Line *>(entity);
+  REQUIRE(line); REQUIRE(line->materialHandle() == 0xA1u);
+  line->move(RS_Vector(10, 20));
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), format));
+  CHECK(recordGroupValues(output, "LINE", "10") == std::vector<std::string>{"11"});
+  CHECK(recordGroupValues(output, "LINE", "20") == std::vector<std::string>{"22"});
+  CHECK(recordGroupValues(output, "LINE", "11") == std::vector<std::string>{"18"});
+  CHECK(recordGroupValues(output, "LINE", "21") == std::vector<std::string>{"29"});
+  CHECK(recordGroupValues(output, "LINE", "347") == recordGroupValues(output, "MATERIAL", "5"));
+  RS_Graphic reopened; REQUIRE(filter.fileImport(reopened, QString::fromStdString(output), format));
+  REQUIRE(filter.fileExport(reopened, QString::fromStdString(resaved), format));
+  CHECK(recordGroupValues(resaved, "LINE", "347") == recordGroupValues(resaved, "MATERIAL", "5"));
+  struct DeliveryProbe : RS_FilterDXFRW {
+    bool alter = true;
+    void addLine(const DRW_Line &data) override {
+      auto changed = data; if (alter) changed.basePoint.x += 1;
+      RS_FilterDXFRW::addLine(changed);
+    }
+  } probe;
+  RS_Graphic mismatched; REQUIRE(probe.fileImport(mismatched, QString::fromStdString(source), format));
+  const std::string sentinel = "preserve mismatched material line";
+  writeText(output, sentinel); CHECK_FALSE(probe.fileExport(mismatched, QString::fromStdString(output), format));
+  { std::ifstream in(output, std::ios::binary); CHECK(std::string(std::istreambuf_iterator<char>(in), {}) == sentinel); }
+  probe.alter = false; RS_Graphic retry;
+  REQUIRE(probe.fileImport(retry, QString::fromStdString(source), format));
+  REQUIRE(probe.fileExport(retry, QString::fromStdString(output), format));
+  REQUIRE(filter.fileExport(graphic, QString::fromStdString(output), format));
+  if (const char *prefix = std::getenv("LIBRECAD_KEEP_VERSIONED_MATERIAL_LINE")) {
     std::filesystem::copy_file(source, std::string(prefix) + "." + version + ".source.dxf", std::filesystem::copy_options::overwrite_existing);
     std::filesystem::copy_file(output, std::string(prefix) + "." + version + ".output.dxf", std::filesystem::copy_options::overwrite_existing);
   }
