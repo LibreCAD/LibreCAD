@@ -13517,7 +13517,8 @@ bool verifyHatchModelSpaceSource(const QByteArray &input, std::uint32_t owner, s
           (group.second == "$CUSTOMPROPERTY" || group.second == "$CUSTOMPROPERTYTAG")) isolated = false;
 #ifdef LIBDXFRW_HAS_DXF_CANONICAL_HEADER_VARIABLE_QUERY
       if (recordSection == "HEADER" && code == 9 &&
-          !DRW_Header::isDxfCanonicalVariableName(group.second.toStdString())) isolated = false;
+          (!group.second.startsWith('$') ||
+           !DRW_Header::isDxfCanonicalVariableName(group.second.toStdString()))) isolated = false;
 #else
       if (recordSection == "HEADER" && code == 9) isolated = false;
 #endif

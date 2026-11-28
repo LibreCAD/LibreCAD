@@ -9713,6 +9713,13 @@ TEST_CASE("DXF physical hatch source roles reject conflicting records",
   const auto propertyRoles = readRoles(customProperty, 0);
   CHECK(propertyRoles.modelSpace);
   CHECK_FALSE(propertyRoles.sourceHandleIsolation);
+  auto aliasProperty = structured;
+  const auto aliasPropertyEnd = aliasProperty.find("0\nENDSEC\n");
+  REQUIRE(aliasPropertyEnd != std::string::npos);
+  aliasProperty.insert(aliasPropertyEnd, "9\nCUSTOMPROPERTY\n1\nVALUE\n");
+  const auto aliasPropertyRoles = readRoles(aliasProperty, 0);
+  CHECK(aliasPropertyRoles.modelSpace);
+  CHECK_FALSE(aliasPropertyRoles.sourceHandleIsolation);
   auto unknownHeaderField = structured;
   const auto unknownFieldEnd = unknownHeaderField.find("0\nENDSEC\n");
   REQUIRE(unknownFieldEnd != std::string::npos);
